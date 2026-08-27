@@ -1,128 +1,45 @@
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
-using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// EncounterChoice resolver save persistence — closes the
-    /// Setup-without-Save triad gap found by the audit on Main.cs.
-    /// Pattern sibling of Combat/Narrative stores.
+    /// EncounterChoice resolver save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub) for atomic writing,
+    /// checksum envelope integrity, backup rotation, and slot-root routing.
+    /// Capture/restore keep this section's envelope-capture semantics.
     /// </summary>
     public static class EncounterChoiceSaveStore
     {
         public const string FileName = "encounter_choice_save.json";
         public const string SectionName = "encounter_choice";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(EncounterChoiceState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static EncounterChoiceState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<EncounterChoiceState> s_store =
+            SaveStoreHub.Checksummed<EncounterChoiceState>(FileName, nameof(EncounterChoiceSaveStore), createBackup: true);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(EncounterChoiceState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[EncounterChoiceSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static EncounterChoiceState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<EncounterChoiceState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[EncounterChoiceSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        public static string TryCaptureDirect(EncounterChoiceState state) =>
+            s_store.CaptureEnvelope(state);
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        public static EncounterChoiceState? TryRestoreDirect(string json) =>
+            s_store.RestoreEnvelope(json);
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        public static string TryCapture(EncounterChoiceState state) =>
+            s_store.CaptureEnvelope(state);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        public static EncounterChoiceState? TryRestore(string json) =>
+            s_store.RestoreEnvelope(json);
 
-        public static bool TrySave(EncounterChoiceState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new EncounterChoiceSaveEnvelope { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[EncounterChoice] save failed: " + e.Message);
-                return false;
-            }
-        }
+        public static bool TrySave(EncounterChoiceState state) =>
+            s_store.TrySave(state);
 
-        public static EncounterChoiceState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                var envelope = s_json.Deserialize<EncounterChoiceSaveEnvelope>(raw);
-                if (envelope == null) return null;
-                if (string.IsNullOrEmpty(envelope.Checksum))
-                {
-                    GD.PrintErr("[EncounterChoice] save envelope missing checksum (corrupt save)");
-                    return null;
-                }
-                string computed = SaveChecksum.Compute(envelope);
-                if (!string.Equals(envelope.Checksum, computed, StringComparison.Ordinal))
-                {
-                    GD.PrintErr("[EncounterChoice] checksum mismatch — possible tampering");
-                    return null;
-                }
-                return envelope.State;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[EncounterChoice] load failed: " + e.Message);
-                return null;
-            }
-        }
-    }
+        public static EncounterChoiceState? TryLoad() =>
+            s_store.TryLoad();
 
-    [Serializable]
-    public sealed class EncounterChoiceSaveEnvelope
-    {
-        public EncounterChoiceState State;
-        public string Checksum;
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(EncounterChoiceState state) => s_store.CapturePersisted(state);
     }
 }

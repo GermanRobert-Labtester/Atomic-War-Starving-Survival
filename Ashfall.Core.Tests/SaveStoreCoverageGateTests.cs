@@ -25,9 +25,11 @@ namespace Ashfall.Core.Tests
         private static readonly Regex BlockComment =
             new Regex("/\\*.*?\\*/", RegexOptions.Compiled | RegexOptions.Singleline);
 
-        // Codec delegation, e.g. HoldfastSaveCodec.Encode(...) / .TryDecode(...)
+        // Codec/Helper/Hub delegation, e.g. HoldfastSaveCodec.Encode(...) / .TryDecode(...),
+        // SaveEnvelopeHelper.*, or SaveStoreHub.Checksummed/FromCodec façades (the hub routes
+        // through SaveSlotRoot and the Core SaveStore<T> envelope machinery).
         private static readonly Regex CodecDelegation =
-            new Regex(@"\w*Codec\s*\.\s*(Encode|Decode|TryDecode)", RegexOptions.Compiled);
+            new Regex(@"(?:\w*Codec\s*\.\s*(?:Encode|Decode|TryDecode)|SaveEnvelopeHelper|SaveStoreHub)", RegexOptions.Compiled);
 
         private static string SrcDir()
         {
@@ -79,18 +81,54 @@ namespace Ashfall.Core.Tests
             foreach (string file in storeFiles)
             {
                 string code = StripComments(File.ReadAllText(file));
-                bool hasChecksum = code.Contains("Checksum");
-                bool delegatesToCodec = CodecDelegation.IsMatch(code);
-                if (!hasChecksum && !delegatesToCodec)
+                // Initiative #41 hardened this gate: a store is compliant only
+                // by DELEGATING persistence — to the Core SaveStore<T> service
+                // (SaveStoreHub), SaveEnvelopeHelper, or a Core save codec.
+                // A hand-rolled envelope (bare "Checksum" token) no longer
+                // passes; the duplicated boilerplate this initiative removed
+                // must not creep back.
+                if (!CodecDelegation.IsMatch(code))
                     bare.Add(Path.GetFileName(file));
             }
 
             Assert.True(bare.Count == 0,
-                "Bare save stores (no checksum envelope, no codec delegation) found — " +
-                "corruption in these files is undetectable on load. Seal each one with the " +
-                "ExpeditionSaveStore envelope pattern ({ State, Checksum } + legacy bare-state " +
-                "fallback) or delegate to a Core save codec:\n  " +
+                "Save stores without delegated persistence found — every store must " +
+                "route through SaveStoreHub (SaveStore<T> service), SaveEnvelopeHelper, " +
+                "or a Core save codec so checksum/atomic-write/legacy-load logic has a " +
+                "single owner:\n  " +
                 string.Join("\n  ", bare));
+        }
+
+        [Fact]
+        public void EverySaveStore_IsSlotRootIsolated()
+        {
+            string srcRoot = SrcDir();
+            var storeFiles = Directory
+                .EnumerateFiles(srcRoot, "*SaveStore*.cs", SearchOption.AllDirectories)
+                .Where(f => !f.Replace('\\', '/').Contains("/obj/") &&
+                            !f.Replace('\\', '/').Contains("/bin/") &&
+                            !f.EndsWith("SelfTest.cs", StringComparison.OrdinalIgnoreCase) &&
+                            !f.EndsWith("Tests.cs", StringComparison.OrdinalIgnoreCase) &&
+                            !f.EndsWith("Test.cs", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(f => f, StringComparer.Ordinal)
+                .ToList();
+
+            var unisolated = new List<string>();
+            foreach (string file in storeFiles)
+            {
+                string code = StripComments(File.ReadAllText(file));
+                bool hasSlotRoot = code.Contains("SaveSlotRoot") || code.Contains("ResolveSlotFile") || code.Contains("ResolveSlotPath") ||
+                    // Façades delegating to SaveStoreHub are isolated through the hub's
+                    // SaveSlotRoot.ResolveBaseDirectory wiring.
+                    code.Contains("SaveStoreHub");
+                if (!hasSlotRoot)
+                    unisolated.Add(Path.GetFileName(file));
+            }
+
+            Assert.True(unisolated.Count == 0,
+                "Save stores missing SaveSlotRoot isolation found — saves in these files risk " +
+                "polluting the global user:// directory during headless tests or profile switching:\n  " +
+                string.Join("\n  ", unisolated));
         }
     }
 }

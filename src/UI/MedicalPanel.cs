@@ -582,7 +582,7 @@ namespace AtomicWar.GodotApp.UI
             }
             catch (Exception ex_CATDIAG)
             {
-                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                CatalogDiagnostics.Warn("<scroll>", "ScrollToChild", ex_CATDIAG);
                 // ignore — scroll happens best-effort
             }
         }
@@ -604,12 +604,22 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
+        public void Unbind()
         {
             if (_respiratory != null)
             {
                 _respiratory.OnStateChanged -= OnRespiratoryStateChanged;
+                _respiratory = null;
             }
+            _medicalHost = null;
+            _survivorsHost = null;
+            _inventoryHost = null;
+            RefreshView();
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

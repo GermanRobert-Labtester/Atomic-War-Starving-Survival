@@ -1,115 +1,55 @@
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
+// ============================================================================
+// Save Store : WildlifeTrappingSaveStore
+// Core State : Ashfall.Core.WildlifeTrappingState
+// Host Caller: Main.ShelterSocial / WildlifeTrappingHostSession
+// Purpose    : Wildlife snare traps, bait replenishment, and wasteland game yields
+// ============================================================================
 using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
-    [Serializable]
-    public sealed class WildlifeTrappingHostSave
-    {
-        public string SchemaVersion { get; set; } = "1.0";
-        public WildlifeTrappingState State { get; set; }
-        public string Checksum { get; set; } = string.Empty;
-    }
-
+    /// <summary>
+    /// Wildlife trapping save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). This
+    /// shelter-batch section ships the legacy
+    /// <c>{ SchemaVersion, State, Checksum }</c> envelope, preserved
+    /// byte-for-byte by the Core <see cref="SchemaVersionedEnvelope{T}"/>
+    /// adapter (presence-only checksum, legacy bare-state fallback); path
+    /// resolution, atomic write, and error handling live in the service.
+    /// </summary>
     public static class WildlifeTrappingSaveStore
     {
         public const string FileName = "wildlife_trapping_save.json";
         public const string SectionName = "wildlife_trapping";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(WildlifeTrappingState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static WildlifeTrappingState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<WildlifeTrappingState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(WildlifeTrappingSaveStore),
+            SchemaVersionedEnvelope<WildlifeTrappingState>.Encode,
+            SchemaVersionedEnvelope<WildlifeTrappingState>.Decode);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(WildlifeTrappingState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[WildlifeTrappingSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static WildlifeTrappingState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<WildlifeTrappingState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[WildlifeTrappingSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        public static bool TrySave(WildlifeTrappingState state) => s_store.TrySave(state);
 
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
-        public static bool Exists => s_files.FileExists(SavePath);
+        public static WildlifeTrappingState? TryLoad() => s_store.TryLoad();
 
-        public static bool TrySave(WildlifeTrappingState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new WildlifeTrappingHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Trapping] save failed: " + e.Message);
-                return false;
-            }
-        }
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(WildlifeTrappingState state) => s_store.CapturePersisted(state);
 
-        public static WildlifeTrappingState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(WildlifeTrappingState state) => s_store.CaptureBare(state);
 
-                var envelope = s_json.Deserialize<WildlifeTrappingHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                    return envelope.State;
-                }
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static WildlifeTrappingState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-                return s_json.Deserialize<WildlifeTrappingState>(raw);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Trapping] load failed: " + e.Message);
-                return null;
-            }
-        }
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(WildlifeTrappingState state) => s_store.CaptureBare(state);
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static WildlifeTrappingState? TryRestore(string json) => s_store.RestoreBare(json);
     }
 }

@@ -105,5 +105,18 @@ namespace Ashfall.Core.Tests
             Assert.Equal(engineA.State.completedIds.Count, engineB.State.completedIds.Count);
             Assert.Equal(engineA.State.activeResearchId, engineB.State.activeResearchId);
         }
+
+        [Fact]
+        public void RegisterDefaults_CoversAllCanonicalDisciplines()
+        {
+            var engine = BuildEngine();
+            var categories = engine.Catalog.Values.Select(k => k.category).Distinct().ToList();
+
+            Assert.Contains("survival", categories);
+            Assert.Contains("engineering", categories);
+            Assert.Contains("science", categories);
+            Assert.Contains("scavenging", categories);
+            Assert.Contains("combat", categories);
+        }
     }
 }

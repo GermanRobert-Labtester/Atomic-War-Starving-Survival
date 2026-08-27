@@ -155,12 +155,12 @@ Editor / Tests
 
 `GameBootstrap.InitializeSystems()` orchestrates:
 
-1. `InitFoundation` — registry, GameState, Time, Weather, Temp, Photoperiod, Shelter modules  
-2. `InitUtilityAI` — UtilityAI + action list  
-3. `InitMedicalSystems`  
-4. `InitEventsAndSurvivors` → EventRunner, mental break, addiction, world/tactical/narrative/atmosphere/diary/hatch/faction map systems  
-5. `InitSaveAndExpeditions`  
-6. `InitRadioAndEndgame`  
+1. `InitFoundation` — registry, GameState, Time, Weather, Temp, Photoperiod, Shelter modules
+2. `InitUtilityAI` — UtilityAI + action list
+3. `InitMedicalSystems`
+4. `InitEventsAndSurvivors` → EventRunner, mental break, addiction, world/tactical/narrative/atmosphere/diary/hatch/faction map systems
+5. `InitSaveAndExpeditions`
+6. `InitRadioAndEndgame`
 7. `FinishSystemRegistration` → `RegisterSystemsInRegistry`
 
 ### 3.4 Update loops

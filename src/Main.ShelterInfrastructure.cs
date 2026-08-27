@@ -44,7 +44,6 @@ namespace AtomicWar.GodotApp
             var wtSys = new WaterTreatmentSystem(new GodotLog());
             wtSys.RestoreState(wtState);
             _waterTreatment = new WaterTreatmentHostSession(wtSys);
-            _waterTreatment.StateChanged += () => _waterTreatment.MarkDirty();
             if (_waterTreatmentPanel != null && _waterTreatmentPanel.IsInsideTree())
                 RemoveChild(_waterTreatmentPanel);
             _waterTreatmentPanel = new WaterTreatmentPanel();
@@ -55,7 +54,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveWaterTreatment()
         {
-            _waterTreatment?.Save();
+            if (_waterTreatment != null)
+                CaptureSection("water_treatment", WaterTreatmentSaveStore.TryCapturePersisted(_waterTreatment.System.CaptureState()));
         }
 
         private void SetupAirlockSecurity()
@@ -64,7 +64,6 @@ namespace AtomicWar.GodotApp
             var asSys = new AirlockSecuritySystem(new SeededRng(1986), new GodotLog());
             asSys.RestoreState(asState);
             _airlockSecurity = new AirlockSecurityHostSession(asSys);
-            _airlockSecurity.StateChanged += () => _airlockSecurity.MarkDirty();
             if (_airlockSecurityPanel != null && _airlockSecurityPanel.IsInsideTree())
                 RemoveChild(_airlockSecurityPanel);
             _airlockSecurityPanel = new AirlockSecurityPanel();
@@ -75,7 +74,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveAirlockSecurity()
         {
-            _airlockSecurity?.Save();
+            if (_airlockSecurity != null)
+                CaptureSection("airlock_security", AirlockSecuritySaveStore.TryCapturePersisted(_airlockSecurity.System.CaptureState()));
         }
 
         private void SetupShelterThermal()
@@ -87,7 +87,6 @@ namespace AtomicWar.GodotApp
             var stSys = new ShelterThermalSystem(new SeededRng(1986), stNeeds, stStarting, stDeepFreeze, new GodotLog());
             stSys.RestoreState(stState);
             _shelterThermal = new ShelterThermalHostSession(stSys);
-            _shelterThermal.StateChanged += () => _shelterThermal.MarkDirty();
             if (_shelterThermalPanel != null && _shelterThermalPanel.IsInsideTree())
                 RemoveChild(_shelterThermalPanel);
             _shelterThermalPanel = new ShelterThermalPanel();
@@ -98,7 +97,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveShelterThermal()
         {
-            _shelterThermal?.Save();
+            if (_shelterThermal != null)
+                CaptureSection("shelter_thermal", ShelterThermalSaveStore.TryCapturePersisted(_shelterThermal.System.CaptureState()));
         }
 
         private void SetupShelterSchedule()
@@ -109,7 +109,6 @@ namespace AtomicWar.GodotApp
             ssSys.RestoreState(ssState);
             _shelterSchedule = new ShelterScheduleHostSession(ssSys);
             _shelterSchedule.LoadCatalog(_dataDir);
-            _shelterSchedule.StateChanged += () => _shelterSchedule.MarkDirty();
             if (_shelterSchedulePanel != null && _shelterSchedulePanel.IsInsideTree())
                 RemoveChild(_shelterSchedulePanel);
             _shelterSchedulePanel = new ShelterSchedulePanel();
@@ -120,7 +119,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveShelterSchedule()
         {
-            _shelterSchedule?.Save();
+            if (_shelterSchedule != null)
+                CaptureSection("shelter_schedule", ShelterScheduleSaveStore.TryCapturePersisted(_shelterSchedule.System.CaptureState()));
         }
 
         private void SetupAutopsy(ResearchSystem sharedResearch)
@@ -136,7 +136,6 @@ namespace AtomicWar.GodotApp
             auSys.RestoreState(auState);
             _autopsy = new AutopsyHostSession(auSys);
             _autopsy.LoadCatalog(_dataDir);
-            _autopsy.StateChanged += () => _autopsy.MarkDirty();
             if (_autopsyReportPanel != null && _autopsyReportPanel.IsInsideTree())
                 RemoveChild(_autopsyReportPanel);
             _autopsyReportPanel = new AutopsyReportPanel();
@@ -147,7 +146,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveAutopsy()
         {
-            _autopsy?.Save();
+            if (_autopsy != null)
+                CaptureSection("autopsy", AutopsySaveStore.TryCapturePersisted(_autopsy.System.CaptureState()));
         }
 
         private void SetupWaystation()
@@ -156,7 +156,6 @@ namespace AtomicWar.GodotApp
             var wsSys = new WaystationSystem();
             wsSys.RestoreState(wsState);
             _waystation = new WaystationHostSession(wsSys);
-            _waystation.StateChanged += () => _waystation.MarkDirty();
             if (_waystationPanel != null && _waystationPanel.IsInsideTree())
                 RemoveChild(_waystationPanel);
             _waystationPanel = new WaystationNetworkPanel();
@@ -167,7 +166,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveWaystation()
         {
-            _waystation?.Save();
+            if (_waystation != null)
+                CaptureSection("waystation", WaystationSaveStore.TryCapturePersisted(_waystation.System.CaptureState()));
         }
     }
 }

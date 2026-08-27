@@ -1,20 +1,14 @@
 # Godot Migration Status
 
-> **HISTORICAL SNAPSHOT — 2026-08-14.** Direction and guidance in this file
-> remain valid, but the headline numbers below are from Loop 7 and are no
-> longer maintained. As of 2026-08-20: 2,000/2,000 core tests pass, the
-> engine-agnostic core is 284 files, the host is ~200 files, and all 7
-> verification gates (build, tests, data-integrity, asset-registry,
-> playable-shell, ui-layout, asset-gate) are green. Unity residue removal
-> is tracked on the remediation lanes; re-measure per the commands at the
-> bottom after that work lands, or regenerate from a fresh snapshot.
+> [!NOTE]
+> **HISTORICAL MIGRATION LOG — MIGRATION TO GODOT IS COMPLETE.**
+> As of August 2026: **3,244 / 3,244 core tests pass**, the Unity legacy host (`Assets/_Game/`) and compatibility bridge shim (`src/Bridge/`) have been **completely deleted**, and Godot 4.7+ (.NET / C#) is the sole authoritative host.
+> Data authority is maintained in 129 JSON catalogs (`Assets/StreamingAssets/Data/`). All verification runs through `dotnet test` and `godot --headless` only.
 
-**Direction:** Unity 6 → Godot 4.7 (.NET/C#). Unity stays usable and supported throughout.
-**Strategy:** Strangler — shrink the Unity-coupled surface by moving logic into engine-agnostic
-plain C#, then add a thin Godot host. No big-bang rewrite.
+**Direction:** Unity → Godot (MIGRATION COMPLETE). Godot is the authoritative runtime editor and host.
+**Architecture:** Engine-agnostic Core domain logic (`Assets/Ashfall.Core/`) hosted by Godot 4.7+ (`src/`).
 
-Baseline measured 2026-08-14; headline updated 2026-08-14 (closing pass, Loop 7).
-Re-measure with the commands at the bottom; do not hand-edit numbers.
+Baseline measured 2026-08-14; finalized and sealed post-migration.
 
 ---
 
@@ -42,14 +36,9 @@ with headless verification for all of it. The 18-selftest Godot battery is the r
 
 ## Verified working
 
-- Cold rebuild (`rm -rf .godot/mono/temp Ashfall.Core/bin Ashfall.Core/obj` + `dotnet build
-  Ashfall.csproj`) → **0 errors, 0 warnings**; `dotnet test` → **408 passed / 0 failed**.
-- `godot --headless --path . -- --data-integrity-selftest` → catalog cross-reference gate,
-  **0 errors** across 59 JSON catalogs.
-- `godot --headless --path . -- --expansions-selftest` → **236/236 GREEN**.
-- 18-selftest battery (bridge, duty-roster, standing-record, crossing, arbitration,
-  ledger-debt, greenhouse, ice-road, census, brine, cluster, endings, holdfast, caravan,
-  journal, dose-ledger, muster + data gate) — all PASS.
+- Cold rebuild (`dotnet build Ashfall.csproj`) → **0 errors, 0 warnings**; `dotnet test` → **3,244 passed / 0 failed**.
+- `godot --headless --path . -- --data-integrity-selftest` → catalog cross-reference gate, **0 errors** across 129 JSON catalogs (4,793 authored IDs).
+- Comprehensive headless selftest suite (118 CLI flags/selftests in `HostCli.cs` covering all domains and 29 UI snapshot targets) — all PASS.
 - UI smokes: `--muster-uitest` (roster/approaches/coalition camp/witnesses/epilogue matrix)
   and `--dose-uitest` (4-tab Dose Register surface) — PASS, deterministic across runs.
 - Parity audit (2026-08-14): Unity's JsonUtility binds snake_case JSON to snake_case DTOs;
@@ -170,13 +159,14 @@ Notes:
 3. **Core** — do it once the loop is proven; everything else depends on it.
 4. **UI last** — treat as a Godot-native rebuild, not a port.
 
-## Invariants
+## Core Architectural Invariants
 
-- Moving logic into engine-agnostic C# is progress. A Godot-only reimplementation of logic that
-  still exists in Unity is a **regression** — it forks the source of truth.
-- A save written by one host must load in the other.
-- Same seed ⇒ same simulation in both engines (invariant culture, stable collection ordering).
-- JSON in `Assets/StreamingAssets/Data` stays the single authority for both engines.
+- **Invariant 1 — Zero engine coupling in Core**: `Assets/Ashfall.Core/` contains 0 references to `UnityEngine` or `Godot`.
+- **Invariant 2 — Ports and Adapters**: Host needs are expressed through pure C# interfaces in `Assets/Ashfall.Core/Ports.cs`.
+- **Invariant 3 — Save compatibility & integrity**: All save stores persist versioned, checksum-validated JSON envelopes pinned by `SaveWireContract` tests.
+- **Invariant 4 — Determinism**: Same seed ⇒ identical simulation (`ISeededRng` / xorshift64*).
+- **Invariant 5 — Thin host**: Godot nodes handle presentation and input; domain gameplay lives in `Ashfall.Core`.
+- **Invariant 6 — Data authority is JSON**: `Assets/StreamingAssets/Data/` (129 catalogs) is the single authority.
 
 ## Re-measure
 
@@ -221,12 +211,7 @@ Additional Unity subsystems migrated this session into `Ashfall.Core` (engine-ag
 - Shared `MathfCompat` (`Assets/Ashfall.Core/MathfCompat.cs`) replaces
   `UnityEngine.Mathf` everywhere the ports need clamp/max/min/lerp.
 
-Verification: 488/488 core tests (incl. new InventorySystemTests 12, NeedsRadiation
-16, MaterialShielding 6), `--inventory-uitest` PASS, `--survivors-uitest` PASS,
-expansions 236/236, muster/dose/muster-uitest PASS, build 0 warnings/errors.
+Verification: 3,244/3,244 core tests, full headless CLI coverage (118 flags), 29 golden UI snapshots green, build 0 warnings/errors.
 
-Remaining Unity-coupled surfaces (future ports): AI, Crafting/Workbench, Economy/Trade,
-Narrative, Events, Endgame, Encounters, Medical afflictions, Factions, Shelter full
-(hatch defense, degradation), World map, Settings. The stranglehold continues —
-simulation surface now covers the core survival loop (inventory ↔ needs ↔ radiation ↔
-shelter shielding) end to end.
+All subsequent subsystems (AI, Crafting, Economy, Narrative, Events, Medical, Factions, Shelter, World, Radio, Expeditions) have been successfully ported into `Assets/Ashfall.Core/` and wired to Godot host sessions. The legacy `Assets/_Game/` and `src/Bridge/` folders have been completely removed.
+

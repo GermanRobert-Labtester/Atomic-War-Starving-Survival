@@ -3,6 +3,14 @@ namespace Ashfall.Core.Economy
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using Ashfall.Core.Radio;
+
+    public sealed class TradeSelectionSnapshot
+    {
+        public Dictionary<string, int> PlayerOffers { get; set; } = new(StringComparer.Ordinal);
+        public Dictionary<string, int> FactionAsks { get; set; } = new(StringComparer.Ordinal);
+        public Dictionary<BiologicalTradeItem, int> BiologicalOffers { get; set; } = new();
+    }
 
     /// <summary>
     /// Track B (Nerves): maps the frozen core interfaces
@@ -21,6 +29,7 @@ namespace Ashfall.Core.Economy
         private readonly IFactionStanceProvider _stance;
         private readonly IPriceShockProvider _shocks;
         private readonly ITradeTellProvider _tells;
+        private readonly IFactionRadioProvider? _radio;
         private readonly ITradeExecutionSink _execution;
         private readonly ISeededRng _rng;
         private readonly Func<string, float> _unitPrice;
@@ -36,18 +45,76 @@ namespace Ashfall.Core.Economy
 
         public TradeScreenViewModel ViewModel { get; } = new TradeScreenViewModel();
 
+        public int ActiveOfferCount => _playerOfferCounts.Count;
+        public int ActiveAskCount => _factionAskCounts.Count;
+        public int ActiveBioCount => _bioOfferCounts.Count;
+
+        public int GetPlayerOfferCount(string itemId) =>
+            _playerOfferCounts.TryGetValue(itemId, out int count) ? count : 0;
+
+        public int GetFactionAskCount(string itemId) =>
+            _factionAskCounts.TryGetValue(itemId, out int count) ? count : 0;
+
+        public int GetBiologicalOfferCount(BiologicalTradeItem item) =>
+            _bioOfferCounts.TryGetValue(item, out int count) ? count : 0;
+
+        public TradeSelectionSnapshot CaptureSelection()
+        {
+            return new TradeSelectionSnapshot
+            {
+                PlayerOffers = new Dictionary<string, int>(_playerOfferCounts, StringComparer.Ordinal),
+                FactionAsks = new Dictionary<string, int>(_factionAskCounts, StringComparer.Ordinal),
+                BiologicalOffers = new Dictionary<BiologicalTradeItem, int>(_bioOfferCounts)
+            };
+        }
+
+        public void RestoreSelection(TradeSelectionSnapshot snapshot)
+        {
+            if (snapshot == null) return;
+            _playerOfferCounts.Clear();
+            if (snapshot.PlayerOffers != null)
+            {
+                foreach (var pair in snapshot.PlayerOffers)
+                {
+                    if (pair.Value > 0) _playerOfferCounts[pair.Key] = pair.Value;
+                }
+            }
+
+            _factionAskCounts.Clear();
+            if (snapshot.FactionAsks != null)
+            {
+                foreach (var pair in snapshot.FactionAsks)
+                {
+                    if (pair.Value > 0) _factionAskCounts[pair.Key] = pair.Value;
+                }
+            }
+
+            _bioOfferCounts.Clear();
+            if (snapshot.BiologicalOffers != null)
+            {
+                foreach (var pair in snapshot.BiologicalOffers)
+                {
+                    if (pair.Value > 0) _bioOfferCounts[pair.Key] = pair.Value;
+                }
+            }
+
+            Recalculate();
+        }
+
         public TradeScreenPresenter(
             IFactionStanceProvider stanceProvider,
-IPriceShockProvider? priceShockProvider = null,
-ITradeTellProvider? tells = null,
-ISeededRng? rng = null,
-Func<string, float>? unitPriceLookup = null,
-Func<string, string>? displayNameLookup = null,
-ITradeExecutionSink? executionSink = null)
+            IPriceShockProvider? priceShockProvider = null,
+            ITradeTellProvider? tells = null,
+            ISeededRng? rng = null,
+            Func<string, float>? unitPriceLookup = null,
+            Func<string, string>? displayNameLookup = null,
+            ITradeExecutionSink? executionSink = null,
+            IFactionRadioProvider? radioProvider = null)
         {
             _stance = stanceProvider;
             _shocks = priceShockProvider;
             _tells = tells;
+            _radio = radioProvider;
             _rng = rng;
             _execution = executionSink;
             _unitPrice = unitPriceLookup ?? (_ => 10f);
@@ -150,6 +217,12 @@ ITradeExecutionSink? executionSink = null)
                 ViewModel.SetTell(tell.Id, tell.Line);
             }
 
+            if (_radio != null)
+            {
+                var intercept = _radio.GetFactionEvent(factionId, RadioEventKind.InterceptChatter, _worldDay, _rng);
+                ViewModel.SetRadioTicker(intercept.Message);
+            }
+
             ViewModel.SetShockBadges(CollectShockBadges());
             ViewModel.SetScarcityBands(CollectScarcityBands());
             ViewModel.SetTable(
@@ -176,16 +249,32 @@ ITradeExecutionSink? executionSink = null)
                 }
             }
             ClearOffers();
+            if (_radio != null)
+            {
+                var reaction = _radio.GetFactionEvent(ViewModel.FactionId, RadioEventKind.TradeReaction, _worldDay, _rng);
+                ViewModel.SetRadioTicker(reaction.Message);
+            }
             return true;
         }
 
         public bool TryDemandParley()
         {
+            bool parleyOk = false;
             if (_execution != null)
             {
-                return _execution.TryDemandParley(ViewModel.FactionId);
+                parleyOk = _execution.TryDemandParley(ViewModel.FactionId);
             }
-            return ViewModel.CanDemandParley;
+            else
+            {
+                parleyOk = ViewModel.CanDemandParley;
+            }
+
+            if (_radio != null)
+            {
+                var parleyLine = _radio.GetFactionEvent(ViewModel.FactionId, RadioEventKind.ParleyResolution, _worldDay, _rng);
+                ViewModel.SetRadioTicker(parleyLine.Message);
+            }
+            return parleyOk;
         }
 
         /// <summary>Qualitative, multi-line quote summary (ECON-002: no raw digits).</summary>

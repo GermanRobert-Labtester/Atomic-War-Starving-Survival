@@ -326,10 +326,9 @@ namespace AtomicWar.GodotApp
 
         public override void _UnhandledKeyInput(InputEvent @event)
         {
-            var key = @event as InputEventKey;
-            if (key == null || !key.Pressed || key.Echo) return;
+            if (!@event.IsPressed() || @event.IsEcho()) return;
 
-            if (key.Keycode == Key.Escape)
+            if (AshfallInputActions.IsCloseOrCancel(@event))
             {
                 CloseTerminal();
                 GetViewport().SetInputAsHandled();
@@ -341,12 +340,12 @@ namespace AtomicWar.GodotApp
             // Keyboard shortcuts when trade tab is active.
             if (_tabs.CurrentTab == 4)
             {
-                if (key.Keycode == Key.B)
+                if (AshfallInputActions.IsHoldfastBuild(@event))
                 {
                     PressBuy();
                     GetViewport().SetInputAsHandled();
                 }
-                else if (key.Keycode == Key.S && !key.CtrlPressed)
+                else if (AshfallInputActions.IsHoldfastStatus(@event) && !(@event is InputEventKey key && key.CtrlPressed))
                 {
                     PressSell();
                     GetViewport().SetInputAsHandled();

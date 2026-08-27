@@ -99,6 +99,10 @@ namespace AtomicWar.GodotApp
 
             SetupWorld();
             _world.TickDemo(24f);
+            // Weather intelligence (station forecast + orbital telemetry) advances
+            // after the authoritative weather roll so the station forecast reflects
+            // the current day's weather state.
+            _world.WeatherIntelligence.TickDay(day);
 
             SetupCaravans();
             _caravans.TickDemo();
@@ -216,6 +220,11 @@ namespace AtomicWar.GodotApp
             TickPowerGrid(day);
             TickAllExpandedShelterSystems(day);
 
+            // The survivor-social cluster (leadership, friction, ration
+            // conflict, trauma bonds, skill atrophy) advances on the real day
+            // clock after survivors and duty-roster have ticked.
+            TickSurvivorSocial(day);
+
             // Phase 0 (psychological/medical effects) advances on the real day clock:
             // refresh environment signals from the world/shelter hosts, then tick all
             // ten systems for a full day.
@@ -239,7 +248,7 @@ namespace AtomicWar.GodotApp
         private void SaveHoldfast()
         {
             if (_core == null) return;
-            if (HoldfastSaveStore.TrySave(_core.CaptureSave()))
+            if (CaptureSection("holdfast", HoldfastSaveStore.TryCapturePersisted(_core.CaptureSave())))
             {
                 _holdfastDirty = false;
                 GD.Print($"[Ashfall Godot] Holdfast S1 save written (day {_core.Clock.Day}).");
@@ -249,7 +258,7 @@ namespace AtomicWar.GodotApp
         private void SaveHoldfastRuntime()
         {
             if (_holdfastRuntime == null) return;
-            if (_holdfastRuntime.TrySave())
+            if (CaptureSection("holdfast_trade", HoldfastTradeSaveStore.TryCapturePersisted(_holdfastRuntime.Trade.CaptureState())))
                 GD.Print("[Ashfall Godot] Holdfast player/trade state written.");
         }
 

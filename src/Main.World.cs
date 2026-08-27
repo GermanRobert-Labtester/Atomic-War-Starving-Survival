@@ -131,12 +131,13 @@ namespace AtomicWar.GodotApp
         private void SaveWorld()
         {
             if (_world == null) return;
-            if (WorldSaveStore.TrySave(
+            if (CaptureSection("world", WorldSaveStore.TryCapturePersisted(
                 _world!.CaptureSave()!,
                 _world!.CaptureSkyArmorSave()!,
+                _world!.CaptureWeatherIntelligenceSave()!,
                 _world!.LocationEvolution?.CaptureState()!,
                 _world!.Wildlife?.CaptureState()!,
-                _world!.Landmarks?.CaptureState()!))
+                _world!.Landmarks?.CaptureState()!)))
             {
                 _worldDirty = false;
                 GD.Print("[Ashfall Godot] World save written.");
@@ -165,7 +166,48 @@ namespace AtomicWar.GodotApp
         {
             if (_crafting != null) return;
             SetupInventory();
-            _crafting = CraftingHostSession.Create(_dataDir, _inventory.Inventory);
+            _sharedResearch ??= new ResearchSystem(log: new GodotLog());
+            _crafting = CraftingHostSession.Create(_dataDir, _inventory.Inventory, _sharedResearch);
+
+            _crafting.Workshop.BindSkillEvaluator(survivorId =>
+            {
+                if (string.IsNullOrEmpty(survivorId)) return 1.0f;
+                var def = _survivors?.Roster?.FindDefinition(survivorId);
+                if (def == null) return 1.0f;
+                float skill = 1.0f;
+                if (def.traitIds != null && def.traitIds.Contains("skill_crafting_expert")) skill += 0.5f;
+                if (def.traitIds != null && def.traitIds.Contains("skill_scavenge_efficiency")) skill += 0.3f;
+                return skill;
+            });
+
+            _crafting.PharmaLab.BindSkillEvaluator(chemistId =>
+            {
+                if (string.IsNullOrEmpty(chemistId)) return 1.0f;
+                var def = _survivors?.Roster?.FindDefinition(chemistId);
+                if (def == null) return 1.0f;
+                float skill = 1.0f;
+                if (def.traitIds != null && def.traitIds.Contains("skill_medical_doctor")) skill += 0.5f;
+                if (def.traitIds != null && def.traitIds.Contains("skill_chemistry_specialist")) skill += 0.4f;
+                return skill;
+            });
+
+            _crafting.PharmaLab.OnDependencyRisk += risk =>
+            {
+                if (!string.IsNullOrEmpty(_crafting.PharmaLab.State.assignedChemistId) && _chemicalDependency != null)
+                {
+                    _chemicalDependency.System.OnSubstanceConsumed(
+                        _crafting.PharmaLab.State.assignedChemistId,
+                        _crafting.PharmaLab.State.currentRecipeId,
+                        Ashfall.Core.Medical.ChemicalDependencyKind.Opioid);
+                }
+            };
+
+            var save = CraftingSaveStore.TryLoad();
+            if (save != null)
+            {
+                _crafting.RestoreSave(save);
+            }
+
             _crafting.StateChanged += () => _craftingDirty = true;
             GD.Print("[Ashfall Godot] Crafting host ready.");
         }
@@ -173,7 +215,7 @@ namespace AtomicWar.GodotApp
         private void SaveCrafting()
         {
             if (_crafting == null) return;
-            if (CraftingSaveStore.TrySave(_crafting.CaptureSave()))
+            if (CaptureSection("crafting", CraftingSaveStore.TryCapturePersisted(_crafting.CaptureSave())))
             {
                 _craftingDirty = false;
                 GD.Print("[Ashfall Godot] Crafting save written.");
@@ -210,7 +252,7 @@ namespace AtomicWar.GodotApp
         private void SaveStartingLevel()
         {
             if (_startingLevel == null) return;
-            if (StartingLevelSaveStore.TrySave(_startingLevel.CaptureState()))
+            if (CaptureSection("starting_level", StartingLevelSaveStore.TryCapturePersisted(_startingLevel.CaptureState())))
             {
                 _startingLevelDirty = false;
                 GD.Print("[Ashfall Godot] Starting level save written.");
@@ -278,7 +320,7 @@ namespace AtomicWar.GodotApp
         private void SaveGreenhouse()
         {
             if (_greenhouse == null) return;
-            if (GreenhouseSaveStore.TrySave(_greenhouse.CaptureSave()))
+            if (CaptureSection("greenhouse", GreenhouseSaveStore.TryCapturePersisted(_greenhouse.CaptureSave())))
             {
                 _greenhouseDirty = false;
                 GD.Print("[Ashfall Godot] Greenhouse save written.");
@@ -292,7 +334,17 @@ namespace AtomicWar.GodotApp
 
         private void CloseCraftingPanel()
         {
-            _craftingPanel.Visible = false;
+            if (_craftingPanel != null) _craftingPanel.Visible = false;
+        }
+
+        private void CloseWorkshopPanel()
+        {
+            if (_workshopPanel != null) _workshopPanel.Visible = false;
+        }
+
+        private void ClosePharmaLabPanel()
+        {
+            if (_pharmaLabPanel != null) _pharmaLabPanel.Visible = false;
         }
 
         private void CloseWeatherPanel()

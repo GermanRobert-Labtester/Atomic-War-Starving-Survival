@@ -43,6 +43,10 @@ namespace AtomicWar.GodotApp
         {
             Dive.OnDiveEnded += _ => { LastEvent = "Dive ended."; RaiseStateChanged(); };
             Dive.OnRoomEntered += _ => { LastEvent = "Dive moved to next room."; RaiseStateChanged(); };
+            Dive.OnAirWarning += air => { LastEvent = $"WARNING: Low oxygen ({air:F0}s remaining)!"; RaiseStateChanged(); };
+            Dive.OnDecompressionStarted += req => { LastEvent = $"Decompression stop initiated ({req:F0}s required)."; RaiseStateChanged(); };
+            Dive.OnDecompressionCompleted += () => { LastEvent = "Decompression stop cleared."; RaiseStateChanged(); };
+            Dive.OnDiverLost += id => { LastEvent = $"CRITICAL: Diver {id} lost in deep hull!"; RaiseStateChanged(); };
             Scavenge.OnLootRolled += (_, _, _) => RaiseStateChanged();
             Scavenge.OnItemDegraded += (_, _) => RaiseStateChanged();
             Psychology.OnContaminationApplied += (_, _) => RaiseStateChanged();
@@ -56,12 +60,18 @@ namespace AtomicWar.GodotApp
         public static MaritimeHostSession Create(string dataDir)
         {
             var session = new MaritimeHostSession();
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                var catalog = DiveSiteCatalogLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+                session.Dive.LoadCatalog(catalog);
+            }
             var save = MaritimeSaveStore.TryLoad();
             if (save != null)
             {
                 session.Dive.RestoreState(save.Dive);
                 session.Scavenge.RestoreState(save.Scavenge);
                 session.Psychology.RestoreState(save.Psychology);
+                if (save.SafeCrack != null) session.SafeCrack.RestoreState(save.SafeCrack);
                 session.LastEvent = "Maritime state restored from save.";
             }
             return session;
@@ -130,6 +140,25 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"Advanced to room {Dive.CurrentRoomIndex + 1} (noise {Dive.NoiseLevel})."
                 : "Cannot advance (at the deep hold or dive inactive).";
+            RaiseStateChanged();
+            return LastEvent;
+        }
+
+        public string AbortDiveDemo(bool emergency = false)
+        {
+            if (!Dive.IsActive) return "No active dive.";
+            Dive.AbortDive(emergency);
+            LastEvent = emergency ? "Emergency ascent aborted!" : "Controlled ascent completed.";
+            RaiseStateChanged();
+            return LastEvent;
+        }
+
+        public string DecompressDemo(float seconds = 10f)
+        {
+            if (!Dive.IsActive) return "No active dive.";
+            Dive.StartDecompression();
+            Dive.Tick(seconds);
+            LastEvent = $"Decompression stop: {Dive.DecompressionProgressSeconds:F1}s / {Dive.DecompressionRequiredSeconds:F1}s.";
             RaiseStateChanged();
             return LastEvent;
         }

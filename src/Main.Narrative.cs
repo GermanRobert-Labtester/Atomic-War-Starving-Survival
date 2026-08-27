@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp
         {
             if (_journal != null) return;
 
-            var catalogs = CatalogJsonLoader.Load(_dataDir);
+            var catalogs = CatalogJsonLoader.Load(new FileSystemIO(), _dataDir);
             _journal = new JournalSystem();
             // Mark dirty rather than writing the whole save file per entry; the
             // _Process tick flushes it. Seeding adds many entries in one frame and
@@ -107,7 +107,7 @@ namespace AtomicWar.GodotApp
         private void SaveJournal()
         {
             if (_journal == null) return;
-            JournalSaveStore.Save(_journal.CaptureState());
+            CaptureSection("journal", JournalSaveStore.TryCapturePersisted(_journal.CaptureState()));
             _journalDirty = false;
         }
 
@@ -161,7 +161,7 @@ namespace AtomicWar.GodotApp
         private void SaveNarrative()
         {
             if (_narrative == null) return;
-            if (NarrativeSaveStore.TrySave(_narrative.CaptureSave()))
+            if (CaptureSection("narrative", NarrativeSaveStore.TryCapturePersisted(_narrative.CaptureSave())))
             {
                 _narrativeDirty = false;
                 GD.Print("[Ashfall Godot] Narrative save written.");
@@ -171,7 +171,7 @@ namespace AtomicWar.GodotApp
         private void SaveEventAdapter()
         {
             if (_hostEventAdapter == null) return;
-            if (HostEventSaveStore.TrySave(_hostEventAdapter.State))
+            if (CaptureSection("host_event", HostEventSaveStore.TryCapturePersisted(_hostEventAdapter.State)))
             {
                 _hostEventAdapterDirty = false;
             }
@@ -193,7 +193,6 @@ namespace AtomicWar.GodotApp
             }
 
             SetupJournal();
-            SetupWastelandMap();
             _radio = RadioHostSession.Create(_dataDir, _core != null ? _core.Clock.Day : _simDay);
             _radio.StateChanged += () => _radioPanel?.RefreshView();
             _radio.Triangulation.OnLocationRevealed += locId =>
@@ -211,7 +210,7 @@ namespace AtomicWar.GodotApp
         private void SaveRadio()
         {
             if (_radio == null) return;
-            if (RadioSaveStore.TrySave(_radio.CaptureSave()))
+            if (CaptureSection("radio", RadioSaveStore.TryCapturePersisted(_radio.CaptureSave())))
             {
                 GD.Print("[Ashfall Godot] Radio save written.");
             }

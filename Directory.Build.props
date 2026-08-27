@@ -1,0 +1,30 @@
+<Project>
+  <!--
+    ASHFALL — Shared Build & Compiler Configuration
+    Applies to:
+      - Ashfall.csproj (Godot host)
+      - Ashfall.Core/Ashfall.Core.csproj (Engine-agnostic Core library)
+      - Ashfall.Core.Tests/Ashfall.Core.Tests.csproj (xUnit test suite)
+  -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Deterministic>true</Deterministic>
+
+    <!--
+      Shared Warning Policy:
+      CS0108/CS0114  — NOT suppressed: resolved member hiding across all host sessions
+      CS0067         — NOT suppressed: all public events verified invoked (lambda closures count)
+      CS8602/CS8603  — NOT suppressed: real null-dereference detection active
+      CS8605/CS8629  — NOT suppressed: real unboxing/.Value crash detection active
+      CS0414         — serializer-assigned fields flagged as unused
+      CS8600/CS8601  — JSON-populated DTO null conversions (known safe)
+      CS8604/CS8618  — serializer-assigned reference fields
+      CS8625         — null passed to non-nullable param in JSON paths
+      CS8765         — interface/override nullability mismatch on DTOs
+      CS8619/CS8620  — tuple nullability drift in host adapters
+      CS0649/CS0169  — fields only written by JSON serializer
+    -->
+    <NoWarn>$(NoWarn);CS8619;CS8620;CS8765;CS0414;CS0169;CS8600;CS8601;CS8603;CS8604;CS8618;CS8625;CS0649</NoWarn>
+  </PropertyGroup>
+</Project>

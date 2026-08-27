@@ -37,7 +37,7 @@ public class MigrationV1ToV2 : SaveMigration
 {
     public override int FromVersion => 1;
     public override int ToVersion => 2;
-    
+
     public override SystemState Migrate(SystemState state)
     {
         // Migration logic from V1 to V2
@@ -299,7 +299,7 @@ The skill can automatically apply fixes for:
 public class ExpansionMasterSession : ISaveWire<ExpansionMasterSessionDto>
 {
     public const int CurrentCodecVersion = 1;
-    
+
     public SystemState CaptureState()
     {
         return new SystemState
@@ -315,7 +315,7 @@ public class ExpansionMasterSession : ISaveWire<ExpansionMasterSessionDto>
             }
         };
     }
-    
+
     public void RestoreState(SystemState state) { }
 }
 ```
@@ -326,12 +326,12 @@ public class ExpansionMasterSession : ISaveWire<ExpansionMasterSessionDto>
 public class ExpansionMasterSession : ISaveWire<ExpansionMasterSessionDto>
 {
     public const int CurrentCodecVersion = 2;
-    
+
     private static readonly Dictionary<int, Type> Migrations = new()
     {
         { 1, typeof(MigrationV1ToV2) }
     };
-    
+
     public SystemState CaptureState()
     {
         var state = new SystemState
@@ -348,11 +348,11 @@ public class ExpansionMasterSession : ISaveWire<ExpansionMasterSessionDto>
                 }
             }
         };
-        
+
         state.Checksum = SaveChecksum.Calculate(state);
         return state;
     }
-    
+
     public void RestoreState(SystemState state)
     {
         // Apply migrations if needed
@@ -360,14 +360,14 @@ public class ExpansionMasterSession : ISaveWire<ExpansionMasterSessionDto>
         {
             state = ApplyMigrations(state);
         }
-        
+
         // Validate checksum
         if (!SaveChecksum.Validate(state))
         {
             throw new SaveCorruptionException("Checksum validation failed");
         }
     }
-    
+
     private SystemState ApplyMigrations(SystemState state)
     {
         // Migration logic here
@@ -380,12 +380,12 @@ public class MigrationV1ToV2 : SaveMigration
 {
     public override int FromVersion => 1;
     public override int ToVersion => 2;
-    
+
     public override SystemState Migrate(SystemState state)
     {
         var dto = state.Data as ExpansionMasterSessionDto;
         var oldHoldfast = dto.Holdfast as dynamic; // V1 DTO
-        
+
         dto.Holdfast = new Expansion05HoldfastSystemDto
         {
             ActiveQuests = oldHoldfast.ActiveQuests,
@@ -393,7 +393,7 @@ public class MigrationV1ToV2 : SaveMigration
             CompletedQuests = new string[0],
             IsFactionHostile = false
         };
-        
+
         return state;
     }
 }

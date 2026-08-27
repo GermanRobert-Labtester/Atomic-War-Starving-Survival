@@ -15,12 +15,13 @@ namespace AtomicWar.GodotApp.UI
     /// Displays live wasteland geography, discovered sectors, active sortie routes,
     /// radiation danger gradients, and strategic waypoints using real Core data.
     /// </summary>
-    public partial class MapPanel : Control
+    public partial class MapPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action<string>? OnLocationDetailRequested;
 
         private VBoxContainer _overviewContainer = null!;
+        private VBoxContainer _legendContainer = null!;
         private VBoxContainer _locationsContainer = null!;
         private VBoxContainer _routesContainer = null!;
         private VBoxContainer _explorationContainer = null!;
@@ -67,11 +68,12 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_overviewContainer == null || _locationsContainer == null ||
-                _routesContainer == null || _explorationContainer == null)
+            if (_overviewContainer == null || _legendContainer == null ||
+                _locationsContainer == null || _routesContainer == null || _explorationContainer == null)
                 return;
 
             AshfallUiHelpers.EmptyChildren(_overviewContainer);
+            AshfallUiHelpers.EmptyChildren(_legendContainer);
             AshfallUiHelpers.EmptyChildren(_locationsContainer);
             AshfallUiHelpers.EmptyChildren(_routesContainer);
             AshfallUiHelpers.EmptyChildren(_explorationContainer);
@@ -90,11 +92,67 @@ namespace AtomicWar.GodotApp.UI
             var ovBox = overviewCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Home Station", "District 8 Holdfast Bunker [Sector 07]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Atmospheric Hazard", weatherStr, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+
+            // Weather-intelligence route-safety advisory (station + orbital telemetry).
+            var intel = _world?.WeatherIntelligence?.BuildReadModel();
+            if (intel != null)
+            {
+                string routeLine = intel.stationOperational
+                    ? intel.routeSafeDays > 0
+                        ? $"Best travel window: day {intel.bestTravelDay} ({intel.bestTravelConfidence:P0} confidence, {intel.routeSafeDays} safe day(s))"
+                        : "No safe travel windows in forecast horizon."
+                    : "Route safety unknown — no calibrated weather station.";
+                ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Expedition Routing", routeLine,
+                    intel.routeSafeDays > 0 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)
+                        : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
+                if (intel.telemetryActive && intel.hasPendingImpact)
+                {
+                    ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Orbital Warning",
+                        $"IMPACT day {intel.impactDay} ({intel.daysUntilImpact}d lead)",
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
+                }
+            }
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Cataloged Waypoints", $"{Math.Max(totalLocations, 8)} Sector Coordinates", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Active Sorties", $"{activeSorties} Active Recon Team(s)", AshfallUiHelpers.ToColor(activeSorties > 0 ? Ashfall.Core.UI.Theme.Hot : Ashfall.Core.UI.Theme.Dim)));
             _overviewContainer.AddChild(overviewCard);
 
-            // ── 2. Known Locations ──
+            // ── 2. Marker Status Legend ──
+            var legendCard = AshfallUiHelpers.MakeCardFrame("MAP MARKER CLASSIFICATION", "CARTOGRAPHY STATUS KEY");
+            var legBox = legendCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            var chipBar = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingLg);
+            chipBar.Alignment = BoxContainer.AlignmentMode.Center;
+            AddLegendChip(chipBar, "LOCKED", Ashfall.Core.UI.Theme.Critical);
+            AddLegendChip(chipBar, "AVAILABLE", Ashfall.Core.UI.Theme.Ozone);
+            AddLegendChip(chipBar, "DISCOVERED", Ashfall.Core.UI.Theme.Lethe);
+            AddLegendChip(chipBar, "COMPLETE", Ashfall.Core.UI.Theme.Muted);
+            legBox.AddChild(chipBar);
+
+            legBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            legBox.AddChild(MakeLegendDefinitionRow(
+                "LOCKED",
+                Ashfall.Core.UI.Theme.Critical,
+                "Restricted or inaccessible due to lethal radiation, environmental hazard, structural collapse, or hostile faction blockade. Requires special clearance, protective equipment, or narrative unlock to enter."));
+
+            legBox.AddChild(MakeLegendDefinitionRow(
+                "AVAILABLE",
+                Ashfall.Core.UI.Theme.Ozone,
+                "Unexplored sector connected to charted territory via open transit routes. Reachable for immediate reconnaissance scouting, expedition sorties, and route mapping."));
+
+            legBox.AddChild(MakeLegendDefinitionRow(
+                "DISCOVERED",
+                Ashfall.Core.UI.Theme.Lethe,
+                "Fully charted and surveyed location with cataloged atmospheric conditions, verified radiation rates, and active points of interest for resource gathering sorties."));
+
+            legBox.AddChild(MakeLegendDefinitionRow(
+                "COMPLETE",
+                Ashfall.Core.UI.Theme.Muted,
+                "Location objectives fully cleared, primary narrative encounters resolved, or major high-value salvage caches scavenged [✓]."));
+
+            _legendContainer.AddChild(legendCard);
+
+            // ── 3. Known Locations ──
             var locList = new List<(string id, string name, string region, float danger, float rads, string desc)>();
 
             if (_core?.Catalog?.Locations != null && _core.Catalog.Locations.Count > 0)
@@ -134,7 +192,33 @@ namespace AtomicWar.GodotApp.UI
 
             foreach (var item in locList)
             {
-                var card = AshfallUiHelpers.MakeCardFrame(item.name, $"DANGER {item.danger:F0}/5 · RAD +{item.rads:F1} mSv/h");
+                string statusBadge = "DISCOVERED";
+                if (_world?.WastelandMap != null)
+                {
+                    var status = _world.WastelandMap.ResolveNodeStatus(item.id);
+                    switch (status)
+                    {
+                        case Ashfall.Core.World.MapNodeStatusKind.Locked:
+                            statusBadge = "LOCKED";
+                            break;
+                        case Ashfall.Core.World.MapNodeStatusKind.Available:
+                            statusBadge = "AVAILABLE";
+                            break;
+                        case Ashfall.Core.World.MapNodeStatusKind.Completed:
+                            statusBadge = "CLEARED ✓";
+                            break;
+                        case Ashfall.Core.World.MapNodeStatusKind.Discovered:
+                        default:
+                            statusBadge = "DISCOVERED";
+                            break;
+                    }
+                }
+                else if (item.danger >= 4f)
+                {
+                    statusBadge = "HIGH HAZARD";
+                }
+
+                var card = AshfallUiHelpers.MakeCardFrame(item.name, $"[{statusBadge}] · DANGER {item.danger:F0}/5 · RAD +{item.rads:F1} mSv/h");
                 var cardBox = card.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
                 var descLabel = AshfallUiHelpers.MakeSmall(item.desc);
@@ -154,7 +238,7 @@ namespace AtomicWar.GodotApp.UI
                 _locationsContainer.AddChild(card);
             }
 
-            // ── 3. Routes & Expeditions ──
+            // ── 4. Routes & Expeditions ──
             var routesCard = AshfallUiHelpers.MakeCardFrame("DISCOVERED TRANSIT CORRIDORS", "TACTICAL PATHS");
             var routesBox = routesCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
@@ -279,6 +363,15 @@ namespace AtomicWar.GodotApp.UI
 
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
+            // Marker Status Legend Section
+            var legendTitle = AshfallUiHelpers.MakeSectionHeader("MAP MARKER STATUS LEGEND");
+            rootBox.AddChild(legendTitle);
+
+            _legendContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_legendContainer);
+
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
             // Known Locations Section
             var locTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN SECTOR LOCATIONS & WAYPOINTS");
             rootBox.AddChild(locTitle);
@@ -316,6 +409,49 @@ namespace AtomicWar.GodotApp.UI
             rootBox.AddChild(hint);
         }
 
+        private static void AddLegendChip(HBoxContainer host, string label, (float r, float g, float b, float a) token)
+        {
+            var chip = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingXs);
+            var dot = new ColorRect
+            {
+                Color = AshfallUiHelpers.ToColor(token),
+                CustomMinimumSize = new Vector2(8, 8),
+                SizeFlagsVertical = SizeFlags.ShrinkCenter
+            };
+            chip.AddChild(dot);
+            var lbl = AshfallUiHelpers.MakeSmall(label);
+            lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(token));
+            chip.AddChild(lbl);
+            host.AddChild(chip);
+        }
+
+        private static Control MakeLegendDefinitionRow(string stateName, (float r, float g, float b, float a) token, string explanation)
+        {
+            var rowBox = AshfallUiHelpers.MakeVBox(2);
+
+            var titleRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingXs);
+            var indicator = new ColorRect
+            {
+                Color = AshfallUiHelpers.ToColor(token),
+                CustomMinimumSize = new Vector2(10, 10),
+                SizeFlagsVertical = SizeFlags.ShrinkCenter
+            };
+            titleRow.AddChild(indicator);
+
+            var badge = AshfallUiHelpers.MakeLabel($"[{stateName}]", Ashfall.Core.UI.Theme.FontSizeSmall, token);
+            var font = AshfallUiHelpers.FontBarlowSemiBold;
+            if (font != null) badge.AddThemeFontOverride("font", font);
+            titleRow.AddChild(badge);
+
+            rowBox.AddChild(titleRow);
+
+            var descLabel = AshfallUiHelpers.MakeSmall(explanation, autowrap: true);
+            descLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            rowBox.AddChild(descLabel);
+
+            return rowBox;
+        }
+
         public void Open()
         {
             Visible = true;
@@ -334,9 +470,10 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_expeditions != null)
+
+    public void Unbind()
+    {
+        if (_expeditions != null)
                 _expeditions.StateChanged -= RefreshView;
             if (_world != null)
                 _world.StateChanged -= RefreshView;
@@ -344,6 +481,11 @@ namespace AtomicWar.GodotApp.UI
                 _deepCoast.StateChanged -= RefreshView;
             if (_yearOfAsh?.Warlord != null)
                 _yearOfAsh.Warlord.OnStateChanged -= RefreshView;
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

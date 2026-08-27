@@ -1,102 +1,118 @@
 #!/usr/bin/env bash
-# triad-drift-gate.sh — ensure every SaveXxx has a SetupXxx and AllSaveSections entry
-# Fails if a Setup/Save pair is missing or AllSaveSections is out of sync.
-# See AGENTS.md H7 triad drift risk: Setup without Save silently drops state.
+# =============================================================================
+# triad-drift-gate.sh — Declarative Save-Section Triad Gate
+# =============================================================================
+# Validates that every save section defined in the declarative authority
+# (Assets/Ashfall.Core/Save/SaveSectionRegistry.cs) has matching SaveXxx and
+# SetupXxx methods in src/Main.*.cs, and that no unregistered Save methods exist.
+#
+# Prevents AGENTS.md Invariant / H7 triad drift (Setup without Save or Save
+# without registered section).
+#
+# Documentation: docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md
+# =============================================================================
+
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-cd "$ROOT"
 
-# Extract Setup* and Save* method names (private void SetupXxx() / SaveXxx())
-SETUPS=$(grep -rhoE "private void Setup[A-Za-z0-9_]*\(" src/Main*.cs | sed -E 's/.*Setup([A-Za-z0-9_]+)\(.*/\1/' | sort -u)
-SAVES=$(grep -rhoE "private void Save[A-Za-z0-9_]*\(" src/Main*.cs | grep -v "SaveAll" | sed -E 's/.*Save([A-Za-z0-9_]+)\(.*/\1/' | sort -u)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+cd "${REPO_ROOT}"
 
-# Extract AllSaveSections entries (strings in array)
-SECTIONS=$(grep -oE '"[a-z0-9_]+"' src/Main.SaveOrchestrator.cs | tr -d '"' | grep -v "user:" | sort -u)
+echo "── Declarative Triad Drift Gate ──"
 
-# Helper: PascalCase to snake_case
-to_snake() {
-  echo "$1" | sed -E 's/([a-z0-9])([A-Z])/\1_\2/g' | tr '[:upper:]' '[:lower:]'
-}
+python3 - <<'PY'
+import re
+import glob
+import sys
+import pathlib
 
-FAIL=0
+registry_path = pathlib.Path("Assets/Ashfall.Core/Save/SaveSectionRegistry.cs")
+if not registry_path.is_file():
+    print(f"ERROR: {registry_path} not found!", file=sys.stderr)
+    sys.exit(1)
 
-echo "── Triad Drift Gate ──"
-echo "Setups found: $(echo "$SETUPS" | wc -l), Saves found: $(echo "$SAVES" | wc -l), Sections: $(echo "$SECTIONS" | wc -l)"
-echo ""
+# 1. Parse declarative SaveSectionRegistry
+registry_content = registry_path.read_text(encoding="utf-8")
+pattern = re.compile(
+    r'new\s*\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*("[^"]+"|\bnull\b)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"(?:\s*,\s*RequiresSetup:\s*(true|false))?\s*\)'
+)
 
-# For each Save, check Setup exists and section exists
-for save in $SAVES; do
-  # Skip orchestrators already filtered, but double-check
-  if [[ "$save" == "All" || "$save" == "AllExpandedShelterSystems" ]]; then continue; fi
-  if ! echo "$SETUPS" | grep -qx "$save"; then
-    echo "[WARN] Save$save has no matching Setup$save in src/Main.*.cs" >&2
-    # not fatal — some Saves are for sub-steps, but log
-  fi
-  snake=$(to_snake "$save")
-  if ! echo "$SECTIONS" | grep -qx "$snake"; then
-    # Try common aliases: SaveSurvivors -> survivors, SaveExpeditions -> expedition, SaveCaravans -> caravan, SaveMoralChoice -> (no section, uses journal?), SaveHoldfastRuntime -> holdfast_trade
-    case "$save" in
-      Survivors) snake="survivors" ;;
-      Expeditions) snake="expedition" ;;
-      Caravans) snake="caravan" ;;
-      Holdfast) snake="holdfast" ;;
-      HoldfastRuntime) snake="holdfast_trade" ;;
-      MoralChoice) snake="host_event" ;; # MoralChoice state is saved via HostEventSaveStore/host_event, not a dedicated section
-      PhantomMemory) snake="phantom_memory" ;;
-      DoseLedger) snake="dose_ledger" ;;
-      Thirdonary) snake="thirdonary" ;;
-      CampaignDay) snake="campaign_day" ;;
-      DailyBriefing) snake="daily_briefing" ;;
-      MedicalWard) snake="medical_ward" ;;
-      WastelandMap) snake="wasteland_map" ;;
-      EncounterChoice) snake="encounter_choice" ;;
-      PowerGrid) snake="power_grid" ;;
-      StartingLevel) snake="starting_level" ;;
-      YearOfAsh) snake="year_of_ash" ;;
-      Phase0) snake="phase0" ;;
-      EventAdapter) snake="host_event" ;;
-      ExpansionQuests) snake="expansion_quest" ;;
-      ChemicalDependency) snake="chemical_dependency" ;;
-      *) ;;
-    esac
-    if ! echo "$SECTIONS" | grep -qx "$snake"; then
-      echo "[FAIL] Save$save (snake: $snake) missing from AllSaveSections in src/Main.SaveOrchestrator.cs" >&2
-      FAIL=1
-    fi
-  fi
-done
+entries = []
+for m in pattern.finditer(registry_content):
+    sec_key = m.group(1)
+    save_method = m.group(2)
+    setup_raw = m.group(3)
+    setup_method = setup_raw.strip('"') if setup_raw != "null" else None
+    owner = m.group(4)
+    desc = m.group(5)
+    req_setup_str = m.group(6)
+    requires_setup = (req_setup_str != "false") if req_setup_str else (setup_method is not None)
 
-# For each section, check Save exists
-for sec in $SECTIONS; do
-  # Convert snake to Pascal for Save check (e.g., water_treatment -> WaterTreatment)
-  pascal=$(echo "$sec" | awk -F_ '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)}1' OFS="" | tr -d ' ')
-  # Handle aliases
-  case "$sec" in
-    survivors) pascal="Survivors" ;;
-    expedition) pascal="Expeditions" ;;
-    caravan) pascal="Caravans" ;;
-    holdfast) pascal="Holdfast" ;;
-    holdfast_trade) pascal="HoldfastRuntime" ;;
-    host_event) pascal="EventAdapter" ;; # also covers MoralChoice
-    expansion_quest) pascal="ExpansionQuests" ;;
-    *) ;;
-  esac
-  if ! echo "$SAVES" | grep -qx "$pascal"; then
-    # Check alternative for host_event (could be MoralChoice or EventAdapter)
-    if [[ "$sec" == "host_event" ]]; then
-      if echo "$SAVES" | grep -qx "EventAdapter" || echo "$SAVES" | grep -qx "MoralChoice"; then
-        continue
-      fi
-    fi
-    echo "[FAIL] AllSaveSections entry \"$sec\" has no matching Save$pascal in src/Main.*.cs" >&2
-    FAIL=1
-  fi
-done
+    entries.append({
+        "key": sec_key,
+        "save": save_method,
+        "setup": setup_method,
+        "owner": owner,
+        "desc": desc,
+        "requires_setup": requires_setup
+    })
 
-if [[ $FAIL -eq 0 ]]; then
-  echo "GATE PASS: triad drift — AllSaveSections in sync with Setup/Save pairs"
-  exit 0
-else
-  echo "GATE FAIL: triad drift detected — fix Setup/Save/AllSaveSections" >&2
-  exit 1
-fi
+if not entries:
+    print("ERROR: Failed to parse any save section definitions from SaveSectionRegistry.cs", file=sys.stderr)
+    sys.exit(1)
+
+# 2. Extract methods from src/Main*.cs
+main_files = glob.glob("src/Main*.cs")
+all_main_code = "\n".join(pathlib.Path(f).read_text(encoding="utf-8") for f in main_files)
+
+found_saves = set(re.findall(r"private void (Save[A-Za-z0-9_]+)\(", all_main_code))
+found_saves.discard("SaveAll")
+found_saves.discard("SaveAllExpandedShelterSystems")
+
+found_setups = set(re.findall(r"private void (Setup[A-Za-z0-9_]+)\(", all_main_code))
+
+registered_saves = {e["save"] for e in entries}
+registered_setups = {e["setup"] for e in entries if e["setup"]}
+
+errors = []
+
+print(f"Registered Save Sections: {len(entries)}")
+print(f"Found in host: {len(found_saves)} Save methods, {len(found_setups)} Setup methods")
+print()
+
+# Check every registered section has its Save method and Setup method (if required)
+for e in entries:
+    sec_key = e["key"]
+    save_m = e["save"]
+    setup_m = e["setup"]
+    req_setup = e["requires_setup"]
+
+    if save_m not in found_saves:
+        errors.append(f"[FAIL] Registered section '{sec_key}' expects method '{save_m}()' in src/Main*.cs but it was not found.")
+
+    if req_setup:
+        if not setup_m:
+            errors.append(f"[FAIL] Registered section '{sec_key}' requires setup but has null SetupMethod.")
+        elif setup_m not in found_setups:
+            errors.append(f"[FAIL] Registered section '{sec_key}' expects setup method '{setup_m}()' in src/Main*.cs but it was not found.")
+    elif setup_m is None:
+        print(f"[OK]   Section '{sec_key}' ({save_m}) — setup exemption documented ({e['owner']}: {e['desc']})")
+
+# Check if there are any Save methods in Main*.cs not declared in the registry
+for save_m in sorted(found_saves):
+    if save_m not in registered_saves:
+        # Check special alias for MoralChoice / EventAdapter
+        if save_m == "SaveMoralChoice" and "SaveEventAdapter" in registered_saves:
+            continue
+        errors.append(f"[FAIL] Host defines '{save_m}()' in src/Main*.cs which is not declared in SaveSectionRegistry.cs.")
+
+if errors:
+    print("\nTRIAD DRIFT ERRORS DETECTED:")
+    for err in errors:
+        print(err, file=sys.stderr)
+    sys.exit(1)
+
+print("\nGATE PASS: triad drift — SaveSectionRegistry matches host Setup and Save implementations cleanly.")
+PY
+
+exit 0

@@ -168,7 +168,7 @@ Violators will be subject to immediate arrest and quarantine protocols.
 
 RATION DISTRIBUTION SCHEDULE:
 - Zone A (Downtown Core): 06:00-08:00 AM
-- Zone B (Residential Districts): 08:00-10:00 AM  
+- Zone B (Residential Districts): 08:00-10:00 AM
 - Zone C (Industrial/Commercial): 10:00 AM-12:00 PM
 - Zone D (Outlying Areas): 12:00-02:00 PM
 
@@ -179,7 +179,7 @@ SCHOOLS AND CHILDCARE FACILITIES SUSPENDED
 "Stay indoors. Stay safe. The government is working around the clock to resolve this situation."
 
 STAMP: EMERGENCY MANAGEMENT AGENCY
-SIGNATURE: ________________  
+SIGNATURE: ________________
 DATE: March 17, 2024
 
 [Handwritten in blue ink in margin: "Heard on scanner - bridges rigged. Don't trust the buses. Also, the water tastes funny today."]

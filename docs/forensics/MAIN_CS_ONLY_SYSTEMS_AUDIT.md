@@ -1,7 +1,7 @@
 # Main.cs-Only Systems Audit (P3-1)
 
-**Date:** 2026-08-23  
-**Status:** Audit complete; extraction plan documented  
+**Date:** 2026-08-23
+**Status:** Audit complete; extraction plan documented
 
 ---
 

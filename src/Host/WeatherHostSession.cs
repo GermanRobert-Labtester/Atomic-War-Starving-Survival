@@ -29,16 +29,11 @@ namespace AtomicWar.GodotApp
 
         public override void Save()
         {
+            // Weather is canonically persisted inside the world section of the
+            // campaign envelope (WorldHostSave.State is the WorldWeatherState);
+            // no standalone weather_save.json write happens here anymore.
             if (!IsDirty) return;
-            try
-            {
-                if (WeatherSaveStore.TrySave(this.System.CaptureState()))
-                    IsDirty = false;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Weather] save failed: " + e.Message);
-            }
+            IsDirty = false;
         }
 
         public void RestoreSave(WorldWeatherState? state)

@@ -144,19 +144,16 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-            if (@event is InputEventKey key && key.Pressed)
+            if (AshfallInputActions.IsConfirm(@event))
             {
-                if (key.Keycode == Key.Enter || key.Keycode == Key.Space)
-                {
-                    Acknowledge();
-                    GetViewport().SetInputAsHandled();
-                    return;
-                }
-                if (key.Keycode == Key.Tab)
-                {
-                    SkipToComplete();
-                    GetViewport().SetInputAsHandled();
-                }
+                Acknowledge();
+                GetViewport()?.SetInputAsHandled();
+                return;
+            }
+            if (AshfallInputActions.IsNextTab(@event))
+            {
+                SkipToComplete();
+                GetViewport()?.SetInputAsHandled();
             }
         }
 

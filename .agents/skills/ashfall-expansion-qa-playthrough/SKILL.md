@@ -313,18 +313,18 @@ The skill detects and reports:
    - Expansion: ON
    - Day: 47
    - Scenario: mid_game
-   
+
    Details:
    - Quest: quest_holdfast_defense
    - Missing prerequisite: flag_holdfast_outpost_accessible
    - Cause: quest_holdfast_main does not set the required flag
    - Impact: 100% of players stuck at this point
-   
+
    Reproduction:
    - Always happens on day 47
    - Requires starting with seed 42
    - Expansion must be enabled
-   
+
    Suggested Fix:
    - Add flag_holdfast_outpost_accessible in quest_holdfast_main completion
    - Ensure flag unlocks quest_holdfast_defense
@@ -338,22 +338,22 @@ The skill detects and reports:
    - Expansion ON: 65%
    - Expansion OFF: 85%
    - Delta: -20% (CRITICAL)
-   
+
    Root Cause:
    - Expansion adds new afflictions (radiation, injuries)
    - Starting resources insufficient for new afflictions
    - No early-game medical facilities in expansion zones
-   
+
    Impact:
    - Expansion makes game significantly harder
    - Players may quit due to unexpected difficulty spike
    - Expansion fails its design goals
-   
+
    Recommendation:
    - Add early-game medical supplies in starting locations
    - Reduce affliction rates in early game
    - Provide better starting gear for expansion content
-   
+
    Merge Decision: ❌ BLOCKED until regression fixed
 ```
 
@@ -364,23 +364,23 @@ The skill detects and reports:
    - Error: Checksum validation failed
    - Save file: expansion_05_save.json
    - Day: 90
-   
+
    Details:
    - Checksum mismatch: expected "a1b2c3...", got "x9y8z7..."
    - Data tampered or corrupted during save
    - Possible causes: concurrent modification, disk error, memory corruption
-   
+
    Impact:
    - Player data loss
    - Game crashes on load
    - Save system instability
-   
+
    Recommendation:
    - Investigate save system for race conditions
    - Add checksum validation in save/load
    - Implement save file backup system
    - Run ashfall-save-fuzz to test corruption scenarios
-   
+
    Merge Decision: ❌ BLOCKED until save corruption fixed
 ```
 
@@ -391,23 +391,23 @@ The skill detects and reports:
    - Expansion ON: 2.4s average
    - Expansion OFF: 0.8s average
    - Delta: +160% (WARNING)
-   
+
    Root Cause:
    - Expansion adds new systems with large save data
    - Save compression not optimized for expansion content
    - Multiple systems saving state unnecessarily
-   
+
    Impact:
    - Longer load times
    - Potential UI stutter during save
    - Player frustration
-   
+
    Recommendation:
    - Optimize save data for expansion systems
    - Implement lazy save for non-critical systems
    - Add save compression
    - Consider splitting expansion save data
-   
+
    Merge Decision: ⚠️  CONDITIONAL (after optimization)
 ```
 
@@ -417,17 +417,17 @@ The skill detects and reports:
    - Issue: Broken reference in quest_holdfast_main.json
    - Reference: locationId "loc_holdfast_missing_loc"
    - This location does not exist in any catalog
-   
+
    Impact:
    - Quest cannot be completed
    - Player stuck waiting for impossible objective
    - Narrative broken
-   
+
    Recommendation:
    - Create loc_holdfast_missing_loc
    - Update quest to use valid location
    - Run ashfall-expansion-id-lint to validate
-   
+
    Merge Decision: ⚠️  CONDITIONAL (after data fix)
 ```
 
@@ -438,24 +438,24 @@ The skill detects and reports:
    - Expansion ON: Softlock on day 62
    - Expansion OFF: No softlock
    - Reproduction: 5% of simulations
-   
+
    Details:
    - Trade stance: 0.5 (hostile)
    - Ledger debt: 8000 credits
    - Starting resources: minimal
    - Trigger: Caravan raid on day 60
-   
+
    Impact:
    - Rare but catastrophic failure
    - Players lose all progress
    - Game becomes unplayable
-   
+
    Recommendation:
    - Add warning before dangerous caravans
    - Provide escape route
    - Reduce raid frequency at high debt
    - Add debt management tutorial
-   
+
    Merge Decision: ⚠️  CONDITIONAL (after edge case fix)
 ```
 

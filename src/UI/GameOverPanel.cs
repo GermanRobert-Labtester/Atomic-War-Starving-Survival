@@ -102,19 +102,15 @@ namespace AtomicWar.GodotApp
         {
             if (!Visible) return;
 
-            if (@event is InputEventKey key && key.Pressed)
+            if (AshfallInputActions.IsConfirm(@event))
             {
-                switch (key.Keycode)
-                {
-                    case Key.Enter:
-                        OnNewGame?.Invoke();
-                        GetViewport().SetInputAsHandled();
-                        break;
-                    case Key.Escape:
-                        OnReturnToMenu?.Invoke();
-                        GetViewport().SetInputAsHandled();
-                        break;
-                }
+                OnNewGame?.Invoke();
+                GetViewport()?.SetInputAsHandled();
+            }
+            else if (AshfallInputActions.IsCloseOrCancel(@event))
+            {
+                OnReturnToMenu?.Invoke();
+                GetViewport()?.SetInputAsHandled();
             }
         }
     }

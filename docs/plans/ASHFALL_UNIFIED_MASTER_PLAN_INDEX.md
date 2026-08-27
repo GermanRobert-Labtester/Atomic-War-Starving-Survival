@@ -1,10 +1,10 @@
 # ASHFALL — Unified Master Plan Index & Living Architecture Matrix
 
-**Canonical Index Path:** `docs/plans/ASHFALL_UNIFIED_MASTER_PLAN_INDEX.md`  
-**Target:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` (ASHFALL)  
-**Engine Authority:** Godot 4.7+ (.NET/C#)  
-**Simulation Authority:** `Assets/Ashfall.Core/` (netstandard2.1/net8.0, 0 engine references)  
-**Data Authority:** `Assets/StreamingAssets/Data/` (129 catalogs, 4,793 authored IDs)  
+**Canonical Index Path:** `docs/plans/ASHFALL_UNIFIED_MASTER_PLAN_INDEX.md`
+**Target:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` (ASHFALL)
+**Engine Authority:** Godot 4.7+ (.NET/C#)
+**Simulation Authority:** `Assets/Ashfall.Core/` (netstandard2.1/net8.0, 0 engine references)
+**Data Authority:** `Assets/StreamingAssets/Data/` (129 catalogs, 4,793 authored IDs)
 **Status:** ALL ACTIVE PLANS INDEXED, INITIATED, RECONCILED & RE-VERIFIED
 
 ---
@@ -15,16 +15,16 @@ The following authoritative plans govern the architecture, milestones, asset pip
 
 | Plan ID / Canonical Document | Primary Purpose | Scope & Horizon | Active Status |
 |---|---|---|---|
-| [`docs/plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md) | First-session playable vertical slice (Launch → Day 1 → Advance → Day 2 → Continue) | Milestone (WP-01 to WP-09) | **PASS / VERIFIED** (`DAY1_TO_DAY2_SELFTEST PASS`) |
-| [`docs/audit/ACTIONABLE_AUDIT_EXECUTION_PLAN.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/audit/ACTIONABLE_AUDIT_EXECUTION_PLAN.md) | Actionable remediation of the 42-section forensic audit and Top 50 Action Items | Forensic / Host Wiring (Phase A–F) | **INITIATED & ACTIVE** (Phases F0-P3, Phase B 2D shelter integrated) |
-| [`docs/audit/ASHFALL_COMPREHENSIVE_GAME_AUDIT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/audit/ASHFALL_COMPREHENSIVE_GAME_AUDIT.md) | Comprehensive 42-section game audit covering all domains, rendering, and persistence | Complete Architectural Audit | **CANONICAL REFERENCE** |
-| [`docs/plans/ASHFALL_MAJOR_WORLD_EXPANSION_AND_INTEGRATION_PLAN.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/ASHFALL_MAJOR_WORLD_EXPANSION_AND_INTEGRATION_PLAN.md) | World Consequence Spine, Living Holdfast, Faction War, Combat AI Utility, World Population | Living World Expansion Arc | **INITIATED** |
-| [`docs/plans/ASHFALL_FURTHER_NEXT_STEPS_AND_LIVING_WORLD_MILESTONE.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/ASHFALL_FURTHER_NEXT_STEPS_AND_LIVING_WORLD_MILESTONE.md) | Multi-day campaign headless runner, Campaign Director, delayed consequence loops | Campaign Simulation & Balancing | **INITIATED** |
-| [`docs/plans/ASHFALL_REALISTIC_NEXT_STEPS_REAUTHORED.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/ASHFALL_REALISTIC_NEXT_STEPS_REAUTHORED.md) | 200-step dependency-ordered roadmap derived from the 10,000-step generated horizon | Core Architecture to Alpha (NS-001–200) | **ACTIVE ROADMAP** |
-| [`docs/plans/ASHFALL_GITHUB_INVESTIGATION_50_STEP_ROADMAP.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/ASHFALL_GITHUB_INVESTIGATION_50_STEP_ROADMAP.md) | 50-step repository hardening, CI/CD migration, LFS tracking, and test gates | Repository & CI Engineering | **ACTIVE** |
-| [`docs/plans/ASHFALL_Visual_Asset_Pipeline_Plan.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/ASHFALL_Visual_Asset_Pipeline_Plan.md) | Asset production decision ladder, 2D art staging, Godot import settings, Krita/Pixelorama pipeline | Visual & Audio Production | **ACTIVE PIPELINE** |
-| [`docs/plans/GAME_CREATION_APPLICATIONS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/GAME_CREATION_APPLICATIONS.md) | Tool routing registry (Godot, .NET SDK, Krita, Pixelorama, Tiled, ImageMagick, FFmpeg) | Workstation Tool Authority | **CANONICAL ROUTING** |
-| [`docs/forensics/CANONICAL_SUBSYSTEM_REGISTRY.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/forensics/CANONICAL_SUBSYSTEM_REGISTRY.md) | 578-component deduplicated inventory across Core (314) and Godot Hosts (264) | Subsystem Inventory | **CANONICAL INVENTORY** |
+| [`docs/plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md`](ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md) | First-session playable vertical slice (Launch → Day 1 → Advance → Day 2 → Continue) | Milestone (WP-01 to WP-09) | **PASS / VERIFIED** (`DAY1_TO_DAY2_SELFTEST PASS`) |
+| [`docs/audit/ACTIONABLE_AUDIT_EXECUTION_PLAN.md`](../audit/ACTIONABLE_AUDIT_EXECUTION_PLAN.md) | Actionable remediation of the 42-section forensic audit and Top 50 Action Items | Forensic / Host Wiring (Phase A–F) | **INITIATED & ACTIVE** (Phases F0-P3, Phase B 2D shelter integrated) |
+| [`docs/audit/ASHFALL_COMPREHENSIVE_GAME_AUDIT.md`](../audit/ASHFALL_COMPREHENSIVE_GAME_AUDIT.md) | Comprehensive 42-section game audit covering all domains, rendering, and persistence | Complete Architectural Audit | **CANONICAL REFERENCE** |
+| [`docs/plans/ASHFALL_MAJOR_WORLD_EXPANSION_AND_INTEGRATION_PLAN.md`](ASHFALL_MAJOR_WORLD_EXPANSION_AND_INTEGRATION_PLAN.md) | World Consequence Spine, Living Holdfast, Faction War, Combat AI Utility, World Population | Living World Expansion Arc | **INITIATED** |
+| [`docs/plans/ASHFALL_FURTHER_NEXT_STEPS_AND_LIVING_WORLD_MILESTONE.md`](ASHFALL_FURTHER_NEXT_STEPS_AND_LIVING_WORLD_MILESTONE.md) | Multi-day campaign headless runner, Campaign Director, delayed consequence loops | Campaign Simulation & Balancing | **INITIATED** |
+| [`docs/plans/ASHFALL_REALISTIC_NEXT_STEPS_REAUTHORED.md`](ASHFALL_REALISTIC_NEXT_STEPS_REAUTHORED.md) | 200-step dependency-ordered roadmap derived from the 10,000-step generated horizon | Core Architecture to Alpha (NS-001–200) | **ACTIVE ROADMAP** |
+| [`docs/plans/ASHFALL_GITHUB_INVESTIGATION_50_STEP_ROADMAP.md`](ASHFALL_GITHUB_INVESTIGATION_50_STEP_ROADMAP.md) | 50-step repository hardening, CI/CD migration, LFS tracking, and test gates | Repository & CI Engineering | **ACTIVE** |
+| [`docs/plans/ASHFALL_Visual_Asset_Pipeline_Plan.md`](ASHFALL_Visual_Asset_Pipeline_Plan.md) | Asset production decision ladder, 2D art staging, Godot import settings, Krita/Pixelorama pipeline | Visual & Audio Production | **ACTIVE PIPELINE** |
+| [`docs/plans/GAME_CREATION_APPLICATIONS.md`](GAME_CREATION_APPLICATIONS.md) | Tool routing registry (Godot, .NET SDK, Krita, Pixelorama, Tiled, ImageMagick, FFmpeg) | Workstation Tool Authority | **CANONICAL ROUTING** |
+| [`docs/forensics/CANONICAL_SUBSYSTEM_REGISTRY.md`](../forensics/CANONICAL_SUBSYSTEM_REGISTRY.md) | 578-component deduplicated inventory across Core (314) and Godot Hosts (264) | Subsystem Inventory | **CANONICAL INVENTORY** |
 
 ---
 

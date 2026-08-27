@@ -29,7 +29,7 @@ namespace AtomicWar.GodotApp
             bool liveSources = _world != null && _inventory != null && _survivors != null;
             bool pass = shellBuilt && overlayParentedToRoot && inventoryOpened && liveSources;
             GD.Print($"[DashboardUiTest] shell={shellBuilt} rootOverlay={overlayParentedToRoot} inventory={inventoryOpened} liveSources={liveSources}");
-            GD.Print(pass ? "DASHBOARD_UITEST PASS" : "DASHBOARD_UITEST FAIL");
+            HostCli.EmitSummary("dashboard_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
@@ -163,7 +163,38 @@ namespace AtomicWar.GodotApp
 
         private void OpenPlayerPanel(string panelId)
         {
+            // Validate against the typed registry — emit a visible diagnostic for any
+            // unknown route so dead navigation targets surface immediately.
+            var descriptor = Ashfall.Core.UI.PanelRegistry.Resolve(panelId, msg =>
+            {
+                GD.PrintErr(msg);
+                if (_statusLabel != null)
+                    _statusLabel.Text = msg;
+            });
+            if (descriptor == null) return; // dead route — diagnostic already emitted above
+
+            if (_state == GameState.Menu && !descriptor.AvailableInMenu)
+            {
+                string msg = "[PanelRegistry] BLOCKED ROUTE: '" + panelId + "' is not accessible from the main menu.";
+                GD.PrintErr(msg);
+                if (_statusLabel != null)
+                    _statusLabel.Text = msg;
+                return;
+            }
+
             CloseAllOverlayPanels();
+
+            if (descriptor.OpenAction != null)
+            {
+                descriptor.Bind();
+                descriptor.Open();
+                return;
+            }
+
+            // Fallback for panels not yet migrated to registry actions.
+            // All panels should have OpenAction configured via RegisterPlayerSurfaces().
+            // If we reach here, a panel was registered but not wired — this is a bug.
+            GD.PrintErr($"[PanelRegistry] MISSING ACTIONS: '{panelId}' is registered but has no OpenAction configured. All panels must be wired in RegisterPlayerSurfaces().");
 
             switch (panelId)
             {
@@ -191,6 +222,61 @@ namespace AtomicWar.GodotApp
                     SetupPhase0();
                     _radiationDetailPanel.Bind(_doseLedger, _survivors);
                     _radiationDetailPanel.Open();
+                    break;
+                case "research":
+                    // Lazily create when the expanded-shelter setup hasn't run;
+                    // SetupExpandedShelterSystems assigns a fresh instance on
+                    // new-game/continue so the panel always rebinds to current state.
+                    _sharedResearch ??= new ResearchSystem(log: new GodotLog());
+                    _researchPanel.Bind(_sharedResearch);
+                    _researchPanel.Open();
+                    break;
+                case "weather_detail":
+                    SetupWorld();
+                    _weatherDetailPanel.Bind(_world?.Weather);
+                    _weatherDetailPanel.Open();
+                    break;
+                case "event_detail":
+                    SetupEventsHost();
+                    _eventDetailPanel.Bind(_eventsHost);
+                    _eventDetailPanel.Open();
+                    break;
+                case "economy_detail":
+                    SetupEconomy();
+                    _economyDetailPanel.Bind(_economy);
+                    _economyDetailPanel.Open();
+                    break;
+                case "radiation_history":
+                    SetupPhase0();
+                    _radiationHistoryPanel.Bind(_doseLedger);
+                    _radiationHistoryPanel.Open();
+                    break;
+                case "journal_detail":
+                    SetupJournal();
+                    _journalDetailPanel.Bind(_journal);
+                    _journalDetailPanel.Open();
+                    break;
+                case "survival_detail":
+                    SetupSurvivors();
+                    _survivalDetailPanel.Bind(_survivors);
+                    _survivalDetailPanel.Open();
+                    break;
+                case "survivor_detail":
+                    SetupSurvivors();
+                    var firstSurvivor = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? "";
+                    _survivorDetailPanel.Bind(_survivors, firstSurvivor);
+                    _survivorDetailPanel.Open();
+                    break;
+                case "inventory_detail":
+                    SetupInventory();
+                    var firstItem = _inventory?.Inventory?.FindSlot("bandage")?.Item?.id ?? "bandage";
+                    _inventoryDetailPanel.Bind(_inventory, firstItem);
+                    _inventoryDetailPanel.Open();
+                    break;
+                case "achievements":
+                    SetupSurvivors();
+                    _achievementsPanel.Bind(_survivors, _simDay);
+                    _achievementsPanel.Open();
                     break;
                 case "survivors":
                     SetupSurvivors();
@@ -262,14 +348,19 @@ namespace AtomicWar.GodotApp
                     SetupHoldfastRuntime();
                     SetupMuster();
                     SetupExpansions();
-                    _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions);
+                    SetupYearOfAsh();
+                    SetupFactionBranch();
+                    SetupMoralChoice();
+                    _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice);
                     _factionsPanel.Open();
                     break;
                 case "quests":
                     SetupHoldfastRuntime();
                     SetupExpansions();
                     SetupDutyRoster();
-                    _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay);
+                    SetupFactionBranch();
+                    SetupMoralChoice();
+                    _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice);
                     _questsPanel.Open();
                     break;
                 case "journal":
@@ -523,7 +614,7 @@ namespace AtomicWar.GodotApp
             Control[] panels =
             {
                 _settingsPanel, _inventoryOverlay, _survivorsOverlay, _craftingPanel,
-                _radioPanel, _medicalPanel, _dutyRosterPanel, _economyOverlayPanel,
+                _radioPanel, _medicalPanel, _dutyRosterPanel,
                 _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
                 _factionsPanel, _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
                 _silentFoundryPanel,
@@ -550,7 +641,7 @@ namespace AtomicWar.GodotApp
 
         public override void _UnhandledInput(InputEvent @event)
         {
-            if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+            if (@event.IsActionPressed(AshfallInputActions.UiCancel) || @event.IsActionPressed(AshfallInputActions.Close))
             {
                 if (AnyOverlayPanelOpen())
                 {

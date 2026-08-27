@@ -20,11 +20,12 @@ namespace Ashfall.Core.Radio
         public void RegisterChannel(FactionRadioChannel channel)
         {
             if (channel == null || string.IsNullOrEmpty(channel.FactionId)) return;
-            if (!_channels.ContainsKey(channel.FactionId))
+            string normId = channel.FactionId.ToLowerInvariant();
+            if (!_channels.ContainsKey(normId))
             {
-                _factionOrder.Add(channel.FactionId);
+                _factionOrder.Add(normId);
             }
-            _channels[channel.FactionId] = channel;
+            _channels[normId] = channel;
         }
 
         public void AddSilenceEvent(string silenceText)

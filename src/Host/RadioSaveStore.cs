@@ -1,109 +1,65 @@
+// ============================================================================
+// Save Store : RadioSaveStore
+// Core State : Ashfall.Core.Radio.RadioSaveState
+// Host Caller: Main.Narrative / RadioHostSession
+// Purpose    : Radio frequency tuning, intercepted broadcast history, and signal triangulation
+// ============================================================================
 using System;
-using System.IO;
-using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Radio;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Radio save persistence — thin pattern sibling of the other host stores:
-    /// user:// path, try/catch, checksummed codec serialization via the
-    /// engine-agnostic <see cref="RadioSaveCodec"/>. This is the single
-    /// canonical persisted owner of receiver state; no other store serializes it.
+    /// Radio save persistence — thin façade over the Core SaveStore&lt;T&gt;
+    /// service (via SaveStoreHub, codec flavor). Checksummed codec
+    /// serialization lives in <see cref="RadioSaveCodec"/>; path resolution,
+    /// atomic write, and error handling live in the service. This is the
+    /// single canonical persisted owner of receiver state; no other store
+    /// serializes it.
     /// </summary>
     public static class RadioSaveStore
     {
         public const string FileName = "radio_save.json";
         public const string SectionName = "radio";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(RadioSaveState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static RadioSaveState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<RadioSaveState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(RadioSaveStore),
+            (state, json) => RadioSaveCodec.Encode(state, json),
+            DecodeRadio);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(RadioSaveState state)
-    {
-        try
+        public static string SavePath => s_store.SavePath;
+
+        public static bool Exists => s_store.Exists();
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(RadioSaveState state) => s_store.CaptureBare(state);
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static RadioSaveState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(RadioSaveState state) => s_store.CaptureBare(state);
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static RadioSaveState? TryRestore(string json) => s_store.RestoreBare(json);
+
+        public static bool TrySave(RadioSaveState state, string pathOverride = null!) =>
+            s_store.TrySave(state, pathOverride);
+
+        public static RadioSaveState? TryLoad(string pathOverride = null!) =>
+            s_store.TryLoad(pathOverride);
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(RadioSaveState state) => s_store.CapturePersisted(state);
+
+        private static RadioSaveState? DecodeRadio(string raw, IJsonSerializer json)
         {
-            if (state == null) return string.Empty;
-            return new SystemTextJsonSerializer().Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[RadioSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
-
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static RadioSaveState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return new SystemTextJsonSerializer().Deserialize<RadioSaveState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[RadioSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
-
-
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
-
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
-
-        public static bool Exists => s_files.FileExists(SavePath);
-
-        public static bool TrySave(RadioSaveState state, string pathOverride = null!)
-        {
-            try
-            {
-                if (state == null) return false;
-                string path = pathOverride ?? SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, RadioSaveCodec.Encode(state, s_json));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Radio] save failed: " + e.Message);
-                return false;
-            }
-        }
-
-        public static RadioSaveState? TryLoad(string pathOverride = null!)
-        {
-            try
-            {
-                string path = pathOverride ?? SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                if (RadioSaveCodec.TryDecode(raw, s_json, out var state))
-                    return state;
-                GD.PrintErr("[Radio] save rejected (bad checksum or version).");
-                return null;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Radio] load failed: " + e.Message);
-                return null;
-            }
+            if (RadioSaveCodec.TryDecode(raw, json, out var state))
+                return state;
+            throw new InvalidOperationException("save rejected (bad checksum or version).");
         }
     }
 }

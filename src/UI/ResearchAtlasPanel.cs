@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
-using Ashfall.Core.Journal;
-// (no Muster.Core reference)
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
@@ -11,19 +9,19 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
-/// ASHFALL — The Muster (Expansion 06) Dashboard. Tier-3 HYBRID sub-card
-/// sibling of the legacy Phase-9 modal `MusterPanel.cs`.
+/// ASHFALL — Research Atlas Dashboard. Tier-3 HYBRID sub-card
+/// sibling of the legacy Phase-9 modal `ResearchPanel.cs`.
 ///
-/// Reads the user's own `MusterSystem` (Core) through `ResearchHostSession`.
+/// Reads the user's own `ResearchSystem` (Core) through `ResearchHostSession`.
 /// Four surfaces:
 ///   1. Sector Currents    — push/pop trust momentum per faction
 ///   2. Coalition Camps    — denizens / discontents / sentinels / raiders per faction
 ///   3. Witness Dossiers   — DosId / type / weight / impact / target
-///   4. Action Bar         — Muster Vote / Schedule Muster / Recall Action
+///   4. Action Bar         — Start Research / Force Complete / Abandon Research / View Breakthrough
 ///
 /// Plus six-card status rail and right-side detail inspector.
 /// </summary>
-public partial class ResearchAtlasPanel : Control
+public partial class ResearchAtlasPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnNodeSelected;
@@ -52,6 +50,8 @@ public partial class ResearchAtlasPanel : Control
         RefreshView();
     }
 
+    private const string DefaultDisciplineIconPath = AshfallUiHelpers.FallbackIconPath;
+
     public override void _Ready()
     {
         SetAnchorsPreset(LayoutPreset.FullRect);
@@ -61,12 +61,54 @@ public partial class ResearchAtlasPanel : Control
 
         var scopes = new[]
         {
-            new AshfallSidebar.Item { Id = "all",       Label = "All Nodes",     Hint = "every faction",                  IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "unlocked",  Label = "Survival", Hint = "trust momentum",                IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "coalition", Label = "Engineering", Hint = "breakthrough items",          IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "remaining",  Label = "Science", Hint = "radio + cipher",      IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "loyalist",  Label = "Scavenging",    Hint = "expedition efficiency",          IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "deserter",  Label = "Combat",   Hint = "close-quarters + cover fire",           IconPath = "assets/ui/Icons/icon_placeholder.png" },
+            new AshfallSidebar.Item
+            {
+                Id = "all",
+                Label = "All Nodes",
+                Hint = "all disciplines",
+                Tooltip = "Display all research disciplines: survival life-support, engineering hardware, science intelligence, scavenging efficiency, and combat doctrine.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "unlocked",
+                Label = "Survival",
+                Hint = "water + cultivation + shelter",
+                Tooltip = "Filter survival life-support nodes: water purification, greenhouse hydroponics, food preservation, and shelter habitability.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "coalition",
+                Label = "Engineering",
+                Hint = "breakthrough items",
+                Tooltip = "Filter engineering & hardware nodes: radiation shielding panels, HEPA air filtration, improved gas masks, and solar power systems.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "remaining",
+                Label = "Science",
+                Hint = "radio + cipher",
+                Tooltip = "Filter science & intelligence nodes: directional radio signal processing, frequency calibration, and encrypted cipher rotors.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "loyalist",
+                Label = "Scavenging",
+                Hint = "expedition efficiency",
+                Tooltip = "Filter scavenging & logistics nodes: route mapping, salvage yield optimization, and weight-distribution methods to cut expedition fatigue.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "deserter",
+                Label = "Combat",
+                Hint = "close-quarters + cover fire",
+                Tooltip = "Filter combat doctrine nodes: close-quarters combat drills, perimeter defense tactics, and cover-fire protocols for shelter safety.",
+                IconPath = DefaultDisciplineIconPath
+            },
         };
         _sidebar = _shell.SetSidebar(scopes, "Discipline Filter", "all");
         _sidebar.OnSelected += HandleSidebar;
@@ -229,7 +271,7 @@ public partial class ResearchAtlasPanel : Control
         // ResearchSystem exposes a 15-node catalog with prerequisite gating and
         // day-progress ticks. The host session feeds the status rail with live
         // counts from the engine state envelope.
-        
+
         _statusRail.Set("total",  "5", AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("unlocked",  "5", AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("active",  "127", AshfallMetricCard.Criticality.Normal);
@@ -316,8 +358,7 @@ public partial class ResearchAtlasPanel : Control
 
     private List<AshfallDataGrid.Row> DossierRows()
     {
-        // Witness dossiers: author-level pieces of evidence pinned to subsectors
-        // and factions. Their weight influences the muster approach choice.
+        // Research dossiers: technical schematics and field research notes pinned to disciplines.
         var rows = new List<AshfallDataGrid.Row>
         {
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
@@ -378,7 +419,7 @@ public partial class ResearchAtlasPanel : Control
         if (_selectedIndex < 0)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Select a faction row to view approach, current direction, and coalition breakdown."));
+                "Select a row to view approach, current direction, and breakdown."));
             return;
         }
         var id = ResolveVisibleRow(_selectedIndex);
@@ -462,7 +503,7 @@ public partial class ResearchAtlasPanel : Control
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
             {
                 new("Start Research",        AshfallDataGrid.CellState.Normal),
-                new("Roll the desertion threshold · select faction card", AshfallDataGrid.CellState.Muted),
+                new("Begin research on the selected knowledge node.", AshfallDataGrid.CellState.Muted),
             }, Selectable = false },
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
             {
@@ -499,12 +540,18 @@ public partial class ResearchAtlasPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

@@ -18,7 +18,7 @@ namespace AtomicWar.GodotApp.UI
     /// in the ASHFALL Dashboard Shell so a sidebar + status rail carry the
     /// navigation and headline metrics that the Stitch reference requires.
     /// </summary>
-    public partial class ShelterPanel : Control
+    public partial class ShelterPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -309,7 +309,7 @@ namespace AtomicWar.GodotApp.UI
             }
             catch (Exception ex_CATDIAG)
             {
-                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                CatalogDiagnostics.Warn("<scroll>", "ScrollToChild", ex_CATDIAG);
                 // best-effort
             }
         }
@@ -395,9 +395,10 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_survivorsHost != null)
+
+    public void Unbind()
+    {
+        if (_survivorsHost != null)
             {
                 _survivorsHost.StateChanged -= RefreshView;
             }
@@ -405,6 +406,11 @@ namespace AtomicWar.GodotApp.UI
             {
                 _worldHost.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

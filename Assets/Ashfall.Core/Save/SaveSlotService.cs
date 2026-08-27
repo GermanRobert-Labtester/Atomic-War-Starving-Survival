@@ -241,21 +241,28 @@ public class SaveSlotService
         if (envelope == null)
             return AggregateValidationResult.Invalid("Aggregate envelope is null.");
 
-        var errors = new List<string>();
-        var sectionErrors = new List<string>();
+            var errors = new List<string>();
+            var sectionErrors = new List<string>();
 
-        if (envelope.manifestVersion != 1)
-            errors.Add($"Unsupported manifest version: {envelope.manifestVersion}");
+            // Version ladder: V1 (filename-keyed sections) and the current
+            // version are both loadable; V1 migrates in memory via
+            // MigrateToCurrent. Anything newer than what this build knows is
+            // rejected — a future-format save must not be silently truncated.
+            if (envelope.manifestVersion != 1 &&
+                envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+                errors.Add($"Unsupported manifest version: {envelope.manifestVersion}");
 
         if (envelope.sections == null || envelope.sections.Count == 0)
             errors.Add("Aggregate envelope contains no sections.");
 
         // Validate each section independently.
-        for (int i = 0; i < envelope.sections.Count; i++)
+        if (envelope.sections != null)
         {
-            SaveSectionEnvelope section = envelope.sections[i];
-            if (string.IsNullOrWhiteSpace(section.sectionName))
-                sectionErrors.Add($"Section {i}: sectionName is empty.");
+            for (int i = 0; i < envelope.sections.Count; i++)
+            {
+                SaveSectionEnvelope section = envelope.sections[i];
+                if (string.IsNullOrWhiteSpace(section.sectionName))
+                    sectionErrors.Add($"Section {i}: sectionName is empty.");
 
             if (string.IsNullOrEmpty(section.payloadJson))
                 sectionErrors.Add($"Section {i} ({section.sectionName}): payloadJson is empty.");
@@ -270,6 +277,7 @@ public class SaveSlotService
             {
                 sectionErrors.Add($"Section {i} ({section.sectionName}): checksum is empty for a non-empty payload.");
             }
+        }
         }
 
         // Validate aggregate checksum.
@@ -375,43 +383,181 @@ public class SaveSlotService
     }
 
     /// <summary>
-    /// Load and validate an aggregate envelope. Returns null if the slot does
-    /// not exist or the envelope fails validation.
+    /// Load and validate an aggregate envelope, returning a detailed SaveLoadResult
+    /// with a user-facing recoverable status message on failure.
+    /// Quarantines corrupt or checksum-invalid saves.
     /// </summary>
-    public AggregateSaveEnvelope? LoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
+    public SaveLoadResult TryLoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
     {
+        if (IsIronManTerminal(profileId, slotId))
+        {
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.IronManBlocked,
+                $"Save slot '{slotId.Value}' is sealed (Iron Man terminal defeat). Manual restore blocked.");
+        }
+
         string path = GetAggregatePath(profileId, slotId);
         if (!_files.FileExists(path))
-            return null;
+        {
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.MissingFile,
+                $"Save file for slot '{slotId.Value}' was not found.");
+        }
 
+        string raw;
         try
         {
-            string raw = _files.ReadAllText(path);
-            if (string.IsNullOrWhiteSpace(raw))
-                return null;
+            raw = _files.ReadAllText(path);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: failed to read aggregate for slot '{slotId}': {ex.Message}");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save file for slot '{slotId.Value}' could not be read: {ex.Message}");
+        }
 
-            var envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
-            if (envelope == null)
-            {
-                _log.Warn($"SaveSlotService: aggregate envelope for slot '{slotId}' deserialized as null.");
-                return null;
-            }
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            QuarantineCorruptSave(profileId, slotId, path, "Empty or whitespace save file");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save data for slot '{slotId.Value}' is empty or corrupt. Live session preserved.");
+        }
+
+        AggregateSaveEnvelope? envelope;
+        try
+        {
+            envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: JSON deserialize failed for slot '{slotId}': {ex.Message}");
+            QuarantineCorruptSave(profileId, slotId, path, $"JSON parse error: {ex.Message}");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save data for slot '{slotId.Value}' is corrupted (malformed JSON). Live session preserved.",
+                new[] { ex.Message });
+        }
+
+        if (envelope == null)
+        {
+            _log.Warn($"SaveSlotService: aggregate envelope for slot '{slotId}' deserialized as null.");
+            QuarantineCorruptSave(profileId, slotId, path, "Deserialized as null");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save data for slot '{slotId.Value}' could not be parsed. Live session preserved.");
+        }
 
             var validation = ValidateAggregate(envelope);
             if (!validation.IsValid)
             {
                 QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", validation.Errors));
-                return null;
+                bool isChecksumFailure = validation.Errors.Any(e => e.IndexOf("checksum", StringComparison.OrdinalIgnoreCase) >= 0);
+                var status = isChecksumFailure ? SaveLoadStatus.ChecksumMismatch : SaveLoadStatus.CorruptData;
+                string msg = isChecksumFailure
+                    ? $"Save data for slot '{slotId.Value}' failed checksum validation (corrupted or modified). Live session preserved."
+                    : $"Save data for slot '{slotId.Value}' failed validation ({string.Join(", ", validation.Errors)}). Live session preserved.";
+                return SaveLoadResult.Fail(status, msg, validation.Errors);
             }
 
-            return envelope;
-        }
-        catch (Exception ex)
-        {
-            _log.Warn($"SaveSlotService: failed to load aggregate for slot '{slotId}': {ex.Message}");
-            return null;
-        }
+            // Older envelopes migrate to the current format in memory; the
+            // on-disk file is rewritten as current on the next save.
+            if (envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+                envelope = MigrateToCurrent(envelope);
+
+            return SaveLoadResult.Ok(envelope, $"Save slot '{slotId.Value}' loaded successfully.");
     }
+
+        /// <summary>
+        /// Load and validate an aggregate envelope. Returns null if the slot does
+        /// not exist or the envelope fails validation. V1 envelopes are migrated
+        /// to the current format in memory (the on-disk file is only rewritten
+        /// as V2 on the next save).
+        /// </summary>
+        public AggregateSaveEnvelope? LoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
+        {
+            var result = TryLoadAggregate(profileId, slotId);
+            return result.Envelope;
+        }
+
+        /// <summary>
+        /// Reserved section name used by <see cref="TryImportLegacySave"/> for
+        /// its single-blob import payload. It is not a registry section, but
+        /// V1 migration preserves it verbatim so imported slots keep loading
+        /// exactly as they did before versioning.
+        /// </summary>
+        public const string LegacyImportSectionName = "legacy";
+
+        /// <summary>
+        /// Migrate an older aggregate envelope to the current format in
+        /// memory. V1 named sections after their files (e.g.
+        /// "inventory_save"); the current format keys them by
+        /// SaveSectionRegistry SectionKey and stamps real schema versions.
+        /// Unknown/stray sections are dropped with a warning — the registry is
+        /// the whitelist — except the reserved single-file import section,
+        /// which is preserved verbatim. Payload bytes are never touched, so
+        /// per-section content survives migration verbatim. Envelopes already
+        /// at the current version are returned unchanged.
+        /// </summary>
+        public static AggregateSaveEnvelope MigrateToCurrent(AggregateSaveEnvelope envelope, ILog? log = null)
+        {
+            if (envelope == null) throw new ArgumentNullException(nameof(envelope));
+            if (envelope.manifestVersion == CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+                return envelope;
+            if (envelope.manifestVersion != 1)
+                throw new InvalidOperationException(
+                    $"No migration path from envelope manifestVersion {envelope.manifestVersion} to {CampaignEnvelopeBuilder.CurrentEnvelopeVersion}.");
+
+            var sections = new List<SaveSectionEnvelope>();
+            var dropped = new List<string>();
+            foreach (var section in envelope.sections ?? new List<SaveSectionEnvelope>())
+            {
+                bool reserved = string.Equals(section.sectionName, LegacyImportSectionName, StringComparison.Ordinal);
+                if (reserved)
+                {
+                    var kept = new SaveSectionEnvelope
+                    {
+                        sectionName = section.sectionName,
+                        schemaVersion = section.schemaVersion,
+                        payloadJson = section.payloadJson,
+                        checksum = section.checksum,
+                    };
+                    sections.Add(kept);
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(section.sectionName) ||
+                    !SaveSectionRegistry.TryGetKeyForSectionName(section.sectionName, out var key))
+                {
+                    dropped.Add(section.sectionName ?? "(null)");
+                    continue;
+                }
+
+                var migrated = new SaveSectionEnvelope
+                {
+                    sectionName = key!,
+                    schemaVersion = SaveSectionRegistry.SchemaVersionFor(key!),
+                    payloadJson = section.payloadJson,
+                };
+                migrated.checksum = ComputeSectionChecksum(migrated);
+                sections.Add(migrated);
+            }
+
+            if (dropped.Count > 0)
+                log?.Warn($"SaveSlotService: dropped {dropped.Count} unknown legacy section(s) during V1 migration: {string.Join(", ", dropped)}");
+
+            var result = new AggregateSaveEnvelope
+            {
+                manifestVersion = CampaignEnvelopeBuilder.CurrentEnvelopeVersion,
+                manifest = envelope.manifest,
+                sections = sections,
+                migratedFromLegacy = envelope.migratedFromLegacy,
+                legacySourcePath = envelope.legacySourcePath,
+            };
+            result.aggregateChecksum = ComputeAggregateChecksum(result);
+            return result;
+        }
 
     /// <summary>
     /// Delete a slot and all its files. Returns true if the slot was deleted
@@ -563,7 +709,7 @@ public class SaveSlotService
         try
         {
             string quarantinePath = path + "." + slotId.Value + QuarantineExtension;
-            File.Move(path, quarantinePath);
+            File.Move(path, quarantinePath, overwrite: true);
             _log.Warn($"SaveSlotService: quarantined corrupt save for slot '{slotId}' to '{quarantinePath}'. Reason: {reason}");
         }
         catch (Exception ex)

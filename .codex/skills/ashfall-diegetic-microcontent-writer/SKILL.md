@@ -263,7 +263,7 @@ Some authors write complete paragraphs.
 
 Others write:
 
-> Pump 3 stopped again.  
+> Pump 3 stopped again.
 > Don't restart it until Tomas checks the intake.
 
 ## FORMALITY
@@ -540,7 +540,7 @@ Avoid:
 
 Prefer specific concerns:
 
-> Day 47.  
+> Day 47.
 > Rima moved the flour again. She says the wall is damp. I think she doesn't want Pavel counting the sacks.
 
 A journal should reveal the writer's priorities.

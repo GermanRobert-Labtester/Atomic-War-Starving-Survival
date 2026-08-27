@@ -17,7 +17,7 @@ namespace AtomicWar.GodotApp.UI
     /// row, and the brief explicitly cautions against converting every
     /// focused modal into a full-screen dashboard.
     /// </summary>
-    public partial class SurvivorsPanel : Control
+    public partial class SurvivorsPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -35,14 +35,25 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(SurvivorsHostSession survivors)
         {
+            Unbind();
             _survivorsHost = survivors;
             if (_survivorsHost != null)
             {
-                _survivorsHost.StateChanged -= RefreshView;
                 _survivorsHost.StateChanged += RefreshView;
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_survivorsHost != null)
+            {
+                _survivorsHost.StateChanged -= RefreshView;
+                _survivorsHost = null;
+            }
+        }
+
+
 
         public void RefreshView()
         {
@@ -313,10 +324,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_survivorsHost != null)
-            {
-                _survivorsHost.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

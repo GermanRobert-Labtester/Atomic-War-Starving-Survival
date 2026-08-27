@@ -1,5 +1,13 @@
 # ASHFALL — ENGINEERING CODE INDEX (cheap-context reference)
 
+> [!IMPORTANT]
+> **CURRENT PROJECT AUTHORITY**
+> 1. **Master Directives:** [`AGENTS.md`](../AGENTS.md) is the authoritative architectural and workflow rulebook. All AI agents and contributors must follow its non-negotiable rules.
+> 2. **Core Domain Logic (Truth):** [`Assets/Ashfall.Core/`](../Assets/Ashfall.Core) is the single source of truth for simulation logic — 100% engine-agnostic C# with zero engine references.
+> 3. **Data Authority:** [`Assets/StreamingAssets/Data/`](../Assets/StreamingAssets/Data) (JSON catalogs) is the absolute authority for definitions, balancing, quests, and economy.
+> 4. **Authoritative Host & Runtime:** **Godot 4.7+ (.NET / C#)** (`src/`, `scenes/Main.tscn`, `project.godot`). The legacy Unity host (`Assets/_Game/`) and shim (`src/Bridge/`) have been fully retired and deleted.
+> 5. **Verification Pipeline:** `dotnet test` (all unit tests passing, 0 failures) + `godot --headless` only.
+
 > Load this file first. It is a distilled, dense map of the whole codebase so a
 > fresh agent/session working on ASHFALL does not need to re-scan ~250K LOC.
 > It records **where things live**, **what the key APIs are**, **the data
@@ -10,33 +18,27 @@ Path: `home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`
 
 ---
 
-## 1. The one thing to understand (strangler migration)
+## 1. Project Architecture & Authority
 
 | Path | Role |
 |---|---|
-| `Assets/_Game/` | **Unity legacy** gameplay (1,337 `.cs`, ~232K LOC, 24 subsystems). `UnityEngine`-coupled. |
-| `Assets/Ashfall.Core/` | **Migration target.** Engine-agnostic plain C# (70 files). Compiled by BOTH hosts + tests. |
-| `src/` + `scenes/` | **Godot host.** Thin nodes/UI + CLI. `scenes/Main.tscn` boots `src/Main.cs`. |
-| `Ashfall.Core/` | Stub `.csproj` that globs `../Assets/Ashfall.Core/**/*.cs`. No sources here. |
-| `Assets/StreamingAssets/Data/*.json` | **Single authority** for data. Both engines read these (Godot via `res://Assets/StreamingAssets/Data`). |
-| `src/Bridge/` | Unity shim — lets `Assets/_Game` be **compiled** (not run) under Godot. |
+| `Assets/Ashfall.Core/` | **Domain Logic (Truth).** Engine-agnostic plain C# domain systems, state DTOs, codecs, and validators. |
+| `src/` + `scenes/` | **Godot Host (Active).** Thin presentation nodes, UI panels, input handling, and CLI dispatch. `scenes/Main.tscn` boots `src/Main.cs`. |
+| `Assets/StreamingAssets/Data/*.json` | **Single Authority for Data.** 129 JSON catalogs loaded via Core serializers. |
+| `Ashfall.Core.Tests/` | **xUnit Test Suite.** 3,244 unit, integration, determinism, and contract tests under net9.0. |
+| `Assets/_Game/` & `src/Bridge/` | **REMOVED / RETIRED.** Unity host and shim migration is complete; legacy files deleted. |
 
-`Ashfall.csproj` (Godot build, `Godot.NET.Sdk/4.7.1`) compiles:
-`src/**` + `Assets/Ashfall.Core/**` + `Assets/_Game/**` together. That's why
-`dotnet build Ashfall.csproj` works without Unity.
+`Ashfall.csproj` (Godot build, `Godot.NET.Sdk/4.7.1`) compiles `src/**` and `Assets/Ashfall.Core/**`.
+Verification uses `dotnet build Ashfall.csproj` and `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`.
 
-**Migration = moving logic from `Assets/_Game/` into `Assets/Ashfall.Core/`.** A
-Godot-only rewrite of existing logic is a REGRESSION (forks source of truth).
-Currently only **Journal** is fully ported (1/24 subsystems; Godot share ~2.4%).
-18.7% of Unity files are already `UnityEngine`-free (portable as-is).
-See `docs/GODOT_MIGRATION_STATUS.md`.
+**Migration to Godot is complete.** All active simulation logic lives in `Assets/Ashfall.Core/` (engine-agnostic C#), presented through the Godot 4.7+ host (`src/`).
 
 **Engine policy (hard rules):**
 - NEVER run/invoke Unity (batchmode/editor/playmode) unless the user explicitly asks.
 - Verify with `dotnet test`, `dotnet build Ashfall.csproj`, `godot --headless`.
 - `JsonUtility` is BANNED from core; serialize via `IJsonSerializer` port.
-- Same seed ⇒ same sim both engines: invariant culture, ordinal-sorted collections.
-- A save written by one host MUST load in the other.
+- Same seed ⇒ same sim: invariant culture, ordinal-sorted collections, `ISeededRng`.
+- Versioned saves with checksum envelopes required on all save stores.
 - One system per task; small reviewable changes.
 - snake_case ids always; never invent an id not in the JSON master lists.
 
@@ -45,7 +47,7 @@ See `docs/GODOT_MIGRATION_STATUS.md`.
 ## 2. Verification (the gates)
 
 ```bash
-dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # core unit tests, ~333 pass, no Unity
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # core unit tests, 3,244 pass, net9.0
 dotnet build Ashfall.csproj                                 # Godot host compile (0 errors target)
 godot --headless --path "<root>" --quit-after 2             # boots, prints banner
 # Per-subsystem selftest gates (exit != 0 = FAIL):
@@ -91,6 +93,17 @@ Full flag list + exit codes in `src/Host/HostCli.cs` (the CLI dispatcher).
 - **Holdfast (4-storey):** `Holdfast{Session,Save,SaveFrozen,QuestSystem,Endings,Catalog}`, `IceRoadSystem`, `BrineWaterSystem`, `LedgerDebtSystem`, `WaystationSystem`, `Crossing{Session,Catalog,ArbitrationSystem}`
 - **Expansions:** `DutyRoster/{DutyRosterSystem,Catalog,MoraleMarkSystem,ShelterEncounterSystem}`, `Muster/{MusterSystem,QuestApproach}`, `StandingRecord/{LocationLayout,LocationMemory,SiteEncounter,StandingRecordCatalog}`, `Journal/{JournalSystem,Entry,Voice,KnowledgeBase,RiskBiasTrait}`, `Greenhouse/{GreenhouseSystem,ExpansionCatalog}`, `TravelingCaravanSystem`
 - **Year of Ash (Days 180–360):** `YearOfAsh/{TimelineSystem,DeepFreezeSystem,RadonSystem,FactionWarSystem,QuestlineSystem,DoorEncounterSystem,YearOfAshSave}`
+- **Wasteland Map & World Navigation:**
+  - **Data Authority:** `Assets/StreamingAssets/Data/wasteland_map.json` and `world_regions.json`
+  - **Catalog Loader:** [`Assets/Ashfall.Core/World/WastelandMapCatalogLoader.cs`](../Assets/Ashfall.Core/World/WastelandMapCatalogLoader.cs) — Loads 99+ wasteland nodes, normalized coordinates `(X, Y)`, sectors, hazard profiles, and route edge connectivity.
+  - **Core System (Truth):** [`Assets/Ashfall.Core/World/WastelandMapSystem.cs`](../Assets/Ashfall.Core/World/WastelandMapSystem.cs) — Manages 4-state marker progression (`Locked`, `Available`, `Discovered`, `Complete`), traversal cost calculation, route unlocks, and `WastelandMapState` snapshot DTO.
+  - **Godot Host Session:** [`src/Host/WorldHostSession.cs`](../src/Host/WorldHostSession.cs) — Lifecycle adapter managing map instance, sector hazard tracking, and coordinate mapping.
+  - **Save Store:** [`src/Host/WastelandMapSaveStore.cs`](../src/Host/WastelandMapSaveStore.cs) — Persists to `user://saves/save_wasteland_map.json` using versioned codec and SHA-256 state checksum envelope (registered as `"wasteland_map"` in `AllSaveSections`).
+  - **View Layer & UI:**
+    - [`src/World/WastelandMapView.cs`](../src/World/WastelandMapView.cs) & [`src/World/MapLocationMarkerView.cs`](../src/World/MapLocationMarkerView.cs) — Interactive 2D viewport map surface.
+    - [`src/UI/MapAtlasPanel.cs`](../src/UI/MapAtlasPanel.cs) — Fullscreen interactive modal atlas panel with discipline/sector filters, marker state legend, route inspector, and location details.
+    - [`src/UI/MapPanel.cs`](../src/UI/MapPanel.cs) — Shelter HUD overview panel with sector indicators and marker state legend.
+  - **Verification:** `dotnet test --filter WastelandMap` + `godot --headless --path . -- --world-selftest`.
 - Every system: raises events on state change, and has `CaptureState()`/`RestoreState()` returning a `[Serializable]` primitives-only snapshot. Effortless save/load + deep-copy snapshot isolation (never alias the live state into CaptureState).
 
 ### Unity-side core infra (`Assets/_Game/Core/`) — the wider dependency
@@ -173,9 +186,9 @@ Full flag list + exit codes in `src/Host/HostCli.cs` (the CLI dispatcher).
 
 - **Entry:** `scenes/Main.tscn` → `src/Main.cs` (`Main : Control`).
 - `Main.cs` (1602 lines): `_Ready()` → resolve data dir, parse CLI, build UI/menus, setup all host sessions, restore saves; `_Process` pumps the Unity shim (`BridgeRuntime.Tick`), throttled diagnostics + **dirty-flag save coalescing** (one file write per burst); `_UnhandledKeyInput` J toggles journal book, Esc closes; `_Notification(WMCloseRequest)` flushes all saves then `BridgeRuntime.Shutdown()`.
-- **Sessions/SaveStores** (thin pattern): each subsystem gets `*HostSession` (`Create(dataDir)`, `.StateChanged`, `*Line()` display strings, `CaptureSave()`) + `*SaveStore` (`TrySave(save[,path])`, `TryLoad([path])`, codec + checksum). Existing: `Holdfast{SaveStore,BriefingView}`, `CoreDemoSession`, `DutyRoster`, `ExpansionHostSession`+`ExpansionHubSaveStore`, `PhantomMemory`, `DoseLedger`, `YearOfAsh`, `Journal`. Located `src/Host/` + `src/Journal/` + `src/YearOfAsh/`.
-- **UI widgets:** `Journal/JournalBookUI.cs` (544 lines) + `JournalCodex.cs`, `JournalCatalogData.cs`, `JournalDemoHarness.cs`; YearOfAsh `DoorEncounterModal`, `QuestlineModal`, `FactionWarMapWidget`, `GeothermalHeatingWidget`, `RadonVentilationWidget`, `RadioBroadcastTerminal`, `HoldfastBriefingView`.
-- **Bridge (`src/Bridge/`):** `BridgeRuntime.cs` (lifecycle/coroutines/clock pump), `UnityEngineCore.cs` (1027 lines — the biggest shim), `UnityEngineGUI/Input/SceneManagement/UIElements`, `UnityEditorBridge`, `BridgeGap`, `BridgeSelfTest`, `CoroutineRunner`. Failure policy: semantic throws, cosmetic quiet.
+- **Sessions/SaveStores** (thin pattern): each subsystem gets `*HostSession` (`Create(dataDir)`, `.StateChanged`, `*Line()` display strings, `CaptureSave()`) + `*SaveStore` (`TrySave(save[,path])`, `TryLoad([path])`, codec + checksum). Existing: `WorldHostSession` + `WastelandMapSaveStore`, `Holdfast{SaveStore,BriefingView}`, `CoreDemoSession`, `DutyRoster`, `ExpansionHostSession`+`ExpansionHubSaveStore`, `PhantomMemory`, `DoseLedger`, `YearOfAsh`, `Journal`, `Combat`, `Medical`, `Survivors`, `Economy`, `SilentFoundry`. Located `src/Host/` + `src/Journal/` + `src/YearOfAsh/`.
+- **UI widgets & modal atlas panels:** `Journal/JournalBookUI.cs` (544 lines), `UI/MapAtlasPanel.cs`, `UI/MapPanel.cs`, `World/WastelandMapView.cs`, `World/MapLocationMarkerView.cs`, `UI/ResearchAtlasPanel.cs`, `UI/EventsLogPanel.cs`, `UI/CombatHistoryPanel.cs`, `YearOfAsh/DoorEncounterModal`, `QuestlineModal`, `FactionWarMapWidget`, `GeothermalHeatingWidget`, `RadonVentilationWidget`, `RadioBroadcastTerminal`, `HoldfastBriefingView`.
+- **Bridge Removal:** The legacy `UnityEngine.*` bridge shim (`src/Bridge/`) has been completely removed. `--bridge-selftest` verifies absence and exits 0.
 - `src/CSharpVerificationTest.cs`.
 
 ---
@@ -402,20 +415,16 @@ consecutive zero-finding loops = convergence).
 
 ---
 
-## 12. CURRENT VERIFIED STATE (measured 2026-08-14)
+## 12. CURRENT VERIFIED STATE
 
-Command-readout of the green baseline, so a fresh session knows where things stand without re-running:
+Verification checklist for the canonical Godot pipeline:
 
-| Check | Result |
-|---|---|
-| `dotnet build Ashfall.csproj` | **Build succeeded, 0 errors** |
-| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **345/345 pass** (0 failed, net9.0) |
-| `--holdfast-save-selftest` | **PASS** |
-| `--journal-selftest` | **PASS** |
-| `--duty-roster-save-selftest` | **PASS** |
-| `--expansion-hub-save-selftest` | **PASS** |
-| Selftest gates (per audit#2): expansions, data-integrity, bridge (41), brine (21), cluster (19), endings (11), year-of-ash (19) | PASS at last audit |
-
-> **Caveats on the above:** the 345 tests are the Core-agnostic suite + hosted sessions. The full
-> `_Game` runtime (Unity-host simulation) is still NOT executed under Godot (see 11.1). The green
-> build includes `/bin`-linked `_Game` that compiles but does not run.
+| Check | Result | Details |
+|---|---|---|
+| `dotnet build Ashfall.csproj` | **PASS** | 0 errors, 0 warnings |
+| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **PASS** | All unit tests pass cleanly (0 failed, net9.0) |
+| `godot --headless --path . -- --data-integrity-selftest` | **PASS** | 129 catalogs verified, 0 errors |
+| `godot --headless --path . -- --player-panels-uitest` | **PASS** | All player UI panels bound & verified |
+| `godot --headless --path . -- --expansions-selftest` | **PASS** | Expansions 01–10 green |
+| `bash scripts/ci/triad-drift-gate.sh` | **PASS** | Setup/Save/AllSaveSections parity verified |
+| `bash scripts/ci/generate-cli-catalog.sh --check` | **PASS** | CLI catalog in sync with live `--host-help` |

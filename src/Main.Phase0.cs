@@ -76,7 +76,7 @@ namespace AtomicWar.GodotApp
         private void SavePhantomMemory()
         {
             if (_phantomMemory == null) return;
-            if (PhantomMemorySaveStore.TrySave(_phantomMemory.CaptureSave()))
+            if (CaptureSection("phantom_memory", PhantomMemorySaveStore.TryCapturePersisted(_phantomMemory.CaptureSave())))
                 GD.Print("[Ashfall Godot] Phantom Memory save written.");
         }
 
@@ -93,84 +93,80 @@ namespace AtomicWar.GodotApp
             SetupExpeditions();
             SetupMedical();
 
-            _phase0.Consumers.ApplyMoraleDelta = (sv, delta) =>
-            {
-                var survivor = _survivors.Find(sv);
-                if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Morale, delta);
-            };
-            _phase0.Consumers.ApplyHealthDelta = (sv, delta) =>
-            {
-                var survivor = _survivors.Find(sv);
-                if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Health, delta);
-            };
-            _phase0.Consumers.ApplyFatigueDelta = (sv, delta) =>
-            {
-                var survivor = _survivors.Find(sv);
-                if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Fatigue, delta);
-            };
-            // Work efficiency + chemical crafting penalty compose into the real
-            // CraftingSystem craft-time multiplier.
-            _phase0.Consumers.ApplyWorkEfficiencyMultiplier = (sv, mult) =>
-            {
-                if (_crafting == null) return;
-                _crafting.Engine.SetCrafterCraftTimeMultiplier(id =>
-                    id == sv ? MathfCompat.Max(0.1f, 1f / MathfCompat.Max(0.1f, mult)) : 1f);
-            };
-            _phase0.Consumers.ApplyCraftingPenaltyFactor = (sv, factor) =>
-            {
-                if (_crafting == null) return;
-                _crafting.Engine.SetCrafterCraftTimeMultiplier(id =>
-                    id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
-            };
-            // Chemical combat penalty feeds the expedition encounter/failure risk by
-            // draining stamina faster (tremor). Also exposed via ApplyStaminaDrainMultiplier.
-            _phase0.Consumers.ApplyCombatPenaltyFactor = (sv, factor) =>
-            {
-                if (_expeditions == null) return;
-                _expeditions.Engine.SetStaminaDrainMultiplier(id =>
-                    id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
-            };
-            // Respiratory severe cough raises expedition stamina drain.
-            _phase0.Consumers.ApplyStaminaDrainMultiplier = (sv, factor) =>
-            {
-                if (_expeditions == null) return;
-                _expeditions.Engine.SetStaminaDrainMultiplier(id =>
-                    id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
-            };
-            // Shelter-wide morale deltas (final wish / moral branching) reach every
-            // alive survivor's morale via the authoritative NeedsSystem.
-            _phase0.Consumers.ApplyShelterMoraleDelta = delta =>
-            {
-                for (int i = 0; i < _survivors.RosterState.Count; i++)
+            _phase0.Consumers = new Phase0EffectConsumers(
+                applyMoraleDelta: (sv, delta) =>
                 {
-                    var s = _survivors.RosterState[i];
-                    if (s != null && s.IsAliveState)
-                        _survivors.Needs.Modify(s, NeedKind.Morale, delta);
-                }
-            };
-            _phase0.Consumers.FireNarrativeEvent = (narrativeId, sv) =>
-            {
-                int day = _holdfastRuntime?.Day ?? _simDay;
-                _journal.TryAddRawEntry(
-                    $"{narrativeId}_{sv}_{day}",
-                    $"{sv}: {narrativeId.Replace('_', ' ')}.",
-                    author: null!,
-                    day: day);
-            };
-            _phase0.Consumers.GrantChronicIllness = (sv, afflictionId) =>
-            {
-                var rad = _survivors.RadStateFor(sv);
-                if (rad != null && !rad.HasChronicIllness)
+                    var survivor = _survivors.Find(sv);
+                    if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Morale, delta);
+                },
+                applyHealthDelta: (sv, delta) =>
                 {
-                    rad.HasChronicIllness = true;
-                    SaveSurvivors();
-                }
-            };
-            _phase0.Consumers.ResetRadiationDose = sv =>
-            {
-                var rad = _survivors.RadStateFor(sv);
-                if (rad != null) _survivors.Radiation.SetDose(rad, 0f);
-            };
+                    var survivor = _survivors.Find(sv);
+                    if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Health, delta);
+                },
+                applyFatigueDelta: (sv, delta) =>
+                {
+                    var survivor = _survivors.Find(sv);
+                    if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Fatigue, delta);
+                },
+                applyShelterMoraleDelta: delta =>
+                {
+                    for (int i = 0; i < _survivors.RosterState.Count; i++)
+                    {
+                        var s = _survivors.RosterState[i];
+                        if (s != null && s.IsAliveState)
+                            _survivors.Needs.Modify(s, NeedKind.Morale, delta);
+                    }
+                },
+                applyWorkEfficiencyMultiplier: (sv, mult) =>
+                {
+                    if (_crafting == null) return;
+                    _crafting.Engine.SetCrafterCraftTimeMultiplier(id =>
+                        id == sv ? MathfCompat.Max(0.1f, 1f / MathfCompat.Max(0.1f, mult)) : 1f);
+                },
+                applyCraftingPenaltyFactor: (sv, factor) =>
+                {
+                    if (_crafting == null) return;
+                    _crafting.Engine.SetCrafterCraftTimeMultiplier(id =>
+                        id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
+                },
+                applyCombatPenaltyFactor: (sv, factor) =>
+                {
+                    if (_expeditions == null) return;
+                    _expeditions.Engine.SetStaminaDrainMultiplier(id =>
+                        id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
+                },
+                applyStaminaDrainMultiplier: (sv, factor) =>
+                {
+                    if (_expeditions == null) return;
+                    _expeditions.Engine.SetStaminaDrainMultiplier(id =>
+                        id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
+                },
+                fireNarrativeEvent: (narrativeId, sv) =>
+                {
+                    int day = _holdfastRuntime?.Day ?? _simDay;
+                    _journal.TryAddRawEntry(
+                        $"{narrativeId}_{sv}_{day}",
+                        $"{sv}: {narrativeId.Replace('_', ' ')}.",
+                        author: null!,
+                        day: day);
+                },
+                grantChronicIllness: (sv, afflictionId) =>
+                {
+                    var rad = _survivors.RadStateFor(sv);
+                    if (rad != null && !rad.HasChronicIllness)
+                    {
+                        rad.HasChronicIllness = true;
+                        SaveSurvivors();
+                    }
+                },
+                resetRadiationDose: sv =>
+                {
+                    var rad = _survivors.RadStateFor(sv);
+                    if (rad != null) _survivors.Radiation.SetDose(rad, 0f);
+                },
+                applyWorkRefusalHours: null);
+            _phase0.ValidateConsumers();
 
             // Environment signals from the real world/shelter hosts.
             _phase0.CurrentDay = _holdfastRuntime?.Day ?? _simDay;
@@ -192,6 +188,11 @@ namespace AtomicWar.GodotApp
             }
             _phase0.RegisterSurvivors(ids);
 
+            if (_shelterAssignment != null)
+            {
+                _phase0.BindShelterAssignment(_shelterAssignment.System);
+            }
+
             var save = Phase0SaveStore.TryLoad();
             if (save != null)
             {
@@ -204,7 +205,7 @@ namespace AtomicWar.GodotApp
         private void SavePhase0()
         {
             if (_phase0 == null) return;
-            if (Phase0SaveStore.TrySave(_phase0.CaptureSave()))
+            if (CaptureSection("phase0", Phase0SaveStore.TryCapturePersisted(_phase0.CaptureSave())))
             {
                 _phase0Dirty = false;
                 GD.Print("[Ashfall Godot] Phase-0 effects save written.");
@@ -321,7 +322,7 @@ namespace AtomicWar.GodotApp
         {
             if (_doseLedger == null) return;
             int day = _core != null ? _core.Clock.Day : _simDay;
-            if (DoseLedgerSaveStore.TrySave(_doseLedger.CaptureSave(day)))
+            if (CaptureSection("dose_ledger", DoseLedgerSaveStore.TryCapturePersisted(_doseLedger.CaptureSave(day))))
             {
                 _doseLedgerDirty = false;
                 GD.Print($"[Ashfall Godot] Dose Ledger save written (day {day}).");

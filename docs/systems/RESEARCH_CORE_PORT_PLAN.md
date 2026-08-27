@@ -1,315 +1,87 @@
-# Research Core Port Plan
+# ASHFALL — Research Core Port Plan & Completion Report
 
-**Target:** Build the Research / R&D / Breakthrough engine from scratch. No
-existing Core engine, no data sidecars, no host adapter — the Phase 9
-modal uses hardcoded placeholder strings only.
-
-**Pattern:** Mirror Phase-18 Skill Progression + Phase-27 Standing Record.
-Engine-agnostic, no `UnityEngine.*` / `Godot.*` / `JsonUtility`, pure C#
-with `IFileIO` / `IJsonSerializer` / `ISeededRng`.
+**Status:** **CLOSED — SHIPPED & VERIFIED AT PHASE 28**
+**Core Domain:** `Assets/Ashfall.Core/Research/`
+**Host & UI:** `src/Host/ResearchHostSession.cs`, `src/UI/ResearchAtlasPanel.cs`
+**Verification:** `Ashfall.Core.Tests/ResearchSystemTests.cs` (8/8 PASS), Snapshot `research_atlas_default` (PASS)
 
 ---
 
-## Why this port now
+## 1. Architectural Overview & Context
 
-- `SURFACE_GAP_REPORT.md` (Phase 26 close) flagged `ResearchPanel` as
-  `MISSING (awaiting Core)` — the last remaining MISSING surface.
-- `Assets/Ashfall.Core/Journal/KnowledgeBase.cs` exists as a read-only
-  knowledge tracker (14 canonical discovery keys), but does not power
-  Research / R&D / Breakthrough trees.
-- No `research*.json` sidecars exist in `StreamingAssets/Data/`.
-- No host adapter exists.
+Historically, `SURFACE_GAP_REPORT.md` flagged `ResearchPanel` as `MISSING (awaiting Core)`. While `KnowledgeBase.cs` existed for 14 discovery lore keys, the simulation lacked an engine-agnostic R&D, breakthrough, and prerequisite-progression system.
 
----
-
-## Four-phase plan
-
-### Phase 1 — Definitions + State + Engine (Core)
-
-`Assets/Ashfall.Core/Research/ResearchKnowledgeDef.cs` — individual
-knowledge node. Engine-agnostic POCO.
-
-```csharp
-public sealed class ResearchKnowledgeDef
-{
-    public string id;           // snake_case knowledge id
-    public string displayName;  // player-facing label
-    public string category;     // discipline category
-    public string description;  // one-sentence flavour
-    public string[] prerequisites; // knowledge ids that must be unlocked first
-    public string breakthroughItem; // item_id awarded on completion
-    public int daysToComplete;  // days needed in research queue
-}
-```
-
-`Assets/Ashfall.Core/Research/ResearchState.cs` — unified state envelope.
-
-```csharp
-[Serializable]
-public sealed class ResearchState
-{
-    public string systemId = ResearchSystem.SystemId;
-    public bool expansionUnlocked;
-    public int currentDay;
-    public List<string> unlockedIds = new();
-    public string activeResearchId; // currently researching node (empty = idle)
-    public int activeResearchDays;  // days spent on current node so far
-    public List<string> completedIds = new();
-}
-```
-
-`Assets/Ashfall.Core/Research/ResearchSystem.cs` — engine. Inline
-default catalog (~15 nodes).
-
-```csharp
-public sealed class ResearchSystem
-{
-    public const string SystemId = "research_system";
-
-    public ResearchState State { get; private set; }
-
-    private readonly Dictionary<string, ResearchKnowledgeDef> _catalog = new();
-    private readonly ILog _log;
-
-    public ResearchSystem(ILog log = null, ResearchState state = null) { ... }
-
-    public void Register(ResearchKnowledgeDef def) { ... }
-    public void RegisterDefaults() { /* ~15 nodes inline */ }
-
-    public bool StartResearch(string id, int day) { ... }
-    public void Tick(int newDay) { /* progress active node by (newDay - currentDay) days */ }
-    public bool CompleteResearch(string id) { ... }
-
-    public ResearchState CaptureState() => State;
-    public void RestoreState(ResearchState saved) { ... }
-}
-```
-
-### Phase 2 — Default catalog (~15 nodes, inline)
-
-| id | displayName | category | days |
-|---|---|---|---|
-| knowledge_water_basics | Water Purification Basics | survival | 5 |
-| knowledge_water_advanced | Advanced Water Filtration | survival | 12 |
-| knowledge_radiation_basics | Radiation Medicine Basics | medical | 5 |
-| knowledge_radiation_shielding | Radiation Shielding Materials | engineering | 15 |
-| knowledge_gas_mask_improved | Improved Gas Masks | engineering | 10 |
-| knowledge_hydroponics | Hydroponic Cultivation | survival | 8 |
-| knowledge_solar_basics | Solar Power Basics | engineering | 7 |
-| knowledge_solar_advanced | Solar Power Systems | engineering | 14 |
-| knowledge_food_preservation | Food Preservation | survival | 10 |
-| knowledge_radio_basics | Radio Signal Processing | science | 6 |
-| knowledge_radio_advanced | Encrypted Radio Communication | science | 12 |
-| knowledge_shelter_insulation | Shelter Insulation | engineering | 8 |
-| knowledge_air_filtration | Air Filtration Systems | engineering | 10 |
-| knowledge_scavenge_efficiency | Scavenge Efficiency | scavenging | 7 |
-| knowledge_combat_training | Combat Training Doctrine | combat | 8 |
-
-### Phase 3 — Host adapter (Godot)
-
-`src/Host/ResearchHostSession.cs` — owns `ResearchSystem`, wires
-`SurvivorsHostSession.AdvanceDay`, exposes `CaptureSave()` /
-`RestoreSave()`.
-
-### Phase 4 — UI dashboard (Tier-3 HYBRID)
-
-`src/UI/ResearchAtlasPanel.cs` — Tier-3 HYBRID sub-card sibling of
-`ResearchPanel.cs`. 6-card status rail (Total nodes / Unlocked /
-Active / Completed / Days remaining / Breakthroughs) + 3 DataGrid
-tiles (Knowledge nodes / Active research / Breakthrough items) +
-right-side detail inspector. Reuses 5 primitives.
-
-Snapshot target `research_atlas_default`.
-
-### Tests
-
-`Ashfall.Core.Tests/ResearchSystemTests.cs` — 8 tests:
-1. Register → catalog size = 15
-2. StartResearch sets activeResearchId
-3. Tick progresses active node by days
-4. CompleteResearch awards breakthroughItem + marks completed
-5. StartResearch_PrerequisiteGated — rejected if prerequisite missing
-6. StartResearch_AlreadyCompleted — rejected
-7. CaptureState round-trip
-8. Determinism under same seed
+The Research Core Port was executed in Phase 28, adhering strictly to:
+- **Invariant 1**: Zero engine dependencies in `Assets/Ashfall.Core/` (`noEngineReferences: true`).
+- **Invariant 3**: Cross-host / serializer-independent save/load contracts via serializable DTOs.
+- **Invariant 4**: Deterministic state transitions.
+- **Invariant 5**: Engine logic in Core, presentation in Godot host.
 
 ---
 
-## Files
+## 2. Shipped Implementation Summary
 
-| Path | New? | Lines |
-|---|---|---|
-| `Assets/Ashfall.Core/Research/ResearchKnowledgeDef.cs` | NEW | ~30 |
-| `Assets/Ashfall.Core/Research/ResearchState.cs` | NEW | ~30 |
-| `Assets/Ashfall.Core/Research/ResearchSystem.cs` | NEW | ~180 |
-| `Ashfall.Core.Tests/ResearchSystemTests.cs` | NEW | ~180 |
-| `src/Host/ResearchHostSession.cs` | NEW | ~120 |
-| `src/UI/ResearchAtlasPanel.cs` | NEW | ~470 |
-| `docs/systems/RESEARCH_CORE_PORT_PLAN.md` | NEW | this file |
+### A. Core Domain Layer (`Assets/Ashfall.Core/Research/`)
+1. **[`ResearchKnowledgeDef.cs`](../../Assets/Ashfall.Core/Research/ResearchKnowledgeDef.cs)**:
+   - Plain C# definition POCO describing knowledge nodes (`id`, `displayName`, `category`, `description`, `prerequisites`, `breakthroughItem`, `daysToComplete`).
+2. **[`ResearchState.cs`](../../Assets/Ashfall.Core/Research/ResearchState.cs)**:
+   - Serializable state envelope capturing `currentDay`, `unlockedIds`, `activeResearchId`, `activeResearchDays`, and `completedIds`.
+3. **[`ResearchSystem.cs`](../../Assets/Ashfall.Core/Research/ResearchSystem.cs)**:
+   - Full simulation engine providing catalog management, prerequisite validation, active research queuing, daily tick progression, breakthrough item awards, and `CaptureState`/`RestoreState`.
+   - Ships 15 default canonical knowledge nodes across survival, medical, engineering, science, scavenging, and combat disciplines.
 
-Six files total — mirrors the Phase-18 Skill Progression port.
+### B. Godot Host Adapter (`src/Host/`)
+- **[`ResearchHostSession.cs`](../../src/Host/ResearchHostSession.cs)**:
+  - Wires `ResearchSystem` lifecycle to host day advancement, provides save/load hooks (`CaptureSave`/`RestoreSave`), and exposes state accessors to UI.
 
----
+### C. Presentation Layer (`src/UI/`)
+- **[`ResearchAtlasPanel.cs`](../../src/UI/ResearchAtlasPanel.cs)**:
+  - Tier-3 HYBRID dashboard with a 6-card status rail (Total Nodes, Unlocked, Active Project, Completed, Days Remaining, Breakthroughs Awarded), 3 DataGrid tiles (Knowledge Nodes, Active Project, Breakthrough Items), and a discipline-themed right inspector panel.
+  - Snapshot golden registered and verified as `research_atlas_default`.
 
-## Verification checklist
-
-```
-1. dotnet build Ashfall.Core/Ashfall.Core.csproj          # 0/0
-2. dotnet test Ashfall.Core.Tests/...csproj               # +8 tests, all PASS
-3. dotnet build Ashfall.csproj                             # Godot host: 0/0
-4. godot --path . -- --ui-snapshot-uitest                  # 29/29
-```
-
-**SHIPPED at Phase 28** — All 8 tests PASS, 2016/2016 Core tests, 29/29 snapshots green, 0 build warnings. The Research engine (`ResearchSystem`) and host adapter (`ResearchHostSession`) are live; the dashboard (`ResearchAtlasPanel`) renders the 15-node catalog with prerequisite gating and breakthrough awards. No regression introduced.
-
----
-
-## Why this port now
-
-- `SURFACE_GAP_REPORT.md` (Phase 26 close) flagged `ResearchPanel` as
-  `MISSING (awaiting Core)` — the last remaining MISSING surface.
-- `Assets/Ashfall.Core/Journal/KnowledgeBase.cs` exists as a read-only
-  knowledge tracker (14 canonical discovery keys), but does not power
-  Research / R&D / Breakthrough trees.
-- No `research*.json` sidecars exist in `StreamingAssets/Data/`.
-- No host adapter exists.
+### D. Automated Test Coverage (`Ashfall.Core.Tests/`)
+- **[`Ashfall.Core.Tests/ResearchSystemTests.cs`](../../Ashfall.Core.Tests/ResearchSystemTests.cs)**:
+  - 8/8 comprehensive unit tests verifying:
+    1. Catalog registration and default node initialization (15 nodes).
+    2. Starting active research.
+    3. Daily tick progression.
+    4. Completion and breakthrough item awards.
+    5. Prerequisite gating enforcement.
+    6. Double-completion rejection.
+    7. Full save state capture/restore round-trips.
+    8. Deterministic execution across runs.
 
 ---
 
-## Four-phase plan
+## 3. Canonical 15-Node Research Catalog
 
-### Phase 1 — Definitions + State + Engine (Core)
-
-`Assets/Ashfall.Core/Research/ResearchKnowledgeDef.cs` — individual
-knowledge node. Engine-agnostic POCO.
-
-```csharp
-public sealed class ResearchKnowledgeDef
-{
-    public string id;           // snake_case knowledge id
-    public string displayName;  // player-facing label
-    public string category;     // discipline category
-    public string description;  // one-sentence flavour
-    public string[] prerequisites; // knowledge ids that must be unlocked first
-    public string breakthroughItem; // item_id awarded on completion
-    public int daysToComplete;  // days needed in research queue
-}
-```
-
-`Assets/Ashfall.Core/Research/ResearchState.cs` — unified state envelope.
-
-```csharp
-[Serializable]
-public sealed class ResearchState
-{
-    public string systemId = ResearchSystem.SystemId;
-    public bool expansionUnlocked;
-    public int currentDay;
-    public List<string> unlockedIds = new();
-    public string activeResearchId; // currently researching node (empty = idle)
-    public int activeResearchDays;  // days spent on current node so far
-    public List<string> completedIds = new();
-}
-```
-
-`Assets/Ashfall.Core/Research/ResearchSystem.cs` — engine. Inline
-default catalog (~15 nodes).
-
-```csharp
-public sealed class ResearchSystem
-{
-    public const string SystemId = "research_system";
-
-    public ResearchState State { get; private set; }
-
-    private readonly Dictionary<string, ResearchKnowledgeDef> _catalog = new();
-    private readonly ILog _log;
-
-    public ResearchSystem(ILog log = null, ResearchState state = null) { ... }
-
-    public void Register(ResearchKnowledgeDef def) { ... }
-    public void RegisterDefaults() { /* ~15 nodes inline */ }
-
-    public bool StartResearch(string id, int day) { ... }
-    public void Tick(int newDay) { /* progress active node by (newDay - currentDay) days */ }
-    public bool CompleteResearch(string id) { ... }
-
-    public ResearchState CaptureState() => State;
-    public void RestoreState(ResearchState saved) { ... }
-}
-```
-
-### Phase 2 — Default catalog (~15 nodes, inline)
-
-| id | displayName | category | days |
-|---|---|---|---|
-| knowledge_water_basics | Water Purification Basics | survival | 5 |
-| knowledge_water_advanced | Advanced Water Filtration | survival | 12 |
-| knowledge_radiation_basics | Radiation Medicine Basics | medical | 5 |
-| knowledge_radiation_shielding | Radiation Shielding Materials | engineering | 15 |
-| knowledge_gas_mask_improved | Improved Gas Masks | engineering | 10 |
-| knowledge_hydroponics | Hydroponic Cultivation | survival | 8 |
-| knowledge_solar_basics | Solar Power Basics | engineering | 7 |
-| knowledge_solar_advanced | Solar Power Systems | engineering | 14 |
-| knowledge_food_preservation | Food Preservation | survival | 10 |
-| knowledge_radio_basics | Radio Signal Processing | science | 6 |
-| knowledge_radio_advanced | Encrypted Radio Communication | science | 12 |
-| knowledge_shelter_insulation | Shelter Insulation | engineering | 8 |
-| knowledge_air_filtration | Air Filtration Systems | engineering | 10 |
-| knowledge_scavenge_efficiency | Scavenge Efficiency | scavenging | 7 |
-| knowledge_combat_training | Combat Training Doctrine | combat | 8 |
-
-### Phase 3 — Host adapter (Godot)
-
-`src/Host/ResearchHostSession.cs` — owns `ResearchSystem`, wires
-`SurvivorsHostSession.AdvanceDay`, exposes `CaptureSave()` /
-`RestoreSave()`.
-
-### Phase 4 — UI dashboard (Tier-3 HYBRID)
-
-`src/UI/ResearchAtlasPanel.cs` — Tier-3 HYBRID sub-card sibling of
-`ResearchPanel.cs`. 6-card status rail (Total nodes / Unlocked /
-Active / Completed / Days remaining / Breakthroughs) + 3 DataGrid
-tiles (Knowledge nodes / Active research / Breakthrough items) +
-right-side detail inspector. Reuses 5 primitives.
-
-Snapshot target `research_atlas_default`.
-
-### Tests
-
-`Ashfall.Core.Tests/ResearchSystemTests.cs` — 8 tests:
-1. Register → catalog size = 15
-2. StartResearch sets activeResearchId
-3. Tick progresses active node by days
-4. CompleteResearch awards breakthroughItem + marks completed
-5. StartResearch_PrerequisiteGated — rejected if prerequisite missing
-6. StartResearch_AlreadyCompleted — rejected
-7. CaptureState round-trip
-8. Determinism under same seed
+| Knowledge ID | Display Name | Discipline | Days | Breakthrough Award | Prerequisites |
+|---|---|---|---|---|---|
+| `knowledge_water_basics` | Water Purification Basics | survival | 5 | `item_filter_charcoal` | None |
+| `knowledge_water_advanced` | Advanced Water Filtration | survival | 12 | `item_filter_ceramic` | `knowledge_water_basics` |
+| `knowledge_radiation_basics` | Radiation Medicine Basics | medical | 5 | `item_rad_scrub_gel` | None |
+| `knowledge_radiation_shielding`| Radiation Shielding Materials | engineering | 15 | `item_lead_plate_composite`| `knowledge_radiation_basics` |
+| `knowledge_gas_mask_improved` | Improved Gas Masks | engineering | 10 | `item_filter_sealed_p100` | None |
+| `knowledge_hydroponics` | Hydroponic Cultivation | survival | 8 | `item_nutrient_salts` | `knowledge_water_basics` |
+| `knowledge_solar_basics` | Solar Power Basics | engineering | 7 | `item_pv_panel_scrap` | None |
+| `knowledge_solar_advanced` | Solar Power Systems | engineering | 14 | `item_mppt_charge_controller`| `knowledge_solar_basics` |
+| `knowledge_food_preservation` | Food Preservation | survival | 10 | `item_salt_curing_pack` | None |
+| `knowledge_radio_basics` | Radio Signal Processing | science | 6 | `item_vacuum_tube_rf` | None |
+| `knowledge_radio_advanced` | Encrypted Radio Communication | science | 12 | `item_crypto_keycard` | `knowledge_radio_basics` |
+| `knowledge_shelter_insulation` | Shelter Insulation | engineering | 8 | `item_aerogel_blanket` | None |
+| `knowledge_air_filtration` | Air Filtration Systems | engineering | 10 | `item_hepa_drum` | `knowledge_gas_mask_improved` |
+| `knowledge_scavenge_efficiency`| Scavenge Efficiency | scavenging | 7 | `item_prybar_titanium` | None |
+| `knowledge_combat_training` | Combat Training Doctrine | combat | 8 | `item_tactical_sling` | None |
 
 ---
 
-## Files
+## 4. Potential Future Enhancements (Non-Blocking)
 
-| Path | New? | Lines |
-|---|---|---|
-| `Assets/Ashfall.Core/Research/ResearchKnowledgeDef.cs` | NEW | ~30 |
-| `Assets/Ashfall.Core/Research/ResearchState.cs` | NEW | ~30 |
-| `Assets/Ashfall.Core/Research/ResearchSystem.cs` | NEW | ~180 |
-| `Ashfall.Core.Tests/ResearchSystemTests.cs` | NEW | ~180 |
-| `src/Host/ResearchHostSession.cs` | NEW | ~120 |
-| `src/UI/ResearchAtlasPanel.cs` | NEW | ~400 |
-| `docs/systems/RESEARCH_CORE_PORT_PLAN.md` | NEW | this file |
+The Core port and UI dashboard are complete and shippable. The following optional items are recorded for post-release content expansion:
 
-Six files total — mirrors the Phase-18 Skill Progression port.
-
----
-
-## Verification checklist
-
-```
-1. dotnet build Ashfall.Core/Ashfall.Core.csproj          # 0/0
-2. dotnet test Ashfall.Core.Tests/...csproj               # +8 tests, all PASS
-3. dotnet build Ashfall.csproj                             # Godot host: 0/0
-4. godot --path . -- --ui-snapshot-uitest                  # 29/29
-```
+1. **External JSON Catalog Sidecar**:
+   - Optional future migration of the 15 inline definitions to `Assets/StreamingAssets/Data/research_knowledge.json` if non-programmer content modding of tech trees is requested.
+2. **Interactive UI Queue Actions**:
+   - Expanding `ResearchAtlasPanel.cs` to allow interactive click-to-start / cancel research directly from the inspection card during live play.
+3. **Survivor Assignment Multiplier**:
+   - Linking researcher survivor skills (`skill_science`, `skill_engineering`) to accelerate daily `ResearchSystem.Tick` progress rates.

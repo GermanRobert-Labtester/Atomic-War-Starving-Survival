@@ -6,8 +6,18 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
-    public partial class CaregivingPanel : Control
+    /// <summary>
+    /// ASHFALL — Caregiving & Bedside Tending Management Interface.
+    /// Thin presentation panel displaying active caregiver-to-patient pairings, bond strengths,
+    /// and tending capacities.
+    ///
+    /// Presentation only — all caregiving mechanics, recovery boosts, and bond progressions
+    /// are evaluated authoritatively in <see cref="Ashfall.Core.Survivors.CaregivingSystem"/>
+    /// via <see cref="CaregivingHostSession"/>.
+    /// </summary>
+    public partial class CaregivingPanel : Control, IBindablePanel
     {
+        /// <summary>Raised when the panel is dismissed by the player.</summary>
         public event Action? OnClose;
 
         private AshfallDashboardShell _shell = null!;
@@ -19,8 +29,13 @@ namespace AtomicWar.GodotApp.UI
 
         private CaregivingHostSession? _host;
 
+        /// <summary>Indicates whether the panel is currently wired to a live host session.</summary>
         public bool IsBound => _host != null;
 
+        /// <summary>
+        /// Binds this panel to the host session and subscribes to state change events.
+        /// </summary>
+        /// <param name="session">The active caregiving host session.</param>
         public void Bind(CaregivingHostSession session)
         {
             _host = session;
@@ -28,6 +43,17 @@ namespace AtomicWar.GodotApp.UI
                 _host.StateChanged += RefreshView;
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -46,27 +72,25 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
-            _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _assignBtn = new Button { Text = "Demo Assign (caregiver_a → patient_b)", CustomMinimumSize = new Vector2(260, 36) };
-            _assignBtn.Pressed += () =>
+            _assignBtn = AshfallUiHelpers.MakeButton("Demo Assign (caregiver_a → patient_b)", () =>
             {
                 if (_host != null)
                     _host.AssignCaregiver("caregiver_a", "patient_b");
-            };
+            });
+            _assignBtn.CustomMinimumSize = new Vector2(260, 36);
             buttonRow.AddChild(_assignBtn);
 
-            _unassignBtn = new Button { Text = "Unassign patient_b", CustomMinimumSize = new Vector2(160, 36) };
-            _unassignBtn.Pressed += () =>
+            _unassignBtn = AshfallUiHelpers.MakeButton("Unassign patient_b", () =>
             {
                 if (_host != null)
                     _host.UnassignCaregiver("patient_b");
-            };
+            });
+            _unassignBtn.CustomMinimumSize = new Vector2(160, 36);
             buttonRow.AddChild(_unassignBtn);
 
             _contentStack.AddChild(buttonRow);
@@ -81,9 +105,22 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        /// <summary>
+        /// Renders active metrics, assignment pairs, and bond strengths from the
+        /// authoritative <see cref="Ashfall.Core.Survivors.CaregivingSystem"/> state snapshot.
+        /// </summary>
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_host == null || _statusRail == null)
+            {
+                if (_detailText != null)
+                {
+                    _detailText.Text = "Caregiving host session is not bound. Bedside tending assignments and bond records are offline.";
+                }
+                if (_assignBtn != null) _assignBtn.Disabled = true;
+                if (_unassignBtn != null) _unassignBtn.Disabled = true;
+                return;
+            }
 
             var s = _host.System.CaptureState();
             int active = _host.ActiveAssignmentCount;
@@ -93,20 +130,19 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Active Caregiving Pairs: {active}\n";
+                string text = active > 0
+                    ? $"Active Caregiving Pairs: {active}\n"
+                    : "No active caregiving assignments registered.\nPair healthy caregivers with recovering patients to accelerate bedside healing and build emotional bonds.\n";
                 foreach (var a in s.Assignments)
                     text += $"  • {a.CaregiverId} → {a.PatientId} (bond {a.BondStrength:F2})\n";
-                if (s.Assignments.Count == 0)
-                    text += "  (no active assignments)\n";
-                text += $"\nLast Event: {_host.LastEvent}";
+                text += $"\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 _detailText.Text = text;
             }
         }
 
         public override void _ExitTree()
         {
-            if (_host != null)
-                _host.StateChanged -= RefreshView;
+            Unbind();
             base._ExitTree();
         }
     }

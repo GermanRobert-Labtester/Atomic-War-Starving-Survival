@@ -14,7 +14,7 @@ namespace AtomicWar.GodotApp.UI
     ///
     /// Presentation only — queries LocationLayoutSystem for authoritative state.
     /// </summary>
-    public partial class StandingRecordPanel : Control
+    public partial class StandingRecordPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -24,6 +24,8 @@ namespace AtomicWar.GodotApp.UI
         private Label _statusLabel = null!;
         private readonly List<string> _parentLocationIds = new List<string>();
         private string _selectedParentId = LocationLayoutSystem.LocKilometre19;
+
+        public bool IsBound => _layoutSystem != null;
 
         public override void _Ready()
         {
@@ -323,12 +325,18 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(container);
         }
 
-        public override void _ExitTree()
-        {
-            if (_locationsList != null)
+
+    public void Unbind()
+    {
+        if (_locationsList != null)
             {
                 _locationsList.ItemSelected -= OnLocationSelected;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

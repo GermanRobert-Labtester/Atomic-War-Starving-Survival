@@ -42,6 +42,29 @@ namespace Ashfall.Core.Inventory
             if (gameHours <= 0f) return;
             CurrentDurability = Math.Max(0f, CurrentDurability - DegradeRate * gameHours);
         }
+
+        public static WornGear FromInventory(EquippedGearData src)
+        {
+            return new WornGear
+            {
+                RadProtection = src.RadProtection,
+                MaxDurability = src.MaxDurability,
+                CurrentDurability = src.CurrentDurability,
+                DegradeRate = src.DegradeRate
+            };
+        }
+
+        public static WornGear? FromInventory(WornGear? src)
+        {
+            if (src == null) return null;
+            return new WornGear
+            {
+                RadProtection = src.RadProtection,
+                MaxDurability = src.MaxDurability,
+                CurrentDurability = src.CurrentDurability,
+                DegradeRate = src.DegradeRate
+            };
+        }
     }
 
     public class Inventory
@@ -387,6 +410,377 @@ namespace Ashfall.Core.Inventory
             _slots.Clear();
             _equipped.Clear();
             OnInventoryChanged?.Invoke();
+        }
+
+        // ── Atomic Inventory Transaction Boundary ──────────────────────
+
+        /// <summary>
+        /// Validates a multi-item transaction (costs and grants) against current inventory state.
+        /// Aggregates duplicate item IDs, verifies availability, and checks capacity and weight limits.
+        /// </summary>
+        public InventoryTransactionValidationResult ValidateTransaction(
+            InventoryBill bill,
+            Func<string, ItemDefinition?>? lookup = null)
+        {
+            if (bill == null || bill.IsEmpty)
+                return InventoryTransactionValidationResult.Success();
+
+            var aggregatedCosts = bill.GetAggregatedCosts();
+            var aggregatedGrants = bill.GetAggregatedGrants();
+
+            // 1. Verify cost availability with aggregated totals
+            foreach (var kv in aggregatedCosts)
+            {
+                string itemId = kv.Key;
+                int required = kv.Value;
+                if (required <= 0) continue;
+
+                int available = CountById(itemId);
+                if (available < required)
+                {
+                    return InventoryTransactionValidationResult.Insufficient(itemId, required, available);
+                }
+            }
+
+            // 2. Simulate slot and weight changes after cost removal
+            float simulatedWeight = GetCurrentWeight();
+            var simulatedSlots = new List<(string id, int amount, int stackMax)>(_slots.Count);
+
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                var s = _slots[i];
+                if (s?.Item != null && s.Amount > 0)
+                {
+                    int sMax = s.Item.stackMax > 0 ? s.Item.stackMax : 99;
+                    simulatedSlots.Add((s.Item.id, s.Amount, sMax));
+                }
+            }
+
+            // Deduct costs from simulated slots
+            foreach (var kv in aggregatedCosts)
+            {
+                string itemId = kv.Key;
+                int remainingToDeduct = kv.Value;
+
+                for (int i = simulatedSlots.Count - 1; i >= 0 && remainingToDeduct > 0; i--)
+                {
+                    var entry = simulatedSlots[i];
+                    if (entry.id == itemId)
+                    {
+                        var def = ResolveDefinition(itemId, bill, lookup);
+                        float itemWeight = def.weight;
+
+                        if (entry.amount <= remainingToDeduct)
+                        {
+                            simulatedWeight -= itemWeight * entry.amount;
+                            remainingToDeduct -= entry.amount;
+                            simulatedSlots.RemoveAt(i);
+                        }
+                        else
+                        {
+                            simulatedWeight -= itemWeight * remainingToDeduct;
+                            simulatedSlots[i] = (entry.id, entry.amount - remainingToDeduct, entry.stackMax);
+                            remainingToDeduct = 0;
+                        }
+                    }
+                }
+            }
+
+            // 3. Simulate adding grants to check slot capacity and weight limit
+            foreach (var kv in aggregatedGrants)
+            {
+                string itemId = kv.Key;
+                int remainingToAdd = kv.Value;
+                if (remainingToAdd <= 0) continue;
+
+                var def = ResolveDefinition(itemId, bill, lookup);
+                int stackMax = def.stackMax > 0 ? def.stackMax : 99;
+                float itemWeight = def.weight;
+
+                simulatedWeight += itemWeight * remainingToAdd;
+
+                // Fill existing simulated slots with available space
+                for (int i = 0; i < simulatedSlots.Count && remainingToAdd > 0; i++)
+                {
+                    var entry = simulatedSlots[i];
+                    if (entry.id == itemId && entry.amount < entry.stackMax)
+                    {
+                        int space = entry.stackMax - entry.amount;
+                        int placed = Math.Min(space, remainingToAdd);
+                        simulatedSlots[i] = (entry.id, entry.amount + placed, entry.stackMax);
+                        remainingToAdd -= placed;
+                    }
+                }
+
+                // Allocate new slots as needed
+                while (remainingToAdd > 0)
+                {
+                    int toPlace = Math.Min(stackMax, remainingToAdd);
+                    simulatedSlots.Add((itemId, toPlace, stackMax));
+                    remainingToAdd -= toPlace;
+                }
+            }
+
+            if (Capacity > 0 && simulatedSlots.Count > Capacity)
+            {
+                return InventoryTransactionValidationResult.CapacityExceeded(simulatedSlots.Count, Capacity);
+            }
+
+            if (MaxWeight > 0f && simulatedWeight > MaxWeight)
+            {
+                return InventoryTransactionValidationResult.WeightExceeded(GetCurrentWeight(), simulatedWeight - GetCurrentWeight(), MaxWeight);
+            }
+
+            return InventoryTransactionValidationResult.Success();
+        }
+
+        private ItemDefinition ResolveDefinition(string itemId, InventoryBill? bill, Func<string, ItemDefinition?>? lookup)
+        {
+            if (lookup != null)
+            {
+                var def = lookup(itemId);
+                if (def != null) return def;
+            }
+
+            var existingSlot = FindSlot(itemId);
+            if (existingSlot?.Item != null) return existingSlot.Item;
+
+            if (bill != null)
+            {
+                for (int i = 0; i < bill.Grants.Count; i++)
+                {
+                    if (bill.Grants[i].ItemId == itemId && bill.Grants[i].Definition != null)
+                        return bill.Grants[i].Definition!;
+                }
+                for (int i = 0; i < bill.Costs.Count; i++)
+                {
+                    if (bill.Costs[i].ItemId == itemId && bill.Costs[i].Definition != null)
+                        return bill.Costs[i].Definition!;
+                }
+            }
+
+            return new ItemDefinition { id = itemId, stackMax = 99 };
+        }
+
+        /// <summary>
+        /// Generates a comprehensive quote for a proposed bill, detailing weights, aggregated costs/grants, and validation.
+        /// </summary>
+        public InventoryTransactionQuote Quote(
+            InventoryBill bill,
+            Func<string, ItemDefinition?>? lookup = null)
+        {
+            if (bill == null) bill = new InventoryBill();
+
+            var aggregatedCosts = bill.GetAggregatedCosts();
+            var aggregatedGrants = bill.GetAggregatedGrants();
+
+            float totalCostWeight = 0f;
+            foreach (var kv in aggregatedCosts)
+            {
+                var def = ResolveDefinition(kv.Key, bill, lookup);
+                totalCostWeight += def.weight * kv.Value;
+            }
+
+            float totalGrantWeight = 0f;
+            foreach (var kv in aggregatedGrants)
+            {
+                var def = ResolveDefinition(kv.Key, bill, lookup);
+                totalGrantWeight += def.weight * kv.Value;
+            }
+
+            var validation = ValidateTransaction(bill, lookup);
+            return new InventoryTransactionQuote(
+                bill, aggregatedCosts, aggregatedGrants, totalCostWeight, totalGrantWeight, validation);
+        }
+
+        /// <summary>
+        /// Begins an active atomic transaction with snapshot isolation and rollback guarantees.
+        /// </summary>
+        public InventoryTransaction BeginTransaction(
+            InventoryBill bill,
+            Func<string, ItemDefinition?>? lookup = null)
+        {
+            if (bill == null) bill = new InventoryBill();
+            var validation = ValidateTransaction(bill, lookup);
+            var snapshot = new InventorySnapshot(Capacity, MaxWeight, _slots, _equipped);
+            return new InventoryTransaction(this, bill, validation, snapshot);
+        }
+
+        /// <summary>
+        /// Atomically executes a transaction (consumes costs and adds grants).
+        /// If validation fails or the post-commit callback throws an exception, rolls back completely.
+        /// Fires OnInventoryChanged exactly once upon successful completion.
+        /// </summary>
+        public bool TryExecuteTransaction(
+            InventoryBill bill,
+            Action? onCommitted = null,
+            Func<string, ItemDefinition?>? lookup = null)
+        {
+            using var tx = BeginTransaction(bill, lookup);
+            if (!tx.Validation.IsValid) return false;
+            return tx.TryCommit(onCommitted);
+        }
+
+        /// <summary>
+        /// Atomically consumes a multi-item cost bill. Returns false without modifying inventory if any item is insufficient.
+        /// Fires OnInventoryChanged exactly once on success.
+        /// </summary>
+        public bool TryConsumeBill(IReadOnlyDictionary<string, int> costs, Action? onCommitted = null)
+        {
+            return TryExecuteTransaction(InventoryBill.FromCosts(costs), onCommitted);
+        }
+
+        /// <summary>
+        /// Atomically consumes a multi-item cost collection.
+        /// </summary>
+        public bool TryConsumeBill(IEnumerable<KeyValuePair<string, int>> costs, Action? onCommitted = null)
+        {
+            return TryExecuteTransaction(InventoryBill.FromCosts(costs), onCommitted);
+        }
+
+        /// <summary>
+        /// Atomically consumes a list of item IDs (1 of each).
+        /// </summary>
+        public bool TryConsumeBill(IEnumerable<string> itemIds, Action? onCommitted = null)
+        {
+            return TryExecuteTransaction(InventoryBill.FromCosts(itemIds), onCommitted);
+        }
+
+        internal void ApplyTransactionMutations(InventoryBill bill, Func<string, ItemDefinition?>? lookup = null)
+        {
+            if (bill == null || bill.IsEmpty) return;
+
+            var aggregatedCosts = bill.GetAggregatedCosts();
+            var aggregatedGrants = bill.GetAggregatedGrants();
+
+            // 1. Remove costs (silently during atomic batch)
+            foreach (var kv in aggregatedCosts)
+            {
+                string itemId = kv.Key;
+                int remaining = kv.Value;
+
+                for (int i = _slots.Count - 1; i >= 0 && remaining > 0; i--)
+                {
+                    if (_slots[i] == null || _slots[i].Item == null) continue;
+                    if (_slots[i].Item.id != itemId) continue;
+
+                    if (_slots[i].Amount <= remaining)
+                    {
+                        remaining -= _slots[i].Amount;
+                        _slots.RemoveAt(i);
+                    }
+                    else
+                    {
+                        _slots[i].Amount -= remaining;
+                        remaining = 0;
+                    }
+                }
+            }
+
+            // 2. Add grants (silently during atomic batch)
+            foreach (var kv in aggregatedGrants)
+            {
+                string itemId = kv.Key;
+                int amount = kv.Value;
+                if (amount <= 0) continue;
+
+                var def = ResolveDefinition(itemId, bill, lookup);
+                int stackMax = def.stackMax > 0 ? def.stackMax : 99;
+
+                for (int i = 0; i < _slots.Count && amount > 0; i++)
+                {
+                    if (_slots[i] != null && _slots[i].Item != null && _slots[i].Item.id == itemId)
+                    {
+                        int space = stackMax - _slots[i].Amount;
+                        if (space > 0)
+                        {
+                            int toAdd = Math.Min(space, amount);
+                            _slots[i].Amount += toAdd;
+                            amount -= toAdd;
+                        }
+                    }
+                }
+
+                while (amount > 0)
+                {
+                    int toAdd = Math.Min(stackMax, amount);
+                    _slots.Add(new InventorySlot
+                    {
+                        Item = def,
+                        Amount = toAdd,
+                        Device = def.type == ItemType.Device ? DeviceState.CreateDefault() : null,
+                        CurrentDurability = def.durability > 0f ? def.durability : -1f
+                    });
+                    amount -= toAdd;
+                }
+            }
+        }
+
+        internal void NotifyTransactionCommitted(InventoryBill bill, Func<string, ItemDefinition?>? lookup = null)
+        {
+            if (bill == null || bill.IsEmpty) return;
+
+            var aggregatedCosts = bill.GetAggregatedCosts();
+            var aggregatedGrants = bill.GetAggregatedGrants();
+
+            if (OnItemRemoved != null)
+            {
+                foreach (var kv in aggregatedCosts)
+                {
+                    var def = ResolveDefinition(kv.Key, bill, lookup);
+                    OnItemRemoved.Invoke(def, kv.Value);
+                }
+            }
+
+            if (OnItemAdded != null)
+            {
+                foreach (var kv in aggregatedGrants)
+                {
+                    var def = ResolveDefinition(kv.Key, bill, lookup);
+                    OnItemAdded.Invoke(def, kv.Value);
+                }
+            }
+
+            OnInventoryChanged?.Invoke();
+        }
+
+        internal void RestoreSnapshot(InventorySnapshot snapshot)
+        {
+            if (snapshot == null) return;
+            _slots.Clear();
+            _equipped.Clear();
+            Capacity = snapshot.Capacity;
+            MaxWeight = snapshot.MaxWeight;
+
+            for (int i = 0; i < snapshot.Slots.Count; i++)
+            {
+                var s = snapshot.Slots[i];
+                if (s == null) continue;
+                _slots.Add(new InventorySlot
+                {
+                    Item = s.Item,
+                    Amount = s.Amount,
+                    CurrentDurability = s.CurrentDurability,
+                    Device = s.Device != null ? new DeviceState
+                    {
+                        Battery = s.Device.Battery,
+                        Calibration = s.Device.Calibration,
+                        Broken = s.Device.Broken,
+                        LastCalibratedDay = s.Device.LastCalibratedDay
+                    } : null
+                });
+            }
+
+            for (int i = 0; i < snapshot.Equipped.Count; i++)
+            {
+                var e = snapshot.Equipped[i];
+                if (e == null) continue;
+                _equipped.Add(new EquippedItem
+                {
+                    Item = e.Item,
+                    CurrentDurability = e.CurrentDurability
+                });
+            }
         }
 
         public bool Transfer(ItemDefinition item, int amount, Inventory destination)

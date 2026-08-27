@@ -140,13 +140,12 @@ ILog? log = null)
                 return ActionResult.Blocked("empty_queue", "decon.empty_queue");
 
             // Atomic resource consumption: clean water + soap
-            if (_inventory.CountById("water_clean") < 1)
-                return ActionResult.Blocked("no_water", "decon.no_water");
-            if (_inventory.CountById("soap") < 1)
+            if (!_inventory.TryConsumeBill(new[] { "water_clean", "soap" }))
+            {
+                if (_inventory.CountById("water_clean") < 1)
+                    return ActionResult.Blocked("no_water", "decon.no_water");
                 return ActionResult.Blocked("no_soap", "decon.no_soap");
-
-            _inventory.RemoveById("water_clean", 1);
-            _inventory.RemoveById("soap", 1);
+            }
 
             var next = _state.queue[0];
             next.status = DeconStatus.InProgress;

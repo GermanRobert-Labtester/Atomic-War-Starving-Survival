@@ -1,7 +1,7 @@
 # ASHFALL — Holdfast 100% Push: Final Report
 
-**Date:** 2026-08-15  
-**Engine:** Godot 4.7+ (.NET) — sole engine  
+**Date:** 2026-08-15
+**Engine:** Godot 4.7+ (.NET) — sole engine
 **Unity:** Editor removed (8.9 GB freed), Library cache removed (6.6 GB freed), Hub preserved
 
 ---

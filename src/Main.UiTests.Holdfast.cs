@@ -305,7 +305,7 @@ namespace AtomicWar.GodotApp
                      $"buy={bought} invalidAtomic={rejectedWithoutMutation} sell={sold} " +
                      $"failureMatrix={failureMatrix} save={saved} reload={reloaded} restored={restored} " +
                      $"postReloadRender={postReloadRender} newLedger={newLedgerOk} continued={continued} quarantine={quarantinePass} archive={archivePass}");
-            GD.Print(pass ? "HOLDFAST_RUNTIME_UITEST PASS" : "HOLDFAST_RUNTIME_UITEST FAIL");
+            HostCli.EmitSummary("holdfast_runtime_uitest", pass, pass ? 0 : 1);
 
             if (File.Exists(basePath)) File.Delete(basePath);
             if (File.Exists(tradePath)) File.Delete(tradePath);

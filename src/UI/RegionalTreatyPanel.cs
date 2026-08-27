@@ -7,7 +7,7 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
-    public partial class RegionalTreatyPanel : Control
+    public partial class RegionalTreatyPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -32,6 +32,17 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -48,19 +59,17 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
-            _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _proposeBtn = new Button { Text = "Propose Non-Aggression Pact", CustomMinimumSize = new Vector2(200, 36) };
-            _proposeBtn.Pressed += () => _host?.ProposeTreaty("treaty_meridian_non_aggression", 1);
+            _proposeBtn = AshfallUiHelpers.MakeButton("Propose Non-Aggression Pact", () => _host?.ProposeTreaty("treaty_meridian_non_aggression", 1));
+            _proposeBtn.CustomMinimumSize = new Vector2(200, 36);
             buttonRow.AddChild(_proposeBtn);
 
-            _ratifyBtn = new Button { Text = "Ratify Pending Accord", CustomMinimumSize = new Vector2(180, 36) };
-            _ratifyBtn.Pressed += () => _host?.RatifyTreaty("treaty_meridian_non_aggression", 1);
+            _ratifyBtn = AshfallUiHelpers.MakeButton("Ratify Pending Accord", () => _host?.RatifyTreaty("treaty_meridian_non_aggression", 1));
+            _ratifyBtn.CustomMinimumSize = new Vector2(180, 36);
             buttonRow.AddChild(_ratifyBtn);
 
             _contentStack.AddChild(buttonRow);
@@ -98,10 +107,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

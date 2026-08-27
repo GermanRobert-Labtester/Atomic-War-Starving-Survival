@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS0649
-using System.IO;
-using System.Text.Json;
 using Ashfall.Core;
 
 namespace AtomicWar.Journal
@@ -63,43 +61,35 @@ namespace AtomicWar.Journal
 
     public static class CatalogJsonLoader
     {
-        private static readonly JsonSerializerOptions s_options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            IncludeFields = true
-        };
-
         /// <summary>
         /// Load the four codex catalogs from a data directory. Missing files are
         /// tolerated (empty lists) so the book still opens on a partial archive.
         /// </summary>
-        public static JournalCatalogs Load(string dataDir)
+        public static JournalCatalogs Load(IFileIO fileIO, string dataDir)
         {
             var catalogs = new JournalCatalogs();
-            if (string.IsNullOrEmpty(dataDir) || !Directory.Exists(dataDir))
+            if (fileIO == null || string.IsNullOrEmpty(dataDir) || !fileIO.DirectoryExists(dataDir))
                 return catalogs;
 
-            catalogs.Items = LoadList<ItemDefinitionData>(Path.Combine(dataDir, "items.json"));
-            catalogs.Locations = LoadList<LocationDefinitionData>(Path.Combine(dataDir, "locations.json"));
-            catalogs.Survivors = LoadList<SurvivorArchetypeData>(Path.Combine(dataDir, "survivors.json"));
-            catalogs.Events = LoadList<GameEventData>(Path.Combine(dataDir, "events.json"));
-            catalogs.VerdictHistory = LoadVerdictHistory(dataDir);
+            catalogs.Items = LoadList<ItemDefinitionData>(fileIO, fileIO.Combine(dataDir, "items.json"));
+            catalogs.Locations = LoadList<LocationDefinitionData>(fileIO, fileIO.Combine(dataDir, "locations.json"));
+            catalogs.Survivors = LoadList<SurvivorArchetypeData>(fileIO, fileIO.Combine(dataDir, "survivors.json"));
+            catalogs.Events = LoadList<GameEventData>(fileIO, fileIO.Combine(dataDir, "events.json"));
+            catalogs.VerdictHistory = LoadVerdictHistory(fileIO, dataDir);
             return catalogs;
         }
 
-        /// <summary>Map verdict_data.json.world_history_ladder to codex event rows
-        /// (knowledge_key → id, title, body_summary → body).</summary>
-        private static List<GameEventData> LoadVerdictHistory(string dataDir)
+        private static List<GameEventData> LoadVerdictHistory(IFileIO fileIO, string dataDir)
         {
             var result = new List<GameEventData>();
             try
             {
-                string path = Path.Combine(dataDir, "verdict_data.json");
-                if (!File.Exists(path)) return result;
-                string json = File.ReadAllText(path);
-                var root = JsonSerializer.Deserialize<VerdictDataRaw>(json, s_options);
-                if (root?.world_history_ladder == null) return result;
-                foreach (var l in root.world_history_ladder)
+                string path = fileIO.Combine(dataDir, "verdict_data.json");
+                if (!fileIO.FileExists(path)) return result;
+                string json = fileIO.ReadAllText(path);
+                var ladder = CatalogLocator.LoadWrappedList<VerdictLadderRaw>(json, SystemTextJsonSerializer.Options);
+                if (ladder == null) return result;
+                foreach (var l in ladder)
                 {
                     if (l == null || string.IsNullOrEmpty(l.knowledge_key)) continue;
                     result.Add(new GameEventData
@@ -122,38 +112,17 @@ namespace AtomicWar.Journal
             public string? discovery_location_id;
         }
 
-        private class VerdictDataRaw
-        {
-            public List<VerdictLadderRaw>? world_history_ladder;
-        }
-
-        private static List<T> LoadList<T>(string path)
+        private static List<T> LoadList<T>(IFileIO fileIO, string path)
         {
             try
             {
-                if (!File.Exists(path)) return new List<T>();
-                string json = File.ReadAllText(path);
-
-                // Support wrapped catalogs: {"schema_version": N, "items"/"locations"/"survivors"/"events": [...]}
-                using var doc = JsonDocument.Parse(json);
-                if (doc.RootElement.ValueKind == JsonValueKind.Object)
-                {
-                    foreach (var prop in doc.RootElement.EnumerateObject())
-                    {
-                        if (prop.Name.Equals("schema_version", StringComparison.OrdinalIgnoreCase))
-                            continue;
-                        if (prop.Value.ValueKind == JsonValueKind.Array)
-                        {
-                            var list = CatalogLocator.LoadWrappedList<T>(prop.Value.GetRawText(), s_options);
-                            return list ?? new List<T>();
-                        }
-                    }
-                }
-
-                return CatalogLocator.LoadWrappedList<T>(json, s_options) ?? new List<T>();
+                if (!fileIO.FileExists(path)) return new List<T>();
+                string json = fileIO.ReadAllText(path);
+                return CatalogLocator.LoadWrappedList<T>(json, SystemTextJsonSerializer.Options) ?? new List<T>();
             }
             catch (Exception)
             {
+                /* cleanup: fallback on missing or corrupt journal catalog */
                 return new List<T>();
             }
         }

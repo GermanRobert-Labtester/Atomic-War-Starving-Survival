@@ -76,6 +76,46 @@ namespace Ashfall.Core.Expeditions
         public List<CampWatchShift> watchShifts = new List<CampWatchShift>();
     }
 
+    /// <summary>
+    /// Vehicle facts for one dispatch, projected by the host from
+    /// ExpeditionVehicleSystem's garage. Passed at Start; the expedition core
+    /// stays decoupled from the garage (fuel tank, repairs, ownership).
+    /// </summary>
+    [Serializable]
+    public sealed class ExpeditionVehicleProfile
+    {
+        public string vehicleId = string.Empty;
+        /// <summary>Travel-step multiplier while the vehicle runs (foot = 1.0).</summary>
+        public float speedMultiplier = 1f;
+        /// <summary>Loot capacity in kg while the vehicle runs (0 = keep foot cap).</summary>
+        public float cargoCapacityKg = 0f;
+        /// <summary>Per-travel-tick breakdown chance while the vehicle runs.</summary>
+        public float breakdownChancePerTick = 0f;
+        /// <summary>Fuel units consumed per travel tick (for estimates).</summary>
+        public float fuelPerTravelTick = 0f;
+    }
+
+    /// <summary>Pre-dispatch numbers for the expedition UI (pure, no RNG).</summary>
+    [Serializable]
+    public sealed class ExpeditionEstimate
+    {
+        public string locationId = string.Empty;
+        public string stance = string.Empty;
+        public int distanceTicks;
+        public float outboundTicks;
+        public float inboundTicks;
+        public float lootingTicks;
+        public float totalTicks;
+        public float cargoCapacityKg;
+        public float fuelRequired;
+        public float breakdownRiskPerTick;
+        public float breakdownRiskTotal;
+        public float encounterRiskPerTick;
+        public float weaponReadiness = 1f;
+        public float weaponJamRisk;
+        public bool usingVehicle;
+    }
+
     /// <summary>Serialized state of one expedition (save/load safe).</summary>
     [Serializable]
     public class ExpeditionState
@@ -101,6 +141,10 @@ namespace Ashfall.Core.Expeditions
         public bool isNightScavenge = false;
         public bool hasBicycle = false;
         public bool hasFlashlight = false;
+        public string vehicleId = string.Empty;
+        public float vehicleSpeedMultiplier = 1f;
+        public float vehicleBreakdownChancePerTick = 0f;
+        public bool vehicleBrokenDown = false;
         public string outcomeText = string.Empty;
         public List<ExpeditionLootEntry> loot = new List<ExpeditionLootEntry>();
         public CampState campState = new CampState();
@@ -162,6 +206,7 @@ namespace Ashfall.Core.Expeditions
         public event Action<ExpeditionState> OnPhaseChanged;
         public event Action<ExpeditionState> OnLootAdded;                 // state, itemId, qty
         public event Action<ExpeditionState> OnEncounterTriggered;
+        public event Action<ExpeditionState> OnVehicleBreakdown;
         public event Action<ExpeditionState> OnExpeditionCompleted;
         public event Action<ExpeditionState, string> OnExpeditionFailed;
         public event Action<ExpeditionState> OnStateChanged;
@@ -218,7 +263,8 @@ namespace Ashfall.Core.Expeditions
             ExpeditionStance stance = ExpeditionStance.Stealth,
             bool isNightScavenge = false,
             bool hasBicycle = false,
-            bool hasFlashlight = false)
+            bool hasFlashlight = false,
+            ExpeditionVehicleProfile? vehicle = null)
         {
             if (def == null || string.IsNullOrEmpty(def.id) || string.IsNullOrEmpty(survivorId))
                 return false;
@@ -241,10 +287,80 @@ namespace Ashfall.Core.Expeditions
                 hasBicycle = hasBicycle,
                 hasFlashlight = hasFlashlight
             };
+            if (vehicle != null && !string.IsNullOrEmpty(vehicle.vehicleId))
+            {
+                exp.vehicleId = vehicle.vehicleId;
+                exp.vehicleSpeedMultiplier = vehicle.speedMultiplier > 0f ? vehicle.speedMultiplier : 1f;
+                exp.vehicleBreakdownChancePerTick = Math.Clamp(vehicle.breakdownChancePerTick, 0f, 1f);
+                if (vehicle.cargoCapacityKg > 0f)
+                    exp.maxLootCapacityKg = vehicle.cargoCapacityKg;
+            }
             _active[survivorId] = exp;
             OnExpeditionStarted?.Invoke(exp);
             OnStateChanged?.Invoke(exp);
             return true;
+        }
+
+        /// <summary>
+        /// Pure pre-dispatch math for the UI: travel ticks by stance/vehicle,
+        /// capacity, fuel need, breakdown and encounter risk. Mirrors the
+        /// exact step/risk formulas the tick loop applies — no RNG.
+        /// </summary>
+        public static ExpeditionEstimate Estimate(
+            ExpeditionDefinition def,
+            ExpeditionStance stance,
+            bool isNightScavenge = false,
+            ExpeditionVehicleProfile? vehicle = null,
+            float weaponReadiness = 1f,
+            float weaponJamRisk = 0f)
+        {
+            var est = new ExpeditionEstimate
+            {
+                locationId = def?.id ?? string.Empty,
+                stance = stance.ToString(),
+                distanceTicks = def != null ? Math.Max(1, def.distanceTicks) : 0,
+                cargoCapacityKg = 40f,
+                weaponReadiness = Math.Clamp(weaponReadiness, 0f, 1f),
+                weaponJamRisk = Math.Clamp(weaponJamRisk, 0f, 1f),
+            };
+
+            float speed = stance == ExpeditionStance.Speed ? 1.5f : 1.0f;
+            float breakdown = 0f;
+            float fuelPerTick = 0f;
+            if (vehicle != null && !string.IsNullOrEmpty(vehicle.vehicleId))
+            {
+                est.usingVehicle = true;
+                float vSpeed = vehicle.speedMultiplier > 0f ? vehicle.speedMultiplier : 1f;
+                speed *= vSpeed;
+                breakdown = Math.Clamp(vehicle.breakdownChancePerTick, 0f, 1f);
+                fuelPerTick = vehicle.fuelPerTravelTick;
+                if (vehicle.cargoCapacityKg > 0f)
+                    est.cargoCapacityKg = vehicle.cargoCapacityKg;
+            }
+
+            est.breakdownRiskPerTick = breakdown;
+            est.outboundTicks = (float)Math.Ceiling(est.distanceTicks / speed);
+            // Inbound keeps the bicycle bonus estimate at foot pace for
+            // simplicity: 0.5 extra only when no vehicle is projected.
+            float inboundSpeed = speed;
+            if (!est.usingVehicle && stance != ExpeditionStance.Speed)
+                inboundSpeed += 0.5f; // bicycle-friendly foot estimate bookkeeping
+            est.inboundTicks = (float)Math.Ceiling(est.distanceTicks / Math.Max(0.5f, inboundSpeed));
+            est.lootingTicks = AutoRetreatAfterLootTicks;
+            est.totalTicks = est.outboundTicks + est.lootingTicks + est.inboundTicks;
+            est.fuelRequired = fuelPerTick * (est.outboundTicks + est.inboundTicks);
+            float travelTicksForRisk = est.outboundTicks + est.inboundTicks;
+            est.breakdownRiskTotal = travelTicksForRisk > 0
+                ? 1f - (float)Math.Pow(1f - breakdown, travelTicksForRisk)
+                : 0f;
+
+            float encounter = def != null ? def.encounterChancePerTick : 0.12f;
+            if (stance == ExpeditionStance.Stealth) encounter *= 0.5f;
+            // A degraded weapon cannot deter trouble as well: poor readiness
+            // raises the effective encounter risk by up to half again.
+            encounter *= 1f + (1f - est.weaponReadiness) * 0.5f;
+            est.encounterRiskPerTick = Math.Clamp(encounter, 0f, 1f);
+            return est;
         }
 
         private readonly List<string> _tickKeyBuffer = new();
@@ -271,6 +387,21 @@ namespace Ashfall.Core.Expeditions
                 }
 
                 RollEncounter(exp, rng); // every leg can meet trouble (Unity parity)
+
+                // Mid-route vehicle breakdown: one seeded roll per travel tick
+                // while the vehicle still runs. A breakdown drops the sortie
+                // to foot speed and foot capacity for the remainder.
+                if (!string.IsNullOrEmpty(exp.vehicleId) && !exp.vehicleBrokenDown &&
+                    exp.vehicleBreakdownChancePerTick > 0f &&
+                    ((ExpeditionPhase)exp.phase == ExpeditionPhase.Outbound ||
+                     (ExpeditionPhase)exp.phase == ExpeditionPhase.Inbound) &&
+                    rng.NextDouble() < exp.vehicleBreakdownChancePerTick)
+                {
+                    exp.vehicleBrokenDown = true;
+                    exp.maxLootCapacityKg = Math.Min(exp.maxLootCapacityKg, 40f);
+                    exp.outcomeText = $"The {exp.vehicleId} gave out — continuing on foot.";
+                    OnVehicleBreakdown?.Invoke(exp);
+                }
 
                 switch ((ExpeditionPhase)exp.phase)
                 {
@@ -614,6 +745,7 @@ namespace Ashfall.Core.Expeditions
         private void AdvanceOutbound(ExpeditionState exp)
         {
             float step = exp.stance == nameof(ExpeditionStance.Speed) ? 1.5f : 1.0f;
+            step *= VehicleTravelMultiplier(exp);
             exp.travelTicksCompleted += (int)Math.Round(step, MidpointRounding.AwayFromZero);
             if (exp.travelTicksCompleted >= exp.distanceTicks)
                 SetPhase(exp, ExpeditionPhase.Looting);
@@ -709,12 +841,24 @@ namespace Ashfall.Core.Expeditions
         {
             float step = exp.stance == nameof(ExpeditionStance.Speed) ? 1.5f : 1.0f;
             if (exp.hasBicycle) step += 0.5f; // faster return on a bicycle
+            step *= VehicleTravelMultiplier(exp);
             exp.travelTicksCompleted -= (int)Math.Round(step, MidpointRounding.AwayFromZero);
             if (exp.travelTicksCompleted <= 0)
             {
                 exp.travelTicksCompleted = 0;
                 SetPhase(exp, ExpeditionPhase.Completed);
             }
+        }
+
+        /// <summary>
+        /// Travel multiplier of the dispatched vehicle. A broken-down vehicle
+        /// multiplies by nothing — the rest of the sortie is on foot.
+        /// </summary>
+        private static float VehicleTravelMultiplier(ExpeditionState exp)
+        {
+            if (string.IsNullOrEmpty(exp.vehicleId) || exp.vehicleBrokenDown)
+                return 1f;
+            return exp.vehicleSpeedMultiplier > 0f ? exp.vehicleSpeedMultiplier : 1f;
         }
 
         private void ApplyStaminaDrain(ExpeditionState exp, float hours)

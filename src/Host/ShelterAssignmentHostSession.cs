@@ -43,6 +43,8 @@ namespace AtomicWar.GodotApp
             System.OnAssignmentChanged += _ => RaiseStateChanged();
         }
 
+        public bool AreInSameRoom(string? a, string? b) => System?.AreInSameRoom(a, b) ?? false;
+
         public bool TrySave()
         {
             var save = new ShelterAssignmentSave
@@ -163,5 +165,8 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(ShelterAssignmentSave save) => TryCapture(save);
     }
 }

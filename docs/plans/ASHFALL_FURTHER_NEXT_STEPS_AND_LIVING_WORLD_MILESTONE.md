@@ -1,7 +1,7 @@
 # ASHFALL — Further Next Steps & Living World Milestone
 
-**Document type:** prioritized next-step roadmap  
-**Project:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`  
+**Document type:** prioritized next-step roadmap
+**Project:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`
 **Purpose:** turn ASHFALL’s existing systems depth into a more reactive, spatial, interconnected, replayable survival world.
 
 ---

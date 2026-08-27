@@ -60,7 +60,7 @@ namespace AtomicWar.GodotApp
             bool pass = roster && needsMoved && doseClimbed && resistance && antiRadApplied && roundtrip && radRestored;
             GD.Print($"[SurvivorsUiTest] roster={roster} needs={needsMoved} dose={doseClimbed} " +
                      $"iodine={resistance} antiRad={antiRadApplied} roundtrip={roundtrip} rad={radRestored}");
-            GD.Print(pass ? "SURVIVORS_UITEST PASS" : "SURVIVORS_UITEST FAIL");
+            HostCli.EmitSummary("survivors_uitest", pass, pass ? 0 : 1);
             if (System.IO.File.Exists(SurvivorsSaveStore.SavePath))
                 System.IO.File.Delete(SurvivorsSaveStore.SavePath);
             QuitUiTestAfterFrame(pass ? 0 : 1);

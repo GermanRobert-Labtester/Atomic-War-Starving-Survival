@@ -648,6 +648,124 @@
       "resultAmount": 0,
       "craftingTimeHours": 8.0,
       "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_water_filter",
+      "recipeName": "Water Filter (charcoal)",
+      "ingredients": [
+        {
+          "itemId": "scrap_mechanical",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_electronic",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "water_filter",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_bandage",
+      "recipeName": "Bandage (clean cloth)",
+      "ingredients": [
+        {
+          "itemId": "scrap_mechanical",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "bandage",
+      "resultAmount": 2,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_iodine_kit",
+      "recipeName": "Iodine Kit",
+      "ingredients": [
+        {
+          "itemId": "scrap_chemical",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_mechanical",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "iodine_pills",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_rad_away",
+      "recipeName": "Rad-Away (chelators)",
+      "ingredients": [
+        {
+          "itemId": "scrap_chemical",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_electronic",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "rad_away",
+      "resultAmount": 1,
+      "craftingTimeHours": 6.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_gas_mask_filter",
+      "recipeName": "Filter Pack (gas mask)",
+      "ingredients": [
+        {
+          "itemId": "scrap_electronic",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_mechanical",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "filter_pack",
+      "resultAmount": 1,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_inhaler",
+      "recipeName": "Improvised Inhaler",
+      "ingredients": [
+        {
+          "itemId": "scrap_chemical",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_mechanical",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "inhaler",
+      "resultAmount": 1,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_herbal_tea",
+      "recipeName": "Herbal Tea (respiratory relief)",
+      "ingredients": [
+        {
+          "itemId": "scrap_mechanical",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "herbal_tea",
+      "resultAmount": 2,
+      "craftingTimeHours": 0.5,
+      "requiredStationId": ""
     }
   ]
 }

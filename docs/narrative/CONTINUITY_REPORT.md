@@ -144,7 +144,7 @@ The final "8" has no supporting hunger tally. There is no Day 105 or Day 108 tal
 
 #### Finding 5 — Geothermal transition gap and contradiction (MEDIUM)
 
-**Locations:** 
+**Locations:**
 - `narrative/expedition_briefs_expansion.json` Day 31/32 (Tomas assessment)
 - `narrative/expedition_field_reports.json` Day 50 (field report)
 - `narrative/journal_entries_batch_1.json` Day 47 (journal)

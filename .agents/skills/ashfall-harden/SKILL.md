@@ -648,10 +648,10 @@ Inspect risks from:
 
 Look for behavior at:
 
-Day 1  
-Day 30  
-Day 180  
-Day 360+  
+Day 1
+Day 30
+Day 180
+Day 360+
 
 Recommend soak/selftests where appropriate.
 
@@ -832,22 +832,22 @@ Structure:
 
 ## HARD-XX — Title
 
-**Priority:** H0/H1/H2/H3/H4  
-**Category:**  
-**Current behavior:**  
-**Structural weakness:**  
-**Failure mode enabled:**  
-**Why current tests may not catch it:**  
-**Affected domains:**  
-**Evidence:**  
-**Migration impact:**  
-**Save impact:**  
-**Determinism impact:**  
-**Expansion impact:**  
-**Suggested hardening direction:**  
-**Complexity:** LOW/MEDIUM/HIGH  
-**Regression risk:** LOW/MEDIUM/HIGH  
-**Confidence:** HIGH/MEDIUM/LOW  
+**Priority:** H0/H1/H2/H3/H4
+**Category:**
+**Current behavior:**
+**Structural weakness:**
+**Failure mode enabled:**
+**Why current tests may not catch it:**
+**Affected domains:**
+**Evidence:**
+**Migration impact:**
+**Save impact:**
+**Determinism impact:**
+**Expansion impact:**
+**Suggested hardening direction:**
+**Complexity:** LOW/MEDIUM/HIGH
+**Regression risk:** LOW/MEDIUM/HIGH
+**Confidence:** HIGH/MEDIUM/LOW
 
 ---
 

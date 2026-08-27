@@ -91,11 +91,11 @@ def render_raster_icon(item, png_path):
     """Renders authentic 128x128 binary PNG icon matching ASHFALL DNA."""
     img = Image.new("RGBA", (128, 128), COLOR_DARK_BG)
     draw = ImageDraw.Draw(img)
-    
+
     # Background subtle fill
     draw.rectangle([2, 2, 125, 125], fill=COLOR_CARD_BG, outline=COLOR_ASH, width=1)
     draw.rectangle([4, 4, 123, 123], outline=COLOR_BRASS, width=1)
-    
+
     # Tactile Corner L-brackets
     draw.line([(6, 6), (16, 6)], fill=COLOR_AMBER, width=2)
     draw.line([(6, 6), (6, 16)], fill=COLOR_AMBER, width=2)
@@ -105,7 +105,7 @@ def render_raster_icon(item, png_path):
     draw.line([(6, 121), (6, 111)], fill=COLOR_AMBER, width=2)
     draw.line([(121, 121), (111, 121)], fill=COLOR_AMBER, width=2)
     draw.line([(121, 121), (121, 111)], fill=COLOR_AMBER, width=2)
-    
+
     # Center Graphic Symbol
     aid = item["id"]
     if "rad" in aid or "geiger" in aid or "dosimeter" in aid:
@@ -141,22 +141,22 @@ def render_raster_icon(item, png_path):
         draw.ellipse([34, 34, 94, 94], outline=COLOR_BRASS, width=2)
         draw.polygon([(64, 38), (86, 76), (42, 76)], outline=COLOR_AMBER, fill=COLOR_PANEL_BG)
         draw.ellipse([58, 58, 70, 70], fill=COLOR_TEAL)
-        
+
     # Technical micro-readout at bottom
     draw.line([(20, 108), (108, 108)], fill=COLOR_ASH, width=1)
     draw.rectangle([60, 106, 68, 110], fill=COLOR_AMBER)
-    
+
     img.save(png_path, "PNG")
 
 def render_raster_background(item, png_path):
     """Renders authentic 1920x1080 binary PNG background matching ASHFALL DNA."""
     img = Image.new("RGBA", (1920, 1080), COLOR_DARK_BG)
     draw = ImageDraw.Draw(img)
-    
+
     # Outer framing
     draw.rectangle([10, 10, 1909, 1069], outline=COLOR_ASH, width=2)
     draw.rectangle([20, 20, 1899, 1059], outline=COLOR_BRASS, width=1)
-    
+
     # Large Corner L-brackets
     draw.line([(30, 30), (80, 30)], fill=COLOR_AMBER, width=3)
     draw.line([(30, 30), (30, 80)], fill=COLOR_AMBER, width=3)
@@ -166,27 +166,27 @@ def render_raster_background(item, png_path):
     draw.line([(30, 1049), (30, 999)], fill=COLOR_AMBER, width=3)
     draw.line([(1889, 1049), (1839, 1049)], fill=COLOR_AMBER, width=3)
     draw.line([(1889, 1049), (1889, 999)], fill=COLOR_AMBER, width=3)
-    
+
     # Technical Gridlines
     for y in range(200, 1000, 150):
         draw.line([(60, y), (1860, y)], fill=(110, 163, 168, 40), width=1)
     for x in range(200, 1800, 200):
         draw.line([(x, 150), (x, 950)], fill=(110, 163, 168, 30), width=1)
-        
+
     # Top banner header line
     draw.line([(60, 120), (1860, 120)], fill=COLOR_BRASS, width=2)
-    
+
     # Central Emblem Plate Box
     draw.rectangle([760, 340, 1160, 740], fill=COLOR_PANEL_BG, outline=COLOR_BRASS, width=3)
     draw.ellipse([810, 390, 1110, 690], outline=COLOR_AMBER, width=2)
     draw.polygon([(960, 420), (1080, 640), (840, 640)], fill=COLOR_CARD_BG, outline=COLOR_TEAL, width=2)
     draw.ellipse([930, 530, 990, 590], fill=COLOR_BRASS)
-    
+
     # Calibrated technical markings
     draw.line([(700, 800), (1220, 800)], fill=COLOR_ASH, width=2)
     for tick in range(700, 1240, 20):
         draw.line([(tick, 795), (tick, 805)], fill=COLOR_BRASS, width=1)
-        
+
     img.save(png_path, "PNG")
 
 def render_vector_png(vname, png_path):
@@ -248,9 +248,9 @@ def main():
     os.makedirs(os.path.join(OUTPUT_DIR, "backgrounds"), exist_ok=True)
     os.makedirs(os.path.join(OUTPUT_DIR, "vector"), exist_ok=True)
     os.makedirs(os.path.join(OUTPUT_DIR, "vector", "_png"), exist_ok=True)
-    
+
     manifest = {"version": "1.0", "updated_at": "2026-08-16T12:36:00Z", "assets": []}
-    
+
     # 1. Vector UI
     vector_assets = [
         ("frame_9slice", "generated_AIassets/vector/frame_9slice.svg"),
@@ -335,7 +335,7 @@ def main():
         json.dump(manifest, f, indent=2)
     with open(FAILURES_PATH, "w") as f:
         json.dump([], f)
-        
+
     print(f"[Pipeline] Successfully rendered 49 valid binary PNG & vector assets into {OUTPUT_DIR}.")
 
 if __name__ == "__main__":

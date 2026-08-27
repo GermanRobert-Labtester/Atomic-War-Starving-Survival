@@ -137,10 +137,10 @@ IReadOnlyCollection<string> setFlags, int phase, string? locationId = null)
                 return count;
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return 0;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "VerdictNpcEntry list", ex_CATDIAG);
+                return 0;
+            }
         }
     }
 }

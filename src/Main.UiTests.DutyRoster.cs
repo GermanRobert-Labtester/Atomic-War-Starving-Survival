@@ -119,7 +119,7 @@ namespace AtomicWar.GodotApp
             Check(_questsPanel.GetChildCount() > 0, "quests panel renders with the roster section");
             CloseQuestsPanel();
 
-            GD.Print(pass ? "DUTY_ROSTER_UITEST PASS" : "DUTY_ROSTER_UITEST FAIL");
+            HostCli.EmitSummary("duty_roster_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

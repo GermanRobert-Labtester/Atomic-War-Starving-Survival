@@ -1,7 +1,7 @@
 # ASHFALL — Comprehensive GitHub Codebase Investigation & 50-Step High-Value Roadmap
 
-**Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`  
-**Target branch reviewed:** `main`  
+**Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`
+**Target branch reviewed:** `main`
 **Primary objective:** Identify unresolved issues, unimplemented/unwired systems, persistence risks, CI gaps, runtime placeholders, architecture debt, migration debt, and produce an execution-oriented roadmap of **20 high-value tasks / exactly 50 next steps**.
 
 ---

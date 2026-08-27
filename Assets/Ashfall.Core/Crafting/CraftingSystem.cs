@@ -87,16 +87,9 @@ namespace Ashfall.Core.Crafting
             }
 
             float costMult = GetCraftCostMultiplier(crafterId);
-            if (recipe.ingredients != null)
-            {
-                for (int i = 0; i < recipe.ingredients.Count; i++)
-                {
-                    var ingredient = recipe.ingredients[i];
-                    if (ingredient == null || ingredient.item == null) return false;
-                    int need = ScaleIngredientAmount(ingredient.amount, costMult);
-                    if (_inventory.Count(ingredient.item) < need) return false;
-                }
-            }
+            var bill = BuildIngredientBill(recipe, costMult);
+            var validation = _inventory.ValidateTransaction(bill);
+            if (!validation.IsValid) return false;
 
             if (recipe.result != null && recipe.resultAmount > 0 && !_inventory.CanAdd(recipe.result, recipe.resultAmount))
                 return false;
@@ -116,15 +109,9 @@ namespace Ashfall.Core.Crafting
             }
 
             float costMult = GetCraftCostMultiplier(crafterId);
-            if (recipe.ingredients != null)
-            {
-                for (int i = 0; i < recipe.ingredients.Count; i++)
-                {
-                    var ingredient = recipe.ingredients[i];
-                    int need = ScaleIngredientAmount(ingredient.amount, costMult);
-                    _inventory.Remove(ingredient.item, need);
-                }
-            }
+            var bill = BuildIngredientBill(recipe, costMult);
+            if (!_inventory.TryExecuteTransaction(bill))
+                return false;
 
             float duration = recipe.craftingTimeHours;
             if (crafterId != null && _crafterCraftTimeMultiplier != null)
@@ -192,15 +179,35 @@ namespace Ashfall.Core.Crafting
             OnCraftCompleted?.Invoke(recipe);
         }
 
+        private static InventoryBill BuildIngredientBill(Recipe recipe, float costMult)
+        {
+            var bill = new InventoryBill();
+            if (recipe?.ingredients != null)
+            {
+                for (int i = 0; i < recipe.ingredients.Count; i++)
+                {
+                    var ingredient = recipe.ingredients[i];
+                    if (ingredient?.item != null)
+                    {
+                        int need = ScaleIngredientAmount(ingredient.amount, costMult);
+                        bill.AddCost(ingredient.item, need);
+                    }
+                }
+            }
+            return bill;
+        }
+
         private void RefundIngredients(Recipe recipe)
         {
             if (recipe?.ingredients == null) return;
+            var bill = new InventoryBill();
             for (int i = 0; i < recipe.ingredients.Count; i++)
             {
                 var ingredient = recipe.ingredients[i];
                 if (ingredient?.item != null)
-                    _inventory.Add(ingredient.item, ingredient.amount);
+                    bill.AddGrant(ingredient.item, ingredient.amount);
             }
+            _inventory.TryExecuteTransaction(bill);
         }
 
         private float GetCraftCostMultiplier(string crafterId)
@@ -323,6 +330,8 @@ namespace Ashfall.Core.Crafting
     public class CraftingSystemSave
     {
         public ActiveCraftSave[] ActiveCrafts = Array.Empty<ActiveCraftSave>();
+        public WorkshopState? WorkshopState;
+        public PharmaLabState? PharmaState;
     }
 
     public class ActiveCraftSave

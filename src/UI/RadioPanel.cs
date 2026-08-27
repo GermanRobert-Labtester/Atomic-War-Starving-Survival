@@ -17,7 +17,7 @@ namespace AtomicWar.GodotApp.UI
     /// last 16 intercepts. Per the brief, no waveform / spectrogram is added —
     /// there is no Core data source exposed.
     /// </summary>
-    public partial class RadioPanel : Control
+    public partial class RadioPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action? OnRadioBroadcastSent;
@@ -40,14 +40,25 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(RadioHostSession radio)
         {
+            Unbind();
             _radioHost = radio;
             if (_radioHost != null)
             {
-                _radioHost.StateChanged -= RefreshView;
                 _radioHost.StateChanged += RefreshView;
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_radioHost != null)
+            {
+                _radioHost.StateChanged -= RefreshView;
+                _radioHost = null;
+            }
+        }
+
+
 
         public void RefreshView()
         {
@@ -311,10 +322,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_radioHost != null)
-            {
-                _radioHost.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

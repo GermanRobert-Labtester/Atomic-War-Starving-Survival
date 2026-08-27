@@ -62,7 +62,7 @@ namespace AtomicWar.GodotApp
             try
             {
                 var save = _dailyBriefing.CaptureState();
-                if (DailyBriefingSaveStore.TrySave(save)) _dailyBriefingDirty = false;
+                if (CaptureSection("daily_briefing", DailyBriefingSaveStore.TryCapturePersisted(save))) _dailyBriefingDirty = false;
             }
             catch (Exception e)
             {
@@ -76,7 +76,7 @@ namespace AtomicWar.GodotApp
             try
             {
                 var save = _campaignDay.CaptureState();
-                if (CampaignDaySaveStore.TrySave(save)) _campaignDayDirty = false;
+                if (CaptureSection("campaign_day", CampaignDaySaveStore.TryCapturePersisted(save))) _campaignDayDirty = false;
             }
             catch (Exception e)
             {
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp
                     simDay = _simDay,
                     State = _memorial.CaptureState()
                 };
-                if (MemorialSaveStore.TrySave(save))
+                if (CaptureSection("memorial", MemorialSaveStore.TryCapturePersisted(save)))
                     _memorialDirty = false;
             }
             catch (Exception e)

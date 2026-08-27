@@ -25,7 +25,7 @@ namespace AtomicWar.GodotApp.UI;
 /// own StartDemoExpedition / PushLuckDemo / RetreatDemo APIs are surfaced
 /// to the player through buttons that route back to the same host session.
 /// </summary>
-public partial class ExpeditionRadarPanel : Control
+public partial class ExpeditionRadarPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnDispatchRequested;
@@ -584,12 +584,18 @@ public partial class ExpeditionRadarPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

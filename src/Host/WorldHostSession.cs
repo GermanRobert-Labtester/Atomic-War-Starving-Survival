@@ -17,9 +17,11 @@ namespace AtomicWar.GodotApp
 
         public WeatherSystem Weather { get; }
         public SkyLayerArmorSystem SkyArmor { get; }
+        public WeatherIntelligenceCoordinator WeatherIntelligence { get; }
         public LocationEvolutionSystem LocationEvolution { get; }
         public WildlifeMigrationSystem Wildlife { get; }
         public LandmarkDegradationSystem Landmarks { get; }
+        public WastelandMapSystem WastelandMap { get; }
         public SeasonProfileDef Profile { get; private set; }
 
         public string LastEvent { get; private set; } = string.Empty;
@@ -28,13 +30,16 @@ namespace AtomicWar.GodotApp
             SkyLayerArmorSystem skyArmor = null!,
             LocationEvolutionSystem locationEvolution = null!,
             WildlifeMigrationSystem wildlife = null!,
-            LandmarkDegradationSystem landmarks = null!)
+            LandmarkDegradationSystem landmarks = null!,
+            WastelandMapSystem wastelandMap = null!)
         {
             Weather = weather ?? new WeatherSystem();
             SkyArmor = skyArmor ?? new SkyLayerArmorSystem();
+            WeatherIntelligence = new WeatherIntelligenceCoordinator(Weather, SkyArmor, new SeededRng(DemoSeed));
             LocationEvolution = locationEvolution ?? new LocationEvolutionSystem();
             Wildlife = wildlife ?? new WildlifeMigrationSystem();
             Landmarks = landmarks ?? new LandmarkDegradationSystem();
+            WastelandMap = wastelandMap ?? WastelandMapCatalogLoader.CreateSystem(string.Empty);
             Weather.OnWeatherChanged += kind =>
             {
                 LastEvent = $"Weather: {kind}";
@@ -43,11 +48,15 @@ namespace AtomicWar.GodotApp
                 RaiseStateChanged();
             };
             Weather.OnStateChanged += _ => RaiseStateChanged();
+            WeatherIntelligence.OnIntelligenceChanged += () => RaiseStateChanged();
         }
 
         public static WorldHostSession Create(string dataDir)
         {
-            var session = new WorldHostSession();
+            var mapSystem = !string.IsNullOrEmpty(dataDir)
+                ? WastelandMapCatalogLoader.CreateSystem(dataDir)
+                : null!;
+            var session = new WorldHostSession(wastelandMap: mapSystem);
             var profile = !string.IsNullOrEmpty(dataDir)
                 ? WeatherProfileLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer())
                 : null;
@@ -61,11 +70,15 @@ namespace AtomicWar.GodotApp
             {
                 if (env.State != null) session.Weather.RestoreState(env.State);
                 if (env.SkyArmor != null) session.SkyArmor.RestoreState(env.SkyArmor);
+                if (env.WeatherIntelligence != null) session.WeatherIntelligence.RestoreState(env.WeatherIntelligence);
                 if (env.LocationEvolution != null) session.LocationEvolution.RestoreState(env.LocationEvolution);
                 if (env.Wildlife != null) session.Wildlife.RestoreState(env.Wildlife);
                 if (env.Landmark != null) session.Landmarks.RestoreState(env.Landmark);
                 session.LastEvent = "World state restored from save.";
             }
+            var mapSave = WastelandMapSaveStore.TryLoad();
+            if (mapSave != null)
+                session.WastelandMap.RestoreState(mapSave);
             return session;
         }
 
@@ -136,6 +149,45 @@ namespace AtomicWar.GodotApp
 
         public SkyArmorSaveState CaptureSkyArmorSave() => SkyArmor.CaptureState();
         public void RestoreSkyArmorSave(SkyArmorSaveState state) => SkyArmor.RestoreState(state);
+
+        // ── Weather Intelligence (station + orbital telemetry) ────────────
+
+        public WeatherIntelligenceSaveState CaptureWeatherIntelligenceSave()
+            => WeatherIntelligence.CaptureState();
+
+        public string InstallWeatherStationDemo(int day)
+        {
+            var r = WeatherIntelligence.Station.Install(day);
+            return r.Status == ActionResult.StatusKind.Success
+                ? $"Weather station installed on day {day}."
+                : "Station already installed.";
+        }
+
+        public string CalibrateWeatherStationDemo(int day)
+        {
+            var r = WeatherIntelligence.Station.Calibrate(day);
+            return r.Status == ActionResult.StatusKind.Success
+                ? $"Station calibrated (accuracy {WeatherIntelligence.Station.State.accuracy:P0})."
+                : "Cannot calibrate — station not installed or already calibrated.";
+        }
+
+        public string ActivateOrbitalTelemetryDemo(int day)
+        {
+            WeatherIntelligence.Orbital.ActivateTelemetry(day);
+            return $"Orbital Harrow telemetry activated on day {day}.";
+        }
+
+        public string ScheduleOrbitalImpactDemo(int day, int gridX, float energyMj)
+        {
+            WeatherIntelligence.Orbital.ScheduleImpact(day, gridX, energyMj);
+            return $"Orbital impact scheduled: day {day}, grid {gridX}, {energyMj:F1} MJ. Warning lead: {WeatherIntelligence.Orbital.State.warningLeadDays}d.";
+        }
+
+        public string WeatherIntelligenceStatusLine()
+        {
+            var rm = WeatherIntelligence.BuildReadModel();
+            return rm.advisory;
+        }
 
         /// <summary>
         /// Hazard weather kinds that warrant an audio alert on transition.

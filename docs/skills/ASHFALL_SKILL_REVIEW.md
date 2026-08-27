@@ -1,6 +1,6 @@
 # ASHFALL Skill Review
 
-**Date:** 2026-08-22  
+**Date:** 2026-08-22
 **Scope:** Ten skills proposed during the skill-gap brainstorm
 
 ## Decision

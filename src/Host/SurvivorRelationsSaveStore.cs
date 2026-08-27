@@ -1,115 +1,55 @@
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
+// ============================================================================
+// Save Store : SurvivorRelationsSaveStore
+// Core State : Ashfall.Core.SurvivorRelationsState
+// Host Caller: Main.ShelterSocial / SurvivorRelationsHostSession
+// Purpose    : Interpersonal survivor affinities, rivalries, trust bonds, and social friction
+// ============================================================================
 using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
-    [Serializable]
-    public sealed class SurvivorRelationsHostSave
-    {
-        public string SchemaVersion { get; set; } = "1.0";
-        public SurvivorRelationsState State { get; set; }
-        public string Checksum { get; set; } = string.Empty;
-    }
-
+    /// <summary>
+    /// Survivor relations save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). This
+    /// shelter-batch section ships the legacy
+    /// <c>{ SchemaVersion, State, Checksum }</c> envelope, preserved
+    /// byte-for-byte by the Core <see cref="SchemaVersionedEnvelope{T}"/>
+    /// adapter; path resolution, atomic write, and error handling live in the
+    /// service.
+    /// </summary>
     public static class SurvivorRelationsSaveStore
     {
         public const string FileName = "survivor_relations_save.json";
         public const string SectionName = "survivor_relations";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(SurvivorRelationsState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static SurvivorRelationsState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<SurvivorRelationsState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(SurvivorRelationsSaveStore),
+            SchemaVersionedEnvelope<SurvivorRelationsState>.Encode,
+            SchemaVersionedEnvelope<SurvivorRelationsState>.Decode);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(SurvivorRelationsState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[SurvivorRelationsSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static SurvivorRelationsState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<SurvivorRelationsState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[SurvivorRelationsSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(SurvivorRelationsState state) => s_store.CaptureBare(state);
 
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static SurvivorRelationsState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static bool TrySave(SurvivorRelationsState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new SurvivorRelationsHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Relations] save failed: " + e.Message);
-                return false;
-            }
-        }
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(SurvivorRelationsState state) => s_store.CaptureBare(state);
 
-        public static SurvivorRelationsState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static SurvivorRelationsState? TryRestore(string json) => s_store.RestoreBare(json);
 
-                var envelope = s_json.Deserialize<SurvivorRelationsHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                    return envelope.State;
-                }
+        public static bool TrySave(SurvivorRelationsState state) => s_store.TrySave(state);
 
-                return s_json.Deserialize<SurvivorRelationsState>(raw);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Relations] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static SurvivorRelationsState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(SurvivorRelationsState state) => s_store.CapturePersisted(state);
     }
 }

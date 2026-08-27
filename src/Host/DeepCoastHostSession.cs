@@ -110,7 +110,7 @@ namespace AtomicWar.GodotApp
 
         public string ClearPerimeter(int day)
         {
-            if (DeepCoast.TryClearPerimeter(day, TryConsumeAtomic))
+            if (DeepCoast.TryClearPerimeter(day, TryConsumeBillAtomic))
             {
                 LastEvent = "The perimeter boom is down. The channel mouth is open.";
                 return LastEvent;
@@ -122,7 +122,7 @@ namespace AtomicWar.GodotApp
 
         public string ClearChannel(int day)
         {
-            if (DeepCoast.TryClearServiceChannel(day, TryConsumeAtomic))
+            if (DeepCoast.TryClearServiceChannel(day, TryConsumeBillAtomic))
             {
                 LastEvent = "The service channel is cut and winched clear. The deep berth is reachable.";
                 Note(District8DeepCoastSystem.JournalDockOpen, "We cut the slip open. The water came up black and still and the ice came away in blue sheets that rang when they broke. A pallet of coiled rope still hangs on the gantry trolley, five years dry and still greased. The yard is open past the berths now. The Northern Sound dock is hull-down beyond the quay, answering a schedule nobody reads.");
@@ -135,7 +135,7 @@ namespace AtomicWar.GodotApp
 
         public string RepairBerth(int day)
         {
-            if (DeepCoast.TryRepairDeepBerth(day, TryConsumeAtomic))
+            if (DeepCoast.TryRepairDeepBerth(day, TryConsumeBillAtomic))
             {
                 LastEvent = "Berth 9 is operational: winch, hose reels, mooring cable. Dock work can begin.";
                 Note(District8DeepCoastSystem.JournalBerthOperational, "The winch housing opened with the square key — the Commission kept their keys, and someone left a copy under the cable drum. We greased the bitts, re-reeled the hose, and ran the mooring cable end to end. The brass plate says BERTH 9 — ICEBREAKER MAINTENANCE. It says so again now, for the first time in five years, in a way that means work.");
@@ -326,11 +326,14 @@ namespace AtomicWar.GodotApp
 
         // ── Helpers ───────────────────────────────────────────────────
 
+        private bool TryConsumeBillAtomic(IReadOnlyDictionary<string, int> bill)
+        {
+            return Inventory.TryConsumeBill(bill);
+        }
+
         private bool TryConsumeAtomic(string itemId, int qty)
         {
-            if (!Inventory.Items.TryGetValue(itemId, out int held) || held < qty) return false;
-            Inventory.RemoveItem(itemId, qty);
-            return true;
+            return Inventory.TryConsumeBill(new Dictionary<string, int>(StringComparer.Ordinal) { { itemId, qty } });
         }
 
         private void Note(string key, string text)

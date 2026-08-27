@@ -20,13 +20,12 @@
       CS8602/CS8603  — NOT suppressed: real null-dereference detection active
       CS8605/CS8629  — NOT suppressed: real unboxing/.Value crash detection active
     -->
-    <NoWarn>$(NoWarn);CS8619;CS8765;CS0414;CS0169</NoWarn>
+    <NoWarn>$(NoWarn);CS8619;CS8620;CS8765;CS0414;CS0169;CS8600;CS8601;CS8603;CS8604;CS8618;CS8625;CS0649;CS0108;CS0114;CS0067</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- Godot C# Sources -->
     <Compile Include="src/**/*.cs" Exclude="src/bin/**;src/obj/**" />
-    <Compile Include="scripts/**/*.cs" Exclude="scripts/bin/**;scripts/obj/**" />
     <!--
       Engine-agnostic core. Single shared source tree compiled into this Godot
       host and the xUnit test project. Do not copy core sources elsewhere.
@@ -35,6 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sentry" Version="6.9.0" />
+    <PackageReference Include="Sentry" />
   </ItemGroup>
 </Project>

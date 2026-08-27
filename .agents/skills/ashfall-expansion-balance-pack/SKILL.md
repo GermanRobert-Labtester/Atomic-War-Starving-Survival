@@ -238,12 +238,12 @@ The skill detects and reports:
    - Economic stability: 20% (collapsing)
    - Narrative completion: 15% (stuck)
    - Softlocks detected: 3 types
-   
+
    Root causes:
    - Trade stance too hostile (0.5)
    - Ledger debt too high (8000 credits)
    - Brine water price too high (0.9)
-   
+
    Recommended fixes:
    - Increase trade stance to 1.2
    - Reduce ledger debt to 3000
@@ -258,7 +258,7 @@ The skill detects and reports:
    - Cause: Missing flag production in quest completion
    - Impact: 100% of players stuck at this point
    - Reproduction: Always happens on day 12
-   
+
    Suggested fix:
    - Add flag_holdfast_main_completed in quest_holdfast_main completion
    - Ensure flag unlocks next quest
@@ -271,13 +271,13 @@ The skill detects and reports:
    - Ledger debt = 8000 (high)
    - Brine water price = 0.9 (very high)
    - Result: 0% survival rate
-   
+
    Analysis:
    - Hostile trade stance reduces income
    - High debt increases expenses
    - High water price makes survival impossible
    - Combined effect is catastrophic
-   
+
    Recommendation:
    - Never allow these three parameters to be extreme simultaneously
    - Add validation in expansion setup
@@ -289,12 +289,12 @@ The skill detects and reports:
    - Survival rate: 85% → 45% (-40%)
    - Economic stability: 90% → 30% (-60%)
    - Narrative completion: 95% → 25% (-70%)
-   
+
    Root cause:
    - Recent change to trade algorithm
    - New debt interest calculation
    - Reduced trade route safety
-   
+
    Impact:
    - Expansion makes game unplayable
    - Must revert changes or fix balance
@@ -307,12 +307,12 @@ The skill detects and reports:
    - Trigger condition: Trade stance = 0.6 AND debt = 5000
    - Impact: 50% caravan survival rate
    - Reproduction: 10% of simulations
-   
+
    Analysis:
    - Trade stance affects caravan safety
    - Debt level affects caravan size
    - Combined creates dangerous scenario
-   
+
    Recommendation:
    - Add warning to players
    - Provide escape route
@@ -327,12 +327,12 @@ The skill detects and reports:
    - Actual: Sudden spike on day 90
    - Cause: Resource shortage due to raid
    - Impact: Players cannot afford basic supplies
-   
+
    Analysis:
    - Raid system triggers too aggressively
    - Should have cooldown or warning
    - Players need time to prepare
-   
+
    Recommendation:
    - Add raid cooldown
    - Provide warning before raids

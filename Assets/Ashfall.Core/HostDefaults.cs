@@ -13,18 +13,20 @@ namespace Ashfall.Core
     /// </summary>
     public sealed class FileSystemIO : IFileIO
     {
+        private static readonly UTF8Encoding Utf8NoBom = new UTF8Encoding(false);
+
         public bool DirectoryExists(string path) => Directory.Exists(path);
 
         public bool FileExists(string path) => File.Exists(path);
 
-        public string ReadAllText(string path) => File.ReadAllText(path, Encoding.UTF8);
+        public string ReadAllText(string path) => File.ReadAllText(path, Utf8NoBom);
 
         public void WriteAllText(string path, string contents)
         {
             string? dir = Path.GetDirectoryName(path);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
-            File.WriteAllText(path, contents ?? string.Empty, Encoding.UTF8);
+            File.WriteAllText(path, contents ?? string.Empty, Utf8NoBom);
         }
 
         public string Combine(params string[] parts) => Path.Combine(parts);
@@ -216,7 +218,6 @@ namespace Ashfall.Core
                 }
                 // Also try to see if the res path itself contains Data
                 string resData = "res://Assets/StreamingAssets/Data";
-                string resDataLower = "res://assets/StreamingAssets/Data";
                 // We cannot use DirAccess here (Core), so just check if startDirectory is a parent of resData
                 if (startDirectory == "res://" || startDirectory == "res://Assets" || startDirectory == "res://Assets/StreamingAssets")
                 {

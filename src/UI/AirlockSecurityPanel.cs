@@ -7,7 +7,7 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
-    public partial class AirlockSecurityPanel : Control
+    public partial class AirlockSecurityPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -34,6 +34,17 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -56,23 +67,22 @@ namespace AtomicWar.GodotApp.UI
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _admitBtn = new Button { Text = "Admit Visitor", CustomMinimumSize = new Vector2(140, 36) };
-            _admitBtn.Pressed += () => _host?.ResolveIncident(VisitorDecision.Admit);
+            _admitBtn = AshfallUiHelpers.MakeButton("Admit Visitor", () => _host?.ResolveIncident(VisitorDecision.Admit));
+            _admitBtn.CustomMinimumSize = new Vector2(140, 36);
             buttonRow.AddChild(_admitBtn);
 
-            _quarantineBtn = new Button { Text = "Quarantine (3 Days)", CustomMinimumSize = new Vector2(140, 36) };
-            _quarantineBtn.Pressed += () => _host?.ResolveIncident(VisitorDecision.Quarantine);
+            _quarantineBtn = AshfallUiHelpers.MakeButton("Quarantine (3 Days)", () => _host?.ResolveIncident(VisitorDecision.Quarantine));
+            _quarantineBtn.CustomMinimumSize = new Vector2(140, 36);
             buttonRow.AddChild(_quarantineBtn);
 
-            _turnAwayBtn = new Button { Text = "Turn Away", CustomMinimumSize = new Vector2(140, 36) };
-            _turnAwayBtn.Pressed += () => _host?.ResolveIncident(VisitorDecision.TurnAway);
+            _turnAwayBtn = AshfallUiHelpers.MakeButton("Turn Away", () => _host?.ResolveIncident(VisitorDecision.TurnAway));
+            _turnAwayBtn.CustomMinimumSize = new Vector2(140, 36);
             buttonRow.AddChild(_turnAwayBtn);
 
-            _cycleDoorBtn = new Button { Text = "Cycle Door", CustomMinimumSize = new Vector2(120, 36) };
-            _cycleDoorBtn.Pressed += () => _host?.CycleDoor(AirlockDoorState.Cycling);
+            _cycleDoorBtn = AshfallUiHelpers.MakeButton("Cycle Door", () => _host?.CycleDoor(AirlockDoorState.Cycling));
+            _cycleDoorBtn.CustomMinimumSize = new Vector2(120, 36);
             buttonRow.AddChild(_cycleDoorBtn);
 
             _contentStack.AddChild(buttonRow);
@@ -89,7 +99,18 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_host == null || _statusRail == null)
+            {
+                if (_detailText != null)
+                {
+                    _detailText.Text = "Airlock security session is not bound. Sentry post & biometric scanners are offline.";
+                }
+                if (_admitBtn != null) _admitBtn.Disabled = true;
+                if (_quarantineBtn != null) _quarantineBtn.Disabled = true;
+                if (_turnAwayBtn != null) _turnAwayBtn.Disabled = true;
+                if (_cycleDoorBtn != null) _cycleDoorBtn.Disabled = true;
+                return;
+            }
 
             var s = _host.System.State;
             _statusRail.Set("door", s.doorState.ToString().ToUpperInvariant(), s.doorState == AirlockDoorState.Breached ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);
@@ -107,10 +128,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

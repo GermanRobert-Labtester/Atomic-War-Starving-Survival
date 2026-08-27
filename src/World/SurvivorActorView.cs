@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.Survivors;
@@ -6,15 +7,29 @@ using Ashfall.Core.Survivors;
 namespace AtomicWar.GodotApp.World
 {
     /// <summary>
-    /// A single survivor's visual on the shelter interior. Shows name, a health
-    /// indicator (green→red), a radiation indicator (blue→red), and a status
-    /// indicator driven by survival needs. Presentation only — all state is read
-    /// from the authoritative <see cref="SurvivorNeedsState"/> / <see cref="SurvivorRadState"/>
-    /// supplied by the host session.
+    /// A single survivor's visual on the shelter interior. Shows portrait/sprite, name,
+    /// a health indicator (green→red), a radiation indicator (blue→red), and a status
+    /// indicator driven by survival needs.
+    /// Resolves survivor portraits by survivor ID via <see cref="AssetRegistry.GetPortrait"/>
+    /// with canonical fallback to generic survivor placeholder sprite.
     /// </summary>
     public partial class SurvivorActorView : Node2D
     {
-        public string SurvivorId { get; set; }
+        private string _survivorId = string.Empty;
+
+        public string SurvivorId
+        {
+            get => _survivorId;
+            set
+            {
+                if (_survivorId != value)
+                {
+                    _survivorId = value;
+                    UpdatePortrait();
+                }
+            }
+        }
+
         public Label Label { get; private set; }
         public Sprite2D Sprite { get; private set; }
         public ColorRect HealthIndicator { get; private set; }
@@ -22,6 +37,9 @@ namespace AtomicWar.GodotApp.World
         public ColorRect StatusIndicator { get; private set; }
 
         public SurvivorNeedsState SurvivorState { get; private set; }
+
+        /// <summary>Canonical fallback texture path for unskinned survivors.</summary>
+        public const string FallbackTexturePath = AssetRegistry.FallbackSurvivorPath;
 
         public SurvivorActorView()
         {
@@ -45,7 +63,6 @@ namespace AtomicWar.GodotApp.World
             Label.Position = new Vector2(0, -30);
 
             Sprite = new Sprite2D();
-            Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/Characters/placeholder_survivor.png");
             Sprite.Scale = new Vector2(0.7f, 0.7f);
 
             // Health indicator (bottom left of sprite)
@@ -66,6 +83,8 @@ namespace AtomicWar.GodotApp.World
             actorContainer.AddChild(HealthIndicator);
             actorContainer.AddChild(RadiationIndicator);
             actorContainer.AddChild(StatusIndicator);
+
+            UpdatePortrait();
         }
 
         private ColorRect CreateStatusIndicator(Color color)
@@ -74,6 +93,44 @@ namespace AtomicWar.GodotApp.World
             indicator.Size = new Vector2(20, 5);
             indicator.Color = color;
             return indicator;
+        }
+
+        /// <summary>
+        /// Resolves the survivor portrait using <see cref="AssetRegistry.GetPortrait"/>
+        /// before falling back to the canonical generic character sprite.
+        /// </summary>
+        public void UpdatePortrait()
+        {
+            if (Sprite == null) return;
+
+            Texture2D? texture = null;
+            if (!string.IsNullOrEmpty(_survivorId))
+            {
+                var result = AssetRegistry.GetPortrait(_survivorId);
+                if (result.Texture != null)
+                {
+                    texture = result.Texture;
+                }
+            }
+
+            texture ??= GD.Load<Texture2D>(FallbackTexturePath);
+
+            Sprite.Texture = texture;
+            if (texture != null)
+            {
+                Vector2 texSize = texture.GetSize();
+                if (texSize.X > 0 && texSize.Y > 0)
+                {
+                    // Scale uniformly to fit within ~48x48 pixel bounding box
+                    float targetDim = 48f;
+                    float scaleFactor = targetDim / Math.Max(texSize.X, texSize.Y);
+                    Sprite.Scale = new Vector2(scaleFactor, scaleFactor);
+                }
+                else
+                {
+                    Sprite.Scale = new Vector2(0.7f, 0.7f);
+                }
+            }
         }
 
         /// <summary>
@@ -89,6 +146,7 @@ namespace AtomicWar.GodotApp.World
             }
 
             SurvivorState = state;
+            SurvivorId = state.Id;
             Visible = true;
             Label.Text = FormatSurvivorName(state.Id);
 
@@ -138,7 +196,7 @@ namespace AtomicWar.GodotApp.World
             }
         }
 
-        private string FormatSurvivorName(string id)
+        private static string FormatSurvivorName(string id)
         {
             if (string.IsNullOrEmpty(id)) return "Unknown";
             return System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(id.Replace('_', ' '));

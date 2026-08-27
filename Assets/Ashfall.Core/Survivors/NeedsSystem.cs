@@ -70,16 +70,16 @@ namespace Ashfall.Core.Survivors
     public class NeedsSystem
     {
         private readonly NeedsProfile _profile;
-        private readonly Func<SurvivorNeedsState, bool> _isNearHeatSource;
+        private readonly Func<SurvivorNeedsState, bool>? _isNearHeatSource;
         private readonly System.Collections.Generic.List<SurvivorNeedsState> _survivors =
             new System.Collections.Generic.List<SurvivorNeedsState>();
 
-        public event Action<SurvivorNeedsState, NeedKind, float> OnNeedChanged;
-        public event Action<SurvivorNeedsState, NeedKind> OnNeedCritical;
-        public event Action<SurvivorNeedsState> OnDied;
+        public event Action<SurvivorNeedsState, NeedKind, float>? OnNeedChanged;
+        public event Action<SurvivorNeedsState, NeedKind>? OnNeedCritical;
+        public event Action<SurvivorNeedsState>? OnDied;
 
         /// <summary>Optional death-gate: return true to defer death at 0 Health.</summary>
-        public Func<SurvivorNeedsState, bool> TryDeferDeath;
+        public Func<SurvivorNeedsState, bool>? TryDeferDeath;
 
         public NeedsSystem(NeedsProfile? profile = null, Func<SurvivorNeedsState, bool>? isNearHeatSource = null)
         {

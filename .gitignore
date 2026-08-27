@@ -239,3 +239,7 @@ codex_alt_*.png
 
 # Other agent harness local state
 /.commandcode/
+
+
+# Snapshot diff captures (scratch — never commit)
+/snapshot-capture/

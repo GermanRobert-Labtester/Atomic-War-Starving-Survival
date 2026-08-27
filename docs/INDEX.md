@@ -1,0 +1,436 @@
+# ASHFALL — Master Documentation Index
+
+**Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
+**Total Indexed Documents:** 336 | **Last Verified:** 2026-08-27
+
+| Status Badge | Meaning | Corpus Count |
+|---|---|---|
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 225 |
+| 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 98 |
+| 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 13 |
+
+---
+
+## Duplicate & Near-Duplicate Audit Generations
+
+The following documents share identical or near-identical filenames across root, `docs/`, and `deprecated_audits/`. Use the canonical location listed below:
+
+| Filename | Copies / Locations | Canonical Location | Notes |
+|---|---|---|---|
+| `ASHFALL_MASTER_IMPLEMENTATION_PLAN.md` | `ASHFALL_MASTER_IMPLEMENTATION_PLAN.md`<br>`docs/ASHFALL_MASTER_IMPLEMENTATION_PLAN.md` | `ASHFALL_MASTER_IMPLEMENTATION_PLAN.md` | Root vs docs mirror |
+| `manifest.md` | `Assets/sprites/AI_Generated/manifest.md`<br>`assets/sprites/AI_Generated/manifest.md` | `Assets/sprites/AI_Generated/manifest.md` | Root vs docs mirror |
+| `audit_ASSET_MANIFEST.md` | `deprecated_audits/audit_ASSET_MANIFEST.md`<br>`docs/deprecated_audits/audit_ASSET_MANIFEST.md` | `deprecated_audits/audit_ASSET_MANIFEST.md` | Historical audit duplicate |
+| `audit_AUDIT_REPORT.md` | `deprecated_audits/audit_AUDIT_REPORT.md`<br>`docs/deprecated_audits/audit_AUDIT_REPORT.md` | `deprecated_audits/audit_AUDIT_REPORT.md` | Historical audit duplicate |
+| `audit_COMPREHENSIVE_AUDIT_2026-08-04.md` | `deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md`<br>`docs/deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md` | `deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md` | Historical audit duplicate |
+| `audit_ISSUE_REGISTER.md` | `deprecated_audits/audit_ISSUE_REGISTER.md`<br>`docs/deprecated_audits/audit_ISSUE_REGISTER.md` | `deprecated_audits/audit_ISSUE_REGISTER.md` | Historical audit duplicate |
+| `audit_audit_framework.md` | `deprecated_audits/audit_audit_framework.md`<br>`docs/deprecated_audits/audit_audit_framework.md` | `deprecated_audits/audit_audit_framework.md` | Historical audit duplicate |
+| `audit_c1_plan.md` | `deprecated_audits/audit_c1_plan.md`<br>`docs/deprecated_audits/audit_c1_plan.md` | `deprecated_audits/audit_c1_plan.md` | Historical audit duplicate |
+| `audit_c1_remediation.md` | `deprecated_audits/audit_c1_remediation.md`<br>`docs/deprecated_audits/audit_c1_remediation.md` | `deprecated_audits/audit_c1_remediation.md` | Historical audit duplicate |
+| `audit_c2_remediation.md` | `deprecated_audits/audit_c2_remediation.md`<br>`docs/deprecated_audits/audit_c2_remediation.md` | `deprecated_audits/audit_c2_remediation.md` | Historical audit duplicate |
+| `audit_c3_plan.md` | `deprecated_audits/audit_c3_plan.md`<br>`docs/deprecated_audits/audit_c3_plan.md` | `deprecated_audits/audit_c3_plan.md` | Historical audit duplicate |
+| `audit_c3_remediation.md` | `deprecated_audits/audit_c3_remediation.md`<br>`docs/deprecated_audits/audit_c3_remediation.md` | `deprecated_audits/audit_c3_remediation.md` | Historical audit duplicate |
+| `audit_h1_plan.md` | `deprecated_audits/audit_h1_plan.md`<br>`docs/deprecated_audits/audit_h1_plan.md` | `deprecated_audits/audit_h1_plan.md` | Historical audit duplicate |
+| `audit_h1_remediation.md` | `deprecated_audits/audit_h1_remediation.md`<br>`docs/deprecated_audits/audit_h1_remediation.md` | `deprecated_audits/audit_h1_remediation.md` | Historical audit duplicate |
+| `audit_h2_plan.md` | `deprecated_audits/audit_h2_plan.md`<br>`docs/deprecated_audits/audit_h2_plan.md` | `deprecated_audits/audit_h2_plan.md` | Historical audit duplicate |
+| `audit_h2_remediation.md` | `deprecated_audits/audit_h2_remediation.md`<br>`docs/deprecated_audits/audit_h2_remediation.md` | `deprecated_audits/audit_h2_remediation.md` | Historical audit duplicate |
+| `audit_h3_plan.md` | `deprecated_audits/audit_h3_plan.md`<br>`docs/deprecated_audits/audit_h3_plan.md` | `deprecated_audits/audit_h3_plan.md` | Historical audit duplicate |
+| `audit_h3_remediation.md` | `deprecated_audits/audit_h3_remediation.md`<br>`docs/deprecated_audits/audit_h3_remediation.md` | `deprecated_audits/audit_h3_remediation.md` | Historical audit duplicate |
+| `audit_h4_plan.md` | `deprecated_audits/audit_h4_plan.md`<br>`docs/deprecated_audits/audit_h4_plan.md` | `deprecated_audits/audit_h4_plan.md` | Historical audit duplicate |
+| `ASSET_MANIFEST.md` | `deprecated_audits/junk_20260822/audit/ASSET_MANIFEST.md`<br>`docs/ai-art/ASSET_MANIFEST.md` | `docs/ai-art/ASSET_MANIFEST.md` | Historical audit duplicate |
+| `AUDIT_REPORT.md` | `deprecated_audits/junk_20260822/audit/AUDIT_REPORT.md`<br>`docs/audit/AUDIT_REPORT.md` | `docs/audit/AUDIT_REPORT.md` | Historical audit duplicate |
+| `DEEP_CODE_AUDIT_2026-08-23.md` | `docs/DEEP_CODE_AUDIT_2026-08-23.md`<br>`docs/plans/DEEP_CODE_AUDIT_2026-08-23.md` | `docs/DEEP_CODE_AUDIT_2026-08-23.md` | Historical audit duplicate |
+| `sources.md` | `docs/plans/sources.md`<br>`sources.md` | `docs/plans/sources.md` | Root vs docs mirror |
+| `ASSET_GALLERY.md` | `docs/ui/ASSET_GALLERY.md`<br>`docs/visual/ASSET_GALLERY.md` | `docs/ui/ASSET_GALLERY.md` | Root vs docs mirror |
+
+---
+
+## 1. Living System Architecture & Governance (8 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`AGENTS.md`](../AGENTS.md) | **PROJECT: ASHFALL (working title) — 2D Atomic-War Survival** — Original 2D survival-management game set after a nuclear exchange. Inspired by the survival-management genre; do **no... |
+| 🟢 `CURRENT` | [`README.md`](../README.md) | **ASHFALL: Atomic War – Starving Survival** — 2D post-nuclear survival-management game. Godot 4.7 .NET (C#) is the only |
+| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-08-27<br> |
+| 🟢 `CURRENT` | [`docs/architecture/GODOT_HOST_DECOMPOSITION_MAIN.md`](architecture/GODOT_HOST_DECOMPOSITION_MAIN.md) | **Main.cs Decomposition Plan — GAP-ARCH-01** — **Date:** 2026-08-23 |
+| 🟢 `CURRENT` | [`docs/architecture/GODOT_HOST_PROJECT_REFERENCE_SPIKE.md`](architecture/GODOT_HOST_PROJECT_REFERENCE_SPIKE.md) | **ASHFALL — Feasibility Spike Report: Compiling Godot Host via ProjectReference** — **Date:** 2026-08-27<br> |
+| 🟢 `CURRENT` | [`docs/architecture/ORDINAL_PERSISTENCE_BOUNDARY_AUDIT.md`](architecture/ORDINAL_PERSISTENCE_BOUNDARY_AUDIT.md) | **ASHFALL — Ordinal vs Case-Insensitive Boundary Architecture Audit** — **Date:** 2026-08-27<br> |
+| 🟢 `CURRENT` | [`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`](architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md) | **ASHFALL — Triad Drift Gate & Subsystem Save Ownership** — **Date:** 2026-08-27 |
+| 🟢 `CURRENT` | [`docs/architecture/dual_engine_plan.md`](architecture/dual_engine_plan.md) | **ASHFALL dual-engine plan (Phase 0)** — Unity 6 LTS is the **primary** authoring/shipping engine. Godot 4.7 .NET is the **secondary** runtime so the simulati... |
+
+## 10. Quarantined & Historical Audits (68 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_ASSET_MANIFEST.md`](../deprecated_audits/audit_ASSET_MANIFEST.md) | **ASHFALL — asset manifest** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_AUDIT_REPORT.md`](../deprecated_audits/audit_AUDIT_REPORT.md) | **ASHFALL — Comprehensive Game Code Audit Report** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md`](../deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md) | **ASHFALL — Comprehensive Technical Audit** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_ISSUE_REGISTER.md`](../deprecated_audits/audit_ISSUE_REGISTER.md) | **ASHFALL Master Issue Register** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_audit_framework.md`](../deprecated_audits/audit_audit_framework.md) | **ASHFALL Comprehensive Game Audit — Framework** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_c1_plan.md`](../deprecated_audits/audit_c1_plan.md) | **C-1 Remediation Plan — Per-system decision matrix** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_c1_remediation.md`](../deprecated_audits/audit_c1_remediation.md) | **C-1 Remediation — Outcome** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_c2_remediation.md`](../deprecated_audits/audit_c2_remediation.md) | **C-2 Remediation — Save/Load Round-Trip Coverage** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_c3_plan.md`](../deprecated_audits/audit_c3_plan.md) | **C-3 Remediation Plan — AI Action Wiring** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_c3_remediation.md`](../deprecated_audits/audit_c3_remediation.md) | **C-3 Remediation — AI Action Coverage** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_h1_plan.md`](../deprecated_audits/audit_h1_plan.md) | **H-1 Remediation Plan — TimeSystem Substep Watchdog** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_h1_remediation.md`](../deprecated_audits/audit_h1_remediation.md) | **H-1 Remediation — TimeSystem Substep Watchdog** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_h2_plan.md`](../deprecated_audits/audit_h2_plan.md) | **H-2 Remediation Plan — EventBus Lifecycle** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_h2_remediation.md`](../deprecated_audits/audit_h2_remediation.md) | **H-2 Remediation — EventBus Lifecycle** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_h3_plan.md`](../deprecated_audits/audit_h3_plan.md) | **H-3 Remediation Plan — EncounterEventFactory id dedup** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_h3_remediation.md`](../deprecated_audits/audit_h3_remediation.md) | **H-3 Remediation — EncounterEventFactory id dedup** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/audit_h4_plan.md`](../deprecated_audits/audit_h4_plan.md) | **H-4 Remediation Plan — SaveSystem refactor to ISaveable** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/ASSET_MANIFEST.md`](../deprecated_audits/junk_20260822/audit/ASSET_MANIFEST.md) | **ASHFALL — asset manifest** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/AUDIT_REPORT.md`](../deprecated_audits/junk_20260822/audit/AUDIT_REPORT.md) | **ASHFALL — Comprehensive Game Code Audit Report** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/COMPREHENSIVE_AUDIT_2026-08-04.md`](../deprecated_audits/junk_20260822/audit/COMPREHENSIVE_AUDIT_2026-08-04.md) | **ASHFALL — Comprehensive Technical Audit** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_MASTER.md`](../deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_MASTER.md) | **ASHFALL (Atomic War) — Master Deep Code Audit & Sweep Synthesis** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART2.md`](../deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART2.md) | **ASHFALL (Atomic War) — Master Deep Code Audit (Part 2: Sweeps 11–20)** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART3.md`](../deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART3.md) | **ASHFALL (Atomic War) — Master Deep Code Audit (Part 3: Sweeps 21–30)** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART4.md`](../deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART4.md) | **ASHFALL (Atomic War) — Master Deep Code Audit (Part 4: Sweeps 31–40)** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART5.md`](../deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART5.md) | **ASHFALL (Atomic War) — Master Deep Code Audit (Part 5: Chunk-by-Chunk Deep Logic & Code Bloat Sweeps 41–50)** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART6.md`](../deprecated_audits/junk_20260822/audit/COMPREHENSIVE_DEEP_SWEEP_AUDIT_PART6.md) | **ASHFALL (Atomic War) — Master Deep Code Audit (Part 6: Undone, Unwired & Unfinished Systems Sweeps 51–60)** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/CONSOLIDATED_AUDIT_2026-08-12_CLAUDE.md`](../deprecated_audits/junk_20260822/audit/CONSOLIDATED_AUDIT_2026-08-12_CLAUDE.md) | **ASHFALL — Consolidated Audit & Remediation Plan** — **Date:** 2026-08-12 |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/DEEP_CODE_AUDIT_2026-08-12_ZCODE.md`](../deprecated_audits/junk_20260822/audit/DEEP_CODE_AUDIT_2026-08-12_ZCODE.md) | **ASHFALL — Deep Code Audit (logic-correctness pass)** — **Date:** 2026-08-12 |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/DEEP_SWEEP_AUDIT_2026-08.md`](../deprecated_audits/junk_20260822/audit/DEEP_SWEEP_AUDIT_2026-08.md) | **ASHFALL — Deep Code Audit: 10 Systematic Sweeps** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/DEEP_SWEEP_AUDIT_FINAL.md`](../deprecated_audits/junk_20260822/audit/DEEP_SWEEP_AUDIT_FINAL.md) | **DEEP AUDIT — FINAL REPORT** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/DEEP_SWEEP_AUDIT_PART2.md`](../deprecated_audits/junk_20260822/audit/DEEP_SWEEP_AUDIT_PART2.md) | **ASHFALL — Deep Code Audit Part 2: Unscanned Subsystems** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/DEEP_SWEEP_AUDIT_PART3.md`](../deprecated_audits/junk_20260822/audit/DEEP_SWEEP_AUDIT_PART3.md) | **ASHFALL — Deep Code Audit Part 3: Economy, Needs, EventRunner Save/Load, Full Restore Order** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/GRAND_MASTER_AUDIT_ENCYCLOPEDIA.md`](../deprecated_audits/junk_20260822/audit/GRAND_MASTER_AUDIT_ENCYCLOPEDIA.md) | **ASHFALL (Atomic War) — Grand Master Audit & Refactoring Encyclopedia** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/LIVE_AUDIT_REPORT.md`](../deprecated_audits/junk_20260822/audit/LIVE_AUDIT_REPORT.md) | **ASHFALL — Live Technical Audit Report** — **Date:** 2026-08-12 |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/MIGRATION_AUDIT_REPORT.md`](../deprecated_audits/junk_20260822/audit/MIGRATION_AUDIT_REPORT.md) | **Ashfall Unity → Godot Migration Audit Report** — **Date:** 2026-08-14 |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/REMAINING_WORK_REPORT.md`](../deprecated_audits/junk_20260822/audit/REMAINING_WORK_REPORT.md) | **ASHFALL — Remaining Work Report** — **Branch:** `feature/new-content-batch` |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/VERIFICATION_REPORT.md`](../deprecated_audits/junk_20260822/audit/VERIFICATION_REPORT.md) | **ASHFALL Audit Verification Report** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/audit_framework.md`](../deprecated_audits/junk_20260822/audit/audit_framework.md) | **ASHFALL Comprehensive Game Audit — Framework** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/c1_plan.md`](../deprecated_audits/junk_20260822/audit/c1_plan.md) | **C-1 Remediation Plan — Per-system decision matrix** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/c1_remediation.md`](../deprecated_audits/junk_20260822/audit/c1_remediation.md) | **C-1 Remediation — Outcome** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/c2_remediation.md`](../deprecated_audits/junk_20260822/audit/c2_remediation.md) | **C-2 Remediation — Save/Load Round-Trip Coverage** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/c3_plan.md`](../deprecated_audits/junk_20260822/audit/c3_plan.md) | **C-3 Remediation Plan — AI Action Wiring** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/c3_remediation.md`](../deprecated_audits/junk_20260822/audit/c3_remediation.md) | **C-3 Remediation — AI Action Coverage** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/h1_plan.md`](../deprecated_audits/junk_20260822/audit/h1_plan.md) | **H-1 Remediation Plan — TimeSystem Substep Watchdog** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/h1_remediation.md`](../deprecated_audits/junk_20260822/audit/h1_remediation.md) | **H-1 Remediation — TimeSystem Substep Watchdog** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/h2_plan.md`](../deprecated_audits/junk_20260822/audit/h2_plan.md) | **H-2 Remediation Plan — EventBus Lifecycle** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/h2_remediation.md`](../deprecated_audits/junk_20260822/audit/h2_remediation.md) | **H-2 Remediation — EventBus Lifecycle** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/h3_plan.md`](../deprecated_audits/junk_20260822/audit/h3_plan.md) | **H-3 Remediation Plan — EncounterEventFactory id dedup** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/h3_remediation.md`](../deprecated_audits/junk_20260822/audit/h3_remediation.md) | **H-3 Remediation — EncounterEventFactory id dedup** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/h4_plan.md`](../deprecated_audits/junk_20260822/audit/h4_plan.md) | **H-4 Remediation Plan — SaveSystem refactor to ISaveable** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/ISSUE_REGISTER.md`](deprecated_audits/ISSUE_REGISTER.md) | **ASHFALL Master Issue Register** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_ASSET_MANIFEST.md`](deprecated_audits/audit_ASSET_MANIFEST.md) | **ASHFALL — asset manifest** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_AUDIT_REPORT.md`](deprecated_audits/audit_AUDIT_REPORT.md) | **ASHFALL — Comprehensive Game Code Audit Report** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md`](deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md) | **ASHFALL — Comprehensive Technical Audit** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_ISSUE_REGISTER.md`](deprecated_audits/audit_ISSUE_REGISTER.md) | **ASHFALL Master Issue Register** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_audit_framework.md`](deprecated_audits/audit_audit_framework.md) | **ASHFALL Comprehensive Game Audit — Framework** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_c1_plan.md`](deprecated_audits/audit_c1_plan.md) | **C-1 Remediation Plan — Per-system decision matrix** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_c1_remediation.md`](deprecated_audits/audit_c1_remediation.md) | **C-1 Remediation — Outcome** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_c2_remediation.md`](deprecated_audits/audit_c2_remediation.md) | **C-2 Remediation — Save/Load Round-Trip Coverage** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_c3_plan.md`](deprecated_audits/audit_c3_plan.md) | **C-3 Remediation Plan — AI Action Wiring** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_c3_remediation.md`](deprecated_audits/audit_c3_remediation.md) | **C-3 Remediation — AI Action Coverage** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h1_plan.md`](deprecated_audits/audit_h1_plan.md) | **H-1 Remediation Plan — TimeSystem Substep Watchdog** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h1_remediation.md`](deprecated_audits/audit_h1_remediation.md) | **H-1 Remediation — TimeSystem Substep Watchdog** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h2_plan.md`](deprecated_audits/audit_h2_plan.md) | **H-2 Remediation Plan — EventBus Lifecycle** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h2_remediation.md`](deprecated_audits/audit_h2_remediation.md) | **H-2 Remediation — EventBus Lifecycle** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h3_plan.md`](deprecated_audits/audit_h3_plan.md) | **H-3 Remediation Plan — EncounterEventFactory id dedup** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h3_remediation.md`](deprecated_audits/audit_h3_remediation.md) | **H-3 Remediation — EncounterEventFactory id dedup** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h4_plan.md`](deprecated_audits/audit_h4_plan.md) | **H-4 Remediation Plan — SaveSystem refactor to ISaveable** — ======================================================================================== |
+
+## 11. General Project Guides & Summaries (96 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`ANTIGRAVITY.md`](../ANTIGRAVITY.md) | **ASHFALL PROJECT — ANTIGRAVITY Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`ART_ASSET_INTEGRATION_PLAN.md`](../ART_ASSET_INTEGRATION_PLAN.md) | **ASHFALL — ART ASSET INTEGRATION MASTER PLAN** — The existing production pipeline uses **two different visual languages** that must be maintained: |
+| 🟢 `CURRENT` | [`ASHFALL_BATCH2_PLAN.md`](../ASHFALL_BATCH2_PLAN.md) | **ASHFALL Batch 2 — Quality Implementation Plan** — Deliver roadmap items 17–32 as dependency-ordered Godot/Core vertical slices building on Batch 1. Existing Core syste... |
+| 🟢 `CURRENT` | [`ASHFALL_Batch3_Quality_Next_Steps_Plan.md`](../ASHFALL_Batch3_Quality_Next_Steps_Plan.md) | **ASHFALL: BATCH 3 QUALITY & NEXT-STEPS IMPLEMENTATION PLAN** — **Complete Engineering Specification, Cross-System Wiring, Content Manifests & Automated Verification for All 6 Phase... |
+| 🟢 `CURRENT` | [`ASHFALL_Batch4_Next15Tasks.md`](../ASHFALL_Batch4_Next15Tasks.md) | **ASHFALL: BATCH 4 — NEXT 15 SUGGESTED IMPLEMENTATION TASKS** — **Deep-Integration Engineering Specification with 5 Substeps per Task** |
+| 🟢 `CURRENT` | [`ASHFALL_GAME_MASTER_DOCUMENT.md`](../ASHFALL_GAME_MASTER_DOCUMENT.md) | **ASHFALL (Working Title: Atomic War - Starving Survival)** — YOU ARE AN AI SYSTEM ARCHITECT AND LEAD GAME DESIGNER REVIEWING THE 'ASHFALL' SURVIVAL GAME MASTER DOCUMENT. |
+| 🟢 `CURRENT` | [`ASHFALL_GAME_MASTER_DOCUMENT_UPDATED.md`](../ASHFALL_GAME_MASTER_DOCUMENT_UPDATED.md) | **ASHFALL (Working Title: Atomic War - Starving Survival)** — YOU ARE AN AI SYSTEM ARCHITECT AND LEAD GAME DESIGNER REVIEWING THE 'ASHFALL' SURVIVAL GAME MASTER DOCUMENT. |
+| 🟢 `CURRENT` | [`ASHFALL_MASTER_IMPLEMENTATION_PLAN.md`](../ASHFALL_MASTER_IMPLEMENTATION_PLAN.md) | **ASHFALL: MASTER INTEGRATION & IMPLEMENTATION PLAN (ADVERSARIALLY HARDENED)** — **Deep Engineering Specifications, Exact Failure Mode Mitigations, Systemic Bridges & Verification Blueprints for 25 ... |
+| 🟢 `CURRENT` | [`ASHFALL_NEXT_STEPS_ACTION_PLAN.md`](../ASHFALL_NEXT_STEPS_ACTION_PLAN.md) | **ASHFALL: STRATEGIC NEXT-STEPS ACTION PLAN** — **25 Prioritized Implementation & Expansion Tasks (Forensic Gap Remediation, Systemic Integration & Content Expansion)** |
+| 🟢 `CURRENT` | [`ASH_FALL_CREATIVE_FRAMEWORK.md`](../ASH_FALL_CREATIVE_FRAMEWORK.md) | **ASHFALL: ATOMIC WAR - COMPREHENSIVE CREATIVE WRITING FRAMEWORK** — This framework provides a complete system for creating all diegetic writing, lore, quests, environmental fiction, and... |
+| 🟢 `CURRENT` | [`AUDIT_FINDINGS_AND_FIX_PLAN.md`](../AUDIT_FINDINGS_AND_FIX_PLAN.md) | **ASHFALL Deep Code Audit — Findings & Fix Plan** — **Audit Date:** 2026-08-10 |
+| 🟢 `CURRENT` | [`Assets/sprites/AI_Generated/manifest.md`](../Assets/sprites/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
+| 🟢 `CURRENT` | [`CLAUDE.md`](../CLAUDE.md) | **CLAUDE CODE INSTRUCTIONS — ASHFALL PROJECT** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`CODEX.md`](../CODEX.md) | **ASHFALL PROJECT — CODEX Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`CRUSH.md`](../CRUSH.md) | **ASHFALL PROJECT — CRUSH Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`DEEP_LORE_MASTER_PLAN.md`](../DEEP_LORE_MASTER_PLAN.md) | **ASHFALL — DEEP LORE & CHARACTER PROGRESSION: IMPLEMENTATION PLAN** — This expansion is **primarily data, not code**. The project already has all the narrative plumbing: |
+| 🟢 `CURRENT` | [`DEEP_LORE_PLAN_FOR_CURSOR.md`](../DEEP_LORE_PLAN_FOR_CURSOR.md) | **ASHFALL — DEEP LORE & CHARACTER PROGRESSION: UI & ASSET PLAN FOR CURSOR** — Run these queries against the ASHFALL Figma design file to extract the existing visual language: |
+| 🟢 `CURRENT` | [`FACTION_EMBLEMS_ENCYCLOPEDIA.md`](../FACTION_EMBLEMS_ENCYCLOPEDIA.md) | **ASHFALL: Factions of the Ashfall** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
+| 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | **ASHFALL PROJECT — GOOSE Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`Game-day-1plan.md`](../Game-day-1plan.md) | **ASHFALL Day 1 First-Playable Vertical Slice** — Build a 10–15 minute Godot-only loop: |
+| 🟢 `CURRENT` | [`INTEGRATION_MASTER_PLAN.md`](../INTEGRATION_MASTER_PLAN.md) | **ASHFALL — COMPREHENSIVE MASTER INTEGRATION PLAN** — **File**: `Assets/_Game/Survivors/Survivor.cs` |
+| 🟢 `CURRENT` | [`INTEGRATION_PLAN_FOR_CURSOR.md`](../INTEGRATION_PLAN_FOR_CURSOR.md) | **ASHFALL — UI & ASSET INTEGRATION PLAN FOR CURSOR** — 1. Open Cursor Settings → MCP → Add MCP Server |
+| 🟢 `CURRENT` | [`IntelBible.md`](../IntelBible.md) | **IntelBible.md — Radio Broadcast Archive** — This document contains 50 radio broadcast texts used by the RadioTunerSystem. Broadcasts are |
+| 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | **ASHFALL PROJECT — MIMOCODE Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`NARRATIVE_NEEDS.md`](../NARRATIVE_NEEDS.md) | **Narrative Needs — Faction War Arc (Days 480–600+)** — Code requirements surfaced while authoring the six `faction_war_*.json` catalogs |
+| 🟢 `CURRENT` | [`OPENSETUP.md`](../OPENSETUP.md) | **ASHFALL PROJECT — OPENSETUP Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`PHASE_16_REPORT.md`](../PHASE_16_REPORT.md) | **ASHFALL — Phase 16 Production Execution Status** — **Date:** this phase. |
+| 🟢 `CURRENT` | [`PHASE_17_REPORT.md`](../PHASE_17_REPORT.md) | **ASHFALL — Phase 17 Production Execution Status** — **Date:** this phase. |
+| 🟢 `CURRENT` | [`QWEN.md`](../QWEN.md) | **ASHFALL PROJECT — QWEN Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`UNITY_FIX_PLAN.md`](../UNITY_FIX_PLAN.md) | **Unity Fix Plan — Atomic War** — **Project:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` |
+| 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | **ASHFALL PROJECT — VIBE Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
+| 🟢 `CURRENT` | [`VISUAL_QA_REPORT.md`](../VISUAL_QA_REPORT.md) | **ASHFALL — Phase 16 Visual QA Report** — **Date:** this phase. |
+| 🟢 `CURRENT` | [`assets/quarantine/deprecated_sprites/README.md`](../assets/quarantine/deprecated_sprites/README.md) | **Deprecated Item Sprites Quarantine** — **Date Quarantined:** 2026-08-27 |
+| 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
+| 🟢 `CURRENT` | [`docs/AI_DISCLOSURE.md`](AI_DISCLOSURE.md) | **AI Content Disclosure — ASHFALL** — - **Code**: [e.g. "Every AI-generated function was reviewed, tested, and often rewritten. Architecture decisions, gam... |
+| 🟢 `CURRENT` | [`docs/ASHFALL_CODE_INDEX.md`](ASHFALL_CODE_INDEX.md) | **ASHFALL — ENGINEERING CODE INDEX (cheap-context reference)** — Path: `home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` |
+| 🟢 `CURRENT` | [`docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`](ASHFALL_IMPLEMENTED_CANON_REGISTRY.md) | **ASHFALL: THE DEFINITIVE IMPLEMENTED-CONTENT & MECHANICS REGISTRY** — **Authoritative Forensic Knowledge Base for AI Game Mechanics & Narrative Brainstorming** |
+| 🟢 `CURRENT` | [`docs/ASHFALL_MASTER_IMPLEMENTATION_PLAN.md`](ASHFALL_MASTER_IMPLEMENTATION_PLAN.md) | **ASHFALL: MASTER INTEGRATION & IMPLEMENTATION PLAN (ADVERSARIALLY HARDENED)** — **Deep Engineering Specifications, Exact Failure Mode Mitigations, Systemic Bridges & Verification Blueprints for 25 ... |
+| 🟢 `CURRENT` | [`docs/CURRENT_AUTHORITY.md`](CURRENT_AUTHORITY.md) | **ASHFALL — Documentation Source-of-Truth & Authority Map** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/CURRENT_INTEGRATION_BATCH.md`](CURRENT_INTEGRATION_BATCH.md) | **ASHFALL — Current Integration Batch Manifest** — **Date:** 2026-08-27 |
+| 🟢 `CURRENT` | [`docs/DEBUG_LOOPS_LOG.md`](DEBUG_LOOPS_LOG.md) | **ASHFALL DEBUG LOOPS — AUDIT LOG** — Each loop = 4 sweep audits. Every finding fixed before the loop closes. |
+| 🟢 `CURRENT` | [`docs/ENGINE_SUPPORT_POLICY.md`](ENGINE_SUPPORT_POLICY.md) | **ASHFALL Engine Support and Source-Authority Policy** — This document defines which engine and source tree is authoritative during the Unity-to-Godot strangler migration. |
+| 🟢 `CURRENT` | [`docs/GODOT_MIGRATION_STATUS.md`](GODOT_MIGRATION_STATUS.md) | **Godot Migration Status** — **Direction:** Unity → Godot (MIGRATION COMPLETE). Godot is the authoritative runtime editor and host. |
+| 🟢 `CURRENT` | [`docs/HOLDFAST_100_PERCENT_REPORT.md`](HOLDFAST_100_PERCENT_REPORT.md) | **ASHFALL — Holdfast 100% Push: Final Report** — **Date:** 2026-08-15 |
+| 🟢 `CURRENT` | [`docs/HUMAN_AUTHORSHIP.md`](HUMAN_AUTHORSHIP.md) | **Human Authorship Checklist — ASHFALL** — - [ ] **Paint-over**: Every AI-generated sprite has been painted over by hand — brushstrokes, color choices, and deta... |
+| 🟢 `CURRENT` | [`docs/HoldfastManualPlaytest.md`](HoldfastManualPlaytest.md) | **Holdfast Manual Playtest Checklist** — **Environment:** Desktop Godot 4.7.1+ (.NET), launch via `godot --path .` or editor Play. |
+| 🟢 `CURRENT` | [`docs/HoldfastPlaytestHandoff.md`](HoldfastPlaytestHandoff.md) | **Holdfast Playtest Handoff** — **Environment:** Desktop Godot 4.7.1+ (.NET), display available (`$DISPLAY=:0`). |
+| 🟢 `CURRENT` | [`docs/MORAL_CHOICE_SYSTEM.md`](MORAL_CHOICE_SYSTEM.md) | **ASHFALL: ATOMIC WAR - MORAL CHOICE SYSTEM** — *60 Quests, 8 Branching Paths, World Impact Without UI Clutter* |
+| 🟢 `CURRENT` | [`docs/MUSTER_INTEGRATION_PREP.md`](MUSTER_INTEGRATION_PREP.md) | **MUSTER INTEGRATION PREP — Notes for the Later-Plan Sprint** — 1. **`quest_final_manifest_muster`** (the Aurora Departure / Northern Redoubt evacuation roll-call, Expansion 05) is ... |
+| 🟢 `CURRENT` | [`docs/NEW_CONTENT_DELIVERY.md`](NEW_CONTENT_DELIVERY.md) | **New Content Delivery — Spec Prompts #319–#325** — Production code (`Assets/_Game/Survivors/SleepDeprivationSystem.cs`, |
+| 🟢 `CURRENT` | [`docs/agents/AGENTS_SYNC_REPORT.md`](agents/AGENTS_SYNC_REPORT.md) | **ASHFALL Agent-Rulebook Synchronization Report** — **Canonical source:** `AGENTS.md` |
+| 🟢 `CURRENT` | [`docs/audits/ECONOMY_AUDIT.md`](audits/ECONOMY_AUDIT.md) | **Economy Core Audit — Stage 0** — **Date:** 2026-08-15 |
+| 🟢 `CURRENT` | [`docs/audits/utility_ai_AUDIT.md`](audits/utility_ai_AUDIT.md) | **UTILITY AI — Phase B Audit (pre-port)** — Date: 2026-08-15. Source of truth: `Assets/_Game/AI/` (829 LOC core + 93 action files). |
+| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-08-27<br> |
+| 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
+| 🟢 `CURRENT` | [`docs/data/DATA_GAP_AUDIT.md`](data/DATA_GAP_AUDIT.md) | **ASHFALL Data Gap Audit** — Counted entries in every top-level JSON catalog, identified C# consumers per catalog, |
+| 🟢 `CURRENT` | [`docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md`](gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md) | **ASHFALL Implementation Gap Audit** — **Method:** 10-loop forensic scan (ashfall-scan skill) |
+| 🟢 `CURRENT` | [`docs/health/CODEHEALTH_SWEEP.md`](health/CODEHEALTH_SWEEP.md) | **Codehealth Sweep — ThemeHelper Facade & harvestable_materials Vocabulary Regression Check** — **Scope:** Read-only structural-health sweep triggered after two changes landed: |
+| 🟢 `CURRENT` | [`docs/hygiene/GIT_OBJECT_INVENTORY.md`](hygiene/GIT_OBJECT_INVENTORY.md) | **ASHFALL — Git Object Inventory & Retention Policy** — **0 stashes.** Working tree is clean. |
+| 🟢 `CURRENT` | [`docs/hygiene/REPOSITORY_ROOT_ARTIFACT_POLICY.md`](hygiene/REPOSITORY_ROOT_ARTIFACT_POLICY.md) | **ASHFALL — Repository-Root Artifact & Hygiene Policy** — **Date:** 2026-08-27 |
+| 🟢 `CURRENT` | [`docs/hygiene/REPO_HYGIENE_REPORT.md`](hygiene/REPO_HYGIENE_REPORT.md) | **ASHFALL — Repository Hygiene Report** — These directories are owned by AI coding assistants, aider, composio, etc. |
+| 🟢 `CURRENT` | [`docs/integration/SECTION_14_REPORT.md`](integration/SECTION_14_REPORT.md) | **ASHFALL: VERDICT EXPANSION × UI/ASSET INTEGRATION — INTEGRATION & EXPANSION REPORT** — * **Id format:** `snake_case` everywhere; **`AGENTS.md` "Ids: snake_case everywhere"** — verified by `Assets/Streamin... |
+| 🟢 `CURRENT` | [`docs/plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md`](plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md) | **ASHFALL — DAY 1 → DAY 2 PLAYABLE MILESTONE MASTER PLAN** — **Plan ID:** `ashfall_day1_to_day2_playable_gate` |
+| 🟢 `CURRENT` | [`docs/plans/ASHFALL_FURTHER_NEXT_STEPS_AND_LIVING_WORLD_MILESTONE.md`](plans/ASHFALL_FURTHER_NEXT_STEPS_AND_LIVING_WORLD_MILESTONE.md) | **ASHFALL — Further Next Steps & Living World Milestone** — **Document type:** prioritized next-step roadmap |
+| 🟢 `CURRENT` | [`docs/plans/ASHFALL_GITHUB_INVESTIGATION_50_STEP_ROADMAP.md`](plans/ASHFALL_GITHUB_INVESTIGATION_50_STEP_ROADMAP.md) | **ASHFALL — Comprehensive GitHub Codebase Investigation & 50-Step High-Value Roadmap** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
+| 🟢 `CURRENT` | [`docs/plans/ASHFALL_REALISTIC_NEXT_STEPS_REAUTHORED.md`](plans/ASHFALL_REALISTIC_NEXT_STEPS_REAUTHORED.md) | **ASHFALL — Reauthored Realistic Next Steps** — This document intentionally does **not** preserve the 10,000-step count. It converts the generated horizon into a bou... |
+| 🟢 `CURRENT` | [`docs/plans/ASHFALL_UNIFIED_MASTER_PLAN_INDEX.md`](plans/ASHFALL_UNIFIED_MASTER_PLAN_INDEX.md) | **ASHFALL — Unified Master Plan Index & Living Architecture Matrix** — **Canonical Index Path:** `docs/plans/ASHFALL_UNIFIED_MASTER_PLAN_INDEX.md` |
+| 🟢 `CURRENT` | [`docs/plans/ASHFALL_Visual_Asset_Pipeline_Plan.md`](plans/ASHFALL_Visual_Asset_Pipeline_Plan.md) | **ASHFALL: Atomic War — Starving Survival** — Engine target: **Godot 4.7.1 (.NET 8, C# 12)**. All shaders written as Godot `CanvasItem` GLSL (`shader_type canvas_i... |
+| 🟢 `CURRENT` | [`docs/plans/GAME_CREATION_APPLICATIONS.md`](plans/GAME_CREATION_APPLICATIONS.md) | **GAME CREATION APPLICATIONS & TOOLCHAINS** — **System:** Linux x86_64 \| **Generated:** 2026-08-18 |
+| 🟢 `CURRENT` | [`docs/plans/campaign_envelope_INTEGRATION_PLAN.md`](plans/campaign_envelope_INTEGRATION_PLAN.md) | **Initiative #42 — Single Versioned Atomic Campaign Envelope** — Date: 2026-08-27 · Status: approved & in execution · Plan preserved verbatim below. |
+| 🟢 `CURRENT` | [`docs/plans/remaining_for_generation.md`](plans/remaining_for_generation.md) | **ASHFALL — Remaining Asset Generation Manifest** — Generated: 2026-08-19 |
+| 🟢 `CURRENT` | [`docs/plans/save_store_persistence_service_INTEGRATION_PLAN.md`](plans/save_store_persistence_service_INTEGRATION_PLAN.md) | **Initiative #41 — Generic Injected Persistence Service for Save Stores** — Date: 2026-08-27 · Status: approved (user decisions locked) · Implementer: ZCode |
+| 🟢 `CURRENT` | [`docs/plans/sources.md`](plans/sources.md) | **Atomic War: Starving Survival — Comprehensive Codebase Exploration Report** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
+| 🟢 `CURRENT` | [`docs/systems/RESEARCH_CORE_PORT_PLAN.md`](systems/RESEARCH_CORE_PORT_PLAN.md) | **ASHFALL — Research Core Port Plan & Completion Report** — **Status:** **CLOSED — SHIPPED & VERIFIED AT PHASE 28** |
+| 🟢 `CURRENT` | [`docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md`](systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md) | **ASHFALL — Skill Progression Core Port Plan (Phase 14 design) — SHIPPED at Phase 18** — **Status:** design SHIPPED at Phase 18. Files: |
+| 🟢 `CURRENT` | [`docs/systems/STANDING_RECORD_CORE_PORT_PLAN.md`](systems/STANDING_RECORD_CORE_PORT_PLAN.md) | **Standing Record Core Port Plan** — **Target:** Promote the Standing Record (Expansion 03) from read-only |
+| 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
+| 🟢 `CURRENT` | [`mistral_plans/AGENTS.mistral-plans.md`](../mistral_plans/AGENTS.mistral-plans.md) | **PROJECT: ASHFALL (working title) — 2D Atomic-War Survival** — Original 2D survival-management game set after a nuclear exchange. Inspired by the survival-management genre; do **no... |
+| 🟢 `CURRENT` | [`mistral_plans/ASH_FALL_ALPHA_0.8_DEVELOPMENT_PLAN.md`](../mistral_plans/ASH_FALL_ALPHA_0.8_DEVELOPMENT_PLAN.md) | **ASHFALL ALPHA 0.8 DEVELOPMENT PLAN** — **Milestone**: ASHFALL Alpha 0.8 = Modular host + fully connected Shelter 2D viewport + functional visual Wasteland map |
+| 🟢 `CURRENT` | [`scripts/README.md`](../scripts/README.md) | **ASHFALL — Script Catalog & Lifecycle Index** — This document catalogs all developer tools, CI gates, asset pipelines, and maintenance utilities under `scripts/`, cl... |
+| 🟢 `CURRENT` | [`sources.md`](../sources.md) | **Atomic War: Starving Survival — Comprehensive Codebase Exploration Report** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
+| 🟢 `CURRENT` | [`summaries.md`](../summaries.md) | **ASHFALL: Atomic War - Starving Survival** — This folder contains the complete summary and canvas-style exported PDF reports for the forensic optimization and deb... |
+| 🟢 `CURRENT` | [`summaries/README.md`](../summaries/README.md) | **ASHFALL: Atomic War - Starving Survival** — This folder contains the complete summary and canvas-style exported PDF reports for the forensic optimization and deb... |
+| 🟢 `CURRENT` | [`tools/README.md`](../tools/README.md) | **ASHFALL — Non-Runtime Tools & Utilities Catalog** — **Date:** 2026-08-27<br> |
+| 🔵 `GENERATED` | [`docs/ASHFALL_The_Long_Ash_Followup_Three_Model_Prompts.md`](ASHFALL_The_Long_Ash_Followup_Three_Model_Prompts.md) | **ASHFALL: The Long Ash — Three-Model Follow-Up Workflow** — This file contains three standalone major prompts for the next editorial and creative pass on the ten-year ASHFALL ex... |
+| 🔵 `GENERATED` | [`game_assets_prompts.md`](../game_assets_prompts.md) | **Game Assets Prompts** — - **Affliction Phase:** A desolate ui asset of **Affliction Phase**. A 2D prop asset of **Affliction Phase**. The obj... |
+| 🔵 `GENERATED` | [`prompts_for_ai.md`](../prompts_for_ai.md) | **AI Art Prompts for ASHFALL (Working Title)** — This document contains detailed prompts for generating game assets for a 2D atomic-survival game. The desired art sty... |
+| 🟡 `HISTORICAL` | [`10LOOP_AUDIT_REPORT.md`](../10LOOP_AUDIT_REPORT.md) | **ASHFALL 10-Loop Deep Audit & Harden — Ledger** — Objective: multilayered debugging + regression audit in **10 loops**. Each loop is |
+| 🟡 `HISTORICAL` | [`CODE_AUDIT_REPORT.md`](../CODE_AUDIT_REPORT.md) | **ASHFALL EXPANSION CODE AUDIT — FINDINGS & FIX PLAN** — 1. C1-C12: Compile fixes (rename refs, guard calls, remove dead hooks) |
+| 🟡 `HISTORICAL` | [`COMPREHENSIVE_GAME_AUDIT.md`](../COMPREHENSIVE_GAME_AUDIT.md) | **ASHFALL — COMPREHENSIVE READ-ONLY PROJECT AUDIT [HISTORICAL ARCHIVE]** — **Date of Audit:** 2026-08-18 (Historical) |
+| 🟡 `HISTORICAL` | [`REPO_REVIEW_REPORT.md`](../REPO_REVIEW_REPORT.md) | **ASHFALL Repository Deep Review Report [HISTORICAL ARCHIVE]** — **Date:** 2026-08-16 \| **Branch:** `cursor/phase11-expansion-ui-integration` (historical) \| **Commits:** 1002 |
+| 🟡 `HISTORICAL` | [`docs/ASHFALL_DEEP_CODE_AUDIT_2026-08-14.md`](ASHFALL_DEEP_CODE_AUDIT_2026-08-14.md) | **Ashfall — Deep Code Audit (Game + Godot Port)** — Date: 2026-08-14 · Scope: `Assets/_Game` (Unity, 228,489 LOC), `src/` (Godot, 2,118 LOC), |
+| 🟡 `HISTORICAL` | [`docs/ASHFALL_DEEP_CODE_AUDIT_2_2026-08-14.md`](ASHFALL_DEEP_CODE_AUDIT_2_2026-08-14.md) | **Ashfall — Deep Code Audit #2 (post-Bridge)** — Date: 2026-08-14 (second pass, after the UnityEngine compatibility bridge landed). |
+| 🟡 `HISTORICAL` | [`docs/ASHFALL_LATEST_DEEP_CODE_AUDIT_50_TASK_IMPLEMENTATION_PLAN_2026-08-26.md`](ASHFALL_LATEST_DEEP_CODE_AUDIT_50_TASK_IMPLEMENTATION_PLAN_2026-08-26.md) | **ASHFALL — Latest Deep Code Audit & 50-Task Planned Implementation Plan** — **Audit date:** 2026-08-26 |
+| 🟡 `HISTORICAL` | [`docs/DEEP_CODE_AUDIT_2026-08-23.md`](DEEP_CODE_AUDIT_2026-08-23.md) | **ASHFALL Deep Code Audit and Remediation Plan** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
+| 🟡 `HISTORICAL` | [`docs/plans/DEEP_CODE_AUDIT_2026-08-23.md`](plans/DEEP_CODE_AUDIT_2026-08-23.md) | **ASHFALL Deep Code Audit and Remediation Plan** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
+
+## 2. CI, Fast-Tier Gates & Verification (2 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`docs/CI.md`](CI.md) | **ASHFALL — Continuous Integration & Verification Guide** — **Authoritative host/engine:** Godot 4.7+ (.NET / C#) (`project.godot`) |
+| 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-08-26 |
+
+## 3. Save Systems & State Architecture (4 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`docs/saves/SAVE_FUZZ_REPORT.md`](saves/SAVE_FUZZ_REPORT.md) | **ASHFALL Save System Fuzz Audit — Phase 1 (Persistence Surface)** — **Skill:** ashfall-save-fuzz · **Mode:** read-only surface map |
+| 🟢 `CURRENT` | [`docs/saves/battery/ALL_BATTERY.md`](saves/battery/ALL_BATTERY.md) | **ASHFALL Save System Fuzz — Phase 2 (Round-Trip Battery)** — **Skill:** ashfall-save-fuzz · **Mode:** round-trip battery |
+| 🟢 `CURRENT` | [`docs/saves/battery/EXPEDITION_BATTERY.md`](saves/battery/EXPEDITION_BATTERY.md) | **ASHFALL Save System Fuzz — Phase 2 (Round-Trip Battery)** — **Skill:** ashfall-save-fuzz · **Mode:** round-trip battery |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-08-27<br> |
+
+## 4. Expansions (01–10 Master Plans & Context) (27 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`EXPANSION_3_4_MASTER_PLAN.md`](../EXPANSION_3_4_MASTER_PLAN.md) | **ASHFALL — EXPANSION 3 & 4: COMPREHENSIVE IMPLEMENTATION PLAN** — **Goal**: Add dynamic condition, contamination, and purity to all scavenged items. |
+| 🟢 `CURRENT` | [`EXPANSION_3_4_PLAN_FOR_CURSOR.md`](../EXPANSION_3_4_PLAN_FOR_CURSOR.md) | **ASHFALL — EXPANSION 3 & 4: UI & ASSET PLAN FOR CURSOR** — "command": "npx", |
+| 🟢 `CURRENT` | [`docs/ASHFALL_EXPANSION_CONTEXT_ATLAS.md`](ASHFALL_EXPANSION_CONTEXT_ATLAS.md) | **ASHFALL: DEEP EXPANSION CONTEXT & INTEGRATION ATLAS** — **Authoritative Architectural Blueprint, Connective Seams, Temporal Dynamics & Creative Design Context** |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_02_the_duty_roster_creative_pack.md`](expansions/expansion_02_the_duty_roster_creative_pack.md) | **ASHFALL: THE DUTY ROSTER — Creative Pack** — **Internal id:** `expansion_the_duty_roster` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_02_the_duty_roster_plan.md`](expansions/expansion_02_the_duty_roster_plan.md) | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE DUTY ROSTER |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_03_nobodys_charter_INTEGRATION_PIPELINE.md`](expansions/expansion_03_nobodys_charter_INTEGRATION_PIPELINE.md) | **ASHFALL: NOBODY'S CHARTER — Integration & Architectural Pipeline** — Nobody's Charter is integrated exactly like the two sister packs, because it must read their flags (Appendix A of the... |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_03_nobodys_charter_plan.md`](expansions/expansion_03_nobodys_charter_plan.md) | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: NOBODY'S CHARTER |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_03_the_standing_record_creative_pack.md`](expansions/expansion_03_the_standing_record_creative_pack.md) | **ASHFALL: THE STANDING RECORD — Creative Pack** — **Internal id:** `expansion_the_standing_record` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_03_the_standing_record_plan.md`](expansions/expansion_03_the_standing_record_plan.md) | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE STANDING RECORD |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_04_nobodys_charter_plan.md`](expansions/expansion_04_nobodys_charter_plan.md) | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: NOBODY'S CHARTER |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_05_the_year_of_ash_creative_pack.md`](expansions/expansion_05_the_year_of_ash_creative_pack.md) | **ASHFALL: THE YEAR OF ASH (DAYS 180–360) — Grand Lore Bible & Master Creative Pack** — **Internal id:** `expansion_05_the_year_of_ash` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_05_the_year_of_ash_plan.md`](expansions/expansion_05_the_year_of_ash_plan.md) | **ASHFALL — Master Expansion Design Bible & 10-Faction Strategic Integration Plan** — **Title:** ASHFALL: THE YEAR OF ASH (THE LONG WINTER & THE FINAL RECKONING) |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_06_the_muster_plan.md`](expansions/expansion_06_the_muster_plan.md) | **ASHFALL — Expansion Design Bible & Godot-Native Integration Plan** — **Title:** ASHFALL: THE MUSTER (THE FIFTEENTH CURRENT & THE VERGE RISING) |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_07_the_dose_IMPLEMENTATION.md`](expansions/expansion_07_the_dose_IMPLEMENTATION.md) | **ASHFALL: THE DOSE — Implementation Approach & Player Experience** — **Companion to `docs/expansions/expansion_07_the_dose_plan.md`.** This document is the build |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_07_the_dose_plan.md`](expansions/expansion_07_the_dose_plan.md) | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE DOSE |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_08_the_verdict_creative_pack.md`](expansions/expansion_08_the_verdict_creative_pack.md) | **ASHFALL: THE VERDICT — MASTER CREATIVE PACK** — **Internal id:** `expansion_08_the_verdict` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_08_the_verdict_plan.md`](expansions/expansion_08_the_verdict_plan.md) | **ASHFALL — Expansion Design Bible & Creative Pipeline Spec** — **Title:** ASHFALL: THE VERDICT (THE MACHINE THAT KEEPS THE COUNT) |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_08_verdict_INTEGRATION_MATRIX.md`](expansions/expansion_08_verdict_INTEGRATION_MATRIX.md) | **ASHFALL — Expansion 08 (The Verdict) Integration Matrix** — **Audit date:** Exchange + (this pass). **Architecture source:** live `Ashfall.Core` + `src/` reads. |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_09_the_black_flotilla_plan.md`](expansions/expansion_09_the_black_flotilla_plan.md) | **ASHFALL — Expansion 09: The Black Flotilla** — **Expansion 09** is the maritime expansion: coastal wreck salvage, 4-room stealth dive |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_10_the_silent_foundry_PHASE0.md`](expansions/expansion_10_the_silent_foundry_PHASE0.md) | **Expansion 10 — The Silent Foundry — Phase 0 Preflight & Dependency Map** — Status: implemented (Core system + host + save + trade surfaces). Re-anchored to |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_11_the_long_line_creative_pack.md`](expansions/expansion_11_the_long_line_creative_pack.md) | **ASHFALL — Expansion Proposal 11: THE LONG LINE** — **Proposed internal id:** `expansion_11_the_long_line` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_the_holdfast_creative_pack.md`](expansions/expansion_the_holdfast_creative_pack.md) | **ASHFALL: THE HOLDFAST — Creative Pack** — **Internal id:** `expansion_the_holdfast` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_the_holdfast_plan.md`](expansions/expansion_the_holdfast_plan.md) | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE HOLDFAST |
+| 🟢 `CURRENT` | [`docs/plans/ASHFALL_MAJOR_WORLD_EXPANSION_AND_INTEGRATION_PLAN.md`](plans/ASHFALL_MAJOR_WORLD_EXPANSION_AND_INTEGRATION_PLAN.md) | **ASHFALL — Major World Expansion, Faction War, AI Combat & Living-World Integration Plan** — **Document type:** implementation-grade creative + technical master plan |
+| 🔵 `GENERATED` | [`docs/ai-art/prompts/FULL_CATALOG_EXPANSION.md`](ai-art/prompts/FULL_CATALOG_EXPANSION.md) | **ASHFALL — Prompt Catalog Expansion** — This file is a **continuation**, not a replacement. Two prompt libraries already exist and remain valid: |
+| 🔵 `GENERATED` | [`prompt_assets/ASHFALL_PROMPT_CATALOG_EXPANSION.md`](../prompt_assets/ASHFALL_PROMPT_CATALOG_EXPANSION.md) | **ASHFALL — Prompt Catalog Expansion** — This file is a **continuation**, not a replacement. Two prompt libraries already exist and remain valid: |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/EXPANSION4_VERIFICATION_REPORT.md`](../deprecated_audits/junk_20260822/audit/EXPANSION4_VERIFICATION_REPORT.md) | **ASHFALL — Expansion 4 Integration Verification Report** — **Date:** 2026-08-12 |
+
+## 5. UI, UX & Visual Systems (48 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`AUDIT_2026-08-19_UI_AND_YESTERDAYS_ASSETS.md`](../AUDIT_2026-08-19_UI_AND_YESTERDAYS_ASSETS.md) | **ASHFALL — 2026-08-19 UI + Yesterday's Integrated Assets Audit** — **Date:** 2026-08-19 (EEST). |
+| 🟢 `CURRENT` | [`README_UI_SYSTEM.md`](../README_UI_SYSTEM.md) | **ASHFALL UI System - Complete Summary** — Comprehensive UI system for ASHFALL: Atomic War - Starving Survival with AI-generated backgrounds, smooth animations,... |
+| 🟢 `CURRENT` | [`UI_DESIGN_PLAN_FIGMA_CANVA.md`](../UI_DESIGN_PLAN_FIGMA_CANVA.md) | **ASHFALL — COMPREHENSIVE UI DESIGN PLAN** — 1. **Diegetic, not digital.** Every UI element should feel like it exists *in the bunker* — scratched gauges, worn la... |
+| 🟢 `CURRENT` | [`UI_PANELS_MASTER_VOLUME_2.md`](../UI_PANELS_MASTER_VOLUME_2.md) | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
+| 🟢 `CURRENT` | [`UI_PANELS_MASTER_VOLUME_3.md`](../UI_PANELS_MASTER_VOLUME_3.md) | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
+| 🟢 `CURRENT` | [`UI_PANELS_MASTER_VOLUME_4.md`](../UI_PANELS_MASTER_VOLUME_4.md) | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
+| 🟢 `CURRENT` | [`UI_PANELS_MASTER_VOLUME_5.md`](../UI_PANELS_MASTER_VOLUME_5.md) | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
+| 🟢 `CURRENT` | [`docs/lore/06_REBUILDERS_AND_BLACK_OPS.md`](lore/06_REBUILDERS_AND_BLACK_OPS.md) | **The Two Unwritten Factions** — Everything in `03_LOCATIONS.md`, `04_ENCOUNTERS.md` and `05_FACTIONS.md` is |
+| 🟢 `CURRENT` | [`docs/narrative/CONTINUITY_REPORT.md`](narrative/CONTINUITY_REPORT.md) | **Narrative Continuity Report — Full Corpus Audit (25 Creative-Writing Batches)** — **Scope:** Cross-reference and contradiction audit across the full narrative data-authority corpus (`Assets/Streaming... |
+| 🟢 `CURRENT` | [`docs/ui/ASSET_GALLERY.md`](ui/ASSET_GALLERY.md) | **ASSET GALLERY** — This gallery lists all UI snapshots for ASHFALL: Atomic War - Starving Survival. |
+| 🟢 `CURRENT` | [`docs/ui/DESIGN_SYSTEM_RULES.md`](ui/DESIGN_SYSTEM_RULES.md) | **Ashfall Design System Rules & Production Specification** — - **Theme**: Grim 2D survival-management (This War of Mine / Sheltered inspired). |
+| 🟢 `CURRENT` | [`docs/ui/FACTION_VOICE_MATRIX.md`](ui/FACTION_VOICE_MATRIX.md) | **Faction Radio Voice Matrix — Ashfall Canon** — The radio is the auditory heartbeat of the Ashfall wasteland. Across 12 distinct frequencies, each faction possesses ... |
+| 🟢 `CURRENT` | [`docs/ui/JOURNAL_UI_PLAN.md`](ui/JOURNAL_UI_PLAN.md) | **ASHFALL — Journal UI Plan** — Turn the existing diegetic journal (playthrough log + tutorial pages) into the |
+| 🟢 `CURRENT` | [`docs/ui/PHASE13_DATA_AVAILABILITY.md`](ui/PHASE13_DATA_AVAILABILITY.md) | **Phase 13 — Data Availability Report** — **Date:** this turn. |
+| 🟢 `CURRENT` | [`docs/ui/PIPELINE_REGRESSION_FIX.md`](ui/PIPELINE_REGRESSION_FIX.md) | **Pipeline Regression Fix (Phase 26 close)** — During Phase 26 close, an on-disk byte-level integrity check revealed a regression |
+| 🟢 `CURRENT` | [`docs/ui/RADIO_HUD_CONCEPTS.md`](ui/RADIO_HUD_CONCEPTS.md) | **Radio HUD Concept Exploration & Scorecard** — - **Visual Structure**: Stamped steel 19" rack bezel with brass screws and knurled aluminium tuning dials. |
+| 🟢 `CURRENT` | [`docs/ui/SNAPSHOT_COVERAGE.md`](ui/SNAPSHOT_COVERAGE.md) | **Snapshot Coverage — Post-Audit State** — **Generated:** Phase 26 close (2026-08-18). Refreshed after `SURFACE_GAP_REPORT.md` audit; reconciled post-Phase 28. |
+| 🟢 `CURRENT` | [`docs/ui/SNAPSHOT_FIXTURE_POLICY.md`](ui/SNAPSHOT_FIXTURE_POLICY.md) | **ASHFALL — Snapshot Fixture Policy** — **Date:** this turn (Phase 14). |
+| 🟢 `CURRENT` | [`docs/ui/SNAPSHOT_MANIFEST_CONSISTENCY_AUDIT_2026-08-26.md`](ui/SNAPSHOT_MANIFEST_CONSISTENCY_AUDIT_2026-08-26.md) | **Snapshot Manifest Consistency Audit — 2026-08-26** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/ui/SNAPSHOT_REGEN_APPROVAL_2026-08-26.md`](ui/SNAPSHOT_REGEN_APPROVAL_2026-08-26.md) | **Snapshot Golden Regeneration — Approval Request (2026-08-26)** — **Pipeline:** implemented in `961df334` (`--ui-snapshot-uitest` diff gate + `--ui-snapshot-regenerate`) |
+| 🟢 `CURRENT` | [`docs/ui/SURFACE_GAP_REPORT.md`](ui/SURFACE_GAP_REPORT.md) | **Surface Gap Report — Audit of every non-COVERED runtime UI surface** — **Generated:** Phase 26 close (2026-08-18) |
+| 🟢 `CURRENT` | [`docs/ui/TIER3_UI_READINESS.md`](ui/TIER3_UI_READINESS.md) | **ASHFALL — Tier-3 UI Readiness Map** — **Date:** Reconciled post-Phase 28 (Historical Phase 14 baseline). |
+| 🟢 `CURRENT` | [`docs/ui/UI_CORRECTION_REPORT.md`](ui/UI_CORRECTION_REPORT.md) | **ASHFALL — UI CORRECTION PASS REPORT** — **Date:** 2026-08-15 |
+| 🟢 `CURRENT` | [`docs/ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md`](ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md) | **Contributor Guide — UI Node Diagnostics, Lifecycle & Leak Triage** — **Date:** 2026-08-27 |
+| 🟢 `CURRENT` | [`docs/ui/UI_VISUAL_TEXT_SPEC.md`](ui/UI_VISUAL_TEXT_SPEC.md) | **ASHFALL — UI Visual Information (text spec)** — All authored in house voice: cold, exhausted, human, restrained; specificity |
+| 🟢 `CURRENT` | [`docs/visual/ART_FAMILY_REFERENCE_GUIDE.md`](visual/ART_FAMILY_REFERENCE_GUIDE.md) | **ASHFALL — Art Family Reference Guide** — **Date:** Phase 16. |
+| 🟢 `CURRENT` | [`docs/visual/ASSET_COVERAGE_REPORT_2026-08-26.md`](visual/ASSET_COVERAGE_REPORT_2026-08-26.md) | **ASHFALL Visual Asset Coverage Report** — 1. **Items (91.1% Coverage)**: |
+| 🟢 `CURRENT` | [`docs/visual/ASSET_GALLERY.md`](visual/ASSET_GALLERY.md) | **ASHFALL — Visual Asset Gallery** — **Date:** this turn (Phase 14). |
+| 🟢 `CURRENT` | [`docs/visual/ASSET_REGISTRY_RESOLUTION.md`](visual/ASSET_REGISTRY_RESOLUTION.md) | **ASHFALL AssetRegistry — Resolution Semantics** — **Source of truth:** `src/Host/AssetRegistry.cs` |
+| 🟢 `CURRENT` | [`docs/visual/ASSET_REPLACEMENT_QUEUE.md`](visual/ASSET_REPLACEMENT_QUEUE.md) | **ASHFALL — Visual Asset Replacement Queue (Phase 14 — Post-Prioritization)** — Generated by `tools/production_manifest.py` + `tools/production_ledger.py`. This is the **actionable** queue: rows wh... |
+| 🟢 `CURRENT` | [`docs/visual/DEPRECATED_AMMO_AUDIT.md`](visual/DEPRECATED_AMMO_AUDIT.md) | **ASHFALL — Deprecated Ammo Audit** — Total deprecated ammo files found in `assets/art/`: **80**. |
+| 🟢 `CURRENT` | [`docs/visual/DIRECT_GODOT_ASSET_LOADS_AUDIT.md`](visual/DIRECT_GODOT_ASSET_LOADS_AUDIT.md) | **ASHFALL — Direct Godot Asset Loads Audit** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/visual/DUPLICATE_CONSOLIDATION_PLAN.md`](visual/DUPLICATE_CONSOLIDATION_PLAN.md) | **ASHFALL — Duplicate Consolidation Plan** — Phase 14T. **DOES NOT delete or move files.** Output is a documented plan only. |
+| 🟢 `CURRENT` | [`docs/visual/DUPLICATE_VISUAL_ASSETS.md`](visual/DUPLICATE_VISUAL_ASSETS.md) | **ASHFALL — Duplicate Visual Assets** — Exact duplicates (MD5): **182 groups**. |
+| 🟢 `CURRENT` | [`docs/visual/FALLBACK_VISUAL_ASSETS.md`](visual/FALLBACK_VISUAL_ASSETS.md) | **ASHFALL — Active Fallback Visual Assets & Resolution Architecture** — **Last Updated:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/visual/ORPHAN_ASSET_SHORTLIST_2026-08-26.md`](visual/ORPHAN_ASSET_SHORTLIST_2026-08-26.md) | **ASHFALL — Orphan Asset Review Shortlist (Non-Destructive)** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/visual/ORPHAN_VISUAL_ASSETS.md`](visual/ORPHAN_VISUAL_ASSETS.md) | **ASHFALL — Orphan Visual Assets** — **Orphan** = visual file on disk NOT referenced from any catalog entry. |
+| 🟢 `CURRENT` | [`docs/visual/PLACEHOLDER_TRIAGE.md`](visual/PLACEHOLDER_TRIAGE.md) | **ASHFALL — Placeholder Triage** — Phase 14R — per-placeholder classification. |
+| 🟢 `CURRENT` | [`docs/visual/PRODUCTION_ART_GENERATION_LEDGER.md`](visual/PRODUCTION_ART_GENERATION_LEDGER.md) | **ASHFALL — Phase 16 Production-Art Generation Ledger** — **Date:** this phase. |
+| 🟢 `CURRENT` | [`docs/visual/PRODUCTION_ART_PRIORITY.md`](visual/PRODUCTION_ART_PRIORITY.md) | **ASHFALL — Phase 16 Production-Art Priority** — **Date:** this phase (turn). |
+| 🟢 `CURRENT` | [`docs/visual/RUNTIME_CONTEXT_TRACE.md`](visual/RUNTIME_CONTEXT_TRACE.md) | **Runtime-context wiring trace** — Phase 15 — panel-level reachability of AssetRegistry from runtime code. |
+| 🟢 `CURRENT` | [`docs/visual/VISUAL_ASSET_AUDIT.md`](visual/VISUAL_ASSET_AUDIT.md) | **Phase 14 — Visual Asset Audit** — Generated by `scripts/audit_assets.py` from the active `assets/` tree and the legacy `Assets/` tree. |
+| 🟢 `CURRENT` | [`docs/visual/VISUAL_ASSET_SUMMARY.md`](visual/VISUAL_ASSET_SUMMARY.md) | **Visual Asset Manifest — Summary** — - Active `assets/` files: **2335** |
+| 🟢 `CURRENT` | [`docs/visual/WIRING_MATRIX.md`](visual/WIRING_MATRIX.md) | **ASHFALL — Visual Asset Wiring Matrix** — Generated from `[{'asset_id': '15_weather_kinds', 'file_path': 'assets/art/15_weather_kinds.jpg', 'file_type': '.jpg'... |
+| 🟢 `CURRENT` | [`docs/visual/_qa/_qa_report.md`](visual/_qa/_qa_report.md) | **Phase 14 — QA Report** — Staged files examined: **8** |
+| 🔵 `GENERATED` | [`STITCH_GENERATED_UI_INVENTORY.md`](../STITCH_GENERATED_UI_INVENTORY.md) | **ASHFALL: Complete Google Stitch UI Inventory (62 Generated Screens)** — **Stitch Project Resource:** `projects/17640704459929707404` (*Ashfall - Atomic War Survival*) |
+| 🟡 `HISTORICAL` | [`deprecated_audits/junk_20260822/audit/COMPREHENSIVE_REMEDIATION_STRATEGY_GUIDE.md`](../deprecated_audits/junk_20260822/audit/COMPREHENSIVE_REMEDIATION_STRATEGY_GUIDE.md) | **ASHFALL (Atomic War) — Master Architecture Review & Remediation Strategy Guide** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/deprecated_audits/ADR_UI_TOOLKIT_BINDING_VERIFICATION.md`](deprecated_audits/ADR_UI_TOOLKIT_BINDING_VERIFICATION.md) | **ADR: Unity UI Toolkit — Trade Screen & Economy HUD Binding Verification** — **Date:** 2026-08-15 |
+
+## 6. Lore, Gazetteer & World Design (9 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`docs/lore/00_OVERVIEW.md`](lore/00_OVERVIEW.md) | **ASHFALL — Lore Bible** — `docs/superpowers/specs/2026-08-12-ashfall-massive-content-expansion-design.md` |
+| 🟢 `CURRENT` | [`docs/lore/01_GAZETTEER.md`](lore/01_GAZETTEER.md) | **Sector 4 — Gazetteer** — `warlords_sector_4` is canon, so **Sector 4** is already the administrative |
+| 🟢 `CURRENT` | [`docs/lore/02_THE_LIST.md`](lore/02_THE_LIST.md) | **The Spine — *Who Rode Out First*** — Canon establishes three facts and never connects them: |
+| 🟢 `CURRENT` | [`docs/lore/03_LOCATIONS.md`](lore/03_LOCATIONS.md) | **New Locations** — 40 locations, banded by region per `01_GAZETTEER.md`. |
+| 🟢 `CURRENT` | [`docs/lore/04_ENCOUNTERS.md`](lore/04_ENCOUNTERS.md) | **Encounters** — Canon already has four faction figureheads: **Colonel Voss** (`iron_garrison`), |
+| 🟢 `CURRENT` | [`docs/lore/05_FACTIONS.md`](lore/05_FACTIONS.md) | **Factions — Powers and Currents** — Adding factions to a world that already has four well-drawn ones usually makes |
+| 🟢 `CURRENT` | [`docs/narrative/ACCEPTANCE_eight_batches.md`](narrative/ACCEPTANCE_eight_batches.md) | **Narrative Acceptance Check — Eight Diegetic-Content Batches** — **Slice:** The eight creative-writing batches from commit `0118d212` (atmosphere, radio, journals, bureaucratic, lett... |
+| 🟢 `CURRENT` | [`docs/narrative/ACCEPTANCE_moral_quests.md`](narrative/ACCEPTANCE_moral_quests.md) | **Narrative Acceptance Check — Moral-Choice Quests Expansion** — **Slice:** `moral_choice_quests_expansion.json` — 50 morale-choice quests with 200 moral/empathy-traded choices, from... |
+| 🟢 `CURRENT` | [`docs/narrative/ACCEPTANCE_survivor_profiles.md`](narrative/ACCEPTANCE_survivor_profiles.md) | **Narrative Acceptance Check — Survivor Profiles Expansion** — **Slice:** `survivor_profiles_expansion.json` — 40 survivor profiles with character vignettes, from commit `94a68dc8`. |
+
+## 7. Forensics, Phase Logs & System Audits (57 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`docs/audit/ACTIONABLE_AUDIT_EXECUTION_PLAN.md`](audit/ACTIONABLE_AUDIT_EXECUTION_PLAN.md) | **ASHFALL: Actionable Execution Roadmap (from Comprehensive Game Audit)** — **Status:** ACTIVE EXECUTION |
+| 🟢 `CURRENT` | [`docs/audit/ASHFALL_COMPREHENSIVE_GAME_AUDIT.md`](audit/ASHFALL_COMPREHENSIVE_GAME_AUDIT.md) | **ASHFALL — COMPREHENSIVE READ-ONLY PROJECT AUDIT** — **Date of Audit:** 2026-08-18 |
+| 🟢 `CURRENT` | [`docs/audit/NULLABLE_SUPPRESSION_INVENTORY.md`](audit/NULLABLE_SUPPRESSION_INVENTORY.md) | **ASHFALL — Nullable & Compiler Warning Suppression Inventory** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/audit/NULLABLE_SUPPRESSION_SRC_OWNERSHIP_LIST.md`](audit/NULLABLE_SUPPRESSION_SRC_OWNERSHIP_LIST.md) | **ASHFALL — Godot Host (`src/`) Nullable & Warning Suppression Ownership List** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/debug/10LOOP_BATCH3_AUDIT.md`](debug/10LOOP_BATCH3_AUDIT.md) | **ASHFALL 10-Loop Bug Audit** — **Target:** Latest ASHFALL commit `eeff1f79` ("feat(batch3-phases1-3): implement 12 Batch 3 systems + Core support ad... |
+| 🟢 `CURRENT` | [`docs/debug/10LOOP_INTEGRATED20TASKS_BUG_AUDIT.md`](debug/10LOOP_INTEGRATED20TASKS_BUG_AUDIT.md) | **ASHFALL 10-Loop Bug Audit — Integrated 20 Tasks (PCK, CI, Caregiving → Pharma)** — **Date:** 2026-08-26 \| **Commit:** `2c324c1b` \| **Branch:** `audit/fix-batch3-plus-phases` |
+| 🟢 `CURRENT` | [`docs/debug/10LOOP_WHOLE_CODEBASE_BUG_AUDIT.md`](debug/10LOOP_WHOLE_CODEBASE_BUG_AUDIT.md) | **ASHFALL 10-Loop Bug Audit — Whole Codebase** — Whole ASHFALL codebase: `Assets/Ashfall.Core/`, `src/`, `Assets/StreamingAssets/Data/`, `Ashfall.Core.Tests/`, `src/H... |
+| 🟢 `CURRENT` | [`docs/debug/10LOOP_WORKING_TREE_DIFF_BUG_AUDIT.md`](debug/10LOOP_WORKING_TREE_DIFF_BUG_AUDIT.md) | **ASHFALL 10-Loop Bug Audit** — The uncommitted working-tree diff at commit `de1c0a1feaba9904fe03e1bba35bcb4408bdfb29` — |
+| 🟢 `CURRENT` | [`docs/debug/20LOOP_FULL_REPO_BUG_AUDIT.md`](debug/20LOOP_FULL_REPO_BUG_AUDIT.md) | **ASHFALL 20-Loop Forensic Bug Audit** — Whole repository — Core (`Assets/Ashfall.Core/`), Godot host (`src/`), data authority (`Assets/StreamingAssets/Data/`... |
+| 🟢 `CURRENT` | [`docs/debug/BATCH_REPAIR_5BUGS_RESOLUTION.md`](debug/BATCH_REPAIR_5BUGS_RESOLUTION.md) | **5-Bug Resolution Report** — **Plan:** `docs/debug/plans/BATCH_REPAIR_5BUGS_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/BATCH_REPAIR_BATCH2_RESOLUTION.md`](debug/BATCH_REPAIR_BATCH2_RESOLUTION.md) | **Batch 2 Resolution Report** — **Plan:** `docs/debug/plans/BATCH_REPAIR_BATCH2_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/BATCH_REPAIR_BATCH3_RESOLUTION.md`](debug/BATCH_REPAIR_BATCH3_RESOLUTION.md) | **Batch 3 Resolution Report** — **Plan:** `docs/debug/plans/BATCH_REPAIR_BATCH3_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/BATCH_REPAIR_BATCH4_RESOLUTION.md`](debug/BATCH_REPAIR_BATCH4_RESOLUTION.md) | **Batch 4 Resolution Report** — **Plan.** `docs/debug/plans/BATCH_REPAIR_BATCH4_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/BATCH_REPAIR_BATCH5_RESOLUTION.md`](debug/BATCH_REPAIR_BATCH5_RESOLUTION.md) | **Batch 5 Resolution Report** — **Plan.** `docs/debug/plans/BATCH_REPAIR_BATCH5_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/DEEP_INVESTIGATION_POST_AUDIT.md`](debug/DEEP_INVESTIGATION_POST_AUDIT.md) | **ASHFALL Deep Investigation — Post-Audit Refinement** — This document records the deep investigation performed after the initial 10-loop audit. The user requested deeper cod... |
+| 🟢 `CURRENT` | [`docs/debug/logs/BATCH_REPAIR_5BUGS_IMPLEMENTATION_LOG.md`](debug/logs/BATCH_REPAIR_5BUGS_IMPLEMENTATION_LOG.md) | **5-Bug Repair Implementation Log** — **Plan:** `docs/debug/plans/BATCH_REPAIR_5BUGS_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/logs/BATCH_REPAIR_BATCH2_IMPLEMENTATION_LOG.md`](debug/logs/BATCH_REPAIR_BATCH2_IMPLEMENTATION_LOG.md) | **Batch 2 Repair Implementation Log** — **Plan:** `docs/debug/plans/BATCH_REPAIR_BATCH2_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/logs/BATCH_REPAIR_BATCH3_IMPLEMENTATION_LOG.md`](debug/logs/BATCH_REPAIR_BATCH3_IMPLEMENTATION_LOG.md) | **Batch 3 Repair Implementation Log** — **Plan:** `docs/debug/plans/BATCH_REPAIR_BATCH3_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/logs/BATCH_REPAIR_BATCH4_IMPLEMENTATION_LOG.md`](debug/logs/BATCH_REPAIR_BATCH4_IMPLEMENTATION_LOG.md) | **Batch 4 Repair Implementation Log (filled)** — **Plan.** `docs/debug/plans/BATCH_REPAIR_BATCH4_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/logs/BATCH_REPAIR_BATCH5_IMPLEMENTATION_LOG.md`](debug/logs/BATCH_REPAIR_BATCH5_IMPLEMENTATION_LOG.md) | **Batch 5 Repair Implementation Log (filled)** — **Plan.** `docs/debug/plans/BATCH_REPAIR_BATCH5_PLAN.md` |
+| 🟢 `CURRENT` | [`docs/debug/logs/BUG-01_world_save_checksum_softening_IMPLEMENTATION_LOG.md`](debug/logs/BUG-01_world_save_checksum_softening_IMPLEMENTATION_LOG.md) | **BUG-01 Implementation Log — WorldSaveStore Checksum Softening** — **Pre-integration checkpoint:** PASS (repo unchanged since audit; `customPath` hooks |
+| 🟢 `CURRENT` | [`docs/debug/plans/BATCH_REPAIR_5BUGS_PLAN.md`](debug/plans/BATCH_REPAIR_5BUGS_PLAN.md) | **5-Bug Core Repair Plan** — **Source audit:** `docs/debug/10LOOP_BATCH3_AUDIT.md` |
+| 🟢 `CURRENT` | [`docs/debug/plans/BATCH_REPAIR_BATCH2_PLAN.md`](debug/plans/BATCH_REPAIR_BATCH2_PLAN.md) | **Batch 2 Repair Plan** — **Source audit:** `docs/debug/10LOOP_BATCH3_AUDIT.md` |
+| 🟢 `CURRENT` | [`docs/debug/plans/BATCH_REPAIR_BATCH3_PLAN.md`](debug/plans/BATCH_REPAIR_BATCH3_PLAN.md) | **Batch 3 Repair Plan** — **Prior batches:** Batches 1 + 2 — 2438/2438 tests passing. |
+| 🟢 `CURRENT` | [`docs/debug/plans/BATCH_REPAIR_BATCH4_PLAN.md`](debug/plans/BATCH_REPAIR_BATCH4_PLAN.md) | **Batch 4 Repair Plan** — **Prior batches.** Batch 1 + Batch 2 + Batch 3 — all closed; resolution reports at `docs/debug/BATCH_REPAIR_{5BUGS,BA... |
+| 🟢 `CURRENT` | [`docs/debug/plans/BATCH_REPAIR_BATCH5_PLAN.md`](debug/plans/BATCH_REPAIR_BATCH5_PLAN.md) | **Batch 5 Repair Plan (warmth + decon + tuning + BUG-15 deferred)** — **Falsification of prior batch's "design-blocked" verdicts.** Before writing this plan I re-read `Assets/Ashfall.Core... |
+| 🟢 `CURRENT` | [`docs/debug/plans/BUG-01_world_save_checksum_softening_REPAIR_PLAN.md`](debug/plans/BUG-01_world_save_checksum_softening_REPAIR_PLAN.md) | **BUG-01 Repair Plan — WorldSaveStore Checksum-Mismatch Softening** — `src/Host/WorldSaveStore.cs:84-88` (working tree, uncommitted): when a checksummed |
+| 🟢 `CURRENT` | [`docs/debug/plans/BUG_01_03_11_REPAIR_PLAN.md`](debug/plans/BUG_01_03_11_REPAIR_PLAN.md) | **BUG-01/03/11 Repair Plan: NeedsSystem/ResearchSystem/StartingLevelSystem State Authority** — **BUG-01 (CRITICAL):** Three local `NeedsSystem` instances in `Main.ExpandedShelterSystems.cs` have empty `_survivors... |
+| 🟢 `CURRENT` | [`docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`](qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md) | **Manual Smoke-Test Checklist — Audio & User Settings Recovery Behavior** — **Date:** 2026-08-27 |
+| 🟢 `CURRENT` | [`docs/qa/MANUAL_PLAYTHROUGH_CHECKLIST.md`](qa/MANUAL_PLAYTHROUGH_CHECKLIST.md) | **Manual Playthrough Checklist — Day 1 → Day 2 Milestone** — **Environment:** Desktop Godot 4.7+ (.NET), launch via `godot --path .` or editor Play. |
+| 🟢 `CURRENT` | [`docs/qa/TEST_LAYOUT_CONVENTIONS.md`](qa/TEST_LAYOUT_CONVENTIONS.md) | **ASHFALL Test Suite Layout & Conventions** — All unit, integration, simulation, and contract test files are organized by domain under `Ashfall.Core.Tests/`: |
+| 🟢 `CURRENT` | [`docs/superpowers/plans/2026-08-09-event-modal-view.md`](superpowers/plans/2026-08-09-event-modal-view.md) | **Event Modal View Implementation Plan** — **Goal:** Draw the event prompt and its choices, closing the last gap in a complete gameplay loop. |
+| 🟢 `CURRENT` | [`docs/superpowers/plans/2026-08-09-first-playable.md`](superpowers/plans/2026-08-09-first-playable.md) | **First Playable Implementation Plan** — **Goal:** Make NEW EXPEDITION on the main menu load a real gameplay scene in which `GameBootstrap` boots fully wired,... |
+| 🟢 `CURRENT` | [`docs/superpowers/plans/2026-08-09-player-input-in-scene.md`](superpowers/plans/2026-08-09-player-input-in-scene.md) | **Player Input In Scene Implementation Plan** — **Goal:** Put `PlayerInputHandler` into the generated gameplay scene so key presses reach the simulation, and add the... |
+| 🟢 `CURRENT` | [`docs/superpowers/plans/2026-08-09-vitals-panel.md`](superpowers/plans/2026-08-09-vitals-panel.md) | **Vitals Panel Implementation Plan** — **Goal:** Render day/time, radiation dose and the four core needs in the diegetic HUD, so the simulation the player i... |
+| 🟢 `CURRENT` | [`docs/superpowers/specs/2026-08-07-main-menu-design.md`](superpowers/specs/2026-08-07-main-menu-design.md) | **Main Menu ("LAST STATIC") — Design Spec** — Date: 2026-08-07 |
+| 🟢 `CURRENT` | [`docs/superpowers/specs/2026-08-09-first-playable-design.md`](superpowers/specs/2026-08-09-first-playable-design.md) | **First Playable — Boot the Simulation from the Main Menu** — Date: 2026-08-09 |
+| 🟢 `CURRENT` | [`docs/superpowers/specs/2026-08-09-vitals-panel-design.md`](superpowers/specs/2026-08-09-vitals-panel-design.md) | **Vitals Panel Design** — **Date:** 2026-08-09 |
+| 🟢 `CURRENT` | [`docs/superpowers/specs/2026-08-12-ashfall-massive-content-expansion-design.md`](superpowers/specs/2026-08-12-ashfall-massive-content-expansion-design.md) | **ASHFALL — Massive Content Expansion (Expansion V) — Design Spec** — The user handed off a master brainstorm doc (originally authored by "antigravity", living at |
+| 🟡 `HISTORICAL` | [`docs/audit/AUDIT_REPORT.md`](audit/AUDIT_REPORT.md) | **ASHFALL (Atomic War) — Comprehensive Technical Audit Report** — ======================================================================================== |
+| 🟡 `HISTORICAL` | [`docs/forensics/254_SUBSYSTEMS_CONSOLIDATED_REPORT.md`](forensics/254_SUBSYSTEMS_CONSOLIDATED_REPORT.md) | **ASHFALL 254-Subsystem Consolidated Forensic Report** — **Date:** 2026-08-22 |
+| 🟡 `HISTORICAL` | [`docs/forensics/30_SUBSYSTEMS_FORENSIC_REPORT.md`](forensics/30_SUBSYSTEMS_FORENSIC_REPORT.md) | **30-Subsystem Forensic Survey** — **Date:** 2026-08-22 |
+| 🟡 `HISTORICAL` | [`docs/forensics/30_SUBSYSTEMS_FORENSIC_REPORT_2.md`](forensics/30_SUBSYSTEMS_FORENSIC_REPORT_2.md) | **30-Subsystem Forensic Survey — Batch 2** — **Date:** 2026-08-22 |
+| 🟡 `HISTORICAL` | [`docs/forensics/50_SUBSYSTEMS_FORENSIC_REPORT_3.md`](forensics/50_SUBSYSTEMS_FORENSIC_REPORT_3.md) | **50-Subsystem Forensic Survey — Batch 3** — **Date:** 2026-08-22 |
+| 🟡 `HISTORICAL` | [`docs/forensics/50_SUBSYSTEMS_FORENSIC_REPORT_4.md`](forensics/50_SUBSYSTEMS_FORENSIC_REPORT_4.md) | **50-Subsystem Forensic Survey — Batch 4** — **Date:** 2026-08-22 |
+| 🟡 `HISTORICAL` | [`docs/forensics/50_SUBSYSTEMS_FORENSIC_REPORT_5.md`](forensics/50_SUBSYSTEMS_FORENSIC_REPORT_5.md) | **50-Subsystem Forensic Survey — Batch 5** — **Date:** 2026-08-22 |
+| 🟡 `HISTORICAL` | [`docs/forensics/57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md`](forensics/57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md) | **57-Subsystem Forensic Survey — Final Batch** — **Date:** 2026-08-22 |
+| 🟡 `HISTORICAL` | [`docs/forensics/ACTIONABLE_EXECUTION_PLAN.md`](forensics/ACTIONABLE_EXECUTION_PLAN.md) | **Actionable Execution Plan: ASHFALL Integration Phases** — **Status:** P0-3 COMPLETE ✅ \| P0-2, P0-1, P1-1, P1-2, P1-3, P2-1, P2-2 pending |
+| 🟡 `HISTORICAL` | [`docs/forensics/ACTIONABLE_EXECUTION_PLAN_REVISED.md`](forensics/ACTIONABLE_EXECUTION_PLAN_REVISED.md) | **Actionable Execution Plan: ASHFALL Forensic Remediation** — **Status:** REVISED — forensic reconciliation required before broad mutation |
+| 🟡 `HISTORICAL` | [`docs/forensics/BASELINE_FORENSIC_VERIFICATION.md`](forensics/BASELINE_FORENSIC_VERIFICATION.md) | **Baseline Forensic Verification** — **Date:** 2026-08-26 |
+| 🟡 `HISTORICAL` | [`docs/forensics/CANONICAL_SUBSYSTEM_REGISTRY.md`](forensics/CANONICAL_SUBSYSTEM_REGISTRY.md) | **Canonical Subsystem Registry** — **Date:** 2026-08-26 |
+| 🟡 `HISTORICAL` | [`docs/forensics/DEEP_ANALYSIS_254_SUBSYSTEMS.md`](forensics/DEEP_ANALYSIS_254_SUBSYSTEMS.md) | **Deep Forensic Analysis: 254-Subsystem Survey** — **Date:** 2026-08-23 |
+| 🟡 `HISTORICAL` | [`docs/forensics/DEEP_INTEGRATION_PLAN.md`](forensics/DEEP_INTEGRATION_PLAN.md) | **Deep Integration Plan: 254-Subsystem Forensic Actionables** — **Date:** 2026-08-23 |
+| 🟡 `HISTORICAL` | [`docs/forensics/MAIN_CS_ONLY_SYSTEMS_AUDIT.md`](forensics/MAIN_CS_ONLY_SYSTEMS_AUDIT.md) | **Main.cs-Only Systems Audit (P3-1)** — **Date:** 2026-08-23 |
+| 🟡 `HISTORICAL` | [`docs/forensics/PHASE_F0_P0_EXECUTION_LOG.md`](forensics/PHASE_F0_P0_EXECUTION_LOG.md) | **Phase F0 + P0 + P1-1 Execution Log** — **Date:** 2026-08-23 |
+| 🟡 `HISTORICAL` | [`docs/forensics/PHASE_F0_P0_P1_P2_EXECUTION_LOG.md`](forensics/PHASE_F0_P0_P1_P2_EXECUTION_LOG.md) | **Phase F0 + P0 + P1 + P2 + P3 Execution Log** — **Date:** 2026-08-26 |
+| 🟡 `HISTORICAL` | [`docs/forensics/SCHEMA_VERSION_POLICY.md`](forensics/SCHEMA_VERSION_POLICY.md) | **Schema Version Policy** — **Date:** 2026-08-23 |
+
+## 8. AI Art & Prompt Generation Catalogs (15 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`docs/ai-art/ASSET_TAXONOMY.md`](ai-art/ASSET_TAXONOMY.md) | **ASSET_TAXONOMY.md** — Asset families for this specific game, grounded in the actual catalogs (not a generic game's taxonomy), plus a per-fa... |
+| 🟢 `CURRENT` | [`docs/ai-art/CONSISTENCY_ANCHORS.md`](ai-art/CONSISTENCY_ANCHORS.md) | **CONSISTENCY_ANCHORS** — - **Seed reference:** `generated_AIassets/ammo_545x39_jhp_ap.png` controls black field, object scale, top-left light ... |
+| 🟢 `CURRENT` | [`docs/ai-art/GAME_VISUAL_DNA.md`](ai-art/GAME_VISUAL_DNA.md) | **GAME_VISUAL_DNA** — Updated: 2026-08-13. This is the prompt-level visual source of truth for the current playable build. |
+| 🟢 `CURRENT` | [`docs/ai-art/IMAGE_MODEL_PROFILES.md`](ai-art/IMAGE_MODEL_PROFILES.md) | **IMAGE_MODEL_PROFILES.md** — - **Best for:** photoreal/painterly textures, materials, environments — this project's default for gritty painterly a... |
+| 🟢 `CURRENT` | [`docs/ai-art/MODEL_ROUTING.md`](ai-art/MODEL_ROUTING.md) | **MODEL ROUTING** — Assigned production-model availability checked 2026-08-13. Production allocation is exactly 80 Recraft assets plus 32... |
+| 🟢 `CURRENT` | [`docs/ai-art/RECRAFT_80.md`](ai-art/RECRAFT_80.md) | **RECRAFT 80** — Exactly 80 unique production assets selected after full manifest scoring. Selection favors clean isolated objects, co... |
+| 🟢 `CURRENT` | [`docs/ai-art/SEAART_QUEUE.md`](ai-art/SEAART_QUEUE.md) | **SEAART QUEUE** — 326 production assets remain after the 80 Recraft selections and 31 existing bases are removed from the 437 live item... |
+| 🟢 `CURRENT` | [`docs/ai-art/TRIAGE_2026-08-13.md`](ai-art/TRIAGE_2026-08-13.md) | **TRIAGE — generated_AIassets batch, 2026-08-13** — Triage of the 101 unnamed files that had accumulated in `generated_AIassets/`. |
+| 🟢 `CURRENT` | [`docs/ai-art/WEB_NANO_BANANA_PRO.md`](ai-art/WEB_NANO_BANANA_PRO.md) | **WEB NANO BANANA PRO GENERATION PROMPTS Fully generated .md deprecated!** — These prompts have been adapted from the SeaArt queue specifically for the **Web Nano Banana Pro** model. The origina... |
+| 🔵 `GENERATED` | [`docs/ai-art/ASSET_MANIFEST.md`](ai-art/ASSET_MANIFEST.md) | **MASTER VISUAL ASSET MANIFEST** — Updated: 2026-08-13. Canonical prompts live in `RECRAFT_80.md` and `SEAART_QUEUE.md`; this manifest is the deduplicat... |
+| 🔵 `GENERATED` | [`docs/ai-art/EXISTING_PROMPT_AUDIT.md`](ai-art/EXISTING_PROMPT_AUDIT.md) | **EXISTING_PROMPT_AUDIT.md** — Two prompt-adjacent files already exist. Audited against: GOOD / COMPRESS / CONTRADICTORY / GENERATOR-MISMATCHED / TO... |
+| 🔵 `GENERATED` | [`docs/ai-art/PROMPT_RULES.md`](ai-art/PROMPT_RULES.md) | **PROMPT_RULES.md** — *(This project's own independently-derived version — still the right reference for asset families the Desktop librari... |
+| 🔵 `GENERATED` | [`docs/ai-art/nano banana pro generations/generation_rules.md`](ai-art/nano banana pro generations/generation_rules.md) | **Generation Rules** — - **Batch Size:** Generate 2 to 3 images per prompt (no more than 3). |
+| 🔵 `GENERATED` | [`docs/ai-art/prompts/pilot_batch.md`](ai-art/prompts/pilot_batch.md) | **Pilot batch — 10 assets** — Validates the system end to end before scaling to the full catalog. 8 of 10 assets clear the actively-uncommitted Pha... |
+| 🔵 `GENERATED` | [`prompt_assets/prompt-optimizer-skill.md`](../prompt_assets/prompt-optimizer-skill.md) | **UNIVERSAL PROMPT OPTIMIZER — Full Skill Reference** — name: prompt-optimizer |
+
+## 9. Maintenance & Developer Tooling (2 documents)
+
+| Status | Document | Title / Summary |
+|---|---|---|
+| 🟢 `CURRENT` | [`docs/skills/ASHFALL_SKILL_REVIEW.md`](skills/ASHFALL_SKILL_REVIEW.md) | **ASHFALL Skill Review** — **Date:** 2026-08-22 |
+| 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |

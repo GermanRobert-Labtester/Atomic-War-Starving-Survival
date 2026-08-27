@@ -1,8 +1,8 @@
 # ASHFALL: THE DUTY ROSTER — Creative Pack
 
-**Internal id:** `expansion_the_duty_roster`  
-**Kind:** Shippable prose. Additive to `docs/expansions/expansion_02_the_duty_roster_plan.md`. Does not rewrite the bible.  
-**Voice lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.  
+**Internal id:** `expansion_the_duty_roster`
+**Kind:** Shippable prose. Additive to `docs/expansions/expansion_02_the_duty_roster_plan.md`. Does not rewrite the bible.
+**Voice lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.
 **VO:** Lines marked `[VO]` are text-first; record only if the radio/intercom pipeline already exists. Everything else is UI/Codex/inspect.
 
 Ids reuse the Duty Roster bible. Re-grep `locations.json`, `locations_expansion3.json`, `QuestlineSO`, `faction_lore.json`, `currents.json`, `world_history.json`, and Holdfast proposed ids before implementation. No C# in this pack. No seventh Power. No Tessarat, Sector 7G, terraformers, androids, neuromancers. No second District 8 coast.
@@ -23,42 +23,42 @@ Schema: `id`, `displayName`, `inspect` (one line), `description` (80–180 words
 
 **inspect:** Fourteen rows. A pencil on a string. The heading is older than anyone sleeping here.
 
-**description:**  
+**description:**
 A wall chart headed `ALLOCATION 12 — DUTY ROSTER`, print date before the Exchange, paper that has gone the colour of tea. Fourteen rows. Columns: name, occupation, watch, remarks. The remarks column was never meant for the living. A hole is punched in the lower left; a pencil hangs through it on a string darkened by hands. The point is short. There is a knife-nick in the rail where someone meant to start a name and did not. Four unfaded rectangles on the corridor behind you are the same width as brass plates. If the rows are still blank, dust has been wiped in a rectangle the size of a palm, daily. If they are written, the graphite shines when the lamp is lit and dulls when it is not. You can take the pencil. The next morning will be guessed. You can write a name that has not slept here. Kess will erase it before the kettle boils.
 
 ### `loc_stack_sleeping` — The Sleeping Stack
 
 **inspect:** Eleven bolted footboards. Three pads. One extra blanket folded as if it were a person.
 
-**description:**  
+**description:**
 Bunks sized for eleven, numbered in stencil that skipped 4 and 13 the way some buildings skip floors. The manifest in the airlock still reads fourteen. Three camp-pads fill the difference, edges taped, names on paper tags if anyone has claimed a fourteenth. A blanket is folded on the empty pad even when no one is due. It keeps the shape of a chest. Under A7, a sock. Under A2, a dosimeter on a nail, ticking slower than the intake. You can take the blanket. The pad will look like a pad. You can move a tag from one board to another. Kess will put it back if the person did not sleep there. The air is breath and wool and the ghost of iodine.
 
 ### `loc_stack_mess` — The Mess
 
 **inspect:** One table. Portion rings burned into enamel. A ladle that has a queue.
 
-**description:**  
+**description:**
 A table that seats eight if no one brings elbows. Enamel bowls with rings where stew sat and was not eaten, or sat and was. A ladle hangs on a nail at head height so children cannot vote with it unless lifted. Knife-scratches on the table edge count something that is not days: extra portions, or the times the count was short. A tin of salt with a lid that does not match. If three people are north, two bowls wait at the far end with cloth over them, and the cloth gets a skin of dust by evening. You can take the ladle. The next meal will be poured with a mug. You can leave a bowl until it is cold. The ring it leaves is a mark. Ansel will not point at it.
 
 ### `loc_stack_filtration` — Filtration Stack
 
 **inspect:** Canisters. A tin behind them that everyone puts back. The intake bunk is the one with the cough.
 
-**description:**  
+**description:**
 The filtration stack is a throat of metal and cloth. Canisters notch-filed for days, the way Waystation A's filter is notched for a window. Behind it, a tin. Fourteen brass nameplates. Everyone who has found them has put them back. The tin is heavier than it looks until it isn't. A stool is bolted nearest the intake; the person who sleeps there tastes the filter first. A rag on a hook is Hadi's if he is here, and is still Hadi's if he is not. You can take a canister. The next night the intake bunk will know. You can take the tin. The rectangles in the corridor will not grow brass. You can screw one plate under a living name. It will catch the lamp. Nobody will mention the tin.
 
 ### `loc_stack_clinic_alcove` — Clinic Alcove
 
 **inspect:** Iodine, cloth, a bolt of string. Not a hospital. A rag that is damp when he is gone.
 
-**description:**  
+**description:**
 A curtain on a wire. Behind it: iodine in a brown bottle with a Continuity lot number, a bolt of boiled cloth, string, a basin that was a mixing bowl. Arithmetic, if Ianov has visited, is a paper on the crate with numbers that were not rounded toward ease. If Hadi Morrow is north, the rag on the hook is still damp and nobody boils it. If he is dead, the rag is dry and still nobody throws it. A child's drawing of a bunk, labelled with a number that is not on the sleeping-stack stencil. You can take the iodine. The next dressing will be water and hope that is not called hope. You can take the rag. The hook will still look like a hook.
 
 ### `loc_stack_airlock` — Inner Airlock
 
 **inspect:** A crate of boots, sizes 1 through 4, the tape still factory. A chair bolted to the wrong profession.
 
-**description:**  
+**description:**
 The last room before the hatch scene. A dental chair, bolted, no instruments. A crate stencilled `ALLOC-12 / NOT FOR GENERAL ISSUE`, children's winter boots, sizes 1–4, tape uncut unless you cut it. Decon is a bucket and a rag on a nail. The rag ticks if someone came in glowing. Boots sit in pairs even in the crate, as if pairing were a kind of care. You can open the crate. A child can wear a pair. They were not packed for them. You can leave the tape. The crate will still be a crate in forty days. You can unbolt the chair. Dentists' Row is missing exactly this.
 
 ---
@@ -69,28 +69,28 @@ The last room before the hatch scene. A dental chair, bolted, no instruments. A 
 
 **inspect:** Standby cycle held it unlocked once. Everything since has been a decision.
 
-**description:**  
+**description:**
 The outer hatch. Wheel, gasket, intercom grille with a button cracked to show the spring. Temperature is a number Tamsin will say if you ask, and a fact if you do not. Frost on the inner rim in winter; salt-rime if a column has come from the Cut. Scratches on the wheel from hands that did not know the direction. A laminated card in a freezer bag has been here, or will be, or a triplicate form, or a ticket from a driving-licence bureau. You can open. You can keep shut. The game will give you the temperature and then stop talking. You can steal the cracked button. The next visitor will knock on metal.
 
 ### `loc_approach_apron` — Ash Apron
 
 **inspect:** Tracks. A rectangle of earth the crows already know.
 
-**description:**  
+**description:**
 Ash packed by feet into a fan. Folding-stool marks, three metres out, a triangle that has been pulled and sunk and pulled. If a burial was done outside, the rectangle is a different grey and the flock has a schedule. A peg for a lantern that is not always lit; Tamsin lights it for whoever is walking, which is not Ivy's rule and must not be asked to be. You can scuff the stool marks. They will come back if the person does. You can leave a cup. It will fill with grit.
 
 ### `loc_approach_stool` — The Waiting Stool
 
 **inspect:** He does not knock. The waiting is the procedure.
 
-**description:**  
+**description:**
 A folding stool, municipal, one rivet replaced with wire. Three metres from the hatch, which is the distance Edor Vale will name if you ask why he does not come closer. The feet have sunk. A square of cardboard under one foot is dated in pencil, a week ago, or a month. There is no cup unless you bring one. If you carry tea out, he will wash the cup in the ash and there will be grit in the seam when you get it back. If levy is refused, the stool is here for forty days. If the column was hidden, the stool may be empty because there is nothing to wait for, or still occupied because he does not know. You can fold the stool and bring it in. He will stand. Standing is also in the procedure.
 
 ### `loc_approach_decon` — Decon Alcove
 
 **inspect:** A bucket. A rag. The magnitudes are already written.
 
-**description:**  
+**description:**
 A niche with a grate. Bucket, cold water, a rag that has been boiled and has not. A painted line on the floor that means strip. Force-decon spills; the alcove ticks at ten. Let-in ticks at fifty, and the tick walks inside. Deny does not tick. Deny is a number on everyone else's face in the mess. A nail holds spare string for tying sleeves. You can take the rag. The next returnee will use a shirt. You should not retune the numbers. They were expensive.
 
 ---
@@ -101,28 +101,28 @@ A niche with a grate. Bucket, cold water, a rag that has been boiled and has not
 
 **inspect:** The authenticator is on. The chart is blank on purpose.
 
-**description:**  
+**description:**
 A hatch that still believes in a number. Inside: the same print of duty roster, fourteen rows, wiped. A disc with no number hangs on a nail by the wheel. Four people sleep here. Their names are not on the wall. Nila Brant will trade a hiding place for a filter and will not say please. If you write one of their living names in ink, or on a census, or on 12-C, this hatch will still look like a hatch. It will not open. You can take the disc. It authenticates nothing. That is the point. You can write a name as a kindness. Kindness is how a pool is made.
 
 ### `loc_overflow_alloc_13` — Allocation 13
 
 **inspect:** Authenticator lit. Dust. One name erased to a scar in the paper.
 
-**description:**  
+**description:**
 Empty. The light is a waste. A chart with a rectangle of thinner fibre where a name was, graphite ground out with a wet thumb. The scar is still a shape if you hold it to the lamp. Nila wants it to stay a scar. Copying it for Sole is completeness. Completeness opens 13 to a file and closes 11 to you. A bunk frame with no mattress. A kettle with mineral rings, dry. You can rewrite the name. You can leave the scar. You can pocket a rubbing. The authenticator will not care. Nila will.
 
 ### `loc_overflow_pump_hatch` — Pump Hatch
 
 **inspect:** A hatch on a riser. It authenticates for nobody.
 
-**description:**  
+**description:**
 Service architecture, a lid on a pipe the city used to deny floods with. The authenticator plate is blank — not wiped, never numbered. Blank Rows leave filters here, and a pencil jar, and a note that says `DO NOT WRITE THE LIVING` in a hand that is not Nila's. The air smells of wet rust. You can take a filter. Someone in 11 will breathe worse. You can write a joke. They will not laugh. They will move the cache.
 
 ### `loc_overflow_blank_cellar` — The Blank Cellar
 
 **inspect:** Pencils in a jar. The rule is the only decoration.
 
-**description:**  
+**description:**
 A cellar under a Grid stair that still has a civil-defence stripe. Chairs that do not match. A jar of pencils, points kept, erasers worn to metal. The rule is painted, not paper: `DO NOT WRITE THE LIVING`. A second line, smaller, in graphite: *the dead can take it.* They argue about the second line. You can steal a pencil. Kess's string will not match. You can add a third line. They will paint over it.
 
 ---
@@ -175,8 +175,8 @@ Speakable. Text-first.
 
 ## 2.1 `npc_kess_adler` — Kess Adler
 
-**Where:** `loc_stack_roster_wall`  
-**Was:** Records clerk. RUR 9. Unlisted.  
+**Where:** `loc_stack_roster_wall`
+**Was:** Records clerk. RUR 9. Unlisted.
 **Will not:** Write a name that has not slept here. Falsify a DOB. Joke. Ink without being ordered.
 
 ### Do / Don't
@@ -187,40 +187,40 @@ Speakable. Text-first.
 
 ### Barks (12)
 
-**First meet**  
+**First meet**
 "The wall was left blank because the names it wanted did not arrive. If I write yours, that is not the same as being them. It is only the same as being here."
 
-**Morning**  
+**Morning**
 "Who slept here. That's the only column I can fill without lying. Lying is a different pencil."
 
-**Pencil**  
+**Pencil**
 "Graphite comes off. That's the point of it. Ink is a levy. I don't choose ink."
 
-**Ink ordered**  
+**Ink ordered**
 "I will write it. I will not pretend I chose it. Nila will hear the difference even if you don't tell her."
 
-**Hadi**  
+**Hadi**
 "Veterinary assistant. Edor will write veterinarian. I can leave the grade wrong. I can also not."
 
-**Levy**  
+**Levy**
 "Three names. I can copy them. I can misspell them. Missing a letter is still a name. I won't misspell them."
 
-**Child at the wall**  
+**Child at the wall**
 "That's a nickname. I can leave it. The Office will call it irregular. Irregular is a status. Status follows occupancy."
 
-**Tin**  
+**Tin**
 "I don't comment on the tin. I never have. The rectangles are still there."
 
-**Burn**  
+**Burn**
 "If you burn it, I will still stand here in the morning. There will be a cleaner rectangle of wall. I will wipe that too."
 
-**Sole**  
+**Sole**
 "I can say a name aloud. I wrote it. That is corroboration. It is not a religion. The children in the Drown inferred one. I didn't."
 
-**Blank Rows**  
+**Blank Rows**
 "They keep it empty on purpose. I keep it empty until someone sleeps. Those are not the same empty."
 
-**Trust-low**  
+**Trust-low**
 "You asked me to write a person who was not here. I erased it. I will erase it again. The string is long enough."
 
 ### Monologue (once) `[VO]`
@@ -229,18 +229,18 @@ Speakable. Text-first.
 
 ### threateningBodyText pair
 
-**Neutral**  
+**Neutral**
 Kess stands under the chart with the pencil on its string. She waits until you say who slept here. She does not prompt. The kettle clicks.
 
-**Threatening (`threateningFactionId` unused; mark `mark_wrote_unslept`)**  
+**Threatening (`threateningFactionId` unused; mark `mark_wrote_unslept`)**
 She has already erased a name. The paper is thinner there. She does not look at you while she wipes the dust into the same palm-rectangle as before.
 
 ---
 
 ## 2.2 `npc_hadi_morrow` — Hadi Morrow
 
-**Where:** clinic alcove  
-**Was:** Veterinary assistant. Levy bait.  
+**Where:** clinic alcove
+**Was:** Veterinary assistant. Levy bait.
 **Will not:** Call himself a doctor. Leave a septic child for a form without being ordered.
 
 ### Do / Don't
@@ -251,40 +251,40 @@ She has already erased a name. The paper is thinner there. She does not look at 
 
 ### Barks (12)
 
-**First meet**  
+**First meet**
 "I can do this here with iodine and a clean rag. I can do the outfall with a whistle. I cannot do both in the same morning. You have to write which morning it is."
 
-**Title**  
+**Title**
 "I'm not a veterinarian. I'm the person who is here. Ianov will tell you the difference with arithmetic. I will tell you with a rag."
 
-**Listed**  
+**Listed**
 "If my name is on a return, it is a name on a return. I won't hide in a cupboard. I will hide in Allocation 11 if you ask Nila, and I will hate the asking."
 
-**Sent**  
+**Sent**
 "Thirty days is thirty dressings I will not do. Pack the iodine. Pack a second rag. I will come back if the ice does."
 
-**Never back (read by others)**  
+**Never back (read by others)**
 The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remarks. Remarks were for the dead.
 
-**Child**  
+**Child**
 "If they are hot, I am here. If I am not here, you boil the cloth and you do not guess the dose. Guessing is how I know I am not a doctor."
 
-**Ianov**  
+**Ianov**
 "He doesn't round toward ease. I don't either. That is the whole of the colleague."
 
-**Membrane**  
+**Membrane**
 "They need bodies on an apron that eats skin. I have skin. So do you. Write it."
 
-**Meal**  
+**Meal**
 "I skipped it. I know. If you send the child with a bowl I will eat it. If you make a speech I will not."
 
-**Sela**  
+**Sela**
 "She remembers water that worked in a hole that was not provisioned. That is more useful than my title. Don't send both of us north in the same window."
 
-**Trust-high**  
+**Trust-high**
 "Put me on the morning row. Not the remarks."
 
-**Trust-low**  
+**Trust-low**
 "You wrote veterinarian. I am going to correct Kess. You can correct Edor yourself."
 
 ### Monologue (once) `[VO]`
@@ -295,8 +295,8 @@ The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remark
 
 ## 2.3 `npc_tamsin_rook` — Tamsin Rook
 
-**Where:** intercom / night slate  
-**Was:** Harbour night-clerk. Unlisted.  
+**Where:** intercom / night slate
+**Was:** Harbour night-clerk. Unlisted.
 **Will not:** Lie about who is outside. Sleep the same bunk two nights if the watch is short — unless you make her.
 
 ### Do / Don't
@@ -307,40 +307,40 @@ The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remark
 
 ### Barks (12)
 
-**First meet**  
+**First meet**
 "There's a stool in the ash. There's a person on it. I'm not opening until you say. I'm also not pretending the stool isn't there."
 
-**Intercom, unknown**  
+**Intercom, unknown**
 "Say again. I have a cracked button and a wind. Name, or I keep the wheel where it is."
 
-**Glow**  
+**Glow**
 "They're ticking. Let-in walks it inside. Decon spills a little. Deny is a number on everyone who didn't go out. Those numbers are already written. I don't change them."
 
-**Night slate**  
+**Night slate**
 "Same name three times is not a rotation. It's a person falling over at four. Write someone else or I write the airlock pad."
 
-**Waystation**  
+**Waystation**
 "A1 through A4 are our people with different weather. If I go, this grille is a grille. You will hear the crack in the button louder."
 
-**Office escort**  
+**Office escort**
 "Faded jackets. Forms. They know the temperature. I know the temperature. I'm asking you, not them."
 
-**Pell**  
+**Pell**
 "He brought a ticket machine. He is not joking. Take a number or don't. Don't break it unless you want a worse man with a worse machine."
 
-**Len**  
+**Len**
 "Two knocks. That's the House. They want a name and a sentence. I don't supply either."
 
-**Ice Road open**  
+**Ice Road open**
 "Haulers out. House thin. I stay unless you send me. If you send me, teach someone the wheel."
 
-**Road dark**  
+**Road dark**
 "Everyone is home. The stack is a stack. I need a second watch or I need you to accept that I will miss a knock."
 
-**Trust-high**  
+**Trust-high**
 "I'll tell you who's on the apron before they speak. That's the job. That's all of the job."
 
-**Trust-low**  
+**Trust-low**
 "You asked me to say we weren't here. I said we were. The grille doesn't do fiction."
 
 ### Monologue (once) `[VO]`
@@ -351,8 +351,8 @@ The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remark
 
 ## 2.4 `npc_ansel_duth` — Ansel Duth
 
-**Where:** mess / stack  
-**Was:** Parent. Unlisted.  
+**Where:** mess / stack
+**Was:** Parent. Unlisted.
 **Will not:** Ask twice whether you told the truth at the table.
 
 ### Do / Don't
@@ -363,40 +363,40 @@ The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remark
 
 ### Barks (12)
 
-**First meet**  
+**First meet**
 "If you tell them the boots were for someone else, they will still put them on. They will just know."
 
-**Ladle**  
+**Ladle**
 "There's one left. I'm not taking it. I'm asking who is."
 
-**Levy packing**  
+**Levy packing**
 "Say north and forms, or say work, or send them to the pads. Don't mix the three. They can tell mixing."
 
-**Empty bunk**  
+**Empty bunk**
 "Make it or don't. A sock on the board is also a decision. I won't pick it up if you leave it."
 
-**Sela**  
+**Sela**
 "She's thirteen. She already did this arithmetic. Don't make my kid do it for her."
 
-**Quiet House**  
+**Quiet House**
 "If it's me, you give him the name I use. Not the one on a plate in a tin. I put that plate back."
 
-**Burn**  
+**Burn**
 "If the wall burns, they will ask. Fire in the kettle is a story. We did it is a story. Silence is a story. Pick one."
 
-**Pell**  
+**Pell**
 "He'll say service is rations. It is. I'm still not putting a child's name on a ticket."
 
-**Frayne**  
+**Frayne**
 "Someone said fair in the allotments. She didn't write the word. She wrote that a visitor spoke. Don't send that person again."
 
-**Ink**  
+**Ink**
 "Ink means they can find us. Pencil means they can almost find us. I know which one keeps a child in a bunk. I also know which one gets iodine from a clinic that isn't this curtain."
 
-**Trust-high**  
+**Trust-high**
 "I'll sit the table. I'll keep my mouth shut if you asked for shut."
 
-**Trust-low**  
+**Trust-low**
 "You told them a softer sentence. They asked me in the dark. I didn't correct you. I also didn't sleep."
 
 ### Monologue (once) `[VO]`
@@ -407,8 +407,8 @@ The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remark
 
 ## 2.5 `npc_len_quill` — Len Quill
 
-**Where:** apron → St Brigid's  
-**Was:** Quiet House runner. Not a medic.  
+**Where:** apron → St Brigid's
+**Was:** Quiet House runner. Not a medic.
 **Will not:** Enter uninvited. Adjudicate the back room. Take a body without a name.
 
 ### Do / Don't
@@ -419,40 +419,40 @@ The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remark
 
 ### Barks (12)
 
-**First meet**  
+**First meet**
 "We make it quiet. I need the name. I need one true thing. I will write it the way you say it."
 
-**Knock**  
+**Knock**
 "Two. I won't do three. Three looks like a raid."
 
-**Name**  
+**Name**
 "The name they answer to. If you give me a plate-name they never used, I will still write it. The tag will be wrong in a way that lasts."
 
-**Lie**  
+**Lie**
 "I don't catch lies. I copy. Someone here will read it later. That's not my catching."
 
-**Refuse**  
+**Refuse**
 "Then I go. If they die on the apron, the flock has a rectangle. I don't come back for rectangles."
 
-**Invite**  
+**Invite**
 "As far as the airlock. Not the stack unless you say. I don't look at charts."
 
-**Blanket**  
+**Blanket**
 "If it's the child's, say so. I can take a half. Half is worse than no. I will still take it if that's what you have."
 
-**Effects**  
+**Effects**
 "Catalogued. The sentence on the tag. I return them. I don't explain the back room."
 
-**Sela present**  
+**Sela present**
 "I don't claim children. That's a different hatch. That's a different paper."
 
-**Office on stool**  
+**Office on stool**
 "I can wait. He can wait. We are not the same wait. Don't make us a queue."
 
-**Trust-high**  
+**Trust-high**
 "You gave a true thing that was true. I wrote it. That's the work."
 
-**Trust-low**  
+**Trust-low**
 "You refused the name and kept the body in the bunk. The bunk is a bunk. I have other doors."
 
 ### Monologue (once) `[VO]`
@@ -463,8 +463,8 @@ The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remark
 
 ## 2.6 `npc_nila_brant` — Nila Brant
 
-**Where:** Allocation 11  
-**Was:** Lamp-oil clerk. Occupies a Continuity hole.  
+**Where:** Allocation 11
+**Was:** Lamp-oil clerk. Occupies a Continuity hole.
 **Will not:** Hide a person already on Ormund's return. Open 11 after you ink her living.
 
 ### Do / Don't
@@ -475,40 +475,40 @@ The rag is dry. Nobody boils it. Kess has not written MISSING. Missing is remark
 
 ### Barks (12)
 
-**First meet**  
+**First meet**
 "If it isn't written, it isn't a pool. You can sleep here if you are not a pool. The minute you are a pool, this hatch is a wall."
 
-**Filter**  
+**Filter**
 "I need one. I will not say please. Please is how Provisioned talk when they want a stranger to feel the difference. I'm not them."
 
-**Hadi**  
+**Hadi**
 "If his name is already on a stool-form, I cannot unwrite it. If it isn't, he can cough in our intake bunk. We have one too."
 
-**Ink**  
+**Ink**
 "You put a living name in a year-colour. This wheel will still turn. It will not undog."
 
-**Scar at 13**  
+**Scar at 13**
 "Leave it. If you copy it for the Drown, that's a name. I don't care that it's a scar. Completeness is a kind of ink."
 
-**Levy refuse**  
+**Levy refuse**
 "Dark road is weather. Blank is us. Don't confuse them. We didn't ask Yara to starve you."
 
-**Kess**  
+**Kess**
 "She writes people who slept. That's almost our rule. Almost is how clerks get you."
 
-**Pell**  
+**Pell**
 "Don't bring his numbers here. We are not a quota. We are a hatch that doesn't open."
 
-**Second Winter**  
+**Second Winter**
 "Come if the stack is too full. One night. Two if the ice is wrong. A third and you are occupancy. Occupancy is a chart."
 
-**Disc**  
+**Disc**
 "It authenticates nothing. Keep it if you need to remember that nothing is a setting."
 
-**Trust-high**  
+**Trust-high**
 "I will hide one. Not three. Three is a column. Columns are what the ice is for."
 
-**Trust-low**  
+**Trust-low**
 "You wrote us. The light is still on. The wheel is a wheel. Goodbye."
 
 ### Monologue (once) `[VO]`
@@ -545,21 +545,21 @@ Kess: "Who slept here. That's the only column I can fill without lying. I will n
 
 ### Choices
 
-**A — `roster_write_pencil`**  
+**A — `roster_write_pencil`**
 "Write who slept here. Pencil."
 
 Kess nods once. The string ticks the rail. She writes three names you can see from here, occupation as observed, watch blank. The graphite shines. She does not look proud. She looks at the kettle.
 
 *Mark:* `mutation_roster_in_use`. Wall inspect recasts. Edor can match or mismatch.
 
-**B — `roster_leave_blank`**  
+**B — `roster_leave_blank`**
 "Leave it. Wipe the dust if you want."
 
 Kess: "I will wipe it. Forty days of this is a politics. I understand it. I cannot feed fourteen people with a politics alone. I will ask again. I will not ask twice in one morning."
 
 *Mark:* `mutation_roster_still_blank`. Occupations on any census stay guessed.
 
-**C — `roster_wait_ink`**  
+**C — `roster_wait_ink`**
 "Wait. If we write, we write so it doesn't come off."
 
 Kess: "Ink is a levy. I don't choose ink. I will wait. The dust will still come. I will still wipe it. Do not take that for agreement."
@@ -606,22 +606,22 @@ Heads in the room. Scoops in the pot. Covered bowls if levy honoured. A ring on 
 
 ### Choices — the extra, or the short
 
-**A — Child**  
+**A — Child**
 The last scoop goes to the child. An adult's bowl is water and salt. Ansel does not thank you. The child looks at the water-bowl and then does not.
 
 *Later:* `mark_bowl_adult_water`. That adult will be slow on the hatch wheel.
 
-**B — Hatch-opener**  
+**B — Hatch-opener**
 The last scoop goes to whoever has the night slate. Tamsin, if it's her, eats standing. "I'll taste it at four anyway."
 
 *Later:* `mark_bowl_watch`. The child asks why the ladle likes the grille.
 
-**C — Leave it**  
+**C — Leave it**
 The last bowl sits until it is cold. Nobody takes it. The ring it leaves is brown and stays.
 
 *Later:* `mark_bowl_cold`. "The enamel has a ring nobody scrubs."
 
-**D — Protocol (if you take it)**  
+**D — Protocol (if you take it)**
 Kess: "I can write this. Child first. Watch first. Sick first. I will not write fair. I will write an order."
 
 Pick an order. She pencils it on the mess wall, not the duty chart. Different paper. Different crime.
@@ -630,10 +630,10 @@ Pick an order. She pencils it on the mess wall, not the duty chart. Different pa
 
 ### Objective: Tell the child
 
-**Truth:** "There wasn't enough. We chose."  
+**Truth:** "There wasn't enough. We chose."
 Ansel's jaw. The child nods as if nodding were a job.
 
-**Softer:** "We'll have more tomorrow."  
+**Softer:** "We'll have more tomorrow."
 Ansel, later, in the dark, does not sleep. He does not correct you.
 
 **Send out:** They go to the pads with a crust. The table is quieter. The ring still happens.
@@ -669,13 +669,13 @@ Tamsin: "I'm not opening until you say. I'm also not pretending they aren't ther
 
 ### Choices — hatch (existing magnitudes)
 
-**Let in**  
+**Let in**
 The tick walks inside. Fifty. Pads. A paper tag on a footboard that was not stencilled.
 
-**Force decon**  
+**Force decon**
 Bucket. Rag. Ten in the alcove. They stand in the painted line and do not joke.
 
-**Deny**  
+**Deny**
 Twenty off everyone who did not go out. Tamsin keeps the wheel. Forty days. A ticket or a disc or a pair of hands in the ash.
 
 ### If in — tag or not
@@ -719,17 +719,17 @@ He will not self-name as doctor. He will pack a second rag if you say north. He 
 
 ### Choices
 
-**List (`flag_hadi_listed`)**  
+**List (`flag_hadi_listed`)**
 Kess writes veterinary assistant, observed. Edor's form can be corrected. Cluster strip can come down. Levy can find him.
 
 Hadi: "Put me on the morning row. Not the remarks."
 
-**Hide (`flag_hadi_hidden`)**  
+**Hide (`flag_hadi_hidden`)**
 Intercom lie check (`mmc_intercom_lie`). Nila: "If his name is already on a stool-form, I cannot unwrite it." If it isn't, Allocation 11's intake bunk.
 
 Kess leaves a blank where a trade was. Edor stays wrong by one. She does not like the blank. She keeps it.
 
-**Send (`flag_hadi_sent`)**  
+**Send (`flag_hadi_sent`)**
 Kit: iodine, rag, warmth, welders' glass if Cut. Thirty days. Alcove curtain on a wire with nothing behind it but a hook.
 
 ### Objective: Ianov (optional)
@@ -756,8 +756,8 @@ He boils the rag himself. He does not describe the outfall. He eats if a child c
 
 Three names. They exist on more than one paper.
 
-If levy issued: Edor's carbon, pink in a satchel.  
-If Pell: a ticket spike.  
+If levy issued: Edor's carbon, pink in a satchel.
+If Pell: a ticket spike.
 If both: the same three bodies, two receipts.
 
 Kess lays the wall beside the carbon. Pencil or ink. Match or irregular.
@@ -770,18 +770,18 @@ Levy names vs morning row. Substitute is a status. Hide is a hatch in Overflow. 
 
 ### Choices
 
-**Honour as written**  
+**Honour as written**
 Kit. Iodine. Glass. Column on the Cut or the Toll. Mess: two covered bowls. `se_levy_absence`.
 
-**Substitute**  
+**Substitute**
 Kess: "I can copy the wrong names. I won't misspell them. Irregular is the Office's word. I will still write what slept here."
 
 Edor, if present: he does not like it. He does not raise his voice. He notes.
 
-**Refuse**  
+**Refuse**
 In writing, or silence. Stool. Forty days. Lamps may go dark (Holdfast). Pell may arrive with a machine.
 
-**Hide at 11**  
+**Hide at 11**
 Nila: "One. Not three. Three is a column." If you bring three she will take one and the other two are still a problem. Access is not a warehouse.
 
 ### Encounter — intercept
@@ -824,16 +824,16 @@ Kess is in the corridor. She does not comment on the tin. She never has.
 
 ### Choices
 
-**Keep (`mutation_brass_kept`)**  
+**Keep (`mutation_brass_kept`)**
 Put it back. Hands know the way. Rectangles still unfaded.
 
-**North (`mutation_brass_north`)**  
+**North (`mutation_brass_north`)**
 Leva will not ask origin. Playground may still be chains. Holdfast legendary tin-fourteenth if that id ships.
 
-**Works (`mutation_brass_frayne`)**  
+**Works (`mutation_brass_frayne`)**
 Mass, not origin. Water clock. Leva still short.
 
-**One plate on the wall (`mutation_plate_on_wall`)**  
+**One plate on the wall (`mutation_plate_on_wall`)**
 Screw a living name under a living name. Lamp-catch. `item_nameplate_living`. The tin is lighter by one. Nobody mentions it.
 
 ### Ansel, if present
@@ -866,11 +866,11 @@ He copies. He does not catch lies. He does not enter the back room with you. The
 
 Implementer: build from marks that exist. Always include:
 
-- They kept the kettle.  
-- They took the last bowl.  
-- They went to the hatch when asked.  
-- They refused the hatch.  
-- A lie you type from a short list (e.g. "They were allocated." / "They weren't afraid.").  
+- They kept the kettle.
+- They took the last bowl.
+- They went to the hatch when asked.
+- They refused the hatch.
+- A lie you type from a short list (e.g. "They were allocated." / "They weren't afraid.").
 - Refuse the sentence.
 
 Len: "If you lie, the lie is the sentence. Someone here will read it later."
@@ -993,16 +993,16 @@ Tamsin: "I'll tell you who's on the apron. I won't tell you what to write. The g
 
 ### Choices
 
-**Ink (`mutation_roster_ink` / `ending_roster_ink`)**  
+**Ink (`mutation_roster_ink` / `ending_roster_ink`)**
 Stick. Year-colour. Names that do not come off in the morning. Edor's return current. 11 dark if their living is included. Hatch reversed reads your list. Block C plates can match.
 
-**Pencil (`mutation_roster_pencil` / `ending_roster_pencil`)**  
+**Pencil (`mutation_roster_pencil` / `ending_roster_pencil`)**
 Kess's preference. Audit risk. Nila still talks. Ice still wants a column.
 
-**Erase (`mutation_roster_blank` / `ending_roster_blank`)**  
+**Erase (`mutation_roster_blank` / `ending_roster_blank`)**
 Wet thumb. Scars. Not a pool. Ormund incomplete. Stool may remain. Sole cannot complete what isn't written.
 
-**Burn (`mutation_roster_burned` / `ending_roster_burned`)**  
+**Burn (`mutation_roster_burned` / `ending_roster_burned`)**
 Kettle, or honesty. Header charred: `ALLOCATION 12 — DUTY` and then nothing. `item_chart_burned_edge`. Child asks. `mmc_burn_story`.
 
 ### Objective: Night slate
@@ -1483,186 +1483,186 @@ No `Morale +2`. Each option is a line the player can say or do. Later evidence i
 
 ---
 
-**`mmc_extra_portion`** — One bowl left. Two people looking at it.  
-- "It's theirs." (child)  
-- "It's for the hatch." (watch)  
-- Leave it.  
+**`mmc_extra_portion`** — One bowl left. Two people looking at it.
+- "It's theirs." (child)
+- "It's for the hatch." (watch)
+- Leave it.
 
 *Later:* The enamel has a ring nobody scrubs. / The child asks why the ladle likes the grille.
 
-**`mmc_who_hatch`** — Returnees ticking.  
-- Open.  
-- Bucket.  
-- Keep shut.  
+**`mmc_who_hatch`** — Returnees ticking.
+- Open.
+- Bucket.
+- Keep shut.
 
 *Later:* A rag that still ticks. / Twenty points on faces that didn't go out. (numbers already written)
 
-**`mmc_child_boots`** — Size 2, on.  
-- Let them.  
-- Take them off.  
-- "They're borrowed."  
+**`mmc_child_boots`** — Size 2, on.
+- Let them.
+- Take them off.
+- "They're borrowed."
 
 *Later:* They sleep in them. / Cluster school notices northern rubber.
 
-**`mmc_name_on_wall`** — Nickname in a child's hand.  
-- Leave it.  
-- Kess corrects.  
-- Erase.  
+**`mmc_name_on_wall`** — Nickname in a child's hand.
+- Leave it.
+- Kess corrects.
+- Erase.
 
 *Later:* Edor's return has a nickname. Irregular, noted.
 
-**`mmc_tell_child_levy`** — Three packs.  
-- "North. Forms. Thirty days."  
-- "Work. They'll be back."  
-- Send them to the pads.  
+**`mmc_tell_child_levy`** — Three packs.
+- "North. Forms. Thirty days."
+- "Work. They'll be back."
+- Send them to the pads.
 
 *Later:* They wait at the hatch on day 30, or they don't.
 
-**`mmc_sela_row`** — Kess, morning.  
-- "She's a row."  
-- "She's a guest."  
-- "Ask her."  
+**`mmc_sela_row`** — Kess, morning.
+- "She's a row."
+- "She's a guest."
+- "Ask her."
 
 *Later:* Clinic claim uses your noun.
 
-**`mmc_edor_tea`** — Stool. Kettle.  
-- Carry a cup out.  
-- "You can come as far as the airlock."  
-- No cup.  
+**`mmc_edor_tea`** — Stool. Kettle.
+- Carry a cup out.
+- "You can come as far as the airlock."
+- No cup.
 
 *Later:* Grit in the seam. / He notes the silence in the return.
 
-**`mmc_pell_number`** — Machine in the ash.  
-- Take a number.  
-- "We're not a bureau."  
-- Break the gear.  
+**`mmc_pell_number`** — Machine in the ash.
+- Take a number.
+- "We're not a bureau."
+- Break the gear.
 
 *Later:* Your number on a spike. / A worse machine.
 
-**`mmc_night_same_bunk`** — One empty.  
-- Rotate someone else.  
-- She sleeps it.  
-- Pad in the airlock.  
+**`mmc_night_same_bunk`** — One empty.
+- Rotate someone else.
+- She sleeps it.
+- Pad in the airlock.
 
 *Later:* Intercom slower. You will think the button is more cracked.
 
-**`mmc_filter_who`** — Intake bunk.  
-- Sick.  
-- Child.  
-- Volunteer.  
-- Lots (Kess writes the lot).  
+**`mmc_filter_who`** — Intake bunk.
+- Sick.
+- Child.
+- Volunteer.
+- Lots (Kess writes the lot).
 
 *Later:* Morning cough has an address.
 
-**`mmc_true_thing_lie`** — Len waiting.  
-- A true thing (from run list).  
-- A lie (from short list).  
-- No sentence.  
+**`mmc_true_thing_lie`** — Len waiting.
+- A true thing (from run list).
+- A lie (from short list).
+- No sentence.
 
 *Later:* Tag in the alcove. Someone who knew them reads it.
 
-**`mmc_wren_object`** — She wants the pencil explained.  
-- "It writes who slept here."  
-- A joke.  
-- "I don't know."  
+**`mmc_wren_object`** — She wants the pencil explained.
+- "It writes who slept here."
+- A joke.
+- "I don't know."
 
 *Later:* Her only version. Homework, if any.
 
-**`mmc_frayne_comment`** — Someone said fair.  
-- Silence.  
-- "Don't."  
-- Let it stand.  
+**`mmc_frayne_comment`** — Someone said fair.
+- Silence.
+- "Don't."
+- Let it stand.
 
 *Later:* Minutes: a visitor spoke.
 
-**`mmc_brass_one_plate`** — Screwdriver.  
-- Screw it under a living name.  
-- Don't.  
-- Up for a night, then back in the tin.  
+**`mmc_brass_one_plate`** — Screwdriver.
+- Screw it under a living name.
+- Don't.
+- Up for a night, then back in the tin.
 
 *Later:* Lamp-catch. Nobody mentions the tin.
 
-**`mmc_empty_bunk_sheet`** — Three north.  
-- Make the bunk.  
-- Leave the tangle.  
-- A sock on the board.  
+**`mmc_empty_bunk_sheet`** — Three north.
+- Make the bunk.
+- Leave the tangle.
+- A sock on the board.
 
 *Later:* Extra portion protocol. A sock or a taut blanket.
 
-**`mmc_intercom_lie`** — "Is Hadi inside?"  
-- Yes.  
-- No.  
-- "We don't give names."  
+**`mmc_intercom_lie`** — "Is Hadi inside?"
+- Yes.
+- No.
+- "We don't give names."
 
 *Later:* Retrieval file. Nila hears a yes.
 
-**`mmc_second_helping_hadi`** — Dressing, skipped meal.  
-- Make him eat.  
-- Leave it.  
-- Child carries the bowl.  
+**`mmc_second_helping_hadi`** — Dressing, skipped meal.
+- Make him eat.
+- Leave it.
+- Child carries the bowl.
 
 *Later:* Outfall fatigue, or not.
 
-**`mmc_alloc13_rewrite`** — Scar in the paper.  
-- Rewrite.  
-- Leave.  
-- Rubbing for Sole.  
+**`mmc_alloc13_rewrite`** — Scar in the paper.
+- Rewrite.
+- Leave.
+- Rubbing for Sole.
 
 *Later:* 11 opens, or doesn't. Vault has a scar-copy.
 
-**`mmc_waystation_letter`** — Tag on A3.  
-- Bring it home.  
-- Leave it.  
-- Burn.  
+**`mmc_waystation_letter`** — Tag on A3.
+- Bring it home.
+- Leave it.
+- Burn.
 
 *Later:* Home footboard missing a tag.
 
-**`mmc_membrane_iodine`** — Last brown bottle.  
-- Home thyroid.  
-- North process.  
-- Split.  
+**`mmc_membrane_iodine`** — Last brown bottle.
+- Home thyroid.
+- North process.
+- Split.
 
 *Later:* Clinic, plant, or both a little worse.
 
-**`mmc_voss_receipt`** — Three names, Garrison ink.  
-- Pin by the chart.  
-- Hide.  
-- Burn.  
+**`mmc_voss_receipt`** — Three names, Garrison ink.
+- Pin by the chart.
+- Hide.
+- Burn.
 
 *Later:* Pell sees it. Kess will not take it down if you pin it.
 
-**`mmc_quiet_blanket`** — Child's blanket.  
-- Give it.  
-- Refuse.  
-- Cut it.  
+**`mmc_quiet_blanket`** — Child's blanket.
+- Give it.
+- Refuse.
+- Cut it.
 
 *Later:* Tag: a half blanket. Child sleeps cold.
 
-**`mmc_burn_story`** — Header gone.  
-- "Fire in the kettle."  
-- "We did it."  
-- Say nothing.  
+**`mmc_burn_story`** — Header gone.
+- "Fire in the kettle."
+- "We did it."
+- Say nothing.
 
 *Later:* They repeat it at the Quad if they go.
 
-**`mmc_sole_aloud`** — Cotton gloves.  
-- Say the name.  
-- Whisper.  
-- Copy without sound.  
+**`mmc_sole_aloud`** — Cotton gloves.
+- Say the name.
+- Whisper.
+- Copy without sound.
 
 *Later:* Kess asks which.
 
-**`mmc_deny_forty`** — A bag in the ash.  
-- Bring it in.  
-- Bury it.  
-- Leave it.  
+**`mmc_deny_forty`** — A bag in the ash.
+- Bring it in.
+- Bury it.
+- Leave it.
 
 *Later:* A card in the bunker, or a rectangle the crows know.
 
-**`mmc_lamp_oil_cup`** — One cup.  
-- House.  
-- Ivy.  
-- Yara.  
+**`mmc_lamp_oil_cup`** — One cup.
+- House.
+- Ivy.
+- Yara.
 
 *Later:* Dark mess, dark kilometre, or dark Cut.
 
@@ -1680,10 +1680,10 @@ Inspect, speech, replies, aftermath. Hatch magnitudes unchanged.
 
 Tamsin: "Same name three times is not a rotation. It's a person falling over at four."
 
-**Replies:**  
-- "I'll write someone else."  
-- "It's you again."  
-- "Airlock pad."  
+**Replies:**
+- "I'll write someone else."
+- "It's you again."
+- "Airlock pad."
 
 **Aftermath:** Fatigue on the named. Intercom tempo. Second Winter: she asks once more, not twice.
 
@@ -1847,7 +1847,7 @@ Nila, if they came: "One night. Two if the ice is wrong. A third and you are occ
 
 Kess: "Is she a row or a guest. Guests are pads. Rows are returns."
 
-Sela, if she speaks: "They have a school. They have iodine. They have my father's number in a drawer. That isn't the same as having him."  
+Sela, if she speaks: "They have a school. They have iodine. They have my father's number in a drawer. That isn't the same as having him."
 *(Holdfast-adjacent; if clinic already claimed, this scene does not fire.)*
 
 **Replies:** Row / guest / let her say.
@@ -1862,34 +1862,34 @@ Text-first. `[VO]` optional. Bands: reuse shelter grille; do not collide Holdfas
 
 ---
 
-**`radio_dr_stool`** — Tamsin  
+**`radio_dr_stool`** — Tamsin
 "Three metres. Folding. He's not knocking. I'm not opening. Say if that's a cup or a form."
 
-**`radio_dr_glow`**  
+**`radio_dr_glow`**
 "Tick on the apron. Fifty if they walk. Ten if they strip. Twenty on the rest if they don't. I didn't write those. I'm reading them."
 
-**`radio_dr_two_knocks`**  
+**`radio_dr_two_knocks`**
 "Two. Not three. House. Name and a sentence. I don't supply either."
 
-**`radio_dr_machine`**  
+**`radio_dr_machine`**
 "There's a ticket machine in the ash. It still works. That's the whole message."
 
-**`radio_dr_window`**  
+**`radio_dr_window`**
 "Ice is a length. House is a slate. If both are short, someone is lying about one of them. I'm asking which."
 
-**`radio_dr_office_threat`** — 12-C, threatening  
+**`radio_dr_office_threat`** — 12-C, threatening
 "The grille is not a second form. The wall is. Occupancy remains irregular. Forty days is the quiet interval. After that the file does not get quieter."
 
-**`radio_dr_nila_closed`**  
+**`radio_dr_nila_closed`**
 "Eleven is a hatch. Eleven is a wall. If you are hearing this, you wrote a living name in a year-colour. Do not come. The light will still be on."
 
-**`radio_dr_hadi_gone`**  
+**`radio_dr_hadi_gone`**
 No voice. A hiss the length of a dressing. Kess, if she keys: "I'm not writing remarks. Don't ask me to."
 
-**`radio_dr_burn`**  
+**`radio_dr_burn`**
 Child, if they found the button: "The heading is gone. Ansel said later. It is later."
 
-**`radio_dr_foghorn_faint`** — only if Holdfast foghorn owned  
+**`radio_dr_foghorn_faint`** — only if Holdfast foghorn owned
 A far sound on Silence nights. Tamsin: "That's not my grille. That's a coast. We're a hole. Don't confuse them."
 
 ---
@@ -1928,46 +1928,46 @@ Found in the pencil-tin, or issued by Kess if pencil is allowed. Carbon. Not a r
 
 ---
 
-**ALLOCATION 12 — DUTY ROSTER**  
-**Standing Instruction (unofficial)**  
+**ALLOCATION 12 — DUTY ROSTER**
+**Standing Instruction (unofficial)**
 **Authority:** none that arrived. Occupancy.
 
 Print date of the wall chart is before the Exchange. This instruction is not. This instruction is a morning.
 
 **Rows:** fourteen. The manifest in the airlock still says fourteen. Bolted bunks: eleven. Pads: three. A fourteenth is a tag, or a refusal, or a stool.
 
-**Who may be written**  
+**Who may be written**
 A person who slept here. Occupation as observed, not as hoped. Watch as assigned. Remarks are not for nicknames unless the nickname is what they answer to. Remarks were ruled for the dead. Do not put the living in remarks because the ice is short. Do not put the living in remarks because a clerk is on a stool.
 
-**Pencil**  
+**Pencil**
 Graphite comes off. Morning row. Delay, not kindness. A census can still be wrong by one.
 
-**Ink**  
+**Ink**
 Year-colour. A levy. A return that completes. Overflow hatches that will not undog. Do not ink a name that has not slept here. Do not ink a Blank Rows living name unless you intend the wall at Allocation 11.
 
-**Blank**  
+**Blank**
 A politics. Dust wiped into a palm-rectangle. Forty days of this is still occupancy. Occupancy does not require graphite. Retrieval does.
 
-**Burn**  
+**Burn**
 The heading will survive as an edge. Escorts will bring a list from elsewhere. Children will ask. Have a sentence ready, or have a silence ready. Both are sentences.
 
-**Assignments the wall can carry**  
+**Assignments the wall can carry**
 Night watch. Mess. Hatch opener. Intake sleeper. Expedition. Levy. Waystation. Quiet. Missing is not an assignment. Missing is remarks. Do not write it until you mean remarks.
 
-**Hatch**  
+**Hatch**
 Let-in, decon, deny: magnitudes already written on a different paper. This instruction does not retune them. The grille reports who is on the apron. The grille does not do fiction.
 
-**Two districts**  
+**Two districts**
 If a coastal office names three, copy the wall beside the carbon. Match, substitute, refuse, hide: statuses. Status follows occupancy. A decent conscriptor may want the same three. That is a different form and the same bodies. Do not pretend otherwise.
 
-**Brass**  
+**Brass**
 There is a tin behind the filtration stack. This instruction does not comment on it.
 
-**Quiet**  
+**Quiet**
 Two knocks. A name. One true thing, copied as given. The back room is not a row.
 
-**Sign**  
-Clerk (unlisted): _____________  (ADLER, K.)  
+**Sign**
+Clerk (unlisted): _____________  (ADLER, K.)
 Occupancy: _____________  (or: refused / silence / ice / ash)
 
 Do not fold through a name.
@@ -2229,13 +2229,13 @@ Ianov. Paper. Numbers not rounded toward ease. If Hadi is north, the second pair
 
 Not a weather DLC. A script the encounter system can play when `season_second_winter` is active and `quest_roster_window` is the closed-road or thin-window variant. Three nights. Then the slate either matches or a name is missing.
 
-**Night 1 — oil**  
+**Night 1 — oil**
 The mess lamp is a cup. Ivy's can is a cup. Yara's stick, if the Cut exists this week, is a cup. There is one cup. Tamsin: "If both the ice and the house are short, someone is lying about one of them. I'm asking which." Choose. Dark mess or dark kilometre or dark Cut. Child does homework, if homework is a copied heading, by touch.
 
-**Night 2 — cough**  
+**Night 2 — cough**
 Intake bunk. Filter notch. Lots or order. Hadi present or a dry rag. Len may knock at the end of the night, not the beginning. Do not merge with Pell. Queue.
 
-**Night 3 — visitor who cannot leave**  
+**Night 3 — visitor who cannot leave**
 Road dark. A person on the apron who would have been a fourteenth in a better week. Nila: one night, two if the ice is wrong. A third is occupancy. Tamsin missed a knock yesterday; she says so. Assign a second watch or accept another miss. The kettle has a queue. The ladle has a ring. The wall is whatever you already wrote.
 
 After night 3: `flag_home_held` if stove, filter, child, and at least the names on the slate came to morning. Else `mutation_house_thinned`. Overlay ending `lore_dr_ending_second_winter` may append. It does not replace occupancy.

@@ -124,12 +124,6 @@ namespace AtomicWar.GodotApp
             LastEvent = "Standing Record restored";
             RaiseStateChanged();
         }
-
-        private void RaiseStateChanged()
-        {
-            try { RaiseStateChanged(); }
-            catch (Exception ex) { GD.PrintErr($"[StandingRecord] StateChanged event failed: {ex.Message}"); }
-        }
     }
 
     /// <summary>

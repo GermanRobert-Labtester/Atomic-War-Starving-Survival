@@ -137,9 +137,30 @@ namespace AtomicWar.GodotApp.Audio
             Check("Settings round-trip preserves volume", restored != null && restored.MasterVolume == 50f, ref pass, ref fail);
             Check("Settings round-trip preserves mute", restored != null && restored.MusicMute, ref pass, ref fail);
 
-            // Malformed recovery
-            var recovered = AudioSettings.Load();
-            Check("Settings load returns non-null", recovered != null, ref pass, ref fail);
+            // Malformed and Resilient Recovery
+            string testAudioPath = Path.Combine(ProjectSettings.GlobalizePath("user://"), "audio_settings_selftest.json");
+            try
+            {
+                // A. Completely malformed syntax
+                File.WriteAllText(testAudioPath, "{ CORRUPT_AUDIO_DATA_!@#$");
+                var recoveredCorrupt = AudioSettings.Load(testAudioPath);
+                Check("Corrupted audio settings returns non-null defaults", recoveredCorrupt != null && recoveredCorrupt.MasterVolume == 100f, ref pass, ref fail);
+                Check("Diagnostic error recorded for corrupt audio file", AudioSettings.HasDiagnosticError && AudioSettings.LastDiagnosticMessage!.Contains("Malformed JSON"), ref pass, ref fail);
+
+                // B. Partially invalid JSON: preserve valid values, restore defaults for invalid
+                File.WriteAllText(testAudioPath, "{\n  \"master_volume\": 42.0,\n  \"music_volume\": \"BAD_TYPE\",\n  \"sfx_mute\": true\n}");
+                var recoveredPartial = AudioSettings.Load(testAudioPath);
+                Check("Partial recovery preserves valid master volume", recoveredPartial != null && recoveredPartial.MasterVolume == 42.0f, ref pass, ref fail);
+                Check("Partial recovery preserves valid mute state", recoveredPartial != null && recoveredPartial.SfxMute, ref pass, ref fail);
+                Check("Partial recovery restores default for invalid music volume", recoveredPartial != null && recoveredPartial.MusicVolume == 70.0f, ref pass, ref fail);
+
+                if (File.Exists(testAudioPath)) File.Delete(testAudioPath);
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[AudioSelfTest] Recovery test exception: {ex.Message}");
+                fail++;
+            }
 
             // Volume helpers
             Check("PercentToDb(100) ≈ 0", Math.Abs(AudioSettings.PercentToDb(100f)) < 0.1f, ref pass, ref fail);
@@ -220,9 +241,9 @@ namespace AtomicWar.GodotApp.Audio
             GD.Print($"[AudioSelfTest] Cues: {cueCount} ({resolved} resolved, {fallback} fallback, {silent} silent)");
             GD.Print($"[AudioSelfTest] Assets checked: {keyAssets.Length}");
 
-            bool allPass = fail == 0;
-            GD.Print(allPass ? "AUDIO_SELFTEST PASS" : $"AUDIO_SELFTEST FAIL (fail={fail})");
-            return allPass ? 0 : 1;
+            bool allPass = fail == 0 && (pass + fail) > 0;
+            return HostCli.EmitSummary("audio_selftest", allPass, allPass ? 0 : 1, pass, fail,
+                details: $"cues={cueCount} resolved={resolved} fallback={fallback} silent={silent} assets={keyAssets.Length}");
         }
 
         private static void Check(string label, bool condition, ref int pass, ref int fail)

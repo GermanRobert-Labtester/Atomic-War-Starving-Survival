@@ -41,7 +41,7 @@ namespace AtomicWar.GodotApp
             if (!panel || !session)
             {
                 GD.Print("[Phase0UiTest] panel=false session=false");
-                GD.Print("PHASE0_UITEST FAIL");
+                HostCli.EmitSummary("phase0_uitest", false, 1);
                 QuitUiTestAfterFrame(1);
                 return;
             }
@@ -77,7 +77,7 @@ namespace AtomicWar.GodotApp
 
             GD.Print($"[Phase0UiTest] panel={panel} session={session} bound={bound} " +
                      $"conditions={_phase0Panel.RenderedConditionCount} visible={visible}");
-            GD.Print(pass ? "PHASE0_UITEST PASS" : "PHASE0_UITEST FAIL");
+            HostCli.EmitSummary("phase0_uitest", pass, pass ? 0 : 1);
             if (System.IO.File.Exists(Phase0SaveStore.SavePath))
                 System.IO.File.Delete(Phase0SaveStore.SavePath);
             QuitUiTestAfterFrame(pass ? 0 : 1);

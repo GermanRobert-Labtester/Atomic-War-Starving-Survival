@@ -1,11 +1,11 @@
 # ASHFALL — DAY 1 → DAY 2 PLAYABLE MILESTONE MASTER PLAN
 
-**Plan ID:** `ashfall_day1_to_day2_playable_gate`  
-**Canonical plan location:** `.mistral/plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md`  
-**Project:** ASHFALL — Atomic War / Starving Survival  
-**Engine authority:** Godot 4.7+ .NET/C#  
-**Milestone:** Launch → New Game → Play Day 1 → End Day → Enter Day 2 → Quit/Continue → Resume Day 2 correctly  
-**Plan type:** Major implementation, integration, UX, asset, verification, and playable-gate plan  
+**Plan ID:** `ashfall_day1_to_day2_playable_gate`
+**Canonical plan location:** `.mistral/plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md`
+**Project:** ASHFALL — Atomic War / Starving Survival
+**Engine authority:** Godot 4.7+ .NET/C#
+**Milestone:** Launch → New Game → Play Day 1 → End Day → Enter Day 2 → Quit/Continue → Resume Day 2 correctly
+**Plan type:** Major implementation, integration, UX, asset, verification, and playable-gate plan
 **Scope boundary:** Stop at a reliable, coherent start of Day 2. Do not expand late-game content unless a late-game system is directly causing the Day 1→2 transition to fail.
 
 ---
@@ -481,7 +481,7 @@ Do not parallelize phases that modify the same orchestration path in `src/Main.c
 
 # 7. PHASE 0 — BASELINE FREEZE AND TRUTH CAPTURE
 
-**Priority:** P0  
+**Priority:** P0
 **Goal:** Establish the exact pre-change state before implementation.
 
 ## Tasks
@@ -550,7 +550,7 @@ No implementation begins until baseline failures are classified as:
 
 # 8. PHASE 1 — P0 REGRESSION FIXES
 
-**Priority:** P0  
+**Priority:** P0
 **Goal:** Remove known correctness defects on the Day-1 path.
 
 ## 1.1 Radio `LastIntercept`
@@ -593,7 +593,7 @@ All known Day-1 correctness regressions are green, or every remaining failure ha
 
 # 9. PHASE 2 — BOOT, MENU, AND NEW-GAME RELIABILITY
 
-**Priority:** P0  
+**Priority:** P0
 **Goal:** Make the first 30 seconds deterministic and boring in the best sense.
 
 ## 2.1 Main scene
@@ -653,7 +653,7 @@ A fresh launch can reliably enter a clean Day 1 ten consecutive times without st
 
 # 10. PHASE 3 — OPENING PROTOCOL AS A REAL GAME MOMENT
 
-**Priority:** P0/P1  
+**Priority:** P0/P1
 **Goal:** Make the existing opening decisions clear, readable, and stateful.
 
 Primary UI:
@@ -714,7 +714,7 @@ A new player can complete the opening protocol without external explanation.
 
 # 11. PHASE 4 — SHELTER VISUAL ANCHOR
 
-**Priority:** P1  
+**Priority:** P1
 **Goal:** Prevent Day 1 from feeling like a collection of unrelated data panels.
 
 Audit gap:
@@ -792,7 +792,7 @@ The player can look at the shelter and understand that assigned survivors and sh
 
 # 12. PHASE 5 — DAY-1 CORE ACTIONS
 
-**Priority:** P0  
+**Priority:** P0
 **Goal:** Make the core management actions reliable enough for a complete first day.
 
 ---
@@ -900,7 +900,7 @@ A human can perform the five shelter actions above without entering an invalid s
 
 # 13. PHASE 6 — MAP AND EXPEDITION FIRST-SESSION PASS
 
-**Priority:** P1  
+**Priority:** P1
 **Goal:** Make leaving the shelter feel intentional and remove the most obvious placeholder.
 
 Audit gap:
@@ -971,7 +971,7 @@ No obvious placeholder remains in the map flow and one expedition can be launche
 
 # 14. PHASE 7 — END-DAY TRANSACTION
 
-**Priority:** P0  
+**Priority:** P0
 **Goal:** Treat Day 1→2 as a transaction that must happen exactly once.
 
 Key runtime evidence:
@@ -1051,7 +1051,7 @@ Repeated automated and manual tests show one click-confirm cycle produces exactl
 
 # 15. PHASE 8 — DAY-2 SAVE / CONTINUE PROOF
 
-**Priority:** P0  
+**Priority:** P0
 **Goal:** Prove the first daily transition is durable, not merely in-memory.
 
 ## 8.1 Save state before quit
@@ -1103,7 +1103,7 @@ A Day-2 save survives a full process restart and matches the pre-exit Day-2 fing
 
 # 16. PHASE 9 — FIRST-SESSION UX, AUDIO, AND ASSET PASS
 
-**Priority:** P1/P2  
+**Priority:** P1/P2
 **Goal:** Improve comprehension and atmosphere without expanding scope.
 
 This phase happens after functional correctness.

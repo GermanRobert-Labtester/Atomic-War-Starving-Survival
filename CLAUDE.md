@@ -70,6 +70,12 @@ If an MCP invocation fails because the server/tool is missing, disconnected, or 
 
 Godot project: `project.godot` at root, `gl_compatibility` renderer, 1920×1080, 60 FPS, `BarlowCondensed` + `ShareTechMono` fonts.
 
+### SDK & Target Framework Requirements (.NET 8 Host / .NET 9 Tests)
+- **`global.json`**: Root workspace configuration pins baseline SDK `8.0.100` with `rollForward: latestMajor` and `allowPrerelease: false`.
+- **Godot Host (`Ashfall.csproj`) & Core Library (`Ashfall.Core.csproj`)**: Targets **`net8.0`** (and `netstandard2.1` compatibility), guaranteeing full compatibility with Godot 4.7+ .NET Mono runtime without runtime version mismatch.
+- **Unit & Determinism Tests (`Ashfall.Core.Tests.csproj`)**: Targets **`net9.0`** (with `RollForward: LatestMajor`), required for high-throughput xUnit execution and modern runtime determinism in simulation suites.
+- **Environment Prerequisites**: Development environments require .NET 9+ SDK (which builds both `net8.0` host and `net9.0` test assemblies via `global.json`'s `latestMajor` roll-forward) or side-by-side .NET 8 + .NET 9 SDK installations as configured in CI.
+
 ---
 
 ## ASSET MIGRATION (Unity → Godot)

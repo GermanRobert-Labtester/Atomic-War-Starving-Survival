@@ -146,6 +146,7 @@ namespace Ashfall.Core.Greenhouse
             if (!_hives.TryGetValue(hiveId, out var hive)) return false;
             hive.linkedPlotIds.Clear();
             if (plotIds != null) hive.linkedPlotIds.AddRange(plotIds);
+            OnPollinationChanged?.Invoke(hiveId, GetHivePollinationStrength(hiveId));
             RaiseChanged();
             return true;
         }
@@ -226,7 +227,8 @@ namespace Ashfall.Core.Greenhouse
                 OnProductionTick?.Invoke(hive.hiveId, honey, wax);
             }
 
-            RaiseChanged();
+            if (_hives.Count > 0)
+                RaiseChanged();
         }
 
         // ── Pollination ──────────────────────────────────────────────
@@ -310,6 +312,15 @@ namespace Ashfall.Core.Greenhouse
             hive.waxBuffer = 0f;
             RaiseChanged();
             return (honey, wax);
+        }
+
+        /// <summary>Process medicinal propolis or royal jelly from a hive.</summary>
+        public bool ProcessMedicalSupplies(string hiveId)
+        {
+            if (!_hives.TryGetValue(hiveId, out var hive) || hive.isDead) return false;
+            OnMedicalProcessingCompleted?.Invoke(hiveId);
+            RaiseChanged();
+            return true;
         }
 
         // ── Queries ──────────────────────────────────────────────────

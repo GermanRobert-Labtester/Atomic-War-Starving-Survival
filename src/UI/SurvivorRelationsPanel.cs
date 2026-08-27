@@ -1,13 +1,15 @@
 using System;
+using System.Text;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Survivors;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
-    public partial class SurvivorRelationsPanel : Control
+    public partial class SurvivorRelationsPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -18,8 +20,16 @@ namespace AtomicWar.GodotApp.UI
         private Button _mediateBtn = null!;
 
         private SurvivorRelationsHostSession? _host;
+        private SurvivorSocialReadModel? _socialReadModel;
 
         public bool IsBound => _host != null;
+
+        /// <summary>Attach the survivor-social read model so the panel can display leadership, bonds, friction, and atrophy alongside relations.</summary>
+        public void SetSocialReadModel(SurvivorSocialReadModel? rm)
+        {
+            _socialReadModel = rm;
+            RefreshView();
+        }
 
         public void Bind(SurvivorRelationsHostSession session)
         {
@@ -30,6 +40,17 @@ namespace AtomicWar.GodotApp.UI
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -48,22 +69,20 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
-            _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _mediateBtn = new Button { Text = "Mediate Active Conflict", CustomMinimumSize = new Vector2(180, 36) };
-            _mediateBtn.Pressed += () =>
+            _mediateBtn = AshfallUiHelpers.MakeButton("Mediate Active Conflict", () =>
             {
                 if (_host != null && _host.System.State.activeConflicts.Count > 0)
                 {
                     var c = _host.System.State.activeConflicts[0];
                     _host.Mediate(c.conflictId, "Leader", MediationStyle.Apology);
                 }
-            };
+            });
+            _mediateBtn.CustomMinimumSize = new Vector2(180, 36);
             buttonRow.AddChild(_mediateBtn);
 
             _contentStack.AddChild(buttonRow);
@@ -90,23 +109,42 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Active Interpersonal Conflicts: {conflictCount}\n";
+                var sb = new StringBuilder();
+                sb.Append($"Active Interpersonal Conflicts: {conflictCount}\n");
                 foreach (var c in s.activeConflicts)
                 {
                     if (!c.isResolved)
-                        text += $"  • {c.dwellerA} vs {c.dwellerB} (Cause: {c.cause}) — Day Started: {c.dayStarted}\n";
+                        sb.Append($"  • {c.dwellerA} vs {c.dwellerB} (Cause: {c.cause}) — Day Started: {c.dayStarted}\n");
                 }
-                text += $"\nLast Event: {_host.LastEvent}";
-                _detailText.Text = text;
+
+                if (_socialReadModel != null)
+                {
+                    sb.Append("\n── Social Dynamics ──\n");
+                    if (!string.IsNullOrEmpty(_socialReadModel.leaderId))
+                        sb.Append($"Leader: {_socialReadModel.leaderId} (stress {_socialReadModel.leaderStress:F0})\n");
+                    foreach (var e in _socialReadModel.entries)
+                    {
+                        sb.Append($"  • {e.survivorId}");
+                        if (!string.IsNullOrEmpty(e.belief))
+                            sb.Append($" [{e.belief}]");
+                        if (e.bondCount > 0)
+                            sb.Append($" bonds:{e.bondCount} (strongest: {e.strongestBondPartnerId} {e.strongestBondStrength:F2})");
+                        if (e.resentmentLevel > 0f)
+                            sb.Append($" resentment→{e.resentmentTargetId} ({e.resentmentLevel:F2})");
+                        if (e.atrophiedSkills.Count > 0)
+                            sb.Append($" atrophied:[{string.Join(", ", e.atrophiedSkills)}]");
+                        sb.Append('\n');
+                    }
+                }
+
+                sb.Append($"\nLast Event: {_host.LastEvent}");
+                _detailText.Text = sb.ToString();
             }
         }
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

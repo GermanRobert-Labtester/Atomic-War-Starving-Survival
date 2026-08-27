@@ -1,31 +1,105 @@
 using System;
+using System.Collections.Generic;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.Combat
 {
     /// <summary>
-    /// Host ports the combat sim uses to reach real survivor/inventory state.
-    /// Every hook is optional; unset hooks degrade to in-encounter bookkeeping so
-    /// the sim stays deterministic and testable without a full host.
+    /// Immutable host-port bundle the combat sim uses to reach real
+    /// survivor/inventory state. Every hook is set once at construction; there
+    /// are no mutable fields to silently leave unwired.
+    ///
+    /// Effect classification:
+    ///  - Essential (health/morale): default to named no-op adapters when null
+    ///    so the sim never NullRefs, but are tracked as unbound.
+    ///  - Production-required (inventory/progression): stay null when unbound so
+    ///    the sim's existing null-check fallbacks (in-encounter bookkeeping)
+    ///    keep working; tracked as unbound for startup validation.
+    ///  - Truly optional (RaiseTrauma): null when unbound, not tracked.
+    ///
+    /// Use <see cref="NoOp"/> for isolated tests. Production wiring builds a
+    /// fully-bound instance via the constructor and checks
+    /// <see cref="UnboundRequiredEffects"/> at startup.
     /// </summary>
-    public class CombatHostPorts
+    public sealed class CombatHostPorts
     {
+        // ── Essential effects (health / morale) — no-op when unbound ──
+
         /// <summary>Apply damage to a real survivor. Returns the new health (or the input when unset).</summary>
-        public Func<string, float, float> DamageSurvivor;
+        public Func<string, float, float> DamageSurvivor { get; }
         /// <summary>Apply healing to a real survivor. Returns the new health.</summary>
-        public Func<string, float, float> HealSurvivor;
+        public Func<string, float, float> HealSurvivor { get; }
         /// <summary>Apply a morale delta to a real survivor.</summary>
-        public Action<string, float> ApplyMoraleDelta;
-        /// <summary>Consume rounds of the given ammo item. Returns -1 if it cannot be afforded, else remaining.</summary>
-        public Func<string, int, int> ConsumeAmmo;
-        /// <summary>Consume a generic item (scrap, bandage, etc.). Returns true when consumed.</summary>
-        public Func<string, int, bool> ConsumeItem;
-        /// <summary>Raise a trauma/affliction on a real survivor (kind, severity).</summary>
-        public Action<string, string, float> RaiseTrauma;
-        /// <summary>Grant captured loot to the real inventory.</summary>
-        public Action<CombatLootEntry> GrantLoot;
-        /// <summary>Record that a survivor survived a combat encounter (CombatTraumaSystem.OnCombatSurvived).</summary>
-        public Action<string> MarkCombatSurvived;
+        public Action<string, float> ApplyMoraleDelta { get; }
+
+        // ── Production-required (inventory / progression) — null when unbound ──
+
+        /// <summary>Consume rounds of the given ammo item. Returns -1 if it cannot be afforded, else remaining. Null → in-encounter bookkeeping.</summary>
+        public Func<string, int, int> ConsumeAmmo { get; }
+        /// <summary>Consume a generic item (scrap, bandage, etc.). Returns true when consumed. Null → action refused.</summary>
+        public Func<string, int, bool> ConsumeItem { get; }
+        /// <summary>Grant captured loot to the real inventory. Null → loot discarded.</summary>
+        public Action<CombatLootEntry> GrantLoot { get; }
+        /// <summary>Record that a survivor survived a combat encounter (CombatTraumaSystem.OnCombatSurvived). Null → survival unrecorded.</summary>
+        public Action<string> MarkCombatSurvived { get; }
+
+        // ── Truly optional — null when unbound, not validated ──
+
+        /// <summary>Raise a trauma/affliction on a real survivor (kind, severity). Null → trauma skipped.</summary>
+        public Action<string, string, float> RaiseTrauma { get; }
+
+        private readonly List<string> _unboundRequired;
+
+        /// <summary>
+        /// Names of production-required effects that were not explicitly bound
+        /// (null passed → no-op/null). Essential effects appear here when they
+        /// fell back to a no-op adapter. Empty when fully wired. Checked at
+        /// startup so a production system cannot silently run with a missing
+        /// health, morale, inventory, or progression effect.
+        /// </summary>
+        public IReadOnlyList<string> UnboundRequiredEffects => _unboundRequired;
+
+        public CombatHostPorts(
+            Func<string, float, float>? damageSurvivor,
+            Func<string, float, float>? healSurvivor,
+            Action<string, float>? applyMoraleDelta,
+            Func<string, int, int>? consumeAmmo = null,
+            Func<string, int, bool>? consumeItem = null,
+            Action<string, string, float>? raiseTrauma = null,
+            Action<CombatLootEntry>? grantLoot = null,
+            Action<string>? markCombatSurvived = null)
+        {
+            DamageSurvivor = damageSurvivor ?? NoOpDamageSurvivor;
+            HealSurvivor = healSurvivor ?? NoOpHealSurvivor;
+            ApplyMoraleDelta = applyMoraleDelta ?? NoOpApplyMoraleDelta;
+            ConsumeAmmo = consumeAmmo;
+            ConsumeItem = consumeItem;
+            RaiseTrauma = raiseTrauma;
+            GrantLoot = grantLoot;
+            MarkCombatSurvived = markCombatSurvived;
+
+            _unboundRequired = new List<string>();
+            if (damageSurvivor == null) _unboundRequired.Add(nameof(DamageSurvivor));
+            if (healSurvivor == null) _unboundRequired.Add(nameof(HealSurvivor));
+            if (applyMoraleDelta == null) _unboundRequired.Add(nameof(ApplyMoraleDelta));
+            if (consumeAmmo == null) _unboundRequired.Add(nameof(ConsumeAmmo));
+            if (consumeItem == null) _unboundRequired.Add(nameof(ConsumeItem));
+            if (grantLoot == null) _unboundRequired.Add(nameof(GrantLoot));
+            if (markCombatSurvived == null) _unboundRequired.Add(nameof(MarkCombatSurvived));
+        }
+
+        /// <summary>All-effects-unbound instance for isolated tests. Essential effects use no-op adapters; optional effects are null (fallbacks active).</summary>
+        public static CombatHostPorts NoOp() =>
+            new CombatHostPorts(null, null, null, null, null, null, null, null);
+
+        // ── Named no-op adapters (referenced by NoOp and as fallbacks) ──
+
+        /// <summary>Returns the input damage; the return is unused by the sim.</summary>
+        public static readonly Func<string, float, float> NoOpDamageSurvivor = (_, d) => d;
+        /// <summary>Returns the input heal amount.</summary>
+        public static readonly Func<string, float, float> NoOpHealSurvivor = (_, h) => h;
+        /// <summary>Does nothing.</summary>
+        public static readonly Action<string, float> NoOpApplyMoraleDelta = (_, __) => { };
     }
 
     /// <summary>

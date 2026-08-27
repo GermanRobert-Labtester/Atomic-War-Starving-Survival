@@ -18,9 +18,9 @@ of truth for architecture decisions.
   stretch, 1920×1080 default viewport.
 - **Host:** `Ashfall.csproj` (net8.0) compiles `src/**/*.cs` +
   `Assets/Ashfall.Core/**/*.cs` into the Godot assembly (`AtomicWar`).
-- **Core:** engine-agnostic `Ashfall.Core` (plumbed into host and tests from a
-  single source tree; do not copy files).
-- **Tests:** xUnit via `Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`.
+- **Core:** engine-agnostic `Ashfall.Core` (`Ashfall.Core.csproj`, net8.0 / `netstandard2.1` compatibility).
+- **Tests:** xUnit via `Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` (net9.0).
+- **SDK Configuration:** `global.json` pins baseline SDK `8.0.100` with `rollForward: latestMajor`. Dev environments require .NET 9+ SDK (which builds both `net8.0` host and `net9.0` test targets) or side-by-side .NET 8 + .NET 9 SDKs.
 
 ## Namespace scheme
 

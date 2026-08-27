@@ -28,7 +28,7 @@
 ```
 1. "Get the color palette from the DiegeticHud frame"
    → Extract amber (#FFC107), red (#F44336), green (#4CAF50), grey (#9E9E9E)
-   
+
 2. "Get the typography scale from the Barlow Condensed text styles"
    → Font sizes, weights, letter-spacing for HUD text
 

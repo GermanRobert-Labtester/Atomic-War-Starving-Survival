@@ -53,10 +53,10 @@ namespace Ashfall.Core.Verdict
                 return count;
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return 0;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "Verdict quest catalog", ex_CATDIAG);
+                return 0;
+            }
         }
     }
 }

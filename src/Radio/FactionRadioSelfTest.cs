@@ -84,10 +84,8 @@ namespace AtomicWar.GodotApp
                 Check(false, "No exceptions");
             }
 
-            bool ok = passed == total;
-            GD.Print($"[FactionRadioSelfTest] result: {passed}/{total} PASS, FAIL count {total - passed}");
-            GD.Print(ok ? "FACTION_RADIO_SELFTEST PASS" : "FACTION_RADIO_SELFTEST FAIL");
-            return ok ? 0 : 1;
+            bool ok = passed == total && total > 0;
+            return HostCli.EmitSummary("faction_radio_selftest", ok, ok ? 0 : 1, passed, total - passed);
         }
     }
 }

@@ -29,7 +29,10 @@
       "bio": "Haunted by a patient lost on Day 1, a child brought in with a chest wound who was gone before the anesthesia settled. Their hands still remember the cut they could not finish; some nights they wake mid-motion, fingers hooked like they are still holding the clamp. They keep the scalpel from that morning in a rolled cloth. They operate by headlamp when the power fails and do not ask anyone to hold the light for them. They have sewn up every survivor who has come back bleeding. The scars are tidy. That is how the bunker knows it was them.",
       "baseHealth": 90,
       "latentExpertTrait": "trait_miracle_worker",
-      "activeQuestlineId": "quest_the_shaking_hand"
+      "activeQuestlineId": "quest_the_shaking_hand",
+      "traitIds": [
+        "skill_sanitization_expert"
+      ]
     },
     {
       "id": "the_pharmacist",
@@ -1225,6 +1228,20 @@
       "profession": "Medic",
       "bio": "A former paramedic who now cares for the bunker's sick and injured. Their touch is gentle, and their heart is kind. They work tirelessly in the medical bay, easing pain and saving lives. Their hands are always busy, and their spirit is always strong. They believe that healing is the most important work of all.",
       "baseHealth": 85
+    },
+    {
+      "id": "survivor_dr_sarah_chen",
+      "displayName": "Dr. Sarah Chen",
+      "profession": "Trauma Surgeon",
+      "bio": "Former chief trauma surgeon from the city university hospital who ran emergency surgical bays during the atomic bombardment.",
+      "baseHealth": 100
+    },
+    {
+      "id": "survivor_gunner_mikhail",
+      "displayName": "Gunner Mikhail",
+      "profession": "Heavy Artillery Loader",
+      "bio": "Heavy artillery battery loader who manned defensive emplacements along the river line through weeks of heavy fallout exposure.",
+      "baseHealth": 100
     }
   ]
 }

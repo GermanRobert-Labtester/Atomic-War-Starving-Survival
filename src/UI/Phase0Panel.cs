@@ -14,7 +14,7 @@ namespace AtomicWar.GodotApp.UI
     /// existing host commands only — no eligibility, tick, resource, medical,
     /// morale, or narrative rules live here.
     /// </summary>
-    public partial class Phase0Panel : Control
+    public partial class Phase0Panel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -238,12 +238,18 @@ namespace AtomicWar.GodotApp.UI
             Visible = true;
         }
 
-        public override void _ExitTree()
-        {
-            if (_phase0 != null)
+
+    public void Unbind()
+    {
+        if (_phase0 != null)
             {
                 _phase0.StateChanged -= OnPhase0StateChanged;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

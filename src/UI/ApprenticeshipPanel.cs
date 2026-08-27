@@ -7,7 +7,7 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
-    public partial class ApprenticeshipPanel : Control
+    public partial class ApprenticeshipPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -31,6 +31,17 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -51,11 +62,10 @@ namespace AtomicWar.GodotApp.UI
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _startPairBtn = new Button { Text = "Assign Metallurgy Apprentice", CustomMinimumSize = new Vector2(220, 36) };
-            _startPairBtn.Pressed += () => _host?.StartPair("Master_Blacksmith", "Teen_Dweller_01", "skill_foundry_casting", 100f);
+            _startPairBtn = AshfallUiHelpers.MakeButton("Assign Metallurgy Apprentice", () => _host?.StartPair("Master_Blacksmith", "Teen_Dweller_01", "skill_foundry_casting", 100f));
+            _startPairBtn.CustomMinimumSize = new Vector2(220, 36);
             buttonRow.AddChild(_startPairBtn);
 
             _contentStack.AddChild(buttonRow);
@@ -72,7 +82,14 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_host == null || _statusRail == null)
+            {
+                if (_detailText != null)
+                {
+                    _detailText.Text = "Apprenticeship host session is not bound. Mentor-apprentice skill progression records are offline.";
+                }
+                return;
+            }
 
             var s = _host.System.State;
             int active = s.activePairs.FindAll(p => !p.isComplete && !p.isCancelled).Count;
@@ -81,22 +98,21 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Active Apprenticeships ({active} pairs):\n";
+                string text = active > 0
+                    ? $"Active Apprenticeships ({active} pairs):\n"
+                    : "No active apprenticeship pairs registered.\nPair veteran survivors with apprentices to transmit technical and survival skills.\n";
                 foreach (var p in s.activePairs)
                 {
                     text += $"  • [{p.targetSkillId}] Apprentice: {p.apprenticeId} under Mentor: {p.mentorId} — Progress: {p.progressXp:F0}/{p.targetXp:F0} XP\n";
                 }
-                text += $"\nLast Event: {_host.LastEvent}";
+                text += $"\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 _detailText.Text = text;
             }
         }
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

@@ -25,7 +25,7 @@ namespace AtomicWar.GodotApp.UI;
 /// Pure presentation. All recipe/craft authority stays in
 /// CraftingHostSession / CraftingSystem and InventoryHostSession.
 /// </summary>
-public partial class SurvivalWorkstationPanel : Control
+public partial class SurvivalWorkstationPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action? OnOpenInventoryOverlay;
@@ -578,13 +578,19 @@ public partial class SurvivalWorkstationPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_craftingHost != null)
         {
             _craftingHost.Engine.OnCraftStarted -= OnEngineCraftStarted;
             _craftingHost.Engine.OnCraftCompleted -= OnEngineCraftCompleted;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

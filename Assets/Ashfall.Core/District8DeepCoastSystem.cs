@@ -337,11 +337,12 @@ namespace Ashfall.Core
         }
 
         /// <summary>
-        /// Surveyed → PerimeterOpen. Consumes the material bill through the
-        /// host-provided atomic check/consume lambda (the canonical inventory
-        /// authority). Fleet-controlled access clears the perimeter for free.
+        /// <summary>
+        /// Surveyed → PerimeterOpen. Consumes the material bill atomically through the
+        /// host-provided atomic bill consumer lambda (the canonical inventory authority).
+        /// Fleet-controlled access clears the perimeter for free.
         /// </summary>
-        public bool TryClearPerimeter(int day, Func<string, int, bool> tryConsume)
+        public bool TryClearPerimeter(int day, Func<IReadOnlyDictionary<string, int>, bool> tryConsumeBill)
         {
             if (_state.perimeterCleared) return false;
             if (_state.stage < (int)DeepCoastStage.Surveyed) return false;
@@ -350,7 +351,7 @@ namespace Ashfall.Core
             if (_state.accessDecision != (int)DeepCoastAccessDecision.FleetControlled)
             {
                 var bill = PerimeterClearBill();
-                if (tryConsume == null || !ConsumeBill(bill, tryConsume)) return false;
+                if (tryConsumeBill == null || !tryConsumeBill(bill)) return false;
             }
 
             _state.perimeterCleared = true;
@@ -360,11 +361,16 @@ namespace Ashfall.Core
             return true;
         }
 
+        public bool TryClearPerimeter(int day, Func<string, int, bool> tryConsumeItem)
+        {
+            return TryClearPerimeter(day, bill => ConsumeBillLegacy(bill, tryConsumeItem));
+        }
+
         /// <summary>
         /// PerimeterOpen → DockAccessible. Requires the service channel
         /// cleared (materials) unless the Fleet already cut it.
         /// </summary>
-        public bool TryClearServiceChannel(int day, Func<string, int, bool> tryConsume)
+        public bool TryClearServiceChannel(int day, Func<IReadOnlyDictionary<string, int>, bool> tryConsumeBill)
         {
             if (_state.channelCleared) return false;
             if (_state.stage < (int)DeepCoastStage.PerimeterOpen) return false;
@@ -372,7 +378,7 @@ namespace Ashfall.Core
             if (!_state.fleetLevyActive)
             {
                 var bill = ChannelClearBill();
-                if (tryConsume == null || !ConsumeBill(bill, tryConsume)) return false;
+                if (tryConsumeBill == null || !tryConsumeBill(bill)) return false;
             }
 
             _state.channelCleared = true;
@@ -383,12 +389,17 @@ namespace Ashfall.Core
             return true;
         }
 
+        public bool TryClearServiceChannel(int day, Func<string, int, bool> tryConsumeItem)
+        {
+            return TryClearServiceChannel(day, bill => ConsumeBillLegacy(bill, tryConsumeItem));
+        }
+
         /// <summary>
         /// DockAccessible → DeepBerthOperational. The berth at the icebreaker
         /// dock needs the structural bill paid; a damaged perimeter
         /// (salvage-immediate) forces a heavier scrap-only shoring bill first.
         /// </summary>
-        public bool TryRepairDeepBerth(int day, Func<string, int, bool> tryConsume)
+        public bool TryRepairDeepBerth(int day, Func<IReadOnlyDictionary<string, int>, bool> tryConsumeBill)
         {
             if (_state.berthRepaired) return false;
             if (_state.stage < (int)DeepCoastStage.DockAccessible) return false;
@@ -396,7 +407,7 @@ namespace Ashfall.Core
             if (!_state.fleetLevyActive)
             {
                 var bill = BerthRepairBill();
-                if (tryConsume == null || !ConsumeBill(bill, tryConsume)) return false;
+                if (tryConsumeBill == null || !tryConsumeBill(bill)) return false;
             }
 
             _state.berthRepaired = true;
@@ -406,6 +417,11 @@ namespace Ashfall.Core
             _state.lastTickDay = day;
             RaiseChanged();
             return true;
+        }
+
+        public bool TryRepairDeepBerth(int day, Func<string, int, bool> tryConsumeItem)
+        {
+            return TryRepairDeepBerth(day, bill => ConsumeBillLegacy(bill, tryConsumeItem));
         }
 
         // ── Dock operation (expedition → dive handoff) ───────────────
@@ -557,12 +573,11 @@ namespace Ashfall.Core
             }
         }
 
-        private static bool ConsumeBill(Dictionary<string, int> bill, Func<string, int, bool> tryConsume)
+        private static bool ConsumeBillLegacy(IReadOnlyDictionary<string, int> bill, Func<string, int, bool> tryConsume)
         {
             if (bill == null || bill.Count == 0) return true;
             if (tryConsume == null) return false;
 
-            // Atomic: verify the full bill first, then consume.
             foreach (var kv in bill)
             {
                 if (!tryConsume(kv.Key, kv.Value)) return false;

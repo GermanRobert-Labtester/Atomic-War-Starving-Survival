@@ -24,7 +24,7 @@ namespace AtomicWar.GodotApp.UI;
 /// Pure presentation. Reads only from Core / host APIs; never mutates the
 /// engine state.
 /// </summary>
-public partial class SkillMatrixPanel : Control
+public partial class SkillMatrixPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnSurvivorSelected;
@@ -493,12 +493,18 @@ public partial class SkillMatrixPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_skills != null)
         {
             _skills.OnSkillEarned -= HandleSkillChanged;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

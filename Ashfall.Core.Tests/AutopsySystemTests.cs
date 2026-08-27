@@ -56,6 +56,35 @@ namespace Ashfall.Core.Tests
             Assert.True(research.IsManualUnlocked("vaccine_rad"));
         }
 
+        [Fact]
+        public void BeginAutopsy_ConsumableMissing_LeavesToolsInInventory()
+        {
+            var a = Create(out var inv, out _, out _, out _, out _);
+            a.LoadCatalog(new System.Collections.Generic.List<AutopsyProcedure>
+            {
+                new AutopsyProcedure
+                {
+                    procedure_id = "standard",
+                    requiredTools = new System.Collections.Generic.List<string> { "scalpel" },
+                    requiredConsumables = new System.Collections.Generic.List<string> { "formalin" }
+                }
+            });
+            // Provide tool (scalpel) and consumable (formalin) to queue successfully
+            inv.AddById("scalpel", 1);
+            inv.AddById("formalin", 1);
+            a.QueueAutopsy("deceased_1", "standard", "medic_1");
+            Assert.Single(a.State.cases);
+
+            // Consume/remove formalin before beginning autopsy
+            inv.RemoveById("formalin", 1);
+            var r = a.BeginAutopsy(a.State.cases[0].caseId);
+            Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
+            Assert.Equal("missing_supplies", r.FailureCode);
+            // 0 scalpels consumed (atomic rollback)
+            Assert.Equal(1, inv.CountById("scalpel"));
+            Assert.Equal(AutopsyStatus.Queued, a.State.cases[0].status);
+        }
+
         [Fact] public void CompletedSpecimen_BlocksReuse()
         {
             var a = Create(out var inv, out _, out _, out _, out _);

@@ -267,3 +267,24 @@ Total tracked:     30 player-facing runtime surfaces (was 33)
   estimate: same shape as Phase 18 Skill Progression port (one file each in
   Core + Tests + UI + Manifest, four files total).
 
+---
+
+## Postscript — Subsequent Delivery (Phases 27–28 / 2026-08-26)
+
+Following this Phase 26 audit, the two remaining `MISSING` surfaces were fully implemented and shipped:
+
+1. **Standing Record Atlas (`StandingRecordAtlasPanel`) — Shipped in Phase 27:**
+   - **Core Engine:** Built `Assets/Ashfall.Core/StandingRecord/StandingRecordEngine.cs` with full state capture/restore and tick integration.
+   - **Host & UI:** Implemented `StandingRecordHostSession` and `StandingRecordAtlasPanel.cs`.
+   - **Snapshot Target:** Promoted to `COVERED` via `standing_record_atlas_default` (MD5: `96da620bfcad4289011eb6905a31e1e`).
+
+2. **Research Atlas (`ResearchAtlasPanel`) — Shipped in Phase 28:**
+   - **Core Engine:** Built `Assets/Ashfall.Core/Research/ResearchSystem.cs` and supporting domain state/catalog classes.
+   - **Host & UI:** Implemented `ResearchHostSession` and `ResearchAtlasPanel.cs` across all 6 disciplines.
+   - **Snapshot Target:** Promoted to `COVERED` via `research_atlas_default` (MD5: `90e831c0dd572b980622bb80f963b915`).
+
+**Current Reconciled Snapshot Coverage (as of 2026-08-26):**
+- **COVERED:** 26 surfaces (29 snapshot targets in manifest)
+- **PARTIAL:** 1 surface (`TradeScreenGodotPanel`, intentional sub-modal child)
+- **REGRESSION_ONLY:** 1 surface (`CraftingPanel`, drill-down of `SurvivalWorkstationPanel`)
+- **MISSING:** 0 surfaces (100% resolution of player-facing runtime surfaces)

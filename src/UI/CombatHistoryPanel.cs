@@ -11,7 +11,7 @@ namespace AtomicWar.GodotApp.UI
     /// Presents the full combat event log, aggregated battle outcomes (win/loss/
     /// retreat), and tactical analysis from the live CombatHostSession snapshot.
     /// </summary>
-    public partial class CombatHistoryPanel : Control
+    public partial class CombatHistoryPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -34,28 +34,47 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_combat == null || _combatHistory == null) return;
+            if (_combatHistory == null || _battleOutcomes == null || _tacticalAnalysis == null) return;
             AshfallUiHelpers.EmptyChildren(_combatHistory);
             AshfallUiHelpers.EmptyChildren(_battleOutcomes);
             AshfallUiHelpers.EmptyChildren(_tacticalAnalysis);
+
+            if (_combat == null)
+            {
+                _combatHistory.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No combat session bound", "offline"));
+                _battleOutcomes.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No active combat outcomes", "offline"));
+                _tacticalAnalysis.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Tactical weapon telemetry unavailable", "offline"));
+                return;
+            }
+
             var snap = _combat.Snapshot();
 
             // Battle log (real combat history).
-            foreach (var e in snap.Events)
-                AddLine(_combatHistory, $"[T{e.Turn}] {e.Detail}");
+            if (snap.Events == null || snap.Events.Count == 0)
+            {
+                _combatHistory.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No combat events logged in current encounter"));
+            }
+            else
+            {
+                foreach (var e in snap.Events)
+                    AddLine(_combatHistory, $"[T{e.Turn}] {e.Detail}");
+            }
 
             // Aggregate outcomes.
             int fireEvents = 0, jams = 0, downs = 0, deaths = 0, retreats = 0, winsOrLosses = 0;
-            foreach (var e in snap.Events)
+            if (snap.Events != null)
             {
-                switch (e.Kind)
+                foreach (var e in snap.Events)
                 {
-                    case "fire": fireEvents++; break;
-                    case "weapon_jam": jams++; break;
-                    case "downed": downs++; break;
-                    case "death": deaths++; break;
-                    case "retreat": retreats++; break;
-                    case "victory": case "defeat": winsOrLosses++; break;
+                    switch (e.Kind)
+                    {
+                        case "fire": fireEvents++; break;
+                        case "weapon_jam": jams++; break;
+                        case "downed": downs++; break;
+                        case "death": deaths++; break;
+                        case "retreat": retreats++; break;
+                        case "victory": case "defeat": winsOrLosses++; break;
+                    }
                 }
             }
             AddLine(_battleOutcomes, "Shots fired: " + fireEvents);
@@ -67,12 +86,22 @@ namespace AtomicWar.GodotApp.UI
             AddLine(_battleOutcomes, snap.Resolved ? "Final: " + snap.OutcomeText : "Encounter ongoing.");
 
             // Tactical analysis (stance trade-offs currently in force).
-            AddLine(_tacticalAnalysis, "Weapons monitored: " + snap.Weapons.Count);
-            foreach (var w in snap.Weapons)
-                AddLine(_tacticalAnalysis, $"{w.WeaponName} — cond {w.ConditionPct}%, jam {w.JamChancePct}%, ammo {w.AmmoRemaining}");
-            if (snap.Loot.Count > 0)
+            if (snap.Weapons == null || snap.Weapons.Count == 0)
+            {
+                _tacticalAnalysis.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No weapons monitored in squad loadout"));
+            }
+            else
+            {
+                AddLine(_tacticalAnalysis, "Weapons monitored: " + snap.Weapons.Count);
+                foreach (var w in snap.Weapons)
+                    AddLine(_tacticalAnalysis, $"{w.WeaponName} — cond {w.ConditionPct}%, jam {w.JamChancePct}%, ammo {w.AmmoRemaining}");
+            }
+
+            if (snap.Loot != null && snap.Loot.Count > 0)
+            {
                 foreach (var l in snap.Loot)
                     AddLine(_tacticalAnalysis, $"Loot captured: +{l.quantity} {l.itemId}");
+            }
         }
 
         private static void AddLine(VBoxContainer box, string text)
@@ -149,12 +178,18 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_combat != null)
+
+    public void Unbind()
+    {
+        if (_combat != null)
             {
                 _combat.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

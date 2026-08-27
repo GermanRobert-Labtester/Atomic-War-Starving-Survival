@@ -159,3 +159,36 @@ public class SaveIdJsonConverter<T> : System.Text.Json.Serialization.JsonConvert
         writer.WriteEndObject();
     }
 }
+
+/// <summary>
+/// Status code for save load operations.
+/// </summary>
+public enum SaveLoadStatus
+{
+    Success = 0,
+    MissingSlot = 1,
+    MissingFile = 2,
+    CorruptData = 3,
+    ChecksumMismatch = 4,
+    IronManBlocked = 5,
+    EmptyEnvelope = 6
+}
+
+/// <summary>
+/// Detailed result of attempting to load a save slot, containing a user-facing
+/// recoverable message, status code, and the deserialized envelope if successful.
+/// </summary>
+public class SaveLoadResult
+{
+    public SaveLoadStatus Status { get; set; }
+    public bool IsSuccess => Status == SaveLoadStatus.Success;
+    public string UserMessage { get; set; } = string.Empty;
+    public AggregateSaveEnvelope? Envelope { get; set; }
+    public System.Collections.Generic.List<string> Details { get; set; } = new();
+
+    public static SaveLoadResult Ok(AggregateSaveEnvelope envelope, string message = "Save loaded successfully.") =>
+        new() { Status = SaveLoadStatus.Success, Envelope = envelope, UserMessage = message };
+
+    public static SaveLoadResult Fail(SaveLoadStatus status, string message, System.Collections.Generic.IEnumerable<string>? details = null) =>
+        new() { Status = status, UserMessage = message, Details = details != null ? new System.Collections.Generic.List<string>(details) : new System.Collections.Generic.List<string>() };
+}

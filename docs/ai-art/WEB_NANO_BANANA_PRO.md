@@ -4,65 +4,65 @@ These prompts have been adapted from the SeaArt queue specifically for the **Web
 
 ## geiger_counter — Geiger Counter
 
-**Priority:** P0  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P0
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
 > A retro, worn geiger counter with a meter body, handle, and analog gauge, viewed from a three-quarter angle. Placed alone on a flat, opaque black background. The object has a worn, weathered material texture suitable for a post-apocalyptic survival setting, illuminated by a top-left rim light. No lettering, no labels, no text, no logos, no other props.
 
-**Negative:** 
+**Negative:**
 Additional objects, readable lettering, logos, bright white background, room backdrop, text, complex environment.
 
-**Destination:** Raw: `generated_AIassets/geiger_counter.png`; approved: `Assets/Resources/Art/Items/geiger_counter.png`  
+**Destination:** Raw: `generated_AIassets/geiger_counter.png`; approved: `Assets/Resources/Art/Items/geiger_counter.png`
 
 
 ## iodine_pills — Iodine Pills
 
-**Priority:** P0  
-**Category:** Iodine / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P0
+**Category:** Iodine / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
 > A small cardboard carton of iodine pills with a visible blister pack of pills, viewed from a three-quarter angle. Placed alone on a flat, opaque black background. The object has a worn material texture suitable for a post-apocalyptic survival setting, illuminated by a top-left rim light. No lettering, no labels, no text, no logos, no symbols, no other props.
 
-**Negative:** 
+**Negative:**
 Additional objects, readable lettering, logos, bright white background, symbols, text, complex environment.
 
-**Destination:** Raw: `generated_AIassets/iodine_pills.png`; approved: `Assets/Resources/Art/Items/iodine_pills.png`  
+**Destination:** Raw: `generated_AIassets/iodine_pills.png`; approved: `Assets/Resources/Art/Items/iodine_pills.png`
 
 
 ## hazmat_suit — Hazmat Suit
 
-**Priority:** P0  
-**Category:** Protective / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P0
+**Category:** Protective / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
 > A full hazmat protective suit featuring a hood, visor, gloves, and boots. Placed alone on a flat, opaque black background. The suit has a worn, slightly degraded material texture suitable for a post-apocalyptic survival setting, illuminated by a top-left rim light. No lettering, no labels, no text, no logos, no other props.
 
-**Negative:** 
+**Negative:**
 Additional objects, readable lettering, logos, bright white background, room backdrop, text, environment, human face visible inside visor.
 
-**Destination:** Raw: `generated_AIassets/hazmat_suit.png`; approved: `Assets/Resources/Art/Items/hazmat_suit.png`  
+**Destination:** Raw: `generated_AIassets/hazmat_suit.png`; approved: `Assets/Resources/Art/Items/hazmat_suit.png`
 
 
 ## fuel_0_5l_of_1l — Fuel 0.5L / 1L
 
-**Priority:** P1  
-**Category:** Fuel / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Fuel / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -70,15 +70,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/fuel_0_5l_of_1l.png`; approved: `Assets/Resources/Art/Items/fuel_0_5l_of_1l.png`  
+**Destination:** Raw: `generated_AIassets/fuel_0_5l_of_1l.png`; approved: `Assets/Resources/Art/Items/fuel_0_5l_of_1l.png`
 
 ## accelerant_half — Accelerant (Half-Full)
 
-**Priority:** P1  
-**Category:** Fuel / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Fuel / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -86,16 +86,16 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/accelerant_half.png`; approved: `Assets/Resources/Art/Items/accelerant_half.png`  
+**Destination:** Raw: `generated_AIassets/accelerant_half.png`; approved: `Assets/Resources/Art/Items/accelerant_half.png`
 
 
 ## wire_cutters_broken — Wire Cutters Broken
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -103,15 +103,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/wire_cutters_broken.png`; approved: `Assets/Resources/Art/Items/wire_cutters_broken.png`  
+**Destination:** Raw: `generated_AIassets/wire_cutters_broken.png`; approved: `Assets/Resources/Art/Items/wire_cutters_broken.png`
 
 ## metal_pipe_broken — Metal Pipe Broken
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -119,15 +119,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/metal_pipe_broken.png`; approved: `Assets/Resources/Art/Items/metal_pipe_broken.png`  
+**Destination:** Raw: `generated_AIassets/metal_pipe_broken.png`; approved: `Assets/Resources/Art/Items/metal_pipe_broken.png`
 
 ## shovel_broken — Shovel Broken
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -135,15 +135,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/shovel_broken.png`; approved: `Assets/Resources/Art/Items/shovel_broken.png`  
+**Destination:** Raw: `generated_AIassets/shovel_broken.png`; approved: `Assets/Resources/Art/Items/shovel_broken.png`
 
 ## multitool_broken — Multitool Broken
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -151,15 +151,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/multitool_broken.png`; approved: `Assets/Resources/Art/Items/multitool_broken.png`  
+**Destination:** Raw: `generated_AIassets/multitool_broken.png`; approved: `Assets/Resources/Art/Items/multitool_broken.png`
 
 ## knife_broken — Knife Broken
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -167,15 +167,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/knife_broken.png`; approved: `Assets/Resources/Art/Items/knife_broken.png`  
+**Destination:** Raw: `generated_AIassets/knife_broken.png`; approved: `Assets/Resources/Art/Items/knife_broken.png`
 
 ## hammer_broken — Hammer Broken
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -183,15 +183,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/hammer_broken.png`; approved: `Assets/Resources/Art/Items/hammer_broken.png`  
+**Destination:** Raw: `generated_AIassets/hammer_broken.png`; approved: `Assets/Resources/Art/Items/hammer_broken.png`
 
 ## screwdriver_broken — Screwdriver Broken
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -199,15 +199,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/screwdriver_broken.png`; approved: `Assets/Resources/Art/Items/screwdriver_broken.png`  
+**Destination:** Raw: `generated_AIassets/screwdriver_broken.png`; approved: `Assets/Resources/Art/Items/screwdriver_broken.png`
 
 ## water_bottle_1l_of_2l — Water Bottle 1L / 2L
 
-**Priority:** P1  
-**Category:** Water / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Water / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -215,15 +215,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/water_bottle_1l_of_2l.png`; approved: `Assets/Resources/Art/Items/water_bottle_1l_of_2l.png`  
+**Destination:** Raw: `generated_AIassets/water_bottle_1l_of_2l.png`; approved: `Assets/Resources/Art/Items/water_bottle_1l_of_2l.png`
 
 ## water_bottle_0_5l_of_1l — Water Bottle 0.5L / 1L
 
-**Priority:** P1  
-**Category:** Water / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Water / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -231,15 +231,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/water_bottle_0_5l_of_1l.png`; approved: `Assets/Resources/Art/Items/water_bottle_0_5l_of_1l.png`  
+**Destination:** Raw: `generated_AIassets/water_bottle_0_5l_of_1l.png`; approved: `Assets/Resources/Art/Items/water_bottle_0_5l_of_1l.png`
 
 ## water_bottle_0_5l_of_2l — Water Bottle 0.5L / 2L
 
-**Priority:** P1  
-**Category:** Water / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Water / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -247,15 +247,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/water_bottle_0_5l_of_2l.png`; approved: `Assets/Resources/Art/Items/water_bottle_0_5l_of_2l.png`  
+**Destination:** Raw: `generated_AIassets/water_bottle_0_5l_of_2l.png`; approved: `Assets/Resources/Art/Items/water_bottle_0_5l_of_2l.png`
 
 ## water_bottle_1_5l_of_2l — Water Bottle 1.5L / 2L
 
-**Priority:** P1  
-**Category:** Water / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Water / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -263,15 +263,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/water_bottle_1_5l_of_2l.png`; approved: `Assets/Resources/Art/Items/water_bottle_1_5l_of_2l.png`  
+**Destination:** Raw: `generated_AIassets/water_bottle_1_5l_of_2l.png`; approved: `Assets/Resources/Art/Items/water_bottle_1_5l_of_2l.png`
 
 ## water_bottle_empty — Empty Water Bottle
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -279,15 +279,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/water_bottle_empty.png`; approved: `Assets/Resources/Art/Items/water_bottle_empty.png`  
+**Destination:** Raw: `generated_AIassets/water_bottle_empty.png`; approved: `Assets/Resources/Art/Items/water_bottle_empty.png`
 
 ## water_purification_tablets_0_of_40 — Water Purification Tablets 0/40 (Empty)
 
-**Priority:** P2  
-**Category:** Material / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P2
+**Category:** Material / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -295,15 +295,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/water_purification_tablets_0_of_40.png`; approved: `Assets/Resources/Art/Items/water_purification_tablets_0_of_40.png`  
+**Destination:** Raw: `generated_AIassets/water_purification_tablets_0_of_40.png`; approved: `Assets/Resources/Art/Items/water_purification_tablets_0_of_40.png`
 
 ## workbench_intermediate — Workbench (Intermediate)
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -311,15 +311,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/workbench_intermediate.png`; approved: `Assets/Resources/Art/Items/workbench_intermediate.png`  
+**Destination:** Raw: `generated_AIassets/workbench_intermediate.png`; approved: `Assets/Resources/Art/Items/workbench_intermediate.png`
 
 ## workbench_advanced — Workbench (Advanced)
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -327,15 +327,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/workbench_advanced.png`; approved: `Assets/Resources/Art/Items/workbench_advanced.png`  
+**Destination:** Raw: `generated_AIassets/workbench_advanced.png`; approved: `Assets/Resources/Art/Items/workbench_advanced.png`
 
 ## workbench_professional — Workbench (Professional)
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -343,15 +343,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/workbench_professional.png`; approved: `Assets/Resources/Art/Items/workbench_professional.png`  
+**Destination:** Raw: `generated_AIassets/workbench_professional.png`; approved: `Assets/Resources/Art/Items/workbench_professional.png`
 
 ## advanced_cooking_stove — Advanced Cooking Stove
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -359,15 +359,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/advanced_cooking_stove.png`; approved: `Assets/Resources/Art/Items/advanced_cooking_stove.png`  
+**Destination:** Raw: `generated_AIassets/advanced_cooking_stove.png`; approved: `Assets/Resources/Art/Items/advanced_cooking_stove.png`
 
 ## advanced_heater — Advanced Heater
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -375,15 +375,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/advanced_heater.png`; approved: `Assets/Resources/Art/Items/advanced_heater.png`  
+**Destination:** Raw: `generated_AIassets/advanced_heater.png`; approved: `Assets/Resources/Art/Items/advanced_heater.png`
 
 ## advanced_water_boiler — Advanced Water Boiler
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -391,15 +391,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/advanced_water_boiler.png`; approved: `Assets/Resources/Art/Items/advanced_water_boiler.png`  
+**Destination:** Raw: `generated_AIassets/advanced_water_boiler.png`; approved: `Assets/Resources/Art/Items/advanced_water_boiler.png`
 
 ## advanced_herb_garden — Advanced Herb Garden
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -407,15 +407,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/advanced_herb_garden.png`; approved: `Assets/Resources/Art/Items/advanced_herb_garden.png`  
+**Destination:** Raw: `generated_AIassets/advanced_herb_garden.png`; approved: `Assets/Resources/Art/Items/advanced_herb_garden.png`
 
 ## herbal_farm_max_tier — Herbal Farm (Max Tier)
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -423,15 +423,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/herbal_farm_max_tier.png`; approved: `Assets/Resources/Art/Items/herbal_farm_max_tier.png`  
+**Destination:** Raw: `generated_AIassets/herbal_farm_max_tier.png`; approved: `Assets/Resources/Art/Items/herbal_farm_max_tier.png`
 
 ## advanced_recycle_bench — Advanced Recycle Bench
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -439,15 +439,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/advanced_recycle_bench.png`; approved: `Assets/Resources/Art/Items/advanced_recycle_bench.png`  
+**Destination:** Raw: `generated_AIassets/advanced_recycle_bench.png`; approved: `Assets/Resources/Art/Items/advanced_recycle_bench.png`
 
 ## basic_tool_workshop — Basic Tool Workshop
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -455,15 +455,15 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/basic_tool_workshop.png`; approved: `Assets/Resources/Art/Items/basic_tool_workshop.png`  
+**Destination:** Raw: `generated_AIassets/basic_tool_workshop.png`; approved: `Assets/Resources/Art/Items/basic_tool_workshop.png`
 
 ## advanced_tool_workshop — Advanced Tool Workshop
 
-**Priority:** P1  
-**Category:** Device / inventory icon  
-**Platform:** Web  
-**Model:** Nano Banana Pro  
-**Aspect:** 1:1, 1024×1024 master; opaque black field  
+**Priority:** P1
+**Category:** Device / inventory icon
+**Platform:** Web
+**Model:** Nano Banana Pro
+**Aspect:** 1:1, 1024×1024 master; opaque black field
 
 **Prompt:**
 
@@ -471,7 +471,7 @@ Additional objects, readable lettering, logos, bright white background, room bac
 
 **Negative:** Additional objects, altered object geometry, readable lettering, logos, bright white background.
 
-**Destination:** Raw: `generated_AIassets/advanced_tool_workshop.png`; approved: `Assets/Resources/Art/Items/advanced_tool_workshop.png`  
+**Destination:** Raw: `generated_AIassets/advanced_tool_workshop.png`; approved: `Assets/Resources/Art/Items/advanced_tool_workshop.png`
 
 # SEEDREAM
 

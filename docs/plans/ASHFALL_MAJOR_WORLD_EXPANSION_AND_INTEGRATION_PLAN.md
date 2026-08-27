@@ -1,12 +1,12 @@
 # ASHFALL — Major World Expansion, Faction War, AI Combat & Living-World Integration Plan
 
-**Document type:** implementation-grade creative + technical master plan  
-**Target:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`  
-**Engine:** Godot 4.7+ (.NET/C#)  
-**Gameplay authority:** `Assets/Ashfall.Core/`  
-**Host/presentation:** `src/`  
-**Data authority:** `Assets/StreamingAssets/Data/`  
-**Legacy Unity tree:** `Assets/_Game/` — read-only; do not extend  
+**Document type:** implementation-grade creative + technical master plan
+**Target:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`
+**Engine:** Godot 4.7+ (.NET/C#)
+**Gameplay authority:** `Assets/Ashfall.Core/`
+**Host/presentation:** `src/`
+**Data authority:** `Assets/StreamingAssets/Data/`
+**Legacy Unity tree:** `Assets/_Game/` — read-only; do not extend
 **Purpose:** convert ASHFALL from a systems-rich management game into a coherent, reactive survival world in which survivors, factions, locations, expeditions, combat, shelter systems, radio, weather, economy, quests and endings continuously influence one another.
 
 ---
@@ -17,12 +17,12 @@ ASHFALL already has an unusually deep simulation foundation. The next leap shoul
 
 The desired player experience is:
 
-> **I make a decision in the Holdfast. That decision changes a survivor.  
-> That survivor behaves differently on an expedition.  
-> The expedition changes a location.  
-> The location changes a faction's behavior.  
-> The faction changes prices, patrols, rumors and radio traffic.  
-> Those changes return to the Holdfast as consequences.  
+> **I make a decision in the Holdfast. That decision changes a survivor.
+> That survivor behaves differently on an expedition.
+> The expedition changes a location.
+> The location changes a faction's behavior.
+> The faction changes prices, patrols, rumors and radio traffic.
+> Those changes return to the Holdfast as consequences.
 > The game remembers all of it.**
 
 The core development objective should therefore be a **World Consequence Spine** connecting:

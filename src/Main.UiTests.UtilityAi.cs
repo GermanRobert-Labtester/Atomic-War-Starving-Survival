@@ -52,7 +52,7 @@ namespace AtomicWar.GodotApp
 
             bool pass = panel && catalog && noLeak && selected;
             GD.Print($"[UtilityAiUiTest] panel={panel} catalog={catalog} noLeak={noLeak} selected={selected}");
-            GD.Print(pass ? "UTILITY_AI_UITEST PASS" : "UTILITY_AI_UITEST FAIL");
+            HostCli.EmitSummary("utility_ai_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

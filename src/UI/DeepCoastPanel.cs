@@ -15,7 +15,7 @@ namespace AtomicWar.GodotApp.UI
     /// operation handoff. Presentation only — every rule lives in
     /// DeepCoastHostSession / District8DeepCoastSystem.
     /// </summary>
-    public partial class DeepCoastPanel : Control
+    public partial class DeepCoastPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -25,6 +25,8 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _routeContainer = null!;
         private VBoxContainer _actionContainer = null!;
         private Label _statusLabel = null!;
+
+        public bool IsBound => _deepCoast != null || _core != null;
 
         public override void _Ready()
         {
@@ -313,9 +315,10 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(container);
         }
 
-        public override void _ExitTree()
-        {
-            if (_deepCoast != null)
+
+    public void Unbind()
+    {
+        if (_deepCoast != null)
             {
                 _deepCoast.StateChanged -= RefreshView;
             }
@@ -323,6 +326,11 @@ namespace AtomicWar.GodotApp.UI
             {
                 _core.IceRoad.OnStateChanged -= HandleIceRoadStateChanged;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

@@ -84,7 +84,7 @@ namespace AtomicWar.GodotApp
         private void SaveYearOfAsh()
         {
             if (_yearOfAsh == null) return;
-            if (YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave()))
+            if (CaptureSection("year_of_ash", YearOfAshSaveStore.TryCapturePersisted(_yearOfAsh.CaptureSave())))
             {
                 _yearOfAshDirty = false;
                 GD.Print("[Ashfall Godot] Year of Ash save written.");
@@ -303,7 +303,7 @@ namespace AtomicWar.GodotApp
             var result = _yearOfAsh.Encounters.ResolveChoice(encounter, choice, _yearOfAsh.DemoRoster);
             _doorModal.DisplayResolution(result);
             _statusLabel.Text = $"Encounter resolved: {encounter.visitorName}. Morale: {result.netMoraleDelta:+#;-#;0}, Guilt: {result.netGuiltDelta:+#;-#;0}";
-            YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+            SaveYearOfAsh();
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace AtomicWar.GodotApp
                 return;
             }
 
-            YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+            SaveYearOfAsh();
             ShowQuestlineStage(def.questlineId, day);
             _statusLabel.Text = $"Questline begun: {def.title} (day {day}).";
         }
@@ -402,7 +402,7 @@ namespace AtomicWar.GodotApp
 
             // Persist immediately: questline progress is the one Year of Ash surface a
             // player would most obviously expect to survive a quit.
-            YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+            SaveYearOfAsh();
 
             _statusLabel.Text = ended
                 ? $"{questlineId} → {result.newQuestStatus}. Morale {result.moraleDelta:+#;-#;0}, guilt {result.guiltDelta:+#;-#;0}."
@@ -418,7 +418,7 @@ namespace AtomicWar.GodotApp
             _yearOfAsh.TickDay(targetDay);
             // Persist after the day advance too, so a quit between ticks doesn't
             // lose the timeline (encounter resolutions already save on their own).
-            YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+            SaveYearOfAsh();
             AutoEscalateMuster();
             if (_radioTerminal != null)
                 _radioTerminal.RefreshView(_yearOfAsh.Timeline.CurrentDay);

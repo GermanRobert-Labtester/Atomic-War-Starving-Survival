@@ -25,7 +25,7 @@ namespace AtomicWar.GodotApp.UI;
 /// the modal remains the focused interaction surface; this atlas adds
 /// the always-on top progression dashboard.
 /// </summary>
-public partial class QuestsAtlasPanel : Control
+public partial class QuestsAtlasPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnQuestSelected;
@@ -413,12 +413,18 @@ public partial class QuestsAtlasPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_holdfast != null)
         {
             _holdfast.OnQuestStageChanged -= HandleQuestStageChanged;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

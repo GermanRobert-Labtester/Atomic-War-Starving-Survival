@@ -22,6 +22,12 @@ namespace AtomicWar.GodotApp
     {
         // ── 12 Expanded Shelter Host Sessions ──
 
+        // Single shared ResearchSystem consulted by autopsy + library study
+        // (previously a local var in SetupExpandedShelterSystems, which made it
+        // unreachable for the Research panel bind). Created fresh by
+        // SetupExpandedShelterSystems; lazily by the research panel route.
+        private ResearchSystem _sharedResearch = null!;
+
 
 
         // Batch 4 BUG-14 follow-up: a SINGLE shared duty roster passed to
@@ -56,7 +62,7 @@ namespace AtomicWar.GodotApp
             SetupStartingLevel();
             SetupWorld();
 
-            var sharedResearch = new ResearchSystem(log: new GodotLog());
+            _sharedResearch = new ResearchSystem(log: new GodotLog());
 
             SetupWaterTreatment();
             SetupAirlockSecurity();
@@ -69,7 +75,7 @@ namespace AtomicWar.GodotApp
             SetupCaregiving();
             SetupShelterThermal();
             SetupShelterSchedule();
-            SetupAutopsy(sharedResearch);
+            SetupAutopsy(_sharedResearch);
             SetupWaystation();
             SetupSumpFlooding();
             WireWaterTreatmentSumpBridge();
@@ -79,7 +85,7 @@ namespace AtomicWar.GodotApp
             SetupDecontamination();
             SetupKitchenNutrition();
             SetupEquipmentCondition();
-            SetupLibraryStudy(sharedResearch);
+            SetupLibraryStudy(_sharedResearch);
             SetupArchiveDesk();
             SetupContractorRoster();
             SetupMentalHealthCrisis();
@@ -104,10 +110,9 @@ namespace AtomicWar.GodotApp
             _wildlifeTrapping.System.OnButcheryCompleted += (siteId, butcherId, species, isToxic) =>
             {
                 if (string.IsNullOrEmpty(butcherId)) return;
-                // Sterile technique trait — placeholder deterministic check: butcherId containing "sterile" has the trait
-                // Real check would query SurvivorCatalog/Roster trait, but host keeps it simple and deterministic
-                bool hasSterile = butcherId.IndexOf("sterile", StringComparison.OrdinalIgnoreCase) >= 0;
-                if (hasSterile) return;
+                var def = _survivors?.Roster?.FindDefinition(butcherId);
+                if (def != null && def.traitIds != null && def.traitIds.Contains("skill_sanitization_expert"))
+                    return;
                 int seed = StableHash.Of(butcherId) ^ _simDay;
                 var rng = new SeededRng(seed);
                 if (rng.NextDouble() < 0.30)
@@ -160,7 +165,11 @@ namespace AtomicWar.GodotApp
                             Epitaph = $"Forensic finding: {finding}"
                         });
                     }
-                    catch { /* memorial optional — never block autopsy */ }
+                    catch (Exception ex)
+                    {
+                        // Memorial integration is optional; log warning without blocking autopsy flow.
+                        GD.PushWarning($"[Ashfall Godot] Autopsy memorialization failed for {c.specimenId}: {ex.Message}");
+                    }
                 }
             };
         }
@@ -202,6 +211,7 @@ namespace AtomicWar.GodotApp
             SaveMentalHealthCrisis();
             SaveChemicalDependency();
             SaveShelterAssignment();
+            SaveFactionBranch();
         }
 
 
@@ -239,6 +249,7 @@ namespace AtomicWar.GodotApp
             _archiveDesk?.TickDay(day);
             _contractorRoster?.TickDay(day);
             _mentalHealthCrisis?.TickDay(day);
+            _crafting?.TickDay(day);
         }
 
         public void OpenExpandedPanel(string panelKey)
@@ -415,17 +426,8 @@ namespace AtomicWar.GodotApp
             _mentalHealthCrisisDirty = false;
 
             // Delete slot and global save files for expanded shelter systems
-            foreach (var file in new[]
-            {
-                "water_treatment_save.json", "airlock_security_save.json", "shelter_thermal_save.json",
-                "shelter_schedule_save.json", "autopsy_save.json", "waystation_save.json",
-                "survivor_relations_save.json", "regional_treaty_save.json", "vinyl_morale_save.json",
-                "wildlife_trapping_save.json", "excavation_save.json", "apprenticeship_save.json",
-                "caregiving_save.json", "sump_flooding_save.json", "decontamination_save.json",
-                "kitchen_nutrition_save.json", "equipment_condition_save.json", "library_study_save.json",
-                "archive_desk_save.json", "contractor_roster_save.json", "mental_health_crisis_save.json",
-                "chemical_dependency_save.json", "shelter_assignment_save.json", "traveling_caravan_save.json"
-            })
+            // (section file names come from the single registry authority)
+            foreach (var file in Ashfall.Core.Save.SaveSectionRegistry.SectionFileNames.Values)
             {
                 string p = SaveSlotRoot.Resolve(file);
                 if (System.IO.File.Exists(p))

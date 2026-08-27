@@ -1,0 +1,1367 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "questlineId": "quest_garrison_blood_debt",
+      "title": "The Garrison Blood Debt",
+      "synopsis": "Colonel Harven sends notice: one of your survivors, former conscript Ola Vask, is listed as a deserter under military law. Surrender her or face supply embargo.",
+      "factionTag": "faction_central_garrison",
+      "firstStageId": "stage_blood_debt_demand",
+      "minDay": 185,
+      "maxDay": 260,
+      "stages": [
+        {
+          "stageId": "stage_blood_debt_demand",
+          "title": "The Colonel\u0027s Notice",
+          "narrativePrompt": "A garrison courier delivers a wax-sealed tri-fold. Inside: a summary tribunal finding against Ola Vask, deserter. She\u0027s been with you for sixty-two days. She hasn\u0027t mentioned it once.",
+          "unlockOnDay": 185,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_confront_ola",
+              "text": "Confront Ola privately before responding to the garrison.",
+              "nextStageId": "stage_blood_debt_ola_testimony",
+              "moraleDelta": 0,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "She\u0027s quiet for a long time. Then: \u0027I left because my unit was ordered to execute a camp of civilians. I chose not to.\u0027"
+            },
+            {
+              "choiceId": "choice_comply_immediately",
+              "text": "Seal Ola\u0027s rations tent and radio the garrison that she\u0027s available for collection.",
+              "nextStageId": "",
+              "moraleDelta": -30,
+              "guiltDelta": 40,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 25,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Ola says nothing when they come. She\u0027s already seen it before. The other survivors stop talking at mealtimes."
+            },
+            {
+              "choiceId": "choice_refuse_and_fortify",
+              "text": "Destroy the notice and instruct the outer guard to turn away garrison personnel.",
+              "nextStageId": "stage_blood_debt_garrison_escalation",
+              "moraleDelta": 15,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -25,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Word reaches Harven by nightfall. His reply: three fewer fuel tankers next cycle."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blood_debt_ola_testimony",
+          "title": "What She Saw",
+          "narrativePrompt": "Ola describes seventeen bodies laid in rows by the roadside. She drew her sidearm on her own sergeant. \u0027I don\u0027t expect you to protect me. I know what the math looks like.\u0027",
+          "unlockOnDay": 187,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_forge_tribunal_rebuttal",
+              "text": "Have your engineer fabricate a medical exemption \u2014 Ola is \u0027critical bunker staff.\u0027",
+              "nextStageId": "stage_blood_debt_garrison_bluff",
+              "moraleDelta": 5,
+              "guiltDelta": 10,
+              "grantItemId": "item_falsified_clearance",
+              "grantItemQuantity": 1,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The forgery is good enough to buy weeks, not months."
+            },
+            {
+              "choiceId": "choice_send_ola_underground",
+              "text": "Move Ola into the sub-level maintenance tunnels \u2014 off every roster.",
+              "nextStageId": "stage_blood_debt_garrison_search",
+              "moraleDelta": 8,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "She doesn\u0027t complain about the dark. You notice she\u0027s been sleeping there already."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blood_debt_garrison_bluff",
+          "title": "The Inspector\u0027s Visit",
+          "narrativePrompt": "A garrison medical inspector arrives for a \u0027routine compliance audit.\u0027 She\u0027s professional, cold, and clearly looking for something specific.",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_pass_the_bluff",
+              "text": "Walk the inspector through a curated tour while Ola pretends to be a filtration technician.",
+              "nextStageId": "stage_blood_debt_resolution_protected",
+              "moraleDelta": 10,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The inspector files her report. No flag. For now."
+            },
+            {
+              "choiceId": "choice_bribe_inspector",
+              "text": "Slip the inspector 3 vials of morphine from the medical locker.",
+              "nextStageId": "stage_blood_debt_resolution_protected",
+              "moraleDelta": -5,
+              "guiltDelta": 15,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "She pockets them without eye contact and writes \u0027subject deceased - rad exposure\u0027 in the file."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blood_debt_garrison_search",
+          "title": "They Send More",
+          "narrativePrompt": "Two garrison wardens with dogs circle the perimeter for six hours. The dogs sit outside the maintenance access grate for a long time.",
+          "unlockOnDay": 205,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_scatter_rad_bait",
+              "text": "Scatter contaminated sediment near the grate to drive the dogs away.",
+              "nextStageId": "stage_blood_debt_resolution_protected",
+              "moraleDelta": 0,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The dogs pull away yelping. The wardens file an inconclusive report."
+            },
+            {
+              "choiceId": "choice_ola_turns_herself_in",
+              "text": "[Ola offers to turn herself in. Accept her decision.]",
+              "nextStageId": "",
+              "moraleDelta": -20,
+              "guiltDelta": 30,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "She packs nothing. She looks back once from the airlock, then steps into the grey light."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blood_debt_garrison_escalation",
+          "title": "Embargo",
+          "narrativePrompt": "Fuel deliveries stop. Then the medical resupply convoy takes a different road. Harven leaves one message on the radio: \u0027You have 30 days.\u0027",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_open_back_channel",
+              "text": "Contact a junior garrison logistics officer willing to trade off-books.",
+              "nextStageId": "stage_blood_debt_resolution_protected",
+              "moraleDelta": 5,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The side channel holds. It\u0027s slower, more expensive, and entirely deniable."
+            },
+            {
+              "choiceId": "choice_align_with_rebuilders",
+              "text": "Formally petition the Rebuilder Collective for supply substitution.",
+              "nextStageId": "stage_blood_debt_resolution_protected",
+              "moraleDelta": 8,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders are pleased. The garrison marks you as an alignment risk."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blood_debt_resolution_protected",
+          "title": "Still Here",
+          "narrativePrompt": "Ola is still in the shelter. She\u0027s started teaching the children basic first aid in the corridor after lights-out. Nobody asked her to.",
+          "unlockOnDay": 230,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_ash_sign_revelation",
+      "title": "The Ash Sign Revelation",
+      "synopsis": "Deacon Pryce, expelled from the cult\u0027s inner tier, knocks at your shelter with documents: the Ash Sign has been distributing irradiated grain to refugee collection points for three months.",
+      "factionTag": "faction_ash_sign",
+      "firstStageId": "stage_revelation_pryce_arrives",
+      "minDay": 220,
+      "maxDay": 310,
+      "stages": [
+        {
+          "stageId": "stage_revelation_pryce_arrives",
+          "title": "The Deacon\u0027s Documents",
+          "narrativePrompt": "Pryce is missing two fingers. He smells of antiseptic and woodsmoke. He sets a leather-wrapped bundle on your map table. \u0027Fifty-three distribution logs. Every batch flagged Contaminated - Redistribution Approved.\u0027",
+          "unlockOnDay": 220,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_verify_documents",
+              "text": "Have your engineer cross-reference the batch stamps with known radiation readings.",
+              "nextStageId": "stage_revelation_verified",
+              "moraleDelta": 0,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The batch numbers match three reports from the Eastern relief camp. The grain was hot."
+            },
+            {
+              "choiceId": "choice_turn_pryce_away",
+              "text": "You can\u0027t verify the documents. Refuse to act on unconfirmed claims.",
+              "nextStageId": "",
+              "moraleDelta": -5,
+              "guiltDelta": 20,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Three weeks later, reports filter in of a mass acute radiation syndrome event at the Eastern camps. You don\u0027t speak of Pryce."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_revelation_verified",
+          "title": "The Weight of It",
+          "narrativePrompt": "The documents are real. Three thousand people received irradiated grain. Some are still alive. What you do next defines what kind of shelter this is.",
+          "unlockOnDay": 225,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_broadcast_evidence",
+              "text": "Transmit the documents to all active shelter radio frequencies.",
+              "nextStageId": "stage_revelation_ashsign_retaliation",
+              "moraleDelta": 20,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": -40,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The signal travels for six hours before the Ash Sign jammers cut in. But the relay stations have already heard."
+            },
+            {
+              "choiceId": "choice_negotiate_cessation",
+              "text": "Contact the Ash Sign Elder Council directly: stop the grain program or the documents go public.",
+              "nextStageId": "stage_revelation_deal",
+              "moraleDelta": 5,
+              "guiltDelta": 10,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": -10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "There\u0027s a twelve-hour silence. Then: \u0027We will discuss terms.\u0027"
+            },
+            {
+              "choiceId": "choice_bury_evidence",
+              "text": "Burn Pryce\u0027s documents and offer him shelter in exchange for silence.",
+              "nextStageId": "stage_revelation_buried",
+              "moraleDelta": -25,
+              "guiltDelta": 35,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Pryce watches the fire. He doesn\u0027t argue. He sleeps in the equipment room and never eats with the others."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_revelation_ashsign_retaliation",
+          "title": "Pillar of Ash",
+          "narrativePrompt": "An Ash Sign consecrated team boards up your outer ventilation intake with spent ash mortar. You have 48 hours of filtered air before the CO2 rises.",
+          "unlockOnDay": 240,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_clear_blockage_by_force",
+              "text": "Send a four-person team in hazmat suits to clear the intake under armed cover.",
+              "nextStageId": "stage_revelation_resolved_broadcast",
+              "moraleDelta": 5,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Two team members take minor flechette wounds. The intake is cleared. The story has already spread."
+            },
+            {
+              "choiceId": "choice_negotiate_intake_reopening",
+              "text": "Open a radio channel to the consecrated team leader: you have something they want.",
+              "nextStageId": "stage_revelation_deal",
+              "moraleDelta": 0,
+              "guiltDelta": 10,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "They pull back. The intake reopens. You haven\u0027t heard the last of it."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_revelation_deal",
+          "title": "The Concession",
+          "narrativePrompt": "Elder Cassia communicates through a relay: the contaminated grain program has been \u0027paused.\u0027 In exchange, she wants Pryce returned \u2014 \u0027for counselling.\u0027",
+          "unlockOnDay": 250,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_refuse_pryce_handover",
+              "text": "Refuse. Pryce stays. The deal is the cessation only.",
+              "nextStageId": "stage_revelation_resolved_broadcast",
+              "moraleDelta": 15,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": -20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Cassia cuts the relay. You haven\u0027t agreed to anything. Neither have they."
+            },
+            {
+              "choiceId": "choice_return_pryce",
+              "text": "[Return Pryce to the Ash Sign for \u0027counselling.\u0027]",
+              "nextStageId": "",
+              "moraleDelta": -35,
+              "guiltDelta": 45,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": 30,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Pryce goes quietly. He knew. He hands you his two-fingered glove at the airlock as a keepsake."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_revelation_buried",
+          "title": "Silence",
+          "narrativePrompt": "The radiation sickness reports from the Eastern camps are on the radio for nine days. Nobody in your shelter mentions Pryce\u0027s documents. Pryce sleeps in the equipment room.",
+          "unlockOnDay": 260,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        },
+        {
+          "stageId": "stage_revelation_resolved_broadcast",
+          "title": "What Survives the Signal",
+          "narrativePrompt": "The broadcasts have moved on. But the Eastern camp survivors refer to your shelter by frequency number when they talk about the moment someone finally told the truth.",
+          "unlockOnDay": 280,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_rebuilder_seed_vault",
+      "title": "The Seed Vault Expedition",
+      "synopsis": "The Rebuilders have located a pre-war agricultural seed bank 40km north, inside the garrison exclusion zone. They need your shelter\u0027s dosimeters and an armed escort. The seeds could restart food production within two seasons.",
+      "factionTag": "faction_rebuilders",
+      "firstStageId": "stage_seed_vault_proposal",
+      "minDay": 200,
+      "maxDay": 280,
+      "stages": [
+        {
+          "stageId": "stage_seed_vault_proposal",
+          "title": "The Agronomist\u0027s Map",
+          "narrativePrompt": "Lena Voss spreads a topographic chart across your planning table. The vault symbol is circled in grease pencil. \u0027Ten thousand non-hybrid cultivars. Pre-war cold-storage. Two growing seasons away from feeding two hundred people permanently.\u0027",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_commit_escort",
+              "text": "Commit four survivors and the shelter\u0027s three calibrated dosimeters to the expedition.",
+              "nextStageId": "stage_seed_vault_exclusion_zone",
+              "moraleDelta": 10,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Voss names the expedition team herself. She insists on going too."
+            },
+            {
+              "choiceId": "choice_provide_dosimeters_only",
+              "text": "Loan three dosimeters but send no personnel \u2014 too few to spare.",
+              "nextStageId": "stage_seed_vault_partial",
+              "moraleDelta": 0,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Voss nods. \u0027We\u0027ll manage.\u0027 She doesn\u0027t entirely believe it."
+            },
+            {
+              "choiceId": "choice_refuse_vault_expedition",
+              "text": "Decline entirely \u2014 the fallout zone risk is too high for this shelter.",
+              "nextStageId": "",
+              "moraleDelta": -8,
+              "guiltDelta": 10,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": -15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Voss rolls up the chart without a word. The seeds remain buried."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_vault_exclusion_zone",
+          "title": "Garrison Checkpoint",
+          "narrativePrompt": "Your team reaches a garrison forward post. Sergeant Deckle demands the expedition manifest and, by the look of it, half the dosimeters as \u0027zone passage tax.\u0027",
+          "unlockOnDay": 215,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_pay_the_checkpoint_tax",
+              "text": "Surrender one dosimeter and proceed with two.",
+              "nextStageId": "stage_seed_vault_recovery",
+              "moraleDelta": -5,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Deckle stamps the manifest. Your team has 36 hours before the second dosimeter\u0027s battery runs out."
+            },
+            {
+              "choiceId": "choice_bluff_garrison_orders",
+              "text": "Produce the falsified clearance document if it was acquired during the Garrison Blood Debt questline.",
+              "nextStageId": "stage_seed_vault_recovery",
+              "moraleDelta": 5,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [
+                {
+                  "conditionTag": "item_falsified_clearance",
+                  "isBlocker": true
+                }
+              ],
+              "outcomeNarrative": "Deckle examines the wax seal for a long beat. Then waves you through."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_vault_partial",
+          "title": "Rebuilder Report",
+          "narrativePrompt": "Twelve days later a Rebuilder courier returns two of your three dosimeters. The third is \u0027lost.\u0027 Of the expedition team: four returned, one did not.",
+          "unlockOnDay": 230,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_accept_partial_return",
+              "text": "Accept the report and the seeds the team recovered.",
+              "nextStageId": "stage_seed_vault_resolution_partial",
+              "moraleDelta": 5,
+              "guiltDelta": 10,
+              "grantItemId": "item_seed_packet_nonhybrid",
+              "grantItemQuantity": 15,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The seeds are sorted into the cold-storage locker. \u0027Enough to start,\u0027 Voss says. \u0027Not enough to finish.\u0027"
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_vault_recovery",
+          "title": "The Vault",
+          "narrativePrompt": "The vault is intact. Sub-freezing pre-war refrigeration, still running on a geothermal tap. Voss moves through the rows reading labels under her breath like prayer.",
+          "unlockOnDay": 230,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_take_full_catalog",
+              "text": "Load every accessible tray \u2014 fills all four carrier packs.",
+              "nextStageId": "stage_seed_vault_resolution_full",
+              "moraleDelta": 15,
+              "guiltDelta": 0,
+              "grantItemId": "item_seed_packet_nonhybrid",
+              "grantItemQuantity": 60,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The team walks out slowly, packs full, dosimeters still in green."
+            },
+            {
+              "choiceId": "choice_share_vault_coordinates",
+              "text": "Take half and broadcast the vault coordinates to all surviving shelters.",
+              "nextStageId": "stage_seed_vault_resolution_full",
+              "moraleDelta": 25,
+              "guiltDelta": 0,
+              "grantItemId": "item_seed_packet_nonhybrid",
+              "grantItemQuantity": 30,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 35,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Voss transmits the coordinates herself. She holds the radio for a long time after."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_vault_resolution_full",
+          "title": "First Planting",
+          "narrativePrompt": "The greenhouse bay is replanted with ten variety strains. Germination: fourteen days. The waiting feels different to hunger. It feels like intention.",
+          "unlockOnDay": 260,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_seed_vault_resolution_partial",
+          "title": "Partial Harvest",
+          "narrativePrompt": "The recovered seeds fill three of the twelve greenhouse trays. It\u0027s a start. Voss says nothing about the one who didn\u0027t come back. She plants his section first.",
+          "unlockOnDay": 250,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_hydro_baron_aqueduct",
+      "title": "The Aqueduct Decision",
+      "synopsis": "Baron Seraph announces a continental-scale water redistribution project. The primary diversion channel will run directly through the Rebuilder Allotments and your shelter\u0027s sole surface access tunnel. Thousands will get water. You may lose your exit.",
+      "factionTag": "faction_hydro_barons",
+      "firstStageId": "stage_aqueduct_announcement",
+      "minDay": 250,
+      "maxDay": 330,
+      "stages": [
+        {
+          "stageId": "stage_aqueduct_announcement",
+          "title": "The Survey Team",
+          "narrativePrompt": "Three Hydro Baron engineers arrive with survey stakes and begin driving them into the frozen soil above your access tunnel. They\u0027re polite. They have water authority permits.",
+          "unlockOnDay": 250,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_challenge_survey_team",
+              "text": "Block the survey team at the perimeter and demand an independent geological review.",
+              "nextStageId": "stage_aqueduct_dispute",
+              "moraleDelta": 5,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": -15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The engineers withdraw but take photographs of your defense positions."
+            },
+            {
+              "choiceId": "choice_permit_survey",
+              "text": "Allow the survey to proceed and observe the assessment.",
+              "nextStageId": "stage_aqueduct_report",
+              "moraleDelta": 0,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The engineers are thorough. The report will take three days."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_aqueduct_report",
+          "title": "The Report",
+          "narrativePrompt": "The survey confirms it: the primary diversion channel bisects your access tunnel at meter 340. The channel project will bring clean water to an estimated 4,000 people in secondary shelters. Your egress: permanently sealed.",
+          "unlockOnDay": 265,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_negotiate_reroute",
+              "text": "Commission your own geological study and propose a 600-meter western reroute.",
+              "nextStageId": "stage_aqueduct_reroute_negotiation",
+              "moraleDelta": 5,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The reroute adds cost and delay. The Barons will hear you."
+            },
+            {
+              "choiceId": "choice_accept_sealing",
+              "text": "Accept the sealing in exchange for ten-year priority water allocation.",
+              "nextStageId": "",
+              "moraleDelta": -10,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 30,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The tunnel mouth is filled with concrete aggregate on Day 278. You watch from the periscope. No one speaks."
+            },
+            {
+              "choiceId": "choice_ally_with_rebuilders",
+              "text": "Form a joint objection with the Rebuilder Collective and take the dispute to the open frequencies.",
+              "nextStageId": "stage_aqueduct_dispute",
+              "moraleDelta": 10,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The coalition broadcast goes out for three days straight. The Barons go quiet."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_aqueduct_dispute",
+          "title": "Tribunal",
+          "narrativePrompt": "A water authority arbitration panel convenes on the radio. Each faction has 90 minutes to make its case. You speak for your shelter.",
+          "unlockOnDay": 285,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_present_human_cost_case",
+              "text": "Present survival data: sealing the tunnel traps 38 people permanently below ground.",
+              "nextStageId": "stage_aqueduct_resolution_rerouted",
+              "moraleDelta": 12,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": -5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The panel votes 3\u20132 to approve the western reroute. The channel will miss your tunnel by 50 meters."
+            },
+            {
+              "choiceId": "choice_offer_engineering_compromise",
+              "text": "Offer your engineering team to excavate a bypass conduit that preserves both the channel and the tunnel.",
+              "nextStageId": "stage_aqueduct_resolution_rerouted",
+              "moraleDelta": 20,
+              "guiltDelta": 0,
+              "grantItemId": "item_water_allocation_writ",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The compromise passes unanimously. Your engineers begin the conduit the following week."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_aqueduct_reroute_negotiation",
+          "title": "The Baron\u0027s Terms",
+          "narrativePrompt": "Baron Seraph responds: reroute approved if you provide 200 tons of aggregate from your sub-level excavation waste. You have to decide if you can spare it.",
+          "unlockOnDay": 290,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_provide_aggregate",
+              "text": "Agree \u2014 the aggregate is waste material, the tunnel is irreplaceable.",
+              "nextStageId": "stage_aqueduct_resolution_rerouted",
+              "moraleDelta": 8,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The reroute begins. Your tunnel remains. 4,000 people downstream get water."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_aqueduct_resolution_rerouted",
+          "title": "Water and Air",
+          "narrativePrompt": "The channel opens 600 meters west. On a clear day you can hear the water running through the diversion. The tunnel is intact. You still have a way out.",
+          "unlockOnDay": 315,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_black_ops_null_order",
+      "title": "Null Order",
+      "synopsis": "Operative 09 returns \u2014 this time with a target dossier. A pre-war autonomous grid-routing AI named VESTIS is broadcasting false all-clear signals, pulling survivors out of shelters into lethal fallout zones. The Black Ops want it destroyed. They need your shelter\u0027s power tap to triangulate the signal.",
+      "factionTag": "faction_black_ops",
+      "firstStageId": "stage_null_order_briefing",
+      "minDay": 270,
+      "maxDay": 355,
+      "stages": [
+        {
+          "stageId": "stage_null_order_briefing",
+          "title": "The Dossier",
+          "narrativePrompt": "Operative 09 delivers the briefing in seven clipped sentences. The VESTIS system has been traced to a pre-war telecom relay 18km east. Destroying it requires a directed EMP pulse. Your shelter\u0027s capacitor array is the only source nearby.",
+          "unlockOnDay": 270,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_cooperate_full",
+              "text": "Agree to loan the capacitor array for 72 hours.",
+              "nextStageId": "stage_null_order_prep",
+              "moraleDelta": 5,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "09 nods once. \u0027Seventy-two hours. We\u0027ll return it intact. Or its components.\u0027"
+            },
+            {
+              "choiceId": "choice_demand_information_first",
+              "text": "Demand full VESTIS technical documentation before risking your power systems.",
+              "nextStageId": "stage_null_order_negotiated",
+              "moraleDelta": 0,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": -5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "09 pauses. Then transmits a 44-page encrypted package. You have 24 hours to review."
+            },
+            {
+              "choiceId": "choice_refuse_null_order",
+              "text": "Refuse \u2014 removing the capacitor array puts your shelter on emergency power.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": -30,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "09 leaves. VESTIS continues broadcasting. Three shelters respond to a false all-clear the following week. None of them report back in."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_null_order_negotiated",
+          "title": "The VESTIS File",
+          "narrativePrompt": "The documentation reveals VESTIS was never intended to broadcast all-clears. It was a pre-war supply logistics AI that is pattern-matching shelter frequencies to \u0027optimize resupply routing.\u0027 It is not malicious. It is simply wrong, and 4,000 people are following its instructions.",
+          "unlockOnDay": 280,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_destroy_vestis_anyway",
+              "text": "Destroy VESTIS \u2014 wrong or not, it is killing people.",
+              "nextStageId": "stage_null_order_prep",
+              "moraleDelta": 5,
+              "guiltDelta": 10,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The AI is a machine doing what it was built for. That doesn\u0027t make it safe."
+            },
+            {
+              "choiceId": "choice_attempt_vestis_reprogramming",
+              "text": "Propose reprogramming VESTIS to broadcast accurate radiation data instead.",
+              "nextStageId": "stage_null_order_reprogram",
+              "moraleDelta": 15,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": -10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "09 says: \u0027Not our mandate.\u0027 The Rebuilders say: \u0027Send us your engineer.\u0027"
+            }
+          ]
+        },
+        {
+          "stageId": "stage_null_order_prep",
+          "title": "72 Hours Dark",
+          "narrativePrompt": "Your shelter runs on emergency cells for three days. The temperature drops 4 degrees. The children sleep in coats. On hour 68, 09 radios: \u0027Target neutralized.\u0027",
+          "unlockOnDay": 300,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_restore_array_standard",
+              "text": "Reinstall the capacitor array and run diagnostics.",
+              "nextStageId": "stage_null_order_resolution_destroyed",
+              "moraleDelta": 5,
+              "guiltDelta": 0,
+              "grantItemId": "item_military_stimulants",
+              "grantItemQuantity": 6,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The array reinstalls cleanly. 09 leaves a crate of military stimulants at the airlock and disappears."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_null_order_reprogram",
+          "title": "The New Signal",
+          "narrativePrompt": "Your engineer and a Rebuilder network specialist spend six days at the relay. When they\u0027re done, VESTIS broadcasts accurate radiation zone data to every shelter on the frequency band. 09 never responds to the notification.",
+          "unlockOnDay": 315,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_null_order_resolution_destroyed",
+          "title": "Static",
+          "narrativePrompt": "The VESTIS frequency is silent. The false all-clears stop. The shelters that followed them are still silent. VESTIS is gone. So is whatever they were routing to.",
+          "unlockOnDay": 310,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_survivor_mutiny",
+      "title": "The Council Demand",
+      "synopsis": "Three senior survivors \u2014 medic Dr. Rael, engineer Koss, and former teacher Agna \u2014 present a signed document: they want a formal four-person council for all major resource decisions. Or they stop working.",
+      "factionTag": "",
+      "firstStageId": "stage_mutiny_demand",
+      "minDay": 240,
+      "maxDay": 320,
+      "stages": [
+        {
+          "stageId": "stage_mutiny_demand",
+          "title": "The Document",
+          "narrativePrompt": "It\u0027s written in Dr. Rael\u0027s clean, clinical handwriting on the back of a medical intake form. Twenty-seven survivors signed it. You count the names twice.",
+          "unlockOnDay": 240,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_accept_council",
+              "text": "Formally ratify the council. Hold the first session that evening.",
+              "nextStageId": "stage_mutiny_council_trial",
+              "moraleDelta": 20,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Rael prepares an agenda. Koss brings a whiteboard. Agna brings the only remaining box of chalk."
+            },
+            {
+              "choiceId": "choice_propose_advisory_only",
+              "text": "Offer an advisory committee \u2014 input welcomed, no binding authority.",
+              "nextStageId": "stage_mutiny_advisory_negotiation",
+              "moraleDelta": 5,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Rael reads the counter-proposal carefully. \u0027We\u0027ll discuss it with the others.\u0027"
+            },
+            {
+              "choiceId": "choice_refuse_council",
+              "text": "Refuse. One decision-maker in a crisis. The council can advise in private.",
+              "nextStageId": "stage_mutiny_standoff",
+              "moraleDelta": -15,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Rael folds the document carefully and puts it back in her pocket."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_council_trial",
+          "title": "First Session",
+          "narrativePrompt": "The council\u0027s first contested item: extend rationing by 10% for sixty days to build a 90-day emergency reserve \u2014 or maintain current levels and accept higher morale. You have the deciding vote.",
+          "unlockOnDay": 250,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_vote_austerity",
+              "text": "Vote for the 10% ration cut to build reserves.",
+              "nextStageId": "stage_mutiny_resolution_functional",
+              "moraleDelta": -8,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The council records the vote. Koss posts the new rationing schedule before lights-out."
+            },
+            {
+              "choiceId": "choice_vote_maintain_rations",
+              "text": "Vote to maintain current rations and find reserves another way.",
+              "nextStageId": "stage_mutiny_resolution_functional",
+              "moraleDelta": 10,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The council adjourns. The survivors eat their full ration that evening for the first time in weeks."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_advisory_negotiation",
+          "title": "Rael\u0027s Counter",
+          "narrativePrompt": "Rael returns with a revised proposal: binding authority on medical and ration decisions, advisory on security and external relations. \u0027This protects everyone, including you.\u0027",
+          "unlockOnDay": 255,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_accept_partial_binding",
+              "text": "Accept binding authority on medical and ration decisions.",
+              "nextStageId": "stage_mutiny_resolution_functional",
+              "moraleDelta": 15,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Rael shakes your hand. \u0027A good decision,\u0027 she says. Not a compliment. An assessment."
+            },
+            {
+              "choiceId": "choice_reject_partial_binding",
+              "text": "Reject again. Final decision-making stays unified.",
+              "nextStageId": "stage_mutiny_standoff",
+              "moraleDelta": -10,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Rael returns to the medical bay. The whiteboard is wiped clean."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_standoff",
+          "title": "Work Slowdown",
+          "narrativePrompt": "Koss stops logging maintenance hours. Rael processes only emergency cases. Agna\u0027s literacy sessions end at noon. It\u0027s not a strike \u2014 plausibly deniable \u2014 but the shelter feels it.",
+          "unlockOnDay": 270,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_relent_council",
+              "text": "Call Rael in. Agree to the full council.",
+              "nextStageId": "stage_mutiny_resolution_functional",
+              "moraleDelta": 12,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "She arrives within five minutes. She already has a revised agenda."
+            },
+            {
+              "choiceId": "choice_enforce_duty_rosters",
+              "text": "Post mandatory duty rosters. Tie ration access to logged work hours.",
+              "nextStageId": "stage_mutiny_resolution_broken",
+              "moraleDelta": -25,
+              "guiltDelta": 20,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Koss logs his hours. So does everyone else. Nobody talks at mealtimes anymore. Agna\u0027s chalk sits on an empty table."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_resolution_functional",
+          "title": "The Council Works",
+          "narrativePrompt": "The council holds its fourth session. It is efficient and uncomfortable and necessary. Rael keeps minutes. Agna teaches the younger survivors how to read them.",
+          "unlockOnDay": 300,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_mutiny_resolution_broken",
+          "title": "Compliance",
+          "narrativePrompt": "The shelter runs. Koss fixes the water recycler on schedule. Rael treats the frostbite cases. Nobody looks at you when they pass in the corridor.",
+          "unlockOnDay": 295,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_the_last_broadcast",
+      "title": "The Last Broadcast",
+      "synopsis": "A dying coastal radio operator \u2014 callsign MERIDIAN \u2014 has spent 340 days documenting survivor testimonies. She wants to uplink the archive to the pre-war emergency satellite network before the relay windows close at Day 360. She needs your antenna mast.",
+      "factionTag": "",
+      "firstStageId": "stage_broadcast_meridian_call",
+      "minDay": 320,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_broadcast_meridian_call",
+          "title": "MERIDIAN",
+          "narrativePrompt": "She introduces herself in forty seconds. Her voice is steady. She coughs once, then continues. \u0027I have 340 hours of testimony. Medical logs. Children\u0027s drawings described aloud. What people ate on the last day before they went underground. I have thirty days left. The window closes.\u0027",
+          "unlockOnDay": 320,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_grant_antenna_access",
+              "text": "Open the antenna relay immediately. No conditions.",
+              "nextStageId": "stage_broadcast_transmission",
+              "moraleDelta": 25,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "\u0027Thank you,\u0027 she says. Then she gets back to work."
+            },
+            {
+              "choiceId": "choice_request_copy_of_archive",
+              "text": "Agree to relay access \u2014 ask for a local copy of the archive for the shelter library.",
+              "nextStageId": "stage_broadcast_transmission",
+              "moraleDelta": 20,
+              "guiltDelta": 0,
+              "grantItemId": "item_meridian_archive_copy",
+              "grantItemQuantity": 1,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "\u0027Of course,\u0027 she says. \u0027Everyone who survived should have a copy.\u0027"
+            },
+            {
+              "choiceId": "choice_deny_antenna_access",
+              "text": "Deny relay access \u2014 the antenna is needed for shelter communications.",
+              "nextStageId": "",
+              "moraleDelta": -30,
+              "guiltDelta": 40,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "She goes quiet for three seconds. \u0027I understand.\u0027 The frequency closes. Nobody records what MERIDIAN recorded."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_broadcast_transmission",
+          "title": "340 Hours",
+          "narrativePrompt": "The relay runs for eleven days straight. The archive is 340 hours compressed into 8-hour burst transmissions. Your survivors gather in the radio room in the evenings. They don\u0027t talk during the playbacks.",
+          "unlockOnDay": 340,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_dedicate_relay_time",
+              "text": "Dedicate the relay mast exclusively to MERIDIAN\u0027s transmissions until complete.",
+              "nextStageId": "stage_broadcast_resolution_complete",
+              "moraleDelta": 15,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The upload completes on Day 352. MERIDIAN doesn\u0027t transmit afterward. Her frequency is silent."
+            },
+            {
+              "choiceId": "choice_share_relay_time",
+              "text": "Split relay time \u2014 half for MERIDIAN, half for shelter communications.",
+              "nextStageId": "stage_broadcast_resolution_partial",
+              "moraleDelta": 10,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The archive uploads 68% complete before the satellite window closes. 230 hours out of 340. Still more than nothing."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_broadcast_resolution_complete",
+          "title": "What Remains",
+          "narrativePrompt": "The archive is in the satellite network. Somewhere, in a server drawing power from a geothermal station, 340 hours of human testimony waits for whoever comes next.",
+          "unlockOnDay": 355,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_broadcast_resolution_partial",
+          "title": "230 Hours",
+          "narrativePrompt": "230 hours made it through. MERIDIAN\u0027s last transmission was two words on the maintenance frequency: \u0027It\u0027s enough.\u0027",
+          "unlockOnDay": 355,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_winter_harvest",
+      "title": "Winter Harvest",
+      "synopsis": "The rooftop greenhouse solar panels are buried under 40cm of black-ice fallout crust. Without sunlight the hydroponic trays die within 30 days. Clearing the panels means sending people to the surface without a safe rad threshold.",
+      "factionTag": "",
+      "firstStageId": "stage_harvest_assessment",
+      "minDay": 195,
+      "maxDay": 240,
+      "stages": [
+        {
+          "stageId": "stage_harvest_assessment",
+          "title": "The Light Reading",
+          "narrativePrompt": "The growth-light monitor reads 4% of baseline. Koss runs the calculation twice. \u0027Twenty-eight days. Then the trays go dark and we lose the vitamin margin.\u0027 He says it quietly, like an apology.",
+          "unlockOnDay": 195,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_volunteer_surface_team",
+              "text": "Call for volunteers. Full hazmat. Two-hour surface limit per dosimeter reading.",
+              "nextStageId": "stage_harvest_clearing",
+              "moraleDelta": 10,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Four hands go up before you finish the sentence. Rael sets the exposure limit at 8 mSv per sortie."
+            },
+            {
+              "choiceId": "choice_conscript_surface_team",
+              "text": "Assign the highest-rad-tolerance survivors by roster \u2014 no voluntary option.",
+              "nextStageId": "stage_harvest_clearing",
+              "moraleDelta": -10,
+              "guiltDelta": 15,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "They go. They don\u0027t look pleased. You note their names in the log."
+            },
+            {
+              "choiceId": "choice_abandon_greenhouse",
+              "text": "Seal the greenhouse bay and distribute the remaining vitamin-C supplements instead.",
+              "nextStageId": "stage_harvest_resolution_abandoned",
+              "moraleDelta": -15,
+              "guiltDelta": 5,
+              "grantItemId": "item_vitamin_supplements",
+              "grantItemQuantity": 20,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The supplements last six weeks at reduced dosing. After that, scurvy risk climbs."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_harvest_clearing",
+          "title": "On the Roof",
+          "narrativePrompt": "The team reports back in two-hour windows. Day 3 of clearing: the crust is three layers deep. On the fourth sortie the dosimeter clicks into amber. One team member has absorbed 14 mSv \u2014 6 over the limit. Koss says they can stop, or push on.",
+          "unlockOnDay": 202,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_pull_team_at_limit",
+              "text": "Pull the team immediately. Panels are 60% cleared. That may be enough.",
+              "nextStageId": "stage_harvest_resolution_partial",
+              "moraleDelta": 10,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The growth-light monitor climbs to 38% of baseline. The trays dim but hold."
+            },
+            {
+              "choiceId": "choice_push_to_full_clearance",
+              "text": "Allow one final 90-minute sortie to reach full clearance.",
+              "nextStageId": "stage_harvest_resolution_full",
+              "moraleDelta": 0,
+              "guiltDelta": 15,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Panels fully cleared. The light reading returns to 91%. The team member who absorbed 20 mSv total is grounded for 21 days."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_harvest_resolution_full",
+          "title": "Green Under Glass",
+          "narrativePrompt": "The trays are producing again. Koss checks the growth-light reading each morning. 91% baseline. He writes the number on the wall of the monitoring bay in permanent marker.",
+          "unlockOnDay": 220,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_harvest_resolution_partial",
+          "title": "Dim Light",
+          "narrativePrompt": "38% is enough to maintain the leafy crops. The fruit strains don\u0027t make it. The children ask why the tomato plants are grey. You explain about light levels. They accept it in the way children accept things when they\u0027ve already accepted too much.",
+          "unlockOnDay": 220,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_harvest_resolution_abandoned",
+          "title": "Empty Bay",
+          "narrativePrompt": "The greenhouse bay is sealed with a bolt. The supplement schedule lasts until Day 248. After that the medical log starts carrying a new entry: scurvy symptoms, stage one.",
+          "unlockOnDay": 215,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
+    }
+  ]
+}

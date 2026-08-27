@@ -15,7 +15,7 @@ namespace AtomicWar.GodotApp.UI
     /// High-density terminal UI corresponding to Stitch screen d2da12a6fdaa41d1a7451f1241cba24b.
     /// Manages ward beds, patient admission/discharge, surgical procedures, and trauma triage.
     /// </summary>
-    public partial class MedicalWardPanel : Control
+    public partial class MedicalWardPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -44,6 +44,17 @@ namespace AtomicWar.GodotApp.UI
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -315,10 +326,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

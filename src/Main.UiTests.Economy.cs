@@ -210,7 +210,7 @@ namespace AtomicWar.GodotApp
                      $"radioHudPass={radioHudPass} (frame={radioHasFrame} tuner={radioHasTuner} smeter={radioHasSmeter} " +
                      $"crt={radioHasCrt} live={radioHasLive} mil={radioHitMilitary} cult={radioHitCult} " +
                      $"silence={radioHitSilence} radioRes={radioResPass} logCount={radioPanel.LogCount})");
-            GD.Print(pass ? "ECONOMY_UITEST PASS" : "ECONOMY_UITEST FAIL");
+            HostCli.EmitSummary("economy_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

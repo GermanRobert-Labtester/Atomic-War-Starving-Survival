@@ -66,7 +66,7 @@ namespace Ashfall.Core.Maritime
             }
             catch (Exception ex_CATDIAG)
             {
-                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                CatalogDiagnostics.Warn(path, "DiveSiteContainer", ex_CATDIAG);
                 // Missing or malformed catalog degrades to an empty container;
                 // the host selftest surfaces it as a data-integrity failure.
             }

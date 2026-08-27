@@ -1,9 +1,13 @@
+// ============================================================================
+// Save Store : MusterSaveStore
+// Core State : Ashfall.Core.Muster.MusterHostSave
+// Host Caller: Main.Muster / MusterHostSession
+// Purpose    : The Muster expansion coalition standings, faction votes, and military escalations
+// ============================================================================
 using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Muster;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
@@ -23,117 +27,66 @@ namespace AtomicWar.GodotApp
     }
 
     /// <summary>
-    /// Muster (Expansion 06) save persistence — thin pattern sibling of
-    /// PhantomMemorySaveStore: user:// path, try/catch, codec serialization.
+    /// Muster (Expansion 06) save persistence — façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). The
+    /// multi-field Muster envelope is self-checksummed; encode/decode stamp
+    /// and verify it directly while path resolution, atomic write, and error
+    /// handling live in the service.
     /// </summary>
     public static class MusterSaveStore
     {
         public const string FileName = "muster_save.json";
         public const string SectionName = "muster";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(MusterHostSave save)
-    {
-        return TryCapture(save);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static MusterHostSave? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<MusterHostSave> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(MusterSaveStore),
+            EncodeSave,
+            DecodeSave);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(MusterHostSave save)
-    {
-        try
+        public static string SavePath => s_store.SavePath;
+
+        public static bool Exists => s_store.Exists();
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(MusterHostSave save) => s_store.CaptureBare(save);
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static MusterHostSave? TryRestoreDirect(string json) => s_store.RestoreBare(json);
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(MusterHostSave save) => s_store.CaptureBare(save);
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static MusterHostSave? TryRestore(string json) => s_store.RestoreBare(json);
+
+        public static bool TrySave(MusterHostSave save) => s_store.TrySave(save);
+
+        public static MusterHostSave? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(MusterHostSave save) => s_store.CapturePersisted(save);
+
+        private static string EncodeSave(MusterHostSave save, IJsonSerializer json)
         {
-            if (save == null) return string.Empty;
-            return s_json.Serialize(save);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[MusterSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
-
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static MusterHostSave? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<MusterHostSave>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[MusterSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
-
-
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
-
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
-
-        public static bool Exists => s_files.FileExists(SavePath);
-
-        public static bool TrySave(MusterHostSave save)
-        {
-            try
-            {
-                if (save == null) return false;
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                // Recompute so a mutated envelope cannot persist a stale hash.
-                save.Checksum = SaveChecksum.Compute(save);
-                System.IO.File.WriteAllText(path, s_json.Serialize(save));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Muster] save failed: " + e.Message);
-                return false;
-            }
+            // Recompute so a mutated envelope cannot persist a stale hash.
+            save.Checksum = SaveChecksum.Compute(save);
+            return json.Serialize(save);
         }
 
-        public static MusterHostSave? TryLoad()
+        private static MusterHostSave? DecodeSave(string raw, IJsonSerializer json)
         {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                var save = s_json.Deserialize<MusterHostSave>(raw);
-                if (save == null) return null;
-                // The checksummed envelope is the current Muster format; an empty
-                // checksum means a malformed new-format save, not "legacy". A
-                // pre-envelope bare-state file yields a null-shaped envelope and
-                // falls through to a fresh state (no partial restore).
-                if (string.IsNullOrEmpty(save.Checksum))
-                {
-                    GD.PrintErr("[Muster] load failed: checksum field missing (corrupt save).");
-                    return null;
-                }
-                string actual = SaveChecksum.Compute(save);
-                if (!string.Equals(save.Checksum, actual, StringComparison.Ordinal))
-                {
-                    GD.PrintErr("[Muster] load failed: checksum mismatch (corrupt or foreign save).");
-                    return null;
-                }
-                return save;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Muster] load failed: " + e.Message);
-                return null;
-            }
+            var save = json.Deserialize<MusterHostSave>(raw);
+            if (save == null) return null;
+            // The checksummed envelope is the current Muster format; an empty
+            // checksum means a malformed new-format save, not "legacy". A
+            // pre-envelope bare-state file yields a null-shaped envelope and
+            // falls through to a fresh state (no partial restore).
+            if (string.IsNullOrEmpty(save.Checksum))
+                throw new InvalidOperationException("checksum field missing (corrupt save).");
+            if (!string.Equals(save.Checksum, SaveChecksum.Compute(save), StringComparison.Ordinal))
+                throw new InvalidOperationException("checksum mismatch (corrupt or foreign save).");
+            return save;
         }
     }
 }

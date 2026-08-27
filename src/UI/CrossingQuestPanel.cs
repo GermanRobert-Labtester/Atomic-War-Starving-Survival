@@ -14,7 +14,7 @@ namespace AtomicWar.GodotApp.UI
     /// available interaction choices, and gate/lock reasons. All state mutations go
     /// through ExpansionHostSession; this panel is purely presentational.
     /// </summary>
-    public partial class CrossingQuestPanel : Control
+    public partial class CrossingQuestPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -470,9 +470,10 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(container);
         }
 
-        public override void _ExitTree()
-        {
-            if (_expansions?.CrossingQuests != null)
+
+    public void Unbind()
+    {
+        if (_expansions?.CrossingQuests != null)
             {
                 _expansions.CrossingQuests.OnStateChanged -= OnStateChangedHandler;
             }
@@ -480,6 +481,11 @@ namespace AtomicWar.GodotApp.UI
             {
                 _vouch.OnStateChanged -= OnVouchChangedHandler;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

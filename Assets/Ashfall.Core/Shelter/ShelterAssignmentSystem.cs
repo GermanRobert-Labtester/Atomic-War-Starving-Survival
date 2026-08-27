@@ -69,6 +69,24 @@ namespace Ashfall.Core.Shelter
             return n;
         }
 
+        /// <summary>
+        /// Null-safe ordinal check: returns true if two distinct survivors are actively assigned to the same shelter room.
+        /// </summary>
+        public bool AreInSameRoom(string? survivorA, string? survivorB)
+        {
+            if (string.IsNullOrEmpty(survivorA) || string.IsNullOrEmpty(survivorB)) return false;
+            if (string.Equals(survivorA, survivorB, StringComparison.Ordinal)) return false;
+
+            var assignA = GetAssignmentForSurvivor(survivorA);
+            var assignB = GetAssignmentForSurvivor(survivorB);
+
+            if (assignA == null || assignB == null) return false;
+            if (assignA.Status != ShelterAssignmentStatus.Active || assignB.Status != ShelterAssignmentStatus.Active) return false;
+            if (string.IsNullOrEmpty(assignA.RoomId) || string.IsNullOrEmpty(assignB.RoomId)) return false;
+
+            return string.Equals(assignA.RoomId, assignB.RoomId, StringComparison.Ordinal);
+        }
+
         public int GetRoomCapacity(string roomId)
         {
             for (int i = 0; i < _rooms.Count; i++)

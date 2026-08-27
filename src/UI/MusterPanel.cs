@@ -15,7 +15,7 @@ namespace AtomicWar.GodotApp.UI
     /// Order witness dossiers, and sector faction outposts.
     /// Thin presentation only: delegates all mutations to MusterHostSession.
     /// </summary>
-    public partial class MusterPanel : Control
+    public partial class MusterPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action<string, IReadOnlyList<ApproachOption>>? OnApproachModalRequested;
@@ -369,12 +369,18 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(container);
         }
 
-        public override void _ExitTree()
-        {
-            if (_muster != null)
+
+    public void Unbind()
+    {
+        if (_muster != null)
             {
                 _muster.StateChanged -= OnStateChangedHandler;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

@@ -110,18 +110,20 @@ namespace Ashfall.Core.Combat
             Check(burstTriggered, "pipe rifle with military ammo can burst (observed across seeds)");
 
             // ── 4. Full encounter: victory path ──
-            var ports = new CombatHostPorts();
             int moraleClicked = 0;
             int lootGranted = 0;
             int survivorDamaged = 0;
             int traumaRaised = 0;
             int ammoConsumed = 0;
-            ports.ApplyMoraleDelta = (id, d) => moraleClicked++;
-            ports.GrantLoot = l => lootGranted++;
-            ports.DamageSurvivor = (id, d) => { survivorDamaged++; return Math.Max(0f, 100f - d); };
-            ports.RaiseTrauma = (id, k, s) => traumaRaised++;
-            ports.ConsumeAmmo = (ammoId, n) => { ammoConsumed += n; return 100 - ammoConsumed; };
-            ports.ConsumeItem = (id, n) => id == "scrap_metal";
+            var ports = new CombatHostPorts(
+                damageSurvivor: (id, d) => { survivorDamaged++; return Math.Max(0f, 100f - d); },
+                healSurvivor: null,
+                applyMoraleDelta: (id, d) => moraleClicked++,
+                consumeAmmo: (ammoId, n) => { ammoConsumed += n; return 100 - ammoConsumed; },
+                consumeItem: (id, n) => id == "scrap_metal",
+                raiseTrauma: (id, k, s) => traumaRaised++,
+                grantLoot: l => lootGranted++,
+                markCombatSurvived: null);
 
             var sys = new TacticalCombatSystem(null!, ports);
             var players = new List<CombatantState>
@@ -164,12 +166,12 @@ namespace Ashfall.Core.Combat
 
             // ── 6. Deterministic replay from same seed + state ──
             var sysA = MakeEngine();
-            var portsA = new CombatHostPorts();
+            var portsA = CombatHostPorts.NoOp();
             sysA.Ports = portsA;
             var seqA = RunScenario(sysA);
 
             var sysB = MakeEngine();
-            var portsB = new CombatHostPorts();
+            var portsB = CombatHostPorts.NoOp();
             sysB.Ports = portsB;
             var seqB = RunScenario(sysB);
 
@@ -198,7 +200,7 @@ namespace Ashfall.Core.Combat
 
             // ── 8. Expedition → combat handoff (raiding / ambush seam) ──
             var expSys = new Ashfall.Core.Expeditions.ExpeditionSystem();
-            var handoff = new TacticalCombatSystem(null!, new CombatHostPorts());
+            var handoff = new TacticalCombatSystem(null!, CombatHostPorts.NoOp());
             int triggered = 0;
             expSys.OnEncounterTriggered += st =>
             {

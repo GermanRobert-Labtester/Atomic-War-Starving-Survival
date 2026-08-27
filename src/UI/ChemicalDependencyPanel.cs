@@ -16,7 +16,7 @@ namespace AtomicWar.GodotApp.UI
     /// Manages addiction profiles, substance blood saturation, withdrawal symptoms,
     /// managed detox vs cold turkey protocols, and medical lockbox inventories.
     /// </summary>
-    public partial class ChemicalDependencyPanel : Control
+    public partial class ChemicalDependencyPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -46,6 +46,17 @@ namespace AtomicWar.GodotApp.UI
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -155,11 +166,19 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_patientList == null || _dossierContainer == null || _protocolContainer == null) return;
 
             AshfallUiHelpers.EmptyChildren(_patientList);
             AshfallUiHelpers.EmptyChildren(_dossierContainer);
             AshfallUiHelpers.EmptyChildren(_protocolContainer);
+
+            if (_host == null || _statusRail == null)
+            {
+                _patientList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No chemical dependency session bound", "offline"));
+                _dossierContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Patient dossier offline", "offline"));
+                _protocolContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Treatment protocols unavailable", "offline"));
+                return;
+            }
 
             var ledger = _host.System.Ledger;
             int totalDeps = 0;
@@ -354,10 +373,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

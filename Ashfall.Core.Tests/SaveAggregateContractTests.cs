@@ -192,7 +192,7 @@ public class SaveAggregateContractTests
             {
                 new SaveSectionEnvelope
                 {
-                    sectionName = "game",
+                    sectionName = "journal",
                     schemaVersion = 1,
                     payloadJson = "{\"health\":100}"
                 }
@@ -206,7 +206,7 @@ public class SaveAggregateContractTests
         Assert.Equal("RoundTrip", loaded!.manifest.campaignName);
         Assert.Equal(42, loaded.manifest.currentDay);
         Assert.Single(loaded.sections);
-        Assert.Equal("game", loaded.sections[0].sectionName);
+        Assert.Equal("journal", loaded.sections[0].sectionName);
     }
 
     [Fact]

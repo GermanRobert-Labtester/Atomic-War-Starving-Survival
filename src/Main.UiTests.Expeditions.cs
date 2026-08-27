@@ -66,7 +66,7 @@ namespace AtomicWar.GodotApp
                 phase = (int)ExpeditionPhase.Outbound,
                 encounterCount = 1
             };
-            _expeditions.Bridge.Surface(state);
+            _expeditions!.Bridge.Surface(state);
             Check(_expeditionPanel.TotalEncounterNotices == 1, "one notice delivered on first surface");
 
             // Close, reopen, surface again — count must advance by exactly one
@@ -84,7 +84,7 @@ namespace AtomicWar.GodotApp
                 : string.Empty);
             Check(def != null || _expeditions.Pending.Count == 0, "pending queue consistent with surfaced encounters");
 
-            GD.Print(pass ? "EXPEDITION_PANEL_UITEST PASS" : "EXPEDITION_PANEL_UITEST FAIL");
+            HostCli.EmitSummary("expedition_panel_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

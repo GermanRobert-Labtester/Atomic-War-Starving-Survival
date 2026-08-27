@@ -138,10 +138,10 @@ IJsonSerializer? serializer = null)
                 return serializer.Deserialize<FoundryTreatyConsequenceFile>(text) ?? new FoundryTreatyConsequenceFile();
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return new FoundryTreatyConsequenceFile();
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "FoundryTreatyConsequenceFile", ex_CATDIAG);
+                return new FoundryTreatyConsequenceFile();
+            }
         }
     }
 

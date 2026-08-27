@@ -349,10 +349,10 @@ Search the target using:
 
 For each candidate future idea classify:
 
-A. already exists  
-B. renamed duplicate  
-C. partial equivalent  
-D. safe extension seam  
+A. already exists
+B. renamed duplicate
+C. partial equivalent
+D. safe extension seam
 E. genuinely new
 
 ---

@@ -359,7 +359,7 @@ namespace Ashfall.Core
                 }
                 catch (Exception ex_CATDIAG)
                 {
-                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                    CatalogDiagnostics.Warn(path, "item catalog probe", ex_CATDIAG);
                     // Not every catalog uses the item shape; skip it.
                 }
             }

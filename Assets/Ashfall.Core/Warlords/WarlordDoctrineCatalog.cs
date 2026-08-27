@@ -362,7 +362,7 @@ namespace Ashfall.Core.Warlords
                 }
                 catch (Exception ex_CATDIAG)
                 {
-                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                    CatalogDiagnostics.Warn(path, "WarlordCatalogWrapperProbe", ex_CATDIAG);
                 }
             }
             return ids;
@@ -382,9 +382,9 @@ namespace Ashfall.Core.Warlords
                         ids.Add(list[i].faction_id);
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "WarlordFactionProbe list", ex_CATDIAG);
+            }
             return ids;
         }
     }

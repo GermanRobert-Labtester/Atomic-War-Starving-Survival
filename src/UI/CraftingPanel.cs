@@ -13,10 +13,12 @@ namespace AtomicWar.GodotApp.UI
     /// lets the player start crafts and track the active queue.
     /// Thin presentation layer — all craft logic lives in CraftingSystem.
     /// </summary>
-    public partial class CraftingPanel : Control
+    public partial class CraftingPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action? OnCraftStarted;
+        public event Action? OnOpenWorkshopRequested;
+        public event Action? OnOpenPharmaLabRequested;
 
         public bool IsBound => _craftingHost != null;
 
@@ -290,6 +292,25 @@ namespace AtomicWar.GodotApp.UI
                 btn.CustomMinimumSize = new Vector2(120, 28);
                 filterRow.AddChild(btn);
             }
+
+            filterRow.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+
+            var btnWorkshop = AshfallUiHelpers.MakeButton("RELIC WORKSHOP >", () =>
+            {
+                Visible = false;
+                OnOpenWorkshopRequested?.Invoke();
+            });
+            btnWorkshop.CustomMinimumSize = new Vector2(140, 28);
+            filterRow.AddChild(btnWorkshop);
+
+            var btnPharma = AshfallUiHelpers.MakeButton("PHARMA LAB >", () =>
+            {
+                Visible = false;
+                OnOpenPharmaLabRequested?.Invoke();
+            });
+            btnPharma.CustomMinimumSize = new Vector2(120, 28);
+            filterRow.AddChild(btnPharma);
+
             vbox.AddChild(filterRow);
 
             // ── Scrollable recipe list ─────────────────────────────────
@@ -336,13 +357,19 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_craftingHost != null)
+
+    public void Unbind()
+    {
+        if (_craftingHost != null)
             {
                 _craftingHost.Engine.OnCraftStarted -= OnEngineCraftStarted;
                 _craftingHost.Engine.OnCraftCompleted -= OnEngineCraftCompleted;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

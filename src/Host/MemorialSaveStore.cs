@@ -1,99 +1,70 @@
+// ============================================================================
+// Save Store : MemorialSaveStore
+// Core State : Ashfall.Core.Memorial.MemorialSave
+// Host Caller: Main.Campaign / MemorialHostSession
+// Purpose    : Fallen survivor memorial wall, cause of death records, and shelter grief tallies
+// ============================================================================
 using System;
-using System.IO;
-using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Memorial;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
-    /// <summary>Persists MemorialState under user://memorial_save.json.</summary>
+    /// <summary>
+    /// Persists MemorialState under user://memorial_save.json — façade over
+    /// the Core SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor).
+    /// MemorialSave is a self-checksummed type (the checksum is a field of the
+    /// state itself), so encode/decode stamp and verify it directly; path
+    /// resolution, atomic write, and error handling live in the service.
+    /// </summary>
     public static class MemorialSaveStore
     {
         public const string FileName = "memorial_save.json";
         public const string SectionName = "memorial";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(MemorialSave state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static MemorialSave? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<MemorialSave> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(MemorialSaveStore),
+            EncodeSave,
+            DecodeSave);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(MemorialSave state)
-    {
-        try
+        public static string SavePath => s_store.SavePath;
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(MemorialSave state) => s_store.CaptureBare(state);
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static MemorialSave? TryRestoreDirect(string json) => s_store.RestoreBare(json);
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(MemorialSave state) => s_store.CaptureBare(state);
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static MemorialSave? TryRestore(string json) => s_store.RestoreBare(json);
+
+        public static bool TrySave(MemorialSave save) => s_store.TrySave(save);
+
+        public static MemorialSave? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(MemorialSave save) => s_store.CapturePersisted(save);
+
+        private static string EncodeSave(MemorialSave save, IJsonSerializer json)
         {
-            if (state == null) return string.Empty;
-            return new SystemTextJsonSerializer().Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[MemorialSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
-
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static MemorialSave? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return new SystemTextJsonSerializer().Deserialize<MemorialSave>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[MemorialSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
-
-        private static readonly IFileIO s_files = new FileSystemIO();
-        private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
-        private static readonly ILog s_log = new GodotLog();
-
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
-
-        public static bool TrySave(MemorialSave save)
-        {
-            if (save == null) return false;
-            try
-            {
-                save.Checksum = SaveChecksum.Compute(save);
-                s_files.WriteAllText(SavePath, s_json.Serialize(save));
-                return true;
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[MemorialSaveStore] save failed: " + e.Message);
-                return false;
-            }
+            save.Checksum = SaveChecksum.Compute(save);
+            return json.Serialize(save);
         }
 
-        public static MemorialSave? TryLoad()
+        private static MemorialSave? DecodeSave(string raw, IJsonSerializer json)
         {
-            try
-            {
-                if (!s_files.FileExists(SavePath)) return null;
-                var save = s_json.Deserialize<MemorialSave>(s_files.ReadAllText(SavePath));
-                if (save == null) return null;
-                if (string.IsNullOrEmpty(save.Checksum))
-                    throw new InvalidOperationException("MemorialSave: empty checksum");
-                if (!string.Equals(save.Checksum, SaveChecksum.Compute(save), StringComparison.Ordinal))
-                    throw new InvalidOperationException("MemorialSave: checksum mismatch");
-                return save;
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[MemorialSaveStore] load failed: " + e.Message);
-                return null;
-            }
+            var save = json.Deserialize<MemorialSave>(raw);
+            if (save == null) return null;
+            if (string.IsNullOrEmpty(save.Checksum))
+                throw new InvalidOperationException("MemorialSave: empty checksum");
+            if (!string.Equals(save.Checksum, SaveChecksum.Compute(save), StringComparison.Ordinal))
+                throw new InvalidOperationException("MemorialSave: checksum mismatch");
+            return save;
         }
     }
 }

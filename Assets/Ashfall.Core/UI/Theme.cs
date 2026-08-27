@@ -56,6 +56,36 @@ namespace Ashfall.Core.UI
         public const string CriticalHex = "#E63333";
         public static readonly (float r, float g, float b, float a) Critical = (0.902f, 0.200f, 0.200f, 1f);
 
+        // ── Semantic Design Tokens ───────────────────────────────────────
+        public const string SurfaceHex = "#0E1114";
+        public static readonly (float r, float g, float b, float a) Surface = (0.055f, 0.067f, 0.078f, 1f);
+
+        public const string SurfaceCardHex = "#14191E";
+        public static readonly (float r, float g, float b, float a) SurfaceCard = (0.078f, 0.098f, 0.118f, 1f);
+
+        public static readonly (float r, float g, float b, float a) BackdropOverlay = (0.031f, 0.039f, 0.047f, 0.94f);
+
+        public const string SelectedBgHex = "#282319";
+        public static readonly (float r, float g, float b, float a) SelectedBg = (0.157f, 0.137f, 0.098f, 1f);
+
+        public const string HoverBgHex = "#1D2228";
+        public static readonly (float r, float g, float b, float a) HoverBg = (0.114f, 0.133f, 0.157f, 1f);
+
+        public const string SuccessHex = "#5CD670";
+        public static readonly (float r, float g, float b, float a) Success = (0.361f, 0.839f, 0.439f, 1f);
+
+        public const string WarningHex = "#C97B3A";
+        public static readonly (float r, float g, float b, float a) Warning = (0.788f, 0.482f, 0.227f, 1f);
+
+        public const string RadiationHex = "#D9A026";
+        public static readonly (float r, float g, float b, float a) Radiation = (0.851f, 0.627f, 0.149f, 1f);
+
+        public const string RadiationAcuteHex = "#E65C2B";
+        public static readonly (float r, float g, float b, float a) RadiationAcute = (0.902f, 0.361f, 0.169f, 1f);
+
+        public const string InfoHex = "#6EA3A8";
+        public static readonly (float r, float g, float b, float a) Info = (0.431f, 0.639f, 0.659f, 1f);
+
         // ── Expansion IV tokens ─────────────────────────────────────────
 
         /// <summary>Structural entropy — corroded amber. #c97b3a.</summary>

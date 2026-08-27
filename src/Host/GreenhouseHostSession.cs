@@ -5,6 +5,7 @@ using System.Text.Json;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Greenhouse;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
@@ -267,50 +268,79 @@ namespace AtomicWar.GodotApp
 
     /// <summary>
     /// Persistent on-disk JSON store for GreenhouseState at user://greenhouse_save.json.
+    /// Thin façade over the Core SaveStore&lt;T&gt; service (via SaveStoreHub,
+    /// codec flavor): this section's on-disk shape (indented System.Text.Json,
+    /// property envelope <c>{ State, Checksum }</c>) is preserved verbatim by
+    /// local encode/decode delegates; path resolution, atomic write, and
+    /// error handling live in the service.
     /// </summary>
     public static class GreenhouseSaveStore
     {
+        public const string FileName = "greenhouse_save.json";
+        public const string SectionName = "greenhouse";
+
         private static readonly JsonSerializerOptions JsonOpts = new JsonSerializerOptions
         {
             WriteIndented = true,
             IncludeFields = true
         };
 
-        public static string SavePath => SaveSlotRoot.Resolve("greenhouse_save.json");
+        private static readonly SaveStore<GreenhouseState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(GreenhouseSaveStore),
+            EncodeSave,
+            DecodeSave);
 
-        public static bool Exists => File.Exists(SavePath);
+        public static string SavePath => s_store.SavePath;
 
-        public static bool TrySave(GreenhouseState state)
+        public static bool Exists => s_store.Exists();
+
+        public static bool TrySave(GreenhouseState state) => s_store.TrySave(state);
+
+        public static GreenhouseState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(GreenhouseState state) => s_store.CapturePersisted(state);
+
+        private static string EncodeSave(GreenhouseState state, IJsonSerializer json)
         {
-            if (state == null) return false;
-            try
-            {
-                string dir = Path.GetDirectoryName(SavePath)!;
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                string json = JsonSerializer.Serialize(state, JsonOpts);
-                File.WriteAllText(SavePath, json);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                GD.PushError($"[GreenhouseSaveStore] Save failed: {ex.Message}");
-                return false;
-            }
+            var envelope = new GreenhouseSaveEnvelope { State = state };
+            envelope.Checksum = SaveChecksum.Compute(envelope);
+            return JsonSerializer.Serialize(envelope, JsonOpts);
         }
 
-        public static GreenhouseState? TryLoad()
+        private static GreenhouseState? DecodeSave(string raw, IJsonSerializer json)
         {
-            if (!Exists) return null;
+            // Attempt envelope decode first
             try
             {
-                string json = File.ReadAllText(SavePath);
-                return JsonSerializer.Deserialize<GreenhouseState>(json, JsonOpts);
+                var envelope = JsonSerializer.Deserialize<GreenhouseSaveEnvelope>(raw, JsonOpts);
+                if (envelope?.State != null)
+                {
+                    if (string.IsNullOrEmpty(envelope.Checksum))
+                        throw new InvalidOperationException("save envelope missing checksum (corrupt save)");
+                    if (!string.Equals(envelope.Checksum, SaveChecksum.Compute(envelope), StringComparison.Ordinal))
+                        throw new InvalidOperationException("checksum mismatch — possible tampering");
+                    return envelope.State;
+                }
             }
-            catch (Exception ex)
+            catch (InvalidOperationException)
             {
-                GD.PushWarning($"[GreenhouseSaveStore] Load failed: {ex.Message}");
-                return null;
+                throw;
             }
+            catch
+            {
+                // Fall back to legacy bare state decode
+            }
+
+            return JsonSerializer.Deserialize<GreenhouseState>(raw, JsonOpts);
         }
+    }
+
+    [Serializable]
+    public sealed class GreenhouseSaveEnvelope
+    {
+        public GreenhouseState? State { get; set; }
+        public string? Checksum { get; set; }
     }
 }

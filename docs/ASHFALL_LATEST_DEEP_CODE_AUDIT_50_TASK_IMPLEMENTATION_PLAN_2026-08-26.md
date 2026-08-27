@@ -1,12 +1,12 @@
 # ASHFALL — Latest Deep Code Audit & 50-Task Planned Implementation Plan
 
-**Audit date:** 2026-08-26  
-**Current `main` snapshot inspected:** `236be96e6c05fd7241cd07a60158942912af9c6e`  
-**Open PR inspected:** PR #29, head `0b0cc2d0cd2cbc531811534d1fcf1a43735cfc09`  
-**Primary engine:** Godot 4.7.1 .NET/C#  
-**Core authority:** `Assets/Ashfall.Core/`  
-**Data authority:** `Assets/StreamingAssets/Data/`  
-**Active host:** `src/` + `scenes/`  
+**Audit date:** 2026-08-26
+**Current `main` snapshot inspected:** `236be96e6c05fd7241cd07a60158942912af9c6e`
+**Open PR inspected:** PR #29, head `0b0cc2d0cd2cbc531811534d1fcf1a43735cfc09`
+**Primary engine:** Godot 4.7.1 .NET/C#
+**Core authority:** `Assets/Ashfall.Core/`
+**Data authority:** `Assets/StreamingAssets/Data/`
+**Active host:** `src/` + `scenes/`
 **Legacy rule for this plan:** Unity is retired. Do not invoke Unity, do not add Unity code, and do not create new gameplay ownership under `Assets/_Game/`.
 
 > This is an implementation plan, not an implementation. The current repository was inspected through the connected GitHub source at the commit above. The execution environment used to create this report could not clone GitHub directly, so current build/test commands were **not rerun here**. Historical repository evidence reports green suites at prior checkpoints, but every task below contains its own fresh verification gate.
@@ -119,35 +119,35 @@ The 2026-08-18 comprehensive audit remains useful for architecture and long-runn
 ## 5. Planned implementation phases
 
 ### Phase A — Authority and correctness blockers
-AF-001 through AF-008.  
+AF-001 through AF-008.
 **Goal:** establish a trustworthy Godot-only baseline and close correctness defects that can invalidate tests, time progression, saves, or builds.
 
 ### Phase B — Verification architecture
-AF-009 through AF-015.  
+AF-009 through AF-015.
 **Goal:** make generated data, nullable diagnostics, CLI tests, branch protection, and system wiring mechanically auditable.
 
 ### Phase C — Batch 3 end-to-end integration
-AF-016 through AF-027.  
+AF-016 through AF-027.
 **Goal:** turn Core-only/host-only systems into real campaign mechanics with save, tick, UI, data, and self-tests.
 
 ### Phase D — Persistence hardening
-AF-028 through AF-035.  
+AF-028 through AF-035.
 **Goal:** make every save participant tamper-safe, versioned, crash-safe, transactional, and lifecycle-safe.
 
 ### Phase E — Host architecture decomposition
-AF-036 through AF-041.  
+AF-036 through AF-041.
 **Goal:** reduce Main/legacy/bridge coupling and finish the migration to one Core authority.
 
 ### Phase F — 2D spatial gameplay integration
-AF-042 through AF-046.  
+AF-042 through AF-046.
 **Goal:** make the shelter and wasteland views state-driven rather than static/host-hard-coded.
 
 ### Phase G — Content correctness and cross-system atomicity
-AF-047 through AF-048.  
+AF-047 through AF-048.
 **Goal:** ensure new systems have real content and no partial-consumption failure paths.
 
 ### Phase H — Campaign and release gates
-AF-049 through AF-050.  
+AF-049 through AF-050.
 **Goal:** prove multi-day deterministic play, reload equivalence, and Godot-only packaging before adding more expansion scope.
 
 ---
@@ -156,8 +156,8 @@ AF-049 through AF-050.
 
 ### 01. AF-001 — Reconcile open PR #29 against current main before any implementation
 
-**Priority:** P0  
-**Effort:** SMALL  
+**Priority:** P0
+**Effort:** SMALL
 **Dependencies:** None
 
 **Evidence / rationale:** PR #29 (`audit/fix-batch3-plus-phases`) is open on 2026-08-26; its history contains older remediation commits and generated/agent-skill work. Base is current main, but the branch predates several merged repairs.
@@ -183,8 +183,8 @@ AF-049 through AF-050.
 ---
 ### 02. AF-002 — Retire the Unity compatibility GitHub Actions workflow
 
-**Priority:** P0  
-**Effort:** SMALL  
+**Priority:** P0
+**Effort:** SMALL
 **Dependencies:** AF-001
 
 **Evidence / rationale:** `.github/workflows/build.yml` still invokes Unity 6000.5.5f1 for Windows/WebGL compatibility artifacts, while the project direction is now Godot-only.
@@ -207,8 +207,8 @@ AF-049 through AF-050.
 ---
 ### 03. AF-003 — Stop compiling the entire legacy `Assets/_Game` tree into the Godot host
 
-**Priority:** P0  
-**Effort:** LARGE  
+**Priority:** P0
+**Effort:** LARGE
 **Dependencies:** AF-001, AF-002
 
 **Evidence / rationale:** `Ashfall.csproj` currently includes `<Compile Include="Assets/_Game/**/*.cs" .../>`, keeping the full legacy semantic surface load-bearing in Godot.
@@ -233,8 +233,8 @@ AF-049 through AF-050.
 ---
 ### 04. AF-004 — Rewrite engine/source-authority policy as Godot-only
 
-**Priority:** P0  
-**Effort:** SMALL  
+**Priority:** P0
+**Effort:** SMALL
 **Dependencies:** AF-002, AF-003
 
 **Evidence / rationale:** `docs/ENGINE_SUPPORT_POLICY.md` still describes Unity as a retained compatibility surface. That no longer matches the project mandate.
@@ -256,8 +256,8 @@ AF-049 through AF-050.
 ---
 ### 05. AF-005 — Add a Godot-only source-policy CI gate
 
-**Priority:** P0  
-**Effort:** SMALL  
+**Priority:** P0
+**Effort:** SMALL
 **Dependencies:** AF-003, AF-004
 
 **Evidence / rationale:** Architecture rules currently rely heavily on convention. The repository needs a mechanical guard against regression.
@@ -281,8 +281,8 @@ AF-049 through AF-050.
 ---
 ### 06. AF-006 — Fix `TimeSystem` so every crossed integer hour emits exactly one hour tick
 
-**Priority:** P0  
-**Effort:** MEDIUM  
+**Priority:** P0
+**Effort:** MEDIUM
 **Dependencies:** AF-003 if TimeSystem is migrated first; otherwise independent
 
 **Evidence / rationale:** `Assets/_Game/Core/TimeSystem.cs` documents one `OnHourTick` per crossed integer hour, but `Advance(stepHours)` compares only the starting and final integer hour. If `MaxGameHoursPerStep > 1`, intermediate hours are skipped.
@@ -306,8 +306,8 @@ AF-049 through AF-050.
 ---
 ### 07. AF-007 — Canonicalize `TimeSystem` restore state and reject non-finite time values
 
-**Priority:** P0  
-**Effort:** SMALL  
+**Priority:** P0
+**Effort:** SMALL
 **Dependencies:** AF-006
 
 **Evidence / rationale:** `RestoreState` clamps `hourAccumulator` to 0..24 inclusive even though current hour is documented 0..23; exactly 24 can leave an invalid hour until a later tick.
@@ -330,8 +330,8 @@ AF-049 through AF-050.
 ---
 ### 08. AF-008 — Make Godot asset import failure fatal in the canonical gate
 
-**Priority:** P0  
-**Effort:** SMALL  
+**Priority:** P0
+**Effort:** SMALL
 **Dependencies:** None
 
 **Evidence / rationale:** `scripts/ci/godot-asset-gate.sh` currently logs an import failure and continues to subsequent gates.
@@ -354,8 +354,8 @@ AF-049 through AF-050.
 ---
 ### 09. AF-009 — Repair stale production-art manifest tests to assert invariants, not historical counts
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** None
 
 **Evidence / rationale:** `ProductionArtManifestTests` still encodes the old 478-actionable/136-skipped phase model and requires `skipped > 0`, although regeneration can legitimately produce zero skipped rows.
@@ -379,8 +379,8 @@ AF-049 through AF-050.
 ---
 ### 10. AF-010 — Create one atomic freshness boundary for generated visual/data artifacts
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-009
 
 **Evidence / rationale:** `runtime_context_top_ids.json` still reports `manifest_actionable: 478`; generated outputs can drift independently.
@@ -404,8 +404,8 @@ AF-049 through AF-050.
 ---
 ### 11. AF-011 — Ratchet nullable/compiler warning policy for Core and new Godot host code
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-003
 
 **Evidence / rationale:** `Ashfall.csproj` globally suppresses high-signal nullable warnings including CS8602/CS8603/CS8604/CS8618.
@@ -429,8 +429,8 @@ AF-049 through AF-050.
 ---
 ### 12. AF-012 — Replace duplicated `HostCli` parsing/help wiring with a command descriptor registry
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** None
 
 **Evidence / rationale:** The CLI surface is large, command registration/help are manually duplicated, and canonical CI exercises only a subset.
@@ -454,8 +454,8 @@ AF-049 through AF-050.
 ---
 ### 13. AF-013 — Split headless verification into PR-smoke and full/nightly matrices
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-012
 
 **Evidence / rationale:** `godot-asset-gate.sh` currently executes only seven headless flags despite a much larger self-test surface.
@@ -479,8 +479,8 @@ AF-049 through AF-050.
 ---
 ### 14. AF-014 — Verify and enforce required branch-protection checks
 
-**Priority:** P1  
-**Effort:** SMALL  
+**Priority:** P1
+**Effort:** SMALL
 **Dependencies:** AF-008, AF-013
 
 **Evidence / rationale:** The deep audit reported that strong CI existed without required-status-check enforcement. Current protection metadata could not be read through the integration, so this must be verified explicitly.
@@ -504,8 +504,8 @@ AF-049 through AF-050.
 ---
 ### 15. AF-015 — Create a machine-readable persistent-system wiring registry and omission test
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-012
 
 **Evidence / rationale:** `Main.cs` uses repeated Setup/Save/Flush/tick patterns; new Batch 3 systems demonstrate how Core code can exist without runtime composition.
@@ -529,8 +529,8 @@ AF-049 through AF-050.
 ---
 ### 16. AF-016 — Wire Apprenticeship end-to-end into the live Godot campaign
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015
 
 **Evidence / rationale:** `ApprenticeshipSystem` and tests exist in Core, but no `ApprenticeshipHostSession` indexed on current main and no live composition evidence was found.
@@ -557,8 +557,8 @@ AF-049 through AF-050.
 ---
 ### 17. AF-017 — Complete Archive Desk runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `ArchiveDeskHostSession` and `ArchiveDeskSaveStore` exist, but no indexed `Main`/composition call site was found. Its loader also has checksum-validation regression.
@@ -585,8 +585,8 @@ AF-049 through AF-050.
 ---
 ### 18. AF-018 — Complete Autopsy runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `AutopsySystem`, tests, and an `AutopsyHostSession` exist, but no live composition call site was found.
@@ -613,8 +613,8 @@ AF-049 through AF-050.
 ---
 ### 19. AF-019 — Complete Contractor Roster runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `ContractorRosterSystem` and `ContractorRosterHostSession` exist, but no live composition call site was found.
@@ -641,8 +641,8 @@ AF-049 through AF-050.
 ---
 ### 20. AF-020 — Complete Decontamination runtime integration and validate net-contamination semantics
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `DecontaminationHostSession` exists and Core duplicate-queue bugs were repaired, but no live composition call site was found; Batch 3 audit also left net-contamination intent unresolved.
@@ -669,8 +669,8 @@ AF-049 through AF-050.
 ---
 ### 21. AF-021 — Complete Equipment Condition runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `EquipmentConditionHostSession` exists, but no live composition call site was found. Core atomic maintenance consumption has been repaired.
@@ -697,8 +697,8 @@ AF-049 through AF-050.
 ---
 ### 22. AF-022 — Complete Kitchen Nutrition runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028, AF-047
 
 **Evidence / rationale:** `KitchenNutritionHostSession` exists but no live composition call site was found; Core job eviction and resource atomicity were repaired.
@@ -725,8 +725,8 @@ AF-049 through AF-050.
 ---
 ### 23. AF-023 — Complete Library Study runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028, AF-047
 
 **Evidence / rationale:** `LibraryStudyHostSession` exists but no live composition call site was found.
@@ -753,8 +753,8 @@ AF-049 through AF-050.
 ---
 ### 24. AF-024 — Complete Mental Health Crisis runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `MentalHealthCrisisHostSession` exists but no live composition call site was found.
@@ -781,8 +781,8 @@ AF-049 through AF-050.
 ---
 ### 25. AF-025 — Complete Shelter Schedule runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `ShelterScheduleHostSession` exists but no live composition call site was found.
@@ -809,8 +809,8 @@ AF-049 through AF-050.
 ---
 ### 26. AF-026 — Create and wire the missing Shelter Thermal host/runtime layer
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `ShelterThermalSystem` and Core tests exist, but no `ShelterThermalHostSession` was indexed on current main; Batch 3 notes also flagged unresolved thermal design decisions.
@@ -837,8 +837,8 @@ AF-049 through AF-050.
 ---
 ### 27. AF-027 — Complete Sump Flooding runtime integration
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-028
 
 **Evidence / rationale:** `SumpFloodingHostSession` exists but no live composition call site was found.
@@ -865,8 +865,8 @@ AF-049 through AF-050.
 ---
 ### 28. AF-028 — Fix checksum verification in all new Batch 3 save stores
 
-**Priority:** P0  
-**Effort:** MEDIUM  
+**Priority:** P0
+**Effort:** MEDIUM
 **Dependencies:** None
 
 **Evidence / rationale:** At least Archive Desk, Kitchen Nutrition, Equipment Condition, and Decontamination loaders accept any non-empty checksum without recomputing it; older stores such as `WorldSaveStore` correctly recompute and compare.
@@ -891,8 +891,8 @@ AF-049 through AF-050.
 ---
 ### 29. AF-029 — Standardize Batch 3 save envelope versions and migration policy
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-028
 
 **Evidence / rationale:** Batch 3 host saves use `SchemaVersion = "1.0"` ad hoc; new systems need the same explicit migration/future-version behavior as mature stores.
@@ -917,8 +917,8 @@ AF-049 through AF-050.
 ---
 ### 30. AF-030 — Make every save write crash-safe with temp-file + atomic replace
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-028
 
 **Evidence / rationale:** Many stores use direct `File.WriteAllText(path, ...)`; process/power loss can leave a truncated current save.
@@ -943,8 +943,8 @@ AF-049 through AF-050.
 ---
 ### 31. AF-031 — Add campaign save-generation IDs to prevent cross-store mixed snapshots
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-030
 
 **Evidence / rationale:** The campaign persists many independent domain files; adding Batch 3 stores increases the risk that a crash yields files from different day/save generations.
@@ -968,8 +968,8 @@ AF-049 through AF-050.
 ---
 ### 32. AF-032 — Implement the versioned save-participant registry with two-phase transactional restore
 
-**Priority:** P1  
-**Effort:** VERY LARGE  
+**Priority:** P1
+**Effort:** VERY LARGE
 **Dependencies:** AF-015, AF-028, AF-029, AF-031
 
 **Evidence / rationale:** Tracked issue #26 identifies excessive persistence fan-out and partial-restore risk in the central coordinator.
@@ -995,8 +995,8 @@ AF-049 through AF-050.
 ---
 ### 33. AF-033 — Add property-based/fuzz corruption tests across every save participant
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-028, AF-032
 
 **Evidence / rationale:** Checksums catch mutation only if all stores validate correctly; malformed JSON, future versions, null collections, and numeric edge cases require systematic coverage.
@@ -1020,8 +1020,8 @@ AF-049 through AF-050.
 ---
 ### 34. AF-034 — Eliminate unconditional host `StateChanged`/dirty churn on no-op daily ticks
 
-**Priority:** P2  
-**Effort:** MEDIUM  
+**Priority:** P2
+**Effort:** MEDIUM
 **Dependencies:** AF-015
 
 **Evidence / rationale:** Several Batch 3 wrappers call `System.TickDay(day); StateChanged?.Invoke();` even if Core state did not change, potentially causing avoidable UI refresh/save flush churn.
@@ -1044,8 +1044,8 @@ AF-049 through AF-050.
 ---
 ### 35. AF-035 — Add explicit subscription ownership and disposal for host sessions/panels
 
-**Priority:** P2  
-**Effort:** MEDIUM  
+**Priority:** P2
+**Effort:** MEDIUM
 **Dependencies:** AF-036
 
 **Evidence / rationale:** Host wrappers subscribe to Core events with lambdas; repeated new-game/load/UI reconstruction can create duplicate callbacks unless ownership is strictly bounded.
@@ -1069,8 +1069,8 @@ AF-049 through AF-050.
 ---
 ### 36. AF-036 — Decompose `src/Main.cs` phase 1: CLI, diagnostics, and save-flush coordination
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-015, AF-012
 
 **Evidence / rationale:** Tracked issue #25 identifies `src/Main.cs` as an orchestration god object with large host/UI/save/lifecycle responsibility.
@@ -1096,8 +1096,8 @@ AF-049 through AF-050.
 ---
 ### 37. AF-037 — Decompose `src/Main.cs` phase 2: UI composition/navigation and game-session lifecycle
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-036
 
 **Evidence / rationale:** Even after infrastructure extraction, Main should not directly construct dozens of panels and own every stateful host session transition.
@@ -1122,8 +1122,8 @@ AF-049 through AF-050.
 ---
 ### 38. AF-038 — Eliminate duplicated survival behavior from `HoldfastRuntimeSession`
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-003
 
 **Evidence / rationale:** Project architecture notes flag `src/Host/HoldfastRuntimeSession.cs` as duplicating Core survival mechanics, violating thin-host ownership.
@@ -1148,8 +1148,8 @@ AF-049 through AF-050.
 ---
 ### 39. AF-039 — Consolidate duplicate `WornGear` domain models
 
-**Priority:** P2  
-**Effort:** MEDIUM  
+**Priority:** P2
+**Effort:** MEDIUM
 **Dependencies:** AF-003
 
 **Evidence / rationale:** Project architecture notes identify `Inventory.WornGear` and `Radiation.WornGear` as duplicated models connected by a sanctioned conversion bridge.
@@ -1174,8 +1174,8 @@ AF-049 through AF-050.
 ---
 ### 40. AF-040 — Replace swallowed catalog-loader exceptions with typed diagnostics
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-003
 
 **Evidence / rationale:** Architecture audit notes identify bare `catch { }` blocks in catalog loaders, which can silently turn content/configuration failures into empty systems.
@@ -1200,8 +1200,8 @@ AF-049 through AF-050.
 ---
 ### 41. AF-041 — Shrink and then retire `src/Bridge` after legacy compile removal
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-003
 
 **Evidence / rationale:** `src/Bridge` is a migration aid; keeping it after `_Game` is no longer compiled creates dead semantic surface and future confusion.
@@ -1226,8 +1226,8 @@ AF-049 through AF-050.
 ---
 ### 42. AF-042 — Refactor Wasteland Map data loading onto the project data/port architecture
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-003
 
 **Evidence / rationale:** `WastelandMapView` directly uses Godot `FileAccess` and `System.Text.Json` for `wasteland_map_v1.json`; it also stores `_worldHost` but does not use it to derive marker state.
@@ -1252,8 +1252,8 @@ AF-049 through AF-050.
 ---
 ### 43. AF-043 — Replace hard-coded Holdfast room definitions with authoritative room/layout data
 
-**Priority:** P1  
-**Effort:** MEDIUM  
+**Priority:** P1
+**Effort:** MEDIUM
 **Dependencies:** AF-003
 
 **Evidence / rationale:** `HoldfastInteriorView.PopulateRoomHotspots()` hard-codes three rooms and display coordinates/names.
@@ -1278,8 +1278,8 @@ AF-049 through AF-050.
 ---
 ### 44. AF-044 — Bind survivor actors to Duty Roster assignments and real room positions
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-043, AF-025
 
 **Evidence / rationale:** `HoldfastInteriorView` spawns only the first four survivors at fixed horizontal positions and updates vitals, not duty-room positions.
@@ -1304,8 +1304,8 @@ AF-049 through AF-050.
 ---
 ### 45. AF-045 — Make Wasteland Map markers reflect live access, hazards, factions, and expeditions
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-042
 
 **Evidence / rationale:** `WastelandMapView` currently builds markers from static JSON `Danger`/Faction fields; bound `_worldHost` is unused. The scene background is `bunker_map_root.jpg`, not a confirmed regional production map.
@@ -1331,8 +1331,8 @@ AF-049 through AF-050.
 ---
 ### 46. AF-046 — Add dedicated 2D spatial-view regression/self-tests
 
-**Priority:** P2  
-**Effort:** MEDIUM  
+**Priority:** P2
+**Effort:** MEDIUM
 **Dependencies:** AF-043, AF-044, AF-045
 
 **Evidence / rationale:** The 2D spatial layer remains substantially less verified than the dashboard/data systems.
@@ -1357,8 +1357,8 @@ AF-049 through AF-050.
 ---
 ### 47. AF-047 — Audit and populate all Batch 3 production catalogs; fail loudly on required empty catalogs
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-040
 
 **Evidence / rationale:** Batch 3 resolution notes explicitly identify four wired systems with empty catalogs, while newer host wrappers can also silently operate with no loaded content.
@@ -1383,8 +1383,8 @@ AF-049 through AF-050.
 ---
 ### 48. AF-048 — Perform a Core-wide validate-before-mutate atomicity sweep
 
-**Priority:** P1  
-**Effort:** LARGE  
+**Priority:** P1
+**Effort:** LARGE
 **Dependencies:** AF-003
 
 **Evidence / rationale:** Batch 3 repairs established an explicit invariant after Kitchen/Equipment bugs: multi-resource actions must validate all prerequisites before consuming anything.
@@ -1409,8 +1409,8 @@ AF-049 through AF-050.
 ---
 ### 49. AF-049 — Build deterministic 30-day and 100-day end-to-end campaign harnesses with reload checkpoints
 
-**Priority:** P0  
-**Effort:** LARGE  
+**Priority:** P0
+**Effort:** LARGE
 **Dependencies:** AF-016 through AF-035 as available
 
 **Evidence / rationale:** Unit/self-tests are deep but fragmented; integration omissions and cross-store drift require a campaign-level oracle.
@@ -1435,8 +1435,8 @@ AF-049 through AF-050.
 ---
 ### 50. AF-050 — Create a Godot-only release-readiness gate and freeze new expansion work until it is green
 
-**Priority:** P1  
-**Effort:** VERY LARGE  
+**Priority:** P1
+**Effort:** VERY LARGE
 **Dependencies:** AF-002 through AF-049
 
 **Evidence / rationale:** Expansion 11 planning has already appeared while core integration debt remains. Release confidence should be based on the active Godot product, not feature count.

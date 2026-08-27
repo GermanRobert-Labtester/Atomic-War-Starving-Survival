@@ -17,6 +17,19 @@ namespace AtomicWar.GodotApp.UI
     /// </summary>
     public static class AshfallUiHelpers
     {
+        // ── Canonical Fallback Texture Constants ─────────────────────────
+        /// <summary>Canonical relative path for the fallback placeholder UI icon.</summary>
+        public const string FallbackIconPath = "assets/ui/Icons/icon_placeholder.png";
+
+        /// <summary>Canonical resource path for the fallback placeholder UI icon.</summary>
+        public const string FallbackIconResPath = "res://assets/ui/Icons/icon_placeholder.png";
+
+        /// <summary>Canonical resource path for the fallback survivor sprite/portrait.</summary>
+        public const string FallbackSurvivorResPath = "res://assets/sprites/Characters/placeholder_survivor.png";
+
+        /// <summary>Canonical relative path for the fallback survivor sprite/portrait.</summary>
+        public const string FallbackSurvivorPath = "assets/sprites/Characters/placeholder_survivor.png";
+
         // ── Font Loading ────────────────────────────────────────────────
         // Lazy-loaded canonical fonts. Each property loads on first access
         // and caches the result. Returns null when the resource is missing
@@ -202,6 +215,59 @@ namespace AtomicWar.GodotApp.UI
             return lbl;
         }
 
+        // ── Semantic Color Properties ──────────────────────────────────
+        public static Color ColorBackdrop => ToColor(Theme.BackdropOverlay);
+        public static Color ColorSurface => ToColor(Theme.Surface);
+        public static Color ColorSurfaceCard => ToColor(Theme.SurfaceCard);
+        public static Color ColorPrimary => ToColor(Theme.Warm);
+        public static Color ColorHighlight => ToColor(Theme.Hot);
+        public static Color ColorText => ToColor(Theme.Pale);
+        public static Color ColorMuted => ToColor(Theme.Muted);
+        public static Color ColorDim => ToColor(Theme.Dim);
+        public static Color ColorSuccess => ToColor(Theme.Success);
+        public static Color ColorWarning => ToColor(Theme.Warning);
+        public static Color ColorCritical => ToColor(Theme.Critical);
+        public static Color ColorRadiation => ToColor(Theme.Radiation);
+        public static Color ColorRadiationAcute => ToColor(Theme.RadiationAcute);
+        public static Color ColorInfo => ToColor(Theme.Info);
+
+        /// <summary>
+        /// Creates a full-screen semi-transparent backdrop overlay for modal panels.
+        /// </summary>
+        public static ColorRect MakeBackdropOverlay()
+        {
+            var bg = new ColorRect { Color = ColorBackdrop };
+            bg.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+            return bg;
+        }
+
+        public static Label MakeSuccess(string text)
+        {
+            var lbl = new Label { Text = text };
+            lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
+            lbl.AddThemeColorOverride("font_color", ColorSuccess);
+            ApplyFont(lbl, FontBarlowSemiBold);
+            return lbl;
+        }
+
+        public static Label MakeInfo(string text)
+        {
+            var lbl = new Label { Text = text };
+            lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
+            lbl.AddThemeColorOverride("font_color", ColorInfo);
+            ApplyFont(lbl, FontBarlowRegular);
+            return lbl;
+        }
+
+        public static Label MakeRadiation(string text, bool acute = false)
+        {
+            var lbl = new Label { Text = text };
+            lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
+            lbl.AddThemeColorOverride("font_color", acute ? ColorRadiationAcute : ColorRadiation);
+            ApplyFont(lbl, FontBarlowSemiBold);
+            return lbl;
+        }
+
         // ── Spacing & Layout ────────────────────────────────────────────
 
         public static VBoxContainer MakeVBox(int separation = Theme.SpacingSm)
@@ -231,6 +297,64 @@ namespace AtomicWar.GodotApp.UI
             margin.AddThemeConstantOverride("margin_right", right);
             margin.AddThemeConstantOverride("margin_bottom", bottom);
             return margin;
+        }
+
+        // ── Empty State Helpers ─────────────────────────────────────────
+
+        /// <summary>
+        /// Creates a standardized empty-state placeholder container with an optional title,
+        /// description message, and an informative action hint so empty panels never appear broken or blank.
+        /// </summary>
+        public static Control MakeEmptyState(
+            string message,
+            string title = "NO DATA RECORDED",
+            string? actionHint = null,
+            (float r, float g, float b, float a)? accentColor = null)
+        {
+            var panel = MakePanel();
+            panel.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            panel.CustomMinimumSize = new Vector2(0, 100);
+
+            var margin = MakeMargins((int)Theme.SpacingMd);
+            panel.AddChild(margin);
+
+            var vbox = MakeVBox((int)Theme.SpacingXs);
+            vbox.Alignment = BoxContainer.AlignmentMode.Center;
+            margin.AddChild(vbox);
+
+            var color = accentColor.HasValue ? ToColor(accentColor.Value) : ToColor(Theme.Muted);
+
+            var titleLabel = MakeTitle(title, Theme.FontSizeH3);
+            titleLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            titleLabel.AddThemeColorOverride("font_color", color);
+            vbox.AddChild(titleLabel);
+
+            var msgLabel = MakeSmall(message, autowrap: true);
+            msgLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            msgLabel.AddThemeColorOverride("font_color", ToColor(Theme.Pale));
+            vbox.AddChild(msgLabel);
+
+            if (!string.IsNullOrEmpty(actionHint))
+            {
+                var hintLabel = MakeMetadata(actionHint);
+                hintLabel.HorizontalAlignment = HorizontalAlignment.Center;
+                hintLabel.AddThemeColorOverride("font_color", ToColor(Theme.Dim));
+                vbox.AddChild(hintLabel);
+            }
+
+            return panel;
+        }
+
+        /// <summary>
+        /// Creates a lightweight inline empty-state label for sub-lists or tables with no items.
+        /// </summary>
+        public static Label MakeEmptyStateLabel(string message, string? hint = null)
+        {
+            string fullText = string.IsNullOrEmpty(hint) ? $"— {message} —" : $"— {message} [{hint}] —";
+            var label = MakeSmall(fullText, autowrap: true);
+            label.HorizontalAlignment = HorizontalAlignment.Center;
+            label.AddThemeColorOverride("font_color", ToColor(Theme.Dim));
+            return label;
         }
 
         // ── Panel Shells ────────────────────────────────────────────────
@@ -460,6 +584,48 @@ namespace AtomicWar.GodotApp.UI
             return row;
         }
 
+        /// <summary>
+        /// Creates a dim/styled label for muted informational text.
+        /// Used for empty states, disabled messages, and secondary information.
+        /// </summary>
+        public static Label MakeDimLabel(string text)
+        {
+            var lbl = new Label { Text = text };
+            lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
+            lbl.AddThemeColorOverride("font_color", ToColor(Theme.Dim));
+            ApplyFont(lbl, FontBarlowRegular);
+            return lbl;
+        }
+
+        /// <summary>
+        /// Creates a label with a specific color token.
+        /// Used for status messages, afflictions, and colored notifications.
+        /// </summary>
+        public static Label MakeColoredLabel(string text, (float r, float g, float b, float a) colorToken,
+            int fontSize = Theme.FontSizeBody)
+        {
+            var lbl = new Label { Text = text };
+            lbl.AddThemeFontSizeOverride("font_size", fontSize);
+            lbl.AddThemeColorOverride("font_color", ToColor(colorToken));
+            ApplyFont(lbl, FontBarlowRegular);
+            return lbl;
+        }
+
+        /// <summary>
+        /// Creates a horizontal action bar container for buttons.
+        /// Standard separation and right-alignment by default.
+        /// </summary>
+        public static HBoxContainer MakeActionBar(int separation = Theme.SpacingSm)
+        {
+            var bar = new HBoxContainer
+            {
+                SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd,
+                Alignment = BoxContainer.AlignmentMode.End
+            };
+            bar.AddThemeConstantOverride("separation", separation);
+            return bar;
+        }
+
         // ── Visual Asset Loaders ────────────────────────────────────────
 
         public static TextureRect MakeFactionEmblem(string factionId, int size = 40)
@@ -537,7 +703,7 @@ namespace AtomicWar.GodotApp.UI
             }
             catch (Exception ex_CATDIAG)
             {
-                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                CatalogDiagnostics.Warn(path, "Texture load (ResourceLoader)", ex_CATDIAG);
                 // Fall back below
             }
 
@@ -555,7 +721,7 @@ namespace AtomicWar.GodotApp.UI
                 }
                 catch (Exception ex_CATDIAG)
                 {
-                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                    CatalogDiagnostics.Warn(alt, "Texture load (case-normalized)", ex_CATDIAG);
                     // Fall back below
                 }
             }
@@ -576,7 +742,7 @@ namespace AtomicWar.GodotApp.UI
                 }
                 catch (Exception ex_CATDIAG)
                 {
-                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                    CatalogDiagnostics.Warn(osPath, "Texture load (filesystem)", ex_CATDIAG);
                     // Fall through
                 }
             }
@@ -598,7 +764,7 @@ namespace AtomicWar.GodotApp.UI
                     }
                     catch (Exception ex_CATDIAG)
                     {
-                        CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                        CatalogDiagnostics.Warn(altOsPath, "Texture load (alt filesystem)", ex_CATDIAG);
                         // Fall through
                     }
                 }

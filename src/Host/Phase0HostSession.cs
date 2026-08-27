@@ -60,37 +60,138 @@ namespace AtomicWar.GodotApp
     }
 
     /// <summary>
-    /// Real-consumer wiring bundle. The host (Main.cs) injects these callbacks so
-    /// Phase-0 effects reach the authoritative gameplay consumers instead of living
-    /// in a display value. All defaults are no-ops so the session is self-contained
-    /// for headless selftests.
+    /// Immutable real-consumer wiring bundle. The host (Main.cs) constructs one
+    /// fully-bound instance and assigns it to <see cref="Phase0HostSession.Consumers"/>
+    /// so Phase-0 effects reach the authoritative gameplay consumers instead of
+    /// living in a display value. There are no mutable fields to silently leave
+    /// unwired.
+    ///
+    /// Effect classification:
+    ///  - Essential (health/morale/fatigue/shelter-morale): default to named
+    ///    no-op adapters when null, tracked as unbound.
+    ///  - Production-required (progression/medical/narrative): stay null when
+    ///    unbound so the session's null-check skips preserve headless behavior;
+    ///    tracked as unbound for startup validation.
+    ///  - Truly optional (ApplyWorkRefusalHours): null when unbound, not tracked.
+    ///
+    /// Use <see cref="NoOp"/> (with optional overrides) for isolated tests.
     /// </summary>
     public sealed class Phase0EffectConsumers
     {
+        // ── Essential effects (health / morale / fatigue) — no-op when unbound ──
+
         /// <summary>survivorId, morale delta → NeedsSystem.</summary>
-        public Action<string, float> ApplyMoraleDelta;
+        public Action<string, float> ApplyMoraleDelta { get; }
         /// <summary>survivorId, health delta → NeedsSystem.</summary>
-        public Action<string, float> ApplyHealthDelta;
+        public Action<string, float> ApplyHealthDelta { get; }
         /// <summary>survivorId, fatigue delta → NeedsSystem.</summary>
-        public Action<string, float> ApplyFatigueDelta;
-        /// <summary>survivorId, work-efficiency multiplier → work/task consumer.</summary>
-        public Action<string, float> ApplyWorkEfficiencyMultiplier;
-        /// <summary>survivorId, work-refusal hours → work/task consumer.</summary>
-        public Action<string, float> ApplyWorkRefusalHours;
-        /// <summary>survivorId, crafting penalty factor → CraftingSystem time multiplier.</summary>
-        public Action<string, float> ApplyCraftingPenaltyFactor;
-        /// <summary>survivorId, combat penalty factor → expedition/combat consumer.</summary>
-        public Action<string, float> ApplyCombatPenaltyFactor;
-        /// <summary>survivorId, stamina drain multiplier → ExpeditionSystem stamina drain.</summary>
-        public Action<string, float> ApplyStaminaDrainMultiplier;
+        public Action<string, float> ApplyFatigueDelta { get; }
         /// <summary>Shelter-wide morale delta (final wish / moral branching).</summary>
-        public Action<float> ApplyShelterMoraleDelta;
+        public Action<float> ApplyShelterMoraleDelta { get; }
+
+        // ── Production-required (progression / medical / narrative) — null when unbound ──
+
+        /// <summary>survivorId, work-efficiency multiplier → work/task consumer.</summary>
+        public Action<string, float> ApplyWorkEfficiencyMultiplier { get; }
+        /// <summary>survivorId, crafting penalty factor → CraftingSystem time multiplier.</summary>
+        public Action<string, float> ApplyCraftingPenaltyFactor { get; }
+        /// <summary>survivorId, combat penalty factor → expedition/combat consumer.</summary>
+        public Action<string, float> ApplyCombatPenaltyFactor { get; }
+        /// <summary>survivorId, stamina drain multiplier → ExpeditionSystem stamina drain.</summary>
+        public Action<string, float> ApplyStaminaDrainMultiplier { get; }
         /// <summary>narrativeId, survivorId → Journal / event runner.</summary>
-        public Action<string, string> FireNarrativeEvent;
+        public Action<string, string> FireNarrativeEvent { get; }
         /// <summary>survivorId, afflictionId → medical / chronic-illness authority.</summary>
-        public Action<string, string> GrantChronicIllness;
+        public Action<string, string> GrantChronicIllness { get; }
         /// <summary>survivorId → RadiationSystem dose reset (Prodromal metabolized the acute dose).</summary>
-        public Action<string> ResetRadiationDose;
+        public Action<string> ResetRadiationDose { get; }
+
+        // ── Truly optional — null when unbound, not validated ──
+
+        /// <summary>survivorId, work-refusal hours → work/task consumer.</summary>
+        public Action<string, float> ApplyWorkRefusalHours { get; }
+
+        private readonly List<string> _unboundRequired;
+
+        /// <summary>
+        /// Names of production-required effects that were not explicitly bound
+        /// (null passed → no-op/null). Empty when fully wired. Checked at startup
+        /// so a production system cannot silently run with a missing health,
+        /// morale, inventory, or progression effect.
+        /// </summary>
+        public IReadOnlyList<string> UnboundRequiredEffects => _unboundRequired;
+
+        public Phase0EffectConsumers(
+            Action<string, float>? applyMoraleDelta,
+            Action<string, float>? applyHealthDelta,
+            Action<string, float>? applyFatigueDelta,
+            Action<float>? applyShelterMoraleDelta,
+            Action<string, float>? applyWorkEfficiencyMultiplier = null,
+            Action<string, float>? applyCraftingPenaltyFactor = null,
+            Action<string, float>? applyCombatPenaltyFactor = null,
+            Action<string, float>? applyStaminaDrainMultiplier = null,
+            Action<string, string>? fireNarrativeEvent = null,
+            Action<string, string>? grantChronicIllness = null,
+            Action<string>? resetRadiationDose = null,
+            Action<string, float>? applyWorkRefusalHours = null)
+        {
+            ApplyMoraleDelta = applyMoraleDelta ?? NoOpMoraleDelta;
+            ApplyHealthDelta = applyHealthDelta ?? NoOpHealthDelta;
+            ApplyFatigueDelta = applyFatigueDelta ?? NoOpFatigueDelta;
+            ApplyShelterMoraleDelta = applyShelterMoraleDelta ?? NoOpShelterMoraleDelta;
+            ApplyWorkEfficiencyMultiplier = applyWorkEfficiencyMultiplier;
+            ApplyCraftingPenaltyFactor = applyCraftingPenaltyFactor;
+            ApplyCombatPenaltyFactor = applyCombatPenaltyFactor;
+            ApplyStaminaDrainMultiplier = applyStaminaDrainMultiplier;
+            FireNarrativeEvent = fireNarrativeEvent;
+            GrantChronicIllness = grantChronicIllness;
+            ResetRadiationDose = resetRadiationDose;
+            ApplyWorkRefusalHours = applyWorkRefusalHours;
+
+            _unboundRequired = new List<string>();
+            if (applyMoraleDelta == null) _unboundRequired.Add(nameof(ApplyMoraleDelta));
+            if (applyHealthDelta == null) _unboundRequired.Add(nameof(ApplyHealthDelta));
+            if (applyFatigueDelta == null) _unboundRequired.Add(nameof(ApplyFatigueDelta));
+            if (applyShelterMoraleDelta == null) _unboundRequired.Add(nameof(ApplyShelterMoraleDelta));
+            if (applyWorkEfficiencyMultiplier == null) _unboundRequired.Add(nameof(ApplyWorkEfficiencyMultiplier));
+            if (applyCraftingPenaltyFactor == null) _unboundRequired.Add(nameof(ApplyCraftingPenaltyFactor));
+            if (applyCombatPenaltyFactor == null) _unboundRequired.Add(nameof(ApplyCombatPenaltyFactor));
+            if (applyStaminaDrainMultiplier == null) _unboundRequired.Add(nameof(ApplyStaminaDrainMultiplier));
+            if (fireNarrativeEvent == null) _unboundRequired.Add(nameof(FireNarrativeEvent));
+            if (grantChronicIllness == null) _unboundRequired.Add(nameof(GrantChronicIllness));
+            if (resetRadiationDose == null) _unboundRequired.Add(nameof(ResetRadiationDose));
+        }
+
+        /// <summary>
+        /// All-effects-unbound instance for isolated tests, with optional
+        /// overrides. Essential effects use no-op adapters; production-required
+        /// effects are null (session null-checks skip them).
+        /// </summary>
+        public static Phase0EffectConsumers NoOp(
+            Action<string, float>? applyMoraleDelta = null,
+            Action<string, float>? applyHealthDelta = null,
+            Action<string, float>? applyFatigueDelta = null,
+            Action<float>? applyShelterMoraleDelta = null,
+            Action<string, float>? applyWorkEfficiencyMultiplier = null,
+            Action<string, float>? applyCraftingPenaltyFactor = null,
+            Action<string, float>? applyCombatPenaltyFactor = null,
+            Action<string, float>? applyStaminaDrainMultiplier = null,
+            Action<string, string>? fireNarrativeEvent = null,
+            Action<string, string>? grantChronicIllness = null,
+            Action<string>? resetRadiationDose = null,
+            Action<string, float>? applyWorkRefusalHours = null)
+            => new Phase0EffectConsumers(
+                applyMoraleDelta, applyHealthDelta, applyFatigueDelta, applyShelterMoraleDelta,
+                applyWorkEfficiencyMultiplier, applyCraftingPenaltyFactor, applyCombatPenaltyFactor,
+                applyStaminaDrainMultiplier, fireNarrativeEvent, grantChronicIllness,
+                resetRadiationDose, applyWorkRefusalHours);
+
+        // ── Named no-op adapters for essential effects ──
+
+        public static readonly Action<string, float> NoOpMoraleDelta = (_, __) => { };
+        public static readonly Action<string, float> NoOpHealthDelta = (_, __) => { };
+        public static readonly Action<string, float> NoOpFatigueDelta = (_, __) => { };
+        public static readonly Action<float> NoOpShelterMoraleDelta = _ => { };
     }
 
     /// <summary>
@@ -135,8 +236,8 @@ namespace AtomicWar.GodotApp
         public FinalWishSystem FinalWish { get; }
         public RespiratoryDegenerationSystem Respiratory { get; }
 
-        /// <summary>Real-consumer wiring bundle. Set by the host (Main.cs).</summary>
-        public Phase0EffectConsumers Consumers { get; set; } = new Phase0EffectConsumers();
+        /// <summary>Real-consumer wiring bundle. Set by the host (Main.cs) with a fully-bound instance.</summary>
+        public Phase0EffectConsumers Consumers { get; set; } = Phase0EffectConsumers.NoOp();
 
         /// <summary>Accumulated permanent shelter-wide morale buff from completed final wishes.</summary>
         public float PermanentShelterMoraleBuff { get; private set; }
@@ -392,6 +493,23 @@ namespace AtomicWar.GodotApp
             FinalWish.OnStateChanged += _onFinalWishStateChanged;
             _onRespiratoryStateChanged = () => RecomputeAllEffects();
             Respiratory.OnStateChanged += _onRespiratoryStateChanged;
+        }
+
+        /// <summary>
+        /// Logs any production-required Phase-0 effects still unbound on the
+        /// current <see cref="Consumers"/>. An empty list means every health,
+        /// morale, fatigue, and progression effect reaches a real consumer.
+        /// Call after the host assigns <see cref="Consumers"/>.
+        /// </summary>
+        public void ValidateConsumers()
+        {
+            var unbound = Consumers.UnboundRequiredEffects;
+            if (unbound.Count > 0)
+            {
+                GD.PrintErr("[Ashfall Godot] Phase-0 effect consumers unbound: "
+                    + string.Join(", ", unbound)
+                    + ". Effects will silently no-op in production.");
+            }
         }
 
         // ── Roster wiring ─────────────────────────────────────────────
@@ -850,10 +968,15 @@ namespace AtomicWar.GodotApp
             public double NextDouble() => _rng.NextDouble();
         }
 
-        // JSON DTOs consolidated to Assets/Ashfall.Core/Phantoms/PhantomTriggerDto.cs
-    public void BindShelterAssignment(ShelterAssignmentSystem shelterAssignment)
+        public void BindShelterAssignment(ShelterAssignmentSystem shelterAssignment)
         {
-            if (shelterAssignment == null) return;
+            if (shelterAssignment == null)
+            {
+                Flashbacks.IsCompanionInSameRoom = (a, b) => false;
+                return;
+            }
+
+            Flashbacks.IsCompanionInSameRoom = shelterAssignment.AreInSameRoom;
             shelterAssignment.OnAssignmentChanged += ev =>
             {
                 LastEvent = $"[Phase0] Shelter assignment changed: {ev?.SurvivorId ?? "unknown"} -> {ev?.RoomId ?? "unknown"}";

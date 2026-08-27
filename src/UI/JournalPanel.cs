@@ -70,7 +70,7 @@ public partial class JournalPanel : Control
 
     public void RefreshView()
     {
-        if (_journal == null) return;
+        if (_journal == null || _logEntries == null || _itemsList == null || _peopleList == null || _placesList == null || _eventsList == null) return;
 
         // Clear all tab containers
         ClearContainer(_logEntries);
@@ -378,14 +378,37 @@ public partial class JournalPanel : Control
         }
         catch (Exception ex)
         {
-            CatalogDiagnostics.Warn("<unknown>", "unknown", ex);
+            CatalogDiagnostics.Warn("<scroll>", "ScrollToChild", ex);
         }
     }
 
     public void Open()
     {
         Visible = true;
+        RefreshView();
         QueueRedraw();
+    }
+
+    public void Close()
+    {
+        Visible = false;
+    }
+
+    public void Unbind()
+    {
+        if (_journal != null)
+        {
+            _journal.OnEntryAdded -= OnEntryAdded;
+            _journal.OnTabChanged -= OnTabChanged;
+            _journal.OnCodexUnlocked -= OnCodexUnlocked;
+            _journal = null;
+        }
+
+        if (_logEntries != null) ClearContainer(_logEntries);
+        if (_itemsList != null) ClearContainer(_itemsList);
+        if (_peopleList != null) ClearContainer(_peopleList);
+        if (_placesList != null) ClearContainer(_placesList);
+        if (_eventsList != null) ClearContainer(_eventsList);
     }
 
     public override void _UnhandledInput(InputEvent @event)

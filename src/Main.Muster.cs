@@ -338,7 +338,7 @@ namespace AtomicWar.GodotApp
         private void SaveMuster()
         {
             if (_muster == null) return;
-            if (MusterSaveStore.TrySave(_muster.CaptureSave()))
+            if (CaptureSection("muster", MusterSaveStore.TryCapturePersisted(_muster.CaptureSave())))
                 GD.Print("[Ashfall Godot] Muster save written.");
         }
 

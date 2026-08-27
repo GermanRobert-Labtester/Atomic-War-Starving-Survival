@@ -12,7 +12,7 @@ namespace AtomicWar.GodotApp.UI
     /// tactical stance and its trade-offs, casualties &amp; losses, and outcomes
     /// (captured loot, morale/injury consequences reaching real state).
     /// </summary>
-    public partial class CombatDetailPanel : Control
+    public partial class CombatDetailPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -167,12 +167,18 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_combat != null)
+
+    public void Unbind()
+    {
+        if (_combat != null)
             {
                 _combat.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

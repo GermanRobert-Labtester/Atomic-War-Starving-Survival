@@ -1,35 +1,48 @@
+using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Disease;
+using Ashfall.Core.Survivors;
 using Xunit;
 
 namespace Ashfall.Core.Tests
 {
     public class WildlifeDiseaseBridgeTests
     {
+        private const string SanitizationExpertTrait = "skill_sanitization_expert";
+
         private static WildlifeTrappingSystem CreateTrapping() => new WildlifeTrappingSystem(new SeededRng(42));
 
         private static DiseaseSystem CreateDisease()
         {
             var state = new DiseaseSystemState();
             var sys = new DiseaseSystem(state, new SeededRng(99));
-            // Bind minimal catalog with zoonotic flu
             var catalog = new DiseaseCatalog();
-            // Ensure zoonotic flu entry exists — use EnsureEntry via BindCatalog with a minimal catalog
-            // Instead, directly ensure entry via reflection-like: add disease via Infect will auto-create? No, need catalog.
-            // Create a minimal DiseaseCatalog with zoonotic flu def
             var def = new DiseaseDefinition { id = DiseaseIds.ZoonoticFlu, vector = DiseaseVectorNames.Air, infectivity = 1f, illness_days = 5, lethality = 0f };
             catalog.Diseases.Add(def);
             sys.BindCatalog(catalog);
             return sys;
         }
 
-        private static void Wire(WildlifeTrappingSystem trap, DiseaseSystem disease, int day)
+        private static SurvivorRosterSystem CreateRosterWithTrait(string survivorId, string traitId)
+        {
+            var roster = new SurvivorRosterSystem();
+            roster.RegisterDefinition(new SurvivorDefinition
+            {
+                id = survivorId,
+                displayName = survivorId,
+                traitIds = new List<string> { traitId }
+            });
+            return roster;
+        }
+
+        private static void Wire(WildlifeTrappingSystem trap, DiseaseSystem disease, SurvivorRosterSystem roster, int day = 10)
         {
             trap.OnButcheryCompleted += (siteId, butcherId, species, isToxic) =>
             {
                 if (string.IsNullOrEmpty(butcherId)) return;
-                bool hasSterile = butcherId.IndexOf("sterile", System.StringComparison.OrdinalIgnoreCase) >= 0;
-                if (hasSterile) return;
+                var def = roster.FindDefinition(butcherId);
+                if (def != null && def.traitIds != null && def.traitIds.Contains(SanitizationExpertTrait))
+                    return;
                 int seed = StableHash.Of(butcherId) ^ day;
                 var rng = new SeededRng(seed);
                 if (rng.NextDouble() < 0.30)
@@ -42,16 +55,15 @@ namespace Ashfall.Core.Tests
         {
             var trap = CreateTrapping();
             var disease = CreateDisease();
+            var roster = new SurvivorRosterSystem();
             const int day = 10;
-            Wire(trap, disease, day);
+            Wire(trap, disease, roster, day);
 
             trap.SetTrap("site_a", "meat", "hunter_a");
-            // Force a catch
             trap.State.trapSites[0].hasCatch = true;
             trap.State.trapSites[0].catchSpecies = "rabbit";
             trap.State.trapSites[0].isToxic = false;
 
-            // Determine expected outcome via same RNG
             int seed = StableHash.Of("hunter_a") ^ day;
             bool shouldInfect = new SeededRng(seed).NextDouble() < 0.30;
 
@@ -66,17 +78,18 @@ namespace Ashfall.Core.Tests
         {
             var trap = CreateTrapping();
             var disease = CreateDisease();
+            var roster = CreateRosterWithTrait("the_surgeon", SanitizationExpertTrait);
             const int day = 10;
-            Wire(trap, disease, day);
+            Wire(trap, disease, roster, day);
 
-            trap.SetTrap("site_b", "meat", "hunter_sterile");
+            trap.SetTrap("site_b", "meat", "the_surgeon");
             trap.State.trapSites[0].hasCatch = true;
             trap.State.trapSites[0].catchSpecies = "rat";
             trap.State.trapSites[0].isToxic = true;
 
-            trap.Butcher("site_b", "hunter_sterile_trait");
+            trap.Butcher("site_b", "the_surgeon");
 
-            Assert.False(disease.IsInfected("hunter_sterile_trait", DiseaseIds.ZoonoticFlu));
+            Assert.False(disease.IsInfected("the_surgeon", DiseaseIds.ZoonoticFlu));
         }
 
         [Fact]
@@ -84,7 +97,8 @@ namespace Ashfall.Core.Tests
         {
             var trap = CreateTrapping();
             var disease = CreateDisease();
-            Wire(trap, disease, 10);
+            var roster = new SurvivorRosterSystem();
+            Wire(trap, disease, roster, 10);
 
             trap.SetTrap("site_c", "meat", "hunter_c");
             trap.State.trapSites[0].hasCatch = true;

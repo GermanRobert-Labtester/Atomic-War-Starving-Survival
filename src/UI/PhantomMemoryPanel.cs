@@ -14,7 +14,7 @@ namespace AtomicWar.GodotApp.UI
     /// Manages psychological reactions to scavenged personal artifacts, photographs,
     /// military tags, and letters, determining motivation surges vs emotional breakdowns.
     /// </summary>
-    public partial class PhantomMemoryPanel : Control
+    public partial class PhantomMemoryPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -256,12 +256,18 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_host != null)
+
+    public void Unbind()
+    {
+        if (_host != null)
             {
                 _host.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

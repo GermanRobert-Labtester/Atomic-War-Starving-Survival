@@ -11,22 +11,44 @@ namespace Ashfall.Core
     /// Spec: docs/expansions/expansion_03_the_standing_record_plan.md §5.2.
     /// Engine-agnostic; no UnityEngine / Godot / JsonUtility.
     /// </summary>
+    /// <summary>
+    /// Represents a historical or mutable narrative layer for a location.
+    /// </summary>
     [Serializable]
     public class LocationMemoryStratum
     {
+        /// <summary>Target site/location identifier.</summary>
         public string siteId;
-        public string stratumId;   // "pre" / "after" / "now"
-        public string requiredFlag; // mutation that selects this stratum ("" = always)
+
+        /// <summary>Stratum layer identifier ("pre", "after", or "now").</summary>
+        public string stratumId;
+
+        /// <summary>Mutation/narrative flag required to activate this stratum ("" for default/always).</summary>
+        public string requiredFlag;
+
+        /// <summary>Diegetic descriptive prose rendered for this stratum.</summary>
         public string text;
     }
 
+    /// <summary>
+    /// Persistent state DTO for the location memory system.
+    /// </summary>
     [Serializable]
     public class LocationMemoryState
     {
+        /// <summary>System identifier for save codec routing.</summary>
         public string systemId = LocationMemorySystem.SystemId;
+
+        /// <summary>Whether the Standing Record expansion is unlocked.</summary>
         public bool expansionUnlocked;
+
+        /// <summary>List of loaded location strata.</summary>
         public List<LocationMemoryStratum> strata = new List<LocationMemoryStratum>();
+
+        /// <summary>Active world/narrative mutation flags affecting descriptions.</summary>
         public List<string> activeFlags = new List<string>();
+
+        /// <summary>Chronological history of applied description recasts.</summary>
         public List<string> recastHistory = new List<string>();
     }
 
@@ -160,11 +182,10 @@ namespace Ashfall.Core
         /// The active "now" text for a site: last matching stratum by flag set
         /// (now wins over after/pre), else the base description is untouched.
         /// </summary>
-        public string GetActiveRecast(string siteId)
+        public string? GetActiveRecast(string siteId)
         {
             if (string.IsNullOrEmpty(siteId)) return null;
-            List<LocationMemoryStratum> list;
-            if (!_bySite.TryGetValue(siteId, out list)) return null;
+            if (!_bySite.TryGetValue(siteId, out var list) || list == null) return null;
 
             // "now" strata first (they are the current lived layer), then "after".
             // No "pre" fallback: a recast exists only once a mutation re-wrote
@@ -192,11 +213,10 @@ namespace Ashfall.Core
             return null;
         }
 
-        public string GetStratumText(string siteId, string stratumId)
+        public string? GetStratumText(string siteId, string stratumId)
         {
             if (string.IsNullOrEmpty(siteId) || string.IsNullOrEmpty(stratumId)) return null;
-            List<LocationMemoryStratum> list;
-            if (!_bySite.TryGetValue(siteId, out list)) return null;
+            if (!_bySite.TryGetValue(siteId, out var list) || list == null) return null;
             for (int i = 0; i < list.Count; i++)
             {
                 LocationMemoryStratum s = list[i];

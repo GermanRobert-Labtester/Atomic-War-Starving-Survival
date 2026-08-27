@@ -1,0 +1,1605 @@
+{
+  "schema_version": 1,
+  "messages": [
+    {
+      "key": "quest_completed",
+      "category": "success",
+      "severity": "success",
+      "template": "Quest completed! You\u0027ve earned {0} reputation and {1} resources.",
+      "parameter_count": 2,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "survivor_recruited",
+      "category": "success",
+      "severity": "success",
+      "template": "{0} has joined your bunker!",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "resource_gained",
+      "category": "success",
+      "severity": "success",
+      "template": "You\u0027ve gained {0} {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "technology_unlocked",
+      "category": "success",
+      "severity": "success",
+      "template": "New technology unlocked: {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "relationship_improved",
+      "category": "success",
+      "severity": "success",
+      "template": "Your relationship with {0} has improved.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "bunker_upgraded",
+      "category": "success",
+      "severity": "success",
+      "template": "Bunker upgraded! Capacity increased by {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "medical_treatment_success",
+      "category": "success",
+      "severity": "success",
+      "template": "Medical treatment successful. {0}\u0027s condition improved.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "trade_success",
+      "category": "success",
+      "severity": "success",
+      "template": "Trade completed! Received {0} in exchange for {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "alliance_formed",
+      "category": "success",
+      "severity": "success",
+      "template": "Alliance formed with {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "expedition_success",
+      "category": "success",
+      "severity": "success",
+      "template": "Expedition returned safely with {0} resources.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "quest_failed",
+      "category": "failure",
+      "severity": "error",
+      "template": "Quest failed. You lost {0} reputation and {1} morale.",
+      "parameter_count": 2,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "survivor_lost",
+      "category": "failure",
+      "severity": "error",
+      "template": "{0} has died. Their skills are lost to the bunker.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "resource_lost",
+      "category": "failure",
+      "severity": "error",
+      "template": "You\u0027ve lost {0} {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "technology_lost",
+      "category": "failure",
+      "severity": "error",
+      "template": "Technology {0} was damaged and is now unusable.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "relationship_damaged",
+      "category": "failure",
+      "severity": "error",
+      "template": "Your relationship with {0} has been damaged.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "bunker_damaged",
+      "category": "failure",
+      "severity": "error",
+      "template": "Bunker took damage! Repairs needed.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "medical_failure",
+      "category": "failure",
+      "severity": "error",
+      "template": "Medical treatment failed. {0}\u0027s condition worsened.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "trade_failed",
+      "category": "failure",
+      "severity": "error",
+      "template": "Trade failed. {0} took your resources without delivering.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "alliance_broken",
+      "category": "failure",
+      "severity": "error",
+      "template": "Alliance with {0} has been broken.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "expedition_failed",
+      "category": "failure",
+      "severity": "error",
+      "template": "Expedition failed. No resources recovered.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "low_food",
+      "category": "warning",
+      "severity": "warning",
+      "template": "Food supplies are critically low! Prioritize rationing.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "low_medical",
+      "category": "warning",
+      "severity": "warning",
+      "template": "Medical supplies are running out. Assign scavengers to find more.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "low_fuel",
+      "category": "warning",
+      "severity": "warning",
+      "template": "Fuel reserves are at {0}%. Send an expedition soon.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "high_radiation",
+      "category": "warning",
+      "severity": "warning",
+      "template": "Radiation levels are elevated. Avoid outdoor activities.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "low_morale",
+      "category": "warning",
+      "severity": "warning",
+      "template": "Morale is dangerously low. Survivors are restless.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "bunker_deteriorating",
+      "category": "warning",
+      "severity": "warning",
+      "template": "Bunker structures are deteriorating. Assign laborers to repairs.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "disease_outbreak",
+      "category": "warning",
+      "severity": "warning",
+      "template": "A disease is spreading. Quarantine infected survivors immediately.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "raider_activity",
+      "category": "warning",
+      "severity": "warning",
+      "template": "Raider activity detected in Sector {0}. Stay alert.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "storm_approaching",
+      "category": "warning",
+      "severity": "warning",
+      "template": "A storm is approaching in {0} hours. Prepare the bunker.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "power_critical",
+      "category": "warning",
+      "severity": "warning",
+      "template": "Power levels are critical. Generator needs immediate attention.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "invalid_action",
+      "category": "error",
+      "severity": "error",
+      "template": "Invalid action. Please try again.",
+      "parameter_count": 0,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "insufficient_resources",
+      "category": "error",
+      "severity": "error",
+      "template": "Insufficient {0} to complete this action.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "missing_id",
+      "category": "error",
+      "severity": "error",
+      "template": "Error: Missing ID \u0027{0}\u0027. Check your data files.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "system_overload",
+      "category": "error",
+      "severity": "error",
+      "template": "System overload detected. Please wait and try again.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "file_not_found",
+      "category": "error",
+      "severity": "error",
+      "template": "File not found: {0}. Check your installation.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "corrupt_data",
+      "category": "error",
+      "severity": "error",
+      "template": "Corrupt data detected in {0}. The file may be damaged.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "permission_denied",
+      "category": "error",
+      "severity": "error",
+      "template": "Permission denied. You don\u0027t have access to this action.",
+      "parameter_count": 0,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "network_error",
+      "category": "error",
+      "severity": "error",
+      "template": "Network error. Unable to connect to {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "out_of_bounds",
+      "category": "error",
+      "severity": "error",
+      "template": "Error: Value out of bounds. Check your inputs.",
+      "parameter_count": 0,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "invalid_input",
+      "category": "error",
+      "severity": "error",
+      "template": "Invalid input. Please enter a valid value.",
+      "parameter_count": 0,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "delete_survivor",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to exile {0}? This cannot be undone.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "abandon_quest",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to abandon this quest? Progress will be lost.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "use_medicine",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to use {0} medicine on {1}? This cannot be undone.",
+      "parameter_count": 2,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "scavenge_dangerous",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to send an expedition to this dangerous location?",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "trade_with_faction",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to trade with {0}? Their reputation is questionable.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "upgrade_bunker",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to upgrade the bunker? This will cost {0} resources.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "start_expedition",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to start this expedition? Survivors will be at risk.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "accept_alliance",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to accept this alliance? It may have hidden costs.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "use_technology",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to use this unstable technology? It may cause damage.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "close_bunker",
+      "category": "confirmation",
+      "severity": "warning",
+      "template": "Are you sure you want to close the bunker? Survivors outside will be at risk.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "quest_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Quest progress: {0}% complete. {1} remaining.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "construction_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Construction progress: {0}% complete. {1} days remaining.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "training_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Training progress: {0}% complete. {1} survivors remaining.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "expedition_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Expedition progress: {0} days elapsed. {1} days remaining. Distance: {2} km.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "medical_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Medical treatment: {0}% complete. {1} remaining.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "repair_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Repair progress: {0}% complete. {1} systems remaining.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "ration_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Rationing: {0} days of supplies remaining. {1} days until restock.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "morale_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Morale: {0}/100. {1} survivors affected.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "relationship_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "Relationship with {0}: {1}/100.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "resource_progress",
+      "category": "progress",
+      "severity": "info",
+      "template": "{0}: {1}/{2} available.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "reputation_gained",
+      "category": "reward",
+      "severity": "success",
+      "template": "You\u0027ve gained {0} reputation with {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "resource_reward",
+      "category": "reward",
+      "severity": "success",
+      "template": "You\u0027ve earned {0} {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "item_reward",
+      "category": "reward",
+      "severity": "success",
+      "template": "You\u0027ve received: {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "technology_reward",
+      "category": "reward",
+      "severity": "success",
+      "template": "New technology unlocked: {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "skill_reward",
+      "category": "reward",
+      "severity": "success",
+      "template": "{0} has learned a new skill: {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "morale_boost",
+      "category": "reward",
+      "severity": "success",
+      "template": "Morale increased by {0} points.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "health_reward",
+      "category": "reward",
+      "severity": "success",
+      "template": "{0}\u0027s health improved by {1} points.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "faction_reward",
+      "category": "reward",
+      "severity": "success",
+      "template": "Your alliance with {0} has strengthened.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "experience_reward",
+      "category": "reward",
+      "severity": "success",
+      "template": "{0} gained {1} experience points.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "bonus_reward",
+      "category": "reward",
+      "severity": "success",
+      "template": "Bonus reward: {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "reputation_lost",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "You\u0027ve lost {0} reputation with {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "resource_penalty",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "You\u0027ve lost {0} {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "item_penalty",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "You\u0027ve lost: {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "technology_damaged",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "Technology {0} was damaged and is now unusable.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "skill_penalty",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "{0} lost the skill: {1}.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "morale_penalty",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "Morale decreased by {0} points.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "health_penalty",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "{0}\u0027s health decreased by {1} points.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "faction_penalty",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "Your alliance with {0} has weakened.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "experience_penalty",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "{0} lost {1} experience points.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "time_penalty",
+      "category": "penalty",
+      "severity": "warning",
+      "template": "You\u0027ve lost {0} days due to delays.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "bunker_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Bunker: {0}/{1} capacity. {2}% structural integrity.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "survivor_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Survivors: {0}/{1} alive. {2} injured.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "food_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Food: {0}/{1} days remaining. {2}% waste.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "water_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Water: {0}/{1} liters remaining. {2}% clean.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "medical_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Medical: {0}/{1} supplies remaining. {2} patients.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "fuel_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Fuel: {0}/{1} liters remaining. {2}% efficiency.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "power_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Power: {0}/{1}%. Generator status: {2}.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "morale_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Morale: {0}/100. {1} survivors affected.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3
+    },
+    {
+      "key": "radiation_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Radiation: {0} mSv/hr outside. {1} mSv/hr inside.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "weather_status",
+      "category": "status",
+      "severity": "info",
+      "template": "Weather: {0}. Visibility: {1} km. Temperature: {2}\u00B0C.",
+      "parameter_count": 3,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "storm_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Radiation storm approaching in {0} hours!",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "raider_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Raiders detected near Sector {0}!",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "disease_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Disease outbreak detected! Quarantine required.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "fire_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Fire in {0}! Evacuate if necessary.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "intruder_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Intruder detected in the bunker!",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "power_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Power failure in {0}! Emergency protocols activated.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "radiation_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Radiation leak detected! Seal affected areas immediately.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "food_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Food storage compromised! Check for contamination.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "water_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Water filtration system failing! Repairs needed.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "medical_alert",
+      "category": "alert",
+      "severity": "critical",
+      "template": "ALERT: Medical bay at capacity! Prioritize critical cases.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "scavenge_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Scavenge in areas with low radiation for better results.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "ration_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Equal rationing maintains morale, but priority rationing saves lives.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "medical_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Assign your best medics to critical cases to improve survival rates.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "trade_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Trade with factions you trust, but always verify their claims.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "expedition_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Send experienced survivors on dangerous expeditions.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "morale_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Small celebrations boost morale more than large ones.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "repair_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Assign laborers to repair bunker structures to prevent deterioration.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "radiation_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Use protective gear when radiation levels are elevated.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "faction_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Maintain good relationships with multiple factions to avoid isolation.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "resource_hint",
+      "category": "hint",
+      "severity": "info",
+      "template": "Tip: Stockpile resources before winter to avoid shortages.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "major_reveal",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER WARNING: This action will reveal major plot points. Continue?",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "ending_spoiler",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: This choice affects the game\u0027s ending. Are you sure?",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "faction_spoiler",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: This choice may permanently alter faction relationships.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "survivor_spoiler",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: This action may result in a survivor\u0027s death.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "technology_spoiler",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: This technology has hidden consequences. Proceed with caution.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "quest_spoiler",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: This quest has branching paths with different outcomes.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "world_spoiler",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: This choice may permanently change the game world.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "secret_spoiler",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: You\u0027re about to uncover a hidden secret. Continue?",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "ending_choice",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: This is a major story choice. Think carefully before proceeding.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "final_consequence",
+      "category": "spoiler",
+      "severity": "warning",
+      "template": "SPOILER: This action has irreversible consequences. Are you certain?",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "storm_countdown",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Storm arrives in {0} hours. {1} tasks remaining.",
+      "parameter_count": 2,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "raid_countdown",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Raiders attack in {0} minutes. Prepare defenses now.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "medical_emergency",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! {0} is critical. {1} minutes until irreversible damage.",
+      "parameter_count": 2,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "power_failure",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Power failure in {0} minutes. Activate backup generator.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "food_shortage",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Food runs out in {0} days. Send scavengers immediately.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "water_contamination",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Water contaminated. {0} hours until unusable.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "radiation_spike",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Radiation spike detected. {0} minutes to find shelter.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "siege_imminent",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Siege begins in {0} hours. Fortify the bunker now.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "expedition_timeout",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Expedition deadline in {0} hours. Recall team if overdue.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "trade_deadline",
+      "category": "time_pressure",
+      "severity": "critical",
+      "template": "HURRY! Trade deadline in {0} minutes. Meet at the rendezvous point.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "food_low",
+      "category": "resource_warning",
+      "severity": "warning",
+      "template": "WARNING: Food supplies at {0}%. Assign scavengers to find more.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "water_low",
+      "category": "resource_warning",
+      "severity": "warning",
+      "template": "WARNING: Water supplies at {0}%. Filter repairs needed.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "medical_low",
+      "category": "resource_warning",
+      "severity": "warning",
+      "template": "WARNING: Medical supplies at {0}%. Prioritize critical cases.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "fuel_low",
+      "category": "resource_warning",
+      "severity": "warning",
+      "template": "WARNING: Fuel at {0}%. Send expedition to scavenge.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "scrap_low",
+      "category": "resource_warning",
+      "severity": "warning",
+      "template": "WARNING: Scrap metal at {0}%. Construction projects delayed.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "technology_low",
+      "category": "resource_warning",
+      "severity": "warning",
+      "template": "WARNING: Technology at {0}%. Research projects stalled.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "ammo_low",
+      "category": "resource_warning",
+      "severity": "warning",
+      "template": "WARNING: Ammunition at {0}%. Assign survivors to scavenge weapons.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "medicine_low",
+      "category": "resource_warning",
+      "severity": "warning",
+      "template": "WARNING: Medicine at {0}%. Disease risk increases.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "fuel_critical",
+      "category": "resource_warning",
+      "severity": "critical",
+      "template": "CRITICAL: Fuel at {0}%. Bunker operations at risk.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "food_critical",
+      "category": "resource_warning",
+      "severity": "critical",
+      "template": "CRITICAL: Food at {0}%. Starvation imminent without action.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "radiation_high",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: Radiation levels at {0} mSv/hr. Seek shelter immediately.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "injury_critical",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: {0} is critically injured. Medical attention required NOW.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "sickness_spreading",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: Disease spreading. Quarantine infected survivors.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "starvation_imminent",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: {0} is starving. Feed them immediately or they will die.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "dehydration_imminent",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: {0} is dehydrated. Provide water immediately or they will die.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "radiation_sickness",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: {0} has radiation sickness. Immediate medical treatment required.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "hypothermia_risk",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: Hypothermia risk high. Provide warmth immediately.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "heatstroke_risk",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: Heatstroke risk high. Provide cooling immediately.",
+      "parameter_count": 0,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "mental_break",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: {0} is having a mental breakdown. Provide support immediately.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "poisoning_risk",
+      "category": "health_warning",
+      "severity": "critical",
+      "template": "DANGER: {0} has been poisoned. Provide antidote immediately.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "morale_critical",
+      "category": "morale_warning",
+      "severity": "critical",
+      "template": "CRITICAL: Morale at {0}/100. Survivors may abandon the bunker.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "starvation_morale",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale dropping: Survivors are hungry and restless.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "death_morale",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale dropping: A survivor has died. Community in mourning.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "isolation_morale",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale dropping: Bunker feels isolated. Survivors crave connection.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "fear_morale",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale dropping: Radiation storms and raids increase fear.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "hope_low",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale low: Survivors have lost hope for the future.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "celebration_needed",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale low: Survivors need a celebration to boost spirits.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "leadership_doubt",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale low: Survivors question leadership decisions.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "community_divided",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale low: Survivors are divided and distrustful.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "survival_fatigue",
+      "category": "morale_warning",
+      "severity": "warning",
+      "template": "Morale low: Survivors are tired of constant struggle.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "relationship_improved",
+      "category": "relationship",
+      "severity": "info",
+      "template": "Your relationship with {0} has improved to {1}/100.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "relationship_damaged",
+      "category": "relationship",
+      "severity": "info",
+      "template": "Your relationship with {0} has worsened to {1}/100.",
+      "parameter_count": 2,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "relationship_hostile",
+      "category": "relationship",
+      "severity": "warning",
+      "template": "Your relationship with {0} is now hostile. Avoid contact.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "relationship_allies",
+      "category": "relationship",
+      "severity": "info",
+      "template": "Your relationship with {0} is now allied. Trade and cooperation possible.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "relationship_trusting",
+      "category": "relationship",
+      "severity": "info",
+      "template": "Your relationship with {0} is now trusting. They may share secrets.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "relationship_respected",
+      "category": "relationship",
+      "severity": "info",
+      "template": "{0} now respects you. They may offer valuable information.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "relationship_fearful",
+      "category": "relationship",
+      "severity": "warning",
+      "template": "{0} fears you. They may avoid or betray you.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "relationship_dependent",
+      "category": "relationship",
+      "severity": "info",
+      "template": "{0} is now dependent on you. They may follow your lead.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "relationship_manipulated",
+      "category": "relationship",
+      "severity": "warning",
+      "template": "You have manipulated {0}. They may seek revenge.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "relationship_betrayed",
+      "category": "relationship",
+      "severity": "warning",
+      "template": "{0} feels betrayed. Trust has been broken.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "faction_allies",
+      "category": "faction",
+      "severity": "info",
+      "template": "You are now allied with {0}. Trade and cooperation possible.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "faction_enemies",
+      "category": "faction",
+      "severity": "warning",
+      "template": "You are now enemies with {0}. Avoid their territory.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "faction_neutral",
+      "category": "faction",
+      "severity": "info",
+      "template": "Your relationship with {0} is neutral. Proceed with caution.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "faction_trade_blocked",
+      "category": "faction",
+      "severity": "warning",
+      "template": "Trade with {0} is now blocked. Find another partner.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "faction_support_gained",
+      "category": "faction",
+      "severity": "info",
+      "template": "{0} now supports you. They may provide aid.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "faction_support_lost",
+      "category": "faction",
+      "severity": "warning",
+      "template": "{0} has withdrawn support. You are on your own.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "faction_raid_imminent",
+      "category": "faction",
+      "severity": "critical",
+      "template": "{0} is planning a raid. Fortify your defenses.",
+      "parameter_count": 1,
+      "display_duration_seconds": 5
+    },
+    {
+      "key": "faction_trade_improved",
+      "category": "faction",
+      "severity": "info",
+      "template": "Trade terms with {0} have improved.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "faction_trade_worsened",
+      "category": "faction",
+      "severity": "warning",
+      "template": "Trade terms with {0} have worsened.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "faction_alliance_broken",
+      "category": "faction",
+      "severity": "warning",
+      "template": "Your alliance with {0} has been broken.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "storm_approaching",
+      "category": "world_state",
+      "severity": "info",
+      "template": "The weather forecast predicts a radiation storm in {0} hours.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "season_changing",
+      "category": "world_state",
+      "severity": "info",
+      "template": "The season is changing to {0}. Prepare for {1} conditions.",
+      "parameter_count": 2,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "radiation_increasing",
+      "category": "world_state",
+      "severity": "warning",
+      "template": "Radiation levels are increasing across the wasteland.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "settlement_destroyed",
+      "category": "world_state",
+      "severity": "warning",
+      "template": "The settlement at {0} has been destroyed. Survivors may seek refuge here.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "raider_activity_increasing",
+      "category": "world_state",
+      "severity": "warning",
+      "template": "Raider activity is increasing in Sector {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "trade_route_disrupted",
+      "category": "world_state",
+      "severity": "warning",
+      "template": "The trade route to {0} has been disrupted by raiders.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "water_source_contaminated",
+      "category": "world_state",
+      "severity": "warning",
+      "template": "The water source at {0} has been contaminated.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "food_source_depleted",
+      "category": "world_state",
+      "severity": "warning",
+      "template": "The food source at {0} has been depleted.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "technology_scavenged",
+      "category": "world_state",
+      "severity": "info",
+      "template": "A new technology cache has been scavenged at {0}.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "radiation_storm_passed",
+      "category": "world_state",
+      "severity": "info",
+      "template": "The radiation storm has passed. Radiation levels are returning to normal.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "save_success",
+      "category": "system",
+      "severity": "info",
+      "template": "Game saved successfully.",
+      "parameter_count": 0,
+      "display_duration_seconds": 2.5
+    },
+    {
+      "key": "save_failed",
+      "category": "system",
+      "severity": "error",
+      "template": "Failed to save game. Check your storage device.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "load_success",
+      "category": "system",
+      "severity": "info",
+      "template": "Game loaded successfully.",
+      "parameter_count": 0,
+      "display_duration_seconds": 2.5
+    },
+    {
+      "key": "load_failed",
+      "category": "system",
+      "severity": "error",
+      "template": "Failed to load game. File may be corrupted.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "backup_created",
+      "category": "system",
+      "severity": "info",
+      "template": "Backup created successfully.",
+      "parameter_count": 0,
+      "display_duration_seconds": 2.5
+    },
+    {
+      "key": "backup_failed",
+      "category": "system",
+      "severity": "error",
+      "template": "Failed to create backup. Check your storage device.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "update_available",
+      "category": "system",
+      "severity": "info",
+      "template": "Update available! Version {0} is ready to install.",
+      "parameter_count": 1,
+      "display_duration_seconds": 3.5
+    },
+    {
+      "key": "update_failed",
+      "category": "system",
+      "severity": "error",
+      "template": "Failed to install update. Check your connection.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4
+    },
+    {
+      "key": "crash_recovered",
+      "category": "system",
+      "severity": "warning",
+      "template": "Game recovered from crash. Some progress may be lost.",
+      "parameter_count": 0,
+      "display_duration_seconds": 4.5
+    },
+    {
+      "key": "performance_warning",
+      "category": "system",
+      "severity": "warning",
+      "template": "Performance warning: {0}% CPU usage. Optimize your settings.",
+      "parameter_count": 1,
+      "display_duration_seconds": 4
+    }
+  ]
+}

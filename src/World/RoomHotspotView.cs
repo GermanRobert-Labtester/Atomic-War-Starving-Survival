@@ -60,7 +60,7 @@ namespace AtomicWar.GodotApp.World
         {
             string countStr = _occupantCount > 0 ? $" ({_occupantCount})" : "";
             Label.Text = $"{_displayName}{countStr}";
-            Label.TooltipText = string.IsNullOrEmpty(_statusText) 
+            Label.TooltipText = string.IsNullOrEmpty(_statusText)
                 ? $"{_displayName} — {_occupantCount} dweller(s)"
                 : $"{_displayName} — {_occupantCount} dweller(s)\n{_statusText}";
         }

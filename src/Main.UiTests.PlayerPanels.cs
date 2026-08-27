@@ -42,76 +42,157 @@ namespace AtomicWar.GodotApp
             SetupWorld();
             SetupRadio();
 
+            UiNodeDiagnostics.Section("PlayerPanelsUiTest — per-panel node counts");
+
             _survivorsOverlay.Bind(_survivors);
+            UiNodeDiagnostics.Mark(this, "survivors");
             _survivorsOverlay.Open();
             bool survivors = _survivorsOverlay.IsBound
                 && _survivorsOverlay.RenderedSurvivorCount == _survivors.RosterState.Count
                 && _survivorsOverlay.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "survivors");
 
             _medicalPanel.Bind(_medical, _survivors, _inventory,
                 _phase0?.Respiratory);
+            UiNodeDiagnostics.Mark(this, "medical");
             _medicalPanel.Open();
             bool medical = _medicalPanel.IsBound
                 && _medicalPanel.RenderedHealthCount >= _survivors.RosterState.Count
                 && _medicalPanel.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "medical");
 
             _world.ForceDemo(Ashfall.Core.WeatherKind.FalloutStorm);
             _weatherPanel.Bind(_world);
+            UiNodeDiagnostics.Mark(this, "weather");
             _weatherPanel.Open();
             bool weather = _weatherPanel.IsBound
                 && _weatherPanel.BoundWeather == Ashfall.Core.WeatherKind.FalloutStorm
                 && _weatherPanel.RenderedHazardCount > 0
                 && _weatherPanel.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "weather");
 
             _radioPanel.Bind(_radio);
+            UiNodeDiagnostics.Mark(this, "radio");
             _radioPanel.Open();
             bool radio = _radioPanel.IsBound
                 && _radio.Engine.FactionCount > 0
                 && _radioPanel.RenderedSignalCount > 0
                 && _radioPanel.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "radio");
 
             _shelterPanel.Bind(_survivors, _world, _inventory);
+            UiNodeDiagnostics.Mark(this, "shelter");
             _shelterPanel.Open();
             bool shelter = _shelterPanel.IsBound
                 && _shelterPanel.RenderedStructureCount > 0
                 && _shelterPanel.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "shelter");
 
             _statusPanel.Bind(_survivors, _world.Weather, _powerGrid, _inventory, _simDay);
+            UiNodeDiagnostics.Mark(this, "status");
             _statusPanel.Open();
             bool status = _statusPanel.IsBound
                 && _statusPanel.RenderedDayInfoCount >= 2
                 && _statusPanel.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "status");
 
             _tutorialPanel.Bind(_simDay);
+            UiNodeDiagnostics.Mark(this, "tutorial");
             _tutorialPanel.Open();
             bool tutorial = _tutorialPanel.IsBound
                 && _tutorialPanel.RenderedControlsCount >= 7
                 && _tutorialPanel.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "tutorial");
 
             SetupMedical();
             SetupPhase0();
             _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory);
+            UiNodeDiagnostics.Mark(this, "afflictions");
             _afflictionsPanel.Open();
             bool afflictions = _afflictionsPanel.IsBound && _afflictionsPanel.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "afflictions");
 
             _radiationDetailPanel.Bind(_doseLedger, _survivors);
+            UiNodeDiagnostics.Mark(this, "radiation");
             _radiationDetailPanel.Open();
             bool radiation = _radiationDetailPanel.IsBound && _radiationDetailPanel.Visible;
             CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "radiation");
 
-            bool pass = survivors && medical && weather && radio && shelter && status && tutorial && afflictions && radiation;
+            // ── Per-Panel Bind/Unbind Lifecycle Verification (Research, Journal, Weather, Expedition) ──
+            SetupExpeditions();
+            SetupJournal();
+
+            // 1. ResearchPanel: Open -> Bind -> Close -> Reopen
+            _sharedResearch = new ResearchSystem(log: new GodotLog());
+            _sharedResearch.RegisterDefaults();
+            _sharedResearch.UnlockManual("res_rad_mapping");
+            _researchPanel.Bind(_sharedResearch);
+            UiNodeDiagnostics.Mark(this, "research-lifecycle");
+            _researchPanel.Open();
+            int r1Count = _researchPanel.RenderedRowCount;
+            _researchPanel.Close();
+            _researchPanel.Unbind();
+            _researchPanel.Bind(_sharedResearch);
+            _researchPanel.Open();
+            int r2Count = _researchPanel.RenderedRowCount;
+            bool researchLifecycle = _researchPanel.IsBound && _researchPanel.Visible && r1Count == r2Count;
+            CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "research-lifecycle");
+
+            // 2. JournalPanel: Open -> Bind -> Close -> Reopen
+            _journalPanel.Bind(_journal);
+            UiNodeDiagnostics.Mark(this, "journal-lifecycle");
+            _journalPanel.Open();
+            _journalPanel.Close();
+            _journalPanel.Unbind();
+            _journalPanel.Bind(_journal);
+            _journalPanel.Open();
+            bool journalLifecycle = _journalPanel.Visible;
+            CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "journal-lifecycle");
+
+            // 3. WeatherPanel: Open -> Bind -> Close -> Reopen
+            _weatherPanel.Bind(_world);
+            UiNodeDiagnostics.Mark(this, "weather-lifecycle");
+            _weatherPanel.Open();
+            _weatherPanel.Close();
+            _weatherPanel.Unbind();
+            _weatherPanel.Bind(_world);
+            _weatherPanel.Open();
+            bool weatherLifecycle = _weatherPanel.IsBound && _weatherPanel.Visible;
+            CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "weather-lifecycle");
+
+            // 4. ExpeditionPanel: Open -> Bind -> Close -> Reopen
+            _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+            UiNodeDiagnostics.Mark(this, "expedition-lifecycle");
+            _expeditionPanel.Open();
+            _expeditionPanel.Close();
+            _expeditionPanel.Unbind();
+            _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+            _expeditionPanel.Open();
+            bool expeditionLifecycle = _expeditionPanel.IsBound && _expeditionPanel.Visible;
+            CloseAllOverlayPanels();
+            UiNodeDiagnostics.Report(this, "expedition-lifecycle");
+
+            bool nodeCallbackLifecycle = PanelBindLifecycleSelfTest.Run(_dataDir) == 0;
+            bool lifecyclePass = researchLifecycle && journalLifecycle && weatherLifecycle && expeditionLifecycle && nodeCallbackLifecycle;
+
+            bool pass = survivors && medical && weather && radio && shelter && status && tutorial && afflictions && radiation && researchLifecycle && lifecyclePass;
             GD.Print($"[PlayerPanelsUiTest] survivors={survivors} medical={medical} weather={weather} " +
                      $"radio={radio} shelter={shelter} status={status} tutorial={tutorial} " +
-                     $"afflictions={afflictions} radiation={radiation}");
-            GD.Print(pass ? "PLAYER_PANELS_UITEST PASS" : "PLAYER_PANELS_UITEST FAIL");
+                     $"afflictions={afflictions} radiation={radiation} " +
+                     $"lifecycle=(res={researchLifecycle}, jrn={journalLifecycle}, wtr={weatherLifecycle}, exp={expeditionLifecycle}, callbacks={nodeCallbackLifecycle})");
+            HostCli.EmitSummary("player_panels_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

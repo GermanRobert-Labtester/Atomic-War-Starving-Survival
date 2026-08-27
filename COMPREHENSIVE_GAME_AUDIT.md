@@ -1,8 +1,15 @@
-# ASHFALL — COMPREHENSIVE READ-ONLY PROJECT AUDIT
-**Date of Audit:** 2026-08-18  
-**Auditor Role:** Principal Game Development Auditor, Technical Director, Systems Designer, Narrative Systems Analyst, UI/UX Reviewer, Production Architect, and Codebase Archaeologist  
-**Target Repository:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`  
-**Execution Environment:** Linux x86_64, .NET 8.0/9.0, Godot Engine v4.7.1.stable.mono.official (gl_compatibility)  
+# ASHFALL — COMPREHENSIVE READ-ONLY PROJECT AUDIT [HISTORICAL ARCHIVE]
+
+> [!CAUTION]
+> **SUPERSEDED HISTORICAL AUDIT (2026-08-18) — PRESERVED FOR HISTORICAL CONTEXT ONLY**
+>
+> This audit was conducted prior to the full removal of the legacy Unity host (`Assets/_Game/`).
+> For current active architecture, consult [`AGENTS.md`](AGENTS.md), [`docs/CURRENT_AUTHORITY.md`](docs/CURRENT_AUTHORITY.md), and [`docs/ASHFALL_CODE_INDEX.md`](docs/ASHFALL_CODE_INDEX.md).
+
+**Date of Audit:** 2026-08-18 (Historical)
+**Auditor Role:** Principal Game Development Auditor, Technical Director, Systems Designer, Narrative Systems Analyst, UI/UX Reviewer, Production Architect, and Codebase Archaeologist
+**Target Repository:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`
+**Execution Environment:** Linux x86_64, .NET 8.0/9.0, Godot Engine v4.7.1.stable.mono.official (gl_compatibility)
 **Operating Constraint:** READ-ONLY EVIDENCE-BASED FORENSIC AUDIT (Zero Source/Data/Asset Mutations)
 
 ---

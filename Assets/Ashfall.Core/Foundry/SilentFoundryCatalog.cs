@@ -153,10 +153,10 @@ IJsonSerializer? serializer = null)
                 }
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return new Dictionary<string, int>(StringComparer.Ordinal);
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "RegionalTreatiesFile", ex_CATDIAG);
+                return new Dictionary<string, int>(StringComparer.Ordinal);
+            }
             return ratification;
         }
 
@@ -176,10 +176,10 @@ IJsonSerializer? serializer = null)
                 return serializer.Deserialize<FoundryProductionFile>(text) ?? new FoundryProductionFile();
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return new FoundryProductionFile();
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "FoundryProductionFile", ex_CATDIAG);
+                return new FoundryProductionFile();
+            }
         }
 
         public static FoundryFactionEntry? LoadFaction(
@@ -198,10 +198,10 @@ IJsonSerializer? serializer = null)
                 return serializer.Deserialize<FoundryFactionEntry>(text);
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return null;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "FoundryFactionEntry", ex_CATDIAG);
+                return null;
+            }
         }
     }
 

@@ -9,20 +9,38 @@ namespace Ashfall.Core.Maritime
     /// locations with variable loot tables. Reads deep_lore_locations.json
     /// via the engine-agnostic IFileIO/IJsonSerializer ports.
     /// </summary>
+    /// <summary>
+    /// Data Transfer Object representing a deep lore dive/salvage location in JSON.
+    /// </summary>
     [Serializable]
     public class DeepLoreLocationEntry
     {
+        /// <summary>Unique location identifier (e.g. loc_deep_lore_01).</summary>
         public string id = string.Empty;
+
+        /// <summary>Player-visible location name.</summary>
         public string displayName = string.Empty;
+
+        /// <summary>Ambient radiation level in micro-Sieverts per hour (µSv/h).</summary>
         public float radiationUSv;
+
+        /// <summary>Relative danger level tier (1-5).</summary>
         public int dangerLevel;
+
+        /// <summary>Round-trip expedition travel time in hours.</summary>
         public float travelHours;
+
+        /// <summary>List of variable loot nodes available for salvage rolls at this location.</summary>
         public List<VariableLootNode> lootTable = new List<VariableLootNode>();
     }
 
+    /// <summary>
+    /// Root JSON container for deep_lore_locations.json.
+    /// </summary>
     [Serializable]
     public class DeepLoreLocationContainer
     {
+        /// <summary>Collection of deep lore location definitions.</summary>
         public List<DeepLoreLocationEntry> locations = new List<DeepLoreLocationEntry>();
     }
 
@@ -53,10 +71,10 @@ namespace Ashfall.Core.Maritime
                 }
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return result;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "DeepLoreLocationContainer", ex_CATDIAG);
+                return result;
+            }
             return result;
         }
 

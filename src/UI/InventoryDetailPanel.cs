@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
@@ -8,7 +9,8 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Inventory Detail panel.
-    /// Shows detailed item information, item properties, and item actions.
+    /// Shows item info, stats, and available actions for a specific item —
+    /// bound to the live InventoryHostSession for a given item id.
     /// </summary>
     public partial class InventoryDetailPanel : Control
     {
@@ -22,81 +24,94 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblItemActionsTitle;
         private VBoxContainer _itemActions;
 
-        // Placeholder item data
-        private readonly string[] _placeholderItemInfo = {
-            "Item: Gas Mask (Basic)",
-            "Type: Protective Equipment",
-            "Rarity: Common",
-            "Condition: 85% (Worn)",
-            "Weight: 2.5 kg",
-            "Value: 15 units"
-        };
+        private InventoryHostSession? _inventory;
+        private string _itemId = string.Empty;
 
-        private readonly string[] _placeholderItemStats = {
-            "Protection: 40% radiation reduction",
-            "Durability: 75/100 uses remaining",
-            "Compatibility: Standard gas mask filter",
-            "Special: Can be repaired with cloth",
-            "Effects: Reduces radiation exposure"
-        };
+        public bool IsBound => _inventory != null && !string.IsNullOrEmpty(_itemId);
+        public int RenderedRowCount { get; private set; }
 
-        private readonly string[] _placeholderItemActions = {
-            "Equip — Wear the gas mask",
-            "Unequip — Remove from inventory",
-            "Use — Apply to current situation",
-            "Repair — Fix worn condition (requires cloth)",
-            "Discard — Remove from inventory permanently",
-            "Trade — Offer to another survivor or faction"
-        };
-
-        // Real data from host session
-        // private InventoryHostSession? _inventoryHost;
-        // private string _selectedItemId;
-
-        public void Bind(object inventory, string itemId) // placeholder for InventoryHostSession
+        public void Bind(InventoryHostSession? inventory, string itemId)
         {
-            // _inventoryHost = (InventoryHostSession)inventory;
-            // _selectedItemId = itemId;
-            // RefreshView();
+            _inventory = inventory;
+            _itemId = itemId ?? string.Empty;
+            RefreshView();
         }
 
         public void RefreshView()
         {
             if (_itemInfo == null || _itemStats == null || _itemActions == null) return;
 
-            // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_itemInfo);
             AshfallUiHelpers.EmptyChildren(_itemStats);
             AshfallUiHelpers.EmptyChildren(_itemActions);
 
-            // Display placeholder item info
-            foreach (string info in _placeholderItemInfo)
+            RenderedRowCount = 0;
+
+            if (_inventory?.Inventory == null || string.IsNullOrEmpty(_itemId))
             {
-                var label = new Label { Text = info };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _itemInfo.AddChild(label);
+                _itemInfo.AddChild(MakeDimLine("No item selected."));
+                return;
             }
 
-            // Display placeholder item stats
-            foreach (string stats in _placeholderItemStats)
+            var slot = _inventory.Inventory.FindSlot(_itemId);
+            if (slot == null)
             {
-                var label = new Label { Text = stats };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _itemStats.AddChild(label);
+                _itemInfo.AddChild(MakeDimLine($"Item '{_itemId}' not in inventory."));
+                return;
             }
 
-            // Display placeholder item actions
-            foreach (string action in _placeholderItemActions)
+            var def = slot.Item;
+            int count = _inventory.Inventory.CountById(_itemId);
+
+            // ── Item info ──
+            AddRow(_itemInfo, $"Name: {def.displayName}", Ashfall.Core.UI.Theme.Pale);
+            AddRow(_itemInfo, $"ID: {def.id}", Ashfall.Core.UI.Theme.Dim);
+            AddRow(_itemInfo, $"Type: {def.type}", Ashfall.Core.UI.Theme.Lethe);
+            AddRow(_itemInfo, $"In Stock: {count}", count > 0 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 4;
+
+            if (!string.IsNullOrEmpty(def.description))
             {
-                var label = new Label { Text = action };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                _itemActions.AddChild(label);
+                AddRow(_itemInfo, def.description, Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount++;
             }
+
+            // ── Stats ──
+            if (def.radProtection > 0) { AddRow(_itemStats, $"Rad Protection: {def.radProtection * 100f:0}%", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
+            if (def.durability > 0) { AddRow(_itemStats, $"Durability: {def.durability:0}", Ashfall.Core.UI.Theme.Pale); RenderedRowCount++; }
+            if (def.hungerRestore > 0) { AddRow(_itemStats, $"Hunger Restore: {def.hungerRestore:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
+            if (def.thirstRestore > 0) { AddRow(_itemStats, $"Thirst Restore: {def.thirstRestore:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
+            if (def.healthEffect > 0) { AddRow(_itemStats, $"Health Effect: +{def.healthEffect:0}", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
+            if (def.radCleanse > 0) { AddRow(_itemStats, $"Rad Cleanse: −{def.radCleanse:0} mSv", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
+            if (def.moraleEffect > 0) { AddRow(_itemStats, $"Morale Effect: +{def.moraleEffect:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
+            if (def.tradeValue > 0) { AddRow(_itemStats, $"Trade Value: {def.tradeValue:0} (tier {def.tradeTier})", Ashfall.Core.UI.Theme.Pale); RenderedRowCount++; }
+            if (def.isEquipable) { AddRow(_itemStats, $"Equipable: {def.equipSlot}", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
+            if (RenderedRowCount == 4)
+                _itemStats.AddChild(MakeDimLine("No special stats."));
+
+            // ── Actions (contextual) ──
+            AddRow(_itemActions, $"Consume: {(def.hungerRestore > 0 || def.thirstRestore > 0 || def.healthEffect > 0 ? "available" : "not consumable")}",
+                (def.hungerRestore > 0 || def.thirstRestore > 0 || def.healthEffect > 0) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+            AddRow(_itemActions, $"Equip: {(def.isEquipable ? "available (" + def.equipSlot + ")" : "not equipable")}",
+                def.isEquipable ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 2;
+        }
+
+        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
         }
 
         public override void _Ready()
@@ -122,35 +137,29 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Item info section
-            _lblItemInfoTitle = AshfallUiHelpers.MakeSectionHeader("ITEM INFORMATION");
+            _lblItemInfoTitle = AshfallUiHelpers.MakeSectionHeader("ITEM INFO");
             vbox.AddChild(_lblItemInfoTitle);
-
             _itemInfo = new VBoxContainer();
             _itemInfo.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _itemInfo.CustomMinimumSize = new Vector2(400, 0);
+            _itemInfo.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_itemInfo);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Item stats section
-            _lblItemStatsTitle = AshfallUiHelpers.MakeSectionHeader("ITEM STATISTICS");
+            _lblItemStatsTitle = AshfallUiHelpers.MakeSectionHeader("ITEM STATS");
             vbox.AddChild(_lblItemStatsTitle);
-
             _itemStats = new VBoxContainer();
             _itemStats.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _itemStats.CustomMinimumSize = new Vector2(400, 0);
+            _itemStats.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_itemStats);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Item actions section
-            _lblItemActionsTitle = AshfallUiHelpers.MakeSectionHeader("ITEM ACTIONS");
+            _lblItemActionsTitle = AshfallUiHelpers.MakeSectionHeader("ACTIONS");
             vbox.AddChild(_lblItemActionsTitle);
-
             _itemActions = new VBoxContainer();
             _itemActions.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _itemActions.CustomMinimumSize = new Vector2(400, 0);
+            _itemActions.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_itemActions);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -158,11 +167,6 @@ namespace AtomicWar.GodotApp.UI
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()
@@ -174,7 +178,6 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-
             if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
                 OnClose?.Invoke();

@@ -1,103 +1,57 @@
-using System;
-using System.IO;
-using Godot;
+// ============================================================================
+// Save Store : DoseLedgerSaveStore
+// Core State : Ashfall.Core.DoseLedgerSave
+// Host Caller: Main.Holdfast, Main.Phase0 / DoseLedgerHostSession
+// Purpose    : Cumulative radiation dose ledger, threshold brackets, and survivor exposure logs
+// ============================================================================
 using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Persists <see cref="DoseLedgerSave"/> as JSON under user://dose_ledger_save.json
-    /// using the core IFileIO / SystemTextJsonSerializer ports. Shape and validation
-    /// live in Ashfall.Core.DoseLedgerSaveCodec. This type only picks the Godot path and
-    /// the log, mirroring the other expansion save stores.
+    /// Persists <see cref="DoseLedgerSave"/> as JSON under
+    /// user://dose_ledger_save.json — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). Shape and
+    /// validation live in <see cref="DoseLedgerSaveCodec"/>; path resolution,
+    /// atomic write, and error handling live in the service.
     /// </summary>
     public static class DoseLedgerSaveStore
     {
         public const string FileName = "dose_ledger_save.json";
         public const string SectionName = "dose_ledger";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(DoseLedgerSave state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static DoseLedgerSave? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<DoseLedgerSave> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(DoseLedgerSaveStore),
+            (save, json) => DoseLedgerSaveCodec.Encode(save, json),
+            (raw, json) => DoseLedgerSaveCodec.Decode(raw, json));
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(DoseLedgerSave state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return new SystemTextJsonSerializer().Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[DoseLedgerSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static DoseLedgerSave? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return new SystemTextJsonSerializer().Deserialize<DoseLedgerSave>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[DoseLedgerSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(DoseLedgerSave state) => s_store.CaptureBare(state);
 
-        private static readonly IFileIO s_files = new FileSystemIO();
-        private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
-        private static readonly ILog s_log = new GodotLog();
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static DoseLedgerSave? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(DoseLedgerSave state) => s_store.CaptureBare(state);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static DoseLedgerSave? TryRestore(string json) => s_store.RestoreBare(json);
 
         /// <summary>Writes through the codec (checksum stamped). Returns false on failure.</summary>
-        public static bool TrySave(DoseLedgerSave save, string pathOverride = null!)
-        {
-            if (save == null) return false;
-            try
-            {
-                string path = pathOverride ?? SavePath;
-                s_files.WriteAllText(path, DoseLedgerSaveCodec.Encode(save, s_json));
-                return true;
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[DoseLedgerSaveStore] save failed: " + e.Message);
-                return false;
-            }
-        }
+        public static bool TrySave(DoseLedgerSave save, string pathOverride = null!) =>
+            s_store.TrySave(save, pathOverride);
 
         /// <summary>Reads and validates through the codec. Returns null when absent or corrupt.</summary>
-        public static DoseLedgerSave? TryLoad(string pathOverride = null!)
-        {
-            try
-            {
-                string path = pathOverride ?? SavePath;
-                if (!s_files.FileExists(path)) return null;
-                return DoseLedgerSaveCodec.Decode(s_files.ReadAllText(path), s_json);
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[DoseLedgerSaveStore] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static DoseLedgerSave? TryLoad(string pathOverride = null!) =>
+            s_store.TryLoad(pathOverride);
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(DoseLedgerSave save) => s_store.CapturePersisted(save);
     }
 }

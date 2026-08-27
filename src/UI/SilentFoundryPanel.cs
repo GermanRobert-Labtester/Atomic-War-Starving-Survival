@@ -21,7 +21,7 @@ namespace AtomicWar.GodotApp.UI;
 /// Six columns of the active cast queue + condition bars + treaty roll-up.
 /// Pure presentation; reads only from `Ashfall.Core.Foundry.*`.
 /// </summary>
-public partial class SilentFoundryPanel : Control
+public partial class SilentFoundryPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<int>? OnProductSelected;
@@ -437,12 +437,18 @@ public partial class SilentFoundryPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

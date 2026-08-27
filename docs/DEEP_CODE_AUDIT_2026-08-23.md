@@ -1,9 +1,9 @@
 # ASHFALL Deep Code Audit and Remediation Plan
 
-**Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`  
-**Audit baseline:** `main` at `b4763049037495649ac854358e0f333988827b99`  
-**Audit date:** 2026-08-23  
-**Focus:** defects, correctness risks, architecture pressure points, persistence/determinism, CI/test integrity, performance, data/tooling, dependency surface, and maintainability.  
+**Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`
+**Audit baseline:** `main` at `b4763049037495649ac854358e0f333988827b99`
+**Audit date:** 2026-08-23
+**Focus:** defects, correctness risks, architecture pressure points, persistence/determinism, CI/test integrity, performance, data/tooling, dependency surface, and maintainability.
 **Related work:** `sources.md` is the broader architecture/codebase exploration report. This document is intentionally more defect- and remediation-oriented.
 
 ## Verification model
@@ -40,8 +40,8 @@ Confidence is reported as **High**, **Medium**, or **Conditional**. Conditional 
 
 ## AUD-001 — `main` contains an incomplete Core integration and does not represent a trustworthy build baseline
 
-**Severity:** P0  
-**Confidence:** High  
+**Severity:** P0
+**Confidence:** High
 **Status:** In-flight remediation in PR #24
 
 ### Evidence
@@ -77,7 +77,7 @@ Finish the focused repair already underway in PR #24 rather than adding more par
 
 ## AUD-002 — `main` is nominally protected, but required CI checks are not enforced
 
-**Severity:** P0/P1  
+**Severity:** P0/P1
 **Confidence:** High
 
 ### Evidence
@@ -108,8 +108,8 @@ Also prevent force-push/bypass for routine feature work. If administrator bypass
 
 ## AUD-003 — production-art tests contain stale phase assumptions and currently reject legitimate regenerated state
 
-**Severity:** P1  
-**Confidence:** High  
+**Severity:** P1
+**Confidence:** High
 **Status:** Current blocker exposed after PR #24 restored compilation
 
 ### Evidence
@@ -150,7 +150,7 @@ Treat generated visual artifacts as an atomic dependency graph.
 
 ## AUD-004 — `TimeSystem` can violate its own “one event per crossed hour” contract
 
-**Severity:** P1  
+**Severity:** P1
 **Confidence:** High
 
 ### Evidence
@@ -190,8 +190,8 @@ Add regression tests for:
 
 ## AUD-005 — `src/Main.cs` is an orchestration god object
 
-**Severity:** P1  
-**Confidence:** High  
+**Severity:** P1
+**Confidence:** High
 **Status:** Tracked by issue #25
 
 ### Evidence
@@ -233,8 +233,8 @@ Keep `Main` as the Godot composition root, but make it compose explicit coordina
 
 ## AUD-006 — persistence coordination has extreme concrete dependency fan-out and insufficiently explicit transactional semantics
 
-**Severity:** P1  
-**Confidence:** High  
+**Severity:** P1
+**Confidence:** High
 **Status:** Tracked by issue #26
 
 ### Evidence
@@ -255,7 +255,7 @@ The file already points toward an `ISaveable` registry model, but the central co
 
 Continue toward a versioned participant registry with a two-phase restore:
 
-**Phase A — detached:** decode, checksum, migrate, validate all participants into detached snapshots.  
+**Phase A — detached:** decode, checksum, migrate, validate all participants into detached snapshots.
 **Phase B — apply:** mutate live systems only after every required participant has passed Phase A.
 
 Each participant should expose a stable ID, participant schema version, capture, decode/validate, migration chain where needed, and apply function.
@@ -272,7 +272,7 @@ Each participant should expose a stable ID, participant schema version, capture,
 
 ## AUD-007 — the active Godot aggregate project still compiles the entire Unity-coupled legacy `_Game` tree
 
-**Severity:** P1  
+**Severity:** P1
 **Confidence:** High
 
 ### Evidence
@@ -312,8 +312,8 @@ Move from wildcard `_Game/**/*.cs` inclusion toward explicit compatibility inclu
 
 ## AUD-008 — engine/source authority is contradictory across README and workflows
 
-**Severity:** P1  
-**Confidence:** High  
+**Severity:** P1
+**Confidence:** High
 **Status:** In-flight remediation in PR #24
 
 ### Evidence
@@ -344,7 +344,7 @@ README, engine-support policy, workflow comments, and release process all state 
 
 ## AUD-009 — compiler-warning policy hides too much signal
 
-**Severity:** P1/P2  
+**Severity:** P1/P2
 **Confidence:** High
 
 ### Evidence
@@ -377,7 +377,7 @@ Use a ratchet rather than a flag-day cleanup:
 
 ## AUD-010 — the headless CLI verification surface is much larger than the canonical gate, and command registration is manually duplicated
 
-**Severity:** P2  
+**Severity:** P2
 **Confidence:** High
 
 ### Evidence
@@ -418,7 +418,7 @@ The CLI exposes many additional checks for combat, medical, narrative, world, ec
 
 ## AUD-011 — canonical Godot asset import failure is currently tolerated
 
-**Severity:** P2  
+**Severity:** P2
 **Confidence:** High
 
 ### Evidence
@@ -442,7 +442,7 @@ Make import failure fail the canonical gate by default. If there are known benig
 
 ## AUD-012 — `SaveChecksum` is a strong cross-host design, but its reflection contract needs explicit schema guards
 
-**Severity:** P2  
+**Severity:** P2
 **Confidence:** High for the contract risk; Conditional for performance impact
 
 ### Evidence
@@ -476,7 +476,7 @@ Do **not** replace SHA-256 or return to hashing serializer text.
 
 ## AUD-013 — generated-data tooling lacks a single freshness boundary
 
-**Severity:** P2  
+**Severity:** P2
 **Confidence:** High
 
 ### Evidence
@@ -516,7 +516,7 @@ Each generated file should contain generator name/version or source digest where
 
 ## AUD-014 — legacy dependency/service surface is much broader than the active-host story suggests
 
-**Severity:** P2  
+**Severity:** P2
 **Confidence:** High
 
 ### Evidence
@@ -546,7 +546,7 @@ Maintain a dependency ownership table with columns: package, host, purpose, runt
 
 ## AUD-015 — repository hygiene mixes source, audit/process material, generated state, and migration quarantine at the root
 
-**Severity:** P3  
+**Severity:** P3
 **Confidence:** High
 
 ### Impact

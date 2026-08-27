@@ -49,10 +49,10 @@ Re-touching those would be a silent regression.
 ## Phase 1 — BUG-04 thermal heat-transfer placeholder
 
 ### Original Bug (audit §7)
-`ShelterThermalSystem.TickDay(ShelterThermalSystem.cs)` used three magic literals:  
-- `HeatGainBaseRate = 0.1f` to convert kW·day into °C/day,  
-- `HeatLossBaseRate = 0.1f` against a unit-less `(T_inside - T_outside)` driving force,  
-- an `insulationFactor + InsulationDivisionEpsilon` denominator,  
+`ShelterThermalSystem.TickDay(ShelterThermalSystem.cs)` used three magic literals:
+- `HeatGainBaseRate = 0.1f` to convert kW·day into °C/day,
+- `HeatLossBaseRate = 0.1f` against a unit-less `(T_inside - T_outside)` driving force,
+- an `insulationFactor + InsulationDivisionEpsilon` denominator,
 - and a divisor `/ Math.Max(1, _state.rooms.Count)` that *reduced* per-room heat as more rooms were added.
 
 Visible kW panel label was a lie (the audit uses that exact phrase): a 100 kW boiler on a 5-room bunker delivered each room ~2 kW after `/nRooms` × the `*0.1f` reduction.

@@ -24,7 +24,7 @@ namespace AtomicWar.GodotApp.UI;
 ///
 /// Pure presentation. Reads only; never mutates trust or thresholds.
 /// </summary>
-public partial class FactionMatrixPanel : Control
+public partial class FactionMatrixPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnFactionSelected;
@@ -75,9 +75,9 @@ public partial class FactionMatrixPanel : Control
             return;
         }
 
+        string osPath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
         try
         {
-            string osPath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
             if (!File.Exists(osPath)) return;
             using var stream = File.OpenRead(osPath);
             using var doc = JsonDocument.Parse(stream);
@@ -96,7 +96,7 @@ public partial class FactionMatrixPanel : Control
         }
         catch (Exception ex_CATDIAG)
         {
-            CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+            CatalogDiagnostics.Warn(osPath, "faction_lore.json", ex_CATDIAG);
             // ignored — fixture data will be used at row render time
         }
     }
@@ -466,9 +466,15 @@ public partial class FactionMatrixPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         _factions.Clear();
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

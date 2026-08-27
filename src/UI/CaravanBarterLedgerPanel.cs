@@ -38,7 +38,7 @@ namespace AtomicWar.GodotApp.UI;
 /// TradeScreenGodotPanel. This wrapper does not re-implement the wiring; it
 /// only routes the user toward the right sub-section via sidebar selection.
 /// </summary>
-public partial class CaravanBarterLedgerPanel : Control
+public partial class CaravanBarterLedgerPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnSetActiveFaction;
@@ -148,10 +148,10 @@ public partial class CaravanBarterLedgerPanel : Control
             return 0;
         }
         catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return 0;
-                                }
+        {
+            CatalogDiagnostics.Warn("<reflection>", "ConsecutiveRepels property", ex_CATDIAG);
+            return 0;
+        }
     }
 
     public override void _Ready()
@@ -243,12 +243,18 @@ public partial class CaravanBarterLedgerPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_session != null)
         {
             _session.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

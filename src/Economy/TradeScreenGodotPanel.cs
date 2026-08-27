@@ -9,7 +9,7 @@ using Ashfall.Core.Economy;
 using Ashfall.Core.Radio;
 namespace AtomicWar.GodotApp.Economy
 {
-    
+
     /// <summary>
     /// Full Godot host implementation of the Ashfall Trade Screen &amp; Economy HUD.
     /// Hits all fields:
@@ -18,7 +18,7 @@ namespace AtomicWar.GodotApp.Economy
     /// - Two-column Barter: Player offers (items, qualitative worth, biological offerings: blood, marrow, plasma, organ) and Faction asks
     /// - Arbitrator: Deal fairness badge, value comparison, confirm button, parley button
     /// - Radio Ticker: Intercept chatter and parley resolutions
-    /// 
+    ///
     /// Follows strict token styling via Ashfall.Core.UI.Theme.
     /// </summary>
     public partial class TradeScreenGodotPanel : PanelContainer

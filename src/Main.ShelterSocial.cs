@@ -48,7 +48,6 @@ namespace AtomicWar.GodotApp
             _survivorRelationsCore = srSys;
             srSys.RestoreState(srState);
             _survivorRelations = new SurvivorRelationsHostSession(srSys);
-            _survivorRelations.StateChanged += () => _survivorRelations.MarkDirty();
             if (_survivorRelationsPanel != null && _survivorRelationsPanel.IsInsideTree())
                 RemoveChild(_survivorRelationsPanel);
             _survivorRelationsPanel = new SurvivorRelationsPanel();
@@ -59,7 +58,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveSurvivorRelations()
         {
-            _survivorRelations?.Save();
+            if (_survivorRelations != null)
+                CaptureSection("survivor_relations", SurvivorRelationsSaveStore.TryCapturePersisted(_survivorRelations.System.CaptureState()));
         }
 
         private void SetupRegionalTreaty()
@@ -68,7 +68,6 @@ namespace AtomicWar.GodotApp
             var rtSys = new RegionalTreatySystem(new GodotLog());
             rtSys.RestoreState(rtState);
             _regionalTreaty = new RegionalTreatyHostSession(rtSys);
-            _regionalTreaty.StateChanged += () => _regionalTreaty.MarkDirty();
             if (_regionalTreatyPanel != null && _regionalTreatyPanel.IsInsideTree())
                 RemoveChild(_regionalTreatyPanel);
             _regionalTreatyPanel = new RegionalTreatyPanel();
@@ -79,7 +78,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveRegionalTreaty()
         {
-            _regionalTreaty?.Save();
+            if (_regionalTreaty != null)
+                CaptureSection("regional_treaty", RegionalTreatySaveStore.TryCapturePersisted(_regionalTreaty.System.CaptureState()));
         }
 
         private void SetupVinylMorale()
@@ -89,7 +89,6 @@ namespace AtomicWar.GodotApp
             vmSys.RestoreState(vmState);
             _vinylMorale = new VinylMoraleHostSession(vmSys);
             _vinylMorale.DayProvider = () => _simDay;
-            _vinylMorale.StateChanged += () => _vinylMorale.MarkDirty();
             if (_vinylMoralePanel != null && _vinylMoralePanel.IsInsideTree())
                 RemoveChild(_vinylMoralePanel);
             _vinylMoralePanel = new VinylMoralePanel();
@@ -100,7 +99,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveVinylMorale()
         {
-            _vinylMorale?.Save();
+            if (_vinylMorale != null)
+                CaptureSection("vinyl_morale", VinylMoraleSaveStore.TryCapturePersisted(_vinylMorale.System.CaptureState()));
         }
 
         private void SetupWildlifeTrapping()
@@ -109,7 +109,6 @@ namespace AtomicWar.GodotApp
             var wtrapSys = new WildlifeTrappingSystem(new SeededRng(1986), new GodotLog());
             wtrapSys.RestoreState(wtrapState);
             _wildlifeTrapping = new WildlifeTrappingHostSession(wtrapSys);
-            _wildlifeTrapping.StateChanged += () => _wildlifeTrapping.MarkDirty();
             if (_wildlifeTrappingPanel != null && _wildlifeTrappingPanel.IsInsideTree())
                 RemoveChild(_wildlifeTrappingPanel);
             _wildlifeTrappingPanel = new WildlifeTrappingPanel();
@@ -120,7 +119,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveWildlifeTrapping()
         {
-            _wildlifeTrapping?.Save();
+            if (_wildlifeTrapping != null)
+                CaptureSection("wildlife_trapping", WildlifeTrappingSaveStore.TryCapturePersisted(_wildlifeTrapping.System.CaptureState()));
         }
 
         private void SetupExcavation()
@@ -129,7 +129,6 @@ namespace AtomicWar.GodotApp
             var exSys = new ExcavationSystem(new SeededRng(1986), new GodotLog());
             exSys.RestoreState(exState);
             _excavation = new ExcavationHostSession(exSys);
-            _excavation.StateChanged += () => _excavation.MarkDirty();
             if (_excavationPanel != null && _excavationPanel.IsInsideTree())
                 RemoveChild(_excavationPanel);
             _excavationPanel = new ExcavationPanel();
@@ -140,7 +139,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveExcavation()
         {
-            _excavation?.Save();
+            if (_excavation != null)
+                CaptureSection("excavation", ExcavationSaveStore.TryCapturePersisted(_excavation.System.CaptureState()));
         }
 
         private void SetupApprenticeship()
@@ -150,7 +150,6 @@ namespace AtomicWar.GodotApp
             var appSys = new ApprenticeshipSystem(new SeededRng(1986), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
             appSys.RestoreState(appState);
             _apprenticeship = new ApprenticeshipHostSession(appSys);
-            _apprenticeship.StateChanged += () => _apprenticeship.MarkDirty();
             if (_apprenticeshipPanel != null && _apprenticeshipPanel.IsInsideTree())
                 RemoveChild(_apprenticeshipPanel);
             _apprenticeshipPanel = new ApprenticeshipPanel();
@@ -161,7 +160,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveApprenticeship()
         {
-            _apprenticeship?.Save();
+            if (_apprenticeship != null)
+                CaptureSection("apprenticeship", ApprenticeshipSaveStore.TryCapturePersisted(_apprenticeship.System.CaptureState()));
         }
 
         private void SetupCaregiving()
@@ -170,7 +170,6 @@ namespace AtomicWar.GodotApp
             var cgSys = new CaregivingSystem();
             cgSys.RestoreState(cgState);
             _caregiving = new CaregivingHostSession(cgSys);
-            _caregiving.StateChanged += () => _caregiving.MarkDirty();
             if (_caregivingPanel != null && _caregivingPanel.IsInsideTree())
                 RemoveChild(_caregivingPanel);
             _caregivingPanel = new CaregivingPanel();
@@ -181,7 +180,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveCaregiving()
         {
-            _caregiving?.Save();
+            if (_caregiving != null)
+                CaptureSection("caregiving", CaregivingSaveStore.TryCapturePersisted(_caregiving.System.CaptureState()));
         }
     }
 }

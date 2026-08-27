@@ -27,6 +27,15 @@ public partial class SaveLoadHostSession : Node
     /// <summary>Raised when the active slot changes.</summary>
     public event Action<SaveSlotId?>? ActiveSlotChanged;
 
+    /// <summary>Raised when a load operation finishes with its detailed result and user-facing message.</summary>
+    public event Action<SaveLoadResult>? OnLoadCompleted;
+
+    /// <summary>Last result from a TryLoadSlot invocation.</summary>
+    public SaveLoadResult? LastLoadResult { get; private set; }
+
+    /// <summary>User-facing message from the last save/load operation.</summary>
+    public string LastStatusMessage => LastLoadResult?.UserMessage ?? string.Empty;
+
     /// <summary>Sections that were successfully restored from the aggregate envelope during the last LoadAllDirect().</summary>
     public IReadOnlySet<string> RestoredSections => _restoredSections;
 
@@ -183,29 +192,82 @@ public partial class SaveLoadHostSession : Node
     {
         var manifest = GetManifest(slotId);
         bool exists = manifest != null;
-        bool isTerminal = exists && manifest.mode == CampaignMode.IronMan &&
+        bool isTerminal = manifest != null && manifest.mode == CampaignMode.IronMan &&
                           manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
 
         return new SlotCard
         {
             SlotId = slotId,
             Exists = exists,
-            CampaignName = exists ? manifest.campaignName : "(empty)",
-            CurrentDay = exists ? manifest.currentDay : 0,
-            Mode = exists ? manifest.mode : CampaignMode.Normal,
+            CampaignName = manifest != null ? manifest.campaignName : "(empty)",
+            CurrentDay = manifest != null ? manifest.currentDay : 0,
+            Mode = manifest != null ? manifest.mode : CampaignMode.Normal,
             IsTerminalIronMan = isTerminal,
-            LastSaveTimestamp = exists ? manifest.lastSaveTimestamp : string.Empty,
-            HasValidSave = exists && File.Exists(
+            LastSaveTimestamp = manifest != null ? manifest.lastSaveTimestamp : string.Empty,
+            HasValidSave = exists && _slotService != null && File.Exists(
                 Path.Combine(_slotService.GetAggregatePath(_currentProfileId, slotId)))
         };
+    }
+
+    /// <summary>
+    /// Migrate pre-slot global section files (the legacy save layout under the
+    /// global user:// directory) into a fresh envelope-backed slot. Payloads
+    /// are the section file bytes verbatim — nothing is translated — and the
+    /// original files are left untouched. Corrupt individual sections are
+    /// skipped with a warning so one bad file cannot block the whole
+    /// migration. Returns the new slot ID, or null when no legacy sections
+    /// were found or the envelope write failed.
+    /// </summary>
+    public SaveSlotId? MigrateLegacyGlobalSaves(string globalUserDir)
+    {
+        if (_slotService == null || string.IsNullOrEmpty(globalUserDir)) return null;
+
+        var payloads = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var pair in SaveSectionRegistry.SectionFileNames)
+        {
+            string path = Path.Combine(globalUserDir, pair.Value);
+            if (!File.Exists(path)) continue;
+            try
+            {
+                string raw = File.ReadAllText(path);
+                if (!string.IsNullOrWhiteSpace(raw))
+                    payloads[pair.Key] = raw;
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[SaveLoad] Skipping corrupt legacy section '{pair.Value}' during migration: {ex.Message}");
+            }
+        }
+
+        if (payloads.Count == 0) return null;
+
+        var existingSlots = new HashSet<string>(_slotService.ListSlots(_currentProfileId).ConvertAll(s => s.Value));
+        string newSlotId = "migrated_1";
+        int counter = 1;
+        while (existingSlots.Contains(newSlotId))
+        {
+            counter++;
+            newSlotId = $"migrated_{counter}";
+        }
+        var slotId = new SaveSlotId(newSlotId);
+        if (!CreateSlot(slotId))
+            return null;
+
+        if (!SaveEnvelopeFromPayloads(payloads))
+        {
+            GD.PrintErr("[SaveLoad] Legacy migration failed to write the campaign envelope.");
+            return null;
+        }
+
+        GD.Print($"[SaveLoad] Migrated {payloads.Count} legacy sections into slot '{slotId}' (originals left in place).");
+        return slotId;
     }
 
     /// <summary>
     /// Import a legacy single-file save into a new slot. Returns the new slot
     /// ID on success, or null on failure.
     /// </summary>
-    public SaveSlotId? ImportLegacySave(string legacyFilePath)
-    {
+    public SaveSlotId? ImportLegacySave(string legacyFilePath)    {
         if (_slotService == null) return null;
 
         // Find an unused slot ID.
@@ -233,6 +295,27 @@ public partial class SaveLoadHostSession : Node
         ActiveSlotChanged?.Invoke(_activeSlotId);
         GD.Print($"[SaveLoad] Imported legacy save to slot: {slotId}");
         return slotId;
+    }
+
+    /// <summary>
+    /// Delete the active slot's campaign envelope (and its backup) so a
+    /// finished run cannot be continued. The manifest is kept — slot history
+    /// and iron-man policy survive; only the save payload is removed.
+    /// </summary>
+    public void ClearActiveSlotEnvelope()
+    {
+        if (_activeSlotId == null || _slotService == null) return;
+        string aggregatePath = _slotService.GetAggregatePath(_currentProfileId, _activeSlotId.Value);
+        try
+        {
+            if (File.Exists(aggregatePath)) File.Delete(aggregatePath);
+            if (File.Exists(aggregatePath + ".bak")) File.Delete(aggregatePath + ".bak");
+            SlotsChanged?.Invoke();
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr($"[SaveLoad] Failed to clear envelope for slot '{_activeSlotId}': {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -273,67 +356,125 @@ public partial class SaveLoadHostSession : Node
     }
 
     /// <summary>
-    /// Pack all JSON save files in the active slot into a single aggregate
-    /// envelope. Called after SaveAll() so the envelope is always up to date.
+    /// Envelope-primary save: build the campaign envelope directly from
+    /// in-memory section payloads (SaveStore&lt;T&gt;.CapturePersisted bytes,
+    /// keyed by SaveSectionRegistry section key) and write it as the single
+    /// authoritative save file. No individual section files are touched.
+    /// Returns false when no slot is active or the atomic write fails; a
+    /// builder rejection (unknown section key) propagates as a save failure.
     /// </summary>
-    public void PackAggregateEnvelope()
+    public bool SaveEnvelopeFromPayloads(IReadOnlyDictionary<string, string> payloads)
     {
-        if (_activeSlotId == null || _slotService == null) return;
+        if (_activeSlotId == null || _slotService == null) return false;
 
-        string slotRoot = _slotService.GetSlotRoot(_currentProfileId, _activeSlotId.Value);
-        if (!System.IO.Directory.Exists(slotRoot)) return;
-
-        var sections = new List<SaveSectionEnvelope>();
-        foreach (string filePath in System.IO.Directory.GetFiles(slotRoot, "*.json"))
+        try
         {
-            string fileName = System.IO.Path.GetFileName(filePath);
-            if (fileName == SaveSlotService.ManifestFileName ||
-                fileName == SaveSlotService.AggregateFileName)
-                continue;
-
-            try
-            {
-                string payload = System.IO.File.ReadAllText(filePath);
-                if (string.IsNullOrWhiteSpace(payload)) continue;
-
-                var section = new SaveSectionEnvelope
-                {
-                    sectionName = System.IO.Path.GetFileNameWithoutExtension(fileName),
-                    schemaVersion = 1,
-                    payloadJson = payload,
-                    checksum = SaveSlotService.ComputeSectionChecksum(new SaveSectionEnvelope
-                    {
-                        sectionName = System.IO.Path.GetFileNameWithoutExtension(fileName),
-                        schemaVersion = 1,
-                        payloadJson = payload
-                    })
-                };
-                sections.Add(section);
-            }
-            catch (Exception ex)
-            {
-                GD.PrintErr($"[SaveLoad] Failed to pack '{fileName}': {ex.Message}");
-            }
-        }
-
-        if (sections.Count == 0) return;
-
-        var envelope = new AggregateSaveEnvelope
-        {
-            manifestVersion = 1,
-            manifest = _slotService.LoadManifest(_currentProfileId, _activeSlotId.Value) ?? new SaveManifest
+            RefreshActiveManifest();
+            var manifest = _slotService.LoadManifest(_currentProfileId, _activeSlotId.Value) ?? new SaveManifest
             {
                 profileId = _currentProfileId,
                 slotId = _activeSlotId.Value,
+                campaignName = $"Campaign {_activeSlotId.Value}",
                 currentDay = 1,
-                seed = 0
-            },
-            sections = sections
-        };
-        envelope.aggregateChecksum = SaveSlotService.ComputeAggregateChecksum(envelope);
+                seed = 0,
+                mode = CampaignMode.Normal,
+                ironManTerminalState = IronManTerminalState.Active,
+                lastSaveTimestamp = DateTime.UtcNow.ToString("o"),
+            };
 
-        _slotService.WriteAggregateAtomically(_currentProfileId, _activeSlotId.Value, envelope);
-        GD.Print($"[SaveLoad] Packed aggregate envelope with {sections.Count} sections.");
+            var envelope = CampaignEnvelopeBuilder.Build(payloads, manifest);
+            bool written = _slotService.WriteAggregateAtomically(_currentProfileId, _activeSlotId.Value, envelope);
+            if (written)
+            {
+                SlotsChanged?.Invoke();
+                GD.Print($"[SaveLoad] Wrote campaign envelope with {envelope.sections.Count} sections (single atomic write).");
+            }
+            return written;
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr($"[SaveLoad] Envelope save failed, previous envelope preserved: {ex.Message}");
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Attempt to load and validate a specific slot. Returns true on success.
+    /// On failure, provides a recoverable user-facing message, preserves live session,
+    /// and fires OnLoadCompleted.
+    /// </summary>
+    public bool TryLoadSlot(SaveSlotId slotId, out SaveLoadResult result)
+    {
+        if (_slotService == null)
+        {
+            result = SaveLoadResult.Fail(SaveLoadStatus.MissingSlot, "Save slot service is not initialized.");
+            LastLoadResult = result;
+            OnLoadCompleted?.Invoke(result);
+            return false;
+        }
+
+        result = _slotService.TryLoadAggregate(_currentProfileId, slotId);
+        LastLoadResult = result;
+        OnLoadCompleted?.Invoke(result);
+
+        if (!result.IsSuccess)
+        {
+            GD.PrintErr($"[SaveLoad] Load failed for slot '{slotId}': {result.UserMessage}");
+            return false;
+        }
+
+        _activeSlotId = slotId;
+        ApplySlotRoot();
+
+        // Unpack aggregate envelope sections into individual subsystem files on
+        // disk. Sections are registry keys; each payload lands at the section's
+        // registered file name so the unchanged SetupXxx store loads find it.
+        // Unreserved/unknown sections fall back to "<sectionName>.json".
+        if (result.Envelope?.sections != null)
+        {
+            string slotRoot = _slotService.GetSlotRoot(_currentProfileId, slotId);
+            if (!System.IO.Directory.Exists(slotRoot))
+                System.IO.Directory.CreateDirectory(slotRoot);
+
+            _restoredSections.Clear();
+            foreach (var section in result.Envelope.sections)
+            {
+                if (string.IsNullOrEmpty(section.sectionName) || string.IsNullOrEmpty(section.payloadJson))
+                    continue;
+
+                string sectionFile = SaveSectionRegistry.FileNameFor(section.sectionName) ?? section.sectionName + ".json";
+                string filePath = System.IO.Path.Combine(slotRoot, sectionFile);
+                try
+                {
+                    System.IO.File.WriteAllText(filePath, section.payloadJson);
+                    _restoredSections.Add(section.sectionName);
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[SaveLoad] Failed to unpack section '{section.sectionName}': {ex.Message}");
+                }
+            }
+        }
+
+        ActiveSlotChanged?.Invoke(_activeSlotId);
+        GD.Print($"[SaveLoad] Unpacked and loaded slot: {slotId} ({_restoredSections.Count} sections)");
+        return true;
+    }
+
+    /// <summary>
+    /// Attempt to load and validate the currently active slot.
+    /// </summary>
+    public bool TryLoadActiveSlot(out SaveLoadResult result)
+    {
+        if (_activeSlotId == null)
+        {
+            result = SaveLoadResult.Fail(SaveLoadStatus.MissingSlot, "No active save slot selected.");
+            LastLoadResult = result;
+            OnLoadCompleted?.Invoke(result);
+            return false;
+        }
+
+        return TryLoadSlot(_activeSlotId.Value, out result);
     }
 
     /// <summary>
@@ -342,43 +483,17 @@ public partial class SaveLoadHostSession : Node
     /// </summary>
     public bool UnpackAggregateEnvelope()
     {
-        if (_activeSlotId == null || _slotService == null) return false;
-
-        var envelope = _slotService.LoadAggregate(_currentProfileId, _activeSlotId.Value);
-        if (envelope == null || envelope.sections == null || envelope.sections.Count == 0)
-            return false;
-
-        string slotRoot = _slotService.GetSlotRoot(_currentProfileId, _activeSlotId.Value);
-        if (!System.IO.Directory.Exists(slotRoot))
-            System.IO.Directory.CreateDirectory(slotRoot);
-
-        foreach (var section in envelope.sections)
-        {
-            if (string.IsNullOrEmpty(section.sectionName) || string.IsNullOrEmpty(section.payloadJson))
-                continue;
-
-            string filePath = System.IO.Path.Combine(slotRoot, section.sectionName + ".json");
-            try
-            {
-                System.IO.File.WriteAllText(filePath, section.payloadJson);
-            }
-            catch (Exception ex)
-            {
-                GD.PrintErr($"[SaveLoad] Failed to unpack section '{section.sectionName}': {ex.Message}");
-            }
-        }
-
-        GD.Print($"[SaveLoad] Unpacked aggregate envelope with {envelope.sections.Count} sections.");
-        return true;
+        if (_activeSlotId == null) return false;
+        return TryLoadSlot(_activeSlotId.Value, out _);
     }
 
     /// <summary>
     /// Aggregate-first save: build an envelope directly from subsystem payloads
-    /// without reading individual files.
+    /// without touching individual files.
     /// </summary>
-    public void SaveAllDirect(IEnumerable<string>? sectionNames = null)
+    public bool SaveAllDirect(IReadOnlyDictionary<string, string> sectionPayloads)
     {
-        PackAggregateEnvelope();
+        return SaveEnvelopeFromPayloads(sectionPayloads);
     }
 
     /// <summary>

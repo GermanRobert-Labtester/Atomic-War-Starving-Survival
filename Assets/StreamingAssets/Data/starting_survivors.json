@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "starting_survivors": [
+    {
+      "id": "survivor_dr_sarah_chen",
+      "displayName": "Dr. Sarah Chen (Trauma Surgeon)",
+      "health": 90.0,
+      "hunger": 20.0,
+      "thirst": 25.0,
+      "warmth": 85.0,
+      "morale": 70.0,
+      "lifetimeDose": 14.0,
+      "acuteRad": false,
+      "joinedDay": 0
+    },
+    {
+      "id": "survivor_gunner_mikhail",
+      "displayName": "Gunner Mikhail (Heavy Artillery Loader)",
+      "health": 80.0,
+      "hunger": 35.0,
+      "thirst": 30.0,
+      "warmth": 75.0,
+      "morale": 55.0,
+      "lifetimeDose": 38.0,
+      "acuteRad": true,
+      "joinedDay": 0
+    },
+    {
+      "id": "elena_vasquez",
+      "displayName": "Elena Vasquez (Aridoculture Engineer)",
+      "health": 95.0,
+      "hunger": 15.0,
+      "thirst": 20.0,
+      "warmth": 90.0,
+      "morale": 65.0,
+      "lifetimeDose": 8.0,
+      "acuteRad": false,
+      "joinedDay": 0
+    }
+  ]
+}

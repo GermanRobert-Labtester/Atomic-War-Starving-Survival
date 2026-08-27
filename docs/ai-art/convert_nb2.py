@@ -14,9 +14,9 @@ def process_file():
         if '**Model:** Nano Banana 2' in item:
             lines = item.strip().split('\n')
             title_line = lines[0]
-            
+
             new_lines = [f"## {title_line}"]
-            
+
             for line in lines[1:]:
                 if line.startswith('**Platform:**'):
                     new_lines.append('**Platform:** Web  ')
@@ -34,11 +34,11 @@ def process_file():
                     # Remove "Apply only the specified break; preserve every undamaged part."
                     text = re.sub(r'Apply only.*?part\.\s*', '', text)
                     text = re.sub(r'Add only.*?materials\.\s*', '', text)
-                    
+
                     new_lines.append(f"> {text}")
                 else:
                     new_lines.append(line)
-            
+
             # Clean up multiple empty lines
             cleaned_lines = []
             for line in new_lines:

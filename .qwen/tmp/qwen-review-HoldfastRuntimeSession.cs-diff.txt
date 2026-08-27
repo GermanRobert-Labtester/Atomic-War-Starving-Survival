@@ -12,13 +12,13 @@ index 3de69000..c27a56d4 100644
 +        public const float RadDamageThreshold = 50f; // mSv/day causes HP loss
 +        public const float StarvationThreshold = 90f; // hunger above this causes HP loss
 +        public const float DehydrationThreshold = 90f; // thirst above this causes HP loss
- 
+
          public CoreDemoSession World { get; }
          public HoldfastTradeSession Trade { get; }
 @@ -18,7 +24,22 @@ public sealed class HoldfastRuntimeSession
          public string LastPersistenceMessage { get; private set; } = string.Empty;
          public bool HasPurchasedThisSession { get; set; }
- 
+
 +        // ── Survival state ───────────────────────────────────────────
 +        public int Health { get; private set; } = MaxHealth;
 +        public float Radiation { get; private set; } = 0f; // mSv accumulated
@@ -35,13 +35,13 @@ index 3de69000..c27a56d4 100644
          public event Action StateChanged;
 +        public event Action<string> OnPlayerDied; // passes cause of death
 +        public event Action<string> OnGameWon; // passes win message
- 
+
          public HoldfastRuntimeSession(CoreDemoSession world, long startingValue = DefaultStartingValue)
          {
 @@ -98,6 +119,219 @@ public void SeedDevelopmentState()
              Trade.SeedInventory("item_triplicate_carbon", 1);
          }
- 
+
 +        // ── Survival mechanics ────────────────────────────────────────
 +
 +        /// <summary>

@@ -1,10 +1,32 @@
-# ASHFALL Repository Deep Review Report
-**Date:** 2026-08-16 | **Branch:** `cursor/phase11-expansion-ui-integration` | **Commits:** 1002
-**Method:** 6 parallel deep-review agents + direct investigation. All findings verified against source.
+# ASHFALL Repository Deep Review Report [HISTORICAL ARCHIVE]
+
+> [!CAUTION]
+> **SUPERSEDED HISTORICAL DOCUMENT — DO NOT USE FOR CURRENT ARCHITECTURE OR IMPLEMENTATION**
+>
+> This audit was conducted on **2026-08-16** during the early dual-engine bridge era.
+> **Current Status (August 2026):**
+> 1. **Unity Host Fully Deleted**: The legacy Unity host (`Assets/_Game/`) and compatibility bridge (`src/Bridge/`) have been completely deleted. Godot 4.7+ .NET is the authoritative and sole game host.
+> 2. **All Critical & High Findings Resolved**:
+>    - **C1 (Cross-Host Saves / JsonUtility)**: Resolved. All saves now use portable `IJsonSerializer` and `SaveChecksum` envelopes.
+>    - **C2 (Determinism / System.Random)**: Resolved. Migrated to `ISeededRng` / `SeededRng`.
+>    - **C3 (HoldfastTradeSessionTests)**: Resolved. 100% passing tests (3344+ tests green).
+>    - **C4 (Untracked Narrative JSON)**: Resolved. All 196+ narrative JSON files are fully tracked in Git.
+>    - **C5 (JsonUtility in Catalog Loaders)**: Resolved. Migrated to Core `SystemTextJsonSerializer`.
+>    - **C6 (Unity Host Logic)**: Resolved. Deleted with `Assets/_Game/`; Core is single source of truth.
+>    - **C7 (Demoted Ghost Markers)**: Resolved. 0 markers remain.
+>    - **C8 (Broken CI Pipeline)**: Resolved. Canonical `dotnet` + `godot --headless` CI gate enforced.
+>
+> For active project architecture, consult:
+> - [`AGENTS.md`](AGENTS.md) — Canonical rules and invariants.
+> - [`docs/CURRENT_AUTHORITY.md`](docs/CURRENT_AUTHORITY.md) — System index and current authority map.
+> - [`docs/ASHFALL_CODE_INDEX.md`](docs/ASHFALL_CODE_INDEX.md) — Architecture and subsystem code paths.
+
+**Date:** 2026-08-16 | **Branch:** `cursor/phase11-expansion-ui-integration` (historical) | **Commits:** 1002
+**Method:** 6 parallel deep-review agents + direct investigation. All findings verified against historical source.
 
 ---
 
-## Executive Summary
+## Historical Executive Summary (2026-08-16)
 
 Ashfall is a post-nuclear 2D survival-management game with an ambitious dual-engine architecture: an engine-agnostic C# core (`Assets/Ashfall.Core/`, 234 files) shared between a Unity 6 LTS host (`Assets/_Game/`, 1337 files) and a Godot 4.7+ host (`src/`, 84 files). The project is 1002 commits in, with 280 JSON data files and 143 test files.
 
@@ -310,3 +332,62 @@ JSON property names mix `camelCase` (`displayName`, `basePrice`, `minDay`) and `
 | Largest Godot file | 6546 lines | `Main.cs` — one file, structured as per-subsystem `Setup`/`Save`/`FlushIfDirty` triads (AGENTS.md §H7) |
 | TODO/FIXME/HACK | 0 | Entire codebase |
 | Bare `catch {}` blocks | 13 | Core only |
+
+---
+
+## Initiative #41 — Generic Injected Persistence Service (2026-08-27) — COMPLETE
+
+Replaced the per-store persistence boilerplate in every host save store (51
+`*SaveStore*.cs` files + 10 stores embedded in `*HostSession.cs` files) with
+one generic, port-injected service:
+
+- **Core:** `Assets/Ashfall.Core/Save/SaveStore.cs` (`SaveStore<T>`, checksummed
+  + codec flavors) built on `SaveEnvelopeHelper`; `SchemaVersionedEnvelope<T>`
+  legacy adapter preserves the 12 shelter-batch property envelopes byte-for-byte.
+- **Host:** `src/Host/SaveStoreHub.cs` is the single injection point
+  (FileSystemIO / SystemTextJsonSerializer / GodotLog / SaveSlotRoot per-call
+  base-dir routing).
+- **Façades:** all stores keep their class names, consts, and public static
+  signatures; ~4,900 lines of duplicated logic removed across batches.
+- **Behavior:** on-disk JSON byte-identical; checksum targets, fallback
+  strictness, and per-section quirks (Economy state-hash, HoldfastTrade
+  quarantine/backup, World multi-field envelope, Greenhouse indented JSON,
+  StartingLevel surface) preserved. One deliberate change: writes are now
+  atomic (temp+rename) with optional `.bak`.
+- **Gates hardened:** coverage gate + checksum selftest Gate A + matrix
+  generator now REQUIRE SaveStoreHub/SaveEnvelopeHelper/Core-codec delegation.
+- **Pinned by:** `Ashfall.Core.Tests/Save/SaveStoreServiceTests.cs` (incl.
+  byte-identity vs the hand-rolled pattern) plus the pre-existing sweep/seal/
+  wire suites, all passing unmodified.
+- **Discovered follow-up (out of scope):** the 12 shelter-batch sections carry
+  a degenerate checksum (SaveChecksum walks public fields only; their
+  property-only envelopes hash to a constant) — integrity is not real there;
+  fixing it needs a save-evolution initiative with legacy dual-read.
+
+---
+
+## Initiative #42 — Single Versioned Atomic Campaign Envelope (2026-08-27) — COMPLETE
+
+The per-slot `campaign.json` envelope is now the single authoritative save:
+
+- **Save:** every `SaveXxx` captures its section bytes in memory
+  (`SaveStore<T>.CapturePersisted`, byte-identical to the old file format);
+  `CampaignEnvelopeBuilder` packs the registry-ordered, whitelisted payload
+  map into ONE atomic write. Failed capture aborts the whole save — mixed-
+  generation partial saves are structurally impossible. Section files are no
+  longer written at save time.
+- **Format V2:** sections keyed by `SaveSectionRegistry` SectionKey with real
+  schema versions; `SaveSectionRegistry.SectionFileNames` is the file-name
+  authority (whitelist + V1 filename→key migration + registry-derived reset
+  lists, closing 12+ hardcoded-delete gaps).
+- **Load:** validate → migrate V1 in memory (reserved `legacy` import section
+  preserved; strays dropped; disk rewritten V2 on next save) → explode to
+  registry file names → unchanged `SetupXxx` flows.
+- **Legacy:** Continue with no slots auto-migrates pre-slot global section
+  files verbatim into a fresh `migrated_N` slot (corrupt sections skipped
+  with warning; originals untouched).
+- **Pinned by:** `CampaignEnvelopeBuilderTests` (9 tests) + the 7-gate
+  `--save-load-ui-failure-selftest`; all pre-existing suites pass.
+- **Known follow-up (out of scope):** in-memory restore without file
+  explosion (`ICampaignSaveSection` remains the seam); multi-generation
+  retention beyond the single `.bak`.

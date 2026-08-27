@@ -105,28 +105,13 @@ ILog? log = null)
             var item = _state.items.Find(i => i.instanceId == instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
-            // CR3-03: was a single-pass loop that called _inventory.RemoveById
-            // before checking the next iteration's CountById. Make this atomic:
-            // pre-check every required part's availability first; only consume
-            // when every required part resolves. Earlier parts are not drained
-            // when a later part is missing.
-            if (requiredParts != null)
-            {
-                foreach (var part in requiredParts)
-                {
-                    if (_inventory.CountById(part) < 1)
-                        return ActionResult.Blocked("missing_part", "equip.missing_part");
-                }
-            }
-
             var reserved = new List<string>();
-            if (requiredParts != null)
+            if (requiredParts != null && requiredParts.Count > 0)
             {
-                foreach (var part in requiredParts)
-                {
-                    _inventory.RemoveById(part, 1);
-                    reserved.Add(part);
-                }
+                if (!_inventory.TryConsumeBill(requiredParts))
+                    return ActionResult.Blocked("missing_part", "equip.missing_part");
+
+                reserved.AddRange(requiredParts);
             }
 
             var job = new MaintenanceJob

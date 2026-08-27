@@ -20,18 +20,16 @@ namespace AtomicWar.GodotApp
 
         public string LastEvent { get; private set; } = string.Empty;
 
-        public event Action StateChanged;
-
         public EconomyHostSession(MarketSystem market = null!)
         {
             Market = market ?? new MarketSystem();
             Market.OnDemandAdjusted += (itemId, delta) =>
             {
                 LastEvent = $"Demand {itemId} {delta:+0.00;-0.00}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            Market.OnEconomyChanged += () => StateChanged?.Invoke();
-            Market.OnStateChanged += _ => StateChanged?.Invoke();
+            Market.OnEconomyChanged += () => RaiseStateChanged();
+            Market.OnStateChanged += _ => RaiseStateChanged();
         }
 
         public static EconomyHostSession Create(string dataDir)

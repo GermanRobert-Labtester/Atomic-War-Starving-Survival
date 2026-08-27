@@ -1,6 +1,6 @@
 # Economy Core Audit — Stage 0
-**Date:** 2026-08-15  
-**Scope:** `Assets/Ashfall.Core/Economy/` (MarketSystem, GoodsCatalog, EconomyHeadlessDemo) + `Ashfall.Core.Tests/EconomySystemTests.cs`  
+**Date:** 2026-08-15
+**Scope:** `Assets/Ashfall.Core/Economy/` (MarketSystem, GoodsCatalog, EconomyHeadlessDemo) + `Ashfall.Core.Tests/EconomySystemTests.cs`
 **Baseline:** Build 0/0, 558 tests, --economy-selftest 11/11, expansions 236/236
 
 ---

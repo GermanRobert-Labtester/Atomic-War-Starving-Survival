@@ -1,88 +1,48 @@
-using System;
-using System.IO;
-using Godot;
-using Ashfall.Core;
+// ============================================================================
+// Save Store : CampaignDaySaveStore
+// Core State : Ashfall.Core.Campaign.CampaignDaySave
+// Host Caller: Main.Campaign / CampaignDayHostSession
+// Purpose    : Campaign day clock, day-transition lifecycle, and active day index
+// ============================================================================
 using Ashfall.Core.Campaign;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// Persists <see cref="CampaignDaySave"/> as JSON under
-    /// <c>user://campaign_day_save.json</c> using the core
-    /// <see cref="IFileIO"/> / <see cref="SystemTextJsonSerializer"/> ports.
-    /// Shape and validation live in
-    /// <see cref="Ashfall.Core.Campaign.CampaignDaySaveCodec"/>.
+    /// <c>user://campaign_day_save.json</c> — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). Shape and
+    /// validation live in <see cref="CampaignDaySaveCodec"/>; path
+    /// resolution, atomic write, and error handling live in the service. This
+    /// section keeps its codec-based capture (not bare state).
     /// </summary>
     public static class CampaignDaySaveStore
     {
         public const string FileName = "campaign_day_save.json";
         public const string SectionName = "campaign_day";
 
-        private static readonly IFileIO s_files = new FileSystemIO();
-        private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
-        private static readonly ILog s_log = new GodotLog();
+        private static readonly SaveStore<CampaignDaySave> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(CampaignDaySaveStore),
+            (save, json) => CampaignDaySaveCodec.EncodeToString(save, json),
+            (raw, json) => CampaignDaySaveCodec.Decode(raw, json));
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        public static string SavePath => s_store.SavePath;
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        public static bool Exists => s_store.Exists();
 
-        public static string TryCapture(CampaignDaySave state)
-        {
-            try
-            {
-                if (state == null) return string.Empty;
-                return CampaignDaySaveCodec.EncodeToString(state, s_json);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[CampaignDaySaveStore] capture failed: " + e.Message);
-                return string.Empty;
-            }
-        }
+        /// <summary>Capture state to JSON through the codec without writing to disk.</summary>
+        public static string TryCapture(CampaignDaySave state) => s_store.CaptureEncoded(state);
 
-        public static CampaignDaySave? TryRestore(string json)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(json)) return null;
-                return CampaignDaySaveCodec.Decode(json, s_json);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[CampaignDaySaveStore] restore failed: " + e.Message);
-                return null;
-            }
-        }
+        /// <summary>Restore state from JSON through the codec without reading from disk.</summary>
+        public static CampaignDaySave? TryRestore(string json) => s_store.RestoreEncoded(json);
 
-        public static bool TrySave(CampaignDaySave save)
-        {
-            if (save == null) return false;
-            try
-            {
-                s_files.WriteAllText(SavePath, TryCapture(save));
-                return true;
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[CampaignDaySaveStore] save failed: " + e.Message);
-                return false;
-            }
-        }
+        public static bool TrySave(CampaignDaySave save) => s_store.TrySave(save);
 
-        public static CampaignDaySave? TryLoad()
-        {
-            try
-            {
-                if (!s_files.FileExists(SavePath)) return null;
-                string json = s_files.ReadAllText(SavePath);
-                return TryRestore(json);
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[CampaignDaySaveStore] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static CampaignDaySave? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(CampaignDaySave save) => s_store.CapturePersisted(save);
     }
 }

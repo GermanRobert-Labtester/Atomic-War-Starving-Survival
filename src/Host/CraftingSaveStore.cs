@@ -1,129 +1,50 @@
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
-using Ashfall.Core;
+// ============================================================================
+// Save Store : CraftingSaveStore
+// Core State : Ashfall.Core.CraftingSystemSave
+// Host Caller: Main.World / CraftingHostSession
+// Purpose    : Crafting queue, unlocked workshop recipes, and workbench upgrade levels
+// ============================================================================
+using Ashfall.Core.Save;
 using Ashfall.Core.Crafting;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Crafting save persistence — checksummed envelope, thin pattern sibling
-    /// of InventorySaveStore / SurvivorsSaveStore.
+    /// Crafting save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub): checksummed
+    /// <c>{ State, Checksum }</c> envelope, atomic write, checksum validation,
+    /// and error handling live in the service. This section never shipped a
+    /// pre-checksum bare-state format, so legacy bare-state loading is off.
     /// </summary>
     public static class CraftingSaveStore
     {
         public const string FileName = "crafting_save.json";
         public const string SectionName = "crafting";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(CraftingSystemSave state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static CraftingSystemSave? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<CraftingSystemSave> s_store =
+            SaveStoreHub.Checksummed<CraftingSystemSave>(FileName, nameof(CraftingSaveStore), allowLegacyBareState: false);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(CraftingSystemSave state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[CraftingSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static CraftingSystemSave? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<CraftingSystemSave>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[CraftingSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        public static bool TrySave(CraftingSystemSave state) => s_store.TrySave(state);
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        public static CraftingSystemSave? TryLoad() => s_store.TryLoad();
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(CraftingSystemSave state) => s_store.CapturePersisted(state);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(CraftingSystemSave state) => s_store.CaptureBare(state);
 
-        public static bool TrySave(CraftingSystemSave state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new CraftingHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Crafting] save failed: " + e.Message);
-                return false;
-            }
-        }
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static CraftingSystemSave? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static CraftingSystemSave? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                var envelope = s_json.Deserialize<CraftingHostSave>(raw);
-                if (envelope == null || envelope.State == null) return null;
-                // The checksummed envelope is the current Crafting format; an
-                // empty checksum means a malformed new-format save, not "legacy".
-                if (string.IsNullOrEmpty(envelope.Checksum))
-                {
-                    GD.PrintErr("[Crafting] load failed: checksum field missing (corrupt save).");
-                    return null;
-                }
-                string actual = SaveChecksum.Compute(envelope);
-                if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
-                {
-                    GD.PrintErr("[Crafting] load failed: checksum mismatch (corrupt or foreign save).");
-                    return null;
-                }
-                return envelope.State;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Crafting] load failed: " + e.Message);
-                return null;
-            }
-        }
-    }
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(CraftingSystemSave state) => s_store.CaptureBare(state);
 
-    /// <summary>Crafting envelope: engine state + integrity checksum.</summary>
-    public class CraftingHostSave
-    {
-        public CraftingSystemSave State;
-        public string Checksum = string.Empty;
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static CraftingSystemSave? TryRestore(string json) => s_store.RestoreBare(json);
     }
 }

@@ -139,10 +139,10 @@ QuestlineSystem? quests = null)
                 return true;
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return false;
-                                }
+            {
+                CatalogDiagnostics.Warn("<decode>", "VerdictSave", ex_CATDIAG);
+                return false;
+            }
         }
 
         private static bool MigrateV1(string json, IJsonSerializer serializer, out VerdictSave save)

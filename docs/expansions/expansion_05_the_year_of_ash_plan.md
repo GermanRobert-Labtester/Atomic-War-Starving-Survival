@@ -1,10 +1,10 @@
 # ASHFALL — Master Expansion Design Bible & 10-Faction Strategic Integration Plan
 
-**Title:** ASHFALL: THE YEAR OF ASH (THE LONG WINTER & THE FINAL RECKONING)  
-**Internal id:** `expansion_05_the_year_of_ash`  
-**Timeline Scope:** Day 180 to Day 360 (The Full Nuclear Year Cycle)  
-**Target Engine:** Godot 4.7+ (.NET/C#) Host + `Ashfall.Core` Engine-Agnostic Simulation  
-**Status:** Comprehensive Master Design Bible & Grand Geopolitical Architecture  
+**Title:** ASHFALL: THE YEAR OF ASH (THE LONG WINTER & THE FINAL RECKONING)
+**Internal id:** `expansion_05_the_year_of_ash`
+**Timeline Scope:** Day 180 to Day 360 (The Full Nuclear Year Cycle)
+**Target Engine:** Godot 4.7+ (.NET/C#) Host + `Ashfall.Core` Engine-Agnostic Simulation
+**Status:** Comprehensive Master Design Bible & Grand Geopolitical Architecture
 **Tone Lock:** Cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.
 
 ---
@@ -13,7 +13,7 @@
 
 The first 180 days of *ASHFALL* test baseline biological survival: sealing the blast hatch, rationing iodine, clearing radioactive fallout filters, establishing hydroponics, and negotiating with regional scavengers and early military patrols.
 
-**`expansion_05_the_year_of_ash`** bridges Day 180 to Day 360 — the phase where physical survival collides with psychological exhaustion, societal decay, environmental transformation, and the final geopolitical resolution of the war. 
+**`expansion_05_the_year_of_ash`** bridges Day 180 to Day 360 — the phase where physical survival collides with psychological exhaustion, societal decay, environmental transformation, and the final geopolitical resolution of the war.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐

@@ -14,26 +14,60 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
         public event Action<SaveSlotId>? OnSlotSelected;
+        public event Action<SaveSlotId>? OnLoadRequested;
         public event Action? OnSaveRequested;
         public event Action<SaveSlotId>? OnDeleteRequested;
         public event Action<string>? OnImportRequested;
 
         private SaveLoadHostSession? _session;
         private VBoxContainer _contentVBox = null!;
-        private Label _lblSlotsTitle;
-        private VBoxContainer _slotsList;
-        private Label _lblInfoTitle;
-        private VBoxContainer _infoList;
-        private VBoxContainer _actionButtons;
+        private Label _lblSlotsTitle = null!;
+        private VBoxContainer _slotsList = null!;
+        private Label _lblInfoTitle = null!;
+        private VBoxContainer _infoList = null!;
+        private VBoxContainer _actionButtons = null!;
+        private Label _statusMessageLabel = null!;
         private SaveSlotId? _selectedSlotId;
+
+        public string LastStatusMessage { get; private set; } = string.Empty;
+        public bool IsLastError { get; private set; }
 
         public void Bind(SaveLoadHostSession session)
         {
+            if (_session != null)
+            {
+                _session.SlotsChanged -= RefreshView;
+                _session.ActiveSlotChanged -= OnActiveSlotChanged;
+                _session.OnLoadCompleted -= OnSessionLoadCompleted;
+            }
             _session = session ?? throw new ArgumentNullException(nameof(session));
             _session.SlotsChanged += RefreshView;
             _session.ActiveSlotChanged += OnActiveSlotChanged;
+            _session.OnLoadCompleted += OnSessionLoadCompleted;
             RefreshView();
         }
+
+        private void OnSessionLoadCompleted(SaveLoadResult result)
+        {
+            ShowStatusMessage(result.UserMessage, !result.IsSuccess);
+        }
+
+        public void ShowStatusMessage(string message, bool isError = false)
+        {
+            LastStatusMessage = message;
+            IsLastError = isError;
+            if (_statusMessageLabel != null)
+            {
+                _statusMessageLabel.Text = message;
+                _statusMessageLabel.Visible = !string.IsNullOrWhiteSpace(message);
+                var color = isError ? new Color(1f, 0.4f, 0.4f) : new Color(0.53f, 1f, 0.67f);
+                _statusMessageLabel.AddThemeColorOverride("font_color", color);
+            }
+        }
+
+        public void ShowError(string error) => ShowStatusMessage(error, isError: true);
+        public void ShowSuccess(string message) => ShowStatusMessage(message, isError: false);
+        public void ClearStatusMessage() => ShowStatusMessage(string.Empty, isError: false);
 
         private void OnActiveSlotChanged(SaveSlotId? slotId)
         {
@@ -167,6 +201,15 @@ namespace AtomicWar.GodotApp.UI
             btnSave.Disabled = !_selectedSlotId.HasValue;
             _actionButtons.AddChild(btnSave);
 
+            var btnLoad = AshfallUiHelpers.MakeButton("LOAD SELECTED", () =>
+            {
+                if (_selectedSlotId.HasValue)
+                    OnLoadRequested?.Invoke(_selectedSlotId.Value);
+            });
+            btnLoad.CustomMinimumSize = new Vector2(160, 40);
+            btnLoad.Disabled = !_selectedSlotId.HasValue;
+            _actionButtons.AddChild(btnLoad);
+
             var btnImport = AshfallUiHelpers.MakeButton("IMPORT LEGACY", () =>
             {
                 // Host should present a file dialog; this button signals the intent.
@@ -196,6 +239,16 @@ namespace AtomicWar.GodotApp.UI
             var title = AshfallUiHelpers.MakeTitle("SAVE & LOAD", Ashfall.Core.UI.Theme.FontSizeH1);
             title.HorizontalAlignment = HorizontalAlignment.Center;
             vbox.AddChild(title);
+
+            _statusMessageLabel = new Label
+            {
+                Visible = false,
+                AutowrapMode = TextServer.AutowrapMode.WordSmart,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                CustomMinimumSize = new Vector2(500, 36)
+            };
+            _statusMessageLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            vbox.AddChild(_statusMessageLabel);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
@@ -234,6 +287,24 @@ namespace AtomicWar.GodotApp.UI
             hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             vbox.AddChild(hint);
+        }
+
+        public void Unbind()
+        {
+            if (_session != null)
+            {
+                _session.SlotsChanged -= RefreshView;
+                _session.ActiveSlotChanged -= OnActiveSlotChanged;
+                _session.OnLoadCompleted -= OnSessionLoadCompleted;
+                _session = null;
+            }
+            RefreshView();
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
         }
 
         public void Open()

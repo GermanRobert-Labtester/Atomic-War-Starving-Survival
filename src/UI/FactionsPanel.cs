@@ -12,7 +12,7 @@ namespace AtomicWar.GodotApp.UI
     /// Manages wasteland faction relations, trust metrics, trade privileges,
     /// Scavenger Guild claims, Crossing arbitration, and diplomatic communiques.
     /// </summary>
-    public partial class FactionsPanel : Control
+    public partial class FactionsPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action<string>? OnFactionDetailRequested;
@@ -34,8 +34,10 @@ namespace AtomicWar.GodotApp.UI
         private MusterHostSession? _muster;
         private ExpansionHostSession? _expansions;
         private YearOfAshHostSession? _yearOfAsh;
+        private Ashfall.Core.Factions.FactionBranchCoordinator? _branchCoordinator;
+        private Ashfall.Core.MoralChoice.MoralChoiceSystem? _moralChoice;
 
-        public bool IsBound => _factions != null || _muster != null || _expansions != null;
+        public bool IsBound => _factions != null || _muster != null || _expansions != null || _branchCoordinator != null;
 
         /// <summary>True after RefreshView when the Silent Foundry Guild card rendered.</summary>
         public bool HasGuildCard { get; private set; }
@@ -48,18 +50,24 @@ namespace AtomicWar.GodotApp.UI
             HoldfastTradeSession? trade = null,
             MusterHostSession? muster = null,
             ExpansionHostSession? expansions = null,
-            YearOfAshHostSession? yearOfAsh = null)
+            YearOfAshHostSession? yearOfAsh = null,
+            Ashfall.Core.Factions.FactionBranchCoordinator? branchCoordinator = null,
+            Ashfall.Core.MoralChoice.MoralChoiceSystem? moralChoice = null)
         {
             _factions = factions;
             _trade = trade;
             _muster = muster;
             _expansions = expansions;
             _yearOfAsh = yearOfAsh;
+            _branchCoordinator = branchCoordinator;
+            _moralChoice = moralChoice;
 
             if (_muster != null)
                 _muster.StateChanged += RefreshView;
             if (_expansions != null)
                 _expansions.StateChanged += RefreshView;
+            if (_branchCoordinator != null)
+                _branchCoordinator.OnStateChanged += RefreshView;
             if (_yearOfAsh?.Warlord != null)
             {
                 _yearOfAsh.Warlord.OnStateChanged += RefreshView;
@@ -304,6 +312,66 @@ namespace AtomicWar.GodotApp.UI
                 _relationsContainer.AddChild(wCard);
             }
 
+            // ── 3b. The Weight of Choices: Faction Progression & Branch Storylines ──
+            if (_branchCoordinator != null)
+            {
+                var branchCard = AshfallUiHelpers.MakeCardFrame("THE WEIGHT OF CHOICES // FACTION PROGRESSION", "STRATEGIC ALLEGIANCE");
+                var branchBox = branchCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                string activeFaction = _branchCoordinator.ActiveFactionKind.ToString();
+                string activeBranch = _branchCoordinator.ActiveBranchId ?? "Unaligned (Prospective Paths Open)";
+                string ponrText = _branchCoordinator.IsPonrLocked ? "LOCKED (Point of No Return Reached)" : "Open (Pre-PoNR)";
+                string endingText = _branchCoordinator.ResolvedEndingId ?? "Unresolved";
+
+                branchBox.AddChild(AshfallUiHelpers.MakeDataRow("Active Allegiance", activeFaction, AshfallUiHelpers.ToColor(_branchCoordinator.IsCommitted ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale)));
+                branchBox.AddChild(AshfallUiHelpers.MakeDataRow("Current Branch", activeBranch.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)));
+                branchBox.AddChild(AshfallUiHelpers.MakeDataRow("PoNR Status", ponrText, AshfallUiHelpers.ToColor(_branchCoordinator.IsPonrLocked ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
+                if (_branchCoordinator.ResolvedEndingId != null)
+                {
+                    branchBox.AddChild(AshfallUiHelpers.MakeDataRow("Resolved Ending", endingText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                }
+
+                branchBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+                // Standing summaries
+                var standings = _branchCoordinator.GetFactionStandingSummaries();
+                foreach (var s in standings)
+                {
+                    string statusDesc = s.IsJoined ? "Joined / Allied" : (s.IsOpposed ? "Opposed" : (s.IsHostile ? "Hostile" : (s.IsAllied ? "Allied" : "Neutral")));
+                    branchBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        s.DisplayName,
+                        $"Standing: {s.Standing:+0;-0;0} | Alignment: {s.Alignment:+0;-0;0} ({statusDesc})",
+                        AshfallUiHelpers.ToColor(s.IsHostile ? Ashfall.Core.UI.Theme.Critical : (s.IsJoined || s.IsAllied ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale))));
+                }
+
+                branchBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                branchBox.AddChild(AshfallUiHelpers.MakeSmall("BRANCH PATH AVAILABILITY & CONSEQUENCES:"));
+
+                var options = _branchCoordinator.GetBranchOptions(_moralChoice);
+                int rendered = 0;
+                foreach (var opt in options)
+                {
+                    if (rendered >= 6 && !_branchCoordinator.IsCommitted) break;
+                    if (_branchCoordinator.IsCommitted && !opt.IsCommitted) continue;
+
+                    string statusTag = opt.IsCommitted ? "[COMMITTED]" : (opt.IsAvailable ? "[AVAILABLE]" : $"[LOCKED: {opt.LockoutReason}]");
+                    var optRow = AshfallUiHelpers.MakeDataRow(
+                        $"{opt.DisplayName} ({opt.FactionKind})",
+                        statusTag,
+                        AshfallUiHelpers.ToColor(opt.IsCommitted ? Ashfall.Core.UI.Theme.Hot : (opt.IsAvailable ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim)));
+                    branchBox.AddChild(optRow);
+
+                    if (opt.IsCommitted || opt.IsAvailable)
+                    {
+                        var desc = AshfallUiHelpers.MakeSmall($"Consequence: {opt.ConsequencesSummary} · Trigger: {opt.PonrTrigger}");
+                        branchBox.AddChild(desc);
+                    }
+                    rendered++;
+                }
+
+                _relationsContainer.AddChild(branchCard);
+            }
+
             // ── 4. Diplomatic Events & Radio Intercepts ──
             var evCard = AshfallUiHelpers.MakeCardFrame("RECENT DIPLOMATIC COMMUNIQUES", "RADIO INTERCEPTS");
             var evBox = evCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
@@ -407,14 +475,20 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_muster != null)
+
+    public void Unbind()
+    {
+        if (_muster != null)
                 _muster.StateChanged -= RefreshView;
             if (_expansions != null)
                 _expansions.StateChanged -= RefreshView;
             if (_yearOfAsh?.Warlord != null)
                 _yearOfAsh.Warlord.OnStateChanged -= RefreshView;
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

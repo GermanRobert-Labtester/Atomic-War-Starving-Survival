@@ -92,12 +92,6 @@ namespace AtomicWar.GodotApp
             LastEvent = "Research state restored.";
             RaiseStateChanged();
         }
-
-        private void RaiseStateChanged()
-        {
-            try { RaiseStateChanged(); }
-            catch (Exception ex) { GD.PrintErr($"[Research] StateChanged event failed: {ex.Message}"); }
-        }
     }
 
     [Serializable]

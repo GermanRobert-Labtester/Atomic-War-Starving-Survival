@@ -41,7 +41,7 @@ SECTION A — SYSTEMIC ISSUES (patterns that risk future bugs)
   but nothing else in the game world knows it happened.
   No EmpathSystem, no GriefKeepsakes, no ChildSystem check, no IronMan delete,
   no Pillar-of-Atlas debuff, no Twin partner reaction.
-  
+
   This is NOT a regression from the first audit; it is a latent gap that the
   SurvivorNeedWrite helper introduced (the helper was the right fix for direct
   Health writes, but the death-path wiring is incomplete).
@@ -170,23 +170,23 @@ SECTION C — NEW WIRING GAPS (uncommitted working tree)
    (REPROMOTE-MapHazard-001 VenusTrap, REPROMOTE-Item-001 Keycard)
   Description:   Excellent work wiring dead content (MapHazard_VenusTrap,
   Item_Keycards) into the live expedition path. Two concerns:
-  
+
    (a) VenusTrap.EnterNode(nodeId) is called every time the expedition loots
    a swamp-tagged node. If the trap was already cleared on a previous visit,
    EnterNode should be a no-op. Verify EnterNode checks IsEntrapped(nodeId)
    before re-arming (source at MapHazard_VenusTrap.cs:50-56 looks correct).
-   
+
    (b) TryKeycardDoorOnLootingArrival calls _keycards.ReportKeycardFound
    even on repeat visits. Verify ReportKeycardFound is idempotent (adding
    the same color twice should be a no-op, not a double-count).
-   
+
    (c) IsKeycardDoorNode uses substring matching on DisplayName ("hangar",
    "command", "silo", "bunker rim") which may match unrelated nodes. A
    node named "Commander's Quarters" or "Silo Grain Storage" would match.
    Prefer HasTag("keycard_door") / HasTag("secure") which are already
    checked first; the substring fallback should only fire when tags are
    absent, and the substring list should be tighter.
-   
+
   Suggested Fix: For (b): add an `if (owned.Contains(required)) return;` guard.
   For (c): move substring match to a separate "heuristic fallback" that logs
   when triggered so accidental matches are visible.
@@ -629,13 +629,13 @@ SECTION P — EXPEDITION SYSTEM INTEGRATION (uncommitted working tree)
   Description:   These methods are called every time the expedition enters the
   Looting phase on a matching node. If an expedition visits the same node
   twice (possible if they leave and return), the methods fire again.
-  
+
   (a) VenusTrap.EnterNode must be idempotent — verify it checks IsEntrapped
   and returns early if the trap was already cleared.
-  
+
   (b) Keycard.ReportKeycardFound must be idempotent — verify adding the same
   color twice is a no-op (not a double-count).
-  
+
   (c) IsKeycardDoorNode uses substring matching on DisplayName ("hangar",
   "command", "silo", "bunker rim") as a fallback when tags are absent. A node
   named "Commander's Quarters" or "Silo Grain Storage" would match. The tag
@@ -717,7 +717,7 @@ SECTION R — MEDICAL SYSTEM EDGE CASES
   that second treatment is still running. When it completes, the method finds
   active.AfflictionId in the list (it's still there) and removes it. This is
   correct — the two treatments are independent.
-  
+
   However: if two medics are treating the SAME affliction (same afflictionId),
   the treatment list can have two entries for the same ID. When the first
   completes, it removes one entry. When the second completes, it also finds

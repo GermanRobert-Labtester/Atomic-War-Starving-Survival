@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
@@ -8,7 +9,8 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Survivor Detail panel.
-    /// Shows individual survivor information, needs, traits, and status.
+    /// Shows per-survivor info, needs, traits, and status — bound to the live
+    /// SurvivorsHostSession for a specific survivor id.
     /// </summary>
     public partial class SurvivorDetailPanel : Control
     {
@@ -24,97 +26,105 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblStatusTitle;
         private VBoxContainer _statusList;
 
-        // Placeholder survivor data
-        private readonly string[] _placeholderSurvivorInfo = {
-            "Name: Elena",
-            "Role: Leader",
-            "Age: 42",
-            "Health: 85/100",
-            "Radiation: 12 mSv (Low)",
-            "Morale: Good (75/100)"
-        };
+        private SurvivorsHostSession? _survivors;
+        private string _survivorId = string.Empty;
 
-        private readonly string[] _placeholderNeeds = {
-            "Hunger: Normal (80/100)",
-            "Thirst: Normal (75/100)",
-            "Fatigue: Moderate (60/100)",
-            "Warmth: Adequate (85/100)",
-            "Hygiene: Good (90/100)"
-        };
+        public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
+        public int RenderedRowCount { get; private set; }
 
-        private readonly string[] _placeholderTraits = {
-            "Decisive — Makes tough calls quickly",
-            "Resilient — Recovers from setbacks fast",
-            "Empathetic — Cares for survivors well",
-            "Pragmatic — Focuses on survival needs",
-            "Stressed — Carries leadership burden"
-        };
-
-        private readonly string[] _placeholderStatus = {
-            "Current Activity: Commanding bunker operations",
-            "Location: Main Hallway",
-            "Mood: Focused but tired",
-            "Recent Events: Managed supply distribution",
-            "Relationships: Strong with Marcus (Medic)"
-        };
-
-        // Real data from host session
-        // private SurvivorHostSession? _survivorHost;
-        // private string _selectedSurvivorId;
-
-        public void Bind(object survivor, string survivorId) // placeholder for SurvivorHostSession
+        public void Bind(SurvivorsHostSession? survivors, string survivorId)
         {
-            // _survivorHost = (SurvivorHostSession)survivor;
-            // _selectedSurvivorId = survivorId;
-            // RefreshView();
+            _survivors = survivors;
+            _survivorId = survivorId ?? string.Empty;
+            RefreshView();
         }
 
         public void RefreshView()
         {
             if (_survivorInfo == null || _needsList == null || _traitsList == null || _statusList == null) return;
 
-            // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_survivorInfo);
             AshfallUiHelpers.EmptyChildren(_needsList);
             AshfallUiHelpers.EmptyChildren(_traitsList);
             AshfallUiHelpers.EmptyChildren(_statusList);
 
-            // Display placeholder survivor info
-            foreach (string info in _placeholderSurvivorInfo)
+            RenderedRowCount = 0;
+
+            if (_survivors == null || string.IsNullOrEmpty(_survivorId))
             {
-                var label = new Label { Text = info };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _survivorInfo.AddChild(label);
+                _survivorInfo.AddChild(MakeDimLine("No survivor selected."));
+                return;
             }
 
-            // Display placeholder needs
-            foreach (string need in _placeholderNeeds)
+            var s = _survivors.RosterState.FirstOrDefault(r => r != null && r.Id == _survivorId);
+            if (s == null)
             {
-                var label = new Label { Text = need };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _needsList.AddChild(label);
+                _survivorInfo.AddChild(MakeDimLine($"Survivor '{_survivorId}' not found in roster."));
+                return;
             }
 
-            // Display placeholder traits
-            foreach (string trait in _placeholderTraits)
+            var rad = _survivors.RadStateFor(s.Id);
+
+            // ── Survivor info ──
+            AddRow(_survivorInfo, $"Name: {Name(s.Id)}", Ashfall.Core.UI.Theme.Pale);
+            AddRow(_survivorInfo, $"Alive: {s.IsAlive}", s.IsAlive ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical);
+            AddRow(_survivorInfo, $"Max Health Cap: {s.MaxHealthCap:0}", Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 3;
+
+            // ── Needs ──
+            AddRow(_needsList, $"Health: {s.Health:0} / {s.MaxHealthCap:0}", s.Health < 30 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
+            AddRow(_needsList, $"Hunger: {s.Hunger:0}", s.Hunger >= 90 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"Thirst: {s.Thirst:0}", s.Thirst >= 90 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"Fatigue: {s.Fatigue:0}", s.Fatigue >= 90 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"Warmth: {s.Warmth:0}", s.Warmth < 20 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"Morale: {s.Morale:0}", s.Morale < 20 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"Hygiene: {s.Hygiene:0}", Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 7;
+
+            // ── Traits (from rad state) ──
+            if (rad != null)
             {
-                var label = new Label { Text = trait };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _traitsList.AddChild(label);
+                AddRow(_traitsList, $"Radiation Dose: {rad.RadiationDose:0} mSv", rad.RadiationDose >= 50 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_traitsList, $"Lifetime Exposure: {rad.LifetimeRadiationExposure:0} mSv", Ashfall.Core.UI.Theme.Dim);
+                AddRow(_traitsList, $"Rad Resistance: {rad.HasRadResistance}{(rad.HasRadResistance ? $" ({rad.RadResistanceHoursRemaining:0}h)" : "")}",
+                    rad.HasRadResistance ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Dim);
+                AddRow(_traitsList, $"Acute Sickness: {rad.HasAcuteRadiationSickness}", rad.HasAcuteRadiationSickness ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Dim);
+                AddRow(_traitsList, $"Chronic Illness: {rad.HasChronicIllness}", rad.HasChronicIllness ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount += 5;
+            }
+            else
+            {
+                _traitsList.AddChild(MakeDimLine("No radiation state tracked."));
             }
 
-            // Display placeholder status
-            foreach (string status in _placeholderStatus)
-            {
-                var label = new Label { Text = status };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _statusList.AddChild(label);
-            }
+            // ── Status ──
+            AddRow(_statusList, $"Critical flags: hunger={s.WasHungerCritical} thirst={s.WasThirstCritical} warmth={s.WasWarmthCritical}",
+                (s.WasHungerCritical || s.WasThirstCritical || s.WasWarmthCritical) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount++;
+        }
+
+        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
+        }
+
+        private static string Name(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return "Unknown";
+            int us = id.IndexOf('_');
+            return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
         }
 
         public override void _Ready()
@@ -140,46 +150,38 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Survivor info section
-            _lblSurvivorInfoTitle = AshfallUiHelpers.MakeSectionHeader("SURVIVOR INFORMATION");
+            _lblSurvivorInfoTitle = AshfallUiHelpers.MakeSectionHeader("SURVIVOR INFO");
             vbox.AddChild(_lblSurvivorInfoTitle);
-
             _survivorInfo = new VBoxContainer();
             _survivorInfo.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _survivorInfo.CustomMinimumSize = new Vector2(400, 0);
+            _survivorInfo.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_survivorInfo);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Needs section
-            _lblNeedsTitle = AshfallUiHelpers.MakeSectionHeader("SURVIVAL NEEDS");
+            _lblNeedsTitle = AshfallUiHelpers.MakeSectionHeader("NEEDS");
             vbox.AddChild(_lblNeedsTitle);
-
             _needsList = new VBoxContainer();
             _needsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _needsList.CustomMinimumSize = new Vector2(400, 0);
+            _needsList.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_needsList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Traits section
-            _lblTraitsTitle = AshfallUiHelpers.MakeSectionHeader("PERSONALITY TRAITS");
+            _lblTraitsTitle = AshfallUiHelpers.MakeSectionHeader("RADIATION & TRAITS");
             vbox.AddChild(_lblTraitsTitle);
-
             _traitsList = new VBoxContainer();
             _traitsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _traitsList.CustomMinimumSize = new Vector2(400, 0);
+            _traitsList.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_traitsList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Status section
-            _lblStatusTitle = AshfallUiHelpers.MakeSectionHeader("CURRENT STATUS");
+            _lblStatusTitle = AshfallUiHelpers.MakeSectionHeader("STATUS FLAGS");
             vbox.AddChild(_lblStatusTitle);
-
             _statusList = new VBoxContainer();
             _statusList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _statusList.CustomMinimumSize = new Vector2(400, 0);
+            _statusList.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_statusList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -187,11 +189,6 @@ namespace AtomicWar.GodotApp.UI
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()
@@ -203,7 +200,6 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-
             if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
                 OnClose?.Invoke();

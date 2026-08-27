@@ -1,115 +1,55 @@
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
+// ============================================================================
+// Save Store : VinylMoraleSaveStore
+// Core State : Ashfall.Core.VinylMoraleState
+// Host Caller: Main.ShelterSocial / VinylMoraleHostSession
+// Purpose    : Vinyl record player collection, broadcast tracks, and shelter morale bonuses
+// ============================================================================
 using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
-    [Serializable]
-    public sealed class VinylMoraleHostSave
-    {
-        public string SchemaVersion { get; set; } = "1.0";
-        public VinylMoraleState State { get; set; }
-        public string Checksum { get; set; } = string.Empty;
-    }
-
+    /// <summary>
+    /// Vinyl morale save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). This
+    /// shelter-batch section ships the legacy
+    /// <c>{ SchemaVersion, State, Checksum }</c> envelope, preserved
+    /// byte-for-byte by the Core <see cref="SchemaVersionedEnvelope{T}"/>
+    /// adapter; path resolution, atomic write, and error handling live in the
+    /// service.
+    /// </summary>
     public static class VinylMoraleSaveStore
     {
         public const string FileName = "vinyl_morale_save.json";
         public const string SectionName = "vinyl_morale";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(VinylMoraleState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static VinylMoraleState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<VinylMoraleState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(VinylMoraleSaveStore),
+            SchemaVersionedEnvelope<VinylMoraleState>.Encode,
+            SchemaVersionedEnvelope<VinylMoraleState>.Decode);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(VinylMoraleState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[VinylMoraleSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static VinylMoraleState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<VinylMoraleState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[VinylMoraleSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(VinylMoraleState state) => s_store.CaptureBare(state);
 
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static VinylMoraleState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static bool TrySave(VinylMoraleState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new VinylMoraleHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Vinyl] save failed: " + e.Message);
-                return false;
-            }
-        }
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(VinylMoraleState state) => s_store.CaptureBare(state);
 
-        public static VinylMoraleState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static VinylMoraleState? TryRestore(string json) => s_store.RestoreBare(json);
 
-                var envelope = s_json.Deserialize<VinylMoraleHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                    return envelope.State;
-                }
+        public static bool TrySave(VinylMoraleState state) => s_store.TrySave(state);
 
-                return s_json.Deserialize<VinylMoraleState>(raw);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Vinyl] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static VinylMoraleState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(VinylMoraleState state) => s_store.CapturePersisted(state);
     }
 }

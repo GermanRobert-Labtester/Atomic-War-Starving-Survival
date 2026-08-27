@@ -64,7 +64,6 @@ namespace AtomicWar.GodotApp
             var sfSys = new SumpFloodingSystem(new SeededRng(1986), sfWeather, sfPower, sfDeepFreeze, new GodotLog());
             sfSys.RestoreState(sfState);
             _sumpFlooding = new SumpFloodingHostSession(sfSys, sfWeather, sfPower, sfDeepFreeze);
-            _sumpFlooding.StateChanged += () => _sumpFlooding.MarkDirty();
             if (_sumpFloodingPanel != null && _sumpFloodingPanel.IsInsideTree())
                 RemoveChild(_sumpFloodingPanel);
             _sumpFloodingPanel = new SumpFloodingPanel();
@@ -83,7 +82,6 @@ namespace AtomicWar.GodotApp
             var dcSys = new DecontaminationSystem(new SeededRng(1986), dcRad, dcInv, dcAirlock, dcStarting, new GodotLog());
             dcSys.RestoreState(dcState);
             _decontamination = new DecontaminationHostSession(dcSys, dcRad, dcInv, dcAirlock, dcStarting);
-            _decontamination.StateChanged += () => _decontamination.MarkDirty();
             if (_decontaminationPanel != null && _decontaminationPanel.IsInsideTree())
                 RemoveChild(_decontaminationPanel);
             _decontaminationPanel = new DecontaminationPanel();
@@ -100,7 +98,6 @@ namespace AtomicWar.GodotApp
             var knSys = new KitchenNutritionSystem(new SeededRng(1986), knInv, knNeeds, new GodotLog());
             knSys.RestoreState(knState);
             _kitchenNutrition = new KitchenNutritionHostSession(knSys, knInv, knNeeds);
-            _kitchenNutrition.StateChanged += () => _kitchenNutrition.MarkDirty();
             if (_kitchenNutritionPanel != null && _kitchenNutritionPanel.IsInsideTree())
                 RemoveChild(_kitchenNutritionPanel);
             _kitchenNutritionPanel = new KitchenNutritionPanel();
@@ -117,7 +114,6 @@ namespace AtomicWar.GodotApp
             var ecSys = new EquipmentConditionSystem(new SeededRng(1986), ecInv, ecCrafting, new GodotLog());
             ecSys.RestoreState(ecState);
             _equipmentCondition = new EquipmentConditionHostSession(ecSys, ecInv, ecCrafting);
-            _equipmentCondition.StateChanged += () => _equipmentCondition.MarkDirty();
             if (_equipmentConditionPanel != null && _equipmentConditionPanel.IsInsideTree())
                 RemoveChild(_equipmentConditionPanel);
             _equipmentConditionPanel = new EquipmentConditionPanel();
@@ -136,7 +132,6 @@ namespace AtomicWar.GodotApp
             lsSys.RestoreState(lsState);
             _libraryStudy = new LibraryStudyHostSession(lsSys, lsSkills, lsResearch, lsJournal, _expandedShelterRoster);
             _libraryStudy.LoadCatalog(_dataDir);
-            _libraryStudy.StateChanged += () => _libraryStudy.MarkDirty();
             if (_libraryStudyPanel != null && _libraryStudyPanel.IsInsideTree())
                 RemoveChild(_libraryStudyPanel);
             _libraryStudyPanel = new LibraryStudyPanel();
@@ -155,7 +150,6 @@ namespace AtomicWar.GodotApp
             adSys.RestoreState(adState);
             _archiveDesk = new ArchiveDeskHostSession(adSys, adJournal, adKnowledge, adInv, _expandedShelterRoster);
             _archiveDesk.LoadInkCatalog(_dataDir);
-            _archiveDesk.StateChanged += () => _archiveDesk.MarkDirty();
             if (_archiveDeskPanel != null && _archiveDeskPanel.IsInsideTree())
                 RemoveChild(_archiveDeskPanel);
             _archiveDeskPanel = new ArchiveDeskPanel();
@@ -172,7 +166,6 @@ namespace AtomicWar.GodotApp
             var crSys = new ContractorRosterSystem(new SeededRng(1986), crInv, _expandedShelterRoster, crExpedition, new GodotLog());
             crSys.RestoreState(crState);
             _contractorRoster = new ContractorRosterHostSession(crSys, crInv, _expandedShelterRoster, crExpedition);
-            _contractorRoster.StateChanged += () => _contractorRoster.MarkDirty();
             if (_contractorRosterPanel != null && _contractorRosterPanel.IsInsideTree())
                 RemoveChild(_contractorRosterPanel);
             _contractorRosterPanel = new ContractorRosterPanel();
@@ -190,7 +183,6 @@ namespace AtomicWar.GodotApp
             var mhSys = new MentalHealthCrisisSystem(new SeededRng(1986), mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster, new GodotLog());
             mhSys.RestoreState(mhState);
             _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster);
-            _mentalHealthCrisis.StateChanged += () => _mentalHealthCrisis.MarkDirty();
             if (_mentalHealthCrisisPanel != null && _mentalHealthCrisisPanel.IsInsideTree())
                 RemoveChild(_mentalHealthCrisisPanel);
             _mentalHealthCrisisPanel = new MentalHealthCrisisPanel();
@@ -198,7 +190,6 @@ namespace AtomicWar.GodotApp
             _mentalHealthCrisisPanel.Visible = false;
             AddChild(_mentalHealthCrisisPanel);
 
-            _chemicalDependency.StateChanged += () => _chemicalDependency.MarkDirty();
             var depLoaded = ChemicalDependencySaveStore.TryLoad();
             if (depLoaded != null) _chemicalDependency.RestoreSave(depLoaded);
             if (_chemicalDependencyPanel != null && _chemicalDependencyPanel.IsInsideTree())
@@ -231,21 +222,56 @@ namespace AtomicWar.GodotApp
             if (!_shelterAssignment.TryLoad())
             {
             }
-            _shelterAssignment.StateChanged += () => _shelterAssignment.MarkDirty();
             _shelterThermal.SetAssignments(_shelterAssignment.System);
             SetupPhase0();
             _phase0.BindShelterAssignment(_shelterAssignment.System);
         }
 
-        private void SaveSumpFlooding() => _sumpFlooding?.Save();
-        private void SaveDecontamination() => _decontamination?.Save();
-        private void SaveKitchenNutrition() => _kitchenNutrition?.Save();
-        private void SaveEquipmentCondition() => _equipmentCondition?.Save();
-        private void SaveLibraryStudy() => _libraryStudy?.Save();
-        private void SaveArchiveDesk() => _archiveDesk?.Save();
-        private void SaveContractorRoster() => _contractorRoster?.Save();
-        private void SaveMentalHealthCrisis() => _mentalHealthCrisis?.Save();
-        private void SaveChemicalDependency() => _chemicalDependency?.Save();
+        private void SaveSumpFlooding()
+        {
+            if (_sumpFlooding != null)
+                CaptureSection("sump_flooding", SumpFloodingSaveStore.TryCapturePersisted(_sumpFlooding.System.CaptureState()));
+        }
+        private void SaveDecontamination()
+        {
+            if (_decontamination != null)
+                CaptureSection("decontamination", DecontaminationSaveStore.TryCapturePersisted(_decontamination.System.CaptureState()));
+        }
+        private void SaveKitchenNutrition()
+        {
+            if (_kitchenNutrition != null)
+                CaptureSection("kitchen_nutrition", KitchenNutritionSaveStore.TryCapturePersisted(_kitchenNutrition.System.CaptureState()));
+        }
+        private void SaveEquipmentCondition()
+        {
+            if (_equipmentCondition != null)
+                CaptureSection("equipment_condition", EquipmentConditionSaveStore.TryCapturePersisted(_equipmentCondition.System.CaptureState()));
+        }
+        private void SaveLibraryStudy()
+        {
+            if (_libraryStudy != null)
+                CaptureSection("library_study", LibraryStudySaveStore.TryCapturePersisted(_libraryStudy.System.CaptureState()));
+        }
+        private void SaveArchiveDesk()
+        {
+            if (_archiveDesk != null)
+                CaptureSection("archive_desk", ArchiveDeskSaveStore.TryCapturePersisted(_archiveDesk.System.CaptureState()));
+        }
+        private void SaveContractorRoster()
+        {
+            if (_contractorRoster != null)
+                CaptureSection("contractor_roster", ContractorRosterSaveStore.TryCapturePersisted(_contractorRoster.System.CaptureState()));
+        }
+        private void SaveMentalHealthCrisis()
+        {
+            if (_mentalHealthCrisis != null)
+                CaptureSection("mental_health_crisis", MentalHealthCrisisSaveStore.TryCapturePersisted(_mentalHealthCrisis.System.CaptureState()));
+        }
+        private void SaveChemicalDependency()
+        {
+            if (_chemicalDependency != null)
+                CaptureSection("chemical_dependency", ChemicalDependencySaveStore.TryCapturePersisted(_chemicalDependency.System.CaptureState()));
+        }
         private void SaveShelterAssignment() => _shelterAssignment?.Save();
     }
 }

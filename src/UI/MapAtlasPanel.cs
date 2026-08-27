@@ -26,7 +26,7 @@ namespace AtomicWar.GodotApp.UI;
 ///
 /// Plus right-side location detail inspector with live map cell rendering.
 /// </summary>
-public partial class MapAtlasPanel : Control
+public partial class MapAtlasPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnLocationSelected;
@@ -179,6 +179,15 @@ public partial class MapAtlasPanel : Control
         actionCol.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         actionCol.AddChild(AshfallUiHelpers.MakeSectionHeader("Action Bar"));
         actionCol.AddChild(_actionBarGrid);
+
+        var legendRow = new HBoxContainer();
+        legendRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
+        LegendChip(legendRow, "LOCKED", DesignTheme.Critical, "Restricted");
+        LegendChip(legendRow, "AVAILABLE", DesignTheme.Ozone, "Reachable");
+        LegendChip(legendRow, "DISCOVERED", DesignTheme.Lethe, "Charted");
+        LegendChip(legendRow, "COMPLETE", DesignTheme.Muted, "Cleared");
+        actionCol.AddChild(legendRow);
+
         actionRow.AddChild(actionCol);
 
         _detailBox = new VBoxContainer();
@@ -476,12 +485,34 @@ public partial class MapAtlasPanel : Control
         }
     }
 
-    public override void _ExitTree()
+    private static void LegendChip(HBoxContainer host, string label, (float r, float g, float b, float a) token, string desc)
+    {
+        var chip = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingXs);
+        var dot = new ColorRect
+        {
+            Color = AshfallUiHelpers.ToColor(token),
+            CustomMinimumSize = new Vector2(8, 8),
+            SizeFlagsVertical = SizeFlags.ShrinkCenter
+        };
+        chip.AddChild(dot);
+        var lbl = AshfallUiHelpers.MakeSmall($"{label} [{desc}]");
+        lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(token));
+        chip.AddChild(lbl);
+        host.AddChild(chip);
+    }
+
+
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

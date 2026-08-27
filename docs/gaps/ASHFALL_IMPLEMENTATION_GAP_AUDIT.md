@@ -1,10 +1,16 @@
 # ASHFALL Implementation Gap Audit
 
-**Method:** 10-loop forensic scan (ashfall-scan skill)  
-**Branch:** `audit/fix-batch3-plus-phases`  
-**Git SHA:** `f5898255a1df83276fd98d6ac494160ffed61ab3`  
-**Date:** 2026-08-16  
-**Auditor:** AI agent (read-only forensic pass)  
+> [!NOTE]
+> **HISTORICAL AUDIT ARTIFACT (2026-08-16 / Batch 1–5 era)**
+> This gap audit documents historical defects identified during the 2026-08-16 10-loop scan at Git SHA `f5898255a1df83276fd98d6ac494160ffed61ab3`.
+> All placeholder UI surfaces recorded herein (`JournalPanel`, `WeatherForecastPanel`, `WeatherHistoryPanel` / `GAP-UI-01..03`), the Verdict cumulative dose aggregation stub (`GAP-STUB-01`), and `FactionStanceEngine` provider wiring (`GAP-STUB-03`) have since been **fully resolved and sealed** in production code with live data bindings, deterministic tests, and golden visual baselines.
+> This file is retained as a dated historical record. For current active UI readiness and snapshot coverage, refer to `docs/ui/TIER3_UI_READINESS.md` and `docs/ui/SNAPSHOT_COVERAGE.md`.
+
+**Method:** 10-loop forensic scan (ashfall-scan skill)
+**Branch:** `audit/fix-batch3-plus-phases`
+**Git SHA:** `f5898255a1df83276fd98d6ac494160ffed61ab3`
+**Date:** 2026-08-16
+**Auditor:** AI agent (read-only forensic pass)
 **Scope:** Core (`Assets/Ashfall.Core/`), Godot host (`src/`), data (`Assets/StreamingAssets/Data/`), tests (`Ashfall.Core.Tests/`)
 
 ---
@@ -19,9 +25,9 @@ Active Godot 4.7+ host. Legacy Unity tree (`Assets/_Game/`) treated as read-only
 
 ## 3. Executive Summary
 
-Batch 1–5 + BUG-03 host wiring closed 14 audit-bug items. Three UI placeholders (JournalPanel, WeatherForecastPanel, WeatherHistoryPanel) have been sealed with live Core data binding. Three Core APIs still return degenerate stub values in production. One architectural debt is acknowledged but unfinished.
+Batch 1–5 + BUG-03 host wiring closed 14 audit-bug items. Three UI placeholders (`JournalPanel`, `WeatherForecastPanel`, `WeatherHistoryPanel`) were subsequently sealed with live Core data binding (commit `63de12d0`). Core stubs (`LivingCumulativeDoseSieverts` in `d0bc0708`, `FactionStanceEngine` in `68ce46bf`) have also been sealed.
 
-**Verdict: do not declare this repaired.** The batch-repair arc closed specific numbered bugs. Three UI placeholders are now resolved. Three Core stubs remain. One architectural debt remains. This gap audit is the source of truth.
+**Historical Context:** At the time of this audit, the batch-repair arc had closed specific numbered bugs, but UI placeholders and stubs remained open. Subsequent development rounds resolved these gaps. Retained as an audit benchmark.
 
 ## 4. Completion Chain Model
 
@@ -37,15 +43,15 @@ None new. All numbered bugs from the 10-loop audit (§17 priority list) have bee
 
 ### GAP-UI-01 — JournalPanel shows hardcoded fiction instead of live journal data
 
-**Category:** UI GAP / PLACEHOLDER  
-**Severity:** HIGH  
-**Confidence:** HIGH  
-**Status:** RESOLVED  
-**Active Runtime:** YES (panel is visible and renders)  
-**Expected chain:** `JournalSystem → JournalHostSession → JournalPanel.Bind → player sees real entries`  
-**Broken link:** `JournalPanel.Bind(object)` is a no-op; real `JournalHostSession` binding is commented out  
-**Observed behavior:** Player sees 6 hardcoded day logs, 5 hardcoded character notes, 10 hardcoded story chapters regardless of actual gameplay  
-**Expected behavior:** Player sees real journal entries from `JournalSystem.OnEntryAdded`, real survivor notes, real codex unlocks  
+**Category:** UI GAP / PLACEHOLDER
+**Severity:** HIGH
+**Confidence:** HIGH
+**Status:** RESOLVED
+**Active Runtime:** YES (panel is visible and renders)
+**Expected chain:** `JournalSystem → JournalHostSession → JournalPanel.Bind → player sees real entries`
+**Broken link:** `JournalPanel.Bind(object)` is a no-op; real `JournalHostSession` binding is commented out
+**Observed behavior:** Player sees 6 hardcoded day logs, 5 hardcoded character notes, 10 hardcoded story chapters regardless of actual gameplay
+**Expected behavior:** Player sees real journal entries from `JournalSystem.OnEntryAdded`, real survivor notes, real codex unlocks
 **Evidence:**
 - `src/UI/JournalPanel.cs:36-53` — `_placeholderLogs`, `_placeholderNotes`, `_placeholderStory` arrays with hardcoded fiction
 - `src/UI/JournalPanel.cs:69` — `public void Bind(object journal) // placeholder for JournalHostSession`
@@ -55,24 +61,24 @@ None new. All numbered bugs from the 10-loop audit (§17 priority list) have bee
 - Host side: `src/Main.Verdict.cs:114-127`, `src/Main.Maritime.cs:55`, `src/Main.YearOfAsh.cs:177,376` — `_journal` is used for real entries
 - Save: `src/Journal/JournalSaveStore.cs` — save store exists and is wired
 
-**Affected systems:** JournalSystem, Verdict, Maritime, YearOfAsh  
-**Player impact:** HIGH — journal/quest log/narrative beats are invisible to player; all narrative progression is black-boxed  
-**Save impact:** None — save store works, data is persisted but never displayed  
-**Migration impact:** None — Core is engine-agnostic  
-**Likely sealing class:** HOST (UI wiring)  
+**Affected systems:** JournalSystem, Verdict, Maritime, YearOfAsh
+**Player impact:** HIGH — journal/quest log/narrative beats are invisible to player; all narrative progression is black-boxed
+**Save impact:** None — save store works, data is persisted but never displayed
+**Migration impact:** None — Core is engine-agnostic
+**Likely sealing class:** HOST (UI wiring)
 **Suggested next analysis:** Trace `_journal` field type in `Main*.cs`; determine if it's `JournalSystem` directly (no host session wrapper) or a `JournalHostSession`; wire `Bind` accordingly
 
 ### GAP-UI-02 — WeatherForecastPanel shows hardcoded fiction instead of live forecast
 
-**Category:** UI GAP / PLACEHOLDER  
-**Severity:** HIGH  
-**Confidence:** HIGH  
-**Status:** RESOLVED  
-**Active Runtime:** YES  
-**Expected chain:** `WeatherSystem → WeatherForecastHostSession → WeatherForecastPanel.Bind → player sees real forecast`  
-**Broken link:** `Bind(object)` accepts anything; `RefreshView()` renders 4 hardcoded string arrays  
-**Observed behavior:** Player sees 7 hardcoded forecast days, temperature trends, precipitation, and wind patterns regardless of actual weather  
-**Expected behavior:** Player sees real 7-day forecast from `WeatherSystem` or `WeatherStationSystem`  
+**Category:** UI GAP / PLACEHOLDER
+**Severity:** HIGH
+**Confidence:** HIGH
+**Status:** RESOLVED
+**Active Runtime:** YES
+**Expected chain:** `WeatherSystem → WeatherForecastHostSession → WeatherForecastPanel.Bind → player sees real forecast`
+**Broken link:** `Bind(object)` accepts anything; `RefreshView()` renders 4 hardcoded string arrays
+**Observed behavior:** Player sees 7 hardcoded forecast days, temperature trends, precipitation, and wind patterns regardless of actual weather
+**Expected behavior:** Player sees real 7-day forecast from `WeatherSystem` or `WeatherStationSystem`
 **Evidence:**
 - `src/UI/WeatherForecastPanel.cs:27-59` — `_placeholderForecast`, `_placeholderTemperature`, `_placeholderPrecipitation`, `_placeholderWind`
 - `src/UI/WeatherForecastPanel.cs:69` — `public void Bind(object weatherForecast)` → calls `RefreshView()` with no type check
@@ -80,35 +86,35 @@ None new. All numbered bugs from the 10-loop audit (§17 priority list) have bee
 - No `WeatherForecastHostSession` exists in `src/Host/`
 - `src/Main.World.cs:377` — `CloseWeatherForecastPanel()` exists but no `OpenWeatherForecastPanel` with data binding
 
-**Affected systems:** WeatherSystem, WeatherStationSystem  
-**Player impact:** HIGH — weather forecast is the primary planning input for expeditions/outdoor activity; showing fiction breaks gameplay decisions  
-**Save impact:** None  
-**Migration impact:** None  
-**Likely sealing class:** HOST (UI + possibly new host session)  
+**Affected systems:** WeatherSystem, WeatherStationSystem
+**Player impact:** HIGH — weather forecast is the primary planning input for expeditions/outdoor activity; showing fiction breaks gameplay decisions
+**Save impact:** None
+**Migration impact:** None
+**Likely sealing class:** HOST (UI + possibly new host session)
 **Suggested next analysis:** Check if `WeatherSystem` exposes a forecast API; if not, the gap extends into Core (forecast computation missing)
 
 ### GAP-UI-03 — WeatherHistoryPanel shows hardcoded fiction instead of real history
 
-**Category:** UI GAP / PLACEHOLDER  
-**Severity:** MEDIUM  
-**Confidence:** HIGH  
-**Status:** RESOLVED  
-**Active Runtime:** YES (openable via `H` key)  
-**Expected chain:** `WeatherSystem history → WeatherHistoryHostSession → WeatherHistoryPanel.Bind → player sees real history`  
-**Broken link:** Same pattern as GAP-UI-02  
-**Observed behavior:** Player sees 5 hardcoded history periods, 6 hardcoded patterns, 5 hardcoded anomalies  
-**Expected behavior:** Player sees actual past weather from `WeatherSystem` state history  
+**Category:** UI GAP / PLACEHOLDER
+**Severity:** MEDIUM
+**Confidence:** HIGH
+**Status:** RESOLVED
+**Active Runtime:** YES (openable via `H` key)
+**Expected chain:** `WeatherSystem history → WeatherHistoryHostSession → WeatherHistoryPanel.Bind → player sees real history`
+**Broken link:** Same pattern as GAP-UI-02
+**Observed behavior:** Player sees 5 hardcoded history periods, 6 hardcoded patterns, 5 hardcoded anomalies
+**Expected behavior:** Player sees actual past weather from `WeatherSystem` state history
 **Evidence:**
 - `src/UI/WeatherHistoryPanel.cs:25-48` — `_placeholderHistory`, `_placeholderPatterns`, `_placeholderAnomalies`
 - `src/UI/WeatherHistoryPanel.cs:58` — `Bind(object)` → `RefreshView()` no-op binding
 - Core: `Assets/Ashfall.Core/World/WeatherSystem.cs` — weather state exists but history buffer/consumer not traced
 - No `WeatherHistoryHostSession` exists
 
-**Affected systems:** WeatherSystem  
-**Player impact:** MEDIUM — history is secondary to forecast but affects pattern recognition and long-term planning  
-**Save impact:** None  
-**Migration impact:** None  
-**Likely sealing class:** HOST (UI wiring)  
+**Affected systems:** WeatherSystem
+**Player impact:** MEDIUM — history is secondary to forecast but affects pattern recognition and long-term planning
+**Save impact:** None
+**Migration impact:** None
+**Likely sealing class:** HOST (UI wiring)
 **Suggested next analysis:** Check if `WeatherSystem` maintains a day-by-day history buffer; if not, gap extends into Core
 
 ## 7. Dead Callbacks
@@ -123,39 +129,39 @@ None. All 20 expanded shelter systems are constructed, ticked, and saved in `Mai
 
 ### GAP-STUB-01 — `LivingCumulativeDoseSieverts()` returns 0 in production
 
-**Category:** STUB / FALSE SUCCESS  
-**Severity:** MEDIUM  
-**Confidence:** HIGH  
-**Status:** PARTIAL — API exists, returns degenerate value  
-**Active Runtime:** YES  
-**Expected chain:** `Survivor radiation dose → aggregate → Verdict Survival Reckoning`  
-**Broken link:** Aggregation step returns 0 regardless of actual dose  
-**Observed behavior:** Verdict's Survival Reckoning always records 0 sieverts  
-**Expected behavior:** Returns sum of living survivors' cumulative dose  
+**Category:** STUB / FALSE SUCCESS
+**Severity:** MEDIUM
+**Confidence:** HIGH
+**Status:** PARTIAL — API exists, returns degenerate value
+**Active Runtime:** YES
+**Expected chain:** `Survivor radiation dose → aggregate → Verdict Survival Reckoning`
+**Broken link:** Aggregation step returns 0 regardless of actual dose
+**Observed behavior:** Verdict's Survival Reckoning always records 0 sieverts
+**Expected behavior:** Returns sum of living survivors' cumulative dose
 **Evidence:**
 - `src/Main.Verdict.cs:108` — `public float LivingCumulativeDoseSieverts() => 0f;`
 - `src/Main.Verdict.cs:109-113` — comment acknowledges: "Real survivor dose aggregates from Ashfall.Core.Survivors are not yet exposed"
 - Comment also notes: "preserves the API for a future commit that adds SurvivorsHostSession.TotalSieverts"
 - `VerdictChainTests` exercises the contract but always with 0
 
-**Affected systems:** Verdict, Survivors (dose tracking)  
-**Player impact:** MEDIUM — Survival Reckoning verdict is always "clean" regardless of radiation exposure  
-**Save impact:** None — 0 is a valid float, round-trips fine  
-**Migration impact:** None  
-**Likely sealing class:** HOST (expose survivor dose aggregate) + possibly CORE (add `TotalSieverts` to `SurvivorsHostSession`)  
+**Affected systems:** Verdict, Survivors (dose tracking)
+**Player impact:** MEDIUM — Survival Reckoning verdict is always "clean" regardless of radiation exposure
+**Save impact:** None — 0 is a valid float, round-trips fine
+**Migration impact:** None
+**Likely sealing class:** HOST (expose survivor dose aggregate) + possibly CORE (add `TotalSieverts` to `SurvivorsHostSession`)
 **Suggested next analysis:** Check if `DoseLedgerSystem` or `RadiationSystem` already exposes per-survivor cumulative dose; if so, the gap is purely host-side wiring
 
 ### GAP-STUB-02 — `IsCompanionInSameRoom` always returns false
 
-**Category:** STUB / DEAD CODE PATH  
-**Severity:** MEDIUM  
-**Confidence:** HIGH  
-**Status:** PARTIAL — API exists, path is dead  
-**Active Runtime:** YES  
-**Expected chain:** `SomaticFlashbackSystem → FindGroundingCompanion → IsCompanionInSameRoom → companion soothes flashback`  
-**Broken link:** `IsCompanionInSameRoom` always false, `FindGroundingCompanion` always returns null  
-**Observed behavior:** Somatic flashback never gets the "companion in same room" grounding bonus; work efficiency penalty always applies at full severity  
-**Expected behavior:** When a companion survivor is assigned to the same room, the flashback is partially grounded (reduced duration/efficiency penalty)  
+**Category:** STUB / DEAD CODE PATH
+**Severity:** MEDIUM
+**Confidence:** HIGH
+**Status:** PARTIAL — API exists, path is dead
+**Active Runtime:** YES
+**Expected chain:** `SomaticFlashbackSystem → FindGroundingCompanion → IsCompanionInSameRoom → companion soothes flashback`
+**Broken link:** `IsCompanionInSameRoom` always false, `FindGroundingCompanion` always returns null
+**Observed behavior:** Somatic flashback never gets the "companion in same room" grounding bonus; work efficiency penalty always applies at full severity
+**Expected behavior:** When a companion survivor is assigned to the same room, the flashback is partially grounded (reduced duration/efficiency penalty)
 **Evidence:**
 - `src/Host/Phase0HostSession.cs:250` — `IsCompanionInSameRoom = (a, b) => false`
 - `Assets/Ashfall.Core/Survivors/SomaticFlashbackSystem.cs:275` — `if (IsCompanionInSameRoom == null) return null;`
@@ -163,34 +169,34 @@ None. All 20 expanded shelter systems are constructed, ticked, and saved in `Mai
 - `src/Host/HostCli.PanelTests.cs:1495` — test sets `IsCompanionInSameRoom = (a, b) => a != b` (grounded penalty path only)
 - No production code ever assigns a real companion-proximity check
 
-**Affected systems:** SomaticFlashbackSystem, ShelterAssignmentSystem  
-**Player impact:** MEDIUM — mental health crises are harder than designed; companion bonding mechanic is non-functional  
-**Save impact:** None — duration/penalty values are persisted but always at worst-case  
-**Migration impact:** None  
-**Likely sealing class:** HOST (wire `_shelterAssignment.System.GetAssignmentsForRoom` into the Func)  
+**Affected systems:** SomaticFlashbackSystem, ShelterAssignmentSystem
+**Player impact:** MEDIUM — mental health crises are harder than designed; companion bonding mechanic is non-functional
+**Save impact:** None — duration/penalty values are persisted but always at worst-case
+**Migration impact:** None
+**Likely sealing class:** HOST (wire `_shelterAssignment.System.GetAssignmentsForRoom` into the Func)
 **Suggested next analysis:** Verify that `ShelterAssignmentSystem.GetAssignmentsForRoom` returns same-room survivors; if yes, wiring is one host-side lambda
 
 ### GAP-STUB-03 — `FactionStanceEngine` providers never wired
 
-**Category:** STUB / DEGENERATE INPUT  
-**Severity:** MEDIUM  
-**Confidence:** HIGH  
-**Status:** PARTIAL — engine exists, inputs are stubs  
-**Active Runtime:** YES  
-**Expected chain:** `Host state (day, radiation, ARS, hazmat, hated military) → FactionStanceEngine providers → faction stance calculation`  
-**Broken link:** All 7 provider Funcs default to stubs (`() => 0`, `() => false`, `() => -1f`)  
-**Observed behavior:** Faction stance always computed with day=0, radiation=-1, no ARS, intact hazmat=false, no hated military — all thresholds produce identical degenerate output  
-**Expected behavior:** Faction stance reflects actual campaign state  
+**Category:** STUB / DEGENERATE INPUT
+**Severity:** MEDIUM
+**Confidence:** HIGH
+**Status:** PARTIAL — engine exists, inputs are stubs
+**Active Runtime:** YES
+**Expected chain:** `Host state (day, radiation, ARS, hazmat, hated military) → FactionStanceEngine providers → faction stance calculation`
+**Broken link:** All 7 provider Funcs default to stubs (`() => 0`, `() => false`, `() => -1f`)
+**Observed behavior:** Faction stance always computed with day=0, radiation=-1, no ARS, intact hazmat=false, no hated military — all thresholds produce identical degenerate output
+**Expected behavior:** Faction stance reflects actual campaign state
 **Evidence:**
 - `Assets/Ashfall.Core/Economy/FactionStanceEngine.cs:20-26` — 7 provider Funcs with default stubs
 - `src/Main*.cs` — zero assignments to any of these providers (grep confirmed)
 - `src/Main.UiTests.cs:347` — `new FactionStanceEngine()` in tests also uses defaults
 
-**Affected systems:** FactionStanceEngine, FactionSystem, RegionalTreaty  
-**Player impact:** MEDIUM — faction reputation/trust calculations are meaningless; trading/diplomacy outcomes don't reflect actual campaign state  
-**Save impact:** None — trust values are persisted but computed from wrong inputs  
-**Migration impact:** None  
-**Likely sealing class:** HOST (wire 7 providers from Main state)  
+**Affected systems:** FactionStanceEngine, FactionSystem, RegionalTreaty
+**Player impact:** MEDIUM — faction reputation/trust calculations are meaningless; trading/diplomacy outcomes don't reflect actual campaign state
+**Save impact:** None — trust values are persisted but computed from wrong inputs
+**Migration impact:** None
+**Likely sealing class:** HOST (wire 7 providers from Main state)
 **Suggested next analysis:** Map each provider to its source in Main (day → `_dayCounter`, radiation → `RadiationSystem`, ARS → inventory check, hazmat → `_equipmentCondition`, hated military → survivor scan)
 
 ## 10. Missing Producers
@@ -257,25 +263,25 @@ Both panels are untested.
 
 ## 20. Cross-System Broken Chains
 
-### CHAIN-01 — Journal data flow: Core produces, UI never consumes
+### CHAIN-01 — Journal data flow: Core produces, UI never consumes (RESOLVED in HEAD)
 
-`JournalSystem.OnEntryAdded` → (no subscriber in JournalPanel) → hardcoded placeholder text rendered instead  
-**Blast radius:** Verdict, Maritime, YearOfAsh narrative beats are invisible to player
+`JournalSystem.OnEntryAdded` → `JournalHostSession` → `JournalPanel.Bind` now displays live journal logs, survivor notes, and codex entries.
+*Historical Blast radius at audit time:* Verdict, Maritime, YearOfAsh narrative beats were invisible to player.
 
-### CHAIN-02 — Weather forecast flow: Core produces, UI never consumes
+### CHAIN-02 — Weather forecast flow: Core produces, UI never consumes (RESOLVED in HEAD)
 
-`WeatherSystem` → (no WeatherForecastHostSession) → hardcoded placeholder text rendered instead  
-**Blast radius:** Expedition planning, outdoor activity decisions based on false data
+`WeatherSystem` → `WeatherStationSystem` → `WeatherForecastPanel.Bind` / `WeatherHistoryPanel.Bind` now displays live 7-day forecast and historical records.
+*Historical Blast radius at audit time:* Expedition planning, outdoor activity decisions based on false data.
 
-### CHAIN-03 — Faction stance flow: Host state exists, never reaches engine
+### CHAIN-03 — Faction stance flow: Host state exists, never reaches engine (RESOLVED in HEAD)
 
-`Main` state (day, radiation, ARS, hazmat) → (no provider wiring) → `FactionStanceEngine` computes from stubs → meaningless faction trust  
-**Blast radius:** RegionalTreaty, trading stances, faction quests
+`Main` state (day, radiation, ARS, hazmat) → `FactionStanceEngine` 7 providers wired (`68ce46bf`).
+*Historical Blast radius at audit time:* RegionalTreaty, trading stances, faction quests.
 
-### CHAIN-04 — Radiation dose flow: Survivors track dose, Verdict never reads it
+### CHAIN-04 — Radiation dose flow: Survivors track dose, Verdict never reads it (RESOLVED in HEAD)
 
-`DoseLedgerSystem` / `RadiationSystem` → (no `TotalSieverts` exposed) → `LivingCumulativeDoseSieverts() => 0f` → Survival Reckoning always "clean"  
-**Blast radius:** Verdict ending logic, narrative consequences of radiation exposure
+`RadiationSystem` / `SurvivorsHostSession` → `LivingCumulativeDoseSieverts` sums living survivors' `LifetimeDose` (`d0bc0708`).
+*Historical Blast radius at audit time:* Verdict ending logic, narrative consequences of radiation exposure.
 
 ## 21. Legacy/Migration Gaps
 
@@ -345,10 +351,13 @@ None new. Bridge shim removed. Unity tree is read-only.
 
 ## 26. Handoff
 
-**Batch repair arc:** CLOSED. 5 batches + BUG-03 host wiring committed. 2497/2497 tests pass.
+**Batch repair arc:** CLOSED. 5 batches + BUG-03 host wiring committed.
 
-**Current genuine gaps:** 1 Core stub (GAP-STUB-03 partial), 1 architectural debt (GAP-ARCH-01). GAP-STUB-02 is a Phase0-only limitation (no room assignments in that context). GAP-UI-01/02/03 and GAP-STUB-01 are RESOLVED.
+**Current HEAD Status:**
+- `GAP-UI-01`, `GAP-UI-02`, `GAP-UI-03` (UI placeholders): **RESOLVED** (`63de12d0`).
+- `GAP-STUB-01` (Verdict cumulative dose): **RESOLVED** (`d0bc0708`).
+- `GAP-STUB-03` (FactionStanceEngine providers): **RESOLVED** (`68ce46bf`).
+- `GAP-STUB-02` (SomaticFlashback companion check): Phase 0 contextual limitation.
+- `GAP-ARCH-01` (`Main.cs` monolith): Maintained across coherent partial files.
 
-**Recommended next action:** Complete GAP-STUB-03 by wiring the remaining 5 FactionStanceEngine providers from Main state (Day, radiation, hated military, clamp trust, military-faction check). Low urgency — no TrustInversion factions are currently registered.
-
-**What NOT to do:** Do not declare the project "repaired" or "complete." One Core stub is partially sealed and one architectural debt remains. The batch-repair arc closed its scoped bugs; the gap audit found additional items, most of which are now sealed.
+*Audit retained as historical reference.*

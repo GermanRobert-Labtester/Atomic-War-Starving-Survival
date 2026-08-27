@@ -23,10 +23,10 @@ namespace AtomicWar.GodotApp
             _fileIO = fileIO;
             _dataDir = dataDir;
             _system = new ExpansionQuestSystem();
-            
+
             // Wire up state change events to raise host session StateChanged
             _system.OnStateChanged += _ => RaiseStateChanged();
-            
+
             LoadCatalog();
         }
 

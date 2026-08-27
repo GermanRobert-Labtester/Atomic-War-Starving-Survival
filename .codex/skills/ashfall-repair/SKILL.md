@@ -256,15 +256,15 @@ For each:
 
 ## OPTION A
 
-**Approach:**  
-**Files:**  
-**Advantages:**  
-**Risks:**  
-**Save impact:**  
-**Determinism impact:**  
-**Architecture quality:**  
-**Migration effect:**  
-**Testing burden:**  
+**Approach:**
+**Files:**
+**Advantages:**
+**Risks:**
+**Save impact:**
+**Determinism impact:**
+**Architecture quality:**
+**Migration effect:**
+**Testing burden:**
 
 Options should vary meaningfully.
 

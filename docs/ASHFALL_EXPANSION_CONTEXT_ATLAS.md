@@ -5,7 +5,7 @@
 
 ## 1. PURPOSE / RELATIONSHIP TO IMPLEMENTED REGISTRY
 
-This document is the **deep structural and design-context companion** to [`docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md).
+This document is the **deep structural and design-context companion** to [`docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`](ASHFALL_IMPLEMENTED_CANON_REGISTRY.md).
 
 ```mermaid
 graph LR
@@ -39,7 +39,7 @@ graph LR
 * **Core Runtime:** `netstandard2.1` / `net8.0` Engine-Agnostic C# (`Assets/Ashfall.Core/` — 318 files, 65,923 lines)
 * **Data Authority:** `Assets/StreamingAssets/Data/` (296 JSON catalogs, 59,133 lines)
 * **Host Presentation & UI:** `src/` (203 files, 58,545 lines, 27 HostSessions, 60+ UI panels)
-* **Verification Standard:** `dotnet test` (2,194 tests; 2,193 passing) + `godot --headless` CLI selftests (70+ flags)
+* **Verification Standard:** `dotnet test` (all unit tests passing, 0 failures) + `godot --headless` CLI selftests
 
 ---
 
@@ -87,7 +87,7 @@ ASHFALL is designed around a continuous cognitive loop of information gathering,
 
 ```mermaid
 graph LR
-    A["1. OBSERVE<br/>(Weather forecast, dosimeters, vitals, radio signals, pantry stocks)"] 
+    A["1. OBSERVE<br/>(Weather forecast, dosimeters, vitals, radio signals, pantry stocks)"]
     --> B["2. INTERPRET<br/>(Weigh crisis urgency: freezing vs starvation vs raider toll)"]
     --> C["3. PRIORITIZE<br/>(Allocate power, water, shift rosters, medical beds)"]
     --> D["4. COMMIT<br/>(Dispatch expedition, tap foundry cupola, enforce strict rationing)"]
@@ -209,7 +209,7 @@ graph TD
 High-connectivity hubs are foundational systems whose state mutations ripple across multiple gameplay domains.
 
 ### 1. HUB: Survivor Physiological & Psychological State
-* **Anchor Classes:** [`NeedsSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Survivors/NeedsSystem.cs), [`SurvivorCatalog.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Survivors/SurvivorCatalog.cs), [`GuiltInsomniaSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Survivors/GuiltInsomniaSystem.cs).
+* **Anchor Classes:** [`NeedsSystem.cs`](../Assets/Ashfall.Core/Survivors/NeedsSystem.cs), [`SurvivorCatalog.cs`](../Assets/Ashfall.Core/Survivors/SurvivorCatalog.cs), [`GuiltInsomniaSystem.cs`](../Assets/Ashfall.Core/Survivors/GuiltInsomniaSystem.cs).
 * **Inputs:** Daily ration quality/quantity, ambient room temperature, medical disease infections, combat trauma events, witnessed dweller deaths.
 * **Internal State:** 8 vitals (Hunger, Thirst, Fatigue, Warmth, Morale, Health, Hygiene, Rads), active guilt records, insomnia severity, somatic flashback susceptibility.
 * **Outputs:** Survivor alive/dead status, work efficiency multipliers (0.0 to 1.5x), cognitive refusal flags, autonomous Utility AI action priorities.
@@ -219,7 +219,7 @@ High-connectivity hubs are foundational systems whose state mutations ripple acr
 * **Extension Seams:** Add new trait modifiers in `SurvivorDefinition.traits`, register custom guilt triggers in `guilt_sources.json`, or bind custom response curves in `utility_actions.json`.
 
 ### 2. HUB: Physical Inventory & Supply Chain
-* **Anchor Classes:** [`Inventory.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Inventory/Inventory.cs), [`ItemDefinitions.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Inventory/ItemDefinitions.cs), [`MarketSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Economy/MarketSystem.cs).
+* **Anchor Classes:** [`Inventory.cs`](../Assets/Ashfall.Core/Inventory/Inventory.cs), [`ItemDefinitions.cs`](../Assets/Ashfall.Core/Inventory/ItemDefinitions.cs), [`MarketSystem.cs`](../Assets/Ashfall.Core/Economy/MarketSystem.cs).
 * **Inputs:** Scavenged expedition loot, harvested greenhouse crops, tapped foundry ingots, synthesized pharmaceuticals, caravan barter acquisitions.
 * **Internal State:** Grid slot items, item quantities, durability/wear values, 11 equipped gear items per survivor, 4-tier spoilage states.
 * **Outputs:** Resource availability for crafting, medical procedures, generator fuel, expedition supply checks, barter purchasing power.
@@ -229,7 +229,7 @@ High-connectivity hubs are foundational systems whose state mutations ripple acr
 * **Extension Seams:** Add items in `items.json`, define custom scrap yields in `ItemDefinitions.ScrapYield`, author crafting recipes in `recipes.json`.
 
 ### 3. HUB: Simulation Clock & Calendar
-* **Anchor Classes:** [`SimClock.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/HostDefaults.cs), [`CampaignDayCoordinator.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs).
+* **Anchor Classes:** [`SimClock.cs`](../Assets/Ashfall.Core/HostDefaults.cs), [`CampaignDayCoordinator.cs`](../Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs).
 * **Inputs:** Day advance calls triggered from UI or host orchestrator.
 * **Internal State:** Current integer Day (1 to 3650+), fractional hour (0.0 to 24.0), seasonal phase window.
 * **Outputs:** Daily simulation ticks dispatched to all 38 Core subsystems.
@@ -239,7 +239,7 @@ High-connectivity hubs are foundational systems whose state mutations ripple acr
 * **Extension Seams:** Hook daily listener actions into `Main.cs:TickSimDay()`.
 
 ### 4. HUB: Atmospheric Weather & Nuclear Environment
-* **Anchor Classes:** [`WeatherSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/World/WeatherSystem.cs), [`WeatherKind.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/WeatherKind.cs).
+* **Anchor Classes:** [`WeatherSystem.cs`](../Assets/Ashfall.Core/World/WeatherSystem.cs), [`WeatherKind.cs`](../Assets/Ashfall.Core/WeatherKind.cs).
 * **Inputs:** Multi-day procedural weather generation seeded by `ISeededRng`.
 * **Internal State:** Active weather state (22 `WeatherKind` enums), exterior ambient temperature (°C), atmospheric rads/hr, particulate density.
 * **Outputs:** Shelter insulation heating demands, air intake filter clogging rates, expedition travel hazards, greenhouse solar illumination.
@@ -249,7 +249,7 @@ High-connectivity hubs are foundational systems whose state mutations ripple acr
 * **Extension Seams:** Author seasonal profiles in `weather_seasons.json`.
 
 ### 5. HUB: Radiation & Dosimetry
-* **Anchor Classes:** [`RadiationSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Radiation/RadiationSystem.cs), [`RadiationPhaseProgression.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Radiation/RadiationPhaseProgression.cs), [`DoseLedgerSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/DoseLedgerSystem.cs).
+* **Anchor Classes:** [`RadiationSystem.cs`](../Assets/Ashfall.Core/Radiation/RadiationSystem.cs), [`RadiationPhaseProgression.cs`](../Assets/Ashfall.Core/Radiation/RadiationPhaseProgression.cs), [`DoseLedgerSystem.cs`](../Assets/Ashfall.Core/DoseLedgerSystem.cs).
 * **Inputs:** Environmental rad fields, radioactive dust inhalation, contaminated food/water ingestion, high-dose maintenance tasks.
 * **Internal State:** Personal cumulative mSv, active ARS clinical phase (Healthy to Fibrosis), dosimeter calibration state, 4 dose bands.
 * **Outputs:** Physical stamina debuffs, clinical ARS symptom emergence, triage bed assignment requirements.
@@ -259,7 +259,7 @@ High-connectivity hubs are foundational systems whose state mutations ripple acr
 * **Extension Seams:** Add high-rad exploration nodes or author bespoke chelation drugs in `PharmaLabSystem`.
 
 ### 6. HUB: Faction Standing & Geopolitics
-* **Anchor Classes:** [`FactionStanceEngine.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Economy/FactionStanceEngine.cs), [`WarlordDoctrineSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Warlords/WarlordDoctrineSystem.cs).
+* **Anchor Classes:** [`FactionStanceEngine.cs`](../Assets/Ashfall.Core/Economy/FactionStanceEngine.cs), [`WarlordDoctrineSystem.cs`](../Assets/Ashfall.Core/Warlords/WarlordDoctrineSystem.cs).
 * **Inputs:** Tribute payments, quest resolutions, door encounter choices, combat engagements, treaty signings.
 * **Internal State:** Faction standing score (-100 to +100), active warlord doctrine (`Toll`, `Raiding`, `Fortification`, `Tribute`), treaty compliance quotas.
 * **Outputs:** Barter price multipliers (0.5x to 6.0x), trader dialogue tell lines, radio propaganda themes, raider assault frequencies.
@@ -499,7 +499,7 @@ A single narrative thread in ASHFALL can organically propagate across multiple d
 
 ## 14. QUEST CAPABILITY MAP
 
-This section analyzes the exact mechanical capabilities of ASHFALL's quest engines ([`QuestlineSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/YearOfAsh/QuestlineSystem.cs), [`HoldfastQuestSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/HoldfastQuestSystem.cs), [`DutyRosterSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs)).
+This section analyzes the exact mechanical capabilities of ASHFALL's quest engines ([`QuestlineSystem.cs`](../Assets/Ashfall.Core/YearOfAsh/QuestlineSystem.cs), [`HoldfastQuestSystem.cs`](../Assets/Ashfall.Core/HoldfastQuestSystem.cs), [`DutyRosterSystem.cs`](../Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs)).
 
 ### Quest Engine Feature Matrix
 
@@ -765,9 +765,9 @@ In ASHFALL, failure is rarely a binary "Game Over" screen. Instead, failure is a
 graph TD
     subgraph FailureTaxonomy["Failure & Recovery Architecture"]
         TerminalFail["1. TERMINAL FAILURES<br/>• All Survivors Deceased (Total Extinction)<br/>• Day 360 Machine Sterilization Verdict"]
-        
+
         RecoverableFail["2. RECOVERABLE CRISES (Creates Secondary Story)<br/>• Power Grid Total Blackout (Heaters freeze; force emergency battery repairs)<br/>• Sickness Outbreak (40% infected; convert common room to quarantine)<br/>• Crucible Blowout (Foundry destroyed; emergency burn surgery)<br/>• Lost Expedition (Party captured; launches rescue mission)"]
-        
+
         PunitiveDeadEnds["3. PUNITIVE DEAD-ENDS (To Be Avoided)<br/>• Unwarned instant death from clicking un-scouted map node<br/>• Irreversible soft-locks from running out of water on Day 2"]
     end
 ```
@@ -788,10 +788,10 @@ Understanding ASHFALL's systemic feedback loops prevents designers from introduc
 ### 1. Verified Negative (Dampening) Feedback Loops
 ```text
 REFINED METALLURGY DAMPENER:
-High Foundry Production 
-→ Refractory Firebrick Wear Increases 
-→ Worker Fatigue Spikes 
-→ Labor Strike Dispute Probability Escalates 
+High Foundry Production
+→ Refractory Firebrick Wear Increases
+→ Worker Fatigue Spikes
+→ Labor Strike Dispute Probability Escalates
 → Foundry Automatically Shuts Down for Repairs.
 (Prevents infinite weapon/armor stockpiling).
 ```
@@ -799,11 +799,11 @@ High Foundry Production
 ### 2. Verified Positive (Reinforcing) Feedback Loops
 ```text
 SICKNESS SPIRAL (Reinforcing):
-Contaminated Water Consumed 
-→ Doctor Contracts Cholera 
-→ Medical Ward Capacity Drops 
-→ Secondary Patients Suffer Sepsis 
-→ More Labor Incapacitated 
+Contaminated Water Consumed
+→ Doctor Contracts Cholera
+→ Medical Ward Capacity Drops
+→ Secondary Patients Suffer Sepsis
+→ More Labor Incapacitated
 → Less Clean Water Purified.
 (Creates desperate emergency triage moments).
 ```
@@ -922,9 +922,9 @@ Every proposed expansion MUST be architected with an explicit automated verifica
 graph TD
     subgraph TestingPathways["Automated Verification Hierarchy"]
         xUnit["1. xUnit Automated Unit Tests (Ashfall.Core.Tests/)<br/>• Pure logic & state machine execution<br/>• Determinism tests (Same seed = identical outcome)<br/>• Save/Load roundtrip & checksum stability"]
-        
+
         HeadlessCLI["2. Godot Headless CLI Selftests (src/Host/HostCli.cs)<br/>• End-to-end headless gameplay simulation<br/>• 70+ automated CLI flags (e.g. --data-integrity-selftest)<br/>• Zero-graphics CI test pipeline"]
-        
+
         IntegrityTests["3. Catalog Referential Integrity (CatalogIntegrityValidator.cs)<br/>• Validates all 200+ snake_case ID prefixes<br/>• Checks recipe-to-item, quest-to-location links"]
     end
 ```
@@ -933,11 +933,11 @@ graph TD
 
 | Proposed Feature Type | Primary Verification Tool | Required Test Assertions | Example Test File in Repo |
 | :--- | :--- | :--- | :--- |
-| **New Questline / Storyline** | `dotnet test` + Data Integrity Selftest | Referential integrity of item IDs, location IDs, and faction IDs; quest stage progression DAG validity. | [`HoldfastQuestSystemTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/HoldfastQuestSystemTests.cs) |
-| **New Stateful Core System** | xUnit Test Class (`Ashfall.Core.Tests/`) | Initial state baseline; discrete tick mutations; `CaptureState()` / `RestoreState()` identical hash roundtrip; determinism. | [`SilentFoundrySystemTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/SilentFoundrySystemTests.cs) |
-| **New Chemical / Medical Drug** | `dotnet test` (Pharma Lab suite) | Recipe validation, purity scaling curve math, addiction trigger probability bounds. | [`MedicalWardSystemTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/MedicalWardSystemTests.cs) |
-| **New Tactical Combat Feature** | xUnit Test Class + Combat Demo Flag | Ballistic trajectory math, armor deflection angles, jam rate under extreme fouling, stance modifiers. | [`CombatBallisticsTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/CombatBallisticsTests.cs) |
-| **New Host UI Panel** | `godot --headless -- <flag>` | Panel instantiation without null refs, signal binding/unbinding without memory leaks, clean teardown. | [`HostCli.PanelTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/HostCli.PanelTests.cs) |
+| **New Questline / Storyline** | `dotnet test` + Data Integrity Selftest | Referential integrity of item IDs, location IDs, and faction IDs; quest stage progression DAG validity. | [`HoldfastQuestSystemTests.cs`](../Ashfall.Core.Tests/HoldfastQuestSystemTests.cs) |
+| **New Stateful Core System** | xUnit Test Class (`Ashfall.Core.Tests/`) | Initial state baseline; discrete tick mutations; `CaptureState()` / `RestoreState()` identical hash roundtrip; determinism. | [`SilentFoundrySystemTests.cs`](../Ashfall.Core.Tests/SilentFoundrySystemTests.cs) |
+| **New Chemical / Medical Drug** | `dotnet test` (Pharma Lab suite) | Recipe validation, purity scaling curve math, addiction trigger probability bounds. | [`MedicalWardSystemTests.cs`](../Ashfall.Core.Tests/MedicalWardSystemTests.cs) |
+| **New Tactical Combat Feature** | xUnit Test Class + Combat Demo Flag | Ballistic trajectory math, armor deflection angles, jam rate under extreme fouling, stance modifiers. | [`CombatBallisticsTests.cs`](../Ashfall.Core.Tests/CombatBallisticsTests.cs) |
+| **New Host UI Panel** | `godot --headless -- <flag>` | Panel instantiation without null refs, signal binding/unbinding without memory leaks, clean teardown. | [`HostCli.PanelTests.cs`](../src/Host/HostCli.PanelTests.cs) |
 
 ---
 
@@ -969,7 +969,7 @@ graph TD
     Recipes["recipes.json / relic_recipes.json"] -->|Consumes & Produces| Items
     Foundry["foundry_production.json"] -->|Consumes Scrap & Produces| Items
     Pharma["chemical_dependency_items.json"] -->|References Drug| Items
-    
+
     Quests["questline_master.json / year_of_ash_quests.json"] -->|Requires & Rewards| Items
     Quests -->|Targets Destination| Locations
     Quests -->|Modifies Standing| Factions
@@ -1041,9 +1041,9 @@ ASHFALL features multi-layered Cold War mysteries and institutional secrets dist
 graph TD
     subgraph MysteryStatus["Mystery Knowledge Taxonomy"]
         ActiveMysteries["1. ACTIVE / DISCOVERABLE MYSTERIES<br/>• The Origin of The Machine's Census Directive<br/>• The Fate of the Northern Continental Convoy<br/>• The Secret Purpose of Substation Nine's Cable"]
-        
+
         Ambiguous["2. DELIBERATELY AMBIGUOUS LORE<br/>• Who Fired the First Warhead? (Unanswerable)<br/>• The True Nature of the Horizon Flash (No Supernatural Truth)"]
-        
+
         Reserved["3. RESERVED EXPANSION SEEDS<br/>• The Deep Submerged Keel of the Black Flotilla<br/>• The Sovereign Shelf Sub-Strata Vaults"]
     end
 ```

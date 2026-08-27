@@ -7,7 +7,7 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
-    public partial class AutopsyReportPanel : Control
+    public partial class AutopsyReportPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -31,6 +31,17 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -47,15 +58,15 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
+            _detailText = AshfallUiHelpers.MakeBody("");
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _queueAutopsyBtn = new Button { Text = "Queue Standard Post-Mortem", CustomMinimumSize = new Vector2(220, 36) };
-            _queueAutopsyBtn.Pressed += () => _host?.QueueCase("specimen_survivor_01", "procedure_standard_autopsy", "Chief_Medical_Officer", 1);
+            _queueAutopsyBtn = AshfallUiHelpers.MakeButton("Queue Standard Post-Mortem",
+                () => _host?.QueueCase("specimen_survivor_01", "procedure_standard_autopsy", "Chief_Medical_Officer", 1));
+            _queueAutopsyBtn.CustomMinimumSize = new Vector2(220, 36);
             buttonRow.AddChild(_queueAutopsyBtn);
 
             _contentStack.AddChild(buttonRow);
@@ -72,7 +83,14 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_host == null || _statusRail == null)
+            {
+                if (_detailText != null)
+                {
+                    _detailText.Text = "Autopsy report host session is not bound. Post-mortem records and tissue pathology findings are offline.";
+                }
+                return;
+            }
 
             var s = _host.System.State;
             _statusRail.Set("cases", s.cases.Count.ToString(), AshfallMetricCard.Criticality.Normal);
@@ -80,22 +98,26 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Forensic Autopsy Reports ({s.cases.Count} total):\n";
-                foreach (var c in s.cases)
+                if (s.cases.Count == 0)
                 {
-                    text += $"  • [{c.status}] Specimen {c.specimenId} ({c.procedureId}) — Medic: {c.assignedMedicId} | Finding: {(string.IsNullOrEmpty(c.finding) ? "EXAMINATION IN PROGRESS" : c.finding)}\n";
+                    _detailText.Text = "No forensic autopsy cases registered.\nPost-mortem examinations and pathology findings will appear here when specimens are brought to the medical bay.\n\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 }
-                text += $"\nLast Event: {_host.LastEvent}";
-                _detailText.Text = text;
+                else
+                {
+                    string text = $"Forensic Autopsy Reports ({s.cases.Count} total):\n";
+                    foreach (var c in s.cases)
+                    {
+                        text += $"  • [{c.status}] Specimen {c.specimenId} ({c.procedureId}) — Medic: {c.assignedMedicId} | Finding: {(string.IsNullOrEmpty(c.finding) ? "EXAMINATION IN PROGRESS" : c.finding)}\n";
+                    }
+                    text += $"\nLast Event: {_host.LastEvent}";
+                    _detailText.Text = text;
+                }
             }
         }
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

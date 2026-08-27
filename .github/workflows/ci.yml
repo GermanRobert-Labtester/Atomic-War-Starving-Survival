@@ -1,12 +1,7 @@
-# ASHFALL CI — Godot 4.7 .NET (canonical)
-# Replaces Unity 6000.5.5f1 game-ci pipeline.
-# Verification checklist per AGENTS.md:
-#   1. dotnet build Ashfall.Core.Tests
-#   2. dotnet test Ashfall.Core.Tests
-#   3. dotnet build Ashfall.csproj (Godot host: 0 errors, 0 warnings)
-#   4. godot --headless -- --data-integrity-selftest
-#   5. godot --headless -- --bridge-selftest
-# No Unity batchmode; no JsonUtility; Core stays engine-agnostic.
+# ASHFALL CI — Godot 4.7 .NET (Canonical Shared Verification Pipeline)
+# Driven by docs/ci/CI_GATE_MANIFEST.json via scripts/ci/run-gates.py.
+# Local developer parity: bash scripts/ci/verify-fast.sh
+# Standalone Godot host; no JsonUtility; Core stays engine-agnostic.
 
 name: ASHFALL CI
 
@@ -18,46 +13,14 @@ on:
 
 jobs:
   ci:
-    name: CI Gate (dotnet + godot headless)
+    name: CI Fast-Tier Gates (dotnet + godot headless)
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           lfs: true
-
-      - name: Validate StreamingAssets JSON syntax (fast-fail)
-        run: |
-          python3 - <<'PY'
-          import json
-          import pathlib
-          import sys
-
-          root = pathlib.Path("Assets/StreamingAssets/Data")
-          if not root.is_dir():
-              print(f"ERROR: authoritative data directory is missing: {root}")
-              sys.exit(1)
-
-          files = sorted(root.rglob("*.json"))
-          if not files:
-              print(f"ERROR: no JSON catalogs found under {root}")
-              sys.exit(1)
-
-          errors = []
-          for path in files:
-              try:
-                  json.loads(path.read_text(encoding="utf-8"))
-              except Exception as exc:
-                  errors.append(f"{path}: {exc}")
-
-          if errors:
-              print("JSON validation FAILED:")
-              print("\n".join(errors))
-              sys.exit(1)
-
-          print(f"OK: validated {len(files)} JSON file(s) under {root}")
-          PY
 
       - name: Setup .NET SDKs (8.0 for Godot host, 9.0 for tests)
         uses: actions/setup-dotnet@v4
@@ -73,26 +36,16 @@ jobs:
           use-dotnet: true
           include-templates: true
 
-      - name: 1) dotnet build Ashfall.Core.Tests
-        run: dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
+      - name: Execute Canonical Verification Suite (Fast Tier)
+        run: |
+          python3 scripts/ci/run-gates.py --tier fast \
+            --report-json build/reports/gate-results.json \
+            --fail-artifact build/reports/CI_GATE_FAILURE_REPORT.md
 
-      - name: 2) dotnet test Ashfall.Core.Tests
-        run: dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
-
-      - name: 3) dotnet build Godot host (Ashfall.csproj)
-        run: dotnet build Ashfall.csproj --nologo
-
-      - name: godot --import (build .godot/ cache)
-        run: godot --headless --path . --import 2>&1 | tail -n 20
-
-      - name: 4) godot --headless -- --data-integrity-selftest
-        run: godot --headless --path . -- --data-integrity-selftest
-
-      - name: 5) godot --headless -- --bridge-selftest
-        run: godot --headless --path . -- --bridge-selftest
-
-      - name: 6) godot --headless -- --expansions-selftest
-        run: godot --headless --path . -- --expansions-selftest
-
-      - name: 7) triad drift gate (Setup/Save/AllSaveSections)
-        run: bash scripts/ci/triad-drift-gate.sh
+      - name: Upload Gate Run Artifacts (Results & Failure Report)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-gate-report
+          path: build/reports/
+          if-no-files-found: ignore

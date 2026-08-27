@@ -1,115 +1,55 @@
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
+// ============================================================================
+// Save Store : ExcavationSaveStore
+// Core State : Ashfall.Core.ExcavationState
+// Host Caller: Main.ShelterSocial / ExcavationHostSession
+// Purpose    : Shelter room excavation progress, structural clearance, and expansion rubble
+// ============================================================================
 using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
-    [Serializable]
-    public sealed class ExcavationHostSave
-    {
-        public string SchemaVersion { get; set; } = "1.0";
-        public ExcavationState State { get; set; }
-        public string Checksum { get; set; } = string.Empty;
-    }
-
+    /// <summary>
+    /// Excavation save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). This
+    /// shelter-batch section ships the legacy
+    /// <c>{ SchemaVersion, State, Checksum }</c> envelope, preserved
+    /// byte-for-byte by the Core <see cref="SchemaVersionedEnvelope{T}"/>
+    /// adapter; path resolution, atomic write, and error handling live in the
+    /// service.
+    /// </summary>
     public static class ExcavationSaveStore
     {
         public const string FileName = "excavation_save.json";
         public const string SectionName = "excavation";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(ExcavationState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static ExcavationState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<ExcavationState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(ExcavationSaveStore),
+            SchemaVersionedEnvelope<ExcavationState>.Encode,
+            SchemaVersionedEnvelope<ExcavationState>.Decode);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(ExcavationState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[ExcavationSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static ExcavationState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<ExcavationState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[ExcavationSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(ExcavationState state) => s_store.CaptureBare(state);
 
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static ExcavationState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static bool TrySave(ExcavationState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new ExcavationHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Excavation] save failed: " + e.Message);
-                return false;
-            }
-        }
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(ExcavationState state) => s_store.CaptureBare(state);
 
-        public static ExcavationState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static ExcavationState? TryRestore(string json) => s_store.RestoreBare(json);
 
-                var envelope = s_json.Deserialize<ExcavationHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                    return envelope.State;
-                }
+        public static bool TrySave(ExcavationState state) => s_store.TrySave(state);
 
-                return s_json.Deserialize<ExcavationState>(raw);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Excavation] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static ExcavationState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(ExcavationState state) => s_store.CapturePersisted(state);
     }
 }

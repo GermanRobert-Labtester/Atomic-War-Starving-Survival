@@ -160,10 +160,8 @@ namespace AtomicWar.Journal
                 Check(false, "catalogs populated for codex checks");
             }
 
-            bool ok = passed == total;
-            GD.Print($"[JournalSelfTest] result: {passed}/{total} PASS, FAIL count {total - passed}");
-            GD.Print(ok ? "JOURNAL_SELFTEST PASS" : "JOURNAL_SELFTEST FAIL");
-            return ok ? 0 : 1;
+            bool ok = passed == total && total > 0;
+            return AtomicWar.GodotApp.HostCli.EmitSummary("journal_selftest", ok, ok ? 0 : 1, passed, total - passed);
         }
     }
 }

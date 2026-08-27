@@ -21,7 +21,7 @@ namespace AtomicWar.GodotApp.UI;
 ///
 /// Pure presentation. Reads only from `Ashfall.Core.DutyRosterSystem`.
 /// </summary>
-public partial class DutyRosterPanel : Control
+public partial class DutyRosterPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action? OnAssignmentChanged;
@@ -50,6 +50,7 @@ public partial class DutyRosterPanel : Control
 
     public void Bind(DutyRosterHostSession host, SurvivorsHostSession? survivors = null)
     {
+        Unbind();
         _host = host;
         _survivors = survivors;
         if (_host != null)
@@ -60,6 +61,20 @@ public partial class DutyRosterPanel : Control
         }
         RefreshView();
     }
+
+    public void Unbind()
+    {
+        if (_host != null)
+        {
+            _host.Roster.OnRosterUpdated -= RefreshView;
+            _host.Roster.OnNameWritten -= HandleSurvivorNameChanged;
+            _host.Roster.OnNameErased -= HandleSurvivorNameChanged;
+            _host = null;
+        }
+        _survivors = null;
+    }
+
+
 
     private void HandleSurvivorNameChanged(string _) => RefreshView();
 
@@ -513,13 +528,8 @@ public partial class DutyRosterPanel : Control
     }
 
     public override void _ExitTree()
-    {
-        if (_host != null)
         {
-            _host.Roster.OnRosterUpdated -= RefreshView;
-            _host.Roster.OnNameWritten -= HandleSurvivorNameChanged;
-            _host.Roster.OnNameErased -= HandleSurvivorNameChanged;
+            Unbind();
+            base._ExitTree();
         }
-        base._ExitTree();
-    }
 }

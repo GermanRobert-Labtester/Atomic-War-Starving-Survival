@@ -144,7 +144,7 @@ namespace AtomicWar.GodotApp
         private void SaveDutyRoster()
         {
             if (_dutyRoster == null) return;
-            if (DutyRosterSaveStore.TrySave(_dutyRoster.CaptureSave()))
+            if (CaptureSection("duty_roster", DutyRosterSaveStore.TryCapturePersisted(_dutyRoster.CaptureSave())))
             {
                 _dutyRosterDirty = false;
                 GD.Print($"[Ashfall Godot] Duty Roster save written (day {_dutyRoster.Clock.Day}).");
