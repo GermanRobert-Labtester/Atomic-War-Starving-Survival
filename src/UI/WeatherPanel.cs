@@ -34,6 +34,7 @@ namespace AtomicWar.GodotApp.UI
         private AshfallDataGrid? _forecastGrid;
         private VBoxContainer _advisoryList = null!;
         private VBoxContainer _seasonList = null!;
+        private VBoxContainer _intelligenceList = null!;
 
         public void Bind(WeatherHostSession weather)
         {
@@ -65,6 +66,7 @@ namespace AtomicWar.GodotApp.UI
             BuildForecastRows();
             BuildAdvisory();
             BuildSeasonRows();
+            BuildIntelligence();
         }
 
         private void RefreshStatusRail()
@@ -184,6 +186,71 @@ namespace AtomicWar.GodotApp.UI
             _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Active Season Profile", profileName, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
             _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Next Weather Shift", $"In {w.State.hoursUntilNextCheck:0.0} Hours", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
             _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Recorded Rolls", $"{w.State.rollCount}", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+        }
+
+        private void BuildIntelligence()
+        {
+            if (_intelligenceList == null) return;
+            AshfallUiHelpers.EmptyChildren(_intelligenceList);
+            var rm = _worldHost?.WeatherIntelligence?.BuildReadModel();
+            if (rm == null)
+            {
+                _intelligenceList.AddChild(AshfallUiHelpers.MakeMetadata("Weather intelligence unavailable (world host not bound)."));
+                return;
+            }
+
+            // Station status
+            string stationLine = rm.stationOperational
+                ? $"Station ONLINE — accuracy {rm.stationAccuracy:P0}, horizon {rm.forecastHorizonDays}d"
+                : rm.stationInstalled
+                    ? "Station installed but NOT calibrated — calibrate to enable forecasts."
+                    : "No weather station installed — forecast confidence unavailable.";
+            _intelligenceList.AddChild(AshfallUiHelpers.MakeDataRow(
+                "Weather Station", stationLine,
+                rm.stationOperational ? AshfallUiHelpers.ToColor(DesignTheme.Pale)
+                    : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+
+            // Forecast confidence entries (only when operational)
+            if (rm.stationOperational && rm.forecast.Count > 0)
+            {
+                foreach (var f in rm.forecast)
+                {
+                    string conf = $"D{f.day:00}: {f.weather} — {f.confidence:P0} confidence, route {(f.isRouteSafe ? "SAFE" : "UNSAFE")}";
+                    var color = f.isRouteSafe ? AshfallUiHelpers.ToColor(DesignTheme.Pale)
+                        : AshfallUiHelpers.ToColor(DesignTheme.Lethe);
+                    _intelligenceList.AddChild(AshfallUiHelpers.MakeDataRow("Forecast", conf, color));
+                }
+            }
+
+            // Expedition route-safety summary
+            string travelLine = rm.stationOperational
+                ? rm.routeSafeDays > 0
+                    ? $"Best travel window: day {rm.bestTravelDay} ({rm.bestTravelConfidence:P0} confidence, {rm.routeSafeDays} safe day(s))"
+                    : "No safe travel windows in forecast horizon."
+                : "Route safety unknown without a calibrated station.";
+            _intelligenceList.AddChild(AshfallUiHelpers.MakeDataRow(
+                "Expedition Routing", travelLine, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+
+            // Orbital telemetry
+            string orbitalLine;
+            if (rm.telemetryActive)
+            {
+                orbitalLine = rm.hasPendingImpact
+                    ? $"IMPACT WARNING — day {rm.impactDay} ({rm.daysUntilImpact}d lead), grid warning active"
+                    : "Telemetry active — no pending impacts.";
+            }
+            else
+            {
+                orbitalLine = "Orbital telemetry inactive — no impact warnings.";
+            }
+            _intelligenceList.AddChild(AshfallUiHelpers.MakeDataRow(
+                "Orbital Telemetry", orbitalLine,
+                rm.hasPendingImpact ? AshfallUiHelpers.ToColor(DesignTheme.Lethe)
+                    : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+
+            // Advisory summary
+            if (!string.IsNullOrEmpty(rm.advisory))
+                _intelligenceList.AddChild(AshfallUiHelpers.MakeMetadata(rm.advisory));
         }
 
         private void BuildAdvisory()
@@ -345,6 +412,22 @@ namespace AtomicWar.GodotApp.UI
             split.AddChild(advisoryPanel);
 
             contentStack.AddChild(split);
+
+            // Weather Intelligence (station forecast confidence + orbital telemetry)
+            var intelPanel = AshfallUiHelpers.MakePanel();
+            intelPanel.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            var intelMargin = AshfallUiHelpers.MakeMargins(DesignTheme.SpacingMd);
+            intelPanel.AddChild(intelMargin);
+            var intelVBox = new VBoxContainer();
+            intelVBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            intelMargin.AddChild(intelVBox);
+            intelVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("WEATHER INTELLIGENCE"));
+            _intelligenceList = new VBoxContainer();
+            _intelligenceList.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+            _intelligenceList.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            intelVBox.AddChild(_intelligenceList);
+            contentStack.AddChild(intelPanel);
+
             _shell.SetContent(contentStack);
         }
 

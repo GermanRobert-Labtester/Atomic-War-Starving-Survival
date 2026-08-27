@@ -60,7 +60,9 @@ namespace AtomicWar.GodotApp
             SetupMuster();
             SetupExpansions();
             SetupYearOfAsh();
-            _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh);
+            SetupFactionBranch();
+            SetupMoralChoice();
+            _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice);
             _factionsPanel.OnWarlordTributePay -= PayWarlordTribute;
             _factionsPanel.OnWarlordTributePay += PayWarlordTribute;
             _factionsPanel.OnWarlordTributeRefuse -= RefuseWarlordTribute;

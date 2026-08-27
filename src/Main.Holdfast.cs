@@ -99,6 +99,10 @@ namespace AtomicWar.GodotApp
 
             SetupWorld();
             _world.TickDemo(24f);
+            // Weather intelligence (station forecast + orbital telemetry) advances
+            // after the authoritative weather roll so the station forecast reflects
+            // the current day's weather state.
+            _world.WeatherIntelligence.TickDay(day);
 
             SetupCaravans();
             _caravans.TickDemo();
@@ -215,6 +219,11 @@ namespace AtomicWar.GodotApp
 
             TickPowerGrid(day);
             TickAllExpandedShelterSystems(day);
+
+            // The survivor-social cluster (leadership, friction, ration
+            // conflict, trauma bonds, skill atrophy) advances on the real day
+            // clock after survivors and duty-roster have ticked.
+            TickSurvivorSocial(day);
 
             // Phase 0 (psychological/medical effects) advances on the real day clock:
             // refresh environment signals from the world/shelter hosts, then tick all

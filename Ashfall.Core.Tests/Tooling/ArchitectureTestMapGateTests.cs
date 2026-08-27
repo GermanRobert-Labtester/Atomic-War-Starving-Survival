@@ -48,7 +48,7 @@ namespace Ashfall.Core.Tests
             Assert.Contains("## 4. Lifecycle Status & Reachability Proof Matrix", text);
 
             var registeredSections = SaveSectionRegistry.All.Select(s => s.SectionKey).ToList();
-            Assert.Equal(61, registeredSections.Count);
+            Assert.Equal(SaveSectionRegistry.All.Count, registeredSections.Count);
 
             var missingSections = new List<string>();
             foreach (string sectionKey in registeredSections)

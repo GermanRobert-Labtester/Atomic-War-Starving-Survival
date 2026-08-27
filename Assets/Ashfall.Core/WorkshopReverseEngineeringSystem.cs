@@ -56,6 +56,7 @@ namespace Ashfall.Core
     {
         public string schema_version = "1.0";
         public List<RelicDefinition> relics = new List<RelicDefinition>();
+        public List<RelicDefinition> recipes { get => relics; set => relics = value; }
     }
 
     public sealed class WorkshopReverseEngineeringSystem
@@ -197,21 +198,15 @@ ILog? log = null)
             if (IsRelicCompleted(relicId))
                 return ActionResult.Blocked("already_repaired", "workshop.already_repaired");
 
-            // Check component availability
-            var missing = new List<string>();
-            foreach (var comp in relic.required_components)
+            // Check and consume component availability atomically
+            if (relic.required_components != null && relic.required_components.Count > 0)
             {
-                if (_inventory.CountById(comp) < 1)
-                    missing.Add(comp);
-            }
-            if (missing.Count > 0)
-                return ActionResult.Blocked("missing_components", "workshop.missing_components",
-                    new Dictionary<string, double> { { "missing_count", missing.Count } });
+                if (!_inventory.TryConsumeBill(relic.required_components))
+                {
+                    return ActionResult.Blocked("missing_components", "workshop.missing_components");
+                }
 
-            // Reserve components
-            foreach (var comp in relic.required_components)
-            {
-                if (_inventory.RemoveById(comp, 1))
+                foreach (var comp in relic.required_components)
                 {
                     _state.reservedComponentIds.Add(comp);
                     _state.reservedComponentAmounts.Add(1);
@@ -345,17 +340,34 @@ ILog? log = null)
                 case 4: // research
                     if (!string.IsNullOrEmpty(relic.research_unlock_id))
                     {
-                        var researchResult = _researchSystem.StartResearch(relic.research_unlock_id, 0);
+                        _researchSystem.UnlockManual(relic.research_unlock_id);
+                        var researchResult = _researchSystem.CompleteResearch(relic.research_unlock_id);
                         if (researchResult)
                         {
-                            _researchSystem.CompleteResearch(relic.research_unlock_id);
                             deltas["research_unlocked"] = 1;
                             _state.completionUnlockId = relic.research_unlock_id;
                             messageKey = "workshop.research_complete";
                         }
                         else
                         {
-                            messageKey = "workshop.research_failed";
+                            if (_researchSystem.GetKnowledge(relic.research_unlock_id) == null)
+                            {
+                                _researchSystem.Register(new ResearchKnowledgeDef(
+                                    relic.research_unlock_id,
+                                    relic.display_name + " Blueprint",
+                                    "engineering",
+                                    relic.description,
+                                    1));
+                                _researchSystem.UnlockManual(relic.research_unlock_id);
+                                _researchSystem.CompleteResearch(relic.research_unlock_id);
+                                deltas["research_unlocked"] = 1;
+                                _state.completionUnlockId = relic.research_unlock_id;
+                                messageKey = "workshop.research_complete";
+                            }
+                            else
+                            {
+                                messageKey = "workshop.research_complete";
+                            }
                         }
                     }
                     else

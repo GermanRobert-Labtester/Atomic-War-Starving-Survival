@@ -169,8 +169,19 @@ namespace AtomicWar.GodotApp.UI
             tBox.AddChild(AshfallUiHelpers.MakeDataRow("Assigned Diver", diverName, AshfallUiHelpers.ToColor(CoreTheme.Hot)));
             tBox.AddChild(AshfallUiHelpers.MakeDataRow("Compressor Operator", opName, AshfallUiHelpers.ToColor(CoreTheme.Warm)));
             tBox.AddChild(AshfallUiHelpers.MakeDataRow("Air Supply Reserve", $"{dive.AirSupplySeconds:F0}s / {dive.MaxAirSupplySeconds:F0}s ({airPercent:F0}%)", AshfallUiHelpers.ToColor(airPercent < 25f ? CoreTheme.Critical : CoreTheme.Pale)));
-            tBox.AddChild(AshfallUiHelpers.MakeDataRow("Acoustic Noise Level", $"{dive.NoiseLevel} / 100", AshfallUiHelpers.ToColor(dive.NoiseLevel > 70 ? CoreTheme.Critical : CoreTheme.Pale)));
+            tBox.AddChild(AshfallUiHelpers.MakeDataRow("Acoustic Noise Level", $"{dive.NoiseLevel} / 100 {(dive.IsCompromised ? "[COMPROMISED]" : "")}", AshfallUiHelpers.ToColor(dive.NoiseLevel > 70 ? CoreTheme.Critical : CoreTheme.Pale)));
             tBox.AddChild(AshfallUiHelpers.MakeDataRow("Submerged Chamber", $"Room {dive.CurrentRoomIndex + 1} of 4", AshfallUiHelpers.ToColor(CoreTheme.Pale)));
+            tBox.AddChild(AshfallUiHelpers.MakeDataRow("Radiation Exposure", $"{dive.AccumulatedRadiationDose:F1} mSv", AshfallUiHelpers.ToColor(dive.AccumulatedRadiationDose > 25f ? CoreTheme.Critical : CoreTheme.Muted)));
+
+            if (dive.DecompressionRequiredSeconds > 0 || dive.HasDecompressionSickness)
+            {
+                string decompStatus = dive.HasDecompressionSickness
+                    ? "ACUTE SICKNESS (Barotrauma Penalty)"
+                    : dive.IsDecompressing
+                        ? $"DECOMPRESSING ({dive.DecompressionProgressSeconds:F0}s / {dive.DecompressionRequiredSeconds:F0}s)"
+                        : $"REQUIRED STOP ({dive.DecompressionRequiredSeconds:F0}s required before surfacing)";
+                tBox.AddChild(AshfallUiHelpers.MakeDataRow("Decompression Status", decompStatus, AshfallUiHelpers.ToColor(dive.HasDecompressionSickness ? CoreTheme.Critical : CoreTheme.Warm)));
+            }
 
             var diveActions = new HBoxContainer();
             diveActions.AddThemeConstantOverride("separation", (int)CoreTheme.SpacingSm);
@@ -195,7 +206,7 @@ namespace AtomicWar.GodotApp.UI
                     _statusLabel.Text = "Compressor cranked manually.";
                     RefreshView();
                 });
-                btnCrank.CustomMinimumSize = new Vector2(240, 36);
+                btnCrank.CustomMinimumSize = new Vector2(210, 36);
                 diveActions.AddChild(btnCrank);
 
                 var btnAdvance = AshfallUiHelpers.MakeButton("ADVANCE TO NEXT ROOM", () =>
@@ -203,26 +214,46 @@ namespace AtomicWar.GodotApp.UI
                     _maritime.AdvanceDiveDemo(10);
                     RefreshView();
                 });
-                btnAdvance.CustomMinimumSize = new Vector2(220, 36);
+                btnAdvance.CustomMinimumSize = new Vector2(190, 36);
                 diveActions.AddChild(btnAdvance);
 
-                var btnTick = AshfallUiHelpers.MakeButton("SIMULATE DIVE (+30s)", () =>
+                if (dive.DecompressionRequiredSeconds > 0)
                 {
-                    _maritime.TickDiveDemo(30f);
-                    _statusLabel.Text = "Advanced dive time by 30 seconds.";
+                    var btnDecomp = AshfallUiHelpers.MakeButton("DECOMPRESS (+10s Stop)", () =>
+                    {
+                        _maritime.DecompressDemo(10f);
+                        RefreshView();
+                    });
+                    btnDecomp.CustomMinimumSize = new Vector2(190, 36);
+                    diveActions.AddChild(btnDecomp);
+                }
+
+                var btnTick = AshfallUiHelpers.MakeButton("SIMULATE (+15s)", () =>
+                {
+                    _maritime.TickDiveDemo(15f);
+                    _statusLabel.Text = "Advanced dive time by 15 seconds.";
                     RefreshView();
                 });
-                btnTick.CustomMinimumSize = new Vector2(200, 36);
+                btnTick.CustomMinimumSize = new Vector2(140, 36);
                 diveActions.AddChild(btnTick);
 
-                var btnAbort = AshfallUiHelpers.MakeButton("ABORT / SURFACE", () =>
+                var btnAbort = AshfallUiHelpers.MakeButton("SAFE ABORT", () =>
                 {
-                    _maritime.Dive.EndDive(true);
-                    _statusLabel.Text = "Diver surfaced safely.";
+                    _maritime.AbortDiveDemo(emergency: false);
+                    _statusLabel.Text = "Controlled surface ascent completed.";
                     RefreshView();
                 });
-                btnAbort.CustomMinimumSize = new Vector2(160, 36);
+                btnAbort.CustomMinimumSize = new Vector2(130, 36);
                 diveActions.AddChild(btnAbort);
+
+                var btnEmergency = AshfallUiHelpers.MakeButton("EMERGENCY BLOWOUT", () =>
+                {
+                    _maritime.AbortDiveDemo(emergency: true);
+                    _statusLabel.Text = "Emergency blowout ascent executed!";
+                    RefreshView();
+                });
+                btnEmergency.CustomMinimumSize = new Vector2(160, 36);
+                diveActions.AddChild(btnEmergency);
             }
 
             _diveDetailsContainer.AddChild(telCard);

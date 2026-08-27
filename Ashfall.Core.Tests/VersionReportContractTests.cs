@@ -58,7 +58,7 @@ namespace Ashfall.Core.Tests
             var stores = VersionReport.SaveSchemaVersions.Select(s => s.Store).OrderBy(s => s).ToArray();
 
             Assert.Equal(
-                new[] { "dose_ledger", "expansion_hub", "expansion_quest", "holdfast", "year_of_ash" },
+                new[] { "dose_ledger", "expansion_hub", "expansion_quest", "holdfast", "weight_of_choices", "year_of_ash" },
                 stores);
         }
 
@@ -174,16 +174,17 @@ namespace Ashfall.Core.Tests
             var versioned = VersionReport.AllPersistenceFormats.Where(f => f.Kind == SavePersistenceKind.VersionedCodec).ToList();
             var envelopes = VersionReport.AllPersistenceFormats.Where(f => f.Kind == SavePersistenceKind.ChecksumEnvelope).ToList();
 
-            // 5 versioned Core codecs
-            Assert.Equal(5, versioned.Count);
+            // 6 versioned Core codecs
+            Assert.Equal(6, versioned.Count);
             Assert.Contains(versioned, f => f.SectionKey == "holdfast" && f.Version == HoldfastSave.CurrentSaveVersion);
             Assert.Contains(versioned, f => f.SectionKey == "year_of_ash" && f.Version == YearOfAsh.YearOfAshSave.CurrentSaveVersion);
             Assert.Contains(versioned, f => f.SectionKey == "dose_ledger" && f.Version == DoseLedgerSave.CurrentSaveVersion);
             Assert.Contains(versioned, f => f.SectionKey == "expansion_hub" && f.Version == ExpansionHubSave.CurrentSaveVersion);
             Assert.Contains(versioned, f => f.SectionKey == "expansion_quest" && f.Version == ExpansionQuestSaveEnvelope.CurrentVersion);
+            Assert.Contains(versioned, f => f.SectionKey == "weight_of_choices" && f.Version == Factions.WeightOfChoicesSave.CurrentSaveVersion);
 
-            // 56 unversioned checksum envelopes
-            Assert.Equal(56, envelopes.Count);
+            // 57 unversioned checksum envelopes
+            Assert.Equal(57, envelopes.Count);
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -196,11 +197,12 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
-            Assert.Contains("Save Persistence Inventory (61 sections: 5 versioned codecs, 56 checksum envelopes):", inventory);
+            Assert.Contains("Save Persistence Inventory (63 sections: 6 versioned codecs, 57 checksum envelopes):", inventory);
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);
             Assert.Contains("survivors", inventory);
+            Assert.Contains("weight_of_choices", inventory);
         }
     }
 }

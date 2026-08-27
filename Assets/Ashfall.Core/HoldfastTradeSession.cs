@@ -91,6 +91,56 @@ namespace Ashfall.Core
             }
         }
 
+        public bool HasSufficient(string itemId, int count)
+        {
+            if (string.IsNullOrEmpty(itemId) || count <= 0) return true;
+            return _items.TryGetValue(itemId, out int existing) && existing >= count;
+        }
+
+        public bool ValidateBill(IReadOnlyDictionary<string, int> bill)
+        {
+            if (bill == null || bill.Count == 0) return true;
+            foreach (var kv in bill)
+            {
+                if (kv.Value <= 0) continue;
+                if (!_items.TryGetValue(kv.Key, out int existing) || existing < kv.Value)
+                    return false;
+            }
+            return true;
+        }
+
+        public bool TryConsumeBill(IReadOnlyDictionary<string, int> bill, Action? onCommitted = null)
+        {
+            if (!ValidateBill(bill)) return false;
+
+            // Take a backup snapshot for rollback
+            var snapshot = new Dictionary<string, int>(_items, StringComparer.Ordinal);
+            try
+            {
+                if (bill != null)
+                {
+                    foreach (var kv in bill)
+                    {
+                        if (kv.Value > 0) RemoveItem(kv.Key, kv.Value);
+                    }
+                }
+
+                if (onCommitted != null)
+                {
+                    onCommitted();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                // Rollback
+                _items.Clear();
+                foreach (var kv in snapshot) _items[kv.Key] = kv.Value;
+                throw;
+            }
+        }
+
         public void Clear() => _items.Clear();
     }
 

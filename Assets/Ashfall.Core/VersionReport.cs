@@ -84,6 +84,7 @@ namespace Ashfall.Core
             new SaveSchemaEntry("dose_ledger",       DoseLedgerSave.CurrentSaveVersion),
             new SaveSchemaEntry("expansion_hub",     ExpansionHubSave.CurrentSaveVersion),
             new SaveSchemaEntry("expansion_quest",   ExpansionQuestSaveEnvelope.CurrentVersion),
+            new SaveSchemaEntry("weight_of_choices", Factions.WeightOfChoicesSave.CurrentSaveVersion),
         };
 
         private static readonly Lazy<IReadOnlyList<PersistenceFormatEntry>> s_allFormats =

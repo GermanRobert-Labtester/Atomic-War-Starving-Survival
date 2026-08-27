@@ -211,6 +211,7 @@ namespace AtomicWar.GodotApp
             SaveMentalHealthCrisis();
             SaveChemicalDependency();
             SaveShelterAssignment();
+            SaveFactionBranch();
         }
 
 
@@ -248,6 +249,7 @@ namespace AtomicWar.GodotApp
             _archiveDesk?.TickDay(day);
             _contractorRoster?.TickDay(day);
             _mentalHealthCrisis?.TickDay(day);
+            _crafting?.TickDay(day);
         }
 
         public void OpenExpandedPanel(string panelKey)

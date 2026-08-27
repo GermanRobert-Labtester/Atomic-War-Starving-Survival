@@ -52,7 +52,7 @@ namespace Ashfall.Core.Combat
         public TacticalCombatSystem(CombatState? state = null, CombatHostPorts? ports = null)
         {
             if (state != null) _state = state;
-            _ports = ports ?? new CombatHostPorts();
+            _ports = ports ?? CombatHostPorts.NoOp();
             CombatCatalog.SeedDefaults();
         }
 

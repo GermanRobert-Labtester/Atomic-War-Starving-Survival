@@ -34,6 +34,19 @@ namespace Ashfall.Core.Tests
             Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
         }
 
+        [Fact]
+        public void StartBatch_LateInputMissing_DoesNotConsumeEarlierInputs()
+        {
+            var pharma = Create(out var inv, out _);
+            inv.AddById("chemicals", 5); // has chemicals, but 0 herbs
+            pharma.RegisterRecipe(MakeRecipe()); // requires chemicals: 2, herbs: 1
+            var r = pharma.StartBatch("test_recipe", "chemist_1");
+            Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
+            Assert.False(pharma.IsProcessing);
+            // 0 chemicals consumed
+            Assert.Equal(5, inv.CountById("chemicals"));
+        }
+
         [Fact] public void StartBatch_WithInputs_StartsProcessing()
         {
             var pharma = Create(out var inv, out _);

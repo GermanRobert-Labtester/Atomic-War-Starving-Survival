@@ -11,7 +11,7 @@ namespace Ashfall.Core.Tests
 
         private static TacticalCombatSystem Engine()
         {
-            var sys = new TacticalCombatSystem(null, new CombatHostPorts { ConsumeAmmo = (id, n) => 5000 });
+            var sys = new TacticalCombatSystem(null, new CombatHostPorts(null, null, null, consumeAmmo: (id, n) => 5000));
             var players = new List<CombatantState>
             {
                 new CombatantState { Id = "p1", Name = "Yuki", SurvivorId = "sv1", IsPlayer = true, Health = 100, MaxHealth = 100 }

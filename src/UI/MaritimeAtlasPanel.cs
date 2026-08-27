@@ -60,17 +60,44 @@ public partial class MaritimeAtlasPanel : Control
     private void LoadSitesFromHost()
     {
         _sites.Clear();
-        // The user's own ASHFALL maritime codenames come from the
-        // dive_sites.json catalog. When the host session is bound, the
-        // site catalog is the canonical authority.
         if (_host == null) return;
-        // The maritime host session does not expose a typed Sites list
-        // directly; we read the canonical SS Sovereign diver site id
-        // and the Phase 9 demo sites. Future work will plug the catalog
-        // enumerator through the host.
-        _sites.Add(("site_exp09_ss_sovereign", "S.S. Sovereign", 120, 0.85f, "q_keeper_of_logs", 4));
-        _sites.Add(("submarine_yard_east", "Submarine Yard (East)", 96, 0.65f, "q_books_of_chrome", 3));
-        _sites.Add(("harbor_wreck_pt3", "Harbor Wreck Pt.3", 84, 0.40f, "q_keeper_of_logs", 3));
+
+        if (_host.Dive.Catalog?.dive_sites != null && _host.Dive.Catalog.dive_sites.Count > 0)
+        {
+            foreach (var site in _host.Dive.Catalog.dive_sites)
+            {
+                if (site == null) continue;
+                _sites.Add((
+                    site.site_id,
+                    site.name,
+                    site.oxygen_budget_ticks,
+                    site.base_noise_floor,
+                    site.keeper_thread_id ?? "—",
+                    site.rooms?.Count ?? 4
+                ));
+            }
+        }
+        else if (_host.Dive.Sites != null && _host.Dive.Sites.Count > 0)
+        {
+            foreach (var site in _host.Dive.Sites)
+            {
+                _sites.Add((
+                    site.siteId,
+                    site.displayName,
+                    (int)(site.depthMeters * 2.5f),
+                    site.hazardLevel,
+                    site.isHazardous ? "q_keeper_of_logs" : "—",
+                    4
+                ));
+            }
+        }
+        else
+        {
+            _sites.Add(("site_exp09_ss_sovereign", "S.S. Sovereign", 120, 0.85f, "q_keeper_of_logs", 4));
+            _sites.Add(("site_exp09_ferry_terminal", "The Drowned Ferry Terminal", 90, 0.60f, "—", 4));
+            _sites.Add(("site_exp09_barge_flotilla", "The Barge Flotilla", 100, 0.40f, "—", 4));
+            _sites.Add(("site_exp09_naval_patrol", "The Patrol Craft", 80, 0.70f, "—", 4));
+        }
     }
 
     public override void _Ready()

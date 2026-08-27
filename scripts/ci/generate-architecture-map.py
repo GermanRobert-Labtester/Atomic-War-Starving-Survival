@@ -882,6 +882,34 @@ ARCHITECTURE_GRAPH = {
         "routes": ["shelter"],
         "cli": ["--shelter-operations-selftest"],
         "tests": ["ShelterAssignmentSystemTests"]
+    },
+    "survivor_social": {
+        "domain": "Shelter & Infrastructure",
+        "core": ["SurvivorSocialCoordinator", "LeadershipSystem", "IdeologicalFrictionSystem", "RationConflictSystem", "TraumaBondSystem", "SkillAtrophySystem"],
+        "catalog": [],
+        "host": ["SurvivorSocialCoordinator"],
+        "setup": "SetupSurvivorSocial",
+        "ticked": True,
+        "tick_type": "Daily Shelter Social Dynamics",
+        "store": ["SurvivorSocialSaveStore"],
+        "ui": ["ShelterPanel"],
+        "routes": ["shelter"],
+        "cli": ["--shelter-operations-selftest"],
+        "tests": ["SurvivorSocialCoordinatorTests"]
+    },
+    "weight_of_choices": {
+        "domain": "Factions & Diplomacy",
+        "core": ["FactionBranchCoordinator", "MilitaryBranchSystem", "RebelBranchSystem", "IndependentBranchSystem", "PrpfStandingSystem"],
+        "catalog": ["military_faction_branch.json", "rebel_faction_branch.json", "independent_faction_branch.json"],
+        "host": ["FactionBranchHostSession"],
+        "setup": "SetupFactionBranch",
+        "ticked": False,
+        "tick_type": "On-Demand (Branch Decisions)",
+        "store": ["WeightOfChoicesSaveStore"],
+        "ui": ["FactionsPanel", "QuestsPanel"],
+        "routes": ["factions", "quests"],
+        "cli": ["--expansions-selftest"],
+        "tests": ["FactionBranchCoordinatorTests", "MilitaryBranchSystemTests", "RebelBranchSystemTests", "IndependentBranchSystemTests", "PrpfStandingSystemTests", "WeightOfChoicesSaveTests"]
     }
 }
 

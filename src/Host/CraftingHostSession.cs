@@ -16,19 +16,38 @@ namespace AtomicWar.GodotApp
     /// No gameplay rules — hosts only present.
     /// </summary>
     public sealed class CraftingHostSession
-    : HostSessionBase{
+    : HostSessionBase
+    {
         public CraftingSystem Engine { get; }
         public InventoryContainer Inventory { get; }
+        public WorkshopReverseEngineeringSystem Workshop { get; }
+        public PharmaLabSystem PharmaLab { get; }
+        public ResearchSystem Research { get; }
         public System.Collections.Generic.List<Recipe> Recipes { get; } =
             new System.Collections.Generic.List<Recipe>();
 
         public string LastEvent { get; private set; } = string.Empty;
-        public CraftingHostSession(InventoryContainer inventory = null!, System.Collections.Generic.List<Recipe> recipes = null!)
+
+        public CraftingHostSession(
+            InventoryContainer inventory = null!,
+            System.Collections.Generic.List<Recipe> recipes = null!,
+            ResearchSystem? research = null,
+            ISeededRng? rng = null,
+            ILog? log = null)
         {
+            var logger = log ?? new GodotLog();
             Inventory = inventory ?? new InventoryContainer();
+            Research = research ?? new ResearchSystem(logger);
+            Research.RegisterDefaults();
             Engine = new CraftingSystem(Inventory);
+            Workshop = new WorkshopReverseEngineeringSystem(Inventory, Research, Engine, logger);
+            PharmaLab = new PharmaLabSystem(Inventory, rng ?? new SeededRng(1986), logger);
+
             Engine.OnCraftStarted += _ => RaiseStateChanged();
             Engine.OnCraftCompleted += _ => RaiseStateChanged();
+            Workshop.OnWorkshopStateChanged += () => RaiseStateChanged();
+            PharmaLab.OnPharmaStateChanged += () => RaiseStateChanged();
+
             SeedStation();
             if (recipes != null && recipes.Count > 0)
             {
@@ -41,14 +60,28 @@ namespace AtomicWar.GodotApp
             Engine.SetRecipeLookup(id => FindRecipe(id));
         }
 
-        public static CraftingHostSession Create(string dataDir, InventoryContainer inventory)
+        public static CraftingHostSession Create(
+            string dataDir,
+            InventoryContainer inventory,
+            ResearchSystem? research = null,
+            ISeededRng? rng = null,
+            ILog? log = null)
         {
             var fileIO = new FileSystemIO();
             var serializer = new SystemTextJsonSerializer();
             var itemCatalog = ItemCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
             var recipes = RecipeCatalogLoader.Load(dataDir, fileIO, serializer, itemCatalog);
 
-            return new CraftingHostSession(inventory, recipes);
+            var session = new CraftingHostSession(inventory, recipes, research, rng, log);
+
+            // Load authoritative relic and pharma catalogs from JSON
+            var relicCatalog = RelicCatalogLoader.Load(dataDir, fileIO, serializer);
+            session.Workshop.LoadCatalog(relicCatalog);
+
+            var pharmaCatalog = PharmaRecipeCatalogLoader.Load(dataDir, fileIO, serializer);
+            session.PharmaLab.LoadCatalog(pharmaCatalog);
+
+            return session;
         }
 
         private void SeedStation()
@@ -207,14 +240,46 @@ namespace AtomicWar.GodotApp
             return sb.ToString().TrimEnd();
         }
 
+        // ── Time & Day Progression ───────────────────────────────────
+
+        public void TickDay(int day, float hours = 24f)
+        {
+            TickHours(hours);
+        }
+
+        public void TickHours(float hours)
+        {
+            Engine.Tick(hours);
+            if (Workshop.IsBusy)
+            {
+                Workshop.TickProgress(hours);
+            }
+            if (PharmaLab.IsProcessing)
+            {
+                PharmaLab.TickProgress(hours);
+            }
+            RaiseStateChanged();
+        }
+
         // ── Save / Load ────────────────────────────────────────────────
 
-        public CraftingSystemSave CaptureSave() => Engine.CaptureState();
+        public CraftingSystemSave CaptureSave()
+        {
+            var save = Engine.CaptureState();
+            save.WorkshopState = Workshop.CaptureState();
+            save.PharmaState = PharmaLab.CaptureState();
+            return save;
+        }
 
         public void RestoreSave(CraftingSystemSave save)
         {
+            if (save == null) return;
             Engine.SetRecipeLookup(id => FindRecipe(id));
             Engine.RestoreState(save);
+            if (save.WorkshopState != null)
+                Workshop.RestoreState(save.WorkshopState);
+            if (save.PharmaState != null)
+                PharmaLab.RestoreState(save.PharmaState);
             RaiseStateChanged();
         }
     }

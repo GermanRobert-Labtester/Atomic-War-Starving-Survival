@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Ashfall.Core;
+using Ashfall.Core.Maritime;
 
 namespace Ashfall.Core.Tests
 {

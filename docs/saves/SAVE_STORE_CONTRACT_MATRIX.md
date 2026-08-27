@@ -1,11 +1,11 @@
 # ASHFALL — Save-Store Contract Matrix & Completeness Authority
 
 **Last Verified:** 2026-08-27<br>
-**Total Save Stores:** 62 classes<br>
-**Total Static Persistence Methods:** 68 methods<br>
-**Checksum-Protected Stores:** 62/62 (100.0%)<br>
-**Slot-Root Isolated Stores:** 62/62 (100.0%)<br>
-**Tested Stores:** 62/62 (100.0%)
+**Total Save Stores:** 64 classes<br>
+**Total Static Persistence Methods:** 70 methods<br>
+**Checksum-Protected Stores:** 64/64 (100.0%)<br>
+**Slot-Root Isolated Stores:** 64/64 (100.0%)<br>
+**Tested Stores:** 63/64 (98.4%)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: All save store classes under `src/` and `Assets/Ashfall.Core/`.
@@ -36,7 +36,7 @@
 | 8 | `ChemicalDependencySaveStore` | [`src/Host/ChemicalDependencySaveStore.cs`](../../src/Host/ChemicalDependencySaveStore.cs) | `chemical_dependency` | `chemical_dependency_save.json` | `TryLoad()` | ✅ | ✅ | `BareSaveStoreSealTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+1 more)* |
 | 9 | `CombatSaveStore` | [`src/Host/CombatSaveStore.cs`](../../src/Host/CombatSaveStore.cs) | `combat` | `combat_save.json` | `TryLoad()` | ✅ | ✅ | `CombatSystemTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+4 more)* |
 | 10 | `ContractorRosterSaveStore` | [`src/Host/ContractorRosterHostSession.cs`](../../src/Host/ContractorRosterHostSession.cs) | `contractor_roster` | `contractor_roster_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
-| 11 | `CraftingSaveStore` | [`src/Host/CraftingSaveStore.cs`](../../src/Host/CraftingSaveStore.cs) | `crafting` | `crafting_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` *(+1 more)* |
+| 11 | `CraftingSaveStore` | [`src/Host/CraftingSaveStore.cs`](../../src/Host/CraftingSaveStore.cs) | `crafting` | `crafting_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` *(+3 more)* |
 | 12 | `DailyBriefingSaveStore` | [`src/Host/DailyBriefingSaveStore.cs`](../../src/Host/DailyBriefingSaveStore.cs) | `daily_briefing` | `daily_briefing_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 13 | `DecontaminationSaveStore` | [`src/Host/DecontaminationHostSession.cs`](../../src/Host/DecontaminationHostSession.cs) | `decontamination` | `decontamination_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 14 | `DiseaseSaveStore` | [`src/Host/DiseaseSaveStore.cs`](../../src/Host/DiseaseSaveStore.cs) | `disease` | `disease_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `DiseaseSystemTests.cs` |
@@ -58,7 +58,7 @@
 | 30 | `KitchenNutritionSaveStore` | [`src/Host/KitchenNutritionHostSession.cs`](../../src/Host/KitchenNutritionHostSession.cs) | `kitchen_nutrition` | `kitchen_nutrition_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 31 | `LibraryStudySaveStore` | [`src/Host/LibraryStudyHostSession.cs`](../../src/Host/LibraryStudyHostSession.cs) | `library_study` | `library_study_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 32 | `MaritimeSaveStore` | [`src/Host/MaritimeSaveStore.cs`](../../src/Host/MaritimeSaveStore.cs) | `maritime` | `maritime_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
-| 33 | `MedicalSaveStore` | [`src/Host/MedicalSaveStore.cs`](../../src/Host/MedicalSaveStore.cs) | `medical` | `medical_save.json` | `TryLoad()` | ✅ | ✅ | `AudioConditionSystemTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+7 more)* |
+| 33 | `MedicalSaveStore` | [`src/Host/MedicalSaveStore.cs`](../../src/Host/MedicalSaveStore.cs) | `medical` | `medical_save.json` | `TryLoad()` | ✅ | ✅ | `AudioConditionSystemTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+8 more)* |
 | 34 | `MedicalWardSaveStore` | [`src/Host/MedicalWardSaveStore.cs`](../../src/Host/MedicalWardSaveStore.cs) | `medical_ward` | `medical_ward_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 35 | `MemorialSaveStore` | [`src/Host/MemorialSaveStore.cs`](../../src/Host/MemorialSaveStore.cs) | `memorial` | `memorial_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 36 | `MentalHealthCrisisSaveStore` | [`src/Host/MentalHealthCrisisHostSession.cs`](../../src/Host/MentalHealthCrisisHostSession.cs) | `mental_health_crisis` | `mental_health_crisis_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
@@ -77,14 +77,16 @@
 | 49 | `StartingLevelSaveStore` | [`src/Host/StartingLevelHostSession.cs`](../../src/Host/StartingLevelHostSession.cs) | `starting_level` | `starting_level_save.json` | `SaveExists()`, `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 50 | `SumpFloodingSaveStore` | [`src/Host/SumpFloodingHostSession.cs`](../../src/Host/SumpFloodingHostSession.cs) | `sump_flooding` | `sump_flooding_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `ExpandedShelterSavePersistenceTests.cs` *(+1 more)* |
 | 51 | `SurvivorRelationsSaveStore` | [`src/Host/SurvivorRelationsSaveStore.cs`](../../src/Host/SurvivorRelationsSaveStore.cs) | `survivor_relations` | `survivor_relations_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
-| 52 | `SurvivorsSaveStore` | [`src/Host/SurvivorsSaveStore.cs`](../../src/Host/SurvivorsSaveStore.cs) | `survivors` | `survivors_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` *(+4 more)* |
-| 53 | `ThirdonarySaveStore` | [`src/Host/ThirdonarySaveStore.cs`](../../src/Host/ThirdonarySaveStore.cs) | `thirdonary` | `thirdonary_quest_save.json` | `Save()`, `TryLoad()` | ✅ | ✅ | `CampaignEnvelopeBuilderTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
-| 54 | `VerdictSaveStore` | [`src/Host/VerdictSaveStore.cs`](../../src/Host/VerdictSaveStore.cs) | `verdict` | `verdict_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
-| 55 | `VinylMoraleSaveStore` | [`src/Host/VinylMoraleSaveStore.cs`](../../src/Host/VinylMoraleSaveStore.cs) | `vinyl_morale` | `vinyl_morale_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
-| 56 | `WastelandMapSaveStore` | [`src/Host/WastelandMapSaveStore.cs`](../../src/Host/WastelandMapSaveStore.cs) | `wasteland_map` | `wasteland_map_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `SaveSectionRegistryTests.cs` |
-| 57 | `WaterTreatmentSaveStore` | [`src/Host/WaterTreatmentSaveStore.cs`](../../src/Host/WaterTreatmentSaveStore.cs) | `water_treatment` | `water_treatment_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
-| 58 | `WaystationSaveStore` | [`src/Host/WaystationSaveStore.cs`](../../src/Host/WaystationSaveStore.cs) | `waystation` | `waystation_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `SaveChecksumTests.cs` |
-| 59 | `WeatherSaveStore` | [`src/Host/WeatherSaveStore.cs`](../../src/Host/WeatherSaveStore.cs) | `weather` | `weather_save.json` | `TryLoad()` | ✅ | ✅ | `BareSaveStoreSealTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+2 more)* |
-| 60 | `WildlifeTrappingSaveStore` | [`src/Host/WildlifeTrappingSaveStore.cs`](../../src/Host/WildlifeTrappingSaveStore.cs) | `wildlife_trapping` | `wildlife_trapping_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
-| 61 | `WorldSaveStore` | [`src/Host/WorldSaveStore.cs`](../../src/Host/WorldSaveStore.cs) | `world` | `world_save.json` | `TryLoad()`, `TryLoadEnvelope()` | ✅ | ✅ | `CampaignEnvelopeBuilderTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+2 more)* |
-| 62 | `YearOfAshSaveStore` | [`src/YearOfAsh/YearOfAshSaveStore.cs`](../../src/YearOfAsh/YearOfAshSaveStore.cs) | `year_of_ash` | `year_of_ash_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `VersionReportContractTests.cs` |
+| 52 | `SurvivorSocialSaveStore` | [`src/Host/SurvivorSocialSaveStore.cs`](../../src/Host/SurvivorSocialSaveStore.cs) | `survivor_social` | `survivor_social_save.json` | `TryLoad()` | ✅ | ✅ | — |
+| 53 | `SurvivorsSaveStore` | [`src/Host/SurvivorsSaveStore.cs`](../../src/Host/SurvivorsSaveStore.cs) | `survivors` | `survivors_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` *(+4 more)* |
+| 54 | `ThirdonarySaveStore` | [`src/Host/ThirdonarySaveStore.cs`](../../src/Host/ThirdonarySaveStore.cs) | `thirdonary` | `thirdonary_quest_save.json` | `Save()`, `TryLoad()` | ✅ | ✅ | `CampaignEnvelopeBuilderTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
+| 55 | `VerdictSaveStore` | [`src/Host/VerdictSaveStore.cs`](../../src/Host/VerdictSaveStore.cs) | `verdict` | `verdict_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
+| 56 | `VinylMoraleSaveStore` | [`src/Host/VinylMoraleSaveStore.cs`](../../src/Host/VinylMoraleSaveStore.cs) | `vinyl_morale` | `vinyl_morale_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
+| 57 | `WastelandMapSaveStore` | [`src/Host/WastelandMapSaveStore.cs`](../../src/Host/WastelandMapSaveStore.cs) | `wasteland_map` | `wasteland_map_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `SaveSectionRegistryTests.cs` |
+| 58 | `WaterTreatmentSaveStore` | [`src/Host/WaterTreatmentSaveStore.cs`](../../src/Host/WaterTreatmentSaveStore.cs) | `water_treatment` | `water_treatment_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
+| 59 | `WaystationSaveStore` | [`src/Host/WaystationSaveStore.cs`](../../src/Host/WaystationSaveStore.cs) | `waystation` | `waystation_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `SaveChecksumTests.cs` |
+| 60 | `WeatherSaveStore` | [`src/Host/WeatherSaveStore.cs`](../../src/Host/WeatherSaveStore.cs) | `weather` | `weather_save.json` | `TryLoad()` | ✅ | ✅ | `BareSaveStoreSealTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+2 more)* |
+| 61 | `WeightOfChoicesSaveStore` | [`src/Host/WeightOfChoicesSaveStore.cs`](../../src/Host/WeightOfChoicesSaveStore.cs) | `weight_of_choices` | `weight_of_choices_save.json` | `TryLoad()` | ✅ | ✅ | `VersionReportContractTests.cs` |
+| 62 | `WildlifeTrappingSaveStore` | [`src/Host/WildlifeTrappingSaveStore.cs`](../../src/Host/WildlifeTrappingSaveStore.cs) | `wildlife_trapping` | `wildlife_trapping_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
+| 63 | `WorldSaveStore` | [`src/Host/WorldSaveStore.cs`](../../src/Host/WorldSaveStore.cs) | `world` | `world_save.json` | `TryLoad()`, `TryLoadEnvelope()` | ✅ | ✅ | `CampaignEnvelopeBuilderTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+2 more)* |
+| 64 | `YearOfAshSaveStore` | [`src/YearOfAsh/YearOfAshSaveStore.cs`](../../src/YearOfAsh/YearOfAshSaveStore.cs) | `year_of_ash` | `year_of_ash_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `VersionReportContractTests.cs` |

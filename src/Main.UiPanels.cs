@@ -50,6 +50,8 @@ namespace AtomicWar.GodotApp
         private InventoryPanel _inventoryOverlay = null!;
         private SurvivorsPanel _survivorsOverlay = null!;
         private CraftingPanel _craftingPanel = null!;
+        private WorkshopPanel _workshopPanel = null!;
+        private PharmaLabPanel _pharmaLabPanel = null!;
         private RadioPanel _radioPanel = null!;
         private MedicalPanel _medicalPanel = null!;
         private Phase0Panel _phase0Panel = null!;
@@ -170,7 +172,19 @@ namespace AtomicWar.GodotApp
             _craftingPanel = new CraftingPanel();
             _craftingPanel.OnClose += CloseCraftingPanel;
             _craftingPanel.OnCraftStarted += () => { UpdateHud(); _craftingDirty = true; };
+            _craftingPanel.OnOpenWorkshopRequested += () => OpenPlayerPanel("workshop");
+            _craftingPanel.OnOpenPharmaLabRequested += () => OpenPlayerPanel("pharma_lab");
             AddChild(_craftingPanel);
+
+            // ── Workshop panel (relic reverse engineering) ──
+            _workshopPanel = new WorkshopPanel();
+            _workshopPanel.OnClose += CloseWorkshopPanel;
+            AddChild(_workshopPanel);
+
+            // ── Pharma Lab panel (compounding & distillation) ──
+            _pharmaLabPanel = new PharmaLabPanel();
+            _pharmaLabPanel.OnClose += ClosePharmaLabPanel;
+            AddChild(_pharmaLabPanel);
 
             // ── Radio panel (overlay) ──
             _radioPanel = new RadioPanel();

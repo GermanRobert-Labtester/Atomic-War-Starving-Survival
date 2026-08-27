@@ -127,19 +127,22 @@ namespace Ashfall.Core
             if (!_recipes.TryGetValue(recipeId, out var recipe))
                 return ActionResult.Failed("unknown_recipe", "pharma.unknown_recipe");
 
-            // Check inputs
+            // Build and consume inputs atomically
+            var bill = new Ashfall.Core.Inventory.InventoryBill();
             for (int i = 0; i < recipe.input_ids.Count; i++)
             {
-                if (_inventory.CountById(recipe.input_ids[i]) < recipe.input_amounts[i])
-                    return ActionResult.Blocked("missing_inputs", "pharma.missing_inputs");
+                int amount = i < recipe.input_amounts.Count ? recipe.input_amounts[i] : 1;
+                bill.AddCost(recipe.input_ids[i], amount);
             }
 
-            // Reserve inputs
+            if (!_inventory.TryExecuteTransaction(bill))
+                return ActionResult.Blocked("missing_inputs", "pharma.missing_inputs");
+
             for (int i = 0; i < recipe.input_ids.Count; i++)
             {
-                _inventory.RemoveById(recipe.input_ids[i], recipe.input_amounts[i]);
+                int amount = i < recipe.input_amounts.Count ? recipe.input_amounts[i] : 1;
                 _state.reservedInputIds.Add(recipe.input_ids[i]);
-                _state.reservedInputAmounts.Add(recipe.input_amounts[i]);
+                _state.reservedInputAmounts.Add(amount);
             }
 
             float skill = _getChemistSkill(chemistId ?? string.Empty);

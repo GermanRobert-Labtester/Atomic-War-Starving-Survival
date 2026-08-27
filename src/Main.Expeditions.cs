@@ -111,6 +111,7 @@ namespace AtomicWar.GodotApp
                 _combat.Inventory = _inventory;
                 _combat.Survivors = _survivors;
                 _combat.WireRealState();
+                _combat.ValidatePorts();
                 _combat.StateChanged += () => _combatDirty = true;
                 // Expedition encounters auto-populate a real combat encounter.
                 SetupExpeditionCombatHandoff(_combat);

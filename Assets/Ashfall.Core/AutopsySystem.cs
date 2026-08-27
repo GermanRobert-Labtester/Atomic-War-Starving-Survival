@@ -98,16 +98,22 @@ ILog? log = null)
             if (!_catalog.TryGetValue(procedureId, out var procedure))
                 return ActionResult.Failed("unknown_procedure", "autopsy.unknown_procedure");
 
-            // Reserve tools and consumables
+            // Validate tools and consumables availability
+            var bill = new Ashfall.Core.Inventory.InventoryBill();
             foreach (var tool in procedure.requiredTools)
-            {
-                if (_inventory.CountById(tool) < 1)
-                    return ActionResult.Blocked("missing_tool", "autopsy.missing_tool");
-            }
+                bill.AddCost(tool, 1);
             foreach (var consumable in procedure.requiredConsumables)
+                bill.AddCost(consumable, 1);
+
+            var validation = _inventory.ValidateTransaction(bill);
+            if (!validation.IsValid)
             {
-                if (_inventory.CountById(consumable) < 1)
-                    return ActionResult.Blocked("missing_consumable", "autopsy.missing_consumable");
+                foreach (var tool in procedure.requiredTools)
+                {
+                    if (_inventory.CountById(tool) < 1)
+                        return ActionResult.Blocked("missing_tool", "autopsy.missing_tool");
+                }
+                return ActionResult.Blocked("missing_consumable", "autopsy.missing_consumable");
             }
 
             var case_ = new AutopsyCase
@@ -128,13 +134,17 @@ ILog? log = null)
             if (case_ == null) return ActionResult.Failed("unknown_case", "autopsy.unknown_case");
             if (case_.status != AutopsyStatus.Queued) return ActionResult.Blocked("not_queued", "autopsy.not_queued");
 
-            // Consume tools and consumables
+            // Consume tools and consumables atomically
             if (!_catalog.TryGetValue(case_.procedureId, out var procedure)) return ActionResult.Failed("missing_procedure", "autopsy.missing_procedure");
 
+            var bill = new Ashfall.Core.Inventory.InventoryBill();
             foreach (var tool in procedure.requiredTools)
-                _inventory.RemoveById(tool, 1);
+                bill.AddCost(tool, 1);
             foreach (var consumable in procedure.requiredConsumables)
-                _inventory.RemoveById(consumable, 1);
+                bill.AddCost(consumable, 1);
+
+            if (!_inventory.TryExecuteTransaction(bill))
+                return ActionResult.Blocked("missing_supplies", "autopsy.missing_supplies");
 
             case_.status = AutopsyStatus.InProgress;
             OnAutopsyChanged?.Invoke();

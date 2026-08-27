@@ -77,7 +77,7 @@ namespace Ashfall.Core.Tests
             Assert.True(cost >= 1, "repair has a scrap cost");
 
             int requested = 0;
-            bool ok = new WeaponConditionSystem().TryFieldRepair(w, new CombatHostPorts(),
+            bool ok = new WeaponConditionSystem().TryFieldRepair(w, CombatHostPorts.NoOp(),
                 (id, n) => { requested = n; return true; });
             Assert.True(ok);
             Assert.Equal(cost, requested);
@@ -90,7 +90,7 @@ namespace Ashfall.Core.Tests
         {
             var w = Rifle();
             WeaponConditionSystem.Degrade(w, 0.5f);
-            bool ok = new WeaponConditionSystem().TryFieldRepair(w, new CombatHostPorts(),
+            bool ok = new WeaponConditionSystem().TryFieldRepair(w, CombatHostPorts.NoOp(),
                 (id, n) => false);
             Assert.False(ok);
             Assert.True(w.ConditionPct < 1f, "failed repair must not restore condition");

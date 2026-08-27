@@ -92,6 +92,26 @@ namespace AtomicWar.GodotApp.UI
             var ovBox = overviewCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Home Station", "District 8 Holdfast Bunker [Sector 07]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Atmospheric Hazard", weatherStr, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+
+            // Weather-intelligence route-safety advisory (station + orbital telemetry).
+            var intel = _world?.WeatherIntelligence?.BuildReadModel();
+            if (intel != null)
+            {
+                string routeLine = intel.stationOperational
+                    ? intel.routeSafeDays > 0
+                        ? $"Best travel window: day {intel.bestTravelDay} ({intel.bestTravelConfidence:P0} confidence, {intel.routeSafeDays} safe day(s))"
+                        : "No safe travel windows in forecast horizon."
+                    : "Route safety unknown — no calibrated weather station.";
+                ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Expedition Routing", routeLine,
+                    intel.routeSafeDays > 0 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)
+                        : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
+                if (intel.telemetryActive && intel.hasPendingImpact)
+                {
+                    ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Orbital Warning",
+                        $"IMPACT day {intel.impactDay} ({intel.daysUntilImpact}d lead)",
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
+                }
+            }
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Cataloged Waypoints", $"{Math.Max(totalLocations, 8)} Sector Coordinates", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Active Sorties", $"{activeSorties} Active Recon Team(s)", AshfallUiHelpers.ToColor(activeSorties > 0 ? Ashfall.Core.UI.Theme.Hot : Ashfall.Core.UI.Theme.Dim)));
             _overviewContainer.AddChild(overviewCard);

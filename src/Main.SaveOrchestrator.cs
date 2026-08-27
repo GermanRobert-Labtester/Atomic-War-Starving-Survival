@@ -352,6 +352,7 @@ namespace AtomicWar.GodotApp
             SaveEncounterChoice();
             // ─────────────────────────────────────────────────────────────
             SaveAllExpandedShelterSystems();
+            SaveSurvivorSocial();
             SaveCampaignDay();
             if (playCue)
                 _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);

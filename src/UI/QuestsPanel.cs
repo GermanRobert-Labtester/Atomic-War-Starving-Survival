@@ -27,15 +27,19 @@ namespace AtomicWar.GodotApp.UI
         private HoldfastQuestSystem? _holdfastQuests;
         private CrossingQuestSystem? _crossingQuests;
         private DutyRosterHostSession? _dutyRoster;
+        private Ashfall.Core.Factions.FactionBranchCoordinator? _branchCoordinator;
+        private Ashfall.Core.MoralChoice.MoralChoiceSystem? _moralChoice;
         private int _currentDay = 1;
 
-        public bool IsBound => _holdfastQuests != null || _crossingQuests != null;
+        public bool IsBound => _holdfastQuests != null || _crossingQuests != null || _branchCoordinator != null;
 
         public void Bind(
             HoldfastQuestSystem? holdfastQuests,
             CrossingQuestSystem? crossingQuests = null,
             DutyRosterHostSession? dutyRoster = null,
-            int currentDay = 1)
+            int currentDay = 1,
+            Ashfall.Core.Factions.FactionBranchCoordinator? branchCoordinator = null,
+            Ashfall.Core.MoralChoice.MoralChoiceSystem? moralChoice = null)
         {
             Unbind();
 
@@ -43,11 +47,15 @@ namespace AtomicWar.GodotApp.UI
             _crossingQuests = crossingQuests;
             _dutyRoster = dutyRoster;
             _currentDay = currentDay;
+            _branchCoordinator = branchCoordinator;
+            _moralChoice = moralChoice;
 
             if (_holdfastQuests != null)
                 _holdfastQuests.OnStateChanged += HandleHoldfastStateChanged;
             if (_crossingQuests != null)
                 _crossingQuests.OnStateChanged += HandleCrossingStateChanged;
+            if (_branchCoordinator != null)
+                _branchCoordinator.OnStateChanged += RefreshView;
 
             RefreshView();
         }
@@ -64,7 +72,13 @@ namespace AtomicWar.GodotApp.UI
                 _crossingQuests.OnStateChanged -= HandleCrossingStateChanged;
                 _crossingQuests = null;
             }
+            if (_branchCoordinator != null)
+            {
+                _branchCoordinator.OnStateChanged -= RefreshView;
+                _branchCoordinator = null;
+            }
             _dutyRoster = null;
+            _moralChoice = null;
         }
 
 
@@ -151,6 +165,58 @@ namespace AtomicWar.GodotApp.UI
                         else
                         {
                             availableList.Add((cDef.id, cDef.display_name, "Crossing Charter", $"Day >= {cDef.min_day}", cDef.briefing));
+                        }
+                    }
+                }
+            }
+
+            // ── 1c. Faction Branch Progression ("The Weight of Choices") ──
+            if (_branchCoordinator != null)
+            {
+                if (_branchCoordinator.IsCommitted)
+                {
+                    string branchName = _branchCoordinator.ActiveBranchId?.Replace('_', ' ') ?? "Faction Branch";
+                    string factionName = _branchCoordinator.ActiveFactionKind.ToString();
+
+                    if (_branchCoordinator.ResolvedEndingId != null)
+                    {
+                        completedCount++;
+                        completedList.Add((
+                            _branchCoordinator.ActiveBranchId!,
+                            $"Faction Finale: {branchName}",
+                            $"The Weight of Choices // {factionName}",
+                            $"Resolved Ending: {_branchCoordinator.ResolvedEndingId.Replace('_', ' ')}"));
+                    }
+                    else
+                    {
+                        activeCount++;
+                        string stageText = _branchCoordinator.IsPonrLocked
+                            ? "Point of No Return Reached. Faction fate sealed — proceeding to final resolution."
+                            : "Pre-PoNR Stage: Executing faction directives and shaping ideological alignment.";
+                        int stageNum = _branchCoordinator.IsPonrLocked ? 2 : 1;
+                        activeList.Add((
+                            _branchCoordinator.ActiveBranchId!,
+                            $"Faction Allegiance: {branchName}",
+                            $"The Weight of Choices // {factionName}",
+                            stageText,
+                            stageNum, 2,
+                            $"Allegiance to {factionName} active. Mutually exclusive branch path locked in."));
+                    }
+                }
+                else
+                {
+                    // Prospective branches available to commit
+                    var options = _branchCoordinator.GetBranchOptions(_moralChoice);
+                    foreach (var opt in options)
+                    {
+                        if (opt.IsAvailable)
+                        {
+                            availableList.Add((
+                                opt.BranchId,
+                                $"Prospective Allegiance: {opt.DisplayName}",
+                                $"Faction Branch ({opt.FactionKind})",
+                                $"Morality: {opt.EntryBandMin}..{opt.EntryBandMax}",
+                                $"{opt.ConsequencesSummary} Trigger: {opt.PonrTrigger}"));
                         }
                     }
                 }

@@ -138,6 +138,22 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void StartRepair_LateComponentMissing_LeavesAllComponentsInInventory()
+        {
+            var workshop = CreateSystem(out var inv, out _, out _);
+            workshop.RegisterRelic(MakeRelic());
+            // Supply 1st component (mechanical_parts) but not 2nd (electronic_scrap)
+            inv.AddById("mechanical_parts", 3);
+
+            var result = workshop.StartRepair("test_relic", "survivor_1");
+            Assert.Equal(ActionResult.StatusKind.Blocked, result.Status);
+            Assert.Equal("missing_components", result.FailureCode);
+            Assert.False(workshop.IsBusy);
+            // 0 mechanical_parts consumed
+            Assert.Equal(3, inv.CountById("mechanical_parts"));
+        }
+
+        [Fact]
         public void Repair_CompletesAndSetsFlag()
         {
             var workshop = CreateSystem(out var inv, out _, out _);

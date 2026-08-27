@@ -106,6 +106,21 @@ namespace AtomicWar.GodotApp
                 openAction: () => _craftingPanel.Open(),
                 closeAction: () => CloseCraftingPanel());
 
+            PanelRegistry.ConfigureActions("workshop",
+                bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); _workshopPanel.Bind(_crafting.Workshop, _inventory.Inventory, _survivors); },
+                openAction: () => _workshopPanel.Open(),
+                closeAction: () => CloseWorkshopPanel());
+
+            PanelRegistry.ConfigureActions("pharma_lab",
+                bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); SetupMentalHealthCrisis(); _pharmaLabPanel.Bind(_crafting.PharmaLab, _inventory.Inventory, _chemicalDependency?.System, _survivors); },
+                openAction: () => _pharmaLabPanel.Open(),
+                closeAction: () => ClosePharmaLabPanel());
+
+            PanelRegistry.ConfigureActions("pharma",
+                bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); SetupMentalHealthCrisis(); _pharmaLabPanel.Bind(_crafting.PharmaLab, _inventory.Inventory, _chemicalDependency?.System, _survivors); },
+                openAction: () => _pharmaLabPanel.Open(),
+                closeAction: () => ClosePharmaLabPanel());
+
             PanelRegistry.ConfigureActions("medical",
                 bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); _medicalPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory); },
                 openAction: () => _medicalPanel.Open(),
@@ -145,7 +160,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseShelterPanel());
 
             PanelRegistry.ConfigureActions("factions",
-                bindAction: () => { SetupHoldfastRuntime(); SetupMuster(); SetupExpansions(); _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions); },
+                bindAction: () => { SetupHoldfastRuntime(); SetupMuster(); SetupExpansions(); SetupYearOfAsh(); SetupFactionBranch(); SetupMoralChoice(); _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice); },
                 openAction: () => _factionsPanel.Open(),
                 closeAction: () => CloseFactionsPanel());
 
@@ -154,7 +169,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseFactionDetailPanel());
 
             PanelRegistry.ConfigureActions("quests",
-                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupDutyRoster(); _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay); },
+                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupDutyRoster(); SetupFactionBranch(); SetupMoralChoice(); _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice); },
                 openAction: () => _questsPanel.Open(),
                 closeAction: () => CloseQuestsPanel());
 

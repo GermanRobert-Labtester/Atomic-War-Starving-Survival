@@ -348,14 +348,19 @@ namespace AtomicWar.GodotApp
                     SetupHoldfastRuntime();
                     SetupMuster();
                     SetupExpansions();
-                    _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions);
+                    SetupYearOfAsh();
+                    SetupFactionBranch();
+                    SetupMoralChoice();
+                    _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice);
                     _factionsPanel.Open();
                     break;
                 case "quests":
                     SetupHoldfastRuntime();
                     SetupExpansions();
                     SetupDutyRoster();
-                    _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay);
+                    SetupFactionBranch();
+                    SetupMoralChoice();
+                    _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice);
                     _questsPanel.Open();
                     break;
                 case "journal":

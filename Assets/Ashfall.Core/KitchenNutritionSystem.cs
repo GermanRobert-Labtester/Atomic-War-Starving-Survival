@@ -107,29 +107,20 @@ ILog? log = null)
             if (_state.activeJobs.Exists(j => j.recipeId == recipeId && !j.isComplete && !j.isCancelled))
                 return ActionResult.Blocked("job_active", "kitchen.job_active");
 
-            // CR3-02: was a single-pass loop that called _inventory.RemoveById
-            // before checking the next iteration's CountById. If a later req
-            // failed, prior decrement(s) were not rolled back. Make this
-            // atomic: pre-check ALL required counts first; only consume
-            // when every required count is satisfiable.
-            if (inputRequirements != null)
-            {
-                foreach (var req in inputRequirements)
-                {
-                    if (_inventory.CountById(req.Key) < req.Value)
-                        return ActionResult.Blocked("insufficient_ingredients", "kitchen.insufficient_ingredients");
-                }
-            }
-
             var reservedIds = new List<string>();
             var reservedCounts = new List<int>();
-            if (inputRequirements != null)
+            if (inputRequirements != null && inputRequirements.Count > 0)
             {
+                if (!_inventory.TryConsumeBill(inputRequirements))
+                    return ActionResult.Blocked("insufficient_ingredients", "kitchen.insufficient_ingredients");
+
                 foreach (var req in inputRequirements)
                 {
-                    _inventory.RemoveById(req.Key, req.Value);
-                    reservedIds.Add(req.Key);
-                    reservedCounts.Add(req.Value);
+                    if (req.Value > 0)
+                    {
+                        reservedIds.Add(req.Key);
+                        reservedCounts.Add(req.Value);
+                    }
                 }
             }
 

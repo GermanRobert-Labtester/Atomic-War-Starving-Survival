@@ -30,7 +30,7 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; private set; } = string.Empty;
         public CombatHostSession(TacticalCombatSystem engine = null!, CombatHostPorts ports = null!)
         {
-            Engine = engine ?? new TacticalCombatSystem(null!, ports ?? new CombatHostPorts());
+            Engine = engine ?? new TacticalCombatSystem(null!, ports ?? CombatHostPorts.NoOp());
             Engine.OnStateChanged += _ => RaiseStateChanged();
             Engine.OnCombatEvent += (s, e) => { LastEvent = e.Detail; RaiseStateChanged(); };
             Engine.OnEncounterEnded += s =>
@@ -43,11 +43,14 @@ namespace AtomicWar.GodotApp
         /// <summary>Wire the engine's host ports to real inventory + survivor sessions when present.</summary>
         public void WireRealState()
         {
-            var ports = Engine.Ports ?? new CombatHostPorts();
+            var prior = Engine.Ports ?? CombatHostPorts.NoOp();
 
+            Func<string, int, int>? consumeAmmo = null;
+            Func<string, int, bool>? consumeItem = null;
+            Action<CombatLootEntry>? grantLoot = null;
             if (Inventory != null)
             {
-                ports.ConsumeAmmo = (ammoId, n) =>
+                consumeAmmo = (ammoId, n) =>
                 {
                     if (Inventory.Inventory.CountById(ammoId) >= n)
                     {
@@ -56,7 +59,7 @@ namespace AtomicWar.GodotApp
                     }
                     return -1; // cannot afford -> action refused
                 };
-                ports.ConsumeItem = (itemId, n) =>
+                consumeItem = (itemId, n) =>
                 {
                     if (Inventory.Inventory.CountById(itemId) >= n)
                     {
@@ -65,12 +68,15 @@ namespace AtomicWar.GodotApp
                     }
                     return false;
                 };
-                ports.GrantLoot = l => Inventory.Add(l.itemId, l.quantity);
+                grantLoot = l => Inventory.Add(l.itemId, l.quantity);
             }
 
+            Func<string, float, float>? damageSurvivor = null;
+            Func<string, float, float>? healSurvivor = null;
+            Action<string, float>? applyMoraleDelta = null;
             if (Survivors != null)
             {
-                ports.DamageSurvivor = (id, d) =>
+                damageSurvivor = (id, d) =>
                 {
                     var s = Survivors.Find(id);
                     if (s == null) return d;
@@ -78,14 +84,14 @@ namespace AtomicWar.GodotApp
                     if (s.Health <= 0f) { s.IsAlive = false; s.IsDead = true; }
                     return s.Health;
                 };
-                ports.HealSurvivor = (id, h) =>
+                healSurvivor = (id, h) =>
                 {
                     var s = Survivors.Find(id);
                     if (s == null) return h;
                     s.Health = MathfCompat.Min(s.MaxHealthCap, s.Health + h);
                     return s.Health;
                 };
-                ports.ApplyMoraleDelta = (id, m) =>
+                applyMoraleDelta = (id, m) =>
                 {
                     var s = Survivors.Find(id);
                     if (s == null) return;
@@ -93,7 +99,31 @@ namespace AtomicWar.GodotApp
                 };
             }
 
-            Engine.Ports = ports;
+            Engine.Ports = new CombatHostPorts(
+                damageSurvivor,
+                healSurvivor,
+                applyMoraleDelta,
+                consumeAmmo,
+                consumeItem,
+                prior.RaiseTrauma,
+                grantLoot,
+                prior.MarkCombatSurvived);
+        }
+
+        /// <summary>
+        /// Logs any production-required combat effects still unbound after
+        /// <see cref="WireRealState"/>. An empty list means every health, morale,
+        /// inventory, and progression effect reaches a real consumer.
+        /// </summary>
+        public void ValidatePorts()
+        {
+            var unbound = Engine.Ports.UnboundRequiredEffects;
+            if (unbound.Count > 0)
+            {
+                GD.PrintErr("[Ashfall Godot] Combat host ports unbound: "
+                    + string.Join(", ", unbound)
+                    + ". Effects will silently no-op/fallback in production.");
+            }
         }
 
         public static CombatHostSession Create(string dataDir)

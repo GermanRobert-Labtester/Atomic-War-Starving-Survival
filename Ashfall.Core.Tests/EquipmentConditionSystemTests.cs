@@ -96,6 +96,25 @@ namespace Ashfall.Core.Tests
             Assert.Empty(e.State.pendingJobs);
         }
 
+        [Fact]
+        public void StartMaintenance_DuplicatePartsRequired_AggregatesAndRefusesWhenShort()
+        {
+            var e = Create(out var inv, out _);
+            e.RegisterItem("tool_1", "wrench", "survivor_1", EquipmentFamily.Tool);
+            // Player only has 1 part_cleaner
+            inv.AddById("part_cleaner", 1);
+
+            // Job requires 2 part_cleaner (passed as list with duplicate IDs)
+            var r = e.StartMaintenance("tool_1", "station_1", MaintenanceType.Repair,
+                new System.Collections.Generic.List<string> { "part_cleaner", "part_cleaner" });
+
+            Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
+            Assert.Equal("missing_part", r.FailureCode);
+            // 0 consumed
+            Assert.Equal(1, inv.CountById("part_cleaner"));
+            Assert.Empty(e.State.pendingJobs);
+        }
+
         private static EquipmentConditionSystem Create(out Inventory.Inventory inv, out CraftingSystem crafting)
         {
             inv = new Inventory.Inventory();

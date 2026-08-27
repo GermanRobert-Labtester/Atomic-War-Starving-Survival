@@ -86,7 +86,9 @@ namespace Ashfall.Core.Save
             new("archive_desk", "SaveArchiveDesk", "SetupArchiveDesk", "knowledge", "Document archiving, ink, and scribing"),
             new("contractor_roster", "SaveContractorRoster", "SetupContractorRoster", "personnel", "Hired mercenaries and specialists"),
             new("mental_health_crisis", "SaveMentalHealthCrisis", "SetupMentalHealthCrisis", "psychology", "Psychological trauma and psych ward"),
-            new("shelter_assignment", "SaveShelterAssignment", "SetupShelterAssignment", "shelter", "Room assignments and living quarters")
+            new("shelter_assignment", "SaveShelterAssignment", "SetupShelterAssignment", "shelter", "Room assignments and living quarters"),
+            new("survivor_social", "SaveSurvivorSocial", "SetupSurvivorSocial", "social", "Leadership, friction, ration conflict, trauma bonds, skill atrophy"),
+            new("weight_of_choices", "SaveFactionBranch", "SetupFactionBranch", "factions", "Weight of choices faction branch progression and PoNR commitments")
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -162,6 +164,8 @@ namespace Ashfall.Core.Save
                 { "contractor_roster", "contractor_roster_save.json" },
                 { "mental_health_crisis", "mental_health_crisis_save.json" },
                 { "shelter_assignment", "shelter_assignment_save.json" },
+                { "survivor_social", "survivor_social_save.json" },
+                { "weight_of_choices", "weight_of_choices_save.json" },
             };
 
         /// <summary>
@@ -176,6 +180,7 @@ namespace Ashfall.Core.Save
                 { "year_of_ash", 4 },
                 { "dose_ledger", 2 },
                 { "expansion_hub", 4 },
+                { "weight_of_choices", 2 },
             };
 
         /// <summary>File name for a section key, or null for unknown keys.</summary>

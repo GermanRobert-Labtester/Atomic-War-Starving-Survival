@@ -43,7 +43,7 @@ namespace Ashfall.Core.Tests
 
         private static TacticalCombatSystem Engine(int enemyCount, float enemyHealth, CombatHostPorts ports = null)
         {
-            var sys = new TacticalCombatSystem(null, ports ?? new CombatHostPorts());
+            var sys = new TacticalCombatSystem(null, ports ?? CombatHostPorts.NoOp());
             sys.BeginEncounter("enc_t", "exp", "loc", "Loc", 1, 99, PlayerRoster(), RifleWeapons(), enemyCount, enemyHealth);
             return sys;
         }
@@ -84,7 +84,7 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void FiringConsumesAmmoAndDegradesWeapon()
         {
-            var ports = new CombatHostPorts { ConsumeAmmo = (id, n) => 1000 - n };
+            var ports = new CombatHostPorts(null, null, null, consumeAmmo: (id, n) => 1000 - n);
             var sys = Engine(1, 40, ports);
             var shooter = sys.State.Combatants[0];
             var weapon = sys.State.Weapons[0];
@@ -154,7 +154,7 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void DownedPlayer_BleedsOutAndDies()
         {
-            var sys = new TacticalCombatSystem(null, new CombatHostPorts());
+            var sys = new TacticalCombatSystem(null, CombatHostPorts.NoOp());
             // Two players: one takes the lethal hit, the other keeps the encounter alive.
             sys.BeginEncounter("enc_t", "exp", "loc", "Loc", 1, 99, PlayerRoster(2), RifleWeapons(2), 1, 40);
             sys.State.Combatants[0].Health = 5f; // Yuki low
@@ -172,14 +172,14 @@ namespace Ashfall.Core.Tests
         public void Victory_GrantsLootAndMoraleAndSurvivorSurvival()
         {
             int loot = 0, morale = 0, survived = 0, trauma = 0;
-            var ports = new CombatHostPorts
-            {
-                GrantLoot = l => loot++,
-                ApplyMoraleDelta = (id, d) => morale++,
-                MarkCombatSurvived = id => survived++,
-                RaiseTrauma = (id, k, s) => trauma++,
-                ConsumeAmmo = (id, n) => 10000
-            };
+            var ports = new CombatHostPorts(
+                damageSurvivor: null,
+                healSurvivor: null,
+                applyMoraleDelta: (id, d) => morale++,
+                consumeAmmo: (id, n) => 10000,
+                raiseTrauma: (id, k, s) => trauma++,
+                grantLoot: l => loot++,
+                markCombatSurvived: id => survived++);
             var sys = Engine(1, 10, ports); // fragile enemy
             sys.ResolveToEnd(new SeededRng(42), 60);
             Assert.True(sys.State.Resolved, "encounter resolves");

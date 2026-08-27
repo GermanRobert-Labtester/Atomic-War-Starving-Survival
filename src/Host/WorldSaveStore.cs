@@ -51,6 +51,7 @@ namespace AtomicWar.GodotApp
         public static bool TrySave(
             WorldWeatherState state,
             SkyArmorSaveState skyArmor = null!,
+            WeatherIntelligenceSaveState weatherIntelligence = null!,
             LocationEvolutionSaveState locationEvolution = null!,
             WildlifeSaveState wildlife = null!,
             LandmarkSaveState landmark = null!)
@@ -60,6 +61,7 @@ namespace AtomicWar.GodotApp
             {
                 State = state,
                 SkyArmor = skyArmor,
+                WeatherIntelligence = weatherIntelligence,
                 LocationEvolution = locationEvolution,
                 Wildlife = wildlife,
                 Landmark = landmark
@@ -71,6 +73,7 @@ namespace AtomicWar.GodotApp
         public static string TryCapturePersisted(
             WorldWeatherState state,
             SkyArmorSaveState skyArmor = null!,
+            WeatherIntelligenceSaveState weatherIntelligence = null!,
             LocationEvolutionSaveState locationEvolution = null!,
             WildlifeSaveState wildlife = null!,
             LandmarkSaveState landmark = null!)
@@ -80,6 +83,7 @@ namespace AtomicWar.GodotApp
             {
                 State = state,
                 SkyArmor = skyArmor,
+                WeatherIntelligence = weatherIntelligence,
                 LocationEvolution = locationEvolution,
                 Wildlife = wildlife,
                 Landmark = landmark
@@ -128,6 +132,7 @@ namespace AtomicWar.GodotApp
     {
         public WorldWeatherState State;
         public SkyArmorSaveState SkyArmor;
+        public WeatherIntelligenceSaveState WeatherIntelligence;
         public LocationEvolutionSaveState LocationEvolution;
         public WildlifeSaveState Wildlife;
         public LandmarkSaveState Landmark;

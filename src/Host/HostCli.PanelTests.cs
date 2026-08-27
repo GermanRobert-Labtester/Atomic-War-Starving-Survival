@@ -1468,15 +1468,37 @@ namespace AtomicWar.GodotApp
                 Check(Math.Abs(hostMult - 1f) < 1e-4f,
                     "host work-efficiency view recomputes after boost decays");
 
-                // ── 2. Somatic flashback: work penalty, grounded penalty ─
+                // ── 2. Somatic flashback: real shelter proximity grounding ─
+                var shelterAssignments = new Ashfall.Core.Shelter.ShelterAssignmentSystem(
+                    new Ashfall.Core.Shelter.ShelterAssignmentState(),
+                    new System.Collections.Generic.List<Ashfall.Core.Shelter.ShelterRoom>
+                    {
+                        new Ashfall.Core.Shelter.ShelterRoom("room_bunks", "Bunks", 4),
+                        new Ashfall.Core.Shelter.ShelterRoom("room_kitchen", "Kitchen", 2)
+                    },
+                    new CoreSeededRng(99));
+
+                session.BindShelterAssignment(shelterAssignments);
+
                 var flash = session.Flashbacks;
-                flash.GetAliveSurvivorIds = () => new[] { "sv_a", "sv_b" };
-                flash.IsCompanionInSameRoom = (a, b) => a != b; // everyone grounded
+                flash.GetAliveSurvivorIds = () => new[] { "sv_a", "sv_b", "sv_c" };
+
+                // A. Apart / Unassigned: sv_a in bunks, sv_c in kitchen, sv_b unassigned
+                shelterAssignments.Assign("sv_a", "room_bunks");
+                shelterAssignments.Assign("sv_c", "room_kitchen");
+
                 flash.IncreaseSusceptibility("sv_a", 1f);
-                flash.OnAudioEvent("siren", 1f);
+                flash.OnAudioEvent("siren", 10f);
+                float ungroundedPenalty = flash.GetWorkEfficiencyPenalty("sv_a");
+                Check(Math.Abs(ungroundedPenalty - Ashfall.Core.Survivors.SomaticFlashbackSystem.FlashbackWorkEfficiencyPenalty) < 1e-4f,
+                    "ungrounded flashback has full work efficiency penalty (0.60) when companions apart/unassigned");
+
+                // B. Reassignment: assign sv_b into room_bunks (together with sv_a)
+                shelterAssignments.Assign("sv_b", "room_bunks");
+                flash.OnAudioEvent("siren", 10f);
                 float groundedPenalty = flash.GetWorkEfficiencyPenalty("sv_a");
-                Check(groundedPenalty == 0f || groundedPenalty == Ashfall.Core.Survivors.SomaticFlashbackSystem.GroundedWorkEfficiencyPenalty,
-                    "flashback penalty is 0 or grounded penalty");
+                Check(Math.Abs(groundedPenalty - Ashfall.Core.Survivors.SomaticFlashbackSystem.GroundedWorkEfficiencyPenalty) < 1e-4f,
+                    "flashback is grounded by companion in same room (penalty reduced to 0.10)");
 
                 // ── 3. Trade specialty: milestones → mastery ───────────
                 int narrativeFired = 0;
@@ -1561,10 +1583,11 @@ namespace AtomicWar.GodotApp
                 float staminaMult = 0f;
                 float craftPenalty = 0f;
                 int narratives = 0;
-                session.Consumers.ApplyMoraleDelta = (sv, d) => moraleApplied += d;
-                session.Consumers.ApplyStaminaDrainMultiplier = (sv, m) => staminaMult += m;
-                session.Consumers.ApplyCraftingPenaltyFactor = (sv, f) => craftPenalty += f;
-                session.Consumers.FireNarrativeEvent = (id, sv) => narratives++;
+                session.Consumers = Phase0EffectConsumers.NoOp(
+                    applyMoraleDelta: (sv, d) => moraleApplied += d,
+                    applyStaminaDrainMultiplier: (sv, m) => staminaMult += m,
+                    applyCraftingPenaltyFactor: (sv, f) => craftPenalty += f,
+                    fireNarrativeEvent: (id, sv) => narratives++);
                 session.Phantom.RegisterRule("former_soldier", "military", 0.40f, "d", "boost", "break");
                 session.Phantom.TriggerChanceOverride = 1.0f; // force a trigger
                 session.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");

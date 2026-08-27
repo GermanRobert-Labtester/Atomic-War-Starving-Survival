@@ -64,6 +64,9 @@ namespace Ashfall.Core.UI
             R("combat",              "Combat Panel",                  PanelGroup.Dashboard);
             R("combat_detail",       "Combat Detail",                 PanelGroup.Secondary);
             R("combat_history",      "Combat History",                PanelGroup.Secondary);
+            R("workshop",            "Relic Workshop",                PanelGroup.Dashboard,  new[] { "crafting", "inventory", "survivors" });
+            R("pharma_lab",          "Pharma Lab",                    PanelGroup.Dashboard,  new[] { "crafting", "inventory", "survivors" });
+            R("pharma",              "Pharma Lab (alias)",            PanelGroup.Dashboard,  new[] { "crafting", "inventory", "survivors" });
 
             // ── Main Menu panels ─────────────────────────────────────────────
             // "codex" is requested from the main menu and resolved to the

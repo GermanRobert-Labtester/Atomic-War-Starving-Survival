@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Crafting;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.Maritime;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 using Xunit;
