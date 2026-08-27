@@ -270,13 +270,16 @@ namespace AtomicWar.GodotApp
     /// </summary>
     public static class GreenhouseSaveStore
     {
+        public const string FileName = "greenhouse_save.json";
+        public const string SectionName = "greenhouse";
+
         private static readonly JsonSerializerOptions JsonOpts = new JsonSerializerOptions
         {
             WriteIndented = true,
             IncludeFields = true
         };
 
-        public static string SavePath => SaveSlotRoot.Resolve("greenhouse_save.json");
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => File.Exists(SavePath);
 
@@ -285,10 +288,15 @@ namespace AtomicWar.GodotApp
             if (state == null) return false;
             try
             {
-                string dir = Path.GetDirectoryName(SavePath)!;
+                string path = SavePath;
+                string dir = Path.GetDirectoryName(path)!;
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                string json = JsonSerializer.Serialize(state, JsonOpts);
-                File.WriteAllText(SavePath, json);
+
+                var envelope = new GreenhouseSaveEnvelope { State = state };
+                envelope.Checksum = SaveChecksum.Compute(envelope);
+
+                string json = JsonSerializer.Serialize(envelope, JsonOpts);
+                File.WriteAllText(path, json);
                 return true;
             }
             catch (Exception ex)
@@ -304,6 +312,33 @@ namespace AtomicWar.GodotApp
             try
             {
                 string json = File.ReadAllText(SavePath);
+                if (string.IsNullOrWhiteSpace(json)) return null;
+
+                // Attempt envelope decode first
+                try
+                {
+                    var envelope = JsonSerializer.Deserialize<GreenhouseSaveEnvelope>(json, JsonOpts);
+                    if (envelope?.State != null)
+                    {
+                        if (string.IsNullOrEmpty(envelope.Checksum))
+                        {
+                            GD.PrintErr("[GreenhouseSaveStore] save envelope missing checksum (corrupt save)");
+                            return null;
+                        }
+                        string computed = SaveChecksum.Compute(envelope);
+                        if (!string.Equals(envelope.Checksum, computed, StringComparison.Ordinal))
+                        {
+                            GD.PrintErr("[GreenhouseSaveStore] checksum mismatch — possible tampering");
+                            return null;
+                        }
+                        return envelope.State;
+                    }
+                }
+                catch
+                {
+                    // Fall back to legacy bare state decode
+                }
+
                 return JsonSerializer.Deserialize<GreenhouseState>(json, JsonOpts);
             }
             catch (Exception ex)
@@ -312,5 +347,12 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+    }
+
+    [Serializable]
+    public sealed class GreenhouseSaveEnvelope
+    {
+        public GreenhouseState? State { get; set; }
+        public string? Checksum { get; set; }
     }
 }

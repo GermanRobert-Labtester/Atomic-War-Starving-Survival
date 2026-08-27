@@ -92,5 +92,34 @@ namespace Ashfall.Core.Tests
                 "fallback) or delegate to a Core save codec:\n  " +
                 string.Join("\n  ", bare));
         }
+
+        [Fact]
+        public void EverySaveStore_IsSlotRootIsolated()
+        {
+            string srcRoot = SrcDir();
+            var storeFiles = Directory
+                .EnumerateFiles(srcRoot, "*SaveStore*.cs", SearchOption.AllDirectories)
+                .Where(f => !f.Replace('\\', '/').Contains("/obj/") &&
+                            !f.Replace('\\', '/').Contains("/bin/") &&
+                            !f.EndsWith("SelfTest.cs", StringComparison.OrdinalIgnoreCase) &&
+                            !f.EndsWith("Tests.cs", StringComparison.OrdinalIgnoreCase) &&
+                            !f.EndsWith("Test.cs", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(f => f, StringComparer.Ordinal)
+                .ToList();
+
+            var unisolated = new List<string>();
+            foreach (string file in storeFiles)
+            {
+                string code = StripComments(File.ReadAllText(file));
+                bool hasSlotRoot = code.Contains("SaveSlotRoot") || code.Contains("ResolveSlotFile") || code.Contains("ResolveSlotPath");
+                if (!hasSlotRoot)
+                    unisolated.Add(Path.GetFileName(file));
+            }
+
+            Assert.True(unisolated.Count == 0,
+                "Save stores missing SaveSlotRoot isolation found — saves in these files risk " +
+                "polluting the global user:// directory during headless tests or profile switching:\n  " +
+                string.Join("\n  ", unisolated));
+        }
     }
 }

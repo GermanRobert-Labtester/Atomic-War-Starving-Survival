@@ -95,15 +95,24 @@ namespace AtomicWar.GodotApp
     /// </summary>
     public static class StartingLevelSaveStore
     {
-        private const string SaveFileName = "starting_level_save.json";
+        public const string SaveFileName = "starting_level_save.json";
+        public const string SectionName = "starting_level";
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static bool TrySave(StartingLevelSaveState state, string? pathOverride = null)
         {
             try
             {
+                if (state == null) return false;
                 string path = pathOverride ?? SaveSlotRoot.Resolve(SaveFileName);
-                string json = s_json.Serialize(state);
+                string? dir = Path.GetDirectoryName(path);
+                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+
+                var envelope = new StartingLevelSaveEnvelope { State = state };
+                envelope.Checksum = SaveChecksum.Compute(envelope);
+
+                string json = s_json.Serialize(envelope);
                 File.WriteAllText(path, json);
                 return true;
             }
@@ -127,6 +136,32 @@ namespace AtomicWar.GodotApp
                 string path = pathOverride ?? SaveSlotRoot.Resolve(SaveFileName);
                 if (!File.Exists(path)) return null;
                 string json = File.ReadAllText(path);
+                if (string.IsNullOrWhiteSpace(json)) return null;
+
+                try
+                {
+                    var envelope = s_json.Deserialize<StartingLevelSaveEnvelope>(json);
+                    if (envelope?.State != null)
+                    {
+                        if (string.IsNullOrEmpty(envelope.Checksum))
+                        {
+                            GD.PrintErr("[StartingLevelSaveStore] save envelope missing checksum (corrupt save)");
+                            return null;
+                        }
+                        string computed = SaveChecksum.Compute(envelope);
+                        if (!string.Equals(envelope.Checksum, computed, StringComparison.Ordinal))
+                        {
+                            GD.PrintErr("[StartingLevelSaveStore] checksum mismatch — possible tampering");
+                            return null;
+                        }
+                        return envelope.State;
+                    }
+                }
+                catch
+                {
+                    // Fall back to legacy bare state decode
+                }
+
                 return s_json.Deserialize<StartingLevelSaveState>(json);
             }
             catch (Exception ex)
@@ -135,5 +170,12 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+    }
+
+    [Serializable]
+    public sealed class StartingLevelSaveEnvelope
+    {
+        public StartingLevelSaveState? State { get; set; }
+        public string? Checksum { get; set; }
     }
 }

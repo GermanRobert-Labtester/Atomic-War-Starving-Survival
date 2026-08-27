@@ -131,5 +131,8 @@ jobs:
       - name: 12) CLI catalog drift gate (docs match --host-help)
         run: bash scripts/ci/generate-cli-catalog.sh --check
 
-      - name: 13) compiler warning baseline gate (0 unexpected warnings)
+      - name: 13) save-store contract matrix completeness gate
+        run: bash scripts/ci/generate-save-store-matrix.sh --check
+
+      - name: 14) compiler warning baseline gate (0 unexpected warnings)
         run: bash scripts/ci/warning-baseline-gate.sh

@@ -21,6 +21,7 @@ namespace AtomicWar.GodotApp
     public static class MoralChoiceSaveStore
     {
         public const string FileName = "moral_choice_save.json";
+        public const string SectionName = "host_event";
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();

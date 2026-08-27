@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp
     public static class ThirdonarySaveStore
     {
         public const string FileName = "thirdonary_quest_save.json";
+        public const string SectionName = "thirdonary";
 
         private static readonly IFileIO s_files = new FileSystemIO();
         private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();

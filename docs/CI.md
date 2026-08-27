@@ -10,28 +10,28 @@
 
 Per `AGENTS.md`, all verification uses **`dotnet` + `godot --headless`**. The canonical GitHub Actions workflow (`.github/workflows/ci.yml`) executes the following stages on every push and PR:
 
-1. **StreamingAssets Data Validation:** Python fast-fail script validates JSON syntax across all catalogs in `Assets/StreamingAssets/Data/`.
-2. **Setup .NET SDKs:** Configures .NET 8.0 (Godot host) and .NET 9.0 (test suite).
-3. **Setup Godot:** Installs Godot 4.7.1 Mono (`chickensoft-games/setup-godot@v2`).
-4. **Build Core & Tests:** `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo`
-5. **Run Test Suite:** `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo` (all tests passing / 0 failed)
-6. **Build Godot Host:** `dotnet build Ashfall.csproj --nologo` (0 errors)
-7. **Godot Asset Import:** `godot --headless --path . --import` (populates `.godot/` cache)
-8. **Data Integrity Gate:** `godot --headless --path . -- --data-integrity-selftest` (0 errors across 129 catalogs, 4,794 authored IDs)
-9. **Bridge Self-Test:** `godot --headless --path . -- --bridge-selftest` (verifies shim removal notice & exit 0)
-10. **Asset Registry Gate:** `godot --headless --path . -- --asset-registry-selftest` (verifies catalog IDs resolve to real textures under `assets/`)
-11. **Player Panels UI Test:** `godot --headless --path . -- --player-panels-uitest` (binds and renders Survivors, Medical, Weather, Radio, Shelter, Status, Tutorial, Afflictions, Radiation panels)
-12. **Save Store & Failure-Path Suite:**
+1. **Trailing Whitespace Gate:** `bash scripts/ci/no-whitespace-churn.sh` (fast-fails on trailing whitespace or whitespace errors).
+2. **StreamingAssets Data Validation:** Python fast-fail script validates JSON syntax across all catalogs in `Assets/StreamingAssets/Data/`.
+3. **Build Core & Tests:** `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo`
+4. **Run Test Suite:** `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo` (all tests passing / 0 failed)
+5. **Build Godot Host:** `dotnet build Ashfall.csproj --nologo` (0 errors)
+6. **Data Integrity Gate:** `godot --headless --path . -- --data-integrity-selftest` (0 errors across 129 catalogs, 4,794 authored IDs)
+7. **Bridge Removal Gate:** `godot --headless --path . -- --bridge-selftest` (verifies shim removal notice & exit 0)
+8. **Asset Registry Gate:** `godot --headless --path . -- --asset-registry-selftest` (verifies catalog IDs resolve to real textures under `assets/`)
+9. **Player Panels UI Test:** `godot --headless --path . -- --player-panels-uitest` (binds and renders Survivors, Medical, Weather, Radio, Shelter, Status, Tutorial, Afflictions, Radiation panels)
+10. **Save Store & Failure-Path Suite:**
     - `godot --headless --path . -- --save-load-ui-failure-selftest` (verifies missing, corrupt, tampered saves show recoverable error messages and preserve live session)
     - `godot --headless --path . -- --holdfast-save-selftest` (Holdfast S1 round-trip and tamper rejection)
     - `godot --headless --path . -- --inventory-save-selftest` (Inventory serialization and checksum verification)
     - `godot --headless --path . -- --journal-save-selftest` (Journal entry ordering, serialization, and persistence)
-13. **Deterministic Campaign Smoke:**
+11. **Deterministic Campaign Smoke:**
     - `godot --headless --path . -- --playable-shell-selftest` (Playable shell, multi-day loop, bunker upgrades, greenhouse planting, save/continue flow)
     - `godot --headless --path . -- --day1-selftest` (Day 1 onboarding, needs decay, triage, bunker fortification, radio protocols)
-14. **Expansions Completeness:** `godot --headless --path . -- --expansions-selftest` (all expansions 01–10 + Verdict chain)
-15. **Triad Drift Gate:** `bash scripts/ci/triad-drift-gate.sh` (enforces Setup/Save/AllSaveSections parity)
-16. **CLI Catalog Drift Gate:** `bash scripts/ci/generate-cli-catalog.sh --check` (regenerates the CLI command catalog from live `--host-help` output and fails if `docs/cli/HOST_CLI_COMMAND_CATALOG.md` is out of date; regenerate with `bash scripts/ci/generate-cli-catalog.sh`)
+12. **Expansions Completeness:** `godot --headless --path . -- --expansions-selftest` (all expansions 01–10 + Verdict chain)
+13. **Triad Drift Gate:** `bash scripts/ci/triad-drift-gate.sh` (enforces Setup/Save/AllSaveSections parity against declarative `SaveSectionRegistry.cs`)
+14. **CLI Catalog Drift Gate:** `bash scripts/ci/generate-cli-catalog.sh --check` (verifies `docs/cli/HOST_CLI_COMMAND_CATALOG.md` matches live `--host-help` output)
+15. **Save-Store Contract Matrix Gate:** `bash scripts/ci/generate-save-store-matrix.sh --check` (verifies all 62 save store classes maintain checksum envelopes and slot-root isolation)
+16. **Compiler Warning Baseline Gate:** `bash scripts/ci/warning-baseline-gate.sh` (0 unexpected warnings across all targets)
 
 For a detailed distinction between blocking CI gates, domain quality gates, and report-only diagnostic tools, see [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md).
 
@@ -39,7 +39,7 @@ For a detailed distinction between blocking CI gates, domain quality gates, and 
 
 ## Local Verification Runner
 
-To run the exact ordered sequence of all 14 CI gates locally and stop immediately on the first failure:
+To run the exact ordered sequence of all 16 CI gates locally and stop immediately on the first failure:
 
 ```bash
 bash scripts/ci/verify-fast.sh

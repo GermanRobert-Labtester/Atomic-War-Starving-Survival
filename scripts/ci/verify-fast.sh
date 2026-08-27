@@ -45,11 +45,11 @@ echo "--------------------------------------------------------------------------
 trap 'echo -e "\n❌ [ABORT] Fast verification failed at gate $? (stopping on first failure)."; exit 1' ERR
 
 # 1. Check for trailing whitespace
-echo -e "\n[1/15] Running trailing whitespace gate..."
+echo -e "\n[1/16] Running trailing whitespace gate..."
 bash scripts/ci/no-whitespace-churn.sh
 
 # 2. Validate StreamingAssets JSON syntax (fast-fail)
-echo -e "\n[2/15] Validating StreamingAssets JSON syntax..."
+echo -e "\n[2/16] Validating StreamingAssets JSON syntax..."
 python3 - <<'PY'
 import json
 import pathlib
@@ -81,65 +81,69 @@ print(f"  -> PASS: validated {len(files)} JSON catalogs under {root}")
 PY
 
 # 3. Build Core & Tests
-echo -e "\n[3/15] Building Ashfall.Core.Tests..."
+echo -e "\n[3/16] Building Ashfall.Core.Tests..."
 dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
 
 # 4. Run Core Test Suite
-echo -e "\n[4/15] Running Core unit test suite..."
+echo -e "\n[4/16] Running Core unit test suite..."
 dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
 
 # 5. Build Godot Host
-echo -e "\n[5/15] Building Godot host (Ashfall.csproj)..."
+echo -e "\n[5/16] Building Godot host (Ashfall.csproj)..."
 dotnet build Ashfall.csproj --nologo
 
 # 6. Data Integrity Gate
-echo -e "\n[6/15] Running data integrity gate..."
+echo -e "\n[6/16] Running data integrity gate..."
 godot --headless --path . -- --data-integrity-selftest
 
 # 7. Bridge Removal Gate
-echo -e "\n[7/15] Running bridge removal confirmation..."
+echo -e "\n[7/16] Running bridge removal confirmation..."
 godot --headless --path . -- --bridge-selftest
 
 # 8. Asset Registry Resolution Gate
-echo -e "\n[8/15] Running asset registry resolution gate..."
+echo -e "\n[8/16] Running asset registry resolution gate..."
 godot --headless --path . -- --asset-registry-selftest
 
 # 9. Player UI Panels Test
-echo -e "\n[9/15] Running player panels UI lifecycle test..."
+echo -e "\n[9/16] Running player panels UI lifecycle test..."
 godot --headless --path . -- --player-panels-uitest
 
 # 10. Save Stores & Failure Paths
-echo -e "\n[10/15] Running save stores & failure path self-tests..."
+echo -e "\n[10/16] Running save stores & failure path self-tests..."
 godot --headless --path . -- --save-load-ui-failure-selftest
 godot --headless --path . -- --holdfast-save-selftest
 godot --headless --path . -- --inventory-save-selftest
 godot --headless --path . -- --journal-save-selftest
 
 # 11. Campaign Smoke Tests
-echo -e "\n[11/15] Running campaign smoke self-tests..."
+echo -e "\n[11/16] Running campaign smoke self-tests..."
 godot --headless --path . -- --playable-shell-selftest
 godot --headless --path . -- --day1-selftest
 
 # 12. Expansions Completeness Gate
-echo -e "\n[12/15] Running expansions completeness gate (01–10)..."
+echo -e "\n[12/16] Running expansions completeness gate (01–10)..."
 godot --headless --path . -- --expansions-selftest
 
 # 13. Triad Drift Gate
-echo -e "\n[13/15] Running triad drift gate..."
+echo -e "\n[13/16] Running triad drift gate..."
 bash scripts/ci/triad-drift-gate.sh
 
 # 14. CLI Catalog Drift Gate
-echo -e "\n[14/15] Running CLI command catalog drift gate..."
+echo -e "\n[14/16] Running CLI command catalog drift gate..."
 bash scripts/ci/generate-cli-catalog.sh --check
 
-# 15. Compiler Warning Baseline Gate
-echo -e "\n[15/15] Running compiler warning baseline gate..."
+# 15. Save-Store Contract Matrix Gate
+echo -e "\n[15/16] Running save-store contract matrix completeness gate..."
+bash scripts/ci/generate-save-store-matrix.sh --check
+
+# 16. Compiler Warning Baseline Gate
+echo -e "\n[16/16] Running compiler warning baseline gate..."
 bash scripts/ci/warning-baseline-gate.sh
 
 END_TIME=$(date +%s)
 ELAPSED=$((END_TIME - START_TIME))
 
 echo -e "\n============================================================================="
-echo "  ✅ ALL 15 FAST-TIER VERIFICATION GATES PASSED (${ELAPSED}s)"
+echo "  ✅ ALL 16 FAST-TIER VERIFICATION GATES PASSED (${ELAPSED}s)"
 echo "============================================================================="
 exit 0

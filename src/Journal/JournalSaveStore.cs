@@ -10,6 +10,7 @@ using System.IO;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Journal;
+using AtomicWar.GodotApp;
 
 namespace AtomicWar.Journal
 {
@@ -22,12 +23,13 @@ namespace AtomicWar.Journal
     public static class JournalSaveStore
     {
         public const string FileName = "journal_save.json";
+        public const string SectionName = "journal";
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

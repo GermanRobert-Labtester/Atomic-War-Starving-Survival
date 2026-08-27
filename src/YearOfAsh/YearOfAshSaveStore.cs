@@ -9,6 +9,7 @@ using System.IO;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.YearOfAsh;
+using AtomicWar.GodotApp;
 
 namespace AtomicWar.GodotApp.YearOfAsh
 {
@@ -19,9 +20,10 @@ namespace AtomicWar.GodotApp.YearOfAsh
     public static class YearOfAshSaveStore
     {
         public const string FileName = "year_of_ash_save.json";
+        public const string SectionName = "year_of_ash";
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => File.Exists(SavePath);
 
