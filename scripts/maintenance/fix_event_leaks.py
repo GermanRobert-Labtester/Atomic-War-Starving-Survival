@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """
-Batch-fix event leaks in HostSessions by adding UnsubscribeAll() methods.
-Handles single-line and multi-line event subscriptions.
+fix_event_leaks.py
+
+STATUS:  HISTORICAL / COMPLETED (Phase 1-2 migration artifact)
+OWNER:   Godot Host Sessions / Lifecycle Architecture
+PURPOSE: Batch-scaffolded UnsubscribeAll() teardown methods across HostSession
+         files to prevent delegate leaks when sessions are re-instantiated.
 """
 import re
 from pathlib import Path
 
-HOST_DIR = Path("src/Host")
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+HOST_DIR = REPO_ROOT / "src" / "Host"
 
 def process_hostsession(filepath: Path):
     content = filepath.read_text()

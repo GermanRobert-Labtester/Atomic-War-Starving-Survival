@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
-"""Clean up the 4 new P1-1 HostSession files to properly inherit from HostSessionBase."""
+"""
+cleanup_p11_hostsessions.py
+
+STATUS:  HISTORICAL / COMPLETED (Phase 1-1 migration artifact)
+OWNER:   Godot Host Sessions / Architecture
+PURPOSE: Cleaned up 4 newly created Phase 1-1 HostSession files to inherit
+         from HostSessionBase and removed duplicate StateChanged events.
+"""
 import re
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 FILES = [
-    "src/Host/ChemicalDependencyHostSession.cs",
-    "src/Host/JournalHostSession.cs",
-    "src/Host/MedicalWardHostSession.cs",
-    "src/Host/WeatherHostSession.cs",
+    REPO_ROOT / "src" / "Host" / "ChemicalDependencyHostSession.cs",
+    REPO_ROOT / "src" / "Host" / "JournalHostSession.cs",
+    REPO_ROOT / "src" / "Host" / "MedicalWardHostSession.cs",
+    REPO_ROOT / "src" / "Host" / "WeatherHostSession.cs",
 ]
 
 def process_file(filepath: Path):

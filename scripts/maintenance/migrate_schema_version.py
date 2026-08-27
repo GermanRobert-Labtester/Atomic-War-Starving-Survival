@@ -1,28 +1,26 @@
 #!/usr/bin/env python3
 """
-Schema version migration tool for ASHFALL JSON data files.
+migrate_schema_version.py
 
-Modes:
-  --check   Report what would change; no writes
+STATUS:  REUSABLE / ACTIVE
+OWNER:   Data Authority / JSON Schemas
+PURPOSE: Schema version migration and batch-wrapping utility for ASHFALL JSON
+         data files under Assets/StreamingAssets/Data/.
+MODES:
+  --check   Report what would change; no writes (dry-run)
   --write   Mutate only validated eligible files
   --dry-run Same as --check
-
-Rules:
-  - Object-root files: add "schema_version": 1 if missing
-  - Wrapper-list files: already wrapped, skip
-  - Bare-list files: wrap as {"schema_version": 1, "key": [...]}
-  - Static blobs: skip unless explicitly targeted
-  - Never double-wrap
-  - Preserve key order and formatting where possible
 """
 
 import argparse
 import json
 import os
+import pathlib
 import sys
 from typing import Dict, List, Tuple
 
-DATA_DIR = "Assets/StreamingAssets/Data"
+REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
+DATA_DIR = str(REPO_ROOT / "Assets" / "StreamingAssets" / "Data")
 
 # Files that should NOT be auto-wrapped (static content, generated files, etc.)
 SKIP_FILES = {

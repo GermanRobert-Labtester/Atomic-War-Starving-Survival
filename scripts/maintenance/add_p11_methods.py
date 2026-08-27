@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 """
-Add P1-1 methods (IsDirty, MarkDirty, Save) to HostSession files that are missing them.
+add_p11_methods.py
+
+STATUS:  HISTORICAL / COMPLETED (Phase 1-1 migration artifact)
+OWNER:   Godot Host Sessions / Save Infrastructure
+PURPOSE: Added P1-1 methods (IsDirty, MarkDirty, Save) to legacy HostSession
+         files that previously lacked dirty tracking and save delegation.
+NOTE:    Superseded by add_p11_methods_v2.py and recent generic SaveStore<T>
+         infrastructure. Retained for historical provenance.
 """
 import re
 from pathlib import Path
 
-HOST_DIR = Path("src/Host")
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+HOST_DIR = REPO_ROOT / "src" / "Host"
 
 def get_save_store_info(hostsession_name: str):
     """Map HostSession name to save store file and method signature."""

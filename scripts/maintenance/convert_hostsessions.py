@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
-"""Convert all HostSession classes to inherit from HostSessionBase."""
+"""
+convert_hostsessions.py
+
+STATUS:  HISTORICAL / COMPLETED (Phase 1-1 migration artifact)
+OWNER:   Godot Host Sessions / Architecture
+PURPOSE: Batch-migrated sealed HostSession classes across src/Host/ to inherit
+         from HostSessionBase.
+"""
 import re
 from pathlib import Path
 
-HOST_DIR = Path("src/Host")
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+HOST_DIR = REPO_ROOT / "src" / "Host"
 SKIP_FILES = {"HostCli.cs", "HostCli.SelfTests.cs", "HostCli.PanelTests.cs", "HostSessionBase.cs", "Phase0HostSession.cs"}
 
 def process_file(filepath: Path):

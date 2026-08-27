@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """
-Batch-consolidate ASHFALL catalog test files to inherit CatalogTestBase.
+consolidate_catalog_tests.py
 
-Handles two patterns (first match only):
-1. Class with existing base: `class Foo : Bar` → `class Foo : CatalogTestBase, Bar`
-2. Class without base: `class Foo {` → `class Foo : CatalogTestBase {`
+STATUS:  REUSABLE / ACTIVE
+OWNER:   Test Suite / Catalog Infrastructure
+PURPOSE: Batch-consolidates ASHFALL catalog test classes in Ashfall.Core.Tests
+         to inherit from CatalogTestBase.
+USAGE:   python3 scripts/maintenance/consolidate_catalog_tests.py [--dry-run | --apply]
 """
 
 import argparse
@@ -12,7 +14,8 @@ import re
 import sys
 from pathlib import Path
 
-CATALOG_TESTS_DIR = Path("Ashfall.Core.Tests")
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+CATALOG_TESTS_DIR = REPO_ROOT / "Ashfall.Core.Tests"
 
 
 def inherits_catalog_test_base(content: str) -> bool:
