@@ -23,7 +23,7 @@ These 9 automated steps are executed on every pull request and commit to `main`.
 |---|---|---|
 | **1. Fast-Fail JSON Syntax** | `python3 scripts/ci/validate_json.py` (inline) | Parses all 129 JSON catalogs under `Assets/StreamingAssets/Data/` to guarantee valid JSON syntax before compiling code. |
 | **2. Core Assembly Build** | `dotnet build Ashfall.Core.Tests/` | Validates compilation of engine-agnostic core and tests (net8.0 / net9.0) with zero engine references (`Invariant 1`). |
-| **3. Core Unit Test Suite** | `dotnet test Ashfall.Core.Tests/` | Executes all **3,315 unit tests** covering survival needs, radiation math, save codecs, catalog integrity, determinism, and CLI help contracts. |
+| **3. Core Unit Test Suite** | `dotnet test Ashfall.Core.Tests/` | Executes the complete Core unit test suite covering survival needs, radiation math, save codecs, catalog integrity, determinism, and CLI contracts. |
 | **4. Godot Host Assembly** | `dotnet build Ashfall.csproj` | Compiles the Godot .NET aggregate host with **0 errors and 0 warnings**. |
 | **5. Data Integrity Gate** | `godot --headless -- --data-integrity-selftest` | Cross-references 4,794 authored IDs across 129 catalogs (items, recipes, quests, locations, encounters, survivors, factions, ranges, uniqueness). |
 | **6. Bridge Removal Gate** | `godot --headless -- --bridge-selftest` | Asserts removal of legacy `UnityEngine.*` bridge shim; prints confirmation and exits 0. |

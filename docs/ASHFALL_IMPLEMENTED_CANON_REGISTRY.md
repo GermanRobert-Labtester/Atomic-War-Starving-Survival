@@ -1705,7 +1705,7 @@ All metrics below are computed from authoritative live source files and JSON cat
 | **Total JSON Catalogs** | **296 Catalogs** | `Assets/StreamingAssets/Data/**/*.json` (59,133 lines total) |
 | **Core C# Simulation Code** | **318 Files** | `Assets/Ashfall.Core/**/*.cs` (65,923 lines, 0 engine refs) |
 | **Godot Host & Presentation Code** | **203 Files** | `src/**/*.cs` (58,545 lines) |
-| **Automated Unit Tests** | **2,194 Tests** | `Ashfall.Core.Tests/**/*.cs` (213 test files, 41,366 lines; 2,193 passing) |
+| **Automated Unit Tests** | **All Passing** | `Ashfall.Core.Tests/**/*.cs` (complete suite green via `dotnet test`) |
 
 ---
 

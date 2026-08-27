@@ -30,7 +30,7 @@
 
 | Gate / Suite | Documentation | Verification Command |
 |---|---|---|
-| **Unit Test Suite** | [`Ashfall.Core.Tests/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/) | `dotnet test` (3,333 tests, 0 failures) |
+| **Unit Test Suite** | [`Ashfall.Core.Tests/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/) | `dotnet test` (all unit tests passing, 0 failures) |
 | **Host Build** | [`Ashfall.csproj`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.csproj) | `dotnet build Ashfall.csproj` |
 | **Data Integrity Gate** | [`Assets/Ashfall.Core/CatalogIntegrityValidator.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/CatalogIntegrityValidator.cs) | `godot --headless --path . -- --data-integrity-selftest` (129 catalogs, 0 errors) |
 | **Triad Drift Gate** | [`scripts/ci/triad-drift-gate.sh`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/scripts/ci/triad-drift-gate.sh)<br>[`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md) | `bash scripts/ci/triad-drift-gate.sh` (enforces Setup/Save/Flush parity) |
@@ -62,6 +62,7 @@ The following documents describe superseded Unity architectures, completed port 
 | Historical Document | Historical Context & Current Replacement |
 |---|---|
 | [`REPO_REVIEW_REPORT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/REPO_REVIEW_REPORT.md) | Deep repository review from 2026-08-16 during dual-engine era. All C1-C8 critical findings are now resolved, and Unity host is deleted. Active truth: [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md). |
+| [`COMPREHENSIVE_GAME_AUDIT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/COMPREHENSIVE_GAME_AUDIT.md) | Comprehensive project audit from 2026-08-18 (pre-Unity removal). Superseded by modern Godot-authoritative documentation. |
 | [`docs/plans/sources.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/sources.md) | Describes early August 2026 Unity/Bridge strangler migration. Current truth is [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md). |
 | [`docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md) | Pre-migration gap audit from Unity era; all critical and high items are resolved. |
 | [`docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md) | Historical port plan for `SkillProgressionSystem` (closed; fully ported in Core Phase 18 and tested). |

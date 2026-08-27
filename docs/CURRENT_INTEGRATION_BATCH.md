@@ -26,7 +26,7 @@ This manifest indexes all newly authored and modified systems currently in the a
 ### Full Gate Suite
 
 ```bash
-# 1. Pure C# Unit Tests (all 3,333+ tests must pass)
+# 1. Pure C# Unit Tests (all unit tests must pass)
 dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
 
 # 2. Godot Host Compilation (0 errors)
@@ -68,6 +68,6 @@ bash scripts/ci/triad-drift-gate.sh
 - [x] Invariant 4: Determinism preserved with `ISeededRng`.
 - [x] Invariant 5: No gameplay logic in presentation nodes.
 - [x] Invariant 6: Data authority in `Assets/StreamingAssets/Data/` is intact (129 catalogs, 0 errors).
-- [x] All 3,333 unit tests pass.
+- [x] All unit tests pass cleanly (0 failures).
 - [x] Godot host compiles with 0 errors.
 - [x] All CI scripts pass without warnings or drift.

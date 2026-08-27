@@ -6,7 +6,7 @@
 > 2. **Core Domain Logic (Truth):** [`Assets/Ashfall.Core/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/) is the single source of truth for simulation logic — 100% engine-agnostic C# with zero engine references.
 > 3. **Data Authority:** [`Assets/StreamingAssets/Data/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/StreamingAssets/Data/) (JSON catalogs) is the absolute authority for definitions, balancing, quests, and economy.
 > 4. **Authoritative Host & Runtime:** **Godot 4.7+ (.NET / C#)** (`src/`, `scenes/Main.tscn`, `project.godot`). The legacy Unity host (`Assets/_Game/`) and shim (`src/Bridge/`) have been fully retired and deleted.
-> 5. **Verification Pipeline:** `dotnet test` (3,244 tests) + `godot --headless` only.
+> 5. **Verification Pipeline:** `dotnet test` (all unit tests passing, 0 failures) + `godot --headless` only.
 
 > Load this file first. It is a distilled, dense map of the whole codebase so a
 > fresh agent/session working on ASHFALL does not need to re-scan ~250K LOC.
@@ -415,20 +415,16 @@ consecutive zero-finding loops = convergence).
 
 ---
 
-## 12. CURRENT VERIFIED STATE (measured 2026-08-14)
+## 12. CURRENT VERIFIED STATE
 
-Command-readout of the green baseline, so a fresh session knows where things stand without re-running:
+Verification checklist for the canonical Godot pipeline:
 
-| Check | Result |
-|---|---|
-| `dotnet build Ashfall.csproj` | **Build succeeded, 0 errors** |
-| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **345/345 pass** (0 failed, net9.0) |
-| `--holdfast-save-selftest` | **PASS** |
-| `--journal-selftest` | **PASS** |
-| `--duty-roster-save-selftest` | **PASS** |
-| `--expansion-hub-save-selftest` | **PASS** |
-| Selftest gates (per audit#2): expansions, data-integrity, bridge (41), brine (21), cluster (19), endings (11), year-of-ash (19) | PASS at last audit |
-
-> **Caveats on the above:** the 345 tests are the Core-agnostic suite + hosted sessions. The full
-> `_Game` runtime (Unity-host simulation) is still NOT executed under Godot (see 11.1). The green
-> build includes `/bin`-linked `_Game` that compiles but does not run.
+| Check | Result | Details |
+|---|---|---|
+| `dotnet build Ashfall.csproj` | **PASS** | 0 errors, 0 warnings |
+| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **PASS** | All unit tests pass cleanly (0 failed, net9.0) |
+| `godot --headless --path . -- --data-integrity-selftest` | **PASS** | 129 catalogs verified, 0 errors |
+| `godot --headless --path . -- --player-panels-uitest` | **PASS** | All player UI panels bound & verified |
+| `godot --headless --path . -- --expansions-selftest` | **PASS** | Expansions 01–10 green |
+| `bash scripts/ci/triad-drift-gate.sh` | **PASS** | Setup/Save/AllSaveSections parity verified |
+| `bash scripts/ci/generate-cli-catalog.sh --check` | **PASS** | CLI catalog in sync with live `--host-help` |

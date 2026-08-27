@@ -39,7 +39,7 @@ graph LR
 * **Core Runtime:** `netstandard2.1` / `net8.0` Engine-Agnostic C# (`Assets/Ashfall.Core/` — 318 files, 65,923 lines)
 * **Data Authority:** `Assets/StreamingAssets/Data/` (296 JSON catalogs, 59,133 lines)
 * **Host Presentation & UI:** `src/` (203 files, 58,545 lines, 27 HostSessions, 60+ UI panels)
-* **Verification Standard:** `dotnet test` (2,194 tests; 2,193 passing) + `godot --headless` CLI selftests (70+ flags)
+* **Verification Standard:** `dotnet test` (all unit tests passing, 0 failures) + `godot --headless` CLI selftests
 
 ---
 

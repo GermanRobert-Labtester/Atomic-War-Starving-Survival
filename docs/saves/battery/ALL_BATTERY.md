@@ -18,7 +18,7 @@ All 5 save stores: 4/5 test types covered (clean, checksum-reject, null-checksum
 | JournalSaveStore | ✅ | ✅ | ✅ | ✅ | ❌ |
 
 **Verification:**
-- ✅ 2497/2497 tests passed (dotnet test Ashfall.Core.Tests)
+- ✅ All unit tests pass cleanly (dotnet test Ashfall.Core.Tests)
 - ✅ 0 errors (godot --headless --path . -- --data-integrity-selftest)
 
 **Next:** Extend test suite to cover version migration logic if/when added.

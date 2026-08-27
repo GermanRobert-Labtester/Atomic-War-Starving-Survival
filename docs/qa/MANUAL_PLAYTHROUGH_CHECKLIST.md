@@ -1,8 +1,8 @@
 # Manual Playthrough Checklist — Day 1 → Day 2 Milestone
 
 > [!NOTE]
-> **LAST VERIFIED AT HEAD — 2026-08-26**
-> - **Test Suite Baseline:** 3,315 unit tests passing (`dotnet test`, net9.0, 0 failures)
+> **LAST VERIFIED AT HEAD — 2026-08-27**
+> - **Test Suite Baseline:** All Core unit tests passing (`dotnet test`, net9.0, 0 failures)
 > - **Data Integrity Gate:** 129 StreamingAssets JSON catalogs (4,794 authored IDs, 0 errors)
 > - **UI Snapshot Baseline:** 29/29 golden snapshot targets verified
 > - **Canonical Headless Verification Pipeline:**
@@ -293,7 +293,7 @@ The following checks are already verified headlessly and do **not** need manual 
 | `--world-selftest` | World domain: map nodes, sector navigation, hazard regions, and landmark states. |
 | `--7-day-smoke-selftest` | 7-day deterministic smoke: map discovery, route/node lock and completion state, weather rolls, needs drift, and mid-run save/reload round-trip across 10 verification gates. |
 | `--save-store-checksum-selftest` | All save stores ship checksummed envelopes; legacy bare-state fallback preserved. |
-| `dotnet test` | 3,315/3,315 Core tests (needs, radiation, save round-trips, journal, catalog integrity, determinism, help contract). |
+| `dotnet test` | All Core unit tests passing (needs, radiation, save round-trips, journal, catalog integrity, determinism, help contract). |
 | `--ui-snapshot-uitest` | 29/29 visual-regression goldens match at HEAD. |
 
 Manual playthrough exists to catch what automation structurally cannot: feel, timing, edge-case intent (rapid-click, cancel-after-rapid-click, new-game-over-save confirmation wording), and human-visible rendering artifacts that a pixel-diff gate may not flag at the wrong resolution.
