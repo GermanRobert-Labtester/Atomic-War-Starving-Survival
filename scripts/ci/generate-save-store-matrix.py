@@ -74,7 +74,7 @@ def extract_save_stores():
             unique_methods = sorted(list(set(methods)))
 
             # Extract checksum / codec
-            has_checksum = "Checksum" in cbody or "SaveChecksum" in cbody
+            has_checksum = "Checksum" in cbody or "SaveChecksum" in cbody or "SaveEnvelopeHelper" in cbody
             has_codec = bool(re.search(r"\w*Codec\s*\.\s*(Encode|Decode|TryDecode)", cbody))
 
             # Extract slot root isolation

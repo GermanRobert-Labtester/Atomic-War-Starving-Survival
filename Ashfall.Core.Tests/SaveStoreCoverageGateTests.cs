@@ -25,9 +25,9 @@ namespace Ashfall.Core.Tests
         private static readonly Regex BlockComment =
             new Regex("/\\*.*?\\*/", RegexOptions.Compiled | RegexOptions.Singleline);
 
-        // Codec delegation, e.g. HoldfastSaveCodec.Encode(...) / .TryDecode(...)
+        // Codec/Helper delegation, e.g. HoldfastSaveCodec.Encode(...) / .TryDecode(...) or SaveEnvelopeHelper
         private static readonly Regex CodecDelegation =
-            new Regex(@"\w*Codec\s*\.\s*(Encode|Decode|TryDecode)", RegexOptions.Compiled);
+            new Regex(@"(?:\w*Codec\s*\.\s*(?:Encode|Decode|TryDecode)|SaveEnvelopeHelper)", RegexOptions.Compiled);
 
         private static string SrcDir()
         {
