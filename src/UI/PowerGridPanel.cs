@@ -28,6 +28,8 @@ namespace AtomicWar.GodotApp.UI
 
         private static readonly PowerGridRoomPriority[] s_priorities = (PowerGridRoomPriority[])Enum.GetValues(typeof(PowerGridRoomPriority));
 
+        public bool IsBound => _session != null;
+
         public void Bind(PowerGridHostSession session)
         {
             if (_session != null)
@@ -40,7 +42,7 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_session == null) return;
+            if (_session == null || _genLabel == null || _drawLabel == null || _batteryLabel == null || _fuelLabel == null || _brownoutLabel == null || _roomList == null) return;
             var snap = _session.LastSnapshot;
             _genLabel.Text = $"GEN {snap.GenerationWatts:0} W";
             _drawLabel.Text = $"DRAW {snap.TotalDrawWatts:0} W (net {snap.NetWatts:+0;-0;0})";
@@ -186,12 +188,19 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
+        public void Unbind()
         {
             if (_session != null)
             {
                 _session.OnStateChanged -= RefreshView;
+                _session = null;
             }
+            RefreshView();
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

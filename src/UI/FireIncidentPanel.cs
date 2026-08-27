@@ -158,12 +158,25 @@ namespace AtomicWar.GodotApp.UI
 
         private void RefreshView()
         {
-            if (_fireSystem == null) return;
+            if (_fireSystem == null)
+            {
+                if (_statusLabel != null) _statusLabel.Text = "Status: Fire suppression system offline (no session bound)";
+                if (_alarmButton != null) _alarmButton.Disabled = true;
+                if (_brigadeButton != null) _brigadeButton.Disabled = true;
+                if (_extinguisherButton != null) _extinguisherButton.Disabled = true;
+                if (_tickButton != null) _tickButton.Disabled = true;
+                return;
+            }
 
             var incident = _fireSystem.GetIncident(_incidentId);
             if (incident == null)
             {
-                _statusLabel.Text = "Status: No active incident";
+                _statusLabel.Text = "Status: No active fire incidents in shelter";
+                if (_zonesContainer != null)
+                {
+                    AshfallUiHelpers.EmptyChildren(_zonesContainer);
+                    _zonesContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("All shelter sectors clear of thermal hazards"));
+                }
                 return;
             }
 

@@ -154,6 +154,11 @@ namespace AtomicWar.GodotApp.UI
             if (_succession == null)
             {
                 _statusLabel.Text = "Succession engine unavailable.";
+                _lineageContainer.AddChild(AshfallUiHelpers.MakeEmptyState(
+                    "Generational succession engine is not bound. Connect live succession data to view generational chapters and mentorship bonds.",
+                    "GENERATIONAL SUCCESSION OFFLINE",
+                    "Awaiting active campaign state"));
+                _mentorshipContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Mentorship bindings offline"));
                 return;
             }
 
@@ -176,7 +181,7 @@ namespace AtomicWar.GodotApp.UI
             // ── Survivor Lineage Cards ──
             _lineageContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("SURVIVOR GENERATION & SUCCESSION ROSTER"));
 
-            if (_survivors != null && _survivors.RosterState != null)
+            if (_survivors != null && _survivors.RosterState != null && _survivors.RosterState.Count > 0)
             {
                 for (int i = 0; i < _survivors.RosterState.Count; i++)
                 {
@@ -224,6 +229,10 @@ namespace AtomicWar.GodotApp.UI
 
                     _lineageContainer.AddChild(sCard);
                 }
+            }
+            else
+            {
+                _lineageContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No survivors registered in shelter roster"));
             }
 
             // ── Mentorship Binding Card ──

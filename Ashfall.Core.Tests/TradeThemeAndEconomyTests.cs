@@ -158,5 +158,21 @@ namespace Ashfall.Core.Tests
                 Assert.True(File.Exists(fullPath), $"Expected asset missing: {fullPath}");
             }
         }
+
+        [Fact]
+        public void ThemeTokens_ValuesAreValidRgbaAndContrasting()
+        {
+            Assert.Equal(1f, Ashfall.Core.UI.Theme.Ink.a);
+            Assert.Equal(1f, Ashfall.Core.UI.Theme.Warm.a);
+            Assert.Equal(1f, Ashfall.Core.UI.Theme.Pale.a);
+            Assert.Equal(1f, Ashfall.Core.UI.Theme.Muted.a);
+            Assert.Equal(1f, Ashfall.Core.UI.Theme.Critical.a);
+
+            Assert.True(Ashfall.Core.UI.Theme.FontSizeH1 > Ashfall.Core.UI.Theme.FontSizeH2);
+            Assert.True(Ashfall.Core.UI.Theme.FontSizeH2 > Ashfall.Core.UI.Theme.FontSizeH3);
+            Assert.True(Ashfall.Core.UI.Theme.FontSizeH3 > Ashfall.Core.UI.Theme.FontSizeBody);
+            Assert.True(Ashfall.Core.UI.Theme.FontSizeBody > Ashfall.Core.UI.Theme.FontSizeSmall);
+            Assert.True(Ashfall.Core.UI.Theme.FontSizeSmall >= Ashfall.Core.UI.Theme.FontSizeLabel);
+        }
     }
 }

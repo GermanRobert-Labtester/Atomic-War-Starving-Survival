@@ -72,7 +72,14 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_host == null || _statusRail == null)
+            {
+                if (_detailText != null)
+                {
+                    _detailText.Text = "Autopsy report host session is not bound. Post-mortem records and tissue pathology findings are offline.";
+                }
+                return;
+            }
 
             var s = _host.System.State;
             _statusRail.Set("cases", s.cases.Count.ToString(), AshfallMetricCard.Criticality.Normal);
@@ -80,13 +87,20 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Forensic Autopsy Reports ({s.cases.Count} total):\n";
-                foreach (var c in s.cases)
+                if (s.cases.Count == 0)
                 {
-                    text += $"  • [{c.status}] Specimen {c.specimenId} ({c.procedureId}) — Medic: {c.assignedMedicId} | Finding: {(string.IsNullOrEmpty(c.finding) ? "EXAMINATION IN PROGRESS" : c.finding)}\n";
+                    _detailText.Text = "No forensic autopsy cases registered.\nPost-mortem examinations and pathology findings will appear here when specimens are brought to the medical bay.\n\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 }
-                text += $"\nLast Event: {_host.LastEvent}";
-                _detailText.Text = text;
+                else
+                {
+                    string text = $"Forensic Autopsy Reports ({s.cases.Count} total):\n";
+                    foreach (var c in s.cases)
+                    {
+                        text += $"  • [{c.status}] Specimen {c.specimenId} ({c.procedureId}) — Medic: {c.assignedMedicId} | Finding: {(string.IsNullOrEmpty(c.finding) ? "EXAMINATION IN PROGRESS" : c.finding)}\n";
+                    }
+                    text += $"\nLast Event: {_host.LastEvent}";
+                    _detailText.Text = text;
+                }
             }
         }
 

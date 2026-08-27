@@ -69,7 +69,7 @@ namespace AtomicWar.GodotApp
             GD.Print($"[VerdictUiTest] panel={panel} session={session} " +
                      $"carrierOpenSoon={carrierOpenSoon} someFired={someFired} " +
                      $"transmissions={transmissions}({rows}) noLeak={noLeak}");
-            GD.Print(pass ? "VERDICT_UITEST PASS" : "VERDICT_UITEST FAIL");
+            HostCli.EmitSummary("verdict_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

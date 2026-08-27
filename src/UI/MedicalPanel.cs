@@ -604,12 +604,22 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
+        public void Unbind()
         {
             if (_respiratory != null)
             {
                 _respiratory.OnStateChanged -= OnRespiratoryStateChanged;
+                _respiratory = null;
             }
+            _medicalHost = null;
+            _survivorsHost = null;
+            _inventoryHost = null;
+            RefreshView();
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

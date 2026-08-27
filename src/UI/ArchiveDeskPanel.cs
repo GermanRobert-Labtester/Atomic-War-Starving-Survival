@@ -152,11 +152,19 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_inkList == null || _transcriptionDesk == null || _archiveLogContainer == null) return;
 
             AshfallUiHelpers.EmptyChildren(_inkList);
             AshfallUiHelpers.EmptyChildren(_transcriptionDesk);
             AshfallUiHelpers.EmptyChildren(_archiveLogContainer);
+
+            if (_host == null || _statusRail == null)
+            {
+                _inkList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No archival desk session bound", "offline"));
+                _transcriptionDesk.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Transcription desk offline", "offline"));
+                _archiveLogContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Archive log unavailable", "offline"));
+                return;
+            }
 
             var s = _host.System.State;
             var catalog = _host.System.Catalog.Values.ToList();

@@ -61,12 +61,54 @@ public partial class ResearchAtlasPanel : Control
 
         var scopes = new[]
         {
-            new AshfallSidebar.Item { Id = "all",       Label = "All Nodes",     Hint = "all disciplines",                  IconPath = DefaultDisciplineIconPath },
-            new AshfallSidebar.Item { Id = "unlocked",  Label = "Survival", Hint = "water + cultivation + shelter",                IconPath = DefaultDisciplineIconPath },
-            new AshfallSidebar.Item { Id = "coalition", Label = "Engineering", Hint = "breakthrough items",          IconPath = DefaultDisciplineIconPath },
-            new AshfallSidebar.Item { Id = "remaining",  Label = "Science", Hint = "radio + cipher",      IconPath = DefaultDisciplineIconPath },
-            new AshfallSidebar.Item { Id = "loyalist",  Label = "Scavenging",    Hint = "expedition efficiency",          IconPath = DefaultDisciplineIconPath },
-            new AshfallSidebar.Item { Id = "deserter",  Label = "Combat",   Hint = "close-quarters + cover fire",           IconPath = DefaultDisciplineIconPath },
+            new AshfallSidebar.Item
+            {
+                Id = "all",
+                Label = "All Nodes",
+                Hint = "all disciplines",
+                Tooltip = "Display all research disciplines: survival life-support, engineering hardware, science intelligence, scavenging efficiency, and combat doctrine.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "unlocked",
+                Label = "Survival",
+                Hint = "water + cultivation + shelter",
+                Tooltip = "Filter survival life-support nodes: water purification, greenhouse hydroponics, food preservation, and shelter habitability.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "coalition",
+                Label = "Engineering",
+                Hint = "breakthrough items",
+                Tooltip = "Filter engineering & hardware nodes: radiation shielding panels, HEPA air filtration, improved gas masks, and solar power systems.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "remaining",
+                Label = "Science",
+                Hint = "radio + cipher",
+                Tooltip = "Filter science & intelligence nodes: directional radio signal processing, frequency calibration, and encrypted cipher rotors.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "loyalist",
+                Label = "Scavenging",
+                Hint = "expedition efficiency",
+                Tooltip = "Filter scavenging & logistics nodes: route mapping, salvage yield optimization, and weight-distribution methods to cut expedition fatigue.",
+                IconPath = DefaultDisciplineIconPath
+            },
+            new AshfallSidebar.Item
+            {
+                Id = "deserter",
+                Label = "Combat",
+                Hint = "close-quarters + cover fire",
+                Tooltip = "Filter combat doctrine nodes: close-quarters combat drills, perimeter defense tactics, and cover-fire protocols for shelter safety.",
+                IconPath = DefaultDisciplineIconPath
+            },
         };
         _sidebar = _shell.SetSidebar(scopes, "Discipline Filter", "all");
         _sidebar.OnSelected += HandleSidebar;

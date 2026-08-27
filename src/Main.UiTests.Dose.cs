@@ -56,7 +56,7 @@ namespace AtomicWar.GodotApp
             bool pass = surface && npcs && book && diagnose && palliative && cohort && volunteer && rendered;
             GD.Print($"[DoseUiTest] surface={surface} npcs={npcs} book={book} diagnose={diagnose} " +
                      $"palliative={palliative} cohort={cohort} volunteer={volunteer} rendered={rendered}");
-            GD.Print(pass ? "DOSE_UITEST PASS" : "DOSE_UITEST FAIL");
+            HostCli.EmitSummary("dose_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

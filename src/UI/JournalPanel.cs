@@ -70,7 +70,7 @@ public partial class JournalPanel : Control
 
     public void RefreshView()
     {
-        if (_journal == null) return;
+        if (_journal == null || _logEntries == null || _itemsList == null || _peopleList == null || _placesList == null || _eventsList == null) return;
 
         // Clear all tab containers
         ClearContainer(_logEntries);

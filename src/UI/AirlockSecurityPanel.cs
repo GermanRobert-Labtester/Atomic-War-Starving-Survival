@@ -89,7 +89,18 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_host == null || _statusRail == null)
+            {
+                if (_detailText != null)
+                {
+                    _detailText.Text = "Airlock security session is not bound. Sentry post & biometric scanners are offline.";
+                }
+                if (_admitBtn != null) _admitBtn.Disabled = true;
+                if (_quarantineBtn != null) _quarantineBtn.Disabled = true;
+                if (_turnAwayBtn != null) _turnAwayBtn.Disabled = true;
+                if (_cycleDoorBtn != null) _cycleDoorBtn.Disabled = true;
+                return;
+            }
 
             var s = _host.System.State;
             _statusRail.Set("door", s.doorState.ToString().ToUpperInvariant(), s.doorState == AirlockDoorState.Breached ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);

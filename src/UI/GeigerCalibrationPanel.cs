@@ -171,12 +171,22 @@ namespace AtomicWar.GodotApp.UI
 
         private void RefreshView()
         {
-            if (_doseHost == null) return;
+            if (_doseHost == null)
+            {
+                if (_deviceTagLabel != null) _deviceTagLabel.Text = "Device: No dosimeter session bound";
+                if (_statusLabel != null) _statusLabel.Text = "Status: Calibration station offline";
+                if (_calibrateButton != null) _calibrateButton.Disabled = true;
+                if (_replaceBatteryButton != null) _replaceBatteryButton.Disabled = true;
+                if (_serviceSensorButton != null) _serviceSensorButton.Disabled = true;
+                return;
+            }
 
             var device = _doseHost.Calibration.GetDevice(_selectedDeviceTag);
             if (device == null)
             {
                 _deviceTagLabel.Text = "Device: Not registered";
+                _statusLabel.Text = "Status: No dosimeter profile found";
+                if (_calibrateButton != null) _calibrateButton.Disabled = true;
                 return;
             }
 

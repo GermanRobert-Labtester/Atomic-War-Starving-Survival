@@ -58,7 +58,7 @@ namespace AtomicWar.GodotApp
             bool closed = !_journalBook.IsOpen && !_journalBook.Visible;
 
             bool pass = opened && closed && logLen > 0 && summaryLen > 0 && tabsWithContent == JournalSystem.TabCount;
-            GD.Print(pass ? "JOURNAL_UITEST PASS" : "JOURNAL_UITEST FAIL");
+            HostCli.EmitSummary("journal_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

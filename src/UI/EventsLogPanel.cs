@@ -35,48 +35,80 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_recentList == null || _incidentsList == null || _narrativeList == null || _eventsHost == null) return;
+            if (_recentList == null || _incidentsList == null || _narrativeList == null) return;
 
             // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_recentList);
             AshfallUiHelpers.EmptyChildren(_incidentsList);
             AshfallUiHelpers.EmptyChildren(_narrativeList);
 
+            if (_eventsHost == null)
+            {
+                _recentList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No events host session bound", "offline"));
+                _incidentsList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No active incident tracking", "offline"));
+                _narrativeList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No narrative progression records", "offline"));
+                return;
+            }
+
             // Fetch and display recent events
             var recentEvents = _eventsHost.GetRecentEvents()
                 .OrderByDescending(e => e.Day)
-                .Take(5);
-            foreach (var eventEntry in recentEvents)
+                .Take(5)
+                .ToList();
+            if (recentEvents.Count == 0)
             {
-                var label = new Label { Text = $"[Day {eventEntry.Day}] {eventEntry.Description}" };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _recentList.AddChild(label);
+                _recentList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No recent events logged"));
+            }
+            else
+            {
+                foreach (var eventEntry in recentEvents)
+                {
+                    var label = new Label { Text = $"[Day {eventEntry.Day}] {eventEntry.Description}" };
+                    label.CustomMinimumSize = new Vector2(400, 35);
+                    label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+                    _recentList.AddChild(label);
+                }
             }
 
             // Fetch and display incidents
             var incidents = _eventsHost.GetIncidents()
                 .OrderByDescending(i => i.Day)
-                .Take(5);
-            foreach (var incident in incidents)
+                .Take(5)
+                .ToList();
+            if (incidents.Count == 0)
             {
-                var label = new Label { Text = $"[Day {incident.Day}] {incident.Description}" };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
-                _incidentsList.AddChild(label);
+                _incidentsList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No active incidents or critical alerts"));
+            }
+            else
+            {
+                foreach (var incident in incidents)
+                {
+                    var label = new Label { Text = $"[Day {incident.Day}] {incident.Description}" };
+                    label.CustomMinimumSize = new Vector2(400, 35);
+                    label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+                    label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+                    _incidentsList.AddChild(label);
+                }
             }
 
             // Fetch and display narrative progression
             var narrativeProgression = _eventsHost.GetNarrativeProgression()
-                .OrderBy(n => n.Order);
-            foreach (var narrative in narrativeProgression)
+                .OrderBy(n => n.Order)
+                .ToList();
+            if (narrativeProgression.Count == 0)
             {
-                var label = new Label { Text = narrative.Description };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _narrativeList.AddChild(label);
+                _narrativeList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No narrative milestones reached yet"));
+            }
+            else
+            {
+                foreach (var narrative in narrativeProgression)
+                {
+                    var label = new Label { Text = narrative.Description };
+                    label.CustomMinimumSize = new Vector2(400, 35);
+                    label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+                    label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                    _narrativeList.AddChild(label);
+                }
             }
         }
 

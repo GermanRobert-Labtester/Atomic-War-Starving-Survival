@@ -167,7 +167,16 @@ namespace AtomicWar.GodotApp.UI
 
         private void RefreshView()
         {
-            if (_foundryHost == null) return;
+            if (_foundryHost == null)
+            {
+                if (_veinLabel != null) _veinLabel.Text = "Vein: No salt mine session bound";
+                if (_openMineButton != null) _openMineButton.Disabled = true;
+                if (_tickButton != null) _tickButton.Disabled = true;
+                if (_deliverButton != null) _deliverButton.Disabled = true;
+                if (_replaceDrillButton != null) _replaceDrillButton.Disabled = true;
+                if (_repairPumpButton != null) _repairPumpButton.Disabled = true;
+                return;
+            }
 
             var vein = _foundryHost.SaltMine.GetVein("vein_salt_01");
             if (vein == null)

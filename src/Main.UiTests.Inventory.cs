@@ -76,7 +76,7 @@ namespace AtomicWar.GodotApp
             GD.Print($"[InventoryUiTest] panel={panel} catalog={catalog} add={addOk} geiger={geigerOk} " +
                      $"mask={maskOk} equip={equipOk} working={working} water={waterOk} " +
                      $"canned={itemCheckCount} protection={protection} roundtrip={roundtrip}");
-            GD.Print(pass ? "INVENTORY_UITEST PASS" : "INVENTORY_UITEST FAIL");
+            HostCli.EmitSummary("inventory_uitest", pass, pass ? 0 : 1);
             if (System.IO.File.Exists(InventorySaveStore.SavePath))
                 System.IO.File.Delete(InventorySaveStore.SavePath);
             QuitUiTestAfterFrame(pass ? 0 : 1);

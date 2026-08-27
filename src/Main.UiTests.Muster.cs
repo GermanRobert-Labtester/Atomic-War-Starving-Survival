@@ -56,7 +56,7 @@ namespace AtomicWar.GodotApp
             GD.Print($"[MusterUiTest] roster={roster} camp={camp} witnesses={witnesses} " +
                      $"epilogues={epilogues} modal={modal} escalate={escalate} campFormed={campFormed} " +
                      $"strategy={strategy} select={resolved} ending={ending} matrix={matrix}");
-            GD.Print(pass ? "MUSTER_UITEST PASS" : "MUSTER_UITEST FAIL");
+            HostCli.EmitSummary("muster_uitest", pass, pass ? 0 : 1);
             if (System.IO.File.Exists(MusterSaveStore.SavePath))
                 System.IO.File.Delete(MusterSaveStore.SavePath);
             QuitUiTestAfterFrame(pass ? 0 : 1);

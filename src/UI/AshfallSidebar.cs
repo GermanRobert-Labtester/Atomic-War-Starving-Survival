@@ -27,6 +27,7 @@ public partial class AshfallSidebar : PanelContainer
         public string Label;        // display row, upper-cased by widget
         public string? Hint;        // optional muted sub-label
         public string IconPath;     // res:// path; falls back to a square chip
+        public string? Tooltip;     // optional player-facing guidance tooltip
     }
 
     public event Action<string>? OnSelected;
@@ -112,6 +113,12 @@ public partial class AshfallSidebar : PanelContainer
         sb.SetBorderWidthAll(0);
         row.AddThemeStyleboxOverride("panel", sb);
 
+        string tooltipText = !string.IsNullOrEmpty(item.Tooltip) ? item.Tooltip : (!string.IsNullOrEmpty(item.Hint) ? item.Hint : string.Empty);
+        if (!string.IsNullOrEmpty(tooltipText))
+        {
+            row.TooltipText = tooltipText;
+        }
+
         var rowMargin = new MarginContainer();
         rowMargin.AddThemeConstantOverride("margin_left", DesignTheme.SpacingSm);
         rowMargin.AddThemeConstantOverride("margin_top", DesignTheme.SpacingXs);
@@ -128,6 +135,10 @@ public partial class AshfallSidebar : PanelContainer
             Text = string.IsNullOrEmpty(item.Label) ? item.Id.ToUpperInvariant() : item.Label.ToUpperInvariant()
         };
         lbl.Name = "label";
+        if (!string.IsNullOrEmpty(tooltipText))
+        {
+            lbl.TooltipText = tooltipText;
+        }
         lbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
         lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
         var barlow = AshfallUiHelpers.LoadFont("res://assets/fonts/BarlowCondensed-SemiBold.ttf");
@@ -138,6 +149,10 @@ public partial class AshfallSidebar : PanelContainer
         {
             var hint = new Label { Text = item.Hint };
             hint.Name = "hint";
+            if (!string.IsNullOrEmpty(tooltipText))
+            {
+                hint.TooltipText = tooltipText;
+            }
             hint.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
             if (_monoFont != null) hint.AddThemeFontOverride("font", _monoFont);

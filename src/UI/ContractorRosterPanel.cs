@@ -151,11 +151,19 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_contractorList == null || _contractDesk == null || _payrollLogContainer == null) return;
 
             AshfallUiHelpers.EmptyChildren(_contractorList);
             AshfallUiHelpers.EmptyChildren(_contractDesk);
             AshfallUiHelpers.EmptyChildren(_payrollLogContainer);
+
+            if (_host == null || _statusRail == null)
+            {
+                _contractorList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No contractor roster session bound", "offline"));
+                _contractDesk.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Contract desk offline", "offline"));
+                _payrollLogContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Payroll log unavailable", "offline"));
+                return;
+            }
 
             var s = _host.System.State;
             int activeContractors = s.contractors.Count(c => c.status == ContractStatus.Active);

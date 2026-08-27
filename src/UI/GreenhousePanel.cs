@@ -575,12 +575,19 @@ public partial class GreenhousePanel : Control
         }
     }
 
-    public override void _ExitTree()
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
+            _host = null;
         }
+        RefreshView();
+    }
+
+    public override void _ExitTree()
+    {
+        Unbind();
         base._ExitTree();
     }
 }

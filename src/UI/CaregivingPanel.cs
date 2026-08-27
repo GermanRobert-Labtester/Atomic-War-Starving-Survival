@@ -102,7 +102,16 @@ namespace AtomicWar.GodotApp.UI
         /// </summary>
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_host == null || _statusRail == null)
+            {
+                if (_detailText != null)
+                {
+                    _detailText.Text = "Caregiving host session is not bound. Bedside tending assignments and bond records are offline.";
+                }
+                if (_assignBtn != null) _assignBtn.Disabled = true;
+                if (_unassignBtn != null) _unassignBtn.Disabled = true;
+                return;
+            }
 
             var s = _host.System.CaptureState();
             int active = _host.ActiveAssignmentCount;
@@ -112,12 +121,12 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Active Caregiving Pairs: {active}\n";
+                string text = active > 0
+                    ? $"Active Caregiving Pairs: {active}\n"
+                    : "No active caregiving assignments registered.\nPair healthy caregivers with recovering patients to accelerate bedside healing and build emotional bonds.\n";
                 foreach (var a in s.Assignments)
                     text += $"  • {a.CaregiverId} → {a.PatientId} (bond {a.BondStrength:F2})\n";
-                if (s.Assignments.Count == 0)
-                    text += "  (no active assignments)\n";
-                text += $"\nLast Event: {_host.LastEvent}";
+                text += $"\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 _detailText.Text = text;
             }
         }

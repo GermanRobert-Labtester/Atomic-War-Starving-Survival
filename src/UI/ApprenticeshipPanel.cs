@@ -72,7 +72,14 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_host == null || _statusRail == null)
+            {
+                if (_detailText != null)
+                {
+                    _detailText.Text = "Apprenticeship host session is not bound. Mentor-apprentice skill progression records are offline.";
+                }
+                return;
+            }
 
             var s = _host.System.State;
             int active = s.activePairs.FindAll(p => !p.isComplete && !p.isCancelled).Count;
@@ -81,12 +88,14 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Active Apprenticeships ({active} pairs):\n";
+                string text = active > 0
+                    ? $"Active Apprenticeships ({active} pairs):\n"
+                    : "No active apprenticeship pairs registered.\nPair veteran survivors with apprentices to transmit technical and survival skills.\n";
                 foreach (var p in s.activePairs)
                 {
                     text += $"  • [{p.targetSkillId}] Apprentice: {p.apprenticeId} under Mentor: {p.mentorId} — Progress: {p.progressXp:F0}/{p.targetXp:F0} XP\n";
                 }
-                text += $"\nLast Event: {_host.LastEvent}";
+                text += $"\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 _detailText.Text = text;
             }
         }

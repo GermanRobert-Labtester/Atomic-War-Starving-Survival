@@ -152,11 +152,19 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_queueList == null || _caseInspector == null || _incidentLogContainer == null) return;
 
             AshfallUiHelpers.EmptyChildren(_queueList);
             AshfallUiHelpers.EmptyChildren(_caseInspector);
             AshfallUiHelpers.EmptyChildren(_incidentLogContainer);
+
+            if (_host == null || _statusRail == null)
+            {
+                _queueList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No decontamination session bound", "offline"));
+                _caseInspector.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Airlock chamber offline", "offline"));
+                _incidentLogContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Incident log unavailable", "offline"));
+                return;
+            }
 
             var s = _host.System.State;
             int queuedCount = s.queue.Count(c => c.status == DeconStatus.Queued);

@@ -152,11 +152,19 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_recipeList == null || _prepStation == null || _serviceLogContainer == null) return;
 
             AshfallUiHelpers.EmptyChildren(_recipeList);
             AshfallUiHelpers.EmptyChildren(_prepStation);
             AshfallUiHelpers.EmptyChildren(_serviceLogContainer);
+
+            if (_host == null || _statusRail == null)
+            {
+                _recipeList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No kitchen nutrition session bound", "offline"));
+                _prepStation.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Prep station offline", "offline"));
+                _serviceLogContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Service log unavailable", "offline"));
+                return;
+            }
 
             var s = _host.System.State;
             int prepCount = s.activeJobs.Count;

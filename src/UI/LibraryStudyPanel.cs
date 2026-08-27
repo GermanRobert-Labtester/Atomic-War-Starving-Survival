@@ -151,11 +151,19 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || _statusRail == null) return;
+            if (_manualList == null || _studyDesk == null || _studyLogContainer == null) return;
 
             AshfallUiHelpers.EmptyChildren(_manualList);
             AshfallUiHelpers.EmptyChildren(_studyDesk);
             AshfallUiHelpers.EmptyChildren(_studyLogContainer);
+
+            if (_host == null || _statusRail == null)
+            {
+                _manualList.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("No library study session bound", "offline"));
+                _studyDesk.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Study desk offline", "offline"));
+                _studyLogContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Study log unavailable", "offline"));
+                return;
+            }
 
             var s = _host.System.State;
             var catalog = _host.System.Catalog.Values.ToList();

@@ -173,7 +173,7 @@ namespace AtomicWar.GodotApp
             _factionsPanel.RefreshView();
             CloseFactionsPanel();
 
-            GD.Print(pass ? "SILENT_FOUNDRY_UITEST PASS" : "SILENT_FOUNDRY_UITEST FAIL");
+            HostCli.EmitSummary("silent_foundry_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

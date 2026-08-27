@@ -246,6 +246,64 @@ namespace AtomicWar.GodotApp.UI
             return margin;
         }
 
+        // ── Empty State Helpers ─────────────────────────────────────────
+
+        /// <summary>
+        /// Creates a standardized empty-state placeholder container with an optional title,
+        /// description message, and an informative action hint so empty panels never appear broken or blank.
+        /// </summary>
+        public static Control MakeEmptyState(
+            string message,
+            string title = "NO DATA RECORDED",
+            string? actionHint = null,
+            (float r, float g, float b, float a)? accentColor = null)
+        {
+            var panel = MakePanel();
+            panel.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            panel.CustomMinimumSize = new Vector2(0, 100);
+
+            var margin = MakeMargins((int)Theme.SpacingMd);
+            panel.AddChild(margin);
+
+            var vbox = MakeVBox((int)Theme.SpacingXs);
+            vbox.Alignment = BoxContainer.AlignmentMode.Center;
+            margin.AddChild(vbox);
+
+            var color = accentColor.HasValue ? ToColor(accentColor.Value) : ToColor(Theme.Muted);
+
+            var titleLabel = MakeTitle(title, Theme.FontSizeH3);
+            titleLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            titleLabel.AddThemeColorOverride("font_color", color);
+            vbox.AddChild(titleLabel);
+
+            var msgLabel = MakeSmall(message, autowrap: true);
+            msgLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            msgLabel.AddThemeColorOverride("font_color", ToColor(Theme.Pale));
+            vbox.AddChild(msgLabel);
+
+            if (!string.IsNullOrEmpty(actionHint))
+            {
+                var hintLabel = MakeMetadata(actionHint);
+                hintLabel.HorizontalAlignment = HorizontalAlignment.Center;
+                hintLabel.AddThemeColorOverride("font_color", ToColor(Theme.Dim));
+                vbox.AddChild(hintLabel);
+            }
+
+            return panel;
+        }
+
+        /// <summary>
+        /// Creates a lightweight inline empty-state label for sub-lists or tables with no items.
+        /// </summary>
+        public static Label MakeEmptyStateLabel(string message, string? hint = null)
+        {
+            string fullText = string.IsNullOrEmpty(hint) ? $"— {message} —" : $"— {message} [{hint}] —";
+            var label = MakeSmall(fullText, autowrap: true);
+            label.HorizontalAlignment = HorizontalAlignment.Center;
+            label.AddThemeColorOverride("font_color", ToColor(Theme.Dim));
+            return label;
+        }
+
         // ── Panel Shells ────────────────────────────────────────────────
 
         /// <summary>

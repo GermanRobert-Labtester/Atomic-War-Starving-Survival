@@ -21,11 +21,11 @@ namespace AtomicWar.GodotApp.UI
 
         private SaveLoadHostSession? _session;
         private VBoxContainer _contentVBox = null!;
-        private Label _lblSlotsTitle;
-        private VBoxContainer _slotsList;
-        private Label _lblInfoTitle;
-        private VBoxContainer _infoList;
-        private VBoxContainer _actionButtons;
+        private Label _lblSlotsTitle = null!;
+        private VBoxContainer _slotsList = null!;
+        private Label _lblInfoTitle = null!;
+        private VBoxContainer _infoList = null!;
+        private VBoxContainer _actionButtons = null!;
         private Label _statusMessageLabel = null!;
         private SaveSlotId? _selectedSlotId;
 
@@ -287,6 +287,24 @@ namespace AtomicWar.GodotApp.UI
             hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             vbox.AddChild(hint);
+        }
+
+        public void Unbind()
+        {
+            if (_session != null)
+            {
+                _session.SlotsChanged -= RefreshView;
+                _session.ActiveSlotChanged -= OnActiveSlotChanged;
+                _session.OnLoadCompleted -= OnSessionLoadCompleted;
+                _session = null;
+            }
+            RefreshView();
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
         }
 
         public void Open()
