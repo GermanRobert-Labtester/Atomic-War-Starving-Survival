@@ -4,118 +4,49 @@
 // Host Caller: Main.ShelterInfrastructure / ShelterThermalHostSession
 // Purpose    : Shelter thermal insulation, heating zones, fuel consumption, and cold exposure
 // ============================================================================
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
-    [Serializable]
-    public sealed class ShelterThermalHostSave
-    {
-        public string SchemaVersion { get; set; } = "1.0";
-        public ShelterThermalState State { get; set; }
-        public string Checksum { get; set; } = string.Empty;
-    }
-
+    /// <summary>
+    /// Shelter thermal save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). This
+    /// shelter-batch section ships the legacy
+    /// <c>{ SchemaVersion, State, Checksum }</c> envelope, preserved
+    /// byte-for-byte by the Core <see cref="SchemaVersionedEnvelope{T}"/>
+    /// adapter; path resolution, atomic write, and error handling live in the
+    /// service.
+    /// </summary>
     public static class ShelterThermalSaveStore
     {
         public const string FileName = "shelter_thermal_save.json";
         public const string SectionName = "shelter_thermal";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(ShelterThermalState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static ShelterThermalState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<ShelterThermalState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(ShelterThermalSaveStore),
+            SchemaVersionedEnvelope<ShelterThermalState>.Encode,
+            SchemaVersionedEnvelope<ShelterThermalState>.Decode);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(ShelterThermalState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[ShelterThermalSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static ShelterThermalState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<ShelterThermalState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[ShelterThermalSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(ShelterThermalState state) => s_store.CaptureBare(state);
 
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static ShelterThermalState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static bool TrySave(ShelterThermalState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new ShelterThermalHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Thermal] save failed: " + e.Message);
-                return false;
-            }
-        }
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(ShelterThermalState state) => s_store.CaptureBare(state);
 
-        public static ShelterThermalState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static ShelterThermalState? TryRestore(string json) => s_store.RestoreBare(json);
 
-                var envelope = s_json.Deserialize<ShelterThermalHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                    return envelope.State;
-                }
+        public static bool TrySave(ShelterThermalState state) => s_store.TrySave(state);
 
-                return s_json.Deserialize<ShelterThermalState>(raw);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Thermal] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static ShelterThermalState? TryLoad() => s_store.TryLoad();
     }
 }
