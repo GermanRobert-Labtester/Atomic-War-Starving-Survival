@@ -48,7 +48,6 @@ namespace AtomicWar.GodotApp
             _survivorRelationsCore = srSys;
             srSys.RestoreState(srState);
             _survivorRelations = new SurvivorRelationsHostSession(srSys);
-            _survivorRelations.StateChanged += () => _survivorRelations.MarkDirty();
             if (_survivorRelationsPanel != null && _survivorRelationsPanel.IsInsideTree())
                 RemoveChild(_survivorRelationsPanel);
             _survivorRelationsPanel = new SurvivorRelationsPanel();
@@ -68,7 +67,6 @@ namespace AtomicWar.GodotApp
             var rtSys = new RegionalTreatySystem(new GodotLog());
             rtSys.RestoreState(rtState);
             _regionalTreaty = new RegionalTreatyHostSession(rtSys);
-            _regionalTreaty.StateChanged += () => _regionalTreaty.MarkDirty();
             if (_regionalTreatyPanel != null && _regionalTreatyPanel.IsInsideTree())
                 RemoveChild(_regionalTreatyPanel);
             _regionalTreatyPanel = new RegionalTreatyPanel();
@@ -89,7 +87,6 @@ namespace AtomicWar.GodotApp
             vmSys.RestoreState(vmState);
             _vinylMorale = new VinylMoraleHostSession(vmSys);
             _vinylMorale.DayProvider = () => _simDay;
-            _vinylMorale.StateChanged += () => _vinylMorale.MarkDirty();
             if (_vinylMoralePanel != null && _vinylMoralePanel.IsInsideTree())
                 RemoveChild(_vinylMoralePanel);
             _vinylMoralePanel = new VinylMoralePanel();
@@ -109,7 +106,6 @@ namespace AtomicWar.GodotApp
             var wtrapSys = new WildlifeTrappingSystem(new SeededRng(1986), new GodotLog());
             wtrapSys.RestoreState(wtrapState);
             _wildlifeTrapping = new WildlifeTrappingHostSession(wtrapSys);
-            _wildlifeTrapping.StateChanged += () => _wildlifeTrapping.MarkDirty();
             if (_wildlifeTrappingPanel != null && _wildlifeTrappingPanel.IsInsideTree())
                 RemoveChild(_wildlifeTrappingPanel);
             _wildlifeTrappingPanel = new WildlifeTrappingPanel();
@@ -129,7 +125,6 @@ namespace AtomicWar.GodotApp
             var exSys = new ExcavationSystem(new SeededRng(1986), new GodotLog());
             exSys.RestoreState(exState);
             _excavation = new ExcavationHostSession(exSys);
-            _excavation.StateChanged += () => _excavation.MarkDirty();
             if (_excavationPanel != null && _excavationPanel.IsInsideTree())
                 RemoveChild(_excavationPanel);
             _excavationPanel = new ExcavationPanel();
@@ -150,7 +145,6 @@ namespace AtomicWar.GodotApp
             var appSys = new ApprenticeshipSystem(new SeededRng(1986), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
             appSys.RestoreState(appState);
             _apprenticeship = new ApprenticeshipHostSession(appSys);
-            _apprenticeship.StateChanged += () => _apprenticeship.MarkDirty();
             if (_apprenticeshipPanel != null && _apprenticeshipPanel.IsInsideTree())
                 RemoveChild(_apprenticeshipPanel);
             _apprenticeshipPanel = new ApprenticeshipPanel();
@@ -170,7 +164,6 @@ namespace AtomicWar.GodotApp
             var cgSys = new CaregivingSystem();
             cgSys.RestoreState(cgState);
             _caregiving = new CaregivingHostSession(cgSys);
-            _caregiving.StateChanged += () => _caregiving.MarkDirty();
             if (_caregivingPanel != null && _caregivingPanel.IsInsideTree())
                 RemoveChild(_caregivingPanel);
             _caregivingPanel = new CaregivingPanel();
