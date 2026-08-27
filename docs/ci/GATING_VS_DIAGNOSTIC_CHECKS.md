@@ -17,7 +17,10 @@
 
 ## 2. Tier 1: Canonical CI Release Gates (`.github/workflows/ci.yml`)
 
-These 9 automated steps are executed on every pull request and commit to `main`. Every check must pass cleanly (0 errors, 0 warnings where enforced):
+These automated steps are executed on every pull request and commit to `main`. Every check must pass cleanly (0 errors, 0 warnings where enforced). To run the full ordered gate suite locally and fail fast:
+```bash
+bash scripts/ci/verify-fast.sh
+```
 
 | Gate Step | Command / Script | Coverage & Enforcement Contract |
 |---|---|---|

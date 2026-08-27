@@ -37,9 +37,19 @@ For a detailed distinction between blocking CI gates, domain quality gates, and 
 
 ---
 
-## Local Verification Commands
+## Local Verification Runner
 
-Run these locally to match CI exactly without requiring external secrets:
+To run the exact ordered sequence of all 14 CI gates locally and stop immediately on the first failure:
+
+```bash
+bash scripts/ci/verify-fast.sh
+```
+
+---
+
+## Individual Local Verification Commands
+
+Run these granular steps manually if debugging a specific stage:
 
 ```bash
 # 1. Clean cold build

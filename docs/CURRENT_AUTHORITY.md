@@ -30,6 +30,7 @@
 
 | Gate / Suite | Documentation | Verification Command |
 |---|---|---|
+| **Fast-Tier Local Runner** | [`scripts/ci/verify-fast.sh`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/scripts/ci/verify-fast.sh)<br>[`docs/CI.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/CI.md) | `bash scripts/ci/verify-fast.sh` (mirrors all 14 CI gates in order, fails fast) |
 | **Unit Test Suite** | [`Ashfall.Core.Tests/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/) | `dotnet test` (all unit tests passing, 0 failures) |
 | **Host Build** | [`Ashfall.csproj`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.csproj) | `dotnet build Ashfall.csproj` |
 | **Data Integrity Gate** | [`Assets/Ashfall.Core/CatalogIntegrityValidator.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/CatalogIntegrityValidator.cs) | `godot --headless --path . -- --data-integrity-selftest` (129 catalogs, 0 errors) |
