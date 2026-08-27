@@ -5,6 +5,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
@@ -86,109 +87,44 @@ namespace AtomicWar.GodotApp
         }
     }
 
-    [Serializable]
-    public sealed class ContractorRosterHostSave
-    {
-        public string SchemaVersion { get; set; } = "1.0";
-        public ContractorRosterState State { get; set; }
-        public string Checksum { get; set; } = string.Empty;
-    }
-
+    /// <summary>
+    /// Contractor roster save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). This
+    /// shelter-batch section ships the legacy
+    /// <c>{ SchemaVersion, State, Checksum }</c> envelope, preserved
+    /// byte-for-byte by the Core <see cref="SchemaVersionedEnvelope{T}"/>
+    /// adapter (presence-only checksum, legacy bare-state fallback); path
+    /// resolution, atomic write, and error handling live in the service.
+    /// </summary>
     public static class ContractorRosterSaveStore
     {
         public const string FileName = "contractor_roster_save.json";
         public const string SectionName = "contractor_roster";
 
+        private static readonly SaveStore<ContractorRosterState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(ContractorRosterSaveStore),
+            SchemaVersionedEnvelope<ContractorRosterState>.Encode,
+            SchemaVersionedEnvelope<ContractorRosterState>.Decode);
+
+        public static string SavePath => s_store.SavePath;
+
+        public static bool Exists => s_store.Exists();
+
+        public static bool TrySave(ContractorRosterState state) => s_store.TrySave(state);
+
+        public static ContractorRosterState? TryLoad() => s_store.TryLoad();
+
         /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-        public static string TryCaptureDirect(ContractorRosterState state)
-        {
-            return TryCapture(state);
-        }
+        public static string TryCaptureDirect(ContractorRosterState state) => s_store.CaptureBare(state);
 
         /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-        public static ContractorRosterState? TryRestoreDirect(string json)
-        {
-            return TryRestore(json);
-        }
+        public static ContractorRosterState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
         /// <summary>Capture state to JSON without writing to disk.</summary>
-        public static string TryCapture(ContractorRosterState state)
-        {
-            try
-            {
-                if (state == null) return string.Empty;
-                return s_json.Serialize(state);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[ContractorRosterSaveStore] capture failed: " + e.Message);
-                return string.Empty;
-            }
-        }
+        public static string TryCapture(ContractorRosterState state) => s_store.CaptureBare(state);
 
         /// <summary>Restore state from JSON without reading from disk.</summary>
-        public static ContractorRosterState? TryRestore(string json)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(json)) return null;
-                return s_json.Deserialize<ContractorRosterState>(json);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[ContractorRosterSaveStore] restore failed: " + e.Message);
-                return null;
-            }
-        }
-
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
-
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
-        public static bool Exists => s_files.FileExists(SavePath);
-
-        public static bool TrySave(ContractorRosterState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new ContractorRosterHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                    Directory.CreateDirectory(dir);
-                File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Contractor] save failed: " + e.Message);
-                return false;
-            }
-        }
-
-        public static ContractorRosterState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                var envelope = s_json.Deserialize<ContractorRosterHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                    return envelope.State;
-                }
-                return s_json.Deserialize<ContractorRosterState>(raw);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Contractor] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static ContractorRosterState? TryRestore(string json) => s_store.RestoreBare(json);
     }
 }

@@ -154,9 +154,10 @@ namespace AtomicWar.GodotApp
                 if (normalized.EndsWith("Test.cs", StringComparison.OrdinalIgnoreCase)) continue;
 
                 string code = StripComments(File.ReadAllText(file));
-                bool hasChecksum = code.Contains("Checksum");
-                bool delegatesToCodec = CodecDelegation.IsMatch(code);
-                if (!hasChecksum && !delegatesToCodec)
+                // Initiative #41 hardened this gate: stores are compliant only by
+                // delegating persistence (SaveStoreHub / SaveEnvelopeHelper / Core
+                // codec); a hand-rolled envelope no longer passes.
+                if (!CodecDelegation.IsMatch(code))
                     bare.Add(Path.GetFileName(file));
             }
             return bare;

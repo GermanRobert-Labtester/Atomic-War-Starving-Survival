@@ -78,8 +78,10 @@ def extract_save_stores():
             methods = re.findall(r"public\s+static\s+[^\n(]+\s+(Save[A-Za-z0-9_]*|TryLoad[A-Za-z0-9_]*|Load[A-Za-z0-9_]*|Exists[A-Za-z0-9_]*|Delete[A-Za-z0-9_]*|RestoreSave[A-Za-z0-9_]*|SavePayload|RestoreState|CaptureState)\s*\(", cbody)
             unique_methods = sorted(list(set(methods)))
 
-            # Extract checksum / codec / hub delegation
-            has_checksum = "Checksum" in cbody or "SaveChecksum" in cbody or "SaveEnvelopeHelper" in cbody or "SaveStoreHub" in cbody
+            # Initiative #41: checksum protection is evidenced by DELEGATION —
+            # SaveStoreHub (Core SaveStore<T>), SaveEnvelopeHelper, or a Core codec.
+            # A bare "Checksum" token no longer qualifies.
+            has_checksum = "SaveEnvelopeHelper" in cbody or "SaveStoreHub" in cbody
             has_codec = bool(re.search(r"\w*Codec\s*\.\s*(Encode|Decode|TryDecode)", cbody))
 
             # Extract slot root isolation (direct or via the SaveStoreHub factory)

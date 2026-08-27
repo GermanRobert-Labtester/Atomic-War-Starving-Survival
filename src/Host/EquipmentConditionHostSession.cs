@@ -5,6 +5,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Crafting;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
@@ -79,109 +80,44 @@ namespace AtomicWar.GodotApp
         }
     }
 
-    [Serializable]
-    public sealed class EquipmentConditionHostSave
-    {
-        public string SchemaVersion { get; set; } = "1.0";
-        public EquipmentConditionState State { get; set; }
-        public string Checksum { get; set; } = string.Empty;
-    }
-
+    /// <summary>
+    /// EquipmentConditionSaveStore save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). This
+    /// shelter-batch section ships the legacy
+    /// &lt;c&gt;{ SchemaVersion, State, Checksum }&lt;/c&gt; envelope, preserved
+    /// byte-for-byte by the Core &lt;see cref="SchemaVersionedEnvelope{T}"/&gt;
+    /// adapter (presence-only checksum, legacy bare-state fallback); path
+    /// resolution, atomic write, and error handling live in the service.
+    /// </summary>
     public static class EquipmentConditionSaveStore
     {
         public const string FileName = "equipment_condition_save.json";
         public const string SectionName = "equipment_condition";
 
+        private static readonly SaveStore<EquipmentConditionState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(EquipmentConditionSaveStore),
+            SchemaVersionedEnvelope<EquipmentConditionState>.Encode,
+            SchemaVersionedEnvelope<EquipmentConditionState>.Decode);
+
+        public static string SavePath => s_store.SavePath;
+
+        public static bool Exists => s_store.Exists();
+
+        public static bool TrySave(EquipmentConditionState state) => s_store.TrySave(state);
+
+        public static EquipmentConditionState? TryLoad() => s_store.TryLoad();
+
         /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-        public static string TryCaptureDirect(EquipmentConditionState state)
-        {
-            return TryCapture(state);
-        }
+        public static string TryCaptureDirect(EquipmentConditionState state) => s_store.CaptureBare(state);
 
         /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-        public static EquipmentConditionState? TryRestoreDirect(string json)
-        {
-            return TryRestore(json);
-        }
+        public static EquipmentConditionState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
         /// <summary>Capture state to JSON without writing to disk.</summary>
-        public static string TryCapture(EquipmentConditionState state)
-        {
-            try
-            {
-                if (state == null) return string.Empty;
-                return s_json.Serialize(state);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[EquipmentConditionSaveStore] capture failed: " + e.Message);
-                return string.Empty;
-            }
-        }
+        public static string TryCapture(EquipmentConditionState state) => s_store.CaptureBare(state);
 
         /// <summary>Restore state from JSON without reading from disk.</summary>
-        public static EquipmentConditionState? TryRestore(string json)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(json)) return null;
-                return s_json.Deserialize<EquipmentConditionState>(json);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[EquipmentConditionSaveStore] restore failed: " + e.Message);
-                return null;
-            }
-        }
-
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
-
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
-        public static bool Exists => s_files.FileExists(SavePath);
-
-        public static bool TrySave(EquipmentConditionState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new EquipmentConditionHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                    Directory.CreateDirectory(dir);
-                File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Equipment] save failed: " + e.Message);
-                return false;
-            }
-        }
-
-        public static EquipmentConditionState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                var envelope = s_json.Deserialize<EquipmentConditionHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                    return envelope.State;
-                }
-                return s_json.Deserialize<EquipmentConditionState>(raw);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Equipment] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static EquipmentConditionState? TryRestore(string json) => s_store.RestoreBare(json);
     }
 }

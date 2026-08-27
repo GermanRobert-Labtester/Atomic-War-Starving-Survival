@@ -81,17 +81,21 @@ namespace Ashfall.Core.Tests
             foreach (string file in storeFiles)
             {
                 string code = StripComments(File.ReadAllText(file));
-                bool hasChecksum = code.Contains("Checksum");
-                bool delegatesToCodec = CodecDelegation.IsMatch(code);
-                if (!hasChecksum && !delegatesToCodec)
+                // Initiative #41 hardened this gate: a store is compliant only
+                // by DELEGATING persistence — to the Core SaveStore<T> service
+                // (SaveStoreHub), SaveEnvelopeHelper, or a Core save codec.
+                // A hand-rolled envelope (bare "Checksum" token) no longer
+                // passes; the duplicated boilerplate this initiative removed
+                // must not creep back.
+                if (!CodecDelegation.IsMatch(code))
                     bare.Add(Path.GetFileName(file));
             }
 
             Assert.True(bare.Count == 0,
-                "Bare save stores (no checksum envelope, no codec delegation) found — " +
-                "corruption in these files is undetectable on load. Seal each one with the " +
-                "ExpeditionSaveStore envelope pattern ({ State, Checksum } + legacy bare-state " +
-                "fallback) or delegate to a Core save codec:\n  " +
+                "Save stores without delegated persistence found — every store must " +
+                "route through SaveStoreHub (SaveStore<T> service), SaveEnvelopeHelper, " +
+                "or a Core save codec so checksum/atomic-write/legacy-load logic has a " +
+                "single owner:\n  " +
                 string.Join("\n  ", bare));
         }
 

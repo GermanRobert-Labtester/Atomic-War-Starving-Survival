@@ -3,6 +3,7 @@ using System.IO;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.StartingLevel;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
@@ -90,85 +91,60 @@ namespace AtomicWar.GodotApp
 
     /// <summary>
     /// Save store for the starting level state in Godot user:// directory.
-    /// Uses SystemTextJsonSerializer (Ashfall.Core.HostDefaults) so the serializer
-    /// is consistent with every other host save store.
+    /// Thin façade over the Core SaveStore&lt;T&gt; service (via SaveStoreHub,
+    /// codec flavor): this section's property envelope
+    /// <c>{ State, Checksum }</c> and its verify-then-bare-fallback load
+    /// semantics are preserved verbatim by local encode/decode delegates;
+    /// path resolution, atomic write, and error handling live in the service.
     /// </summary>
     public static class StartingLevelSaveStore
     {
         public const string SaveFileName = "starting_level_save.json";
         public const string SectionName = "starting_level";
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
-        public static bool TrySave(StartingLevelSaveState state, string? pathOverride = null)
+        private static readonly SaveStore<StartingLevelSaveState> s_store = SaveStoreHub.FromCodec(
+            SaveFileName,
+            nameof(StartingLevelSaveStore),
+            EncodeSave,
+            DecodeSave);
+
+        public static bool TrySave(StartingLevelSaveState state, string? pathOverride = null) => s_store.TrySave(state, pathOverride);
+
+        public static bool SaveExists(string? pathOverride = null) => File.Exists(pathOverride ?? s_store.SavePath);
+
+        public static StartingLevelSaveState? TryLoad(string? pathOverride = null) => s_store.TryLoad(pathOverride);
+
+        private static string EncodeSave(StartingLevelSaveState state, IJsonSerializer json)
+        {
+            var envelope = new StartingLevelSaveEnvelope { State = state };
+            envelope.Checksum = SaveChecksum.Compute(envelope);
+            return json.Serialize(envelope);
+        }
+
+        private static StartingLevelSaveState? DecodeSave(string raw, IJsonSerializer json)
         {
             try
             {
-                if (state == null) return false;
-                string path = pathOverride ?? SaveSlotRoot.Resolve(SaveFileName);
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                    Directory.CreateDirectory(dir);
-
-                var envelope = new StartingLevelSaveEnvelope { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-
-                string json = s_json.Serialize(envelope);
-                File.WriteAllText(path, json);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                GD.PushWarning($"[StartingLevelSaveStore] Failed to save starting level: {ex.Message}");
-                return false;
-            }
-        }
-
-        public static bool SaveExists(string? pathOverride = null)
-        {
-            string path = pathOverride ?? SaveSlotRoot.Resolve(SaveFileName);
-            return File.Exists(path);
-        }
-
-        public static StartingLevelSaveState? TryLoad(string? pathOverride = null)
-        {
-            try
-            {
-                string path = pathOverride ?? SaveSlotRoot.Resolve(SaveFileName);
-                if (!File.Exists(path)) return null;
-                string json = File.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(json)) return null;
-
-                try
+                var envelope = json.Deserialize<StartingLevelSaveEnvelope>(raw);
+                if (envelope?.State != null)
                 {
-                    var envelope = s_json.Deserialize<StartingLevelSaveEnvelope>(json);
-                    if (envelope?.State != null)
-                    {
-                        if (string.IsNullOrEmpty(envelope.Checksum))
-                        {
-                            GD.PrintErr("[StartingLevelSaveStore] save envelope missing checksum (corrupt save)");
-                            return null;
-                        }
-                        string computed = SaveChecksum.Compute(envelope);
-                        if (!string.Equals(envelope.Checksum, computed, StringComparison.Ordinal))
-                        {
-                            GD.PrintErr("[StartingLevelSaveStore] checksum mismatch — possible tampering");
-                            return null;
-                        }
-                        return envelope.State;
-                    }
+                    if (string.IsNullOrEmpty(envelope.Checksum))
+                        throw new InvalidOperationException("save envelope missing checksum (corrupt save)");
+                    if (!string.Equals(envelope.Checksum, SaveChecksum.Compute(envelope), StringComparison.Ordinal))
+                        throw new InvalidOperationException("checksum mismatch — possible tampering");
+                    return envelope.State;
                 }
-                catch
-                {
-                    // Fall back to legacy bare state decode
-                }
-
-                return s_json.Deserialize<StartingLevelSaveState>(json);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException)
             {
-                GD.PushWarning($"[StartingLevelSaveStore] Failed to load starting level: {ex.Message}");
-                return null;
+                throw;
             }
+            catch
+            {
+                // Fall back to legacy bare state decode
+            }
+
+            return json.Deserialize<StartingLevelSaveState>(raw);
         }
     }
 

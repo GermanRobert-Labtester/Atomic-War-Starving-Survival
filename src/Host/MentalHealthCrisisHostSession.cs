@@ -4,6 +4,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.Medical;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
@@ -69,109 +70,44 @@ namespace AtomicWar.GodotApp
         }
     }
 
-    [Serializable]
-    public sealed class MentalHealthCrisisHostSave
-    {
-        public string SchemaVersion { get; set; } = "1.0";
-        public MentalHealthState State { get; set; }
-        public string Checksum { get; set; } = string.Empty;
-    }
-
+    /// <summary>
+    /// MentalHealthCrisisSaveStore save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). This
+    /// shelter-batch section ships the legacy
+    /// &lt;c&gt;{ SchemaVersion, State, Checksum }&lt;/c&gt; envelope, preserved
+    /// byte-for-byte by the Core &lt;see cref="SchemaVersionedEnvelope{T}"/&gt;
+    /// adapter (presence-only checksum, legacy bare-state fallback); path
+    /// resolution, atomic write, and error handling live in the service.
+    /// </summary>
     public static class MentalHealthCrisisSaveStore
     {
         public const string FileName = "mental_health_crisis_save.json";
         public const string SectionName = "mental_health_crisis";
 
+        private static readonly SaveStore<MentalHealthState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(MentalHealthCrisisSaveStore),
+            SchemaVersionedEnvelope<MentalHealthState>.Encode,
+            SchemaVersionedEnvelope<MentalHealthState>.Decode);
+
+        public static string SavePath => s_store.SavePath;
+
+        public static bool Exists => s_store.Exists();
+
+        public static bool TrySave(MentalHealthState state) => s_store.TrySave(state);
+
+        public static MentalHealthState? TryLoad() => s_store.TryLoad();
+
         /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-        public static string TryCaptureDirect(MentalHealthState state)
-        {
-            return TryCapture(state);
-        }
+        public static string TryCaptureDirect(MentalHealthState state) => s_store.CaptureBare(state);
 
         /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-        public static MentalHealthState? TryRestoreDirect(string json)
-        {
-            return TryRestore(json);
-        }
+        public static MentalHealthState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
         /// <summary>Capture state to JSON without writing to disk.</summary>
-        public static string TryCapture(MentalHealthState state)
-        {
-            try
-            {
-                if (state == null) return string.Empty;
-                return s_json.Serialize(state);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[MentalHealthCrisisSaveStore] capture failed: " + e.Message);
-                return string.Empty;
-            }
-        }
+        public static string TryCapture(MentalHealthState state) => s_store.CaptureBare(state);
 
         /// <summary>Restore state from JSON without reading from disk.</summary>
-        public static MentalHealthState? TryRestore(string json)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(json)) return null;
-                return s_json.Deserialize<MentalHealthState>(json);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[MentalHealthCrisisSaveStore] restore failed: " + e.Message);
-                return null;
-            }
-        }
-
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
-
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
-        public static bool Exists => s_files.FileExists(SavePath);
-
-        public static bool TrySave(MentalHealthState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new MentalHealthCrisisHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                    Directory.CreateDirectory(dir);
-                File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[MentalHealth] save failed: " + e.Message);
-                return false;
-            }
-        }
-
-        public static MentalHealthState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                var envelope = s_json.Deserialize<MentalHealthCrisisHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                    return envelope.State;
-                }
-                return s_json.Deserialize<MentalHealthState>(raw);
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[MentalHealth] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static MentalHealthState? TryRestore(string json) => s_store.RestoreBare(json);
     }
 }

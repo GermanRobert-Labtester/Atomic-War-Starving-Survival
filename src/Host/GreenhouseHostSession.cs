@@ -5,6 +5,7 @@ using System.Text.Json;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Greenhouse;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
@@ -267,6 +268,11 @@ namespace AtomicWar.GodotApp
 
     /// <summary>
     /// Persistent on-disk JSON store for GreenhouseState at user://greenhouse_save.json.
+    /// Thin façade over the Core SaveStore&lt;T&gt; service (via SaveStoreHub,
+    /// codec flavor): this section's on-disk shape (indented System.Text.Json,
+    /// property envelope <c>{ State, Checksum }</c>) is preserved verbatim by
+    /// local encode/decode delegates; path resolution, atomic write, and
+    /// error handling live in the service.
     /// </summary>
     public static class GreenhouseSaveStore
     {
@@ -279,73 +285,52 @@ namespace AtomicWar.GodotApp
             IncludeFields = true
         };
 
-        public static string SavePath => SaveSlotRoot.Resolve(FileName);
+        private static readonly SaveStore<GreenhouseState> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(GreenhouseSaveStore),
+            EncodeSave,
+            DecodeSave);
 
-        public static bool Exists => File.Exists(SavePath);
+        public static string SavePath => s_store.SavePath;
 
-        public static bool TrySave(GreenhouseState state)
+        public static bool Exists => s_store.Exists();
+
+        public static bool TrySave(GreenhouseState state) => s_store.TrySave(state);
+
+        public static GreenhouseState? TryLoad() => s_store.TryLoad();
+
+        private static string EncodeSave(GreenhouseState state, IJsonSerializer json)
         {
-            if (state == null) return false;
-            try
-            {
-                string path = SavePath;
-                string dir = Path.GetDirectoryName(path)!;
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-                var envelope = new GreenhouseSaveEnvelope { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-
-                string json = JsonSerializer.Serialize(envelope, JsonOpts);
-                File.WriteAllText(path, json);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                GD.PushError($"[GreenhouseSaveStore] Save failed: {ex.Message}");
-                return false;
-            }
+            var envelope = new GreenhouseSaveEnvelope { State = state };
+            envelope.Checksum = SaveChecksum.Compute(envelope);
+            return JsonSerializer.Serialize(envelope, JsonOpts);
         }
 
-        public static GreenhouseState? TryLoad()
+        private static GreenhouseState? DecodeSave(string raw, IJsonSerializer json)
         {
-            if (!Exists) return null;
+            // Attempt envelope decode first
             try
             {
-                string json = File.ReadAllText(SavePath);
-                if (string.IsNullOrWhiteSpace(json)) return null;
-
-                // Attempt envelope decode first
-                try
+                var envelope = JsonSerializer.Deserialize<GreenhouseSaveEnvelope>(raw, JsonOpts);
+                if (envelope?.State != null)
                 {
-                    var envelope = JsonSerializer.Deserialize<GreenhouseSaveEnvelope>(json, JsonOpts);
-                    if (envelope?.State != null)
-                    {
-                        if (string.IsNullOrEmpty(envelope.Checksum))
-                        {
-                            GD.PrintErr("[GreenhouseSaveStore] save envelope missing checksum (corrupt save)");
-                            return null;
-                        }
-                        string computed = SaveChecksum.Compute(envelope);
-                        if (!string.Equals(envelope.Checksum, computed, StringComparison.Ordinal))
-                        {
-                            GD.PrintErr("[GreenhouseSaveStore] checksum mismatch — possible tampering");
-                            return null;
-                        }
-                        return envelope.State;
-                    }
+                    if (string.IsNullOrEmpty(envelope.Checksum))
+                        throw new InvalidOperationException("save envelope missing checksum (corrupt save)");
+                    if (!string.Equals(envelope.Checksum, SaveChecksum.Compute(envelope), StringComparison.Ordinal))
+                        throw new InvalidOperationException("checksum mismatch — possible tampering");
+                    return envelope.State;
                 }
-                catch
-                {
-                    // Fall back to legacy bare state decode
-                }
-
-                return JsonSerializer.Deserialize<GreenhouseState>(json, JsonOpts);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException)
             {
-                GD.PushWarning($"[GreenhouseSaveStore] Load failed: {ex.Message}");
-                return null;
+                throw;
             }
+            catch
+            {
+                // Fall back to legacy bare state decode
+            }
+
+            return JsonSerializer.Deserialize<GreenhouseState>(raw, JsonOpts);
         }
     }
 
