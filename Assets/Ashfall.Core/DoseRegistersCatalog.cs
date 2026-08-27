@@ -83,10 +83,10 @@ namespace Ashfall.Core
                 }
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return catalog;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "DoseRegistersCatalog", ex_CATDIAG);
+                return catalog;
+            }
             return catalog;
         }
 

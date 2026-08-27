@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.Survivors;
 using Xunit;
+using WornGear = Ashfall.Core.Inventory.WornGear;
 
 namespace Ashfall.Core.Tests
 {
@@ -300,7 +302,7 @@ namespace Ashfall.Core.Tests
     /// </summary>
     public class GearProtectionBridgeTests
     {
-        private static SurvivorRadState Exposed2hWithGear(List<WornGear> worn)
+        private static SurvivorRadState Exposed2hWithGear(List<Ashfall.Core.Inventory.WornGear> worn)
         {
             var sys = new RadiationSystem(exposureContext: _ => new ExposureContext
             {
@@ -346,25 +348,64 @@ namespace Ashfall.Core.Tests
             Assert.True(geared.RadiationDose > 30f, $"degraded gear protects less; dose={geared.RadiationDose}");
         }
 
+        // FromInventory method removed during consolidation - Radiation now uses
+        // Inventory.WornGear directly, so no conversion is needed
+
         [Fact]
-        public void FromInventory_MapsAllFields()
+        public void OldSave_Deserialization_Equivalence()
         {
-            var source = new Ashfall.Core.Inventory.WornGear
+            // Old saves serialized Radiation.WornGear with fields: RadProtection, MaxDurability,
+            // CurrentDurability, DegradeRate. Since Radiation.WornGear inherited from Inventory.WornGear
+            // with no additional fields, the serialized JSON is identical.
+            // This test verifies that deserializing old save data works correctly.
+            var serializer = new SystemTextJsonSerializer();
+
+            // Simulate old save data that had Radiation.WornGear
+            string oldSaveJson = "{\"RadProtection\":50.0,\"MaxDurability\":200.0,\"CurrentDurability\":150.0,\"DegradeRate\":1.5}";
+
+            var deserialized = serializer.Deserialize<Ashfall.Core.Inventory.WornGear>(oldSaveJson);
+            Assert.NotNull(deserialized);
+            Assert.Equal(50f, deserialized.RadProtection, 3);
+            Assert.Equal(200f, deserialized.MaxDurability, 3);
+            Assert.Equal(150f, deserialized.CurrentDurability, 3);
+            Assert.Equal(1.5f, deserialized.DegradeRate, 3);
+            Assert.Equal(0.75f, deserialized.DurabilityFraction(), 3);
+            Assert.Equal(37.5f, deserialized.EffectiveProtection(), 3);
+        }
+
+        [Fact]
+        public void DoseCalculation_Equivalence_WithConsolidatedWornGear()
+        {
+            // Verify that dose calculation produces the same results with the consolidated
+            // Inventory.WornGear as it did with the old Radiation.WornGear
+            var worn = new List<Ashfall.Core.Inventory.WornGear>
             {
-                RadProtection = 30f,
-                MaxDurability = 100f,
-                CurrentDurability = 40f,
-                DegradeRate = 2f
+                new Ashfall.Core.Inventory.WornGear
+                {
+                    RadProtection = 30f,
+                    MaxDurability = 100f,
+                    CurrentDurability = 100f,
+                    DegradeRate = 0f
+                },
+                new Ashfall.Core.Inventory.WornGear
+                {
+                    RadProtection = 80f,
+                    MaxDurability = 100f,
+                    CurrentDurability = 50f,  // 50% durability = 50% protection
+                    DegradeRate = 0f
+                }
             };
-            var mapped = WornGear.FromInventory(source);
-            Assert.NotNull(mapped);
-            Assert.Equal(30f, mapped.RadProtection, 3);
-            Assert.Equal(100f, mapped.MaxDurability, 3);
-            Assert.Equal(40f, mapped.CurrentDurability, 3);
-            Assert.Equal(2f, mapped.DegradeRate, 3);
-            Assert.Equal(0.4f, mapped.DurabilityFraction(), 3);
-            Assert.Equal(12f, mapped.EffectiveProtection(), 3);
-            Assert.Null(WornGear.FromInventory(null));
+
+            float totalProtection = RadiationSystem.ComputeGearProtection(worn);
+            // 30 + (80 * 0.5) = 30 + 40 = 70
+            Assert.Equal(70f, totalProtection, 3);
+
+            // Test with degraded gear
+            worn[0].CurrentDurability = 50f; // First gear now at 50%
+            worn[1].CurrentDurability = 100f; // Second gear back to 100%
+            totalProtection = RadiationSystem.ComputeGearProtection(worn);
+            // (30 * 0.5) + 80 = 15 + 80 = 95
+            Assert.Equal(95f, totalProtection, 3);
         }
     }
 
@@ -393,7 +434,7 @@ namespace Ashfall.Core.Tests
             };
         }
 
-        private static List<WornGear> EquippedGear(params Ashfall.Core.Inventory.ItemDefinition[] defs)
+        private static List<Ashfall.Core.Inventory.WornGear> EquippedGear(params Ashfall.Core.Inventory.ItemDefinition[] defs)
         {
             var inventory = new Ashfall.Core.Inventory.Inventory();
             foreach (var def in defs)
@@ -403,13 +444,7 @@ namespace Ashfall.Core.Tests
             }
             var buffer = new List<Ashfall.Core.Inventory.WornGear>();
             inventory.FillWornGear(buffer);
-            var mapped = new List<WornGear>();
-            for (int i = 0; i < buffer.Count; i++)
-            {
-                var converted = WornGear.FromInventory(buffer[i]);
-                if (converted != null) mapped.Add(converted);
-            }
-            return mapped;
+            return buffer;
         }
 
         [Fact]

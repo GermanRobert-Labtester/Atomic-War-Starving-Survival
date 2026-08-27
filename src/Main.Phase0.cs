@@ -76,7 +76,7 @@ namespace AtomicWar.GodotApp
         private void SavePhantomMemory()
         {
             if (_phantomMemory == null) return;
-            if (PhantomMemorySaveStore.TrySave(_phantomMemory.CaptureSave()))
+            if (CaptureSection("phantom_memory", PhantomMemorySaveStore.TryCapturePersisted(_phantomMemory.CaptureSave())))
                 GD.Print("[Ashfall Godot] Phantom Memory save written.");
         }
 
@@ -204,7 +204,7 @@ namespace AtomicWar.GodotApp
         private void SavePhase0()
         {
             if (_phase0 == null) return;
-            if (Phase0SaveStore.TrySave(_phase0.CaptureSave()))
+            if (CaptureSection("phase0", Phase0SaveStore.TryCapturePersisted(_phase0.CaptureSave())))
             {
                 _phase0Dirty = false;
                 GD.Print("[Ashfall Godot] Phase-0 effects save written.");
@@ -321,7 +321,7 @@ namespace AtomicWar.GodotApp
         {
             if (_doseLedger == null) return;
             int day = _core != null ? _core.Clock.Day : _simDay;
-            if (DoseLedgerSaveStore.TrySave(_doseLedger.CaptureSave(day)))
+            if (CaptureSection("dose_ledger", DoseLedgerSaveStore.TryCapturePersisted(_doseLedger.CaptureSave(day))))
             {
                 _doseLedgerDirty = false;
                 GD.Print($"[Ashfall Godot] Dose Ledger save written (day {day}).");

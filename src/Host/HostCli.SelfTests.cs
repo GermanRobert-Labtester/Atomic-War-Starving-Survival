@@ -1,5 +1,6 @@
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.IO;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Warlords;
@@ -746,12 +747,186 @@ namespace AtomicWar.GodotApp
             return EmitSummary("7day_smoke_selftest", rc == 0, rc);
         }
 
+        public static int RunUiAccessibilitySelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            int rc = UiAccessibilitySelfTest.Run();
+            return EmitSummary("ui_accessibility_selftest", rc == 0, rc);
+        }
+
         public static int RunCoreSelfTest(string dataDirectory)
         {
             int ice = RunIceRoadSelfTest(dataDirectory);
             int census = RunCensusSelfTest();
             int rc = ice != 0 ? ice : census;
             return EmitSummary("core_selftest", rc == 0, rc);
+        }
+
+        /// <summary>
+        /// Catalog boot preflight: validates that all catalog files are present,
+        /// well-formed, and classifies them. Reports missing, empty, malformed, and
+        /// valid catalogs with their classification. Machine-readable output.
+        /// </summary>
+        public static int RunCatalogBootPreflight(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            IFileIO files = CatalogPath.CreateFileIOForDataDir(dataDirectory);
+            var json = new SystemTextJsonSerializer();
+
+            // Enumerate all JSON catalog files
+            string[] catalogFiles;
+            try
+            {
+                catalogFiles = CatalogFileSystem.EnumerateJsonFiles(files, dataDirectory, System.IO.SearchOption.TopDirectoryOnly);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[PREFLIGHT] Failed to enumerate catalog files: " + e.Message);
+                return EmitSummary("catalog_boot_preflight", false, 1, details: "Enumeration failed: " + e.Message);
+            }
+
+            if (catalogFiles == null || catalogFiles.Length == 0)
+            {
+                GD.PrintErr("[PREFLIGHT] No catalog files found in " + dataDirectory);
+                return EmitSummary("catalog_boot_preflight", false, 1, details: "No catalog files found");
+            }
+
+            int totalCount = catalogFiles.Length;
+            int requiredCount = 0;
+            int optionalCount = 0;
+            int devOnlyCount = 0;
+            int missingCount = 0;
+            int malformedCount = 0;
+            int emptyCount = 0;
+            int validCount = 0;
+
+            // Classify and validate each catalog
+            foreach (string filePath in catalogFiles)
+            {
+                string fileName = Path.GetFileName(filePath);
+                CatalogClassification classification = ClassifyCatalog(fileName);
+
+                switch (classification)
+                {
+                    case CatalogClassification.Required:
+                        requiredCount++;
+                        break;
+                    case CatalogClassification.Optional:
+                        optionalCount++;
+                        break;
+                    case CatalogClassification.DeveloperOnly:
+                        devOnlyCount++;
+                        break;
+                }
+
+                // Check if file exists and is readable
+                if (!files.FileExists(filePath))
+                {
+                    GD.PrintErr("[MISSING] (" + classification + ") " + filePath);
+                    missingCount++;
+                    continue;
+                }
+
+                string raw;
+                try
+                {
+                    raw = files.ReadAllText(filePath);
+                }
+                catch (Exception e)
+                {
+                    GD.PrintErr("[READ_ERROR] (" + classification + ") " + filePath + ": " + e.Message);
+                    malformedCount++;
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(raw))
+                {
+                    GD.Print("[EMPTY] (" + classification + ") " + filePath);
+                    emptyCount++;
+                    continue;
+                }
+
+                // Try to parse as JSON to check if it's well-formed
+                bool isValidJson = false;
+                try
+                {
+                    // Just parse to check JSON validity
+                    System.Text.Json.JsonDocument.Parse(raw);
+                    isValidJson = true;
+                }
+                catch (Exception e)
+                {
+                    GD.PrintErr("[MALFORMED] (" + classification + ") " + filePath + ": " + e.Message);
+                    malformedCount++;
+                    continue;
+                }
+
+                if (isValidJson)
+                {
+                    GD.Print("[VALID] (" + classification + ") " + filePath);
+                    validCount++;
+                }
+            }
+
+            // Summary
+            GD.Print("\n--- Catalog Boot Preflight Summary ---");
+            GD.Print("Total catalogs: " + totalCount);
+            GD.Print("  Required: " + requiredCount + ", Optional: " + optionalCount + ", DeveloperOnly: " + devOnlyCount);
+            GD.Print("  Valid: " + validCount + ", Empty: " + emptyCount + ", Missing: " + missingCount + ", Malformed: " + malformedCount);
+
+            bool allRequiredValid = missingCount == 0 && malformedCount == 0;
+            return EmitSummary("catalog_boot_preflight", allRequiredValid,
+                allRequiredValid ? 0 : 1, totalCount,
+                missingCount + malformedCount,
+                allRequiredValid ? "PASS" : "FAIL (" + missingCount + " missing, " + malformedCount + " malformed)");
+        }
+
+        /// <summary>
+        /// Classify a catalog file based on its filename.
+        /// </summary>
+        private static CatalogClassification ClassifyCatalog(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+                return CatalogClassification.Optional;
+
+            string lower = fileName.ToLowerInvariant();
+
+            // Required catalogs - game cannot start without these
+            if (lower.Contains("items") && !lower.Contains("dev") && !lower.Contains("test"))
+                return CatalogClassification.Required;
+            if (lower.Contains("recipes") || lower.Contains("recipe"))
+                return CatalogClassification.Required;
+            if (lower.Contains("locations") || lower.Contains("location"))
+                return CatalogClassification.Required;
+            if (lower.Contains("survivors") || lower.Contains("survivor"))
+                return CatalogClassification.Required;
+            if (lower.Contains("factions") || lower.Contains("faction"))
+                return CatalogClassification.Required;
+            if (lower.Contains("goods") || lower.Contains("economy") || lower.Contains("trade"))
+                return CatalogClassification.Required;
+            if (lower.Contains("quests") || lower.Contains("quest") && !lower.Contains("test"))
+                return CatalogClassification.Required;
+            if (lower.Contains("events") || lower.Contains("event") && !lower.Contains("test"))
+                return CatalogClassification.Required;
+            if (lower.Contains("weather") || lower.Contains("seasons") || lower.Contains("season"))
+                return CatalogClassification.Required;
+            if (lower.Contains("radio") || lower.Contains("broadcast"))
+                return CatalogClassification.Required;
+            if (lower.Contains("narrative") || lower.Contains("encounter") || lower.Contains("dialog") || lower.Contains("echo"))
+                return CatalogClassification.Required;
+            if (lower.Contains("world") || lower.Contains("zone") || lower.Contains("sector") || lower.Contains("map"))
+                return CatalogClassification.Required;
+            if (lower.Contains("dose") || lower.Contains("radiation") || lower.Contains("medical") || lower.Contains("chemical"))
+                return CatalogClassification.Required;
+            if (lower.Contains("inventory") || lower.Contains("gear") || lower.Contains("equipment"))
+                return CatalogClassification.Required;
+
+            // Developer-only catalogs
+            if (lower.Contains("dev") || lower.Contains("test") || lower.Contains("debug") || lower.Contains("sample"))
+                return CatalogClassification.DeveloperOnly;
+
+            // Optional by default (expansions, mod content, etc.)
+            return CatalogClassification.Optional;
         }
     }
 }

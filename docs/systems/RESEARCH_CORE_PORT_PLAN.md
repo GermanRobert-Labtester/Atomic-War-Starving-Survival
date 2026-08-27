@@ -22,25 +22,25 @@ The Research Core Port was executed in Phase 28, adhering strictly to:
 ## 2. Shipped Implementation Summary
 
 ### A. Core Domain Layer (`Assets/Ashfall.Core/Research/`)
-1. **[`ResearchKnowledgeDef.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Research/ResearchKnowledgeDef.cs)**:
+1. **[`ResearchKnowledgeDef.cs`](../../Assets/Ashfall.Core/Research/ResearchKnowledgeDef.cs)**:
    - Plain C# definition POCO describing knowledge nodes (`id`, `displayName`, `category`, `description`, `prerequisites`, `breakthroughItem`, `daysToComplete`).
-2. **[`ResearchState.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Research/ResearchState.cs)**:
+2. **[`ResearchState.cs`](../../Assets/Ashfall.Core/Research/ResearchState.cs)**:
    - Serializable state envelope capturing `currentDay`, `unlockedIds`, `activeResearchId`, `activeResearchDays`, and `completedIds`.
-3. **[`ResearchSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Research/ResearchSystem.cs)**:
+3. **[`ResearchSystem.cs`](../../Assets/Ashfall.Core/Research/ResearchSystem.cs)**:
    - Full simulation engine providing catalog management, prerequisite validation, active research queuing, daily tick progression, breakthrough item awards, and `CaptureState`/`RestoreState`.
    - Ships 15 default canonical knowledge nodes across survival, medical, engineering, science, scavenging, and combat disciplines.
 
 ### B. Godot Host Adapter (`src/Host/`)
-- **[`ResearchHostSession.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/ResearchHostSession.cs)**:
+- **[`ResearchHostSession.cs`](../../src/Host/ResearchHostSession.cs)**:
   - Wires `ResearchSystem` lifecycle to host day advancement, provides save/load hooks (`CaptureSave`/`RestoreSave`), and exposes state accessors to UI.
 
 ### C. Presentation Layer (`src/UI/`)
-- **[`ResearchAtlasPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/ResearchAtlasPanel.cs)**:
+- **[`ResearchAtlasPanel.cs`](../../src/UI/ResearchAtlasPanel.cs)**:
   - Tier-3 HYBRID dashboard with a 6-card status rail (Total Nodes, Unlocked, Active Project, Completed, Days Remaining, Breakthroughs Awarded), 3 DataGrid tiles (Knowledge Nodes, Active Project, Breakthrough Items), and a discipline-themed right inspector panel.
   - Snapshot golden registered and verified as `research_atlas_default`.
 
 ### D. Automated Test Coverage (`Ashfall.Core.Tests/`)
-- **[`Ashfall.Core.Tests/ResearchSystemTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/ResearchSystemTests.cs)**:
+- **[`Ashfall.Core.Tests/ResearchSystemTests.cs`](../../Ashfall.Core.Tests/ResearchSystemTests.cs)**:
   - 8/8 comprehensive unit tests verifying:
     1. Catalog registration and default node initialization (15 nodes).
     2. Starting active research.

@@ -7,7 +7,7 @@
 
 ## 1. Background: The Triad Pattern & Triad Drift Gate
 
-In the ASHFALL Godot host architecture ([`src/Main.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.cs) and its domain partial files), persistent game subsystems follow the **Triad Pattern**:
+In the ASHFALL Godot host architecture ([`src/Main.cs`](../../src/Main.cs) and its domain partial files), persistent game subsystems follow the **Triad Pattern**:
 
 ```
 SetupXxx()          ── Constructs & wires the domain host session and dependencies
@@ -16,9 +16,9 @@ FlushXxxIfDirty()   ── (Optional) Performs deferred write-to-disk when dirty
 ```
 
 ### The Declarative Save Section Authority (`Invariant H7`)
-If a developer implements a `SetupXxx()` method without a corresponding `SaveXxx()` method declared in [`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Save/SaveSectionRegistry.cs), that subsystem will operate during runtime but silently drop its state upon save or shutdown.
+If a developer implements a `SetupXxx()` method without a corresponding `SaveXxx()` method declared in [`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`](../../Assets/Ashfall.Core/Save/SaveSectionRegistry.cs), that subsystem will operate during runtime but silently drop its state upon save or shutdown.
 
-The CI script [`scripts/ci/triad-drift-gate.sh`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/scripts/ci/triad-drift-gate.sh) runs in **Tier 1 Mandatory CI** to enforce that:
+The CI script [`scripts/ci/triad-drift-gate.sh`](../../scripts/ci/triad-drift-gate.sh) runs in **Tier 1 Mandatory CI** to enforce that:
 1. Every save section declared in `SaveSectionRegistry.cs` has a matching `SaveXxx()` method in `src/Main*.cs`.
 2. Every declared save section requiring setup has its matching `SetupXxx()` method in `src/Main*.cs`.
 3. `Main.SaveOrchestrator.cs` consumes `SaveSectionRegistry.SectionKeys` for all section aggregation.
@@ -28,17 +28,17 @@ The CI script [`scripts/ci/triad-drift-gate.sh`](file:///home/robertsrff/Music/A
 
 ## 2. Declarative Triad-Gate Section Mappings & Exemptions
 
-Save sections, save methods, setup initializers, and exemptions are declaratively registered in [`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Save/SaveSectionRegistry.cs) with explicit metadata (`SectionKey`, `SaveMethod`, `SetupMethod`, `Owner`, `Description`, `RequiresSetup`):
+Save sections, save methods, setup initializers, and exemptions are declaratively registered in [`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`](../../Assets/Ashfall.Core/Save/SaveSectionRegistry.cs) with explicit metadata (`SectionKey`, `SaveMethod`, `SetupMethod`, `Owner`, `Description`, `RequiresSetup`):
 
 | # | Save Method | Nominal Setup Mismatch | Actual Setup Location & Wiring | Save Store & Section Key | Domain Owner |
 |---|---|---|---|---|---|
-| **1** | `SaveChemicalDependency()` | *Inline in Crisis Setup* | `SetupMentalHealthCrisis()` in [`src/Main.ShelterBatch3.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.ShelterBatch3.cs) | [`ChemicalDependencySaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/ChemicalDependencySaveStore.cs)<br>Key: `"chemical_dependency"` | Medical & Shelter Subsystem Team (`Ashfall.Core.Medical`) |
-| **2** | `SaveDailyBriefing()` | *No `SetupDailyBriefing`* | `SetupDailyBriefingModal()` in [`src/Main.Campaign.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.Campaign.cs) | [`DailyBriefingSaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/DailyBriefingSaveStore.cs)<br>Key: `"daily_briefing"` | Campaign & Progression Team (`AtomicWar.GodotApp.Host`) |
-| **3** | `SaveExpansionHub()` | *No `SetupExpansionHub`* | `SetupExpansions()` in [`src/Main.ExpansionHub.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.ExpansionHub.cs) | [`ExpansionHubSaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/ExpansionHubSaveStore.cs)<br>Key: `"expansion_hub"` | Expansion Framework Team (`AtomicWar.GodotApp.Host`) |
-| **4** | `SaveHoldfast()` | *No `SetupHoldfast`* | `SetupHoldfastRuntime()` in [`src/Main.Holdfast.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.Holdfast.cs) | [`HoldfastSaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/HoldfastSaveStore.cs)<br>Key: `"holdfast"` | Holdfast / Exp 01 Team (`Ashfall.Core` / `Host`) |
-| **5** | `SavePhantomMemory()` | *No `SetupPhantomMemory`* | `SetupPhantom()` in [`src/Main.Phase0.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.Phase0.cs) | [`PhantomMemorySaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/PhantomMemorySaveStore.cs)<br>Key: `"phantom_memory"` | Phase 0 & Lineage Team (`Ashfall.Core.StandingRecord`) |
+| **1** | `SaveChemicalDependency()` | *Inline in Crisis Setup* | `SetupMentalHealthCrisis()` in [`src/Main.ShelterBatch3.cs`](../../src/Main.ShelterBatch3.cs) | [`ChemicalDependencySaveStore`](../../src/Host/ChemicalDependencySaveStore.cs)<br>Key: `"chemical_dependency"` | Medical & Shelter Subsystem Team (`Ashfall.Core.Medical`) |
+| **2** | `SaveDailyBriefing()` | *No `SetupDailyBriefing`* | `SetupDailyBriefingModal()` in [`src/Main.Campaign.cs`](../../src/Main.Campaign.cs) | [`DailyBriefingSaveStore`](../../src/Host/DailyBriefingSaveStore.cs)<br>Key: `"daily_briefing"` | Campaign & Progression Team (`AtomicWar.GodotApp.Host`) |
+| **3** | `SaveExpansionHub()` | *No `SetupExpansionHub`* | `SetupExpansions()` in [`src/Main.ExpansionHub.cs`](../../src/Main.ExpansionHub.cs) | [`ExpansionHubSaveStore`](../../src/Host/ExpansionHubSaveStore.cs)<br>Key: `"expansion_hub"` | Expansion Framework Team (`AtomicWar.GodotApp.Host`) |
+| **4** | `SaveHoldfast()` | *No `SetupHoldfast`* | `SetupHoldfastRuntime()` in [`src/Main.Holdfast.cs`](../../src/Main.Holdfast.cs) | [`HoldfastSaveStore`](../../src/Host/HoldfastSaveStore.cs)<br>Key: `"holdfast"` | Holdfast / Exp 01 Team (`Ashfall.Core` / `Host`) |
+| **5** | `SavePhantomMemory()` | *No `SetupPhantomMemory`* | `SetupPhantom()` in [`src/Main.Phase0.cs`](../../src/Main.Phase0.cs) | [`PhantomMemorySaveStore`](../../src/Host/PhantomMemorySaveStore.cs)<br>Key: `"phantom_memory"` | Phase 0 & Lineage Team (`Ashfall.Core.StandingRecord`) |
 
-*(Note: `SaveWastelandMap()` is a related 6th entry whose initialization is delegated to [`WorldHostSession.Create()`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/WorldHostSession.cs) rather than a standalone `SetupWastelandMap` in `Main`.)*
+*(Note: `SaveWastelandMap()` is a related 6th entry whose initialization is delegated to [`WorldHostSession.Create()`](../../src/Host/WorldHostSession.cs) rather than a standalone `SetupWastelandMap` in `Main`.)*
 
 ---
 
@@ -47,7 +47,7 @@ Save sections, save methods, setup initializers, and exemptions are declarativel
 ### 1. `SaveChemicalDependency` (Inline Initialization)
 - **Architectural Rationale:** The chemical dependency ledger tracks physiological substance addictions, cold-turkey penalties, and supervised detox lockboxes. Because chemical dependencies trigger mental breakdown events, the dependency system is created inline during `SetupMentalHealthCrisis()` and shared between medical and crisis presenters.
 - **Persistence Target:** `user://saves/save_chemical_dependency.json`
-- **Envelope Integrity:** Wrapped in a versioned `{ State, Checksum }` envelope verified by [`Ashfall.Core.Tests/BareSaveStoreSealTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/BareSaveStoreSealTests.cs).
+- **Envelope Integrity:** Wrapped in a versioned `{ State, Checksum }` envelope verified by [`Ashfall.Core.Tests/BareSaveStoreSealTests.cs`](../../Ashfall.Core.Tests/BareSaveStoreSealTests.cs).
 - **Save Trigger:** Called directly during `SaveAll()` and on daily rollover flush.
 
 ### 2. `SaveDailyBriefing` (Nominal Mismatch)

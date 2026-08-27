@@ -32,7 +32,7 @@ def get_doc_files():
         # Exclude hidden directories, subagent configs, and node_modules
         if any(part.startswith(".") for part in p.relative_to(REPO_ROOT).parts):
             continue
-        if "node_modules/" in rel or "obj/" in rel or "bin/" in rel:
+        if "node_modules/" in rel or "obj/" in rel or "bin/" in rel or "build/" in rel or "artifacts/" in rel:
             continue
         if rel == "docs/INDEX.md":
             continue
@@ -190,8 +190,8 @@ def generate_index_markdown(docs, verified_date):
 
         for item in sorted(items, key=lambda x: (x['status'] != 'CURRENT', x['status'] != 'GENERATED', x['path'])):
             badge = "🟢 `CURRENT`" if item["status"] == "CURRENT" else ("🔵 `GENERATED`" if item["status"] == "GENERATED" else "🟡 `HISTORICAL`")
-            root_path = REPO_ROOT.as_posix().lstrip('/')
-            doc_link = f"[`{item['path']}`](file:///{root_path}/{item['path']})"
+            rel_to_index = os.path.relpath(REPO_ROOT / item['path'], INDEX_FILE.parent).replace('\\', '/')
+            doc_link = f"[`{item['path']}`]({rel_to_index})"
             title_summary = f"**{item['title']}** — {item['summary']}" if item['title'] != item['summary'] else f"**{item['title']}**"
             title_summary = title_summary.replace("|", "\\|")
             lines.append(f"| {badge} | {doc_link} | {title_summary} |")

@@ -181,7 +181,7 @@ namespace AtomicWar.GodotApp
                 }
                 finally
                 {
-                    try { Directory.Delete(tempDir, true); } catch { }
+                    try { Directory.Delete(tempDir, true); } catch { /* cleanup: best-effort temp directory delete */ }
                 }
 
                 // ── GATE 3: PowerGridPanel Bind -> Unbind -> Rebind Callback Test ──

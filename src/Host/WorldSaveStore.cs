@@ -67,6 +67,26 @@ namespace AtomicWar.GodotApp
             return s_store.TrySave(envelope);
         }
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(
+            WorldWeatherState state,
+            SkyArmorSaveState skyArmor = null!,
+            LocationEvolutionSaveState locationEvolution = null!,
+            WildlifeSaveState wildlife = null!,
+            LandmarkSaveState landmark = null!)
+        {
+            if (state == null) return string.Empty;
+            var envelope = new WorldHostSave
+            {
+                State = state,
+                SkyArmor = skyArmor,
+                LocationEvolution = locationEvolution,
+                Wildlife = wildlife,
+                Landmark = landmark
+            };
+            return s_store.CapturePersisted(envelope);
+        }
+
         public static WorldHostSave? TryLoadEnvelope() => s_store.TryLoad();
 
         public static WorldWeatherState? TryLoad()

@@ -126,6 +126,18 @@ namespace AtomicWar.GodotApp
         public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null!)
         {
             var session = new ExpeditionHostSession(null!, narrative);
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                var fileIO = new FileSystemIO();
+                var serializer = new SystemTextJsonSerializer();
+                var loaded = ExpeditionCatalogLoader.Load(dataDir, fileIO, serializer);
+                if (loaded != null && loaded.Count > 0)
+                {
+                    session.DemoDefinitions.Clear();
+                    session.DemoDefinitions.AddRange(loaded);
+                }
+            }
+
             var save = ExpeditionSaveStore.TryLoad();
             if (save != null)
             {

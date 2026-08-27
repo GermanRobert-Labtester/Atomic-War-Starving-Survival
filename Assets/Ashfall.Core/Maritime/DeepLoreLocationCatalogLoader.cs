@@ -71,10 +71,10 @@ namespace Ashfall.Core.Maritime
                 }
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return result;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "DeepLoreLocationContainer", ex_CATDIAG);
+                return result;
+            }
             return result;
         }
 

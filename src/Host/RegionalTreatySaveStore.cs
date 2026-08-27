@@ -48,5 +48,8 @@ namespace AtomicWar.GodotApp
         public static bool TrySave(RegionalTreatyState state) => s_store.TrySave(state);
 
         public static RegionalTreatyState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(RegionalTreatyState state) => s_store.CapturePersisted(state);
     }
 }

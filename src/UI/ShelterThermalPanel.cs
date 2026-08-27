@@ -60,22 +60,20 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
-            _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _toggleBoilerBtn = new Button { Text = "Toggle Boiler On/Off", CustomMinimumSize = new Vector2(180, 36) };
-            _toggleBoilerBtn.Pressed += () =>
+            _toggleBoilerBtn = AshfallUiHelpers.MakeButton("Toggle Boiler On/Off", () =>
             {
                 if (_host != null)
                 {
                     bool active = !_host.System.State.boilerActive;
                     _host.SetBoilerActive(active);
                 }
-            };
+            });
+            _toggleBoilerBtn.CustomMinimumSize = new Vector2(180, 36);
             buttonRow.AddChild(_toggleBoilerBtn);
 
             _contentStack.AddChild(buttonRow);

@@ -490,7 +490,7 @@ namespace Ashfall.Core.YearOfAsh
                         guiltDelta  = 8,
                         grantItemId = "",
                         conditions  = new List<QuestCondition> {
-                            new QuestCondition { conditionTag = "item_falsified_clearance_in_inventory", isBlocker = true }
+                            new QuestCondition { conditionTag = "item_falsified_clearance", isBlocker = true }
                         },
                         outcomeNarrative     = "Deckle examines the wax seal for a long beat. Then waves you through."
                     }

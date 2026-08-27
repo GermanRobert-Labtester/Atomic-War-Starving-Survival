@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp
         private void SaveInventory()
         {
             if (_inventory == null) return;
-            if (InventorySaveStore.TrySave(_inventory.CaptureSave()))
+            if (CaptureSection("inventory", InventorySaveStore.TryCapturePersisted(_inventory.CaptureSave())))
                 GD.Print("[Ashfall Godot] Inventory save written.");
         }
 

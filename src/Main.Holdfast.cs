@@ -239,7 +239,7 @@ namespace AtomicWar.GodotApp
         private void SaveHoldfast()
         {
             if (_core == null) return;
-            if (HoldfastSaveStore.TrySave(_core.CaptureSave()))
+            if (CaptureSection("holdfast", HoldfastSaveStore.TryCapturePersisted(_core.CaptureSave())))
             {
                 _holdfastDirty = false;
                 GD.Print($"[Ashfall Godot] Holdfast S1 save written (day {_core.Clock.Day}).");
@@ -249,7 +249,7 @@ namespace AtomicWar.GodotApp
         private void SaveHoldfastRuntime()
         {
             if (_holdfastRuntime == null) return;
-            if (_holdfastRuntime.TrySave())
+            if (CaptureSection("holdfast_trade", HoldfastTradeSaveStore.TryCapturePersisted(_holdfastRuntime.Trade.CaptureState())))
                 GD.Print("[Ashfall Godot] Holdfast player/trade state written.");
         }
 

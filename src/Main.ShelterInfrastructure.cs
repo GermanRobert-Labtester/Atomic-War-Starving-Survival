@@ -54,7 +54,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveWaterTreatment()
         {
-            _waterTreatment?.Save();
+            if (_waterTreatment != null)
+                CaptureSection("water_treatment", WaterTreatmentSaveStore.TryCapturePersisted(_waterTreatment.System.CaptureState()));
         }
 
         private void SetupAirlockSecurity()
@@ -73,7 +74,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveAirlockSecurity()
         {
-            _airlockSecurity?.Save();
+            if (_airlockSecurity != null)
+                CaptureSection("airlock_security", AirlockSecuritySaveStore.TryCapturePersisted(_airlockSecurity.System.CaptureState()));
         }
 
         private void SetupShelterThermal()
@@ -95,7 +97,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveShelterThermal()
         {
-            _shelterThermal?.Save();
+            if (_shelterThermal != null)
+                CaptureSection("shelter_thermal", ShelterThermalSaveStore.TryCapturePersisted(_shelterThermal.System.CaptureState()));
         }
 
         private void SetupShelterSchedule()
@@ -116,7 +119,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveShelterSchedule()
         {
-            _shelterSchedule?.Save();
+            if (_shelterSchedule != null)
+                CaptureSection("shelter_schedule", ShelterScheduleSaveStore.TryCapturePersisted(_shelterSchedule.System.CaptureState()));
         }
 
         private void SetupAutopsy(ResearchSystem sharedResearch)
@@ -142,7 +146,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveAutopsy()
         {
-            _autopsy?.Save();
+            if (_autopsy != null)
+                CaptureSection("autopsy", AutopsySaveStore.TryCapturePersisted(_autopsy.System.CaptureState()));
         }
 
         private void SetupWaystation()
@@ -161,7 +166,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveWaystation()
         {
-            _waystation?.Save();
+            if (_waystation != null)
+                CaptureSection("waystation", WaystationSaveStore.TryCapturePersisted(_waystation.System.CaptureState()));
         }
     }
 }

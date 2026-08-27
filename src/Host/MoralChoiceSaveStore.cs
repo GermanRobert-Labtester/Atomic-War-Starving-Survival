@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp
     public static class MoralChoiceSaveStore
     {
         public const string FileName = "moral_choice_save.json";
-        public const string SectionName = "host_event";
+        public const string SectionName = "moral_choice";
 
         private static readonly SaveStore<MoralChoiceState> s_store =
             SaveStoreHub.Checksummed<MoralChoiceState>(FileName, nameof(MoralChoiceSaveStore));
@@ -37,5 +37,8 @@ namespace AtomicWar.GodotApp
         {
             return s_store.TryLoad(pathOverride);
         }
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(MoralChoiceState state) => s_store.CapturePersisted(state);
     }
 }

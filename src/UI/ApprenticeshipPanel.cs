@@ -62,11 +62,10 @@ namespace AtomicWar.GodotApp.UI
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _startPairBtn = new Button { Text = "Assign Metallurgy Apprentice", CustomMinimumSize = new Vector2(220, 36) };
-            _startPairBtn.Pressed += () => _host?.StartPair("Master_Blacksmith", "Teen_Dweller_01", "skill_foundry_casting", 100f);
+            _startPairBtn = AshfallUiHelpers.MakeButton("Assign Metallurgy Apprentice", () => _host?.StartPair("Master_Blacksmith", "Teen_Dweller_01", "skill_foundry_casting", 100f));
+            _startPairBtn.CustomMinimumSize = new Vector2(220, 36);
             buttonRow.AddChild(_startPairBtn);
 
             _contentStack.AddChild(buttonRow);

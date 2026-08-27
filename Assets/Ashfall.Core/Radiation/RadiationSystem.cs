@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Ashfall.Core.Radiation
 {
+    using InventoryWornGear = Ashfall.Core.Inventory.WornGear;
     /// <summary>
     /// Minimal, engine-agnostic per-survivor radiation state the RadiationSystem
     /// mutates. Kept as a plain DTO so hosts (Godot or Unity) can map it onto
@@ -55,27 +56,7 @@ namespace Ashfall.Core.Radiation
         public float ZoneRadLevel;
         public float ShelterShielding;
         public Func<float, float> ShelterRadQuery; // zone -> interior rads/hr
-        public List<WornGear> WornGear = new List<WornGear>();
-    }
-
-    /// <summary>
-    /// Runtime instance of worn protective gear.
-    /// Consolidated into Ashfall.Core.Inventory.WornGear (H2 resolution).
-    /// </summary>
-    public class WornGear : Ashfall.Core.Inventory.WornGear
-    {
-        public static WornGear? FromInventory(Ashfall.Core.Inventory.WornGear gear)
-        {
-            if (gear == null) return null;
-            if (gear is WornGear wg) return wg;
-            return new WornGear
-            {
-                RadProtection = gear.RadProtection,
-                MaxDurability = gear.MaxDurability,
-                CurrentDurability = gear.CurrentDurability,
-                DegradeRate = gear.DegradeRate
-            };
-        }
+        public List<InventoryWornGear> WornGear = new List<InventoryWornGear>();
     }
 
     /// <summary>
@@ -198,7 +179,7 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
             }
         }
 
-        public static float ComputeGearProtection(IReadOnlyList<WornGear> worn)
+        public static float ComputeGearProtection(IReadOnlyList<InventoryWornGear> worn)
         {
             if (worn == null) return 0f;
             float total = 0f;
@@ -323,7 +304,7 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
             }
         }
 
-        private void DegradeWornGear(List<WornGear> worn, float gameHours)
+        private void DegradeWornGear(List<InventoryWornGear> worn, float gameHours)
         {
             if (worn == null) return;
             float mult = _hazmatDegradeMultiplier != null ? _hazmatDegradeMultiplier(null!) : 1f;

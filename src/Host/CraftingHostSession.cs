@@ -23,20 +23,32 @@ namespace AtomicWar.GodotApp
             new System.Collections.Generic.List<Recipe>();
 
         public string LastEvent { get; private set; } = string.Empty;
-        public CraftingHostSession(InventoryContainer inventory = null!)
+        public CraftingHostSession(InventoryContainer inventory = null!, System.Collections.Generic.List<Recipe> recipes = null!)
         {
             Inventory = inventory ?? new InventoryContainer();
             Engine = new CraftingSystem(Inventory);
             Engine.OnCraftStarted += _ => RaiseStateChanged();
             Engine.OnCraftCompleted += _ => RaiseStateChanged();
             SeedStation();
-            SeedRecipes();
+            if (recipes != null && recipes.Count > 0)
+            {
+                Recipes.AddRange(recipes);
+            }
+            else
+            {
+                SeedRecipes();
+            }
             Engine.SetRecipeLookup(id => FindRecipe(id));
         }
 
         public static CraftingHostSession Create(string dataDir, InventoryContainer inventory)
         {
-            return new CraftingHostSession(inventory);
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            var itemCatalog = ItemCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
+            var recipes = RecipeCatalogLoader.Load(dataDir, fileIO, serializer, itemCatalog);
+
+            return new CraftingHostSession(inventory, recipes);
         }
 
         private void SeedStation()

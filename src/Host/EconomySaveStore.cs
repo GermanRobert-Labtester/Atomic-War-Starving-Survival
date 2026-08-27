@@ -65,6 +65,9 @@ namespace AtomicWar.GodotApp
 
         public static MarketState? TryLoad(string path) => s_store.TryLoad(path);
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(MarketState state) => s_store.CapturePersisted(state);
+
         private static string EncodeState(MarketState state, IJsonSerializer json)
         {
             var envelope = new EconomySaveEnvelope

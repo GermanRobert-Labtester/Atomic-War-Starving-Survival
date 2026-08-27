@@ -48,5 +48,8 @@ namespace AtomicWar.GodotApp
         public static bool TrySave(VinylMoraleState state) => s_store.TrySave(state);
 
         public static VinylMoraleState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(VinylMoraleState state) => s_store.CapturePersisted(state);
     }
 }

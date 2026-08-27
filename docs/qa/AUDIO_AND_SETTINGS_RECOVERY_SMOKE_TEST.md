@@ -8,8 +8,8 @@
 ## 1. Background & Persistence Architecture
 
 User preferences in ASHFALL are isolated from gameplay save slots to avoid progression entanglement:
-- **Audio Preferences:** `user://audio_settings.json` (managed by [`AudioSettings`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Audio/AudioSettings.cs) & [`AudioSettingsCodec`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Audio/AudioSettingsCodec.cs)).
-- **Display & General Settings:** `user://settings.json` (managed by [`UserSettingsStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Settings/UserSettings.cs) & [`UserSettingsCodec`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Settings/UserSettingsCodec.cs)).
+- **Audio Preferences:** `user://audio_settings.json` (managed by [`AudioSettings`](../../src/Audio/AudioSettings.cs) & [`AudioSettingsCodec`](../../Assets/Ashfall.Core/Audio/AudioSettingsCodec.cs)).
+- **Display & General Settings:** `user://settings.json` (managed by [`UserSettingsStore`](../../src/Settings/UserSettings.cs) & [`UserSettingsCodec`](../../Assets/Ashfall.Core/Settings/UserSettingsCodec.cs)).
 
 ### Recovery Contract (`Invariant 1 & Host Stability`)
 1. **Never Throw on Startup:** Corrupt or missing settings files must never block game launch or crash the process.

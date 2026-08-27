@@ -50,10 +50,10 @@ namespace Ashfall.Core.Verdict
                 }
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return result;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "VerdictLocationEntry list", ex_CATDIAG);
+                return result;
+            }
             return result;
         }
 
@@ -117,7 +117,7 @@ namespace Ashfall.Core.Verdict
             }
             catch (Exception ex_CATDIAG)
             {
-                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                CatalogDiagnostics.Warn(path, "VerdictItemEntry list", ex_CATDIAG);
                 return result;
             }
             return result;
@@ -156,10 +156,10 @@ namespace Ashfall.Core.Verdict
                 }
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return result;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "VerdictRadioContainer", ex_CATDIAG);
+                return result;
+            }
             return result;
         }
 
@@ -185,9 +185,9 @@ namespace Ashfall.Core.Verdict
                     result.AddRange(parsed.corruption_corpus);
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "VerdictDataContainer", ex_CATDIAG);
+            }
             return result;
         }
 

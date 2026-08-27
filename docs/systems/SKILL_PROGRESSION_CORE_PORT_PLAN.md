@@ -128,5 +128,5 @@ This port plan is **CLOSED — FULLY IMPLEMENTED AND VERIFIED**.
 - **Snapshot Target**: Covered under `skill_matrix_default` (MD5: `76057f2be71cdf3640169982f3f90907`).
 
 ### 3. Verification & Test Gate
-- **Unit Tests**: [`Ashfall.Core.Tests/SkillProgressionSystemTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/SkillProgressionSystemTests.cs) passes 12/12 tests covering training, XP calculations, tier advancements, daily atrophy, and save/restore roundtrips.
+- **Unit Tests**: [`Ashfall.Core.Tests/SkillProgressionSystemTests.cs`](../../Ashfall.Core.Tests/SkillProgressionSystemTests.cs) passes 12/12 tests covering training, XP calculations, tier advancements, daily atrophy, and save/restore roundtrips.
 - **Zero Engine References**: Holds strict Invariant 1 compliance (`noEngineReferences: true`).

@@ -58,7 +58,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveSurvivorRelations()
         {
-            _survivorRelations?.Save();
+            if (_survivorRelations != null)
+                CaptureSection("survivor_relations", SurvivorRelationsSaveStore.TryCapturePersisted(_survivorRelations.System.CaptureState()));
         }
 
         private void SetupRegionalTreaty()
@@ -77,7 +78,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveRegionalTreaty()
         {
-            _regionalTreaty?.Save();
+            if (_regionalTreaty != null)
+                CaptureSection("regional_treaty", RegionalTreatySaveStore.TryCapturePersisted(_regionalTreaty.System.CaptureState()));
         }
 
         private void SetupVinylMorale()
@@ -97,7 +99,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveVinylMorale()
         {
-            _vinylMorale?.Save();
+            if (_vinylMorale != null)
+                CaptureSection("vinyl_morale", VinylMoraleSaveStore.TryCapturePersisted(_vinylMorale.System.CaptureState()));
         }
 
         private void SetupWildlifeTrapping()
@@ -116,7 +119,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveWildlifeTrapping()
         {
-            _wildlifeTrapping?.Save();
+            if (_wildlifeTrapping != null)
+                CaptureSection("wildlife_trapping", WildlifeTrappingSaveStore.TryCapturePersisted(_wildlifeTrapping.System.CaptureState()));
         }
 
         private void SetupExcavation()
@@ -135,7 +139,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveExcavation()
         {
-            _excavation?.Save();
+            if (_excavation != null)
+                CaptureSection("excavation", ExcavationSaveStore.TryCapturePersisted(_excavation.System.CaptureState()));
         }
 
         private void SetupApprenticeship()
@@ -155,7 +160,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveApprenticeship()
         {
-            _apprenticeship?.Save();
+            if (_apprenticeship != null)
+                CaptureSection("apprenticeship", ApprenticeshipSaveStore.TryCapturePersisted(_apprenticeship.System.CaptureState()));
         }
 
         private void SetupCaregiving()
@@ -174,7 +180,8 @@ namespace AtomicWar.GodotApp
 
         private void SaveCaregiving()
         {
-            _caregiving?.Save();
+            if (_caregiving != null)
+                CaptureSection("caregiving", CaregivingSaveStore.TryCapturePersisted(_caregiving.System.CaptureState()));
         }
     }
 }

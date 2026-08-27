@@ -143,9 +143,9 @@ namespace Ashfall.Core
                     }
                 }
                 catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                }
+                {
+                    CatalogDiagnostics.Warn(itemPath, "DoseItemsRoot", ex_CATDIAG);
+                }
             }
 
             // Quests (authored to the live DAG DTO)
@@ -165,9 +165,9 @@ namespace Ashfall.Core
                     }
                 }
                 catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                }
+                {
+                    CatalogDiagnostics.Warn(questPath, "DoseQuestDef list", ex_CATDIAG);
+                }
             }
 
             return catalog;

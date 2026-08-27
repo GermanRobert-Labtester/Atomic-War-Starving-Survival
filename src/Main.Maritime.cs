@@ -126,7 +126,7 @@ namespace AtomicWar.GodotApp
         private void SaveMaritime()
         {
             if (_maritime == null) return;
-            if (MaritimeSaveStore.TrySave(_maritime.CaptureSave()))
+            if (CaptureSection("maritime", MaritimeSaveStore.TryCapturePersisted(_maritime.CaptureSave())))
             {
                 _maritimeDirty = false;
                 GD.Print("[Ashfall Godot] Maritime save written.");

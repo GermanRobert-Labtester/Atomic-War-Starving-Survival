@@ -67,23 +67,22 @@ namespace AtomicWar.GodotApp.UI
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _admitBtn = new Button { Text = "Admit Visitor", CustomMinimumSize = new Vector2(140, 36) };
-            _admitBtn.Pressed += () => _host?.ResolveIncident(VisitorDecision.Admit);
+            _admitBtn = AshfallUiHelpers.MakeButton("Admit Visitor", () => _host?.ResolveIncident(VisitorDecision.Admit));
+            _admitBtn.CustomMinimumSize = new Vector2(140, 36);
             buttonRow.AddChild(_admitBtn);
 
-            _quarantineBtn = new Button { Text = "Quarantine (3 Days)", CustomMinimumSize = new Vector2(140, 36) };
-            _quarantineBtn.Pressed += () => _host?.ResolveIncident(VisitorDecision.Quarantine);
+            _quarantineBtn = AshfallUiHelpers.MakeButton("Quarantine (3 Days)", () => _host?.ResolveIncident(VisitorDecision.Quarantine));
+            _quarantineBtn.CustomMinimumSize = new Vector2(140, 36);
             buttonRow.AddChild(_quarantineBtn);
 
-            _turnAwayBtn = new Button { Text = "Turn Away", CustomMinimumSize = new Vector2(140, 36) };
-            _turnAwayBtn.Pressed += () => _host?.ResolveIncident(VisitorDecision.TurnAway);
+            _turnAwayBtn = AshfallUiHelpers.MakeButton("Turn Away", () => _host?.ResolveIncident(VisitorDecision.TurnAway));
+            _turnAwayBtn.CustomMinimumSize = new Vector2(140, 36);
             buttonRow.AddChild(_turnAwayBtn);
 
-            _cycleDoorBtn = new Button { Text = "Cycle Door", CustomMinimumSize = new Vector2(120, 36) };
-            _cycleDoorBtn.Pressed += () => _host?.CycleDoor(AirlockDoorState.Cycling);
+            _cycleDoorBtn = AshfallUiHelpers.MakeButton("Cycle Door", () => _host?.CycleDoor(AirlockDoorState.Cycling));
+            _cycleDoorBtn.CustomMinimumSize = new Vector2(120, 36);
             buttonRow.AddChild(_cycleDoorBtn);
 
             _contentStack.AddChild(buttonRow);

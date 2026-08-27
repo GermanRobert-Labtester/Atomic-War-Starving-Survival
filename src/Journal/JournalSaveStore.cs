@@ -33,6 +33,9 @@ namespace AtomicWar.Journal
             s_store.TrySave(save, pathOverride);
         }
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(JournalSave save) => s_store.CapturePersisted(save);
+
         public static JournalSave? Load(string? pathOverride = null)
         {
             return s_store.TryLoad(pathOverride);

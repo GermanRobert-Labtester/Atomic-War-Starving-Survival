@@ -48,5 +48,8 @@ namespace AtomicWar.GodotApp
         public static bool TrySave(WaystationSystemState state) => s_store.TrySave(state);
 
         public static WaystationSystemState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(WaystationSystemState state) => s_store.CapturePersisted(state);
     }
 }

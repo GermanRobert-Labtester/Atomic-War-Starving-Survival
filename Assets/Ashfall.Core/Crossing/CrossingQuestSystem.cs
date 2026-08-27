@@ -373,10 +373,10 @@ namespace Ashfall.Core.Crossing
                 return quests ?? new List<CrossingQuestDef>();
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return new List<CrossingQuestDef>();
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "CrossingQuestDef list", ex_CATDIAG);
+                return new List<CrossingQuestDef>();
+            }
         }
     }
 }

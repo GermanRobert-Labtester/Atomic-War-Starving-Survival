@@ -58,15 +58,15 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
+            _detailText = AshfallUiHelpers.MakeBody("");
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _queueAutopsyBtn = new Button { Text = "Queue Standard Post-Mortem", CustomMinimumSize = new Vector2(220, 36) };
-            _queueAutopsyBtn.Pressed += () => _host?.QueueCase("specimen_survivor_01", "procedure_standard_autopsy", "Chief_Medical_Officer", 1);
+            _queueAutopsyBtn = AshfallUiHelpers.MakeButton("Queue Standard Post-Mortem",
+                () => _host?.QueueCase("specimen_survivor_01", "procedure_standard_autopsy", "Chief_Medical_Officer", 1));
+            _queueAutopsyBtn.CustomMinimumSize = new Vector2(220, 36);
             buttonRow.AddChild(_queueAutopsyBtn);
 
             _contentStack.AddChild(buttonRow);

@@ -7,8 +7,25 @@ using Xunit;
 
 namespace Ashfall.Core.Tests
 {
-    public class MusterContentCatalogTests
-    : CatalogTestBase{
+    public class MusterContentCatalogTests : CatalogTestBase
+    {
+        public MusterContentCatalogTests()
+        {
+            EnsureJournalVoiceBound();
+        }
+
+        private static void EnsureJournalVoiceBound()
+        {
+            if (JournalVoice.GetCatalog() != null) return;
+            string dataDir = FindDataDir();
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                var loader = new JournalVoiceProseCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+                var catalog = loader.Load(dataDir);
+                JournalVoice.BindCatalog(catalog);
+            }
+        }
+
         private static string FindDataDir()
         {
             string dataDir = string.Empty;

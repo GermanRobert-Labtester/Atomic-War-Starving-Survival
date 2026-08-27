@@ -246,7 +246,7 @@ namespace AtomicWar.GodotApp
 
             Done:
             // Cleanup temp directory.
-            try { Directory.Delete(tmpDir, recursive: true); } catch { }
+            try { Directory.Delete(tmpDir, recursive: true); } catch { /* cleanup: best-effort temp directory delete */ }
 
             GD.Print($"\n=== 7-DAY DETERMINISTIC SMOKE RUN {(failures == 0 ? "PASS" : "FAIL")} ({10 - failures}/10 gates passed) ===");
             return failures == 0 ? 0 : 1;

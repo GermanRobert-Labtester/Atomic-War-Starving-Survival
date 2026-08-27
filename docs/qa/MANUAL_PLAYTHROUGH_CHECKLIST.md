@@ -236,7 +236,7 @@ These are the paths the automation cannot fully exercise (they require human tim
 | D3 — No mass-unlock regression | After D2's reload, inspect nodes/routes that were **never** unlocked. | They remain locked/undiscovered — the reload must not accidentally mass-unlock the map or leak undiscovered node names into the atlas. |
 ### E. Audio & User Settings Recovery Behavior
 
-> Grounded in [`AudioSettingsCodec`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Audio/AudioSettingsCodec.cs) and [`UserSettingsCodec`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Settings/UserSettingsCodec.cs). Full scenario guide in [`docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md).
+> Grounded in [`AudioSettingsCodec`](../../Assets/Ashfall.Core/Audio/AudioSettingsCodec.cs) and [`UserSettingsCodec`](../../Assets/Ashfall.Core/Settings/UserSettingsCodec.cs). Full scenario guide in [`docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`](AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md).
 
 | Sub-case | Action | Expected outcome |
 |----------|--------|------------------|

@@ -46,5 +46,8 @@ namespace AtomicWar.GodotApp
         public static bool TrySave(MedicalWardSave save) => s_store.TrySave(save);
 
         public static MedicalWardSave? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(MedicalWardSave save) => s_store.CapturePersisted(save);
     }
 }

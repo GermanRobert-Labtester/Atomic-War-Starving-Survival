@@ -131,12 +131,12 @@ namespace AtomicWar.GodotApp
         private void SaveWorld()
         {
             if (_world == null) return;
-            if (WorldSaveStore.TrySave(
+            if (CaptureSection("world", WorldSaveStore.TryCapturePersisted(
                 _world!.CaptureSave()!,
                 _world!.CaptureSkyArmorSave()!,
                 _world!.LocationEvolution?.CaptureState()!,
                 _world!.Wildlife?.CaptureState()!,
-                _world!.Landmarks?.CaptureState()!))
+                _world!.Landmarks?.CaptureState()!)))
             {
                 _worldDirty = false;
                 GD.Print("[Ashfall Godot] World save written.");
@@ -173,7 +173,7 @@ namespace AtomicWar.GodotApp
         private void SaveCrafting()
         {
             if (_crafting == null) return;
-            if (CraftingSaveStore.TrySave(_crafting.CaptureSave()))
+            if (CaptureSection("crafting", CraftingSaveStore.TryCapturePersisted(_crafting.CaptureSave())))
             {
                 _craftingDirty = false;
                 GD.Print("[Ashfall Godot] Crafting save written.");
@@ -210,7 +210,7 @@ namespace AtomicWar.GodotApp
         private void SaveStartingLevel()
         {
             if (_startingLevel == null) return;
-            if (StartingLevelSaveStore.TrySave(_startingLevel.CaptureState()))
+            if (CaptureSection("starting_level", StartingLevelSaveStore.TryCapturePersisted(_startingLevel.CaptureState())))
             {
                 _startingLevelDirty = false;
                 GD.Print("[Ashfall Godot] Starting level save written.");
@@ -278,7 +278,7 @@ namespace AtomicWar.GodotApp
         private void SaveGreenhouse()
         {
             if (_greenhouse == null) return;
-            if (GreenhouseSaveStore.TrySave(_greenhouse.CaptureSave()))
+            if (CaptureSection("greenhouse", GreenhouseSaveStore.TryCapturePersisted(_greenhouse.CaptureSave())))
             {
                 _greenhouseDirty = false;
                 GD.Print("[Ashfall Godot] Greenhouse save written.");

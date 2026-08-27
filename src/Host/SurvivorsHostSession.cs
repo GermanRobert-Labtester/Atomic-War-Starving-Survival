@@ -104,6 +104,28 @@ namespace AtomicWar.GodotApp
 
         public SurvivorRosterSystem Roster { get; } = new SurvivorRosterSystem();
 
+        /// <summary>Load starting roster and initial conditions from starting_survivors.json (the authority).</summary>
+        public void LoadStartingRoster(string dataDir)
+        {
+            if (RosterState.Count > 0) return;
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                var fileIO = new FileSystemIO();
+                var serializer = new SystemTextJsonSerializer();
+                var starting = SurvivorStartingStateLoader.Load(dataDir, fileIO, serializer);
+                if (starting != null && starting.Count > 0)
+                {
+                    for (int i = 0; i < starting.Count; i++)
+                    {
+                        var s = starting[i];
+                        AddSurvivor(s.id, s.displayName, s.health, s.hunger, s.thirst, s.warmth, s.morale, s.lifetimeDose, s.acuteRad);
+                    }
+                    return;
+                }
+            }
+            SeedDemoRoster();
+        }
+
         /// <summary>Seed the demo roster with canonical survivor ids from the master list.</summary>
         public void SeedDemoRoster()
         {
@@ -194,22 +216,15 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Assemble the shared inventory's equipped protective gear into Radiation
-        /// WornGear records (via the Core conversion point), or an empty list when
-        /// no inventory is bound. RadiationSystem subtracts this from the zone rate.
+        /// Assemble the shared inventory's equipped protective gear into a list
+        /// of Inventory.WornGear records. RadiationSystem subtracts this from the zone rate.
         /// </summary>
-        private System.Collections.Generic.List<WornGear> CollectWornGear()
+        private System.Collections.Generic.List<Ashfall.Core.Inventory.WornGear> CollectWornGear()
         {
-            var result = new System.Collections.Generic.List<WornGear>();
+            var result = new System.Collections.Generic.List<Ashfall.Core.Inventory.WornGear>();
             var inventory = Inventory?.Inventory;
             if (inventory == null) return result;
-            var buffer = new System.Collections.Generic.List<Ashfall.Core.Inventory.WornGear>();
-            inventory.FillWornGear(buffer);
-            for (int i = 0; i < buffer.Count; i++)
-            {
-                var converted = WornGear.FromInventory(buffer[i]);
-                if (converted != null) result.Add(converted);
-            }
+            inventory.FillWornGear(result);
             return result;
         }
 

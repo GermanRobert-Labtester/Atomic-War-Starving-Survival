@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "starting_supplies": [
+    {
+      "itemId": "clean_water",
+      "amount": 12
+    },
+    {
+      "itemId": "canned_food",
+      "amount": 16
+    },
+    {
+      "itemId": "irradiated_water",
+      "amount": 4
+    },
+    {
+      "itemId": "item_air_filter_hepa",
+      "amount": 2
+    },
+    {
+      "itemId": "item_desal_membrane",
+      "amount": 1
+    },
+    {
+      "itemId": "iodine_pills",
+      "amount": 4
+    },
+    {
+      "itemId": "bandage",
+      "amount": 2
+    },
+    {
+      "itemId": "rad_away",
+      "amount": 1
+    },
+    {
+      "itemId": "item_dosimeter_pen",
+      "amount": 1
+    },
+    {
+      "itemId": "item_geiger_m3",
+      "amount": 1
+    },
+    {
+      "itemId": "gas_mask",
+      "amount": 1
+    },
+    {
+      "itemId": "hazmat_suit",
+      "amount": 1
+    },
+    {
+      "itemId": "battery",
+      "amount": 4
+    },
+    {
+      "itemId": "scrap_mechanical",
+      "amount": 6
+    },
+    {
+      "itemId": "scrap_electronic",
+      "amount": 3
+    }
+  ]
+}

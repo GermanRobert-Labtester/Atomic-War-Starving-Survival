@@ -31,6 +31,7 @@ namespace Ashfall.Core
             }
             catch
             {
+                /* cleanup: fallback on IO failure */
                 return new string[0];
             }
         }

@@ -62,29 +62,27 @@ namespace AtomicWar.GodotApp
             Epilogue = new EpilogueMatrixRuntime();
 
             // Persistence: any hub-system state change marks the save dirty.
-            Waystation.OnStateChanged += _ => StateChanged?.Invoke();
-            Layouts.OnStateChanged += _ => StateChanged?.Invoke();
-            Memory.OnStateChanged += _ => StateChanged?.Invoke();
-            SiteEncounters.OnStateChanged += _ => StateChanged?.Invoke();
-            Vouch.OnStateChanged += _ => StateChanged?.Invoke();
-            Greenhouse.OnCropPlanted += (_, _, _) => StateChanged?.Invoke();
-            Greenhouse.OnCropMatured += (_, _) => StateChanged?.Invoke();
-            Greenhouse.OnCropHarvested += _ => StateChanged?.Invoke();
-            Greenhouse.OnBlightOutbreak += _ => StateChanged?.Invoke();
-            Greenhouse.OnPlotDriedOut += _ => StateChanged?.Invoke();
-            Greenhouse.OnCropFailed += _ => StateChanged?.Invoke();
-            Arbitration.OnStateChanged += _ => StateChanged?.Invoke();
-            CrossingQuests.OnStateChanged += _ => StateChanged?.Invoke();
+            Waystation.OnStateChanged += _ => RaiseStateChanged();
+            Layouts.OnStateChanged += _ => RaiseStateChanged();
+            Memory.OnStateChanged += _ => RaiseStateChanged();
+            SiteEncounters.OnStateChanged += _ => RaiseStateChanged();
+            Vouch.OnStateChanged += _ => RaiseStateChanged();
+            Greenhouse.OnCropPlanted += (_, _, _) => RaiseStateChanged();
+            Greenhouse.OnCropMatured += (_, _) => RaiseStateChanged();
+            Greenhouse.OnCropHarvested += _ => RaiseStateChanged();
+            Greenhouse.OnBlightOutbreak += _ => RaiseStateChanged();
+            Greenhouse.OnPlotDriedOut += _ => RaiseStateChanged();
+            Greenhouse.OnCropFailed += _ => RaiseStateChanged();
+            Arbitration.OnStateChanged += _ => RaiseStateChanged();
+            CrossingQuests.OnStateChanged += _ => RaiseStateChanged();
             // When the opening vouch quest completes, soften the gate automatically
             CrossingQuests.OnOpeningQuestCompleted += () => Vouch.SoftenAccess();
             CrossingQuests.OnStageNarrativeEmitted += evt => OnCrossingStageNarrative?.Invoke(evt);
-            Generational.OnDwellerRetired += (_, _) => StateChanged?.Invoke();
-            Generational.OnTraitInherited += (_, _, _) => StateChanged?.Invoke();
-            Generational.OnChapterAdvanced += _ => StateChanged?.Invoke();
+            Generational.OnDwellerRetired += (_, _) => RaiseStateChanged();
+            Generational.OnTraitInherited += (_, _, _) => RaiseStateChanged();
+            Generational.OnChapterAdvanced += _ => RaiseStateChanged();
         }
 
-        /// <summary>Raised when any hub-system state changes (save dirty flag).</summary>
-        public event Action StateChanged;
         public event Action<CrossingStageNarrativeEvent>? OnCrossingStageNarrative;
 
         public static ExpansionHostSession Create(string dataDirectory, ILog log = null!)
@@ -135,7 +133,7 @@ namespace AtomicWar.GodotApp
             foundry.BindCatalog(foundryData, maintenanceCycle);
             session.SilentFoundry = foundry;
             session.FoundryData = foundryData;
-            foundry.OnStateChanged += _ => session.StateChanged?.Invoke();
+            foundry.OnStateChanged += _ => session.RaiseStateChanged();
 
             // Disease Expansion: static catalog + deterministic contagion engine.
             // Bound on the catalog (registered above); always active — outbreaks
@@ -145,7 +143,7 @@ namespace AtomicWar.GodotApp
             disease.BindCatalog(diseaseData);
             session.Disease = disease;
             session.DiseaseData = diseaseData;
-            disease.OnStateChanged += _ => session.StateChanged?.Invoke();
+            disease.OnStateChanged += _ => session.RaiseStateChanged();
             return session;
         }
 

@@ -163,7 +163,38 @@ namespace AtomicWar.GodotApp
 
         private void OpenPlayerPanel(string panelId)
         {
+            // Validate against the typed registry — emit a visible diagnostic for any
+            // unknown route so dead navigation targets surface immediately.
+            var descriptor = Ashfall.Core.UI.PanelRegistry.Resolve(panelId, msg =>
+            {
+                GD.PrintErr(msg);
+                if (_statusLabel != null)
+                    _statusLabel.Text = msg;
+            });
+            if (descriptor == null) return; // dead route — diagnostic already emitted above
+
+            if (_state == GameState.Menu && !descriptor.AvailableInMenu)
+            {
+                string msg = "[PanelRegistry] BLOCKED ROUTE: '" + panelId + "' is not accessible from the main menu.";
+                GD.PrintErr(msg);
+                if (_statusLabel != null)
+                    _statusLabel.Text = msg;
+                return;
+            }
+
             CloseAllOverlayPanels();
+
+            if (descriptor.OpenAction != null)
+            {
+                descriptor.Bind();
+                descriptor.Open();
+                return;
+            }
+
+            // Fallback for panels not yet migrated to registry actions.
+            // All panels should have OpenAction configured via RegisterPlayerSurfaces().
+            // If we reach here, a panel was registered but not wired — this is a bug.
+            GD.PrintErr($"[PanelRegistry] MISSING ACTIONS: '{panelId}' is registered but has no OpenAction configured. All panels must be wired in RegisterPlayerSurfaces().");
 
             switch (panelId)
             {
@@ -605,7 +636,7 @@ namespace AtomicWar.GodotApp
 
         public override void _UnhandledInput(InputEvent @event)
         {
-            if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+            if (@event.IsActionPressed(AshfallInputActions.UiCancel) || @event.IsActionPressed(AshfallInputActions.Close))
             {
                 if (AnyOverlayPanelOpen())
                 {

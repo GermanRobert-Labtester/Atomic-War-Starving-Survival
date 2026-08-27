@@ -163,5 +163,8 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(ShelterAssignmentSave save) => TryCapture(save);
     }
 }

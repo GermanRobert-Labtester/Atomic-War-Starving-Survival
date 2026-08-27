@@ -33,7 +33,10 @@ namespace AtomicWar.GodotApp
 
         public static InventoryHostSession Create(string dataDir)
         {
-            var session = new InventoryHostSession();
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            var catalog = ItemCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
+            var session = new InventoryHostSession(null!, catalog);
 
             var save = InventorySaveStore.TryLoad();
             if (save != null)
@@ -43,9 +46,28 @@ namespace AtomicWar.GodotApp
             }
             else
             {
-                session.SeedStartingSupplies();
+                session.LoadOrSeedStartingSupplies(dataDir, fileIO, serializer);
             }
             return session;
+        }
+
+        public void LoadOrSeedStartingSupplies(string dataDir, IFileIO fileIO = null!, IJsonSerializer serializer = null!)
+        {
+            fileIO ??= new FileSystemIO();
+            serializer ??= new SystemTextJsonSerializer();
+            var supplies = ItemCatalogLoader.LoadStartingSupplies(dataDir, fileIO, serializer);
+            if (supplies != null && supplies.Count > 0)
+            {
+                for (int i = 0; i < supplies.Count; i++)
+                {
+                    Add(supplies[i].itemId, supplies[i].amount);
+                }
+                LastEvent = "Starting supplies loaded into Holdfast storage from JSON authority.";
+            }
+            else
+            {
+                SeedStartingSupplies();
+            }
         }
 
         public void SeedStartingSupplies()

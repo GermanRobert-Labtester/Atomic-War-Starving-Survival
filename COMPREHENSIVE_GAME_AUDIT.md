@@ -4,7 +4,7 @@
 > **SUPERSEDED HISTORICAL AUDIT (2026-08-18) — PRESERVED FOR HISTORICAL CONTEXT ONLY**
 >
 > This audit was conducted prior to the full removal of the legacy Unity host (`Assets/_Game/`).
-> For current active architecture, consult [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md), [`docs/CURRENT_AUTHORITY.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/CURRENT_AUTHORITY.md), and [`docs/ASHFALL_CODE_INDEX.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ASHFALL_CODE_INDEX.md).
+> For current active architecture, consult [`AGENTS.md`](AGENTS.md), [`docs/CURRENT_AUTHORITY.md`](docs/CURRENT_AUTHORITY.md), and [`docs/ASHFALL_CODE_INDEX.md`](docs/ASHFALL_CODE_INDEX.md).
 
 **Date of Audit:** 2026-08-18 (Historical)
 **Auditor Role:** Principal Game Development Auditor, Technical Director, Systems Designer, Narrative Systems Analyst, UI/UX Reviewer, Production Architect, and Codebase Archaeologist

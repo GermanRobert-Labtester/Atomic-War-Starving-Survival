@@ -11,6 +11,7 @@ using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Foundry;
+using Ashfall.Core.IO;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
@@ -34,7 +35,15 @@ namespace AtomicWar.GodotApp
         {
             GD.Print("[Ashfall Godot] Initializing ASHFALL: Atomic War - Starving Survival...");
 
+            // Register all player-navigable panel descriptors before any navigation occurs.
+            Ashfall.Core.UI.PanelRegistryBootstrap.RegisterAll();
+
             ResolveDataDir();
+
+            // Validate required catalogs before any systems are initialized.
+            // This ensures the game cannot start with missing or malformed required data.
+            ValidateRequiredCatalogs();
+
             switch (HostCli.Parse(OS.GetCmdlineUserArgs()))
             {
                 case HostCliAction.Help:
@@ -101,6 +110,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.SevenDayDeterministicSmokeSelfTest:
                     GetTree().Quit(HostCli.RunSevenDayDeterministicSmokeSelfTest(_dataDir));
+                    return;
+                case HostCliAction.UiAccessibilitySelfTest:
+                    GetTree().Quit(HostCli.RunUiAccessibilitySelfTest());
                     return;
                 case HostCliAction.CombatSelfTest:
                     GetTree().Quit(HostCli.RunCombatSelfTest(_dataDir));
@@ -234,6 +246,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
                     return;
+                case HostCliAction.CatalogBootPreflight:
+                    GetTree().Quit(HostCli.RunCatalogBootPreflight(_dataDir));
+                    return;
                 case HostCliAction.CaravanSelfTest:
                     GetTree().Quit(HostCli.RunCaravanSelfTest());
                     return;
@@ -328,6 +343,21 @@ namespace AtomicWar.GodotApp
             // Moral choice ledger ("The Weight of Survival"): constructed at boot so
             // its save restores before any encounter can resolve against a blank ledger.
             SetupMoralChoice();
+
+            if (DisplayServer.GetName() == "headless")
+            {
+                string[] userArgs = OS.GetCmdlineUserArgs();
+                if (userArgs != null && userArgs.Length > 0)
+                {
+                    GD.PrintErr($"[Ashfall Godot] Unrecognized headless argument(s): {string.Join(" ", userArgs)}. Run with --host-help to see valid flags.");
+                    GetTree().Quit(1);
+                    return;
+                }
+
+                GD.Print("[Ashfall Godot] Headless interactive boot completed. Exiting cleanly.");
+                GetTree().Quit(0);
+                return;
+            }
         }
 
         public override void _Process(double delta)
@@ -395,20 +425,19 @@ namespace AtomicWar.GodotApp
 
         public override void _UnhandledKeyInput(InputEvent @event)
         {
-            var key = @event as InputEventKey;
-            if (key == null || !key.Pressed || key.Echo) return;
+            if (!@event.IsPressed() || @event.IsEcho()) return;
 
-            if (key.Keycode == Key.F && _state == GameState.Playing)
+            if (AshfallInputActions.IsForecast(@event) && _state == GameState.Playing)
             {
                 OpenWeatherForecastPanel();
                 GetViewport().SetInputAsHandled();
             }
-            else if (key.Keycode == Key.H && _state == GameState.Playing)
+            else if (AshfallInputActions.IsWeatherHistory(@event) && _state == GameState.Playing)
             {
                 OpenWeatherHistoryPanel();
                 GetViewport().SetInputAsHandled();
             }
-            else if (key.Keycode == Key.J)
+            else if (AshfallInputActions.IsJournal(@event))
             {
                 if (_state == GameState.Playing && _dashboard.Visible)
                     OpenPlayerPanel("journal");
@@ -416,24 +445,24 @@ namespace AtomicWar.GodotApp
                     ToggleJournal();
                 GetViewport().SetInputAsHandled();
             }
-            else if (key.Keycode == Key.F1 && _state == GameState.Playing)
+            else if (AshfallInputActions.IsHelp(@event) && _state == GameState.Playing)
             {
                 ToggleDeveloperConsole();
                 GetViewport().SetInputAsHandled();
             }
-            else if (key.Keycode == Key.E && _state == GameState.Playing)
+            else if (AshfallInputActions.IsEvents(@event) && _state == GameState.Playing)
             {
                 OpenEventsLogPanel();
                 GetViewport().SetInputAsHandled();
             }
             else if (_journalBook != null && _journalBook.IsOpen)
             {
-                if (key.Keycode >= Key.Key1 && key.Keycode <= Key.Key5)
+                if (AshfallInputActions.GetJournalTabNumber(@event, out int tab))
                 {
-                    _journal.SwitchTab((int)(key.Keycode - Key.Key1));
+                    _journal.SwitchTab(tab - 1);
                     GetViewport().SetInputAsHandled();
                 }
-                else if (key.Keycode == Key.Escape)
+                else if (AshfallInputActions.IsCloseOrCancel(@event))
                 {
                     // Cancel a pending sleep advance before closing the journal.
                     CancelAdvanceConfirmation();
@@ -466,6 +495,24 @@ namespace AtomicWar.GodotApp
         private void ResolveDataDir()
         {
             _dataDir = CatalogPath.ResolveDataDir();
+        }
+
+        /// <summary>
+        /// Validate that all required catalogs are present and well-formed.
+        /// Throws if any required catalog is missing or malformed, preventing the game from starting.
+        /// </summary>
+        private void ValidateRequiredCatalogs()
+        {
+            var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
+            var json = new SystemTextJsonSerializer();
+
+            // Use CatalogBootValidator to check all registered catalogs
+            var report = CatalogBootValidator.Validate(_dataDir, fileIO, json);
+
+            GD.Print(report.ToString());
+
+            // Throw if any required catalogs failed to load
+            CatalogBootValidator.ThrowIfRequiredFailed(report);
         }
 
         /// <summary>

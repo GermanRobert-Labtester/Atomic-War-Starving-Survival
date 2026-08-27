@@ -72,27 +72,25 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
-            _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _assignBtn = new Button { Text = "Demo Assign (caregiver_a → patient_b)", CustomMinimumSize = new Vector2(260, 36) };
-            _assignBtn.Pressed += () =>
+            _assignBtn = AshfallUiHelpers.MakeButton("Demo Assign (caregiver_a → patient_b)", () =>
             {
                 if (_host != null)
                     _host.AssignCaregiver("caregiver_a", "patient_b");
-            };
+            });
+            _assignBtn.CustomMinimumSize = new Vector2(260, 36);
             buttonRow.AddChild(_assignBtn);
 
-            _unassignBtn = new Button { Text = "Unassign patient_b", CustomMinimumSize = new Vector2(160, 36) };
-            _unassignBtn.Pressed += () =>
+            _unassignBtn = AshfallUiHelpers.MakeButton("Unassign patient_b", () =>
             {
                 if (_host != null)
                     _host.UnassignCaregiver("patient_b");
-            };
+            });
+            _unassignBtn.CustomMinimumSize = new Vector2(160, 36);
             buttonRow.AddChild(_unassignBtn);
 
             _contentStack.AddChild(buttonRow);

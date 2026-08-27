@@ -49,5 +49,8 @@ namespace AtomicWar.GodotApp
         public static bool TrySave(CaregivingSaveState state) => s_store.TrySave(state);
 
         public static CaregivingSaveState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(CaregivingSaveState state) => s_store.CapturePersisted(state);
     }
 }

@@ -34,6 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sentry" Version="6.9.0" />
+    <PackageReference Include="Sentry" />
   </ItemGroup>
 </Project>

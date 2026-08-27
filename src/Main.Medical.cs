@@ -67,7 +67,7 @@ namespace AtomicWar.GodotApp
         private void SaveMedical()
         {
             if (_medical == null) return;
-            if (MedicalSaveStore.TrySave(_medical.CaptureSave()))
+            if (CaptureSection("medical", MedicalSaveStore.TryCapturePersisted(_medical.CaptureSave())))
             {
                 _medicalDirty = false;
                 GD.Print("[Ashfall Godot] Medical save written.");
@@ -164,7 +164,7 @@ namespace AtomicWar.GodotApp
             if (_disease == null) return;
             try
             {
-                DiseaseSaveStore.TrySave(_disease.Engine.CaptureState());
+                CaptureSection("disease", DiseaseSaveStore.TryCapturePersisted(_disease.Engine.CaptureState()));
             }
             catch (Exception e)
             {

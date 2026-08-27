@@ -1,22 +1,7 @@
-# ASHFALL CI — Godot 4.7 .NET (canonical)
-# Replaces Unity 6000.5.5f1 game-ci pipeline.
-# Fast-tier verification checklist:
-#   1. Validate StreamingAssets JSON syntax (fast-fail)
-#   2. dotnet build Ashfall.Core.Tests
-#   3. dotnet test Ashfall.Core.Tests
-#   4. dotnet build Ashfall.csproj (Godot host: 0 errors)
-#   5. godot --import (build .godot/ cache)
-#   6. godot --headless -- --data-integrity-selftest (0 errors across 129 catalogs)
-#   7. godot --headless -- --bridge-selftest
-#   8. godot --headless -- --asset-registry-selftest (asset resolution)
-#   9. godot --headless -- --player-panels-uitest (player UI panels construction & binding)
-#  10. godot --headless save stores (holdfast, inventory, journal, save-load failure paths)
-#  11. godot --headless campaign smoke (playable shell & day 1 onboarding)
-#  12. godot --headless -- --expansions-selftest (01-10 expansion completeness)
-#  13. triad drift gate (Setup/Save/AllSaveSections parity)
-#  14. CLI catalog drift gate (docs/cli/HOST_CLI_COMMAND_CATALOG.md matches --host-help)
-#  15. compiler warning baseline gate (0 unexpected warnings)
-# No Unity batchmode; no JsonUtility; Core stays engine-agnostic.
+# ASHFALL CI — Godot 4.7 .NET (Canonical Shared Verification Pipeline)
+# Driven by docs/ci/CI_GATE_MANIFEST.json via scripts/ci/run-gates.py.
+# Local developer parity: bash scripts/ci/verify-fast.sh
+# Standalone Godot host; no JsonUtility; Core stays engine-agnostic.
 
 name: ASHFALL CI
 
@@ -28,20 +13,14 @@ on:
 
 jobs:
   ci:
-    name: CI Fast-Tier Gate (dotnet + godot headless)
+    name: CI Fast-Tier Gates (dotnet + godot headless)
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           lfs: true
-
-      - name: Trailing Whitespace Gate
-        run: bash scripts/ci/no-whitespace-churn.sh
-
-      - name: Validate StreamingAssets JSON Syntax & Schema Policy (fast-fail)
-        run: bash scripts/ci/json-schema-policy-gate.sh
 
       - name: Setup .NET SDKs (8.0 for Godot host, 9.0 for tests)
         uses: actions/setup-dotnet@v4
@@ -57,56 +36,16 @@ jobs:
           use-dotnet: true
           include-templates: true
 
-      - name: 1) dotnet build Ashfall.Core.Tests
-        run: dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
-
-      - name: 2) dotnet test Ashfall.Core.Tests
-        run: dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
-
-      - name: 3) dotnet build Godot host (Ashfall.csproj)
-        run: dotnet build Ashfall.csproj --nologo
-
-      - name: godot --import (build .godot/ cache)
-        run: godot --headless --path . --import 2>&1 | tail -n 20
-
-      - name: 4) godot --headless -- --data-integrity-selftest
-        run: godot --headless --path . -- --data-integrity-selftest
-
-      - name: 5) godot --headless -- --bridge-selftest
-        run: godot --headless --path . -- --bridge-selftest
-
-      - name: 6) godot --headless -- --asset-registry-selftest (asset resolution)
-        run: godot --headless --path . -- --asset-registry-selftest
-
-      - name: 7) godot --headless -- --player-panels-uitest (player UI panels)
-        run: godot --headless --path . -- --player-panels-uitest
-
-      - name: 8) godot --headless save stores (holdfast, inventory, journal, failure-paths)
+      - name: Execute Canonical Verification Suite (Fast Tier)
         run: |
-          godot --headless --path . -- --save-load-ui-failure-selftest
-          godot --headless --path . -- --holdfast-save-selftest
-          godot --headless --path . -- --inventory-save-selftest
-          godot --headless --path . -- --journal-save-selftest
+          python3 scripts/ci/run-gates.py --tier fast \
+            --report-json build/reports/gate-results.json \
+            --fail-artifact build/reports/CI_GATE_FAILURE_REPORT.md
 
-      - name: 9) godot --headless campaign smoke (playable shell & day 1 onboarding)
-        run: |
-          godot --headless --path . -- --playable-shell-selftest
-          godot --headless --path . -- --day1-selftest
-
-      - name: 10) godot --headless -- --expansions-selftest (01-10 completeness)
-        run: godot --headless --path . -- --expansions-selftest
-
-      - name: 11) triad drift gate (Setup/Save/AllSaveSections)
-        run: bash scripts/ci/triad-drift-gate.sh
-
-      - name: 12) CLI catalog drift gate (docs match --host-help)
-        run: bash scripts/ci/generate-cli-catalog.sh --check
-
-      - name: 13) save-store contract matrix completeness gate
-        run: bash scripts/ci/generate-save-store-matrix.sh --check
-
-      - name: 14) compiler warning baseline gate (0 unexpected warnings)
-        run: bash scripts/ci/warning-baseline-gate.sh
-
-      - name: 15) master docs index drift gate (docs/INDEX.md in sync)
-        run: python3 scripts/ci/generate-docs-index.py --check
+      - name: Upload Gate Run Artifacts (Results & Failure Report)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-gate-report
+          path: build/reports/
+          if-no-files-found: ignore

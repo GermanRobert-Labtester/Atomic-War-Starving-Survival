@@ -129,7 +129,7 @@ public partial class VerdictDashboardPanel : Control
         }
         catch (Exception ex_CATDIAG)
         {
-            CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+            CatalogDiagnostics.Warn("<ui>", "VerdictDashboard refresh", ex_CATDIAG);
             // bound session with quirky state should not break the dashboard
             _statusRail.Set("phase", "—", AshfallMetricCard.Criticality.Normal);
         }

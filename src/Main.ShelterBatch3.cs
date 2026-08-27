@@ -227,15 +227,51 @@ namespace AtomicWar.GodotApp
             _phase0.BindShelterAssignment(_shelterAssignment.System);
         }
 
-        private void SaveSumpFlooding() => _sumpFlooding?.Save();
-        private void SaveDecontamination() => _decontamination?.Save();
-        private void SaveKitchenNutrition() => _kitchenNutrition?.Save();
-        private void SaveEquipmentCondition() => _equipmentCondition?.Save();
-        private void SaveLibraryStudy() => _libraryStudy?.Save();
-        private void SaveArchiveDesk() => _archiveDesk?.Save();
-        private void SaveContractorRoster() => _contractorRoster?.Save();
-        private void SaveMentalHealthCrisis() => _mentalHealthCrisis?.Save();
-        private void SaveChemicalDependency() => _chemicalDependency?.Save();
+        private void SaveSumpFlooding()
+        {
+            if (_sumpFlooding != null)
+                CaptureSection("sump_flooding", SumpFloodingSaveStore.TryCapturePersisted(_sumpFlooding.System.CaptureState()));
+        }
+        private void SaveDecontamination()
+        {
+            if (_decontamination != null)
+                CaptureSection("decontamination", DecontaminationSaveStore.TryCapturePersisted(_decontamination.System.CaptureState()));
+        }
+        private void SaveKitchenNutrition()
+        {
+            if (_kitchenNutrition != null)
+                CaptureSection("kitchen_nutrition", KitchenNutritionSaveStore.TryCapturePersisted(_kitchenNutrition.System.CaptureState()));
+        }
+        private void SaveEquipmentCondition()
+        {
+            if (_equipmentCondition != null)
+                CaptureSection("equipment_condition", EquipmentConditionSaveStore.TryCapturePersisted(_equipmentCondition.System.CaptureState()));
+        }
+        private void SaveLibraryStudy()
+        {
+            if (_libraryStudy != null)
+                CaptureSection("library_study", LibraryStudySaveStore.TryCapturePersisted(_libraryStudy.System.CaptureState()));
+        }
+        private void SaveArchiveDesk()
+        {
+            if (_archiveDesk != null)
+                CaptureSection("archive_desk", ArchiveDeskSaveStore.TryCapturePersisted(_archiveDesk.System.CaptureState()));
+        }
+        private void SaveContractorRoster()
+        {
+            if (_contractorRoster != null)
+                CaptureSection("contractor_roster", ContractorRosterSaveStore.TryCapturePersisted(_contractorRoster.System.CaptureState()));
+        }
+        private void SaveMentalHealthCrisis()
+        {
+            if (_mentalHealthCrisis != null)
+                CaptureSection("mental_health_crisis", MentalHealthCrisisSaveStore.TryCapturePersisted(_mentalHealthCrisis.System.CaptureState()));
+        }
+        private void SaveChemicalDependency()
+        {
+            if (_chemicalDependency != null)
+                CaptureSection("chemical_dependency", ChemicalDependencySaveStore.TryCapturePersisted(_chemicalDependency.System.CaptureState()));
+        }
         private void SaveShelterAssignment() => _shelterAssignment?.Save();
     }
 }

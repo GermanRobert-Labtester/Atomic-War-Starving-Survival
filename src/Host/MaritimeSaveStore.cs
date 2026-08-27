@@ -48,6 +48,9 @@ namespace AtomicWar.GodotApp
 
         public static MaritimeHostSave? TryLoad() => s_store.TryLoad();
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(MaritimeHostSave save) => s_store.CapturePersisted(save);
+
         private static string EncodeSave(MaritimeHostSave save, IJsonSerializer json)
         {
             save.Checksum = SaveChecksum.Compute(save);

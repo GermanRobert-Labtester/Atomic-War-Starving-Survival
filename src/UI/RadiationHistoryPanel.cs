@@ -55,17 +55,17 @@ namespace AtomicWar.GodotApp.UI
             foreach (var entry in _dose.Ledger.Entries)
             {
                 if (entry == null) continue;
-                AddRow(_historyList, $"{Name(entry.survivorId)} — baseline {entry.baselineMsv:0.0} · cumulative {entry.cumulativeMsv:0.0} mSv",
-                    entry.cumulativeMsv >= 50f ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_historyList, $"{FormatSurvivorName(entry.survivorId)} — baseline {entry.baselineMsv:0.0} · cumulative {entry.cumulativeMsv:0.0} mSv",
+                    entry.cumulativeMsv >= 50f ? AshfallUiHelpers.ColorCritical : AshfallUiHelpers.ColorInfo);
                 RenderedRowCount++;
             }
 
             // ── Cumulative summary ──
             float totalCumulative = _dose.Ledger.Entries.Sum(e => e?.cumulativeMsv ?? 0f);
             float totalBaseline = _dose.Ledger.Entries.Sum(e => e?.baselineMsv ?? 0f);
-            AddRow(_cumulativeList, $"Total cumulative dose: {totalCumulative:0.0} mSv", Ashfall.Core.UI.Theme.Pale);
-            AddRow(_cumulativeList, $"Total inherited baseline: {totalBaseline:0.0} mSv", Ashfall.Core.UI.Theme.Dim);
-            AddRow(_cumulativeList, $"Tracked survivors: {_dose.Ledger.Entries.Count}", Ashfall.Core.UI.Theme.Dim);
+            AddRow(_cumulativeList, $"Total cumulative dose: {totalCumulative:0.0} mSv", AshfallUiHelpers.ColorText);
+            AddRow(_cumulativeList, $"Total inherited baseline: {totalBaseline:0.0} mSv", AshfallUiHelpers.ColorDim);
+            AddRow(_cumulativeList, $"Tracked survivors: {_dose.Ledger.Entries.Count}", AshfallUiHelpers.ColorDim);
             RenderedRowCount += 3;
 
             // ── Reading events (capped at 20) ──
@@ -76,8 +76,8 @@ namespace AtomicWar.GodotApp.UI
                 foreach (var reading in entry.readingsHistory)
                 {
                     if (reading == null || shown >= 20) continue;
-                    AddRow(_eventsList, $"[Day {reading.day}] {Name(entry.survivorId)} — {reading.bookedMsv:0.0} mSv ({reading.source})",
-                        Ashfall.Core.UI.Theme.Critical);
+                    AddRow(_eventsList, $"[Day {reading.day}] {FormatSurvivorName(entry.survivorId)} — {reading.bookedMsv:0.0} mSv ({reading.source})",
+                        AshfallUiHelpers.ColorRadiationAcute);
                     shown++;
                     RenderedRowCount++;
                 }
@@ -86,12 +86,12 @@ namespace AtomicWar.GodotApp.UI
                 _eventsList.AddChild(MakeDimLine("No reading events logged."));
         }
 
-        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        private void AddRow(VBoxContainer parent, string text, Color col)
         {
             var label = new Label { Text = text };
             label.CustomMinimumSize = new Vector2(400, 0);
             label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            label.AddThemeColorOverride("font_color", col);
             parent.AddChild(label);
         }
 
@@ -99,11 +99,11 @@ namespace AtomicWar.GodotApp.UI
         {
             var l = new Label { Text = text };
             l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ColorDim);
             return l;
         }
 
-        private static string Name(string id)
+        private static string FormatSurvivorName(string id)
         {
             if (string.IsNullOrEmpty(id)) return "Unknown";
             int us = id.IndexOf('_');
@@ -115,9 +115,7 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+            AddChild(AshfallUiHelpers.MakeBackdropOverlay());
 
             var container = new CenterContainer();
             container.SetAnchorsPreset(LayoutPreset.FullRect);

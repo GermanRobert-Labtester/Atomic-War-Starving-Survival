@@ -33,17 +33,48 @@ namespace AtomicWar.GodotApp
         private static readonly string[] AllSaveSections = SaveSectionRegistry.SectionKeys.ToArray();
 
         /// <summary>
+        /// In-memory campaign section payloads for the envelope-primary save.
+        /// Each SaveXxx captures its section's persisted bytes here (instead
+        /// of writing a section file); SaveAll packs them into ONE atomic
+        /// campaign.json write. Keys are SaveSectionRegistry section keys.
+        /// </summary>
+        private readonly Dictionary<string, string> _sectionPayloads = new();
+
+        /// <summary>
+        /// Set when any section capture failed during the current SaveAll;
+        /// the envelope write is then aborted so a partially captured
+        /// generation can never be presented as a coherent snapshot.
+        /// </summary>
+        private bool _sectionCaptureFailed;
+
+        /// <summary>
+        /// Record one section's captured payload. Returns true when the
+        /// payload is usable (callers clear their dirty flag); an empty
+        /// payload marks the capture as failed and aborts the save.
+        /// </summary>
+        internal bool CaptureSection(string sectionKey, string payload)
+        {
+            if (string.IsNullOrWhiteSpace(payload))
+            {
+                _sectionCaptureFailed = true;
+                GD.PrintErr($"[Ashfall Godot] Section '{sectionKey}' captured empty — save will be aborted.");
+                return false;
+            }
+            _sectionPayloads[sectionKey] = payload;
+            return true;
+        }
+
+        /// <summary>
         /// Flushes dirty save stores that were marked during the in-flight day
         /// advance. Invoked by the campaign-day coordinator before the briefing
         /// modal opens so a crash mid-modal does not lose the day's mutations.
+        /// With the envelope-primary save this performs a full (silent) save:
+        /// every capture is in-memory and the single envelope write is cheaper
+        /// than the old per-file flushes.
         /// </summary>
         internal void FlushDirtyStoresForDayAdvance()
         {
-            if (_dailyBriefingDirty) SaveDailyBriefing();
-            // The remaining save stores flush through their standard paths
-            // when SaveAll runs at the tail of CommitAdvance. Anything that
-            // cannot tolerate a deferred flush should set its own dirty flag
-            // and call its Save*() here.
+            SaveAll(playCue: false);
         }
 
         /// <summary>
@@ -138,21 +169,18 @@ namespace AtomicWar.GodotApp
 
             ResetExpandedShelterSessions();
 
-            foreach (var file in new[]
+            // Registry-derived cleanup: every registered section file (and its
+            // .bak) is removed from the global user:// directory so a new
+            // game starts from a clean slate. Slots are untouched — they are
+            // independent campaigns.
+            foreach (var fileName in SaveSectionRegistry.SectionFileNames.Values)
             {
-                "holdfast_s1_save.json", "holdfast_trade_save.json", "holdfast_trade_save.json.bak",
-                "duty_roster_save.json", "expansion_hub_save.json", "phantom_memory_save.json",
-                "dose_ledger_save.json", "inventory_save.json", "survivors_save.json",
-                "economy_save.json", "muster_save.json", "verdict_save.json",
-                "maritime_save.json", "expedition_save.json", "narrative_save.json",
-                "medical_save.json", "world_save.json", "crafting_save.json",
-                "caravan_save.json", "campaign_day_save.json", "journal_save.json", "year_of_ash_save.json",
-                "starting_level_save.json", "greenhouse_save.json", "host_event_save.json", "radio_save.json"
-            })
-            {
-                string p = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
+                string p = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), fileName);
                 if (System.IO.File.Exists(p))
                     System.IO.File.Delete(p);
+                string bak = p + ".bak";
+                if (System.IO.File.Exists(bak))
+                    System.IO.File.Delete(bak);
             }
             GD.Print("[Ashfall Godot] New game: all sessions reset, saves cleared.");
         }
@@ -260,7 +288,9 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Remove the holdfast base + trade saves (and backup) so a
-        /// completed run cannot be continued into an immediate game-over loop.</summary>
+        /// completed run cannot be continued into an immediate game-over loop.
+        /// With the envelope-primary save the authoritative copy is the active
+        /// slot's campaign envelope, so that (and its backup) goes too.</summary>
         private void ClearContinuableSaves()
         {
             if (System.IO.File.Exists(HoldfastSaveStore.SavePath))
@@ -269,9 +299,16 @@ namespace AtomicWar.GodotApp
                 System.IO.File.Delete(HoldfastTradeSaveStore.SavePath);
             if (System.IO.File.Exists(HoldfastTradeSaveStore.BackupPath))
                 System.IO.File.Delete(HoldfastTradeSaveStore.BackupPath);
+
+            if (_saveLoadHost?.ActiveSlotId != null)
+            {
+                _saveLoadHost.ClearActiveSlotEnvelope();
+            }
         }
 
-        private void SaveAll()
+        private void SaveAll() => SaveAll(playCue: true);
+
+        private void SaveAll(bool playCue)
         {
             SaveJournal();
             SaveMoralChoice();
@@ -314,10 +351,20 @@ namespace AtomicWar.GodotApp
             // ─────────────────────────────────────────────────────────────
             SaveAllExpandedShelterSystems();
             SaveCampaignDay();
-            _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
+            if (playCue)
+                _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
 
-            // Aggregate-first save: pack all subsystem payloads into the canonical envelope.
-            _saveLoadHost?.SaveAllDirect(AllSaveSections);
+            // Envelope-primary save: ONE atomic campaign.json write from the
+            // in-memory payload map. A failed capture aborts here so a mixed-
+            // generation snapshot can never be written; the previous envelope
+            // stays intact.
+            if (_sectionCaptureFailed)
+            {
+                _sectionCaptureFailed = false;
+                GD.PrintErr("[Ashfall Godot] SaveAll aborted: one or more sections failed to capture; previous campaign envelope preserved.");
+                return;
+            }
+            _saveLoadHost?.SaveAllDirect(_sectionPayloads);
         }
 
     }

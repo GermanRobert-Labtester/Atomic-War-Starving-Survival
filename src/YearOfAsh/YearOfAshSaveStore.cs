@@ -37,5 +37,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
 
         public static YearOfAshSave? TryLoad(string pathOverride = null!) =>
             s_store.TryLoad(pathOverride);
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(YearOfAshSave save) => s_store.CapturePersisted(save);
     }
 }

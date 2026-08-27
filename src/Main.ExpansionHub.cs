@@ -278,7 +278,7 @@ namespace AtomicWar.GodotApp
         {
             if (_expansions == null) return;
             int day = _core != null ? _core.Clock.Day : _simDay;
-            if (ExpansionHubSaveStore.TrySave(_expansions.CaptureSave(day)))
+            if (CaptureSection("expansion_hub", ExpansionHubSaveStore.TryCapturePersisted(_expansions.CaptureSave(day))))
             {
                 _expansionHubDirty = false;
                 GD.Print($"[Ashfall Godot] Expansion hub save written (day {day}).");

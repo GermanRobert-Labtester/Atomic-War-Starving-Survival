@@ -60,33 +60,31 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
-            _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _curfewBtn = new Button { Text = "Toggle Night Curfew", CustomMinimumSize = new Vector2(180, 36) };
-            _curfewBtn.Pressed += () =>
+            _curfewBtn = AshfallUiHelpers.MakeButton("Toggle Night Curfew", () =>
             {
                 if (_host != null)
                 {
                     bool active = !_host.System.State.curfewActive;
                     _host.SetCurfew(active);
                 }
-            };
+            });
+            _curfewBtn.CustomMinimumSize = new Vector2(180, 36);
             buttonRow.AddChild(_curfewBtn);
 
-            _emergencyBtn = new Button { Text = "Emergency Override", CustomMinimumSize = new Vector2(180, 36) };
-            _emergencyBtn.Pressed += () =>
+            _emergencyBtn = AshfallUiHelpers.MakeButton("Emergency Override", () =>
             {
                 if (_host != null)
                 {
                     bool active = !_host.System.State.emergencyOverride;
                     _host.SetEmergencyOverride(active);
                 }
-            };
+            });
+            _emergencyBtn.CustomMinimumSize = new Vector2(180, 36);
             buttonRow.AddChild(_emergencyBtn);
 
             _contentStack.AddChild(buttonRow);

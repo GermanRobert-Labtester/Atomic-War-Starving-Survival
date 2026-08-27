@@ -50,6 +50,9 @@ namespace AtomicWar.GodotApp
         public static VerdictSave? TryLoad(string pathOverride = null!) =>
             s_store.TryLoad(pathOverride);
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(VerdictSave save) => s_store.CapturePersisted(save);
+
         private static VerdictSave? DecodeVerdict(string raw, IJsonSerializer json)
         {
             if (VerdictSaveCodec.TryDecode(raw, json, out var save))

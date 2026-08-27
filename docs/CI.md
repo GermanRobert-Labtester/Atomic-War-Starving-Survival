@@ -35,7 +35,7 @@ Per `AGENTS.md`, all verification uses **`dotnet` + `godot --headless`**. The ca
 16. **Compiler Warning Baseline Gate:** `bash scripts/ci/warning-baseline-gate.sh` (0 unexpected warnings across all targets)
 17. **Master Docs Index Drift Gate:** `python3 scripts/ci/generate-docs-index.py --check` (verifies `docs/INDEX.md` stays in sync with repository docs corpus)
 
-For a detailed distinction between blocking CI gates, domain quality gates, and report-only diagnostic tools, see [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md).
+For a detailed distinction between blocking CI gates, domain quality gates, and report-only diagnostic tools, see [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md).
 
 ---
 

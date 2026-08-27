@@ -50,5 +50,8 @@ namespace AtomicWar.GodotApp
         /// <summary>Reads and validates through the codec. Returns null when absent or corrupt.</summary>
         public static HoldfastSave? TryLoad(string pathOverride = null!) =>
             s_store.TryLoad(pathOverride);
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(HoldfastSave save) => s_store.CapturePersisted(save);
     }
 }

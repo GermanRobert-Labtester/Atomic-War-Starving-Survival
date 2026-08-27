@@ -299,6 +299,9 @@ namespace AtomicWar.GodotApp
 
         public static GreenhouseState? TryLoad() => s_store.TryLoad();
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(GreenhouseState state) => s_store.CapturePersisted(state);
+
         private static string EncodeSave(GreenhouseState state, IJsonSerializer json)
         {
             var envelope = new GreenhouseSaveEnvelope { State = state };

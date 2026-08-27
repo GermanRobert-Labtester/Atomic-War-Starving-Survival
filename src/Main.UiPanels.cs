@@ -788,6 +788,9 @@ namespace AtomicWar.GodotApp
             // ── Setup Expanded Shelter Systems (Water, Airlock, Relations, Treaties, etc.) ──
             SetupExpandedShelterSystems();
 
+            // ── Register Typed Player Surface Actions ──
+            RegisterPlayerSurfaces();
+
             // ── Start in menu state ──
             _state = GameState.Menu;
         }

@@ -32,12 +32,12 @@ In Godot Engine, calling `node.QueueFree()` or closing an overlay does not insta
 - Consequently, nodes queued for deletion are still present in the scene tree when `UiNodeDiagnostics.Report()` captures the "after" snapshot immediately following panel closure.
 
 ### 2. First-Open Caching & Sub-Component Pooling
-Many complex panels (such as [`MapAtlasPanel`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/MapAtlasPanel.cs), [`ResearchAtlasPanel`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/ResearchAtlasPanel.cs), and [`EventsLogPanel`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/EventsLogPanel.cs)) lazily instantiate sub-views (reusable item rows, tooltip containers, background texture 9-slices) on their first `Open()` and keep them hidden (`Visible = false`) for rapid reopening rather than re-allocating them on every interaction:
+Many complex panels (such as [`MapAtlasPanel`](../../src/UI/MapAtlasPanel.cs), [`ResearchAtlasPanel`](../../src/UI/ResearchAtlasPanel.cs), and [`EventsLogPanel`](../../src/UI/EventsLogPanel.cs)) lazily instantiate sub-views (reusable item rows, tooltip containers, background texture 9-slices) on their first `Open()` and keep them hidden (`Visible = false`) for rapid reopening rather than re-allocating them on every interaction:
 - This creates an intentional, one-time positive node delta on the first open/close cycle.
 - On subsequent open/close cycles, the delta drops to `+0`.
 
 ### 3. Non-Blocking Diagnostic Isolation (`Tier 3`)
-Under the [Gating vs Diagnostic Policy](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md), `UiNodeDiagnostics` is classified as **Tier 3 (Diagnostic Only)**:
+Under the [Gating vs Diagnostic Policy](../ci/GATING_VS_DIAGNOSTIC_CHECKS.md), `UiNodeDiagnostics` is classified as **Tier 3 (Diagnostic Only)**:
 - It tracks `TreeNodes`, `UiControls`, and Godot's live `ObjectCount` performance monitor to assist developers during profiling.
 - It is intentionally decoupled from the test's return code so informational telemetry never masks or conflates real logic defects.
 

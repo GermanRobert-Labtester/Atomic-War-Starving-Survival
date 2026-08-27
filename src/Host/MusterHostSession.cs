@@ -33,7 +33,6 @@ namespace AtomicWar.GodotApp
         /// framing is keyed to this trait, never to the witness.</summary>
         public RiskBiasTrait AuthorBias { get; private set; } = RiskBiasTrait.Realist;
 
-        public event Action? StateChanged;
         public event Action<MusterRecord>? OnQuestlineResolved;
 
         public MusterHostSession(
@@ -64,16 +63,16 @@ namespace AtomicWar.GodotApp
             {
                 LastEvent = $"Resolved {record.questlineId} via approach {record.selectedApproach} → {record.endingKey}";
                 OnQuestlineResolved?.Invoke(record);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            Engine.OnStateChanged += _ => StateChanged?.Invoke();
-            Camp.OnStateChanged += _ => StateChanged?.Invoke();
-            ColdCount.OnStateChanged += _ => StateChanged?.Invoke();
-            Provisioned.OnStateChanged += _ => StateChanged?.Invoke();
-            LongWalk.OnStateChanged += _ => StateChanged?.Invoke();
-            ScavengerGuild.OnStateChanged += _ => StateChanged?.Invoke();
-            IronRaiders.OnStateChanged += _ => StateChanged?.Invoke();
-            HydroBarons.OnStateChanged += _ => StateChanged?.Invoke();
+            Engine.OnStateChanged += _ => RaiseStateChanged();
+            Camp.OnStateChanged += _ => RaiseStateChanged();
+            ColdCount.OnStateChanged += _ => RaiseStateChanged();
+            Provisioned.OnStateChanged += _ => RaiseStateChanged();
+            LongWalk.OnStateChanged += _ => RaiseStateChanged();
+            ScavengerGuild.OnStateChanged += _ => RaiseStateChanged();
+            IronRaiders.OnStateChanged += _ => RaiseStateChanged();
+            HydroBarons.OnStateChanged += _ => RaiseStateChanged();
         }
 
         public static MusterHostSession Create(string dataDir)
@@ -121,7 +120,7 @@ namespace AtomicWar.GodotApp
             LastEvent = Engine.MusterTriggered
                 ? $"Day {day}: the Muster is open. Coalition camp holds {Camp.MembersRallied}."
                 : $"Day {day}: escalation tracked (Muster opens Day {MusterSystem.MusterOpeningDay}).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -135,7 +134,7 @@ namespace AtomicWar.GodotApp
             int next = ((int)AuthorBias + 1) % all.Length;
             AuthorBias = all[next];
             LastEvent = $"Witness accounts now recorded by a {AuthorBias} author.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -147,7 +146,7 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"A deserter has walked in. Camp holds {Camp.MembersRallied}."
                 : "No holding ground yet — the Muster has not opened.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -157,7 +156,7 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"Strategy {strategy} chosen. Lockout risk {Camp.GarrisonLockoutRisk}%."
                 : "Strategy rejected: not formed, or already chosen.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -169,7 +168,7 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"Approach {approach} selected for {questlineId}."
                 : $"Rejected: {questlineId} does not offer {approach} or is resolved.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 

@@ -2,9 +2,9 @@
 
 > [!IMPORTANT]
 > **CURRENT PROJECT AUTHORITY**
-> 1. **Master Directives:** [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md) is the authoritative architectural and workflow rulebook. All AI agents and contributors must follow its non-negotiable rules.
-> 2. **Core Domain Logic (Truth):** [`Assets/Ashfall.Core/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/) is the single source of truth for simulation logic — 100% engine-agnostic C# with zero engine references.
-> 3. **Data Authority:** [`Assets/StreamingAssets/Data/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/StreamingAssets/Data/) (JSON catalogs) is the absolute authority for definitions, balancing, quests, and economy.
+> 1. **Master Directives:** [`AGENTS.md`](../AGENTS.md) is the authoritative architectural and workflow rulebook. All AI agents and contributors must follow its non-negotiable rules.
+> 2. **Core Domain Logic (Truth):** [`Assets/Ashfall.Core/`](../Assets/Ashfall.Core) is the single source of truth for simulation logic — 100% engine-agnostic C# with zero engine references.
+> 3. **Data Authority:** [`Assets/StreamingAssets/Data/`](../Assets/StreamingAssets/Data) (JSON catalogs) is the absolute authority for definitions, balancing, quests, and economy.
 > 4. **Authoritative Host & Runtime:** **Godot 4.7+ (.NET / C#)** (`src/`, `scenes/Main.tscn`, `project.godot`). The legacy Unity host (`Assets/_Game/`) and shim (`src/Bridge/`) have been fully retired and deleted.
 > 5. **Verification Pipeline:** `dotnet test` (all unit tests passing, 0 failures) + `godot --headless` only.
 
@@ -95,14 +95,14 @@ Full flag list + exit codes in `src/Host/HostCli.cs` (the CLI dispatcher).
 - **Year of Ash (Days 180–360):** `YearOfAsh/{TimelineSystem,DeepFreezeSystem,RadonSystem,FactionWarSystem,QuestlineSystem,DoorEncounterSystem,YearOfAshSave}`
 - **Wasteland Map & World Navigation:**
   - **Data Authority:** `Assets/StreamingAssets/Data/wasteland_map.json` and `world_regions.json`
-  - **Catalog Loader:** [`Assets/Ashfall.Core/World/WastelandMapCatalogLoader.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/World/WastelandMapCatalogLoader.cs) — Loads 99+ wasteland nodes, normalized coordinates `(X, Y)`, sectors, hazard profiles, and route edge connectivity.
-  - **Core System (Truth):** [`Assets/Ashfall.Core/World/WastelandMapSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/World/WastelandMapSystem.cs) — Manages 4-state marker progression (`Locked`, `Available`, `Discovered`, `Complete`), traversal cost calculation, route unlocks, and `WastelandMapState` snapshot DTO.
-  - **Godot Host Session:** [`src/Host/WorldHostSession.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/WorldHostSession.cs) — Lifecycle adapter managing map instance, sector hazard tracking, and coordinate mapping.
-  - **Save Store:** [`src/Host/WastelandMapSaveStore.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/WastelandMapSaveStore.cs) — Persists to `user://saves/save_wasteland_map.json` using versioned codec and SHA-256 state checksum envelope (registered as `"wasteland_map"` in `AllSaveSections`).
+  - **Catalog Loader:** [`Assets/Ashfall.Core/World/WastelandMapCatalogLoader.cs`](../Assets/Ashfall.Core/World/WastelandMapCatalogLoader.cs) — Loads 99+ wasteland nodes, normalized coordinates `(X, Y)`, sectors, hazard profiles, and route edge connectivity.
+  - **Core System (Truth):** [`Assets/Ashfall.Core/World/WastelandMapSystem.cs`](../Assets/Ashfall.Core/World/WastelandMapSystem.cs) — Manages 4-state marker progression (`Locked`, `Available`, `Discovered`, `Complete`), traversal cost calculation, route unlocks, and `WastelandMapState` snapshot DTO.
+  - **Godot Host Session:** [`src/Host/WorldHostSession.cs`](../src/Host/WorldHostSession.cs) — Lifecycle adapter managing map instance, sector hazard tracking, and coordinate mapping.
+  - **Save Store:** [`src/Host/WastelandMapSaveStore.cs`](../src/Host/WastelandMapSaveStore.cs) — Persists to `user://saves/save_wasteland_map.json` using versioned codec and SHA-256 state checksum envelope (registered as `"wasteland_map"` in `AllSaveSections`).
   - **View Layer & UI:**
-    - [`src/World/WastelandMapView.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/World/WastelandMapView.cs) & [`src/World/MapLocationMarkerView.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/World/MapLocationMarkerView.cs) — Interactive 2D viewport map surface.
-    - [`src/UI/MapAtlasPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/MapAtlasPanel.cs) — Fullscreen interactive modal atlas panel with discipline/sector filters, marker state legend, route inspector, and location details.
-    - [`src/UI/MapPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/MapPanel.cs) — Shelter HUD overview panel with sector indicators and marker state legend.
+    - [`src/World/WastelandMapView.cs`](../src/World/WastelandMapView.cs) & [`src/World/MapLocationMarkerView.cs`](../src/World/MapLocationMarkerView.cs) — Interactive 2D viewport map surface.
+    - [`src/UI/MapAtlasPanel.cs`](../src/UI/MapAtlasPanel.cs) — Fullscreen interactive modal atlas panel with discipline/sector filters, marker state legend, route inspector, and location details.
+    - [`src/UI/MapPanel.cs`](../src/UI/MapPanel.cs) — Shelter HUD overview panel with sector indicators and marker state legend.
   - **Verification:** `dotnet test --filter WastelandMap` + `godot --headless --path . -- --world-selftest`.
 - Every system: raises events on state change, and has `CaptureState()`/`RestoreState()` returning a `[Serializable]` primitives-only snapshot. Effortless save/load + deep-copy snapshot isolation (never alias the live state into CaptureState).
 

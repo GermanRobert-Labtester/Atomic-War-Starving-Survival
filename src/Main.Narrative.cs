@@ -107,7 +107,7 @@ namespace AtomicWar.GodotApp
         private void SaveJournal()
         {
             if (_journal == null) return;
-            JournalSaveStore.Save(_journal.CaptureState());
+            CaptureSection("journal", JournalSaveStore.TryCapturePersisted(_journal.CaptureState()));
             _journalDirty = false;
         }
 
@@ -161,7 +161,7 @@ namespace AtomicWar.GodotApp
         private void SaveNarrative()
         {
             if (_narrative == null) return;
-            if (NarrativeSaveStore.TrySave(_narrative.CaptureSave()))
+            if (CaptureSection("narrative", NarrativeSaveStore.TryCapturePersisted(_narrative.CaptureSave())))
             {
                 _narrativeDirty = false;
                 GD.Print("[Ashfall Godot] Narrative save written.");
@@ -171,7 +171,7 @@ namespace AtomicWar.GodotApp
         private void SaveEventAdapter()
         {
             if (_hostEventAdapter == null) return;
-            if (HostEventSaveStore.TrySave(_hostEventAdapter.State))
+            if (CaptureSection("host_event", HostEventSaveStore.TryCapturePersisted(_hostEventAdapter.State)))
             {
                 _hostEventAdapterDirty = false;
             }
@@ -210,7 +210,7 @@ namespace AtomicWar.GodotApp
         private void SaveRadio()
         {
             if (_radio == null) return;
-            if (RadioSaveStore.TrySave(_radio.CaptureSave()))
+            if (CaptureSection("radio", RadioSaveStore.TryCapturePersisted(_radio.CaptureSave())))
             {
                 GD.Print("[Ashfall Godot] Radio save written.");
             }

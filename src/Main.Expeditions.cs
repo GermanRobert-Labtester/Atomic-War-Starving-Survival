@@ -93,7 +93,7 @@ namespace AtomicWar.GodotApp
         private void SaveExpeditions()
         {
             if (_expeditions == null) return;
-            if (ExpeditionSaveStore.TrySave(_expeditions.CaptureSave()))
+            if (CaptureSection("expedition", ExpeditionSaveStore.TryCapturePersisted(_expeditions.CaptureSave())))
             {
                 _expeditionDirty = false;
                 GD.Print("[Ashfall Godot] Expedition save written.");
@@ -121,7 +121,7 @@ namespace AtomicWar.GodotApp
         private void SaveCombat()
         {
             if (_combat == null) return;
-            if (CombatSaveStore.TrySave(_combat.CaptureSave()))
+            if (CaptureSection("combat", CombatSaveStore.TryCapturePersisted(_combat.CaptureSave())))
             {
                 _combatDirty = false;
                 GD.Print("[Ashfall Godot] Combat save written.");
@@ -186,7 +186,7 @@ namespace AtomicWar.GodotApp
             if (_world?.WastelandMap == null) return;
             try
             {
-                WastelandMapSaveStore.TrySave(_world.WastelandMap.CaptureState());
+                CaptureSection("wasteland_map", WastelandMapSaveStore.TryCapturePersisted(_world.WastelandMap.CaptureState()));
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace AtomicWar.GodotApp
             if (_encounterChoice == null || !_encounterChoiceDirty) return;
             try
             {
-                if (EncounterChoiceSaveStore.TrySave(_encounterChoice.CaptureState()))
+                if (CaptureSection("encounter_choice", EncounterChoiceSaveStore.TryCapturePersisted(_encounterChoice.CaptureState())))
                     _encounterChoiceDirty = false;
             }
             catch (Exception e)

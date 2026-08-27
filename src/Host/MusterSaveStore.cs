@@ -64,6 +64,9 @@ namespace AtomicWar.GodotApp
 
         public static MusterHostSave? TryLoad() => s_store.TryLoad();
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(MusterHostSave save) => s_store.CapturePersisted(save);
+
         private static string EncodeSave(MusterHostSave save, IJsonSerializer json)
         {
             // Recompute so a mutated envelope cannot persist a stale hash.

@@ -309,7 +309,7 @@ namespace AtomicWar.GodotApp.UI
             }
             catch (Exception ex_CATDIAG)
             {
-                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                CatalogDiagnostics.Warn("<scroll>", "ScrollToChild", ex_CATDIAG);
                 // best-effort
             }
         }

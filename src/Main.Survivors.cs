@@ -44,7 +44,7 @@ namespace AtomicWar.GodotApp
             if (_survivors != null) return;
             _survivors = new SurvivorsHostSession();
             _survivors.LoadCatalog(_dataDir);
-            _survivors.SeedDemoRoster();
+            _survivors.LoadStartingRoster(_dataDir);
             _survivors.StateChanged += () =>
             {
                 SaveSurvivors();
@@ -124,7 +124,7 @@ namespace AtomicWar.GodotApp
         private void SaveSurvivors()
         {
             if (_survivors == null) return;
-            if (SurvivorsSaveStore.TrySave(_survivors.CaptureSave()))
+            if (CaptureSection("survivors", SurvivorsSaveStore.TryCapturePersisted(_survivors.CaptureSave())))
                 GD.Print("[Ashfall Godot] Survivors save written.");
         }
 

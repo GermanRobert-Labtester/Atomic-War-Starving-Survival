@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-08-27<br>
-**Total Registered Actions:** 90 entries / 135 flag tokens (aliases included)
+**Total Registered Actions:** 92 entries / 140 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -13,12 +13,14 @@
 
 | Primary Flag | Aliases | Description |
 |---|---|---|
-| `--7-day-smoke-selftest` | `--seven-day-smoke-selftest`, `--deterministic-smoke-selftest` | 7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates |
+| `--7-day-smoke-selftest` | `--seven-day-smoke-selftest`, `--deterministic-smoke-selftest`, `--deterministic-smoke-run` | 7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates |
+| `--accessibility-selftest` | `--ui-accessibility-selftest`, `--ui-access-selftest` | Verify focus order, non-empty labels, modal close handling, and accessibility compliance across UI panels |
 | `--asset-coverage-report` | — | Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list |
 | `--asset-registry-selftest` | — | Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/ |
 | `--bridge-selftest` | — | Report UnityEngine shim removal (shim is gone; always exits 0) |
 | `--core-selftest` | — | Ice road + census headless demos |
 | `--data-integrity-selftest` | — | Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates) |
+| `--catalog-boot-preflight` | — | Machine-readable preflight: checks all catalogs are present, well-formed, and reports classification (required/optional/dev-only) with any load errors |
 | `--panel-bind-lifecycle-selftest` | `--panel-bind-selftest`, `--panel-lifecycle-selftest` | Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch |
 | `--save-load-ui-failure-selftest` | `--save-load-failure-selftest`, `--save-load-failure-uitest`, `--save-load-selftest` | Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact |
 | `--save-store-checksum-selftest` | `--save-store-checksums-selftest`, `--checksum-sweep-selftest` | Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard) |

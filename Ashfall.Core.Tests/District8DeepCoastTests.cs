@@ -196,7 +196,7 @@ namespace Ashfall.Core.Tests
                 }
                 catch (Exception ex_CATDIAG)
                 {
-                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                    CatalogDiagnostics.Warn(path, "item catalog probe", ex_CATDIAG);
                 }
             }
             return ids;

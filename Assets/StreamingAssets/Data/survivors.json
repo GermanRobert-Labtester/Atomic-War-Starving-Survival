@@ -30,7 +30,9 @@
       "baseHealth": 90,
       "latentExpertTrait": "trait_miracle_worker",
       "activeQuestlineId": "quest_the_shaking_hand",
-      "traitIds": ["skill_sanitization_expert"]
+      "traitIds": [
+        "skill_sanitization_expert"
+      ]
     },
     {
       "id": "the_pharmacist",
@@ -1226,6 +1228,20 @@
       "profession": "Medic",
       "bio": "A former paramedic who now cares for the bunker's sick and injured. Their touch is gentle, and their heart is kind. They work tirelessly in the medical bay, easing pain and saving lives. Their hands are always busy, and their spirit is always strong. They believe that healing is the most important work of all.",
       "baseHealth": 85
+    },
+    {
+      "id": "survivor_dr_sarah_chen",
+      "displayName": "Dr. Sarah Chen",
+      "profession": "Trauma Surgeon",
+      "bio": "Former chief trauma surgeon from the city university hospital who ran emergency surgical bays during the atomic bombardment.",
+      "baseHealth": 100
+    },
+    {
+      "id": "survivor_gunner_mikhail",
+      "displayName": "Gunner Mikhail",
+      "profession": "Heavy Artillery Loader",
+      "bio": "Heavy artillery battery loader who manned defensive emplacements along the river line through weeks of heavy fallout exposure.",
+      "baseHealth": 100
     }
   ]
 }

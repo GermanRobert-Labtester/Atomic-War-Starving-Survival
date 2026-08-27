@@ -105,7 +105,7 @@ namespace AtomicWar.GodotApp
         private void SaveEconomy()
         {
             if (_economy == null) return;
-            if (EconomySaveStore.TrySave(_economy.CaptureSave()))
+            if (CaptureSection("economy", EconomySaveStore.TryCapturePersisted(_economy.CaptureSave())))
             {
                 _economyDirty = false;
                 GD.Print("[Ashfall Godot] Economy save written.");
@@ -128,7 +128,7 @@ namespace AtomicWar.GodotApp
         private void SaveCaravans()
         {
             if (_caravans == null) return;
-            if (CaravanSaveStore.TrySave(_caravans.CaptureSave()))
+            if (CaptureSection("caravan", CaravanSaveStore.TryCapturePersisted(_caravans.CaptureSave())))
             {
             _caravansDirty = false;
             _yearOfAshDirty = false;
@@ -141,7 +141,7 @@ namespace AtomicWar.GodotApp
             if (_silentFoundry == null) return;
             try
             {
-                SilentFoundrySaveStore.TrySave(_silentFoundry.Engine.CaptureState());
+                CaptureSection("silent_foundry", SilentFoundrySaveStore.TryCapturePersisted(_silentFoundry.Engine.CaptureState()));
             }
             catch (Exception e)
             {

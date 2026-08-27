@@ -41,5 +41,8 @@ namespace AtomicWar.GodotApp
         public static bool TrySave(ChemicalDependencyLedgerState state) => s_store.TrySave(state);
 
         public static ChemicalDependencyLedgerState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(ChemicalDependencyLedgerState state) => s_store.CapturePersisted(state);
     }
 }

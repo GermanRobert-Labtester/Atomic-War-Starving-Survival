@@ -148,10 +148,10 @@ public partial class CaravanBarterLedgerPanel : Control, IBindablePanel
             return 0;
         }
         catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return 0;
-                                }
+        {
+            CatalogDiagnostics.Warn("<reflection>", "ConsecutiveRepels property", ex_CATDIAG);
+            return 0;
+        }
     }
 
     public override void _Ready()

@@ -85,6 +85,7 @@ namespace AtomicWar.GodotApp
         UtilityAiSelfTest,
         UtilityAiUiTest,
         DataIntegritySelfTest,
+        CatalogBootPreflight,
         CaravanSelfTest,
         AssetRegistrySelfTest,
         AssetCoverageReport,
@@ -117,6 +118,7 @@ namespace AtomicWar.GodotApp
         PanelBindLifecycleSelfTest,
         SaveStoreChecksumSelfTest,
         SevenDayDeterministicSmokeSelfTest,
+        UiAccessibilitySelfTest,
         UiSnapshotSelfTest,
         UiSnapshotRegenerate
     }
@@ -292,6 +294,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.UtilityAiUiTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
+            if (Has(args, "--catalog-boot-preflight"))
+                return HostCliAction.CatalogBootPreflight;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
                 return HostCliAction.CaravanSelfTest;
             if (Has(args, "--asset-registry-selftest"))
@@ -342,8 +346,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.PanelBindLifecycleSelfTest;
             if (Has(args, "--save-store-checksum-selftest") || Has(args, "--save-store-checksums-selftest") || Has(args, "--checksum-sweep-selftest"))
                 return HostCliAction.SaveStoreChecksumSelfTest;
-            if (Has(args, "--7-day-smoke-selftest") || Has(args, "--seven-day-smoke-selftest") || Has(args, "--deterministic-smoke-selftest"))
+            if (Has(args, "--7-day-smoke-selftest") || Has(args, "--seven-day-smoke-selftest") || Has(args, "--deterministic-smoke-selftest") || Has(args, "--deterministic-smoke-run"))
                 return HostCliAction.SevenDayDeterministicSmokeSelfTest;
+            if (Has(args, "--ui-accessibility-selftest") || Has(args, "--ui-access-selftest") || Has(args, "--accessibility-selftest"))
+                return HostCliAction.UiAccessibilitySelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -352,12 +358,14 @@ namespace AtomicWar.GodotApp
             GD.Print("ASHFALL Godot host flags (after --):");
 
             GD.Print("\n--- Core & System Gates ---");
-            GD.Print("  --7-day-smoke-selftest / --seven-day-smoke-selftest / --deterministic-smoke-selftest 7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates");
+            GD.Print("  --7-day-smoke-selftest / --seven-day-smoke-selftest / --deterministic-smoke-selftest / --deterministic-smoke-run 7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates");
+            GD.Print("  --accessibility-selftest / --ui-accessibility-selftest / --ui-access-selftest Verify focus order, non-empty labels, modal close handling, and accessibility compliance across UI panels");
             GD.Print("  --asset-coverage-report  Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list");
             GD.Print("  --asset-registry-selftest Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
             GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
             GD.Print("  --core-selftest          Ice road + census headless demos");
             GD.Print("  --data-integrity-selftest Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
+            GD.Print("  --catalog-boot-preflight   Machine-readable preflight: checks all catalogs are present, well-formed, and reports classification (required/optional/dev-only) with any load errors");
             GD.Print("  --panel-bind-lifecycle-selftest / --panel-bind-selftest / --panel-lifecycle-selftest Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch");
             GD.Print("  --save-load-ui-failure-selftest / --save-load-failure-selftest / --save-load-failure-uitest / --save-load-selftest Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact");
             GD.Print("  --save-store-checksum-selftest / --save-store-checksums-selftest / --checksum-sweep-selftest Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)");

@@ -83,10 +83,10 @@ namespace Ashfall.Core.Radio
                 return true;
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return false;
-                                }
+            {
+                CatalogDiagnostics.Warn("<decode>", "RadioSaveState", ex_CATDIAG);
+                return false;
+            }
         }
     }
 }

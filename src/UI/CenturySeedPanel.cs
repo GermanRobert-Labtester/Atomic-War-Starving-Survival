@@ -131,8 +131,7 @@ namespace AtomicWar.GodotApp.UI
             contentBox.AddChild(_mentorshipContainer);
 
             // ── Bottom Action Bar ──
-            var bottomBar = new HBoxContainer();
-            bottomBar.AddThemeConstantOverride("separation", (int)CoreTheme.SpacingMd);
+            var bottomBar = AshfallUiHelpers.MakeActionBar(separation: (int)CoreTheme.SpacingMd);
             mainVBox.AddChild(bottomBar);
 
             var btnClose = AshfallUiHelpers.MakeButton("RETURN TO EXPANSION HUB [ESC]", Close);

@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
 
             root.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var buttonRow = new HBoxContainer();
+            var buttonRow = AshfallUiHelpers.MakeActionBar();
             root.AddChild(buttonRow);
 
             _openMineButton = AshfallUiHelpers.MakeButton("Open Mine", OnOpenMine);

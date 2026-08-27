@@ -57,7 +57,7 @@ namespace AtomicWar.GodotApp
                 state = state,
                 checksum = SaveChecksum.Compute(state)
             };
-            ExpansionQuestSaveStore.Save(envelope);
+            CaptureSection("expansion_quest", ExpansionQuestSaveStore.TryCapturePersisted(envelope));
             _expansionQuestsDirty = false;
         }
 
@@ -89,7 +89,7 @@ namespace AtomicWar.GodotApp
                 state = state,
                 checksum = SaveChecksum.Compute(state)
             };
-            ThirdonarySaveStore.Save(envelope);
+            CaptureSection("thirdonary", ThirdonarySaveStore.TryCapturePersisted(envelope));
             _thirdonaryDirty = false;
         }
 

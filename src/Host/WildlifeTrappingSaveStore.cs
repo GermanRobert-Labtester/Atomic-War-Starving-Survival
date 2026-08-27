@@ -37,6 +37,9 @@ namespace AtomicWar.GodotApp
 
         public static WildlifeTrappingState? TryLoad() => s_store.TryLoad();
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(WildlifeTrappingState state) => s_store.CapturePersisted(state);
+
         /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
         public static string TryCaptureDirect(WildlifeTrappingState state) => s_store.CaptureBare(state);
 

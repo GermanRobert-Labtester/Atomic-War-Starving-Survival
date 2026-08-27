@@ -17,9 +17,9 @@
 >    - **C8 (Broken CI Pipeline)**: Resolved. Canonical `dotnet` + `godot --headless` CI gate enforced.
 >
 > For active project architecture, consult:
-> - [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md) — Canonical rules and invariants.
-> - [`docs/CURRENT_AUTHORITY.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/CURRENT_AUTHORITY.md) — System index and current authority map.
-> - [`docs/ASHFALL_CODE_INDEX.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ASHFALL_CODE_INDEX.md) — Architecture and subsystem code paths.
+> - [`AGENTS.md`](AGENTS.md) — Canonical rules and invariants.
+> - [`docs/CURRENT_AUTHORITY.md`](docs/CURRENT_AUTHORITY.md) — System index and current authority map.
+> - [`docs/ASHFALL_CODE_INDEX.md`](docs/ASHFALL_CODE_INDEX.md) — Architecture and subsystem code paths.
 
 **Date:** 2026-08-16 | **Branch:** `cursor/phase11-expansion-ui-integration` (historical) | **Commits:** 1002
 **Method:** 6 parallel deep-review agents + direct investigation. All findings verified against historical source.

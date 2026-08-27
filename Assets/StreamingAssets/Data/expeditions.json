@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "expeditions": [
+    {
+      "id": "loc_the_allotments",
+      "displayName": "The Works Allotment Commune",
+      "distanceTicks": 5,
+      "dangerLevel": 2,
+      "encounterChancePerTick": 0.12,
+      "baseStaminaDrainPerHour": 2.0,
+      "lootCategories": [
+        "scrap_metal",
+        "clean_water",
+        "bandages",
+        "food_rations"
+      ]
+    },
+    {
+      "id": "loc_denial_cut_substation",
+      "displayName": "The Denial Cut Substation",
+      "distanceTicks": 8,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 3.0,
+      "lootCategories": [
+        "dosimeter",
+        "copper_wire",
+        "fuel",
+        "item_hydro_baron_queue_chit"
+      ]
+    }
+  ]
+}

@@ -122,6 +122,7 @@ namespace AtomicWar.Journal
             }
             catch (Exception)
             {
+                /* cleanup: fallback on missing or corrupt journal catalog */
                 return new List<T>();
             }
         }

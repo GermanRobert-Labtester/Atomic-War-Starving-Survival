@@ -1,0 +1,308 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
+  "total_gates": 30,
+  "fast_tier_count": 30,
+  "gates": [
+    {
+      "gate_id": "whitespace_hygiene",
+      "name": "Trailing Whitespace & Hygiene Gate",
+      "category": "Code & Repo Hygiene",
+      "command": "bash scripts/ci/no-whitespace-churn.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "No whitespace errors detected",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "json_schema_policy",
+      "name": "StreamingAssets JSON Syntax & Schema Policy",
+      "category": "Code & Repo Hygiene",
+      "command": "bash scripts/ci/json-schema-policy-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "declare valid schema policy",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "build_core_tests",
+      "name": "Build Ashfall.Core.Tests (net9.0)",
+      "category": "Build & Tests",
+      "command": "dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
+      "timeout_seconds": 60,
+      "expected_summary": "",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "test_core_suite",
+      "name": "Execute Core Unit & Determinism Test Suite (xUnit)",
+      "category": "Build & Tests",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
+      "timeout_seconds": 90,
+      "expected_summary": "Passed!",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "build_godot_host",
+      "name": "Build Godot Host Application (Ashfall.csproj net8.0)",
+      "category": "Build & Tests",
+      "command": "dotnet build Ashfall.csproj --nologo",
+      "timeout_seconds": 60,
+      "expected_summary": "",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "godot_import",
+      "name": "Godot Resource Cache Import",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . --import",
+      "timeout_seconds": 90,
+      "expected_summary": "",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "data_integrity",
+      "name": "Data Authority Integrity Gate (129+ Catalogs)",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --data-integrity-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "DATA_INTEGRITY_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "bridge_removal",
+      "name": "Bridge Shim Removal Confirmation Gate",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --bridge-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "BRIDGE_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "asset_registry",
+      "name": "Asset Registry Resolution Gate",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --asset-registry-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "ASSET_REGISTRY_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "player_panels_uitest",
+      "name": "Player UI Panels Construction & Binding",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --player-panels-uitest",
+      "timeout_seconds": 60,
+      "expected_summary": "PLAYER_PANELS_UITEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "panel_bind_lifecycle",
+      "name": "Panel Bind/Unbind/Rebind Lifecycle Self-Test",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --panel-bind-lifecycle-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "PANEL_BIND_LIFECYCLE_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "save_load_failure",
+      "name": "Save/Load UI Failure Paths Self-Test",
+      "category": "Save Stores & Persistence",
+      "command": "godot --headless --path . -- --save-load-ui-failure-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "SAVELOAD_UI_FAILURE_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "holdfast_save",
+      "name": "Holdfast S1 Save Store Self-Test",
+      "category": "Save Stores & Persistence",
+      "command": "godot --headless --path . -- --holdfast-save-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "HOLDFAST_SAVE_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "inventory_save",
+      "name": "Inventory Save Store Self-Test",
+      "category": "Save Stores & Persistence",
+      "command": "godot --headless --path . -- --inventory-save-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "INVENTORY_SAVE_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "journal_save",
+      "name": "Journal Save Store Self-Test",
+      "category": "Save Stores & Persistence",
+      "command": "godot --headless --path . -- --journal-save-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "JOURNAL_SAVE_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "playable_shell",
+      "name": "Playable Shell Campaign Smoke Self-Test",
+      "category": "Campaign Smoke",
+      "command": "godot --headless --path . -- --playable-shell-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "PLAYABLE_SHELL_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "day1_onboarding",
+      "name": "Day 1 Onboarding & Shelter Survival Self-Test",
+      "category": "Campaign Smoke",
+      "command": "godot --headless --path . -- --day1-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "DAY1_PLAYABLE_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "expansions_completeness",
+      "name": "Expansions 01-10 Completeness Self-Test",
+      "category": "Campaign Smoke",
+      "command": "godot --headless --path . -- --expansions-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "EXPANSIONS_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "triad_drift",
+      "name": "Setup/Save/AllSaveSections Triad Drift Gate",
+      "category": "Drift & Architecture Gates",
+      "command": "bash scripts/ci/triad-drift-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "GATE PASS: triad drift",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "cli_catalog_drift",
+      "name": "Host CLI Command Catalog Drift Gate",
+      "category": "Drift & Architecture Gates",
+      "command": "bash scripts/ci/generate-cli-catalog.sh --check",
+      "timeout_seconds": 30,
+      "expected_summary": "CLI catalog in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "save_store_matrix_drift",
+      "name": "Save-Store Contract Matrix Drift Gate",
+      "category": "Drift & Architecture Gates",
+      "command": "bash scripts/ci/generate-save-store-matrix.sh --check",
+      "timeout_seconds": 30,
+      "expected_summary": "Save-store matrix is up to date",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "architecture_map_drift",
+      "name": "Architecture Test Map Drift Gate",
+      "category": "Drift & Architecture Gates",
+      "command": "bash scripts/ci/generate-architecture-map.sh --check",
+      "timeout_seconds": 30,
+      "expected_summary": "Architecture map is up to date",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "compiler_warning_baseline",
+      "name": "Compiler Warning Baseline Gate (0 Warnings)",
+      "category": "Drift & Architecture Gates",
+      "command": "bash scripts/ci/warning-baseline-gate.sh",
+      "timeout_seconds": 90,
+      "expected_summary": "COMPILER WARNING BASELINE GATE PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "docs_index_drift",
+      "name": "Master Documentation Index Drift Gate",
+      "category": "Drift & Architecture Gates",
+      "command": "python3 scripts/ci/generate-docs-index.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "Master docs index is up to date",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "forbidden_core_apis",
+      "name": "Forbidden Core API Source Gate",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/forbidden-api-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "Forbidden Core API Gate PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "catch_policy_lint",
+      "name": "Catch Policy & Exception Handling Lint Gate",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/catch-policy-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "Catch Policy Lint Gate PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "persistent_filename_registry",
+      "name": "Persistent Filename Uniqueness & Registry Gate",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/persistent-filename-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "Persistent Filename Gate Passed",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "central_package_management",
+      "name": "Central Package Management (CPM) Gate",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/nuget-dependency-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "Central Package Management Gate Passed",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "doc_link_portability",
+      "name": "Portable Documentation Link Gate",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/doc-link-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "PORTABLE DOC LINK GATE PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "lfs_health_check",
+      "name": "Git LFS Object Storage & Binary Health Check",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/lfs-health-check.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "GIT LFS HEALTH CHECK PASSED",
+      "classification": "fast",
+      "critical": true
+    }
+  ]
+}

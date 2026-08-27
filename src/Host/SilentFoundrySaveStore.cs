@@ -42,5 +42,8 @@ namespace AtomicWar.GodotApp
         public static bool TrySave(SilentFoundryState state) => s_store.TrySave(state);
 
         public static SilentFoundryState? TryLoad() => s_store.TryLoad();
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(SilentFoundryState state) => s_store.CapturePersisted(state);
     }
 }

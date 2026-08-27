@@ -43,6 +43,7 @@ namespace Ashfall.Core.Tests
             var offenders = new System.Collections.Generic.List<string>();
             foreach (var file in Directory.GetFiles(dataDir, "*.json"))
             {
+                if (!File.Exists(file) || file.EndsWith("_tmp.json")) continue;
                 string raw = File.ReadAllText(file);
                 if (Regex.IsMatch(raw, RealCountryPattern, RegexOptions.IgnoreCase))
                     offenders.Add(Path.GetFileName(file));

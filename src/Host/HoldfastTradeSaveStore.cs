@@ -98,7 +98,7 @@ namespace AtomicWar.GodotApp
                             return backupEnvelope.State;
                         }
                     }
-                    catch (Exception) { /* backup also corrupt */ }
+                    catch (Exception) { /* cleanup: fallback when backup is also corrupt */ }
                 }
 
                 return null;
@@ -109,6 +109,9 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(HoldfastTradeSaveState state) => s_store.CapturePersisted(state);
 
         private static string EncodeState(HoldfastTradeSaveState state, IJsonSerializer json)
         {

@@ -5,6 +5,7 @@ using Ashfall.Core.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
+    using DesignTheme = Ashfall.Core.UI.Theme;
     /// <summary>
     /// ASHFALL — Fire Incident panel.
     /// Thin presentation layer for shelter fire management.
@@ -70,20 +71,24 @@ namespace AtomicWar.GodotApp.UI
 
             root.AddChild(AshfallUiHelpers.MakeSeparator());
 
+            var metricsContainer = new VBoxContainer();
+            metricsContainer.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+            root.AddChild(metricsContainer);
+
             _statusLabel = AshfallUiHelpers.MakeBody("Status: —");
-            root.AddChild(_statusLabel);
+            metricsContainer.AddChild(_statusLabel);
 
             _alarmLabel = AshfallUiHelpers.MakeBody("Alarm: —");
-            root.AddChild(_alarmLabel);
+            metricsContainer.AddChild(_alarmLabel);
 
             _brigadeLabel = AshfallUiHelpers.MakeBody("Brigade: —");
-            root.AddChild(_brigadeLabel);
+            metricsContainer.AddChild(_brigadeLabel);
 
             _extinguisherLabel = AshfallUiHelpers.MakeBody("Extinguishers: —");
-            root.AddChild(_extinguisherLabel);
+            metricsContainer.AddChild(_extinguisherLabel);
 
             _damageLabel = AshfallUiHelpers.MakeBody("Structural Damage: —");
-            root.AddChild(_damageLabel);
+            metricsContainer.AddChild(_damageLabel);
 
             root.AddChild(AshfallUiHelpers.MakeSeparator());
 
@@ -95,7 +100,7 @@ namespace AtomicWar.GodotApp.UI
 
             root.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var buttonRow = new HBoxContainer();
+            var buttonRow = AshfallUiHelpers.MakeActionBar();
             root.AddChild(buttonRow);
 
             _alarmButton = AshfallUiHelpers.MakeButton("Raise Alarm", OnRaiseAlarm);

@@ -386,10 +386,10 @@ namespace Ashfall.Core.World
                 return parsed;
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return null;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "SeasonProfileDef", ex_CATDIAG);
+                return null;
+            }
         }
     }
 }

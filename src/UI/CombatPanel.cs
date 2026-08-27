@@ -135,8 +135,7 @@ namespace AtomicWar.GodotApp.UI
 
         private HBoxContainer Row()
         {
-            var row = new HBoxContainer();
-            row.AddThemeConstantOverride("separation", 8);
+            var row = AshfallUiHelpers.MakeHBox(separation: 8);
             return row;
         }
 

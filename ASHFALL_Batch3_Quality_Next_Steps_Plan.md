@@ -36,33 +36,33 @@ graph TD
 
 ### Phase 2: Low-Connectivity Island Bridges (Tasks 4–9) — COMPLETED & WIRED
 - **Task 4: Maritime & Diving System**
-  - Core: [`MaritimeDiveSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/MaritimeDiveSystem.cs)
-  - Host: [`MaritimeHostSession.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/MaritimeHostSession.cs)
-  - UI: [`MaritimePanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/MaritimePanel.cs), [`MaritimeAtlasPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/MaritimeAtlasPanel.cs)
+  - Core: [`MaritimeDiveSystem.cs`](Assets/Ashfall.Core/MaritimeDiveSystem.cs)
+  - Host: [`MaritimeHostSession.cs`](src/Host/MaritimeHostSession.cs)
+  - UI: [`MaritimePanel.cs`](src/UI/MaritimePanel.cs), [`MaritimeAtlasPanel.cs`](src/UI/MaritimeAtlasPanel.cs)
   - Verified by: `Ashfall.Core.Tests/IslandBridgesTests.cs:MaritimeDive_ConductDive_ResolvesAndPreservesState`
 - **Task 5: Workshop Reverse-Engineering**
-  - Core: [`WorkshopReverseEngineeringSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs)
-  - Host: [`WorkshopHostSession.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/WorkshopHostSession.cs)
-  - Data: [`relic_recipes.json`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/StreamingAssets/Data/relic_recipes.json)
+  - Core: [`WorkshopReverseEngineeringSystem.cs`](Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs)
+  - Host: [`WorkshopHostSession.cs`](src/Host/WorkshopHostSession.cs)
+  - Data: [`relic_recipes.json`](Assets/StreamingAssets/Data/relic_recipes.json)
   - Verified by: `Ashfall.Core.Tests/IslandBridgesTests.cs:WorkshopReverseEngineering_ExamineAndRepair_UnlocksRelic`
 - **Task 6: Pharma Lab & Chemical Synthesis**
-  - Core: [`PharmaLabSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/PharmaLabSystem.cs)
-  - Host: [`PharmaLabHostSession.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/PharmaLabHostSession.cs)
-  - Data: [`pharma_recipes.json`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/StreamingAssets/Data/pharma_recipes.json)
+  - Core: [`PharmaLabSystem.cs`](Assets/Ashfall.Core/PharmaLabSystem.cs)
+  - Host: [`PharmaLabHostSession.cs`](src/Host/PharmaLabHostSession.cs)
+  - Data: [`pharma_recipes.json`](Assets/StreamingAssets/Data/pharma_recipes.json)
   - Verified by: `Ashfall.Core.Tests/IslandBridgesTests.cs:PharmaLab_SynthesizeMedicine_ProducesOutput`
 - **Task 7: Weather Station & Calibrated Forecasting**
-  - Core: [`WeatherStationSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/WeatherStationSystem.cs)
-  - Host: [`WeatherStationHostSession.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/WeatherStationHostSession.cs)
-  - UI: [`WeatherForecastPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/WeatherForecastPanel.cs)
+  - Core: [`WeatherStationSystem.cs`](Assets/Ashfall.Core/WeatherStationSystem.cs)
+  - Host: [`WeatherStationHostSession.cs`](src/Host/WeatherStationHostSession.cs)
+  - UI: [`WeatherForecastPanel.cs`](src/UI/WeatherForecastPanel.cs)
   - Verified by: `Ashfall.Core.Tests/IslandBridgesTests.cs:WeatherStation_InstallAndCalibrate_GeneratesForecast`
 - **Task 8: Orbital Harrow Telemetry & Sky Layer Roof Armor**
-  - Core: [`OrbitalHarrowTelemetrySystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/OrbitalHarrowTelemetrySystem.cs), [`SkyLayerArmorSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Shelter/SkyLayerArmorSystem.cs)
-  - UI: [`OrbitalHarrowPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/OrbitalHarrowPanel.cs)
+  - Core: [`OrbitalHarrowTelemetrySystem.cs`](Assets/Ashfall.Core/OrbitalHarrowTelemetrySystem.cs), [`SkyLayerArmorSystem.cs`](Assets/Ashfall.Core/Shelter/SkyLayerArmorSystem.cs)
+  - UI: [`OrbitalHarrowPanel.cs`](src/UI/OrbitalHarrowPanel.cs)
   - Verified by: `Ashfall.Core.Tests/IslandBridgesTests.cs:OrbitalHarrow_WarningAndImpact_ResolvesDamage`
 - **Task 9: Expedition Vehicle Logistics**
-  - Core: [`ExpeditionVehicleSystem.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/ExpeditionVehicleSystem.cs)
-  - Host: [`ExpeditionVehicleHostSession.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/ExpeditionVehicleHostSession.cs)
-  - Data: [`vehicles.json`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/StreamingAssets/Data/vehicles.json)
+  - Core: [`ExpeditionVehicleSystem.cs`](Assets/Ashfall.Core/ExpeditionVehicleSystem.cs)
+  - Host: [`ExpeditionVehicleHostSession.cs`](src/Host/ExpeditionVehicleHostSession.cs)
+  - Data: [`vehicles.json`](Assets/StreamingAssets/Data/vehicles.json)
   - Verified by: `Ashfall.Core.Tests/IslandBridgesTests.cs:ExpeditionVehicle_RefuelAndTravel_TracksCondition`
 
 ### Phase 3: High-Value Content Expansion (Tasks 10–15) — COMPLETED & WIRED
@@ -74,11 +74,11 @@ graph TD
 - **Task 15:** 12+ Declassified Forensic Evidence Dossiers (`verdict_dossiers.json`, `items.json`).
 
 ### Phase 4: UI Presentation & Player Feedback Gaps (Tasks 16–20) — COMPLETED & WIRED
-- **Task 16:** Psychological Trauma & Guilt Dossier UI Sub-Tab in [`SurvivorsPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/SurvivorsPanel.cs).
-- **Task 17:** Interactive Power Circuit Breaker & Load Shedding Board in [`PowerGridPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/PowerGridPanel.cs).
-- **Task 18:** Radio Morse & Signal Auto-Transcription Log in [`RadioPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/RadioPanel.cs).
-- **Task 19:** Tactical Combat Ballistic Predictive Tooltips in [`CombatPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/CombatPanel.cs).
-- **Task 20:** Underground Air Quality & Radon Telemetry HUD in [`VentilationPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/VentilationPanel.cs) and [`GameDashboardPanel.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/UI/GameDashboardPanel.cs).
+- **Task 16:** Psychological Trauma & Guilt Dossier UI Sub-Tab in [`SurvivorsPanel.cs`](src/UI/SurvivorsPanel.cs).
+- **Task 17:** Interactive Power Circuit Breaker & Load Shedding Board in [`PowerGridPanel.cs`](src/UI/PowerGridPanel.cs).
+- **Task 18:** Radio Morse & Signal Auto-Transcription Log in [`RadioPanel.cs`](src/UI/RadioPanel.cs).
+- **Task 19:** Tactical Combat Ballistic Predictive Tooltips in [`CombatPanel.cs`](src/UI/CombatPanel.cs).
+- **Task 20:** Underground Air Quality & Radon Telemetry HUD in [`VentilationPanel.cs`](src/UI/VentilationPanel.cs) and [`GameDashboardPanel.cs`](src/UI/GameDashboardPanel.cs).
 
 ### Phase 5: Narrative Depth & Emergent Stories (Tasks 21–23) — COMPLETED & WIRED
 - **Task 21:** Foundry Crucible Blowout to Emergency Surgical Chain (`SilentFoundrySystem.cs`, `MedicalWardSystem.cs`).

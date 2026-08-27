@@ -270,10 +270,10 @@ namespace Ashfall.Core.Narrative
                 }
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return result;
-                                }
+            {
+                CatalogDiagnostics.Warn(path, "EncounterDefinition list", ex_CATDIAG);
+                return result;
+            }
             return result;
         }
     }

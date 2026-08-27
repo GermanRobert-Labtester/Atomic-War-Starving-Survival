@@ -151,7 +151,7 @@ namespace AtomicWar.GodotApp
         private void SaveVerdict()
         {
             if (_verdict == null) return;
-            if (AtomicWar.GodotApp.VerdictSaveStore.TrySave(_verdict.CaptureSave()))
+            if (CaptureSection("verdict", AtomicWar.GodotApp.VerdictSaveStore.TryCapturePersisted(_verdict.CaptureSave())))
             {
                 _verdictDirty = false;
                 GD.Print("[Ashfall Godot] Verdict save written.");

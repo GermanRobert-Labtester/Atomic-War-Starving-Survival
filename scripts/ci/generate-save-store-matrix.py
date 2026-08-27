@@ -159,8 +159,9 @@ def generate_markdown(stores, verified_date=None):
         slot_icon = "✅" if s["has_slot_root"] else "❌"
         tests_str = ", ".join(f"`{t}`" for t in s["tests"][:2]) + (f" *(+{len(s['tests'])-2} more)*" if len(s['tests']) > 2 else "") if s["tests"] else "—"
 
+        rel_f = os.path.relpath(REPO_ROOT / s['file'], DOC_PATH.parent).replace('\\', '/')
         lines.append(
-            f"| {i} | `{s['class']}` | [`{s['file']}`](file:///{REPO_ROOT.as_posix()}/{s['file']}) | `{s['section']}` | `{s['json_file']}` | {methods_str} | {checksum_icon} | {slot_icon} | {tests_str} |"
+            f"| {i} | `{s['class']}` | [`{s['file']}`]({rel_f}) | `{s['section']}` | `{s['json_file']}` | {methods_str} | {checksum_icon} | {slot_icon} | {tests_str} |"
         )
 
     lines.append("")

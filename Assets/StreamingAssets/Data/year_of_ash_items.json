@@ -456,6 +456,46 @@
       "tradeValue": 55,
       "category": "tools",
       "description": "A morally neutral tool: forge transit papers for the Railroad, or fabricate a manifest entry that covers an informant's tracks. The game does not gate which use is allowed."
+    },
+    {
+      "id": "item_seed_packet_nonhybrid",
+      "name": "Non-Hybrid Heritage Seed Packet",
+      "weightKg": 0.2,
+      "tradeValue": 40,
+      "category": "survival_gear",
+      "description": "True-to-seed heirloom vegetable genetics capable of multi-generational cultivation without hybrid sterility."
+    },
+    {
+      "id": "item_water_allocation_writ",
+      "name": "Hydro-Baron Water Allocation Writ",
+      "weightKg": 0.1,
+      "tradeValue": 65,
+      "category": "documents",
+      "description": "Authorized requisition document entitling bearer to prioritized high-volume well draw from Sector 4 aquifers."
+    },
+    {
+      "id": "item_military_stimulants",
+      "name": "3rd Corps Military Combat Stimulants",
+      "weightKg": 0.3,
+      "tradeValue": 50,
+      "category": "medical_reagents",
+      "description": "Emergency pharmaceutical ampoules suppressing exhaustion and trauma response during high-threat tactical operations."
+    },
+    {
+      "id": "item_meridian_archive_copy",
+      "name": "Meridian Compact Microfilm Archive",
+      "weightKg": 0.4,
+      "tradeValue": 80,
+      "category": "documents",
+      "description": "Unredacted diplomatic and strategic communications detailing treaty negotiations in the months preceding the Exchange."
+    },
+    {
+      "id": "item_vitamin_supplements",
+      "name": "Chewable Micronutrient Ration Tablets",
+      "weightKg": 0.5,
+      "tradeValue": 30,
+      "category": "medical_reagents",
+      "description": "Concentrated vitamin and mineral supplement ensuring survivor metabolic health during severe dietary restriction."
     }
   ]
 }

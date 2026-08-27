@@ -86,7 +86,7 @@ namespace AtomicWar.GodotApp
             }
             catch (Exception ex_CATDIAG)
             {
-                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                CatalogDiagnostics.Warn("<ui>", "UiBackgroundCarousel", ex_CATDIAG);
                 // Fall back to solid background
             }
 

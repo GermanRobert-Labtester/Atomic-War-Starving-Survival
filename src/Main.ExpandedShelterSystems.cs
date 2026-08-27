@@ -424,17 +424,8 @@ namespace AtomicWar.GodotApp
             _mentalHealthCrisisDirty = false;
 
             // Delete slot and global save files for expanded shelter systems
-            foreach (var file in new[]
-            {
-                "water_treatment_save.json", "airlock_security_save.json", "shelter_thermal_save.json",
-                "shelter_schedule_save.json", "autopsy_save.json", "waystation_save.json",
-                "survivor_relations_save.json", "regional_treaty_save.json", "vinyl_morale_save.json",
-                "wildlife_trapping_save.json", "excavation_save.json", "apprenticeship_save.json",
-                "caregiving_save.json", "sump_flooding_save.json", "decontamination_save.json",
-                "kitchen_nutrition_save.json", "equipment_condition_save.json", "library_study_save.json",
-                "archive_desk_save.json", "contractor_roster_save.json", "mental_health_crisis_save.json",
-                "chemical_dependency_save.json", "shelter_assignment_save.json", "traveling_caravan_save.json"
-            })
+            // (section file names come from the single registry authority)
+            foreach (var file in Ashfall.Core.Save.SaveSectionRegistry.SectionFileNames.Values)
             {
                 string p = SaveSlotRoot.Resolve(file);
                 if (System.IO.File.Exists(p))

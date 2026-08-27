@@ -75,9 +75,9 @@ public partial class FactionMatrixPanel : Control, IBindablePanel
             return;
         }
 
+        string osPath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
         try
         {
-            string osPath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
             if (!File.Exists(osPath)) return;
             using var stream = File.OpenRead(osPath);
             using var doc = JsonDocument.Parse(stream);
@@ -96,7 +96,7 @@ public partial class FactionMatrixPanel : Control, IBindablePanel
         }
         catch (Exception ex_CATDIAG)
         {
-            CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+            CatalogDiagnostics.Warn(osPath, "faction_lore.json", ex_CATDIAG);
             // ignored — fixture data will be used at row render time
         }
     }

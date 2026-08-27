@@ -1,0 +1,1042 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
+  "total_tests": 87,
+  "headless_test_count": 85,
+  "tests": [
+    {
+      "test_id": "7_day_smoke_selftest",
+      "action": "SevenDayDeterministicSmokeSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--7-day-smoke-selftest",
+      "aliases": [
+        "--seven-day-smoke-selftest",
+        "--deterministic-smoke-selftest"
+      ],
+      "description": "7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates",
+      "headless_compatible": true,
+      "expected_summary_id": "7_day_smoke_selftest",
+      "timeout_seconds": 60
+    },
+    {
+      "test_id": "asset_coverage_report",
+      "action": "AssetCoverageReport",
+      "category": "Core & System Gates",
+      "primary_flag": "--asset-coverage-report",
+      "aliases": [],
+      "description": "Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list",
+      "headless_compatible": true,
+      "expected_summary_id": "asset_coverage_report",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "asset_registry_selftest",
+      "action": "AssetRegistrySelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--asset-registry-selftest",
+      "aliases": [],
+      "description": "Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/",
+      "headless_compatible": true,
+      "expected_summary_id": "asset_registry_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "bridge_selftest",
+      "action": "BridgeSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--bridge-selftest",
+      "aliases": [],
+      "description": "Report UnityEngine shim removal (shim is gone; always exits 0)",
+      "headless_compatible": true,
+      "expected_summary_id": "bridge_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "core_selftest",
+      "action": "CoreSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--core-selftest",
+      "aliases": [],
+      "description": "Ice road + census headless demos",
+      "headless_compatible": true,
+      "expected_summary_id": "core_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "data_integrity_selftest",
+      "action": "DataIntegritySelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--data-integrity-selftest",
+      "aliases": [],
+      "description": "Cross-reference every id in the 129 StreamingAssets catalogs (recipe\u2192item, quest\u2192location, events, door encounters, survivors, factions, ranges, duplicates)",
+      "headless_compatible": true,
+      "expected_summary_id": "data_integrity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "panel_bind_lifecycle_selftest",
+      "action": "PanelBindLifecycleSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--panel-bind-lifecycle-selftest",
+      "aliases": [
+        "--panel-bind-selftest",
+        "--panel-lifecycle-selftest"
+      ],
+      "description": "Real Godot-node callback tests for panel bind \u2192 unbind \u2192 rebind, event propagation, and session-switch",
+      "headless_compatible": true,
+      "expected_summary_id": "panel_bind_lifecycle_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "save_load_ui_failure_selftest",
+      "action": "SaveLoadUiFailureSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--save-load-ui-failure-selftest",
+      "aliases": [
+        "--save-load-failure-selftest",
+        "--save-load-failure-uitest",
+        "--save-load-selftest"
+      ],
+      "description": "Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact",
+      "headless_compatible": true,
+      "expected_summary_id": "save_load_ui_failure_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "save_store_checksum_selftest",
+      "action": "SaveStoreChecksumSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--save-store-checksum-selftest",
+      "aliases": [
+        "--save-store-checksums-selftest",
+        "--checksum-sweep-selftest"
+      ],
+      "description": "Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)",
+      "headless_compatible": true,
+      "expected_summary_id": "save_store_checksum_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "standalone_selftest",
+      "action": "StandaloneSystemsSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--standalone-selftest",
+      "aliases": [],
+      "description": "SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance",
+      "headless_compatible": true,
+      "expected_summary_id": "standalone_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "arbitration_selftest",
+      "action": "ArbitrationSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--arbitration-selftest",
+      "aliases": [],
+      "description": "CrossingArbitrationHeadlessDemo",
+      "headless_compatible": true,
+      "expected_summary_id": "arbitration_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "black_flotilla_selftest",
+      "action": "BlackFlotillaSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--black-flotilla-selftest",
+      "aliases": [
+        "--maritime-selftest",
+        "--expansion-09-selftest"
+      ],
+      "description": "The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "black_flotilla_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "brine_selftest",
+      "action": "BrineSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--brine-selftest",
+      "aliases": [
+        "--salt-steam-selftest"
+      ],
+      "description": "BrineWaterHeadlessDemo (S2 salt & steam)",
+      "headless_compatible": true,
+      "expected_summary_id": "brine_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "census_selftest",
+      "action": "CensusSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--census-selftest",
+      "aliases": [],
+      "description": "CensusHeadlessDemo",
+      "headless_compatible": true,
+      "expected_summary_id": "census_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "cluster_selftest",
+      "action": "ClusterSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--cluster-selftest",
+      "aliases": [
+        "--order-12c-selftest"
+      ],
+      "description": "Cluster12CHeadlessDemo (S3 order 12-C + quest snapshot)",
+      "headless_compatible": true,
+      "expected_summary_id": "cluster_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "combat_selftest",
+      "action": "CombatSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--combat-selftest",
+      "aliases": [],
+      "description": "Combat Expansion: catalog (JSON), ballistics, weapon condition, determinism, save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "combat_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "crossing_selftest",
+      "action": "CrossingSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--crossing-selftest",
+      "aliases": [],
+      "description": "CrossingHeadlessDemo (Exp 04)",
+      "headless_compatible": true,
+      "expected_summary_id": "crossing_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "deep_coast_host_selftest",
+      "action": "DeepCoastHostSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--deep-coast-host-selftest",
+      "aliases": [
+        "--deep-coast-playthrough"
+      ],
+      "description": "Deep-coast host playthrough: survey \u2192 decision \u2192 dive \u2192 scavenge \u2192 save/restore",
+      "headless_compatible": true,
+      "expected_summary_id": "deep_coast_host_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "deep_coast_selftest",
+      "action": "DeepCoastSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--deep-coast-selftest",
+      "aliases": [
+        "--deep-coast-route-selftest"
+      ],
+      "description": "District 8 deep-coast route: stages, decisions, Ice Road gating, dive handoff, v5 save",
+      "headless_compatible": true,
+      "expected_summary_id": "deep_coast_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "disease_selftest",
+      "action": "DiseaseSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--disease-selftest",
+      "aliases": [
+        "--disease-expansion-selftest"
+      ],
+      "description": "Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "disease_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "duty_roster_selftest",
+      "action": "DutyRosterSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--duty-roster-selftest",
+      "aliases": [],
+      "description": "DutyRosterHeadlessDemo (Exp 02)",
+      "headless_compatible": true,
+      "expected_summary_id": "duty_roster_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "endings_selftest",
+      "action": "EndingsSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--endings-selftest",
+      "aliases": [
+        "--shelf-selftest"
+      ],
+      "description": "EndingsHeadlessDemo (S4 endings exclusive + roundtrip)",
+      "headless_compatible": true,
+      "expected_summary_id": "endings_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "expansions_selftest",
+      "action": "ExpansionsSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--expansions-selftest",
+      "aliases": [
+        "--all-expansions-selftest"
+      ],
+      "description": "Run full 7-expansion verification suite (Holdfast, Duty Roster, Standing Record, Crossing, Arbitration, LedgerDebt, Glass Orchard)",
+      "headless_compatible": true,
+      "expected_summary_id": "expansions_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "greenhouse_selftest",
+      "action": "GreenhouseSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--greenhouse-selftest",
+      "aliases": [
+        "--glass-orchard-selftest"
+      ],
+      "description": "GreenhouseHeadlessDemo (Exp 05)",
+      "headless_compatible": true,
+      "expected_summary_id": "greenhouse_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "holdfast_briefing",
+      "action": "HoldfastBriefing",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--holdfast-briefing",
+      "aliases": [],
+      "description": "Print location count and every Holdfast quest briefing",
+      "headless_compatible": true,
+      "expected_summary_id": "holdfast_briefing",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "holdfast_selftest",
+      "action": "HoldfastSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--holdfast-selftest",
+      "aliases": [],
+      "description": "Holdfast S1 survival loop, ice road, and trade verification",
+      "headless_compatible": true,
+      "expected_summary_id": "holdfast_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ice_road_selftest",
+      "action": "IceRoadSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--ice-road-selftest",
+      "aliases": [],
+      "description": "IceRoadHeadlessDemo (Exp 01)",
+      "headless_compatible": true,
+      "expected_summary_id": "ice_road_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ice_road_tick_demo",
+      "action": "IceRoadTickDemo",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--ice-road-tick-demo",
+      "aliases": [],
+      "description": "Unlock, clerk, 30 day ticks, print catalog + briefing",
+      "headless_compatible": true,
+      "expected_summary_id": "ice_road_tick_demo",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ledger_debt_selftest",
+      "action": "LedgerDebtSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--ledger-debt-selftest",
+      "aliases": [],
+      "description": "LedgerDebtHeadlessDemo",
+      "headless_compatible": true,
+      "expected_summary_id": "ledger_debt_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "moral_choice_selftest",
+      "action": "MoralChoiceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--moral-choice-selftest",
+      "aliases": [],
+      "description": "Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks",
+      "headless_compatible": true,
+      "expected_summary_id": "moral_choice_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "muster_selftest",
+      "action": "MusterSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--muster-selftest",
+      "aliases": [
+        "--expansion-06-selftest"
+      ],
+      "description": "MusterHeadlessDemo (Exp 06 the Muster)",
+      "headless_compatible": true,
+      "expected_summary_id": "muster_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "phase0_selftest",
+      "action": "Phase0SelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--phase0-selftest",
+      "aliases": [],
+      "description": "Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip",
+      "headless_compatible": true,
+      "expected_summary_id": "phase0_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "silent_foundry_selftest",
+      "action": "SilentFoundrySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--silent-foundry-selftest",
+      "aliases": [],
+      "description": "Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "silent_foundry_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "standing_record_selftest",
+      "action": "StandingRecordSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--standing-record-selftest",
+      "aliases": [],
+      "description": "StandingRecordHeadlessDemo (Exp 03)",
+      "headless_compatible": true,
+      "expected_summary_id": "standing_record_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "verdict_selftest",
+      "action": "VerdictSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--verdict-selftest",
+      "aliases": [
+        "--expansion-08-selftest"
+      ],
+      "description": "The Verdict (Exp 08): machine log, reckoning phases, evidence, census, save",
+      "headless_compatible": true,
+      "expected_summary_id": "verdict_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "warlord_host_selftest",
+      "action": "WarlordHostSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--warlord-host-selftest",
+      "aliases": [],
+      "description": "Warlord host playthrough: YearOfAsh wiring, standing, v3 save/tamper",
+      "headless_compatible": true,
+      "expected_summary_id": "warlord_host_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "warlord_selftest",
+      "action": "WarlordSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--warlord-selftest",
+      "aliases": [
+        "--warlord-ai-selftest"
+      ],
+      "description": "Adaptive warlord AI: doctrines, territory, tribute, determinism, v3 save",
+      "headless_compatible": true,
+      "expected_summary_id": "warlord_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "warlord_ui_selftest",
+      "action": "WarlordUiSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--warlord-ui-selftest",
+      "aliases": [],
+      "description": "Warlord tribute payment loop + collector voice + FactionsPanel card",
+      "headless_compatible": true,
+      "expected_summary_id": "warlord_ui_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "audio_selftest",
+      "action": "AudioSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--audio-selftest",
+      "aliases": [
+        "--audio-test"
+      ],
+      "description": "Audio cue catalog, AudioManager wiring, and sound event verification",
+      "headless_compatible": true,
+      "expected_summary_id": "audio_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "caravan_selftest",
+      "action": "CaravanSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--caravan-selftest",
+      "aliases": [
+        "--traveling-caravan-selftest"
+      ],
+      "description": "Traveling caravan economy, inventory generation, and barter ticks",
+      "headless_compatible": true,
+      "expected_summary_id": "caravan_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "chemical_dependency_save_selftest",
+      "action": "ChemicalDependencySaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--chemical-dependency-save-selftest",
+      "aliases": [],
+      "description": "Chemical dependency system save store round-trip, tolerance, and withdrawal states",
+      "headless_compatible": true,
+      "expected_summary_id": "chemical_dependency_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "dose_ledger_selftest",
+      "action": "DoseLedgerSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--dose-ledger-selftest",
+      "aliases": [],
+      "description": "Dose Ledger save write \u2192 reload \u2192 restore \u2192 checksum/tamper checks",
+      "headless_compatible": true,
+      "expected_summary_id": "dose_ledger_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "duty_roster_save_selftest",
+      "action": "DutyRosterSaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--duty-roster-save-selftest",
+      "aliases": [],
+      "description": "Duty Roster save write \u2192 reload \u2192 restore \u2192 checksum/tamper checks",
+      "headless_compatible": true,
+      "expected_summary_id": "duty_roster_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "economy_selftest",
+      "action": "EconomySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--economy-selftest",
+      "aliases": [],
+      "description": "Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)",
+      "headless_compatible": true,
+      "expected_summary_id": "economy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "expansion_hub_save_selftest",
+      "action": "ExpansionHubSaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--expansion-hub-save-selftest",
+      "aliases": [],
+      "description": "Expansion hub save write \u2192 reload \u2192 restore \u2192 checksum/tamper checks",
+      "headless_compatible": true,
+      "expected_summary_id": "expansion_hub_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "expedition_encounter_bridge_selftest",
+      "action": "ExpeditionEncounterBridgeSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--expedition-encounter-bridge-selftest",
+      "aliases": [],
+      "description": "ExpeditionEncounterBridge bare-notice + resolved surface smoke test",
+      "headless_compatible": true,
+      "expected_summary_id": "expedition_encounter_bridge_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "expedition_selftest",
+      "action": "ExpeditionSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--expedition-selftest",
+      "aliases": [],
+      "description": "Expedition domain: sorties, encounter resolution, loot drops, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "expedition_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "holdfast_save_selftest",
+      "action": "HoldfastSaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--holdfast-save-selftest",
+      "aliases": [],
+      "description": "S1 save write \u2192 reload \u2192 restore \u2192 checksum/tamper checks",
+      "headless_compatible": true,
+      "expected_summary_id": "holdfast_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "holdfast_trade_save_selftest",
+      "action": "HoldfastTradeSaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--holdfast-trade-save-selftest",
+      "aliases": [],
+      "description": "Holdfast trade ledger and save store round-trip and tamper checks",
+      "headless_compatible": true,
+      "expected_summary_id": "holdfast_trade_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "inventory_save_selftest",
+      "action": "InventorySaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--inventory-save-selftest",
+      "aliases": [],
+      "description": "Inventory system save store round-trip, item serialization, and checksum verification",
+      "headless_compatible": true,
+      "expected_summary_id": "inventory_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "journal_save_selftest",
+      "action": "JournalSaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--journal-save-selftest",
+      "aliases": [],
+      "description": "Journal system save store round-trip, entry ordering, and tamper checks",
+      "headless_compatible": true,
+      "expected_summary_id": "journal_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "journal_selftest",
+      "action": "JournalSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--journal-selftest",
+      "aliases": [],
+      "description": "Journal domain + save roundtrip",
+      "headless_compatible": true,
+      "expected_summary_id": "journal_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "journal_weather_panel_selftest",
+      "action": "JournalWeatherPanelSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--journal-weather-panel-selftest",
+      "aliases": [],
+      "description": "Journal and Weather forecast panel integration and live data binding",
+      "headless_compatible": true,
+      "expected_summary_id": "journal_weather_panel_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "medical_selftest",
+      "action": "MedicalSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--medical-selftest",
+      "aliases": [],
+      "description": "Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "medical_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "medical_ward_save_selftest",
+      "action": "MedicalWardSaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--medical-ward-save-selftest",
+      "aliases": [],
+      "description": "Medical ward save store round-trip, bed allocation, and affliction persistence",
+      "headless_compatible": true,
+      "expected_summary_id": "medical_ward_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "narrative_selftest",
+      "action": "NarrativeSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--narrative-selftest",
+      "aliases": [],
+      "description": "Narrative domain: dialog trees, echoes, flags, and story event resolution",
+      "headless_compatible": true,
+      "expected_summary_id": "narrative_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "radio_selftest",
+      "action": "RadioSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--radio-selftest",
+      "aliases": [],
+      "description": "Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected",
+      "headless_compatible": true,
+      "expected_summary_id": "radio_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "settings_selftest",
+      "action": "SettingsSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--settings-selftest",
+      "aliases": [
+        "--settings-test"
+      ],
+      "description": "SettingsManager state, resolution, audio buses, and keybindings save/load",
+      "headless_compatible": true,
+      "expected_summary_id": "settings_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "survivors_selftest",
+      "action": "SurvivorsSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--survivors-selftest",
+      "aliases": [],
+      "description": "Survivors domain: needs decay, skill progression, trauma, and morale",
+      "headless_compatible": true,
+      "expected_summary_id": "survivors_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "utility_ai_selftest",
+      "action": "UtilityAiSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--utility-ai-selftest",
+      "aliases": [],
+      "description": "Utility AI decision scoring, survivor behaviors, and action selection",
+      "headless_compatible": true,
+      "expected_summary_id": "utility_ai_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "weather_save_selftest",
+      "action": "WeatherSaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--weather-save-selftest",
+      "aliases": [],
+      "description": "Weather system save store round-trip, forecast queue, and atmospheric condition persistence",
+      "headless_compatible": true,
+      "expected_summary_id": "weather_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "world_selftest",
+      "action": "WorldSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--world-selftest",
+      "aliases": [],
+      "description": "World domain: map nodes, sector navigation, hazard regions, and landmark states",
+      "headless_compatible": true,
+      "expected_summary_id": "world_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "year_of_ash_save_selftest",
+      "action": "YearOfAshSaveSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--year-of-ash-save-selftest",
+      "aliases": [],
+      "description": "Year of Ash save write \u2192 reload \u2192 restore \u2192 checksum/tamper checks",
+      "headless_compatible": true,
+      "expected_summary_id": "year_of_ash_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "dashboard_uitest",
+      "action": "DashboardUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--dashboard-uitest",
+      "aliases": [],
+      "description": "Game Dashboard panel UI construction, HUD binding, and metrics display",
+      "headless_compatible": true,
+      "expected_summary_id": "dashboard_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "day1_selftest",
+      "action": "Day1PlayableSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--day1-selftest",
+      "aliases": [
+        "--day-1-selftest",
+        "--day1-playable-selftest"
+      ],
+      "description": "Day 1 onboarding, needs depletion, and shelter survival verification",
+      "headless_compatible": true,
+      "expected_summary_id": "day1_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "day1_to_day2_selftest",
+      "action": "Day1ToDay2MilestoneSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--day1-to-day2-selftest",
+      "aliases": [
+        "--day1-to-day2",
+        "--day1-to-day2-milestone-selftest"
+      ],
+      "description": "Day 1 to Day 2 transition, overnight triage, and milestone progression",
+      "headless_compatible": true,
+      "expected_summary_id": "day1_to_day2_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "dose_uitest",
+      "action": "DoseUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--dose-uitest",
+      "aliases": [],
+      "description": "Dose Ledger panel UI construction, radiation tiers, and dose history",
+      "headless_compatible": true,
+      "expected_summary_id": "dose_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "duty_roster_uitest",
+      "action": "DutyRosterUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--duty-roster-uitest",
+      "aliases": [],
+      "description": "Duty Roster panel UI construction, role assignments, and shift scheduling",
+      "headless_compatible": true,
+      "expected_summary_id": "duty_roster_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "economy_uitest",
+      "action": "EconomyUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--economy-uitest",
+      "aliases": [],
+      "description": "Economy market panel UI construction, price shock display, and barter grid",
+      "headless_compatible": true,
+      "expected_summary_id": "economy_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "expedition_panel_uitest",
+      "action": "ExpeditionPanelUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--expedition-panel-uitest",
+      "aliases": [
+        "--expedition-panel-lifecycle"
+      ],
+      "description": "Expedition panel encounter-notice lifecycle: open\u2192surface\u2192close\u2192reopen\u2192surface",
+      "headless_compatible": true,
+      "expected_summary_id": "expedition_panel_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "holdfast_runtime_uitest",
+      "action": "HoldfastRuntimeUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--holdfast-runtime-uitest",
+      "aliases": [
+        "--holdfast-runtime-ui-test",
+        "--holdfast-runtime-selftest"
+      ],
+      "description": "Godot Holdfast terminal browse \u2192 trade \u2192 failed trade \u2192 save \u2192 reload",
+      "headless_compatible": true,
+      "expected_summary_id": "holdfast_runtime_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "inventory_uitest",
+      "action": "InventoryUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--inventory-uitest",
+      "aliases": [
+        "--inventory-selftest"
+      ],
+      "description": "Inventory panel UI construction, item grid, and slot binding",
+      "headless_compatible": true,
+      "expected_summary_id": "inventory_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "journal_uitest",
+      "action": "JournalUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--journal-uitest",
+      "aliases": [],
+      "description": "Build ledger UI, cycle tabs, quit",
+      "headless_compatible": true,
+      "expected_summary_id": "journal_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "muster_uitest",
+      "action": "MusterUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--muster-uitest",
+      "aliases": [],
+      "description": "The Muster panel UI construction, faction stance cards, and vote tally",
+      "headless_compatible": true,
+      "expected_summary_id": "muster_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "phase0_uitest",
+      "action": "Phase0UiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--phase0-uitest",
+      "aliases": [],
+      "description": "Phase 0 expansion UI preview and workstation panels",
+      "headless_compatible": true,
+      "expected_summary_id": "phase0_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "playable_shell_selftest",
+      "action": "PlayableShellSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--playable-shell-selftest",
+      "aliases": [
+        "--shell-selftest",
+        "--playable-loop-selftest"
+      ],
+      "description": "Playable shell game loop, scene transitions, and day advancement",
+      "headless_compatible": true,
+      "expected_summary_id": "playable_shell_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "player_panels_uitest",
+      "action": "PlayerPanelsUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--player-panels-uitest",
+      "aliases": [
+        "--player-panels-ui-test"
+      ],
+      "description": "Bind and render Survivors, Medical, Weather, Radio, Shelter panels",
+      "headless_compatible": true,
+      "expected_summary_id": "player_panels_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_hazard_loop_selftest",
+      "action": "ShelterHazardLoopSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--shelter-hazard-loop-selftest",
+      "aliases": [
+        "--shelter-hazard-selftest",
+        "--duty-roster-loop-selftest"
+      ],
+      "description": "Shelter hazard loop and duty roster assignment verification",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_hazard_loop_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_operations_selftest",
+      "action": "ShelterOperationsSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--shelter-operations-selftest",
+      "aliases": [
+        "--shelter-ops-selftest",
+        "--operations-selftest"
+      ],
+      "description": "Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_operations_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "silent_foundry_uitest",
+      "action": "SilentFoundryUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--silent-foundry-uitest",
+      "aliases": [],
+      "description": "Silent Foundry trade panel UI construction, binding, and trade loop",
+      "headless_compatible": true,
+      "expected_summary_id": "silent_foundry_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "survivors_uitest",
+      "action": "SurvivorsUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--survivors-uitest",
+      "aliases": [],
+      "description": "Survivors panel UI construction, roster cards, and affliction badges",
+      "headless_compatible": true,
+      "expected_summary_id": "survivors_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ui_accessibility_selftest",
+      "action": "UiAccessibilitySelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--ui-accessibility-selftest",
+      "aliases": [
+        "--accessibility-selftest",
+        "--ui-a11y-selftest"
+      ],
+      "description": "Verify focus order, keyboard close action, readable labels, and modal dismissal paths",
+      "headless_compatible": true,
+      "expected_summary_id": "ui_accessibility_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ui_layout_selftest",
+      "action": "UiLayoutSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--ui-layout-selftest",
+      "aliases": [
+        "--layout-selftest"
+      ],
+      "description": "Verify fixed 1920x1080 UI layout bounds, responsive containers, and panel alignments",
+      "headless_compatible": true,
+      "expected_summary_id": "ui_layout_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ui_snapshot_regenerate",
+      "action": "UiSnapshotRegenerate",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--ui-snapshot-regenerate",
+      "aliases": [
+        "--ui-snapshots-regen"
+      ],
+      "description": "Recapture all snapshot targets and OVERWRITE snapshots/ goldens (needs real display)",
+      "headless_compatible": false,
+      "expected_summary_id": "ui_snapshot_regenerate",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ui_snapshot_uitest",
+      "action": "UiSnapshotSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--ui-snapshot-uitest",
+      "aliases": [
+        "--ui-snapshots"
+      ],
+      "description": "Capture all snapshot targets, DIFF against snapshots/ goldens (needs real display, not --headless)",
+      "headless_compatible": false,
+      "expected_summary_id": "ui_snapshot_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "utility_ai_uitest",
+      "action": "UtilityAiUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--utility-ai-uitest",
+      "aliases": [],
+      "description": "Utility AI debug view, consideration curves, and behavior trees",
+      "headless_compatible": true,
+      "expected_summary_id": "utility_ai_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "verdict_uitest",
+      "action": "VerdictUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--verdict-uitest",
+      "aliases": [],
+      "description": "Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free",
+      "headless_compatible": true,
+      "expected_summary_id": "verdict_uitest",
+      "timeout_seconds": 30
+    }
+  ]
+}

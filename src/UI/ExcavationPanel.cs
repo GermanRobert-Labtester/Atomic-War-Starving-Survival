@@ -58,26 +58,24 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _detailText = new Label();
-            _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _assignWorkersBtn = new Button { Text = "Assign Dig Crew (4 Labor)", CustomMinimumSize = new Vector2(200, 36) };
-            _assignWorkersBtn.Pressed += () =>
+            _assignWorkersBtn = AshfallUiHelpers.MakeButton("Assign Dig Crew (4 Labor)", () =>
             {
                 if (_host != null)
                 {
                     _host.AddSite("vault_strata_delta9", "blueprint_deep_vault_74", 100f, 0.2f);
                     _host.AssignWorkers("vault_strata_delta9", 4);
                 }
-            };
+            });
+            _assignWorkersBtn.CustomMinimumSize = new Vector2(200, 36);
             buttonRow.AddChild(_assignWorkersBtn);
 
-            _shoringBtn = new Button { Text = "Reinforce Shoring", CustomMinimumSize = new Vector2(160, 36) };
-            _shoringBtn.Pressed += () => _host?.ApplyShoring("vault_strata_delta9");
+            _shoringBtn = AshfallUiHelpers.MakeButton("Reinforce Shoring", () => _host?.ApplyShoring("vault_strata_delta9"));
+            _shoringBtn.CustomMinimumSize = new Vector2(160, 36);
             buttonRow.AddChild(_shoringBtn);
 
             _contentStack.AddChild(buttonRow);

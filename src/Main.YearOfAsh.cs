@@ -84,7 +84,7 @@ namespace AtomicWar.GodotApp
         private void SaveYearOfAsh()
         {
             if (_yearOfAsh == null) return;
-            if (YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave()))
+            if (CaptureSection("year_of_ash", YearOfAshSaveStore.TryCapturePersisted(_yearOfAsh.CaptureSave())))
             {
                 _yearOfAshDirty = false;
                 GD.Print("[Ashfall Godot] Year of Ash save written.");

@@ -378,7 +378,7 @@ public partial class JournalPanel : Control
         }
         catch (Exception ex)
         {
-            CatalogDiagnostics.Warn("<unknown>", "unknown", ex);
+            CatalogDiagnostics.Warn("<scroll>", "ScrollToChild", ex);
         }
     }
 

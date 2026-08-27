@@ -55,5 +55,8 @@ namespace AtomicWar.GodotApp
         {
             return s_store.TryLoad(pathOverride)!;
         }
+
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(ExpansionQuestSaveEnvelope envelope) => s_store.CapturePersisted(envelope);
     }
 }

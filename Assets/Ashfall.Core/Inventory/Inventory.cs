@@ -42,6 +42,29 @@ namespace Ashfall.Core.Inventory
             if (gameHours <= 0f) return;
             CurrentDurability = Math.Max(0f, CurrentDurability - DegradeRate * gameHours);
         }
+
+        public static WornGear FromInventory(EquippedGearData src)
+        {
+            return new WornGear
+            {
+                RadProtection = src.RadProtection,
+                MaxDurability = src.MaxDurability,
+                CurrentDurability = src.CurrentDurability,
+                DegradeRate = src.DegradeRate
+            };
+        }
+
+        public static WornGear? FromInventory(WornGear? src)
+        {
+            if (src == null) return null;
+            return new WornGear
+            {
+                RadProtection = src.RadProtection,
+                MaxDurability = src.MaxDurability,
+                CurrentDurability = src.CurrentDurability,
+                DegradeRate = src.DegradeRate
+            };
+        }
     }
 
     public class Inventory

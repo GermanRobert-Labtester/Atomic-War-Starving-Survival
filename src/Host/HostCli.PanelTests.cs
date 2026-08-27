@@ -145,6 +145,7 @@ namespace AtomicWar.GodotApp
                 }
                 catch (Exception)
                 {
+                    /* cleanup: best-effort temp file delete */
                 }
             }
 
@@ -224,6 +225,7 @@ namespace AtomicWar.GodotApp
                 }
                 catch (Exception)
                 {
+                    /* cleanup: best-effort temp file delete */
                 }
             }
 
@@ -330,6 +332,7 @@ namespace AtomicWar.GodotApp
                 }
                 catch (Exception)
                 {
+                    /* cleanup: best-effort temp file delete */
                 }
             }
 
@@ -819,6 +822,7 @@ namespace AtomicWar.GodotApp
                 }
                 catch (Exception)
                 {
+                    /* cleanup: best-effort temp file delete */
                 }
             }
 
@@ -960,6 +964,7 @@ namespace AtomicWar.GodotApp
                 }
                 catch (Exception)
                 {
+                    /* cleanup: best-effort temp file delete */
                 }
             }
 
@@ -1054,6 +1059,7 @@ namespace AtomicWar.GodotApp
                 }
                 catch (Exception)
                 {
+                    /* cleanup: best-effort temp file delete */
                 }
             }
 
@@ -1188,6 +1194,7 @@ namespace AtomicWar.GodotApp
                 }
                 catch (Exception)
                 {
+                    /* cleanup: best-effort temp file delete */
                 }
             }
 

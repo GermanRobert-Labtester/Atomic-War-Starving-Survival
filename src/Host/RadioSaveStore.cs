@@ -52,6 +52,9 @@ namespace AtomicWar.GodotApp
         public static RadioSaveState? TryLoad(string pathOverride = null!) =>
             s_store.TryLoad(pathOverride);
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(RadioSaveState state) => s_store.CapturePersisted(state);
+
         private static RadioSaveState? DecodeRadio(string raw, IJsonSerializer json)
         {
             if (RadioSaveCodec.TryDecode(raw, json, out var state))

@@ -114,6 +114,9 @@ namespace AtomicWar.GodotApp
 
         public static StartingLevelSaveState? TryLoad(string? pathOverride = null) => s_store.TryLoad(pathOverride);
 
+        /// <summary>Capture the exact persisted bytes for the campaign envelope without writing to disk.</summary>
+        public static string TryCapturePersisted(StartingLevelSaveState state) => s_store.CapturePersisted(state);
+
         private static string EncodeSave(StartingLevelSaveState state, IJsonSerializer json)
         {
             var envelope = new StartingLevelSaveEnvelope { State = state };

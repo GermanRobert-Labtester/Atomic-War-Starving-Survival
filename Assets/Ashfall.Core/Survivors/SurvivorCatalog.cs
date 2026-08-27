@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 #pragma warning disable CS8618
 
 using Ashfall.Core.IO;
@@ -218,17 +219,34 @@ namespace Ashfall.Core.Survivors
 
         public static List<SurvivorDefinition> Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
-            var result = new List<SurvivorDefinition>();
+            var loadResult = LoadWithResult(dataDir, fileIO, json);
+            return loadResult.Entries.ToList();
+        }
+
+        public static CatalogLoadResult<SurvivorDefinition> LoadWithResult(
+            string dataDir, IFileIO fileIO, IJsonSerializer json)
+        {
+            string path = fileIO.Combine(dataDir, FileName);
+            var result = new CatalogLoadResult<SurvivorDefinition>(
+                path,
+                "SurvivorDefinition list",
+                CatalogClassification.Required);
+
             if (fileIO == null || json == null || string.IsNullOrEmpty(dataDir))
                 return result;
 
-            string path = fileIO.Combine(dataDir, FileName);
             if (!fileIO.FileExists(path))
+            {
+                result.AddFatal("Required catalog file not found: " + path);
                 return result;
+            }
 
             string raw = fileIO.ReadAllText(path);
             if (string.IsNullOrWhiteSpace(raw))
+            {
+                result.AddError("Catalog file is empty: " + path);
                 return result;
+            }
 
             try
             {
@@ -238,14 +256,15 @@ namespace Ashfall.Core.Survivors
                     var def = parsed[i];
                     if (def == null || string.IsNullOrEmpty(def.id)) continue;
                     if (string.IsNullOrEmpty(def.displayName)) def.displayName = def.id;
-                    result.Add(def);
+                    result.AddEntry(def);
                 }
             }
-            catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return result;
-                                }
+            catch (Exception ex)
+            {
+                CatalogDiagnostics.Warn("SurvivorCatalog", path, ex);
+                result.AddFatal("Failed to load survivor definitions: " + ex.Message, ex);
+            }
+
             return result;
         }
     }
