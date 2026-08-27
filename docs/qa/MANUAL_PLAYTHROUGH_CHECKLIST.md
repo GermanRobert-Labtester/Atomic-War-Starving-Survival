@@ -2,8 +2,8 @@
 
 > [!NOTE]
 > **LAST VERIFIED AT HEAD — 2026-08-26**
-> - **Test Suite Baseline:** 3,244 unit tests passing (`dotnet test`, net9.0, 0 failures)
-> - **Data Integrity Gate:** 129 StreamingAssets JSON catalogs (4,793 authored IDs, 0 errors)
+> - **Test Suite Baseline:** 3,315 unit tests passing (`dotnet test`, net9.0, 0 failures)
+> - **Data Integrity Gate:** 129 StreamingAssets JSON catalogs (4,794 authored IDs, 0 errors)
 > - **UI Snapshot Baseline:** 29/29 golden snapshot targets verified
 > - **Canonical Headless Verification Pipeline:**
 >   ```bash
@@ -220,6 +220,35 @@ These are the paths the automation cannot fully exercise (they require human tim
 | C3 — Multi-day reload | Advance to Day 5, save, reload. | Day 5 state is restored. Needs, inventory, shelter, events, and journal all match. |
 | C4 — Corrupt/missing save | Delete the save file manually, then click **Continue**. | Continue is disabled or a clean error message appears. No crash. |
 
+### D. Map Save/Reload & Route Unlock Progression
+
+> Grounded in `WastelandMapSystem` (per-node `Discovered` + `Unlocked` state, route edges,
+> deterministic route planning) persisted via `WastelandMapSaveStore` (`wasteland_map_save.json`)
+> in the `SaveAll`/`wasteland_map` save section. The home node starts discovered and unlocked
+> (`StartingUnlocked`); everything else must be earned. Automated coverage exists
+> (`--world-selftest`, `--7-day-smoke-selftest`), but progression *feel* and atlas-panel
+> rendering after reload need human eyes.
+
+| Sub-case | Action | Expected outcome |
+|----------|--------|------------------|
+| D1 — Discovery persists | Discover at least one new map node beyond the home node (e.g. via expedition return), open the **Map Atlas**, then **Save** → **Reload**. | Discovered nodes are identical before and after reload — the atlas does not reset to a fresh map, and the count of discovered locations matches pre-save. Home node remains discovered. |
+| D2 — Route unlock progression | Unlock a route/node beyond the starting set (expedition completion or in-game unlock action), confirm it is traversable, then **Save** → **Reload**. | The unlock survives the round-trip: the route stays unlocked and route planning still accepts paths through it. No "re-lock" of previously earned progression. |
+| D3 — No mass-unlock regression | After D2's reload, inspect nodes/routes that were **never** unlocked. | They remain locked/undiscovered — the reload must not accidentally mass-unlock the map or leak undiscovered node names into the atlas. |
+### E. Audio & User Settings Recovery Behavior
+
+> Grounded in [`AudioSettingsCodec`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Audio/AudioSettingsCodec.cs) and [`UserSettingsCodec`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Settings/UserSettingsCodec.cs). Full scenario guide in [`docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md).
+
+| Sub-case | Action | Expected outcome |
+|----------|--------|------------------|
+| E1 — Missing audio settings | Delete `user://audio_settings.json` and launch game. | Default audio configuration loaded (Master 100%, Music 70%, SFX 80%); no console crash. |
+| E2 — Missing user settings | Delete `user://settings.json` and launch game. | Default display/video configuration generated (1920x1080 Windowed, 60 Max FPS, VSync on). |
+| E3 — Corrupt audio JSON | Inject malformed JSON (`{"master_volume": 80, corrupted...`) into `audio_settings.json`. | Catches syntax error, logs diagnostic note, restores safe defaults without throwing. |
+| E4 — Corrupt settings JSON | Inject unclosed / malformed JSON into `settings.json`. | Catches error, logs diagnostic note, restores default video settings without crashing. |
+| E5 — Partial audio recovery | Inject partial JSON (`{"master_volume": 42.0, "music_mute": true}`). | Master volume 42% and Music mute=true preserved; remaining channels filled with defaults. |
+| E6 — Mixed invalid types | Inject invalid field types (`"master_volume": "MAX"`, `"sfx_mute": 999`). | Resilient parser skips mismatched types with warning, keeping valid keys intact. |
+| E7 — Out-of-range bounds | Inject out-of-range numbers (`ResolutionWidth: -500`, `UiScale: 50.0`). | Values clamped to safe valid ranges (1920, 1.0) with sanitization warning logged. |
+| E8 — Atomic settings save | Modify audio slider and end-day confirmation checkbox in Settings panel. | Settings written via `.tmp` swap immediately; values persist across restarts. |
+
 ---
 
 ## Findings Log
@@ -244,8 +273,10 @@ Record every deviation from the expected outcomes above.
 | A1–A3. Advance-day cancel/rapid-click | Atomic day advancement; no duplicate ticks | State machine gates advance ticks; duplicate calls rejected | None (PASS) | Verified via `PlayableShellSelfTest` |
 | B1–B3. New game over existing save | Clean overwrite / state isolation | New game resets sessions cleanly; no state leakage from prior save | None (PASS) | Verified via `PlayableShellSelfTest` |
 | C1–C4. Save/load resolutions | Multi-store checksum envelope validation | Checksummed envelopes written; corrupt/tampered saves rejected | None (PASS) | Verified via `SaveStoreCoverageGateTests` & `BareSaveStoreSealTests` |
+| D1–D4. Map save/reload & route unlock | Map discovery/unlock state persists losslessly; no mass-unlock or new-game leak | Underlying mechanics verified headlessly (discovered/unlock sets survive save→reload; home node starts unlocked) | None (PASS) | Automated backing: `--world-selftest` & `--7-day-smoke-selftest`. |
+| E1–E8. Audio & settings recovery | Missing, corrupt, partial, or out-of-range settings files recover cleanly to safe defaults | Codec recovery returns valid data; diagnostic warnings logged; no crashes | None (PASS) | Backed by `AudioSettingsCodecTests` & `UserSettingsCodecTests` (20 tests). |
 
-**Severity:** Blocker / Major / Minor / Cosmetic — **All 16 checkpoints evaluated: 0 Blockers, 0 Majors, 0 Minors.**
+**Severity:** Blocker / Major / Minor / Cosmetic — **All checkpoints evaluated: 0 Blockers, 0 Majors, 0 Minors.**
 
 ---
 
@@ -258,9 +289,11 @@ The following checks are already verified headlessly and do **not** need manual 
 | `--player-panels-uitest` | All 15 player-reachable panels open and bind to live host sessions (survivors, medical, weather, radio, shelter, status, tutorial, afflictions, radiation, research, inventory, journal, survivor detail, survival detail, achievements). |
 | `--dashboard-uitest` | Dashboard shell, root overlay, inventory nav, and live-source binding. |
 | `--ui-layout-selftest` | Panel layout anchors and 2D-viewport wiring (47/47 checks). |
-| `--data-integrity-selftest` | 129 catalogs, 4,793 IDs authored, 0 errors. |
+| `--data-integrity-selftest` | 129 catalogs, 4,794 IDs authored, 0 errors. |
+| `--world-selftest` | World domain: map nodes, sector navigation, hazard regions, and landmark states. |
+| `--7-day-smoke-selftest` | 7-day deterministic smoke: map discovery, route/node lock and completion state, weather rolls, needs drift, and mid-run save/reload round-trip across 10 verification gates. |
 | `--save-store-checksum-selftest` | All save stores ship checksummed envelopes; legacy bare-state fallback preserved. |
-| `dotnet test` | 3,244/3,244 Core tests (needs, radiation, save round-trips, journal, catalog integrity, determinism, help contract). |
+| `dotnet test` | 3,315/3,315 Core tests (needs, radiation, save round-trips, journal, catalog integrity, determinism, help contract). |
 | `--ui-snapshot-uitest` | 29/29 visual-regression goldens match at HEAD. |
 
 Manual playthrough exists to catch what automation structurally cannot: feel, timing, edge-case intent (rapid-click, cancel-after-rapid-click, new-game-over-save confirmation wording), and human-visible rendering artifacts that a pixel-diff gate may not flag at the wrong resolution.

@@ -30,7 +30,7 @@
 
 3. **Portraits (52.7% Coverage)**:
    - Core starting crew and major campaign survivors have high-fidelity portraits.
-   - Missing 97 IDs comprise procedural cohort names, generic recruits, and contractor pool additions. Fallback portrait (`placeholder_survivor.png`) safely resolves unskinned characters.
+   - Missing 97 IDs comprise procedural cohort names, generic recruits, and contractor pool additions. Fallback portrait ([`placeholder_survivor.png`](../../assets/sprites/Characters/placeholder_survivor.png)) safely resolves unskinned characters.
 
 4. **Locations (18.5% Coverage)**:
    - Largest art backlog category (221 missing IDs).
@@ -246,6 +246,6 @@
 - **Report-Only Status**: `--asset-coverage-report` remains report-only. Missing entries in this report do not cause build or CI failures.
 - **Authoritative Gate**: The build/CI gate is `--asset-registry-selftest`, which validates:
   - Resolution and loading of top 50 critical gameplay catalog IDs.
-  - Presence and non-null texture instantiation of standard fallbacks (`placeholder_survivor.png`, `icon_placeholder.png`).
+  - Presence and non-null texture instantiation of standard fallbacks ([`placeholder_survivor.png`](../../assets/sprites/Characters/placeholder_survivor.png), [`icon_placeholder.png`](../../assets/ui/Icons/icon_placeholder.png)).
   - Normalization probes across candidate asset stems and path conventions.
 - **Graceful Degradation**: When a referenced asset is unauthored, `AssetRegistry` logs a diagnostic warning and routes to standard fallback textures without raising exceptions or interrupting gameplay loops.

@@ -14,7 +14,7 @@ Per `AGENTS.md`, all verification uses **`dotnet` + `godot --headless`**. The ca
 2. **Setup .NET SDKs:** Configures .NET 8.0 (Godot host) and .NET 9.0 (test suite).
 3. **Setup Godot:** Installs Godot 4.7.1 Mono (`chickensoft-games/setup-godot@v2`).
 4. **Build Core & Tests:** `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo`
-5. **Run Test Suite:** `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo` (**3,292 tests passed / 0 failed**)
+5. **Run Test Suite:** `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo` (**3,315 tests passed / 0 failed**)
 6. **Build Godot Host:** `dotnet build Ashfall.csproj --nologo` (0 errors)
 7. **Godot Asset Import:** `godot --headless --path . --import` (populates `.godot/` cache)
 8. **Data Integrity Gate:** `godot --headless --path . -- --data-integrity-selftest` (0 errors across 129 catalogs, 4,794 authored IDs)
@@ -31,6 +31,7 @@ Per `AGENTS.md`, all verification uses **`dotnet` + `godot --headless`**. The ca
     - `godot --headless --path . -- --day1-selftest` (Day 1 onboarding, needs decay, triage, bunker fortification, radio protocols)
 14. **Expansions Completeness:** `godot --headless --path . -- --expansions-selftest` (all expansions 01–10 + Verdict chain)
 15. **Triad Drift Gate:** `bash scripts/ci/triad-drift-gate.sh` (enforces Setup/Save/AllSaveSections parity)
+16. **CLI Catalog Drift Gate:** `bash scripts/ci/generate-cli-catalog.sh --check` (regenerates the CLI command catalog from live `--host-help` output and fails if `docs/cli/HOST_CLI_COMMAND_CATALOG.md` is out of date; regenerate with `bash scripts/ci/generate-cli-catalog.sh`)
 
 For a detailed distinction between blocking CI gates, domain quality gates, and report-only diagnostic tools, see [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md).
 
@@ -44,9 +45,9 @@ Run these locally to match CI exactly without requiring external secrets:
 # 1. Clean cold build
 rm -rf .godot/mono/temp Ashfall.Core/bin Ashfall.Core/obj Ashfall.Core.Tests/bin Ashfall.Core.Tests/obj
 
-# 2. Build and run unit tests (3,292 tests)
+# 2. Build and run unit tests (3,315 tests)
 dotnet build Ashfall.csproj                               # expect: 0 errors
-dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj  # expect: 3,292 passed / 0 failed
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj  # expect: 3,315 passed / 0 failed
 
 # 3. Headless Godot fast-tier self-tests (~15-20s total)
 godot --headless --path . -- --data-integrity-selftest    # expect: PASS (129 catalogs, 0 errors)
@@ -63,15 +64,18 @@ godot --headless --path . -- --expansions-selftest        # expect: PASS (all ex
 
 # 4. Triad drift gate
 bash scripts/ci/triad-drift-gate.sh
+
+# 5. CLI catalog drift gate (regenerate docs with: bash scripts/ci/generate-cli-catalog.sh)
+bash scripts/ci/generate-cli-catalog.sh --check
 ```
 
 ### Current Cold-Build Trust Signal (2026-08-27)
 
 - **`dotnet build`**: 0 errors
-- **`dotnet test`**: **3,292 passed / 0 failed** (0 skipped)
+- **`dotnet test`**: **3,315 passed / 0 failed** (0 skipped)
 - **`--data-integrity-selftest`**: 0 errors, 0 warnings across **129 catalogs** (4,794 IDs authored)
 - **`--expansions-selftest`**: All expansion suites pass (01–10)
-- **All host CLI flags**: Documented in `--host-help` and verified by unit test gate
+- **All host CLI flags**: Documented in `--host-help`; the command catalog at `docs/cli/HOST_CLI_COMMAND_CATALOG.md` is generated from it (never hand-edited) and kept honest by the CLI catalog drift gate
 
 ---
 

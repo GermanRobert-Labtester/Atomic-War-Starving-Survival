@@ -76,7 +76,7 @@ Sibling directories like `ui/Screens` contain Stitch exports (62 PNGs) that are 
 
 `assets/_quarantine_legacy/ammo_deprecated_unknown.jpg`  [Inventory_Item_Ammo]
 
-`assets/sprites/Characters/placeholder_survivor.png`  [Sprite_Unknown]
+[`assets/sprites/Characters/placeholder_survivor.png`](../../assets/sprites/Characters/placeholder_survivor.png)  [Sprite_Unknown]
 
 `assets/sprites/Factions/faction_central_garrison_remnants.png`  [Sprite_Unknown]
 
