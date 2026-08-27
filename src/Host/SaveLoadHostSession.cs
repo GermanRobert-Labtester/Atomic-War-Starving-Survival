@@ -19,7 +19,47 @@ public partial class SaveLoadHostSession : Node
     private string _basePath = string.Empty;
     private SaveProfileId _currentProfileId = new("default");
     private SaveSlotId? _activeSlotId;
+    private AggregateSaveEnvelope? _activeEnvelope;
     private readonly HashSet<string> _restoredSections = new();
+
+    /// <summary>Active loaded aggregate campaign envelope, or null if no slot loaded.</summary>
+    public AggregateSaveEnvelope? ActiveEnvelope => _activeEnvelope;
+
+    /// <summary>
+    /// Try to get a specific section's JSON payload from the loaded in-memory envelope.
+    /// </summary>
+    public bool TryGetSectionPayload(string sectionKey, out string payload)
+    {
+        payload = string.Empty;
+        if (_activeEnvelope?.sections == null) return false;
+        foreach (var s in _activeEnvelope.sections)
+        {
+            if (string.Equals(s.sectionName, sectionKey, StringComparison.Ordinal))
+            {
+                payload = s.payloadJson;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Select or create the default slot if no slot is currently selected,
+    /// guaranteeing an active slot root before sessions start.
+    /// </summary>
+    public SaveSlotId SelectOrCreateDefaultSlot(string slotName = "slot_1")
+    {
+        var slotId = new SaveSlotId(slotName);
+        if (_slotService != null && !_slotService.SlotExists(_currentProfileId, slotId))
+        {
+            CreateSlot(slotId);
+        }
+        else
+        {
+            SelectSlot(slotId);
+        }
+        return slotId;
+    }
 
     /// <summary>Raised when slot data changes (create, delete, save, load).</summary>
     public event Action? SlotsChanged;
@@ -424,6 +464,7 @@ public partial class SaveLoadHostSession : Node
         }
 
         _activeSlotId = slotId;
+        _activeEnvelope = result.Envelope;
         ApplySlotRoot();
 
         // Unpack aggregate envelope sections into individual subsystem files on

@@ -277,6 +277,13 @@ public class SaveSlotService
             {
                 sectionErrors.Add($"Section {i} ({section.sectionName}): checksum is empty for a non-empty payload.");
             }
+
+            if (!string.IsNullOrEmpty(envelope.manifest.generationId) &&
+                !string.IsNullOrEmpty(section.generationId) &&
+                !string.Equals(envelope.manifest.generationId, section.generationId, StringComparison.Ordinal))
+            {
+                sectionErrors.Add($"Section {i} ({section.sectionName}): generation mismatch (manifest '{envelope.manifest.generationId}', section '{section.generationId}').");
+            }
         }
         }
 
@@ -290,8 +297,14 @@ public class SaveSlotService
 
         if (errors.Count > 0 || sectionErrors.Count > 0)
         {
-            errors.AddRange(sectionErrors);
-            return AggregateValidationResult.Invalid(errors.ToArray());
+            var allErrors = new List<string>(errors);
+            allErrors.AddRange(sectionErrors);
+            return new AggregateValidationResult
+            {
+                IsValid = false,
+                Errors = allErrors,
+                SectionErrors = new List<string>(sectionErrors)
+            };
         }
 
         return AggregateValidationResult.Valid();
@@ -308,7 +321,7 @@ public class SaveSlotService
         string targetPath = GetAggregatePath(profileId, slotId);
         string? dir = Path.GetDirectoryName(targetPath);
         if (!string.IsNullOrEmpty(dir) && !_files.DirectoryExists(dir))
-            Directory.CreateDirectory(dir);
+            _files.CreateDirectory(dir);
 
         string tempPath = targetPath + ".tmp";
         string backupPath = targetPath + ".bak";
@@ -359,7 +372,8 @@ public class SaveSlotService
             {
                 try
                 {
-                    File.Copy(targetPath, backupPath, overwrite: true);
+                    string existing = _files.ReadAllText(targetPath);
+                    _files.WriteAllText(backupPath, existing);
                 }
                 catch (Exception ex)
                 {
@@ -367,17 +381,15 @@ public class SaveSlotService
                 }
             }
 
-            File.Move(tempPath, targetPath, overwrite: true);
-
-            // Clean up temp if it still exists (Move can fail on some filesystems).
-            try { if (_files.FileExists(tempPath)) File.Delete(tempPath); } catch (Exception ex) { _log.Warn($"SaveSlotService: temp cleanup failed: {ex.Message}"); }
+            _files.WriteAllText(targetPath, readBack);
+            if (_files.FileExists(tempPath))
+                _files.DeleteFile(tempPath);
 
             return true;
         }
         catch (Exception ex)
         {
-            _log.Error($"SaveSlotService: atomic write failed for slot '{slotId}': {ex.Message}");
-            try { if (_files.FileExists(tempPath)) File.Delete(tempPath); } catch (Exception cleanupEx) { _log.Warn($"SaveSlotService: temp cleanup failed after atomic write error: {cleanupEx.Message}"); }
+            _log.Error($"SaveSlotService: failed to write aggregate envelope for slot '{slotId}': {ex.Message}");
             return false;
         }
     }

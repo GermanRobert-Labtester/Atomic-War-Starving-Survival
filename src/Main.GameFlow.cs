@@ -98,6 +98,9 @@ namespace AtomicWar.GodotApp
             // and delete the store files so Continue stays disabled for a fresh run.
             ResetAllSessions();
 
+            // Ensure an active save slot is selected before initializing sessions
+            _saveLoadHost?.SelectOrCreateDefaultSlot("slot_1");
+
             // Initialize Holdfast & Starting Level
             SetupHoldfastRuntime();
             _holdfastTerminal.PressNewLedger();

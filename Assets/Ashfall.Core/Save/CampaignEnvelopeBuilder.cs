@@ -51,6 +51,9 @@ namespace Ashfall.Core.Save
                     "Unknown section key(s) not in SaveSectionRegistry: " + string.Join(", ", unknown) +
                     ". The campaign envelope is registry-whitelisted.");
 
+            if (string.IsNullOrEmpty(manifest.generationId))
+                manifest.generationId = $"gen_{manifest.slotId.Value}_{manifest.lastSaveTick}";
+
             var sections = new List<SaveSectionEnvelope>();
             foreach (var meta in SaveSectionRegistry.All)
             {
@@ -61,6 +64,7 @@ namespace Ashfall.Core.Save
                 {
                     sectionName = meta.SectionKey,
                     schemaVersion = SaveSectionRegistry.SchemaVersionFor(meta.SectionKey),
+                    generationId = manifest.generationId,
                     payloadJson = payload,
                 };
                 section.checksum = SaveSlotService.ComputeSectionChecksum(section);

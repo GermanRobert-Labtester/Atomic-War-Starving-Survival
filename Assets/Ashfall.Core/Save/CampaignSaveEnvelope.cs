@@ -48,6 +48,9 @@ public class SaveManifest
 
     /// <summary>ISO-8601 timestamp of last successful save.</summary>
     public string lastSaveTimestamp = string.Empty;
+
+    /// <summary>Unique generation/run identifier to prevent mixed-generation sections.</summary>
+    public string generationId = string.Empty;
 }
 
 /// <summary>
@@ -68,6 +71,9 @@ public class SaveSectionEnvelope
 
     /// <summary>SHA-256 checksum of the canonicalized payload.</summary>
     public string checksum = string.Empty;
+
+    /// <summary>Generation ID matching the parent manifest.</summary>
+    public string generationId = string.Empty;
 
     /// <summary>
     /// Raw JSON payload for this section. The payload is checksummed and
