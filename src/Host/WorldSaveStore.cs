@@ -5,74 +5,48 @@
 // Purpose    : World aggregate domain save: weather, hazard maps, and regional state
 // ============================================================================
 using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Save;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// World (weather port) save persistence — thin pattern sibling of the
-    /// other host stores: user:// path, try/catch, checksummed envelope.
-    /// Legacy bare-state saves (pre-checksum) still load.
+    /// World (weather port) save persistence — façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). The World
+    /// section is the one host store whose persisted shape is a multi-field
+    /// envelope (weather state plus sky armor, location evolution, wildlife,
+    /// and landmark sections), so checksum stamping/validation and the legacy
+    /// bare-weather wrap are World-specific delegates here; path resolution,
+    /// atomic write, and error handling live in the service.
     /// </summary>
     public static class WorldSaveStore
     {
         public const string FileName = "world_save.json";
         public const string SectionName = "world";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(WorldHostSave envelope)
-    {
-        return TryCapture(envelope);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static WorldHostSave? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<WorldHostSave> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(WorldSaveStore),
+            EncodeEnvelope,
+            DecodeEnvelope);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(WorldHostSave envelope)
-    {
-        try
-        {
-            if (envelope == null) return string.Empty;
-            return new SystemTextJsonSerializer().Serialize(envelope);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[WorldSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static WorldHostSave? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return new SystemTextJsonSerializer().Deserialize<WorldHostSave>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[WorldSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(WorldHostSave envelope) => s_store.CaptureBare(envelope);
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static WorldHostSave? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(WorldHostSave envelope) => s_store.CaptureBare(envelope);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static WorldHostSave? TryRestore(string json) => s_store.RestoreBare(json);
 
         public static bool TrySave(
             WorldWeatherState state,
@@ -81,76 +55,51 @@ namespace AtomicWar.GodotApp
             WildlifeSaveState wildlife = null!,
             LandmarkSaveState landmark = null!)
         {
-            try
+            if (state == null) return false;
+            var envelope = new WorldHostSave
             {
-                if (state == null) return false;
-                var envelope = new WorldHostSave
-                {
-                    State = state,
-                    SkyArmor = skyArmor,
-                    LocationEvolution = locationEvolution,
-                    Wildlife = wildlife,
-                    Landmark = landmark
-                };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[World] save failed: " + e.Message);
-                return false;
-            }
+                State = state,
+                SkyArmor = skyArmor,
+                LocationEvolution = locationEvolution,
+                Wildlife = wildlife,
+                Landmark = landmark
+            };
+            return s_store.TrySave(envelope);
         }
 
-        public static WorldHostSave? TryLoadEnvelope()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-
-                var envelope = s_json.Deserialize<WorldHostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    // A non-empty checksum field is required for any save in the
-                    // new envelope format. Empty/null previously slipped past as
-                    // "legacy" — a malformed save in the new format must be
-                    // rejected, not silently trusted.
-                    if (string.IsNullOrEmpty(envelope.Checksum))
-                    {
-                        GD.PrintErr("[World] load failed: checksum field missing (corrupt save).");
-                        return null;
-                    }
-                    string actual = SaveChecksum.Compute(envelope);
-                    if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
-                    {
-                        GD.PrintErr("[World] load failed: checksum mismatch (corrupt or foreign save).");
-                        return null;
-                    }
-                    return envelope;
-                }
-
-                // Legacy bare-state save (written before the checksum envelope).
-                var legacy = s_json.Deserialize<WorldWeatherState>(raw);
-                return legacy == null ? null : new WorldHostSave { State = legacy };
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[World] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static WorldHostSave? TryLoadEnvelope() => s_store.TryLoad();
 
         public static WorldWeatherState? TryLoad()
         {
             return TryLoadEnvelope()?.State;
+        }
+
+        private static string EncodeEnvelope(WorldHostSave envelope, IJsonSerializer json)
+        {
+            envelope.Checksum = SaveChecksum.Compute(envelope);
+            return json.Serialize(envelope);
+        }
+
+        private static WorldHostSave? DecodeEnvelope(string raw, IJsonSerializer json)
+        {
+            var envelope = json.Deserialize<WorldHostSave>(raw);
+            if (envelope != null && envelope.State != null)
+            {
+                // A non-empty checksum field is required for any save in the
+                // new envelope format. Empty/null is a malformed new-format
+                // save — reject it, do not silently trust it.
+                if (string.IsNullOrEmpty(envelope.Checksum))
+                    throw new InvalidOperationException("checksum field missing (corrupt save).");
+                string actual = SaveChecksum.Compute(envelope);
+                if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                    throw new InvalidOperationException("checksum mismatch (corrupt or foreign save).");
+                return envelope;
+            }
+
+            // Legacy bare-state save (written before the checksum envelope):
+            // a bare weather state, wrapped into the current envelope shape.
+            var legacy = json.Deserialize<WorldWeatherState>(raw);
+            return legacy == null ? null : new WorldHostSave { State = legacy };
         }
     }
 

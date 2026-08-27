@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Save;
 using Ashfall.Core.World;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Survivors;
@@ -202,7 +203,7 @@ namespace AtomicWar.GodotApp
             }
 
             // Tamper-detect: mutate totalElapsedHours → checksum must change.
-            var envelopeA = new WeatherHostSave { State = stateA };
+            var envelopeA = new SaveEnvelope<WorldWeatherState> { State = stateA };
             envelopeA.Checksum = SaveChecksum.Compute(envelopeA);
             var stateC = new WorldWeatherState
             {
@@ -213,7 +214,7 @@ namespace AtomicWar.GodotApp
                 rollCount = stateA.rollCount,
                 restrictToNonHazardWeather = stateA.restrictToNonHazardWeather
             };
-            var envelopeC = new WeatherHostSave { State = stateC };
+            var envelopeC = new SaveEnvelope<WorldWeatherState> { State = stateC };
             envelopeC.Checksum = SaveChecksum.Compute(envelopeC);
             check(!string.Equals(envelopeA.Checksum, envelopeC.Checksum, StringComparison.Ordinal),
                 "B1e: Mutating totalElapsedHours changes WeatherSaveStore checksum (tamper detection).");
@@ -301,7 +302,7 @@ namespace AtomicWar.GodotApp
                 totalElapsedHours = 3.14159265f,
                 rollCount = 42
             };
-            var envelope = new WeatherHostSave { State = state, Checksum = string.Empty };
+            var envelope = new SaveEnvelope<WorldWeatherState> { State = state, Checksum = string.Empty };
 
             string h1 = SaveChecksum.Compute(envelope);
             string h2 = SaveChecksum.Compute(envelope);
@@ -312,7 +313,7 @@ namespace AtomicWar.GodotApp
             check(string.Equals(h1, h2, StringComparison.Ordinal),
                 $"B4b: SaveChecksum is stable across two calls on the same object (hash={h1[..8]}…).");
             check(string.Equals(h1, h3, StringComparison.Ordinal),
-                $"B4c: SaveChecksum is stable across three calls on the same object.");
+                "B4c: SaveChecksum is stable across three calls on the same object.");
 
             // Mutate and confirm the hash changes.
             envelope.State.rollCount = 43;
@@ -329,7 +330,7 @@ namespace AtomicWar.GodotApp
             // hash — this is the guard that prevents a missing checksum from being
             // silently trusted on load.
             var state = new WorldWeatherState { currentKind = "Clear", rollCount = 7 };
-            var envelopeNullChecksum = new WeatherHostSave { State = state, Checksum = null! };
+            var envelopeNullChecksum = new SaveEnvelope<WorldWeatherState> { State = state, Checksum = null! };
             string computed = SaveChecksum.Compute(envelopeNullChecksum);
 
             check(!string.Equals(envelopeNullChecksum.Checksum, computed, StringComparison.Ordinal),

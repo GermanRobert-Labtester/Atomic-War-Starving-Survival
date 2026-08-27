@@ -36,7 +36,7 @@ namespace Ashfall.Core.Save
         private readonly string _logTag;
         private readonly bool _createBackup;
         private readonly Func<T, IJsonSerializer, string>? _encode;
-        private readonly Func<string, IJsonSerializer, T>? _decode;
+        private readonly Func<string, IJsonSerializer, T?>? _decode;
 
         /// <summary>
         /// Checksummed-envelope store. Writes <c>{ State, Checksum }</c> JSON
@@ -71,7 +71,7 @@ namespace Ashfall.Core.Save
             string logTag,
             bool createBackup,
             Func<T, IJsonSerializer, string> encode,
-            Func<string, IJsonSerializer, T> decode)
+            Func<string, IJsonSerializer, T?> decode)
             : this(fileName, files, json, log, baseDirProvider, logTag, createBackup)
         {
             _encode = encode ?? throw new ArgumentNullException(nameof(encode));
@@ -91,7 +91,7 @@ namespace Ashfall.Core.Save
             Func<string> baseDirProvider,
             string logTag,
             Func<T, IJsonSerializer, string> encode,
-            Func<string, IJsonSerializer, T> decode,
+            Func<string, IJsonSerializer, T?> decode,
             bool createBackup = false)
         {
             return new SaveStore<T>(fileName, files, json, log, baseDirProvider, logTag, createBackup, encode, decode);

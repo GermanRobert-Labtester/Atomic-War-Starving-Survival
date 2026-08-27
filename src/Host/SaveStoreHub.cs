@@ -47,7 +47,7 @@ namespace AtomicWar.GodotApp
             string fileName,
             string logTag,
             Func<T, IJsonSerializer, string> encode,
-            Func<string, IJsonSerializer, T> decode,
+            Func<string, IJsonSerializer, T?> decode,
             bool createBackup = false)
             where T : class
         {

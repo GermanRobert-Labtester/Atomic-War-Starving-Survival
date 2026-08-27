@@ -11,7 +11,7 @@
 #
 # Gates executed in order:
 #   1. Trailing whitespace and whitespace errors (scripts/ci/no-whitespace-churn.sh)
-#   2. StreamingAssets JSON syntax validation (fast-fail)
+#   2. JSON syntax & schema policy gate (scripts/ci/json-schema-policy-gate.sh)
 #   3. Build Core & Tests (net9.0)
 #   4. Execute Core unit test suite (xUnit net9.0)
 #   5. Build Godot host (Ashfall.csproj net8.0, 0 errors)
@@ -24,7 +24,9 @@
 #  12. Expansions completeness gate (--expansions-selftest, 01-10)
 #  13. Triad drift gate (scripts/ci/triad-drift-gate.sh)
 #  14. CLI catalog drift gate (scripts/ci/generate-cli-catalog.sh --check)
-#  15. Compiler warning baseline gate (scripts/ci/warning-baseline-gate.sh)
+#  15. Save-store contract matrix gate (scripts/ci/generate-save-store-matrix.sh --check)
+#  16. Compiler warning baseline gate (scripts/ci/warning-baseline-gate.sh)
+#  17. Documentation index drift gate (python3 scripts/ci/generate-docs-index.py --check)
 # =============================================================================
 
 set -euo pipefail
@@ -109,13 +111,17 @@ echo -e "\n[15/16] Running save-store contract matrix completeness gate..."
 bash scripts/ci/generate-save-store-matrix.sh --check
 
 # 16. Compiler Warning Baseline Gate
-echo -e "\n[16/16] Running compiler warning baseline gate..."
+echo -e "\n[16/17] Running compiler warning baseline gate..."
 bash scripts/ci/warning-baseline-gate.sh
+
+# 17. Master Docs Index Drift Gate
+echo -e "\n[17/17] Running documentation index drift gate..."
+python3 scripts/ci/generate-docs-index.py --check
 
 END_TIME=$(date +%s)
 ELAPSED=$((END_TIME - START_TIME))
 
 echo -e "\n============================================================================="
-echo "  ✅ ALL 16 FAST-TIER VERIFICATION GATES PASSED (${ELAPSED}s)"
+echo "  ✅ ALL 17 FAST-TIER VERIFICATION GATES PASSED (${ELAPSED}s)"
 echo "============================================================================="
 exit 0

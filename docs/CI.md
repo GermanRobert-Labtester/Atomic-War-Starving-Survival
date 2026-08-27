@@ -33,6 +33,7 @@ Per `AGENTS.md`, all verification uses **`dotnet` + `godot --headless`**. The ca
 14. **CLI Catalog Drift Gate:** `bash scripts/ci/generate-cli-catalog.sh --check` (verifies `docs/cli/HOST_CLI_COMMAND_CATALOG.md` matches live `--host-help` output)
 15. **Save-Store Contract Matrix Gate:** `bash scripts/ci/generate-save-store-matrix.sh --check` (verifies all 62 save store classes maintain checksum envelopes and slot-root isolation)
 16. **Compiler Warning Baseline Gate:** `bash scripts/ci/warning-baseline-gate.sh` (0 unexpected warnings across all targets)
+17. **Master Docs Index Drift Gate:** `python3 scripts/ci/generate-docs-index.py --check` (verifies `docs/INDEX.md` stays in sync with repository docs corpus)
 
 For a detailed distinction between blocking CI gates, domain quality gates, and report-only diagnostic tools, see [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md).
 
@@ -40,7 +41,7 @@ For a detailed distinction between blocking CI gates, domain quality gates, and 
 
 ## Local Verification Runner
 
-To run the exact ordered sequence of all 16 CI gates locally and stop immediately on the first failure:
+To run the exact ordered sequence of all 17 CI gates locally and stop immediately on the first failure:
 
 ```bash
 bash scripts/ci/verify-fast.sh
