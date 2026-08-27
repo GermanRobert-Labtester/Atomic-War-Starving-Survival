@@ -69,19 +69,20 @@ namespace AtomicWar.GodotApp
         public event Action<string> OnPlayerDied; // passes cause of death
         public event Action<string> OnGameWon; // passes win message
 
-        public HoldfastRuntimeSession(CoreDemoSession world, long startingValue = DefaultStartingValue)
+        public HoldfastRuntimeSession(CoreDemoSession world, long startingValue = DefaultStartingValue, Ashfall.Core.Inventory.Inventory? inventory = null)
         {
             World = world ?? throw new ArgumentNullException(nameof(world));
-            Trade = new HoldfastTradeSession(World.Catalog, startingValue);
+            Trade = new HoldfastTradeSession(World.Catalog, startingValue, inventory);
             Trade.StateChanged += () => StateChanged?.Invoke();
         }
 
         public static HoldfastRuntimeSession Create(
             CoreDemoSession world,
             bool seedDevelopmentState = true,
-            bool loadTradeSave = true)
+            bool loadTradeSave = true,
+            Ashfall.Core.Inventory.Inventory? inventory = null)
         {
-            var session = new HoldfastRuntimeSession(world);
+            var session = new HoldfastRuntimeSession(world, DefaultStartingValue, inventory);
             if (loadTradeSave)
             {
                 var saved = HoldfastTradeSaveStore.TryLoad();

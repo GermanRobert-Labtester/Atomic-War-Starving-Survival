@@ -70,7 +70,8 @@ namespace AtomicWar.GodotApp
                 return;
             }
 
-            _holdfastRuntime = HoldfastRuntimeSession.Create(_core);
+            SetupInventory();
+            _holdfastRuntime = HoldfastRuntimeSession.Create(_core, inventory: _inventory?.Inventory);
             _holdfastRuntime.Survivors = _survivors;
             if (_holdfastTerminal == null || !_holdfastTerminal.IsInsideTree())
             {
