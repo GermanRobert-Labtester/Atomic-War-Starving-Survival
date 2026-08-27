@@ -230,7 +230,8 @@ namespace Ashfall.Core.Save
         public static (bool Success, T? State, string? ErrorMessage) RestoreEnvelope<T>(
             string jsonString,
             IJsonSerializer? serializer = null,
-            Func<string, T?>? legacyFallback = null) where T : class
+            Func<string, T?>? legacyFallback = null,
+            bool allowBareFallback = true) where T : class
         {
             if (string.IsNullOrWhiteSpace(jsonString))
                 return (false, null, "JSON string is empty.");
@@ -259,9 +260,14 @@ namespace Ashfall.Core.Save
                         return (true, fallback, null);
                 }
 
-                var raw = json.Deserialize<T>(jsonString);
-                if (raw != null)
-                    return (true, raw, null);
+                // Some sections deliberately dropped their pre-checksum format
+                // instead of migrating it; those stores disable this fallback.
+                if (allowBareFallback)
+                {
+                    var raw = json.Deserialize<T>(jsonString);
+                    if (raw != null)
+                        return (true, raw, null);
+                }
 
                 return (false, null, "Failed to deserialize envelope.");
             }

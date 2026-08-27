@@ -276,6 +276,70 @@ namespace Ashfall.Core.Tests.Save
             Assert.Null(store.RestoreEnvelope(captured.Replace("Bunker Gamma", "Forged")));
         }
 
+        [Fact]
+        public void LegacyBareStateFallback_CanBeDisabled()
+        {
+            string baseDir = _tempDir;
+            var store = new SaveStore<StoreServiceState>(
+                "strict.json", new FileSystemIO(), new SystemTextJsonSerializer(), _log,
+                () => baseDir, "StrictStore", createBackup: false, allowLegacyBareState: false);
+
+            File.WriteAllText(store.SavePath, "{\"Day\":9,\"Name\":\"PreEnvelope\",\"Dose\":1}");
+            Assert.True(store.TryLoad() == null, "sections that dropped their pre-envelope format must not adopt bare-state files");
+
+            // Envelope saves still load normally with the flag off.
+            Assert.True(store.TrySave(Sample(day: 10)));
+            Assert.Equal(10, store.TryLoad()!.Day);
+        }
+
+        [Fact]
+        public void SchemaVersionedEnvelope_IsByteAndBehaviorCompatibleWithLegacyStores()
+        {
+            var json = new SystemTextJsonSerializer();
+
+            string encoded = SchemaVersionedEnvelope<StoreServiceState>.Encode(Sample(day: 61), json);
+            Assert.StartsWith("{\"SchemaVersion\":\"1.0\",\"State\":", encoded, StringComparison.Ordinal);
+            Assert.Contains("\"Checksum\":\"", encoded, StringComparison.Ordinal);
+
+            // The legacy stores stamped SaveChecksum over a property-only
+            // envelope, which walks zero public fields — a constant. The
+            // adapter must keep producing exactly that value.
+            var mirror = new LegacyPropertyEnvelope { State = Sample(day: 61) };
+            Assert.Equal(SaveChecksum.Compute(mirror), json.Deserialize<LegacyChecksumProbe>(encoded)!.Checksum);
+
+            // Historical load semantics: checksum presence is checked but not
+            // verified — a tampered payload still loads.
+            string tampered = encoded.Replace("Bunker Gamma", "Forged");
+            StoreServiceState? loaded = SchemaVersionedEnvelope<StoreServiceState>.Decode(tampered, json);
+            Assert.NotNull(loaded);
+            Assert.Equal("Forged", loaded!.Name);
+
+            // Empty checksum in the legacy shape is still rejected...
+            Assert.Throws<InvalidOperationException>(() =>
+                SchemaVersionedEnvelope<StoreServiceState>.Decode(
+                    "{\"SchemaVersion\":\"1.0\",\"State\":{\"Day\":1},\"Checksum\":\"\"}", json));
+
+            // ...and bare-state files still parse through the fallback.
+            StoreServiceState? bare = SchemaVersionedEnvelope<StoreServiceState>.Decode(
+                "{\"Day\":7,\"Name\":\"Legacy\",\"Dose\":0}", json);
+            Assert.NotNull(bare);
+            Assert.Equal(7, bare!.Day);
+        }
+
+        private sealed class LegacyChecksumProbe
+        {
+            public string SchemaVersion { get; set; } = "1.0";
+            public StoreServiceState State { get; set; } = null!;
+            public string Checksum { get; set; } = string.Empty;
+        }
+
+        private sealed class LegacyPropertyEnvelope
+        {
+            public string SchemaVersion { get; set; } = "1.0";
+            public StoreServiceState State { get; set; } = null!;
+            public string Checksum { get; set; } = string.Empty;
+        }
+
         private sealed class CapturingLog : ILog
         {
             public readonly List<string> Messages = new List<string>();

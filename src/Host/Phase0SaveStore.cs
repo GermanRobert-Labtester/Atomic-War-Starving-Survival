@@ -4,137 +4,43 @@
 // Host Caller: Main.Phase0 / Phase0HostSession
 // Purpose    : Phase 0 survivor behavioral quirks, specialized perks, and lingering trauma
 // ============================================================================
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Phase-0 effects save persistence — thin pattern sibling of the other
-    /// host stores: user:// path, try/catch, checksummed envelope. The Phase-0
-    /// session was previously never persisted; wiring it into a store closes
-    /// that gap (permanent shelter morale buff must survive reloads).
+    /// Phase-0 effects save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub). Checksummed envelope and
+    /// atomic write live in the service; this section keeps its historical
+    /// strictness of NOT adopting pre-envelope bare-state files.
     /// </summary>
     public static class Phase0SaveStore
     {
         public const string FileName = "phase0_save.json";
         public const string SectionName = "phase0";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(Phase0EffectsSaveState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static Phase0EffectsSaveState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<Phase0EffectsSaveState> s_store =
+            SaveStoreHub.Checksummed<Phase0EffectsSaveState>(FileName, nameof(Phase0SaveStore), allowLegacyBareState: false);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(Phase0EffectsSaveState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[Phase0SaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static Phase0EffectsSaveState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<Phase0EffectsSaveState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[Phase0SaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(Phase0EffectsSaveState state) => s_store.CaptureBare(state);
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static Phase0EffectsSaveState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(Phase0EffectsSaveState state) => s_store.CaptureBare(state);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static Phase0EffectsSaveState? TryRestore(string json) => s_store.RestoreBare(json);
 
-        public static bool TrySave(Phase0EffectsSaveState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new Phase0HostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Phase0] save failed: " + e.Message);
-                return false;
-            }
-        }
+        public static bool TrySave(Phase0EffectsSaveState state) => s_store.TrySave(state);
 
-        public static Phase0EffectsSaveState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-
-                var envelope = s_json.Deserialize<Phase0HostSave>(raw);
-                if (envelope != null && envelope.State != null)
-                {
-                    // The checksummed envelope is the only Phase-0 format; an
-                    // empty checksum means a malformed new-format save.
-                    if (string.IsNullOrEmpty(envelope.Checksum))
-                    {
-                        GD.PrintErr("[Phase0] load failed: checksum field missing (corrupt save).");
-                        return null;
-                    }
-                    string actual = SaveChecksum.Compute(envelope);
-                    if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
-                    {
-                        GD.PrintErr("[Phase0] load failed: checksum mismatch (corrupt or foreign save).");
-                        return null;
-                    }
-                    return envelope.State;
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Phase0] load failed: " + e.Message);
-                return null;
-            }
-        }
-    }
-
-    /// <summary>Phase-0 save envelope: engine state + integrity checksum.</summary>
-    public class Phase0HostSave
-    {
-        public Phase0EffectsSaveState State;
-        public string Checksum = string.Empty;
+        public static Phase0EffectsSaveState? TryLoad() => s_store.TryLoad();
     }
 }

@@ -4,132 +4,43 @@
 // Host Caller: Main.Inventory / InventoryHostSession
 // Purpose    : Shelter storage inventory, container contents, item stacks, and gear durability
 // ============================================================================
-using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
-using Ashfall.Core;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Inventory save persistence — thin pattern sibling of the other host stores:
-    /// user:// path, try/catch, checksummed envelope serialization.
+    /// Inventory save persistence — thin façade over the Core SaveStore&lt;T&gt;
+    /// service (via SaveStoreHub). Checksummed envelope and atomic write live
+    /// in the service; this section keeps its historical strictness of NOT
+    /// adopting pre-envelope bare-state files.
     /// </summary>
     public static class InventorySaveStore
     {
         public const string FileName = "inventory_save.json";
         public const string SectionName = "inventory";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(InventorySaveState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static InventorySaveState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<InventorySaveState> s_store =
+            SaveStoreHub.Checksummed<InventorySaveState>(FileName, nameof(InventorySaveStore), allowLegacyBareState: false);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(InventorySaveState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[InventorySaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static InventorySaveState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<InventorySaveState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[InventorySaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(InventorySaveState state) => s_store.CaptureBare(state);
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static InventorySaveState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(InventorySaveState state) => s_store.CaptureBare(state);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static InventorySaveState? TryRestore(string json) => s_store.RestoreBare(json);
 
-        public static bool TrySave(InventorySaveState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new InventoryHostSave { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Inventory] save failed: " + e.Message);
-                return false;
-            }
-        }
+        public static bool TrySave(InventorySaveState state) => s_store.TrySave(state);
 
-        public static InventorySaveState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                var envelope = s_json.Deserialize<InventoryHostSave>(raw);
-                if (envelope == null || envelope.State == null) return null;
-                // The checksummed envelope is the current Inventory format; an
-                // empty checksum means a malformed new-format save, not "legacy".
-                if (string.IsNullOrEmpty(envelope.Checksum))
-                {
-                    GD.PrintErr("[Inventory] load failed: checksum field missing (corrupt save).");
-                    return null;
-                }
-                string actual = SaveChecksum.Compute(envelope);
-                if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
-                {
-                    GD.PrintErr("[Inventory] load failed: checksum mismatch (corrupt or foreign save).");
-                    return null;
-                }
-                return envelope.State;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Inventory] load failed: " + e.Message);
-                return null;
-            }
-        }
-    }
-
-    /// <summary>Inventory envelope: engine state + integrity checksum.</summary>
-    public class InventoryHostSave
-    {
-        public InventorySaveState State;
-        public string Checksum = string.Empty;
+        public static InventorySaveState? TryLoad() => s_store.TryLoad();
     }
 }

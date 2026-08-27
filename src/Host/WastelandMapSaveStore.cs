@@ -5,123 +5,45 @@
 // Purpose    : Wasteland travel map exploration, discovered POIs, and route fog-of-war
 // ============================================================================
 using System;
-#pragma warning disable CS8618
-using System.IO;
-using Godot;
-using Ashfall.Core;
+using Ashfall.Core.Save;
 using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Wasteland Map save persistence — closes the Setup-without-Save triad gap
-    /// found by the audit on Main.cs. Pattern sibling of Combat/Narrative stores.
+    /// Wasteland Map save persistence — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub). Checksummed envelope and
+    /// atomic write live in the service; this section keeps its historical
+    /// strictness of NOT adopting pre-envelope bare-state files. The envelope
+    /// DTO stays because the deterministic smoke test round-trips it directly.
     /// </summary>
     public static class WastelandMapSaveStore
     {
         public const string FileName = "wasteland_map_save.json";
         public const string SectionName = "wasteland_map";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(WastelandMapState state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static WastelandMapState? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<WastelandMapState> s_store =
+            SaveStoreHub.Checksummed<WastelandMapState>(FileName, nameof(WastelandMapSaveStore), allowLegacyBareState: false);
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(WastelandMapState state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return s_json.Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[WastelandMapSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static WastelandMapState? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return s_json.Deserialize<WastelandMapState>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[WastelandMapSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(WastelandMapState state) => s_store.CaptureBare(state);
 
-        private static readonly FileSystemIO s_files = new FileSystemIO();
-        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static WastelandMapState? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(WastelandMapState state) => s_store.CaptureBare(state);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static WastelandMapState? TryRestore(string json) => s_store.RestoreBare(json);
 
-        public static bool TrySave(WastelandMapState state)
-        {
-            try
-            {
-                if (state == null) return false;
-                var envelope = new WastelandMapSaveEnvelope { State = state };
-                envelope.Checksum = SaveChecksum.Compute(envelope);
-                string path = SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
-                return true;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[WastelandMap] save failed: " + e.Message);
-                return false;
-            }
-        }
+        public static bool TrySave(WastelandMapState state) => s_store.TrySave(state);
 
-        public static WastelandMapState? TryLoad()
-        {
-            try
-            {
-                string path = SavePath;
-                if (!s_files.FileExists(path)) return null;
-                string raw = s_files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(raw)) return null;
-                var envelope = s_json.Deserialize<WastelandMapSaveEnvelope>(raw);
-                if (envelope == null) return null;
-                if (string.IsNullOrEmpty(envelope.Checksum))
-                {
-                    GD.PrintErr("[WastelandMap] save envelope missing checksum (corrupt save)");
-                    return null;
-                }
-                string computed = SaveChecksum.Compute(envelope);
-                if (!string.Equals(envelope.Checksum, computed, StringComparison.Ordinal))
-                {
-                    GD.PrintErr("[WastelandMap] checksum mismatch — possible tampering");
-                    return null;
-                }
-                return envelope.State;
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[WastelandMap] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static WastelandMapState? TryLoad() => s_store.TryLoad();
     }
 
     [Serializable]

@@ -22,9 +22,15 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Checksummed-envelope store: writes the canonical
         /// <c>{ State, Checksum }</c> JSON for the section file name, with
-        /// atomic replacement and optional .bak rotation.
+        /// atomic replacement and optional .bak rotation. Pass
+        /// <paramref name="allowLegacyBareState"/> false for sections that
+        /// deliberately dropped their pre-checksum bare-state format.
         /// </summary>
-        public static SaveStore<T> Checksummed<T>(string fileName, string logTag, bool createBackup = false)
+        public static SaveStore<T> Checksummed<T>(
+            string fileName,
+            string logTag,
+            bool createBackup = false,
+            bool allowLegacyBareState = true)
             where T : class
         {
             return new SaveStore<T>(
@@ -34,7 +40,8 @@ namespace AtomicWar.GodotApp
                 new GodotLog(),
                 SaveSlotRoot.ResolveBaseDirectory,
                 logTag,
-                createBackup);
+                createBackup,
+                allowLegacyBareState);
         }
 
         /// <summary>

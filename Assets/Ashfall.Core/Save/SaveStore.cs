@@ -35,12 +35,16 @@ namespace Ashfall.Core.Save
         private readonly Func<string> _baseDirProvider;
         private readonly string _logTag;
         private readonly bool _createBackup;
+        private readonly bool _allowLegacyBareState;
         private readonly Func<T, IJsonSerializer, string>? _encode;
         private readonly Func<string, IJsonSerializer, T?>? _decode;
 
         /// <summary>
         /// Checksummed-envelope store. Writes <c>{ State, Checksum }</c> JSON
         /// identical to the canonical per-store envelope pattern.
+        /// <paramref name="allowLegacyBareState"/> keeps (default) or drops the
+        /// fallback to parsing a pre-checksum bare-state file; sections that
+        /// deliberately abandoned their pre-envelope format pass false.
         /// </summary>
         public SaveStore(
             string fileName,
@@ -49,7 +53,8 @@ namespace Ashfall.Core.Save
             ILog log,
             Func<string> baseDirProvider,
             string logTag,
-            bool createBackup = false)
+            bool createBackup = false,
+            bool allowLegacyBareState = true)
         {
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentException("File name must not be null or whitespace.", nameof(fileName));
@@ -60,6 +65,7 @@ namespace Ashfall.Core.Save
             _baseDirProvider = baseDirProvider ?? throw new ArgumentNullException(nameof(baseDirProvider));
             _logTag = string.IsNullOrEmpty(logTag) ? typeof(SaveStore<>).Name : logTag;
             _createBackup = createBackup;
+            _allowLegacyBareState = allowLegacyBareState;
         }
 
         private SaveStore(
@@ -177,7 +183,7 @@ namespace Ashfall.Core.Save
                 string raw = _files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
 
-                var (ok, state, error) = SaveEnvelopeHelper.RestoreEnvelope<T>(raw, _json);
+                var (ok, state, error) = SaveEnvelopeHelper.RestoreEnvelope<T>(raw, _json, null, _allowLegacyBareState);
                 if (!ok && !string.IsNullOrEmpty(error))
                     _log.Error($"[{_logTag}] load failed: " + error);
                 return ok ? state : null;
