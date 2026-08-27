@@ -14,6 +14,10 @@ namespace Ashfall.Core
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
+            if (string.IsNullOrEmpty(dataDirectory))
+            {
+                CatalogLocator.TryFindDataDirectory(System.Environment.CurrentDirectory, out dataDirectory);
+            }
             var report = new HeadlessReport();
 
             void Check(bool condition, string name)

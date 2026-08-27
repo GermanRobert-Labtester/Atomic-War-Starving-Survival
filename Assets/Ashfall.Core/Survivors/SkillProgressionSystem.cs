@@ -50,31 +50,31 @@ public sealed class SkillProgressionSystem
         new Dictionary<string, SkillDef>(StringComparer.Ordinal);
 
     /// <summary>Multiplier lookup: returns action-driven XP multiplier for an actor. <c>null</c> disables multi-perk adjustment.</summary>
-    public Func<string, float> ActionXpMultiplier { get; set; }
+    public Func<string, float>? ActionXpMultiplier { get; set; }
 
     /// <summary>Lookup: stops skill decay across the entire bunker (e.g. Archivist perk).</summary>
-    public Func<bool> BunkerSkillDecayStopped { get; set; }
+    public Func<bool>? BunkerSkillDecayStopped { get; set; }
 
     /// <summary>Lookup: maximum morale cap for an actor (Traumatized etc.); applied after Epiphany restore.</summary>
-    public Func<string, float> MaxMoraleCap { get; set; }
+    public Func<string, float>? MaxMoraleCap { get; set; }
 
     /// <summary>Host-side mood setter; called after a successful Epiphany. <c>null</c> disables the morale restore.</summary>
-    public Action<string, float> ApplyMorale { get; set; }
+    public Action<string, float>? ApplyMorale { get; set; }
 
     /// <summary>Fired when an actor gains XP. Args: (actor, discipline, newXp).</summary>
-    public event Action<SkillActor, string, float> OnXpGained;
+    public event Action<SkillActor, string, float>? OnXpGained;
 
     /// <summary>Fired when a skill is earned. Args: (actor, skillId).</summary>
-    public event Action<SkillActor, string> OnSkillEarned;
+    public event Action<SkillActor, string>? OnSkillEarned;
 
     /// <summary>Fired when a skill is decayed to dormant. Args: (actor, skillId).</summary>
-    public event Action<SkillActor, string> OnSkillDormant;
+    public event Action<SkillActor, string>? OnSkillDormant;
 
     /// <summary>Fired when a dormant skill is reactivated. Args: (actor, skillId).</summary>
-    public event Action<SkillActor, string> OnSkillReactivated;
+    public event Action<SkillActor, string>? OnSkillReactivated;
 
     /// <summary>Fired when an Epiphany fires. Args: (actor, highlightSkillId-or-null).</summary>
-    public event Action<SkillActor, string> OnEpiphany;
+    public event Action<SkillActor, string?>? OnEpiphany;
 
     public int CatalogCount => _catalog.Count;
 
@@ -106,7 +106,7 @@ public sealed class SkillProgressionSystem
         _bySkillId[id] = def;
     }
 
-    public SkillDef GetSkill(string id)
+    public SkillDef? GetSkill(string id)
     {
         if (string.IsNullOrEmpty(id)) return null;
         return _bySkillId.TryGetValue(id, out var s) ? s : null;
@@ -416,7 +416,7 @@ int currentDay, ISeededRng? rng = null)
     // ─── Epiphany ────────────────────────────────────────────────────
 
     private bool TryStressEpiphany(SkillActor actor, SkillProgressionState state,
-        string disciplineId, ISeededRng rng)
+        string disciplineId, ISeededRng? rng)
     {
         bool desperate = actor.Morale < EpiphanyMoraleThreshold
                          || actor.Health < EpiphanyHealthThreshold;
@@ -452,7 +452,7 @@ int currentDay, ISeededRng? rng = null)
         SyncSkillBonuses(actor, state);
 
         // Highlight is the highest-threshold active skill for this discipline.
-        string highlight = null;
+        string? highlight = null;
         for (int i = 0; i < state.activeSkillIds.Count; i++)
         {
             var s = GetSkill(state.activeSkillIds[i]);

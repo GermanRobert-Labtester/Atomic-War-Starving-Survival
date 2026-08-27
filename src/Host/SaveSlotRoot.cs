@@ -9,14 +9,55 @@ namespace AtomicWar.GodotApp;
 /// Host-side slot root router. When a slot root is set, all participating
 /// save stores resolve their paths under that root instead of the global user://
 /// directory. This lets the Godot host support multiple isolated campaigns
-/// without changing each store's capture/restore logic.
+/// and headless runs without changing each store's capture/restore logic.
 /// </summary>
 public static class SaveSlotRoot
 {
+    private static string? s_currentRoot;
+
     /// <summary>
-    /// Current slot root, or null if stores should use the legacy global user:// path.
+    /// Current slot root, or null if stores should use the default user:// path.
+    /// Also checks ASHFALL_USER_DIR if set and no programmatic override is active.
     /// </summary>
-    public static string? CurrentRoot { get; set; }
+    public static string? CurrentRoot
+    {
+        get => s_currentRoot ?? System.Environment.GetEnvironmentVariable("ASHFALL_USER_DIR");
+        set => s_currentRoot = value;
+    }
+
+    /// <summary>
+    /// Configure an explicit user data directory for isolated headless runs.
+    /// </summary>
+    public static void ConfigureUserDataDirectory(string? userDir)
+    {
+        if (string.IsNullOrWhiteSpace(userDir))
+        {
+            s_currentRoot = null;
+            return;
+        }
+
+        try
+        {
+            Directory.CreateDirectory(userDir);
+            s_currentRoot = userDir;
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr($"[SaveSlotRoot] Failed to create user directory '{userDir}': {ex.Message}");
+            s_currentRoot = null;
+        }
+    }
+
+    /// <summary>
+    /// Returns the effective base directory for user data (custom root or globalized user://).
+    /// </summary>
+    public static string ResolveBaseDirectory()
+    {
+        string? root = CurrentRoot;
+        if (!string.IsNullOrEmpty(root))
+            return root;
+        return ProjectSettings.GlobalizePath("user://");
+    }
 
     /// <summary>
     /// Resolve a save file path. If a slot root is active, the file is placed
@@ -24,9 +65,7 @@ public static class SaveSlotRoot
     /// </summary>
     public static string Resolve(string fileName)
     {
-        if (!string.IsNullOrEmpty(CurrentRoot))
-            return Path.Combine(CurrentRoot, fileName);
-        return Path.Combine(ProjectSettings.GlobalizePath("user://"), fileName);
+        return Path.Combine(ResolveBaseDirectory(), fileName);
     }
 
     /// <summary>

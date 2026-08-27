@@ -289,6 +289,7 @@ namespace Ashfall.Core.Shelter
                 // Check survivor exposure
                 if (!z.isEvacuated && (z.smokeLevel > CriticalSmokeLevel || z.coLevel > CriticalCoLevel))
                 {
+                    OnSmokeZoneChanged?.Invoke(incidentId, z.zoneId);
                     OnSurvivorExposed?.Invoke(incidentId, z.zoneId);
                 }
             }

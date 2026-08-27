@@ -107,8 +107,17 @@ namespace Ashfall.Core.Radio
             _observationsBySignal[obs.signalId] = obs;
 
             OnObservationRecorded?.Invoke(obs);
+            OnFrequencyLocked?.Invoke(obs.signalId);
             RaiseChanged();
             return true;
+        }
+
+        /// <summary>Notify antenna calibration update for a given station.</summary>
+        public void NotifyAntennaCalibration(string stationId)
+        {
+            if (string.IsNullOrEmpty(stationId)) return;
+            OnAntennaCalibrationChanged?.Invoke(stationId);
+            RaiseChanged();
         }
 
         // ── Triangulation ────────────────────────────────────────────
@@ -165,7 +174,7 @@ namespace Ashfall.Core.Radio
                     break;
                 }
             }
-            if (!_state.candidates.Contains(candidate))
+            if (!found)
                 _state.candidates.Add(candidate);
 
             OnCandidateChanged?.Invoke(candidate);

@@ -20,25 +20,25 @@ namespace AtomicWar.GodotApp
         {
             System = system ?? new ChemicalDependencySystem();
             _onstatechanged_handler = RaiseChanged;
-            _onstatechanged_handler = RaiseChanged;
+            System.OnStateChanged += _onstatechanged_handler;
             _ondependencyformed_handler = (survivorId, itemId) =>
             {
                 LastEvent = $"[ChemicalDependency] {survivorId} formed dependency on {itemId}";
                 RaiseChanged();
             };
-            _ondependencyformed_handler = _ondependencyformed_handler;
+            System.OnDependencyFormed += _ondependencyformed_handler;
             _onwithdrawalstarted_handler = (survivorId, itemId) =>
             {
                 LastEvent = $"[ChemicalDependency] {survivorId} withdrawal started for {itemId}";
                 RaiseChanged();
             };
-            _onwithdrawalstarted_handler = _onwithdrawalstarted_handler;
+            System.OnWithdrawalStarted += _onwithdrawalstarted_handler;
             _ondetoxcompleted_handler = (survivorId, itemId) =>
             {
                 LastEvent = $"[ChemicalDependency] {survivorId} detox completed for {itemId}";
                 RaiseChanged();
             };
-            _ondetoxcompleted_handler = _ondetoxcompleted_handler;
+            System.OnDetoxCompleted += _ondetoxcompleted_handler;
             _ondetoxfailed_handler = (survivorId, itemId) =>
             {
                 LastEvent = $"[ChemicalDependency] {survivorId} detox failed for {itemId}";

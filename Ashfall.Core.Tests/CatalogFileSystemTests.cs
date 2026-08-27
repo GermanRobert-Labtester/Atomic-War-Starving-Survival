@@ -52,7 +52,7 @@ public class CatalogFileSystemTests
 
         Assert.NotNull(files);
         Assert.NotEmpty(files);
-        Assert.All(files, f => Assert.True(f.EndsWith(".json")));
+        Assert.All(files, f => Assert.EndsWith(".json", f));
         Assert.All(files, f =>
         {
             var dir = Path.GetDirectoryName(f);
@@ -69,7 +69,7 @@ public class CatalogFileSystemTests
 
         Assert.NotNull(files);
         Assert.NotEmpty(files);
-        Assert.All(files, f => Assert.True(f.EndsWith(".json")));
+        Assert.All(files, f => Assert.EndsWith(".json", f));
 
         var nested = files.Where(f => !string.Equals(Path.GetDirectoryName(f), DataDirectory, StringComparison.OrdinalIgnoreCase)).ToList();
         Assert.True(nested.Count > 0, "recursive search should find at least one nested JSON file");
@@ -83,7 +83,7 @@ public class CatalogFileSystemTests
 
         Assert.NotNull(result);
         Assert.NotEmpty(result);
-        Assert.All(result, f => Assert.True(f.EndsWith(".json")));
+        Assert.All(result, f => Assert.EndsWith(".json", f));
         Assert.Contains(result, f => Path.GetFileName(f).Equals("items.json", StringComparison.OrdinalIgnoreCase));
     }
 

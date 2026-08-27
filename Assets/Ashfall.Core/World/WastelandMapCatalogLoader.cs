@@ -7,46 +7,91 @@ namespace Ashfall.Core.World
     [Serializable]
     public sealed class WastelandMapCatalogContainer
     {
+        /// <summary>Schema version of the wasteland travel map JSON catalog.</summary>
         public int schema_version { get; set; }
+
+        /// <summary>Collection of wasteland travel node definitions.</summary>
         public List<MapNodeDef> nodes { get; set; } = new List<MapNodeDef>();
+
+        /// <summary>Collection of wasteland travel route definitions connecting nodes.</summary>
         public List<MapRouteDef> routes { get; set; } = new List<MapRouteDef>();
     }
 
+    /// <summary>Data Transfer Object representing a wasteland map location node in JSON.</summary>
     [Serializable]
     public sealed class MapNodeDef
     {
+        /// <summary>Unique identifier for the location node (e.g. loc_holdfast, loc_foghorn).</summary>
         public string id { get; set; } = string.Empty;
+
+        /// <summary>Display name rendered in UI panels and map view labels.</summary>
         public string displayName { get; set; } = string.Empty;
+
+        /// <summary>Danger rating string (e.g. "none", "low", "medium", "high", "locked").</summary>
         public string danger { get; set; } = "none";
+
+        /// <summary>Controlling faction identifier, or null if unaligned.</summary>
         public string? faction { get; set; }
+
+        /// <summary>Loot table identifier for scavenging rolls, or null if none.</summary>
         public string? lootTable { get; set; }
+
+        /// <summary>Horizontal position (X coordinate) on the wasteland map canvas.</summary>
         public float positionX { get; set; }
+
+        /// <summary>Vertical position (Y coordinate) on the wasteland map canvas.</summary>
         public float positionY { get; set; }
+
+        /// <summary>Whether this node can be discovered via exploration/scouting.</summary>
         public bool discoverable { get; set; }
+
+        /// <summary>Whether this node starts unlocked and visible at campaign Day 1.</summary>
         public bool startingUnlocked { get; set; }
     }
 
+    /// <summary>Data Transfer Object representing a travel route edge between two map nodes in JSON.</summary>
     [Serializable]
     public sealed class MapRouteDef
     {
+        /// <summary>Origin map node identifier.</summary>
         public string from { get; set; } = string.Empty;
+
+        /// <summary>Destination map node identifier.</summary>
         public string to { get; set; } = string.Empty;
+
+        /// <summary>Distance between nodes in kilometers.</summary>
         public float distanceKm { get; set; }
+
+        /// <summary>Weather hazard risk multiplier along this travel corridor.</summary>
         public float weatherHazard { get; set; }
     }
 
+    /// <summary>Categories of route validation failures in the map catalog.</summary>
     public enum MapRouteErrorKind
     {
+        /// <summary>A duplicate directed route exists between the same endpoints.</summary>
         DuplicateRoute,
+
+        /// <summary>One or both endpoints do not resolve to a known map node ID.</summary>
         DanglingEndpoint,
+
+        /// <summary>The route distance is non-positive, NaN, or infinite.</summary>
         NegativeOrZeroDistance,
+
+        /// <summary>The route origin and destination point to the exact same node.</summary>
         SelfRoute
     }
 
+    /// <summary>Represents a validation error encountered when checking wasteland map routes.</summary>
     public sealed class MapRouteValidationError
     {
+        /// <summary>Description of the route with the validation issue (e.g. "from->to").</summary>
         public string RouteDescription { get; set; } = string.Empty;
+
+        /// <summary>Human-readable error description explaining the validation failure.</summary>
         public string ErrorMessage { get; set; } = string.Empty;
+
+        /// <summary>Kind of route validation error detected.</summary>
         public MapRouteErrorKind Kind { get; set; }
     }
 

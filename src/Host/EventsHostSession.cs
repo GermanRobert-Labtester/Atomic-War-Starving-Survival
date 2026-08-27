@@ -38,7 +38,8 @@ namespace AtomicWar.GodotApp.Host
             string eventsJsonPath = "res://Assets/StreamingAssets/Data/events.json";
             string eventsJson = _fileIO.ReadAllText(eventsJsonPath);
             var eventsData = _jsonSerializer.Deserialize<EventsRoot>(eventsJson);
-            _events = eventsData.Events;
+            if (eventsData?.Events != null)
+                _events = eventsData.Events;
         }
 
         private void LoadIncidents()
@@ -48,7 +49,8 @@ namespace AtomicWar.GodotApp.Host
             {
                 string incidentsJson = _fileIO.ReadAllText(incidentsJsonPath);
                 var incidentsData = _jsonSerializer.Deserialize<IncidentsRoot>(incidentsJson);
-                _incidents = incidentsData.Incidents;
+                if (incidentsData?.Incidents != null)
+                    _incidents = incidentsData.Incidents;
             }
         }
 
@@ -59,7 +61,8 @@ namespace AtomicWar.GodotApp.Host
             {
                 string narrativeJson = _fileIO.ReadAllText(narrativeJsonPath);
                 var narrativeData = _jsonSerializer.Deserialize<NarrativeRoot>(narrativeJson);
-                _narrativeProgression = narrativeData.Entries;
+                if (narrativeData?.Entries != null)
+                    _narrativeProgression = narrativeData.Entries;
             }
         }
 

@@ -192,19 +192,19 @@ public partial class SaveLoadHostSession : Node
     {
         var manifest = GetManifest(slotId);
         bool exists = manifest != null;
-        bool isTerminal = exists && manifest.mode == CampaignMode.IronMan &&
+        bool isTerminal = manifest != null && manifest.mode == CampaignMode.IronMan &&
                           manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
 
         return new SlotCard
         {
             SlotId = slotId,
             Exists = exists,
-            CampaignName = exists ? manifest.campaignName : "(empty)",
-            CurrentDay = exists ? manifest.currentDay : 0,
-            Mode = exists ? manifest.mode : CampaignMode.Normal,
+            CampaignName = manifest != null ? manifest.campaignName : "(empty)",
+            CurrentDay = manifest != null ? manifest.currentDay : 0,
+            Mode = manifest != null ? manifest.mode : CampaignMode.Normal,
             IsTerminalIronMan = isTerminal,
-            LastSaveTimestamp = exists ? manifest.lastSaveTimestamp : string.Empty,
-            HasValidSave = exists && File.Exists(
+            LastSaveTimestamp = manifest != null ? manifest.lastSaveTimestamp : string.Empty,
+            HasValidSave = exists && _slotService != null && File.Exists(
                 Path.Combine(_slotService.GetAggregatePath(_currentProfileId, slotId)))
         };
     }

@@ -29,7 +29,7 @@ namespace AtomicWar.GodotApp
             bool liveSources = _world != null && _inventory != null && _survivors != null;
             bool pass = shellBuilt && overlayParentedToRoot && inventoryOpened && liveSources;
             GD.Print($"[DashboardUiTest] shell={shellBuilt} rootOverlay={overlayParentedToRoot} inventory={inventoryOpened} liveSources={liveSources}");
-            GD.Print(pass ? "DASHBOARD_UITEST PASS" : "DASHBOARD_UITEST FAIL");
+            HostCli.EmitSummary("dashboard_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 

@@ -251,57 +251,113 @@ namespace Ashfall.Core.World
         }
     }
 
+    /// <summary>Status of a map node for player interaction and visibility.</summary>
     public enum MapNodeStatusKind
     {
+        /// <summary>Node has been discovered on the map.</summary>
         Discovered = 0,
+
+        /// <summary>Node is available and reachable for travel/expeditions.</summary>
         Available = 1,
+
+        /// <summary>Node is locked by story, hazard, or mission requirements.</summary>
         Locked = 2,
+
+        /// <summary>Node content/expedition has been fully resolved or completed.</summary>
         Completed = 3,
+
+        /// <summary>Node is currently unavailable or beyond travel range.</summary>
         Unavailable = 4
     }
 
+    /// <summary>Runtime domain object representing a point of interest or sector node on the wasteland map.</summary>
     [Serializable]
     public sealed class MapNode
     {
+        /// <summary>Unique location identifier.</summary>
         public string Id;
+
+        /// <summary>Player-facing display name of the location.</summary>
         public string DisplayName;
+
+        /// <summary>Threat / danger classification of the location.</summary>
         public MapNodeDanger Danger;
+
+        /// <summary>Controlling faction identifier, or empty string if unaligned.</summary>
         public string FactionId;
+
+        /// <summary>Loot table identifier for scavenging and salvage rewards.</summary>
         public string LootTableId;
+
+        /// <summary>X coordinate on the world map canvas.</summary>
         public float PositionX;
+
+        /// <summary>Y coordinate on the world map canvas.</summary>
         public float PositionY;
+
+        /// <summary>Whether this node can be revealed via exploration.</summary>
         public bool Discoverable;
+
+        /// <summary>Whether this node is revealed and unlocked from Day 1.</summary>
         public bool StartingUnlocked;
 
+        /// <summary>Initializes a new empty instance of <see cref="MapNode"/>.</summary>
         public MapNode() { }
     }
 
+    /// <summary>Danger rating classifications for wasteland locations.</summary>
     public enum MapNodeDanger
     {
+        /// <summary>No immediate environmental or combat hazard.</summary>
         None = 0,
+
+        /// <summary>Low threat level (light radiation/scavengers).</summary>
         Low = 1,
+
+        /// <summary>Moderate threat level (moderate radiation/hostile patrols).</summary>
         Medium = 2,
+
+        /// <summary>High threat level (severe radiation/warlord presence).</summary>
         High = 3,
+
+        /// <summary>Locked node requiring keycard, quest, or demolition access.</summary>
         Locked = 4
     }
 
+    /// <summary>Runtime domain object representing a travel route edge connecting two map nodes.</summary>
     [Serializable]
     public sealed class MapRoute
     {
+        /// <summary>Origin map node identifier.</summary>
         public string From;
+
+        /// <summary>Destination map node identifier.</summary>
         public string To;
+
+        /// <summary>Travel distance in kilometers.</summary>
         public float DistanceKm;
+
+        /// <summary>Weather hazard factor along the route.</summary>
         public float WeatherHazard;
 
+        /// <summary>Initializes a new empty instance of <see cref="MapRoute"/>.</summary>
         public MapRoute() { }
     }
 
+    /// <summary>Serializable state DTO for player wasteland map progression and fog-of-war.</summary>
     [Serializable]
     public sealed class WastelandMapState
     {
+        /// <summary>List of discovered location node IDs.</summary>
         public List<string> Discovered = new List<string>();
+
+        /// <summary>List of completed/scavenged location node IDs.</summary>
         public List<string> Completed = new List<string>();
+
+        /// <summary>List of locked location node IDs.</summary>
         public List<string> Locked = new List<string>();
+
+        /// <summary>List of dynamically unlocked location node IDs.</summary>
         public List<string> Unlocked = new List<string>();
 
         public void NormalizeAndValidate(IReadOnlyList<MapNode> nodes)

@@ -41,6 +41,10 @@ namespace AtomicWar.GodotApp
                     HostCli.PrintHelp();
                     GetTree().Quit(0);
                     return;
+                case HostCliAction.Version:
+                    HostCli.PrintVersion(_dataDir);
+                    GetTree().Quit(0);
+                    return;
                 case HostCliAction.ExpansionsSelfTest:
                     GetTree().Quit(HostCli.RunExpansionsSelfTest(_dataDir));
                     return;

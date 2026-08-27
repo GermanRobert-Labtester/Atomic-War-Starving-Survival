@@ -216,7 +216,6 @@ namespace Ashfall.Core
                 }
                 // Also try to see if the res path itself contains Data
                 string resData = "res://Assets/StreamingAssets/Data";
-                string resDataLower = "res://assets/StreamingAssets/Data";
                 // We cannot use DirAccess here (Core), so just check if startDirectory is a parent of resData
                 if (startDirectory == "res://" || startDirectory == "res://Assets" || startDirectory == "res://Assets/StreamingAssets")
                 {

@@ -14,6 +14,8 @@
 #  11. godot --headless campaign smoke (playable shell & day 1 onboarding)
 #  12. godot --headless -- --expansions-selftest (01-10 expansion completeness)
 #  13. triad drift gate (Setup/Save/AllSaveSections parity)
+#  14. CLI catalog drift gate (docs/cli/HOST_CLI_COMMAND_CATALOG.md matches --host-help)
+#  15. compiler warning baseline gate (0 unexpected warnings)
 # No Unity batchmode; no JsonUtility; Core stays engine-agnostic.
 
 name: ASHFALL CI
@@ -122,3 +124,9 @@ jobs:
 
       - name: 11) triad drift gate (Setup/Save/AllSaveSections)
         run: bash scripts/ci/triad-drift-gate.sh
+
+      - name: 12) CLI catalog drift gate (docs match --host-help)
+        run: bash scripts/ci/generate-cli-catalog.sh --check
+
+      - name: 13) compiler warning baseline gate (0 unexpected warnings)
+        run: bash scripts/ci/warning-baseline-gate.sh

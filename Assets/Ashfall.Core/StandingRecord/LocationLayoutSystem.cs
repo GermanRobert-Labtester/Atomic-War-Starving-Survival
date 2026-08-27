@@ -269,11 +269,11 @@ namespace Ashfall.Core
             return true;
         }
 
-        public string GetInspectKey(string parentLocationId, string roomId)
+        public string? GetInspectKey(string parentLocationId, string roomId)
         {
-            LocationLayoutDef def = GetLayout(parentLocationId);
+            LocationLayoutDef? def = GetLayout(parentLocationId);
             if (def == null) return null;
-            LocationLayoutRoomDef room = def.GetRoom(roomId)!;
+            LocationLayoutRoomDef? room = def.GetRoom(roomId);
             if (room == null) return null;
             return string.IsNullOrEmpty(room.inspectKey) ? null : room.inspectKey;
         }

@@ -23,8 +23,8 @@ namespace Ashfall.Core.Verdict
 
         private readonly List<VerdictCatalogLoader.VerdictRadioEntry> _corpus = new List<VerdictCatalogLoader.VerdictRadioEntry>();
         private readonly HashSet<string> _firedIds = new HashSet<string>(StringComparer.Ordinal);
-        private readonly IEventBus _bus;
-        private readonly ISimClock _clock;
+        private readonly IEventBus? _bus;
+        private readonly ISimClock? _clock;
 
         public VerdictRadioSystem(
 IEventBus? bus = null,

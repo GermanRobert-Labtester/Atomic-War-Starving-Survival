@@ -287,7 +287,7 @@ namespace Ashfall.Core.World
 
         // ── Telemetry sampling (deterministic, uses WeatherSystem state) ──
 
-        private float SampleTemperature(float altitudeKm, ISeededRng rng)
+        private float SampleTemperature(float altitudeKm, ISeededRng? rng)
         {
             // Temperature decreases with altitude (standard lapse rate)
             float baseTemp = 15f; // ground temperature
@@ -298,7 +298,7 @@ namespace Ashfall.Core.World
             return temp;
         }
 
-        private float SampleRadiation(float altitudeKm, ISeededRng rng)
+        private float SampleRadiation(float altitudeKm, ISeededRng? rng)
         {
             // Radiation increases with altitude (less shielding)
             float baseRad = 0.1f;
@@ -308,7 +308,7 @@ namespace Ashfall.Core.World
             return Math.Max(0f, rad);
         }
 
-        private float SampleWindSpeed(float altitudeKm, ISeededRng rng)
+        private float SampleWindSpeed(float altitudeKm, ISeededRng? rng)
         {
             // Wind increases with altitude
             float baseWind = 10f;
@@ -317,7 +317,7 @@ namespace Ashfall.Core.World
             return Math.Max(0f, wind);
         }
 
-        private float SampleWindDirection(float altitudeKm, ISeededRng rng)
+        private float SampleWindDirection(float altitudeKm, ISeededRng? rng)
         {
             // Random direction with some altitude correlation
             float dir = altitudeKm * 10f;
@@ -325,7 +325,7 @@ namespace Ashfall.Core.World
             return ((dir % 360f) + 360f) % 360f;
         }
 
-        private float SampleHumidity(float altitudeKm, ISeededRng rng)
+        private float SampleHumidity(float altitudeKm, ISeededRng? rng)
         {
             // Humidity decreases with altitude
             float baseHumidity = 60f;
