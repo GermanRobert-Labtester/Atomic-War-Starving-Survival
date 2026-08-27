@@ -2,7 +2,8 @@
 
 **Authoritative host/engine:** Godot 4.7+ (.NET / C#) (`project.godot`)
 **Primary CI Workflow:** `.github/workflows/ci.yml` (Canonical `dotnet` + `godot --headless` gate)
-**Target Frameworks:** `netstandard2.1` (Core), `net8.0` (Godot host `Ashfall.csproj`), `net9.0` (Tests `Ashfall.Core.Tests.csproj`)
+**Target Frameworks:** `netstandard2.1` (Core), `net8.0` (Godot host `Ashfall.csproj` & `Ashfall.Core.csproj`), `net9.0` (Tests `Ashfall.Core.Tests.csproj`)
+**Workspace SDK Config:** `global.json` (`version: 8.0.100`, `rollForward: latestMajor`)
 
 ---
 
