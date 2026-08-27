@@ -84,7 +84,7 @@ if check:
 lines = [
     "# ASHFALL — Host CLI Command Catalog",
     "",
-    f"**Last Verified:** {verified_date}  ",
+    f"**Last Verified:** {verified_date}<br>",
     f"**Total Registered Actions:** {len(entries)} entries / {total_tokens} flag tokens (aliases included)",
     "",
     "> **GENERATED FILE — do not edit by hand.**",

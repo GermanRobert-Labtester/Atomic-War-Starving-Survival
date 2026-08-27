@@ -1,6 +1,6 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-08-27
+**Last Verified:** 2026-08-27<br>
 **Total Registered Actions:** 90 entries / 135 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
