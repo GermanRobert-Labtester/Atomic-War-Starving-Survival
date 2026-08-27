@@ -332,3 +332,34 @@ JSON property names mix `camelCase` (`displayName`, `basePrice`, `minDay`) and `
 | Largest Godot file | 6546 lines | `Main.cs` — one file, structured as per-subsystem `Setup`/`Save`/`FlushIfDirty` triads (AGENTS.md §H7) |
 | TODO/FIXME/HACK | 0 | Entire codebase |
 | Bare `catch {}` blocks | 13 | Core only |
+
+---
+
+## Initiative #41 — Generic Injected Persistence Service (2026-08-27) — COMPLETE
+
+Replaced the per-store persistence boilerplate in every host save store (51
+`*SaveStore*.cs` files + 10 stores embedded in `*HostSession.cs` files) with
+one generic, port-injected service:
+
+- **Core:** `Assets/Ashfall.Core/Save/SaveStore.cs` (`SaveStore<T>`, checksummed
+  + codec flavors) built on `SaveEnvelopeHelper`; `SchemaVersionedEnvelope<T>`
+  legacy adapter preserves the 12 shelter-batch property envelopes byte-for-byte.
+- **Host:** `src/Host/SaveStoreHub.cs` is the single injection point
+  (FileSystemIO / SystemTextJsonSerializer / GodotLog / SaveSlotRoot per-call
+  base-dir routing).
+- **Façades:** all stores keep their class names, consts, and public static
+  signatures; ~4,900 lines of duplicated logic removed across batches.
+- **Behavior:** on-disk JSON byte-identical; checksum targets, fallback
+  strictness, and per-section quirks (Economy state-hash, HoldfastTrade
+  quarantine/backup, World multi-field envelope, Greenhouse indented JSON,
+  StartingLevel surface) preserved. One deliberate change: writes are now
+  atomic (temp+rename) with optional `.bak`.
+- **Gates hardened:** coverage gate + checksum selftest Gate A + matrix
+  generator now REQUIRE SaveStoreHub/SaveEnvelopeHelper/Core-codec delegation.
+- **Pinned by:** `Ashfall.Core.Tests/Save/SaveStoreServiceTests.cs` (incl.
+  byte-identity vs the hand-rolled pattern) plus the pre-existing sweep/seal/
+  wire suites, all passing unmodified.
+- **Discovered follow-up (out of scope):** the 12 shelter-batch sections carry
+  a degenerate checksum (SaveChecksum walks public fields only; their
+  property-only envelopes hash to a constant) — integrity is not real there;
+  fixing it needs a save-evolution initiative with legacy dual-read.
