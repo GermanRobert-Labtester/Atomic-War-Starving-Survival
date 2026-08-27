@@ -140,7 +140,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnTickPressed()
         {
             if (_expeditionHost == null) return;
-            string result = _expeditionHost.CampTickDemo(_survivorId);
+            string result = _expeditionHost.CampTick(_survivorId);
             _outcomeLabel.Text = result;
             RefreshView();
         }
@@ -148,7 +148,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnBreakCampResume()
         {
             if (_expeditionHost == null) return;
-            string result = _expeditionHost.BreakCampDemo(_survivorId, retreat: false);
+            string result = _expeditionHost.BreakCamp(_survivorId, retreat: false);
             _outcomeLabel.Text = result;
             RefreshView();
             OnCampResolved?.Invoke();
@@ -157,7 +157,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnBreakCampRetreat()
         {
             if (_expeditionHost == null) return;
-            string result = _expeditionHost.BreakCampDemo(_survivorId, retreat: true);
+            string result = _expeditionHost.BreakCamp(_survivorId, retreat: true);
             _outcomeLabel.Text = result;
             RefreshView();
             OnCampResolved?.Invoke();
@@ -166,7 +166,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnResolveEncounter()
         {
             if (_expeditionHost == null) return;
-            string result = _expeditionHost.ResolveCampEncounterDemo(_survivorId, "resolved");
+            string result = _expeditionHost.ResolveCampEncounter(_survivorId, "resolved");
             _outcomeLabel.Text = result;
             RefreshView();
         }

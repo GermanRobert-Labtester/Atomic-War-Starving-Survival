@@ -196,18 +196,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (catalog.Count == 0)
             {
-                _inkList.AddChild(AshfallUiHelpers.MakeMetadata("No ink formulations in catalog."));
-                var btnSeed = AshfallUiHelpers.MakeButton("LOAD INK FORMULATIONS", () =>
-                {
-                    _host.LoadInkCatalog(new List<InkMaterialDefinition>
-                    {
-                        new InkMaterialDefinition { ink_id = "ink_carbon_lampblack", display_name = "Carbon Lampblack", legibilityScore = 0.95f, archivalLongevityDays = 720f },
-                        new InkMaterialDefinition { ink_id = "ink_iron_gall", display_name = "Iron Gall Extract", legibilityScore = 0.90f, archivalLongevityDays = 500f },
-                        new InkMaterialDefinition { ink_id = "ink_fungal_bioluminescence", display_name = "Phosphor Fungal Dye", legibilityScore = 0.70f, archivalLongevityDays = 180f }
-                    });
-                    RefreshView();
-                });
-                _inkList.AddChild(btnSeed);
+                _inkList.AddChild(AshfallUiHelpers.MakeMetadata("No archival ink formulations in catalog."));
             }
             else
             {
@@ -253,25 +242,26 @@ namespace AtomicWar.GodotApp.UI
             _transcriptionDesk.AddChild(AshfallUiHelpers.MakeSeparator());
             _transcriptionDesk.AddChild(AshfallUiHelpers.MakeSubsectionHeader("DISPATCH SCRIPT WORK"));
 
-            var btnTranscribeLog = AshfallUiHelpers.MakeButton("TRANSCRIBE EXPEDITION DIARY", () =>
+            if (curInk != null && s.unlockedEvidenceIds.Count > 0)
             {
-                if (curInk != null)
+                foreach (var evId in s.unlockedEvidenceIds)
                 {
-                    _host.QueueTranscription("evidence_bunker_log_001", "the_teacher", curInk.ink_id);
-                    RefreshView();
+                    bool isQueued = s.queue.Exists(j => j.evidenceId == evId && !j.isComplete && !j.isCancelled);
+                    if (!isQueued)
+                    {
+                        var btnTranscribe = AshfallUiHelpers.MakeButton($"TRANSCRIBE // {evId.ToUpperInvariant()}", () =>
+                        {
+                            _host.QueueTranscription(evId, "archivist", curInk.ink_id);
+                            RefreshView();
+                        });
+                        _transcriptionDesk.AddChild(btnTranscribe);
+                    }
                 }
-            });
-            _transcriptionDesk.AddChild(btnTranscribeLog);
-
-            var btnTranscribeMap = AshfallUiHelpers.MakeButton("DRAFT SECTOR CARTOGRAPHY MAP", () =>
+            }
+            else
             {
-                if (curInk != null)
-                {
-                    _host.QueueTranscription("evidence_sector_map_km19", "the_teacher", curInk.ink_id);
-                    RefreshView();
-                }
-            });
-            _transcriptionDesk.AddChild(btnTranscribeMap);
+                _transcriptionDesk.AddChild(AshfallUiHelpers.MakeBody("No pending field evidence or survey logs currently awaiting transcription. Expeditions will recover historical documents and sector maps for archival."));
+            }
 
             // Populate Completed / Queued Jobs
             if (s.queue.Count == 0 && s.unlockedEvidenceIds.Count == 0)

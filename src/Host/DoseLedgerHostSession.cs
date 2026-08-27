@@ -106,10 +106,10 @@ namespace AtomicWar.GodotApp
             Calibration.RegisterDevice("tag_2", "elena_vasquez");
         }
 
-        // ── Calibration demo actions ─────────────────────────────────
+        // ── Calibration production methods ──────────────────────────
 
         /// <summary>Start calibration for a device.</summary>
-        public string StartCalibrationDemo(string deviceTag, int currentDay)
+        public string StartCalibration(string deviceTag, int currentDay)
         {
             bool ok = Calibration.StartCalibration(deviceTag, currentDay);
             return ok
@@ -117,8 +117,10 @@ namespace AtomicWar.GodotApp
                 : $"Cannot start calibration for {deviceTag} (battery low, sensor damaged, or station occupied).";
         }
 
+        public string StartCalibrationDemo(string deviceTag, int currentDay) => StartCalibration(deviceTag, currentDay);
+
         /// <summary>Complete calibration for a device (if duration elapsed).</summary>
-        public string CompleteCalibrationDemo(string deviceTag, int currentDay)
+        public string CompleteCalibration(string deviceTag, int currentDay)
         {
             bool ok = Calibration.CompleteCalibration(deviceTag, currentDay);
             if (!ok) return $"Calibration not ready for {deviceTag}.";
@@ -126,19 +128,25 @@ namespace AtomicWar.GodotApp
             return $"Calibration complete for {deviceTag}. Quality: {device?.calibrationQuality:F2}. Error band: ±{device?.errorBandMsv:F1} mSv.";
         }
 
+        public string CompleteCalibrationDemo(string deviceTag, int currentDay) => CompleteCalibration(deviceTag, currentDay);
+
         /// <summary>Replace battery in a device.</summary>
-        public string ReplaceBatteryDemo(string deviceTag)
+        public string ReplaceBattery(string deviceTag)
         {
             bool ok = Calibration.ReplaceBattery(deviceTag);
             return ok ? $"Battery replaced in {deviceTag}." : $"Unknown device: {deviceTag}.";
         }
 
+        public string ReplaceBatteryDemo(string deviceTag) => ReplaceBattery(deviceTag);
+
         /// <summary>Service sensor in a device.</summary>
-        public string ServiceSensorDemo(string deviceTag)
+        public string ServiceSensor(string deviceTag)
         {
             bool ok = Calibration.ServiceSensor(deviceTag);
             return ok ? $"Sensor serviced for {deviceTag}." : $"Unknown device: {deviceTag}.";
         }
+
+        public string ServiceSensorDemo(string deviceTag) => ServiceSensor(deviceTag);
 
         /// <summary>Get calibration status for a device.</summary>
         public string CalibrationStatusLine(string deviceTag)

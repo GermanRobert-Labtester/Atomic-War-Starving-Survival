@@ -20,6 +20,16 @@ namespace AtomicWar.GodotApp
     public static class SaveStoreHub
     {
         /// <summary>
+        /// Total count of successful atomic writes completed across all save stores.
+        /// </summary>
+        public static long TotalSaveWrites => SaveEnvelopeHelper.TotalAtomicWrites;
+
+        /// <summary>
+        /// Resets the total atomic write instrumentation counter.
+        /// </summary>
+        public static void ResetInstrumentation() => SaveEnvelopeHelper.ResetAtomicWriteCounter();
+
+        /// <summary>
         /// Checksummed-envelope store: writes the canonical
         /// <c>{ State, Checksum }</c> JSON for the section file name, with
         /// atomic replacement and optional .bak rotation. Pass

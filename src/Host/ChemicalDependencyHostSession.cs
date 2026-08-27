@@ -53,7 +53,7 @@ namespace AtomicWar.GodotApp
             try
             {
                 if (ChemicalDependencySaveStore.TrySave(System.CaptureState()))
-                    IsDirty = false;
+                    base.Save();
             }
             catch (Exception e)
             {

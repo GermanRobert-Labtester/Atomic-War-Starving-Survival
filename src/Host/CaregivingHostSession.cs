@@ -22,25 +22,21 @@ namespace AtomicWar.GodotApp
             System.OnCaregivingStarted += (caregiverId, patientId) =>
             {
                 LastEvent = $"[Caregiving] {caregiverId} → tending {patientId}";
-                RaiseStateChanged();
             };
 
             System.OnCaregivingBondDeepened += (caregiverId, patientId, bond) =>
             {
                 LastEvent = $"[Caregiving] Bond deepened: {caregiverId} ↔ {patientId} ({bond:F2})";
-                RaiseStateChanged();
             };
 
             System.OnCaregivingEnded += (caregiverId, patientId) =>
             {
                 LastEvent = $"[Caregiving] Ended: {caregiverId} ↔ {patientId}";
-                RaiseStateChanged();
             };
 
             System.OnCaregivingDialogueUnlocked += (caregiverId, patientId) =>
             {
                 LastEvent = $"[Caregiving] Dialogue unlocked: {caregiverId} ↔ {patientId}";
-                RaiseStateChanged();
             };
 
             System.OnStateChanged += () => RaiseStateChanged();
@@ -48,29 +44,23 @@ namespace AtomicWar.GodotApp
 
         public bool AssignCaregiver(string caregiverId, string patientId)
         {
-            bool ok = System.AssignCaregiver(caregiverId, patientId);
-            if (ok)
-                RaiseStateChanged();
-            return ok;
+            return System.AssignCaregiver(caregiverId, patientId);
         }
 
         public void UnassignCaregiver(string patientId)
         {
             System.UnassignCaregiver(patientId);
-            RaiseStateChanged();
         }
 
         public void UnassignCaregiverByCaregiver(string caregiverId)
         {
             System.UnassignCaregiverByCaregiver(caregiverId);
-            RaiseStateChanged();
         }
 
         public void TickDay(int day)
         {
             // Caregiving tick is hour-based; host ticks one full day.
             System.Tick(24f);
-            RaiseStateChanged();
         }
 
         public int ActiveAssignmentCount => System.ActiveAssignmentCount;

@@ -158,7 +158,7 @@ namespace AtomicWar.GodotApp.UI
             ClearContainer(_outcomesContainer);
 
             var fate = _runtime.EvaluateRegionalFate(_context);
-            var demo = _runtime.EvaluateDemographics(_context);
+            var demographics = _runtime.EvaluateDemographics(_context);
             var moral = _runtime.EvaluateMoralStanding(_context);
 
             var outCard = AshfallUiHelpers.MakePanel();
@@ -171,7 +171,7 @@ namespace AtomicWar.GodotApp.UI
 
             oBox.AddChild(AshfallUiHelpers.MakeSectionHeader("EVALUATED HISTORICAL OUTCOMES"));
             oBox.AddChild(AshfallUiHelpers.MakeDataRow("Regional Fate", FormatEnum(fate), AshfallUiHelpers.ToColor(CoreTheme.Hot)));
-            oBox.AddChild(AshfallUiHelpers.MakeDataRow("Demographic Legacy", FormatEnum(demo), AshfallUiHelpers.ToColor(CoreTheme.Warm)));
+            oBox.AddChild(AshfallUiHelpers.MakeDataRow("Demographic Legacy", FormatEnum(demographics), AshfallUiHelpers.ToColor(CoreTheme.Warm)));
             oBox.AddChild(AshfallUiHelpers.MakeDataRow("Moral Standing", FormatEnum(moral), AshfallUiHelpers.ToColor(CoreTheme.Pale)));
             oBox.AddChild(AshfallUiHelpers.MakeDataRow("Days Survived", $"{_context.totalDaysSurvived} Days", AshfallUiHelpers.ToColor(CoreTheme.Pale)));
             oBox.AddChild(AshfallUiHelpers.MakeDataRow("Living Dwellers", $"{_context.livingDwellerCount} Active", AshfallUiHelpers.ToColor(CoreTheme.Pale)));

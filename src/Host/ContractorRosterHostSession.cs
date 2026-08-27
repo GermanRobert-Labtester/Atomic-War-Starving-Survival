@@ -30,12 +30,10 @@ namespace AtomicWar.GodotApp
             System.OnContractorStatusChanged += contractor =>
             {
                 LastEvent = $"Contractor status changed: {contractor.contractorId}";
-                RaiseStateChanged();
             };
             System.OnOfferStatusChanged += offer =>
             {
                 LastEvent = $"Offer status changed: {offer.offerId}";
-                RaiseStateChanged();
             };
             System.OnRosterChanged += () => RaiseStateChanged();
         }
@@ -46,7 +44,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Offer generated for {candidateId} ({role})";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -57,7 +54,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Offer accepted: {offerId}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -68,7 +64,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Contractor dismissed: {contractorId}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -76,7 +71,6 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            RaiseStateChanged();
         }
 
         public override void Save()

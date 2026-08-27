@@ -151,7 +151,7 @@ namespace AtomicWar.GodotApp
                 var cs = _combat.Engine.State;
                 bool idle = string.IsNullOrEmpty(cs.EncounterId) || cs.Resolved;
                 if (!idle) return;
-                _combat.StartDemoCombat(state.locationId, state.displayName);
+                _combat.StartCombat(state.locationId, state.displayName);
                 _combatDirty = true;
                 GD.Print($"[Ashfall Godot] Expedition encounter at {state.locationId} spawned combat.");
             };
@@ -160,26 +160,26 @@ namespace AtomicWar.GodotApp
         private void OnExpeditionStartClicked(string locationId)
         {
             SetupExpeditions();
-            _statusLabel.Text = _expeditions.StartDemoExpedition("survivor_gunner_mikhail", locationId)
+            _statusLabel.Text = _expeditions.StartExpedition("survivor_gunner_mikhail", locationId)
                 + "\n" + _expeditions.StatusLine();
         }
 
         private void OnExpeditionTickClicked()
         {
             SetupExpeditions();
-            _statusLabel.Text = _expeditions.TickDemoHours(2f) + "\n" + _expeditions.StatusLine();
+            _statusLabel.Text = _expeditions.TickHours(2f) + "\n" + _expeditions.StatusLine();
         }
 
         private void OnExpeditionDiveClicked()
         {
             SetupExpeditions();
-            _statusLabel.Text = _expeditions.StartDiveDemo();
+            _statusLabel.Text = _expeditions.StartDive();
         }
 
         private void OnExpeditionAdvanceDiveClicked()
         {
             SetupExpeditions();
-            _statusLabel.Text = _expeditions.AdvanceDiveDemo() + "\n" + _expeditions.DiveStatusLine();
+            _statusLabel.Text = _expeditions.AdvanceDive() + "\n" + _expeditions.DiveStatusLine();
         }
 
         private void SaveWastelandMap()

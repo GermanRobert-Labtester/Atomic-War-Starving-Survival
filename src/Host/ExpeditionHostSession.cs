@@ -1,24 +1,26 @@
 using System;
 using System.Collections.Generic;
-#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.IO;
 using Ashfall.Core.Narrative;
+
+#pragma warning disable CS8618
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Thin Godot-host session for the expedition core (Encounters port).
-    /// Registers demo definitions, drives day/hour ticks with a seeded RNG,
-    /// persists active expeditions. No gameplay rules here — hosts only
-    /// present and wire.
+    /// Thin Godot-host session for the expedition core.
+    /// Manages expedition definitions, drives day/hour ticks with a seeded RNG,
+    /// and persists active expeditions. Presentation and wiring only — all rules in Core.
     /// </summary>
-    public sealed class ExpeditionHostSession
-    : HostSessionBase{
+    public sealed class ExpeditionHostSession : HostSessionBase
+    {
         public const int DemoSeed = 7071;
 
         public ExpeditionSystem Engine { get; }
-        public List<ExpeditionDefinition> DemoDefinitions { get; }
+        public List<ExpeditionDefinition> Definitions { get; }
+        public List<ExpeditionDefinition> DemoDefinitions => Definitions;
         public DiveInstanceRunner DiveRunner { get; private set; }
 
         /// <summary>Optional crossing gate — when set, crossing-node expeditions require vouch access.</summary>
@@ -45,8 +47,7 @@ namespace AtomicWar.GodotApp
 
         /// <summary>
         /// Encounter surfacing bridge. Read-only so hosts can drive the surface
-        /// pipeline (UI tests surface a synthetic expedition state through it);
-        /// Core owns all encounter rules.
+        /// pipeline; Core owns all encounter rules.
         /// </summary>
         public ExpeditionEncounterBridge Bridge => _bridge;
 
@@ -76,16 +77,14 @@ namespace AtomicWar.GodotApp
             _rng = new SeededRng(DemoSeed);
             _narrative = narrative ?? new NarrativeEncounterSystem();
             _bridge = new ExpeditionEncounterBridge(_narrative, _rng);
-            DemoDefinitions = new List<ExpeditionDefinition>();
-            RegisterDemoDefinitions();
+            Definitions = new List<ExpeditionDefinition>();
+            RegisterDefaultDefinitions();
             Engine.OnExpeditionStarted += s => { LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; RaiseStateChanged(); };
             Engine.OnExpeditionCompleted += s => { LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot.Count} loot lines."; RaiseStateChanged(); };
             Engine.OnExpeditionFailed += (s, r) => { LastEvent = $"Expedition failed: {s.survivorId} — {r}"; RaiseStateChanged(); };
             _bridge.OnSurfaced += dto =>
             {
                 LastEvent = $"Encounter triggered: {dto.trigger.survivorId} at {dto.trigger.displayName} (#{dto.trigger.encounterCount}) -> {dto.encounter_id ?? "bare-notice"}.";
-                // Bare notices have no catalog id and cannot be resolved, so they
-                // never enter the pending list — only resolvable encounters do.
                 if (!string.IsNullOrEmpty(dto.encounter_id))
                     _narrative.EnqueuePending(dto.encounter_id, dto.trigger.locationId, dto.trigger.encounterCount, CurrentDay);
                 RaiseStateChanged();
@@ -95,7 +94,7 @@ namespace AtomicWar.GodotApp
             Engine.OnStateChanged += _ => RaiseStateChanged();
         }
 
-        private void RegisterDemoDefinitions()
+        private void RegisterDefaultDefinitions()
         {
             var allotments = new ExpeditionDefinition
             {
@@ -119,8 +118,8 @@ namespace AtomicWar.GodotApp
             };
             ExpeditionDefinitionRegistry.Register(allotments);
             ExpeditionDefinitionRegistry.Register(cut);
-            DemoDefinitions.Add(allotments);
-            DemoDefinitions.Add(cut);
+            Definitions.Add(allotments);
+            Definitions.Add(cut);
         }
 
         public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null!)
@@ -133,8 +132,13 @@ namespace AtomicWar.GodotApp
                 var loaded = ExpeditionCatalogLoader.Load(dataDir, fileIO, serializer);
                 if (loaded != null && loaded.Count > 0)
                 {
-                    session.DemoDefinitions.Clear();
-                    session.DemoDefinitions.AddRange(loaded);
+                    session.Definitions.Clear();
+                    session.Definitions.AddRange(loaded);
+                    foreach (var def in loaded)
+                    {
+                        if (def != null && !string.IsNullOrEmpty(def.id))
+                            ExpeditionDefinitionRegistry.Register(def);
+                    }
                 }
             }
 
@@ -147,7 +151,7 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        // ── Demo actions ─────────────────────────────────────────────
+        // ── Production Expedition Actions ─────────────────────────────
 
         /// <summary>True when the player cannot dispatch to this location right now.</summary>
         public bool IsLocationBlocked(string locationId)
@@ -159,23 +163,32 @@ namespace AtomicWar.GodotApp
             return false;
         }
 
-        public string StartDemoExpedition(string survivorId, string locationId)
+        /// <summary>Production API to start an expedition to a specified location.</summary>
+        public string StartExpedition(string survivorId, string locationId, ExpeditionStance stance = ExpeditionStance.Stealth, int staminaBudget = 40)
         {
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
                 return $"Crossing gate is closed — no vouch. Cannot dispatch to {locationId}.";
             if (ExtraBlocked != null && ExtraBlocked(locationId))
                 return $"Route blocked: cannot dispatch to {locationId} right now (seasonal or sealed).";
-            var def = ExpeditionDefinitionRegistry.Get(locationId);
+            var def = ExpeditionDefinitionRegistry.Get(locationId)
+                      ?? Definitions.Find(d => d.id == locationId);
             if (def == null) return $"Unknown expedition target: {locationId}";
-            bool ok = Engine.Start(def, survivorId, 40, ExpeditionStance.Stealth);
+            bool ok = Engine.Start(def, survivorId, staminaBudget, stance);
             return ok ? $"Sent {survivorId} to {def.displayName}." : "Expedition start refused (already active or invalid).";
         }
 
-        public string TickDemoHours(float hours)
+        public string StartDemoExpedition(string survivorId, string locationId)
+            => StartExpedition(survivorId, locationId);
+
+        /// <summary>Production API to advance active expeditions by the specified duration.</summary>
+        public string TickHours(float hours)
         {
             Engine.TickHours(hours, _rng);
             return $"Tick: {Engine.ActiveCount} active expedition(s).";
         }
+
+        public string TickDemoHours(float hours)
+            => TickHours(hours);
 
         /// <summary>
         /// Apply a player choice for a surfaced encounter through Core. The
@@ -215,20 +228,24 @@ namespace AtomicWar.GodotApp
             return null;
         }
 
-        public string PushLuckDemo(string survivorId)
+        public string PushLuck(string survivorId)
         {
             return Engine.PushLuck(survivorId) ? $"{survivorId} is pushing luck." : "Cannot push luck (not looting).";
         }
 
-        public string RetreatDemo(string survivorId)
+        public string PushLuckDemo(string survivorId) => PushLuck(survivorId);
+
+        public string Retreat(string survivorId)
         {
             return Engine.Retreat(survivorId) ? $"{survivorId} is retreating." : "Cannot retreat (not looting).";
         }
 
+        public string RetreatDemo(string survivorId) => Retreat(survivorId);
+
         // ── Camp actions ──────────────────────────────────────────────
 
         /// <summary>Enter camp phase for an outbound expedition.</summary>
-        public string EnterCampDemo(
+        public string EnterCamp(
             string survivorId,
             float temperatureC = -10f,
             string weatherCondition = "Clear",
@@ -250,8 +267,21 @@ namespace AtomicWar.GodotApp
                 : "Cannot enter camp (not outbound or unknown expedition).";
         }
 
+        public string EnterCampDemo(
+            string survivorId,
+            float temperatureC = -10f,
+            string weatherCondition = "Clear",
+            float firewood = 8f,
+            float water = 4f,
+            float food = 4f,
+            bool hasTent = true,
+            bool hasBedroll = true,
+            string shelterType = "tent",
+            bool hasSentry = true)
+            => EnterCamp(survivorId, temperatureC, weatherCondition, firewood, water, food, hasTent, hasBedroll, shelterType, hasSentry);
+
         /// <summary>Advance one night segment. Returns dawn message when complete.</summary>
-        public string CampTickDemo(string survivorId)
+        public string CampTick(string survivorId)
         {
             bool dawn = Engine.CampTick(survivorId, _rng);
             var camp = Engine.GetCampState(survivorId);
@@ -262,21 +292,28 @@ namespace AtomicWar.GodotApp
                    $"Firewood: {camp.firewoodRemaining:F1}. Temp: {camp.temperatureC + camp.heatOutput:F1}C.";
         }
 
+        public string CampTickDemo(string survivorId) => CampTick(survivorId);
+
         /// <summary>Resolve a camp encounter.</summary>
-        public string ResolveCampEncounterDemo(string survivorId, string outcome)
+        public string ResolveCampEncounter(string survivorId, string outcome)
         {
             bool ok = Engine.ResolveCampEncounter(survivorId, outcome, outcome == "injury" ? 15f : 0f);
             return ok ? $"Camp encounter resolved: {outcome}." : "No unresolved encounter.";
         }
 
+        public string ResolveCampEncounterDemo(string survivorId, string outcome)
+            => ResolveCampEncounter(survivorId, outcome);
+
         /// <summary>Break camp at dawn.</summary>
-        public string BreakCampDemo(string survivorId, bool retreat = false)
+        public string BreakCamp(string survivorId, bool retreat = false)
         {
             bool ok = Engine.BreakCamp(survivorId, retreat);
             return ok
                 ? $"Camp broken. {(retreat ? "Retreating to shelter." : "Resuming travel.")}"
                 : "Cannot break camp (night not over or no camp).";
         }
+
+        public string BreakCampDemo(string survivorId, bool retreat = false) => BreakCamp(survivorId, retreat);
 
         /// <summary>Get camp status for UI display.</summary>
         public CampState? GetCampState(string survivorId) => Engine.GetCampState(survivorId);
@@ -306,7 +343,7 @@ namespace AtomicWar.GodotApp
 
         // ── Dive Instance (Exp 09) ──────────────────────────────────
 
-        public string StartDiveDemo(string siteId = "site_exp09_ss_sovereign")
+        public string StartDive(string siteId = "site_exp09_ss_sovereign")
         {
             var site = new DiveSiteDefinition(siteId, 120, 0.5, "q_keeper_of_logs");
             DiveRunner = new DiveInstanceRunner(new Ashfall.Core.Events.SimpleEventBus(),
@@ -314,21 +351,27 @@ namespace AtomicWar.GodotApp
             return $"Dive started at {siteId}. Oxygen: {DiveRunner.OxygenRemaining} ticks.";
         }
 
-        public string AdvanceDiveDemo()
+        public string StartDiveDemo(string siteId = "site_exp09_ss_sovereign") => StartDive(siteId);
+
+        public string AdvanceDive()
         {
             if (DiveRunner == null) return "No active dive.";
             bool ok = DiveRunner.Advance();
             return ok ? $"Advanced to {DiveRunner.CurrentRoom}. O2: {DiveRunner.OxygenRemaining}." : "Cannot advance (at end or no oxygen).";
         }
 
-        public string TickDiveOxygenDemo()
+        public string AdvanceDiveDemo() => AdvanceDive();
+
+        public string TickDiveOxygen()
         {
             if (DiveRunner == null) return "No active dive.";
             DiveRunner.TickOxygen();
             return $"O2: {DiveRunner.OxygenRemaining}. Room: {DiveRunner.CurrentRoom}.";
         }
 
-        public string CommitDiveChoiceDemo(string choice)
+        public string TickDiveOxygenDemo() => TickDiveOxygen();
+
+        public string CommitDiveChoice(string choice)
         {
             if (DiveRunner == null) return "No active dive.";
             if (choice == "flood") DiveRunner.CommitChoice(SovereignChoice.flood_the_market);
@@ -336,6 +379,8 @@ namespace AtomicWar.GodotApp
             else return $"Unknown choice: {choice}";
             return $"Choice committed: {DiveRunner.Choice}.";
         }
+
+        public string CommitDiveChoiceDemo(string choice) => CommitDiveChoice(choice);
 
         public string DiveStatusLine()
         {

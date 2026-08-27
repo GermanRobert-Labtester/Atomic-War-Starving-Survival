@@ -176,7 +176,7 @@ namespace AtomicWar.GodotApp.UI
 
             // Target selection + start
             var startRow = Row();
-            var startBtn = Btn("START RAID", () => DoAction(() => _combat.StartDemoCombat("loc_denial_cut", "The Denial Cut")));
+            var startBtn = Btn("ENGAGE ENCOUNTER", () => DoAction(() => _combat.StartCombat("loc_denial_cut", "The Denial Cut")));
             startRow.AddChild(startBtn);
             _targetSelect = new OptionButton();
             _targetSelect.CustomMinimumSize = new Vector2(240, 36);

@@ -135,7 +135,7 @@ namespace AtomicWar.GodotApp.UI
             for (int i = 0; i < safe.difficulty; i++)
                 guess[i] = (int)_tumblers[i].Value;
 
-            string result = _maritimeHost.AttemptSafeDemo(_safeId, guess, _toolCondition);
+            string result = _maritimeHost.AttemptSafe(_safeId, guess, _toolCondition);
             _feedbackLabel.Text = result;
 
             if (_maritimeHost.SafeCrack.IsOpened(_safeId))
@@ -149,7 +149,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnAccessibleAttempt()
         {
             if (_maritimeHost == null) return;
-            string result = _maritimeHost.AttemptSafeAccessibleDemo(_safeId, 0.5f, _toolCondition, 0.3f);
+            string result = _maritimeHost.AttemptSafeAccessible(_safeId, 0.5f, _toolCondition, 0.3f);
             _feedbackLabel.Text = result;
 
             if (_maritimeHost.SafeCrack.IsOpened(_safeId))
@@ -163,7 +163,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnTransferLoot()
         {
             if (_maritimeHost == null) return;
-            string result = _maritimeHost.TransferLootDemo(_safeId);
+            string result = _maritimeHost.TransferSafeLoot(_safeId);
             _lootLabel.Text = result;
             RefreshView();
         }

@@ -247,22 +247,8 @@ namespace AtomicWar.GodotApp.UI
             _prepStation.AddChild(AshfallUiHelpers.MakeDataRow("Scurvy Prevention", "High Vitamin C Equivalent", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
 
             _prepStation.AddChild(AshfallUiHelpers.MakeSeparator());
-            _prepStation.AddChild(AshfallUiHelpers.MakeSubsectionHeader("COOK ACTIONS"));
-
-            var btnStartPrep = AshfallUiHelpers.MakeButton($"COOK {curRecipe.name.ToUpperInvariant()}", () =>
-            {
-                var reqs = new Dictionary<string, int> { { "clean_water", 1 }, { "canned_rations", 1 } };
-                _host.StartPrepJob(curRecipe.id, "survivor_dweller_cook", reqs);
-                RefreshView();
-            });
-            _prepStation.AddChild(btnStartPrep);
-
-            var btnServe = AshfallUiHelpers.MakeButton("SERVE MEAL TO SURVIVORS", () =>
-            {
-                _host.ServeMeal("survivor_dweller_1", curRecipe.id);
-                RefreshView();
-            });
-            _prepStation.AddChild(btnServe);
+            _prepStation.AddChild(AshfallUiHelpers.MakeSubsectionHeader("COOK ASSIGNMENT"));
+            _prepStation.AddChild(AshfallUiHelpers.MakeBody("Assign shelter cooks through the Duty Roster to schedule daily meal prep batches for this recipe."));
 
             // Populate Serving Log
             if (s.servingLog.Count == 0)

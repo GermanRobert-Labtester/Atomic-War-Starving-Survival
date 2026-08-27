@@ -111,7 +111,7 @@ namespace AtomicWar.GodotApp
             _medical.TickDemo(24f);
 
             SetupExpeditions();
-            _expeditions.TickDemoHours(24f);
+            _expeditions.TickHours(24f);
 
             // Hatch-return bridge (Exp 02): a returning expedition crosses the
             // hatch as a staged shelter scene. Expedition magnitudes are owned by
@@ -139,7 +139,7 @@ namespace AtomicWar.GodotApp
 
             SetupMaritime();
             if (_maritime.Dive.IsActive)
-                _maritime.TickDiveDemo(60f);
+                _maritime.TickDive(60f);
             SetupDeepCoast();
             _deepCoast.TickDaily(day, _core.Weather);
             _deepCoastPanel?.SetSimDay(day);

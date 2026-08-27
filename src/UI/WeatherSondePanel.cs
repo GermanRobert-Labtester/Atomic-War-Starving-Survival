@@ -119,7 +119,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnLaunch()
         {
             if (_weatherHost == null) return;
-            string result = _weatherHost.LaunchSondeDemo(SimDay); // from bound host or caller
+            string result = _weatherHost.LaunchSonde(SimDay); // from bound host or caller
             _feedbackLabel.Text = result;
             RefreshView();
         }
@@ -127,7 +127,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnTick()
         {
             if (_weatherHost == null) return;
-            string result = _weatherHost.TickSondeDemo();
+            string result = _weatherHost.TickSonde();
             _feedbackLabel.Text = result;
             RefreshView();
         }

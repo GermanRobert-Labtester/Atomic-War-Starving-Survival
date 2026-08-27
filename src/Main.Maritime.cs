@@ -142,19 +142,19 @@ namespace AtomicWar.GodotApp
         private void OnMaritimeTickDiveClicked()
         {
             SetupMaritime();
-            _statusLabel.Text = _maritime.TickDiveDemo(10f);
+            _statusLabel.Text = _maritime.TickDive(10f);
         }
 
         private void OnMaritimeScavengeClicked()
         {
             SetupMaritime();
-            _statusLabel.Text = _maritime.ScavengeDemo("location_stadium_evacuation_center");
+            _statusLabel.Text = _maritime.ScavengeLocation("location_stadium_evacuation_center");
         }
 
         private void OnMaritimeContaminateClicked()
         {
             SetupMaritime();
-            _statusLabel.Text = _maritime.ContaminateDemo("survivor_gunner_mikhail", "location_automated_abattoir");
+            _statusLabel.Text = _maritime.Contaminate("survivor_gunner_mikhail", "location_automated_abattoir");
         }
 
         private void CloseMaritimePanel()

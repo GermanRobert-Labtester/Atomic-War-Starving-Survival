@@ -176,13 +176,7 @@ namespace AtomicWar.GodotApp.UI
             // Populate Caravan List
             if (caravans.Count == 0)
             {
-                _caravanList.AddChild(AshfallUiHelpers.MakeMetadata("No trade caravans currently en route."));
-                var btnSpawn = AshfallUiHelpers.MakeButton("SUMMON WANDERING MENDERS CARAVAN", () =>
-                {
-                    _host.SpawnDemoCaravan("loc_holdfast_gate");
-                    RefreshView();
-                });
-                _caravanList.AddChild(btnSpawn);
+                _caravanList.AddChild(AshfallUiHelpers.MakeMetadata("No trade caravans currently en route in this sector."));
             }
             else
             {
@@ -270,13 +264,8 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // Route Actions & Logs
-            _routeLogContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("ROUTE MANAGEMENT"));
-            var btnTickRoute = AshfallUiHelpers.MakeButton("STEP ROUTE (DAILY TICK)", () =>
-            {
-                _host.TickDemo();
-                RefreshView();
-            });
-            _routeLogContainer.AddChild(btnTickRoute);
+            _routeLogContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("ROUTE STATUS"));
+            _routeLogContainer.AddChild(AshfallUiHelpers.MakeMetadata("Caravan trade routes advance automatically with the daily simulation clock."));
 
             _routeLogContainer.AddChild(AshfallUiHelpers.MakeSeparator());
             _routeLogContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("CARAVAN RADIO CHATTER"));

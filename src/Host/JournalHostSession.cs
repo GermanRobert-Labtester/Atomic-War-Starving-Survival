@@ -37,7 +37,7 @@ namespace AtomicWar.GodotApp
             {
                 var save = System.CaptureState();
                 JournalSaveStore.Save(save);
-                IsDirty = false;
+                base.Save();
             }
             catch (Exception e)
             {

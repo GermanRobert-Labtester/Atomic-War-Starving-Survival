@@ -172,7 +172,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (_expeditionHost != null)
                 {
-                    _expeditionHost.TickDemoHours(2f);
+                    _expeditionHost.TickHours(2f);
                     OnExpeditionUpdated?.Invoke();
                     RefreshView();
                 }
@@ -253,7 +253,7 @@ namespace AtomicWar.GodotApp.UI
                     {
                         var btnPush = AshfallUiHelpers.MakeButton("PUSH LUCK (SCAVENGE DEEPER)", () =>
                         {
-                            _expeditionHost.PushLuckDemo(scoutId);
+                            _expeditionHost.PushLuck(scoutId);
                             OnExpeditionUpdated?.Invoke();
                             RefreshView();
                         });
@@ -262,7 +262,7 @@ namespace AtomicWar.GodotApp.UI
 
                         var btnRetreat = AshfallUiHelpers.MakeButton("ORDER INBOUND RETURN", () =>
                         {
-                            _expeditionHost.RetreatDemo(scoutId);
+                            _expeditionHost.Retreat(scoutId);
                             OnExpeditionUpdated?.Invoke();
                             RefreshView();
                         });
@@ -303,7 +303,7 @@ namespace AtomicWar.GodotApp.UI
                 livingSurvivors.Add("survivor_gunner_mikhail");
             }
 
-            foreach (var def in _expeditionHost.DemoDefinitions)
+            foreach (var def in _expeditionHost.Definitions)
             {
                 if (def == null) continue;
 

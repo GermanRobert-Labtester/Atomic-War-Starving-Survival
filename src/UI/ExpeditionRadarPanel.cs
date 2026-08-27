@@ -198,7 +198,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         }
 
         int active = _host.Engine.ActiveCount;
-        var defs = _host.DemoDefinitions;
+        var defs = _host.Definitions;
         int blocked = 0;
         int maxDanger = 0;
         int encTotal = 0;
@@ -293,7 +293,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         }
 
         var rows = new List<AshfallDataGrid.Row>();
-        var defs = _host.DemoDefinitions;
+        var defs = _host.Definitions;
         for (int i = 0; i < defs.Count; i++)
         {
             var d = defs[i];
@@ -409,7 +409,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
     {
         if (_host == null) return null;
         int seen = -1;
-        var defs = _host.DemoDefinitions;
+        var defs = _host.Definitions;
         for (int i = 0; i < defs.Count; i++)
         {
             var d = defs[i];

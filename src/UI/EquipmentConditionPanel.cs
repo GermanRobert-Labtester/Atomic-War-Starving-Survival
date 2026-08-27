@@ -184,19 +184,10 @@ namespace AtomicWar.GodotApp.UI
                 _eventLogLabel.Text = _host.LastEvent;
             }
 
-            // If empty, allow seeding
+            // If empty, render empty state
             if (s.items.Count == 0)
             {
-                _gearList.AddChild(AshfallUiHelpers.MakeMetadata("No equipment registered in armory."));
-                var btnSeed = AshfallUiHelpers.MakeButton("REGISTER STANDARD LOADOUT", () =>
-                {
-                    _host.RegisterItem("eq_rifle_01", "assault_rifle_ak", "survivor_gunner_mikhail", EquipmentFamily.Weapon, 100f);
-                    _host.RegisterItem("eq_hazmat_01", "hazmat_suit_lead", "elena_vasquez", EquipmentFamily.Clothing, 100f);
-                    _host.RegisterItem("eq_gasmask_01", "gas_mask_m40", "the_teacher", EquipmentFamily.Clothing, 80f);
-                    _host.RegisterItem("eq_tool_01", "multitool_heavy", "survivor_dweller_1", EquipmentFamily.Tool, 90f);
-                    RefreshView();
-                });
-                _gearList.AddChild(btnSeed);
+                _gearList.AddChild(AshfallUiHelpers.MakeMetadata("No equipment items registered in shelter armory."));
             }
             else
             {
@@ -275,13 +266,6 @@ namespace AtomicWar.GodotApp.UI
                     RefreshView();
                 });
                 _workbenchInspector.AddChild(btnOverhaul);
-
-                var btnWear = AshfallUiHelpers.MakeButton("SIMULATE FIELD USE (WEAR -15%)", () =>
-                {
-                    _host.UseItem(curItem.instanceId, 15f);
-                    RefreshView();
-                });
-                _workbenchInspector.AddChild(btnWear);
             }
             else
             {

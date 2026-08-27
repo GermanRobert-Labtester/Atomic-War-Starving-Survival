@@ -85,8 +85,8 @@ namespace AtomicWar.GodotApp.UI
 
             int activeSorties = _expeditions?.Engine.ActiveCount ?? 0;
             int totalLocations = _core?.Catalog?.Locations.Count ?? _catalogs?.Locations.Count ?? 0;
-            if (totalLocations == 0 && _expeditions?.DemoDefinitions.Count > 0)
-                totalLocations = _expeditions.DemoDefinitions.Count;
+            if (totalLocations == 0 && _expeditions?.Definitions.Count > 0)
+                totalLocations = _expeditions.Definitions.Count;
 
             var overviewCard = AshfallUiHelpers.MakeCardFrame("SECTOR RECONNAISSANCE SUMMARY", "TACTICAL GRID");
             var ovBox = overviewCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
@@ -173,9 +173,9 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // Fallback to expedition definitions if list is empty
-            if (locList.Count == 0 && _expeditions?.DemoDefinitions != null)
+            if (locList.Count == 0 && _expeditions?.Definitions != null)
             {
-                foreach (var def in _expeditions.DemoDefinitions)
+                foreach (var def in _expeditions.Definitions)
                 {
                     locList.Add((def.id, def.displayName, "Sector Recon", def.dangerLevel, def.dangerLevel * 2.5f, "Active expedition destination."));
                 }

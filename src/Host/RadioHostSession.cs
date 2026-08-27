@@ -368,12 +368,12 @@ namespace AtomicWar.GodotApp
         // ── Triangulation demo actions ────────────────────────────────
 
         /// <summary>Record a directional observation of a signal.</summary>
-        public string RecordObservationDemo(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f)
+        public string RecordObservation(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f, string stationId = "station_alpha")
         {
             var obs = new RadioObservation
             {
                 signalId = signalId,
-                stationId = "station_alpha",
+                stationId = stationId,
                 day = Day,
                 hour = 12f,
                 bearingDegrees = bearing,
@@ -390,8 +390,11 @@ namespace AtomicWar.GodotApp
                 : "Invalid observation.";
         }
 
+        public string RecordObservationDemo(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f)
+            => RecordObservation(signalId, bearing, signalStrength, noise);
+
         /// <summary>Attempt to triangulate a signal.</summary>
-        public string TriangulateDemo(string signalId)
+        public string TriangulateSignal(string signalId)
         {
             var candidate = Triangulation.Triangulate(signalId, Rng);
             if (candidate == null)
@@ -401,6 +404,8 @@ namespace AtomicWar.GodotApp
                 ? $"Triangulation complete! Location {candidate.locationId} discovered (confidence {candidate.confidence:F2}, uncertainty ±{candidate.uncertaintyRadiusKm:F0} km)."
                 : $"Hypothesis: {candidate.locationId} (confidence {candidate.confidence:F2}, uncertainty ±{candidate.uncertaintyRadiusKm:F0} km, {candidate.observationCount} observations).";
         }
+
+        public string TriangulateDemo(string signalId) => TriangulateSignal(signalId);
 
         /// <summary>Get triangulation status for a signal.</summary>
         public string TriangulationStatusLine(string signalId)

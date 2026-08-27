@@ -19,7 +19,6 @@ namespace AtomicWar.GodotApp
             System.OnIncidentResolved += log =>
             {
                 LastEvent = $"[Airlock] Incident resolved for {log.visitorId}: Decision {log.decision}, Outcome: {log.outcome}";
-                RaiseStateChanged();
             };
 
             System.OnSecurityChanged += () =>
@@ -32,7 +31,6 @@ namespace AtomicWar.GodotApp
         {
             System.AssignSentry(dwellerId);
             LastEvent = $"Assigned sentry: {dwellerId}";
-            RaiseStateChanged();
         }
 
         public ActionResult CycleDoor(AirlockDoorState newState)
@@ -41,7 +39,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Airlock blast door cycled to {newState}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -52,7 +49,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Visitor arrived at airlock: {visitorType} ({visitorId})";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -63,7 +59,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Security incident resolved: {decision}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -71,7 +66,6 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            RaiseStateChanged();
         }
 
         public override void Save()

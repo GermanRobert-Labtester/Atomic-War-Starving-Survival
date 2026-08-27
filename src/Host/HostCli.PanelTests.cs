@@ -900,12 +900,12 @@ namespace AtomicWar.GodotApp
 
                 // 4. Dive-room progression + air / noise / compromised state.
                 Check(!session.Dive!.IsActive, "dive starts idle");
-                session.StartDiveDemo("diver_selftest", "operator_selftest");
+                session.StartDive("diver_selftest", "operator_selftest");
                 Check(session.Dive.IsActive, "dive launches");
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 120f) < 0.001f, "dive starts at full air (120s)");
-                session.TickDiveDemo(60f);
+                session.TickDive(60f);
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 60f) < 0.001f, "air consumed on tick");
-                session.CrankDiveDemo();
+                session.CrankDiveCompressor();
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 90f) < 0.001f, "compressor crank restores air");
                 bool advanced = session.Dive.AdvanceToNextRoom(50);
                 Check(advanced && session.Dive.CurrentRoomIndex == 1 && session.Dive.NoiseLevel == 50,
@@ -2566,12 +2566,12 @@ namespace AtomicWar.GodotApp
 
                 // ── 2. Wasteland Expedition Scavenging Sortie Verification ──
                 var expeditions = ExpeditionHostSession.Create(dataDirectory);
-                Check(expeditions.DemoDefinitions.Count >= 2, "expedition definitions loaded");
+                Check(expeditions.Definitions.Count >= 2, "expedition definitions loaded");
 
-                var target = expeditions.DemoDefinitions[0];
+                var target = expeditions.Definitions[0];
                 Check(target != null && target.id == "loc_the_allotments", "target is The Works Allotment Commune");
 
-                string startMsg = expeditions.StartDemoExpedition("survivor_dr_sarah_chen", target!.id);
+                string startMsg = expeditions.StartExpedition("survivor_dr_sarah_chen", target!.id);
                 Check(expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
                 var activeExp = expeditions.Engine.Active["survivor_dr_sarah_chen"];
                 Check(activeExp != null && activeExp.phase == (int)ExpeditionPhase.Outbound, "expedition starts in Outbound phase");
@@ -2579,7 +2579,7 @@ namespace AtomicWar.GodotApp
                 // Advance hours until arrival / looting
                 for (int h = 0; h < 6; h++)
                 {
-                    expeditions.TickDemoHours(2f);
+                    expeditions.TickHours(2f);
                 }
 
                 // Push luck or advance to looting

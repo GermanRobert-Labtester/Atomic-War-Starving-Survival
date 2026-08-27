@@ -61,7 +61,7 @@ public partial class MapAtlasPanel : Control, IBindablePanel
     {
         _locations.Clear();
         if (_host == null) return;
-        var defs = _host.DemoDefinitions;
+        var defs = _host.Definitions;
         for (int i = 0; i < defs.Count; i++)
         {
             var d = defs[i];
