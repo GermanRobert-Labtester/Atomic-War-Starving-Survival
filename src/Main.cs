@@ -45,7 +45,7 @@ namespace AtomicWar.GodotApp
         private Ashfall.Core.Events.SimpleEventBus _eventBus = new Ashfall.Core.Events.SimpleEventBus();
         private AtomicWar.GodotApp.Host.HostEventAdapter _hostEventAdapter = null!;
         private string _dataDir = string.Empty;
-        private int _simDay = 4;
+        private int _simDay => _campaignDay?.Calendar?.CurrentDay ?? _core?.Clock?.Day ?? 1;
 
         // Diagnostics strip throttling. Engine.GetVersionInfo() allocates a Godot
         // Dictionary, so the version string is resolved once and cached for the process.

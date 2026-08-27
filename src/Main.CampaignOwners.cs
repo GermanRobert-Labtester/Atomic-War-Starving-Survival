@@ -218,6 +218,7 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupDutyRoster();
+                _m._dutyRoster!.SyncDay(day);
                 _m._dutyRoster!.TickDay(_m.BuildHomeOccupantSnapshot());
                 _m.SetupIceRoad();
                 _m._dutyRoster.SyncHoldfastToDuty(_m._core.Census, _m._core.IceRoad, _m._expansions.Waystation, _m._core.Brine, day);

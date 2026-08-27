@@ -175,6 +175,12 @@ namespace AtomicWar.GodotApp
             return TickDay(DemoOccupants());
         }
 
+        public void SyncDay(int day)
+        {
+            if (day > 0)
+                Clock.SetDay(day);
+        }
+
         /// <summary>
         /// Morning tick with the host's real home-occupant snapshot. Kess fills
         /// pencil rows; ink never auto-fills; the chart is a document other

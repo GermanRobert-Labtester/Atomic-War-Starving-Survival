@@ -661,7 +661,8 @@ namespace AtomicWar.GodotApp
         {
             SetupIceRoad();
             _core.UnlockAndClerk();
-            _simDay = _core.Clock.Day;
+            SetupCampaignDay();
+            _campaignDay.Calendar.SetDay(_core.Clock.Day);
             _statusLabel.Text = $"Holdfast unlocked. Clerk at the hatch. Day {_core.Clock.Day}. Tick the ice road.";
             _codexViewer.Text =
                 "=== ICE ROAD (Ashfall.Core) ===\n" +

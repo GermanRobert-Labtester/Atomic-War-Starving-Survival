@@ -50,7 +50,8 @@ namespace AtomicWar.GodotApp
             if (save != null)
             {
                 _core.RestoreSave(save);
-                _simDay = _core.Clock.Day;
+                SetupCampaignDay();
+                _campaignDay.Calendar.SetDay(_core.Clock.Day);
                 _holdfastDirty = false; // restore just raised state-change events
                 GD.Print($"[Ashfall Godot] Holdfast S1 state restored (day {_core.Clock.Day}).");
             }
@@ -95,7 +96,6 @@ namespace AtomicWar.GodotApp
             var args = _campaignDay.Advance(day, new CampaignDayPersistenceAdapter(this));
             if (args != null && args.Succeeded)
             {
-                _simDay = day;
                 _campaignDayDirty = true;
                 UpdateHud();
             }
@@ -210,7 +210,6 @@ namespace AtomicWar.GodotApp
 
             try
             {
-                _simDay = targetDay;
                 _campaignDayDirty = true;
 
                 _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.DayTransition);

@@ -33,6 +33,14 @@ namespace Ashfall.Core.Campaign
         private bool _advancing;
         private int _lastAdvancedDay = int.MinValue;
 
+        /// <summary>The authoritative campaign calendar.</summary>
+        public ICampaignCalendar Calendar { get; }
+
+        public CampaignDayCoordinator(ICampaignCalendar? calendar = null)
+        {
+            Calendar = calendar ?? new CampaignCalendar(initialDay: 1);
+        }
+
         /// <summary>
         /// Raised once per successful <see cref="Advance"/> call, after every
         /// owner has been ticked and persistence has been requested. The host
@@ -198,6 +206,7 @@ namespace Ashfall.Core.Campaign
                 persistence?.PersistBeforeBriefing(day, reports);
 
                 _lastAdvancedDay = day;
+                Calendar.SetDay(day);
                 OnDayAdvanced?.Invoke(args);
                 return args;
             }
@@ -237,6 +246,8 @@ namespace Ashfall.Core.Campaign
         {
             if (save == null) return;
             _lastAdvancedDay = save.lastAdvancedDay < 0 ? int.MinValue : save.lastAdvancedDay;
+            if (_lastAdvancedDay > 0)
+                Calendar.SetDay(_lastAdvancedDay);
         }
     }
 

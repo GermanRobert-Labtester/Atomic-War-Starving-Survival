@@ -134,7 +134,8 @@ namespace AtomicWar.GodotApp
             _silentFoundry.SyncGuildStanding();
             Check(_silentFoundry.Engine.GetTreatyOutcome(SilentFoundryIds.TreatyBrinePipe, 279) == FoundryTreatyOutcome.NotRatified,
                 "pre-ratification neutral in the live loop");
-            _simDay = 276;
+            SetupCampaignDay();
+            _campaignDay.Calendar.SetDay(276);
             TickSimDay(277);
             TickSimDay(278);
             TickSimDay(279);
