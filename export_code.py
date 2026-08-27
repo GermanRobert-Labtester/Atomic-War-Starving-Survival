@@ -26,17 +26,17 @@ def export_unity_codebase(assets_folder_path, output_filename="unity_codebase.tx
                 if file.endswith(".cs"):
                     file_path = os.path.join(root, file)
                     relative_path = os.path.relpath(file_path, assets_folder_path)
-                    
+
                     outfile.write(f"// ==================================================\n")
                     outfile.write(f"// FILE PATH: Assets/{relative_path}\n")
                     outfile.write(f"// ==================================================\n\n")
-                    
+
                     try:
                         with open(file_path, "r", encoding="utf-8", errors="ignore") as infile:
                             outfile.write(infile.read())
                     except Exception as e:
                         outfile.write(f"// Error reading file: {e}\n")
-                    
+
                     outfile.write("\n\n")
                     script_count += 1
 

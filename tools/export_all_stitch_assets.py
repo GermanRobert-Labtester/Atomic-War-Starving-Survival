@@ -30,7 +30,7 @@ for i, s in enumerate(screens, 1):
     sid = s.get('name', '').split('/')[-1]
     title = s.get('title', f'screen_{i:02d}')
     slug = f"{i:02d}_{sanitize_filename(title)}"
-    
+
     # 1. Download HTML code bundle if present
     html_info = s.get('htmlCode')
     if isinstance(html_info, dict) and html_info.get('downloadUrl'):
@@ -51,14 +51,14 @@ for i, s in enumerate(screens, 1):
         with open(html_file, 'w', encoding='utf-8') as hf:
             hf.write(html_info)
         exported_html_count += 1
-        
+
     # 2. Download Screenshot PNG
     img_url = s.get('screenshot', {}).get('downloadUrl')
     if img_url:
         img_file = os.path.join(SCREENS_DIR, f"{slug}.png")
         try:
             req = urllib.request.Request(
-                img_url, 
+                img_url,
                 headers={'User-Agent': 'Mozilla/5.0'}
             )
             with urllib.request.urlopen(req, timeout=30) as resp, open(img_file, 'wb') as out_f:

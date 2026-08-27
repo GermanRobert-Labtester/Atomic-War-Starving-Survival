@@ -129,7 +129,7 @@ children's board in chalk so it can be erased. Her dialogue forces the player to
 kinder story and a truer one, and she never tells them which is which.
 
 **UI presence of the four:** each appears as a named entry in a chaired row (name, one-line
-disposition, and their current register's most recent line). No agent faces are necessary — the 
+disposition, and their current register's most recent line). No agent faces are necessary — the
 *words* are the portrait. Selecting one opens a three-to-five-line card; a diegetic one-button
 action (Book / Name / Assign / Sign) commits the player's choice and closes the scene.
 

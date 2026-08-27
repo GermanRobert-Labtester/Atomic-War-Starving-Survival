@@ -89,14 +89,14 @@ def main():
     # Get all JSON files
     json_files = sorted(NARRATIVE_DIR.glob("*.json"))
     print(f"Scanning {len(json_files)} narrative JSON files...")
-    
+
     all_results = []
     for thread_name, patterns in THREADS.items():
         print(f"  Thread: {thread_name}")
         results = search_thread(json_files, thread_name, patterns)
         all_results.extend(results)
         print(f"    Found {len(results)} hits")
-    
+
     # Deduplicate by file+thread+first 100 chars of context
     seen = set()
     deduped = []
@@ -105,17 +105,17 @@ def main():
         if key not in seen:
             seen.add(key)
             deduped.append(r)
-    
+
     # Print summary
     print(f"\nTotal deduped hits: {len(deduped)}")
     thread_counts = defaultdict(int)
     for r in deduped:
         thread_counts[r["thread"]] += 1
-    
+
     print("\nThread hit counts:")
     for thread, count in sorted(thread_counts.items()):
         print(f"  {thread}: {count}")
-    
+
     # Save detailed results
     output = Path("/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/narrative/continuity_audit_raw.json")
     with open(output, "w", encoding="utf-8") as f:

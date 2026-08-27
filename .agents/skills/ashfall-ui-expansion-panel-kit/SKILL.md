@@ -52,43 +52,43 @@ public partial class ExpansionOverviewPanel : UiPanel
     [Export] public Label FactionReputationLabel { get; set; }
     [Export] public Label DaysRemainingLabel { get; set; }
     [Export] public Button CloseButton { get; set; }
-    
+
     private Expansion05HoldfastSystem _expansionSystem;
     private IEventBus _eventBus;
     private ISaveManager _saveManager;
     private bool _isDirty = false;
-    
+
     public override void _Ready()
     {
         base._Ready();
-        
+
         // Initialize references
         _expansionSystem = World.GetSystem<Expansion05HoldfastSystem>();
         _eventBus = World.GetService<IEventBus>();
         _saveManager = World.GetService<ISaveManager>();
-        
+
         // Setup UI
         ExpansionNameLabel.Text = "Holdfast Expansion";
         FactionReputationLabel.Text = "Reputation: " + _expansionSystem.ReputationScore;
         DaysRemainingLabel.Text = "Days: " + World.DayCounter.CurrentDay;
-        
+
         // Wire up events
         _eventBus.Subscribe<ExpansionReputationChangedEvent>(OnReputationChanged);
         _eventBus.Subscribe<DayChangedEvent>(OnDayChanged);
-        
+
         // Setup buttons
         CloseButton.Pressed += OnCloseButtonPressed;
     }
-    
+
     public override void _ExitTree()
     {
         // Clean up events
         _eventBus.Unsubscribe<ExpansionReputationChangedEvent>(OnReputationChanged);
         _eventBus.Unsubscribe<DayChangedEvent>(OnDayChanged);
-        
+
         base._ExitTree();
     }
-    
+
     // ===== Setup Triad =====
     public static void SetupExpansion05Overview(World world, IEventBus eventBus, ISaveManager saveManager)
     {
@@ -99,7 +99,7 @@ public partial class ExpansionOverviewPanel : UiPanel
             priority: 100,
             isModal: true
         );
-        
+
         // Subscribe to events
         eventBus.Subscribe<ExpansionPanelRequestedEvent>(e =>
         {
@@ -109,14 +109,14 @@ public partial class ExpansionOverviewPanel : UiPanel
             }
         });
     }
-    
+
     // ===== Save Triad =====
     public static void SaveExpansion05Overview(World world, ISaveManager saveManager)
     {
         // Register save store for this panel
         saveManager.RegisterStore(new Expansion05OverviewSaveStore(world));
     }
-    
+
     // ===== Flush Triad =====
     public static void FlushExpansion05OverviewIfDirty(World world)
     {
@@ -127,39 +127,39 @@ public partial class ExpansionOverviewPanel : UiPanel
             system.Flush();
         }
     }
-    
+
     // ===== Event Handlers =====
     private void OnReputationChanged(ExpansionReputationChangedEvent e)
     {
         FactionReputationLabel.Text = "Reputation: " + e.NewReputation;
         _isDirty = true;
     }
-    
+
     private void OnDayChanged(DayChangedEvent e)
     {
         DaysRemainingLabel.Text = "Days: " + e.NewDay;
         _isDirty = true;
     }
-    
+
     private void OnCloseButtonPressed()
     {
         UiPanelManager.HidePanel("expansion_05_overview");
     }
-    
+
     // ===== Save System =====
     private class Expansion05OverviewSaveStore : ISaveStore
     {
         private readonly World _world;
-        
+
         public Expansion05OverviewSaveStore(World world)
         {
             _world = world;
         }
-        
+
         public SystemState CaptureState()
         {
             var expansionSystem = _world.GetSystem<Expansion05HoldfastSystem>();
-            
+
             return new SystemState
             {
                 Version = 1,
@@ -171,7 +171,7 @@ public partial class ExpansionOverviewPanel : UiPanel
                 }
             };
         }
-        
+
         public void RestoreState(SystemState state)
         {
             if (state.Data is Expansion05OverviewSaveData data)
@@ -182,7 +182,7 @@ public partial class ExpansionOverviewPanel : UiPanel
             }
         }
     }
-    
+
     [Serializable]
     private class Expansion05OverviewSaveData
     {
@@ -278,10 +278,10 @@ private static void SetupExpansion05Panels(World world, IEventBus eventBus, ISav
 {
     // Overview panel
     ExpansionOverviewPanel.SetupExpansion05Overview(world, eventBus, saveManager);
-    
+
     // Trade panel
     ExpansionTradePanel.SetupExpansion05Trade(world, eventBus, saveManager);
-    
+
     // Radio panel
     ExpansionRadioPanel.SetupExpansion05Radio(world, eventBus, saveManager);
 }
@@ -379,7 +379,7 @@ Creates a self-test CLI verb for rapid iteration:
 private static void RunExpansion05SelfTest()
 {
     GD.Print("=== Expansion 05 (Holdfast) Self-Test ===");
-    
+
     // Test panel loading
     GD.Print("Testing panel loading...");
     var overviewPanel = GD.Load<PackedScene>("res://src/UI/Expansion05Holdfast/ExpansionOverviewPanel.tscn");
@@ -392,7 +392,7 @@ private static void RunExpansion05SelfTest()
         GD.Print("❌ Failed to load ExpansionOverviewPanel");
         return;
     }
-    
+
     // Test preview scene
     GD.Print("Testing preview scene...");
     var previewScene = GD.Load<PackedScene>("res://src/UI/Expansion05Holdfast/ExpansionOverviewPanel.Preview.tscn");
@@ -405,7 +405,7 @@ private static void RunExpansion05SelfTest()
         GD.Print("❌ Failed to load preview scene");
         return;
     }
-    
+
     // Test C# compilation
     GD.Print("Testing C# compilation...");
     try
@@ -418,7 +418,7 @@ private static void RunExpansion05SelfTest()
         GD.Print("❌ C# compilation failed: " + e.Message);
         return;
     }
-    
+
     // Test UI registration
     GD.Print("Testing UI registration...");
     if (UiPanelManager.GetPanelRegistration("expansion_05_overview") != null)
@@ -430,7 +430,7 @@ private static void RunExpansion05SelfTest()
         GD.Print("❌ Panel not registered in UI system");
         return;
     }
-    
+
     // Test event wiring
     GD.Print("Testing event wiring...");
     var eventBus = World.GetService<IEventBus>();
@@ -443,7 +443,7 @@ private static void RunExpansion05SelfTest()
         GD.Print("❌ Event bus not available");
         return;
     }
-    
+
     GD.Print("=== All Expansion 05 Self-Tests Passed ===");
     GD.Print("Panel is ready for integration!");
 }
@@ -730,15 +730,15 @@ public partial class ExpansionOverviewPanel : UiPanel
     [Export] public Label FactionReputationLabel { get; set; }
     [Export] public Label DaysRemainingLabel { get; set; }
     [Export] public Button CloseButton { get; set; }
-    
+
     private Expansion05HoldfastSystem _expansionSystem;
     private IEventBus _eventBus;
     private ISaveManager _saveManager;
     private bool _isDirty = false;
-    
+
     public override void _Ready() { /* ... */ }
     public override void _ExitTree() { /* ... */ }
-    
+
     // Triad methods
     public static void SetupExpansion05Overview(World world, IEventBus eventBus, ISaveManager saveManager) { /* ... */ }
     public static void SaveExpansion05Overview(World world, ISaveManager saveManager) { /* ... */ }

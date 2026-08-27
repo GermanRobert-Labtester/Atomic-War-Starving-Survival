@@ -1,9 +1,9 @@
 # ASHFALL — Expansion Design Bible
 
-**Title:** ASHFALL: THE HOLDFAST  
-**Internal id:** `expansion_the_holdfast`  
-**Status:** Design bible for review. No game data has been edited.  
-**All new ids below are PROPOSED** unless marked *existing*.  
+**Title:** ASHFALL: THE HOLDFAST
+**Internal id:** `expansion_the_holdfast`
+**Status:** Design bible for review. No game data has been edited.
+**All new ids below are PROPOSED** unless marked *existing*.
 **Tone lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.
 
 ---
@@ -54,13 +54,13 @@
 
 ## 4. Three expansion concepts (brief)
 
-**A. THE HOLDFAST — Coastal District 8** *(recommended)*  
+**A. THE HOLDFAST — Coastal District 8** *(recommended)*
 The Quiet Evacuation went north. The people who scored ≥60 arrived. They have desalinated water, heat, and the Schedule. They are dying of calories, resin, children, and the trades the formula discarded. They have come south to collect the unlisted — politely, with forms.
 
-**B. THE SECOND WINTER — temporal expansion inside Sector 4**  
+**B. THE SECOND WINTER — temporal expansion inside Sector 4**
 A harsher nuclear-winter season, new weather, deeper shelter degradation, no new map. Cheaper. Does not pay off The List. Does not use `hydro_barons`. Feels like a difficulty pack, not Blood & Wine.
 
-**C. THE DEAD HAND — automated military belt**  
+**C. THE DEAD HAND — automated military belt**
 Lean into `location_the_dead_hand_core`, `location_drone_hive_silo`, `location_automated_mortar_pit`. Strong setpieces, weak thesis. Risks sci-fi action and glorified hardware. D/9 already owns "orders that outlived the state."
 
 ## 5. Choice and why
@@ -144,10 +144,10 @@ Travel banding from the player's bunker (Grid/Verge seam, per gazetteer):
 
 ## 2.1 The Cut — *Estuary Approach 8-South*
 
-**id prefix:** `loc_cut_*`  
-**Visual:** River ice the colour of old milk. Channel markers that do not match the Kittiwake chart. A road that exists only in winter. High-vis jackets faded to the colour of bone.  
-**Lore:** Pre-war this was a dredged shipping cut. The Exchange froze it into a seasonal highway. The Cutters light it the way Lamplighters light Sector 4 — except a dark lamp here does not mean ambush. It means the ice is wrong.  
-**Unique mechanic:** `IceRoadSystem` — travel only while `ice_road_open == true`. Walking the Cut off-season is swimming in brine at −20°C (immediate warmth + health crisis).  
+**id prefix:** `loc_cut_*`
+**Visual:** River ice the colour of old milk. Channel markers that do not match the Kittiwake chart. A road that exists only in winter. High-vis jackets faded to the colour of bone.
+**Lore:** Pre-war this was a dredged shipping cut. The Exchange froze it into a seasonal highway. The Cutters light it the way Lamplighters light Sector 4 — except a dark lamp here does not mean ambush. It means the ice is wrong.
+**Unique mechanic:** `IceRoadSystem` — travel only while `ice_road_open == true`. Walking the Cut off-season is swimming in brine at −20°C (immediate warmth + health crisis).
 **Who you meet:** Cutters; Undertow-adjacent wreckers who drifted north; Long Walk (once a year); Edor Vale's first interview.
 
 ### POIs (8)
@@ -169,10 +169,10 @@ Travel banding from the player's bunker (Grid/Verge seam, per gazetteer):
 
 ## 2.2 The Saltworks — *Municipal Desalination 8*
 
-**id prefix:** `loc_salt_*`  
-**Visual:** Concrete intakes, salt-white yards, steam that smells like hot metal and iodine. RO halls like naves. Workers in suits that were never hazmat — they were *plant* suits, and they have been patched with inner-tube.  
-**Lore:** The Hydro-Barons (`hydro_barons`, *existing id*) were not barons. They were grade 4–7 municipal engineers. The Toll coined the name the same way it coined Rebuilders. They kept the plant because turning it off kills the Cluster in two days, and because nobody issued a stop order.  
-**Unique mechanic:** `BrineWaterSystem` — water output is high; potability requires `item_ro_resin` + `iodine_pills` + heat. Plant steam is a regional warmth source. If the membrane hall trips, Cluster indoor °C falls on a 48-hour clock.  
+**id prefix:** `loc_salt_*`
+**Visual:** Concrete intakes, salt-white yards, steam that smells like hot metal and iodine. RO halls like naves. Workers in suits that were never hazmat — they were *plant* suits, and they have been patched with inner-tube.
+**Lore:** The Hydro-Barons (`hydro_barons`, *existing id*) were not barons. They were grade 4–7 municipal engineers. The Toll coined the name the same way it coined Rebuilders. They kept the plant because turning it off kills the Cluster in two days, and because nobody issued a stop order.
+**Unique mechanic:** `BrineWaterSystem` — water output is high; potability requires `item_ro_resin` + `iodine_pills` + heat. Plant steam is a regional warmth source. If the membrane hall trips, Cluster indoor °C falls on a 48-hour clock.
 **Who you meet:** Leva Quist; Salt workers; Office auditors taking meter readings.
 
 ### POIs (8)
@@ -194,10 +194,10 @@ Travel banding from the player's bunker (Grid/Verge seam, per gazetteer):
 
 ## 2.3 The Cluster — *Allocation Cluster 7*
 
-**id prefix:** `loc_cluster_*`  
-**Visual:** Four-storey prefab, numbered stairwells, a playground with the chains still on the swings and the seats unscrewed (brass). Paint still the civil-service cream. Queue lines painted on asphalt, repainted, like Ration Plaza, except here the queue is for **work tickets**, not bread.  
-**Lore:** 400 allocated households. Occupancy at present: 211 living, 40 apartments kept "for arrivals." They have been keeping those forty for five years. Your unlisted people are, on paper, some of the arrivals.  
-**Unique mechanic:** `CensusClaimSystem` — the Office can name your survivors by occupation and score. A levy is not a raid. Refusing a levy is a *status*, and it follows you home.  
+**id prefix:** `loc_cluster_*`
+**Visual:** Four-storey prefab, numbered stairwells, a playground with the chains still on the swings and the seats unscrewed (brass). Paint still the civil-service cream. Queue lines painted on asphalt, repainted, like Ration Plaza, except here the queue is for **work tickets**, not bread.
+**Lore:** 400 allocated households. Occupancy at present: 211 living, 40 apartments kept "for arrivals." They have been keeping those forty for five years. Your unlisted people are, on paper, some of the arrivals.
+**Unique mechanic:** `CensusClaimSystem` — the Office can name your survivors by occupation and score. A levy is not a raid. Refusing a levy is a *status*, and it follows you home.
 **Who you meet:** Registrar-General Cael Ormund; allocated civilians who will not make eye contact with unlisted guests; children born after the Exchange who have never been hungry in the Sector 4 sense and are salt-hungry instead.
 
 ### POIs (7)
@@ -218,10 +218,10 @@ Travel banding from the player's bunker (Grid/Verge seam, per gazetteer):
 
 ## 2.4 The Shelf — *Pack Ice / Continuity Roadstead*
 
-**id prefix:** `loc_shelf_*`  
-**Visual:** Pressure ridges. A harbour that is now a white field. Hulls at impossible angles. One vessel still upright, still drawing a little current, still answering on a schedule. RTG shine on the crashed convoy visible as a bruise on the ice.  
-**Lore:** Continuity's coastal roadstead. The Fleet was told to wait for a stand-up order that used the same authentication family as D/9's pad. They waited. Some came ashore in year two and were absorbed into the Cluster. The tender *Hearth-4* did not.  
-**Unique mechanic:** Deep expeditions (10–14h). `Victory_Icebreaker` content lives here as **place**, not minigame. Explosives to "blast the ice" remain possible and are recast as a *bad* idea that the Cutters will say so out loud.  
+**id prefix:** `loc_shelf_*`
+**Visual:** Pressure ridges. A harbour that is now a white field. Hulls at impossible angles. One vessel still upright, still drawing a little current, still answering on a schedule. RTG shine on the crashed convoy visible as a bruise on the ice.
+**Lore:** Continuity's coastal roadstead. The Fleet was told to wait for a stand-up order that used the same authentication family as D/9's pad. They waited. Some came ashore in year two and were absorbed into the Cluster. The tender *Hearth-4* did not.
+**Unique mechanic:** Deep expeditions (10–14h). `Victory_Icebreaker` content lives here as **place**, not minigame. Explosives to "blast the ice" remain possible and are recast as a *bad* idea that the Cutters will say so out loud.
 **Who you meet:** Halden Mire (if he has come ashore); Fleet remaining; nobody, for hours.
 
 ### POIs (6)
@@ -257,11 +257,11 @@ When `exp_holdfast_unlocked`:
 
 **Two correct documents.**
 
-Sela Renn's laminated card says Allocation 12 belongs to a water engineer's dependent.  
+Sela Renn's laminated card says Allocation 12 belongs to a water engineer's dependent.
 The Office's Schedule says Allocation 12 was never occupied by its assignees, and that Sector 4 still owes District 8 the **unallocated labour** Continuity reserved as a reconstruction pool — caretakers, clerks, vets, ice-cutters, the people who scored under 60.
 
-Your shelter is the discrepancy.  
-Ormund wants it resolved.  
+Your shelter is the discrepancy.
+Ormund wants it resolved.
 He is not Voss. He will not shoot deserters. He will **file**. Filing, in District 8, moves people.
 
 The player must decide whether the unlisted are a community or a labour reserve the formula stored in the wrong building.
@@ -481,7 +481,7 @@ Confirmed Expansion V gaps this expansion is allowed to spend: Forward Outpost (
 
 ## 5.1 `IceRoadSystem`
 
-**id:** `ice_road_system`  
+**id:** `ice_road_system`
 **What it is:** A seasonal gate on `region_holdfast` travel. Not a minigame. A calendar with teeth.
 
 **Mechanics:**
@@ -506,7 +506,7 @@ Confirmed Expansion V gaps this expansion is allowed to spend: Forward Outpost (
 
 ## 5.2 `BrineWaterSystem`
 
-**id:** `brine_water_system`  
+**id:** `brine_water_system`
 **What it is:** District 8 water is plentiful and not potable. Inverts `WaterEconomySystem` without replacing it.
 
 **Mechanics:**
@@ -527,7 +527,7 @@ Confirmed Expansion V gaps this expansion is allowed to spend: Forward Outpost (
 
 ## 5.3 `CensusClaimSystem`
 
-**id:** `census_claim_system`  
+**id:** `census_claim_system`
 **What it is:** The Office's relationship model. Not hegemony. **Access + named claims.** Matches Currents design: you cannot conquer them; you can lose the Ice Road and gain a file.
 
 **Mechanics:**
@@ -553,7 +553,7 @@ Do **not** add Office to `_hegemony` unless DTO/work is scheduled. Prefer Curren
 
 ## 5.4 `WaystationSystem` (Forward Outpost, scoped)
 
-**id:** `waystation_system`  
+**id:** `waystation_system`
 **What it is:** One secondary camp at `loc_cut_waystation_a` (later optional `loc_cluster_block_c` guesting). Expansion V's outpost, **justified**.
 
 **Mechanics:**
@@ -634,7 +634,7 @@ Human danger in ASHFALL is **people in conditions**. No fantasy mutants. Fauna s
 
 ## 6.3 Crisis "bosses" (6) — multi-phase, not arenas
 
-**Technically unrealistic:** Elden Ring boss HP bars, 3D arenas, 50-hour combat roster.  
+**Technically unrealistic:** Elden Ring boss HP bars, 3D arenas, 50-hour combat roster.
 **What we ship:** three-phase crises with changing needs, access, and prose.
 
 | id | Name | Phases | Failure | Success looks like |
@@ -828,16 +828,16 @@ Honest: a Blood & Wine *volume* is not four sprints for a small team. These four
 
 ## 8.6 QA cases (minimum)
 
-1. Old save → Ice Road dark → sheet quest → window opens  
-2. Window closes while expedition is on Cut → stuck-north / boat fallback  
-3. Levy honour: 3 survivors absent from home needs, present at Cluster  
-4. Membrane trip: Cluster °C drop; home bunker unchanged  
-5. Refuse 12-C: no combat; 40-day quiet; receipt in ash  
-6. Nameplates sold: no morale event  
-7. Yara dark-lamp trap: Cutters withdraw; lamps out 11 days  
-8. Migration Phase 5 → Holdfast instead of fade  
-9. Icebreaker contact via Foghorn without explosives  
-10. `hydro_barons` trade works without Codex relationship field  
+1. Old save → Ice Road dark → sheet quest → window opens
+2. Window closes while expedition is on Cut → stuck-north / boat fallback
+3. Levy honour: 3 survivors absent from home needs, present at Cluster
+4. Membrane trip: Cluster °C drop; home bunker unchanged
+5. Refuse 12-C: no combat; 40-day quiet; receipt in ash
+6. Nameplates sold: no morale event
+7. Yara dark-lamp trap: Cutters withdraw; lamps out 11 days
+8. Migration Phase 5 → Holdfast instead of fade
+9. Icebreaker contact via Foghorn without explosives
+10. `hydro_barons` trade works without Codex relationship field
 11. Compile + EditMode PASS before "done"
 
 ---
@@ -932,10 +932,10 @@ Ostrowski, Ivy Corrigan, Nomi Fisk, Margit Sole, Sela Renn, Ottilie Frayne, Anne
 
 ## 10.5 Remaining contradictions in *base* data (do not worsen)
 
-- Lore vs systems faction namespaces  
-- `world_history` "China" / "nations" vs AGENTS.md no real countries — **do not add more**  
-- Icebreaker convoy vs train vs sub — this bible separates convoy / tender  
-- Expansion II/III FactionSO sci-fi names — unused here  
+- Lore vs systems faction namespaces
+- `world_history` "China" / "nations" vs AGENTS.md no real countries — **do not add more**
+- Icebreaker convoy vs train vs sub — this bible separates convoy / tender
+- Expansion II/III FactionSO sci-fi names — unused here
 
 ## 10.6 Word to the implementer
 

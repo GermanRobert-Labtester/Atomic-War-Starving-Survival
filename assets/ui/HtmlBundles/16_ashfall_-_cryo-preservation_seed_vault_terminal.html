@@ -110,13 +110,13 @@
         .glow-text { text-shadow: 0 0 4px currentColor; }
         .glow-text-error { text-shadow: 0 0 8px theme('colors.error'); }
         .glow-text-secondary { text-shadow: 0 0 4px theme('colors.secondary'); }
-        
+
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .animate-blink { animation: blink 1s step-end infinite; }
-        
+
         @keyframes pulse-fast { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .animate-pulse-fast { animation: pulse-fast 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: theme('colors.surface-container-lowest'); border-left: 1px solid theme('colors.outline-variant'); }
         ::-webkit-scrollbar-thumb { background: theme('colors.outline'); }

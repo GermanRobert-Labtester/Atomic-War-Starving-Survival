@@ -7,9 +7,9 @@
 > For current active architecture, consult [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md), [`docs/CURRENT_AUTHORITY.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/CURRENT_AUTHORITY.md), and [`docs/ASHFALL_CODE_INDEX.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ASHFALL_CODE_INDEX.md).
 
 **Date of Audit:** 2026-08-18 (Historical)
-**Auditor Role:** Principal Game Development Auditor, Technical Director, Systems Designer, Narrative Systems Analyst, UI/UX Reviewer, Production Architect, and Codebase Archaeologist  
-**Target Repository:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`  
-**Execution Environment:** Linux x86_64, .NET 8.0/9.0, Godot Engine v4.7.1.stable.mono.official (gl_compatibility)  
+**Auditor Role:** Principal Game Development Auditor, Technical Director, Systems Designer, Narrative Systems Analyst, UI/UX Reviewer, Production Architect, and Codebase Archaeologist
+**Target Repository:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`
+**Execution Environment:** Linux x86_64, .NET 8.0/9.0, Godot Engine v4.7.1.stable.mono.official (gl_compatibility)
 **Operating Constraint:** READ-ONLY EVIDENCE-BASED FORENSIC AUDIT (Zero Source/Data/Asset Mutations)
 
 ---

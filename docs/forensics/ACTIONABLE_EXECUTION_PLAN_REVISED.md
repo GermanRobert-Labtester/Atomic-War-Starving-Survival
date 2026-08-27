@@ -1,9 +1,9 @@
 # Actionable Execution Plan: ASHFALL Forensic Remediation
 
-**Status:** REVISED — forensic reconciliation required before broad mutation  
-**Date:** 2026-08-23  
-**Scope:** The six subsystem forensic surveys, the consolidated forensic report, `DEEP_ANALYSIS_254_SUBSYSTEMS.md`, `DEEP_INTEGRATION_PLAN.md`, and the previous `ACTIONABLE_EXECUTION_PLAN.md`  
-**Explicitly out of scope:** the separate deep code audit and its remediation roadmap  
+**Status:** REVISED — forensic reconciliation required before broad mutation
+**Date:** 2026-08-23
+**Scope:** The six subsystem forensic surveys, the consolidated forensic report, `DEEP_ANALYSIS_254_SUBSYSTEMS.md`, `DEEP_INTEGRATION_PLAN.md`, and the previous `ACTIONABLE_EXECUTION_PLAN.md`
+**Explicitly out of scope:** the separate deep code audit and its remediation roadmap
 **Mode:** Evidence-first, dependency-ordered, reversible changes with explicit exit criteria
 
 ---

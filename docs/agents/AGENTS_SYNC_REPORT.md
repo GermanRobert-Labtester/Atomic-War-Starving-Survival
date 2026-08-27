@@ -1,9 +1,9 @@
 # ASHFALL Agent-Rulebook Synchronization Report
 
-**Canonical source:** `AGENTS.md`  
-**Synced files:** 12 derived client files  
-**Sync date:** 2026-08-22  
-**Tool:** `ashfall-agents-sync` skill  
+**Canonical source:** `AGENTS.md`
+**Synced files:** 12 derived client files
+**Sync date:** 2026-08-22
+**Tool:** `ashfall-agents-sync` skill
 
 ---
 
@@ -27,9 +27,9 @@ Each diff is exactly 12 lines (6 removed from canonical header + 6 added brandin
 | `.cursorrules` | COSMETIC | Header replaced with `# ASHFALL PROJECT — Cursor Rules` + auto-generated notice |
 | `.windsurfrules` | COSMETIC | Header replaced with `# ASHFALL PROJECT — Windsurf Rules` + auto-generated notice |
 
-**STALE:** 0  
-**NEWER:** 0  
-**CONFLICT:** 0  
+**STALE:** 0
+**NEWER:** 0
+**CONFLICT:** 0
 
 ---
 
@@ -42,7 +42,7 @@ The auto-generated notice (`Run ashfall-agents-sync to regenerate`) is present a
 
 ## PHASE 3 — Structure Recommendation
 
-**Current state:** All 12 files are full copies of `AGENTS.md` with a branded header.  
+**Current state:** All 12 files are full copies of `AGENTS.md` with a branded header.
 **Recommendation:** Keep as **full copies** for now.
 
 ### Trade-offs

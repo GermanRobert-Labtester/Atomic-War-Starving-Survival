@@ -1,8 +1,8 @@
 # Canonical Subsystem Registry
 
-**Date:** 2026-08-26  
-**Total unique entries:** 578  
-**Authority:** Reconciled from 6 forensic surveys against live source code in `Assets/Ashfall.Core/` and `src/`  
+**Date:** 2026-08-26
+**Total unique entries:** 578
+**Authority:** Reconciled from 6 forensic surveys against live source code in `Assets/Ashfall.Core/` and `src/`
 
 ## 1. Summary by Kind
 

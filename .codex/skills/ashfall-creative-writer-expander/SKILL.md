@@ -122,12 +122,12 @@ Prefer EXTENSION where it creates stronger cohesion.
 
 The world is:
 
-cold  
-exhausted  
-human  
-restrained  
-material  
-bureaucratic  
+cold
+exhausted
+human
+restrained
+material
+bureaucratic
 physically grounded
 
 Avoid emotional instruction.

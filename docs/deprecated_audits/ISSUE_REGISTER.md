@@ -6,8 +6,8 @@ Date: 2026-08-08
 
 # ASHFALL Master Issue Register
 
-**Audit date:** 2026-08-04  
-**Status legend:** Open | Investigating | Fixing | Verifying | Closed  
+**Audit date:** 2026-08-04
+**Status legend:** Open | Investigating | Fixing | Verifying | Closed
 **Owner default:** Unassigned (team)
 
 Severity × Frequency × User impact × Regression risk used for priority ordering (see report § prioritization).
@@ -306,11 +306,11 @@ Severity × Frequency × User impact × Regression risk used for priority orderi
 
 ## Suggested first engineering sprint (1 week)
 
-1. **AUDIT-001 + AUDIT-006** — CI + Unity pin  
-2. **AUDIT-005 + AUDIT-004** — save observability + fail policy  
-3. **AUDIT-003** — tick invariants  
-4. Run full EditMode suite; file failures as new issues  
-5. **AUDIT-002** — integrate dirty tree onto reviewable PRs  
+1. **AUDIT-001 + AUDIT-006** — CI + Unity pin
+2. **AUDIT-005 + AUDIT-004** — save observability + fail policy
+3. **AUDIT-003** — tick invariants
+4. Run full EditMode suite; file failures as new issues
+5. **AUDIT-002** — integrate dirty tree onto reviewable PRs
 
 ---
 

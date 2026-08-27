@@ -1,8 +1,8 @@
 # Deep Integration Plan: 254-Subsystem Forensic Actionables
 
-**Date:** 2026-08-23  
-**Input:** `docs/forensics/DEEP_ANALYSIS_254_SUBSYSTEMS.md`  
-**Mode:** Evidence-first integration planning — no code modified  
+**Date:** 2026-08-23
+**Input:** `docs/forensics/DEEP_ANALYSIS_254_SUBSYSTEMS.md`
+**Mode:** Evidence-first integration planning — no code modified
 
 ---
 
@@ -217,7 +217,7 @@ public sealed class WaterTreatmentHostSession
     public WaterTreatmentSystem System { get; }
     public WaterTreatmentPanel Panel { get; }
     public bool IsDirty { get; private set; }
-    
+
     public WaterTreatmentHostSession(string dataDir) { ... }
     public void TickDay(int day) { ... }
     public void Save() { ... }
@@ -281,7 +281,7 @@ godot --headless -- --data-integrity-selftest
    {
        public XxxSystem System { get; }
        public event Action StateChanged;
-       
+
        public XxxHostSession() { System = new XxxSystem(...); }
        public void TickDay(int day) { System.Tick(day); }
        public XxxSaveState CaptureState() => System.CaptureState();

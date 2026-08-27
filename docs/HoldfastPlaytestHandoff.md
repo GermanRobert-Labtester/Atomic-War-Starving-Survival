@@ -1,9 +1,9 @@
 # Holdfast Playtest Handoff
 
-**Environment:** Desktop Godot 4.7.1+ (.NET), display available (`$DISPLAY=:0`).  
-**Launch command:** `godot --path .` (or press Play in the Godot editor).  
-**Estimated time:** 10–12 minutes.  
-**Checklist:** `docs/HoldfastManualPlaytest.md`  
+**Environment:** Desktop Godot 4.7.1+ (.NET), display available (`$DISPLAY=:0`).
+**Launch command:** `godot --path .` (or press Play in the Godot editor).
+**Estimated time:** 10–12 minutes.
+**Checklist:** `docs/HoldfastManualPlaytest.md`
 **Automated coverage:** All 40 items, 3 factions, failure matrix, save/reload, and New Ledger are verified headlessly by `--holdfast-runtime-ui-test`.
 
 ---

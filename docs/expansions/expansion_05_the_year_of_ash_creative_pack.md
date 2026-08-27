@@ -1,9 +1,9 @@
 # ASHFALL: THE YEAR OF ASH (DAYS 180–360) — Grand Lore Bible & Master Creative Pack
 
-**Internal id:** `expansion_05_the_year_of_ash`  
-**Kind:** Shippable prose & definitive narrative resolution. Companion to `docs/expansions/expansion_05_the_year_of_ash_plan.md` and `docs/lore/06_REBUILDERS_AND_BLACK_OPS.md`.  
-**Voice lock:** Cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.  
-**VO:** Lines marked `[VO]` are text-first; record only if the radio/tannoy pipeline exists. Everything else is UI/Codex/inspect.  
+**Internal id:** `expansion_05_the_year_of_ash`
+**Kind:** Shippable prose & definitive narrative resolution. Companion to `docs/expansions/expansion_05_the_year_of_ash_plan.md` and `docs/lore/06_REBUILDERS_AND_BLACK_OPS.md`.
+**Voice lock:** Cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.
+**VO:** Lines marked `[VO]` are text-first; record only if the radio/tannoy pipeline exists. Everything else is UI/Codex/inspect.
 
 ---
 
@@ -213,7 +213,7 @@ FROM: CONTINENTAL MARITIME RESCUE COORDINATION (ICEBREAKER AURORA BOREALIS)
 TO: ALL SUBTERRANEAN SHELTERS SECTOR 4 AND 8
 BT
 MARITIME EVACUATION CORRIDOR REMAINS OPEN AT NORTHERN SOUND ANCHORAGE
-COORDINATES 68-14-N 014-22-E. 
+COORDINATES 68-14-N 014-22-E.
 VESSEL MAINTAINS AUXILIARY STEAM. DEPARTURE LOCKED DAY 360 AT FIRST LIGHT.
 MANIFEST RESTRICTED TO CERTIFIED LOW-RAD RESIDENTS AND REGISTERED SEED CUSTODIANS.
 BRING LOGBOOKS, CALIBRATION DATA, AND ZERO UNCHECKED ORDNANCE.
@@ -263,9 +263,9 @@ REMAIN IN SHELTER."
 ```
 [104.200 MHz — SIGNAL: S5 — RESEARCH LOG BROADCAST]
 "TRANSMISSION: Research Log 44. Dr. Erik Dahl broadcasting from Low-Background Salt Lab.
-Mass spectrometry of fallout dust collected at 400m depth confirms Cesium-137 / Strontium-90 
-isotopic ratio 1.042. This signature is unique to automated Arctic silo ordnance. 
-Repeat: the warheads were launched by unmanned automatic fail-safe systems. 
+Mass spectrometry of fallout dust collected at 400m depth confirms Cesium-137 / Strontium-90
+isotopic ratio 1.042. This signature is unique to automated Arctic silo ordnance.
+Repeat: the warheads were launched by unmanned automatic fail-safe systems.
 There was no foreign human command. Broadcast this data to all units. End the war."
 ```
 

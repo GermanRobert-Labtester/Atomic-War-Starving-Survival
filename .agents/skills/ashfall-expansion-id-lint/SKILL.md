@@ -98,7 +98,7 @@ The skill detects and reports:
    - Location ID: "loc_holdfast_main_camp" (should be "loc_holdfast_camp")
    - Quest ID: "quest_holdfast_primary_mission" (should be "quest_holdfast_main")
 
-   Known prefixes: item_, loc_, quest_, npc_, faction_, trait_, affliction_, 
+   Known prefixes: item_, loc_, quest_, npc_, faction_, trait_, affliction_,
                    skill_, knowledge_, expansion_, sector_, zone_, echo_, radio_
 ```
 

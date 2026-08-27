@@ -1,7 +1,7 @@
 # Holdfast Manual Playtest Checklist
 
-**Environment:** Desktop Godot 4.7.1+ (.NET), launch via `godot --path .` or editor Play.  
-**Estimated time:** 10–12 minutes.  
+**Environment:** Desktop Godot 4.7.1+ (.NET), launch via `godot --path .` or editor Play.
+**Estimated time:** 10–12 minutes.
 **Prerequisite:** Delete `user://holdfast_*` saves if you want a clean first impression.
 
 ---

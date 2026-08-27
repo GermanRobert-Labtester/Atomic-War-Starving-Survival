@@ -425,15 +425,15 @@ For each:
 
 ### [Priority] Action Name
 
-**Type:**  
-**Why now:**  
-**Player value:**  
-**Systems affected:**  
-**Dependencies:**  
-**Implementation class:** DATA / WIRING / CORE / CROSS-SYSTEM / FOUNDATIONAL  
-**Risk:** LOW / MEDIUM / HIGH  
-**Evidence:**  
-**Definition of Done:**  
+**Type:**
+**Why now:**
+**Player value:**
+**Systems affected:**
+**Dependencies:**
+**Implementation class:** DATA / WIRING / CORE / CROSS-SYSTEM / FOUNDATIONAL
+**Risk:** LOW / MEDIUM / HIGH
+**Evidence:**
+**Definition of Done:**
 
 ## 5. Ranked Opportunity Table
 

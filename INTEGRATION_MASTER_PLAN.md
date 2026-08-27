@@ -372,7 +372,7 @@ Assets/_Game/Core/SaveSystem.cs and SaveSystem.Wiring.cs (if new ISaveables regi
 ## VII. NEXT ACTION
 
 ```prompt
-Start with PRIORITY 0: Open the project in Unity 6000.5.5f1, fix all compilation errors, 
+Start with PRIORITY 0: Open the project in Unity 6000.5.5f1, fix all compilation errors,
 run the existing test suite, and report which files need fixes. Then proceed to Phase 16
 (Antigravity mechanics #41-50 — Physical & Mental Quirks).
 ```

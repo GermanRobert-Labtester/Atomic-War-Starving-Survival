@@ -192,14 +192,14 @@ namespace Ashfall.Core
         public bool IsCompleted(string questId) => _state.completedQuestIds.Contains(questId);
         public bool IsFailed(string questId) => _state.failedQuestIds.Contains(questId);
         public bool IsAvailable(string questId) => GetDefinition(questId) != null;
-        
+
         public bool IsAvailable(string questId, int day)
         {
             var def = GetDefinition(questId);
             if (def == null) return false;
             if (day < def.minDay || day > def.maxDay) return false;
             if (IsStarted(questId) || IsCompleted(questId) || IsFailed(questId)) return false;
-            
+
             foreach (var prereq in def.prerequisites)
             {
                 if (!IsCompleted(prereq))
@@ -272,7 +272,7 @@ namespace Ashfall.Core
             {
                 var def = _catalog[i];
                 if (def == null || string.IsNullOrEmpty(def.id)) continue;
-                
+
                 // Check if quest should start automatically on its minDay
                 if (day >= def.minDay && day <= def.maxDay && !IsStarted(def.id) && !IsCompleted(def.id) && !IsFailed(def.id))
                 {
@@ -280,7 +280,7 @@ namespace Ashfall.Core
                     startedCount++;
                 }
             }
-            
+
             return $"Expansion quests ticked: {startedCount} new quests started";
         }
 
@@ -345,23 +345,23 @@ namespace Ashfall.Core
         {
             fileIO ??= new FileSystemIO();
             serializer ??= new SystemTextJsonSerializer();
-            
+
             var result = new List<ExpansionQuestEntry>();
-            
+
             // Load all expansion quest files
             string[] files = {
                 "quests_expansion_05.json",
                 "quests_expansion_06.json"
             };
-            
+
             foreach (var file in files)
             {
                 string path = System.IO.Path.Combine(dataDir, file);
                 if (!fileIO.FileExists(path)) continue;
-                
+
                 string json = fileIO.ReadAllText(path);
                 if (string.IsNullOrEmpty(json)) continue;
-                
+
                 try
                 {
                     var container = serializer.Deserialize<ExpansionQuestContainer>(json);
@@ -373,7 +373,7 @@ namespace Ashfall.Core
                     CatalogDiagnostics.Warn(file, "unknown", ex);
                 }
             }
-            
+
             return result;
         }
     }

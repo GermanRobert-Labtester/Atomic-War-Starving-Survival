@@ -60,7 +60,7 @@
 Created 6 partial class files to decompose the 6,564-line Main.cs:
 
 1. **Main.PartialClasses.cs** (20,168 bytes) - Core system setup and lifecycle
-2. **Main.UiAndEvents.cs** (25,515 bytes) - UI construction and event handling  
+2. **Main.UiAndEvents.cs** (25,515 bytes) - UI construction and event handling
 3. **Main.JournalAndSaves.cs** (14,477 bytes) - Journal system and save/load management
 4. **Main.PanelManagement.cs** (18,868 bytes) - UI panel management and game state
 5. **Main.EventHandlers.cs** (20,378 bytes) - Event handlers and input processing
@@ -127,7 +127,7 @@ var survivorData = new[]
 **Required Changes:**
 1. ✅ Remove hardcoded survivor list
 2. ✅ Add reference to `_survivors` host session
-3. ✅ Add reference to `_dutyRoster` host session  
+3. ✅ Add reference to `_dutyRoster` host session
 4. ✅ Add reference to `_holdfastInterior` scene node
 5. ✅ Implement `Initialize()` method that:
    - Queries `SurvivorsHostSession.RosterState` for alive survivors
@@ -155,12 +155,12 @@ public partial class SurvivorActorView : Node2D
     public string SurvivorId { get; set; }
     public Label Label { get; private set; }
     public Sprite2D Sprite { get; private set; }
-    
+
     public SurvivorActorView()
     {
         Label = new Label();
         AddChild(Label);
-        
+
         Sprite = new Sprite2D();
         Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/Characters/placeholder_survivor.png");
         AddChild(Sprite);
@@ -496,10 +496,10 @@ Sprint 4 (Days 11-14): Testing & QA
 ### Potential Blockers:
 1. **Asset Availability**: Need survivor sprites with different states
    - Status: ✅ Assets exist in `/assets/art/`
-   
+
 2. **Animation System**: Need animation controller for survivors
    - Status: ⚠️ Placeholder animation system exists, may need enhancement
-   
+
 3. **Save Format Changes**: Risk of breaking existing saves
    - Status: ✅ Mitigation plan in place
 
@@ -631,9 +631,9 @@ Sprint 4 (Days 11-14): Testing & QA
 
 ## ✅ SIGN-OFF
 
-**Plan Created**: November 2024  
-**Last Updated**: November 2024  
-**Status**: Ready for Implementation  
+**Plan Created**: November 2024
+**Last Updated**: November 2024
+**Status**: Ready for Implementation
 **Next Action**: Begin CONNECT THE SHELTER task
 
 ---
@@ -658,6 +658,6 @@ godot --headless --path . -- --survivors-selftest
 
 ---
 
-**Document Version**: 1.0  
-**Author**: Lead ASHFALL Godot Developer  
+**Document Version**: 1.0
+**Author**: Lead ASHFALL Godot Developer
 **Status**: ✅ APPROVED FOR EXECUTION

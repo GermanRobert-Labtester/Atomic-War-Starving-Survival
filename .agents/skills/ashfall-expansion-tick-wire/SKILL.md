@@ -179,7 +179,7 @@ private static void Setup05Holdfast(
         simLoop,
         saveManager,
         clock);
-    
+
     eventBus.Subscribe(expansion05HoldfastSystem);
     simLoop.RegisterSystem(expansion05HoldfastSystem);
     saveManager.RegisterStore(expansion05HoldfastSystem);

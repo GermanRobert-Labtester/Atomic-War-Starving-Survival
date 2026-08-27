@@ -1,9 +1,9 @@
 # ASHFALL 254-Subsystem Consolidated Forensic Report
 
-**Date:** 2026-08-22  
-**Subsystems analyzed:** 243  
-**Method:** Evidence-first read-only discovery per `ashfall-analyze`  
-**Constraint:** No code modified; no Unity launched  
+**Date:** 2026-08-22
+**Subsystems analyzed:** 243
+**Method:** Evidence-first read-only discovery per `ashfall-analyze`
+**Constraint:** No code modified; no Unity launched
 
 ## Executive Summary
 

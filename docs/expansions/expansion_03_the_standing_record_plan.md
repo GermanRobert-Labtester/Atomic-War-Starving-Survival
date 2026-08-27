@@ -1,11 +1,11 @@
 # ASHFALL — Expansion Design Bible
 
-**Title:** ASHFALL: THE STANDING RECORD  
-**Internal id:** `expansion_the_standing_record`  
-**Files:** this bible + `docs/expansions/expansion_03_the_standing_record_creative_pack.md`  
-**Status:** Design bible for review. No game data has been edited. No C#.  
-**All new ids below are PROPOSED** unless marked *existing*.  
-**Tone lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.  
+**Title:** ASHFALL: THE STANDING RECORD
+**Internal id:** `expansion_the_standing_record`
+**Files:** this bible + `docs/expansions/expansion_03_the_standing_record_creative_pack.md`
+**Status:** Design bible for review. No game data has been edited. No C#.
+**All new ids below are PROPOSED** unless marked *existing*.
+**Tone lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.
 **Sister packs:** Expansion 1 `expansion_the_holdfast` (District 8). Expansion 2 `expansion_the_duty_roster` (Allocation 12 interior). This pack does **not** reopen the coast or the bunker wings. It is the ground between them.
 
 ---
@@ -140,19 +140,19 @@ Visual DNA unchanged: dry-gouache, ash-grey, concrete, rust, terminal amber. Thi
 
 Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `travelHours` / danger / rads stay as live data.
 
-**Spine sites (4)** — standing in them advances the main plot: Ministry, Lock Gate Four, Allocation 12-B, Memory Vault.  
-**Route-required (cannot skip):** Kilometre 19, Transit HQ, Weighbridge.  
+**Spine sites (4)** — standing in them advances the main plot: Ministry, Lock Gate Four, Allocation 12-B, Memory Vault.
+**Route-required (cannot skip):** Kilometre 19, Transit HQ, Weighbridge.
 **The rest** deepen the gazetteer and feed branches (which rooms exist/open).
 
 ---
 
 ## 2.1 `loc_cut_kilometre_19` — Kilometre 19 *(Holdfast id; seam)*
 
-**Existing or new:** *Holdfast proposed* `loc_cut_kilometre_19`. Do not mint a twin.  
-**Region:** Cut / Grid-Verge seam. Last Sector 4 lamp.  
-**Visual:** Lamplighter orange post, number stencilled twice, salt-white ice north, ash south. A new brass plate screwed over the stencil.  
-**Lore integration:** Ivy's ledger stops here. Overlay's Record *starts* here: Continuity cadastral `CUT-19 / LAMP`. Yara will not cross. Ostrowski's sheet may show both names.  
-**Unique mechanic:** Plate vs oil. Taking the plate darkens Overlay labour at Cut-adjacent sites. Taking the oil shorts Ivy's next lighting (*Lamplighter rule*).  
+**Existing or new:** *Holdfast proposed* `loc_cut_kilometre_19`. Do not mint a twin.
+**Region:** Cut / Grid-Verge seam. Last Sector 4 lamp.
+**Visual:** Lamplighter orange post, number stencilled twice, salt-white ice north, ash south. A new brass plate screwed over the stencil.
+**Lore integration:** Ivy's ledger stops here. Overlay's Record *starts* here: Continuity cadastral `CUT-19 / LAMP`. Yara will not cross. Ostrowski's sheet may show both names.
+**Unique mechanic:** Plate vs oil. Taking the plate darkens Overlay labour at Cut-adjacent sites. Taking the oil shorts Ivy's next lighting (*Lamplighter rule*).
 **Map relation:** Hook, not a new Cut. Ice Road dark (*Holdfast*) makes the seam reachable only from Sector 4 south; the plate is still there.
 
 **Layout (4 rooms)**
@@ -178,10 +178,10 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.2 `loc_transit_authority_hq` — Transit Authority *(existing)*
 
-**Region:** Grid. d6 · 2.5h · 34 rads.  
-**Visual:** Wall-sized route maps under glass. Grease pencil. A trestle with Overlay plates waiting to replace the pencil.  
-**Lore:** Quiet Evacuation routed here. Convoy 12: `HELD — DOB QUERY`. Overlay wants printed cadastral times, not a dead clerk's hand.  
-**Unique mechanic:** Grease pencil vs overlay print. Copying the pencil is `lore_grid_convoy_slots` (*existing*). Replacing it mutates the map room forever.  
+**Region:** Grid. d6 · 2.5h · 34 rads.
+**Visual:** Wall-sized route maps under glass. Grease pencil. A trestle with Overlay plates waiting to replace the pencil.
+**Lore:** Quiet Evacuation routed here. Convoy 12: `HELD — DOB QUERY`. Overlay wants printed cadastral times, not a dead clerk's hand.
+**Unique mechanic:** Grease pencil vs overlay print. Copying the pencil is `lore_grid_convoy_slots` (*existing*). Replacing it mutates the map room forever.
 **Map:** Grid hub. Highway 9 cleared (*existing mutation*) shortens the walk.
 
 **Layout (5)**
@@ -206,9 +206,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.3 `loc_municipal_archive` — Municipal Archive *(existing)*
 
-**Region:** Grid.  
-**Visual:** Rolling stacks collapsed. Fire-suppression brick below the waist. A cage still dry. Overlay has been filing Continuity plates into municipal drawers that cannot hold them.  
-**Lore:** Garrison searched twice for the Schedule. It was never municipal. Overlay does not know that, or does, and files anyway.  
+**Region:** Grid.
+**Visual:** Rolling stacks collapsed. Fire-suppression brick below the waist. A cage still dry. Overlay has been filing Continuity plates into municipal drawers that cannot hold them.
+**Lore:** Garrison searched twice for the Schedule. It was never municipal. Overlay does not know that, or does, and files anyway.
 **Unique mechanic:** Wrong stacks. Digging the brick costs hours + collapse check. The Schedule is not here. A **site index** might be — Overlay's field copy.
 
 **Layout (4)**
@@ -232,10 +232,10 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.4 `location_ministry_of_truth_bunker` — Ministry *(existing; SPINE)*
 
-**Region:** Grid. Live text is stale; recast on unlock.  
-**Visual:** Civil-service cream that went grey. Enquiry desk with a bell that still works. Scoring charts. A drawer that once held Sector 4's copy of the Schedule (Ormund has the other; Sole has fragments). The **Standing Record** book: sites, not households. Incomplete.  
-**Lore:** Office of Continuity; formula; registrar stayed (`lore_hz_the_registrar_stays`). Ira Vell is that woman, still at the desk, or the junior who inherited the desk when the woman stopped being able to climb the stair. **Do not** invent Protocol Zero.  
-**Unique mechanic:** The book. Copying it is not completing it. Completing it requires standing at the sites it lists. Menu inspection of a photocopy does **not** advance the main plot.  
+**Region:** Grid. Live text is stale; recast on unlock.
+**Visual:** Civil-service cream that went grey. Enquiry desk with a bell that still works. Scoring charts. A drawer that once held Sector 4's copy of the Schedule (Ormund has the other; Sole has fragments). The **Standing Record** book: sites, not households. Incomplete.
+**Lore:** Office of Continuity; formula; registrar stayed (`lore_hz_the_registrar_stays`). Ira Vell is that woman, still at the desk, or the junior who inherited the desk when the woman stopped being able to climb the stair. **Do not** invent Protocol Zero.
+**Unique mechanic:** The book. Copying it is not completing it. Completing it requires standing at the sites it lists. Menu inspection of a photocopy does **not** advance the main plot.
 **Map:** Grid. D/9 denial marks in the obstacle annex (`lore_denial_marks`).
 
 **Layout (6)**
@@ -263,9 +263,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.5 `loc_weighbridge` — The Weighbridge *(existing; route-required)*
 
-**Region:** Toll. Edor's first interview (*Holdfast*). Grain Exchange second paragraph (*05_FACTIONS*).  
-**Visual:** Mechanical scale. Hut. Receipts by mass. Overlay lot-plates stacked where the calibration weight hangs.  
-**Lore:** Favours priced as kilograms. Overlay's plates have no mass. Osric Tann is not the Tollman; he keeps the needle honest.  
+**Region:** Toll. Edor's first interview (*Holdfast*). Grain Exchange second paragraph (*05_FACTIONS*).
+**Visual:** Mechanical scale. Hut. Receipts by mass. Overlay lot-plates stacked where the calibration weight hangs.
+**Lore:** Favours priced as kilograms. Overlay's plates have no mass. Osric Tann is not the Tollman; he keeps the needle honest.
 **Unique mechanic:** Mass vs lot. A plate on the scale reads as mass. That is a joke the Warlords will repeat until it is policy.
 
 **Layout (4)**
@@ -289,9 +289,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.6 `loc_grange_hall` — The Grange Hall *(existing)*
 
-**Region:** Verge.  
-**Visual:** Porch weapons sign. Long table. Ledger from week one. Overlay wants cadastral plot numbers in the name column.  
-**Lore:** First council. Lasko vote. Delacroix. A show of hands is how the Verge names a place.  
+**Region:** Verge.
+**Visual:** Porch weapons sign. Long table. Ledger from week one. Overlay wants cadastral plot numbers in the name column.
+**Lore:** First council. Lasko vote. Delacroix. A show of hands is how the Verge names a place.
 **Unique mechanic:** Vote vs plate. Overlay cannot conquer the hall. They can leave a notice. The ledger is the lived gazetteer.
 
 **Layout (4)**
@@ -315,9 +315,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.7 `loc_the_allotments` — The Allotments *(existing)*
 
-**Region:** Verge / Rebuilders floodplain.  
-**Visual:** Two hundred numbered plots. Caretaker hut. Waiting list in a plastic sleeve. Brass bin. Overlay plates that would make the waiting list "historical."  
-**Lore:** Frayne. Brass. Membrane strip (*Holdfast*) shortens water. Levy absence (*Duty Roster*) means Dara Mewn is not on night watch.  
+**Region:** Verge / Rebuilders floodplain.
+**Visual:** Two hundred numbered plots. Caretaker hut. Waiting list in a plastic sleeve. Brass bin. Overlay plates that would make the waiting list "historical."
+**Lore:** Frayne. Brass. Membrane strip (*Holdfast*) shortens water. Levy absence (*Duty Roster*) means Dara Mewn is not on night watch.
 **Unique mechanic:** Plot number vs waiting-list name. Frayne will not ask where brass came from. Overlay brass *is* plates.
 
 **Layout (5)**
@@ -342,9 +342,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.8 `loc_bridge_seven` — Bridge Seven *(existing)*
 
-**Region:** Toll.  
-**Visual:** Four lanes. Charges taped under the span, visible. Overlay survey flags. D/9 marking grammar on the rail (`lore_denial_marks`).  
-**Lore:** Tollman's authority is nobody checking the detonator. Overlay documenting the charges as "friendly obstacles" is how a Record makes a threat into a line item.  
+**Region:** Toll.
+**Visual:** Four lanes. Charges taped under the span, visible. Overlay survey flags. D/9 marking grammar on the rail (`lore_denial_marks`).
+**Lore:** Tollman's authority is nobody checking the detonator. Overlay documenting the charges as "friendly obstacles" is how a Record makes a threat into a line item.
 **Unique mechanic:** Look vs check. Looking from the span is allowed. Checking the detonator is the branch that can end the Tollman's joke.
 
 **Layout (4)**
@@ -368,9 +368,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.9 `loc_bus_reversal_loop` — Bus Reversal Loop *(existing)*
 
-**Region:** Toll.  
-**Visual:** Forty-one buses, nose to tail, pointing at the city. Overlay stencil on the lead bus: `EVACUATION COMPLETE`.  
-**Lore:** Unlisted sent back. The order was obeyed. Overlay's stencil is a lie that is also a filing.  
+**Region:** Toll.
+**Visual:** Forty-one buses, nose to tail, pointing at the city. Overlay stencil on the lead bus: `EVACUATION COMPLETE`.
+**Lore:** Unlisted sent back. The order was obeyed. Overlay's stencil is a lie that is also a filing.
 **Unique mechanic:** Stencil vs logbook. The lead bus still has a driver's log that contradicts the plate.
 
 **Layout (4)**
@@ -394,9 +394,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.10 `loc_lock_gate_four` — Lock Gate Four *(existing; SPINE)*
 
-**Region:** Drown.  
-**Visual:** Gate mid-cycle, frozen at the angle of failure. Control house. Benno Kade lives in it. Overlay plate: `RECLAMATION 4-W CONTROL / COMPLETE`. The Drown is not complete.  
-**Lore:** Exchange+3W power loss. Maintenance failure. Overlay cannot make a flood a finished job by signing it. They can make District 8 *treat* it as signed.  
+**Region:** Drown.
+**Visual:** Gate mid-cycle, frozen at the angle of failure. Control house. Benno Kade lives in it. Overlay plate: `RECLAMATION 4-W CONTROL / COMPLETE`. The Drown is not complete.
+**Lore:** Exchange+3W power loss. Maintenance failure. Overlay cannot make a flood a finished job by signing it. They can make District 8 *treat* it as signed.
 **Unique mechanic:** Weather vs plate. Benno's gauges are the lived Record. Ice Road / Shallows boat changes who can reach the towpath.
 
 **Layout (6)**
@@ -424,9 +424,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.11 `loc_pump_station_nine` — Pump Station Nine *(existing)*
 
-**Region:** Drown.  
-**Visual:** Six pumps under three metres. One motor dry by accident of a collapsed floor. Overlay condemned tags.  
-**Lore:** Restoring a pump lowers the Drown a measurable amount (*existing bible*). Overlay tagging it condemned keeps the Record tidy and the sublevels shut.  
+**Region:** Drown.
+**Visual:** Six pumps under three metres. One motor dry by accident of a collapsed floor. Overlay condemned tags.
+**Lore:** Restoring a pump lowers the Drown a measurable amount (*existing bible*). Overlay tagging it condemned keeps the Record tidy and the sublevels shut.
 **Unique mechanic:** Restore vs condemn. Hooks `System_BilgePumps` **if present**; otherwise a location mutation + travelHours delta to Vault/12-B/Annex. Do not invent SubBay as a requirement.
 
 **Layout (5)**
@@ -451,9 +451,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.12 `loc_alloc_12b` — Allocation 12-B *(existing; SPINE)*
 
-**Region:** Drown / subway maintenance.  
-**Visual:** Stencil. No provisioning. Fourteen chalk marks, gap, six. Halvard's improvised potable still working if Duty Roster left it. Overlay wants the stencil refreshed as a finished overflow hole.  
-**Lore:** Fallback designation on a form, not a prepared shelter. Sela: engineering, not salvage. Overlay numbering 12-B makes it a pool site for 12-C.  
+**Region:** Drown / subway maintenance.
+**Visual:** Stencil. No provisioning. Fourteen chalk marks, gap, six. Halvard's improvised potable still working if Duty Roster left it. Overlay wants the stencil refreshed as a finished overflow hole.
+**Lore:** Fallback designation on a form, not a prepared shelter. Sela: engineering, not salvage. Overlay numbering 12-B makes it a pool site for 12-C.
 **Unique mechanic:** Kit vs stencil. Taking the kit kills the water. Refreshing the stencil without the kit is a number on a tomb. Blank Rows will hear if you ink this site (*Duty Roster*).
 
 **Layout (5)**
@@ -478,9 +478,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.13 `loc_records_annex` — Records Annex *(existing)*
 
-**Region:** Drown. Boat through a second-storey window.  
-**Visual:** Dusted. Heated. Quil Esser. Overlay crate on the landing, unopened, labelled `GROUND COPY`.  
-**Lore:** Archivists first contact. Name, and the names of the dead. Overlay wants a ground copy filed *without* saying the site names aloud. Quil will not.  
+**Region:** Drown. Boat through a second-storey window.
+**Visual:** Dusted. Heated. Quil Esser. Overlay crate on the landing, unopened, labelled `GROUND COPY`.
+**Lore:** Archivists first contact. Name, and the names of the dead. Overlay wants a ground copy filed *without* saying the site names aloud. Quil will not.
 **Unique mechanic:** Paper vs plate. Filing Overlay plates here is completeness that Sole may accept and Quil may not.
 
 **Layout (4)**
@@ -504,9 +504,9 @@ Indoor room ids are **layout nodes**, not `GeneratedMap` travel nodes. Parent `t
 
 ## 2.14 `location_the_memory_vault` — The Memory Vault *(existing; SPINE; end of route)*
 
-**Region:** Drown. Endgame travel. Live text stale; recast.  
-**Visual:** Not social media. Dry stacks. Sole's table. A cage for a second copy of history that only exists if someone walked the sites. Overlay plates waiting in the airlock like guests.  
-**Lore:** Nine Archivists. Corroboration. Paperwork survives. The Standing Record, completed or refused, is filed **here** or it is not history the Codex will keep.  
+**Region:** Drown. Endgame travel. Live text stale; recast.
+**Visual:** Not social media. Dry stacks. Sole's table. A cage for a second copy of history that only exists if someone walked the sites. Overlay plates waiting in the airlock like guests.
+**Lore:** Nine Archivists. Corroboration. Paperwork survives. The Standing Record, completed or refused, is filed **here** or it is not history the Codex will keep.
 **Unique mechanic:** Which gazetteer. The ending writes `world_history` second paragraphs with `discovery_location_id` = this Vault **and** the sites mutated. You cannot finish from the bunker. Pump Nine / Ice Road / Shallows etiquette gate access.
 
 **Layout (6)**
@@ -542,10 +542,10 @@ Examples, not full layouts: `loc_conscription_office` (Pell vs occupation plates
 
 **Two correct gazetteers.**
 
-Ira Vell's Standing Record lists sites by Continuity number.  
-The people who stayed use other names: the Drown, the Weighbridge, Kilometre 19, plot 114, Allocation 12-B.  
-Maren Holt is finishing the Record on the ground so a clerk in District 8, or Pell, or a levy escort, can walk to a plate.  
-Margit Sole will file a ground copy only if the names are said aloud and corroborated.  
+Ira Vell's Standing Record lists sites by Continuity number.
+The people who stayed use other names: the Drown, the Weighbridge, Kilometre 19, plot 114, Allocation 12-B.
+Maren Holt is finishing the Record on the ground so a clerk in District 8, or Pell, or a levy escort, can walk to a plate.
+Margit Sole will file a ground copy only if the names are said aloud and corroborated.
 Benno Kade's lock is a weather. A plate that says COMPLETE does not close it.
 
 The player must decide whether Sector 4 is a reconstruction map or a set of rooms that already have names.
@@ -959,7 +959,7 @@ Cross-tool QA: layout adjacency × memory recast × Overlay access is **three co
 
 ## 5.1 `LocationLayoutSystem`
 
-**id:** `location_layout_system`  
+**id:** `location_layout_system`
 **What it is:** Room cards + adjacency for featured parents. Not a walker. Not 3D.
 
 **Mechanics:**
@@ -981,7 +981,7 @@ Cross-tool QA: layout adjacency × memory recast × Overlay access is **three co
 
 ## 5.2 `LocationMemorySystem`
 
-**id:** `location_memory_system`  
+**id:** `location_memory_system`
 **What it is:** Lore strata + recast descriptions. The gazetteer the save keeps.
 
 **Mechanics:**
@@ -1001,7 +1001,7 @@ Cross-tool QA: layout adjacency × memory recast × Overlay access is **three co
 
 ## 5.3 `SiteEncounterSystem`
 
-**id:** `site_encounter_system`  
+**id:** `site_encounter_system`
 **What it is:** Encounters keyed to **room**, not generic combat tables.
 
 **Mechanics:**
@@ -1158,17 +1158,17 @@ Dry-gouache, isolated objects, no readable AI text, no flags, no gore, no fantas
 
 ## 7.5 QA cases (minimum)
 
-1. Old save → Km 19 dark of Overlay → plate quest → rooms unlock by adjacency  
-2. Photocopy Record in inventory → Vault cage still empty until Lock + 12-B stood in  
-3. Ice Road dark → Km 19 reachable from south; Cut-adjacent Drown harder  
-4. Levy honour → Allotments hut dark; Overlay numbers present  
-5. Membrane strip → Allotments tap; Dara line  
-6. Roster ink of Overlay numbering 11 → Nila hatch dark  
-7. Pump live → Vault travelHours down; condemned → unchanged  
-8. Scraped plates + burned chart → hatch escort foreign list of people **and** places  
-9. Ostrowski sheet vs Maren sheet at one site — both true, disagree  
-10. Ministry recast: no Protocol Zero in inspect  
-11. Compile + EditMode PASS  
+1. Old save → Km 19 dark of Overlay → plate quest → rooms unlock by adjacency
+2. Photocopy Record in inventory → Vault cage still empty until Lock + 12-B stood in
+3. Ice Road dark → Km 19 reachable from south; Cut-adjacent Drown harder
+4. Levy honour → Allotments hut dark; Overlay numbers present
+5. Membrane strip → Allotments tap; Dara line
+6. Roster ink of Overlay numbering 11 → Nila hatch dark
+7. Pump live → Vault travelHours down; condemned → unchanged
+8. Scraped plates + burned chart → hatch escort foreign list of people **and** places
+9. Ostrowski sheet vs Maren sheet at one site — both true, disagree
+10. Ministry recast: no Protocol Zero in inspect
+11. Compile + EditMode PASS
 
 ---
 
@@ -1258,15 +1258,15 @@ See creative pack for shippable prose. Plan-side estimate:
 
 ## 10.4 Two-way flags with Exp 1 and Exp 2 (10)
 
-1. **Ice Road dark** → Km 19 south-only; Cut-adjacent Drown sites harder; Yara not at the plate.  
-2. **Levy honour / absence** → Allotments hut dark (no Dara); Grange labour thin; Overlay numbers arrive first.  
-3. **Membrane strip** → Allotments water; brass demand stacks with Overlay plates.  
-4. **Roster ink / pencil / blank / burn** → hatch escort list of people **plus** Overlay list of places if plates stand.  
-5. **Hadi listed/sent/hidden** → caretaker labour; hut occupied or not.  
-6. **12-C live** → plated sites become levy addresses; 12-B stencil is a pool pin.  
-7. **Sela clinic vs stay** → 12-B kit language; she leaves the stencil room if called salvage.  
-8. **Blank Rows access** → numbering 11/12-B in ink darkens 11.  
-9. **Kess pencil** → she refuses site numbers on the chart; player can still write (irregular).  
+1. **Ice Road dark** → Km 19 south-only; Cut-adjacent Drown sites harder; Yara not at the plate.
+2. **Levy honour / absence** → Allotments hut dark (no Dara); Grange labour thin; Overlay numbers arrive first.
+3. **Membrane strip** → Allotments water; brass demand stacks with Overlay plates.
+4. **Roster ink / pencil / blank / burn** → hatch escort list of people **plus** Overlay list of places if plates stand.
+5. **Hadi listed/sent/hidden** → caretaker labour; hut occupied or not.
+6. **12-C live** → plated sites become levy addresses; 12-B stencil is a pool pin.
+7. **Sela clinic vs stay** → 12-B kit language; she leaves the stencil room if called salvage.
+8. **Blank Rows access** → numbering 11/12-B in ink darkens 11.
+9. **Kess pencil** → she refuses site numbers on the chart; player can still write (irregular).
 10. **Ostrowski ice-road sheet** → two names for Km 19; Maren's sheet is the other column.
 
 Additional hooks (not the ten): Waystation site-watch; Nomi etiquette with plates; Pell addresses; Sole unsigned 12-C at Vault table; playground/tin brass vs Overlay plates.

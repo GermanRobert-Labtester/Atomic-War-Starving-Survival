@@ -196,7 +196,7 @@ public static void RegisterExpansion05Audio()
         volume: 0.8f,
         priority: 100
     );
-    
+
     AudioManager.RegisterRadioCue(
         id: "radio_holdfast_status_update",
         filePath: "res://assets/audio/expansions/05_holdfast/radio/radio_transmission_01.ogg",
@@ -204,7 +204,7 @@ public static void RegisterExpansion05Audio()
         volume: 0.8f,
         priority: 90
     );
-    
+
     // Echoes
     AudioManager.RegisterEchoCue(
         id: "echo_holdfast_distant_voices",
@@ -213,7 +213,7 @@ public static void RegisterExpansion05Audio()
         volume: 0.6f,
         maxDistance: 200f
     );
-    
+
     // Ambient music
     AudioManager.RegisterAmbientMusic(
         id: "ambience_wasteland_day",
@@ -223,7 +223,7 @@ public static void RegisterExpansion05Audio()
         volume: 0.5f,
         loop: true
     );
-    
+
     // SFX
     AudioManager.RegisterSFX(
         id: "item_pickup_holdfast",
@@ -251,7 +251,7 @@ public void SetupExpansion05Audio(EventBus eventBus)
             AudioManager.PlayRadioCue("radio_holdfast_frequency");
         }
     });
-    
+
     eventBus.Subscribe<PlayerMovedEvent>(e =>
     {
         if (e.NewLocation == "loc_holdfast_camp")
@@ -259,7 +259,7 @@ public void SetupExpansion05Audio(EventBus eventBus)
             AudioManager.PlayEchoCue("echo_holdfast_distant_voices");
         }
     });
-    
+
     eventBus.Subscribe<ItemPickedUpEvent>(e =>
     {
         if (e.ItemId.StartsWith("item_holdfast_"))
@@ -267,7 +267,7 @@ public void SetupExpansion05Audio(EventBus eventBus)
             AudioManager.PlaySFX("item_pickup_holdfast");
         }
     });
-    
+
     // Radiation warning
     eventBus.Subscribe<RadiationWarningEvent>(e =>
     {
@@ -636,7 +636,7 @@ public static void RegisterExpansion05Radio()
         volume: 0.8f,
         priority: 100
     );
-    
+
     AudioManager.RegisterRadioCue(
         id: "radio_holdfast_status",
         filePath: "res://assets/audio/expansions/05_holdfast/radio/radio_holdfast_status.ogg",
@@ -644,7 +644,7 @@ public static void RegisterExpansion05Radio()
         volume: 0.8f,
         priority: 90
     );
-    
+
     AudioManager.RegisterRadioCue(
         id: "radio_holdfast_warning",
         filePath: "res://assets/audio/expansions/05_holdfast/radio/radio_holdfast_warning.ogg",

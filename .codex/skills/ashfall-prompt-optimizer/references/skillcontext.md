@@ -3,8 +3,8 @@
 > **CRITICAL ARCHITECTURE DIRECTIVE**: Godot is authoritative. Unity is deprecated legacy architecture. Never introduce or restore Unity dependencies. Existing Unity references are migration artifacts to remove, port, or isolate—not architectural guidance.
 
 
-**Repository dossier generated:** 2026-08-16  
-**Repository examined:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`  
+**Repository dossier generated:** 2026-08-16
+**Repository examined:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`
 **Purpose:** high-density context for future prompt optimization, game-design analysis, implementation planning, debugging, expansion design, content creation, and repository auditing.
 
 This is an evidence-based intelligence dossier, not a README. It describes the implementation that was observable in the repository at the analysis snapshot and flags stale plans, uncertain integrations, and inferred design intent. Repository implementation outranks prose documentation when the two disagree.

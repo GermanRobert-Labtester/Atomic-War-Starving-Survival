@@ -263,7 +263,7 @@ public void UpdateCharacterArc(string survivorId, int newMilestone, string branc
     <ui:VisualElement name="map-canvas" class="map-canvas">
         <!-- SVG relationship lines -->
         <ui:VisualElement name="relation-lines" class="relation-lines" />
-        
+
         <!-- 4 faction nodes positioned in a diamond -->
         <!-- TOP: Iron Garrison -->
         <ui:VisualElement name="node-garrison" class="faction-node garrison-node">
@@ -271,21 +271,21 @@ public void UpdateCharacterArc(string survivorId, int newMilestone, string branc
             <ui:Label text="IRON\nGARRISON" class="node-label" />
             <ui:VisualElement name="garrison-standing" class="standing-indicator" />
         </ui:VisualElement>
-        
+
         <!-- LEFT: Ash Militia -->
         <ui:VisualElement name="node-militia" class="faction-node militia-node">
             <ui:VisualElement name="militia-emblem" class="faction-emblem-large" />
             <ui:Label text="ASH\nMILITIA" class="node-label" />
             <ui:VisualElement name="militia-standing" class="standing-indicator" />
         </ui:VisualElement>
-        
+
         <!-- RIGHT: Cult of the Ash Sign -->
         <ui:VisualElement name="node-cult" class="faction-node cult-node">
             <ui:VisualElement name="cult-emblem" class="faction-emblem-large" />
             <ui:Label text="CULT OF\nASH SIGN" class="node-label" />
             <ui:VisualElement name="cult-standing" class="standing-indicator" />
         </ui:VisualElement>
-        
+
         <!-- BOTTOM: Warlords of Sector 4 -->
         <ui:VisualElement name="node-warlords" class="faction-node warlords-node">
             <ui:VisualElement name="warlords-emblem" class="faction-emblem-large" />
@@ -293,7 +293,7 @@ public void UpdateCharacterArc(string survivorId, int newMilestone, string branc
             <ui:VisualElement name="warlords-standing" class="standing-indicator" />
         </ui:VisualElement>
     </ui:VisualElement>
-    
+
     <!-- Legend -->
     <ui:VisualElement class="map-legend">
         <ui:VisualElement class="legend-item">
@@ -359,11 +359,11 @@ public void PulseNode(string factionId); // highlight briefly when intel updates
     <ui:Label name="character-name" class="character-name" />
     <ui:Label name="character-profession" class="character-profession" />
     <ui:Label name="character-bio" class="character-bio" />
-    
+
     <ui:VisualElement class="arc-traits">
         <!-- Starting traits as badges -->
     </ui:VisualElement>
-    
+
     <ui:VisualElement class="arc-timeline">
         <!-- Stage 1: Discovery -->
         <ui:VisualElement name="stage-1" class="arc-stage">
@@ -374,9 +374,9 @@ public void PulseNode(string factionId); // highlight briefly when intel updates
                 <ui:Label name="stage-1-desc" class="stage-desc" />
             </ui:VisualElement>
         </ui:VisualElement>
-        
+
         <ui:VisualElement class="stage-connector-vertical" />
-        
+
         <!-- Stage 2: Trigger -->
         <ui:VisualElement name="stage-2" class="arc-stage">
             <ui:VisualElement name="stage-2-circle" class="stage-circle" />
@@ -385,9 +385,9 @@ public void PulseNode(string factionId); // highlight briefly when intel updates
                 <ui:Label name="stage-2-desc" class="stage-desc" />
             </ui:VisualElement>
         </ui:VisualElement>
-        
+
         <ui:VisualElement class="stage-connector-vertical" />
-        
+
         <!-- Stage 3: Crisis (branch point) -->
         <ui:VisualElement name="stage-3" class="arc-stage arc-crisis">
             <ui:VisualElement name="stage-3-circle" class="stage-circle crisis-circle" />
@@ -407,9 +407,9 @@ public void PulseNode(string factionId); // highlight briefly when intel updates
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        
+
         <ui:VisualElement class="stage-connector-vertical" />
-        
+
         <!-- Stage 4: Resolution -->
         <ui:VisualElement name="stage-4" class="arc-stage">
             <ui:VisualElement name="stage-4-circle" class="stage-circle" />
@@ -419,7 +419,7 @@ public void PulseNode(string factionId); // highlight briefly when intel updates
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    
+
     <ui:VisualElement class="arc-reward">
         <ui:Label text="ARC REWARD" class="reward-title" />
         <ui:VisualElement name="reward-trait-icon" class="reward-icon" />

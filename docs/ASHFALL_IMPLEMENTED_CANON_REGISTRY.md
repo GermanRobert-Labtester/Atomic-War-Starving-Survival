@@ -1418,75 +1418,75 @@ ASHFALL's deep simulation creates emergent causal feedback loops across multiple
 
 ```text
 1. SURVIVAL & EPIDEMIC CHAIN:
-   WeatherSystem (FalloutStorm) 
-   → Exterior Rads Spike & Temperature Drops 
-   → VentilationSystem Intake Filters Clog 
-   → PowerGridSystem Overload (Heaters Fail) 
-   → NeedsSystem Warmth Decays 
-   → Raw Cistern Water Consumed in Emergency 
-   → DiseaseSystem (disease_cholera outbreak) 
-   → SickListSystem (Bedridden Triage) 
+   WeatherSystem (FalloutStorm)
+   → Exterior Rads Spike & Temperature Drops
+   → VentilationSystem Intake Filters Clog
+   → PowerGridSystem Overload (Heaters Fail)
+   → NeedsSystem Warmth Decays
+   → Raw Cistern Water Consumed in Emergency
+   → DiseaseSystem (disease_cholera outbreak)
+   → SickListSystem (Bedridden Triage)
    → MedicalWardSystem ICU Capacity Maxed.
 
 2. SOCIAL & GUILT CHAIN:
-   RationConflictSystem (Unequal Food Allocation) 
-   → Resentment Accumulates 
-   → SurvivorRelationsSystem (Trust Plummets) 
-   → IdeologicalFrictionSystem (Bunkroom Brawls) 
-   → Dweller Dies of Malnutrition 
-   → MemorialSystem (Eulogy Generated) 
-   → GuiltInsomniaSystem (Sleep Multiplier drops to 0.3) 
-   → SomaticFlashbackSystem (Panic on Audio Siren) 
+   RationConflictSystem (Unequal Food Allocation)
+   → Resentment Accumulates
+   → SurvivorRelationsSystem (Trust Plummets)
+   → IdeologicalFrictionSystem (Bunkroom Brawls)
+   → Dweller Dies of Malnutrition
+   → MemorialSystem (Eulogy Generated)
+   → GuiltInsomniaSystem (Sleep Multiplier drops to 0.3)
+   → SomaticFlashbackSystem (Panic on Audio Siren)
    → Work Incapacity.
 
 3. ECONOMIC & FACTION CHAIN:
-   MarketSystem (Price Shock: Ammo Embargo) 
-   → HardcoreEconomyTuning (Scarcity Tier: Desperate) 
-   → TravelingCaravanSystem (Inflated Prices) 
-   → LedgerDebtSystem (Player signs Promissory Note) 
-   → Daily Interest Ticks 
-   → Player Defaults 
-   → WarlordDoctrineSystem (Shift to warlord_doctrine_raiding) 
-   → Airlock Breach Assault 
+   MarketSystem (Price Shock: Ammo Embargo)
+   → HardcoreEconomyTuning (Scarcity Tier: Desperate)
+   → TravelingCaravanSystem (Inflated Prices)
+   → LedgerDebtSystem (Player signs Promissory Note)
+   → Daily Interest Ticks
+   → Player Defaults
+   → WarlordDoctrineSystem (Shift to warlord_doctrine_raiding)
+   → Airlock Breach Assault
    → TacticalCombatSystem Firefight.
 
 4. EXPEDITION & TRAUMA CHAIN:
-   WastelandMapSystem (High-Rad Ruin Selected) 
-   → ExpeditionSystem (Aggressive Stance) 
-   → Vehicle Breakdown in Ash Storm 
-   → Personal Dosimeter Exceeds 2000 mSv 
-   → RadiationPhaseProgression (Manifest Illness) 
-   → DoorEncounterSystem (Raider Ambush) 
-   → TacticalCombatSystem (Weapon Jams via WeaponConditionSystem) 
-   → Companion Killed 
-   → Scavenger Returns with Heirloom 
+   WastelandMapSystem (High-Rad Ruin Selected)
+   → ExpeditionSystem (Aggressive Stance)
+   → Vehicle Breakdown in Ash Storm
+   → Personal Dosimeter Exceeds 2000 mSv
+   → RadiationPhaseProgression (Manifest Illness)
+   → DoorEncounterSystem (Raider Ambush)
+   → TacticalCombatSystem (Weapon Jams via WeaponConditionSystem)
+   → Companion Killed
+   → Scavenger Returns with Heirloom
    → PhantomMemoryEngine Flashback.
 
 5. HEAVY INDUSTRIAL & LABOR CHAIN:
-   Foundry Treaty Quota Demanded 
-   → SilentFoundrySystem (Forced Overtime Tapping) 
-   → Refractory Firebrick Wear Exceeds 80% 
-   → Crucible Blowout Incident 
-   → Severe Burn Trauma 
-   → CaregivingSystem (Bedside Vigil) 
-   → TraumaBondSystem (Bond Formed) 
+   Foundry Treaty Quota Demanded
+   → SilentFoundrySystem (Forced Overtime Tapping)
+   → Refractory Firebrick Wear Exceeds 80%
+   → Crucible Blowout Incident
+   → Severe Burn Trauma
+   → CaregivingSystem (Bedside Vigil)
+   → TraumaBondSystem (Bond Formed)
    → Labor Strike Triggered.
 
 6. NARRATIVE & TRIBUNAL RECKONING CHAIN:
-   Scavenging Expeditions Uncover Found Documents 
-   → JournalSystem Decodes Cipher 
-   → EvidenceLedger (4/4 Documents Enrolled) 
-   → MachineLogSystem (Phase 6 Reckoning) 
-   → FactionRadioEngine Intercepts Final Broadcast 
-   → VerdictEndingEvaluator (Tempest Decommissioned) 
+   Scavenging Expeditions Uncover Found Documents
+   → JournalSystem Decodes Cipher
+   → EvidenceLedger (4/4 Documents Enrolled)
+   → MachineLogSystem (Phase 6 Reckoning)
+   → FactionRadioEngine Intercepts Final Broadcast
+   → VerdictEndingEvaluator (Tempest Decommissioned)
    → EpilogueMatrixRuntime (RegionalFate.CommonwealthFounded).
 
 7. PSYCHOLOGICAL & MORALE RESILIENCE CHAIN:
-   Severe Ash Blizzard Freezes Bunker 
-   → PowerGridSystem Routes Power to Common Room 
-   → VinylMoraleSystem Plays Scavenged Record 
-   → Daily Morale Buff (+15) Offsets Freezing Cold 
-   → GuiltInsomnia Countered 
+   Severe Ash Blizzard Freezes Bunker
+   → PowerGridSystem Routes Power to Common Room
+   → VinylMoraleSystem Plays Scavenged Record
+   → Daily Morale Buff (+15) Offsets Freezing Cold
+   → GuiltInsomnia Countered
    → Dwellers Maintain Work Stability.
 ```
 

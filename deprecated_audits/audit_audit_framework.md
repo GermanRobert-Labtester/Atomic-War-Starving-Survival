@@ -6,10 +6,10 @@ Date: 2026-08-08
 
 # ASHFALL Comprehensive Game Audit — Framework
 
-**Project:** ASHFALL (working title) — 2D Atomic-War Survival  
-**Stack:** Unity 6 LTS (6000.5.5f1) · 2D · URP · C#  
-**Audit Date:** 2025-08-04  
-**Auditor:** pi coding agent  
+**Project:** ASHFALL (working title) — 2D Atomic-War Survival
+**Stack:** Unity 6 LTS (6000.5.5f1) · 2D · URP · C#
+**Audit Date:** 2025-08-04
+**Auditor:** pi coding agent
 **Scope:** Full repository, all 291 source files (54,348 LOC), 78 test files, 16 subsystem folders
 
 ## Methodology

@@ -87,7 +87,7 @@ ASHFALL is designed around a continuous cognitive loop of information gathering,
 
 ```mermaid
 graph LR
-    A["1. OBSERVE<br/>(Weather forecast, dosimeters, vitals, radio signals, pantry stocks)"] 
+    A["1. OBSERVE<br/>(Weather forecast, dosimeters, vitals, radio signals, pantry stocks)"]
     --> B["2. INTERPRET<br/>(Weigh crisis urgency: freezing vs starvation vs raider toll)"]
     --> C["3. PRIORITIZE<br/>(Allocate power, water, shift rosters, medical beds)"]
     --> D["4. COMMIT<br/>(Dispatch expedition, tap foundry cupola, enforce strict rationing)"]
@@ -765,9 +765,9 @@ In ASHFALL, failure is rarely a binary "Game Over" screen. Instead, failure is a
 graph TD
     subgraph FailureTaxonomy["Failure & Recovery Architecture"]
         TerminalFail["1. TERMINAL FAILURES<br/>• All Survivors Deceased (Total Extinction)<br/>• Day 360 Machine Sterilization Verdict"]
-        
+
         RecoverableFail["2. RECOVERABLE CRISES (Creates Secondary Story)<br/>• Power Grid Total Blackout (Heaters freeze; force emergency battery repairs)<br/>• Sickness Outbreak (40% infected; convert common room to quarantine)<br/>• Crucible Blowout (Foundry destroyed; emergency burn surgery)<br/>• Lost Expedition (Party captured; launches rescue mission)"]
-        
+
         PunitiveDeadEnds["3. PUNITIVE DEAD-ENDS (To Be Avoided)<br/>• Unwarned instant death from clicking un-scouted map node<br/>• Irreversible soft-locks from running out of water on Day 2"]
     end
 ```
@@ -788,10 +788,10 @@ Understanding ASHFALL's systemic feedback loops prevents designers from introduc
 ### 1. Verified Negative (Dampening) Feedback Loops
 ```text
 REFINED METALLURGY DAMPENER:
-High Foundry Production 
-→ Refractory Firebrick Wear Increases 
-→ Worker Fatigue Spikes 
-→ Labor Strike Dispute Probability Escalates 
+High Foundry Production
+→ Refractory Firebrick Wear Increases
+→ Worker Fatigue Spikes
+→ Labor Strike Dispute Probability Escalates
 → Foundry Automatically Shuts Down for Repairs.
 (Prevents infinite weapon/armor stockpiling).
 ```
@@ -799,11 +799,11 @@ High Foundry Production
 ### 2. Verified Positive (Reinforcing) Feedback Loops
 ```text
 SICKNESS SPIRAL (Reinforcing):
-Contaminated Water Consumed 
-→ Doctor Contracts Cholera 
-→ Medical Ward Capacity Drops 
-→ Secondary Patients Suffer Sepsis 
-→ More Labor Incapacitated 
+Contaminated Water Consumed
+→ Doctor Contracts Cholera
+→ Medical Ward Capacity Drops
+→ Secondary Patients Suffer Sepsis
+→ More Labor Incapacitated
 → Less Clean Water Purified.
 (Creates desperate emergency triage moments).
 ```
@@ -922,9 +922,9 @@ Every proposed expansion MUST be architected with an explicit automated verifica
 graph TD
     subgraph TestingPathways["Automated Verification Hierarchy"]
         xUnit["1. xUnit Automated Unit Tests (Ashfall.Core.Tests/)<br/>• Pure logic & state machine execution<br/>• Determinism tests (Same seed = identical outcome)<br/>• Save/Load roundtrip & checksum stability"]
-        
+
         HeadlessCLI["2. Godot Headless CLI Selftests (src/Host/HostCli.cs)<br/>• End-to-end headless gameplay simulation<br/>• 70+ automated CLI flags (e.g. --data-integrity-selftest)<br/>• Zero-graphics CI test pipeline"]
-        
+
         IntegrityTests["3. Catalog Referential Integrity (CatalogIntegrityValidator.cs)<br/>• Validates all 200+ snake_case ID prefixes<br/>• Checks recipe-to-item, quest-to-location links"]
     end
 ```
@@ -969,7 +969,7 @@ graph TD
     Recipes["recipes.json / relic_recipes.json"] -->|Consumes & Produces| Items
     Foundry["foundry_production.json"] -->|Consumes Scrap & Produces| Items
     Pharma["chemical_dependency_items.json"] -->|References Drug| Items
-    
+
     Quests["questline_master.json / year_of_ash_quests.json"] -->|Requires & Rewards| Items
     Quests -->|Targets Destination| Locations
     Quests -->|Modifies Standing| Factions
@@ -1041,9 +1041,9 @@ ASHFALL features multi-layered Cold War mysteries and institutional secrets dist
 graph TD
     subgraph MysteryStatus["Mystery Knowledge Taxonomy"]
         ActiveMysteries["1. ACTIVE / DISCOVERABLE MYSTERIES<br/>• The Origin of The Machine's Census Directive<br/>• The Fate of the Northern Continental Convoy<br/>• The Secret Purpose of Substation Nine's Cable"]
-        
+
         Ambiguous["2. DELIBERATELY AMBIGUOUS LORE<br/>• Who Fired the First Warhead? (Unanswerable)<br/>• The True Nature of the Horizon Flash (No Supernatural Truth)"]
-        
+
         Reserved["3. RESERVED EXPANSION SEEDS<br/>• The Deep Submerged Keel of the Black Flotilla<br/>• The Sovereign Shelf Sub-Strata Vaults"]
     end
 ```

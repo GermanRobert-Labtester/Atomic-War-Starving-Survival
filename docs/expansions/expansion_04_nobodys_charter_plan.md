@@ -1,11 +1,11 @@
 # ASHFALL — Expansion Design Bible
 
-**Title:** ASHFALL: NOBODY'S CHARTER  
-**Internal id:** `expansion_nobodys_charter` (*existing* in `CrossingIds.Expansion`)  
-**Pack number:** **04** — Standing Record already owns 03. The earlier files `expansion_03_nobodys_charter_plan.md` and `expansion_03_nobodys_charter_INTEGRATION_PIPELINE.md` are misnumbered. **Recommend renaming the pipeline to `expansion_04_nobodys_charter_INTEGRATION_PIPELINE.md`.** Do not do it in this pass. Treat the old 03 plan as a pre-implementation draft; this file is the authoritative post-implementation bible.  
-**Status:** Reverse-engineered from shipped C# and JSON. Design elevated to sibling standard. Divergences are flagged, not papered over.  
-**Ids below are EXISTING unless marked *PROPOSED*.** Where a shipped id is bad, the id stays; the rename lives in Appendix B.  
-**Tone lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.  
+**Title:** ASHFALL: NOBODY'S CHARTER
+**Internal id:** `expansion_nobodys_charter` (*existing* in `CrossingIds.Expansion`)
+**Pack number:** **04** — Standing Record already owns 03. The earlier files `expansion_03_nobodys_charter_plan.md` and `expansion_03_nobodys_charter_INTEGRATION_PIPELINE.md` are misnumbered. **Recommend renaming the pipeline to `expansion_04_nobodys_charter_INTEGRATION_PIPELINE.md`.** Do not do it in this pass. Treat the old 03 plan as a pre-implementation draft; this file is the authoritative post-implementation bible.
+**Status:** Reverse-engineered from shipped C# and JSON. Design elevated to sibling standard. Divergences are flagged, not papered over.
+**Ids below are EXISTING unless marked *PROPOSED*.** Where a shipped id is bad, the id stays; the rename lives in Appendix B.
+**Tone lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.
 **Sister packs:** Expansion 1 `expansion_the_holdfast` (the allocated world). Expansion 2 `expansion_the_duty_roster` (the unlisted home). Expansion 3 `expansion_the_standing_record` (the ground). This pack is **who speaks for whom**.
 
 ---
@@ -245,55 +245,55 @@ Inspect and description below are the **live JSON**, lightly line-broken. They a
 
 ### `loc_crossing_viaduct_gate` — The Viaduct Gate
 
-**Who:** Mattis Cray.  
-**Shipped numbers:** d 0.1 · 8.0h · 0.4 rads — **illegal units; retune to d5 · 3.5–4.0h · 18 rads.**  
-**Inspect:** A rail truss over the Drown's edge, planked over for feet instead of axles. The paint on the sign has texture from how many times it has been redone: NO CHARTER NO GUARD ASK FOR SOMEONE. Someone added, smaller, underneath, in different paint: WE MEAN IT.  
-**Description:** The gate is not a wall. It is a threshold you are allowed to cross only because someone staked their own name on you. Until someone vouches, it stays closed and the viaduct stays quiet.  
+**Who:** Mattis Cray.
+**Shipped numbers:** d 0.1 · 8.0h · 0.4 rads — **illegal units; retune to d5 · 3.5–4.0h · 18 rads.**
+**Inspect:** A rail truss over the Drown's edge, planked over for feet instead of axles. The paint on the sign has texture from how many times it has been redone: NO CHARTER NO GUARD ASK FOR SOMEONE. Someone added, smaller, underneath, in different paint: WE MEAN IT.
+**Description:** The gate is not a wall. It is a threshold you are allowed to cross only because someone staked their own name on you. Until someone vouches, it stays closed and the viaduct stays quiet.
 **Canon flag:** Grain Exchange's `access_rule` is already "No guards, no charter, no enforcement." The sign must stay — it is the pack's best sentence — but the *difference* has to be playable: the Exchange does not ask for someone, because four Powers are already in the room and hunger is the enforcement. The Crossing asks for someone because **no Power is in the room**. Recast the Exchange cameo so a Grain Exchange envoy (`enc_nc_grain_exchange_envoy`, *PROPOSED*) hears the sign and says the board does not need a name. Osran will not argue. Mattis will.
 
 ### `loc_crossing_scalehouse` — The Scalehouse
 
-**Who:** Osran Kell.  
-**Shipped numbers:** d 0.05 · 1.0h · 0.2 rads — **retune to d4 · 4.0h from bunker (or 0.5h from gate if a seeder stores hop weights separately) · 20 rads.**  
-**Inspect:** A truck scale built for loads nobody hauls anymore, kept calibrated for reasons that stopped being obvious around the same time the reasons stopped mattering less. Osran's office has one chair for him and none for you. He'll fetch a second one. He always fetches a second one.  
-**Description:** Every load that leaves the Crossing is weighed here, once, on a scale that has never been argued into lying. Osran keeps the weights he trusts in a drawer he does not lock. Nobody has ever tried.  
+**Who:** Osran Kell.
+**Shipped numbers:** d 0.05 · 1.0h · 0.2 rads — **retune to d4 · 4.0h from bunker (or 0.5h from gate if a seeder stores hop weights separately) · 20 rads.**
+**Inspect:** A truck scale built for loads nobody hauls anymore, kept calibrated for reasons that stopped being obvious around the same time the reasons stopped mattering less. Osran's office has one chair for him and none for you. He'll fetch a second one. He always fetches a second one.
+**Description:** Every load that leaves the Crossing is weighed here, once, on a scale that has never been argued into lying. Osran keeps the weights he trusts in a drawer he does not lock. Nobody has ever tried.
 **Play:** First-weigh ritual (`quest_crossing_first_weigh`). The number is real. Inference is not his problem.
 
 ### `loc_crossing_stallrow` — Stallrow
 
-**Shipped numbers:** d 0.15 · 0.5h · 0.2 rads — **retune to d4 · 4.0h / 0.4h hop · 20 rads.**  
-**Inspect:** The market the Scale vouches for, stalls chalked with claim marks in the Scavenger Guild's old pattern — copied, unofficially, because it is the only enforcement anybody here has seen work without a government behind it.  
-**Description:** Trade happens on chalked claims and a shared patience that can break. Stallrow is where the Crossing becomes legible to a stranger: prices, rivalries, and three different versions of the same founding story.  
+**Shipped numbers:** d 0.15 · 0.5h · 0.2 rads — **retune to d4 · 4.0h / 0.4h hop · 20 rads.**
+**Inspect:** The market the Scale vouches for, stalls chalked with claim marks in the Scavenger Guild's old pattern — copied, unofficially, because it is the only enforcement anybody here has seen work without a government behind it.
+**Description:** Trade happens on chalked claims and a shared patience that can break. Stallrow is where the Crossing becomes legible to a stranger: prices, rivalries, and three different versions of the same founding story.
 **Play:** Standing notice-board (*PROPOSED*). Cameo of `faction_scavenger_guild` as *model*, not questline.
 
 ### `loc_crossing_watchtower` — The Watchtower
 
-**Shipped numbers:** d 0.2 · 0.5h · 0.3 rads — **retune to d5 · 4.5h / 0.5h hop · 24 rads.**  
-**Inspect:** The Drown side of the viaduct, watched. Two people, a stove, and a long list of every face that came across the rail truss and why.  
-**Description:** The watch keeps the gate honest. They answer to no single Power and keep no order but the order they are asked to keep. What they remember is a ledger of its own.  
+**Shipped numbers:** d 0.2 · 0.5h · 0.3 rads — **retune to d5 · 4.5h / 0.5h hop · 24 rads.**
+**Inspect:** The Drown side of the viaduct, watched. Two people, a stove, and a long list of every face that came across the rail truss and why.
+**Description:** The watch keeps the gate honest. They answer to no single Power and keep no order but the order they are asked to keep. What they remember is a ledger of its own.
 **Play:** Sightline. Smuggling side quest (*PROPOSED*). The list of faces is a vouch log — diegetic `vouchedBy` history, not a HUD.
 
 ### `loc_crossing_weighbridge` — The Weighbridge ⚠️
 
-**Shipped numbers:** d 0.05 · 0.5h · 0.2 rads.  
-**Inspect:** The bridge scale itself, heavy as a doctrine. What it reports is a number; the argument is about what the number means. Osran reads it and records it; the record outlives every argument about it.  
-**Description:** Where loads are weighed on the way out and the way in. Its honesty is a shared assumption nobody wants to be the first to break, which is exactly why it has stayed honest.  
+**Shipped numbers:** d 0.05 · 0.5h · 0.2 rads.
+**Inspect:** The bridge scale itself, heavy as a doctrine. What it reports is a number; the argument is about what the number means. Osran reads it and records it; the record outlives every argument about it.
+**Description:** Where loads are weighed on the way out and the way in. Its honesty is a shared assumption nobody wants to be the first to break, which is exactly why it has stayed honest.
 **Defect:** Display name collides with live `loc_weighbridge` (Tollman's first office). Functionally this card is the **deck plate** of the Scalehouse, not a second civic weighbridge. **Proposed rename:** `loc_crossing_deck_scale` / display **The Deck Scale**. Keep the id in data until a migration ticket; `CrossingIds.Locations.Weighbridge` updates with it. Do not delete the card — `quest_crossing_scale_integrity` targets it.
 
 ### `loc_crossing_underwrite_hall` — The Underwrite Hall
 
-**Who:** Dessa Vane (*named in inspect, no character row*).  
-**Shipped numbers:** d 0.1 · 0.5h · 0.2 rads — **retune to d5 · 4.5h / 0.5h hop · 22 rads.**  
-**Inspect:** A long table, a ledger chained to it — not against theft, Dessa will tell you, unprompted, the first time you ask. Against convenient memory. The fire is always lit. Somebody's interest paid for the wood.  
-**Description:** Where help is given at a plainly named price. Every contract here is read twice before it is signed, and after the second reading there is only the ink.  
+**Who:** Dessa Vane (*named in inspect, no character row*).
+**Shipped numbers:** d 0.1 · 0.5h · 0.2 rads — **retune to d5 · 4.5h / 0.5h hop · 22 rads.**
+**Inspect:** A long table, a ledger chained to it — not against theft, Dessa will tell you, unprompted, the first time you ask. Against convenient memory. The fire is always lit. Somebody's interest paid for the wood.
+**Description:** Where help is given at a plainly named price. Every contract here is read twice before it is signed, and after the second reading there is only the ink.
 **Canon flag:** That is the Tally's ethic, relocated. Differentiation is **jurisdiction**. The Tally will walk to your hatch. The Underwrite will not leave the hall. A Tally forfeit can be a life. An Underwrite forfeit is a named good in the Lockup. If a quest needs a collector at Allocation 12, that is the Tally, not Dessa. See §10.
 
 ### `loc_crossing_records_room` — The Records Room
 
-**Who:** Ivo Fenn (*named in inspect, no character row*).  
-**Shipped numbers:** d 0.1 · 0.5h · 0.15 rads — **retune to d6 · 5.5h / 0.6h hop · 30 rads.**  
-**Inspect:** Five years of the Crossing, filed by someone who believes a paper trail is the only enforcement a town without a guard can afford. Ivo Fenn keeps it, and Ivo Fenn's records do not lie.  
-**Description:** Ledgers, claims, and the surviving three pages of the original Charter. What is written here is older than everyone arguing about it, and nobody has read the whole of it in years.  
+**Who:** Ivo Fenn (*named in inspect, no character row*).
+**Shipped numbers:** d 0.1 · 0.5h · 0.15 rads — **retune to d6 · 5.5h / 0.6h hop · 30 rads.**
+**Inspect:** Five years of the Crossing, filed by someone who believes a paper trail is the only enforcement a town without a guard can afford. Ivo Fenn keeps it, and Ivo Fenn's records do not lie.
+**Description:** Ledgers, claims, and the surviving three pages of the original Charter. What is written here is older than everyone arguing about it, and nobody has read the whole of it in years.
 **Defect:** The description **spoils the Charter mystery** on first inspect. Recast on implementation: the file exists; Ivo will not summarise; the player does not learn "three pages" until `quest_crossing_three_dry_pages`. Standing Record may later treat this room as a *site* with a plate. This pack treats it as a *clerk*.
 
 ---
@@ -337,8 +337,8 @@ When `exp_nobodys_charter_unlocked` (*PROPOSED* flag):
 
 **Three people are each partly right about what the Crossing is, and none of them can prove it, because the document that would prove it does not say that.**
 
-Osran Kell says it is a scale-house that grew a market, and a scale-house needs a weighmaster more than it needs a government.  
-Dessa Vane says it is an economy that would raid without someone willing to be owed, and that person does not need to be liked.  
+Osran Kell says it is a scale-house that grew a market, and a scale-house needs a weighmaster more than it needs a government.
+Dessa Vane says it is an economy that would raid without someone willing to be owed, and that person does not need to be liked.
 Perrin Ashby says none of that is a reason it cannot also be a town, with a vote, and a code, and an appeal that is not "find three backers faster."
 
 The player is the only arrival whose name is not already spent taking a side. That is why a vouch matters: it is the first time this place has to decide whether a stranger is real. It is also why a burned vouch is worse than a refused levy. A levy is a form you did not sign. A burned vouch is a person who will not say your name again.
@@ -692,8 +692,8 @@ Shelter-door / viaduct encounters (`se_nc_*`, `mmc_nc_*`) stay in the 03 draft a
 
 ## 5.1 `VouchAccessSystem` — as built
 
-**id:** `vouch_access_system`  
-**File:** `Assets/_Game/Core/VouchAccessSystem.cs`  
+**id:** `vouch_access_system`
+**File:** `Assets/_Game/Core/VouchAccessSystem.cs`
 **Spec the code comments:** the 03 bible §5.2. This section is the code.
 
 ### State (`VouchAccessSystemState`)
@@ -765,7 +765,7 @@ void RestoreState(VouchAccessSystemState saved)  // null = no-op
 
 ## 5.2 `CrossingArbitrationSystem` — designed, not built
 
-**id:** `crossing_arbitration_system` *PROPOSED*  
+**id:** `crossing_arbitration_system` *PROPOSED*
 **What it is:** The Standing. A ruling is real for as long as three backers hold it.
 
 **Mechanics (unchanged, still right):**
@@ -785,7 +785,7 @@ void RestoreState(VouchAccessSystemState saved)  // null = no-op
 
 ## 5.3 `LedgerDebtSystem` — designed, not built
 
-**id:** `ledger_debt_system` *PROPOSED*  
+**id:** `ledger_debt_system` *PROPOSED*
 **What it is:** Debt as a document. Read twice. Forfeit named. No hidden clause.
 
 **Mechanics:**

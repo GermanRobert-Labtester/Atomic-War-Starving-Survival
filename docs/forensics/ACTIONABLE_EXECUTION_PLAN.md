@@ -1,8 +1,8 @@
 # Actionable Execution Plan: ASHFALL Integration Phases
 
-**Status:** P0-3 COMPLETE ✅ | P0-2, P0-1, P1-1, P1-2, P1-3, P2-1, P2-2 pending  
-**Date:** 2026-08-23  
-**Mode:** Exact file paths, exact commands, exact verification steps  
+**Status:** P0-3 COMPLETE ✅ | P0-2, P0-1, P1-1, P1-2, P1-3, P2-1, P2-2 pending
+**Date:** 2026-08-23
+**Mode:** Exact file paths, exact commands, exact verification steps
 
 ---
 
@@ -73,8 +73,8 @@ for m in missing[:10]:
 
 Same script with `--target all` flag.
 
-**Blast radius:** 317 JSON files + ~20 loader updates  
-**Risk:** MEDIUM — bulk data mutation  
+**Blast radius:** 317 JSON files + ~20 loader updates
+**Risk:** MEDIUM — bulk data mutation
 **Reversibility:** `git checkout -- Assets/StreamingAssets/Data/*.json Assets/Ashfall.Core/*Loader.cs`
 
 ---
@@ -144,8 +144,8 @@ public IReadOnlyList<SurvivorNeedsState> RosterState => _coreNeeds.GetAll();
 
 Remove `_radStates` dictionary — delegate to `RadiationSystem` state.
 
-**Blast radius:** 1 file (384 lines → ~200 lines)  
-**Risk:** MEDIUM — touches the most-used host session  
+**Blast radius:** 1 file (384 lines → ~200 lines)
+**Risk:** MEDIUM — touches the most-used host session
 **Reversibility:** `git checkout -- src/Host/SurvivorsHostSession.cs`
 
 ---
@@ -174,7 +174,7 @@ public sealed class WaterTreatmentHostSession
     public WaterTreatmentPanel Panel { get; }
     public bool IsDirty { get; private set; }
     public event Action StateChanged;
-    
+
     public WaterTreatmentHostSession(string dataDir) { ... }
     public void TickDay(int day) => System.Tick(day);
     public void Save() => WaterTreatmentSaveStore.TrySave(System.CaptureState());
@@ -207,8 +207,8 @@ public sealed class WaterTreatmentHostSession
 | 19 | MentalHealthCrisisHostSession | Needs, Medical, Dependency, Roster | 150 |
 | 20 | AutopsyHostSession | Inventory, Radiation, Ventilation, Research, Medical | 200 |
 
-**Blast radius:** 33+ files  
-**Risk:** HIGH — refactoring central orchestration  
+**Blast radius:** 33+ files
+**Risk:** HIGH — refactoring central orchestration
 **Reversibility:** `git checkout -- src/Main.ExpandedShelterSystems.cs src/Host/*HostSession.cs`
 
 ---
@@ -240,20 +240,20 @@ public sealed class WaterTreatmentHostSession
    {
        public XxxSystem System { get; }
        public event Action StateChanged;
-       
-       public XxxHostSession() 
+
+       public XxxHostSession()
        {
            System = new XxxSystem(...);
        }
-       
+
        public void TickDay(int day) => System.Tick(day);
        public XxxState CaptureState() => System.CaptureState();
        public void RestoreState(XxxState s) => System.RestoreState(s);
    }
    ```
 
-**Files to create:** 12 `src/Host/*HostSession.cs`  
-**Files to touch:** 5 `src/Main.*.cs` partials  
+**Files to create:** 12 `src/Host/*HostSession.cs`
+**Files to touch:** 5 `src/Main.*.cs` partials
 **Blast radius:** MEDIUM
 
 ---
@@ -320,7 +320,7 @@ public void CatalogFileSystem_ResolvesSchemaVersion()
 }
 ```
 
-**Files to create:** `Ashfall.Core.Tests/CatalogFileSystemTests.cs`  
+**Files to create:** `Ashfall.Core.Tests/CatalogFileSystemTests.cs`
 **Blast radius:** LOW
 
 ---

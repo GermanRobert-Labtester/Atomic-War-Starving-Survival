@@ -1,7 +1,7 @@
 # Schema Version Policy
 
-**Date:** 2026-08-23  
-**Status:** Policy established; migration tool pending  
+**Date:** 2026-08-23
+**Status:** Policy established; migration tool pending
 
 ---
 

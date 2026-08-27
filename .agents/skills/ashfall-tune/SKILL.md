@@ -931,10 +931,10 @@ Look for growing:
 
 Simulate or inspect:
 
-Day 1  
-Day 30  
-Day 100  
-Day 180+  
+Day 1
+Day 30
+Day 100
+Day 180+
 Day 360+
 
 Look for accumulating:
@@ -1245,21 +1245,21 @@ If yes, mitigation is required.
 
 ## PERF-XX — Title
 
-**Severity:** P0/P1/P2/P3/P4  
-**Type:** CPU / GPU / MEMORY / GC / LOAD / UI / DATA / CODE BLOAT / FRAME PACING  
-**Hot path:**  
-**Frequency:**  
-**Measured evidence:**  
-**Root cause:**  
-**Player impact:**  
-**Current cost:**  
-**Optimization candidate:**  
-**Expected benefit:**  
-**Behavior risk:**  
-**Save risk:**  
-**Determinism risk:**  
-**Complexity:** LOW/MEDIUM/HIGH  
-**Confidence:** HIGH/MEDIUM/LOW  
+**Severity:** P0/P1/P2/P3/P4
+**Type:** CPU / GPU / MEMORY / GC / LOAD / UI / DATA / CODE BLOAT / FRAME PACING
+**Hot path:**
+**Frequency:**
+**Measured evidence:**
+**Root cause:**
+**Player impact:**
+**Current cost:**
+**Optimization candidate:**
+**Expected benefit:**
+**Behavior risk:**
+**Save risk:**
+**Determinism risk:**
+**Complexity:** LOW/MEDIUM/HIGH
+**Confidence:** HIGH/MEDIUM/LOW
 
 ---
 

@@ -12,10 +12,10 @@
 > - Verification gate: `dotnet test` (3,244 tests) + `godot --headless` only.
 > Do not restore or reintroduce Unity dependencies or compatibility shim layers described in this historical document.
 
-**Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`  
-**Branch audited:** `main`  
-**Snapshot commit:** `04b1f465914b18d3b9c4bb8cd254802e2a3b6f30`  
-**Audit date:** 2026-08-22  
+**Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`
+**Branch audited:** `main`
+**Snapshot commit:** `04b1f465914b18d3b9c4bb8cd254802e2a3b6f30`
+**Audit date:** 2026-08-22
 **Audit type:** repository-wide static architecture/code/configuration review using the GitHub repository contents, current source files, build configuration, CI definitions, data layout, tests, and existing audit/design documents.
 
 > **Important verification note:** I did **not** execute `dotnet`, Godot, or Unity in this review. Build/test results quoted from `10LOOP_AUDIT_REPORT.md` and similar files are historical repository evidence, not tests rerun for this report. Current-state findings are explicitly separated from historical/documented claims.
@@ -928,51 +928,51 @@ Long-campaign simulation tests should assert bounds.
 
 ### P1 — Enforce architecture/source authority
 
-**Finding:** current docs disagree with current tree and with each other about active engine/source locations.  
-**Evidence:** README references nonexistent `Assets/_Game/Runtime` and `docs/ARCHITECTURE.md`; CI says Godot-only while a Unity build workflow still runs.  
-**Risk:** new code lands in the wrong layer; migration debt increases.  
+**Finding:** current docs disagree with current tree and with each other about active engine/source locations.
+**Evidence:** README references nonexistent `Assets/_Game/Runtime` and `docs/ARCHITECTURE.md`; CI says Godot-only while a Unity build workflow still runs.
+**Risk:** new code lands in the wrong layer; migration debt increases.
 **Action:** publish one engine-support/source-authority policy and make README/workflows/code index derive from it.
 
 ### P1 — Reduce `src/Main.cs` orchestration concentration
 
-**Finding:** the active Godot root owns a very large number of sessions, UI panels, dirty flags, diagnostics, lifecycle and CLI flows.  
-**Risk:** initialization/save/UI coupling, merge conflicts, difficult ownership reasoning.  
+**Finding:** the active Godot root owns a very large number of sessions, UI panels, dirty flags, diagnostics, lifecycle and CLI flows.
+**Risk:** initialization/save/UI coupling, merge conflicts, difficult ownership reasoning.
 **Action:** split composition, session lifecycle, saves, UI navigation, diagnostics, and CLI dispatch into dedicated coordinators.
 
 ### P1 — Decompose persistence coordination
 
-**Finding:** the `_Game` `SaveSystem` partial type aggregates an extremely broad dependency set.  
-**Risk:** omitted state, partial restore, migration/version complexity, large blast radius.  
+**Finding:** the `_Game` `SaveSystem` partial type aggregates an extremely broad dependency set.
+**Risk:** omitted state, partial restore, migration/version complexity, large blast radius.
 **Action:** continue toward stable-ID participant registry + schema version + transactional restore.
 
 ### P1 — Make CI actually required
 
-**Finding:** current branch metadata exposes no enforced required status checks.  
-**Risk:** strong CI can be bypassed.  
+**Finding:** current branch metadata exposes no enforced required status checks.
+**Risk:** strong CI can be bypassed.
 **Action:** verify rulesets and require primary data/core/Godot gate checks before merge.
 
 ### P2 — Narrow warning suppression
 
-**Finding:** aggregate Godot project suppresses important nullable warnings globally.  
-**Risk:** new migrated-code defects can hide among intentional legacy suppressions.  
+**Finding:** aggregate Godot project suppresses important nullable warnings globally.
+**Risk:** new migrated-code defects can hide among intentional legacy suppressions.
 **Action:** strict warning policy for Core/new host code; legacy-specific suppression scope.
 
 ### P2 — Resolve active-engine policy ambiguity
 
-**Finding:** Godot-only primary CI coexists with Unity release builds.  
-**Risk:** unclear support obligations and release truth.  
+**Finding:** Godot-only primary CI coexists with Unity release builds.
+**Risk:** unclear support obligations and release truth.
 **Action:** explicitly define “active development host”, “legacy compatibility host”, and “shipping targets”.
 
 ### P2 — Repository cleanup
 
-**Finding:** root tracks large amounts of historical/generated/test/process material, including paths now ignored by `.gitignore`.  
-**Risk:** source-of-truth confusion and maintenance noise.  
+**Finding:** root tracks large amounts of historical/generated/test/process material, including paths now ignored by `.gitignore`.
+**Risk:** source-of-truth confusion and maintenance noise.
 **Action:** archive/delete/untrack in a dedicated hygiene PR.
 
 ### P2 — Expand deep-gate scheduling
 
-**Finding:** HostCli exposes far more self-tests than the canonical PR gate executes.  
-**Risk:** rarely invoked checks silently rot.  
+**Finding:** HostCli exposes far more self-tests than the canonical PR gate executes.
+**Risk:** rarely invoked checks silently rot.
 **Action:** nightly full self-test matrix and changed-area PR routing.
 
 ---

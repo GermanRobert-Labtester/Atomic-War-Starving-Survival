@@ -60,39 +60,39 @@ def find_insertion_point(content: str, class_name: str):
     last_event_match = re.search(r'(public string LastEvent \{ get; private set; \} = string\.Empty;)', content)
     if last_event_match:
         return last_event_match.end()
-    
+
     # Try last public property
     prop_match = re.search(r'(\n    public (sealed )?class \w+\n    \{[^}]*?)(\n    public \w+[^=]*?\{)', content, re.DOTALL)
     if prop_match:
         return prop_match.start(3)
-    
+
     # Try after opening brace of class
     class_open = re.search(r'public (sealed )?class \w+\n    \{', content)
     if class_open:
         return class_open.end()
-    
+
     return None
 
 def process_hostsession(filepath: Path):
     content = filepath.read_text()
     original = content
-    
+
     if "public bool IsDirty" in content:
         return False, "already has IsDirty"
-    
+
     class_match = re.search(r'public sealed class (\w+HostSession)', content)
     if not class_match:
         return False, "could not find class"
-    
+
     class_name = class_match.group(1)
     system_name = class_name.replace("HostSession", "")
-    
+
     insert_pos = find_insertion_point(content, class_name)
     if insert_pos is None:
         return False, "could not find insertion point"
-    
+
     save_store, method, state_type, state_expr = get_save_info(class_name)
-    
+
     methods = "\n\n"
     methods += "        public bool IsDirty { get; private set; }\n\n"
     methods += "        public void MarkDirty()\n"
@@ -105,7 +105,7 @@ def process_hostsession(filepath: Path):
     methods += "            if (!IsDirty) return;\n"
     methods += "            try\n"
     methods += "            {\n"
-    
+
     if save_store and method == "TrySave":
         methods += f"                if ({save_store}.{method}({state_expr}))\n"
         methods += "                    IsDirty = false;\n"
@@ -115,26 +115,26 @@ def process_hostsession(filepath: Path):
     else:
         methods += "                // TODO: implement save for " + class_name + "\n"
         methods += "                IsDirty = false;\n"
-    
+
     methods += "            }\n"
     methods += "            catch (Exception e)\n"
     methods += "            {\n"
     methods += '                GD.PrintErr("[' + system_name + '] save failed: " + e.Message);\n'
     methods += "            }\n"
     methods += "        }\n"
-    
+
     new_content = content[:insert_pos] + methods + content[insert_pos:]
-    
+
     if new_content != original:
         filepath.write_text(new_content)
         return True, f"added IsDirty/MarkDirty/Save"
-    
+
     return False, "no changes made"
 
 def main():
     changed = 0
     errors = 0
-    
+
     for f in sorted(HOST_DIR.glob("*HostSession.cs")):
         if f.name in ["HostCli.cs", "HostCli.SelfTests.cs", "HostCli.PanelTests.cs"]:
             continue
@@ -148,7 +148,7 @@ def main():
         except Exception as e:
             errors += 1
             print(f"[ERROR] {f.name}: {e}")
-    
+
     print(f"\nSummary: {changed} changed, {errors} errors")
 
 if __name__ == "__main__":

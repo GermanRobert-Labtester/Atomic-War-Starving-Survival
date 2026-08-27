@@ -48,21 +48,21 @@ for sub in ("Items", "Portraits", "Locations", "Factions"):
 def heuristic_classify(entry):
     cid = entry["content_id"].lower()
     catfile = Path(entry["catalog"]).stem
-    
+
     # Rule F: reference-only catalog
     if catfile in TRULY_NON_VISUAL:
         return "F.REFERENCE_ONLY"
     if catfile in {"recipes", "recipe_dsl"}:
         return "F.REFERENCE_ONLY"
-    
+
     # Rule E: deprecated ammo family (catalog entry starts with ammo_deprecated_)
     if cid.startswith("ammo_deprecated_"):
         return "E.DEPRECATED_CONTENT"
-    
+
     # Rule H: characters.json → portrait; if kind==portrait and not in portrait roots,
     # probably a wrong-category alias issue.
     # (Already handled by the resolver for canonical prefix variations.)
-    
+
     # Rule B: naming mismatch — could be one of these:
     #   - bare stem not in art, prefixed stem not in art (file genuinely missing)
     #   - bare stem not in art, prefixed stem IS in art (this is what prefix-add fixes)

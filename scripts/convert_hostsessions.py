@@ -9,21 +9,21 @@ SKIP_FILES = {"HostCli.cs", "HostCli.SelfTests.cs", "HostCli.PanelTests.cs", "Ho
 def process_file(filepath: Path):
     content = filepath.read_text()
     original = content
-    
+
     # Skip if already inherits from HostSessionBase
     if "HostSessionBase" in content:
         return False, "already inherits HostSessionBase"
-    
+
     # Change sealed class to inherit from HostSessionBase
     content = re.sub(
         r'public sealed class (\w+HostSession)',
         r'public class \1 : HostSessionBase',
         content
     )
-    
+
     if content == original:
         return False, "no sealed class found"
-    
+
     filepath.write_text(content)
     return True, "converted to inherit HostSessionBase"
 
@@ -36,7 +36,7 @@ def main():
         if ok:
             changed += 1
             print(f"[CHANGED] {f.name}: {msg}")
-    
+
     print(f"\nSummary: {changed} files converted")
 
 if __name__ == "__main__":

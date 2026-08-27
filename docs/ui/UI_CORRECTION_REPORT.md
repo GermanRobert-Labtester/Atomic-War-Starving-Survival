@@ -1,7 +1,7 @@
 # ASHFALL — UI CORRECTION PASS REPORT
 
-**Date:** 2026-08-15  
-**Scope:** Verdict, Dose, Trade, Radio, Inventory, Journal, Main HUD, Year of Ash widgets, Muster widgets  
+**Date:** 2026-08-15
+**Scope:** Verdict, Dose, Trade, Radio, Inventory, Journal, Main HUD, Year of Ash widgets, Muster widgets
 **Verification:** Build 0 errors, 1303 Core tests pass, Holdfast self-test 25/25
 
 ---

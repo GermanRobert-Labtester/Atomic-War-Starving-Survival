@@ -25,7 +25,7 @@ namespace AtomicWar.GodotApp.World
         {
             _mapNodesContainer = GetNode<Node2D>("MapNodes");
             _markerScene = GD.Load<PackedScene>("res://src/World/MapLocationMarkerView.tscn");
-            
+
             Initialize();
         }
 
@@ -51,7 +51,7 @@ namespace AtomicWar.GodotApp.World
         public void Initialize()
         {
             GD.Print("[Ashfall Godot][World] Initializing map nodes...");
-            
+
             try
             {
                 ClearMarkers();
@@ -139,10 +139,10 @@ namespace AtomicWar.GodotApp.World
                 marker.Status = ResolveNodeStatus(node);
                 marker.PositionOffset = new Vector2(0, -30);
                 marker.SetPosition(new Vector2(node.PositionX, node.PositionY));
-                
+
                 marker.NodeSelected += OnNodeSelected;
                 _mapNodesContainer.AddChild(marker);
-                
+
                 GD.Print($"[Ashfall Godot][World] Created marker for {node.DisplayName} (status={marker.Status}) at ({node.PositionX}, {node.PositionY})");
             }
             catch (Exception ex)

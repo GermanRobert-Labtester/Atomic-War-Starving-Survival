@@ -1,10 +1,10 @@
 # ASHFALL — Unified Master Plan Index & Living Architecture Matrix
 
-**Canonical Index Path:** `docs/plans/ASHFALL_UNIFIED_MASTER_PLAN_INDEX.md`  
-**Target:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` (ASHFALL)  
-**Engine Authority:** Godot 4.7+ (.NET/C#)  
-**Simulation Authority:** `Assets/Ashfall.Core/` (netstandard2.1/net8.0, 0 engine references)  
-**Data Authority:** `Assets/StreamingAssets/Data/` (129 catalogs, 4,793 authored IDs)  
+**Canonical Index Path:** `docs/plans/ASHFALL_UNIFIED_MASTER_PLAN_INDEX.md`
+**Target:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` (ASHFALL)
+**Engine Authority:** Godot 4.7+ (.NET/C#)
+**Simulation Authority:** `Assets/Ashfall.Core/` (netstandard2.1/net8.0, 0 engine references)
+**Data Authority:** `Assets/StreamingAssets/Data/` (129 catalogs, 4,793 authored IDs)
 **Status:** ALL ACTIVE PLANS INDEXED, INITIATED, RECONCILED & RE-VERIFIED
 
 ---

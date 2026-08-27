@@ -30,7 +30,7 @@
 **World Impact:** Bandits respect you, good factions hunt you
 **Ending:** "The Warlord" - You rule a small territory through fear
 **Faction Relations:** Raiders 🤝, Peacekeepers 💀, Knowledge Keepers 💀
-**Player Experience:** 
+**Player Experience:**
 - Bandits are cautious but may trade
 - Good factions put bounties on your head
 - NPCs fear you but may provide information for a price
@@ -198,7 +198,7 @@
 ```
 Each quest has a base moral value:
 - Very Evil: -10 to -20 per choice
-- Evil: -5 to -10 per choice  
+- Evil: -5 to -10 per choice
 - Slightly Evil: -1 to -4 per choice
 - Neutral: 0 per choice
 - Slightly Positive: +1 to +4 per choice

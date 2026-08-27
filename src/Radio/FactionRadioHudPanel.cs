@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp.Radio
     /// - CRT scanline terminal (signal_static_overlay.png) with live transcript stream
     /// - 12-faction quick preset bank with real-time signal carrier lock
     /// - Historical wiretap transcript log
-    /// 
+    ///
     /// Driven deterministically via IFactionRadioProvider and ISeededRng.
     /// </summary>
     public partial class FactionRadioHudPanel : PanelContainer

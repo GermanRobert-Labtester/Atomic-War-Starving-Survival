@@ -1,12 +1,12 @@
 # ASHFALL — Expansion Proposal 11: THE LONG LINE
 ## Master Story, Lore, Location & Questline Creative Pack
 
-**Proposed internal id:** `expansion_11_the_long_line`  
-**Status:** creative proposal only — **not canonical until explicitly approved and added to `ExpansionSuite`**  
-**Campaign window:** Day 120+; designed to remain useful through the late campaign  
-**Primary geography:** existing Sector 4 only — The Grid, The Verge, The Spine, The Toll, The Drown  
-**Primary theme:** communication as infrastructure, ration, evidence, intimacy, and power  
-**Voice lock:** cold, exhausted, human, restrained. Specificity over adjectives. No supernatural explanation. No real countries, wars, or public figures. No glorified violence.  
+**Proposed internal id:** `expansion_11_the_long_line`
+**Status:** creative proposal only — **not canonical until explicitly approved and added to `ExpansionSuite`**
+**Campaign window:** Day 120+; designed to remain useful through the late campaign
+**Primary geography:** existing Sector 4 only — The Grid, The Verge, The Spine, The Toll, The Drown
+**Primary theme:** communication as infrastructure, ration, evidence, intimacy, and power
+**Voice lock:** cold, exhausted, human, restrained. Specificity over adjectives. No supernatural explanation. No real countries, wars, or public figures. No glorified violence.
 **Design rule:** this expansion adds **no fifth territorial Power** and **no new victory path**. It introduces one non-territorial Current and a physical communications network that crosses the existing map.
 
 ---
@@ -128,11 +128,11 @@ The player is not solving a conspiracy. The player is restoring a machine that w
 # 6. The new Current — `faction_linekeepers`
 ## The Linekeepers
 
-**Type:** Current, never a territorial Power  
-**Territory:** none  
-**Practice:** maintaining working wire between people who would otherwise be cut off  
-**Relationship model:** access granted / restricted / withdrawn; not territorial standing  
-**What they want:** dry cable paper, paraffin, copper, solder, ceramic arresters, battery acid, glass cells, fuse wire, hand tools  
+**Type:** Current, never a territorial Power
+**Territory:** none
+**Practice:** maintaining working wire between people who would otherwise be cut off
+**Relationship model:** access granted / restricted / withdrawn; not territorial standing
+**What they want:** dry cable paper, paraffin, copper, solder, ceramic arresters, battery acid, glass cells, fuse wire, hand tools
 **What they offer:** line repair, route bulletins, call capacity, technical maps, emergency interconnection
 
 The Linekeepers are not a guild in the old sense. There is no headquarters and no membership card. A Linekeeper is somebody who knows where a pair runs and keeps it dry.
@@ -186,8 +186,8 @@ Eleven days later, the circuit is gone.
 # 7. Principal characters
 
 ## `npc_mara_ell` — Mara Ell
-**Age:** 58  
-**Former work:** municipal cable jointer, Outside Plant Section 4  
+**Age:** 58
+**Former work:** municipal cable jointer, Outside Plant Section 4
 **Current:** senior Linekeeper
 
 Mara can identify cable gauge by bending it between two fingers. She carries a folding knife with one blade ground blunt for scraping lead sheath and another she never uses.
@@ -201,8 +201,8 @@ She cares about continuity of service because she has spent five years learning 
 Her central conflict with the player is technical rather than ideological: she will maintain a line she dislikes, but she will not certify a line as neutral if the player has installed a priority seizure key.
 
 ## `npc_sen_ard` — Sen Ard
-**Age:** 36  
-**Former work:** night operator, Regional Hospital switchboard  
+**Age:** 36
+**Former work:** night operator, Regional Hospital switchboard
 **Current:** manual-board operator
 
 Sen remembers voices better than faces. In the hospital, callers rarely gave surnames. They gave ward numbers, symptoms, or the name of somebody who had stopped breathing.
@@ -216,8 +216,8 @@ He refuses to write call content into the traffic ledger. He writes origin, dest
 He becomes the expansion’s clearest advocate for privacy, though he never uses that word.
 
 ## `npc_pele_orin` — Pele Orin
-**Age:** 19  
-**Former work:** none; eleven at the Exchange  
+**Age:** 19
+**Former work:** none; eleven at the Exchange
 **Current:** runner, pole climber, apprentice cable jointer
 
 Pele has never used a telephone that was connected to another live telephone.
@@ -227,8 +227,8 @@ He knows line work from maps, habits, and Mara’s corrections. He is the fastes
 His personal arc is small: at first he calls every old number “dead.” Sen repeatedly corrects him to “not answering.” Late in the expansion, Pele uses the distinction himself.
 
 ## `npc_renna_mere` — Renna Mere
-**Age:** 43  
-**Location:** North Basin Control, beyond the playable map  
+**Age:** 43
+**Location:** North Basin Control, beyond the playable map
 **Role:** far-end duty operator, voice only
 
 The player never meets Renna.
@@ -244,8 +244,8 @@ That is all the proof the game gives.
 > “We are not sending anybody. You are too far. Keep the pair dry and we can still be useful to each other.”
 
 ## `npc_ivo_kern` — Ivo Kern
-**Age:** 51  
-**Affiliation:** Iron Garrison signals section  
+**Age:** 51
+**Affiliation:** Iron Garrison signals section
 **Role:** claimant to the old priority system
 
 Kern is not a cartoon officer. He understands the exchange better than most surviving civilians because military doctrine trained him to.
@@ -257,9 +257,9 @@ He is correct about the engineering problem.
 He is less convincing about who counts as command.
 
 ## `npc_lida_sey` — Lida Sey
-**Age:** 39  
-**Affiliation:** Verge cooperative  
-**Former work:** maternity nurse; now midwife, clerk, crop-record keeper  
+**Age:** 39
+**Affiliation:** Verge cooperative
+**Former work:** maternity nurse; now midwife, clerk, crop-record keeper
 **Role:** advocate for ordinary access
 
 Lida has no philosophical position on public communications. She has a list of nine farms, two clinics, one mill, and the hours each can spare somebody to stand by a phone.
@@ -326,36 +326,36 @@ No location below creates new territory. Each belongs to one of the five existin
 ## THE GRID
 
 ### 1. `loc_sector4_exchange` — Sector 4 Central Exchange
-**Region:** The Grid  
-**Danger:** 4  
-**Travel:** 2.4 h  
+**Region:** The Grid
+**Danger:** 4
+**Travel:** 2.4 h
 **Radiation:** low-moderate
 
 A three-storey brick utility building with no windows on the ground floor. The public entrance still has opening hours painted on the glass. The glass is gone.
 
 Inside, relay racks stand in aisles taller than a person. Dust lies everywhere except on seven test jacks where somebody has recently pushed plugs in and out. A wall clock stopped at 04:17. Another clock on the next floor stopped at 04:23. Neither time is Hour Zero. The batteries kept the building alive after the city did not.
 
-**Inspect:** a directory drawer contains streets that no longer exist and numbers that still do.  
-**Quest use:** main arc hub; Mara and Sen first appear here.  
+**Inspect:** a directory drawer contains streets that no longer exist and numbers that still do.
+**Quest use:** main arc hub; Mara and Sen first appear here.
 **Loot tone:** relays, fuses, patch cords, test lamps; almost no conventional valuables.
 
 ### 2. `loc_exchange_battery_floor` — Forty-Eight Volt Room
-**Region:** The Grid  
-**Danger:** 6  
-**Travel:** same site  
+**Region:** The Grid
+**Danger:** 6
+**Travel:** same site
 **Hazards:** acid, lead, collapsed ventilation
 
 Rows of glass cells sit on steel racks under a ceiling furred with white corrosion. Each jar is big enough to require two people to lift. The plates have slumped in most of them. Four cells still hold clear liquid to the pencil line.
 
 A rubber apron hangs from a peg. The apron is cracked at the folds but the pencilled inspection dates on the wall continue eleven days after the Exchange.
 
-**Inspect:** `FLOAT 52.8V` is written above the busbar in careful block letters.  
-**Quest use:** first exchange restoration.  
+**Inspect:** `FLOAT 52.8V` is written above the busbar in careful block letters.
+**Quest use:** first exchange restoration.
 **Choice:** salvage cells for the shelter or restore the board; both are useful and mutually exclusive in the short term.
 
 ### 3. `loc_main_distribution_frame` — Main Distribution Frame
-**Region:** The Grid  
-**Danger:** 3  
+**Region:** The Grid
+**Danger:** 3
 **Travel:** same site
 
 Thousands of pairs terminate on vertical blocks. Each pair is two thin conductors and a paper label. The labels survived better than the buildings they describe.
@@ -366,32 +366,32 @@ Nobody knows who made it.
 
 Later records make the answer mundane: a technician made it three weeks before the Exchange because Allocation 12 failed acceptance testing.
 
-**Lore:** establishes that the player shelter always had a direct circuit.  
+**Lore:** establishes that the player shelter always had a direct circuit.
 **Quest use:** Pair 12 tracing.
 
 ### 4. `loc_alloc12_cable_vault` — Allocation 12 Cable Vault
-**Region:** Grid/Verge boundary  
-**Danger:** 4  
+**Region:** Grid/Verge boundary
+**Danger:** 4
 **Travel:** 0.8 h from shelter
 
 A cast-iron street vault under a service road. Meltwater stands ankle deep around a lead-sheathed trunk the width of a wrist.
 
 The splice case is wrapped in black compound and linen tape. Somebody opened it once after the Exchange and closed it badly. The paper insulation inside smells sweet and rotten where it has taken water.
 
-**Quest use:** first physical repair.  
-**Item needs:** dry splice paper, paraffin, copper pair, hand pump.  
+**Quest use:** first physical repair.
+**Item needs:** dry splice paper, paraffin, copper pair, hand pump.
 **Failure texture:** a rushed repair works for days, then begins humming after thaw.
 
 ### 5. `loc_hospital_night_switchboard` — Regional Hospital Night Board
-**Region:** The Grid  
-**Danger:** 6  
+**Region:** The Grid
+**Danger:** 6
 **Travel:** inside/adjacent to `loc_regional_hospital`
 
 A small switchboard behind the old admissions desk. Sixteen cord pairs hang from hooks. Three plugs remain inserted.
 
 The traffic slip under the lamp contains only origin numbers and times. The final line reads:
 
-> `04:31 — MATERNITY / OUTSIDE — HELD`  
+> `04:31 — MATERNITY / OUTSIDE — HELD`
 
 There is no clear time.
 
@@ -400,8 +400,8 @@ Sen recognizes the handwriting but does not name the operator immediately.
 **Quest use:** medical-line restoration; Eleven Minutes lore beat.
 
 ### 6. `loc_dead_number_house` — Number 4-2217
-**Region:** The Grid  
-**Danger:** 2  
+**Region:** The Grid
+**Danger:** 2
 **Travel:** 1.6 h
 
 An ordinary house. Roof intact. Kitchen stripped. Telephone on a hallway table beneath a mirror.
@@ -412,14 +412,14 @@ Nobody answers.
 
 The bell works because the line works. That distinction becomes a recurring motif.
 
-**Quest use:** “Number Not Answering” side quest.  
+**Quest use:** “Number Not Answering” side quest.
 **Loot:** none worth listing. The point is the circuit.
 
 ## THE VERGE
 
 ### 7. `loc_verge_party_line_house` — South Cooperative Party-Line Hut
-**Region:** The Verge  
-**Danger:** 2  
+**Region:** The Verge
+**Danger:** 2
 **Travel:** 1.9 h
 
 A farm office with six magneto telephones screwed to one plank wall. Each has a different ring code written above it: two short, one long; long-short-long; three short.
@@ -430,12 +430,12 @@ People did.
 
 The cooperative does not remember this as a privacy crisis. They remember it as how you knew whose cow was down before breakfast.
 
-**Quest use:** rural network and privacy contrast.  
+**Quest use:** rural network and privacy contrast.
 **Benefit:** Verge route, crop, and medical bulletin access.
 
 ### 8. `loc_irrigation_alarm_shed` — Terrace Water Alarm Shed
-**Region:** The Verge  
-**Danger:** 3  
+**Region:** The Verge
+**Danger:** 3
 **Travel:** 2.3 h
 
 A concrete hut above a valve chamber. Two float switches once rang the exchange if the irrigation header lost pressure.
@@ -444,32 +444,32 @@ One float is stuck under a mat of dead roots. The other moves freely and still c
 
 A chalkboard lists valve turns beside first names only. Most names have been rubbed off by sleeves.
 
-**Quest use:** weather/water companion line.  
+**Quest use:** weather/water companion line.
 **Benefit:** earlier drought and freeze warnings if maintained.
 
 ### 9. `loc_linekeepers_splice_yard` — The Splice Yard
-**Region:** Verge/Toll edge  
-**Danger:** 3  
+**Region:** Verge/Toll edge
+**Danger:** 3
 **Travel:** 2.7 h
 
 Not a headquarters. A bus layby with cable reels under tarpaulins, two work benches, a brazier, and a board listing faults.
 
 Each fault is written as a place and symptom:
 
-`BRIDGE EAST — HUM IN WET`  
-`HOSPITAL — RINGS / NO SPEECH`  
-`17 — NO BATTERY WEST`  
+`BRIDGE EAST — HUM IN WET`
+`HOSPITAL — RINGS / NO SPEECH`
+`17 — NO BATTERY WEST`
 
 Nobody signs the board.
 
-**Quest use:** Linekeeper access hub.  
+**Quest use:** Linekeeper access hub.
 **World detail:** if access is withdrawn, the board remains but new chalk stops appearing.
 
 ## THE TOLL
 
 ### 10. `loc_bridge_cable_gallery` — East Bridge Cable Gallery
-**Region:** The Toll  
-**Danger:** 6  
+**Region:** The Toll
+**Danger:** 6
 **Travel:** 3.5 h
 
 A steel maintenance walkway under the road deck. The river is visible through gaps in the grating. Telephone cable, signalling cable, and dead power conduit share the same brackets.
@@ -478,12 +478,12 @@ The Warlords charge toll above. Below, somebody has painted the cable every five
 
 The paint is not theirs. It predates them.
 
-**Quest use:** route-rights conflict and Pair 17 repair.  
+**Quest use:** route-rights conflict and Pair 17 repair.
 **Hazard:** ice, height, old demolition wiring nearby but clearly marked according to canon denial doctrine.
 
 ### 11. `loc_carrier_repeater_17` — Repeater Hut 17
-**Region:** The Toll  
-**Danger:** 5  
+**Region:** The Toll
+**Danger:** 5
 **Travel:** 4.1 h
 
 A roadside concrete box with two doors, one inside the other. The equipment rack carries a bank of carrier filters, a rectifier, and a little inspection stool bolted to the floor.
@@ -492,12 +492,12 @@ A thermos sits under the stool. The lid is missing. Somebody has stuffed the ope
 
 This hut is the reason the far trunk can work at all.
 
-**Quest use:** first contact with North Basin.  
+**Quest use:** first contact with North Basin.
 **Repair needs:** rectifier module, fuse wire, cleaned contacts, stable 48V source.
 
 ### 12. `loc_train_dispatch_board` — Rail Dispatch Telephone Board
-**Region:** The Toll  
-**Danger:** 5  
+**Region:** The Toll
+**Danger:** 5
 **Travel:** 3.8 h
 
 The dispatch room overlooks tracks that stop being tracks fifty metres east. The board still shows block sections using small metal flags.
@@ -511,20 +511,20 @@ The last dispatcher crossed out no trains after Hour Zero. The timetable continu
 ## THE SPINE
 
 ### 13. `loc_weather_wire_house` — Highland Weather Wire House
-**Region:** The Spine  
-**Danger:** 6  
+**Region:** The Spine
+**Danger:** 6
 **Travel:** 5.6 h
 
 A low stone hut below the ridge instruments. Copper lines enter through porcelain tubes. Inside: a barometer, wet-bulb cradle, chart drums, and a telephone with no dial.
 
 The last paper chart is still wrapped around the drum. The pen drew pressure falling until the ink froze.
 
-**Quest use:** Weather Wire companion arc.  
+**Quest use:** Weather Wire companion arc.
 **Benefit:** forecast lead time and False Spring warnings.
 
 ### 14. `loc_observatory_patchbay` — Observatory Instrument Patchbay
-**Region:** The Spine  
-**Danger:** 7  
+**Region:** The Spine
+**Danger:** 7
 **Travel:** tied to existing observatory sites
 
 A rack where instrument circuits were patched onto the civil line during storms. The Cult has labelled several jacks with devotional names in charcoal but has not altered the wiring.
@@ -536,8 +536,8 @@ They interpret what the wind means differently.
 **Quest use:** negotiation with Cult; data sharing without validating doctrine.
 
 ### 15. `loc_highland_ground_bed` — Ridge Ground Bed
-**Region:** The Spine  
-**Danger:** 7  
+**Region:** The Spine
+**Danger:** 7
 **Travel:** 6.2 h
 
 Thirty copper rods driven into wet mineral soil, linked by green-black braid. Lightning arresters dump surge energy here before it enters the repeater line.
@@ -549,8 +549,8 @@ Most rods are still present because copper underground is harder to steal than c
 ## THE DROWN
 
 ### 16. `loc_flooded_exchange_west` — West Exchange Basement
-**Region:** The Drown  
-**Danger:** 9  
+**Region:** The Drown
+**Danger:** 9
 **Travel:** 6.8 h
 
 The ground floor is dry enough to stand in. The cable basement is not.
@@ -559,12 +559,12 @@ Rows of distribution blocks descend into black water. When another restored stat
 
 Methane gathers above the stairwell. No open flame.
 
-**Quest use:** late repair; expands capacity from one to two simultaneous calls.  
+**Quest use:** late repair; expands capacity from one to two simultaneous calls.
 **Tone:** extraordinary visual with completely ordinary cause.
 
 ### 17. `loc_river_cable_landing` — Armoured River Cable Landing
-**Region:** The Drown  
-**Danger:** 8  
+**Region:** The Drown
+**Danger:** 8
 **Travel:** 7.2 h
 
 A concrete landing chamber where the trunk crosses beneath the river in steel armour. One cable was cut for copper years ago. The second remains because the water came in before the thieves could finish.
@@ -573,12 +573,12 @@ A hacksaw lies on the ledge above the flood mark.
 
 The blade is new enough to have teeth.
 
-**Quest use:** optional third circuit / Black Flotilla cross-hook.  
+**Quest use:** optional third circuit / Black Flotilla cross-hook.
 **Hazard:** water, cold, confined space.
 
 ### 18. `loc_pump_alarm_room` — Reclamation Pump Alarm Room
-**Region:** The Drown  
-**Danger:** 8  
+**Region:** The Drown
+**Danger:** 8
 **Travel:** 6.4 h
 
 A narrow room above the old flood pumps. The alarm board has red windows for sluice position, motor overload, and sump depth. Most windows are dark.
@@ -675,31 +675,31 @@ These are written as data-ready lore concepts. Exact schema conversion should us
 ## `pre_exchange`
 
 ### `lore_line_common_carrier`
-**Title:** The Common Carrier Rule  
+**Title:** The Common Carrier Rule
 **Found at:** `loc_sector4_exchange`
 
 The telephone company was required to carry any lawful call for any paying line. Emergency doctrine added exceptions until the exceptions had their own binder.
 
 ### `lore_line_forty_eight_volts`
-**Title:** Forty-Eight Volts  
+**Title:** Forty-Eight Volts
 **Found at:** `loc_exchange_battery_floor`
 
 Exchange batteries were oversized because people noticed telephone failure sooner than almost any other civic failure. The specification required eight hours. The cells ran for eleven days because most lines stopped drawing current.
 
 ### `lore_line_priority_table`
-**Title:** Priority Is a Number  
+**Title:** Priority Is a Number
 **Found at:** `location_ministry_of_truth_bunker`
 
 The priority table was printed on one page. It was meant to prevent arguments during emergencies by deciding the argument beforehand.
 
 ### `lore_line_allocated_extensions`
-**Title:** Shelter Extensions  
+**Title:** Shelter Extensions
 **Found at:** `loc_main_distribution_frame`
 
 Allocated shelters received direct emergency circuits. Allocation 12 was provisioned as Class C and failed its final voice test three weeks before occupancy.
 
 ### `lore_line_last_directory`
-**Title:** Directory Correction  
+**Title:** Directory Correction
 **Found at:** `loc_sector4_exchange`
 
 A clerk corrected three street names after evacuation orders had already begun. The corrected pages were never delivered. The work was completed anyway.
@@ -707,25 +707,25 @@ A clerk corrected three street names after evacuation orders had already begun. 
 ## `hour_zero`
 
 ### `lore_line_priority_zero`
-**Title:** Seizure  
+**Title:** Seizure
 **Found at:** `loc_sector4_exchange`
 
 The priority key was turned once. Lamps for hundreds of lower-class calls went dark at the same moment. The event recorder marks the action as successful.
 
 ### `lore_line_eleven_minutes`
-**Title:** Eleven Minutes  
+**Title:** Eleven Minutes
 **Found at:** `loc_hospital_night_switchboard`
 
 One outside call remained connected after seizure. The notation says maternity. The clear time is blank.
 
 ### `lore_line_calls_waiting`
-**Title:** Calls Waiting  
+**Title:** Calls Waiting
 **Found at:** `loc_sector4_exchange`
 
 The final peg count was 184 waiting calls. Peg counts record demand, not content. Nobody wrote what 184 people wanted.
 
 ### `lore_line_alloc12_no_answer`
-**Title:** Allocation 12 — No Answer  
+**Title:** Allocation 12 — No Answer
 **Found at:** `loc_main_distribution_frame`
 
 The exchange tested Allocation 12 three times during the warning period. Ring current reached the shelter. Nobody answered because the intended occupants had not arrived.
@@ -733,19 +733,19 @@ The exchange tested Allocation 12 three times during the warning period. Ring cu
 ## `black_sky`
 
 ### `lore_line_manual_islands`
-**Title:** Islands  
+**Title:** Islands
 **Found at:** `loc_verge_party_line_house`
 
 For several months, isolated farm loops still worked locally even after the central exchange failed. People learned which neighbours were alive by which ring codes were answered.
 
 ### `lore_line_first_cut`
-**Title:** The First Cut  
+**Title:** The First Cut
 **Found at:** `loc_river_cable_landing`
 
 Copper theft did not begin with greed. The first recorded cut supplied wire for a clinic heater. The second supplied a still. By the third, nobody was keeping records.
 
 ### `lore_line_0300`
-**Title:** The 0300 Reading  
+**Title:** The 0300 Reading
 **Found at:** `loc_weather_wire_house`
 
 A weather observer transmitted a 0300 pressure reading for eighty-three days after the receiving office stopped acknowledging it.
@@ -753,13 +753,13 @@ A weather observer transmitted a 0300 pressure reading for eighty-three days aft
 ## `ashfall`
 
 ### `lore_linekeepers_pair`
-**Title:** No One Owns a Pair  
+**Title:** No One Owns a Pair
 **Found at:** `loc_linekeepers_splice_yard`
 
 The phrase first appears on a fault board after two armed groups both claimed the same cable. The technician repaired it and wrote neither claimant’s name.
 
 ### `lore_line_seventeen_answers`
-**Title:** Circuit Seventeen  
+**Title:** Circuit Seventeen
 **Found at:** triggered by first North Basin connection
 
 The first voice from beyond Sector 4 asked for battery polarity before asking for names.
@@ -775,7 +775,7 @@ The main arc is twelve quests plus a delayed epilogue. It should feel like repai
 ## MAIN 01 — `quest_long_line_one_ring`
 ### “One Ring”
 
-**Trigger:** Day 120+, stable shelter power, storm/thaw or maintenance event  
+**Trigger:** Day 120+, stable shelter power, storm/thaw or maintenance event
 **Target:** player shelter
 
 A telephone bell rings behind the Allocation 12 service panel.
@@ -1091,25 +1091,25 @@ It is not functioning well enough to connect all four.
 ### Minimum crisis board
 
 #### Call A — `busy_call_drown_pump`
-**Origin:** `loc_pump_alarm_room`  
+**Origin:** `loc_pump_alarm_room`
 A surge is arriving. Workers can close a secondary sluice manually if they receive the gate sequence before water reaches the lower room.
 
 **Known:** seventeen people on shift; infrastructure value high; Drown conditions uncertain.
 
 #### Call B — `busy_call_verge_clinic`
-**Origin:** Verge party line  
+**Origin:** Verge party line
 A complicated birth. Lida requests a specific medical consultation and needs a live person, not a written instruction.
 
 **Known:** one patient in immediate danger; shelter medical staff can help if connected.
 
 #### Call C — `busy_call_toll_bridge`
-**Origin:** bridge office / Lamplighter relay  
+**Origin:** bridge office / Lamplighter relay
 A truck axle has failed across the cable-side lane while a convoy is approaching in low visibility. The road can be closed from the east if the warning reaches the next post.
 
 **Known:** number of travellers uncertain; closing the bridge also interrupts supply movement.
 
 #### Call D — `busy_call_grid_fire`
-**Origin:** Grid block line  
+**Origin:** Grid block line
 A tenement stairwell is burning. The nearest working hydrant is on a manually isolated main. Someone at the water office knows which valve to open.
 
 **Known:** residents present; exact count unknown; Garrison patrol can reach the block if dispatched.
@@ -1174,48 +1174,48 @@ The player chooses an operating charter. This is an expansion ending state, **no
 ### Open Board
 Any recognized station may request a call. Queue is chronological except for a narrow life-safety interrupt requiring two operators to agree.
 
-**Benefits:** broad access, strong civilian use, high Linekeeper support.  
-**Costs:** player loses guaranteed priority; high queue load; some strategic calls wait.  
+**Benefits:** broad access, strong civilian use, high Linekeeper support.
+**Costs:** player loses guaranteed priority; high queue load; some strategic calls wait.
 **World texture:** people begin carrying written call requests with preferred times.
 
 ## Charter B — `line_charter_shelter_priority`
 ### Allocation 12 Priority
 The player shelter keeps first seizure right on one circuit.
 
-**Benefits:** strongest direct survival utility; emergency shelter coordination.  
-**Costs:** other users treat the line as player property; some Currents avoid sensitive calls.  
+**Benefits:** strongest direct survival utility; emergency shelter coordination.
+**Costs:** other users treat the line as player property; some Currents avoid sensitive calls.
 **World texture:** the phone in the command room rings less often because people route around you.
 
 ## Charter C — `line_charter_fixed_slots`
 ### The Timetable
 Each Power/Current/community gets allocated windows, published seven days ahead.
 
-**Benefits:** predictable and politically legible.  
-**Costs:** unused minutes cannot always be reclaimed; emergencies create constant exception pressure.  
+**Benefits:** predictable and politically legible.
+**Costs:** unused minutes cannot always be reclaimed; emergencies create constant exception pressure.
 **World texture:** people arrive at phones early and wait for their minute.
 
 ## Charter D — `line_charter_garrison_priority`
 ### Command Net
 The Garrison receives A1 seizure authority and maintains guards, batteries, and repair escorts.
 
-**Benefits:** best physical security and power stability.  
-**Costs:** monitored/strategic use; Militia and some Currents reduce participation; ordinary calls are lower class again.  
+**Benefits:** best physical security and power stability.
+**Costs:** monitored/strategic use; Militia and some Currents reduce participation; ordinary calls are lower class again.
 **World texture:** every call begins with an operator identification code.
 
 ## Charter E — `line_charter_toll_service`
 ### Metered Line
 Warlords administer bridge/repeater access and charge by completed call or reserved slot.
 
-**Benefits:** stable material funding; fewer frivolous calls; freight coordination improves.  
-**Costs:** people without trade goods become effectively mute; the Quiet House cannot always pay.  
+**Benefits:** stable material funding; fewer frivolous calls; freight coordination improves.
+**Costs:** people without trade goods become effectively mute; the Quiet House cannot always pay.
 **World texture:** a mechanical counter clicks before the first ring.
 
 ## Charter F — `line_charter_linekeeper_custody`
 ### Technical Custody
 Linekeepers own no content rights but control switching, repair, and emergency break-in according to their five rules.
 
-**Benefits:** high neutrality and network health; sensitive Currents keep using it.  
-**Costs:** the player cannot order surveillance or preferential access; Linekeepers may deny a politically important preemption they judge non-emergency.  
+**Benefits:** high neutrality and network health; sensitive Currents keep using it.
+**Costs:** the player cannot order surveillance or preferential access; Linekeepers may deny a politically important preemption they judge non-emergency.
 **World texture:** the player must request calls like everyone else.
 
 ---
@@ -1238,7 +1238,7 @@ North Basin still answers if the physical line remains intact.
 
 # 14. COMPANION QUESTLINE A — THE NAMES BETWEEN STATIONS
 
-**Primary systems:** Archivists, located knowledge, *The List* optional integration  
+**Primary systems:** Archivists, located knowledge, *The List* optional integration
 **Tone:** verification, names, distance, the difference between missing and dead
 
 This line becomes available after Pair 17 is restored and the Archivists are known.
@@ -1398,7 +1398,7 @@ This policy is subordinate to the main Line Charter but changes travel and facti
 
 # 16. COMPANION QUESTLINE C — A PRIVATE LINE
 
-**Primary systems:** survivors, trust, Tally, Quiet House, privacy policy  
+**Primary systems:** survivors, trust, Tally, Quiet House, privacy policy
 **Core question:** does restoring private speech also restore the right to keep it private?
 
 ## PRIVATE 01 — `quest_private_extension_three`
@@ -1842,21 +1842,21 @@ If the line goes down permanently, her final confirmed state remains whatever th
 These should use trust-reactive prose where possible.
 
 ## Iron Garrison
-**High trust:** calls it a civil-defense asset under cooperative command.  
+**High trust:** calls it a civil-defense asset under cooperative command.
 **Low trust:** calls it an unsecured strategic circuit and demands inspection.
 
 The technical request is nearly identical. The wording changes.
 
 ## Ash Militia / Verge
-**High trust:** volunteers operators and publishes farm ring hours.  
+**High trust:** volunteers operators and publishes farm ring hours.
 **Low trust:** uses runners for sensitive messages and the phone only for weather.
 
 ## Warlords
-**High trust:** offers bridge access at a stated rate and honours it.  
+**High trust:** offers bridge access at a stated rate and honours it.
 **Low trust:** still offers access, at a worse rate, because a functioning line increases toll traffic.
 
 ## Cult of the Ash Sign
-**High trust:** allows instrument data through with ritual labels attached.  
+**High trust:** allows instrument data through with ritual labels attached.
 **Low trust:** withholds observatory patch access but still accepts emergency weather warnings.
 
 The game never validates their interpretation of the readings.

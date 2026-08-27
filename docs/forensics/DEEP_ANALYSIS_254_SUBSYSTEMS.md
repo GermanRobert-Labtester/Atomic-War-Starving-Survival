@@ -1,8 +1,8 @@
 # Deep Forensic Analysis: 254-Subsystem Survey
 
-**Date:** 2026-08-23  
-**Input:** `docs/forensics/254_SUBSYSTEMS_CONSOLIDATED_REPORT.md`  
-**Mode:** Read-only evidence synthesis — no code modified  
+**Date:** 2026-08-23
+**Input:** `docs/forensics/254_SUBSYSTEMS_CONSOLIDATED_REPORT.md`
+**Mode:** Read-only evidence synthesis — no code modified
 
 ---
 

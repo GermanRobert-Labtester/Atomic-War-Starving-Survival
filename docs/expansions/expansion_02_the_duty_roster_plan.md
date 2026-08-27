@@ -1,10 +1,10 @@
 # ASHFALL — Expansion Design Bible
 
-**Title:** ASHFALL: THE DUTY ROSTER  
-**Internal id:** `expansion_the_duty_roster`  
-**Status:** Design bible for review. No game data has been edited. No C#.  
-**All new ids below are PROPOSED** unless marked *existing*.  
-**Tone lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.  
+**Title:** ASHFALL: THE DUTY ROSTER
+**Internal id:** `expansion_the_duty_roster`
+**Status:** Design bible for review. No game data has been edited. No C#.
+**All new ids below are PROPOSED** unless marked *existing*.
+**Tone lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.
 **Sister pack:** Expansion 1 is `expansion_the_holdfast`. This pack does **not** reopen District 8 geography. It is the unlisted home.
 
 ---
@@ -51,7 +51,7 @@
 
 **ASHFALL: THE DUTY ROSTER.**
 
-Holdfast is the allocated world: District 8, forms, brine, Ice Road.  
+Holdfast is the allocated world: District 8, forms, brine, Ice Road.
 This pack is the **unlisted home**: Allocation 12 as a political space, Sector 4 nodes as quest stages, the bunker/hatch/duty roster/sleeping-stack as a stage.
 
 The Second Winter is a season that can fall across both packs. It is not a difficulty slider with a title screen.
@@ -144,10 +144,10 @@ Travel banding from the hatch:
 
 ## 2.1 The Stack — *Allocation 12 Interior*
 
-**id prefix:** `loc_stack_*`  
-**Visual:** Bolted fittings that do not match the people. Bunks for eleven, manifest for fourteen. Four unfaded rectangles. A crate of boots, sizes 1–4. The chart.  
-**Lore:** Provisioned for fourteen. Occupied by whoever was near an unlocked hatch. The chart was left blank because the assignees had names and these people were not them. Writing a name is how a community starts, and how a levy finds a column.  
-**Unique mechanic:** `DutyRosterSystem` — morning row, assignments, absences, pencil vs ink.  
+**id prefix:** `loc_stack_*`
+**Visual:** Bolted fittings that do not match the people. Bunks for eleven, manifest for fourteen. Four unfaded rectangles. A crate of boots, sizes 1–4. The chart.
+**Lore:** Provisioned for fourteen. Occupied by whoever was near an unlocked hatch. The chart was left blank because the assignees had names and these people were not them. Writing a name is how a community starts, and how a levy finds a column.
+**Unique mechanic:** `DutyRosterSystem` — morning row, assignments, absences, pencil vs ink.
 **Who you meet:** Kess Adler; Ansel Duth; whoever is not north.
 
 ### POIs (6) — all PROPOSED inspectable wings, not a new overworld
@@ -167,10 +167,10 @@ Travel banding from the hatch:
 
 ## 2.2 The Approach — *Hatch Account*
 
-**id prefix:** `loc_approach_*`  
-**Visual:** Outer hatch. Ash apron. A folding stool that should not be there. Intercom grille with a cracked button.  
-**Lore:** Standby cycle held the hatch unlocked at Hour Zero. Everything since has been a decision about who comes in. Edor will wait here. Census escorts will wait here. Quiet House will knock twice. Pell will take a number as if the ash were a bureau.  
-**Unique mechanic:** `ShelterEncounterSystem` hatch-trigger. **Reuses** ExpeditionSystem hatch-dilemma constants. Do not retune without Prompt #26.  
+**id prefix:** `loc_approach_*`
+**Visual:** Outer hatch. Ash apron. A folding stool that should not be there. Intercom grille with a cracked button.
+**Lore:** Standby cycle held the hatch unlocked at Hour Zero. Everything since has been a decision about who comes in. Edor will wait here. Census escorts will wait here. Quiet House will knock twice. Pell will take a number as if the ash were a bureau.
+**Unique mechanic:** `ShelterEncounterSystem` hatch-trigger. **Reuses** ExpeditionSystem hatch-dilemma constants. Do not retune without Prompt #26.
 **Who you meet:** Tamsin Rook (intercom); Edor Vale (*Holdfast*); Len Quill; Sergeant Pell (*existing*).
 
 ### POIs (4) — PROPOSED
@@ -213,10 +213,10 @@ When `exp_duty_roster_unlocked`, these nodes gain inspect lines and `threatening
 
 ## 2.4 The Overflow — *the only new sub-geography*
 
-**id prefix:** `loc_overflow_*`  
-**Visual:** Authenticator lights that still believe in numbers. Stairwells with chalk. Holes Continuity numbered and did not fill.  
-**Lore:** Allocation 12 was overflow for Cluster 7. 11 and 13 were overflow for 12. The formula made spare holes the way it made spare people. Some of the spares are occupied. The occupants do not write names.  
-**Unique mechanic:** Current access `faction_blank_rows` — granted or withdrawn. You cannot conquer them. You can lose the hiding place.  
+**id prefix:** `loc_overflow_*`
+**Visual:** Authenticator lights that still believe in numbers. Stairwells with chalk. Holes Continuity numbered and did not fill.
+**Lore:** Allocation 12 was overflow for Cluster 7. 11 and 13 were overflow for 12. The formula made spare holes the way it made spare people. Some of the spares are occupied. The occupants do not write names.
+**Unique mechanic:** Current access `faction_blank_rows` — granted or withdrawn. You cannot conquer them. You can lose the hiding place.
 **Who you meet:** Nila Brant.
 
 This does **not** reopen Sector 4's Power map. It is a Current practice in authenticated voids, mostly under the Grid/Drown seam, 1.5–3h from home. It is not a coast. It is not District 8.
@@ -259,12 +259,12 @@ This does **not** reopen Sector 4's Power map. It is a Current practice in authe
 
 **Two correct occupancies.**
 
-The wall chart was printed for fourteen assignees.  
-The people sleeping under it have been a community for five years.  
-Reconstruction Order 12-C says unallocated occupants of an authenticated facility are a labour reserve.  
-Voss says able bodies are service.  
-Frayne says brass is fittings, not names.  
-Sole says a record that does not include the living is incomplete.  
+The wall chart was printed for fourteen assignees.
+The people sleeping under it have been a community for five years.
+Reconstruction Order 12-C says unallocated occupants of an authenticated facility are a labour reserve.
+Voss says able bodies are service.
+Frayne says brass is fittings, not names.
+Sole says a record that does not include the living is incomplete.
 Nila says a record that includes the living is how the ice finds them.
 
 The player must decide whether the unlisted are a community, a pool, a hiding place, or a blank.
@@ -691,7 +691,7 @@ Cross-tool QA: roster assignment × needs tick × levy availability is **three c
 
 ## 5.1 `DutyRosterSystem`
 
-**id:** `duty_roster_system`  
+**id:** `duty_roster_system`
 **What it is:** The chart as save-safe occupancy. Not a job minigame. A document that other systems read.
 
 **Mechanics:**
@@ -711,7 +711,7 @@ Cross-tool QA: roster assignment × needs tick × levy availability is **three c
 
 ## 5.2 `ShelterEncounterSystem`
 
-**id:** `shelter_encounter_system`  
+**id:** `shelter_encounter_system`
 **What it is:** The bunker as a stage. Timed, flagged, save-safe scenes. Not a procedural chatterbox.
 
 **Mechanics:**
@@ -731,7 +731,7 @@ Cross-tool QA: roster assignment × needs tick × levy availability is **three c
 
 ## 5.3 `MoraleMarkSystem`
 
-**id:** `morale_mark_system`  
+**id:** `morale_mark_system`
 **What it is:** Small, frequent, diegetic consequences. A flag + a later sentence. Not a second morale meter.
 
 **Mechanics:**
@@ -944,17 +944,17 @@ Dry-gouache, isolated objects, no readable AI text, no flags, no gore, no fantas
 
 ## 8.5 QA cases (minimum)
 
-1. Old save → blank chart → pencil → Edor occupations update  
-2. Levy honour → three `status=levy` → mess extra → day 30 return hatch dilemma  
-3. Hide Hadi → Cluster strip still missing → Nila will hide him → ink of Hadi breaks 11  
-4. Voss intercept vs Office levy — same three names, two receipts  
-5. Tin sold north → Frayne **and** Leva shortage; wall still blank of plates  
-6. Quiet House lie written on tag → Stack reads it  
-7. Sole one-witness fail — no entry  
-8. Ice Road dark → `se_road_dark_crowd` → window quest closed-road variant  
-9. Burn chart → hatch escort brings foreign list  
-10. Hatch let-in still +50 rads/h; deny still −20 morale others  
-11. Compile + EditMode PASS  
+1. Old save → blank chart → pencil → Edor occupations update
+2. Levy honour → three `status=levy` → mess extra → day 30 return hatch dilemma
+3. Hide Hadi → Cluster strip still missing → Nila will hide him → ink of Hadi breaks 11
+4. Voss intercept vs Office levy — same three names, two receipts
+5. Tin sold north → Frayne **and** Leva shortage; wall still blank of plates
+6. Quiet House lie written on tag → Stack reads it
+7. Sole one-witness fail — no entry
+8. Ice Road dark → `se_road_dark_crowd` → window quest closed-road variant
+9. Burn chart → hatch escort brings foreign list
+10. Hatch let-in still +50 rads/h; deny still −20 morale others
+11. Compile + EditMode PASS
 
 ---
 
@@ -1094,15 +1094,15 @@ If a system wants a seventh Codex relationship, a retuned hatch constant, or a w
 
 ## A.3 Two-way flag list (10) — parent summary
 
-1. Levy honour/refuse/substitute ↔ empty bunks, ladle, Edor's stool, irregular mark.  
-2. Membrane strip/drop ↔ iodine/brass/filter at home, Office tone, hide-willingness.  
-3. 12-C live ↔ intercom, ink hard-gate, Kess refusal.  
-4. Sela clinic vs stay ↔ row/guest, boots, 12-B kit language, quieter neighbour.  
-5. Waystation staffing ↔ Tamsin, home watch, steam watch.  
-6. Ice Road dark ↔ closed-road window quest, Pell/Voss instead of levy ice.  
-7. Hadi listed/hidden/gone ↔ levy names, outfall, Ianov, never-back.  
-8. Voss intercept ↔ Gate description, Edor waiting for the wrong district.  
-9. Brass tin/plate ↔ Leva, Frayne, playground, Holdfast achievements.  
+1. Levy honour/refuse/substitute ↔ empty bunks, ladle, Edor's stool, irregular mark.
+2. Membrane strip/drop ↔ iodine/brass/filter at home, Office tone, hide-willingness.
+3. 12-C live ↔ intercom, ink hard-gate, Kess refusal.
+4. Sela clinic vs stay ↔ row/guest, boots, 12-B kit language, quieter neighbour.
+5. Waystation staffing ↔ Tamsin, home watch, steam watch.
+6. Ice Road dark ↔ closed-road window quest, Pell/Voss instead of levy ice.
+7. Hadi listed/hidden/gone ↔ levy names, outfall, Ianov, never-back.
+8. Voss intercept ↔ Gate description, Edor waiting for the wrong district.
+9. Brass tin/plate ↔ Leva, Frayne, playground, Holdfast achievements.
 10. Ink/pencil/blank/burn ↔ hatch reversed escort list, Sole completeness, Block C nameplates.
 
 ---

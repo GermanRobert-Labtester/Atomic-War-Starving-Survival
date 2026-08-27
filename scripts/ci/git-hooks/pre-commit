@@ -25,6 +25,13 @@ if [ -x "$secret_scan" ]; then
     "$secret_scan"
 fi
 
+# --- Whitespace scan (fast, always-on) ---
+if ! git diff --cached --check; then
+    echo "[pre-commit] ERROR: Trailing whitespace detected in staged changes." >&2
+    echo "Please remove trailing whitespace before committing (e.g. git diff --cached --check)." >&2
+    exit 1
+fi
+
 # Only act when the commit touches Godot asset paths.
 staged_files=$(git diff --cached --name-only)
 if [ -z "$staged_files" ]; then

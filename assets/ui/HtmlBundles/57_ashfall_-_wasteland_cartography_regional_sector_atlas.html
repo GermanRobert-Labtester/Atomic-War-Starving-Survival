@@ -112,7 +112,7 @@
             background-attachment: fixed;
             position: relative;
         }
-        
+
         /* CRT Scanline Effect */
         body::before {
             content: " ";
@@ -146,7 +146,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
-        
+
         .tactical-btn {
             border: 1px solid theme('colors.outline-variant');
             background: transparent;
@@ -158,14 +158,14 @@
             color: theme('colors.on-surface');
             border-color: theme('colors.secondary');
         }
-        
+
         .blinking-cursor::after {
             content: '█';
             animation: blink 1s step-end infinite;
             color: theme('colors.secondary');
             margin-left: 4px;
         }
-        
+
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }

@@ -16,7 +16,7 @@ The codebase is **well-engineered** in several key areas: atomic save writes wit
 ## CRITICAL Findings (Fix Before Shipping)
 
 ### C-1: ~60+ Anonymous Lambda Event Subscriptions Never Unsubscribed
-**Sweep:** Event Bus & Lifecycle  
+**Sweep:** Event Bus & Lifecycle
 **Files:** `GameBootstrap.InitLate.cs`, `InitLate.Radio.cs`, `InitFoundation.cs`, `BunkerSocial.cs`, `InitWorld.Narrative.cs`, `InitWorld.Diary.cs`, `UiActions.Hud.cs`, `UiActions.Radio.cs`
 
 ~60+ anonymous lambdas are subscribed to long-lived system events (`+=`) but never unsubscribed (`-=`). On scene reload or "new game," the old `GameBootstrap` cannot be garbage-collected because lambda closures capture `this`. Handler duplication causes double journal entries, double narrative raises, etc. Memory grows unbounded across play sessions in the editor.
@@ -28,7 +28,7 @@ The codebase is **well-engineered** in several key areas: atomic save writes wit
 ---
 
 ### C-2: Iron Man Save Deletion Reports Success Even When Deletion Fails
-**Sweep:** Null Safety  
+**Sweep:** Null Safety
 **File:** `Assets/_Game/Core/Mode_IronMan.cs` (lines 105, 118)
 
 Bare `catch { }` blocks around memorial write and save deletion. If save deletion fails (file locked, permissions), `_state.save_deleted = true` is still set and `OnSaveDeleted` fires — telling the UI the save was deleted when it wasn't. This defeats the entire Iron Man mode.
@@ -40,7 +40,7 @@ Bare `catch { }` blocks around memorial write and save deletion. If save deletio
 ---
 
 ### C-3: GameBootstrap Is a 13,757-Line God Class with 602 Public Properties
-**Sweep:** Architecture  
+**Sweep:** Architecture
 **Files:** 58 partial class files under `Assets/_Game/Core/`
 
 Every system in the game is exposed as a public property on a single MonoBehaviour. Adding any new system requires modifying GameBootstrap in 4+ places (constructor, property, registry registration, save wiring, HUD wiring, tick registration, OnDestroy cleanup). This is the root cause of most coupling issues.
@@ -50,7 +50,7 @@ Every system in the game is exposed as a public property on a single MonoBehavio
 ---
 
 ### C-4: EMP Event Has Zero Test Coverage
-**Sweep:** Test Coverage  
+**Sweep:** Test Coverage
 **Files:** Production: `EMPEvent.cs`, `Weather_EMPStorm.cs`. Tests: none.
 
 The spec explicitly lists "EMP/electronics failure" as a core hazard. No test verifies that EMP disables shelter modules, power grid, or instruments.

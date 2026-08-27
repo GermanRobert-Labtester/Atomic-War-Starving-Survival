@@ -271,7 +271,7 @@ public partial class ResearchAtlasPanel : Control
         // ResearchSystem exposes a 15-node catalog with prerequisite gating and
         // day-progress ticks. The host session feeds the status rail with live
         // counts from the engine state envelope.
-        
+
         _statusRail.Set("total",  "5", AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("unlocked",  "5", AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("active",  "127", AshfallMetricCard.Criticality.Normal);

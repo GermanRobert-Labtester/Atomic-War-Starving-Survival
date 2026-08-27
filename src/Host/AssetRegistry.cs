@@ -46,14 +46,14 @@ namespace AtomicWar.GodotApp
 
     /// <summary>
     /// Thin, presentation-only asset registry that maps catalog IDs to Godot Texture2D resources.
-    /// 
+    ///
     /// Path resolution order:
     /// 1. assets/art/{id}.jpg (primary - most items/locations/survivors)
     /// 2. assets/art/{id}.png (alternate format)
     /// 3. assets/sprites/Items/{id}.png (item sprites)
     /// 4. assets/sprites/Portraits/{id}.png (survivor portraits)
     /// 5. assets/sprites/Locations/{id}.png (location sprites)
-    /// 
+    ///
     /// No simulation logic here — this is purely ID → path → Texture2D.
     /// Uses ResourceLoader.Load for Godot-native resource loading.
     /// Logs missing assets once per ID to avoid per-frame spam.

@@ -37,6 +37,9 @@ jobs:
         with:
           lfs: true
 
+      - name: Trailing Whitespace Gate
+        run: bash scripts/ci/no-whitespace-churn.sh
+
       - name: Validate StreamingAssets JSON syntax (fast-fail)
         run: |
           python3 - <<'PY'
