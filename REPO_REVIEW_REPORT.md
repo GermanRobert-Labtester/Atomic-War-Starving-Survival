@@ -1,10 +1,32 @@
-# ASHFALL Repository Deep Review Report
-**Date:** 2026-08-16 | **Branch:** `cursor/phase11-expansion-ui-integration` | **Commits:** 1002
-**Method:** 6 parallel deep-review agents + direct investigation. All findings verified against source.
+# ASHFALL Repository Deep Review Report [HISTORICAL ARCHIVE]
+
+> [!CAUTION]
+> **SUPERSEDED HISTORICAL DOCUMENT — DO NOT USE FOR CURRENT ARCHITECTURE OR IMPLEMENTATION**
+>
+> This audit was conducted on **2026-08-16** during the early dual-engine bridge era.
+> **Current Status (August 2026):**
+> 1. **Unity Host Fully Deleted**: The legacy Unity host (`Assets/_Game/`) and compatibility bridge (`src/Bridge/`) have been completely deleted. Godot 4.7+ .NET is the authoritative and sole game host.
+> 2. **All Critical & High Findings Resolved**:
+>    - **C1 (Cross-Host Saves / JsonUtility)**: Resolved. All saves now use portable `IJsonSerializer` and `SaveChecksum` envelopes.
+>    - **C2 (Determinism / System.Random)**: Resolved. Migrated to `ISeededRng` / `SeededRng`.
+>    - **C3 (HoldfastTradeSessionTests)**: Resolved. 100% passing tests (3344+ tests green).
+>    - **C4 (Untracked Narrative JSON)**: Resolved. All 196+ narrative JSON files are fully tracked in Git.
+>    - **C5 (JsonUtility in Catalog Loaders)**: Resolved. Migrated to Core `SystemTextJsonSerializer`.
+>    - **C6 (Unity Host Logic)**: Resolved. Deleted with `Assets/_Game/`; Core is single source of truth.
+>    - **C7 (Demoted Ghost Markers)**: Resolved. 0 markers remain.
+>    - **C8 (Broken CI Pipeline)**: Resolved. Canonical `dotnet` + `godot --headless` CI gate enforced.
+>
+> For active project architecture, consult:
+> - [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md) — Canonical rules and invariants.
+> - [`docs/CURRENT_AUTHORITY.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/CURRENT_AUTHORITY.md) — System index and current authority map.
+> - [`docs/ASHFALL_CODE_INDEX.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/ASHFALL_CODE_INDEX.md) — Architecture and subsystem code paths.
+
+**Date:** 2026-08-16 | **Branch:** `cursor/phase11-expansion-ui-integration` (historical) | **Commits:** 1002
+**Method:** 6 parallel deep-review agents + direct investigation. All findings verified against historical source.
 
 ---
 
-## Executive Summary
+## Historical Executive Summary (2026-08-16)
 
 Ashfall is a post-nuclear 2D survival-management game with an ambitious dual-engine architecture: an engine-agnostic C# core (`Assets/Ashfall.Core/`, 234 files) shared between a Unity 6 LTS host (`Assets/_Game/`, 1337 files) and a Godot 4.7+ host (`src/`, 84 files). The project is 1002 commits in, with 280 JSON data files and 143 test files.
 

@@ -61,6 +61,7 @@ The following documents describe superseded Unity architectures, completed port 
 
 | Historical Document | Historical Context & Current Replacement |
 |---|---|
+| [`REPO_REVIEW_REPORT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/REPO_REVIEW_REPORT.md) | Deep repository review from 2026-08-16 during dual-engine era. All C1-C8 critical findings are now resolved, and Unity host is deleted. Active truth: [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md). |
 | [`docs/plans/sources.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/plans/sources.md) | Describes early August 2026 Unity/Bridge strangler migration. Current truth is [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md). |
 | [`docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md) | Pre-migration gap audit from Unity era; all critical and high items are resolved. |
 | [`docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md) | Historical port plan for `SkillProgressionSystem` (closed; fully ported in Core Phase 18 and tested). |
