@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ApprenticeshipSaveStore
+// Core State : Ashfall.Core.ApprenticeshipState
+// Host Caller: Main.ShelterSocial / ApprenticeshipHostSession
+// Purpose    : Apprenticeship mentor-student assignments and craft training progression
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

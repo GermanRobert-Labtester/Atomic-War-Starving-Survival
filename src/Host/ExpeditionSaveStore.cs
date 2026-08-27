@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ExpeditionSaveStore
+// Core State : List<Ashfall.Core.Expeditions.ExpeditionState>
+// Host Caller: Main.Expeditions / ExpeditionHostSession
+// Purpose    : Active and completed expedition sorties, route waypoints, and field loot
+// ============================================================================
 using System;
 using System.IO;
 using System.Collections.Generic;

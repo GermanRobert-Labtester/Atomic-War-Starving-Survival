@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : SurvivorRelationsSaveStore
+// Core State : Ashfall.Core.SurvivorRelationsState
+// Host Caller: Main.ShelterSocial / SurvivorRelationsHostSession
+// Purpose    : Interpersonal survivor affinities, rivalries, trust bonds, and social friction
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

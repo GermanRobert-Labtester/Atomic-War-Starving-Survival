@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : CraftingSaveStore
+// Core State : Ashfall.Core.CraftingSystemSave
+// Host Caller: Main.World / CraftingHostSession
+// Purpose    : Crafting queue, unlocked workshop recipes, and workbench upgrade levels
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

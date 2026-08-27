@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : PhantomMemorySaveStore
+// Core State : Ashfall.Core.PhantomMemoryEngineState
+// Host Caller: Main.Phase0 / PhantomMemoryHostSession
+// Purpose    : Phase 0 phantom memory engine, trauma flashbacks, and psychological echoes
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

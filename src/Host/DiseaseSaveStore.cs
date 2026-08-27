@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : DiseaseSaveStore
+// Core State : Ashfall.Core.Disease.DiseaseSystemState
+// Host Caller: Main.Medical / DiseaseHostSession
+// Purpose    : Disease contagion tracking, infection spread, symptoms, and outbreak protocols
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

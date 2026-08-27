@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : NarrativeSaveStore
+// Core State : Ashfall.Core.NarrativeEncounterState
+// Host Caller: Main.Narrative / NarrativeHostSession
+// Purpose    : Narrative encounter branches, dialogue state machine, and narrative flags
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

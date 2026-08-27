@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : WastelandMapSaveStore
+// Core State : Ashfall.Core.World.WastelandMapState
+// Host Caller: Main.Expeditions / WorldHostSession
+// Purpose    : Wasteland travel map exploration, discovered POIs, and route fog-of-war
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

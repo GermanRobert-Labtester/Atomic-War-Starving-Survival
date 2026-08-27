@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : SurvivorsSaveStore
+// Core State : Ashfall.Core.Survivors.SurvivorsSaveState
+// Host Caller: Main.Survivors / SurvivorsHostSession
+// Purpose    : Survivor roster profiles, vital needs, injuries, traits, and morale
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

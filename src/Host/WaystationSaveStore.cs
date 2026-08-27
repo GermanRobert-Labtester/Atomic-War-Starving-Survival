@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : WaystationSaveStore
+// Core State : Ashfall.Core.WaystationSystemState
+// Host Caller: Main.ShelterInfrastructure / WaystationHostSession
+// Purpose    : Wasteland waystation safehouses, emergency supplies, and outpost repairs
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

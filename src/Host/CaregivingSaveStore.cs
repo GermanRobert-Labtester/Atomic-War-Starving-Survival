@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : CaregivingSaveStore
+// Core State : Ashfall.Core.CaregivingSaveState
+// Host Caller: Main.ShelterSocial / CaregivingHostSession
+// Purpose    : Caregiving assignments, dependent survivor care, and morale buffers
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

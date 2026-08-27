@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : AutopsySaveStore
+// Core State : Ashfall.Core.AutopsyState
+// Host Caller: Main.ShelterInfrastructure / AutopsyHostSession
+// Purpose    : Autopsy examination procedures, pathogen samples, and clinical findings
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

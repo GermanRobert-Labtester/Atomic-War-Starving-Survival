@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : WaterTreatmentSaveStore
+// Core State : Ashfall.Core.WaterTreatmentState
+// Host Caller: Main.ShelterInfrastructure / WaterTreatmentHostSession
+// Purpose    : Water purification filters, contaminated reservoir levels, and clean water stores
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

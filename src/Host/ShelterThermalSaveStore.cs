@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ShelterThermalSaveStore
+// Core State : Ashfall.Core.ShelterThermalState
+// Host Caller: Main.ShelterInfrastructure / ShelterThermalHostSession
+// Purpose    : Shelter thermal insulation, heating zones, fuel consumption, and cold exposure
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : JournalSaveStore
+// Core State : Ashfall.Core.JournalSave
+// Host Caller: Main.Holdfast, Main.Narrative / JournalHostSession
+// Purpose    : Player journal entries, discovered lore fragments, and quest logs
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

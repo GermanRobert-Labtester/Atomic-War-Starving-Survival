@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : RegionalTreatySaveStore
+// Core State : Ashfall.Core.RegionalTreatyState
+// Host Caller: Main.ShelterSocial / RegionalTreatyHostSession
+// Purpose    : Regional faction pacts, non-aggression treaties, and border agreements
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : WildlifeTrappingSaveStore
+// Core State : Ashfall.Core.WildlifeTrappingState
+// Host Caller: Main.ShelterSocial / WildlifeTrappingHostSession
+// Purpose    : Wildlife snare traps, bait replenishment, and wasteland game yields
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

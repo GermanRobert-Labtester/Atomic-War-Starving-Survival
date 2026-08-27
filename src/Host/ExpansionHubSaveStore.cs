@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ExpansionHubSaveStore
+// Core State : Ashfall.Core.ExpansionHubSave
+// Host Caller: Main.ExpansionHub, Main.Holdfast / ExpansionHubHostSession
+// Purpose    : Expansion module registry, activation flags, and cross-expansion telemetry
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : HostEventSaveStore
+// Core State : Ashfall.Core.HostEventState
+// Host Caller: Main.Narrative / HostEventHostSession
+// Purpose    : Host-level dynamic event triggers, queued incidents, and event history
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

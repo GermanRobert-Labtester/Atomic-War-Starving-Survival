@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : YearOfAshSaveStore
+// Core State : Ashfall.Core.YearOfAsh.YearOfAshSave
+// Host Caller: Main.YearOfAsh / YearOfAshHostSession
+// Purpose    : Year of Ash campaign progression, season timeline, and winter survival records
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

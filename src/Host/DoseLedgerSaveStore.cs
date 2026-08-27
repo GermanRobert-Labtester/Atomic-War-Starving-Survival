@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : DoseLedgerSaveStore
+// Core State : Ashfall.Core.DoseLedgerSave
+// Host Caller: Main.Holdfast, Main.Phase0 / DoseLedgerHostSession
+// Purpose    : Cumulative radiation dose ledger, threshold brackets, and survivor exposure logs
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

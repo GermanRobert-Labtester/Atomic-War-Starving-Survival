@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ExpansionQuestSaveStore
+// Core State : Ashfall.Core.ExpansionQuestSaveEnvelope
+// Host Caller: Main.Quests / ExpansionQuestHostSession
+// Purpose    : Expansion quest graph runtime states, objective progression, and quest flags
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

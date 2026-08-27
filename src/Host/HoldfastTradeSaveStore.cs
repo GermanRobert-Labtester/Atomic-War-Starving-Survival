@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : HoldfastTradeSaveStore
+// Core State : Ashfall.Core.HoldfastTradeSaveState
+// Host Caller: Main.Holdfast, Main.SaveOrchestrator / HoldfastRuntimeSession
+// Purpose    : Holdfast trade ledger, merchant transactions, and trade credit balance
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

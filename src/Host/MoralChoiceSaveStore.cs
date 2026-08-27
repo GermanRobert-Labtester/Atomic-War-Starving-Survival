@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : MoralChoiceSaveStore
+// Core State : Ashfall.Core.MoralChoice.MoralChoiceState
+// Host Caller: Main.MoralChoice / MoralChoiceHostSession
+// Purpose    : Moral choice branches, ethical dilemmas, community trust, and faction reactions
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

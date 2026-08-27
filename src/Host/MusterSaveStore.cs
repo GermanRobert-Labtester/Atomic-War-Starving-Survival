@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : MusterSaveStore
+// Core State : Ashfall.Core.Muster.MusterHostSave
+// Host Caller: Main.Muster / MusterHostSession
+// Purpose    : The Muster expansion coalition standings, faction votes, and military escalations
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

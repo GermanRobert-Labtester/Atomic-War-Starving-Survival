@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : MedicalWardSaveStore
+// Core State : Ashfall.Core.MedicalWardSave
+// Host Caller: Main.Medical / MedicalWardHostSession
+// Purpose    : Medical ward bed occupancy, hospital triage, and critical care status
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ExcavationSaveStore
+// Core State : Ashfall.Core.ExcavationState
+// Host Caller: Main.ShelterSocial / ExcavationHostSession
+// Purpose    : Shelter room excavation progress, structural clearance, and expansion rubble
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

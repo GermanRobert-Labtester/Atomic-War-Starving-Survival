@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : DutyRosterSaveStore
+// Core State : Ashfall.Core.DutyRosterSave
+// Host Caller: Main.DutyRoster, Main.Holdfast / DutyRosterHostSession
+// Purpose    : Duty roster shift allocations, work assignments, and fatigue modifiers
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

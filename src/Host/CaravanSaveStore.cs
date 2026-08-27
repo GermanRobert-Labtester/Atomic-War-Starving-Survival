@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : CaravanSaveStore
+// Core State : Ashfall.Core.Economy.TravelingCaravanState
+// Host Caller: Main.Economy / TravelingCaravanHostSession
+// Purpose    : Traveling caravan arrivals, trade schedules, inventory, and barter states
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

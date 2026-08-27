@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ChemicalDependencySaveStore
+// Core State : Ashfall.Core.Medical.ChemicalDependencyLedgerState
+// Host Caller: Main.ShelterBatch3 / ChemicalDependencyHostSession
+// Purpose    : Chemical dependency ledger, addiction tolerance, doses, and withdrawal states
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

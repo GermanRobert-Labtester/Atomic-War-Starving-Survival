@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : DailyBriefingSaveStore
+// Core State : Ashfall.Core.DailyBriefingSave
+// Host Caller: Main.Campaign / DailyBriefingHostSession
+// Purpose    : Daily morning briefings, priority bulletins, and broadcast log archives
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

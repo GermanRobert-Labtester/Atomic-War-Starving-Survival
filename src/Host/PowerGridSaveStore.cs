@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : PowerGridSaveStore
+// Core State : Ashfall.Core.Shelter.PowerGridSave
+// Host Caller: Main.ShelterInfrastructure / PowerGridHostSession
+// Purpose    : Shelter electrical power grid, generator fuel, battery capacity, and blackout zones
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

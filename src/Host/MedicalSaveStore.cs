@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : MedicalSaveStore
+// Core State : Ashfall.Core.Medical.ChemicalDependencyLedgerState
+// Host Caller: Main.Medical / MedicalHostSession
+// Purpose    : Medical ward clinic state, medication regimens, and patient triage queues
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

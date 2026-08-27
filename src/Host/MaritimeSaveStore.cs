@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : MaritimeSaveStore
+// Core State : Ashfall.Core.Maritime.MaritimeHostSave
+// Host Caller: Main.Maritime / DeepCoastHostSession, MaritimeHostSession
+// Purpose    : Black Flotilla / Deep Coast maritime sorties, dive salvage, and hull condition
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : VinylMoraleSaveStore
+// Core State : Ashfall.Core.VinylMoraleState
+// Host Caller: Main.ShelterSocial / VinylMoraleHostSession
+// Purpose    : Vinyl record player collection, broadcast tracks, and shelter morale bonuses
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

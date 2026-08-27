@@ -251,11 +251,13 @@ public class SaveSlotService
             errors.Add("Aggregate envelope contains no sections.");
 
         // Validate each section independently.
-        for (int i = 0; i < envelope.sections.Count; i++)
+        if (envelope.sections != null)
         {
-            SaveSectionEnvelope section = envelope.sections[i];
-            if (string.IsNullOrWhiteSpace(section.sectionName))
-                sectionErrors.Add($"Section {i}: sectionName is empty.");
+            for (int i = 0; i < envelope.sections.Count; i++)
+            {
+                SaveSectionEnvelope section = envelope.sections[i];
+                if (string.IsNullOrWhiteSpace(section.sectionName))
+                    sectionErrors.Add($"Section {i}: sectionName is empty.");
 
             if (string.IsNullOrEmpty(section.payloadJson))
                 sectionErrors.Add($"Section {i} ({section.sectionName}): payloadJson is empty.");
@@ -270,6 +272,7 @@ public class SaveSlotService
             {
                 sectionErrors.Add($"Section {i} ({section.sectionName}): checksum is empty for a non-empty payload.");
             }
+        }
         }
 
         // Validate aggregate checksum.

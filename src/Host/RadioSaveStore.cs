@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : RadioSaveStore
+// Core State : Ashfall.Core.Radio.RadioSaveState
+// Host Caller: Main.Narrative / RadioHostSession
+// Purpose    : Radio frequency tuning, intercepted broadcast history, and signal triangulation
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

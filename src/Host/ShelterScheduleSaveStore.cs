@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ShelterScheduleSaveStore
+// Core State : Ashfall.Core.ShelterScheduleState
+// Host Caller: Main.ShelterInfrastructure / ShelterScheduleHostSession
+// Purpose    : Shelter daily routine schedules, curfew hours, and rationing shifts
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

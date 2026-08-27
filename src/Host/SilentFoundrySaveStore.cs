@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : SilentFoundrySaveStore
+// Core State : Ashfall.Core.SilentFoundryState
+// Host Caller: Main.Economy / SilentFoundryHostSession
+// Purpose    : Silent Foundry automated forge queues, heat cycles, and alloy fabrication
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

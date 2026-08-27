@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : WeatherSaveStore
+// Core State : Ashfall.Core.WorldWeatherState
+// Host Caller: Main.World / WeatherHostSession
+// Purpose    : Atmospheric weather simulation, fallout storms, and temperature forecasts
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

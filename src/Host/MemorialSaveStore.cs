@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : MemorialSaveStore
+// Core State : Ashfall.Core.MemorialSave
+// Host Caller: Main.Campaign / MemorialHostSession
+// Purpose    : Fallen survivor memorial wall, cause of death records, and shelter grief tallies
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

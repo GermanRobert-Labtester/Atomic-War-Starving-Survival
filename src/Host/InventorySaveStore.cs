@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : InventorySaveStore
+// Core State : Ashfall.Core.Inventory.InventorySaveState
+// Host Caller: Main.Inventory / InventoryHostSession
+// Purpose    : Shelter storage inventory, container contents, item stacks, and gear durability
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

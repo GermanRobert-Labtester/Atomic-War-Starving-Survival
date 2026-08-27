@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : CampaignDaySaveStore
+// Core State : Ashfall.Core.CampaignDaySave
+// Host Caller: Main.Campaign / CampaignDayHostSession
+// Purpose    : Campaign day clock, day-transition lifecycle, and active day index
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

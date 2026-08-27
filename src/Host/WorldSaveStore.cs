@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : WorldSaveStore
+// Core State : Ashfall.Core.World.WorldHostSave
+// Host Caller: Main.World / WorldHostSession
+// Purpose    : World aggregate domain save: weather, hazard maps, and regional state
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

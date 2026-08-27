@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : AirlockSecuritySaveStore
+// Core State : Ashfall.Core.AirlockSecurityState
+// Host Caller: Main.ShelterInfrastructure / AirlockSecurityHostSession
+// Purpose    : Airlock security protocols, decontamination cycles, and quarantine locks
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

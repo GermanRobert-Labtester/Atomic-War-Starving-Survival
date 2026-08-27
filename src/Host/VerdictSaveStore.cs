@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : VerdictSaveStore
+// Core State : Ashfall.Core.Verdict.VerdictSave
+// Host Caller: Main.Verdict / VerdictHostSession
+// Purpose    : The Verdict tribunal reckoning stages, evidence dossier, and census tally
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

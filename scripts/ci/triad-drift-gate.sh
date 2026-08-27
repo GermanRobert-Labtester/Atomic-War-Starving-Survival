@@ -2,13 +2,15 @@
 # triad-drift-gate.sh — ensure every SaveXxx has a SetupXxx and AllSaveSections entry
 # Fails if a Setup/Save pair is missing or AllSaveSections is out of sync.
 # See AGENTS.md H7 triad drift risk: Setup without Save silently drops state.
+# Full architecture documentation: docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 
 # ── Documented exceptions ────────────────────────────────────────────
 # These Save methods have no matching Setup method BY DESIGN. Each entry
-# must have an owner comment explaining why. If you add a new Save without
+# must have an owner comment explaining why. Detailed save store ownership
+# is documented in docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md.
 # a Setup, add it here with an explanation — do not silently suppress it.
 #
 # SaveChemicalDependency  — initialized inline in SetupMentalHealthCrisis

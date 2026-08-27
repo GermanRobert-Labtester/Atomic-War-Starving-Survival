@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : EncounterChoiceSaveStore
+// Core State : Ashfall.Core.EncounterChoiceState
+// Host Caller: Main.Expeditions / EncounterChoiceHostSession
+// Purpose    : Expedition encounter branch decisions, player choices, and consequence flags
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

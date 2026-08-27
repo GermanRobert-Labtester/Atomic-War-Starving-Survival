@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : EconomySaveStore
+// Core State : Ashfall.Core.Economy.MarketState
+// Host Caller: Main.Economy / EconomyHostSession
+// Purpose    : Wasteland market commodity prices, price shocks, supply-demand, and barter balances
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

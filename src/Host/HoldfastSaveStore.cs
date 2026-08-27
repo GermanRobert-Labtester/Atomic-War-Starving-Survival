@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : HoldfastSaveStore
+// Core State : Ashfall.Core.HoldfastSave
+// Host Caller: Main.Holdfast, Main.SaveOrchestrator / HoldfastRuntimeSession
+// Purpose    : Holdfast Season 1 survival progression, shelter structural state, and milestone records
+// ============================================================================
 using System;
 using System.IO;
 using Godot;

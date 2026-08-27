@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : CombatSaveStore
+// Core State : Ashfall.Core.Combat.CombatState
+// Host Caller: Main.Expeditions / CombatHostSession
+// Purpose    : Tactical combat encounters, ballistics resolution, enemy status, and weapon wear
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

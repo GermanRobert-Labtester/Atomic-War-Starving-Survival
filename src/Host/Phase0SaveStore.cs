@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : Phase0SaveStore
+// Core State : Ashfall.Core.Phase0EffectsSaveState
+// Host Caller: Main.Phase0 / Phase0HostSession
+// Purpose    : Phase 0 survivor behavioral quirks, specialized perks, and lingering trauma
+// ============================================================================
 using System;
 #pragma warning disable CS8618
 using System.IO;

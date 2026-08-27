@@ -1,3 +1,9 @@
+// ============================================================================
+// Save Store : ThirdonarySaveStore
+// Core State : Ashfall.Core.Thirdonary.ThirdonarySaveEnvelope
+// Host Caller: Main.Quests / ThirdonaryHostSession
+// Purpose    : Thirdonary expansion quest narrative trees and faction cipher state
+// ============================================================================
 using System;
 using System.IO;
 using Godot;
