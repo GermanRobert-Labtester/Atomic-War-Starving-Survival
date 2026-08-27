@@ -26,7 +26,6 @@
   <ItemGroup>
     <!-- Godot C# Sources -->
     <Compile Include="src/**/*.cs" Exclude="src/bin/**;src/obj/**" />
-    <Compile Include="scripts/**/*.cs" Exclude="scripts/bin/**;scripts/obj/**" />
     <!--
       Engine-agnostic core. Single shared source tree compiled into this Godot
       host and the xUnit test project. Do not copy core sources elsewhere.
