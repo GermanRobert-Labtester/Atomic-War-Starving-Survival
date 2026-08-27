@@ -1,20 +1,127 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.Campaign
 {
     /// <summary>
-    /// Daily Briefing — pure Core report builder (item 01).
+    /// Daily Briefing — pure Core report builder.
     ///
-    /// Given a typed <see cref="DailyBriefingInputs"/> snapshot of every daily
-    /// subsystem, produces a deterministic <see cref="DailyBriefingReport"/>
-    /// whose entries are sorted by category, then survivor/item id, then
-    /// event order. Core must not reference host systems: every input is a
-    /// plain DTO so the report can be unit-tested without Godot/Unity.
+    /// Produces a deterministic <see cref="DailyBriefingReport"/> from typed day events
+    /// (<see cref="DayStateChangeEvent"/>) or fallback <see cref="DailyBriefingInputs"/>.
+    /// Entries are deduplicated, ordered by severity and category, and truncated with overflow
+    /// indicators when event count is high.
     /// </summary>
     public static class DailyBriefingReportBuilder
     {
+        public const int DefaultMaxEntriesPerSection = 10;
+
+        /// <summary>
+        /// Builds a deterministic daily briefing report directly from typed day events.
+        /// </summary>
+        public static DailyBriefingReport BuildFromDayEvents(
+            int day,
+            int buildSeed,
+            IEnumerable<DayStateChangeEvent>? events,
+            int maxEntriesPerSection = DefaultMaxEntriesPerSection)
+        {
+            var r = new DailyBriefingReport
+            {
+                Day = day,
+                BuildSeed = buildSeed,
+                Title = $"DAY {day} BRIEFING",
+                GeneratedUtc = string.Empty
+            };
+
+            if (events == null) return r;
+
+            var deaths = new List<DailyBriefingEntry>();
+            var warnings = new List<DailyBriefingEntry>();
+            var survivorChanges = new List<DailyBriefingEntry>();
+            var resourceConsumption = new List<DailyBriefingEntry>();
+            var weatherForecast = new List<DailyBriefingEntry>();
+            var radioIntercepts = new List<DailyBriefingEntry>();
+            var expeditionMilestones = new List<DailyBriefingEntry>();
+            var production = new List<DailyBriefingEntry>();
+
+            int order = 0;
+            foreach (var evt in events)
+            {
+                if (evt == null) continue;
+                order++;
+
+                switch (evt.Kind)
+                {
+                    case "survivor_perished":
+                        deaths.Add(new DailyBriefingEntry("Deaths", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"{evt.PrimaryId} has perished." : $"{evt.PrimaryId} perished: {evt.SecondaryId}", order: order));
+                        break;
+
+                    case "shelter_consequence":
+                    case "hazard_warning":
+                        warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"{evt.PrimaryId} warning." : $"{evt.PrimaryId}: {evt.SecondaryId}", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "survivor_condition":
+                        if (string.Equals(evt.SecondaryId, "critical", StringComparison.OrdinalIgnoreCase) || evt.Numeric >= 80f)
+                            warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId, $"{evt.PrimaryId} is in critical condition ({evt.SecondaryId}, {evt.Numeric:F0}%).", order: order, numeric: evt.Numeric));
+                        else
+                            survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId, $"{evt.PrimaryId} condition: {evt.SecondaryId}.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "consumed_rations":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", evt.PrimaryId,
+                            $"{evt.PrimaryId}: {evt.Numeric:F0} consumed.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "resource_delta":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", evt.PrimaryId,
+                            $"{evt.PrimaryId}: {(evt.Numeric >= 0 ? "+" : "")}{evt.Numeric:F0}", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "weather_condition":
+                    case "weather_ticked":
+                        weatherForecast.Add(new DailyBriefingEntry("Weather Forecast", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"Surface weather: {evt.PrimaryId}" : $"Surface weather: {evt.PrimaryId} ({evt.SecondaryId})", order: order));
+                        break;
+
+                    case "radio_intercept":
+                    case "radio_transmission":
+                        radioIntercepts.Add(new DailyBriefingEntry("Radio Intercepts", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"Intercept on {evt.PrimaryId}" : $"[{evt.PrimaryId}] {evt.SecondaryId}", order: order));
+                        break;
+
+                    case "expedition_milestone":
+                    case "expeditions_caravans_ticked":
+                        if (!string.IsNullOrEmpty(evt.PrimaryId) && !string.Equals(evt.PrimaryId, "none", StringComparison.OrdinalIgnoreCase))
+                        {
+                            expeditionMilestones.Add(new DailyBriefingEntry("Expedition Milestones", evt.PrimaryId,
+                                string.IsNullOrEmpty(evt.SecondaryId) ? $"Expedition update: {evt.PrimaryId}" : $"{evt.PrimaryId}: {evt.SecondaryId}", order: order));
+                        }
+                        break;
+
+                    case "crafting_completed":
+                    case "crafting_production":
+                        production.Add(new DailyBriefingEntry("Production & Maintenance", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.PrimaryId) ? "Crafting work advanced." : $"Crafting completed: {evt.PrimaryId}", order: order, numeric: evt.Numeric));
+                        break;
+                }
+            }
+
+            AddSectionIfNotEmpty(r, "Deaths", deaths, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Warnings", warnings, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Survivor Changes", survivorChanges, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Resource Consumption", resourceConsumption, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Weather Forecast", weatherForecast, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Radio Intercepts", radioIntercepts, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Expedition Milestones", expeditionMilestones, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Production & Maintenance", production, maxEntriesPerSection);
+
+            return r;
+        }
+
         public static DailyBriefingReport Build(DailyBriefingInputs inputs)
         {
             if (inputs == null) throw new ArgumentNullException(nameof(inputs));
@@ -22,8 +129,8 @@ namespace Ashfall.Core.Campaign
             {
                 Day = inputs.Day,
                 BuildSeed = inputs.BuildSeed,
-                Title = "DAY " + inputs.Day + " BRIEFING",
-                GeneratedUtc = inputs.GeneratedUtc
+                Title = $"DAY {inputs.Day} BRIEFING",
+                GeneratedUtc = string.Empty
             };
 
             foreach (var s in SurvivorList(inputs)) r.Sections.Add(s);
@@ -35,6 +142,40 @@ namespace Ashfall.Core.Campaign
             foreach (var s in WarningList(inputs)) r.Sections.Add(s);
 
             return r;
+        }
+
+        private static void AddSectionIfNotEmpty(
+            DailyBriefingReport report,
+            string title,
+            List<DailyBriefingEntry> entries,
+            int maxEntries)
+        {
+            if (entries.Count == 0) return;
+
+            // Deduplicate entries by (Category, PrimaryId, Text)
+            var deduplicated = new List<DailyBriefingEntry>();
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var e in entries)
+            {
+                string key = $"{e.Category}|{e.PrimaryId}|{e.Text}";
+                if (seen.Add(key))
+                    deduplicated.Add(e);
+            }
+
+            deduplicated.Sort(StableEntrySort);
+
+            // Apply overflow rule
+            if (deduplicated.Count > maxEntries)
+            {
+                int overflow = deduplicated.Count - maxEntries;
+                var trimmed = deduplicated.Take(maxEntries).ToList();
+                trimmed.Add(new DailyBriefingEntry(title, "overflow", $"...and {overflow} more items.", order: 999));
+                report.Sections.Add(new DailyBriefingSection(title, trimmed));
+            }
+            else
+            {
+                report.Sections.Add(new DailyBriefingSection(title, deduplicated));
+            }
         }
 
         private static IEnumerable<DailyBriefingSection> SurvivorList(DailyBriefingInputs i)
@@ -139,7 +280,7 @@ namespace Ashfall.Core.Campaign
         public DailyBriefingEntry() { }
 
         public DailyBriefingEntry(string category, string primaryId,
-            string text, int order =0, string? secondaryId = null, float numeric = 0f)
+            string text, int order = 0, string? secondaryId = null, float numeric = 0f)
         {
             Category = category ?? string.Empty;
             PrimaryId = primaryId ?? string.Empty;

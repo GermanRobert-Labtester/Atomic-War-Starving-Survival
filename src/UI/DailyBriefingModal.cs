@@ -111,7 +111,11 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var footer = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            _titleLabel.TooltipText = "Daily Briefing Report Title";
+            _bodyLabel.TooltipText = "Daily Briefing Summary — Use [Up]/[Down] arrow keys or mouse wheel to scroll";
+            _skipButton.TooltipText = "Instantly reveal complete briefing text [Tab]";
+            _ackButton.TooltipText = "Acknowledge daily briefing and resume gameplay [Enter] / [Space]";
+
             _ackLabel = AshfallUiHelpers.MakeMono("PRESS [ENTER] / [SPACE] / [ACK] TO CONTINUE");
             _ackLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             footer.AddChild(_ackLabel);
@@ -154,6 +158,22 @@ namespace AtomicWar.GodotApp.UI
             {
                 SkipToComplete();
                 GetViewport()?.SetInputAsHandled();
+                return;
+            }
+            if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+            {
+                if (keyEvent.Keycode == Key.Up || keyEvent.Keycode == Key.Pageup)
+                {
+                    _scroll.ScrollVertical = Math.Max(0, _scroll.ScrollVertical - 50);
+                    GetViewport()?.SetInputAsHandled();
+                    return;
+                }
+                if (keyEvent.Keycode == Key.Down || keyEvent.Keycode == Key.Pagedown)
+                {
+                    _scroll.ScrollVertical += 50;
+                    GetViewport()?.SetInputAsHandled();
+                    return;
+                }
             }
         }
 
