@@ -273,13 +273,15 @@ namespace AtomicWar.GodotApp
             _dashboard.Visible = true;
             CloseAllOverlayPanels();
 
-            // Load-from-envelope: restore directly from aggregate envelope when available.
-            bool loadedFromEnvelope = _saveLoadHost?.LoadAllDirect() ?? false;
-            if (!loadedFromEnvelope)
+            // No active slot: migrate pre-slot global section files (if any)
+            // into a fresh envelope-backed slot and load that. Payloads are
+            // the legacy file bytes verbatim; originals stay untouched.
+            var migrated = _saveLoadHost?.MigrateLegacyGlobalSaves(ProjectSettings.GlobalizePath("user://"));
+            if (migrated != null)
             {
-                // Fallback: unpack aggregate back to individual files so
-                // dependency-safe SetupXxx() calls can restore from disk as before.
-                _saveLoadHost?.UnpackAggregateEnvelope();
+                if (TryLoadAndRestoreGame(migrated.Value, out string migrateMsg))
+                    return;
+                GD.PrintErr($"[Ashfall Godot] Legacy migration load failed: {migrateMsg}");
             }
 
             RestoreAllSubsystemsFromDisk();

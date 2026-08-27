@@ -272,10 +272,142 @@ namespace AtomicWar.GodotApp
                 }
                 GD.Print($"[PASS] Case 4: Valid save restored cleanly after failures: '{panel.LastStatusMessage}'");
 
+                // ── CASE 5: Envelope-primary save writes ONE file ──
+                GD.Print("\n[CASE 5] Testing envelope-primary save (single atomic write)...");
+                var envelopeSlotId = new SaveSlotId("slot_envelope_v2");
+                hostSession.CreateSlot(envelopeSlotId);
+
+                var payloads = new Dictionary<string, string>
+                {
+                    { "journal", "{\"entries\":[\"day 1\"]}" },
+                    { "inventory", "{\"water\": 100}" },
+                };
+                bool envelopeSaved = hostSession.SaveEnvelopeFromPayloads(payloads);
+                if (!envelopeSaved)
+                {
+                    GD.PrintErr("[FAIL] Case 5: SaveEnvelopeFromPayloads returned false.");
+                    return 1;
+                }
+
+                string envelopeSlotRoot = Path.Combine(tempDir, SaveSlotService.SavesBaseDir, "profile-default", "slot-slot_envelope_v2");
+                string envelopeDisk = System.IO.File.ReadAllText(System.IO.Path.Combine(envelopeSlotRoot, SaveSlotService.AggregateFileName));
+                if (!envelopeDisk.Contains("\"manifestVersion\":2", StringComparison.Ordinal))
+                {
+                    GD.PrintErr("[FAIL] Case 5: Written envelope is not manifestVersion 2.");
+                    return 1;
+                }
+                if (!envelopeDisk.Contains("\"sectionName\":\"journal\"", StringComparison.Ordinal) ||
+                    !envelopeDisk.Contains("\"sectionName\":\"inventory\"", StringComparison.Ordinal))
+                {
+                    GD.PrintErr("[FAIL] Case 5: Envelope sections are not registry-keyed.");
+                    return 1;
+                }
+                string[] jsonFiles = Directory.GetFiles(envelopeSlotRoot, "*.json");
+                if (jsonFiles.Length != 2) // manifest.json + campaign.json — no section files
+                {
+                    GD.PrintErr($"[FAIL] Case 5: Envelope-primary save left {jsonFiles.Length} json files (expected 2: manifest + campaign).");
+                    return 1;
+                }
+                GD.Print("[PASS] Case 5: Envelope save produced one V2 campaign.json, no section files.");
+
+                // ── CASE 6: Load explodes sections to their registry file names ──
+                GD.Print("\n[CASE 6] Testing envelope load explodes to registry file names...");
+                bool envelopeLoaded = hostSession.TryLoadSlot(envelopeSlotId, out var envelopeResult);
+                if (!envelopeLoaded || !envelopeResult.IsSuccess)
+                {
+                    GD.PrintErr($"[FAIL] Case 6: V2 envelope slot failed to load: {envelopeResult.UserMessage}");
+                    return 1;
+                }
+                string explodedJournal = Path.Combine(envelopeSlotRoot, "journal_save.json");
+                string explodedInventory = Path.Combine(envelopeSlotRoot, "inventory_save.json");
+                if (!File.Exists(explodedJournal) || !File.Exists(explodedInventory))
+                {
+                    GD.PrintErr("[FAIL] Case 6: Load did not explode sections to registry file names (journal_save.json/inventory_save.json).");
+                    return 1;
+                }
+                if (File.ReadAllText(explodedJournal) != payloads["journal"])
+                {
+                    GD.PrintErr("[FAIL] Case 6: Exploded journal payload bytes differ from the captured payload.");
+                    return 1;
+                }
+                if (!hostSession.RestoredSections.Contains("journal"))
+                {
+                    GD.PrintErr("[FAIL] Case 6: RestoredSections missing registry key 'journal'.");
+                    return 1;
+                }
+                GD.Print("[PASS] Case 6: Load exploded V2 sections verbatim to registry file names.");
+
+                // ── CASE 7: V1 envelope on disk migrates in memory on load ──
+                GD.Print("\n[CASE 7] Testing V1 (filename-keyed) envelope migration on load...");
+                var legacySlotId = new SaveSlotId("slot_legacy_v1");
+                hostSession.CreateSlot(legacySlotId);
+
+                SaveSectionEnvelope V1Section(string name, string payload) => new SaveSectionEnvelope
+                {
+                    sectionName = name,
+                    schemaVersion = 1,
+                    payloadJson = payload,
+                };
+                var v1Inventory = V1Section("inventory_save", "{\"water\": 55}");
+                v1Inventory.checksum = SaveSlotService.ComputeSectionChecksum(v1Inventory);
+                var v1Stray = V1Section("weather_save", "{\"stray\":true}");
+                v1Stray.checksum = SaveSlotService.ComputeSectionChecksum(v1Stray);
+                var v1Envelope = new AggregateSaveEnvelope
+                {
+                    manifestVersion = 1,
+                    manifest = new SaveManifest
+                    {
+                        profileId = new SaveProfileId("default"),
+                        slotId = legacySlotId,
+                        campaignName = "Legacy V1",
+                        currentDay = 3,
+                        seed = 11,
+                    },
+                    sections = new List<SaveSectionEnvelope> { v1Inventory, v1Stray },
+                };
+                v1Envelope.aggregateChecksum = SaveSlotService.ComputeAggregateChecksum(v1Envelope);
+                string legacySlotRoot = Path.Combine(tempDir, SaveSlotService.SavesBaseDir, "profile-default", "slot-slot_legacy_v1");
+                File.WriteAllText(Path.Combine(legacySlotRoot, SaveSlotService.AggregateFileName),
+                    new SystemTextJsonSerializer().Serialize(v1Envelope));
+
+                bool legacyLoaded = hostSession.TryLoadSlot(legacySlotId, out var legacyResult);
+                if (!legacyLoaded || !legacyResult.IsSuccess)
+                {
+                    GD.PrintErr($"[FAIL] Case 7: V1 envelope failed to load: {legacyResult.UserMessage}");
+                    return 1;
+                }
+                if (legacyResult.Envelope!.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+                {
+                    GD.PrintErr("[FAIL] Case 7: Loaded V1 envelope was not migrated to the current version in memory.");
+                    return 1;
+                }
+                if (!hostSession.RestoredSections.Contains("inventory") || hostSession.RestoredSections.Contains("inventory_save"))
+                {
+                    GD.PrintErr("[FAIL] Case 7: Migrated sections are not registry-keyed in RestoredSections.");
+                    return 1;
+                }
+                if (hostSession.RestoredSections.Contains("weather_save"))
+                {
+                    GD.PrintErr("[FAIL] Case 7: Stray 'weather_save' section was not dropped by the registry whitelist.");
+                    return 1;
+                }
+                if (!File.Exists(Path.Combine(legacySlotRoot, "inventory_save.json")))
+                {
+                    GD.PrintErr("[FAIL] Case 7: Migrated inventory did not explode to its registry file name.");
+                    return 1;
+                }
+                string diskStillV1 = File.ReadAllText(Path.Combine(legacySlotRoot, SaveSlotService.AggregateFileName));
+                if (!diskStillV1.Contains("\"manifestVersion\":1", StringComparison.Ordinal))
+                {
+                    GD.PrintErr("[FAIL] Case 7: V1 file on disk was rewritten before the next save.");
+                    return 1;
+                }
+                GD.Print("[PASS] Case 7: V1 envelope migrated in memory, stray section dropped, disk untouched.");
+
                 panel.QueueFree();
                 hostSession.QueueFree();
 
-                GD.Print("\n=== SAVE-LOAD UI FAILURE-PATH SELF-TEST PASS (4/4 gates verified) ===");
+                GD.Print("\n=== SAVE-LOAD UI FAILURE-PATH SELF-TEST PASS (7/7 gates verified) ===");
                 return 0;
             }
             catch (Exception ex)

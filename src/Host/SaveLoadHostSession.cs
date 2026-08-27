@@ -210,11 +210,64 @@ public partial class SaveLoadHostSession : Node
     }
 
     /// <summary>
+    /// Migrate pre-slot global section files (the legacy save layout under the
+    /// global user:// directory) into a fresh envelope-backed slot. Payloads
+    /// are the section file bytes verbatim — nothing is translated — and the
+    /// original files are left untouched. Corrupt individual sections are
+    /// skipped with a warning so one bad file cannot block the whole
+    /// migration. Returns the new slot ID, or null when no legacy sections
+    /// were found or the envelope write failed.
+    /// </summary>
+    public SaveSlotId? MigrateLegacyGlobalSaves(string globalUserDir)
+    {
+        if (_slotService == null || string.IsNullOrEmpty(globalUserDir)) return null;
+
+        var payloads = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var pair in SaveSectionRegistry.SectionFileNames)
+        {
+            string path = Path.Combine(globalUserDir, pair.Value);
+            if (!File.Exists(path)) continue;
+            try
+            {
+                string raw = File.ReadAllText(path);
+                if (!string.IsNullOrWhiteSpace(raw))
+                    payloads[pair.Key] = raw;
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[SaveLoad] Skipping corrupt legacy section '{pair.Value}' during migration: {ex.Message}");
+            }
+        }
+
+        if (payloads.Count == 0) return null;
+
+        var existingSlots = new HashSet<string>(_slotService.ListSlots(_currentProfileId).ConvertAll(s => s.Value));
+        string newSlotId = "migrated_1";
+        int counter = 1;
+        while (existingSlots.Contains(newSlotId))
+        {
+            counter++;
+            newSlotId = $"migrated_{counter}";
+        }
+        var slotId = new SaveSlotId(newSlotId);
+        if (!CreateSlot(slotId))
+            return null;
+
+        if (!SaveEnvelopeFromPayloads(payloads))
+        {
+            GD.PrintErr("[SaveLoad] Legacy migration failed to write the campaign envelope.");
+            return null;
+        }
+
+        GD.Print($"[SaveLoad] Migrated {payloads.Count} legacy sections into slot '{slotId}' (originals left in place).");
+        return slotId;
+    }
+
+    /// <summary>
     /// Import a legacy single-file save into a new slot. Returns the new slot
     /// ID on success, or null on failure.
     /// </summary>
-    public SaveSlotId? ImportLegacySave(string legacyFilePath)
-    {
+    public SaveSlotId? ImportLegacySave(string legacyFilePath)    {
         if (_slotService == null) return null;
 
         // Find an unused slot ID.
