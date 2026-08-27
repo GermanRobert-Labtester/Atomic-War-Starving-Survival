@@ -25,9 +25,11 @@ namespace Ashfall.Core.Tests
         private static readonly Regex BlockComment =
             new Regex("/\\*.*?\\*/", RegexOptions.Compiled | RegexOptions.Singleline);
 
-        // Codec/Helper delegation, e.g. HoldfastSaveCodec.Encode(...) / .TryDecode(...) or SaveEnvelopeHelper
+        // Codec/Helper/Hub delegation, e.g. HoldfastSaveCodec.Encode(...) / .TryDecode(...),
+        // SaveEnvelopeHelper.*, or SaveStoreHub.Checksummed/FromCodec façades (the hub routes
+        // through SaveSlotRoot and the Core SaveStore<T> envelope machinery).
         private static readonly Regex CodecDelegation =
-            new Regex(@"(?:\w*Codec\s*\.\s*(?:Encode|Decode|TryDecode)|SaveEnvelopeHelper)", RegexOptions.Compiled);
+            new Regex(@"(?:\w*Codec\s*\.\s*(?:Encode|Decode|TryDecode)|SaveEnvelopeHelper|SaveStoreHub)", RegexOptions.Compiled);
 
         private static string SrcDir()
         {
@@ -111,7 +113,10 @@ namespace Ashfall.Core.Tests
             foreach (string file in storeFiles)
             {
                 string code = StripComments(File.ReadAllText(file));
-                bool hasSlotRoot = code.Contains("SaveSlotRoot") || code.Contains("ResolveSlotFile") || code.Contains("ResolveSlotPath");
+                bool hasSlotRoot = code.Contains("SaveSlotRoot") || code.Contains("ResolveSlotFile") || code.Contains("ResolveSlotPath") ||
+                    // Façades delegating to SaveStoreHub are isolated through the hub's
+                    // SaveSlotRoot.ResolveBaseDirectory wiring.
+                    code.Contains("SaveStoreHub");
                 if (!hasSlotRoot)
                     unisolated.Add(Path.GetFileName(file));
             }

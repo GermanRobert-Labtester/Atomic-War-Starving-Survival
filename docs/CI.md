@@ -12,7 +12,7 @@
 Per `AGENTS.md`, all verification uses **`dotnet` + `godot --headless`**. The canonical GitHub Actions workflow (`.github/workflows/ci.yml`) executes the following stages on every push and PR:
 
 1. **Trailing Whitespace Gate:** `bash scripts/ci/no-whitespace-churn.sh` (fast-fails on trailing whitespace or whitespace errors).
-2. **StreamingAssets Data Validation:** Python fast-fail script validates JSON syntax across all catalogs in `Assets/StreamingAssets/Data/`.
+2. **JSON Syntax & Schema Policy Gate:** `bash scripts/ci/json-schema-policy-gate.sh` (fast-fails on invalid JSON, bare array roots, or missing/invalid `schema_version` declarations).
 3. **Build Core & Tests:** `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo`
 4. **Run Test Suite:** `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo` (all tests passing / 0 failed)
 5. **Build Godot Host:** `dotnet build Ashfall.csproj --nologo` (0 errors)

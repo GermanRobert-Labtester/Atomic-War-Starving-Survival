@@ -52,6 +52,11 @@ def extract_save_stores():
             cend = class_matches[i+1].start() if i+1 < len(class_matches) else len(content)
             cbody = content[cstart:cend]
 
+            # Generic service infrastructure (e.g. Core SaveStore<T>) is not a
+            # per-section store: skip generic class declarations entirely.
+            if content[cm.end():cm.end()+1] == "<":
+                continue
+
             # Check if this class is a gameplay SaveStore
             is_store_named = cname.endswith("SaveStore")
             has_save_path = "SavePath" in cbody
@@ -73,12 +78,12 @@ def extract_save_stores():
             methods = re.findall(r"public\s+static\s+[^\n(]+\s+(Save[A-Za-z0-9_]*|TryLoad[A-Za-z0-9_]*|Load[A-Za-z0-9_]*|Exists[A-Za-z0-9_]*|Delete[A-Za-z0-9_]*|RestoreSave[A-Za-z0-9_]*|SavePayload|RestoreState|CaptureState)\s*\(", cbody)
             unique_methods = sorted(list(set(methods)))
 
-            # Extract checksum / codec
-            has_checksum = "Checksum" in cbody or "SaveChecksum" in cbody or "SaveEnvelopeHelper" in cbody
+            # Extract checksum / codec / hub delegation
+            has_checksum = "Checksum" in cbody or "SaveChecksum" in cbody or "SaveEnvelopeHelper" in cbody or "SaveStoreHub" in cbody
             has_codec = bool(re.search(r"\w*Codec\s*\.\s*(Encode|Decode|TryDecode)", cbody))
 
-            # Extract slot root isolation
-            has_slot_root = "SaveSlotRoot" in cbody or "ResolveSlotFile" in cbody or "ResolveSlotPath" in cbody
+            # Extract slot root isolation (direct or via the SaveStoreHub factory)
+            has_slot_root = "SaveSlotRoot" in cbody or "ResolveSlotFile" in cbody or "ResolveSlotPath" in cbody or "SaveStoreHub" in cbody
 
             # Match tests
             matched_tests = []
@@ -134,8 +139,8 @@ def generate_markdown(stores, verified_date=None):
         "",
         "## 1. Architectural Save-Store Contract Invariants",
         "",
-        "1. **Invariant 3 (Save Envelope Integrity):** Every save store must wrap payload state in a `{ State, Checksum }` envelope stamped by `SaveChecksum` or delegate to a Core save codec (`*Codec.Encode / Decode`). Bare unchecksummed stores are strictly rejected.",
-        "2. **Slot-Root Isolation:** All save paths must resolve through `SaveSlotRoot.ResolveSlotFile(...)` or `SaveSlotRoot.ResolveSlotPath(...)` so headless self-tests, slots, and profiles execute in isolated environments without mutating default user data.",
+        "1. **Invariant 3 (Save Envelope Integrity):** Every save store must wrap payload state in a `{ State, Checksum }` envelope stamped by `SaveChecksum`, delegate to a Core save codec (`*Codec.Encode / Decode`), or delegate to the generic `SaveStore<T>` service (`SaveStoreHub.Checksummed / .FromCodec`). Bare unchecksummed stores are strictly rejected.",
+        "2. **Slot-Root Isolation:** All save paths must resolve through `SaveSlotRoot.ResolveSlotFile(...)`, `SaveSlotRoot.ResolveSlotPath(...)`, or the `SaveStoreHub` factory (which routes through `SaveSlotRoot.ResolveBaseDirectory` per operation) so headless self-tests, slots, and profiles execute in isolated environments without mutating default user data.",
         "3. **Declarative Section Alignment:** Every registered `SectionName` must correspond directly to an entry in `SaveSectionRegistry.cs` (`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`).",
         "",
         "---",

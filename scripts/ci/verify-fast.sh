@@ -48,37 +48,9 @@ trap 'echo -e "\n❌ [ABORT] Fast verification failed at gate $? (stopping on fi
 echo -e "\n[1/16] Running trailing whitespace gate..."
 bash scripts/ci/no-whitespace-churn.sh
 
-# 2. Validate StreamingAssets JSON syntax (fast-fail)
-echo -e "\n[2/16] Validating StreamingAssets JSON syntax..."
-python3 - <<'PY'
-import json
-import pathlib
-import sys
-
-root = pathlib.Path("Assets/StreamingAssets/Data")
-if not root.is_dir():
-    print(f"ERROR: authoritative data directory is missing: {root}")
-    sys.exit(1)
-
-files = sorted(root.rglob("*.json"))
-if not files:
-    print(f"ERROR: no JSON catalogs found under {root}")
-    sys.exit(1)
-
-errors = []
-for path in files:
-    try:
-        json.loads(path.read_text(encoding="utf-8"))
-    except Exception as exc:
-        errors.append(f"{path}: {exc}")
-
-if errors:
-    print("JSON validation FAILED:")
-    print("\n".join(errors))
-    sys.exit(1)
-
-print(f"  -> PASS: validated {len(files)} JSON catalogs under {root}")
-PY
+# 2. Validate StreamingAssets JSON syntax and schema policy (fast-fail)
+echo -e "\n[2/16] Validating StreamingAssets JSON syntax & schema policy..."
+bash scripts/ci/json-schema-policy-gate.sh
 
 # 3. Build Core & Tests
 echo -e "\n[3/16] Building Ashfall.Core.Tests..."

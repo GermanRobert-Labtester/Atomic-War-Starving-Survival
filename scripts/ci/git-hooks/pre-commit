@@ -32,6 +32,12 @@ if ! git diff --cached --check; then
     exit 1
 fi
 
+# --- JSON schema policy scan (fast, always-on for staged JSON files) ---
+json_schema_gate="scripts/ci/json-schema-policy-gate.sh"
+if [ -x "$json_schema_gate" ]; then
+    "$json_schema_gate" --staged
+fi
+
 # Only act when the commit touches Godot asset paths.
 staged_files=$(git diff --cached --name-only)
 if [ -z "$staged_files" ]; then

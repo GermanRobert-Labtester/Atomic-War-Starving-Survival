@@ -40,7 +40,7 @@ namespace AtomicWar.GodotApp
         private static readonly Regex BlockComment =
             new Regex("/\\*.*?\\*/", RegexOptions.Compiled | RegexOptions.Singleline);
         private static readonly Regex CodecDelegation =
-            new Regex(@"\w*Codec\s*\.\s*(Encode|Decode|TryDecode)", RegexOptions.Compiled);
+            new Regex(@"(?:\w*Codec\s*\.\s*(?:Encode|Decode|TryDecode)|SaveEnvelopeHelper|SaveStoreHub)", RegexOptions.Compiled);
 
         public static int Run(string dataDirectory)
         {
