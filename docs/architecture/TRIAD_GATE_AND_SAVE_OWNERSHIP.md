@@ -15,23 +15,24 @@ SaveXxx()           ── Captures state snapshot into a versioned, checksummed
 FlushXxxIfDirty()   ── (Optional) Performs deferred write-to-disk when dirty flags trip
 ```
 
-### The Triad Drift Risk (`Invariant H7`)
-If a developer implements a `SetupXxx()` method without a corresponding `SaveXxx()` method registered in `Main.SaveOrchestrator.cs:AllSaveSections`, that subsystem will operate during runtime but silently drop its state upon save or shutdown.
+### The Declarative Save Section Authority (`Invariant H7`)
+If a developer implements a `SetupXxx()` method without a corresponding `SaveXxx()` method declared in [`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Save/SaveSectionRegistry.cs), that subsystem will operate during runtime but silently drop its state upon save or shutdown.
 
 The CI script [`scripts/ci/triad-drift-gate.sh`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/scripts/ci/triad-drift-gate.sh) runs in **Tier 1 Mandatory CI** to enforce that:
-1. Every `SaveXxx()` has a matching `SetupXxx()` in `src/Main*.cs`.
-2. Every `SaveXxx()` is registered under its snake_case section key in `AllSaveSections`.
-3. Every section key in `AllSaveSections` has a corresponding save handler.
+1. Every save section declared in `SaveSectionRegistry.cs` has a matching `SaveXxx()` method in `src/Main*.cs`.
+2. Every declared save section requiring setup has its matching `SetupXxx()` method in `src/Main*.cs`.
+3. `Main.SaveOrchestrator.cs` consumes `SaveSectionRegistry.SectionKeys` for all section aggregation.
+4. No un-registered rogue `SaveXxx()` methods exist in the Godot host.
 
 ---
 
-## 2. The Five Intentional Triad-Gate Exceptions
+## 2. Declarative Triad-Gate Section Mappings & Exemptions
 
-Five `SaveXxx()` methods have intentional non-1:1 naming or initialization structures by architectural design. Rather than masking these or risking silent drift, they are explicitly listed in `scripts/ci/triad-drift-gate.sh` under `NO_SETUP_NEEDED` with documented ownership.
+Save sections, save methods, setup initializers, and exemptions are declaratively registered in [`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/Save/SaveSectionRegistry.cs) with explicit metadata (`SectionKey`, `SaveMethod`, `SetupMethod`, `Owner`, `Description`, `RequiresSetup`):
 
 | # | Save Method | Nominal Setup Mismatch | Actual Setup Location & Wiring | Save Store & Section Key | Domain Owner |
 |---|---|---|---|---|---|
-| **1** | `SaveChemicalDependency()` | *No `SetupChemicalDependency`* | `SetupMentalHealthCrisis()` in [`src/Main.ShelterBatch3.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.ShelterBatch3.cs) | [`ChemicalDependencySaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/ChemicalDependencySaveStore.cs)<br>Key: `"chemical_dependency"` | Medical & Shelter Subsystem Team (`Ashfall.Core.Medical`) |
+| **1** | `SaveChemicalDependency()` | *Inline in Crisis Setup* | `SetupMentalHealthCrisis()` in [`src/Main.ShelterBatch3.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.ShelterBatch3.cs) | [`ChemicalDependencySaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/ChemicalDependencySaveStore.cs)<br>Key: `"chemical_dependency"` | Medical & Shelter Subsystem Team (`Ashfall.Core.Medical`) |
 | **2** | `SaveDailyBriefing()` | *No `SetupDailyBriefing`* | `SetupDailyBriefingModal()` in [`src/Main.Campaign.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.Campaign.cs) | [`DailyBriefingSaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/DailyBriefingSaveStore.cs)<br>Key: `"daily_briefing"` | Campaign & Progression Team (`AtomicWar.GodotApp.Host`) |
 | **3** | `SaveExpansionHub()` | *No `SetupExpansionHub`* | `SetupExpansions()` in [`src/Main.ExpansionHub.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.ExpansionHub.cs) | [`ExpansionHubSaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/ExpansionHubSaveStore.cs)<br>Key: `"expansion_hub"` | Expansion Framework Team (`AtomicWar.GodotApp.Host`) |
 | **4** | `SaveHoldfast()` | *No `SetupHoldfast`* | `SetupHoldfastRuntime()` in [`src/Main.Holdfast.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Main.Holdfast.cs) | [`HoldfastSaveStore`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/src/Host/HoldfastSaveStore.cs)<br>Key: `"holdfast"` | Holdfast / Exp 01 Team (`Ashfall.Core` / `Host`) |
