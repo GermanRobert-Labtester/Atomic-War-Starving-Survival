@@ -95,7 +95,8 @@ namespace Ashfall.Core.Tests.Campaign
             Assert.False(result.OwnerReports[1].Succeeded);
             Assert.Contains("crash", result.OwnerReports[1].FailureMessage);
             Assert.True(result.OwnerReports[2].Succeeded);
-            Assert.Equal(4, c.LastAdvancedDay);
+            Assert.False(result.Succeeded);
+            Assert.Equal(-1, c.LastAdvancedDay); // Fail-closed: owner failure prevents day commit
         }
 
         [Fact]
@@ -124,6 +125,106 @@ namespace Ashfall.Core.Tests.Campaign
         }
 
         [Fact]
+        public void DoubleTryBegin_CausesAdvanceToReturnNull_Characterization()
+        {
+            var c = new CampaignDayCoordinator();
+            c.Register("alpha", new StubOwner("alpha"));
+
+            // When TryBegin is called explicitly beforehand, _advancing is set to true.
+            bool begun = c.TryBegin(1);
+            Assert.True(begun);
+
+            // An immediate Advance(1) attempts TryBegin internally and returns null because _advancing is true.
+            var blockedResult = c.Advance(1);
+            Assert.Null(blockedResult);
+
+            // Releasing the gate allows Advance to run cleanly.
+            c.EndAdvance();
+            var successResult = c.Advance(1);
+            Assert.NotNull(successResult);
+            Assert.True(successResult.Succeeded);
+            Assert.Equal(1, c.LastAdvancedDay);
+        }
+
+        [Fact]
+        public void Advance_FailClosed_DoesNotAdvanceLastDayOrPersistOnFailure()
+        {
+            var c = new CampaignDayCoordinator();
+            c.Register("alpha", new StubOwner("alpha"));
+            c.Register("crash", new CrashingOwner("crash"));
+            var persistence = new CapturingPersistence();
+
+            var result = c.Advance(4, persistence, failClosed: true);
+            Assert.NotNull(result);
+            Assert.True(result.HasFailures);
+            Assert.False(result.Succeeded);
+            Assert.Single(result.FailedReports);
+            Assert.Equal("crash", result.FailedReports[0].OwnerId);
+            Assert.Equal(-1, c.LastAdvancedDay); // Fail-closed: last day NOT committed
+            Assert.Equal(0, persistence.Day); // Fail-closed: persistence NOT invoked
+        }
+
+        [Fact]
+        public void Advance_OwnerFailure_AllowsSafeRetryAfterFix()
+        {
+            var c = new CampaignDayCoordinator();
+            var flaky = new FlakyOwner("flaky") { ShouldCrash = true };
+            c.Register("flaky", flaky);
+
+            // First attempt fails
+            var result1 = c.Advance(5, failClosed: true);
+            Assert.NotNull(result1);
+            Assert.True(result1.HasFailures);
+            Assert.Equal(-1, c.LastAdvancedDay);
+
+            // Fix the condition and retry the same day
+            flaky.ShouldCrash = false;
+            var result2 = c.Advance(5, failClosed: true);
+            Assert.NotNull(result2);
+            Assert.True(result2.Succeeded);
+            Assert.Equal(5, c.LastAdvancedDay);
+        }
+
+        [Fact]
+        public void SaveAndRestoreState_PreservesLastAdvancedDay()
+        {
+            var c1 = new CampaignDayCoordinator();
+            c1.Register("alpha", new StubOwner("alpha"));
+            c1.Advance(10);
+            Assert.Equal(10, c1.LastAdvancedDay);
+
+            var save = c1.CaptureState();
+            Assert.Equal(10, save.lastAdvancedDay);
+
+            var c2 = new CampaignDayCoordinator();
+            c2.Register("alpha", new StubOwner("alpha"));
+            c2.RestoreState(save);
+            Assert.Equal(10, c2.LastAdvancedDay);
+
+            // Next valid day must be > 10
+            Assert.Null(c2.Advance(10));
+            Assert.NotNull(c2.Advance(11));
+        }
+
+        [Fact]
+        public void Advance_CapturesPreDaySnapshotOnAllOwnersBeforeTicking()
+        {
+            var c = new CampaignDayCoordinator();
+            var log = new List<string>();
+            var o1 = new OrderCheckingOwner("o1", log);
+            var o2 = new OrderCheckingOwner("o2", log);
+            c.Register("o1", o1, phase: 1);
+            c.Register("o2", o2, phase: 2);
+
+            var result = c.Advance(3);
+            Assert.NotNull(result);
+            Assert.True(result.Succeeded);
+
+            // Snapshots happen in phase order for all owners, then ticks happen in phase order
+            Assert.Equal(new[] { "snap_o1", "snap_o2", "tick_o1", "tick_o2" }, log);
+        }
+
+        [Fact]
         public void Advance_AllEvents_IteratesEveryEventFromEveryOwner()
         {
             var c = new CampaignDayCoordinator();
@@ -133,6 +234,27 @@ namespace Ashfall.Core.Tests.Campaign
             int count = 0;
             foreach (var _ in result.AllEvents()) count++;
             Assert.Equal(4, count); // 2 per emitting owner
+        }
+
+        private sealed class FlakyOwner : IDayAdvanceOwner
+        {
+            public string Id;
+            public bool ShouldCrash;
+            public FlakyOwner(string id) { Id = id; }
+            public void CapturePreDaySnapshot(int day) { }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                if (ShouldCrash) throw new InvalidOperationException("flaky failure");
+            }
+        }
+
+        private sealed class OrderCheckingOwner : IDayAdvanceOwner
+        {
+            public string Id;
+            private readonly List<string> _log;
+            public OrderCheckingOwner(string id, List<string> log) { Id = id; _log = log; }
+            public void CapturePreDaySnapshot(int day) => _log.Add("snap_" + Id);
+            public void TickDay(int day, List<DayStateChangeEvent> events) => _log.Add("tick_" + Id);
         }
 
         private sealed class StubOwner : IDayAdvanceOwner

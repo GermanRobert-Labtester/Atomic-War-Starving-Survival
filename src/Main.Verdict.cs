@@ -174,8 +174,7 @@ namespace AtomicWar.GodotApp
         private void OnVerdictTickClicked()
         {
             SetupVerdict();
-            _simDay++;
-            TickSimDay(_simDay);
+            CommitAdvance();
             _statusLabel.Text = _verdict.StatusLine();
         }
 

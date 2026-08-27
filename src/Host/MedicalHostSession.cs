@@ -92,10 +92,18 @@ namespace AtomicWar.GodotApp
             return ok ? $"Detox begun for {survivorId} ({itemId})." : "Detox refused (below threshold or unknown).";
         }
 
-        public string TickDemo(float hours)
+        // ── Production Runtime Actions ───────────────────────────────
+        public void TickHours(float hours)
         {
             foreach (var sv in new System.Collections.Generic.List<string>(Engine.Ledger.Keys))
                 Engine.TickHours(sv, hours);
+        }
+
+        // ── Demo actions ─────────────────────────────────────────────
+
+        public string TickDemo(float hours)
+        {
+            TickHours(hours);
             return $"Ticked {hours}h: morale drained {TotalMoraleDrain:F1}, " +
                    $"crafting penalty {ActiveCraftingPenalty:P0}, " +
                    $"combat penalty {ActiveCombatPenalty:P0}.";

@@ -24,6 +24,7 @@ namespace AtomicWar.GodotApp
         {
             if (_campaignDay != null) return;
             _campaignDay = new CampaignDayCoordinator();
+            RegisterProductionCampaignOwners();
             _dailyBriefing = new DailyBriefingState();
             LoadDailyBriefing();
             var loadedCampaignDay = CampaignDaySaveStore.TryLoad();
@@ -144,7 +145,7 @@ namespace AtomicWar.GodotApp
         /// Builds the typed <see cref="DailyBriefingInputs"/> snapshot and shows
         /// the briefing modal. Blocks further simulation until acknowledged.
         /// </summary>
-        private void ShowBriefingForDay(int day)
+        private void ShowBriefingForDay(int day, DayAdvancedEventArgs? args = null)
         {
             SetupDailyBriefingModal();
             SetupSurvivors();

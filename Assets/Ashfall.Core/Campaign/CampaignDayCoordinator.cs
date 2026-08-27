@@ -141,39 +141,63 @@ namespace Ashfall.Core.Campaign
         /// <see cref="DayAdvancedEventArgs"/> describing every owner result,
         /// or null when a guard rejects the call (already advancing, or stale
         /// day). The host should treat a null return as "no-op".
+        /// In fail-closed mode (default), any owner failure aborts persistence
+        /// and leaves <see cref="LastAdvancedDay"/> uncommitted.
         /// </summary>
-        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence? persistence = null)
+        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence? persistence = null, bool failClosed = true)
         {
             if (!TryBegin(day)) return null;
 
             var reports = new List<DayOwnerReport>(_owners.Count);
+            bool anyFailure = false;
             try
             {
+                // Phase 0: Capture pre-day snapshot across all registered owners first.
+                for (int i = 0; i < _owners.Count; i++)
+                {
+                    try
+                    {
+                        _owners[i].Owner.CapturePreDaySnapshot(day);
+                    }
+                    catch (Exception)
+                    {
+                        anyFailure = true;
+                    }
+                }
+
+                // Phase 1: Advance each owner in sorted phase & id order.
                 for (int i = 0; i < _owners.Count; i++)
                 {
                     var reg = _owners[i];
                     DayOwnerReport report;
                     try
                     {
-                        // Capture pre-day snapshot first (idempotent hook).
-                        reg.Owner.CapturePreDaySnapshot(day);
                         var events = new List<DayStateChangeEvent>();
                         reg.Owner.TickDay(day, events);
-                        report = new DayOwnerReport(reg.OwnerId, true, events, null!);
+                        report = new DayOwnerReport(reg.OwnerId, true, events, string.Empty);
                     }
                     catch (Exception e)
                     {
+                        anyFailure = true;
                         report = new DayOwnerReport(reg.OwnerId, false,
                             Array.Empty<DayStateChangeEvent>(), e.Message);
                     }
                     reports.Add(report);
                 }
 
-                // Persistence must happen before the host shows blocking UI.
+                var args = new DayAdvancedEventArgs(day, reports);
+
+                // Fail-closed: an owner failure must not mark the day successfully advanced
+                // or write partial persistent state to disk.
+                if (anyFailure && failClosed)
+                {
+                    return args;
+                }
+
+                // Persistence must happen once, after all required owners succeed and before briefing display.
                 persistence?.PersistBeforeBriefing(day, reports);
 
                 _lastAdvancedDay = day;
-                var args = new DayAdvancedEventArgs(day, reports);
                 OnDayAdvanced?.Invoke(args);
                 return args;
             }
@@ -293,13 +317,31 @@ string? primaryId = null, string? secondaryId = null, float numeric = 0f)
         }
     }
 
-    /// <summary>Aggregate event emitted after a successful day advance.</summary>
+    /// <summary>Aggregate event emitted after a day advance attempt.</summary>
     [Serializable]
     public sealed class DayAdvancedEventArgs
     {
         public int Day;
         public DayOwnerReport[] OwnerReports;
         public int OwnerCount => OwnerReports?.Length ?? 0;
+
+        public bool Succeeded => OwnerReports != null && Array.TrueForAll(OwnerReports, static r => r.Succeeded);
+        public bool HasFailures => !Succeeded;
+
+        public IReadOnlyList<DayOwnerReport> FailedReports
+        {
+            get
+            {
+                if (OwnerReports == null) return Array.Empty<DayOwnerReport>();
+                var list = new List<DayOwnerReport>();
+                for (int i = 0; i < OwnerReports.Length; i++)
+                {
+                    if (OwnerReports[i] != null && !OwnerReports[i].Succeeded)
+                        list.Add(OwnerReports[i]);
+                }
+                return list;
+            }
+        }
 
         public DayAdvancedEventArgs() { }
 

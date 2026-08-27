@@ -82,6 +82,12 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
+        // ── Production Runtime Actions ───────────────────────────────
+        public void TickHours(float hours)
+        {
+            Weather.Tick(hours);
+        }
+
         // ── Demo actions ─────────────────────────────────────────────
 
         public string TickDemo(float hours)
