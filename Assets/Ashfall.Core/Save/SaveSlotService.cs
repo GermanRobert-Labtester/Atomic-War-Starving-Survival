@@ -32,17 +32,19 @@ public class SaveSlotService
     private readonly IJsonSerializer _json;
     private readonly ILog _log;
     private readonly string _basePath;
+    private readonly IWallClock _wallClock;
 
     /// <summary>
     /// Create a new save slot service rooted at the given base path.
     /// Typically the base path is the globalized user:// directory.
     /// </summary>
-    public SaveSlotService(IFileIO files, IJsonSerializer json, ILog log, string basePath)
+    public SaveSlotService(IFileIO files, IJsonSerializer json, ILog log, string basePath, IWallClock? wallClock = null)
     {
         _files = files ?? throw new ArgumentNullException(nameof(files));
         _json = json ?? throw new ArgumentNullException(nameof(json));
         _log = log ?? throw new ArgumentNullException(nameof(log));
         _basePath = basePath ?? throw new ArgumentNullException(nameof(basePath));
+        _wallClock = wallClock ?? SystemWallClock.Instance;
     }
 
     /// <summary>Resolve the root directory for a specific slot.</summary>
@@ -721,7 +723,12 @@ public class SaveSlotService
         try
         {
             string quarantinePath = path + "." + slotId.Value + QuarantineExtension;
-            File.Move(path, quarantinePath, overwrite: true);
+            if (_files.FileExists(path))
+            {
+                string content = _files.ReadAllText(path);
+                _files.WriteAllText(quarantinePath, content);
+                _files.DeleteFile(path);
+            }
             _log.Warn($"SaveSlotService: quarantined corrupt save for slot '{slotId}' to '{quarantinePath}'. Reason: {reason}");
         }
         catch (Exception ex)

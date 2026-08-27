@@ -252,7 +252,7 @@ namespace AtomicWar.GodotApp
             var inputs = new DailyBriefingInputs
             {
                 Day = day,
-                GeneratedUtc = DateTime.UtcNow.ToString("o"),
+                GeneratedUtc = string.Empty,
                 BuildSeed = day,
                 SurvivorChanges = survivorChanges,
                 ResourceConsumption = resourceConsumption,
