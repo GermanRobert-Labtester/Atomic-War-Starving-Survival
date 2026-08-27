@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Random;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.Campaign
@@ -36,9 +37,13 @@ namespace Ashfall.Core.Campaign
         /// <summary>The authoritative campaign calendar.</summary>
         public ICampaignCalendar Calendar { get; }
 
-        public CampaignDayCoordinator(ICampaignCalendar? calendar = null)
+        /// <summary>The campaign RNG manager managing named domain streams.</summary>
+        public ICampaignRngManager Rng { get; }
+
+        public CampaignDayCoordinator(ICampaignCalendar? calendar = null, ICampaignRngManager? rng = null)
         {
             Calendar = calendar ?? new CampaignCalendar(initialDay: 1);
+            Rng = rng ?? new Ashfall.Core.Random.CampaignRngManager();
         }
 
         /// <summary>
@@ -237,7 +242,10 @@ namespace Ashfall.Core.Campaign
             return new CampaignDaySave
             {
                 saveVersion = CampaignDaySave.CurrentSaveVersion,
-                lastAdvancedDay = _lastAdvancedDay == int.MinValue ? -1 : _lastAdvancedDay
+                lastAdvancedDay = _lastAdvancedDay == int.MinValue ? -1 : _lastAdvancedDay,
+                masterSeed = Rng.MasterSeed,
+                derivationVersion = Rng.DerivationVersion,
+                streamPositions = Rng.CapturePositions()
             };
         }
 
@@ -248,6 +256,7 @@ namespace Ashfall.Core.Campaign
             _lastAdvancedDay = save.lastAdvancedDay < 0 ? int.MinValue : save.lastAdvancedDay;
             if (_lastAdvancedDay > 0)
                 Calendar.SetDay(_lastAdvancedDay);
+            Rng.RestorePositions(save.streamPositions);
         }
     }
 

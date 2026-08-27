@@ -57,11 +57,12 @@ namespace AtomicWar.GodotApp
 
         private void SetupSumpFlooding()
         {
+            SetupCampaignDay();
             var sfState = SumpFloodingSaveStore.TryLoad() ?? new SumpFloodingState();
             var sfWeather = _world.Weather;
             var sfPower = _powerGrid.System;
             var sfDeepFreeze = new YearOfAshDeepFreezeSystem();
-            var sfSys = new SumpFloodingSystem(new SeededRng(1986), sfWeather, sfPower, sfDeepFreeze, new GodotLog());
+            var sfSys = new SumpFloodingSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 10), sfWeather, sfPower, sfDeepFreeze, new GodotLog());
             sfSys.RestoreState(sfState);
             _sumpFlooding = new SumpFloodingHostSession(sfSys, sfWeather, sfPower, sfDeepFreeze);
             if (_sumpFloodingPanel != null && _sumpFloodingPanel.IsInsideTree())
@@ -74,12 +75,13 @@ namespace AtomicWar.GodotApp
 
         private void SetupDecontamination()
         {
+            SetupCampaignDay();
             var dcState = DecontaminationSaveStore.TryLoad() ?? new DecontaminationState();
             var dcInv = _inventory.Inventory;
             var dcRad = _survivors.Radiation;
             var dcAirlock = _airlockSecurity.System;
             var dcStarting = _startingLevel.System;
-            var dcSys = new DecontaminationSystem(new SeededRng(1986), dcRad, dcInv, dcAirlock, dcStarting, new GodotLog());
+            var dcSys = new DecontaminationSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 11), dcRad, dcInv, dcAirlock, dcStarting, new GodotLog());
             dcSys.RestoreState(dcState);
             _decontamination = new DecontaminationHostSession(dcSys, dcRad, dcInv, dcAirlock, dcStarting);
             if (_decontaminationPanel != null && _decontaminationPanel.IsInsideTree())
@@ -92,10 +94,11 @@ namespace AtomicWar.GodotApp
 
         private void SetupKitchenNutrition()
         {
+            SetupCampaignDay();
             var knState = KitchenNutritionSaveStore.TryLoad() ?? new KitchenNutritionState();
             var knInv = _inventory.Inventory;
             var knNeeds = _survivors.Needs;
-            var knSys = new KitchenNutritionSystem(new SeededRng(1986), knInv, knNeeds, new GodotLog());
+            var knSys = new KitchenNutritionSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 12), knInv, knNeeds, new GodotLog());
             knSys.RestoreState(knState);
             _kitchenNutrition = new KitchenNutritionHostSession(knSys, knInv, knNeeds);
             if (_kitchenNutritionPanel != null && _kitchenNutritionPanel.IsInsideTree())
@@ -108,10 +111,11 @@ namespace AtomicWar.GodotApp
 
         private void SetupEquipmentCondition()
         {
+            SetupCampaignDay();
             var ecState = EquipmentConditionSaveStore.TryLoad() ?? new EquipmentConditionState();
             var ecInv = _inventory.Inventory;
             var ecCrafting = _crafting.Engine;
-            var ecSys = new EquipmentConditionSystem(new SeededRng(1986), ecInv, ecCrafting, new GodotLog());
+            var ecSys = new EquipmentConditionSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 13), ecInv, ecCrafting, new GodotLog());
             ecSys.RestoreState(ecState);
             _equipmentCondition = new EquipmentConditionHostSession(ecSys, ecInv, ecCrafting);
             if (_equipmentConditionPanel != null && _equipmentConditionPanel.IsInsideTree())
@@ -160,10 +164,11 @@ namespace AtomicWar.GodotApp
 
         private void SetupContractorRoster()
         {
+            SetupCampaignDay();
             var crState = ContractorRosterSaveStore.TryLoad() ?? new ContractorRosterState();
             var crInv = _inventory.Inventory;
             var crExpedition = _expeditions.Engine;
-            var crSys = new ContractorRosterSystem(new SeededRng(1986), crInv, _expandedShelterRoster, crExpedition, new GodotLog());
+            var crSys = new ContractorRosterSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 14), crInv, _expandedShelterRoster, crExpedition, new GodotLog());
             crSys.RestoreState(crState);
             _contractorRoster = new ContractorRosterHostSession(crSys, crInv, _expandedShelterRoster, crExpedition);
             if (_contractorRosterPanel != null && _contractorRosterPanel.IsInsideTree())
@@ -176,11 +181,12 @@ namespace AtomicWar.GodotApp
 
         private void SetupMentalHealthCrisis()
         {
+            SetupCampaignDay();
             var mhState = MentalHealthCrisisSaveStore.TryLoad() ?? new MentalHealthState();
             var mhNeeds = _survivors.Needs;
             var mhMedical = _medicalWard;
             _chemicalDependency = new ChemicalDependencyHostSession();
-            var mhSys = new MentalHealthCrisisSystem(new SeededRng(1986), mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster, new GodotLog());
+            var mhSys = new MentalHealthCrisisSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Psychology, 0, 15), mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster, new GodotLog());
             mhSys.RestoreState(mhState);
             _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster);
             if (_mentalHealthCrisisPanel != null && _mentalHealthCrisisPanel.IsInsideTree())
@@ -218,7 +224,8 @@ namespace AtomicWar.GodotApp
 
         private void SetupShelterAssignment()
         {
-            _shelterAssignment = ShelterAssignmentHostSession.CreateDefault(new SeededRng(1986));
+            SetupCampaignDay();
+            _shelterAssignment = ShelterAssignmentHostSession.CreateDefault(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng);
             if (!_shelterAssignment.TryLoad())
             {
             }

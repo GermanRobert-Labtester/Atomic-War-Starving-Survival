@@ -213,7 +213,8 @@ namespace AtomicWar.GodotApp
                 Array.Empty<Ashfall.Core.Economy.ScarcityEntry>(),
                 Array.Empty<Ashfall.Core.Economy.FactionTradePreference>(),
                 Array.Empty<Ashfall.Core.Economy.PriceShockRule>()));
-            _tradePanel.BindSession(_economy, _silentFoundry.GuildStanceEngine, tuning, _tradeRadio, new SeededRng(2026));
+            SetupCampaignDay();
+            _tradePanel.BindSession(_economy, _silentFoundry.GuildStanceEngine, tuning, _tradeRadio, _campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Economy).Rng);
             _tradePanel.SetActiveFaction(Ashfall.Core.Foundry.SilentFoundryIds.FactionId);
             // Live refresh when a treaty consequence moves the guild's standing
             // (subscribe once per open; CloseTradePanel removes it).

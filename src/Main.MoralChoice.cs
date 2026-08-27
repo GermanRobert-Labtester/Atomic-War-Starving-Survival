@@ -33,10 +33,11 @@ namespace AtomicWar.GodotApp
         {
             if (_moralChoice != null) return;
             SetupJournal();
+            SetupCampaignDay();
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
 
-            _moralChoice = new MoralChoiceSystem(new SeededRng(MoralChoiceSeed));
+            _moralChoice = new MoralChoiceSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.MoralChoice).Rng);
             _moralChoiceDefs = MoralChoiceCatalogLoader.Load(_dataDir, fileIO, json);
 
             // Load branching chain quests and merge into the catalog
@@ -55,7 +56,7 @@ namespace AtomicWar.GodotApp
             _moralGossipData = MoralChoiceGossipCatalogLoader.Load(_dataDir, fileIO, json);
             _moralFactionReactions = MoralChoiceFactionReactionsCatalogLoader.Load(_dataDir, fileIO, json);
             _moralFlagDefs = MoralChoiceFlagCatalogLoader.Load(_dataDir, fileIO, json);
-            _moralGossipRuntime = new MoralChoiceGossipRuntime(_moralGossipData, new SeededRng(MoralChoiceSeed));
+            _moralGossipRuntime = new MoralChoiceGossipRuntime(_moralGossipData, _campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.MoralChoice, 0, 1));
 
             _moralChoice.OnQuestResolved += WriteMoralChoiceJournalEntry;
             _moralChoice.OnQuestResolved += _ => _moralChoiceDirty = true;

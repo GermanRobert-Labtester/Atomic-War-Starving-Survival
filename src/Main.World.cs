@@ -262,7 +262,8 @@ namespace AtomicWar.GodotApp
         private void SetupPowerGrid()
         {
             if (_powerGrid != null) return;
-            var rng = new Ashfall.Core.SeededRng(unchecked(_simDay * 31 + 7));
+            SetupCampaignDay();
+            var rng = _campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng;
             _powerGrid = PowerGridHostSession.CreateDefault(rng);
             _powerGrid.TryLoad();
             _powerGrid.OnStateChanged += () => _powerGridDirty = true;

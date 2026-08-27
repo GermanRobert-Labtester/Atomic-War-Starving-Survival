@@ -43,8 +43,9 @@ namespace AtomicWar.GodotApp
 
         private void SetupSurvivorRelations()
         {
+            SetupCampaignDay();
             var srState = SurvivorRelationsSaveStore.TryLoad() ?? new SurvivorRelationsState();
-            var srSys = new SurvivorRelationsSystem(new SeededRng(1986), new GodotLog());
+            var srSys = new SurvivorRelationsSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Social).Rng, new GodotLog());
             _survivorRelationsCore = srSys;
             srSys.RestoreState(srState);
             _survivorRelations = new SurvivorRelationsHostSession(srSys);
@@ -105,8 +106,9 @@ namespace AtomicWar.GodotApp
 
         private void SetupWildlifeTrapping()
         {
+            SetupCampaignDay();
             var wtrapState = WildlifeTrappingSaveStore.TryLoad() ?? new WildlifeTrappingState();
-            var wtrapSys = new WildlifeTrappingSystem(new SeededRng(1986), new GodotLog());
+            var wtrapSys = new WildlifeTrappingSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng, new GodotLog());
             wtrapSys.RestoreState(wtrapState);
             _wildlifeTrapping = new WildlifeTrappingHostSession(wtrapSys);
             if (_wildlifeTrappingPanel != null && _wildlifeTrappingPanel.IsInsideTree())
@@ -125,8 +127,9 @@ namespace AtomicWar.GodotApp
 
         private void SetupExcavation()
         {
+            SetupCampaignDay();
             var exState = ExcavationSaveStore.TryLoad() ?? new ExcavationState();
-            var exSys = new ExcavationSystem(new SeededRng(1986), new GodotLog());
+            var exSys = new ExcavationSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 2), new GodotLog());
             exSys.RestoreState(exState);
             _excavation = new ExcavationHostSession(exSys);
             if (_excavationPanel != null && _excavationPanel.IsInsideTree())
@@ -145,9 +148,10 @@ namespace AtomicWar.GodotApp
 
         private void SetupApprenticeship()
         {
+            SetupCampaignDay();
             var appState = ApprenticeshipSaveStore.TryLoad() ?? new ApprenticeshipState();
             var appSkills = new SkillProgressionSystem();
-            var appSys = new ApprenticeshipSystem(new SeededRng(1986), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
+            var appSys = new ApprenticeshipSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Social, 0, 3), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
             appSys.RestoreState(appState);
             _apprenticeship = new ApprenticeshipHostSession(appSys);
             if (_apprenticeshipPanel != null && _apprenticeshipPanel.IsInsideTree())
