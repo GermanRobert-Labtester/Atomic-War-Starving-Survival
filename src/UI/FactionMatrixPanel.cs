@@ -24,7 +24,7 @@ namespace AtomicWar.GodotApp.UI;
 ///
 /// Pure presentation. Reads only; never mutates trust or thresholds.
 /// </summary>
-public partial class FactionMatrixPanel : Control
+public partial class FactionMatrixPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnFactionSelected;
@@ -466,9 +466,15 @@ public partial class FactionMatrixPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         _factions.Clear();
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

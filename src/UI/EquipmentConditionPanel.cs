@@ -13,7 +13,7 @@ namespace AtomicWar.GodotApp.UI
     /// ASHFALL — Equipment Condition & Maintenance Workbench Panel.
     /// Manages gear wear & tear, slip risk, maintenance stations, and part repairs.
     /// </summary>
-    public partial class EquipmentConditionPanel : Control
+    public partial class EquipmentConditionPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -42,6 +42,17 @@ namespace AtomicWar.GodotApp.UI
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -311,10 +322,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

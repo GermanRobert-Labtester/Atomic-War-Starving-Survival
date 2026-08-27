@@ -15,7 +15,7 @@ namespace AtomicWar.GodotApp.UI
     /// Displays live wasteland geography, discovered sectors, active sortie routes,
     /// radiation danger gradients, and strategic waypoints using real Core data.
     /// </summary>
-    public partial class MapPanel : Control
+    public partial class MapPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action<string>? OnLocationDetailRequested;
@@ -450,9 +450,10 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_expeditions != null)
+
+    public void Unbind()
+    {
+        if (_expeditions != null)
                 _expeditions.StateChanged -= RefreshView;
             if (_world != null)
                 _world.StateChanged -= RefreshView;
@@ -460,6 +461,11 @@ namespace AtomicWar.GodotApp.UI
                 _deepCoast.StateChanged -= RefreshView;
             if (_yearOfAsh?.Warlord != null)
                 _yearOfAsh.Warlord.OnStateChanged -= RefreshView;
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

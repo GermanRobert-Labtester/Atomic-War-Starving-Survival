@@ -16,7 +16,7 @@ namespace AtomicWar.GodotApp.UI
     ///
     /// Presentation only — delegates simulation state to MaritimeHostSession.
     /// </summary>
-    public partial class MaritimePanel : Control
+    public partial class MaritimePanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -25,6 +25,8 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _diveDetailsContainer = null!;
         private VBoxContainer _lootDetailsContainer = null!;
         private Label _statusLabel = null!;
+
+        public bool IsBound => _maritime != null;
 
         public override void _Ready()
         {
@@ -263,12 +265,18 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(container);
         }
 
-        public override void _ExitTree()
-        {
-            if (_maritime != null)
+
+    public void Unbind()
+    {
+        if (_maritime != null)
             {
                 _maritime.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

@@ -803,11 +803,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_expeditionHost != null)
-            {
-                _expeditionHost.Engine.OnExpeditionCompleted -= OnExpeditionCompleted;
-                _expeditionHost.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

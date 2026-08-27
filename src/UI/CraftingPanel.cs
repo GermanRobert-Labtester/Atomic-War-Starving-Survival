@@ -13,7 +13,7 @@ namespace AtomicWar.GodotApp.UI
     /// lets the player start crafts and track the active queue.
     /// Thin presentation layer — all craft logic lives in CraftingSystem.
     /// </summary>
-    public partial class CraftingPanel : Control
+    public partial class CraftingPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action? OnCraftStarted;
@@ -336,13 +336,19 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_craftingHost != null)
+
+    public void Unbind()
+    {
+        if (_craftingHost != null)
             {
                 _craftingHost.Engine.OnCraftStarted -= OnEngineCraftStarted;
                 _craftingHost.Engine.OnCraftCompleted -= OnEngineCraftCompleted;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

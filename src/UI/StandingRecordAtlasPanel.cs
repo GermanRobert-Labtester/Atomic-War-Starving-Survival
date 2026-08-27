@@ -23,7 +23,7 @@ namespace AtomicWar.GodotApp.UI;
 ///
 /// Plus six-card status rail and right-side detail inspector.
 /// </summary>
-public partial class StandingRecordAtlasPanel : Control
+public partial class StandingRecordAtlasPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnSiteSelected;
@@ -498,12 +498,18 @@ public partial class StandingRecordAtlasPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

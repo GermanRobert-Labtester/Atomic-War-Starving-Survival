@@ -387,14 +387,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_worldHost?.Weather != null)
-            {
-                _worldHost.Weather.OnWeatherChanged -= HandleWeatherChanged;
-            }
-            if (_weatherHost?.System != null)
-            {
-                _weatherHost.System.OnWeatherChanged -= HandleWeatherChanged;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

@@ -26,7 +26,7 @@ namespace AtomicWar.GodotApp.UI;
 ///
 /// Plus right-side location detail inspector with live map cell rendering.
 /// </summary>
-public partial class MapAtlasPanel : Control
+public partial class MapAtlasPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnLocationSelected;
@@ -501,12 +501,18 @@ public partial class MapAtlasPanel : Control
         host.AddChild(chip);
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

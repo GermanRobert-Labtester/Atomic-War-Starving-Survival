@@ -30,7 +30,7 @@ namespace AtomicWar.GodotApp.UI;
 /// `ExpeditionPanel.cs`. The legacy modal remains the focused interaction
 /// surface; this dashboard adds the dashboard view as a Tier-2 sibling.
 /// </summary>
-public partial class FactionsNarrativePanel : Control
+public partial class FactionsNarrativePanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnFactionSelected;
@@ -485,9 +485,15 @@ public partial class FactionsNarrativePanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         _factions.Clear();
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

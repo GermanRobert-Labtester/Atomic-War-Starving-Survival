@@ -21,7 +21,7 @@ namespace AtomicWar.GodotApp.UI;
 ///
 /// Plus six-card status rail and right-side detail inspector.
 /// </summary>
-public partial class ResearchAtlasPanel : Control
+public partial class ResearchAtlasPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnNodeSelected;
@@ -540,12 +540,18 @@ public partial class ResearchAtlasPanel : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

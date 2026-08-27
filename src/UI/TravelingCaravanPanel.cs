@@ -14,7 +14,7 @@ namespace AtomicWar.GodotApp.UI
     /// Manages itinerant merchants, wasteland route nodes, daily movements,
     /// and ration-based outpost barter.
     /// </summary>
-    public partial class TravelingCaravanPanel : Control
+    public partial class TravelingCaravanPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -295,12 +295,18 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_host != null)
+
+    public void Unbind()
+    {
+        if (_host != null)
             {
                 _host.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

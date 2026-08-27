@@ -26,7 +26,7 @@ namespace AtomicWar.GodotApp.UI;
 /// legacy `CombatPanel.cs`; this HUD adds the always-on-top mini-monitor
 /// the existing `ExpeditionPanel.cs` hud-overlay pattern already uses.
 /// </summary>
-public partial class CombatHudOverlay : Control
+public partial class CombatHudOverlay : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action? OnFireRequested;
@@ -433,12 +433,18 @@ public partial class CombatHudOverlay : Control
         }
     }
 
-    public override void _ExitTree()
+
+    public void Unbind()
     {
         if (_host != null)
         {
             _host.StateChanged -= RefreshView;
         }
-        base._ExitTree();
     }
+
+    public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

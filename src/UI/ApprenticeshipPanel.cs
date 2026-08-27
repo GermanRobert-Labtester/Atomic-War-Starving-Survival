@@ -7,7 +7,7 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
-    public partial class ApprenticeshipPanel : Control
+    public partial class ApprenticeshipPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -30,6 +30,17 @@ namespace AtomicWar.GodotApp.UI
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -102,10 +113,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

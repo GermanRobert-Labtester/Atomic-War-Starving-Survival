@@ -15,7 +15,7 @@ namespace AtomicWar.GodotApp.UI
     /// are evaluated authoritatively in <see cref="Ashfall.Core.Survivors.CaregivingSystem"/>
     /// via <see cref="CaregivingHostSession"/>.
     /// </summary>
-    public partial class CaregivingPanel : Control
+    public partial class CaregivingPanel : Control, IBindablePanel
     {
         /// <summary>Raised when the panel is dismissed by the player.</summary>
         public event Action? OnClose;
@@ -43,6 +43,17 @@ namespace AtomicWar.GodotApp.UI
                 _host.StateChanged += RefreshView;
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -133,8 +144,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-                _host.StateChanged -= RefreshView;
+            Unbind();
             base._ExitTree();
         }
     }

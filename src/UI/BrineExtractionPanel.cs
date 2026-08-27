@@ -12,7 +12,7 @@ namespace AtomicWar.GodotApp.UI
     /// treaty delivery status, and maintenance controls.
     /// All gameplay logic delegates to SilentFoundryHostSession → SaltMineExtractionSystem.
     /// </summary>
-    public partial class BrineExtractionPanel : Control
+    public partial class BrineExtractionPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -53,6 +53,23 @@ namespace AtomicWar.GodotApp.UI
                 RefreshView();
             }
         }
+
+        public void Unbind()
+        {
+            if (_foundryHost != null)
+            {
+                _foundryHost.StateChanged -= RefreshView;
+                _foundryHost = null;
+            }
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
+
+
 
         public override void _Ready()
         {
@@ -206,14 +223,6 @@ namespace AtomicWar.GodotApp.UI
             _deliverButton.Disabled = state.brineStorage < SaltMineExtractionSystem.TreatyBrineQuotaBarrels;
             _replaceDrillButton.Disabled = vein.drillCondition > 0.8f;
             _repairPumpButton.Disabled = vein.pumpPressure > 0.8f;
-        }
-
-        public override void _ExitTree()
-        {
-            if (_foundryHost != null)
-            {
-                _foundryHost.StateChanged -= RefreshView;
-            }
         }
     }
 }

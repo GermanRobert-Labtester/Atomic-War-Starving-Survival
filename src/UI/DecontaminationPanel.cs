@@ -14,7 +14,7 @@ namespace AtomicWar.GodotApp.UI
     /// Manages hazmat washdown showers, surface radiation clearing, decon queues,
     /// and shelter air contamination mitigation.
     /// </summary>
-    public partial class DecontaminationPanel : Control
+    public partial class DecontaminationPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -43,6 +43,17 @@ namespace AtomicWar.GodotApp.UI
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -334,10 +345,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

@@ -21,7 +21,7 @@ namespace AtomicWar.GodotApp.UI;
 /// survivors with an assigned dosimeter tag; unbooked rads are the
 /// shelter's silence").
 /// </summary>
-public partial class DoseLedgerPanel : Control
+public partial class DoseLedgerPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnSurvivorSelected;
@@ -43,15 +43,27 @@ public partial class DoseLedgerPanel : Control
 
     public void Bind(DoseLedgerHostSession session, SurvivorsHostSession? survivors = null)
     {
+        Unbind();
         _doseSession = session;
         _survivorsHost = survivors;
         if (_doseSession?.Ledger != null)
         {
-            _doseSession.Ledger.OnStateChanged -= HandleLedgerChanged;
             _doseSession.Ledger.OnStateChanged += HandleLedgerChanged;
         }
         RefreshView();
     }
+
+    public void Unbind()
+    {
+        if (_doseSession?.Ledger != null)
+        {
+            _doseSession.Ledger.OnStateChanged -= HandleLedgerChanged;
+        }
+        _doseSession = null;
+        _survivorsHost = null;
+    }
+
+
 
     private void HandleLedgerChanged(DoseLedgerSystemState _) => RefreshView();
 
@@ -432,11 +444,8 @@ public partial class DoseLedgerPanel : Control
     }
 
     public override void _ExitTree()
-    {
-        if (_doseSession?.Ledger != null)
         {
-            _doseSession.Ledger.OnStateChanged -= HandleLedgerChanged;
+            Unbind();
+            base._ExitTree();
         }
-        base._ExitTree();
-    }
 }

@@ -12,7 +12,7 @@ namespace AtomicWar.GodotApp.UI
     /// Manages active wasteland operations, narrative objectives, Holdfast protocol stages,
     /// Nobody's Charter missions, and historical quest completions using real Core systems.
     /// </summary>
-    public partial class QuestsPanel : Control
+    public partial class QuestsPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action<string>? OnQuestDetailRequested;
@@ -37,10 +37,7 @@ namespace AtomicWar.GodotApp.UI
             DutyRosterHostSession? dutyRoster = null,
             int currentDay = 1)
         {
-            if (_holdfastQuests != null)
-                _holdfastQuests.OnStateChanged -= HandleHoldfastStateChanged;
-            if (_crossingQuests != null)
-                _crossingQuests.OnStateChanged -= HandleCrossingStateChanged;
+            Unbind();
 
             _holdfastQuests = holdfastQuests;
             _crossingQuests = crossingQuests;
@@ -54,6 +51,23 @@ namespace AtomicWar.GodotApp.UI
 
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_holdfastQuests != null)
+            {
+                _holdfastQuests.OnStateChanged -= HandleHoldfastStateChanged;
+                _holdfastQuests = null;
+            }
+            if (_crossingQuests != null)
+            {
+                _crossingQuests.OnStateChanged -= HandleCrossingStateChanged;
+                _crossingQuests = null;
+            }
+            _dutyRoster = null;
+        }
+
+
 
         private void HandleHoldfastStateChanged(HoldfastQuestSystemState _) => RefreshView();
         private void HandleCrossingStateChanged(CrossingQuestSystemState _) => RefreshView();
@@ -411,10 +425,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_holdfastQuests != null)
-                _holdfastQuests.OnStateChanged -= HandleHoldfastStateChanged;
-            if (_crossingQuests != null)
-                _crossingQuests.OnStateChanged -= HandleCrossingStateChanged;
+            Unbind();
             base._ExitTree();
         }
     }

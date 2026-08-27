@@ -16,7 +16,7 @@ namespace AtomicWar.GodotApp.UI
     /// deploy trap, decontaminate, bandage, retreat, last stand, end turn) — the
     /// same commands the Core engine resolves. UI refreshes after every action.
     /// </summary>
-    public partial class CombatPanel : Control
+    public partial class CombatPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -260,12 +260,18 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_combat != null)
+
+    public void Unbind()
+    {
+        if (_combat != null)
             {
                 _combat.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

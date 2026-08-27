@@ -11,7 +11,7 @@ namespace AtomicWar.GodotApp.UI
     /// Presents the full combat event log, aggregated battle outcomes (win/loss/
     /// retreat), and tactical analysis from the live CombatHostSession snapshot.
     /// </summary>
-    public partial class CombatHistoryPanel : Control
+    public partial class CombatHistoryPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -178,12 +178,18 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_combat != null)
+
+    public void Unbind()
+    {
+        if (_combat != null)
             {
                 _combat.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

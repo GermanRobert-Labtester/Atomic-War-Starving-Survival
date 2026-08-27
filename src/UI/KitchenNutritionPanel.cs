@@ -14,7 +14,7 @@ namespace AtomicWar.GodotApp.UI
     /// Manages meal preparation, cook assignments, nutrition/scurvy prevention,
     /// and survivor dietary morale buffs.
     /// </summary>
-    public partial class KitchenNutritionPanel : Control
+    public partial class KitchenNutritionPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -43,6 +43,17 @@ namespace AtomicWar.GodotApp.UI
             }
             RefreshView();
         }
+
+        public void Unbind()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+                _host = null;
+            }
+        }
+
+
 
         public override void _Ready()
         {
@@ -280,10 +291,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            if (_host != null)
-            {
-                _host.StateChanged -= RefreshView;
-            }
+            Unbind();
             base._ExitTree();
         }
     }

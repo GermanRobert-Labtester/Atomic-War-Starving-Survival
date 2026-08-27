@@ -12,7 +12,7 @@ namespace AtomicWar.GodotApp.UI
     /// Manages wasteland faction relations, trust metrics, trade privileges,
     /// Scavenger Guild claims, Crossing arbitration, and diplomatic communiques.
     /// </summary>
-    public partial class FactionsPanel : Control
+    public partial class FactionsPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action<string>? OnFactionDetailRequested;
@@ -407,14 +407,20 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_muster != null)
+
+    public void Unbind()
+    {
+        if (_muster != null)
                 _muster.StateChanged -= RefreshView;
             if (_expansions != null)
                 _expansions.StateChanged -= RefreshView;
             if (_yearOfAsh?.Warlord != null)
                 _yearOfAsh.Warlord.OnStateChanged -= RefreshView;
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

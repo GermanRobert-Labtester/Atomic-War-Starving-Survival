@@ -586,8 +586,8 @@ public partial class GreenhousePanel : Control
     }
 
     public override void _ExitTree()
-    {
-        Unbind();
-        base._ExitTree();
-    }
+        {
+            Unbind();
+            base._ExitTree();
+        }
 }

@@ -6,6 +6,7 @@ using Ashfall.Core.Save;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 using Ashfall.Core.Medical;
+using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -25,7 +26,7 @@ namespace AtomicWar.GodotApp
         {
             GD.Print("── GODOT-NODE CALLBACK PANEL BIND/UNBIND/REBIND SELF-TEST ──");
             int passedGates = 0;
-            int totalGates = 8;
+            int totalGates = 12;
 
             try
             {
@@ -358,6 +359,167 @@ namespace AtomicWar.GodotApp
                 stressPanel.Unbind();
                 stressPanel.QueueFree();
                 GD.Print("[PASS] Gate 8: Multiple sequential rebinds handled idempotently with 0 delegate stacking.");
+                passedGates++;
+
+                // ── GATE 9: Shelter Batch Panels Bind -> Unbind -> Rebind Lifecycle ──
+                GD.Print("\n[Gate 9] Testing shelter batch panels bind -> unbind -> rebind lifecycle...");
+                string dataDir = string.IsNullOrEmpty(dataDirectory) ? "Assets/StreamingAssets/Data" : dataDirectory;
+                var rng = new SeededRng(1986);
+                var log = new GodotLog();
+
+                var airlock = new AirlockSecurityPanel();
+                var airlockSession = new AirlockSecurityHostSession(new AirlockSecuritySystem(rng, log));
+                airlock.Bind(airlockSession);
+                if (!airlock.IsBound) { GD.PrintErr("[FAIL] Gate 9: AirlockSecurityPanel IsBound false."); return 1; }
+                airlock.Unbind();
+                if (airlock.IsBound) { GD.PrintErr("[FAIL] Gate 9: AirlockSecurityPanel IsBound true after unbind."); return 1; }
+                airlock.Bind(airlockSession);
+                airlock.QueueFree();
+
+                var chem = new ChemicalDependencyPanel();
+                var chemSession = new ChemicalDependencyHostSession(new ChemicalDependencySystem());
+                chem.Bind(chemSession);
+                if (!chem.IsBound) { GD.PrintErr("[FAIL] Gate 9: ChemicalDependencyPanel IsBound false."); return 1; }
+                chem.Unbind();
+                if (chem.IsBound) { GD.PrintErr("[FAIL] Gate 9: ChemicalDependencyPanel IsBound true after unbind."); return 1; }
+                chem.Bind(chemSession);
+                chem.QueueFree();
+
+                var care = new CaregivingPanel();
+                var careSession = new CaregivingHostSession(new CaregivingSystem());
+                care.Bind(careSession);
+                if (!care.IsBound) { GD.PrintErr("[FAIL] Gate 9: CaregivingPanel IsBound false."); return 1; }
+                care.Unbind();
+                care.Bind(careSession);
+                care.QueueFree();
+
+                var exc = new ExcavationPanel();
+                var excSession = new ExcavationHostSession(new ExcavationSystem(rng, log));
+                exc.Bind(excSession);
+                exc.Unbind();
+                exc.Bind(excSession);
+                exc.QueueFree();
+
+                var reg = new RegionalTreatyPanel();
+                var regSession = new RegionalTreatyHostSession(new RegionalTreatySystem(log));
+                reg.Bind(regSession);
+                reg.Unbind();
+                reg.Bind(regSession);
+                reg.QueueFree();
+
+                var rel = new SurvivorRelationsPanel();
+                var relSession = new SurvivorRelationsHostSession(new SurvivorRelationsSystem(rng, log));
+                rel.Bind(relSession);
+                rel.Unbind();
+                rel.Bind(relSession);
+                rel.QueueFree();
+
+                var wt = new WaterTreatmentPanel();
+                var wtSession = new WaterTreatmentHostSession(new WaterTreatmentSystem(log));
+                wt.Bind(wtSession);
+                wt.Unbind();
+                wt.Bind(wtSession);
+                wt.QueueFree();
+
+                var way = new WaystationNetworkPanel();
+                var waySession = new WaystationHostSession(new WaystationSystem());
+                way.Bind(waySession);
+                way.Unbind();
+                way.Bind(waySession);
+                way.QueueFree();
+
+                var wild = new WildlifeTrappingPanel();
+                var wildSession = new WildlifeTrappingHostSession(new WildlifeTrappingSystem(rng, log));
+                wild.Bind(wildSession);
+                wild.Unbind();
+                wild.Bind(wildSession);
+                wild.QueueFree();
+
+                GD.Print("[PASS] Gate 9: Shelter batch panels verified for bind -> unbind -> rebind lifecycle.");
+                passedGates++;
+
+                // ── GATE 10: DutyRosterPanel and DoseLedgerPanel Callback Lifecycle ──
+                GD.Print("\n[Gate 10] Testing DutyRosterPanel and DoseLedgerPanel lifecycle...");
+                var dutyHost = DutyRosterHostSession.Create(dataDir, log: null);
+                var survHost = new SurvivorsHostSession();
+                var dutyPanel = new DutyRosterPanel();
+                dutyPanel.Bind(dutyHost, survHost);
+                if (!dutyPanel.IsBound) { GD.PrintErr("[FAIL] Gate 10: DutyRosterPanel IsBound false."); return 1; }
+                dutyPanel.Unbind();
+                if (dutyPanel.IsBound) { GD.PrintErr("[FAIL] Gate 10: DutyRosterPanel IsBound true after unbind."); return 1; }
+                dutyPanel.Bind(dutyHost, survHost);
+                dutyPanel.QueueFree();
+
+                var doseHost = DoseLedgerHostSession.Create(dataDir);
+                var dosePanel = new DoseLedgerPanel();
+                dosePanel.Bind(doseHost, survHost);
+                if (!dosePanel.IsBound) { GD.PrintErr("[FAIL] Gate 10: DoseLedgerPanel IsBound false."); return 1; }
+                dosePanel.Unbind();
+                if (dosePanel.IsBound) { GD.PrintErr("[FAIL] Gate 10: DoseLedgerPanel IsBound true after unbind."); return 1; }
+                dosePanel.Bind(doseHost, survHost);
+                dosePanel.QueueFree();
+
+                GD.Print("[PASS] Gate 10: DutyRosterPanel and DoseLedgerPanel verified cleanly.");
+                passedGates++;
+
+                // ── GATE 11: SurvivorsPanel, RadioPanel and QuestsPanel Callback Lifecycle ──
+                GD.Print("\n[Gate 11] Testing SurvivorsPanel, RadioPanel and QuestsPanel lifecycle...");
+                var survPanel = new SurvivorsPanel();
+                survPanel.Bind(survHost);
+                if (!survPanel.IsBound) { GD.PrintErr("[FAIL] Gate 11: SurvivorsPanel IsBound false."); return 1; }
+                survPanel.Unbind();
+                if (survPanel.IsBound) { GD.PrintErr("[FAIL] Gate 11: SurvivorsPanel IsBound true after unbind."); return 1; }
+                survPanel.Bind(survHost);
+                survPanel.QueueFree();
+
+                var radioHost = RadioHostSession.Create(dataDir, 1);
+                var radioPanel = new RadioPanel();
+                radioPanel.Bind(radioHost);
+                if (!radioPanel.IsBound) { GD.PrintErr("[FAIL] Gate 11: RadioPanel IsBound false."); return 1; }
+                radioPanel.Unbind();
+                if (radioPanel.IsBound) { GD.PrintErr("[FAIL] Gate 11: RadioPanel IsBound true after unbind."); return 1; }
+                radioPanel.Bind(radioHost);
+                radioPanel.QueueFree();
+
+                var questsPanel = new QuestsPanel();
+                var holdfastQuests = new HoldfastQuestSystem();
+                questsPanel.Bind(holdfastQuests);
+                if (!questsPanel.IsBound) { GD.PrintErr("[FAIL] Gate 11: QuestsPanel IsBound false."); return 1; }
+                questsPanel.Unbind();
+                if (questsPanel.IsBound) { GD.PrintErr("[FAIL] Gate 11: QuestsPanel IsBound true after unbind."); return 1; }
+                questsPanel.Bind(holdfastQuests);
+                questsPanel.QueueFree();
+
+                GD.Print("[PASS] Gate 11: SurvivorsPanel, RadioPanel and QuestsPanel verified cleanly.");
+                passedGates++;
+
+                // ── GATE 12: IBindablePanel Interface Conformance ──
+                GD.Print("\n[Gate 12] Testing IBindablePanel interface conformance on panels...");
+                IBindablePanel[] bindablePanels = new IBindablePanel[]
+                {
+                    new AirlockSecurityPanel(),
+                    new ChemicalDependencyPanel(),
+                    new CaregivingPanel(),
+                    new DutyRosterPanel(),
+                    new DoseLedgerPanel(),
+                    new SurvivorsPanel(),
+                    new RadioPanel(),
+                    new QuestsPanel()
+                };
+
+                foreach (var bp in bindablePanels)
+                {
+                    if (bp.IsBound)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 12: Panel {bp.GetType().Name} IsBound is true before binding.");
+                        return 1;
+                    }
+                    bp.Unbind(); // Must be safe on unbound panel
+                    if (bp is Control ctrl)
+                        ctrl.QueueFree();
+                }
+
+                GD.Print("[PASS] Gate 12: IBindablePanel contract conformance verified cleanly.");
                 passedGates++;
 
                 GD.Print($"\n=== PANEL BIND LIFECYCLE SELF-TEST PASS ({passedGates}/{totalGates} gates verified) ===");

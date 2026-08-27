@@ -15,7 +15,7 @@ namespace AtomicWar.GodotApp.UI
     /// applied here — the data is row-major stack listing, where the existing
     /// icon + count rows already serve readability well.
     /// </summary>
-    public partial class InventoryPanel : Control
+    public partial class InventoryPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
@@ -257,12 +257,18 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
-        {
-            if (_inventoryHost != null)
+
+    public void Unbind()
+    {
+        if (_inventoryHost != null)
             {
                 _inventoryHost.StateChanged -= RefreshView;
             }
+    }
+
+    public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }
