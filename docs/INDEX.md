@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 324 | **Last Verified:** 2026-08-27
+**Total Indexed Documents:** 325 | **Last Verified:** 2026-08-27
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 213 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 214 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 98 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 13 |
 
@@ -127,7 +127,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h3_remediation.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/deprecated_audits/audit_h3_remediation.md) | **H-3 Remediation — EncounterEventFactory id dedup** — ======================================================================================== |
 | 🟡 `HISTORICAL` | [`docs/deprecated_audits/audit_h4_plan.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/deprecated_audits/audit_h4_plan.md) | **H-4 Remediation Plan — SaveSystem refactor to ISaveable** — ======================================================================================== |
 
-## 11. General Project Guides & Summaries (88 documents)
+## 11. General Project Guides & Summaries (89 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -187,7 +187,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/data/DATA_GAP_AUDIT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/data/DATA_GAP_AUDIT.md) | **ASHFALL Data Gap Audit** — Counted entries in every top-level JSON catalog, identified C# consumers per catalog, |
 | 🟢 `CURRENT` | [`docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md) | **ASHFALL Implementation Gap Audit** — **Method:** 10-loop forensic scan (ashfall-scan skill) |
 | 🟢 `CURRENT` | [`docs/health/CODEHEALTH_SWEEP.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/health/CODEHEALTH_SWEEP.md) | **Codehealth Sweep — ThemeHelper Facade & harvestable_materials Vocabulary Regression Check** — **Scope:** Read-only structural-health sweep triggered after two changes landed: |
-| 🟢 `CURRENT` | [`docs/hygiene/REPO_HYGIENE_REPORT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/hygiene/REPO_HYGIENE_REPORT.md) | **Repo Hygiene Report** — === PHASE 1 — Inventory === |
+| 🟢 `CURRENT` | [`docs/hygiene/GIT_OBJECT_INVENTORY.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/hygiene/GIT_OBJECT_INVENTORY.md) | **ASHFALL — Git Object Inventory & Retention Policy** — **0 stashes.** Working tree is clean. |
+| 🟢 `CURRENT` | [`docs/hygiene/REPO_HYGIENE_REPORT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/hygiene/REPO_HYGIENE_REPORT.md) | **ASHFALL — Repository Hygiene Report** — These directories are owned by AI coding assistants, aider, composio, etc. |
 | 🟢 `CURRENT` | [`docs/integration/SECTION_14_REPORT.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/integration/SECTION_14_REPORT.md) | **ASHFALL: VERDICT EXPANSION × UI/ASSET INTEGRATION — INTEGRATION & EXPANSION REPORT** — * **Id format:** `snake_case` everywhere; **`AGENTS.md` "Ids: snake_case everywhere"** — verified by `Assets/Streamin... |
 | 🟢 `CURRENT` | [`docs/plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/plans/ASHFALL_DAY1_TO_DAY2_MAJOR_PLAN.md) | **ASHFALL — DAY 1 → DAY 2 PLAYABLE MILESTONE MASTER PLAN** — **Plan ID:** `ashfall_day1_to_day2_playable_gate` |
 | 🟢 `CURRENT` | [`docs/plans/ASHFALL_FURTHER_NEXT_STEPS_AND_LIVING_WORLD_MILESTONE.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/plans/ASHFALL_FURTHER_NEXT_STEPS_AND_LIVING_WORLD_MILESTONE.md) | **ASHFALL — Further Next Steps & Living World Milestone** — **Document type:** prioritized next-step roadmap |
