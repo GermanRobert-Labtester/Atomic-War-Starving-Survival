@@ -117,10 +117,7 @@ namespace AtomicWar.GodotApp
                 "{\"State\":{\"systemId\":\"moral_choice\",\"schemaVersion\":1,\"moralScore\":5},\"Checksum\":\"\"}");
             Check(MoralChoiceSaveStore.TryLoad(path) == null, "empty-checksum envelope rejected as corrupt");
 
-            GD.Print(failures == 0
-                ? "MORAL_CHOICE_SELFTEST PASS"
-                : $"MORAL_CHOICE_SELFTEST FAIL — {failures} failing check(s)");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("moral_choice_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
     }
 }

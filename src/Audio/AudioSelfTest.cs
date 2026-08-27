@@ -241,9 +241,9 @@ namespace AtomicWar.GodotApp.Audio
             GD.Print($"[AudioSelfTest] Cues: {cueCount} ({resolved} resolved, {fallback} fallback, {silent} silent)");
             GD.Print($"[AudioSelfTest] Assets checked: {keyAssets.Length}");
 
-            bool allPass = fail == 0;
-            GD.Print(allPass ? "AUDIO_SELFTEST PASS" : $"AUDIO_SELFTEST FAIL (fail={fail})");
-            return allPass ? 0 : 1;
+            bool allPass = fail == 0 && (pass + fail) > 0;
+            return HostCli.EmitSummary("audio_selftest", allPass, allPass ? 0 : 1, pass, fail,
+                details: $"cues={cueCount} resolved={resolved} fallback={fallback} silent={silent} assets={keyAssets.Length}");
         }
 
         private static void Check(string label, bool condition, ref int pass, ref int fail)

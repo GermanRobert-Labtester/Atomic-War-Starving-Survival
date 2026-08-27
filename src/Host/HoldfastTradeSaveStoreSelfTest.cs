@@ -72,10 +72,8 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            bool ok = passed == total;
-            GD.Print($"[HoldfastTradeSaveStoreSelfTest] result: {passed}/{total} PASS, FAIL count {total - passed}");
-            GD.Print(ok ? "HOLDFAST_TRADE_SAVE_STORE_SELFTEST PASS" : "HOLDFAST_TRADE_SAVE_STORE_SELFTEST FAIL");
-            return ok ? 0 : 1;
+            bool ok = passed == total && total > 0;
+            return HostCli.EmitSummary("holdfast_trade_save_selftest", ok, ok ? 0 : 1, passed, total - passed);
         }
     }
 }

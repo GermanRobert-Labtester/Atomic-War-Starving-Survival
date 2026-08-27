@@ -148,10 +148,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            GD.Print(failures == 0
-                ? "YEAR_OF_ASH_SAVE_SELFTEST PASS"
-                : "YEAR_OF_ASH_SAVE_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("year_of_ash_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -230,10 +227,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            GD.Print(failures == 0
-                ? "DUTY_ROSTER_SAVE_SELFTEST PASS"
-                : "DUTY_ROSTER_SAVE_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("duty_roster_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -339,10 +333,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            GD.Print(failures == 0
-                ? "EXPANSION_HUB_SAVE_SELFTEST PASS"
-                : "EXPANSION_HUB_SAVE_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("expansion_hub_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -356,7 +347,7 @@ namespace AtomicWar.GodotApp
         {
             var report = ExpeditionHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("expedition_selftest", report);
         }
 
         /// <summary>The UnityEngine.* compatibility shim (src/Bridge/) has been fully removed.
@@ -365,7 +356,7 @@ namespace AtomicWar.GodotApp
         public static int RunBridgeSelfTest()
         {
             GD.Print("[BridgeSelfTest] UnityEngine.* shim removed — src/Bridge/ is empty. Migration to Godot is complete; nothing to shim.");
-            return 0;
+            return EmitSummary("bridge_selftest", true, 0, details: "UnityEngine.* shim removed");
         }
 
         /// <summary>Smoke-test ExpeditionEncounterBridge: bare-notice path + resolved path surface count.</summary>
@@ -437,22 +428,21 @@ namespace AtomicWar.GodotApp
             });
             if (resolvedCount != 1) { log.Error("[bridge-selftest] expected 1 resolved surfaced, got " + resolvedCount); errors++; }
 
-            GD.Print($"[ExpeditionEncounterBridge] PASS surfaced={bareCount + resolvedCount} errors={errors}");
-            return errors == 0 ? 0 : 1;
+            return EmitSummary("expedition_encounter_bridge_selftest", errors == 0, errors == 0 ? 0 : 1, details: errors == 0 ? "PASS" : $"FAIL ({errors})");
         }
 
         public static int RunMedicalSelfTest()
         {
             var report = MedicalHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("medical_selftest", report);
         }
 
         public static int RunNarrativeSelfTest()
         {
             var report = NarrativeHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("narrative_selftest", report);
         }
 
         public static int RunSurvivorsSelfTest()
@@ -537,14 +527,14 @@ namespace AtomicWar.GodotApp
                 GD.Print("[FAIL] save/load round-trip probe threw: " + e.Message);
                 pass = false;
             }
-            return pass ? 0 : 1;
+            return EmitSummary("survivors_selftest", pass, pass ? 0 : 1);
         }
 
         public static int RunWorldSelfTest()
         {
             var report = WorldHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("world_selftest", report);
         }
 
         public static int RunEconomySelfTest(string dataDirectory)
@@ -730,14 +720,14 @@ namespace AtomicWar.GodotApp
                 if (File.Exists(continuityPath)) File.Delete(continuityPath);
             }
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("economy_selftest", report);
         }
 
         public static int RunUtilityAiSelfTest(string dataDirectory)
         {
             var report = UtilityAiHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("utility_ai_selftest", report);
         }
 
         public static int RunDoseLedgerSelfTest(string dataDirectory)
@@ -832,10 +822,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            GD.Print(failures == 0
-                ? "DOSE_LEDGER_SELFTEST PASS"
-                : "DOSE_LEDGER_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("dose_ledger_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -976,10 +963,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            GD.Print(failures == 0
-                ? "BLACK_FLOTILLA_SELFTEST PASS"
-                : "BLACK_FLOTILLA_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("black_flotilla_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -1073,10 +1057,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            GD.Print(failures == 0
-                ? "RADIO_SELFTEST PASS"
-                : "RADIO_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("radio_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         public static int RunHoldfastBriefing(string dataDirectory)
@@ -1089,10 +1070,7 @@ namespace AtomicWar.GodotApp
                 && session.Catalog.GetQuest("quest_holdfast_the_sheet") != null
                 && session.Catalog.Items.IsValid
                 && session.Catalog.Items.Count == 40;
-            GD.Print(ok
-                ? $"HoldfastBriefing PASS items={session.Catalog.Items.Count} locations={session.LocationCount} quests={session.QuestCount}"
-                : $"HoldfastBriefing FAIL items={session.Catalog.Items.Count} locations={session.LocationCount} quests={session.QuestCount}");
-            return ok ? 0 : 1;
+            return EmitSummary("holdfast_briefing", ok, ok ? 0 : 1, details: $"items={session.Catalog.Items.Count} locations={session.LocationCount} quests={session.QuestCount}");
         }
 
         public static int RunIceRoadTickDemo(string dataDirectory)
@@ -1117,8 +1095,7 @@ namespace AtomicWar.GodotApp
             GD.Print(HoldfastBriefingView.FormatQuest(session.CurrentQuest, session.Catalog));
             bool ok = session.LocationCount > 0 && session.IceRoad.IsUnlocked
                 && session.IceRoad.State.clerkStarted;
-            GD.Print(ok ? "IceRoadTickDemo PASS" : "IceRoadTickDemo FAIL");
-            return ok ? 0 : 1;
+            return EmitSummary("ice_road_tick_demo", ok, ok ? 0 : 1);
         }
 
         private static bool Has(string[] args, string flag)
@@ -1214,10 +1191,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            GD.Print(failures == 0
-                ? "HOLDFAST_SAVE_SELFTEST PASS"
-                : "HOLDFAST_SAVE_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("holdfast_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -1446,10 +1420,7 @@ namespace AtomicWar.GodotApp
                 Check(false, "standalone systems selftest threw: " + e.Message);
             }
 
-            GD.Print(failures == 0
-                ? "STANDALONE_SYSTEMS_SELFTEST PASS"
-                : $"STANDALONE_SYSTEMS_SELFTEST FAIL ({failures})");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("standalone_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -1625,28 +1596,26 @@ namespace AtomicWar.GodotApp
                 Check(false, "phase0 selftest threw: " + e.Message);
             }
 
-            GD.Print(failures == 0
-                ? "PHASE0_SELFTEST PASS"
-                : $"PHASE0_SELFTEST FAIL ({failures})");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("phase0_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         public static int RunCaravanSelfTest()
         {
-            return TravelingCaravanHeadlessDemo.Run();
+            int rc = TravelingCaravanHeadlessDemo.Run();
+            return EmitSummary("caravan_selftest", rc == 0, rc);
         }
 
         public static int RunAssetRegistrySelfTest(string dataDirectory)
         {
             var report = AssetRegistrySelfTest.Run(dataDirectory, topCount: 50);
             GD.Print(report.Summary);
-            return report.Clean ? 0 : 1;
+            return EmitSummary("asset_registry_selftest", report.Clean, report.Clean ? 0 : 1, details: report.Summary);
         }
 
         public static int RunAssetCoverageReport(string dataDirectory)
         {
             AssetRegistrySelfTest.RunFullCoverage(dataDirectory);
-            return 0; // report-only by design; never gates CI
+            return EmitSummary("asset_coverage_report", true, 0);
         }
 
         public static int RunDay1PlayableSelfTest(string dataDirectory)
@@ -1784,8 +1753,7 @@ namespace AtomicWar.GodotApp
                 failures++;
             }
 
-            GD.Print(failures == 0 ? "DAY1_PLAYABLE_SELFTEST PASS" : "DAY1_PLAYABLE_SELFTEST FAIL");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("day1_playable_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -1824,10 +1792,7 @@ namespace AtomicWar.GodotApp
             GD.Print("[Day1ToDay2MilestoneSelfTest] ── §21 Scenario (craft + duty + fingerprint) ──");
             failures += RunDay1ToDay2ScenarioSection(dataDirectory);
 
-            GD.Print(failures == 0
-                ? "DAY1_TO_DAY2_SELFTEST PASS"
-                : $"DAY1_TO_DAY2_SELFTEST FAIL ({failures} subsystem failures)");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("day1_to_day2_milestone_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures} subsystem failures)");
         }
 
         /// <summary>
@@ -2095,8 +2060,7 @@ namespace AtomicWar.GodotApp
             }
 
             GD.Print($"[UiLayoutSelfTest] Failures: {failures}");
-            GD.Print(failures == 0 ? "UI_LAYOUT_SELFTEST PASS" : "UI_LAYOUT_SELFTEST FAIL");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("ui_layout_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         public static int RunSettingsSelfTest(string dataDirectory)
@@ -2182,8 +2146,7 @@ namespace AtomicWar.GodotApp
                 failures++;
             }
 
-            GD.Print(failures == 0 ? "SETTINGS_SELFTEST PASS" : "SETTINGS_SELFTEST FAIL");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("settings_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         public static int RunPlayableShellSelfTest(string dataDirectory)
@@ -2342,8 +2305,7 @@ namespace AtomicWar.GodotApp
                 failures++;
             }
 
-            GD.Print(failures == 0 ? "PLAYABLE_SHELL_SELFTEST PASS" : "PLAYABLE_SHELL_SELFTEST FAIL");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("playable_shell_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         public static int RunShelterHazardLoopSelfTest(string dataDirectory)
@@ -2495,8 +2457,7 @@ namespace AtomicWar.GodotApp
                 failures++;
             }
 
-            GD.Print(failures == 0 ? "SHELTER_HAZARD_LOOP_SELFTEST PASS" : "SHELTER_HAZARD_LOOP_SELFTEST FAIL");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("shelter_hazard_loop_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         public static int RunShelterOperationsSelfTest(string dataDirectory)
@@ -2857,8 +2818,7 @@ namespace AtomicWar.GodotApp
                 failures++;
             }
 
-            GD.Print(failures == 0 ? "SHELTER_OPERATIONS_SELFTEST PASS" : "SHELTER_OPERATIONS_SELFTEST FAIL");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("shelter_operations_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>

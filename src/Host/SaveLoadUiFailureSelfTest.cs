@@ -142,7 +142,7 @@ namespace AtomicWar.GodotApp
                     GD.PrintErr($"[FAIL] Case 2: Corrupt save was not quarantined to '{quarantinePath}'.");
                     return 1;
                 }
-                if (liveSessionMutated || liveWaterCount != 42 || liveDay != 12)
+                if (liveSessionMutated || liveWaterCount != 42 || liveRationCount != 15 || liveDay != 12 || liveSurvivorId != "survivor_live_alpha")
                 {
                     GD.PrintErr("[FAIL] Case 2: Live session was mutated during corrupt save load failure!");
                     return 1;
@@ -204,7 +204,7 @@ namespace AtomicWar.GodotApp
                     GD.PrintErr($"[FAIL] Case 3: User-facing message '{panel.LastStatusMessage}' did not mention checksum.");
                     return 1;
                 }
-                if (liveSessionMutated || liveWaterCount != 42 || liveDay != 12)
+                if (liveSessionMutated || liveWaterCount != 42 || liveRationCount != 15 || liveDay != 12 || liveSurvivorId != "survivor_live_alpha")
                 {
                     GD.PrintErr("[FAIL] Case 3: Live session was mutated during checksum-invalid load failure!");
                     return 1;

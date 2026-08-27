@@ -50,7 +50,7 @@ namespace AtomicWar.GodotApp
             GD.Print(report.Summary + " — " + report.ErrorCount + " errors, "
                 + report.Warnings.Count + " warnings across "
                 + catalogCount + " catalogs");
-            return report.Clean ? 0 : 1;
+            return EmitSummary("data_integrity_selftest", report.Clean, report.Clean ? 0 : 1, catalogCount, report.ErrorCount, $"{report.ErrorCount} errors across {catalogCount} catalogs");
         }
 
         public static int RunExpansionsSelfTest(string dataDirectory)
@@ -140,10 +140,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            GD.Print(failures == 0
-                ? "ALL EXPANSIONS GREEN (01–10)"
-                : "EXPANSIONS_AGGREGATE FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("expansions_selftest", failures == 0, failures == 0 ? 0 : 1, covered.Count, failures, failures == 0 ? "ALL EXPANSIONS GREEN (01–10)" : $"EXPANSIONS_AGGREGATE FAIL ({failures})");
         }
 
         /// <summary>
@@ -158,7 +155,7 @@ namespace AtomicWar.GodotApp
         {
             var report = DeepCoastHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("deep_coast_selftest", report);
         }
 
         /// <summary>Warlord AI gate (proposed model): doctrines, territory, tribute, save.</summary>
@@ -166,7 +163,7 @@ namespace AtomicWar.GodotApp
         {
             var report = WarlordHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("warlord_selftest", report);
         }
 
         /// <summary>
@@ -236,10 +233,7 @@ namespace AtomicWar.GodotApp
                 Check(false, "warlord host playthrough threw: " + e.Message);
             }
 
-            GD.Print(failures == 0
-                ? "WARLORD_HOST_SELFTEST PASS"
-                : "WARLORD_HOST_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("warlord_host_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -317,10 +311,7 @@ namespace AtomicWar.GodotApp
                 Check(false, "warlord ui selftest threw: " + e.Message);
             }
 
-            GD.Print(failures == 0
-                ? "WARLORD_UI_SELFTEST PASS"
-                : "WARLORD_UI_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("warlord_ui_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         /// <summary>
@@ -422,108 +413,105 @@ namespace AtomicWar.GodotApp
                 Check(false, "host playthrough threw: " + e.Message);
             }
 
-            GD.Print(failures == 0
-                ? "DEEP_COAST_HOST_SELFTEST PASS"
-                : "DEEP_COAST_HOST_SELFTEST FAIL (" + failures + ")");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("deep_coast_host_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         public static int RunGreenhouseSelfTest()
         {
             var report = GreenhouseHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("greenhouse_selftest", report);
         }
 
         public static int RunSilentFoundrySelfTest(string dataDirectory)
         {
             var report = Ashfall.Core.SilentFoundryHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("silent_foundry_selftest", report);
         }
 
         public static int RunDiseaseSelfTest(string dataDirectory)
         {
             var report = Ashfall.Core.DiseaseHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("disease_selftest", report);
         }
 
         public static int RunCombatSelfTest(string dataDirectory)
         {
             var report = Ashfall.Core.Combat.CombatHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("combat_selftest", report);
         }
 
         public static int RunArbitrationSelfTest()
         {
             var report = CrossingArbitrationHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("arbitration_selftest", report);
         }
 
         public static int RunLedgerDebtSelfTest()
         {
             var report = LedgerDebtHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("ledger_debt_selftest", report);
         }
 
         public static int RunHoldfastSelfTest(string dataDirectory)
         {
             var report = HoldfastHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("holdfast_selftest", report);
         }
 
         public static int RunDutyRosterSelfTest(string dataDirectory)
         {
             var report = DutyRosterHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("duty_roster_selftest", report);
         }
 
         public static int RunStandingRecordSelfTest(string dataDirectory)
         {
             var report = StandingRecordHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("standing_record_selftest", report);
         }
 
         public static int RunCrossingSelfTest(string dataDirectory)
         {
             var report = CrossingHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("crossing_selftest", report);
         }
 
         public static int RunIceRoadSelfTest(string dataDirectory)
         {
             var report = IceRoadHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("ice_road_selftest", report);
         }
 
         public static int RunCensusSelfTest()
         {
             var report = CensusHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("census_selftest", report);
         }
 
         public static int RunBrineSelfTest()
         {
             var report = BrineWaterHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("brine_selftest", report);
         }
 
         public static int RunMusterSelfTest()
         {
             var report = MusterHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("muster_selftest", report);
         }
 
         /// <summary>
@@ -654,10 +642,7 @@ namespace AtomicWar.GodotApp
                 if (System.IO.File.Exists(tmpPath)) System.IO.File.Delete(tmpPath);
             }
 
-            GD.Print(failures == 0
-                ? "VERDICT_SELFTEST PASS"
-                : $"VERDICT_SELFTEST FAIL ({failures})");
-            return failures == 0 ? 0 : 1;
+            return EmitSummary("verdict_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 
         private sealed class SelftestCensus : IWorldCensus
@@ -671,14 +656,14 @@ namespace AtomicWar.GodotApp
         {
             var report = Cluster12CHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("cluster_selftest", report);
         }
 
         public static int RunEndingsSelfTest()
         {
             var report = EndingsHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            return EmitSummaryFromHeadlessReport("endings_selftest", report);
         }
 
 
@@ -687,7 +672,8 @@ namespace AtomicWar.GodotApp
             CatalogLocator.UseInvariantCulture();
             var report = JournalSaveSelfTest.Run(string.Empty);
             GD.Print(report);
-            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+            bool ok = !string.IsNullOrEmpty(report) && !report.Contains("[FAIL]");
+            return EmitSummary("journal_save_selftest", ok, ok ? 0 : 1);
         }
 
         public static int RunChemicalDependencySaveSelfTest()
@@ -695,7 +681,8 @@ namespace AtomicWar.GodotApp
             CatalogLocator.UseInvariantCulture();
             var report = ChemicalDependencySaveSelfTest.Run(string.Empty);
             GD.Print(report);
-            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+            bool ok = !string.IsNullOrEmpty(report) && !report.Contains("[FAIL]");
+            return EmitSummary("chemical_dependency_save_selftest", ok, ok ? 0 : 1);
         }
 
         public static int RunMedicalWardSaveSelfTest()
@@ -703,7 +690,8 @@ namespace AtomicWar.GodotApp
             CatalogLocator.UseInvariantCulture();
             var report = MedicalWardSaveSelfTest.Run(string.Empty);
             GD.Print(report);
-            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+            bool ok = !string.IsNullOrEmpty(report) && !report.Contains("[FAIL]");
+            return EmitSummary("medical_ward_save_selftest", ok, ok ? 0 : 1);
         }
 
         public static int RunWeatherSaveSelfTest()
@@ -711,13 +699,14 @@ namespace AtomicWar.GodotApp
             CatalogLocator.UseInvariantCulture();
             var report = WeatherSaveSelfTest.Run(string.Empty);
             GD.Print(report);
-            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+            bool ok = !string.IsNullOrEmpty(report) && !report.Contains("[FAIL]");
+            return EmitSummary("weather_save_selftest", ok, ok ? 0 : 1);
         }
 
         public static int RunJournalWeatherPanelSelfTest()
         {
             GD.Print("[PASS] wiring gate — no runtime panel assertions in headless");
-            return 0;
+            return EmitSummary("journal_weather_panel_selftest", true, 0, details: "wiring gate — no runtime panel assertions in headless");
         }
 
         public static int RunInventorySaveSelfTest()
@@ -725,38 +714,44 @@ namespace AtomicWar.GodotApp
             CatalogLocator.UseInvariantCulture();
             var report = InventorySaveSelfTest.Run(string.Empty);
             GD.Print(report);
-            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+            bool ok = !string.IsNullOrEmpty(report) && !report.Contains("[FAIL]");
+            return EmitSummary("inventory_save_selftest", ok, ok ? 0 : 1);
         }
 
         public static int RunSaveLoadUiFailureSelfTest(string dataDirectory)
         {
             CatalogLocator.UseInvariantCulture();
-            return SaveLoadUiFailureSelfTest.Run(dataDirectory);
+            int rc = SaveLoadUiFailureSelfTest.Run(dataDirectory);
+            return EmitSummary("saveload_ui_failure_selftest", rc == 0, rc);
         }
 
         public static int RunPanelBindLifecycleSelfTest(string dataDirectory)
         {
             CatalogLocator.UseInvariantCulture();
-            return PanelBindLifecycleSelfTest.Run(dataDirectory);
+            int rc = PanelBindLifecycleSelfTest.Run(dataDirectory);
+            return EmitSummary("panel_bind_lifecycle_selftest", rc == 0, rc);
         }
 
         public static int RunSaveStoreChecksumSelfTest(string dataDirectory)
         {
             CatalogLocator.UseInvariantCulture();
-            return SaveStoreChecksumSelfTest.Run(dataDirectory);
+            int rc = SaveStoreChecksumSelfTest.Run(dataDirectory);
+            return EmitSummary("save_store_checksum_selftest", rc == 0, rc);
         }
 
         public static int RunSevenDayDeterministicSmokeSelfTest(string dataDirectory)
         {
             CatalogLocator.UseInvariantCulture();
-            return SevenDayDeterministicSmokeTest.Run(dataDirectory);
+            int rc = SevenDayDeterministicSmokeTest.Run(dataDirectory);
+            return EmitSummary("7day_smoke_selftest", rc == 0, rc);
         }
 
         public static int RunCoreSelfTest(string dataDirectory)
         {
             int ice = RunIceRoadSelfTest(dataDirectory);
             int census = RunCensusSelfTest();
-            return ice != 0 ? ice : census;
+            int rc = ice != 0 ? ice : census;
+            return EmitSummary("core_selftest", rc == 0, rc);
         }
     }
 }
