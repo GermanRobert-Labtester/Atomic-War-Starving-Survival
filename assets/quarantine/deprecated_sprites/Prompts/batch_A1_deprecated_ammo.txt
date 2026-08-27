@@ -1,0 +1,99 @@
+# ASHFALL — Deprecated Ammo (19)
+# Model: Flux 2 Pro via Firefly | Aspect: 1:1 | 1024×1024
+# Suffix: post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements
+# Negative: cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+
+## ammo_deprecated_cal_9x19
+Isolated inventory object: ammo deprecated cal 9x19. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_cal_9x19.png
+
+## ammo_deprecated_380acp
+Isolated inventory object: ammo deprecated 380acp. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_380acp.png
+
+## ammo_deprecated_762x25
+Isolated inventory object: ammo deprecated 762x25. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_762x25.png
+
+## ammo_deprecated_45acp
+Isolated inventory object: ammo deprecated 45acp. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_45acp.png
+
+## ammo_deprecated_9x21
+Isolated inventory object: ammo deprecated 9x21. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_9x21.png
+
+## ammo_deprecated_765x21
+Isolated inventory object: ammo deprecated 765x21. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_765x21.png
+
+## ammo_deprecated_12ga
+Isolated inventory object: ammo deprecated 12ga. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_12ga.png
+
+## ammo_deprecated_16ga
+Isolated inventory object: ammo deprecated 16ga. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_16ga.png
+
+## ammo_deprecated_556x45
+Isolated inventory object: ammo deprecated 556x45. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_556x45.png
+
+## ammo_deprecated_762x39
+Isolated inventory object: ammo deprecated 762x39. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_762x39.png
+
+## ammo_deprecated_545x39
+Isolated inventory object: ammo deprecated 545x39. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_545x39.png
+
+## ammo_deprecated_762x51
+Isolated inventory object: ammo deprecated 762x51. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_762x51.png
+
+## ammo_deprecated_300blk
+Isolated inventory object: ammo deprecated 300blk. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_300blk.png
+
+## ammo_deprecated_57x28
+Isolated inventory object: ammo deprecated 57x28. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_57x28.png
+
+## ammo_deprecated_46x30
+Isolated inventory object: ammo deprecated 46x30. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_46x30.png
+
+## ammo_deprecated_762x54r
+Isolated inventory object: ammo deprecated 762x54r. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_762x54r.png
+
+## ammo_deprecated_338lapua
+Isolated inventory object: ammo deprecated 338lapua. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_338lapua.png
+
+## ammo_deprecated_408cheytac
+Isolated inventory object: ammo deprecated 408cheytac. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_408cheytac.png
+
+## ammo_deprecated_50bmg
+Isolated inventory object: ammo deprecated 50bmg. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_deprecated_50bmg.png

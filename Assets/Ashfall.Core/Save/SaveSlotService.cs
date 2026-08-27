@@ -241,11 +241,16 @@ public class SaveSlotService
         if (envelope == null)
             return AggregateValidationResult.Invalid("Aggregate envelope is null.");
 
-        var errors = new List<string>();
-        var sectionErrors = new List<string>();
+            var errors = new List<string>();
+            var sectionErrors = new List<string>();
 
-        if (envelope.manifestVersion != 1)
-            errors.Add($"Unsupported manifest version: {envelope.manifestVersion}");
+            // Version ladder: V1 (filename-keyed sections) and the current
+            // version are both loadable; V1 migrates in memory via
+            // MigrateToCurrent. Anything newer than what this build knows is
+            // rejected — a future-format save must not be silently truncated.
+            if (envelope.manifestVersion != 1 &&
+                envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+                errors.Add($"Unsupported manifest version: {envelope.manifestVersion}");
 
         if (envelope.sections == null || envelope.sections.Count == 0)
             errors.Add("Aggregate envelope contains no sections.");
@@ -444,30 +449,115 @@ public class SaveSlotService
                 $"Save data for slot '{slotId.Value}' could not be parsed. Live session preserved.");
         }
 
-        var validation = ValidateAggregate(envelope);
-        if (!validation.IsValid)
+            var validation = ValidateAggregate(envelope);
+            if (!validation.IsValid)
+            {
+                QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", validation.Errors));
+                bool isChecksumFailure = validation.Errors.Any(e => e.IndexOf("checksum", StringComparison.OrdinalIgnoreCase) >= 0);
+                var status = isChecksumFailure ? SaveLoadStatus.ChecksumMismatch : SaveLoadStatus.CorruptData;
+                string msg = isChecksumFailure
+                    ? $"Save data for slot '{slotId.Value}' failed checksum validation (corrupted or modified). Live session preserved."
+                    : $"Save data for slot '{slotId.Value}' failed validation ({string.Join(", ", validation.Errors)}). Live session preserved.";
+                return SaveLoadResult.Fail(status, msg, validation.Errors);
+            }
+
+            // Older envelopes migrate to the current format in memory; the
+            // on-disk file is rewritten as current on the next save.
+            if (envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+                envelope = MigrateToCurrent(envelope);
+
+            return SaveLoadResult.Ok(envelope, $"Save slot '{slotId.Value}' loaded successfully.");
+    }
+
+        /// <summary>
+        /// Load and validate an aggregate envelope. Returns null if the slot does
+        /// not exist or the envelope fails validation. V1 envelopes are migrated
+        /// to the current format in memory (the on-disk file is only rewritten
+        /// as V2 on the next save).
+        /// </summary>
+        public AggregateSaveEnvelope? LoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
         {
-            QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", validation.Errors));
-            bool isChecksumFailure = validation.Errors.Any(e => e.IndexOf("checksum", StringComparison.OrdinalIgnoreCase) >= 0);
-            var status = isChecksumFailure ? SaveLoadStatus.ChecksumMismatch : SaveLoadStatus.CorruptData;
-            string msg = isChecksumFailure
-                ? $"Save data for slot '{slotId.Value}' failed checksum validation (corrupted or modified). Live session preserved."
-                : $"Save data for slot '{slotId.Value}' failed validation ({string.Join(", ", validation.Errors)}). Live session preserved.";
-            return SaveLoadResult.Fail(status, msg, validation.Errors);
+            var result = TryLoadAggregate(profileId, slotId);
+            return result.Envelope;
         }
 
-        return SaveLoadResult.Ok(envelope, $"Save slot '{slotId.Value}' loaded successfully.");
-    }
+        /// <summary>
+        /// Reserved section name used by <see cref="TryImportLegacySave"/> for
+        /// its single-blob import payload. It is not a registry section, but
+        /// V1 migration preserves it verbatim so imported slots keep loading
+        /// exactly as they did before versioning.
+        /// </summary>
+        public const string LegacyImportSectionName = "legacy";
 
-    /// <summary>
-    /// Load and validate an aggregate envelope. Returns null if the slot does
-    /// not exist or the envelope fails validation.
-    /// </summary>
-    public AggregateSaveEnvelope? LoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
-    {
-        var result = TryLoadAggregate(profileId, slotId);
-        return result.Envelope;
-    }
+        /// <summary>
+        /// Migrate an older aggregate envelope to the current format in
+        /// memory. V1 named sections after their files (e.g.
+        /// "inventory_save"); the current format keys them by
+        /// SaveSectionRegistry SectionKey and stamps real schema versions.
+        /// Unknown/stray sections are dropped with a warning — the registry is
+        /// the whitelist — except the reserved single-file import section,
+        /// which is preserved verbatim. Payload bytes are never touched, so
+        /// per-section content survives migration verbatim. Envelopes already
+        /// at the current version are returned unchanged.
+        /// </summary>
+        public static AggregateSaveEnvelope MigrateToCurrent(AggregateSaveEnvelope envelope, ILog? log = null)
+        {
+            if (envelope == null) throw new ArgumentNullException(nameof(envelope));
+            if (envelope.manifestVersion == CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+                return envelope;
+            if (envelope.manifestVersion != 1)
+                throw new InvalidOperationException(
+                    $"No migration path from envelope manifestVersion {envelope.manifestVersion} to {CampaignEnvelopeBuilder.CurrentEnvelopeVersion}.");
+
+            var sections = new List<SaveSectionEnvelope>();
+            var dropped = new List<string>();
+            foreach (var section in envelope.sections ?? new List<SaveSectionEnvelope>())
+            {
+                bool reserved = string.Equals(section.sectionName, LegacyImportSectionName, StringComparison.Ordinal);
+                if (reserved)
+                {
+                    var kept = new SaveSectionEnvelope
+                    {
+                        sectionName = section.sectionName,
+                        schemaVersion = section.schemaVersion,
+                        payloadJson = section.payloadJson,
+                        checksum = section.checksum,
+                    };
+                    sections.Add(kept);
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(section.sectionName) ||
+                    !SaveSectionRegistry.TryGetKeyForSectionName(section.sectionName, out var key))
+                {
+                    dropped.Add(section.sectionName ?? "(null)");
+                    continue;
+                }
+
+                var migrated = new SaveSectionEnvelope
+                {
+                    sectionName = key!,
+                    schemaVersion = SaveSectionRegistry.SchemaVersionFor(key!),
+                    payloadJson = section.payloadJson,
+                };
+                migrated.checksum = ComputeSectionChecksum(migrated);
+                sections.Add(migrated);
+            }
+
+            if (dropped.Count > 0)
+                log?.Warn($"SaveSlotService: dropped {dropped.Count} unknown legacy section(s) during V1 migration: {string.Join(", ", dropped)}");
+
+            var result = new AggregateSaveEnvelope
+            {
+                manifestVersion = CampaignEnvelopeBuilder.CurrentEnvelopeVersion,
+                manifest = envelope.manifest,
+                sections = sections,
+                migratedFromLegacy = envelope.migratedFromLegacy,
+                legacySourcePath = envelope.legacySourcePath,
+            };
+            result.aggregateChecksum = ComputeAggregateChecksum(result);
+            return result;
+        }
 
     /// <summary>
     /// Delete a slot and all its files. Returns true if the slot was deleted

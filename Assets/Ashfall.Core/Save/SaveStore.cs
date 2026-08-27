@@ -107,6 +107,17 @@ namespace Ashfall.Core.Save
         public string FileName => _fileName;
 
         /// <summary>
+        /// Creates a new SaveStore for the same section with a custom base directory provider.
+        /// </summary>
+        public SaveStore<T> WithBaseDirectory(Func<string> baseDirProvider)
+        {
+            if (baseDirProvider == null) throw new ArgumentNullException(nameof(baseDirProvider));
+            if (_encode != null && _decode != null)
+                return new SaveStore<T>(_fileName, _files, _json, _log, baseDirProvider, _logTag, _createBackup, _encode, _decode);
+            return new SaveStore<T>(_fileName, _files, _json, _log, baseDirProvider, _logTag, _createBackup, _allowLegacyBareState);
+        }
+
+        /// <summary>
         /// Full save path. The base directory provider is evaluated on every
         /// access so slot-root changes apply to the next operation.
         /// </summary>
@@ -250,6 +261,16 @@ namespace Ashfall.Core.Save
                 return null;
             }
         }
+
+        /// <summary>
+        /// Serialize state into EXACTLY the bytes <see cref="TrySave"/> would
+        /// write to disk — the checksummed envelope for the default flavor,
+        /// the codec's JSON for the codec flavor. This is what the campaign
+        /// envelope packs as a section payload, so a section's bytes are
+        /// identical whether they arrived via a file or via the envelope.
+        /// Returns an empty string on failure.
+        /// </summary>
+        public string CapturePersisted(T state) => _encode != null ? CaptureEncoded(state) : CaptureEnvelope(state);
 
         /// <summary>Deserialize bare state written by <see cref="CaptureBare"/>. Null on failure.</summary>
         public T? RestoreBare(string json)

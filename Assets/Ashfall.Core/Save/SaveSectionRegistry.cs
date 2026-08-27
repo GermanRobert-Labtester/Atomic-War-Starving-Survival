@@ -54,6 +54,7 @@ namespace Ashfall.Core.Save
             new("starting_level", "SaveStartingLevel", "SetupStartingLevel", "starting_level", "Bunker initial configuration & tier"),
             new("greenhouse", "SaveGreenhouse", "SetupGreenhouse", "greenhouse", "Hydroponic crops and food production"),
             new("host_event", "SaveEventAdapter", "SetupEventAdapter", "events", "Host event ledger & moral decisions"),
+            new("moral_choice", "SaveMoralChoice", "SetupMoralChoice", "events", "Moral choice ledger and community trust", RequiresSetup: false),
             new("radio", "SaveRadio", "SetupRadio", "radio", "Radio frequencies, logs, and distress signals"),
             new("daily_briefing", "SaveDailyBriefing", "SetupDailyBriefingModal", "campaign", "Daily dawn briefing notes & status"),
             new("power_grid", "SavePowerGrid", "SetupPowerGrid", "power_grid", "Shelter generator & power allocations"),
@@ -90,6 +91,130 @@ namespace Ashfall.Core.Save
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
             All.ToDictionary(s => s.SectionKey, s => s, StringComparer.Ordinal);
+
+        /// <summary>
+        /// The on-disk section file name for every registry key — the single
+        /// authority for the envelope whitelist, V1 filename→key migration,
+        /// and registry-derived cleanup lists. Weather is deliberately absent:
+        /// the world section is the canonical weather persistence.
+        /// </summary>
+        public static readonly IReadOnlyDictionary<string, string> SectionFileNames =
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                { "journal", "journal_save.json" },
+                { "holdfast", "holdfast_s1_save.json" },
+                { "holdfast_trade", "holdfast_trade_save.json" },
+                { "duty_roster", "duty_roster_save.json" },
+                { "expansion_hub", "expansion_hub_save.json" },
+                { "expansion_quest", "expansion_quest_save.json" },
+                { "thirdonary", "thirdonary_quest_save.json" },
+                { "phantom_memory", "phantom_memory_save.json" },
+                { "dose_ledger", "dose_ledger_save.json" },
+                { "muster", "muster_save.json" },
+                { "inventory", "inventory_save.json" },
+                { "survivors", "survivors_save.json" },
+                { "economy", "economy_save.json" },
+                { "verdict", "verdict_save.json" },
+                { "maritime", "maritime_save.json" },
+                { "expedition", "expedition_save.json" },
+                { "combat", "combat_save.json" },
+                { "narrative", "narrative_save.json" },
+                { "medical", "medical_save.json" },
+                { "world", "world_save.json" },
+                { "crafting", "crafting_save.json" },
+                { "caravan", "caravan_save.json" },
+                { "campaign_day", "campaign_day_save.json" },
+                { "year_of_ash", "year_of_ash_save.json" },
+                { "phase0", "phase0_save.json" },
+                { "starting_level", "starting_level_save.json" },
+                { "greenhouse", "greenhouse_save.json" },
+                { "host_event", "host_event_save.json" },
+                { "moral_choice", "moral_choice_save.json" },
+                { "radio", "radio_save.json" },
+                { "daily_briefing", "daily_briefing_save.json" },
+                { "power_grid", "power_grid_save.json" },
+                { "medical_ward", "medical_ward_save.json" },
+                { "memorial", "memorial_save.json" },
+                { "silent_foundry", "silent_foundry_save.json" },
+                { "disease", "disease_save.json" },
+                { "wasteland_map", "wasteland_map_save.json" },
+                { "encounter_choice", "encounter_choice_save.json" },
+                { "water_treatment", "water_treatment_save.json" },
+                { "airlock_security", "airlock_security_save.json" },
+                { "apprenticeship", "apprenticeship_save.json" },
+                { "caregiving", "caregiving_save.json" },
+                { "autopsy", "autopsy_save.json" },
+                { "chemical_dependency", "chemical_dependency_save.json" },
+                { "equipment_condition", "equipment_condition_save.json" },
+                { "survivor_relations", "survivor_relations_save.json" },
+                { "regional_treaty", "regional_treaty_save.json" },
+                { "vinyl_morale", "vinyl_morale_save.json" },
+                { "wildlife_trapping", "wildlife_trapping_save.json" },
+                { "excavation", "excavation_save.json" },
+                { "waystation", "waystation_save.json" },
+                { "shelter_thermal", "shelter_thermal_save.json" },
+                { "shelter_schedule", "shelter_schedule_save.json" },
+                { "sump_flooding", "sump_flooding_save.json" },
+                { "decontamination", "decontamination_save.json" },
+                { "kitchen_nutrition", "kitchen_nutrition_save.json" },
+                { "library_study", "library_study_save.json" },
+                { "archive_desk", "archive_desk_save.json" },
+                { "contractor_roster", "contractor_roster_save.json" },
+                { "mental_health_crisis", "mental_health_crisis_save.json" },
+                { "shelter_assignment", "shelter_assignment_save.json" },
+            };
+
+        /// <summary>
+        /// Envelope section schema versions for sections whose payload embeds
+        /// a Core save codec with its own saveVersion ladder. Sections without
+        /// an entry carry unversioned <c>{ State, Checksum }</c> payloads (1).
+        /// </summary>
+        public static readonly IReadOnlyDictionary<string, int> SchemaVersions =
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                { "holdfast", 5 },
+                { "year_of_ash", 4 },
+                { "dose_ledger", 2 },
+                { "expansion_hub", 4 },
+            };
+
+        /// <summary>File name for a section key, or null for unknown keys.</summary>
+        public static string? FileNameFor(string sectionKey) =>
+            SectionFileNames.TryGetValue(sectionKey, out var fileName) ? fileName : null;
+
+        /// <summary>Envelope schema version for a section key (1 when unversioned).</summary>
+        public static int SchemaVersionFor(string sectionKey) =>
+            SchemaVersions.TryGetValue(sectionKey, out var version) ? version : 1;
+
+        /// <summary>
+        /// Resolve a registry key from a legacy V1 section name. V1 named
+        /// sections after their file (with or without the .json extension);
+        /// both forms resolve. Returns false for unknown/stray names.
+        /// </summary>
+        public static bool TryGetKeyForSectionName(string sectionName, out string? sectionKey)
+        {
+            sectionKey = null;
+            if (string.IsNullOrEmpty(sectionName)) return false;
+
+            if (ByKeyMap.ContainsKey(sectionName))
+            {
+                sectionKey = sectionName;
+                return true;
+            }
+
+            string fileName = sectionName.EndsWith(".json", StringComparison.Ordinal)
+                ? sectionName
+                : sectionName + ".json";
+            foreach (var pair in SectionFileNames)
+            {
+                if (string.Equals(pair.Value, fileName, StringComparison.Ordinal))
+                {
+                    sectionKey = pair.Key;
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public static bool TryGetSection(string sectionKey, out SaveSectionMetadata? metadata)
         {
