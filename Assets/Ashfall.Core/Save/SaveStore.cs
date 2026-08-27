@@ -195,8 +195,7 @@ namespace Ashfall.Core.Save
             }
         }
 
-        /// <summary>
-        /// Serialize bare state (no envelope) — the aggregate campaign
+        /// <summary>Serialize bare state (no envelope) — the aggregate campaign
         /// envelope path packs section payloads this way. Returns an empty
         /// string on failure.
         /// </summary>
@@ -211,6 +210,44 @@ namespace Ashfall.Core.Save
             {
                 _log.Error($"[{_logTag}] capture failed: " + e.Message);
                 return string.Empty;
+            }
+        }
+
+        /// <summary>Serialize state through the codec's Encode without touching
+        /// disk — for sections whose aggregate capture is codec-shaped rather
+        /// than bare. Codec flavor only. Returns an empty string on failure.
+        /// </summary>
+        public string CaptureEncoded(T state)
+        {
+            if (_encode == null)
+                throw new InvalidOperationException("CaptureEncoded requires the codec flavor of SaveStore<T>.");
+            try
+            {
+                if (state == null) return string.Empty;
+                return _encode(state, _json);
+            }
+            catch (Exception e)
+            {
+                _log.Error($"[{_logTag}] capture failed: " + e.Message);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>Restore state through the codec's Decode without touching
+        /// disk. Codec flavor only. Null on any failure.</summary>
+        public T? RestoreEncoded(string json)
+        {
+            if (_decode == null)
+                throw new InvalidOperationException("RestoreEncoded requires the codec flavor of SaveStore<T>.");
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json)) return null;
+                return _decode(json, _json);
+            }
+            catch (Exception e)
+            {
+                _log.Error($"[{_logTag}] restore failed: " + e.Message);
+                return null;
             }
         }
 

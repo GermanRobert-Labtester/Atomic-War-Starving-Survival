@@ -4,65 +4,38 @@
 // Host Caller: Main.YearOfAsh / YearOfAshHostSession
 // Purpose    : Year of Ash campaign progression, season timeline, and winter survival records
 // ============================================================================
-using System;
-using System.IO;
-using Godot;
-using Ashfall.Core;
+using Ashfall.Core.Save;
 using Ashfall.Core.YearOfAsh;
-using AtomicWar.GodotApp;
 
 namespace AtomicWar.GodotApp.YearOfAsh
 {
     /// <summary>
-    /// File persistence adapter for YearOfAshSave in the Godot host environment.
-    /// Stores the save file in user://year_of_ash_save.json.
+    /// File persistence adapter for YearOfAshSave in the Godot host
+    /// environment — thin façade over the Core SaveStore&lt;T&gt; service
+    /// (via SaveStoreHub, codec flavor). Shape, versioned migration, and
+    /// validation live in <see cref="YearOfAshSaveCodec"/>; path resolution,
+    /// atomic write, and error handling live in the service. Stores the save
+    /// file in user://year_of_ash_save.json.
     /// </summary>
     public static class YearOfAshSaveStore
     {
         public const string FileName = "year_of_ash_save.json";
         public const string SectionName = "year_of_ash";
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        private static readonly SaveStore<YearOfAshSave> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(YearOfAshSaveStore),
+            (save, json) => YearOfAshSaveCodec.Encode(save, json),
+            (raw, json) => YearOfAshSaveCodec.Decode(raw, json));
 
-        public static bool Exists => File.Exists(SavePath);
+        public static string SavePath => s_store.SavePath;
 
-        public static bool TrySave(YearOfAshSave save, string pathOverride = null!)
-        {
-            if (save == null) return false;
-            try
-            {
-                var serializer = new SystemTextJsonSerializer();
-                string json = YearOfAshSaveCodec.Encode(save, serializer);
-                string path = pathOverride ?? SavePath;
-                string? dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                    Directory.CreateDirectory(dir);
-                File.WriteAllText(path, json);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                GD.PrintErr($"[YearOfAshSaveStore] Failed to write save: {ex.Message}");
-                return false;
-            }
-        }
+        public static bool Exists => s_store.Exists();
 
-        public static YearOfAshSave? TryLoad(string pathOverride = null!)
-        {
-            string path = pathOverride ?? SavePath;
-            if (!File.Exists(path)) return null;
-            try
-            {
-                var serializer = new SystemTextJsonSerializer();
-                string json = File.ReadAllText(path);
-                return YearOfAshSaveCodec.Decode(json, serializer);
-            }
-            catch (Exception ex)
-            {
-                GD.PrintErr($"[YearOfAshSaveStore] Failed to load save: {ex.Message}");
-                return null;
-            }
-        }
+        public static bool TrySave(YearOfAshSave save, string pathOverride = null!) =>
+            s_store.TrySave(save, pathOverride);
+
+        public static YearOfAshSave? TryLoad(string pathOverride = null!) =>
+            s_store.TryLoad(pathOverride);
     }
 }

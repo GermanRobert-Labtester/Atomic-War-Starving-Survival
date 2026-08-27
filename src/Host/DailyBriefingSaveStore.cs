@@ -1,110 +1,50 @@
 // ============================================================================
 // Save Store : DailyBriefingSaveStore
-// Core State : Ashfall.Core.DailyBriefingSave
+// Core State : Ashfall.Core.Campaign.DailyBriefingSave
 // Host Caller: Main.Campaign / DailyBriefingHostSession
 // Purpose    : Daily morning briefings, priority bulletins, and broadcast log archives
 // ============================================================================
-using System;
-using System.IO;
-using Godot;
-using Ashfall.Core;
 using Ashfall.Core.Campaign;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// Persists <see cref="DailyBriefingSave"/> as JSON under
-    /// <c>user://daily_briefing_save.json</c> using the core
-    /// <see cref="IFileIO"/> / <see cref="SystemTextJsonSerializer"/> ports.
-    /// Shape and validation live in
-    /// <see cref="Ashfall.Core.Campaign.DailyBriefingSaveCodec"/>. This type
-    /// only picks the Godot path and the log, mirroring the other expansion
-    /// save stores.
+    /// <c>user://daily_briefing_save.json</c> — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). Shape and
+    /// validation live in <see cref="DailyBriefingSaveCodec"/>; path
+    /// resolution, atomic write, and error handling live in the service.
     /// </summary>
     public static class DailyBriefingSaveStore
     {
         public const string FileName = "daily_briefing_save.json";
         public const string SectionName = "daily_briefing";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(DailyBriefingSave state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static DailyBriefingSave? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<DailyBriefingSave> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(DailyBriefingSaveStore),
+            (save, json) => DailyBriefingSaveCodec.EncodeToString(save, json),
+            (raw, json) => DailyBriefingSaveCodec.Decode(raw, json));
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(DailyBriefingSave state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return new SystemTextJsonSerializer().Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[DailyBriefingSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static DailyBriefingSave? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return new SystemTextJsonSerializer().Deserialize<DailyBriefingSave>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[DailyBriefingSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(DailyBriefingSave state) => s_store.CaptureBare(state);
 
-        private static readonly IFileIO s_files = new FileSystemIO();
-        private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
-        private static readonly ILog s_log = new GodotLog();
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static DailyBriefingSave? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(DailyBriefingSave state) => s_store.CaptureBare(state);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static DailyBriefingSave? TryRestore(string json) => s_store.RestoreBare(json);
 
-        public static bool TrySave(DailyBriefingSave save)
-        {
-            if (save == null) return false;
-            try
-            {
-                s_files.WriteAllText(SavePath,
-                    DailyBriefingSaveCodec.EncodeToString(save, s_json));
-                return true;
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[DailyBriefingSaveStore] save failed: " + e.Message);
-                return false;
-            }
-        }
+        public static bool TrySave(DailyBriefingSave save) => s_store.TrySave(save);
 
-        public static DailyBriefingSave? TryLoad()
-        {
-            try
-            {
-                if (!s_files.FileExists(SavePath)) return null;
-                return DailyBriefingSaveCodec.Decode(s_files.ReadAllText(SavePath), s_json);
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[DailyBriefingSaveStore] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static DailyBriefingSave? TryLoad() => s_store.TryLoad();
     }
 }

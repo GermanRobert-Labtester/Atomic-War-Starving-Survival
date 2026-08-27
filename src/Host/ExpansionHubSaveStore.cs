@@ -4,106 +4,51 @@
 // Host Caller: Main.ExpansionHub, Main.Holdfast / ExpansionHubHostSession
 // Purpose    : Expansion module registry, activation flags, and cross-expansion telemetry
 // ============================================================================
-using System;
-using System.IO;
-using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// Persists <see cref="ExpansionHubSave"/> as JSON under
-    /// user://expansion_hub_save.json using the core IFileIO / SystemTextJsonSerializer
-    /// ports. Shape and validation live in Ashfall.Core.ExpansionHubSaveCodec.
-    /// Mirrors the other Godot save stores.
+    /// user://expansion_hub_save.json — thin façade over the Core
+    /// SaveStore&lt;T&gt; service (via SaveStoreHub, codec flavor). Shape and
+    /// validation live in <see cref="ExpansionHubSaveCodec"/>; path
+    /// resolution, atomic write, and error handling live in the service.
     /// </summary>
     public static class ExpansionHubSaveStore
     {
         public const string FileName = "expansion_hub_save.json";
         public const string SectionName = "expansion_hub";
-    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
-    public static string TryCaptureDirect(ExpansionHubSave state)
-    {
-        return TryCapture(state);
-    }
 
-    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
-    public static ExpansionHubSave? TryRestoreDirect(string json)
-    {
-        return TryRestore(json);
-    }
+        private static readonly SaveStore<ExpansionHubSave> s_store = SaveStoreHub.FromCodec(
+            FileName,
+            nameof(ExpansionHubSaveStore),
+            (save, json) => ExpansionHubSaveCodec.Encode(save, json),
+            (raw, json) => ExpansionHubSaveCodec.Decode(raw, json));
 
-    /// <summary>Capture state to JSON without writing to disk.</summary>
-    public static string TryCapture(ExpansionHubSave state)
-    {
-        try
-        {
-            if (state == null) return string.Empty;
-            return new SystemTextJsonSerializer().Serialize(state);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[ExpansionHubSaveStore] capture failed: " + e.Message);
-            return string.Empty;
-        }
-    }
+        public static string SavePath => s_store.SavePath;
 
-    /// <summary>Restore state from JSON without reading from disk.</summary>
-    public static ExpansionHubSave? TryRestore(string json)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(json)) return null;
-            return new SystemTextJsonSerializer().Deserialize<ExpansionHubSave>(json);
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr("[ExpansionHubSaveStore] restore failed: " + e.Message);
-            return null;
-        }
-    }
+        public static bool Exists => s_store.Exists();
 
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(ExpansionHubSave state) => s_store.CaptureBare(state);
 
-        private static readonly IFileIO s_files = new FileSystemIO();
-        private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
-        private static readonly ILog s_log = new GodotLog();
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static ExpansionHubSave? TryRestoreDirect(string json) => s_store.RestoreBare(json);
 
-        public static string SavePath =>
-            SaveSlotRoot.Resolve(FileName);
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(ExpansionHubSave state) => s_store.CaptureBare(state);
 
-        public static bool Exists => s_files.FileExists(SavePath);
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static ExpansionHubSave? TryRestore(string json) => s_store.RestoreBare(json);
 
         /// <summary>Writes through the codec (checksum stamped). Returns false on failure.</summary>
-        public static bool TrySave(ExpansionHubSave save, string pathOverride = null!)
-        {
-            if (save == null) return false;
-            try
-            {
-                string path = pathOverride ?? SavePath;
-                s_files.WriteAllText(path, ExpansionHubSaveCodec.Encode(save, s_json));
-                return true;
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[ExpansionHubSaveStore] save failed: " + e.Message);
-                return false;
-            }
-        }
+        public static bool TrySave(ExpansionHubSave save, string pathOverride = null!) =>
+            s_store.TrySave(save, pathOverride);
 
         /// <summary>Reads and validates through the codec. Returns null when absent or corrupt.</summary>
-        public static ExpansionHubSave? TryLoad(string pathOverride = null!)
-        {
-            try
-            {
-                string path = pathOverride ?? SavePath;
-                if (!s_files.FileExists(path)) return null;
-                return ExpansionHubSaveCodec.Decode(s_files.ReadAllText(path), s_json);
-            }
-            catch (Exception e)
-            {
-                s_log.Error("[ExpansionHubSaveStore] load failed: " + e.Message);
-                return null;
-            }
-        }
+        public static ExpansionHubSave? TryLoad(string pathOverride = null!) =>
+            s_store.TryLoad(pathOverride);
     }
 }
