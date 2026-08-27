@@ -363,3 +363,31 @@ one generic, port-injected service:
   a degenerate checksum (SaveChecksum walks public fields only; their
   property-only envelopes hash to a constant) — integrity is not real there;
   fixing it needs a save-evolution initiative with legacy dual-read.
+
+---
+
+## Initiative #42 — Single Versioned Atomic Campaign Envelope (2026-08-27) — COMPLETE
+
+The per-slot `campaign.json` envelope is now the single authoritative save:
+
+- **Save:** every `SaveXxx` captures its section bytes in memory
+  (`SaveStore<T>.CapturePersisted`, byte-identical to the old file format);
+  `CampaignEnvelopeBuilder` packs the registry-ordered, whitelisted payload
+  map into ONE atomic write. Failed capture aborts the whole save — mixed-
+  generation partial saves are structurally impossible. Section files are no
+  longer written at save time.
+- **Format V2:** sections keyed by `SaveSectionRegistry` SectionKey with real
+  schema versions; `SaveSectionRegistry.SectionFileNames` is the file-name
+  authority (whitelist + V1 filename→key migration + registry-derived reset
+  lists, closing 12+ hardcoded-delete gaps).
+- **Load:** validate → migrate V1 in memory (reserved `legacy` import section
+  preserved; strays dropped; disk rewritten V2 on next save) → explode to
+  registry file names → unchanged `SetupXxx` flows.
+- **Legacy:** Continue with no slots auto-migrates pre-slot global section
+  files verbatim into a fresh `migrated_N` slot (corrupt sections skipped
+  with warning; originals untouched).
+- **Pinned by:** `CampaignEnvelopeBuilderTests` (9 tests) + the 7-gate
+  `--save-load-ui-failure-selftest`; all pre-existing suites pass.
+- **Known follow-up (out of scope):** in-memory restore without file
+  explosion (`ICampaignSaveSection` remains the seam); multi-generation
+  retention beyond the single `.bak`.
