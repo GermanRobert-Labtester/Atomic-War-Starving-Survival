@@ -33,13 +33,14 @@ namespace Ashfall.Core.Save
             IJsonSerializer? serializer = null,
             IFileIO? fileIO = null,
             bool createBackup = false,
-            ILog? log = null)
+            ILog? log = null,
+            string? logTag = null)
         {
             if (state == null) return false;
             if (string.IsNullOrWhiteSpace(path)) return false;
 
             var json = serializer ?? DefaultSerializer;
-            var files = fileIO ?? DefaultFileIO;
+            string tag = logTag ?? "SaveEnvelopeHelper";
 
             try
             {
@@ -49,14 +50,42 @@ namespace Ashfall.Core.Save
                 };
                 envelope.Checksum = SaveChecksum.Compute(envelope);
 
+                string serialized = json.Serialize(envelope);
+                return TryWriteAtomic(path, serialized, fileIO, createBackup, log, tag);
+            }
+            catch (Exception ex)
+            {
+                log?.Error($"[{tag}] Save failed for '{path}': {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Writes an already-serialized payload atomically: temp file, optional
+        /// backup of the current file, then rename over the target. Shared by
+        /// the checksummed envelope path and codec-delegating save stores.
+        /// </summary>
+        public static bool TryWriteAtomic(
+            string path,
+            string payload,
+            IFileIO? fileIO = null,
+            bool createBackup = false,
+            ILog? log = null,
+            string? logTag = null)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return false;
+
+            var files = fileIO ?? DefaultFileIO;
+            string tag = logTag ?? "SaveEnvelopeHelper";
+
+            try
+            {
                 string dir = Path.GetDirectoryName(path)!;
                 if (!string.IsNullOrEmpty(dir) && !files.DirectoryExists(dir))
                 {
                     if (files is FileSystemIO)
                         Directory.CreateDirectory(dir);
                 }
-
-                string serialized = json.Serialize(envelope);
 
                 // Create backup if requested and original exists
                 if (createBackup && files.FileExists(path))
@@ -69,13 +98,13 @@ namespace Ashfall.Core.Save
                     }
                     catch (Exception bakEx)
                     {
-                        log?.Warn($"[SaveEnvelopeHelper] Backup copy failed for '{path}': {bakEx.Message}");
+                        log?.Warn($"[{tag}] Backup copy failed for '{path}': {bakEx.Message}");
                     }
                 }
 
                 // Atomic write via temp file
                 string tempPath = path + ".tmp";
-                files.WriteAllText(tempPath, serialized);
+                files.WriteAllText(tempPath, payload);
 
                 if (File.Exists(tempPath))
                 {
@@ -83,14 +112,14 @@ namespace Ashfall.Core.Save
                 }
                 else
                 {
-                    files.WriteAllText(path, serialized);
+                    files.WriteAllText(path, payload);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                log?.Error($"[SaveEnvelopeHelper] Save failed for '{path}': {ex.Message}");
+                log?.Error($"[{tag}] Save failed for '{path}': {ex.Message}");
                 return false;
             }
         }
@@ -104,7 +133,8 @@ namespace Ashfall.Core.Save
             IJsonSerializer? serializer = null,
             IFileIO? fileIO = null,
             Func<string, T?>? legacyFallback = null,
-            ILog? log = null) where T : class
+            ILog? log = null,
+            string? logTag = null) where T : class
         {
             if (string.IsNullOrWhiteSpace(path))
                 return (false, null, "Path is empty or null.");
@@ -114,6 +144,7 @@ namespace Ashfall.Core.Save
                 return (false, null, $"Save file not found at '{path}'.");
 
             var json = serializer ?? DefaultSerializer;
+            string tag = logTag ?? "SaveEnvelopeHelper";
 
             try
             {
@@ -137,7 +168,7 @@ namespace Ashfall.Core.Save
                     if (string.IsNullOrEmpty(envelope.Checksum))
                     {
                         string err = "Checksum field missing in save envelope (corrupt save).";
-                        log?.Error($"[SaveEnvelopeHelper] {err} at '{path}'");
+                        log?.Error($"[{tag}] {err} at '{path}'");
                         return (false, null, err);
                     }
 
@@ -145,7 +176,7 @@ namespace Ashfall.Core.Save
                     if (!string.Equals(envelope.Checksum, computed, StringComparison.Ordinal))
                     {
                         string err = "Checksum mismatch in save envelope (corrupt or tampered save).";
-                        log?.Error($"[SaveEnvelopeHelper] {err} at '{path}'");
+                        log?.Error($"[{tag}] {err} at '{path}'");
                         return (false, null, err);
                     }
 
@@ -176,7 +207,7 @@ namespace Ashfall.Core.Save
             }
             catch (Exception ex)
             {
-                log?.Error($"[SaveEnvelopeHelper] Load failed for '{path}': {ex.Message}");
+                log?.Error($"[{tag}] Load failed for '{path}': {ex.Message}");
                 return (false, null, ex.Message);
             }
         }
