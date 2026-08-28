@@ -123,6 +123,10 @@ namespace AtomicWar.GodotApp
                     _m._holdfastRuntime.Survivors = _m._survivors;
                     _m._holdfastRuntime.TickDay();
                 }
+                // Calendar-led authority: the clock is a projection and must
+                // land exactly on the campaign day being committed, whatever
+                // its internal tick state said.
+                _m._core.Clock.SetDay(day);
                 events.Add(new DayStateChangeEvent("holdfast_ticked", "holdfast_core", delta, null, _m._core.Clock.Day));
             }
         }

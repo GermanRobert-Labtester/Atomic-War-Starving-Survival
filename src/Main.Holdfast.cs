@@ -51,7 +51,9 @@ namespace AtomicWar.GodotApp
             {
                 _core.RestoreSave(save);
                 SetupCampaignDay();
-                _campaignDay.Calendar.SetDay(_core.Clock.Day);
+                // Calendar-led: the reconciled calendar is authoritative; the
+                // holdfast clock follows it.
+                _core.Clock.SetDay(_campaignDay.Calendar.CurrentDay);
                 _holdfastDirty = false; // restore just raised state-change events
                 GD.Print($"[Ashfall Godot] Holdfast S1 state restored (day {_core.Clock.Day}).");
             }
@@ -208,7 +210,10 @@ namespace AtomicWar.GodotApp
             SetupIceRoad();
             SetupCampaignDay();
 
-            int targetDay = _core.Clock.Day + 1;
+            // Calendar-led authority: the target day comes from the campaign
+            // calendar; the Core holdfast clock is a projection the
+            // holdfast_core owner re-syncs to this day during the tick.
+            int targetDay = _campaignDay.Calendar.CurrentDay + 1;
 
             // Single entry point: CampaignDayCoordinator owns the advance, re-entrancy gate, and order.
             var args = _campaignDay.Advance(targetDay, new CampaignDayPersistenceAdapter(this));

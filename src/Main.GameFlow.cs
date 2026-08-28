@@ -684,7 +684,9 @@ namespace AtomicWar.GodotApp
             SetupIceRoad();
             _core.UnlockAndClerk();
             SetupCampaignDay();
-            _campaignDay.Calendar.SetDay(_core.Clock.Day);
+            // Calendar-led: a new campaign starts at the calendar's day; the
+            // holdfast clock follows.
+            _core.Clock.SetDay(_campaignDay.Calendar.CurrentDay);
             _statusLabel.Text = $"Holdfast unlocked. Clerk at the hatch. Day {_core.Clock.Day}. Tick the ice road.";
             _codexViewer.Text =
                 "=== ICE ROAD (Ashfall.Core) ===\n" +
