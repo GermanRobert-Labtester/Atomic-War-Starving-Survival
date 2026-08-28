@@ -145,6 +145,26 @@ namespace AtomicWar.GodotApp
             Check(_silentFoundry.GuildTrust == -6f, "live loop applied the single missed-quota consequence");
             Check(_silentFoundry.Engine.AppliedConsequences.Count == 1, "exactly one consequence from the live window");
 
+            // Task #112 substep 9: after real advances through the coordinator,
+            // every campaign-day projection must agree with the calendar — the
+            // holdfast clock (owner-landed), the market day (economy owner),
+            // the duty roster clock (SyncDay, no self-advance), and the
+            // calendar's own IClock/ISimClock adapters.
+            int calDay = _campaignDay.Calendar.CurrentDay;
+            Check(calDay == 280, "calendar sits on the last advanced day");
+            Check(_core.Clock.Day == calDay, "holdfast clock projection agrees with the calendar");
+            Check(_economy.Market.Day == calDay, "economy market day projection agrees with the calendar");
+            Check(_dutyRoster != null && _dutyRoster.Clock.Day == calDay, "duty roster clock projection agrees with the calendar");
+            Check(_campaignDay.Calendar.AsClock().Day == calDay, "calendar IClock adapter agrees");
+            Check(_campaignDay.Calendar.AsSimClock().DayIndex == calDay, "calendar ISimClock adapter agrees");
+
+            // Save/reload: the coordinator's captured day must round-trip into
+            // a fresh coordinator (projection agreement after reload).
+            var savedCalendar = _campaignDay.CaptureState();
+            var reloaded = new CampaignDayCoordinator();
+            reloaded.RestoreState(savedCalendar);
+            Check(reloaded.Calendar.CurrentDay == calDay, "calendar day survives save/reload");
+
             // Late-treaty host path: the foundry's live tick line (TickDaily) is
             // day-agnostic, so a late treaty fires through the FULL host pipeline
             // (stance engine + real market) whenever the campaign supplies the day.
