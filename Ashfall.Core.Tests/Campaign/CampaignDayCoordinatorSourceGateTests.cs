@@ -81,6 +81,52 @@ namespace Ashfall.Core.Tests.Campaign
             Assert.Empty(violations);
         }
 
+        [Fact]
+        public void SourceGate_DirectDailyAdvanceOnlyViaCoordinator()
+        {
+            // Initiative #111 substep 12: no new direct daily ticks outside the
+            // coordinator. Main partials and UI panels must reach the day
+            // advance through Main.Holdfast.cs (which owns TickSimDay and the
+            // two coordinator Advance call sites). UiTests partials are the
+            // sanctioned exception — they drive the real coordinator paths.
+            string? root = Directory.GetCurrentDirectory();
+            while (!string.IsNullOrEmpty(root) && !Directory.Exists(Path.Combine(root, "src")))
+            {
+                var parent = Directory.GetParent(root);
+                root = parent?.FullName;
+            }
+
+            if (string.IsNullOrEmpty(root) || !Directory.Exists(Path.Combine(root, "src")))
+                return; // Not running in repo tree
+
+            string srcDir = Path.Combine(root, "src");
+            var violations = new List<string>();
+
+            foreach (var file in Directory.GetFiles(srcDir, "*.cs", SearchOption.AllDirectories))
+            {
+                string name = Path.GetFileName(file);
+                string rel = Path.GetRelativePath(srcDir, file).Replace('\\', '/');
+                bool isMainPartial = name.StartsWith("Main.", StringComparison.Ordinal);
+                bool isUi = rel.StartsWith("UI/", StringComparison.Ordinal);
+                if (!isMainPartial && !isUi) continue;
+                if (name.EndsWith("Tests.cs", StringComparison.Ordinal)) continue;
+
+                bool advanceAllowed = name == "Main.Holdfast.cs";
+                bool tickAllowed = advanceAllowed || name.StartsWith("Main.UiTests.", StringComparison.Ordinal);
+                if (advanceAllowed && tickAllowed) continue;
+
+                string text = File.ReadAllText(file);
+                if (!advanceAllowed && text.Contains("_campaignDay.Advance("))
+                    violations.Add($"{rel}: calls _campaignDay.Advance directly (only Main.Holdfast.cs may)");
+                if (!tickAllowed && text.Contains("TickSimDay("))
+                    violations.Add($"{rel}: calls TickSimDay (only Main.Holdfast.cs and UiTests selftests may)");
+            }
+
+            Assert.True(violations.Count == 0,
+                "Direct daily-advance violations found — route day advancement through the coordinator:\n  " +
+                string.Join("\n  ", violations));
+        }
+
         private sealed class DummyOwner : IDayAdvanceOwner
         {
             public void CapturePreDaySnapshot(int day) { }
