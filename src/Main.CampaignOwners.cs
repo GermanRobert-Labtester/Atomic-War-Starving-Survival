@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core;
 using Ashfall.Core.Campaign;
+using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
 using Godot;
 
@@ -20,6 +22,7 @@ namespace AtomicWar.GodotApp
 
             // Phase 2: Production, Infrastructure & Survival Basics
             _campaignDay.Register("crafting_production", new CraftingProductionDayOwner(this), phase: 2);
+            _campaignDay.Register("economy_market", new EconomyMarketDayOwner(this), phase: 2);
             _campaignDay.Register("greenhouse_foundry", new GreenhouseFoundryDayOwner(this), phase: 2);
             _campaignDay.Register("shelter_facilities", new ShelterFacilitiesDayOwner(this), phase: 2);
             _campaignDay.Register("starting_level_rations", new StartingLevelRationsDayOwner(this), phase: 2);
@@ -42,18 +45,28 @@ namespace AtomicWar.GodotApp
 
         // ── Phase 1 Owners ───────────────────────────────────────────────
 
-        private sealed class WeatherWorldDayOwner : IDayAdvanceOwner
+        private sealed class WeatherWorldDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private Ashfall.Core.World.WorldWeatherState? _snapshot;
             public WeatherWorldDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupWorld();
+                _snapshot = _m._world.Weather.CaptureState();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null)
+                    _m._world.Weather.RestoreState(_snapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupWorld();
                 _m._world.TickHours(24f);
                 _m._world.WeatherIntelligence.TickDay(day);
                 events.Add(new DayStateChangeEvent("weather_ticked", "weather_world",
-                    _m._world.Weather.Current.ToString(), null, _m._world.OutdoorRadModifier));
+                    _m._world.Weather.Current.ToString(), null, _m._world.Weather.OutdoorRadModifier));
             }
         }
 
@@ -86,11 +99,21 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private sealed class HoldfastCoreDayOwner : IDayAdvanceOwner
+        private sealed class HoldfastCoreDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private int _clockDaySnapshot;
             public HoldfastCoreDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day)
+            {
+                // The clock is the double-day hazard: if a later phase fails,
+                // a retry must not tick the calendar twice.
+                _clockDaySnapshot = _m._core.Clock.Day;
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                _m._core.Clock.SetDay(_clockDaySnapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupIceRoad();
@@ -165,6 +188,29 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        private sealed class EconomyMarketDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Economy.MarketState? _snapshot;
+            public EconomyMarketDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupEconomy();
+                _snapshot = _m._economy.CaptureSave();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null)
+                    _m._economy.RestoreSave(_snapshot);
+            }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupEconomy();
+                _m._economy.Market.TickDay(day, _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Economy, day, 0));
+                events.Add(new DayStateChangeEvent("market_ticked", "economy_market", null, null, _m._economy.Market.Day));
+            }
+        }
+
         private sealed class ShelterFacilitiesDayOwner : IDayAdvanceOwner
         {
             private readonly Main _m;
@@ -179,15 +225,31 @@ namespace AtomicWar.GodotApp
 
         // ── Phase 3 Owners ───────────────────────────────────────────────
 
-        private sealed class SurvivorsNeedsDayOwner : IDayAdvanceOwner
+        private sealed class SurvivorsNeedsDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private SurvivorsSaveState? _snapshot;
             public SurvivorsNeedsDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSurvivors();
+                _snapshot = _m._survivors.CaptureSave();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null)
+                    _m._survivors.RestoreSave(_snapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupSurvivors();
                 _m._survivors.TickHour(24f);
+                // Drain any survivor_perished events from the death pipeline
+                // into the briefing feed. Needs/radiation OnDied fires inside
+                // TickHour — every death this day lands here exactly once.
+                _m.SetupSurvivorFate();
+                if (_m._survivorFate != null)
+                    _m._survivorFate.DrainDayEvents(events);
                 events.Add(new DayStateChangeEvent("survivors_ticked", "survivors_needs", null, null, _m._survivors.RosterState.Count));
             }
         }
@@ -260,11 +322,26 @@ namespace AtomicWar.GodotApp
 
         // ── Phase 4 Owners ───────────────────────────────────────────────
 
-        private sealed class ExpeditionsCaravansDayOwner : IDayAdvanceOwner
+        private sealed class ExpeditionsCaravansDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private ExpeditionAggregateState? _expeditionSnapshot;
+            private TravelingCaravanState? _caravanSnapshot;
             public ExpeditionsCaravansDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupExpeditions();
+                _expeditionSnapshot = _m._expeditions.CaptureSaveAggregate();
+                _m.SetupCaravans();
+                _caravanSnapshot = _m._caravans.CaptureSave();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_expeditionSnapshot != null)
+                    _m._expeditions.RestoreSaveAggregate(_expeditionSnapshot);
+                if (_caravanSnapshot != null)
+                    _m._caravans.RestoreSave(_caravanSnapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupExpeditions();
