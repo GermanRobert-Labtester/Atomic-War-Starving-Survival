@@ -391,3 +391,26 @@ The per-slot `campaign.json` envelope is now the single authoritative save:
 - **Known follow-up (out of scope):** in-memory restore without file
   explosion (`ICampaignSaveSection` remains the seam); multi-generation
   retention beyond the single `.bak`.
+
+---
+
+## Task #101 — Expedition Vehicle & Weapon-Condition Logistics (2026-08-28) — COMPLETE
+
+- Vehicles change real outcomes: dispatch preparation gates on exact fuel
+  need (depleted tank refuses with a refuel message), burns fuel + wear via
+  `PrepareForExpedition`, builds a per-tick profile from vehicle condition
+  (worn ⇒ mid-route breakdown risk); driven sorties travel faster and haul
+  more; a seeded breakdown reverts the remainder to foot.
+- Weapon condition flows through ONE authority: equipment-condition
+  instances (Weapon family) project into combat loadouts, engagement wear
+  writes back at encounter end, and readiness/jam risk feed the expedition
+  estimate (degraded weapon raises effective encounter risk up to +50%).
+- UI: DISPATCH PREPARATION block (vehicle/weapon selectors, refuel top-up,
+  live estimate line); dispatch routed through the host (gates kept).
+- Persistence: expedition section = `ExpeditionAggregateState` (sorties +
+  garage), legacy shapes migrate, `vehicles.json` is authoritative.
+- Verification: Core 4395/4399 (4 failures = concurrent session's
+  uncommitted HostCli onboarding files, pre-existing); `--expedition-selftest`
+  10/10 demo + 9/9 vehicle gates; data-integrity + bridge selftests PASS;
+  host builds 0 errors. Cross-tool review required (≥2 coupled variables:
+  fuel/condition/readiness).
