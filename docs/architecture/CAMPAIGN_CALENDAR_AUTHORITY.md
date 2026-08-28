@@ -53,17 +53,20 @@ ASHFALL separates time into three distinct, non-conflated domains:
 
 ### Invariants:
 1. **Single Writer**: Only [`CampaignDayCoordinator`](../../Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs) can advance [`ICampaignCalendar`](../../Assets/Ashfall.Core/Campaign/CampaignCalendar.cs).
-2. **Projections are Read-Only**: `_simDay` in `Main` is a read-only property (`_campaignDay.Calendar.CurrentDay`).
+2. **Projections are Read-Only**: `_simDay` in `Main` is a read-only property (`_campaignDay.Calendar.CurrentDay`) with no subsystem-clock fallback.
 3. **No Secondary Authority**: Subsystems (Journal, Verdict, Duty Roster, Year of Ash) never mutate or derive the master day.
-4. **Fail-Closed Protection**: If any daily advance owner fails or throws, the calendar day is not advanced, persistence is aborted, and the pre-day snapshot remains uncommitted.
+4. **Fail-Closed Protection**: If any daily advance owner fails or throws, the calendar day is not advanced, persistence is aborted, and the pre-day snapshot remains uncommitted. A retried attempt for the same day first rolls `IPreDaySnapshotRestore` owners back (reverse order) so no subsystem is double-ticked.
+5. **Calendar Leads (Task #112)**: `CommitAdvance` derives the target day from `Calendar.CurrentDay + 1`. The Core holdfast clock is a *projection*: the `holdfast_core` owner lands it exactly on the committed day (`Clock.SetDay`), restore/new-game paths re-sync the clock *from* the calendar, and the duty roster clock is set via `SyncDay` (the roster no longer self-advances). After every advance, save, or load all projections must agree — asserted live by the `silent_foundry_uitest` projection gates.
+6. **Coordinator-Only Mutations (source gate)**: `Calendar.SetDay`, `.AdvanceDays(`, and sim-day self-mutation are forbidden in `src/Main*.cs`/`src/UI` outside the sanctioned allowlist (Holdfast sync sites, UiTests drivers), enforced by `CampaignCalendarSourceGateTests`.
 
 ---
 
 ## 3. Save Reconciliation Rules
 
-When loading saves from disk, conflicting legacy section day timestamps are reconciled via [`CampaignCalendarReconciler`](../../Assets/Ashfall.Core/Campaign/CampaignCalendar.cs):
+When loading saves from disk, conflicting legacy section day timestamps are reconciled via [`CampaignCalendarReconciler`](../../Assets/Ashfall.Core/Campaign/CampaignCalendar.cs), wired into `Main.SetupCampaignDay` *before* the coordinator adopts the `campaign_day` envelope:
 
 1. If `campaign_day` exists and `lastAdvancedDay > 0`, it is authoritative.
 2. If `campaign_day` is absent (legacy save), `holdfast.day` is the primary fallback, followed by `max(section_days)`.
 3. Any section whose recorded day diverges from the authoritative day is logged with structured diagnostic format:
    `[CALENDAR_MISMATCH] section='{section}' section_day={sectionDay} authoritative_day={authDay}`
+4. A section day *ahead* of the stored `campaign_day` upgrades the envelope before restore (never rewinds a newer envelope). Sections consulted: `campaign_day`, `holdfast` (simDay), `duty_roster` (simDay), `economy` (day), `year_of_ash` (timeline.currentDay).

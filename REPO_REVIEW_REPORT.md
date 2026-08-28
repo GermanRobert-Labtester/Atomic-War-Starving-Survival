@@ -447,3 +447,36 @@ Verification: Core 4400/4404 (4 failures = concurrent session's uncommitted
 HostCli onboarding files, pre-existing); host 0 errors (2 warnings in the
 same concurrent files); expedition/data-integrity/save-load selftests PASS;
 gate + coordinator suites green.
+
+---
+
+## Task #112 — Campaign Calendar Authority: Residual Gap Closure (2026-08-28) — COMPLETE
+
+Core delivery landed earlier (8029aa69: ICampaignCalendar, adapters,
+reconciler, gates, doc). This pass closed the audited residuals:
+
+- **Calendar now LEADS**: CommitAdvance derives targetDay from
+  `Calendar.CurrentDay + 1`; the Core holdfast clock is a projection
+  landed by the holdfast_core owner and re-synced FROM the calendar on
+  restore/new-game/reconciliation (three stray calendar writes removed).
+- **Reconciler wired** into SetupCampaignDay (was dead code): legacy
+  section days (campaign_day/holdfast/duty_roster/economy/year_of_ash)
+  reconcile before the envelope is adopted; disagreements emit
+  [CALENDAR_MISMATCH]; a later section upgrades an older envelope.
+- **Fallbacks removed**: _simDay projects the calendar only; radio and
+  phase0 read the projection, not the holdfast clock.
+- **Duty roster off-by-one fixed**: TickDay no longer self-advances; the
+  roster clock equals the campaign day after every advance.
+- **Gate widened**: Calendar.SetDay / AdvanceDays / sim-day self-mutation
+  forbidden across Main partials + UI (allowlist: Holdfast sync sites,
+  UiTests drivers); engine-internal ISimClock ticks in src/Host stay
+  legitimate (substep 2).
+- **Live projection-agreement gates**: silent_foundry_uitest now asserts
+  holdfast clock == market day == roster clock == calendar adapters after
+  real advances, plus calendar save/reload round-trip.
+- BEHAVIOR NOTE: reconciliation may now advance a campaign whose
+  campaign_day section lagged a subsystem section (documented priority
+  campaign_day > holdfast > max). Verification: coordinator/calendar
+  suites 34/34; Core 4418/4422 (4 = concurrent session's uncommitted
+  HostCli onboarding files); silent_foundry_uitest projection gates 8/8
+  (its factions-panel failure pre-exists, reproduced on a stashed tree).
