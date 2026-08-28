@@ -48,6 +48,7 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             SetupSurvivors();
             _expeditions = ExpeditionHostSession.Create(_dataDir);
+            _expeditions.Flags = _consequenceLedger;
             _expeditions.StateChanged += () => _expeditionDirty = true;
             _expeditions.OnEncounterSurfaced += OnExpeditionEncounterSurfaced;
             _expeditions.Engine.OnExpeditionCompleted += state =>
@@ -93,7 +94,7 @@ namespace AtomicWar.GodotApp
         private void SaveExpeditions()
         {
             if (_expeditions == null) return;
-            if (CaptureSection("expedition", ExpeditionSaveStore.TryCapturePersisted(_expeditions.CaptureSave())))
+            if (CaptureSection("expedition", ExpeditionSaveStore.TryCapturePersisted(_expeditions.CaptureSaveAggregate())))
             {
                 _expeditionDirty = false;
                 GD.Print("[Ashfall Godot] Expedition save written.");
@@ -110,6 +111,7 @@ namespace AtomicWar.GodotApp
             {
                 _combat.Inventory = _inventory;
                 _combat.Survivors = _survivors;
+                _combat.Equipment = _equipmentCondition?.System;
                 _combat.WireRealState();
                 _combat.ValidatePorts();
                 _combat.StateChanged += () => _combatDirty = true;
@@ -117,6 +119,23 @@ namespace AtomicWar.GodotApp
                 SetupExpeditionCombatHandoff(_combat);
             }
             GD.Print("[Ashfall Godot] Combat host ready: tactical combat expansion.");
+        }
+
+        /// <summary>
+        /// Refuel a garage vehicle from carried fuel items (1 item = 1 fuel
+        /// unit). Consumes the items first so inventory is never drained
+        /// without a tank fill.
+        /// </summary>
+        private string RefuelVehicleFromInventory(string vehicleId, float units)
+        {
+            if (_expeditions == null || _inventory == null) return "Garage not ready.";
+            int needed = Math.Max(1, (int)Math.Ceiling(units));
+            var bill = new List<string>();
+            for (int i = 0; i < needed; i++) bill.Add("fuel");
+            if (!_inventory.Inventory.TryConsumeBill(bill))
+                return $"Not enough fuel aboard ({needed} needed).";
+            SaveInventory();
+            return _expeditions.RefuelVehicle(vehicleId, units);
         }
 
         private void SaveCombat()

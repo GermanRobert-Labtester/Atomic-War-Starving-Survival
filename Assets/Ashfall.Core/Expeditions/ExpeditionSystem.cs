@@ -952,6 +952,10 @@ namespace Ashfall.Core.Expeditions
                 isNightScavenge = src.isNightScavenge,
                 hasBicycle = src.hasBicycle,
                 hasFlashlight = src.hasFlashlight,
+                vehicleId = src.vehicleId,
+                vehicleSpeedMultiplier = src.vehicleSpeedMultiplier,
+                vehicleBreakdownChancePerTick = src.vehicleBreakdownChancePerTick,
+                vehicleBrokenDown = src.vehicleBrokenDown,
                 outcomeText = src.outcomeText
             };
             if (src.loot != null)

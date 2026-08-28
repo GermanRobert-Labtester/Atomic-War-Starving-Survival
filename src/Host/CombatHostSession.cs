@@ -27,6 +27,18 @@ namespace AtomicWar.GodotApp
         /// <summary>Optional real survivor backing for health / morale / injury.</summary>
         public SurvivorsHostSession Survivors { get; set; }
 
+        /// <summary>
+        /// Optional equipment-condition authority. When set, the default weapon
+        /// loadout is projected from its Weapon-family instances (condition
+        /// 0–100 → combat 0–1) and combat wear is written back through the
+        /// authority when the encounter ends — one persisted condition per
+        /// weapon, no duplicate durability. Unset: legacy demo literals.
+        /// </summary>
+        public Ashfall.Core.EquipmentConditionSystem? Equipment { get; set; }
+
+        /// <summary>Condition-at-start of bridge-bound weapons, for the post-combat write-back.</summary>
+        private readonly Dictionary<string, float> _boundWeaponConditionAtStart = new();
+
         public string LastEvent { get; private set; } = string.Empty;
         public CombatHostSession(TacticalCombatSystem engine = null!, CombatHostPorts ports = null!)
         {
@@ -36,8 +48,31 @@ namespace AtomicWar.GodotApp
             Engine.OnEncounterEnded += s =>
             {
                 LastEvent = "Combat ended: " + s.OutcomeText;
+                SyncBoundWeaponsAfterCombat(s);
                 RaiseStateChanged();
             };
+        }
+
+        /// <summary>
+        /// Single post-combat write-back point: bridge-bound weapons sync their
+        /// condition delta into the equipment authority. Runs once per
+        /// encounter end; the snapshot is cleared after syncing.
+        /// </summary>
+        private void SyncBoundWeaponsAfterCombat(CombatState state)
+        {
+            if (Equipment == null || _boundWeaponConditionAtStart.Count == 0 || state?.Weapons == null)
+            {
+                _boundWeaponConditionAtStart.Clear();
+                return;
+            }
+
+            foreach (var weapon in state.Weapons)
+            {
+                if (weapon == null || string.IsNullOrEmpty(weapon.InstanceId)) continue;
+                if (_boundWeaponConditionAtStart.TryGetValue(weapon.InstanceId, out float start))
+                    Ashfall.Core.Combat.WeaponEquipmentBridge.SyncAfterCombat(Equipment, weapon, start);
+            }
+            _boundWeaponConditionAtStart.Clear();
         }
 
         /// <summary>Wire the engine's host ports to real inventory + survivor sessions when present.</summary>
@@ -200,15 +235,22 @@ namespace AtomicWar.GodotApp
                     var p = players[i];
                     string wId = i == 0 ? "weapon_assault_rifle" : "weapon_pipe_rifle";
                     string aId = i == 0 ? "ammo_556" : "ammo_357";
+                    // Project the persisted equipment authority when it tracks
+                    // this weapon; otherwise fall back to the demo literal.
+                    var token = Ashfall.Core.Combat.WeaponEquipmentBridge.ToCombatInstance(
+                        Equipment, wId, p.SurvivorId);
+                    bool bound = !string.IsNullOrEmpty(token.InstanceId);
                     weaponList.Add(new WeaponInstanceState
                     {
-                        InstanceId = "w_" + p.Id,
+                        InstanceId = bound ? token.InstanceId : "w_" + p.Id,
                         WeaponId = wId,
                         OwnerSurvivorId = p.SurvivorId,
-                        ConditionPct = 0.9f,
+                        ConditionPct = bound ? token.ConditionPct : 0.9f,
                         AmmoId = aId,
                         AmmoRemaining = 50
                     });
+                    if (bound)
+                        _boundWeaponConditionAtStart[token.InstanceId] = token.ConditionPct;
                 }
             }
 

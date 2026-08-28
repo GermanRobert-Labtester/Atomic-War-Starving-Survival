@@ -118,6 +118,10 @@ namespace AtomicWar.GodotApp
             var ecSys = new EquipmentConditionSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 13), ecInv, ecCrafting, new GodotLog());
             ecSys.RestoreState(ecState);
             _equipmentCondition = new EquipmentConditionHostSession(ecSys, ecInv, ecCrafting);
+            // Combat projects its default weapon loadout from this authority
+            // and writes engagement wear back here (WeaponEquipmentBridge).
+            if (_combat != null)
+                _combat.Equipment = ecSys;
             if (_equipmentConditionPanel != null && _equipmentConditionPanel.IsInsideTree())
                 RemoveChild(_equipmentConditionPanel);
             _equipmentConditionPanel = new EquipmentConditionPanel();

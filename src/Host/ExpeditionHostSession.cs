@@ -18,10 +18,23 @@ namespace AtomicWar.GodotApp
     {
         public const int DemoSeed = 7071;
 
+        /// <summary>Deterministic seed for the vehicle garage's own rolls (prep breakdowns).</summary>
+        public const int VehicleSeed = 7072;
+
+        /// <summary>Host-side km per travel tick — bridges the tick economy to the km-based vehicle math.</summary>
+        public const float KmPerTravelTick = 2.5f;
+
+        /// <summary>Vehicle granted to a fresh shelter so vehicle logistics are live from day one.</summary>
+        public const string StarterVehicleId = "vehicle_utility_quad";
+
         public ExpeditionSystem Engine { get; }
         public List<ExpeditionDefinition> Definitions { get; }
         public List<ExpeditionDefinition> DemoDefinitions => Definitions;
         public DiveInstanceRunner DiveRunner { get; private set; }
+        public Ashfall.Core.Flags.IFlagLedger Flags { get; set; } = new Ashfall.Core.Flags.CampaignConsequenceLedger();
+
+        /// <summary>Vehicle garage (fuel, condition, repair) — persisted inside the expedition aggregate.</summary>
+        public ExpeditionVehicleSystem Vehicles { get; }
 
         /// <summary>Optional crossing gate — when set, crossing-node expeditions require vouch access.</summary>
         public VouchAccessSystem CrossingGate { get; set; }
@@ -79,6 +92,13 @@ namespace AtomicWar.GodotApp
             _bridge = new ExpeditionEncounterBridge(_narrative, _rng);
             Definitions = new List<ExpeditionDefinition>();
             RegisterDefaultDefinitions();
+            Vehicles = new ExpeditionVehicleSystem(new SeededRng(VehicleSeed));
+            Vehicles.OnVehicleStateChanged += () => RaiseStateChanged();
+            Engine.OnVehicleBreakdown += s =>
+            {
+                LastEvent = $"Vehicle breakdown: {s.survivorId}'s sortie continues on foot.";
+                RaiseStateChanged();
+            };
             Engine.OnExpeditionStarted += s => { LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; RaiseStateChanged(); };
             Engine.OnExpeditionCompleted += s => { LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot.Count} loot lines."; RaiseStateChanged(); };
             Engine.OnExpeditionFailed += (s, r) => { LastEvent = $"Expedition failed: {s.survivorId} — {r}"; RaiseStateChanged(); };
@@ -140,13 +160,23 @@ namespace AtomicWar.GodotApp
                             ExpeditionDefinitionRegistry.Register(def);
                     }
                 }
+                session.Vehicles.LoadCatalog(VehicleCatalogLoader.Load(dataDir, fileIO, serializer));
             }
 
             var save = ExpeditionSaveStore.TryLoad();
             if (save != null)
             {
-                session.Engine.RestoreState(save);
+                session.Engine.RestoreState(save.expeditions);
+                if (save.vehicles != null)
+                    session.Vehicles.RestoreState(save.vehicles);
                 session.LastEvent = "Expedition state restored from save.";
+            }
+            else if (session.Vehicles.State.ownedVehicles.Count == 0)
+            {
+                // Fresh shelter: the compound's quad starts in the garage so
+                // vehicle logistics participate from the first sortie.
+                session.Vehicles.AcquireVehicle(StarterVehicleId);
+                session.LastEvent = $"Garage initialized with the shelter's {StarterVehicleId}.";
             }
             return session;
         }
@@ -163,8 +193,15 @@ namespace AtomicWar.GodotApp
             return false;
         }
 
-        /// <summary>Production API to start an expedition to a specified location.</summary>
-        public string StartExpedition(string survivorId, string locationId, ExpeditionStance stance = ExpeditionStance.Stealth, int staminaBudget = 40)
+        /// <summary>Production API to start an expedition to a specified location.
+        /// When a vehicleId is given, dispatch preparation runs the garage's
+        /// fuel burn, wear, and prep-breakdown roll before the sortie starts.</summary>
+        public string StartExpedition(
+            string survivorId,
+            string locationId,
+            ExpeditionStance stance = ExpeditionStance.Stealth,
+            int staminaBudget = 40,
+            string vehicleId = "")
         {
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
                 return $"Crossing gate is closed — no vouch. Cannot dispatch to {locationId}.";
@@ -173,8 +210,108 @@ namespace AtomicWar.GodotApp
             var def = ExpeditionDefinitionRegistry.Get(locationId)
                       ?? Definitions.Find(d => d.id == locationId);
             if (def == null) return $"Unknown expedition target: {locationId}";
-            bool ok = Engine.Start(def, survivorId, staminaBudget, stance);
-            return ok ? $"Sent {survivorId} to {def.displayName}." : "Expedition start refused (already active or invalid).";
+
+            ExpeditionVehicleProfile? profile = null;
+            if (!string.IsNullOrEmpty(vehicleId))
+            {
+                string? prepared = PrepareVehicleForDispatch(def, vehicleId);
+                if (prepared != null) return prepared;
+                profile = BuildProfile(vehicleId);
+            }
+
+            bool ok = Engine.Start(def, survivorId, staminaBudget, stance, vehicle: profile);
+            return ok ? $"Sent {survivorId} to {def.displayName}{(profile != null ? $" by {profile.vehicleId}" : "")}." : "Expedition start refused (already active or invalid).";
+        }
+
+        /// <summary>
+        /// Non-consuming pre-dispatch estimate for the UI: ticks, fuel need vs
+        /// tank, capacity, breakdown and encounter risk, weapon readiness.
+        /// Returns null for unknown locations.
+        /// </summary>
+        public (ExpeditionEstimate estimate, bool fuelSufficient)? EstimateExpedition(
+            string locationId,
+            ExpeditionStance stance,
+            string vehicleId = "",
+            float weaponReadiness = 1f,
+            float weaponJamRisk = 0f)
+        {
+            var def = ExpeditionDefinitionRegistry.Get(locationId)
+                      ?? Definitions.Find(d => d.id == locationId);
+            if (def == null) return null;
+
+            ExpeditionVehicleProfile? profile = null;
+            bool fuelOk = true;
+            if (!string.IsNullOrEmpty(vehicleId))
+            {
+                var inst = Vehicles.GetVehicle(vehicleId);
+                if (inst != null && !inst.isBrokenDown)
+                {
+                    profile = BuildProfile(vehicleId);
+                    fuelOk = inst.fuel >= profile!.fuelPerTravelTick * 2f * def.distanceTicks;
+                }
+            }
+            var estimate = ExpeditionSystem.Estimate(def, stance, false, profile, weaponReadiness, weaponJamRisk);
+            return (estimate, fuelOk);
+        }
+
+        /// <summary>Refuel from carried fuel units (inventory consumption is the caller's concern).</summary>
+        public string RefuelVehicle(string vehicleId, float units)
+        {
+            var r = Vehicles.Refuel(vehicleId, units);
+            return r.Status == ActionResult.StatusKind.Success
+                ? $"Refueled {vehicleId}."
+                : $"Cannot refuel {vehicleId}: {r.Status}.";
+        }
+
+        /// <summary>Repair a garage vehicle by the given condition amount.</summary>
+        public string RepairVehicle(string vehicleId, float amount)
+        {
+            var r = Vehicles.Repair(vehicleId, amount);
+            return r.Status == ActionResult.StatusKind.Success
+                ? $"Repaired {vehicleId}."
+                : $"Cannot repair {vehicleId}: {r.Status}.";
+        }
+
+        /// <summary>
+        /// Dispatch preparation through the garage: exact fuel need check, the
+        /// consuming PrepareForExpedition (fuel burn, wear, prep-breakdown
+        /// roll). Returns null when ready to roll, otherwise a refusal message.
+        /// </summary>
+        private string? PrepareVehicleForDispatch(ExpeditionDefinition def, string vehicleId)
+        {
+            var inst = Vehicles.GetVehicle(vehicleId);
+            if (inst == null) return $"No such vehicle in the garage: {vehicleId}.";
+            if (inst.isBrokenDown) return $"{vehicleId} is broken down — repair it before dispatch.";
+
+            float distanceKm = 2f * def.distanceTicks * KmPerTravelTick;
+            var vdef = Vehicles.GetDefinition(vehicleId);
+            float consumption = vdef?.fuel_consumption_per_km ?? 0.5f;
+            float fuelNeeded = distanceKm * consumption;
+            if (inst.fuel < fuelNeeded)
+                return $"{vehicleId} needs {fuelNeeded:F1} fuel for this run — tank holds {inst.fuel:F1}. Refuel first.";
+
+            var (_, _, prepBreakdown) = Vehicles.PrepareForExpedition(vehicleId, distanceKm);
+            if (prepBreakdown)
+                return $"{vehicleId} threw a breakdown during preparation — the sortie is aborted and the vehicle needs repair.";
+            return null;
+        }
+
+        private ExpeditionVehicleProfile? BuildProfile(string vehicleId)
+        {
+            var inst = Vehicles.GetVehicle(vehicleId);
+            if (inst == null) return null;
+            var vdef = Vehicles.GetDefinition(vehicleId);
+            float consumption = vdef?.fuel_consumption_per_km ?? 0.5f;
+            return new ExpeditionVehicleProfile
+            {
+                vehicleId = vehicleId,
+                speedMultiplier = inst.speedMultiplier,
+                cargoCapacityKg = inst.cargoCapacity,
+                fuelPerTravelTick = consumption * KmPerTravelTick,
+                // Worn vehicles risk a mid-route breakdown each travel tick;
+                // pristine metal carries a ~0 chance.
+                breakdownChancePerTick = (100f - inst.condition) / 100f * 0.15f,
+            };
         }
 
         public string StartDemoExpedition(string survivorId, string locationId)
@@ -341,13 +478,29 @@ namespace AtomicWar.GodotApp
         public List<ExpeditionState> CaptureSave() => Engine.CaptureState();
         public void RestoreSave(List<ExpeditionState> state) => Engine.RestoreState(state);
 
+        /// <summary>Aggregate save payload: active expeditions + the vehicle garage.</summary>
+        public ExpeditionAggregateState CaptureSaveAggregate() => new ExpeditionAggregateState
+        {
+            expeditions = Engine.CaptureState(),
+            vehicles = Vehicles.CaptureState(),
+        };
+
+        public void RestoreSaveAggregate(ExpeditionAggregateState aggregate)
+        {
+            if (aggregate == null) return;
+            if (aggregate.expeditions != null)
+                Engine.RestoreState(aggregate.expeditions);
+            if (aggregate.vehicles != null)
+                Vehicles.RestoreState(aggregate.vehicles);
+        }
+
         // ── Dive Instance (Exp 09) ──────────────────────────────────
 
         public string StartDive(string siteId = "site_exp09_ss_sovereign")
         {
             var site = new DiveSiteDefinition(siteId, 120, 0.5, "q_keeper_of_logs");
             DiveRunner = new DiveInstanceRunner(new Ashfall.Core.Events.SimpleEventBus(),
-                new Ashfall.Core.Flags.InMemoryFlagLedger(), new SeededRng(DemoSeed), site);
+                Flags ?? new Ashfall.Core.Flags.CampaignConsequenceLedger(), new SeededRng(DemoSeed), site);
             return $"Dive started at {siteId}. Oxygen: {DiveRunner.OxygenRemaining} ticks.";
         }
 
