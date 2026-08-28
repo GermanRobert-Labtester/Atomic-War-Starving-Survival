@@ -414,3 +414,36 @@ The per-slot `campaign.json` envelope is now the single authoritative save:
   10/10 demo + 9/9 vehicle gates; data-integrity + bridge selftests PASS;
   host builds 0 errors. Cross-tool review required (≥2 coupled variables:
   fuel/condition/readiness).
+
+---
+
+## Task #111 — Campaign-Day Coordinator Migration: Residual Gap Closure (2026-08-28) — COMPLETE
+
+The core migration landed earlier (commit 5c0f9046: coordinator, 17 phase
+owners, fail-closed, tests). This pass closed the four audited residuals:
+
+- **Retry-restore (substep 7 made real):** a failed fail-closed advance arms
+  a pending restore; a retry of the same day rolls owners implementing the
+  new `IPreDaySnapshotRestore` back (reverse order) before ticking — no
+  double-applied days. Pinned by 4 new coordinator tests (rollback works,
+  failed rollback stays fail-closed, success clears, stale day dropped).
+- **Real snapshots on the 5 stateful owners:** holdfast_core (clock — the
+  double-day hazard), survivors_needs, weather_world, expeditions_caravans
+  (aggregate + caravans), economy_market.
+- **economy_market owner (phase 2):** the market now advances daily through
+  the coordinator via `EconomyHostSession.TickDay(day, rng)` on the economy
+  RNG stream. INTENTIONAL BEHAVIOR CHANGE: the market previously only moved
+  through a dead demo button; economy pacing may shift — flag for balance.
+- **Demo cleanup (substep 5):** nine dead On*Clicked handlers and their
+  orphaned Demo host methods deleted (Economy/Caravan/World/Medical/
+  Maritime/Expedition incl. TickDemoHours); Maritime's live menu button
+  calls StartDive; the census-levy menu button kept, promoted to
+  `HonourCensusLevy`.
+- **Source gate widened (substep 12):** every src/Main*.cs partial now
+  scanned — TickSimDay only in Main.Holdfast.cs + Main.UiTests.* drivers;
+  `_campaignDay.Advance` only in Main.Holdfast.cs.
+
+Verification: Core 4400/4404 (4 failures = concurrent session's uncommitted
+HostCli onboarding files, pre-existing); host 0 errors (2 warnings in the
+same concurrent files); expedition/data-integrity/save-load selftests PASS;
+gate + coordinator suites green.
