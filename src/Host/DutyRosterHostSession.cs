@@ -185,12 +185,14 @@ namespace AtomicWar.GodotApp
         /// Morning tick with the host's real home-occupant snapshot. Kess fills
         /// pencil rows; ink never auto-fills; the chart is a document other
         /// systems read. Deterministic.
+        /// Task #112: the session no longer owns day advancement — the day is
+        /// set by SyncDay from the campaign calendar before this runs, so the
+        /// roster clock always equals the campaign day after an advance.
         /// </summary>
         public string TickDay(IReadOnlyList<DutyRosterOccupant> occupants)
         {
             LastEvent = string.Empty;
             int day = Clock.Day;
-            Clock.AdvanceDays(1);
             Unlock(day);
 
             if (!Roster.State.wallInspected)

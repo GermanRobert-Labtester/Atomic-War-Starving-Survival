@@ -178,7 +178,7 @@ namespace AtomicWar.GodotApp
         {
             if (_radio != null)
             {
-                _radio.SetDay(_core != null ? _core.Clock.Day : _simDay);
+                _radio.SetDay(_simDay);
                 return;
             }
 
