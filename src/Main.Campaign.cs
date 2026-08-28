@@ -1,11 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.YearOfAsh;
 
 namespace AtomicWar.GodotApp
 {
@@ -30,7 +32,59 @@ namespace AtomicWar.GodotApp
             var loadedCampaignDay = CampaignDaySaveStore.TryLoad();
             if (loadedCampaignDay != null)
             {
+                ReconcileLegacySectionDays(loadedCampaignDay);
                 _campaignDay.RestoreState(loadedCampaignDay);
+            }
+        }
+
+        /// <summary>
+        /// Task #112 substeps 7/8: legacy sections carry their own day values;
+        /// before the coordinator adopts the campaign_day section, reconcile
+        /// every persisted day source, adopt the authoritative winner (and
+        /// upgrade an older campaign_day envelope when a later section saw
+        /// more days), and report every mismatch via [CALENDAR_MISMATCH]
+        /// instead of silently trusting whichever section loads last.
+        /// </summary>
+        private void ReconcileLegacySectionDays(CampaignDaySave loadedCampaignDay)
+        {
+            try
+            {
+                var sectionDays = new Dictionary<string, int>();
+                if (loadedCampaignDay.lastAdvancedDay > 0)
+                    sectionDays["campaign_day"] = loadedCampaignDay.lastAdvancedDay;
+
+                var holdfastSave = HoldfastSaveStore.TryLoad();
+                if (holdfastSave != null && holdfastSave.simDay > 0)
+                    sectionDays["holdfast"] = holdfastSave.simDay;
+
+                var rosterSave = DutyRosterSaveStore.TryLoad();
+                if (rosterSave != null && rosterSave.simDay > 0)
+                    sectionDays["duty_roster"] = rosterSave.simDay;
+
+                var economySave = EconomySaveStore.TryLoad();
+                if (economySave != null && economySave.day > 0)
+                    sectionDays["economy"] = economySave.day;
+
+                var yoaSave = YearOfAshSaveStore.TryLoad();
+                if (yoaSave != null && yoaSave.timeline != null && yoaSave.timeline.currentDay > 0)
+                    sectionDays["year_of_ash"] = yoaSave.timeline.currentDay;
+
+                if (sectionDays.Count == 0) return;
+
+                var result = CampaignCalendarReconciler.Reconcile(sectionDays, new GodotLog());
+
+                // Adopt the reconciled day when it is AHEAD of the stored
+                // campaign_day value (never rewind a newer envelope).
+                if (result.AuthoritativeDay > loadedCampaignDay.lastAdvancedDay)
+                {
+                    GD.Print($"[Ashfall Godot] Calendar reconciled to day {result.AuthoritativeDay} " +
+                             $"(source: {result.PrimarySource}; stored campaign_day was {loadedCampaignDay.lastAdvancedDay}).");
+                    loadedCampaignDay.lastAdvancedDay = result.AuthoritativeDay;
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PushWarning("[Ashfall Godot] Calendar reconciliation skipped: " + ex.Message);
             }
         }
 
