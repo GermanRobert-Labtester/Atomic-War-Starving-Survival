@@ -115,8 +115,6 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string StartDiveDemo(string diverId, string operatorId) => StartDive(diverId, operatorId);
-
         public string TickDive(float seconds)
         {
             if (!Dive.IsActive) return "No active dive.";

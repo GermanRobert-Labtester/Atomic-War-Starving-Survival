@@ -144,24 +144,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void OnWorldTickClicked()
-        {
-            SetupWorld();
-            _statusLabel.Text = _world.TickDemo(6f) + "\n" + _world.StatusLine();
-        }
-
-        private void OnWorldStormClicked()
-        {
-            SetupWorld();
-            _statusLabel.Text = _world.ForceDemo(WeatherKind.FalloutStorm) + "\n" + _world.StatusLine();
-        }
-
-        private void OnWorldSkyArmorClicked(string material)
-        {
-            SetupWorld();
-            _statusLabel.Text = _world.SetSkyArmorDemo(0, material, 1f) + "\n" + _world.SkyArmorStatusLine();
-        }
-
         private void SetupCrafting()
         {
             if (_crafting != null) return;

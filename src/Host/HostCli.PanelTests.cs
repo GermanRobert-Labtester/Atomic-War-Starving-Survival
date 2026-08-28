@@ -1232,7 +1232,7 @@ namespace AtomicWar.GodotApp
                 session.UnlockAndClerk();
                 for (int i = 0; i < 12; i++)
                     session.TickDay();
-                session.HonourDemoLevy();
+                session.HonourCensusLevy();
 
                 var save = session.CaptureSave();
                 Check(!string.IsNullOrEmpty(save.Checksum), "capture stamps checksum");

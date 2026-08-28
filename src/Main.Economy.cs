@@ -74,28 +74,6 @@ namespace AtomicWar.GodotApp
             _codexViewer.Text = _economy.StatusLine();
         }
 
-        private void OnEconomyTickClicked()
-        {
-            SetupEconomy();
-            _statusLabel.Text = _economy.TickDemo(1);
-            FlushEconomyIfDirty();
-            _codexViewer.Text = _economy.StatusLine();
-        }
-
-        private void OnEconomyBuyClicked(string itemId, int quantity)
-        {
-            SetupEconomy();
-            _statusLabel.Text = _economy.BuyDemo(itemId, quantity);
-            FlushEconomyIfDirty();
-        }
-
-        private void OnEconomyBarterClicked(string giveId, int giveQty, string takeId)
-        {
-            SetupEconomy();
-            _statusLabel.Text = _economy.BarterDemo(giveId, giveQty, takeId);
-            FlushEconomyIfDirty();
-        }
-
         private void OnEconomySaveClicked()
         {
             SetupEconomy();
@@ -222,26 +200,6 @@ namespace AtomicWar.GodotApp
             _silentFoundry.StateChanged += _tradePanel.RefreshView;
             _tradePanel.Open();
             GD.Print($"[Ashfall Godot] Trade screen open — Foundry Guild stance {_silentFoundry.GuildStance} · trust {_silentFoundry.GuildTrust:F0}");
-        }
-
-        private void OnCaravanSpawnClicked()
-        {
-            SetupCaravans();
-            _statusLabel.Text = _caravans.SpawnDemoCaravan("loc_the_allotments");
-        }
-
-        private void OnCaravanTickClicked()
-        {
-            SetupCaravans();
-            _statusLabel.Text = _caravans.TickDemo() + "\n" + _caravans.StatusLine();
-        }
-
-        private void OnCaravanBuyClicked()
-        {
-            SetupCaravans();
-            int rations = 20;
-            _statusLabel.Text = _caravans.BuyDemo("caravan_menders", "item_clean_water", 2, ref rations)
-                + $" Rations left: {rations}.";
         }
 
         private void CloseEconomyPanel()

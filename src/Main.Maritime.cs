@@ -136,7 +136,7 @@ namespace AtomicWar.GodotApp
         private void OnMaritimeStartDiveClicked()
         {
             SetupMaritime();
-            _statusLabel.Text = _maritime.StartDiveDemo("diver_cole", "operator_ren");
+            _statusLabel.Text = _maritime.StartDive("diver_cole", "operator_ren");
         }
 
         private void OnMaritimeTickDiveClicked()

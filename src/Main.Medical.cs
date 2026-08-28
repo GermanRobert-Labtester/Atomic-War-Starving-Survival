@@ -74,21 +74,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void OnMedicalDoseClicked(string survivorId)
-        {
-            SetupMedical();
-            _statusLabel.Text = _medical.DoseDemo(survivorId, "morphine", Ashfall.Core.Medical.ChemicalDependencyKind.Opioid)
-                + "\n" + _medical.StatusLine();
-        }
-
-        private void OnMedicalTickClicked()
-        {
-            SetupMedical();
-            _statusLabel.Text = _medical.TickDemo(6f) + "\n" +
-                _medical.StartVigilDemo("dweller_save", new[] { "n1", "n2" }) + "\n" +
-                _medical.TickVigilDemo(30f);
-        }
-
         private MedicalWardHostSession _medicalWardSession = null!;
         private MedicalWardPanel _medicalWardPanel = null!;
 

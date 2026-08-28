@@ -77,13 +77,6 @@ namespace AtomicWar.GodotApp
 
         // ── Demo actions ─────────────────────────────────────────────
 
-        public string DoseDemo(string survivorId, string itemId, ChemicalDependencyKind kind)
-        {
-            Engine.OnSubstanceConsumed(survivorId, itemId, kind);
-            return $"Registered one dose of {itemId} for {survivorId} " +
-                   $"(level {Engine.DependencyLevel(survivorId, itemId):F2}).";
-        }
-
         public string BeginDetoxDemo(string survivorId, string itemId, bool managed)
         {
             bool ok = managed
@@ -100,14 +93,6 @@ namespace AtomicWar.GodotApp
         }
 
         // ── Demo actions ─────────────────────────────────────────────
-
-        public string TickDemo(float hours)
-        {
-            TickHours(hours);
-            return $"Ticked {hours}h: morale drained {TotalMoraleDrain:F1}, " +
-                   $"crafting penalty {ActiveCraftingPenalty:P0}, " +
-                   $"combat penalty {ActiveCombatPenalty:P0}.";
-        }
 
         public string StatusLine()
         {
@@ -135,20 +120,6 @@ namespace AtomicWar.GodotApp
         public void RestoreSave(ChemicalDependencyLedgerState state) => Engine.RestoreState(state);
 
         // ── Vigil (Exp 07) ──────────────────────────────────────────
-
-        public string StartVigilDemo(string dwellerId, string[] names)
-        {
-            Vigil.StartVigil(dwellerId, names);
-            return $"Vigil begun for {dwellerId} ({names.Length} names, {Vigil.DurationSeconds}s).";
-        }
-
-        public string TickVigilDemo(float seconds)
-        {
-            Vigil.Tick(seconds);
-            if (!Vigil.IsActive) return $"Vigil ended. Recited {Vigil.RecitedCount}/{Vigil.Names.Count} names.";
-            return $"Vigil ticking: {Vigil.ElapsedSeconds:F0}/{Vigil.DurationSeconds:F0}s, " +
-                   $"{Vigil.RecitedCount}/{Vigil.Names.Count} names recited.";
-        }
 
         public string SkipVigilDemo()
         {

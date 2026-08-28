@@ -83,6 +83,22 @@ namespace AtomicWar.GodotApp
             // ── Wire death event ──
             _holdfastRuntime.OnPlayerDied += OnPlayerDied;
             _holdfastRuntime.OnGameWon += OnGameWon;
+
+            // Avatar death enters the unified fate pipeline as the player
+            // avatar (distinguished from a roster NPC death). The fate system
+            // is idempotent, so if the survival loop already recorded the same
+            // survivor this report is a no-op carrying the avatar flag.
+            SetupSurvivorFate();
+            _holdfastRuntime.OnPlayerDied += cause =>
+            {
+                _survivorFate?.ReportDeath(
+                    _holdfastRuntime.PlayerSurvivorId,
+                    Ashfall.Core.Survivors.SurvivorDeathCause.Unknown,
+                    cause,
+                    source: "holdfast_runtime",
+                    isPlayerAvatar: true,
+                    day: _holdfastRuntime.Day);
+            };
         }
 
         /// <summary>
@@ -263,7 +279,7 @@ namespace AtomicWar.GodotApp
         private void OnCensusLevyClicked()
         {
             SetupIceRoad();
-            string result = _core.HonourDemoLevy();
+            string result = _core.HonourCensusLevy();
             _statusLabel.Text = result;
             _codexViewer.Text =
                 "=== CENSUS (Ashfall.Core) ===\n" +

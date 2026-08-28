@@ -50,8 +50,6 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string SpawnDemoCaravan(string nodeId) => SpawnCaravan(nodeId);
-
         public string TickRoute()
         {
             Engine.DailyTick();
@@ -59,8 +57,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
             return LastEvent;
         }
-
-        public string TickDemo() => TickRoute();
 
         public string Buy(string caravanId, string itemId, int amount, ref int playerRations)
         {
@@ -71,9 +67,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
             return LastEvent;
         }
-
-        public string BuyDemo(string caravanId, string itemId, int amount, ref int playerRations)
-            => Buy(caravanId, itemId, amount, ref playerRations);
 
         private int ItemPrice(string caravanId, string itemId)
         {

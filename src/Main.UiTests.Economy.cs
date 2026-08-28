@@ -64,9 +64,9 @@ namespace AtomicWar.GodotApp
             }
             bool icons = fallback >= 0;
 
-            _economy.TickDemo(1);
+            _economy.TickDay(_economy.Market.Day + 1, new SeededRng(4242));
             bool ticked = _economy.Market.Day >= 1;
-            bool bought = _economy.BuyDemo("clean_water", 2).Contains("Bought");
+            bool bought = _economy.Market.Buy("clean_water", 2, _economy.Market.Day).Accepted;
 
             // ── Comprehensive Trade Screen & Economy HUD Field Verification ──
             var stanceEngine = new FactionStanceEngine();

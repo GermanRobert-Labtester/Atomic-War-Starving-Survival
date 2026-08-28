@@ -206,7 +206,7 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupEconomy();
-                _m._economy.Market.TickDay(day, _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Economy, day, 0));
+                _m._economy.TickDay(day, _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Economy, day, 0));
                 events.Add(new DayStateChangeEvent("market_ticked", "economy_market", null, null, _m._economy.Market.Day));
             }
         }

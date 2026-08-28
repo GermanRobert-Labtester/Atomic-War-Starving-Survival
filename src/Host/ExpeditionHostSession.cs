@@ -359,9 +359,6 @@ namespace AtomicWar.GodotApp
             return $"Tick: {Engine.ActiveCount} active expedition(s).";
         }
 
-        public string TickDemoHours(float hours)
-            => TickHours(hours);
-
         /// <summary>
         /// Apply a player choice for a surfaced encounter through Core. The
         /// location is taken from that encounter's own pending entry when one

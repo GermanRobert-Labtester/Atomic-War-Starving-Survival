@@ -90,12 +90,6 @@ namespace AtomicWar.GodotApp
 
         // ── Demo actions ─────────────────────────────────────────────
 
-        public string TickDemo(float hours)
-        {
-            Weather.Tick(hours);
-            return $"Tick {hours}h: {Weather.Current} (rolls {Weather.State.rollCount}).";
-        }
-
         public string ForceDemo(WeatherKind kind)
         {
             Weather.ForceWeather(kind);
