@@ -317,6 +317,41 @@ namespace AtomicWar.GodotApp
         public string StartDemoExpedition(string survivorId, string locationId)
             => StartExpedition(survivorId, locationId);
 
+        /// <summary>
+        /// UI dispatch path: gates, vehicle dispatch preparation, and the
+        /// sortie start in one call, with the caller's day (the UI keeps its
+        /// own day semantics). Returns the player-facing result message.
+        /// </summary>
+        public string DispatchSortie(
+            string survivorId,
+            string locationId,
+            ExpeditionStance stance,
+            int day,
+            string vehicleId = "")
+        {
+            var def = ExpeditionDefinitionRegistry.Get(locationId)
+                      ?? Definitions.Find(d => d.id == locationId);
+            if (def == null) return $"Unknown expedition target: {locationId}";
+            if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
+                return $"Crossing gate is closed — no vouch. Cannot dispatch to {locationId}.";
+            if (ExtraBlocked != null && ExtraBlocked(locationId))
+                return $"Route blocked: cannot dispatch to {locationId} right now (seasonal or sealed).";
+
+            ExpeditionVehicleProfile? profile = null;
+            if (!string.IsNullOrEmpty(vehicleId))
+            {
+                string? prepared = PrepareVehicleForDispatch(def, vehicleId);
+                if (prepared != null) return prepared;
+                profile = BuildProfile(vehicleId);
+            }
+
+            bool ok = Engine.Start(def, survivorId, day, stance, vehicle: profile);
+            if (!ok) return "Expedition start refused (already active or invalid).";
+            return profile != null
+                ? $"{survivorId} rolls out for {def.displayName} in the {Vehicles.GetVehicle(vehicleId)?.displayName ?? vehicleId}."
+                : $"{survivorId} sets out on foot for {def.displayName}.";
+        }
+
         /// <summary>Production API to advance active expeditions by the specified duration.</summary>
         public string TickHours(float hours)
         {

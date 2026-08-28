@@ -291,6 +291,7 @@ namespace AtomicWar.GodotApp
                     _inventoryOverlay.Bind(_inventory);
                     _inventoryOverlay.RefreshView();
                     _inventoryOverlay.Open();
+                    ObserveSigil("store.opened");
                     break;
                 case "crafting":
                     SetupCrafting();
@@ -316,7 +317,7 @@ namespace AtomicWar.GodotApp
                     _expeditions.CrossingGate = _expansions.Vouch;
                     SetupSurvivors();
                     SetupInventory();
-                    _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+                    _expeditionPanel.Bind(_expeditions, _survivors, _inventory, _equipmentCondition?.System);
                     _expeditionPanel.Open();
                     break;
                 case "weather":
@@ -460,6 +461,7 @@ namespace AtomicWar.GodotApp
                     SetupDutyRoster();
                     SetupSurvivors();
                     _dutyRosterPanel.Bind(_dutyRoster, _survivors);
+                    _dutyRosterPanel.OnAssignmentChanged += () => ObserveSigil("duty.assigned");
                     _dutyRosterPanel.Open();
                     break;
                 case "duty_roster_detail":
@@ -514,10 +516,27 @@ namespace AtomicWar.GodotApp
             // Save final state
             SaveAll();
 
-            // A finished run must not be continuable: the saved state is a dead
-            // (or won) ledger. Clear the holdfast saves so ReturnToMenu keeps the
-            // Continue button disabled instead of resurrecting an ended run.
-            ClearContinuableSaves();
+            // Run finalization (Task 121): seal the active slot as terminal.
+            // The full campaign envelope stays on disk as an inspectable
+            // memorial/archive — the final state is preserved — but the
+            // manifest is marked TerminalLoss, which blocks SelectSlot,
+            // DeleteSlot, and TryLoadAggregate, so a completed campaign cannot
+            // resurrect through a stale aggregate save. This replaces the old
+            // selective deletion of three Holdfast files (which abandoned the
+            // other 58 sections and still left the slot continuable).
+            FinalizeTerminalRun();
+        }
+
+        /// <summary>
+        /// Seal the active save slot as terminal after a game-over / victory.
+        /// Keeps the envelope as the memorial archive; blocks continuation.
+        /// </summary>
+        private void FinalizeTerminalRun()
+        {
+            if (_saveLoadHost == null) return;
+            int finalDay = _holdfastRuntime != null ? _holdfastRuntime.Day : _simDay;
+            _saveLoadHost.MarkActiveSlotTerminal(finalDay);
+            UpdateContinueButton();
         }
 
 

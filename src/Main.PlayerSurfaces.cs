@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => ClosePhase0Panel());
 
             PanelRegistry.ConfigureActions("expeditions",
-                bindAction: () => { SetupExpeditions(); SetupExpansions(); _expeditions.CrossingGate = _expansions.Vouch; SetupSurvivors(); SetupInventory(); _expeditionPanel.Bind(_expeditions, _survivors, _inventory); },
+                bindAction: () => { SetupExpeditions(); SetupExpansions(); _expeditions.CrossingGate = _expansions.Vouch; SetupSurvivors(); SetupInventory(); _expeditionPanel.Bind(_expeditions, _survivors, _inventory, _equipmentCondition?.System); },
                 openAction: () => _expeditionPanel.Open(),
                 closeAction: () => CloseExpeditionPanel());
 
