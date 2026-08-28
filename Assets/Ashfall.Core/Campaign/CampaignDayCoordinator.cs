@@ -34,6 +34,14 @@ namespace Ashfall.Core.Campaign
         private bool _advancing;
         private int _lastAdvancedDay = int.MinValue;
 
+        /// <summary>
+        /// Day of the most recent fail-closed failed advance whose owners may
+        /// hold in-memory mutations. On a retry of the same day, owners
+        /// implementing <see cref="IPreDaySnapshotRestore"/> are rolled back
+        /// before the tick sequence so earlier owners do not double-tick.
+        /// </summary>
+        private int? _pendingRestoreDay;
+
         /// <summary>The authoritative campaign calendar.</summary>
         public ICampaignCalendar Calendar { get; }
 
@@ -165,6 +173,36 @@ namespace Ashfall.Core.Campaign
             bool anyFailure = false;
             try
             {
+                // Phase -1: a previous fail-closed attempt for this same day
+                // left owners partially ticked in memory. Roll them back via
+                // their pre-day snapshots (reverse registration order) before
+                // anything else, so a retry never double-ticks a subsystem
+                // (e.g. a clock owner that advanced before a later failure).
+                if (_pendingRestoreDay.HasValue)
+                {
+                    bool restoreForThisDay = _pendingRestoreDay.Value == day;
+                    _pendingRestoreDay = null;
+                    if (restoreForThisDay)
+                    {
+                        for (int i = _owners.Count - 1; i >= 0; i--)
+                        {
+                            if (_owners[i].Owner is IPreDaySnapshotRestore restorable)
+                            {
+                                try
+                                {
+                                    restorable.RestorePreDaySnapshot(day);
+                                }
+                                catch (Exception)
+                                {
+                                    // A failed rollback leaves state unverifiable —
+                                    // fail this attempt too so nothing commits.
+                                    anyFailure = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 // Phase 0: Capture pre-day snapshot across all registered owners first.
                 for (int i = 0; i < _owners.Count; i++)
                 {
@@ -201,9 +239,11 @@ namespace Ashfall.Core.Campaign
                 var args = new DayAdvancedEventArgs(day, reports);
 
                 // Fail-closed: an owner failure must not mark the day successfully advanced
-                // or write partial persistent state to disk.
+                // or write partial persistent state to disk. Keep the pre-day
+                // baseline alive so a retry can roll owners back first.
                 if (anyFailure && failClosed)
                 {
+                    _pendingRestoreDay = day;
                     return args;
                 }
 
@@ -260,25 +300,45 @@ namespace Ashfall.Core.Campaign
         }
     }
 
-    /// <summary>Engine-agnostic contract for a system that participates in daily ticks.</summary>
-    public interface IDayAdvanceOwner
-    {
-        /// <summary>
-        /// Capture a pre-day snapshot for the given <paramref name="day"/>.
-        /// Owners that need a baseline (e.g. consumption accounting) implement
-        /// this; owners that are pure side-effect producers may leave it empty.
-        /// MUST be idempotent. MUST NOT mutate persistent state.
-        /// </summary>
-        void CapturePreDaySnapshot(int day);
+        /// <summary>Engine-agnostic contract for a system that participates in daily ticks.</summary>
+        public interface IDayAdvanceOwner
+        {
+            /// <summary>
+            /// Capture a pre-day snapshot for the given <paramref name="day"/>.
+            /// Owners that need a baseline (e.g. consumption accounting) implement
+            /// this; owners that are pure side-effect producers may leave it empty.
+            /// MUST be idempotent. MUST NOT mutate persistent state.
+            /// </summary>
+            void CapturePreDaySnapshot(int day);
+
+            /// <summary>
+            /// Tick exactly one day. Append typed <see cref="DayStateChangeEvent"/>s
+            /// to <paramref name="events"/> in deterministic order. Implementations
+            /// MUST be idempotent: calling twice on the same day must yield
+            /// identical state and identical event lists.
+            /// </summary>
+            void TickDay(int day, List<DayStateChangeEvent> events);
+        }
 
         /// <summary>
-        /// Tick exactly one day. Append typed <see cref="DayStateChangeEvent"/>s
-        /// to <paramref name="events"/> in deterministic order. Implementations
-        /// MUST be idempotent: calling twice on the same day must yield
-        /// identical state and identical event lists.
+        /// Optional contract for owners whose <see cref="IDayAdvanceOwner.TickDay"/>
+        /// mutates in-memory state that a fail-closed retry must not double-apply.
+        /// Implement it to have <see cref="CampaignDayCoordinator"/> roll you back
+        /// to your pre-day baseline (captured in
+        /// <see cref="IDayAdvanceOwner.CapturePreDaySnapshot"/>) before a retried
+        /// attempt for the same day ticks again. Owners that are naturally
+        /// idempotent need not implement it.
         /// </summary>
-        void TickDay(int day, List<DayStateChangeEvent> events);
-    }
+        public interface IPreDaySnapshotRestore
+        {
+            /// <summary>
+            /// Restore the in-memory state captured by the most recent
+            /// <see cref="IDayAdvanceOwner.CapturePreDaySnapshot"/> call. Called
+            /// in reverse registration order before a retried attempt for the
+            /// same day. MUST NOT throw for a valid snapshot.
+            /// </summary>
+            void RestorePreDaySnapshot(int day);
+        }
 
     /// <summary>
     /// Optional persistence callback the host injects so the coordinator can

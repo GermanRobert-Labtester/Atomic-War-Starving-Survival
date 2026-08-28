@@ -310,5 +310,132 @@ namespace Ashfall.Core.Tests.Campaign
                 for (int i = 0; i < ownerReports.Count; i++) Reports.Add(ownerReports[i]);
             }
         }
+
+        /// <summary>Owner whose TickDay mutates state but whose restore always throws —
+        /// models a subsystem whose baseline cannot be trusted for rollback.</summary>
+        private sealed class UnrestorableOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            public int State;
+            public int TicksUntilThrow = int.MaxValue;
+
+            public void CapturePreDaySnapshot(int day) { }
+            public void RestorePreDaySnapshot(int day) { throw new InvalidOperationException("baseline unusable"); }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                State++;
+                if (State >= TicksUntilThrow)
+                    throw new InvalidOperationException("planned failure");
+            }
+        }
+
+        /// <summary>Snapshotting owner: Capture freezes State; Restore rewinds to it.</summary>
+        private sealed class SnapshottingOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            public string Id;
+            public int State;
+            public int Snapshot;
+            public int RestoreCount;
+            private readonly bool _throwOnTick;
+            private int _ticksUntilThrow;
+
+            public SnapshottingOwner(string id, bool throwOnTick = false)
+            {
+                Id = id;
+                _throwOnTick = throwOnTick;
+                _ticksUntilThrow = int.MaxValue;
+            }
+
+            /// <summary>Arm a planned failure after this many total ticks.</summary>
+            public int TicksUntilThrow
+            {
+                get => _ticksUntilThrow;
+                set { _ticksUntilThrow = value; _throwGuard = _throwOnTick; }
+            }
+
+            private bool _throwGuard;
+
+            public void CapturePreDaySnapshot(int day) { Snapshot = State; }
+            public void RestorePreDaySnapshot(int day) { RestoreCount++; State = Snapshot; }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                State++;
+                if (_throwGuard && State >= _ticksUntilThrow)
+                    throw new InvalidOperationException("planned failure");
+            }
+        }
+
+        [Fact]
+        public void Retry_AfterFailure_RestoresSnapshotBeforeTick()
+        {
+            var c = new CampaignDayCoordinator();
+            var clock = new SnapshottingOwner("clock");                 // ticks before the failure
+            var later = new SnapshottingOwner("later", throwOnTick: true) { TicksUntilThrow = 1 };
+            c.Register("clock", clock, phase: 1);
+            c.Register("later", later, phase: 4);
+
+            // Attempt 1: clock ticks (State 0→1), later throws.
+            var first = c.Advance(5);
+            Assert.NotNull(first);
+            Assert.True(first.HasFailures);
+            Assert.Equal(1, clock.State);                               // mutated in memory
+            Assert.Equal(-1, c.LastAdvancedDay);                        // nothing committed
+
+            // Attempt 2 (retry): the coordinator must roll the clock back to
+            // its pre-day snapshot BEFORE ticking, so the day is not applied twice.
+            later.TicksUntilThrow = int.MaxValue;                       // fix the fault
+            var second = c.Advance(5);
+            Assert.NotNull(second);
+            Assert.True(second.Succeeded);
+            Assert.Equal(1, clock.RestoreCount);                        // rolled back once...
+            Assert.Equal(1, clock.State);                               // ...so one tick lands, not two
+            Assert.Equal(5, c.LastAdvancedDay);                         // day committed exactly once
+        }
+
+        [Fact]
+        public void FailedRestore_FailsTheRetryToo()
+        {
+            var c = new CampaignDayCoordinator();
+            var bad = new UnrestorableOwner { TicksUntilThrow = int.MaxValue };
+            c.Register("bad", bad);
+
+            // First attempt: the owner itself throws — arms the restore path.
+            bad.TicksUntilThrow = 1;
+            Assert.True(c.Advance(3)!.HasFailures);
+
+            // Retry: the owner's restore throws (baseline unusable) — the
+            // attempt must fail closed rather than commit over unverified state.
+            Assert.True(c.Advance(3)!.HasFailures);
+            Assert.Equal(-1, c.LastAdvancedDay);
+        }
+
+        [Fact]
+        public void SuccessfulAdvance_ClearsPendingRestore()
+        {
+            var c = new CampaignDayCoordinator();
+            var owner = new SnapshottingOwner("solo");
+            c.Register("solo", owner);
+
+            Assert.True(c.Advance(4)!.Succeeded);
+            owner.State = 99;                                           // unrelated drift after commit
+            Assert.True(c.Advance(5)!.Succeeded);
+            Assert.Equal(0, owner.RestoreCount);                        // restore is not part of a fresh day
+            Assert.Equal(100, owner.State);                             // ticked once, not rolled back
+        }
+
+        [Fact]
+        public void PendingRestore_ForDifferentDay_IsDroppedWithoutRestore()
+        {
+            var c = new CampaignDayCoordinator();
+            var failing = new SnapshottingOwner("failing", throwOnTick: true) { TicksUntilThrow = 1 };
+            c.Register("failing", failing);
+
+            Assert.True(c.Advance(9)!.HasFailures);                     // arms restore for day 9
+
+            // A different (still-future) day is attempted instead: the stale
+            // baseline is dropped and no restore runs.
+            failing.TicksUntilThrow = int.MaxValue;
+            Assert.True(c.Advance(10)!.Succeeded);
+            Assert.Equal(0, failing.RestoreCount);
+        }
     }
 }
