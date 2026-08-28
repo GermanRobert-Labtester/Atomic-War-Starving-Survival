@@ -25,7 +25,7 @@ namespace Ashfall.Core
         public int collapseDay = -1;
     }
 
-    public sealed class LandmarkDegradationSystem
+    public sealed partial class LandmarkDegradationSystem
     {
         public const string SystemId = "landmark_degradation";
         private LandmarkSaveState _state = new LandmarkSaveState();
