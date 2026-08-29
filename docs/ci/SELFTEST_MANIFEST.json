@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 87,
-  "headless_test_count": 85,
+  "total_tests": 89,
+  "headless_test_count": 87,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -495,6 +495,17 @@
       "description": "Chemical dependency system save store round-trip, tolerance, and withdrawal states",
       "headless_compatible": true,
       "expected_summary_id": "chemical_dependency_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "evolving_world_selftest",
+      "action": "EvolvingWorldSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--evolving-world-selftest",
+      "aliases": [],
+      "description": "Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario",
+      "headless_compatible": true,
+      "expected_summary_id": "evolving_world_selftest",
       "timeout_seconds": 30
     },
     {
@@ -1036,6 +1047,19 @@
       "description": "Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free",
       "headless_compatible": true,
       "expected_summary_id": "verdict_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "onboarding_journey_selftest",
+      "action": "OnboardingJourneySelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--onboarding-journey-selftest",
+      "aliases": [
+        "--onboarding-selftest"
+      ],
+      "description": "First-hour onboarding journey: protocol\u2192inspect\u2192rationing\u2192assignment\u2192weather\u2192inventory-use\u2192day-advance, with save/load resume and no-resource fabrication",
+      "headless_compatible": true,
+      "expected_summary_id": "onboarding_journey_selftest",
       "timeout_seconds": 30
     }
   ]

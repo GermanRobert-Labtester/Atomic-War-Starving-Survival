@@ -55,6 +55,7 @@ namespace Ashfall.Core
         IceRoadTickDemo,
         LedgerDebtSelfTest,
         MoralChoiceSelfTest,
+        EvolvingWorldSelfTest,
         MusterSelfTest,
         Phase0SelfTest,
         SilentFoundrySelfTest,
@@ -115,7 +116,8 @@ namespace Ashfall.Core
         UiSnapshotRegenerate,
         UiSnapshotSelfTest,
         UtilityAiUiTest,
-        VerdictUiTest
+        VerdictUiTest,
+        OnboardingJourneySelfTest
     }
 
     /// <summary>
@@ -461,6 +463,12 @@ namespace Ashfall.Core
                     null,
                     "Chemical dependency system save store round-trip, tolerance, and withdrawal states"),
                 new HostCliActionDescriptor(
+                    HostCliAction.EvolvingWorldSelfTest,
+                    "Host Domains & Save Stores",
+                    "--evolving-world-selftest",
+                    null,
+                    "Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario"),
+                new HostCliActionDescriptor(
                     HostCliAction.DoseLedgerSelfTest,
                     "Host Domains & Save Stores",
                     "--dose-ledger-selftest",
@@ -739,7 +747,13 @@ namespace Ashfall.Core
                     "UI Tests, Layout & Gameplay Smoke",
                     "--verdict-uitest",
                     null,
-                    "Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free")
+                    "Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free"),
+                new HostCliActionDescriptor(
+                    HostCliAction.OnboardingJourneySelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--onboarding-journey-selftest",
+                    new[] { "--onboarding-selftest" },
+                    "First-hour onboarding journey: protocol→inspect→rationing→assignment→weather→inventory-use→day-advance, with save/load resume and no-resource fabrication")
         };
 
         private static readonly HostCliActionDescriptor[] _configDescriptors = new[]

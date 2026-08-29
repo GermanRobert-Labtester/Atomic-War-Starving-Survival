@@ -44,19 +44,19 @@ def fetch_live_manifest():
 
     output = res.stdout
     start_idx = output.find("{")
-    end_idx = output.rfind("}")
-    if start_idx == -1 or end_idx == -1:
+    if start_idx == -1:
         print("ERROR: no JSON payload found in --selftest-manifest output", file=sys.stderr)
         print(output, file=sys.stderr)
         sys.exit(1)
 
-    json_str = output[start_idx:end_idx+1]
+    # The verb may print the manifest JSON ahead of [HOST_SELFTEST_*] summary
+    # lines; decode exactly the first JSON value instead of trusting brace counts.
     try:
-        data = json.loads(json_str)
+        data, _ = json.JSONDecoder().raw_decode(output[start_idx:])
         return data
     except Exception as ex:
         print(f"ERROR: failed to parse JSON from --selftest-manifest: {ex}", file=sys.stderr)
-        print(json_str, file=sys.stderr)
+        print(output[start_idx:start_idx+400], file=sys.stderr)
         sys.exit(1)
 
 def run_and_validate_test(entry):

@@ -90,6 +90,15 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.MoralChoiceSelfTest:
                     GetTree().Quit(HostCli.RunMoralChoiceSelfTest(_dataDir));
                     return;
+                case HostCliAction.EvolvingWorldSelfTest:
+                    GetTree().Quit(HostCli.RunEvolvingWorldSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SelfTestManifest:
+                    GetTree().Quit(HostCli.RunSelfTestManifest(_dataDir));
+                    return;
+                case HostCliAction.ListSelfTests:
+                    GetTree().Quit(HostCli.RunListSelfTests(_dataDir));
+                    return;
                 case HostCliAction.ChemicalDependencySaveSelfTest:
                     GetTree().Quit(HostCli.RunChemicalDependencySaveSelfTest());
                     return;
@@ -314,6 +323,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.UiSnapshotRegenerate:
                     BeginSnapshotRun(regenerate: true);
+                    return;
+                case HostCliAction.OnboardingJourneySelfTest:
+                    GetTree().Quit(HostCli.RunOnboardingJourneySelfTest(_dataDir));
                     return;
             }
 
