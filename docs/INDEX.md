@@ -1,12 +1,12 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 130 | **Last Verified:** 2026-08-29
+**Total Indexed Documents:** 131 | **Last Verified:** 2026-08-29
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
 | 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 125 |
-| 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 1 |
+| 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 2 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 4 |
 
 ---
@@ -171,7 +171,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (36 documents)
+## 9. General Project Guides & Archive Reference (37 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -211,3 +211,4 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`tools/asset_migration/legacy_tooling/AI_Generated/manifest.md`](../tools/asset_migration/legacy_tooling/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
 | 🔵 `GENERATED` | [`prompt_assets/prompt-optimizer-skill.md`](../prompt_assets/prompt-optimizer-skill.md) | **UNIVERSAL PROMPT OPTIMIZER — Full Skill Reference** — name: prompt-optimizer |
 | 🟡 `HISTORICAL` | [`docs/ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md) | **ASHFALL Historical Documentation & External Archive Index** — This repository maintains a lean, living documentation corpus in `docs/` representing active, authoritative game spec... |
+| 🟡 `HISTORICAL` | [`docs/forensics/survivor_aggregate_FORENSIC_REPORT.md`](forensics/survivor_aggregate_FORENSIC_REPORT.md) | **1. Target** — Establish one canonical survivor identity and lifecycle model for the entire ASHFALL campaign, with domain-owned muta... |
