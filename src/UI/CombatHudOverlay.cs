@@ -77,12 +77,15 @@ public partial class CombatHudOverlay : Control, IBindablePanel
         // Lane column: lane-tag (Left/Center/Right), 4-col data grid:
         // Combatant, Health, Cover, Armor. Each lane gets its own data grid
         // so the snapshot fixture is row-deterministic.
+        // Width budget: the grid's content floor is the sum of its column
+        // MinWidths (not the ctor minWidth), and three lanes must fit 1280 —
+        // 330px of columns + grid chrome, x3, leaves margin to spare.
         var laneCols = new[]
         {
-            new AshfallDataGrid.Column { Header = "Combatant", MinWidth = 180, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Faction",  MinWidth = 120, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Health",   MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Cover",    MinWidth = 80,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Combatant", MinWidth = 120, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Faction",  MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Health",   MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Cover",    MinWidth = 50,  Alignment = AshfallDataGrid.ColumnAlign.Right },
         };
         _leftLaneGrid = new AshfallDataGrid(laneCols, showHeader: true, minWidth: 330, minHeight: 220);
         _centerLaneGrid = new AshfallDataGrid(laneCols, showHeader: true, minWidth: 330, minHeight: 220);
