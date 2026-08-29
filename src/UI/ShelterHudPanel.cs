@@ -144,15 +144,16 @@ public partial class ShelterHudPanel : Control
         }
 
         _statusRail = _shell.SetStatusRail();
-        _statusRail.AddCard("day",      "DAY",     "—", AshfallMetricCard.Criticality.Normal, 90);
-        _statusRail.AddCard("loc",      "LOCATION","—", AshfallMetricCard.Criticality.Normal, 180);
-        _statusRail.AddCard("weather",  "WEATHER", "—", AshfallMetricCard.Criticality.Normal, 180);
-        _statusRail.AddCard("hp",       "AVG HP",  "—%", AshfallMetricCard.Criticality.Normal, 110);
-        _statusRail.AddCard("rad",      "MAX RAD", "— mSv", AshfallMetricCard.Criticality.Normal, 130);
-        _statusRail.AddCard("air",      "HEPA",    "—%",  AshfallMetricCard.Criticality.Normal, 110);
+        // Width budget: eight cards + sidebar must fit a 1280 viewport.
+        _statusRail.AddCard("day",      "DAY",     "—", AshfallMetricCard.Criticality.Normal, 70);
+        _statusRail.AddCard("loc",      "LOCATION","—", AshfallMetricCard.Criticality.Normal, 130);
+        _statusRail.AddCard("weather",  "WEATHER", "—", AshfallMetricCard.Criticality.Normal, 130);
+        _statusRail.AddCard("hp",       "AVG HP",  "—%", AshfallMetricCard.Criticality.Normal, 90);
+        _statusRail.AddCard("rad",      "MAX RAD", "— mSv", AshfallMetricCard.Criticality.Normal, 110);
+        _statusRail.AddCard("air",      "HEPA",    "—%",  AshfallMetricCard.Criticality.Normal, 90);
         _statusRail.AddSeparator();
-        _statusRail.AddCard("air_q",    "AIR Q",   "—%",  AshfallMetricCard.Criticality.Normal, 110);
-        _statusRail.AddCard("radon",    "RADON",   "— Bq/m³", AshfallMetricCard.Criticality.Normal, 130);
+        _statusRail.AddCard("air_q",    "AIR Q",   "—%",  AshfallMetricCard.Criticality.Normal, 90);
+        _statusRail.AddCard("radon",    "RADON",   "— Bq/m³", AshfallMetricCard.Criticality.Normal, 110);
 
         _shell.AttachHeaderCloseButton("MENU [Esc]", () => OnMenuRequested?.Invoke());
 

@@ -84,9 +84,9 @@ public partial class CombatHudOverlay : Control, IBindablePanel
             new AshfallDataGrid.Column { Header = "Health",   MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
             new AshfallDataGrid.Column { Header = "Cover",    MinWidth = 80,  Alignment = AshfallDataGrid.ColumnAlign.Right },
         };
-        _leftLaneGrid = new AshfallDataGrid(laneCols, showHeader: true, minWidth: 380, minHeight: 220);
-        _centerLaneGrid = new AshfallDataGrid(laneCols, showHeader: true, minWidth: 380, minHeight: 220);
-        _rightLaneGrid = new AshfallDataGrid(laneCols, showHeader: true, minWidth: 380, minHeight: 220);
+        _leftLaneGrid = new AshfallDataGrid(laneCols, showHeader: true, minWidth: 330, minHeight: 220);
+        _centerLaneGrid = new AshfallDataGrid(laneCols, showHeader: true, minWidth: 330, minHeight: 220);
+        _rightLaneGrid = new AshfallDataGrid(laneCols, showHeader: true, minWidth: 330, minHeight: 220);
 
         // Action bar: 4 action tiles with hint.
         var actionCols = new[]
