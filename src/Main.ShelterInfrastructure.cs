@@ -40,6 +40,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupWaterTreatment()
         {
+            if (_waterTreatment != null) return;
             var wtState = WaterTreatmentSaveStore.TryLoad() ?? new WaterTreatmentState();
             var wtSys = new WaterTreatmentSystem(new GodotLog());
             wtSys.RestoreState(wtState);
@@ -60,6 +61,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupAirlockSecurity()
         {
+            if (_airlockSecurity != null) return;
             var asState = AirlockSecuritySaveStore.TryLoad() ?? new AirlockSecurityState();
             var asSys = new AirlockSecuritySystem(new SeededRng(1986), new GodotLog());
             asSys.RestoreState(asState);
@@ -80,6 +82,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupShelterThermal()
         {
+            if (_shelterThermal != null) return;
             var stState = ShelterThermalSaveStore.TryLoad() ?? new ShelterThermalState();
             var stNeeds = _survivors.Needs;
             var stStarting = _startingLevel.System;
@@ -103,6 +106,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupShelterSchedule()
         {
+            if (_shelterSchedule != null) return;
             var ssState = ShelterScheduleSaveStore.TryLoad() ?? new ShelterScheduleState();
             var ssPower = _powerGrid.System;
             var ssSys = new ShelterScheduleSystem(ssPower, new GodotLog());
