@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 131 | **Last Verified:** 2026-08-29
+**Total Indexed Documents:** 132 | **Last Verified:** 2026-08-29
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 125 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 126 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 2 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 4 |
 
@@ -49,12 +49,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`](architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md) | **ASHFALL — Triad Drift Gate & Subsystem Save Ownership** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`sources.md`](../sources.md) | **Atomic War: Starving Survival — Comprehensive Codebase Exploration Report** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
 
-## 2. CI, Fast-Tier Gates & Verification (2 documents)
+## 2. CI, Fast-Tier Gates & Verification (3 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
 | 🟢 `CURRENT` | [`docs/CI.md`](CI.md) | **ASHFALL — Continuous Integration & Verification Guide** — **Authoritative host/engine:** Godot 4.7+ (.NET / C#) (`project.godot`) |
 | 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/ci/TASK132_PRE2_BASELINE.md`](ci/TASK132_PRE2_BASELINE.md) | **Task #132 — PRE-2 Trusted Baseline** — Captured after PRE-1 (expedition test-oracle repair) and before any domain |
 
 ## 3. Save Systems & State Architecture (4 documents)
 
