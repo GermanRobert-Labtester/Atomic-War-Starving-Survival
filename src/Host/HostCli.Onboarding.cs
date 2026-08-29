@@ -170,6 +170,15 @@ namespace AtomicWar.GodotApp
                 // ── Phase D: restore from disk into a fresh journey ──
                 var restored = OnboardingJourney.Restore(loaded);
                 Check(restored != null, "fresh journey restored from disk");
+                if (restored == null)
+                {
+                    // Check() records a failure and continues, so without this the
+                    // dependent assertions below dereferenced null (CS8602) and the
+                    // gate would crash rather than report the failure it just found.
+                    GD.PrintErr("  [FAIL] restore returned null — skipping dependent onboarding assertions");
+                    failures++;
+                    return failures;
+                }
                 Check(restored.CurrentStage == OnboardingStage.DayAdvance,
                     "restored journey resumes at DayAdvance");
                 Check(restored.JourneyComplete == false,

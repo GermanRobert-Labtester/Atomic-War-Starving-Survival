@@ -123,12 +123,16 @@ public sealed class PerfSession : IDisposable
         long? payloadBytes = null)
     {
         if (_disposed) throw new ObjectDisposedException(nameof(PerfSession));
-        if (Statistics == null) ComputeStatistics();
+
+        // Capture the result: the compiler cannot see that ComputeStatistics()
+        // assigns the Statistics property, so reading it back was a possible null
+        // dereference (CS8602).
+        var stats = Statistics ?? ComputeStatistics();
 
         double? regressionPercent = null;
-        if (baselineMedianMs.HasValue && Statistics.Median > 0)
+        if (baselineMedianMs.HasValue && stats.Median > 0)
         {
-            regressionPercent = (Statistics.Median - baselineMedianMs.Value) / baselineMedianMs.Value * 100.0;
+            regressionPercent = (stats.Median - baselineMedianMs.Value) / baselineMedianMs.Value * 100.0;
         }
 
         return new PerfResult
@@ -137,7 +141,7 @@ public sealed class PerfSession : IDisposable
             Context = Context,
             WarmupCount = _warmup.Count,
             IterationCount = _samples.Count,
-            Statistics = Statistics,
+            Statistics = stats,
             Samples = new List<PerfSample>(_samples),
             ThresholdClassification = thresholdClassification,
             BaselineMedianMs = baselineMedianMs,

@@ -185,7 +185,10 @@ namespace AtomicWar.GodotApp.UI
             // Action buttons.
             var btnCreate = AshfallUiHelpers.MakeButton("NEW SLOT", () =>
             {
-                var existing = _session?.GetSlots() ?? new List<SaveSlotId>();
+                // The line below already guarded _session; CreateSlot did not
+                // (CS8602). An unbound panel firing this handler would have thrown.
+                if (_session == null) return;
+                var existing = _session.GetSlots() ?? new List<SaveSlotId>();
                 int nextIdx = 1;
                 while (existing.Any(s => s.Value == $"slot_{nextIdx}"))
                     nextIdx++;
