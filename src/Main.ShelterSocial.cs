@@ -66,6 +66,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupRegionalTreaty()
         {
+            if (_regionalTreaty != null) return;
             var rtState = RegionalTreatySaveStore.TryLoad() ?? new RegionalTreatyState();
             var rtSys = new RegionalTreatySystem(new GodotLog());
             rtSys.RestoreState(rtState);
@@ -86,6 +87,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupVinylMorale()
         {
+            if (_vinylMorale != null) return;
             var vmState = VinylMoraleSaveStore.TryLoad() ?? new VinylMoraleState();
             var vmSys = new VinylMoraleSystem(new GodotLog());
             vmSys.RestoreState(vmState);
@@ -107,6 +109,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupWildlifeTrapping()
         {
+            if (_wildlifeTrapping != null) return;
             SetupCampaignDay();
             var wtrapState = WildlifeTrappingSaveStore.TryLoad() ?? new WildlifeTrappingState();
             var wtrapSys = new WildlifeTrappingSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng, new GodotLog());
@@ -128,6 +131,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupExcavation()
         {
+            if (_excavation != null) return;
             SetupCampaignDay();
             var exState = ExcavationSaveStore.TryLoad() ?? new ExcavationState();
             var exSys = new ExcavationSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 2), new GodotLog());
@@ -149,6 +153,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupApprenticeship()
         {
+            if (_apprenticeship != null) return;
             SetupCampaignDay();
             var appState = ApprenticeshipSaveStore.TryLoad() ?? new ApprenticeshipState();
             var appSkills = new SkillProgressionSystem();
@@ -171,6 +176,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupCaregiving()
         {
+            if (_caregiving != null) return;
             var cgState = CaregivingSaveStore.TryLoad() ?? new CaregivingSaveState();
             var cgSys = new CaregivingSystem();
             cgSys.RestoreState(cgState);

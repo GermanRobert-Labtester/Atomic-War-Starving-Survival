@@ -160,10 +160,11 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md`](systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md) | **ASHFALL — Skill Progression Core Port Plan (Phase 14 design) — SHIPPED at Phase 18** — **Status:** design SHIPPED at Phase 18. Files: |
 | 🟢 `CURRENT` | [`docs/systems/STANDING_RECORD_CORE_PORT_PLAN.md`](systems/STANDING_RECORD_CORE_PORT_PLAN.md) | **Standing Record Core Port Plan** — **Target:** Promote the Standing Record (Expansion 03) from read-only |
 
-## 8. Developer Tooling, Skills & QA (7 documents)
+## 8. Developer Tooling, Skills & QA (8 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
+| 🟢 `CURRENT` | [`docs/hygiene/GIT_OBJECT_INVENTORY.md`](hygiene/GIT_OBJECT_INVENTORY.md) | **ASHFALL — Git Object Inventory & Retention Policy** — **0 stashes.** Working tree is clean. |
 | 🟢 `CURRENT` | [`docs/hygiene/REPO_HYGIENE_REPORT.md`](hygiene/REPO_HYGIENE_REPORT.md) | **ASHFALL — Repository Hygiene Report** — These directories are owned by AI coding assistants, aider, composio, etc. |
 | 🟢 `CURRENT` | [`docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`](qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md) | **Manual Smoke-Test Checklist — Audio & User Settings Recovery Behavior** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/qa/MANUAL_PLAYTHROUGH_CHECKLIST.md`](qa/MANUAL_PLAYTHROUGH_CHECKLIST.md) | **Manual Playthrough Checklist — Day 1 → Day 2 Milestone** — **Environment:** Desktop Godot 4.7+ (.NET), launch via `godot --path .` or editor Play. |
@@ -172,7 +173,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (33 documents)
+## 9. General Project Guides & Archive Reference (32 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -205,7 +206,6 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-08-30<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`scripts/README.md`](../scripts/README.md) | **ASHFALL — Script Catalog & Lifecycle Index** — This document catalogs all developer tools, CI gates, asset pipelines, and maintenance utilities under `scripts/`, cl... |
-| 🟢 `CURRENT` | [`summaries/README.md`](../summaries/README.md) | **ASHFALL: Atomic War - Starving Survival** — This folder contains the complete summary and canvas-style exported PDF reports for the forensic optimization and deb... |
 | 🟢 `CURRENT` | [`tools/README.md`](../tools/README.md) | **ASHFALL — Non-Runtime Tools & Utilities Catalog** — **Date:** 2026-08-27<br> |
 | 🟡 `HISTORICAL` | [`docs/ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md) | **ASHFALL Historical Documentation & External Archive Index** — This repository maintains a lean, living documentation corpus in `docs/` representing active, authoritative game spec... |
 | 🟡 `HISTORICAL` | [`docs/forensics/survivor_aggregate_FORENSIC_REPORT.md`](forensics/survivor_aggregate_FORENSIC_REPORT.md) | **1. Target** — Establish one canonical survivor identity and lifecycle model for the entire ASHFALL campaign, with domain-owned muta... |

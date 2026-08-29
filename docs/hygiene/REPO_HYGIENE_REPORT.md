@@ -53,35 +53,35 @@ No action needed unless `snapshot-capture/` is being mistakenly committed.
 | Filename | snapshots/ date | snapshot-capture/ date |
 |---|---|---|
 
-| `caravan_barter_default.png` | 2026-08-29 | 2026-08-29 |
-| `combat_hud_default.png` | 2026-08-29 | 2026-08-29 |
-| `dose_ledger_default.png` | 2026-08-29 | 2026-08-29 |
-| `duty_roster_default.png` | 2026-08-29 | 2026-08-29 |
-| `expedition_radar_default.png` | 2026-08-29 | 2026-08-29 |
-| `faction_matrix_default.png` | 2026-08-29 | 2026-08-29 |
-| `factions_narrative_default.png` | 2026-08-29 | 2026-08-29 |
-| `greenhouse_default.png` | 2026-08-29 | 2026-08-29 |
-| `inventory_default.png` | 2026-08-29 | 2026-08-29 |
-| `journal_default.png` | 2026-08-29 | 2026-08-29 |
-| `map_atlas_default.png` | 2026-08-29 | 2026-08-29 |
-| `maritime_atlas_default.png` | 2026-08-29 | 2026-08-29 |
-| `medical_default.png` | 2026-08-29 | 2026-08-29 |
-| `muster_atlas_default.png` | 2026-08-29 | 2026-08-29 |
-| `quests_atlas_default.png` | 2026-08-29 | 2026-08-29 |
-| `radio_default.png` | 2026-08-29 | 2026-08-29 |
-| `research_atlas_default.png` | 2026-08-29 | 2026-08-29 |
-| `shelter_default.png` | 2026-08-29 | 2026-08-29 |
-| `shelter_hud_default.png` | 2026-08-29 | 2026-08-29 |
-| `silent_foundry_default.png` | 2026-08-29 | 2026-08-29 |
-| `skill_matrix_default.png` | 2026-08-29 | 2026-08-29 |
-| `standing_record_atlas_default.png` | 2026-08-29 | 2026-08-29 |
-| `survival_workstation_default.png` | 2026-08-29 | 2026-08-29 |
-| `survivors_default.png` | 2026-08-29 | 2026-08-29 |
-| `trade_default.png` | 2026-08-29 | 2026-08-29 |
-| `verdict_dashboard_default.png` | 2026-08-29 | 2026-08-29 |
-| `verdict_default.png` | 2026-08-29 | 2026-08-29 |
-| `weather_dashboard_default.png` | 2026-08-29 | 2026-08-29 |
-| `weather_default.png` | 2026-08-29 | 2026-08-29 |
+| `caravan_barter_default.png` | 2026-08-30 | 2026-08-29 |
+| `combat_hud_default.png` | 2026-08-30 | 2026-08-29 |
+| `dose_ledger_default.png` | 2026-08-30 | 2026-08-29 |
+| `duty_roster_default.png` | 2026-08-30 | 2026-08-29 |
+| `expedition_radar_default.png` | 2026-08-30 | 2026-08-29 |
+| `faction_matrix_default.png` | 2026-08-30 | 2026-08-29 |
+| `factions_narrative_default.png` | 2026-08-30 | 2026-08-29 |
+| `greenhouse_default.png` | 2026-08-30 | 2026-08-29 |
+| `inventory_default.png` | 2026-08-30 | 2026-08-29 |
+| `journal_default.png` | 2026-08-30 | 2026-08-29 |
+| `map_atlas_default.png` | 2026-08-30 | 2026-08-29 |
+| `maritime_atlas_default.png` | 2026-08-30 | 2026-08-29 |
+| `medical_default.png` | 2026-08-30 | 2026-08-29 |
+| `muster_atlas_default.png` | 2026-08-30 | 2026-08-29 |
+| `quests_atlas_default.png` | 2026-08-30 | 2026-08-29 |
+| `radio_default.png` | 2026-08-30 | 2026-08-29 |
+| `research_atlas_default.png` | 2026-08-30 | 2026-08-29 |
+| `shelter_default.png` | 2026-08-30 | 2026-08-29 |
+| `shelter_hud_default.png` | 2026-08-30 | 2026-08-29 |
+| `silent_foundry_default.png` | 2026-08-30 | 2026-08-29 |
+| `skill_matrix_default.png` | 2026-08-30 | 2026-08-29 |
+| `standing_record_atlas_default.png` | 2026-08-30 | 2026-08-29 |
+| `survival_workstation_default.png` | 2026-08-30 | 2026-08-29 |
+| `survivors_default.png` | 2026-08-30 | 2026-08-29 |
+| `trade_default.png` | 2026-08-30 | 2026-08-29 |
+| `verdict_dashboard_default.png` | 2026-08-30 | 2026-08-29 |
+| `verdict_default.png` | 2026-08-30 | 2026-08-29 |
+| `weather_dashboard_default.png` | 2026-08-30 | 2026-08-29 |
+| `weather_default.png` | 2026-08-30 | 2026-08-29 |
 
 ### Gallery PNGs in snapshots/
 
@@ -104,7 +104,7 @@ when next touched to keep `snapshots/` a pure UI diff target.
 | `builds/` | 469M | YES | 0 | ✅ GITIGNORED (safe — local only) |
 | `summaries/` | 572K | YES | 0 | ✅ GITIGNORED (safe — local only) |
 | `Figma-UI/` | 11M | YES | 0 | ✅ GITIGNORED (safe — local only) |
-| `tools/` | 263M | NO | 67 | 📦 TRACKED (67 files) |
+| `tools/` | 262M | NO | 56 | 📦 TRACKED (56 files) |
 
 ### Large Untracked / Ignored Directories
 

@@ -129,6 +129,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupAutopsy(ResearchSystem sharedResearch)
         {
+            if (_autopsy != null) return;
             var auState = AutopsySaveStore.TryLoad() ?? new AutopsyState();
             var auInv = _inventory.Inventory;
             var auRad = _survivors.Radiation;
@@ -156,6 +157,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupWaystation()
         {
+            if (_waystation != null) return;
             var wsState = WaystationSaveStore.TryLoad() ?? new WaystationSystemState();
             var wsSys = new WaystationSystem();
             wsSys.RestoreState(wsState);
