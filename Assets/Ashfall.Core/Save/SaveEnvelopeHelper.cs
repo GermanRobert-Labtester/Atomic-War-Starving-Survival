@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 
 namespace Ashfall.Core.Save
 {
@@ -23,6 +24,18 @@ namespace Ashfall.Core.Save
     {
         private static readonly IJsonSerializer DefaultSerializer = new SystemTextJsonSerializer();
         private static readonly IFileIO DefaultFileIO = new FileSystemIO();
+        private static long s_totalAtomicWrites = 0L;
+
+        /// <summary>
+        /// Total count of successful atomic writes completed across all save stores.
+        /// Used for headless telemetry and zero-write assertion testing (Task 108).
+        /// </summary>
+        public static long TotalAtomicWrites => Interlocked.Read(ref s_totalAtomicWrites);
+
+        /// <summary>
+        /// Resets the total atomic write counter to zero.
+        /// </summary>
+        public static void ResetAtomicWriteCounter() => Interlocked.Exchange(ref s_totalAtomicWrites, 0L);
 
         /// <summary>
         /// Saves state wrapped in a checksum envelope with atomic file replacement and optional backup.
@@ -115,6 +128,7 @@ namespace Ashfall.Core.Save
                     files.WriteAllText(path, payload);
                 }
 
+                Interlocked.Increment(ref s_totalAtomicWrites);
                 return true;
             }
             catch (Exception ex)

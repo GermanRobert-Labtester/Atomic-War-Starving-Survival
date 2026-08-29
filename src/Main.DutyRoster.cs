@@ -97,9 +97,7 @@ namespace AtomicWar.GodotApp
         private void OnRosterTickNightClicked()
         {
             SetupDutyRoster();
-            _simDay++;
-            _dutyRoster.Clock.AdvanceDays(1);
-            TickSimDay(_simDay);
+            CommitAdvance();
             _statusLabel.Text = _dutyRoster.StartEncounter(ShelterEncounterSystem.KindNightSlate);
             RefreshRosterStatus();
         }

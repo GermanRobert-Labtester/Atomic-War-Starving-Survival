@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core.Inventory;
+using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core
 {
@@ -36,21 +37,57 @@ namespace Ashfall.Core
         public int Capacity { get; set; } = 20;
         public float MaxWeight { get; set; } = 100f;
         private readonly Dictionary<string, int> _items = new Dictionary<string, int>(StringComparer.Ordinal);
-        private readonly HoldfastCatalog _catalog;
+        private readonly HoldfastCatalog? _catalog;
+        private readonly Inventory.Inventory? _backingInventory;
 
-        public HoldfastTradeInventory(HoldfastCatalog? catalog = null)
+        public HoldfastTradeInventory(HoldfastCatalog? catalog = null, Inventory.Inventory? backingInventory = null)
         {
             _catalog = catalog;
+            _backingInventory = backingInventory;
         }
 
-        public int OccupiedCount => _items.Count;
-        public IReadOnlyDictionary<string, int> Items => _items;
+        public int OccupiedCount => _backingInventory != null ? _backingInventory.Slots.Count : _items.Count;
+        public IReadOnlyDictionary<string, int> Items
+        {
+            get
+            {
+                if (_backingInventory != null)
+                {
+                    var map = new Dictionary<string, int>(StringComparer.Ordinal);
+                    for (int i = 0; i < _backingInventory.Slots.Count; i++)
+                    {
+                        var s = _backingInventory.Slots[i];
+                        if (s?.Item != null && s.Amount > 0)
+                        {
+                            map.TryGetValue(s.Item.id, out int cur);
+                            map[s.Item.id] = cur + s.Amount;
+                        }
+                    }
+                    return map;
+                }
+                return _items;
+            }
+        }
 
         public IReadOnlyList<HoldfastTradeInventorySlot> Slots
         {
             get
             {
                 var list = new List<HoldfastTradeInventorySlot>();
+                if (_backingInventory != null)
+                {
+                    for (int i = 0; i < _backingInventory.Slots.Count; i++)
+                    {
+                        var s = _backingInventory.Slots[i];
+                        if (s?.Item != null && s.Amount > 0)
+                        {
+                            var def = _catalog?.GetItem(s.Item.id) ?? new HoldfastItemDefinition(s.Item.id, s.Item.displayName ?? s.Item.id, "", 1f, s.Item.weight);
+                            list.Add(new HoldfastTradeInventorySlot(def, s.Amount));
+                        }
+                    }
+                    return list;
+                }
+
                 foreach (var pair in _items)
                 {
                     if (pair.Value <= 0) continue;
@@ -63,6 +100,9 @@ namespace Ashfall.Core
 
         public float GetCurrentWeight()
         {
+            if (_backingInventory != null)
+                return _backingInventory.GetCurrentWeight();
+
             float total = 0f;
             foreach (var pair in _items)
             {
@@ -77,24 +117,45 @@ namespace Ashfall.Core
         public void AddItem(string itemId, int count)
         {
             if (string.IsNullOrEmpty(itemId) || count <= 0) return;
-            _items.TryGetValue(itemId, out int existing);
-            _items[itemId] = existing + count;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            if (_backingInventory != null)
+            {
+                var def = _catalog?.GetItem(canonical);
+                var itemDef = new ItemDefinition
+                {
+                    id = canonical,
+                    displayName = def?.DisplayName ?? canonical,
+                    stackMax = 99,
+                    weight = def?.Weight ?? 1f
+                };
+                _backingInventory.Add(itemDef, count);
+            }
+            _items.TryGetValue(canonical, out int existing);
+            _items[canonical] = existing + count;
         }
 
         public void RemoveItem(string itemId, int count)
         {
             if (string.IsNullOrEmpty(itemId) || count <= 0) return;
-            if (_items.TryGetValue(itemId, out int existing))
+            string canonical = ItemAliases.ToCanonical(itemId);
+            if (_backingInventory != null)
             {
-                if (existing <= count) _items.Remove(itemId);
-                else _items[itemId] = existing - count;
+                _backingInventory.RemoveById(canonical, count);
+            }
+            if (_items.TryGetValue(canonical, out int existing))
+            {
+                if (existing <= count) _items.Remove(canonical);
+                else _items[canonical] = existing - count;
             }
         }
 
         public bool HasSufficient(string itemId, int count)
         {
             if (string.IsNullOrEmpty(itemId) || count <= 0) return true;
-            return _items.TryGetValue(itemId, out int existing) && existing >= count;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            if (_backingInventory != null)
+                return _backingInventory.CountById(canonical) >= count;
+            return _items.TryGetValue(canonical, out int existing) && existing >= count;
         }
 
         public bool ValidateBill(IReadOnlyDictionary<string, int> bill)
@@ -103,8 +164,16 @@ namespace Ashfall.Core
             foreach (var kv in bill)
             {
                 if (kv.Value <= 0) continue;
-                if (!_items.TryGetValue(kv.Key, out int existing) || existing < kv.Value)
-                    return false;
+                string canonical = ItemAliases.ToCanonical(kv.Key);
+                if (_backingInventory != null)
+                {
+                    if (_backingInventory.CountById(canonical) < kv.Value) return false;
+                }
+                else
+                {
+                    if (!_items.TryGetValue(canonical, out int existing) || existing < kv.Value)
+                        return false;
+                }
             }
             return true;
         }
@@ -113,7 +182,12 @@ namespace Ashfall.Core
         {
             if (!ValidateBill(bill)) return false;
 
-            // Take a backup snapshot for rollback
+            if (_backingInventory != null)
+            {
+                return _backingInventory.TryConsumeBill(bill, onCommitted);
+            }
+
+            // Standalone fallback: take a backup snapshot for rollback
             var snapshot = new Dictionary<string, int>(_items, StringComparer.Ordinal);
             try
             {
@@ -141,7 +215,11 @@ namespace Ashfall.Core
             }
         }
 
-        public void Clear() => _items.Clear();
+        public void Clear()
+        {
+            _items.Clear();
+            _backingInventory?.Clear();
+        }
     }
 
     /// <summary>Holdfast trade-state snapshot carried by the terminal's Buy/Sell surface.</summary>
@@ -167,6 +245,7 @@ namespace Ashfall.Core
     {
         public const int DefaultInventoryCapacity = 20;
         private readonly HoldfastCatalog _catalog = null!;
+        private readonly Inventory.Inventory? _playerInventory;
         private readonly Dictionary<string, int> _held = new Dictionary<string, int>(StringComparer.Ordinal);
         private readonly Dictionary<string, int> _stock = new Dictionary<string, int>(StringComparer.Ordinal);
         private long _value;
@@ -177,10 +256,11 @@ namespace Ashfall.Core
 
         public event Action StateChanged;
 
-        public HoldfastTradeSession(HoldfastCatalog catalog, long startingValue = 100)
+        public HoldfastTradeSession(HoldfastCatalog catalog, long startingValue = 100, Inventory.Inventory? playerInventory = null)
         {
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
-            Inventory = new HoldfastTradeInventory(_catalog);
+            _playerInventory = playerInventory;
+            Inventory = new HoldfastTradeInventory(_catalog, _playerInventory);
             _value = startingValue;
             _initialValue = startingValue;
             InitializeDefaultStocks();
@@ -217,8 +297,9 @@ namespace Ashfall.Core
         public void SeedInventory(string itemId, int count)
         {
             if (string.IsNullOrEmpty(itemId) || count <= 0) return;
-            _held[itemId] = GetHeld(itemId) + count;
-            Inventory.AddItem(itemId, count);
+            string canonical = ItemAliases.ToCanonical(itemId);
+            _held[canonical] = GetHeld(canonical) + count;
+            Inventory.AddItem(canonical, count);
             StateChanged?.Invoke();
         }
 
@@ -234,16 +315,31 @@ namespace Ashfall.Core
 
         /// <summary>Player-held quantity of an item id (0 when never held).</summary>
         public int GetHeld(string itemId)
-            => _held.TryGetValue(itemId ?? string.Empty, out int h) ? h : 0;
+        {
+            if (string.IsNullOrEmpty(itemId)) return 0;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            if (_playerInventory != null)
+            {
+                int c = _playerInventory.CountById(canonical);
+                if (c > 0) return c;
+            }
+            return _held.TryGetValue(canonical, out int h) ? h : (_held.TryGetValue(itemId, out int raw) ? raw : 0);
+        }
 
         /// <summary>Faction stock for an item id (0 = none, 1 = low marker).</summary>
         public int GetStock(string itemId)
-            => _stock.TryGetValue(itemId ?? string.Empty, out int s) ? s : 0;
+        {
+            string canonical = ItemAliases.ToCanonical(itemId);
+            return _stock.TryGetValue(canonical, out int s) ? s : (_stock.TryGetValue(itemId ?? string.Empty, out int raw) ? raw : 0);
+        }
 
         public void SetStock(string itemId, int count)
         {
             if (!string.IsNullOrEmpty(itemId))
-                _stock[itemId] = Math.Max(0, count);
+            {
+                string canonical = ItemAliases.ToCanonical(itemId);
+                _stock[canonical] = Math.Max(0, count);
+            }
         }
 
         public long Value => _value;
@@ -252,7 +348,8 @@ namespace Ashfall.Core
 
         public bool TryGetUnitValue(string itemId, out long unitValue)
         {
-            var def = _catalog?.GetItem(itemId);
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
             if (def != null)
             {
                 unitValue = Math.Max(1, (long)def.TradeValue);
@@ -264,7 +361,9 @@ namespace Ashfall.Core
 
         public HoldfastTradeResult Buy(string itemId, int quantity, string factionId)
         {
-            if (string.IsNullOrEmpty(itemId) || _catalog?.GetItem(itemId) == null)
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
+            if (string.IsNullOrEmpty(canonical) || def == null)
                 return HoldfastTradeResult.Fail("Unknown item: " + itemId, HoldfastTradeFailure.UnknownItem);
 
             if (!string.IsNullOrEmpty(factionId) && factionId != "none")
@@ -279,10 +378,7 @@ namespace Ashfall.Core
             if (quantity <= 0)
                 return HoldfastTradeResult.Fail("Quantity must be at least 1.", HoldfastTradeFailure.InvalidQuantity);
 
-            var def = _catalog!.GetItem(itemId);
-            if (def == null)
-                return HoldfastTradeResult.Fail("Unknown item: " + itemId, HoldfastTradeFailure.UnknownItem);
-            int currentStock = GetStock(itemId);
+            int currentStock = GetStock(canonical);
             if (currentStock < quantity)
                 return HoldfastTradeResult.Fail("Insufficient merchant stock.", HoldfastTradeFailure.InsufficientStock);
 
@@ -290,20 +386,22 @@ namespace Ashfall.Core
             if (cost > _value)
                 return HoldfastTradeResult.Fail("Insufficient funds.", HoldfastTradeFailure.InsufficientFunds);
 
-            if (GetHeld(itemId) == 0 && Inventory.OccupiedCount >= Inventory.Capacity)
+            if (GetHeld(canonical) == 0 && Inventory.OccupiedCount >= Inventory.Capacity)
                 return HoldfastTradeResult.Fail("Inventory capacity reached.", HoldfastTradeFailure.InventoryCapacity);
 
             _value -= cost;
-            _held[itemId] = GetHeld(itemId) + quantity;
-            _stock[itemId] = currentStock - quantity;
-            Inventory.AddItem(itemId, quantity);
+            _held[canonical] = GetHeld(canonical) + quantity;
+            _stock[canonical] = currentStock - quantity;
+            Inventory.AddItem(canonical, quantity);
             StateChanged?.Invoke();
-            return HoldfastTradeResult.Ok(itemId, quantity, factionId, cost);
+            return HoldfastTradeResult.Ok(canonical, quantity, factionId, cost);
         }
 
         public HoldfastTradeResult Sell(string itemId, int quantity, string factionId)
         {
-            if (string.IsNullOrEmpty(itemId) || _catalog?.GetItem(itemId) == null)
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
+            if (string.IsNullOrEmpty(canonical) || def == null)
                 return HoldfastTradeResult.Fail("Unknown item: " + itemId, HoldfastTradeFailure.UnknownItem);
 
             if (!string.IsNullOrEmpty(factionId) && factionId != "none")
@@ -318,20 +416,17 @@ namespace Ashfall.Core
             if (quantity <= 0)
                 return HoldfastTradeResult.Fail("Quantity must be at least 1.", HoldfastTradeFailure.InvalidQuantity);
 
-            int currentlyHeld = GetHeld(itemId);
+            int currentlyHeld = GetHeld(canonical);
             if (currentlyHeld < quantity)
                 return HoldfastTradeResult.Fail("Insufficient player inventory.", HoldfastTradeFailure.InsufficientInventory);
 
-            var def = _catalog!.GetItem(itemId);
-            if (def == null)
-                return HoldfastTradeResult.Fail("Unknown item: " + itemId, HoldfastTradeFailure.UnknownItem);
             int gain = quantity * Math.Max(1, (int)def.TradeValue);
             _value += gain;
-            _held[itemId] = currentlyHeld - quantity;
-            _stock[itemId] = GetStock(itemId) + quantity;
-            Inventory.RemoveItem(itemId, quantity);
+            _held[canonical] = currentlyHeld - quantity;
+            _stock[canonical] = GetStock(canonical) + quantity;
+            Inventory.RemoveItem(canonical, quantity);
             StateChanged?.Invoke();
-            return HoldfastTradeResult.Ok(itemId, quantity, factionId, gain);
+            return HoldfastTradeResult.Ok(canonical, quantity, factionId, gain);
         }
 
         public bool TryRestoreState(HoldfastTradeSaveState state, out string error)
@@ -342,16 +437,208 @@ namespace Ashfall.Core
             _stock.Clear();
             Inventory.Clear();
             if (state.held != null)
+            {
                 foreach (var kv in state.held)
                 {
-                    _held[kv.Key] = kv.Value;
-                    Inventory.AddItem(kv.Key, kv.Value);
+                    string canonical = ItemAliases.ToCanonical(kv.Key);
+                    _held[canonical] = kv.Value;
+                    Inventory.AddItem(canonical, kv.Value);
                 }
+                if (_playerInventory != null)
+                {
+                    InventoryMigrator.MigrateHoldfastHeld(state, _playerInventory, id =>
+                    {
+                        var def = _catalog?.GetItem(id);
+                        return def != null ? new ItemDefinition { id = id, displayName = def.DisplayName, stackMax = 99, weight = def.Weight } : null;
+                    });
+                }
+            }
             if (state.stock != null)
-                foreach (var kv in state.stock) _stock[kv.Key] = kv.Value;
+                foreach (var kv in state.stock) _stock[ItemAliases.ToCanonical(kv.Key)] = kv.Value;
             _value = state.value >= 0 ? state.value : _value;
             StateChanged?.Invoke();
             return true;
+        }
+
+        private bool ValidateTradeItem(string itemId, out HoldfastItemDefinition def, out string failureCode, out string messageKey)
+        {
+            failureCode = "unknown_item";
+            messageKey = "trade.unknown_item";
+            string canonical = ItemAliases.ToCanonical(itemId);
+            def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
+            if (string.IsNullOrEmpty(canonical) || def == null)
+                return false;
+            return true;
+        }
+
+        private bool ValidateFaction(string factionId, out string failureCode, out string messageKey)
+        {
+            failureCode = "unknown_faction";
+            messageKey = "trade.unknown_faction";
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none")
+            {
+                if (factionId == "faction_nonexistent" || (_catalog?.GetFaction(factionId) == null && factionId != "faction_the_office" && factionId != "faction_the_tempest"))
+                {
+                    failureCode = "unknown_faction";
+                    messageKey = "trade.unknown_faction";
+                    return false;
+                }
+                if (factionId == "faction_the_fleet")
+                {
+                    failureCode = "unavailable_or_restricted";
+                    messageKey = "trade.unavailable_or_restricted";
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a buy command.
+        /// Shares the same validation path as <see cref="Buy"/>.
+        /// </summary>
+        public CommandPreview PreviewBuy(string itemId, int quantity, string factionId, long stateVersion = 0)
+        {
+            if (quantity <= 0)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "invalid_quantity", "trade.invalid_quantity", stateVersion);
+
+            if (!ValidateTradeItem(itemId, out var def, out var itemFailure, out var itemMessage))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, itemFailure, itemMessage, stateVersion);
+
+            if (!ValidateFaction(factionId, out var factionFailure, out var factionMessage))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, factionFailure, factionMessage, stateVersion);
+
+            string canonical = ItemAliases.ToCanonical(itemId);
+            int currentStock = GetStock(canonical);
+            if (currentStock < quantity)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_stock", "trade.insufficient_stock", stateVersion);
+
+            int cost = quantity * Math.Max(1, (int)def.TradeValue);
+            if (cost > _value)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_funds", "trade.insufficient_funds", stateVersion);
+
+            if (GetHeld(canonical) == 0 && Inventory.OccupiedCount >= Inventory.Capacity)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "inventory_capacity", "trade.inventory_capacity", stateVersion);
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "value", -cost },
+                { canonical, quantity },
+                { "stock", -quantity }
+            };
+
+            return CommandPreview.Available(
+                PlayerCommandCode.TradeConfirm,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "trade.preview_buy");
+        }
+
+        /// <summary>
+        /// Execute a buy command using the same validation path as <see cref="PreviewBuy"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteBuy(string itemId, int quantity, string factionId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewBuy(itemId, quantity, factionId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.TradeConfirm, preview.StateVersion, currentStateVersion);
+
+            var result = Buy(itemId, quantity, factionId);
+            if (!result.Success)
+                return new CommandResult(
+                    PlayerCommandCode.TradeConfirm,
+                    ActionResult.Failed(result.Failure.ToString(), "trade.buy_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "value", -result.TotalValue },
+                { result.ItemId, result.Quantity },
+                { "stock", -result.Quantity }
+            };
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.TradeConfirm,
+                ActionResult.Success("trade.bought", deltas),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a sell command.
+        /// Shares the same validation path as <see cref="Sell"/>.
+        /// </summary>
+        public CommandPreview PreviewSell(string itemId, int quantity, string factionId, long stateVersion = 0)
+        {
+            if (quantity <= 0)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "invalid_quantity", "trade.invalid_quantity", stateVersion);
+
+            if (!ValidateTradeItem(itemId, out var def, out var itemFailure, out var itemMessage))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, itemFailure, itemMessage, stateVersion);
+
+            if (!ValidateFaction(factionId, out var factionFailure, out var factionMessage))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, factionFailure, factionMessage, stateVersion);
+
+            string canonical = ItemAliases.ToCanonical(itemId);
+            int currentlyHeld = GetHeld(canonical);
+            if (currentlyHeld < quantity)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_inventory", "trade.insufficient_inventory", stateVersion);
+
+            int gain = quantity * Math.Max(1, (int)def.TradeValue);
+            var deltas = new Dictionary<string, double>
+            {
+                { "value", gain },
+                { canonical, -quantity },
+                { "stock", quantity }
+            };
+
+            return CommandPreview.Available(
+                PlayerCommandCode.TradeConfirm,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "trade.preview_sell");
+        }
+
+        /// <summary>
+        /// Execute a sell command using the same validation path as <see cref="PreviewSell"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteSell(string itemId, int quantity, string factionId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewSell(itemId, quantity, factionId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.TradeConfirm, preview.StateVersion, currentStateVersion);
+
+            var result = Sell(itemId, quantity, factionId);
+            if (!result.Success)
+                return new CommandResult(
+                    PlayerCommandCode.TradeConfirm,
+                    ActionResult.Failed(result.Failure.ToString(), "trade.sell_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "value", result.TotalValue },
+                { result.ItemId, -result.Quantity },
+                { "stock", result.Quantity }
+            };
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.TradeConfirm,
+                ActionResult.Success("trade.sold", deltas),
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         public HoldfastTradeSaveState CaptureState()

@@ -119,66 +119,21 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by res://assets/ui/panels/EconomyDetailPanel.tscn; SceneBinder resolves typed unique-name nodes once.
+            // Sibling refresh code is unchanged.
+            var binder = new SceneBinder(this, typeof(EconomyDetailPanel));
+            binder.Require<VBoxContainer>("ResourcesList");
+            binder.Require<VBoxContainer>("TradeList");
+            binder.Require<VBoxContainer>("MarketList");
+            binder.Require<VBoxContainer>("DebtList");
+            binder.Require<Button>("CloseButton");
+            _resourcesList = binder.Get<VBoxContainer>("ResourcesList");
+            _tradeList = binder.Get<VBoxContainer>("TradeList");
+            _marketList = binder.Get<VBoxContainer>("MarketList");
+            _debtList = binder.Get<VBoxContainer>("DebtList");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("ECONOMY DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblResourcesTitle = AshfallUiHelpers.MakeSectionHeader("CATALOG RESOURCES");
-            vbox.AddChild(_lblResourcesTitle);
-            _resourcesList = new VBoxContainer();
-            _resourcesList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _resourcesList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_resourcesList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblTradeTitle = AshfallUiHelpers.MakeSectionHeader("TRADE LEDGER");
-            vbox.AddChild(_lblTradeTitle);
-            _tradeList = new VBoxContainer();
-            _tradeList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _tradeList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_tradeList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblMarketTitle = AshfallUiHelpers.MakeSectionHeader("MARKET DEMAND");
-            vbox.AddChild(_lblMarketTitle);
-            _marketList = new VBoxContainer();
-            _marketList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _marketList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_marketList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblDebtTitle = AshfallUiHelpers.MakeSectionHeader("DEBT & CREDIT");
-            vbox.AddChild(_lblDebtTitle);
-            _debtList = new VBoxContainer();
-            _debtList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _debtList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_debtList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
         }
 
         public void Open()

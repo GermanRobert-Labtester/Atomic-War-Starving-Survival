@@ -46,7 +46,7 @@ namespace AtomicWar.GodotApp
             _waterTreatment = new WaterTreatmentHostSession(wtSys);
             if (_waterTreatmentPanel != null && _waterTreatmentPanel.IsInsideTree())
                 RemoveChild(_waterTreatmentPanel);
-            _waterTreatmentPanel = new WaterTreatmentPanel();
+            _waterTreatmentPanel = PanelSceneLoader.Load<WaterTreatmentPanel>("res://assets/ui/panels/WaterTreatmentPanel.tscn");
             _waterTreatmentPanel.Bind(_waterTreatment);
             _waterTreatmentPanel.Visible = false;
             AddChild(_waterTreatmentPanel);

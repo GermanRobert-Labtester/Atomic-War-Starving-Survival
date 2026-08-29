@@ -21,6 +21,13 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; set; } = string.Empty;
         public event Action? StateChanged;
 
+        /// <summary>
+        /// Raised when a disease outcome resolves to death. Carries the
+        /// survivor id and the disease id. The host's SurvivorFateSystem is
+        /// the subscriber — the single disease death feed into the pipeline.
+        /// </summary>
+        public event Action<string, string>? OnSurvivorDied;
+
         private Func<IReadOnlyList<string>>? _populationProvider;
 
         public DiseaseHostSession(DiseaseSystem engine, DiseaseCatalog catalog)
@@ -39,6 +46,8 @@ namespace AtomicWar.GodotApp
             Engine.OnOutcomeResolved += (s, d, recovered) =>
             {
                 LastEvent = (recovered ? s + " recovered from " : s + " died of ") + d;
+                if (!recovered)
+                    OnSurvivorDied?.Invoke(s, d);
                 StateChanged?.Invoke();
             };
             Engine.OnStateChanged += _ => StateChanged?.Invoke();

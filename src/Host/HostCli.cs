@@ -110,6 +110,7 @@ namespace AtomicWar.GodotApp
         JournalSaveSelfTest,
         JournalWeatherPanelSelfTest,
         MoralChoiceSelfTest,
+        EvolvingWorldSelfTest,
         InventorySaveSelfTest,
         MedicalWardSaveSelfTest,
         ChemicalDependencySaveSelfTest,
@@ -119,8 +120,13 @@ namespace AtomicWar.GodotApp
         SaveStoreChecksumSelfTest,
         SevenDayDeterministicSmokeSelfTest,
         UiAccessibilitySelfTest,
+        SceneBindingSelfTest,
         UiSnapshotSelfTest,
-        UiSnapshotRegenerate
+        UiSnapshotRegenerate,
+        OnboardingJourneySelfTest,
+        ContentUtilizationSelfTest,
+        SelfTestManifest,
+        ListSelfTests
     }
 
     /// <summary>
@@ -180,6 +186,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ShelterHazardLoopSelfTest;
             if (Has(args, "--ui-layout-selftest") || Has(args, "--layout-selftest"))
                 return HostCliAction.UiLayoutSelfTest;
+            if (Has(args, "--content-utilization-selftest") || Has(args, "--content-utilization"))
+                return HostCliAction.ContentUtilizationSelfTest;
             if (Has(args, "--settings-selftest") || Has(args, "--settings-test"))
                 return HostCliAction.SettingsSelfTest;
             if (Has(args, "--playable-shell-selftest") || Has(args, "--shell-selftest") || Has(args, "--playable-loop-selftest"))
@@ -322,16 +330,24 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.RadioSelfTest;
             if (Has(args, "--expedition-panel-uitest") || Has(args, "--expedition-panel-lifecycle"))
                 return HostCliAction.ExpeditionPanelUiTest;
+            if (Has(args, "--onboarding-journey-selftest") || Has(args, "--onboarding-selftest"))
+                return HostCliAction.OnboardingJourneySelfTest;
             if (Has(args, "--ui-snapshot-regenerate") || Has(args, "--ui-snapshots-regen"))
                 return HostCliAction.UiSnapshotRegenerate;
             if (Has(args, "--ui-snapshot-uitest") || Has(args, "--ui-snapshots"))
                 return HostCliAction.UiSnapshotSelfTest;
+            if (Has(args, "--selftest-manifest") || Has(args, "--test-manifest"))
+                return HostCliAction.SelfTestManifest;
+            if (Has(args, "--list-selftests") || Has(args, "--list-tests") || Has(args, "--selftests"))
+                return HostCliAction.ListSelfTests;
             if (Has(args, "--journal-save-selftest"))
                 return HostCliAction.JournalSaveSelfTest;
             if (Has(args, "--journal-weather-panel-selftest"))
                 return HostCliAction.JournalWeatherPanelSelfTest;
             if (Has(args, "--moral-choice-selftest"))
                 return HostCliAction.MoralChoiceSelfTest;
+            if (Has(args, "--evolving-world-selftest"))
+                return HostCliAction.EvolvingWorldSelfTest;
             if (Has(args, "--inventory-save-selftest"))
                 return HostCliAction.InventorySaveSelfTest;
             if (Has(args, "--medical-ward-save-selftest"))
@@ -350,6 +366,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.SevenDayDeterministicSmokeSelfTest;
             if (Has(args, "--ui-accessibility-selftest") || Has(args, "--ui-access-selftest") || Has(args, "--accessibility-selftest"))
                 return HostCliAction.UiAccessibilitySelfTest;
+            if (Has(args, "--scene-binding-selftest") || Has(args, "--scene-bindings-selftest"))
+                return HostCliAction.SceneBindingSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -369,6 +387,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --panel-bind-lifecycle-selftest / --panel-bind-selftest / --panel-lifecycle-selftest Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch");
             GD.Print("  --save-load-ui-failure-selftest / --save-load-failure-selftest / --save-load-failure-uitest / --save-load-selftest Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact");
             GD.Print("  --save-store-checksum-selftest / --save-store-checksums-selftest / --checksum-sweep-selftest Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)");
+            GD.Print("  --scene-binding-selftest / --scene-bindings-selftest Headless-instantiate every registered production scene and validate each unique_name_in_owner binding contract (Ticket #125 scene-ownership gate); exits 0 when all required nodes resolve with the expected Godot types");
+            GD.Print("  --content-utilization-selftest / --content-utilization Scan every JSON catalog under StreamingAssets/Data, classify each by reachable consumer (gameplay / UI / codex / orphan), write artifacts/content-utilization.{json,md}, and run the CI gate against artifacts/content-utilization-baseline.json (Ticket #127 content-runtime gate)");
             GD.Print("  --standalone-selftest    SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance");
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
@@ -392,6 +412,13 @@ namespace AtomicWar.GodotApp
             GD.Print("  --ice-road-tick-demo     Unlock, clerk, 30 day ticks, print catalog + briefing");
             GD.Print("  --ledger-debt-selftest   LedgerDebtHeadlessDemo");
             GD.Print("  --moral-choice-selftest  Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks");
+            GD.Print("  --evolving-world-selftest  Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario");
+            GD.Print("  --selftest-manifest      Emit the machine-readable self-test manifest JSON (scripts/ci/generate-selftest-manifest.py)");
+            GD.Print("  --test-manifest          Alias for --selftest-manifest");
+            GD.Print("  --list-selftests         List every registered selftest and run its signature live (runtime/CLI parity audit)");
+            GD.Print("  --list-tests             Alias for --list-selftests");
+            GD.Print("  --selftests              Alias for --list-selftests");
+            GD.Print("  --list-selftest          Alias for --list-selftests");
             GD.Print("  --muster-selftest / --expansion-06-selftest        MusterHeadlessDemo (Exp 06 the Muster)");
             GD.Print("  --phase0-selftest        Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
             GD.Print("  --silent-foundry-selftest Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip");
@@ -436,6 +463,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --duty-roster-uitest     Duty Roster panel UI construction, role assignments, and shift scheduling");
             GD.Print("  --economy-uitest         Economy market panel UI construction, price shock display, and barter grid");
             GD.Print("  --expedition-panel-uitest / --expedition-panel-lifecycle Expedition panel encounter-notice lifecycle: open→surface→close→reopen→surface");
+            GD.Print("  --onboarding-journey-selftest / --onboarding-selftest First-hour onboarding journey: protocol → inspect → rationing → assignment → weather → inventory-use → day-advance, with resume after save/load and no-resource-fabrication");
             GD.Print("  --holdfast-runtime-uitest / --holdfast-runtime-ui-test / --holdfast-runtime-selftest  Godot Holdfast terminal browse → trade → failed trade → save → reload");
             GD.Print("  --inventory-uitest / --inventory-selftest       Inventory panel UI construction, item grid, and slot binding");
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");

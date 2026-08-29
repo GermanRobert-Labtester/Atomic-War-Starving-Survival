@@ -253,10 +253,10 @@ namespace Ashfall.Core.Tests.Save
         [Fact]
         public void AllSaveSections_TotalCountMatchesContractMatrix()
         {
-            // Enforces that every section in the contract matrix (63 sections) is accounted for
-            Assert.Equal(63, SaveSectionRegistry.All.Count);
+            // Enforces that every section in the contract matrix is accounted for
+            Assert.Equal(65, SaveSectionRegistry.All.Count);
             var keys = new HashSet<string>(SaveSectionRegistry.All.Select(s => s.SectionKey));
-            Assert.Equal(63, keys.Count);
+            Assert.Equal(65, keys.Count);
         }
     }
 }

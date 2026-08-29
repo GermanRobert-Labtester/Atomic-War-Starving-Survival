@@ -503,15 +503,15 @@ namespace AtomicWar.GodotApp
         public string OpenDispute(int day) => Engine.BeginLaborDispute(day);
         public string ResolveStrike(FoundryStrikeResolution resolution, int day) => Engine.ResolveStrike(resolution, day);
 
-        // ---- Salt mine demo commands ----
+        // ---- Salt mine production commands ----
 
-        /// <summary>Register and unlock a demo salt mine vein.</summary>
-        public string OpenSaltMineDemo()
+        /// <summary>Register and unlock a salt mine vein.</summary>
+        public string OpenSaltMine(string veinId = "vein_salt_01", string displayName = "Main Salt Vein", int initialWorkers = 2)
         {
             var vein = new SaltMineVeinState
             {
-                veinId = "vein_salt_01",
-                displayName = "Main Salt Vein",
+                veinId = veinId,
+                displayName = displayName,
                 isUnlocked = false,
                 remainingOre = 5000f,
                 extractionRate = 10f,
@@ -521,21 +521,25 @@ namespace AtomicWar.GodotApp
                 pumpPressure = 1.0f
             };
             SaltMine.RegisterVein(vein);
-            SaltMine.UnlockVein("vein_salt_01");
-            SaltMine.AssignWorkers("vein_salt_01", 2);
-            return "Salt mine opened. 2 workers assigned to Main Salt Vein.";
+            SaltMine.UnlockVein(veinId);
+            SaltMine.AssignWorkers(veinId, initialWorkers);
+            return $"Salt mine opened. {initialWorkers} workers assigned to {displayName}.";
         }
 
+        public string OpenSaltMineDemo() => OpenSaltMine();
+
         /// <summary>Run one day of salt extraction.</summary>
-        public string TickSaltMineDemo(int day)
+        public string TickSaltMine(int day)
         {
             SaltMine.TickDaily(day, new CoreSeededRng(day * 31));
             var s = SaltMine.State;
             return $"Salt mine tick d{day}: salt={s.saltStorage:F1} kg, brine={s.brineStorage:F1} brl, sulfur={s.sulfurStorage:F1} kg.";
         }
 
+        public string TickSaltMineDemo(int day) => TickSaltMine(day);
+
         /// <summary>Deliver to treaty.</summary>
-        public string DeliverSaltTreatyDemo(int day)
+        public string DeliverSaltTreaty(int day)
         {
             var record = SaltMine.DeliverToTreaty(day);
             if (record == null) return "No delivery possible.";
@@ -543,6 +547,8 @@ namespace AtomicWar.GodotApp
                 ? $"Treaty delivery accepted: {record.quantityDelivered:F1} barrels brine."
                 : "Treaty delivery failed: insufficient stock.";
         }
+
+        public string DeliverSaltTreatyDemo(int day) => DeliverSaltTreaty(day);
 
         /// <summary>Salt mine status.</summary>
         public string SaltMineStatusLine()

@@ -59,29 +59,16 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        // ── Demo actions ─────────────────────────────────────────────
+        // ── Production actions ───────────────────────────────────────
 
-        public string TickDemo(int days)
+        /// <summary>
+        /// Advance the market exactly one day. Called by the economy_market
+        /// day owner through the campaign coordinator; the RNG comes from the
+        /// coordinator's deterministic economy stream.
+        /// </summary>
+        public void TickDay(int day, ISeededRng rng)
         {
-            for (int i = 0; i < days; i++)
-                Market.TickDay(Market.Day + 1, new SeededRng(DemoSeed));
-            return $"Ticked {days} day(s): day {Market.Day}.";
-        }
-
-        public string BuyDemo(string itemId, int quantity)
-        {
-            var result = Market.Buy(itemId, quantity, Market.Day);
-            return result.Accepted
-                ? $"Bought {quantity}x {itemId} at {result.UnitPrice:0.00} each ({result.TotalValue:0.00} total)."
-                : $"Buy rejected: {result.RejectReason}.";
-        }
-
-        public string BarterDemo(string giveItemId, int giveQuantity, string takeItemId)
-        {
-            var result = Market.Barter(giveItemId, giveQuantity, takeItemId, Market.Day);
-            return result.Accepted
-                ? $"Bartered {giveQuantity}x {giveItemId} for {result.Quantity}x {takeItemId}."
-                : $"Barter rejected: {result.RejectReason}.";
+            Market.TickDay(day, rng);
         }
 
         public string StatusLine()

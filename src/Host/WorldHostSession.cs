@@ -24,6 +24,15 @@ namespace AtomicWar.GodotApp
         public WastelandMapSystem WastelandMap { get; }
         public SeasonProfileDef Profile { get; private set; }
 
+        /// <summary>
+        /// Seed catalog for the evolving-world trio (loaded once in Create).
+        /// Null when no data dir was provided; hosts read the shelter sector
+        /// and scarcity goods from here.
+        /// </summary>
+        public EvolvingWorldSeedContainer? Seeds { get; private set; }
+
+        public string ShelterSectorId => EvolvingWorldSeeder.ShelterSectorId(Seeds);
+
         public string LastEvent { get; private set; } = string.Empty;
         public WorldHostSession(
             WeatherSystem weather = null!,
@@ -76,19 +85,28 @@ namespace AtomicWar.GodotApp
                 if (env.Landmark != null) session.Landmarks.RestoreState(env.Landmark);
                 session.LastEvent = "World state restored from save.";
             }
+
+            // Evolving-world activation (task 122): load the seed authority,
+            // then seed — AFTER restore, and only into empty ledgers, so a
+            // restored save is never overwritten by the starting world.
+            session.Seeds = !string.IsNullOrEmpty(dataDir)
+                ? EvolvingWorldCatalogLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer())
+                : null;
+            EvolvingWorldSeeder.Seed(session.LocationEvolution, session.Wildlife, session.Landmarks, session.Seeds);
+
             var mapSave = WastelandMapSaveStore.TryLoad();
             if (mapSave != null)
                 session.WastelandMap.RestoreState(mapSave);
             return session;
         }
 
-        // ── Demo actions ─────────────────────────────────────────────
-
-        public string TickDemo(float hours)
+        // ── Production Runtime Actions ───────────────────────────────
+        public void TickHours(float hours)
         {
             Weather.Tick(hours);
-            return $"Tick {hours}h: {Weather.Current} (rolls {Weather.State.rollCount}).";
         }
+
+        // ── Demo actions ─────────────────────────────────────────────
 
         public string ForceDemo(WeatherKind kind)
         {

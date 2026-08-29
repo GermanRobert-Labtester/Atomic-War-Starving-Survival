@@ -15,8 +15,6 @@ namespace AtomicWar.GodotApp.UI
         private AshfallStatusRail? _statusRail;
         private VBoxContainer _contentStack = null!;
         private Label _detailText = null!;
-        private Button _assignWorkersBtn = null!;
-        private Button _shoringBtn = null!;
 
         private ExcavationHostSession? _host;
 
@@ -61,24 +59,6 @@ namespace AtomicWar.GodotApp.UI
             _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
-
-            _assignWorkersBtn = AshfallUiHelpers.MakeButton("Assign Dig Crew (4 Labor)", () =>
-            {
-                if (_host != null)
-                {
-                    _host.AddSite("vault_strata_delta9", "blueprint_deep_vault_74", 100f, 0.2f);
-                    _host.AssignWorkers("vault_strata_delta9", 4);
-                }
-            });
-            _assignWorkersBtn.CustomMinimumSize = new Vector2(200, 36);
-            buttonRow.AddChild(_assignWorkersBtn);
-
-            _shoringBtn = AshfallUiHelpers.MakeButton("Reinforce Shoring", () => _host?.ApplyShoring("vault_strata_delta9"));
-            _shoringBtn.CustomMinimumSize = new Vector2(160, 36);
-            buttonRow.AddChild(_shoringBtn);
-
-            _contentStack.AddChild(buttonRow);
             _shell.SetContent(_contentStack);
 
             _shell.AttachHeaderCloseButton("CLOSE", () =>
@@ -99,13 +79,20 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Subterranean Excavation Sites ({s.sites.Count} total):\n";
-                foreach (var site in s.sites)
+                if (s.sites.Count == 0)
                 {
-                    text += $"  • [{site.siteId}] Progress: {site.progress:F0}/{site.requiredProgress:F0} | Workers: {site.assignedWorkerCount} | Shoring: {(site.shoringApplied ? "REINFORCED" : "UNSHORED")} | Cave-in Risk: {site.structuralRisk:P0}\n";
+                    _detailText.Text = "No subterranean excavation sites currently active.\nAssign surveying teams or discover buried deep-strata vaults to begin excavation operations.\n\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 }
-                text += $"\nLast Event: {_host.LastEvent}";
-                _detailText.Text = text;
+                else
+                {
+                    string text = $"Subterranean Excavation Sites ({s.sites.Count} total):\n";
+                    foreach (var site in s.sites)
+                    {
+                        text += $"  • [{site.siteId}] Progress: {site.progress:F0}/{site.requiredProgress:F0} | Workers: {site.assignedWorkerCount} | Shoring: {(site.shoringApplied ? "REINFORCED" : "UNSHORED")} | Cave-in Risk: {site.structuralRisk:P0}\n";
+                    }
+                    text += $"\nLast Event: {_host.LastEvent}";
+                    _detailText.Text = text;
+                }
             }
         }
 

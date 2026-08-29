@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
+using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core
 {
@@ -350,6 +351,64 @@ namespace Ashfall.Core
             return _assignments.Assign(role, survivorId);
         }
 
+        public ActionResult AssignWithResult(string role, string survivorId)
+        {
+            return _assignments.AssignWithResult(role, survivorId);
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a duty assignment command.
+        /// Shares the same validation path as <see cref="AssignWithResult"/>.
+        /// </summary>
+        public CommandPreview PreviewAssign(string role, string survivorId, long stateVersion = 0)
+        {
+            var validation = _assignments.ValidateAssign(role, survivorId);
+            if (!validation.IsSuccess)
+                return CommandPreview.Unavailable(PlayerCommandCode.AssignRole, validation.FailureCode, validation.MessageKey, stateVersion);
+
+            var deltas = new Dictionary<string, double>();
+            if (!string.IsNullOrEmpty(survivorId))
+            {
+                deltas["assignment"] = 1;
+                deltas["role"] = role.Length;
+            }
+
+            return CommandPreview.Available(
+                PlayerCommandCode.AssignRole,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "duty_roster.preview_assign");
+        }
+
+        /// <summary>
+        /// Execute a duty assignment using the same validation path as <see cref="PreviewAssign"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteAssign(string role, string survivorId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewAssign(role, survivorId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.AssignRole, preview.StateVersion, currentStateVersion);
+
+            var result = AssignWithResult(role, survivorId);
+            if (!result.IsSuccess)
+                return new CommandResult(
+                    PlayerCommandCode.AssignRole,
+                    result,
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.AssignRole,
+                result,
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
         /// <summary>The role a survivor currently holds, or null.</summary>
         public string GetRoleOf(string survivorId)
         {
@@ -359,6 +418,12 @@ namespace Ashfall.Core
         public string GetAssignment(string role)
         {
             return _assignments.GetAssignment(role);
+        }
+
+        /// <summary>Drop every role assignment held by a survivor (death, departure).</summary>
+        public void RemoveAssignmentsFor(string survivorId)
+        {
+            _assignments.RemoveAssignmentsFor(survivorId);
         }
 
         /// <summary>

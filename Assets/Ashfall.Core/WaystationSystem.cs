@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.PlayerCommand;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -47,6 +48,62 @@ namespace Ashfall.Core
             OnUnlocked?.Invoke();
             RaiseChanged();
         }
+
+        /// <summary>
+        /// Side-effect-free preview of a watch assignment command.
+        /// Shares the same validation path as <see cref="AssignWatch"/>.
+        /// </summary>
+        public CommandPreview PreviewAssignWatch(IList<string> survivorIds, long stateVersion = 0)
+        {
+            if (!_state.unlocked)
+                return CommandPreview.Unavailable(PlayerCommandCode.AssignWatch, "not_unlocked", "waystation.not_unlocked", stateVersion);
+
+            int validCount = 0;
+            if (survivorIds != null)
+            {
+                foreach (var id in survivorIds)
+                {
+                    if (!string.IsNullOrEmpty(id)) validCount++;
+                }
+            }
+            validCount = Math.Clamp(validCount, 0, MaxBunks);
+
+            return CommandPreview.Available(
+                PlayerCommandCode.AssignWatch,
+                stateVersion,
+                new Dictionary<string, double> { { "watch_sentries", validCount } },
+                isIrreversible: false,
+                messageKey: "waystation.preview_assign_watch");
+        }
+
+        /// <summary>
+        /// Execute a watch assignment using the same validation path as <see cref="PreviewAssignWatch"/>.
+        /// Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteAssignWatch(IList<string> survivorIds, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewAssignWatch(survivorIds, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.AssignWatch, preview.StateVersion, currentStateVersion);
+
+            bool ok = AssignWatch(survivorIds);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.AssignWatch,
+                    ActionResult.Failed("execute_failed", "waystation.execute_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.AssignWatch,
+                ActionResult.Success("waystation.watch_assigned"),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
 
         public bool AssignWatch(IList<string> survivorIds)
         {

@@ -44,7 +44,7 @@ namespace AtomicWar.GodotApp
                     State = System.CaptureState()
                 };
                 if (MedicalWardSaveStore.TrySave(save))
-                    IsDirty = false;
+                    base.Save();
             }
             catch (Exception e)
             {

@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 #pragma warning disable CS8618
-using System.IO;
-using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Crafting;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.PlayerCommand;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 
 namespace AtomicWar.GodotApp
@@ -165,16 +165,27 @@ namespace AtomicWar.GodotApp
 
         // ── Craft ops ──────────────────────────────────────────────────
 
-        public string Start(string recipeId)
+        public CommandResult Start(string recipeId)
         {
             var recipe = FindRecipe(recipeId);
-            if (recipe == null) return $"Unknown recipe: {recipeId}.";
-            bool ok = Engine.StartCraft(recipe);
-            LastEvent = ok
-                ? $"Started {recipe.recipeName} ({recipe.craftingTimeHours:F0}h)."
-                : $"Cannot start {recipe.recipeName}: missing ingredients, station, or room.";
-            RaiseStateChanged();
-            return LastEvent;
+            if (recipe == null)
+                return new CommandResult(
+                    PlayerCommandCode.CraftStart,
+                    ActionResult.Failed("unknown_recipe", "craft.unknown_recipe"),
+                    StateVersion, StateVersion);
+
+            long versionBefore = StateVersion;
+            var result = Engine.ExecuteCraft(recipe, crafterId: null, expectedStateVersion: versionBefore, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
+            {
+                RaiseStateChanged();
+                LastEvent = $"Started {recipe.recipeName} ({recipe.craftingTimeHours:F0}h).";
+            }
+            else
+            {
+                LastEvent = $"Cannot start {recipe.recipeName}: {result.FailureCode}.";
+            }
+            return result;
         }
 
         public string CompleteAll(float gameHours)

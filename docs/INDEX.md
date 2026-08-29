@@ -18,7 +18,7 @@ The following documents share identical or near-identical filenames across root,
 | Filename | Copies / Locations | Canonical Location | Notes |
 |---|---|---|---|
 | `ASHFALL_MASTER_IMPLEMENTATION_PLAN.md` | `ASHFALL_MASTER_IMPLEMENTATION_PLAN.md`<br>`docs/ASHFALL_MASTER_IMPLEMENTATION_PLAN.md` | `ASHFALL_MASTER_IMPLEMENTATION_PLAN.md` | Root vs docs mirror |
-| `manifest.md` | `Assets/sprites/AI_Generated/manifest.md`<br>`assets/sprites/AI_Generated/manifest.md` | `Assets/sprites/AI_Generated/manifest.md` | Root vs docs mirror |
+| `manifest.md` | `assets/sprites/AI_Generated/manifest.md`<br>`assets/sprites/AI_Generated/manifest.md` | `assets/sprites/AI_Generated/manifest.md` | Root vs docs mirror |
 | `audit_ASSET_MANIFEST.md` | `deprecated_audits/audit_ASSET_MANIFEST.md`<br>`docs/deprecated_audits/audit_ASSET_MANIFEST.md` | `deprecated_audits/audit_ASSET_MANIFEST.md` | Historical audit duplicate |
 | `audit_AUDIT_REPORT.md` | `deprecated_audits/audit_AUDIT_REPORT.md`<br>`docs/deprecated_audits/audit_AUDIT_REPORT.md` | `deprecated_audits/audit_AUDIT_REPORT.md` | Historical audit duplicate |
 | `audit_COMPREHENSIVE_AUDIT_2026-08-04.md` | `deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md`<br>`docs/deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md` | `deprecated_audits/audit_COMPREHENSIVE_AUDIT_2026-08-04.md` | Historical audit duplicate |
@@ -145,7 +145,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`ASHFALL_NEXT_STEPS_ACTION_PLAN.md`](../ASHFALL_NEXT_STEPS_ACTION_PLAN.md) | **ASHFALL: STRATEGIC NEXT-STEPS ACTION PLAN** — **25 Prioritized Implementation & Expansion Tasks (Forensic Gap Remediation, Systemic Integration & Content Expansion)** |
 | 🟢 `CURRENT` | [`ASH_FALL_CREATIVE_FRAMEWORK.md`](../ASH_FALL_CREATIVE_FRAMEWORK.md) | **ASHFALL: ATOMIC WAR - COMPREHENSIVE CREATIVE WRITING FRAMEWORK** — This framework provides a complete system for creating all diegetic writing, lore, quests, environmental fiction, and... |
 | 🟢 `CURRENT` | [`AUDIT_FINDINGS_AND_FIX_PLAN.md`](../AUDIT_FINDINGS_AND_FIX_PLAN.md) | **ASHFALL Deep Code Audit — Findings & Fix Plan** — **Audit Date:** 2026-08-10 |
-| 🟢 `CURRENT` | [`Assets/sprites/AI_Generated/manifest.md`](../Assets/sprites/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
+| 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
 | 🟢 `CURRENT` | [`CLAUDE.md`](../CLAUDE.md) | **CLAUDE CODE INSTRUCTIONS — ASHFALL PROJECT** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
 | 🟢 `CURRENT` | [`CODEX.md`](../CODEX.md) | **ASHFALL PROJECT — CODEX Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
 | 🟢 `CURRENT` | [`CRUSH.md`](../CRUSH.md) | **ASHFALL PROJECT — CRUSH Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |

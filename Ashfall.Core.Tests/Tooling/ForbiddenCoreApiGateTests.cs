@@ -203,6 +203,10 @@ namespace Ashfall.Core.Tests
 
             foreach (var (filePath, relPath, code) in files)
             {
+                // IWallClock.cs is the documented single port/adapter for non-simulation wall-clock metadata
+                if (relPath.EndsWith("IWallClock.cs", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 foreach (var pattern in hazardPatterns)
                 {
                     var matches = pattern.Matches(code);

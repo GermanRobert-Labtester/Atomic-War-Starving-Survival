@@ -46,7 +46,7 @@ namespace Ashfall.Core
     [Serializable]
     public sealed class VehicleCatalog
     {
-        public string schema_version = "1.0";
+        public int schema_version = 1;
         public List<VehicleDefinition> vehicles = new List<VehicleDefinition>();
     }
 

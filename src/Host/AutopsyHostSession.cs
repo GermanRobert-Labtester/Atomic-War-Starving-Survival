@@ -38,7 +38,6 @@ namespace AtomicWar.GodotApp
             System.OnCaseCompleted += c =>
             {
                 LastEvent = $"[Autopsy] Completed examination for specimen {c.specimenId}: {c.finding}";
-                RaiseStateChanged();
             };
 
             System.OnAutopsyChanged += () =>
@@ -53,7 +52,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Queued autopsy for {specimenId} with {procedureId}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -64,7 +62,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Started procedure on case {caseId}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -86,7 +83,6 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            RaiseStateChanged();
         }
 
         public override void Save()

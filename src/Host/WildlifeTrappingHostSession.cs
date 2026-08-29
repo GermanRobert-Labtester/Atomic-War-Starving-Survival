@@ -33,12 +33,21 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
-        public ActionResult CheckTraps()
+        /// <summary>
+        /// Live wildlife pressure for the trapped sector (1.0 = authored rate),
+        /// refreshed daily by the evolving-world day owner from the migration
+        /// system's sector density.
+        /// </summary>
+        public float WildlifeDensityMultiplier { get; set; } = 1f;
+
+        public ActionResult CheckTraps(float? densityMultiplier = null)
         {
-            var res = System.CheckTraps();
+            var res = System.CheckTraps(densityMultiplier ?? WildlifeDensityMultiplier);
             if (res.IsSuccess)
             {
-                LastEvent = "Inspected all perimeter snares.";
+                LastEvent = (densityMultiplier ?? WildlifeDensityMultiplier) == 1f
+                    ? "Inspected all perimeter snares."
+                    : $"Inspected all perimeter snares (wildlife pressure x{densityMultiplier:0.00}).";
                 RaiseStateChanged();
             }
             return res;

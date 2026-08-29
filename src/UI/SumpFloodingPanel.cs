@@ -187,14 +187,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (s.nodes.Count == 0)
             {
-                _nodeList.AddChild(AshfallUiHelpers.MakeMetadata("No sump nodes configured. Click below to register lower sump."));
-                var btnInit = AshfallUiHelpers.MakeButton("INITIALIZE LOWER SUMP", () =>
-                {
-                    _host.AddNode("sump_sublevel_01", "Sublevel 01 Bilge", 180f);
-                    _host.AddNode("sump_sublevel_02", "Reactor Basement Sump", 250f);
-                    RefreshView();
-                });
-                _nodeList.AddChild(btnInit);
+                _nodeList.AddChild(AshfallUiHelpers.MakeMetadata("No sump drainage nodes configured in shelter."));
             }
             else
             {

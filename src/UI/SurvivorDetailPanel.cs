@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
@@ -8,23 +7,25 @@ using AtomicWar.GodotApp.UI;
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
-    /// ASHFALL — Survivor Detail panel.
-    /// Shows per-survivor info, needs, traits, and status — bound to the live
-    /// SurvivorsHostSession for a specific survivor id.
+    /// ASHFALL — Survivor Detail panel. Shows per-survivor info, needs, traits,
+    /// and status — bound to the live SurvivorsHostSession for a specific
+    /// survivor id.
+    ///
+    /// Ticket #125: layout chrome (dialog frame, section headers, separators,
+    /// close button) is owned by
+    /// <c>res://assets/ui/panels/SurvivorDetailPanel.tscn</c>. Dynamic content
+    /// (the four lists) is filled at refresh time.
     /// </summary>
     public partial class SurvivorDetailPanel : Control
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblSurvivorInfoTitle;
-        private VBoxContainer _survivorInfo;
-        private Label _lblNeedsTitle;
-        private VBoxContainer _needsList;
-        private Label _lblTraitsTitle;
-        private VBoxContainer _traitsList;
-        private Label _lblStatusTitle;
-        private VBoxContainer _statusList;
+        private SceneBinder? _binder;
+        private VBoxContainer _survivorInfo = null!;
+        private VBoxContainer _needsList = null!;
+        private VBoxContainer _traitsList = null!;
+        private VBoxContainer _statusList = null!;
+        private Button _closeButton = null!;
 
         private SurvivorsHostSession? _survivors;
         private string _survivorId = string.Empty;
@@ -37,6 +38,25 @@ namespace AtomicWar.GodotApp.UI
             _survivors = survivors;
             _survivorId = survivorId ?? string.Empty;
             RefreshView();
+        }
+
+        public override void _Ready()
+        {
+            _binder = new SceneBinder(this, typeof(SurvivorDetailPanel));
+            _binder.Require<VBoxContainer>("SurvivorInfo");
+            _binder.Require<VBoxContainer>("NeedsList");
+            _binder.Require<VBoxContainer>("TraitsList");
+            _binder.Require<VBoxContainer>("StatusList");
+            _binder.Require<Button>("CloseButton");
+
+            _survivorInfo = _binder.Get<VBoxContainer>("SurvivorInfo");
+            _needsList = _binder.Get<VBoxContainer>("NeedsList");
+            _traitsList = _binder.Get<VBoxContainer>("TraitsList");
+            _statusList = _binder.Get<VBoxContainer>("StatusList");
+            _closeButton = _binder.Get<Button>("CloseButton");
+            _closeButton.Pressed += () => OnClose?.Invoke();
+
+            Visible = false;
         }
 
         public void RefreshView()
@@ -125,70 +145,6 @@ namespace AtomicWar.GodotApp.UI
             if (string.IsNullOrEmpty(id)) return "Unknown";
             int us = id.IndexOf('_');
             return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
-        }
-
-        public override void _Ready()
-        {
-            SetAnchorsPreset(LayoutPreset.FullRect);
-            Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("SURVIVOR DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblSurvivorInfoTitle = AshfallUiHelpers.MakeSectionHeader("SURVIVOR INFO");
-            vbox.AddChild(_lblSurvivorInfoTitle);
-            _survivorInfo = new VBoxContainer();
-            _survivorInfo.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _survivorInfo.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_survivorInfo);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblNeedsTitle = AshfallUiHelpers.MakeSectionHeader("NEEDS");
-            vbox.AddChild(_lblNeedsTitle);
-            _needsList = new VBoxContainer();
-            _needsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _needsList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_needsList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblTraitsTitle = AshfallUiHelpers.MakeSectionHeader("RADIATION & TRAITS");
-            vbox.AddChild(_lblTraitsTitle);
-            _traitsList = new VBoxContainer();
-            _traitsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _traitsList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_traitsList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblStatusTitle = AshfallUiHelpers.MakeSectionHeader("STATUS FLAGS");
-            vbox.AddChild(_lblStatusTitle);
-            _statusList = new VBoxContainer();
-            _statusList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _statusList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_statusList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
         }
 
         public void Open()

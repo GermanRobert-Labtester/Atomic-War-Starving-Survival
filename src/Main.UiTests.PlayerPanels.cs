@@ -173,12 +173,12 @@ namespace AtomicWar.GodotApp
             UiNodeDiagnostics.Report(this, "weather-lifecycle");
 
             // 4. ExpeditionPanel: Open -> Bind -> Close -> Reopen
-            _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+            _expeditionPanel.Bind(_expeditions, _survivors, _inventory, _equipmentCondition?.System);
             UiNodeDiagnostics.Mark(this, "expedition-lifecycle");
             _expeditionPanel.Open();
             _expeditionPanel.Close();
             _expeditionPanel.Unbind();
-            _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+            _expeditionPanel.Bind(_expeditions, _survivors, _inventory, _equipmentCondition?.System);
             _expeditionPanel.Open();
             bool expeditionLifecycle = _expeditionPanel.IsBound && _expeditionPanel.Visible;
             CloseAllOverlayPanels();

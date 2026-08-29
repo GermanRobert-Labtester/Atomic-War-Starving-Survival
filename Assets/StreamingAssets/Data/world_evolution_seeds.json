@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "collection_id": "world_evolution_seeds",
+  "description": "Initial world state for the evolving-world systems: sector graph for wildlife migration, wildlife packs, landmark integrity baselines, and location ownership/contamination seeds. Seeded once per fresh save; never overwrites a restored ledger.",
+  "shelter_sector_id": "sector_4_hinterlands",
+  "scarcity_goods": ["canned_food"],
+  "sectors": [
+    { "sector_id": "sector_4_hinterlands", "neighbors": ["sector_4_hills", "sector_4_floodplain", "sector_4_highway_junction"] },
+    { "sector_id": "sector_4_hills", "neighbors": ["sector_4_hinterlands", "sector_4_canyon", "sector_4_railway_cut"] },
+    { "sector_id": "sector_4_floodplain", "neighbors": ["sector_4_hinterlands", "sector_4_river", "sector_8_lowlands"] },
+    { "sector_id": "sector_4_canyon", "neighbors": ["sector_4_hills", "sector_4_railway_cut", "sector_8_quarries"] },
+    { "sector_id": "sector_4_railway_cut", "neighbors": ["sector_4_hills", "sector_4_canyon", "sector_4_highway_junction"] },
+    { "sector_id": "sector_4_river", "neighbors": ["sector_4_floodplain", "sector_8_estuary"] },
+    { "sector_id": "sector_4_highway_junction", "neighbors": ["sector_4_hinterlands", "sector_4_railway_cut", "sector_8_bluffs"] },
+    { "sector_id": "sector_8_bluffs", "neighbors": ["sector_4_highway_junction", "sector_8_lowlands", "sector_8_quarries"] },
+    { "sector_id": "sector_8_lowlands", "neighbors": ["sector_8_bluffs", "sector_4_floodplain", "sector_8_estuary"] },
+    { "sector_id": "sector_8_estuary", "neighbors": ["sector_8_lowlands", "sector_4_river"] },
+    { "sector_id": "sector_8_quarries", "neighbors": ["sector_8_bluffs", "sector_4_canyon"] }
+  ],
+  "packs": [
+    { "pack_id": "pack_hinterland_dogs", "species_id": "species_rad_dog", "sector_id": "sector_4_hinterlands", "population": 6 },
+    { "pack_id": "pack_hill_wolves", "species_id": "species_wolf", "sector_id": "sector_4_hills", "population": 4 },
+    { "pack_id": "pack_floodplain_boars", "species_id": "species_ash_boar", "sector_id": "sector_4_floodplain", "population": 7 },
+    { "pack_id": "pack_canyon_rats", "species_id": "species_blight_rat", "sector_id": "sector_4_canyon", "population": 12 },
+    { "pack_id": "pack_railway_crows", "species_id": "species_iron_crow", "sector_id": "sector_4_railway_cut", "population": 9 },
+    { "pack_id": "pack_river_herons", "species_id": "species_gray_heron", "sector_id": "sector_4_river", "population": 3 },
+    { "pack_id": "pack_junction_dogs", "species_id": "species_rad_dog", "sector_id": "sector_4_highway_junction", "population": 5 },
+    { "pack_id": "pack_bluffs_goats", "species_id": "species_feral_goat", "sector_id": "sector_8_bluffs", "population": 6 },
+    { "pack_id": "pack_lowlands_hares", "species_id": "species_cotton_hare", "sector_id": "sector_8_lowlands", "population": 10 },
+    { "pack_id": "pack_estuary_gulls", "species_id": "species_ash_gull", "sector_id": "sector_8_estuary", "population": 14 },
+    { "pack_id": "pack_quarries_lynx", "species_id": "species_dust_lynx", "sector_id": "sector_8_quarries", "population": 2 }
+  ],
+  "landmarks": [
+    { "landmark_id": "landmark_grange_water_tower", "location_id": "loc_grange_hall", "integrity": 82 },
+    { "landmark_id": "landmark_weighbridge_gantry", "location_id": "loc_weighbridge", "integrity": 64 },
+    { "landmark_id": "landmark_bridge_seven_span", "location_id": "loc_bridge_seven", "integrity": 71 },
+    { "landmark_id": "landmark_relay_mast_guys", "location_id": "loc_radio_relay_mast", "integrity": 58 },
+    { "landmark_id": "landmark_diesel_farm_tanks", "location_id": "loc_diesel_tank_farm", "integrity": 47 },
+    { "landmark_id": "landmark_motel_signage", "location_id": "loc_motel_verity", "integrity": 90 },
+    { "landmark_id": "landmark_cider_press_presshouse", "location_id": "loc_cider_press", "integrity": 76 },
+    { "landmark_id": "landmark_pumphouse_stack", "location_id": "loc_terrace_pumphouse", "integrity": 55 },
+    { "landmark_id": "landmark_printworks_roof", "location_id": "loc_printworks", "integrity": 68 },
+    { "landmark_id": "landmark_gymnasium_trusses", "location_id": "loc_school_gymnasium", "integrity": 84 }
+  ],
+  "location_seeds": [
+    { "location_id": "loc_grange_hall", "owner": "none", "contamination": 0.1, "threats": [] },
+    { "location_id": "loc_weighbridge", "owner": "faction_the_scale", "contamination": 0.2, "threats": ["threat_rad_squatters"] },
+    { "location_id": "loc_bridge_seven", "owner": "none", "contamination": 0.15, "threats": [] },
+    { "location_id": "loc_radio_relay_mast", "owner": "faction_the_compact", "contamination": 0.05, "threats": [] },
+    { "location_id": "loc_diesel_tank_farm", "owner": "faction_the_underwrite", "contamination": 0.35, "threats": ["threat_wild_beasts"] },
+    { "location_id": "loc_motel_verity", "owner": "none", "contamination": 0.1, "threats": [] },
+    { "location_id": "loc_ordnance_shoulder", "owner": "none", "contamination": 0.45, "threats": ["threat_wild_beasts"] },
+    { "location_id": "loc_transit_authority_hq", "owner": "faction_the_scale", "contamination": 0.25, "threats": [] },
+    { "location_id": "loc_recovery_yard", "owner": "none", "contamination": 0.2, "threats": [] },
+    { "location_id": "loc_ration_queue_plaza", "owner": "faction_the_compact", "contamination": 0.1, "threats": [] },
+    { "location_id": "loc_conscription_office", "owner": "faction_the_underwrite", "contamination": 0.3, "threats": ["threat_rad_squatters"] },
+    { "location_id": "loc_ash_sign_shrine", "owner": "none", "contamination": 0.05, "threats": [] }
+  ]
+}

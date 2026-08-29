@@ -16,6 +16,10 @@ namespace Ashfall.Core.Campaign
 
         public int saveVersion = CurrentSaveVersion;
         public int lastAdvancedDay = -1;
+        public int masterSeed = 1986;
+        public int derivationVersion = 1;
+        public System.Collections.Generic.Dictionary<string, int> streamPositions =
+            new System.Collections.Generic.Dictionary<string, int>(StringComparer.Ordinal);
         public string Checksum = string.Empty;
     }
 

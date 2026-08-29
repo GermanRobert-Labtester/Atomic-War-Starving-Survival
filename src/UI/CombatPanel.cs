@@ -176,7 +176,7 @@ namespace AtomicWar.GodotApp.UI
 
             // Target selection + start
             var startRow = Row();
-            var startBtn = Btn("START RAID", () => DoAction(() => _combat.StartDemoCombat("loc_denial_cut", "The Denial Cut")));
+            var startBtn = Btn("ENGAGE ENCOUNTER", () => DoAction(() => _combat.StartCombat("loc_denial_cut", "The Denial Cut")));
             startRow.AddChild(startBtn);
             _targetSelect = new OptionButton();
             _targetSelect.CustomMinimumSize = new Vector2(240, 36);
@@ -192,7 +192,7 @@ namespace AtomicWar.GodotApp.UI
 
             var row2 = Row();
             row2.AddChild(Btn("CLEAR JAM", () => DoAction(() => _combat.ActionClearJam("survivor_yuki"))));
-            row2.AddChild(Btn("REPAIR", () => DoAction(() => _combat.ActionRepair("survivor_yuki"))));
+            row2.AddChild(Btn("REPAIR", () => DoAction(() => _combat.ActionRepair("survivor_yuki").MessageKey)));
             row2.AddChild(Btn("DECON FLUSH", () => DoAction(_combat.ActionDecontaminate)));
             row2.AddChild(Btn("LAST STAND", () => DoAction(() => _combat.ActionLastStand("survivor_yuki"))));
             vbox.AddChild(row2);

@@ -43,7 +43,7 @@ namespace AtomicWar.GodotApp
         private void SetupVerdict()
         {
             if (_verdict != null) return;
-            _verdict = AtomicWar.GodotApp.VerdictHostSession.Create(_dataDir);
+            _verdict = AtomicWar.GodotApp.VerdictHostSession.Create(_dataDir, flags: _consequenceLedger);
             _verdict.StateChanged += () => { _verdictDirty = true; RefreshVerdictReadout(); };
             UnlockVerdictLore();
             RefreshVerdictReadout();
@@ -174,8 +174,7 @@ namespace AtomicWar.GodotApp
         private void OnVerdictTickClicked()
         {
             SetupVerdict();
-            _simDay++;
-            TickSimDay(_simDay);
+            CommitAdvance();
             _statusLabel.Text = _verdict.StatusLine();
         }
 

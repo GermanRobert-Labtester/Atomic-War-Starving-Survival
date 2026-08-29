@@ -129,6 +129,13 @@ namespace Ashfall.Core.Save
         /// <summary>Whether a save file exists for this section.</summary>
         public bool Exists() => _files.FileExists(SavePath);
 
+        private int _writeCount = 0;
+
+        /// <summary>
+        /// Total number of successful writes executed through this store instance.
+        /// </summary>
+        public int WriteCount => _writeCount;
+
         /// <summary>
         /// Persist state. Checksummed flavor wraps it in the integrity
         /// envelope; codec flavor delegates to the codec's Encode. Writes are
@@ -145,7 +152,9 @@ namespace Ashfall.Core.Save
                 try
                 {
                     string payload = _encode(state, _json);
-                    return SaveEnvelopeHelper.TryWriteAtomic(path, payload, _files, _createBackup, _log, _logTag);
+                    bool ok = SaveEnvelopeHelper.TryWriteAtomic(path, payload, _files, _createBackup, _log, _logTag);
+                    if (ok) _writeCount++;
+                    return ok;
                 }
                 catch (Exception e)
                 {
@@ -154,7 +163,9 @@ namespace Ashfall.Core.Save
                 }
             }
 
-            return SaveEnvelopeHelper.TrySaveAtomic(path, state, _json, _files, _createBackup, _log, _logTag);
+            bool saved = SaveEnvelopeHelper.TrySaveAtomic(path, state, _json, _files, _createBackup, _log, _logTag);
+            if (saved) _writeCount++;
+            return saved;
         }
 
         /// <summary>

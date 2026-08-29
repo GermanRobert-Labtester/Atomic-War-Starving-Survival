@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core.Combat
 {
@@ -295,6 +296,63 @@ namespace Ashfall.Core.Combat
             Notify();
             return res;
         }
+
+        /// <summary>
+        /// Side-effect-free preview of a field repair command.
+        /// Shares the same validation path as <see cref="PlayerFieldRepair"/>.
+        /// </summary>
+        public CommandPreview PreviewPlayerFieldRepair(string survivorIdOrCombatantId, long stateVersion = 0)
+        {
+            var c = FindPlayerCombatant(survivorIdOrCombatantId);
+            if (c == null)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairWeapon, "unknown_survivor", "combat.unknown_survivor", stateVersion);
+
+            var weapon = WeaponOf(c);
+            if (weapon == null)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairWeapon, "no_weapon", "combat.no_weapon", stateVersion);
+
+            int cost = WeaponConditionSystem.GetScrapRepairCost(weapon);
+            if (cost <= 0)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairWeapon, "no_scrap_needed", "combat.no_scrap_needed", stateVersion);
+
+            return CommandPreview.Available(
+                PlayerCommandCode.RepairWeapon,
+                stateVersion,
+                new Dictionary<string, double> { { "scrap_cost", cost }, { "condition_restored", 1 } },
+                isIrreversible: false,
+                messageKey: "combat.preview_field_repair");
+        }
+
+        /// <summary>
+        /// Execute a field repair using the same validation path as <see cref="PreviewPlayerFieldRepair"/>.
+        /// Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecutePlayerFieldRepair(string survivorIdOrCombatantId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewPlayerFieldRepair(survivorIdOrCombatantId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.RepairWeapon, preview.StateVersion, currentStateVersion);
+
+            var result = PlayerFieldRepair(survivorIdOrCombatantId, new SeededRng(0));
+            if (!result.Success)
+                return new CommandResult(
+                    PlayerCommandCode.RepairWeapon,
+                    ActionResult.Failed("execute_failed", result.Message),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.RepairWeapon,
+                ActionResult.Success("combat.field_repaired", result.AddedEvents?.Count > 0
+                    ? new Dictionary<string, double> { { "events", result.AddedEvents.Count } }
+                    : null),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
 
         public CombatActionResult PlayerFieldRepair(string survivorIdOrCombatantId, ISeededRng rng)
         {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Combat;
+using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Inventory;
 
 namespace AtomicWar.GodotApp
@@ -27,6 +28,18 @@ namespace AtomicWar.GodotApp
         /// <summary>Optional real survivor backing for health / morale / injury.</summary>
         public SurvivorsHostSession Survivors { get; set; }
 
+        /// <summary>
+        /// Optional equipment-condition authority. When set, the default weapon
+        /// loadout is projected from its Weapon-family instances (condition
+        /// 0–100 → combat 0–1) and combat wear is written back through the
+        /// authority when the encounter ends — one persisted condition per
+        /// weapon, no duplicate durability. Unset: legacy demo literals.
+        /// </summary>
+        public Ashfall.Core.EquipmentConditionSystem? Equipment { get; set; }
+
+        /// <summary>Condition-at-start of bridge-bound weapons, for the post-combat write-back.</summary>
+        private readonly Dictionary<string, float> _boundWeaponConditionAtStart = new();
+
         public string LastEvent { get; private set; } = string.Empty;
         public CombatHostSession(TacticalCombatSystem engine = null!, CombatHostPorts ports = null!)
         {
@@ -36,8 +49,31 @@ namespace AtomicWar.GodotApp
             Engine.OnEncounterEnded += s =>
             {
                 LastEvent = "Combat ended: " + s.OutcomeText;
+                SyncBoundWeaponsAfterCombat(s);
                 RaiseStateChanged();
             };
+        }
+
+        /// <summary>
+        /// Single post-combat write-back point: bridge-bound weapons sync their
+        /// condition delta into the equipment authority. Runs once per
+        /// encounter end; the snapshot is cleared after syncing.
+        /// </summary>
+        private void SyncBoundWeaponsAfterCombat(CombatState state)
+        {
+            if (Equipment == null || _boundWeaponConditionAtStart.Count == 0 || state?.Weapons == null)
+            {
+                _boundWeaponConditionAtStart.Clear();
+                return;
+            }
+
+            foreach (var weapon in state.Weapons)
+            {
+                if (weapon == null || string.IsNullOrEmpty(weapon.InstanceId)) continue;
+                if (_boundWeaponConditionAtStart.TryGetValue(weapon.InstanceId, out float start))
+                    Ashfall.Core.Combat.WeaponEquipmentBridge.SyncAfterCombat(Equipment, weapon, start);
+            }
+            _boundWeaponConditionAtStart.Clear();
         }
 
         /// <summary>Wire the engine's host ports to real inventory + survivor sessions when present.</summary>
@@ -138,36 +174,107 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        // ── Demo entry point ─────────────────────────────────────────────
+        // ── Production Combat Entry Point ────────────────────────────────
 
-        /// <summary>Start a scripted raider encounter at a location (vertical-slice entry point).</summary>
-        public string StartDemoCombat(string locationId, string locationName)
+        /// <summary>
+        /// Start a tactical combat encounter at a location, sourcing survivors and
+        /// weapons from live state when not explicitly provided.
+        /// </summary>
+        public string StartCombat(
+            string locationId,
+            string locationName,
+            IReadOnlyList<CombatantState>? roster = null,
+            IReadOnlyList<WeaponInstanceState>? weapons = null,
+            int enemyCount = 0,
+            int enemyHealth = 0,
+            int? seed = null)
         {
-            if (!Engine.State.Resolved && string.IsNullOrEmpty(Engine.State.EncounterId) == false
+            if (!Engine.State.Resolved && !string.IsNullOrEmpty(Engine.State.EncounterId)
                 && Engine.State.Phase != (int)CombatPhase.Setup)
                 return "Combat already active — finish or retreat first.";
 
-            var players = new List<CombatantState>
+            var players = new List<CombatantState>();
+            if (roster != null && roster.Count > 0)
             {
-                new CombatantState { Id = "p_yuki", Name = "Yuki", SurvivorId = "survivor_yuki", IsPlayer = true, Health = 100, MaxHealth = 100, ArmorRating = 0.4f, CoverRating = 0.3f },
-                new CombatantState { Id = "p_mikhail", Name = "Gunner Mikhail", SurvivorId = "survivor_gunner_mikhail", IsPlayer = true, Health = 100, MaxHealth = 100, ArmorRating = 0.5f, CoverRating = 0.2f }
-            };
-            var weapons = new List<WeaponInstanceState>
+                players.AddRange(roster);
+            }
+            else if (Survivors != null && Survivors.RosterState.Count > 0)
             {
-                new WeaponInstanceState { InstanceId = "w_yuki", WeaponId = "weapon_assault_rifle", OwnerSurvivorId = "survivor_yuki", ConditionPct = 0.95f, AmmoId = "ammo_556", AmmoRemaining = 60 },
-                new WeaponInstanceState { InstanceId = "w_mikhail", WeaponId = "weapon_pipe_rifle", OwnerSurvivorId = "survivor_gunner_mikhail", ConditionPct = 0.8f, AmmoId = "ammo_357", AmmoRemaining = 40 }
-            };
+                foreach (var s in Survivors.RosterState)
+                {
+                    if (s == null || !s.IsAlive) continue;
+                    players.Add(new CombatantState
+                    {
+                        Id = "p_" + s.Id.Replace("survivor_", ""),
+                        Name = s.Id.Replace("survivor_", "").Replace("_", " ").ToUpperInvariant(),
+                        SurvivorId = s.Id,
+                        IsPlayer = true,
+                        Health = (int)Math.Max(1f, s.Health),
+                        MaxHealth = (int)Math.Max(1f, s.MaxHealthCap),
+                        ArmorRating = 0.4f,
+                        CoverRating = 0.3f
+                    });
+                    if (players.Count >= 4) break;
+                }
+            }
+
+            if (players.Count == 0)
+            {
+                players.Add(new CombatantState { Id = "p_yuki", Name = "Yuki", SurvivorId = "survivor_yuki", IsPlayer = true, Health = 100, MaxHealth = 100, ArmorRating = 0.4f, CoverRating = 0.3f });
+                players.Add(new CombatantState { Id = "p_mikhail", Name = "Gunner Mikhail", SurvivorId = "survivor_gunner_mikhail", IsPlayer = true, Health = 100, MaxHealth = 100, ArmorRating = 0.5f, CoverRating = 0.2f });
+            }
+
+            var weaponList = new List<WeaponInstanceState>();
+            if (weapons != null && weapons.Count > 0)
+            {
+                weaponList.AddRange(weapons);
+            }
+            else
+            {
+                for (int i = 0; i < players.Count; i++)
+                {
+                    var p = players[i];
+                    string wId = i == 0 ? "weapon_assault_rifle" : "weapon_pipe_rifle";
+                    string aId = i == 0 ? "ammo_556" : "ammo_357";
+                    // Project the persisted equipment authority when it tracks
+                    // this weapon; otherwise fall back to the demo literal.
+                    var token = Ashfall.Core.Combat.WeaponEquipmentBridge.ToCombatInstance(
+                        Equipment, wId, p.SurvivorId);
+                    bool bound = !string.IsNullOrEmpty(token.InstanceId);
+                    weaponList.Add(new WeaponInstanceState
+                    {
+                        InstanceId = bound ? token.InstanceId : "w_" + p.Id,
+                        WeaponId = wId,
+                        OwnerSurvivorId = p.SurvivorId,
+                        ConditionPct = bound ? token.ConditionPct : 0.9f,
+                        AmmoId = aId,
+                        AmmoRemaining = 50
+                    });
+                    if (bound)
+                        _boundWeaponConditionAtStart[token.InstanceId] = token.ConditionPct;
+                }
+            }
+
+            int finalEnemyCount = enemyCount > 0 ? enemyCount : 3;
+            int finalEnemyHealth = enemyHealth > 0 ? enemyHealth : 45;
 
             bool ok = Engine.BeginEncounter(
-                "enc_demo_" + locationId,
+                "enc_" + locationId + "_" + ScheduleDay(),
                 "exp_" + locationId,
                 locationId,
                 locationName ?? locationId,
                 ScheduleDay(),
-                DemoSeed,
-                players, weapons, enemyCount: 3, enemyHealth: 45);
-            return ok ? "Combat engaged at " + locationName + "." : "Could not start combat.";
+                seed ?? DemoSeed,
+                players,
+                weaponList,
+                enemyCount: finalEnemyCount,
+                enemyHealth: finalEnemyHealth);
+
+            return ok ? "Combat engaged at " + (locationName ?? locationId) + "." : "Could not start combat.";
         }
+
+        public string StartDemoCombat(string locationId, string locationName)
+            => StartCombat(locationId, locationName);
 
         public int ScheduleDay()
         {
@@ -205,10 +312,19 @@ namespace AtomicWar.GodotApp
             return r.Message;
         }
 
-        public string ActionRepair(string subjectId)
+        public CommandResult ActionRepair(string subjectId)
         {
-            var r = Engine.PlayerFieldRepair(subjectId, new SeededRng(RollSeed()));
-            return r.Message;
+            var r = Engine.ExecutePlayerFieldRepair(subjectId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (r.IsSuccess)
+            {
+                LastEvent = r.FailureCode == string.Empty ? "Field repair completed." : $"Field repair: {r.FailureCode}";
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Field repair refused: {r.FailureCode}.";
+            }
+            return r;
         }
 
         public string ActionMoveLane(string subjectId, CombatLane lane)

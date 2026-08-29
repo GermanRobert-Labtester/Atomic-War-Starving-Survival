@@ -1,0 +1,108 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1daily_briefing_modal_ashfall"]
+
+[ext_resource type="Script" path="res://src/UI/DailyBriefingModalContent.cs" id="1_briefing_content"]
+
+[node name="DailyBriefingContent" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.05, 0.06, 0.92)
+
+[node name="Center" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Frame" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(820, 660)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Center/Frame"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="Center/Frame/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Center/Frame/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Center/Frame/Margin/VBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 0
+text = "DAY BRIEFING"
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.827, 0.667, 0.384, 1)
+
+[node name="SkipButton" type="Button" parent="Center/Frame/Margin/VBox/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 32)
+layout_mode = 2
+text = "SKIP [Tab]"
+
+[node name="Sep1" type="HSeparator" parent="Center/Frame/Margin/VBox"]
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Center/Frame/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(780, 520)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BodyLabel" type="RichTextLabel" parent="Center/Frame/Margin/VBox/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = false
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 15
+theme_override_colors/default_color = Color(0.902, 0.878, 0.824, 1)
+
+[node name="Sep2" type="HSeparator" parent="Center/Frame/Margin/VBox"]
+layout_mode = 2
+
+[node name="Footer" type="HBoxContainer" parent="Center/Frame/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AckLabel" type="Label" parent="Center/Frame/Margin/VBox/Footer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PRESS [ENTER] / [SPACE] / [ACK] TO CONTINUE"
+
+[node name="AckButton" type="Button" parent="Center/Frame/Margin/VBox/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 36)
+layout_mode = 2
+text = "ACKNOWLEDGE"

@@ -1,0 +1,119 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1weather_detail_panel_ashfall"]
+
+[ext_resource type="Script" path="res://src/UI/WeatherDetailPanel.cs" id="1_weather_detail"]
+
+[node name="WeatherDetailPanel" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_weather_detail")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.05, 0.92)
+
+[node name="Dialog" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Frame" type="PanelContainer" parent="Dialog"]
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Dialog/Frame"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Content" type="VBoxContainer" parent="Dialog/Frame/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "WEATHER DETAIL"
+horizontal_alignment = 1
+
+[node name="Sep1" type="HSeparator" parent="Dialog/Frame/Margin/Content"]
+layout_mode = 2
+
+[node name="CurrentHeader" type="Label" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "CURRENT CONDITIONS"
+
+[node name="CurrentList" type="VBoxContainer" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(450, 0)
+theme_override_constants/separation = 8
+
+[node name="Sep2" type="HSeparator" parent="Dialog/Frame/Margin/Content"]
+layout_mode = 2
+
+[node name="ForecastHeader" type="Label" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HAZARD FORECAST"
+
+[node name="ForecastList" type="VBoxContainer" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(450, 0)
+theme_override_constants/separation = 8
+
+[node name="Sep3" type="HSeparator" parent="Dialog/Frame/Margin/Content"]
+layout_mode = 2
+
+[node name="WindHeader" type="Label" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "WIND PATTERN"
+
+[node name="WindList" type="VBoxContainer" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(450, 0)
+theme_override_constants/separation = 8
+
+[node name="Sep4" type="HSeparator" parent="Dialog/Frame/Margin/Content"]
+layout_mode = 2
+
+[node name="TrendHeader" type="Label" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "WEATHER TREND"
+
+[node name="TrendList" type="VBoxContainer" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(450, 0)
+theme_override_constants/separation = 8
+
+[node name="Sep5" type="HSeparator" parent="Dialog/Frame/Margin/Content"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "CLOSE [Esc]"

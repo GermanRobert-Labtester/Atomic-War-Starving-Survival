@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "vehicles": [
+    {
+      "vehicle_id": "vehicle_utility_quad",
+      "display_name": "Utility Quad",
+      "max_fuel": 40,
+      "cargo_capacity": 90,
+      "speed_multiplier": 1.3,
+      "terrain_type": "rough",
+      "condition_max": 100,
+      "fuel_consumption_per_km": 0.3,
+      "breakdown_threshold": 0.2,
+      "default_attachments": []
+    },
+    {
+      "vehicle_id": "vehicle_dirt_bike",
+      "display_name": "Dirt Bike",
+      "max_fuel": 25,
+      "cargo_capacity": 30,
+      "speed_multiplier": 1.8,
+      "terrain_type": "rough",
+      "condition_max": 100,
+      "fuel_consumption_per_km": 0.2,
+      "breakdown_threshold": 0.25,
+      "default_attachments": []
+    },
+    {
+      "vehicle_id": "vehicle_cargo_truck",
+      "display_name": "Cargo Truck",
+      "max_fuel": 80,
+      "cargo_capacity": 250,
+      "speed_multiplier": 1.6,
+      "terrain_type": "road",
+      "condition_max": 100,
+      "fuel_consumption_per_km": 0.5,
+      "breakdown_threshold": 0.15,
+      "default_attachments": ["winch_kit"]
+    }
+  ]
+}

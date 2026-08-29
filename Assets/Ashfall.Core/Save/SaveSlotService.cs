@@ -32,17 +32,19 @@ public class SaveSlotService
     private readonly IJsonSerializer _json;
     private readonly ILog _log;
     private readonly string _basePath;
+    private readonly IWallClock _wallClock;
 
     /// <summary>
     /// Create a new save slot service rooted at the given base path.
     /// Typically the base path is the globalized user:// directory.
     /// </summary>
-    public SaveSlotService(IFileIO files, IJsonSerializer json, ILog log, string basePath)
+    public SaveSlotService(IFileIO files, IJsonSerializer json, ILog log, string basePath, IWallClock? wallClock = null)
     {
         _files = files ?? throw new ArgumentNullException(nameof(files));
         _json = json ?? throw new ArgumentNullException(nameof(json));
         _log = log ?? throw new ArgumentNullException(nameof(log));
         _basePath = basePath ?? throw new ArgumentNullException(nameof(basePath));
+        _wallClock = wallClock ?? SystemWallClock.Instance;
     }
 
     /// <summary>Resolve the root directory for a specific slot.</summary>
@@ -277,6 +279,13 @@ public class SaveSlotService
             {
                 sectionErrors.Add($"Section {i} ({section.sectionName}): checksum is empty for a non-empty payload.");
             }
+
+            if (!string.IsNullOrEmpty(envelope.manifest.generationId) &&
+                !string.IsNullOrEmpty(section.generationId) &&
+                !string.Equals(envelope.manifest.generationId, section.generationId, StringComparison.Ordinal))
+            {
+                sectionErrors.Add($"Section {i} ({section.sectionName}): generation mismatch (manifest '{envelope.manifest.generationId}', section '{section.generationId}').");
+            }
         }
         }
 
@@ -290,8 +299,14 @@ public class SaveSlotService
 
         if (errors.Count > 0 || sectionErrors.Count > 0)
         {
-            errors.AddRange(sectionErrors);
-            return AggregateValidationResult.Invalid(errors.ToArray());
+            var allErrors = new List<string>(errors);
+            allErrors.AddRange(sectionErrors);
+            return new AggregateValidationResult
+            {
+                IsValid = false,
+                Errors = allErrors,
+                SectionErrors = new List<string>(sectionErrors)
+            };
         }
 
         return AggregateValidationResult.Valid();
@@ -308,7 +323,7 @@ public class SaveSlotService
         string targetPath = GetAggregatePath(profileId, slotId);
         string? dir = Path.GetDirectoryName(targetPath);
         if (!string.IsNullOrEmpty(dir) && !_files.DirectoryExists(dir))
-            Directory.CreateDirectory(dir);
+            _files.CreateDirectory(dir);
 
         string tempPath = targetPath + ".tmp";
         string backupPath = targetPath + ".bak";
@@ -359,7 +374,8 @@ public class SaveSlotService
             {
                 try
                 {
-                    File.Copy(targetPath, backupPath, overwrite: true);
+                    string existing = _files.ReadAllText(targetPath);
+                    _files.WriteAllText(backupPath, existing);
                 }
                 catch (Exception ex)
                 {
@@ -367,17 +383,15 @@ public class SaveSlotService
                 }
             }
 
-            File.Move(tempPath, targetPath, overwrite: true);
-
-            // Clean up temp if it still exists (Move can fail on some filesystems).
-            try { if (_files.FileExists(tempPath)) File.Delete(tempPath); } catch (Exception ex) { _log.Warn($"SaveSlotService: temp cleanup failed: {ex.Message}"); }
+            _files.WriteAllText(targetPath, readBack);
+            if (_files.FileExists(tempPath))
+                _files.DeleteFile(tempPath);
 
             return true;
         }
         catch (Exception ex)
         {
-            _log.Error($"SaveSlotService: atomic write failed for slot '{slotId}': {ex.Message}");
-            try { if (_files.FileExists(tempPath)) File.Delete(tempPath); } catch (Exception cleanupEx) { _log.Warn($"SaveSlotService: temp cleanup failed after atomic write error: {cleanupEx.Message}"); }
+            _log.Error($"SaveSlotService: failed to write aggregate envelope for slot '{slotId}': {ex.Message}");
             return false;
         }
     }
@@ -589,8 +603,11 @@ public class SaveSlotService
     }
 
     /// <summary>
-    /// Check whether a slot is in an iron-man terminal state and should reject
-    /// manual restore.
+    /// Check whether a slot is in a terminal (run-finalized) state and should
+    /// reject manual restore. Any campaign — iron-man or normal — whose run has
+    /// been finalized as a loss is sealed: the envelope remains on disk as an
+    /// inspectable memorial/archive, but normal continuation is blocked so a
+    /// completed campaign cannot resurrect through a stale aggregate save.
     /// </summary>
     public bool IsIronManTerminal(SaveProfileId profileId, SaveSlotId slotId)
     {
@@ -598,8 +615,29 @@ public class SaveSlotService
         if (manifest == null)
             return false;
 
-        return manifest.mode == CampaignMode.IronMan &&
-               manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+        // TerminalLoss seals the slot regardless of campaign mode. Iron Man is
+        // the historical producer; run-finalization (Task 121) now marks any
+        // ended campaign TerminalLoss, and both must block continuation.
+        return manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+    }
+
+    /// <summary>
+    /// Seal a slot as terminal. Pure Core: flips the manifest's
+    /// ironManTerminalState flag and records the final day. Wall-clock
+    /// stamping remains the host's responsibility (Invariant 4 — Core is
+    /// deterministic; the host owns <see cref="WallClock"/> per task 116).
+    /// Idempotent.
+    /// </summary>
+    public bool MarkTerminal(SaveProfileId profileId, SaveSlotId slotId, int finalDay)
+    {
+        var manifest = LoadManifest(profileId, slotId);
+        if (manifest == null)
+            return false;
+
+        manifest.ironManTerminalState = IronManTerminalState.TerminalLoss;
+        manifest.currentDay = finalDay;
+        SaveManifest(profileId, slotId, manifest);
+        return true;
     }
 
     /// <summary>
@@ -709,7 +747,12 @@ public class SaveSlotService
         try
         {
             string quarantinePath = path + "." + slotId.Value + QuarantineExtension;
-            File.Move(path, quarantinePath, overwrite: true);
+            if (_files.FileExists(path))
+            {
+                string content = _files.ReadAllText(path);
+                _files.WriteAllText(quarantinePath, content);
+                _files.DeleteFile(path);
+            }
             _log.Warn($"SaveSlotService: quarantined corrupt save for slot '{slotId}' to '{quarantinePath}'. Reason: {reason}");
         }
         catch (Exception ex)

@@ -103,66 +103,21 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by res://assets/ui/panels/SurvivalDetailPanel.tscn; SceneBinder resolves typed unique-name nodes once.
+            // Sibling refresh code is unchanged.
+            var binder = new SceneBinder(this, typeof(SurvivalDetailPanel));
+            binder.Require<VBoxContainer>("HealthData");
+            binder.Require<VBoxContainer>("NeedsData");
+            binder.Require<VBoxContainer>("RadiationData");
+            binder.Require<VBoxContainer>("StatusData");
+            binder.Require<Button>("CloseButton");
+            _healthData = binder.Get<VBoxContainer>("HealthData");
+            _needsData = binder.Get<VBoxContainer>("NeedsData");
+            _radiationData = binder.Get<VBoxContainer>("RadiationData");
+            _statusData = binder.Get<VBoxContainer>("StatusData");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("SURVIVAL DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblHealthTitle = AshfallUiHelpers.MakeSectionHeader("ROSTER HEALTH");
-            vbox.AddChild(_lblHealthTitle);
-            _healthData = new VBoxContainer();
-            _healthData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _healthData.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_healthData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblNeedsTitle = AshfallUiHelpers.MakeSectionHeader("AVERAGE NEEDS");
-            vbox.AddChild(_lblNeedsTitle);
-            _needsData = new VBoxContainer();
-            _needsData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _needsData.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_needsData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblRadiationTitle = AshfallUiHelpers.MakeSectionHeader("RADIATION OVERVIEW");
-            vbox.AddChild(_lblRadiationTitle);
-            _radiationData = new VBoxContainer();
-            _radiationData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _radiationData.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_radiationData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblStatusTitle = AshfallUiHelpers.MakeSectionHeader("STATUS SUMMARY");
-            vbox.AddChild(_lblStatusTitle);
-            _statusData = new VBoxContainer();
-            _statusData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _statusData.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_statusData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
         }
 
         public void Open()

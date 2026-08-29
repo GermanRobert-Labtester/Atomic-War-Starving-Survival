@@ -57,6 +57,26 @@ namespace AtomicWar.GodotApp
         private readonly System.Collections.Generic.Dictionary<string, RadSurvivorWrapper> _radStates;
 
         public string LastEvent { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Raised when a survivor dies through the needs/radiation survival
+        /// loop. Carries the survivor id, the normalized cause, and a detail
+        /// string. The host's SurvivorFateSystem is the subscriber — this is
+        /// the single needs/radiation death feed into the unified pipeline.
+        /// </summary>
+        public event System.Action<string, Ashfall.Core.Survivors.SurvivorDeathCause, string> OnSurvivorDied;
+
+        /// <summary>
+        /// True while the survivor is dying of acute radiation sickness — used
+        /// to attribute a needs death at 0 HP to radiation rather than to
+        /// generic privation. Checked when OnDied fires.
+        /// </summary>
+        private bool IsDyingOfRadiation(string id)
+        {
+            var rad = RadStateFor(id);
+            return rad != null && rad.HasAcuteRadiationSickness;
+        }
+
         private sealed class RadSurvivorWrapper : SurvivorRadState { }
 
         public SurvivorsHostSession()
@@ -82,7 +102,13 @@ namespace AtomicWar.GodotApp
             Needs.OnNeedChanged += (s, kind, v) => RaiseStateChanged();
             Needs.OnDied += s =>
             {
+                // Normalize the cause: a 0-HP death while in acute radiation
+                // sickness is a radiation death; everything else is privation.
+                var cause = IsDyingOfRadiation(s.Id)
+                    ? Ashfall.Core.Survivors.SurvivorDeathCause.Radiation
+                    : Ashfall.Core.Survivors.SurvivorDeathCause.Needs;
                 LastEvent = $"{s.Id} has died.";
+                OnSurvivorDied?.Invoke(s.Id, cause, LastEvent);
                 RaiseStateChanged();
             };
 

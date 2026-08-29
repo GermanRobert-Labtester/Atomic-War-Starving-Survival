@@ -105,17 +105,17 @@ namespace AtomicWar.GodotApp
             });
         }
 
-        // ── Demo actions (headless / dev buttons) ─────────────────────
+        // ── Production Maritime Actions ──────────────────────────────
 
-        public string StartDiveDemo(string diverId, string operatorId)
+        public string StartDive(string diverId, string operatorId, float initialAir = 120f, string siteId = "")
         {
-            Dive.StartDive(diverId, operatorId, 120f);
-            LastEvent = $"Dive started: {diverId} (air 120s).";
+            Dive.StartDive(diverId, operatorId, initialAir, siteId);
+            LastEvent = $"Dive started: {diverId} (air {initialAir:F0}s).";
             RaiseStateChanged();
             return LastEvent;
         }
 
-        public string TickDiveDemo(float seconds)
+        public string TickDive(float seconds)
         {
             if (!Dive.IsActive) return "No active dive.";
             Dive.Tick(seconds);
@@ -124,7 +124,9 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string CrankDiveDemo()
+        public string TickDiveDemo(float seconds) => TickDive(seconds);
+
+        public string CrankDiveCompressor()
         {
             if (!Dive.IsActive) return "No active dive.";
             Dive.CrankCompressor();
@@ -133,7 +135,9 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string AdvanceDiveDemo(int noise)
+        public string CrankDiveDemo() => CrankDiveCompressor();
+
+        public string AdvanceDiveRoom(int noise = 10)
         {
             if (!Dive.IsActive) return "No active dive.";
             bool ok = Dive.AdvanceToNextRoom(noise);
@@ -144,7 +148,9 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string AbortDiveDemo(bool emergency = false)
+        public string AdvanceDiveDemo(int noise) => AdvanceDiveRoom(noise);
+
+        public string AbortDive(bool emergency = false)
         {
             if (!Dive.IsActive) return "No active dive.";
             Dive.AbortDive(emergency);
@@ -153,7 +159,9 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string DecompressDemo(float seconds = 10f)
+        public string AbortDiveDemo(bool emergency = false) => AbortDive(emergency);
+
+        public string Decompress(float seconds = 10f)
         {
             if (!Dive.IsActive) return "No active dive.";
             Dive.StartDecompression();
@@ -163,7 +171,9 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string ScavengeDemo(string locationId)
+        public string DecompressDemo(float seconds = 10f) => Decompress(seconds);
+
+        public string ScavengeLocation(string locationId)
         {
             Scavenge.SetCurrentDay(1);
             var rolls = Scavenge.RollLootTable(locationId, LootNodes, locationRads: 2f, hasBioHazard: false);
@@ -182,7 +192,9 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string ContaminateDemo(string survivorId, string locationId)
+        public string ScavengeDemo(string locationId) => ScavengeLocation(locationId);
+
+        public string Contaminate(string survivorId, string locationId)
         {
             Psychology.ApplyContamination(survivorId, locationId, moraleAtVisit: 50f, "generic");
             LastEvent = Psychology.HasContamination(survivorId, PsychologicalContaminationSystem.Contam_ThousandYardStare)
@@ -192,9 +204,18 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        // ── Safe cracking demo actions ───────────────────────────────
+        public string ContaminateDemo(string survivorId, string locationId) => Contaminate(survivorId, locationId);
 
-        /// <summary>Register a demo safe.</summary>
+        // ── Safe cracking production actions ──────────────────────────
+
+        /// <summary>Register a safe definition.</summary>
+        public string RegisterSafe(SafeDefinition def, string locationId)
+        {
+            if (def == null) return "Invalid safe definition.";
+            bool ok = SafeCrack.RegisterSafe(def, locationId);
+            return ok ? $"Safe {def.id} registered at {locationId}." : $"Safe {def.id} already registered.";
+        }
+
         public string RegisterSafeDemo(string safeId = "safe_km19_oil_tin", string locationId = "loc_cut_kilometre_19", string roomId = "room_km19_oil_tin")
         {
             var def = new SafeDefinition
@@ -213,12 +234,11 @@ namespace AtomicWar.GodotApp
                     new SafeLootEntry { itemId = "bandages", minQuantity = 1, maxQuantity = 2, weightKg = 0.5f }
                 }
             };
-            bool ok = SafeCrack.RegisterSafe(def, locationId);
-            return ok ? $"Safe {safeId} registered at {locationId}." : $"Safe {safeId} already registered.";
+            return RegisterSafe(def, locationId);
         }
 
         /// <summary>Inspect a safe.</summary>
-        public string InspectSafeDemo(string safeId)
+        public string InspectSafe(string safeId)
         {
             var safe = SafeCrack.InspectSafe(safeId);
             if (safe == null) return $"Unknown safe: {safeId}";
@@ -226,8 +246,10 @@ namespace AtomicWar.GodotApp
                    $"noise={safe.cumulativeNoise:F2}, opened={safe.isOpened}, jammed={safe.isJammed}";
         }
 
+        public string InspectSafeDemo(string safeId) => InspectSafe(safeId);
+
         /// <summary>Attempt to open a safe with a guess.</summary>
-        public string AttemptSafeDemo(string safeId, int[] guess, float toolCondition = 1.0f)
+        public string AttemptSafe(string safeId, int[] guess, float toolCondition = 1.0f)
         {
             var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
             var feedback = SafeCrack.Attempt(safeId, guess, toolCondition, rng);
@@ -236,8 +258,11 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
+        public string AttemptSafeDemo(string safeId, int[] guess, float toolCondition = 1.0f)
+            => AttemptSafe(safeId, guess, toolCondition);
+
         /// <summary>Attempt accessible mode.</summary>
-        public string AttemptSafeAccessibleDemo(string safeId, float confidence = 0.5f, float toolCondition = 1.0f, float skill = 0.3f)
+        public string AttemptSafeAccessible(string safeId, float confidence = 0.5f, float toolCondition = 1.0f, float skill = 0.3f)
         {
             var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
             var feedback = SafeCrack.AttemptAccessible(safeId, confidence, toolCondition, skill, rng);
@@ -246,8 +271,11 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
+        public string AttemptSafeAccessibleDemo(string safeId, float confidence = 0.5f, float toolCondition = 1.0f, float skill = 0.3f)
+            => AttemptSafeAccessible(safeId, confidence, toolCondition, skill);
+
         /// <summary>Transfer loot from an opened safe.</summary>
-        public string TransferLootDemo(string safeId)
+        public string TransferSafeLoot(string safeId)
         {
             var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
             var loot = SafeCrack.TransferLoot(safeId, rng);

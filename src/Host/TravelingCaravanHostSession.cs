@@ -36,9 +36,9 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        // ── Demo actions (dev buttons / headless) ─────────────────────
+        // ── Production intent methods ─────────────────────────────────
 
-        public string SpawnDemoCaravan(string nodeId)
+        public string SpawnCaravan(string nodeId)
         {
             Engine.SpawnCaravan(
                 "caravan_menders",
@@ -50,7 +50,7 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string TickDemo()
+        public string TickRoute()
         {
             Engine.DailyTick();
             LastEvent = "Caravan day ticked.";
@@ -58,7 +58,7 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string BuyDemo(string caravanId, string itemId, int amount, ref int playerRations)
+        public string Buy(string caravanId, string itemId, int amount, ref int playerRations)
         {
             bool ok = Engine.TryBuyItem(caravanId, itemId, amount, ref playerRations);
             LastEvent = ok

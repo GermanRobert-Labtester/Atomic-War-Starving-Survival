@@ -350,7 +350,95 @@ namespace AtomicWar.GodotApp
         {
             var report = ExpeditionHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return EmitSummaryFromHeadlessReport("expedition_selftest", report);
+            int baseResult = EmitSummaryFromHeadlessReport("expedition_selftest", report);
+            int vehicleResult = RunExpeditionVehicleLogisticsGates();
+            return baseResult != 0 || vehicleResult != 0 ? 1 : 0;
+        }
+
+        /// <summary>
+        /// Task #101 gates: vehicle dispatch preparation (fuel gate + profile),
+        /// driven travel beats foot, estimate math matches the selection, the
+        /// weapon-condition bridge feeds readiness into estimates, and the
+        /// in-flight vehicle state survives the aggregate save round-trip.
+        /// </summary>
+        private static int RunExpeditionVehicleLogisticsGates()
+        {
+            int errors = 0;
+            void Check(bool ok, string label)
+            {
+                if (ok) GD.Print($"[PASS] {label}");
+                else { GD.PrintErr($"[FAIL] {label}"); errors++; }
+            }
+
+            var session = new ExpeditionHostSession();
+
+            // Garage: an inline catalog (no FS dependence), quad acquired fresh.
+            session.Vehicles.LoadCatalog(new VehicleCatalog
+            {
+                vehicles = new System.Collections.Generic.List<VehicleDefinition>
+                {
+                    new VehicleDefinition
+                    {
+                        vehicle_id = ExpeditionHostSession.StarterVehicleId,
+                        display_name = "Utility Quad",
+                        max_fuel = 40f,
+                        cargo_capacity = 90f,
+                        speed_multiplier = 1.3f,
+                        fuel_consumption_per_km = 0.3f,
+                    },
+                }
+            });
+            Check(session.Vehicles.AcquireVehicle(ExpeditionHostSession.StarterVehicleId).Status == ActionResult.StatusKind.Success,
+                "V1: starter quad acquired into the garage.");
+
+            // Estimate: vehicle is faster and carries fuel cost; foot does not.
+            string target = "loc_the_allotments";
+            var foot = session.EstimateExpedition(target, ExpeditionStance.Stealth)!.Value.estimate;
+            var driven = session.EstimateExpedition(target, ExpeditionStance.Stealth, ExpeditionHostSession.StarterVehicleId)!.Value.estimate;
+            Check(!foot.usingVehicle && foot.fuelRequired == 0f, "V2: foot estimate has no fuel cost.");
+            Check(driven.usingVehicle && driven.fuelRequired > 0f && driven.totalTicks < foot.totalTicks,
+                "V3: vehicle estimate is faster with fuel cost.");
+
+            // Weapon-condition bridge feeds readiness into the encounter risk.
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var equipment = new EquipmentConditionSystem(new SeededRng(7), inv, new CraftingSystem(inv));
+            equipment.RegisterItem("eq_gate_rifle", "weapon_bolt_rifle", "survivor_a", EquipmentFamily.Weapon);
+            equipment.UseItem("eq_gate_rifle", 85f); // condition 15 → degraded readiness
+            float readiness = Ashfall.Core.Combat.WeaponEquipmentBridge.Readiness(equipment, "eq_gate_rifle");
+            var degraded = session.EstimateExpedition(target, ExpeditionStance.Stealth, "", readiness, Ashfall.Core.Combat.WeaponEquipmentBridge.JamRisk(equipment, "eq_gate_rifle"))!.Value.estimate;
+            Check(readiness < 1f && degraded.encounterRiskPerTick > foot.encounterRiskPerTick,
+                "V4: degraded weapon readiness raises the encounter-risk estimate.");
+
+            // Dispatch preparation: fuel gate blocks, then a full tank passes
+            // and the sortie starts with the vehicle profile attached.
+            session.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.fuel = 0.5f;
+            var refused = session.StartExpedition("survivor_a", target, ExpeditionStance.Stealth, vehicleId: ExpeditionHostSession.StarterVehicleId);
+            Check(!refused.IsSuccess && session.Engine.ActiveCount == 0,
+                "V5: depleted fuel blocks dispatch with a refuel message.");
+            session.Vehicles.Refuel(ExpeditionHostSession.StarterVehicleId, 60f);
+            var sent = session.DispatchSortie("survivor_a", target, ExpeditionStance.Stealth, 1, ExpeditionHostSession.StarterVehicleId);
+            var active = session.Engine.Active["survivor_a"];
+            Check(session.Engine.ActiveCount == 1 && active.vehicleId == ExpeditionHostSession.StarterVehicleId && active.vehicleSpeedMultiplier > 1f,
+                "V6: fueled dispatch starts a vehicle sortie with a speed profile.");
+
+            // Force a deterministic mid-route breakdown and confirm the
+            // aggregate round-trip keeps the in-flight vehicle state.
+            active.vehicleBreakdownChancePerTick = 1f; // guaranteed next travel tick
+            session.TickHours(1f);
+            Check(active.vehicleBrokenDown, "V7: seeded mid-route breakdown flips the sortie to foot.");
+
+            var aggregate = session.CaptureSaveAggregate();
+            var restored = new ExpeditionHostSession();
+            restored.RestoreSaveAggregate(aggregate);
+            Check(restored.Engine.Active["survivor_a"].vehicleBrokenDown &&
+                  restored.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId) != null,
+                "V8: aggregate save round-trip restores the sortie and the garage.");
+
+            // Repair clears the breakdown and tops the condition.
+            restored.RepairVehicle(ExpeditionHostSession.StarterVehicleId, 100f);
+            Check(restored.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.condition >= 100f,
+                "V9: garage repair restores the vehicle.");
+            return errors == 0 ? 0 : 1;
         }
 
         /// <summary>The UnityEngine.* compatibility shim (src/Bridge/) has been fully removed.
@@ -900,12 +988,12 @@ namespace AtomicWar.GodotApp
 
                 // 4. Dive-room progression + air / noise / compromised state.
                 Check(!session.Dive!.IsActive, "dive starts idle");
-                session.StartDiveDemo("diver_selftest", "operator_selftest");
+                session.StartDive("diver_selftest", "operator_selftest");
                 Check(session.Dive.IsActive, "dive launches");
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 120f) < 0.001f, "dive starts at full air (120s)");
-                session.TickDiveDemo(60f);
+                session.TickDive(60f);
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 60f) < 0.001f, "air consumed on tick");
-                session.CrankDiveDemo();
+                session.CrankDiveCompressor();
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 90f) < 0.001f, "compressor crank restores air");
                 bool advanced = session.Dive.AdvanceToNextRoom(50);
                 Check(advanced && session.Dive.CurrentRoomIndex == 1 && session.Dive.NoiseLevel == 50,
@@ -1144,7 +1232,7 @@ namespace AtomicWar.GodotApp
                 session.UnlockAndClerk();
                 for (int i = 0; i < 12; i++)
                     session.TickDay();
-                session.HonourDemoLevy();
+                session.HonourCensusLevy();
 
                 var save = session.CaptureSave();
                 Check(!string.IsNullOrEmpty(save.Checksum), "capture stamps checksum");
@@ -1384,7 +1472,7 @@ namespace AtomicWar.GodotApp
 
                 // ── 5. DiveInstanceRunner ───────────────────────────────
                 var bus = new SimpleEventBus();
-                var flags = new InMemoryFlagLedger();
+                var flags = new Ashfall.Core.Flags.CampaignConsequenceLedger();
                 var rng = new SeededRng(424242);
                 var site = new DiveSiteDefinition("site_test_dive", 120, 0.3, "keeper_thread_0");
                 var dive = new DiveInstanceRunner(bus, flags, rng, site);
@@ -2566,20 +2654,20 @@ namespace AtomicWar.GodotApp
 
                 // ── 2. Wasteland Expedition Scavenging Sortie Verification ──
                 var expeditions = ExpeditionHostSession.Create(dataDirectory);
-                Check(expeditions.DemoDefinitions.Count >= 2, "expedition definitions loaded");
+                Check(expeditions.Definitions.Count >= 2, "expedition definitions loaded");
 
-                var target = expeditions.DemoDefinitions[0];
+                var target = expeditions.Definitions[0];
                 Check(target != null && target.id == "loc_the_allotments", "target is The Works Allotment Commune");
 
-                string startMsg = expeditions.StartDemoExpedition("survivor_dr_sarah_chen", target!.id);
-                Check(expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
+                var startResult = expeditions.StartExpedition("survivor_dr_sarah_chen", target!.id);
+                Check(startResult.IsSuccess && expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
                 var activeExp = expeditions.Engine.Active["survivor_dr_sarah_chen"];
                 Check(activeExp != null && activeExp.phase == (int)ExpeditionPhase.Outbound, "expedition starts in Outbound phase");
 
                 // Advance hours until arrival / looting
                 for (int h = 0; h < 6; h++)
                 {
-                    expeditions.TickDemoHours(2f);
+                    expeditions.TickHours(2f);
                 }
 
                 // Push luck or advance to looting
@@ -2651,7 +2739,7 @@ namespace AtomicWar.GodotApp
 
                 // 5.5 Start craft → queue grows
                 int craftBandageBefore = craftInv.CountById("bandage");
-                string craftStartMsg = craftSession.Start("recipe_bandage");
+                var craftStartResult = craftSession.Start("recipe_bandage");
                 Check(craftSession.Engine.ActiveCraftCount == 1, "StartCraft queues one entry");
 
 
@@ -2660,8 +2748,8 @@ namespace AtomicWar.GodotApp
                 Check(mechAfter < 5, $"ingredient count decreased after start (was 5, now {mechAfter})");
 
                 // 5.7 Invalid recipe ID → Start returns error, queue unchanged
-                string badCraftMsg = craftSession.Start("recipe_does_not_exist");
-                Check(badCraftMsg != null && badCraftMsg.Length > 0, "invalid recipe ID returns non-empty error message");
+                var badCraftResult = craftSession.Start("recipe_does_not_exist");
+                Check(!badCraftResult.IsSuccess, "invalid recipe ID returns blocked/failed result");
                 Check(craftSession.Engine.ActiveCraftCount == 1, "invalid recipe does not grow queue");
 
 

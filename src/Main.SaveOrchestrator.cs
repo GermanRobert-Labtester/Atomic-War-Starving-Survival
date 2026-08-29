@@ -84,104 +84,8 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void ResetAllSessions()
         {
-            _core = null!;
-            _holdfastRuntime = null!;
-            if (_holdfastTerminal != null && _holdfastTerminal.IsInsideTree())
-                RemoveChild(_holdfastTerminal);
-            _holdfastTerminal = null!;
-            _dutyRoster?.Dispose();
-            _dutyRoster = null!;
-            _expansions?.Dispose();
-            _expansions = null!;
-            _phantomMemory?.Dispose();
-            _phantomMemory = null!;
-            _phase0?.Dispose();
-            _phase0 = null!;
-            _doseLedger?.Dispose();
-            _doseLedger = null!;
-            _inventory = null!;
-            _survivors = null!;
-            _economy?.Dispose();
-            _economy = null!;
-            _utilityAi = null!;
-            _journal = null!;
-            _muster?.Dispose();
-            _muster = null!;
-            _verdict?.Dispose();
-            _verdict = null!;
-            _maritime?.Dispose();
-            _maritime = null!;
-            if (_expeditions != null)
-                _expeditions.OnEncounterSurfaced -= OnExpeditionEncounterSurfaced;
-            _expeditions?.Dispose();
-            _expeditions = null!;
-            _combat?.Dispose();
-            _combat = null!;
-            _combatDirty = false;
-            _narrative?.Dispose();
-            _narrative = null!;
-            _medical?.Dispose();
-            _medical = null!;
-            _world?.Dispose();
-            _world = null!;
-            _crafting?.Dispose();
-            _crafting = null!;
-            _caravans?.Dispose();
-            _caravans = null!;
-            _yearOfAsh = null!;
-            _startingLevel?.Dispose();
-            _startingLevel = null!;
-            _greenhouse?.Dispose();
-            _greenhouse = null!;
-            _sharedResearch = null!;
-            // The Year of Ash panel holds widgets bound to the old session; drop it
-            // so BuildYearOfAshPanel re-creates and rebinds to the fresh session.
-            if (_yearOfAshPanel != null && _rightColumn != null && _yearOfAshPanel.IsInsideTree())
-                _rightColumn.RemoveChild(_yearOfAshPanel);
-            _yearOfAshPanel = null!;
-            _factionWarMap = null!;
-            _geothermalWidget = null!;
-            _radonWidget = null!;
-            _radioTerminal = null!;
-            _radio?.Dispose();
-            _radio = null!;
-
-            // Journal: drop the codex + book so they re-create and re-bind once;
-            // keeping the book and re-binding would stack OnClosed handlers.
-            if (_journalBook != null && _journalBook.IsInsideTree())
-                RemoveChild(_journalBook);
-            _journalBook = null!;
-            _journalCodex = null!;
-
-            _verdictDirty = false;
-            _maritimeDirty = false;
-            _expeditionDirty = false;
-            _narrativeDirty = false;
-            _hostEventAdapterDirty = false;
-            _medicalDirty = false;
-            _worldDirty = false;
-            _craftingDirty = false;
-            _caravansDirty = false;
-            _phase0Dirty = false;
-            _campaignDayDirty = false;
-            _startingLevelDirty = false;
-            _greenhouseDirty = false;
-
-            ResetExpandedShelterSessions();
-
-            // Registry-derived cleanup: every registered section file (and its
-            // .bak) is removed from the global user:// directory so a new
-            // game starts from a clean slate. Slots are untouched — they are
-            // independent campaigns.
-            foreach (var fileName in SaveSectionRegistry.SectionFileNames.Values)
-            {
-                string p = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), fileName);
-                if (System.IO.File.Exists(p))
-                    System.IO.File.Delete(p);
-                string bak = p + ".bak";
-                if (System.IO.File.Exists(bak))
-                    System.IO.File.Delete(bak);
-            }
+            ResetAllSessionsInMemory();
+            DeleteGlobalSavesOnDisk();
             GD.Print("[Ashfall Godot] New game: all sessions reset, saves cleared.");
         }
 
@@ -249,6 +153,7 @@ namespace AtomicWar.GodotApp
             SetupExpansions();
             SetupGreenhouse();
             SetupExpandedShelterSystems();
+            SetupOnboarding();
 
             UpdateHud();
         }
@@ -289,25 +194,6 @@ namespace AtomicWar.GodotApp
             _statusLabel.Text = "Save loaded. The ledger continues.";
         }
 
-        /// <summary>Remove the holdfast base + trade saves (and backup) so a
-        /// completed run cannot be continued into an immediate game-over loop.
-        /// With the envelope-primary save the authoritative copy is the active
-        /// slot's campaign envelope, so that (and its backup) goes too.</summary>
-        private void ClearContinuableSaves()
-        {
-            if (System.IO.File.Exists(HoldfastSaveStore.SavePath))
-                System.IO.File.Delete(HoldfastSaveStore.SavePath);
-            if (System.IO.File.Exists(HoldfastTradeSaveStore.SavePath))
-                System.IO.File.Delete(HoldfastTradeSaveStore.SavePath);
-            if (System.IO.File.Exists(HoldfastTradeSaveStore.BackupPath))
-                System.IO.File.Delete(HoldfastTradeSaveStore.BackupPath);
-
-            if (_saveLoadHost?.ActiveSlotId != null)
-            {
-                _saveLoadHost.ClearActiveSlotEnvelope();
-            }
-        }
-
         private void SaveAll() => SaveAll(playCue: true);
 
         private void SaveAll(bool playCue)
@@ -345,6 +231,7 @@ namespace AtomicWar.GodotApp
             SavePowerGrid();
             SaveMedicalWard();
             SaveMemorial();
+            SaveOnboarding();
             // ── Audit-PR triad repairs ───────────────────────────────────
             SaveSilentFoundry();
             SaveDisease();
@@ -353,6 +240,7 @@ namespace AtomicWar.GodotApp
             // ─────────────────────────────────────────────────────────────
             SaveAllExpandedShelterSystems();
             SaveSurvivorSocial();
+            SaveSurvivorFate();
             SaveCampaignDay();
             if (playCue)
                 _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);

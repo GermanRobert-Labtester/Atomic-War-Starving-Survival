@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 
+using Ashfall.Core.PlayerCommand;
+
 namespace Ashfall.Core
 {
     [Serializable]
@@ -147,6 +149,63 @@ namespace Ashfall.Core
             OnSecurityChanged?.Invoke();
             return ActionResult.Success("airlock.door_repaired",
                 new Dictionary<string, double> { { "integrity", _state.blastDoorIntegrity } });
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a door repair action.
+        /// Shares the same validation path as <see cref="RepairDoor"/>.
+        /// </summary>
+        public CommandPreview PreviewRepairDoor(float amount, long stateVersion = 0)
+        {
+            if (amount <= 0f)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairDoor, "invalid_amount", "airlock.invalid_amount", stateVersion);
+
+            float projected = Math.Min(100f, _state.blastDoorIntegrity + amount);
+            var projectedState = AirlockDoorState.Secure;
+            if (projected > 50f && _state.doorState == AirlockDoorState.Breached)
+                projectedState = AirlockDoorState.Secure;
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "integrity", projected }
+            };
+            if (_state.doorState == AirlockDoorState.Breached && projectedState == AirlockDoorState.Secure)
+                deltas["door_state"] = (int)AirlockDoorState.Secure;
+
+            return CommandPreview.Available(
+                PlayerCommandCode.RepairDoor,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "airlock.preview_repair");
+        }
+
+        /// <summary>
+        /// Execute a door repair using the same validation path as <see cref="PreviewRepairDoor"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteRepairDoor(float amount, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewRepairDoor(amount, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.RepairDoor, preview.StateVersion, currentStateVersion);
+
+            var result = RepairDoor(amount);
+            if (!result.IsSuccess)
+                return new CommandResult(
+                    PlayerCommandCode.RepairDoor,
+                    result,
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.RepairDoor,
+                result,
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         public AirlockSecurityState CaptureState() => CloneState(_state);

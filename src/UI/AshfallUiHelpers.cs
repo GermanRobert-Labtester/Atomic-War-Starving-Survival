@@ -434,20 +434,10 @@ namespace AtomicWar.GodotApp.UI
         // Standard header bar texture (margin 12/8/12/8)
         public static StyleBox MakeHeaderFrameStyleBox()
         {
-            var tex = TryLoadTexture("res://assets/ui/Textures/tab_strip.png")
-                   ?? TryLoadTexture("res://assets/ui/tab_strip.svg")
-                   ?? TryLoadTexture("res://assets/ui/Textures/frame_9slice.png");
-            if (tex != null)
-            {
-                return new StyleBoxTexture
-                {
-                    Texture = tex,
-                    TextureMarginLeft = 12,
-                    TextureMarginTop = 8,
-                    TextureMarginRight = 12,
-                    TextureMarginBottom = 8
-                };
-            }
+            // Flat bar. The tab_strip 9-slice used to dress the whole header,
+            // which painted a phantom empty tab slot on every panel and let
+            // long titles run underneath it; the tab plate now lives only
+            // behind the title (MakeTitleTabStyleBox).
             var flat = new StyleBoxFlat
             {
                 BgColor = new Color(Theme.Ink.r, Theme.Ink.g, Theme.Ink.b, 0.95f),
@@ -456,6 +446,7 @@ namespace AtomicWar.GodotApp.UI
             flat.SetBorderWidthAll(1);
             return flat;
         }
+
 
         /// <summary>
         /// Creates the standard header bar with 9-slice background.

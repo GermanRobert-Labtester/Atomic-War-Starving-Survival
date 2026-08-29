@@ -1,0 +1,259 @@
+#!/usr/bin/env python3
+"""Re-rewrite QuestDetailPanel.tscn and MapDetailPanel.tscn with names
+matching the C# field names declared in source."""
+from pathlib import Path
+
+REPO = Path(".").resolve()
+UI = REPO / "src" / "UI"
+PANELS = REPO / "assets" / "ui" / "panels"
+
+# Re-generated to match C# field names exactly.
+QUEST = """[gd_scene load_steps=2 format=3 uid="uid://b1quest_detail_panel_ashfall"]
+
+[ext_resource type="Script" path="res://src/UI/QuestDetailPanel.cs" id="1_quest_detail"]
+
+[node name="QuestDetailPanel" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_quest_detail")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.04, 0.05, 0.96)
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="Center" type="CenterContainer" parent="Scroll"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RootBox" type="VBoxContainer" parent="Scroll/Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "OPERATION DOSSIER & DIRECTIVE"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+text = "Detailed mission briefing, step-by-step objectives, decision branches, and reward specifications."
+
+[node name="Sep0" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="InfoHeader" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "INFO"
+
+[node name="InfoContainer" type="VBoxContainer" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Sep1" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="StagesHeader" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "STAGES"
+
+[node name="StagesContainer" type="VBoxContainer" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Sep2" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="ChoicesHeader" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "CHOICES"
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Sep3" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="RewardsHeader" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "REWARDS"
+
+[node name="RewardsContainer" type="VBoxContainer" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Sep4" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 42)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "RETURN TO QUESTS [Esc]"
+"""
+
+MAP = """[gd_scene load_steps=2 format=3 uid="uid://b1map_detail_panel_ashfall"]
+
+[ext_resource type="Script" path="res://src/UI/MapDetailPanel.cs" id="1_map_detail"]
+
+[node name="MapDetailPanel" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_map_detail")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.04, 0.05, 0.96)
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="Center" type="CenterContainer" parent="Scroll"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RootBox" type="VBoxContainer" parent="Scroll/Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SECTOR INTELLIGENCE DOSSIER"
+horizontal_alignment = 1
+
+[node name="Sep0" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="InfoHeader" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "INFO"
+
+[node name="InfoContainer" type="VBoxContainer" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Sep1" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="HazardsHeader" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "THREATS"
+
+[node name="HazardsContainer" type="VBoxContainer" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Sep2" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="LayoutsHeader" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "LAYOUTS"
+
+[node name="LayoutsContainer" type="VBoxContainer" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Sep3" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="SalvageHeader" type="Label" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RESOURCES"
+
+[node name="SalvageContainer" type="VBoxContainer" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Sep4" type="HSeparator" parent="Scroll/Center/RootBox"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Scroll/Center/RootBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 42)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "RETURN TO MAP [Esc]"
+"""
+
+(PANELS / "QuestDetailPanel.tscn").write_text(QUEST, encoding="utf-8")
+(PANELS / "MapDetailPanel.tscn").write_text(MAP, encoding="utf-8")
+print("regenerated Quest + Map scenes")

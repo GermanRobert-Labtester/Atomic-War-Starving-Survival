@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 
+using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.StartingLevel;
 using Ashfall.Core.Survivors;
@@ -364,6 +365,63 @@ ShelterAssignmentSystem? assignment = null)
             OnThermalChanged?.Invoke();
             return ActionResult.Success("thermal.pipe_repaired",
                 new Dictionary<string, double> { { "condition", pipe.condition } });
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a pipe repair action.
+        /// Shares the same validation path as <see cref="RepairPipe"/>.
+        /// </summary>
+        public CommandPreview PreviewRepairPipe(string pipeId, float repairAmount = 20f, long stateVersion = 0)
+        {
+            var pipe = _state.pipes.Find(p => p.pipeId == pipeId);
+            if (pipe == null)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairPipe, "unknown_pipe", "thermal.unknown_pipe", stateVersion);
+            if (!pipe.hasBurst)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairPipe, "not_burst", "thermal.not_burst", stateVersion);
+
+            float projected = Math.Min(100f, pipe.condition + repairAmount);
+            bool willSeal = projected >= 50f;
+            var deltas = new Dictionary<string, double>
+            {
+                { "condition", projected }
+            };
+            if (willSeal)
+                deltas["sealed"] = 1;
+
+            return CommandPreview.Available(
+                PlayerCommandCode.RepairPipe,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "thermal.preview_repair");
+        }
+
+        /// <summary>
+        /// Execute a pipe repair using the same validation path as <see cref="PreviewRepairPipe"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteRepairPipe(string pipeId, float repairAmount, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewRepairPipe(pipeId, repairAmount, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.RepairPipe, preview.StateVersion, currentStateVersion);
+
+            var result = RepairPipe(pipeId, repairAmount);
+            if (!result.IsSuccess)
+                return new CommandResult(
+                    PlayerCommandCode.RepairPipe,
+                    result,
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.RepairPipe,
+                result,
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         public ActionResult ThawRoom(string roomId)

@@ -268,15 +268,7 @@ namespace AtomicWar.GodotApp.UI
                 else
                 {
                     _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
-                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody("Bed is vacant and sterilized. Use below quick-admit controls to admit trauma patients."));
-
-                    var admitDemoBtn = AshfallUiHelpers.MakeButton("ADMIT EMERGENCY PATIENT", () =>
-                    {
-                        string demoId = $"survivor_dweller_{_host.System.State.Admissions.Count + 1}";
-                        _host.System.Admit(demoId, currentBed.BedId, _host.SimDay);
-                        RefreshView();
-                    });
-                    _inspectorContainer.AddChild(admitDemoBtn);
+                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody("Bed unit is currently vacant and sterilized. Patients requiring intensive trauma triage or surgical intervention will be admitted from shelter wards."));
                 }
             }
             else

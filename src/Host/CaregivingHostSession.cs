@@ -2,6 +2,7 @@ using System;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.PlayerCommand;
 
 namespace AtomicWar.GodotApp
 {
@@ -22,55 +23,55 @@ namespace AtomicWar.GodotApp
             System.OnCaregivingStarted += (caregiverId, patientId) =>
             {
                 LastEvent = $"[Caregiving] {caregiverId} → tending {patientId}";
-                RaiseStateChanged();
             };
 
             System.OnCaregivingBondDeepened += (caregiverId, patientId, bond) =>
             {
                 LastEvent = $"[Caregiving] Bond deepened: {caregiverId} ↔ {patientId} ({bond:F2})";
-                RaiseStateChanged();
             };
 
             System.OnCaregivingEnded += (caregiverId, patientId) =>
             {
                 LastEvent = $"[Caregiving] Ended: {caregiverId} ↔ {patientId}";
-                RaiseStateChanged();
             };
 
             System.OnCaregivingDialogueUnlocked += (caregiverId, patientId) =>
             {
                 LastEvent = $"[Caregiving] Dialogue unlocked: {caregiverId} ↔ {patientId}";
-                RaiseStateChanged();
             };
 
             System.OnStateChanged += () => RaiseStateChanged();
         }
 
-        public bool AssignCaregiver(string caregiverId, string patientId)
+        public CommandResult AssignCaregiver(string caregiverId, string patientId)
         {
-            bool ok = System.AssignCaregiver(caregiverId, patientId);
-            if (ok)
+            var result = System.ExecuteAssignCaregiver(caregiverId, patientId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
+            {
+                LastEvent = $"Assigned {caregiverId} to care for {patientId}.";
                 RaiseStateChanged();
-            return ok;
+            }
+            else
+            {
+                LastEvent = $"Caregiver assignment refused: {result.FailureCode}.";
+            }
+            return result;
         }
 
         public void UnassignCaregiver(string patientId)
         {
             System.UnassignCaregiver(patientId);
-            RaiseStateChanged();
         }
 
         public void UnassignCaregiverByCaregiver(string caregiverId)
         {
             System.UnassignCaregiverByCaregiver(caregiverId);
-            RaiseStateChanged();
         }
 
         public void TickDay(int day)
         {
             // Caregiving tick is hour-based; host ticks one full day.
             System.Tick(24f);
-            RaiseStateChanged();
         }
 
         public int ActiveAssignmentCount => System.ActiveAssignmentCount;

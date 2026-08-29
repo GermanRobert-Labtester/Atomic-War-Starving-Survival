@@ -15,8 +15,6 @@ namespace AtomicWar.GodotApp.UI
         private AshfallStatusRail? _statusRail;
         private VBoxContainer _contentStack = null!;
         private Label _detailText = null!;
-        private Button _ratifyBtn = null!;
-        private Button _proposeBtn = null!;
 
         private RegionalTreatyHostSession? _host;
 
@@ -62,17 +60,6 @@ namespace AtomicWar.GodotApp.UI
             _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
-
-            _proposeBtn = AshfallUiHelpers.MakeButton("Propose Non-Aggression Pact", () => _host?.ProposeTreaty("treaty_meridian_non_aggression", 1));
-            _proposeBtn.CustomMinimumSize = new Vector2(200, 36);
-            buttonRow.AddChild(_proposeBtn);
-
-            _ratifyBtn = AshfallUiHelpers.MakeButton("Ratify Pending Accord", () => _host?.RatifyTreaty("treaty_meridian_non_aggression", 1));
-            _ratifyBtn.CustomMinimumSize = new Vector2(180, 36);
-            buttonRow.AddChild(_ratifyBtn);
-
-            _contentStack.AddChild(buttonRow);
             _shell.SetContent(_contentStack);
 
             _shell.AttachHeaderCloseButton("CLOSE", () =>
@@ -95,13 +82,20 @@ namespace AtomicWar.GodotApp.UI
 
             if (_detailText != null)
             {
-                string text = $"Regional Diplomatic Treaties ({s.treaties.Count} total):\n";
-                foreach (var t in s.treaties)
+                if (s.treaties.Count == 0)
                 {
-                    text += $"  • [{t.status}] {t.treatyId} (Compliance: {t.complianceScore:P0}, Ratified Day: {t.ratifiedDay})\n";
+                    _detailText.Text = "No regional treaties or diplomatic accords currently on record.\nDiplomatic envoys and faction emissaries will negotiate regional accords during diplomatic outreach.\n\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 }
-                text += $"\nLast Event: {_host.LastEvent}";
-                _detailText.Text = text;
+                else
+                {
+                    string text = $"Regional Diplomatic Treaties ({s.treaties.Count} total):\n";
+                    foreach (var t in s.treaties)
+                    {
+                        text += $"  • [{t.status}] {t.treatyId} (Compliance: {t.complianceScore:P0}, Ratified Day: {t.ratifiedDay})\n";
+                    }
+                    text += $"\nLast Event: {_host.LastEvent}";
+                    _detailText.Text = text;
+                }
             }
         }
 

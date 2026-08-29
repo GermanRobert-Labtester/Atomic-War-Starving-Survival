@@ -68,6 +68,9 @@ public partial class AshfallDashboardShell : PanelContainer
         _headerHbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
         _headerBar.AddChild(_headerHbox);
 
+        // Flat bar, amber condensed title, close button pushed right by the
+        // label's fill. The tab_strip plate was tried behind the title but its
+        // measured width proved unreliable across title lengths.
         _titleLabel = new Label
         {
             Text = string.IsNullOrEmpty(title) ? "—" : title.ToUpperInvariant(),

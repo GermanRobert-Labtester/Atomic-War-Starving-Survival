@@ -191,7 +191,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 var btnStart = AshfallUiHelpers.MakeButton("LAUNCH STEALTH DIVE (SARAH CHEN / MARCUS REID)", () =>
                 {
-                    _maritime.StartDiveDemo("survivor_sarah_chen", "survivor_marcus_reid");
+                    _maritime.StartDive("survivor_sarah_chen", "survivor_marcus_reid");
                     _statusLabel.Text = "Stealth dive launched into Flotilla wreckage.";
                     RefreshView();
                 });
@@ -202,7 +202,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 var btnCrank = AshfallUiHelpers.MakeButton("CRANK COMPRESSOR (+30s Air)", () =>
                 {
-                    _maritime.CrankDiveDemo();
+                    _maritime.CrankDiveCompressor();
                     _statusLabel.Text = "Compressor cranked manually.";
                     RefreshView();
                 });
@@ -211,7 +211,7 @@ namespace AtomicWar.GodotApp.UI
 
                 var btnAdvance = AshfallUiHelpers.MakeButton("ADVANCE TO NEXT ROOM", () =>
                 {
-                    _maritime.AdvanceDiveDemo(10);
+                    _maritime.AdvanceDiveRoom(10);
                     RefreshView();
                 });
                 btnAdvance.CustomMinimumSize = new Vector2(190, 36);
@@ -221,7 +221,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     var btnDecomp = AshfallUiHelpers.MakeButton("DECOMPRESS (+10s Stop)", () =>
                     {
-                        _maritime.DecompressDemo(10f);
+                        _maritime.Decompress(10f);
                         RefreshView();
                     });
                     btnDecomp.CustomMinimumSize = new Vector2(190, 36);
@@ -230,7 +230,7 @@ namespace AtomicWar.GodotApp.UI
 
                 var btnTick = AshfallUiHelpers.MakeButton("SIMULATE (+15s)", () =>
                 {
-                    _maritime.TickDiveDemo(15f);
+                    _maritime.TickDive(15f);
                     _statusLabel.Text = "Advanced dive time by 15 seconds.";
                     RefreshView();
                 });
@@ -239,7 +239,7 @@ namespace AtomicWar.GodotApp.UI
 
                 var btnAbort = AshfallUiHelpers.MakeButton("SAFE ABORT", () =>
                 {
-                    _maritime.AbortDiveDemo(emergency: false);
+                    _maritime.AbortDive(emergency: false);
                     _statusLabel.Text = "Controlled surface ascent completed.";
                     RefreshView();
                 });
@@ -248,7 +248,7 @@ namespace AtomicWar.GodotApp.UI
 
                 var btnEmergency = AshfallUiHelpers.MakeButton("EMERGENCY BLOWOUT", () =>
                 {
-                    _maritime.AbortDiveDemo(emergency: true);
+                    _maritime.AbortDive(emergency: true);
                     _statusLabel.Text = "Emergency blowout ascent executed!";
                     RefreshView();
                 });
@@ -276,7 +276,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (dive.IsActive)
                 {
-                    _maritime.TickDiveDemo(15f);
+                    _maritime.TickDive(15f);
                     _statusLabel.Text = "Loot node recovered: +2 Electronic Scrap, +1 Lead Sheeting.";
                 }
                 else

@@ -169,7 +169,7 @@ namespace AtomicWar.GodotApp
             _phase0.ValidateConsumers();
 
             // Environment signals from the real world/shelter hosts.
-            _phase0.CurrentDay = _holdfastRuntime?.Day ?? _simDay;
+            _phase0.CurrentDay = _simDay;
             _phase0.GetFilterHealth = () =>
             {
                 var filter = _expansions?.Waystation?.State != null

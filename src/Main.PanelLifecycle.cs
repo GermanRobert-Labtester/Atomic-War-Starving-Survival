@@ -24,7 +24,8 @@ namespace AtomicWar.GodotApp
                 _combatDetailPanel, _factionDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
                 _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
                 _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
-                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal, _holdfastTerminal
+                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal, _holdfastTerminal,
+                _onboardingHintPanel
             };
 
             foreach (Control panel in panels)

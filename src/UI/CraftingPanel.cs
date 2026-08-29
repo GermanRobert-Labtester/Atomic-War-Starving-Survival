@@ -243,99 +243,47 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
-            Visible = false;
+            // Ticket #125 follow-up: layout chrome owned by
+            // res://assets/ui/panels/CraftingPanel.tscn. SceneBinder resolves
+            // the typed unique-name nodes; sibling bind logic unchanged.
+            var binder = new SceneBinder(this, typeof(CraftingPanel));
+            binder.Require<VBoxContainer>("RecipeList");
+            binder.Require<VBoxContainer>("QueueList");
+            binder.Require<Label>("QueueHeader");
+            binder.Require<Label>("FilterStatus");
+            binder.Require<Button>("CloseButton");
+            binder.Require<Button>("FilterAllButton");
+            binder.Require<Button>("FilterCraftableButton");
+            binder.Require<Button>("RelicWorkshopButton");
+            binder.Require<Button>("PharmaLabButton");
 
-            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.90f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+            _recipeList = binder.Get<VBoxContainer>("RecipeList");
+            _queueList = binder.Get<VBoxContainer>("QueueList");
+            _queueHeader = binder.Get<Label>("QueueHeader");
+            _queueHeader.Text = "CRAFTING QUEUE  [idle]";
+            _filterStatus = binder.Get<Label>("FilterStatus");
+            _filterStatus.Text = "Filter:";
 
-            var center = new CenterContainer();
-            center.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(center);
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
 
-            var panel = AshfallUiHelpers.MakePanel(720, 600);
-            center.AddChild(panel);
-
-            var margins = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingMd);
-            panel.AddChild(margins);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            margins.AddChild(vbox);
-
-            // ── Title bar ─────────────────────────────────────────────
-            var titleRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-            var title = AshfallUiHelpers.MakeTitle("CRAFTING // WORKBENCH", Ashfall.Core.UI.Theme.FontSizeH2);
-            title.HorizontalAlignment = HorizontalAlignment.Left;
-            title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            titleRow.AddChild(title);
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(110, 32);
-            titleRow.AddChild(btnClose);
-            vbox.AddChild(titleRow);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // ── Filter tabs ────────────────────────────────────────────
-            var filterRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-            _filterStatus = AshfallUiHelpers.MakeSmall("Filter:");
-            filterRow.AddChild(_filterStatus);
-
-            foreach (var (label, key) in new[] { ("ALL", "all"), ("CRAFTABLE NOW", "craftable") })
-            {
-                string filterKey = key;
-                var btn = AshfallUiHelpers.MakeButton(label, () =>
-                {
-                    _activeFilter = filterKey;
-                    RefreshView();
-                });
-                btn.CustomMinimumSize = new Vector2(120, 28);
-                filterRow.AddChild(btn);
-            }
-
-            filterRow.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
-
-            var btnWorkshop = AshfallUiHelpers.MakeButton("RELIC WORKSHOP >", () =>
-            {
+            binder.Get<Button>("FilterAllButton").Pressed += () => {
+                _activeFilter = "all";
+                RefreshView();
+            };
+            binder.Get<Button>("FilterCraftableButton").Pressed += () => {
+                _activeFilter = "craftable";
+                RefreshView();
+            };
+            binder.Get<Button>("RelicWorkshopButton").Pressed += () => {
                 Visible = false;
                 OnOpenWorkshopRequested?.Invoke();
-            });
-            btnWorkshop.CustomMinimumSize = new Vector2(140, 28);
-            filterRow.AddChild(btnWorkshop);
-
-            var btnPharma = AshfallUiHelpers.MakeButton("PHARMA LAB >", () =>
-            {
+            };
+            binder.Get<Button>("PharmaLabButton").Pressed += () => {
                 Visible = false;
                 OnOpenPharmaLabRequested?.Invoke();
-            });
-            btnPharma.CustomMinimumSize = new Vector2(120, 28);
-            filterRow.AddChild(btnPharma);
-
-            vbox.AddChild(filterRow);
-
-            // ── Scrollable recipe list ─────────────────────────────────
-            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("AVAILABLE RECIPES"));
-            var recipeScroll = new ScrollContainer
-            {
-                CustomMinimumSize = new Vector2(680, 280),
-                SizeFlagsVertical = SizeFlags.ExpandFill
             };
-            vbox.AddChild(recipeScroll);
 
-            _recipeList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            _recipeList.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            recipeScroll.AddChild(_recipeList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // ── Queue section ──────────────────────────────────────────
-            _queueHeader = AshfallUiHelpers.MakeSectionHeader("CRAFTING QUEUE  [idle]");
-            vbox.AddChild(_queueHeader);
-
-            _queueList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
-            _queueList.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            vbox.AddChild(_queueList);
-
+            Visible = false;
             RefreshView();
         }
 

@@ -1,3 +1,8 @@
+---
+name: ashfall-asset-pack-expansion
+description: Creates the directory structure, .gitattributes LFS entries, import preset skeletons, and assets.json registry entries for a new ASHFALL expansion asset pack.
+---
+
 # ASHFALL Asset Expansion Skill: ashfall-asset-pack-expansion
 
 ## Overview

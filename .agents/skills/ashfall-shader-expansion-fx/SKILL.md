@@ -1,3 +1,8 @@
+---
+name: ashfall-shader-expansion-fx
+description: Generates expansion-specific Godot shaders (greenhouse, brine, fallout), shared materials, and sampler-budget validation for CI-ready visual effects.
+---
+
 # ASHFALL Asset Expansion Skill: ashfall-shader-expansion-fx
 
 ## Overview

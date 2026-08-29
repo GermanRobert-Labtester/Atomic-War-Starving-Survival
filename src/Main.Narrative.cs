@@ -69,7 +69,6 @@ namespace AtomicWar.GodotApp
             {
                 var save = JournalSaveStore.Load();
                 if (save != null) _journal.RestoreState(save);
-                _simDay = MaxEntryDay();
                 _journalBook.SetEntries(_journal.Entries);
                 _journalBook.ApplyUiState(
                     _journal.HudIsOpen,
@@ -80,22 +79,13 @@ namespace AtomicWar.GodotApp
             }
             else
             {
-                int seededDay = JournalDemoHarness.Seed(_journal, catalogs);
-                _simDay = Math.Max(4, seededDay);
+                JournalDemoHarness.Seed(_journal, catalogs);
                 _journalBook.SetEntries(_journal.Entries);
                 SaveJournal();
                 GD.Print("[Ashfall Godot] Journal seeded with opening-day entries.");
             }
 
             UpdateStatus();
-        }
-
-        private int MaxEntryDay()
-        {
-            int day = 4;
-            for (int i = 0; i < _journal.EntryCount; i++)
-                if (_journal.Entries[i].Day > day) day = _journal.Entries[i].Day;
-            return day;
         }
 
         private void ToggleJournal()
@@ -188,7 +178,7 @@ namespace AtomicWar.GodotApp
         {
             if (_radio != null)
             {
-                _radio.SetDay(_core != null ? _core.Clock.Day : _simDay);
+                _radio.SetDay(_simDay);
                 return;
             }
 

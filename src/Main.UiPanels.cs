@@ -169,7 +169,7 @@ namespace AtomicWar.GodotApp
             AddChild(_survivorsOverlay);
 
             // ── Crafting panel (overlay) ──
-            _craftingPanel = new CraftingPanel();
+            _craftingPanel = PanelSceneLoader.Load<CraftingPanel>("res://assets/ui/panels/CraftingPanel.tscn");
             _craftingPanel.OnClose += CloseCraftingPanel;
             _craftingPanel.OnCraftStarted += () => { UpdateHud(); _craftingDirty = true; };
             _craftingPanel.OnOpenWorkshopRequested += () => OpenPlayerPanel("workshop");
@@ -177,12 +177,12 @@ namespace AtomicWar.GodotApp
             AddChild(_craftingPanel);
 
             // ── Workshop panel (relic reverse engineering) ──
-            _workshopPanel = new WorkshopPanel();
+            _workshopPanel = PanelSceneLoader.Load<WorkshopPanel>("res://assets/ui/panels/WorkshopPanel.tscn");
             _workshopPanel.OnClose += CloseWorkshopPanel;
             AddChild(_workshopPanel);
 
             // ── Pharma Lab panel (compounding & distillation) ──
-            _pharmaLabPanel = new PharmaLabPanel();
+            _pharmaLabPanel = PanelSceneLoader.Load<PharmaLabPanel>("res://assets/ui/panels/PharmaLabPanel.tscn");
             _pharmaLabPanel.OnClose += ClosePharmaLabPanel;
             AddChild(_pharmaLabPanel);
 
@@ -330,17 +330,17 @@ namespace AtomicWar.GodotApp
             AddChild(_mapPanel);
 
             // ── Survivor Detail panel (overlay) ──
-            _survivorDetailPanel = new SurvivorDetailPanel();
+            _survivorDetailPanel = PanelSceneLoader.Load<SurvivorDetailPanel>("res://assets/ui/panels/SurvivorDetailPanel.tscn");
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);
 
             // ── Inventory Detail panel (overlay) ──
-            _inventoryDetailPanel = new InventoryDetailPanel();
+            _inventoryDetailPanel = PanelSceneLoader.Load<InventoryDetailPanel>("res://assets/ui/panels/InventoryDetailPanel.tscn");
             _inventoryDetailPanel.OnClose += CloseInventoryDetailPanel;
             AddChild(_inventoryDetailPanel);
 
             // ── Quest Detail panel (overlay) ──
-            _questDetailPanel = new QuestDetailPanel();
+            _questDetailPanel = PanelSceneLoader.Load<QuestDetailPanel>("res://assets/ui/panels/QuestDetailPanel.tscn");
             _questDetailPanel.OnClose += CloseQuestDetailPanel;
             AddChild(_questDetailPanel);
 
@@ -350,12 +350,12 @@ namespace AtomicWar.GodotApp
             AddChild(_achievementsPanel);
 
             // ── Weather Detail panel (overlay) ──
-            _weatherDetailPanel = new WeatherDetailPanel();
+            _weatherDetailPanel = PanelSceneLoader.Load<WeatherDetailPanel>("res://assets/ui/panels/WeatherDetailPanel.tscn");
             _weatherDetailPanel.OnClose += CloseWeatherDetailPanel;
             AddChild(_weatherDetailPanel);
 
             // ── Radiation Detail panel (overlay) ──
-            _radiationDetailPanel = new RadiationDetailPanel();
+            _radiationDetailPanel = PanelSceneLoader.Load<RadiationDetailPanel>("res://assets/ui/panels/RadiationDetailPanel.tscn");
             _radiationDetailPanel.OnClose += CloseRadiationDetailPanel;
             AddChild(_radiationDetailPanel);
 
@@ -365,22 +365,22 @@ namespace AtomicWar.GodotApp
             AddChild(_eventsLogPanel);
 
             // ── Duty Roster Detail panel (overlay) ──
-            _dutyRosterDetailPanel = new DutyRosterDetailPanel();
+            _dutyRosterDetailPanel = PanelSceneLoader.Load<DutyRosterDetailPanel>("res://assets/ui/panels/DutyRosterDetailPanel.tscn");
             _dutyRosterDetailPanel.OnClose += CloseDutyRosterDetailPanel;
             AddChild(_dutyRosterDetailPanel);
 
             // ── Economy Detail panel (overlay) ──
-            _economyDetailPanel = new EconomyDetailPanel();
+            _economyDetailPanel = PanelSceneLoader.Load<EconomyDetailPanel>("res://assets/ui/panels/EconomyDetailPanel.tscn");
             _economyDetailPanel.OnClose += CloseEconomyDetailPanel;
             AddChild(_economyDetailPanel);
 
             // ── Combat Detail panel (overlay) ──
-            _combatDetailPanel = new CombatDetailPanel();
+            _combatDetailPanel = PanelSceneLoader.Load<CombatDetailPanel>("res://assets/ui/panels/CombatDetailPanel.tscn");
             _combatDetailPanel.OnClose += CloseCombatDetailPanel;
             AddChild(_combatDetailPanel);
 
             // ── Faction Detail panel (overlay) ──
-            _factionDetailPanel = new FactionDetailPanel();
+            _factionDetailPanel = PanelSceneLoader.Load<FactionDetailPanel>("res://assets/ui/panels/FactionDetailPanel.tscn");
             _factionDetailPanel.OnClose += CloseFactionDetailPanel;
             AddChild(_factionDetailPanel);
 
@@ -452,7 +452,7 @@ namespace AtomicWar.GodotApp
             AddChild(_tutorialPanel);
 
             // ── Afflictions panel (overlay) ──
-            _afflictionsPanel = new AfflictionsPanel();
+            _afflictionsPanel = PanelSceneLoader.Load<AfflictionsPanel>("res://assets/ui/panels/AfflictionsPanel.tscn");
             _afflictionsPanel.OnClose += CloseAfflictionsPanel;
             AddChild(_afflictionsPanel);
 
@@ -462,7 +462,7 @@ namespace AtomicWar.GodotApp
             AddChild(_statusPanel);
 
             // ── Survival Detail panel (overlay) ──
-            _survivalDetailPanel = new SurvivalDetailPanel();
+            _survivalDetailPanel = PanelSceneLoader.Load<SurvivalDetailPanel>("res://assets/ui/panels/SurvivalDetailPanel.tscn");
             _survivalDetailPanel.OnClose += CloseSurvivalDetailPanel;
             AddChild(_survivalDetailPanel);
 
@@ -477,7 +477,7 @@ namespace AtomicWar.GodotApp
             AddChild(_radiationHistoryPanel);
 
             // ── Journal Detail panel (overlay) ──
-            _journalDetailPanel = new JournalDetailPanel();
+            _journalDetailPanel = PanelSceneLoader.Load<JournalDetailPanel>("res://assets/ui/panels/JournalDetailPanel.tscn");
             _journalDetailPanel.OnClose += CloseJournalDetailPanel;
             AddChild(_journalDetailPanel);
 
@@ -487,17 +487,17 @@ namespace AtomicWar.GodotApp
             AddChild(_combatHistoryPanel);
 
             // ── Map Detail panel (overlay) ──
-            _mapDetailPanel = new MapDetailPanel();
+            _mapDetailPanel = PanelSceneLoader.Load<MapDetailPanel>("res://assets/ui/panels/MapDetailPanel.tscn");
             _mapDetailPanel.OnClose += CloseMapDetailPanel;
             AddChild(_mapDetailPanel);
 
             // ── Event Detail panel (overlay) ──
-            _eventDetailPanel = new EventDetailPanel();
+            _eventDetailPanel = PanelSceneLoader.Load<EventDetailPanel>("res://assets/ui/panels/EventDetailPanel.tscn");
             _eventDetailPanel.OnClose += CloseEventDetailPanel;
             AddChild(_eventDetailPanel);
 
             // ── Opening Protocol Directives Modal (Day 1 vertical slice) ──
-            _openingProtocolModal = new OpeningProtocolModal();
+            _openingProtocolModal = PanelSceneLoader.Load<OpeningProtocolModal>("res://assets/ui/modals/OpeningProtocolModal.tscn");
             _openingProtocolModal.OnClose += CloseOpeningProtocolModal;
             _openingProtocolModal.OnRationPolicySelected += policy =>
             {
@@ -511,6 +511,7 @@ namespace AtomicWar.GodotApp
                     author: null!,
                     day: day);
                 UpdateHud();
+                ObserveSigil("protocol.ration");
             };
             _openingProtocolModal.OnMaintenanceDirectiveSelected += directive =>
             {
@@ -535,6 +536,7 @@ namespace AtomicWar.GodotApp
                     author: null!,
                     day: day);
                 UpdateHud();
+                ObserveSigil("protocol.maintenance");
             };
             _openingProtocolModal.OnRadioProtocolSelected += protocol =>
             {
@@ -550,6 +552,7 @@ namespace AtomicWar.GodotApp
                     author: null!,
                     day: day);
                 UpdateHud();
+                ObserveSigil("protocol.radio");
             };
             AddChild(_openingProtocolModal);
 
@@ -814,8 +817,19 @@ namespace AtomicWar.GodotApp
             bool hasSave = false;
             if (_saveLoadHost != null)
             {
+                // Continue requires at least one slot that is not terminal. A
+                // run-finalized slot is a sealed memorial/archive, not a
+                // continuable save, so it must not enable Continue.
                 var slots = _saveLoadHost.GetSlots();
-                hasSave = slots.Count > 0;
+                for (int i = 0; i < slots.Count; i++)
+                {
+                    var card = _saveLoadHost.BuildSlotCard(slots[i]);
+                    if (card.Exists && !card.IsTerminalIronMan)
+                    {
+                        hasSave = true;
+                        break;
+                    }
+                }
             }
             if (!hasSave)
             {

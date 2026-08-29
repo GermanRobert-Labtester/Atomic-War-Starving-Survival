@@ -98,48 +98,21 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by res://assets/ui/panels/CombatDetailPanel.tscn; SceneBinder resolves typed unique-name nodes once.
+            // Sibling refresh code is unchanged.
+            var binder = new SceneBinder(this, typeof(CombatDetailPanel));
+            binder.Require<VBoxContainer>("BattleInfo");
+            binder.Require<VBoxContainer>("TacticsData");
+            binder.Require<VBoxContainer>("CasualtyData");
+            binder.Require<VBoxContainer>("OutcomesData");
+            binder.Require<Button>("CloseButton");
+            _battleInfo = binder.Get<VBoxContainer>("BattleInfo");
+            _tacticsData = binder.Get<VBoxContainer>("TacticsData");
+            _casualtyData = binder.Get<VBoxContainer>("CasualtyData");
+            _outcomesData = binder.Get<VBoxContainer>("OutcomesData");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var scroll = new ScrollContainer();
-            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(scroll);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(640, 0);
-            scroll.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("COMBAT DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("BATTLE INFORMATION"));
-            _battleInfo = MakeBox(); vbox.AddChild(_battleInfo);
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("BATTLE TACTICS"));
-            _tacticsData = MakeBox(); vbox.AddChild(_tacticsData);
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("CASUALTIES & LOSSES"));
-            _casualtyData = MakeBox(); vbox.AddChild(_casualtyData);
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("BATTLE OUTCOMES"));
-            _outcomesData = MakeBox(); vbox.AddChild(_outcomesData);
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
-            vbox.AddChild(AshfallUiHelpers.MakeSmall("[Esc] to close"));
-
-            RefreshView();
         }
 
         private static VBoxContainer MakeBox()

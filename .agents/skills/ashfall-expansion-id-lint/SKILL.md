@@ -1,3 +1,8 @@
+---
+name: ashfall-expansion-id-lint
+description: Validates expansion ID consistency across data files, static Ids.cs classes, and CatalogIntegrityValidator tiers to prevent invented prefixes and naming violations.
+---
+
 # ASHFALL Expansion System Skill: ashfall-expansion-id-lint
 
 ## Overview

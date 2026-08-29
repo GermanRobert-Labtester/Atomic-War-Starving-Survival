@@ -50,7 +50,10 @@ namespace AtomicWar.GodotApp
             if (save != null)
             {
                 _core.RestoreSave(save);
-                _simDay = _core.Clock.Day;
+                SetupCampaignDay();
+                // Calendar-led: the reconciled calendar is authoritative; the
+                // holdfast clock follows it.
+                _core.Clock.SetDay(_campaignDay.Calendar.CurrentDay);
                 _holdfastDirty = false; // restore just raised state-change events
                 GD.Print($"[Ashfall Godot] Holdfast S1 state restored (day {_core.Clock.Day}).");
             }
@@ -69,7 +72,8 @@ namespace AtomicWar.GodotApp
                 return;
             }
 
-            _holdfastRuntime = HoldfastRuntimeSession.Create(_core);
+            SetupInventory();
+            _holdfastRuntime = HoldfastRuntimeSession.Create(_core, inventory: _inventory?.Inventory);
             _holdfastRuntime.Survivors = _survivors;
             if (_holdfastTerminal == null || !_holdfastTerminal.IsInsideTree())
             {
@@ -81,168 +85,39 @@ namespace AtomicWar.GodotApp
             // ── Wire death event ──
             _holdfastRuntime.OnPlayerDied += OnPlayerDied;
             _holdfastRuntime.OnGameWon += OnGameWon;
+
+            // Avatar death enters the unified fate pipeline as the player
+            // avatar (distinguished from a roster NPC death). The fate system
+            // is idempotent, so if the survival loop already recorded the same
+            // survivor this report is a no-op carrying the avatar flag.
+            SetupSurvivorFate();
+            _holdfastRuntime.OnPlayerDied += cause =>
+            {
+                _survivorFate?.ReportDeath(
+                    _holdfastRuntime.PlayerSurvivorId,
+                    Ashfall.Core.Survivors.SurvivorDeathCause.Unknown,
+                    cause,
+                    source: "holdfast_runtime",
+                    isPlayerAvatar: true,
+                    day: _holdfastRuntime.Day);
+            };
         }
 
         /// <summary>
-        /// Advance every daily-bound subsystem for a new sim day. Thin host
-        /// orchestration: each session owns its own rules. Weather, caravans,
-        /// medical drift, crafting progress, expedition ticks, and the Verdict
-        /// reckoning all move forward together so the day is consistent.
+        /// Advance every daily-bound subsystem for a new sim day through the canonical
+        /// <see cref="CampaignDayCoordinator"/>. Registered owners execute deterministically
+        /// in phase order.
         /// </summary>
         private void TickSimDay(int day)
         {
-            // Moral choice: overnight settlement — pending legend overflow and
-            // band-crossing faction events land here, after the campaign day
-            // advance in CommitAdvance and never mid-scene.
-            SetupMoralChoice();
-            _moralChoice.Reconcile(day);
-
-            SetupWorld();
-            _world.TickDemo(24f);
-            // Weather intelligence (station forecast + orbital telemetry) advances
-            // after the authoritative weather roll so the station forecast reflects
-            // the current day's weather state.
-            _world.WeatherIntelligence.TickDay(day);
-
-            SetupCaravans();
-            _caravans.TickDemo();
-
-            SetupMedical();
-            _medical.TickDemo(24f);
-
-            SetupExpeditions();
-            _expeditions.TickDemoHours(24f);
-
-            // Hatch-return bridge (Exp 02): a returning expedition crosses the
-            // hatch as a staged shelter scene. Expedition magnitudes are owned by
-            // ExpeditionSystem and never changed here; the bridge only stages.
-            SetupDutyRoster();
-            var expeditions = _expeditions.Engine.CaptureState();
-            if (expeditions != null && _dutyRoster != null)
+            SetupIceRoad();
+            SetupCampaignDay();
+            var args = _campaignDay.Advance(day, new CampaignDayPersistenceAdapter(this));
+            if (args != null && args.Succeeded)
             {
-                for (int i = 0; i < expeditions.Count; i++)
-                {
-                    var ex = expeditions[i];
-                    if (ex == null) continue;
-                    if (ex.phase == (int)ExpeditionPhase.Completed && !string.IsNullOrEmpty(ex.survivorId))
-                    {
-                        // quest_roster_window opens the crisis window: multiple scenes allowed.
-                        bool crisis = _dutyRoster.Quests.IsCrisisQuestActive();
-                        _dutyRoster.BridgeHatchReturn(ex.survivorId, crisis: crisis);
-                        break; // one hatch scene per night unless the window quest is active
-                    }
-                }
+                _campaignDayDirty = true;
+                UpdateHud();
             }
-
-            SetupCrafting();
-            _crafting.CompleteAll(24f);
-
-            SetupMaritime();
-            if (_maritime.Dive.IsActive)
-                _maritime.TickDiveDemo(60f);
-            SetupDeepCoast();
-            _deepCoast.TickDaily(day, _core.Weather);
-            _deepCoastPanel?.SetSimDay(day);
-
-            SetupSurvivors();
-            _survivors.TickHour(24f);
-
-            if (_holdfastRuntime != null && !_holdfastRuntime.IsDead)
-            {
-                _holdfastRuntime.Survivors = _survivors;
-                _holdfastRuntime.TickDay();
-            }
-
-            SetupStartingLevel();
-            _startingLevel.TickDay();
-
-            SetupInventory();
-            int foodToConsume = _startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Half ? 2 : 3;
-            int waterToConsume = _startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Irradiated ? 0 : (_startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Half ? 2 : 3);
-            _inventory.Remove("canned_food", foodToConsume);
-            if (waterToConsume > 0)
-                _inventory.Remove("clean_water", waterToConsume);
-            else
-                _inventory.Remove("irradiated_water", 2);
-
-            TickVerdict(day, LivingDwellerCountEstimate());
-
-            // Year of Ash (Days 180–360): advance the timeline + faction war +
-            // deep-freeze + radon when the sim is inside the expansion window.
-            if (day >= 180 && day <= 360)
-            {
-                SetupYearOfAsh();
-                _yearOfAsh.TickDay(day);
-            }
-
-            // Muster (Exp 06) opens Day 260; escalate idempotently each day past it.
-            if (day >= 260)
-            {
-                SetupMuster();
-                _muster.Escalate(day);
-            }
-
-            SetupExpansions();
-            if (_expansions.Greenhouse.PlotCount > 0)
-                _expansions.TickGreenhouse(day);
-            _expansions.Ledger.TickDaily(day);
-            _expansions.TickCrossingQuests(day);
-
-            SetupExpansionQuests();
-            _expansionQuests.TickDay(day);
-
-            // The Duty Roster (Exp 02) advances on the real day clock: the morning
-            // snapshot comes from the REAL home occupants, and Holdfast state
-            // (levy, membrane, waystation, ice road) feeds the chart's marks.
-            SetupDutyRoster();
-            _dutyRoster!.TickDay(BuildHomeOccupantSnapshot());
-            SetupIceRoad(); // owns _core (IceRoad, Census, Brine)
-            _dutyRoster.SyncHoldfastToDuty(_core.Census, _core.IceRoad, _expansions.Waystation, _core.Brine, day);
-            _dutyRosterPanel?.RefreshView();
-            if (_dutyRosterDirty) SaveDutyRoster();
-
-            // The Silent Foundry (Exp 10) advances on the real day clock.
-            SetupSilentFoundry();
-            _silentFoundry.TickDaily(day);
-            _silentFoundryPanel?.RefreshView();
-            if (_foundryDirty) SaveExpansionHub();
-
-            // The Disease Expansion advances on the real day clock: the exposure
-            // pool is the duty-roster home occupants (threats among the people
-            // actually in the shelter tonight). Outcome-only advance otherwise.
-            SetupDisease();
-            _disease.TickDaily(day);
-            if (_expansionHubDirty) SaveExpansionHub();
-
-            SetupGreenhouse();
-            _greenhouse.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.04f);
-
-            TickPowerGrid(day);
-            TickAllExpandedShelterSystems(day);
-
-            // The survivor-social cluster (leadership, friction, ration
-            // conflict, trauma bonds, skill atrophy) advances on the real day
-            // clock after survivors and duty-roster have ticked.
-            TickSurvivorSocial(day);
-
-            // Phase 0 (psychological/medical effects) advances on the real day clock:
-            // refresh environment signals from the world/shelter hosts, then tick all
-            // ten systems for a full day.
-            SetupPhase0();
-            _phase0.CurrentDay = day;
-            _phase0.IsInFalloutStorm = _world != null && _world.Weather.Current == Ashfall.Core.WeatherKind.FalloutStorm;
-            _phase0.IsNightTime = day % 2 == 0; // night signal for trauma false-alarm rolls
-            _phase0.TickDay(day);
-
-            SetupEventAdapter();
-            bool hydroAudit = _muster?.HydroBarons?.AdminReform ?? false;
-            bool hydroSeized = _muster?.HydroBarons?.PlantSeized ?? false;
-            bool osteophageInquiry = (_yearOfAsh != null && _yearOfAsh.Timeline.CurrentDay >= 205) || day >= 205;
-            bool coldCountBroadcast = _muster?.ColdCount?.BroadcastSent ?? false;
-            _hostEventAdapter?.EvaluateTriggers(day, hydroAudit, hydroSeized, osteophageInquiry, coldCountBroadcast);
-
-            UpdateHud();
-            SaveAll();
         }
 
         private void SaveHoldfast()
@@ -327,40 +202,43 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        /// <summary>Fully tick the simulation forward one day: advance every subsystem
-        /// exactly once, then auto-save per settings.</summary>
+        /// <summary>Fully tick the simulation forward one day through the canonical
+        /// <see cref="CampaignDayCoordinator"/>: each registered owner runs exactly once,
+        /// persistence occurs once before briefing, and fail-closed guards prevent partial days.</summary>
         private void CommitAdvance()
         {
             SetupIceRoad();
             SetupCampaignDay();
 
-            int targetDay = _core.Clock.Day + 1;
+            // Calendar-led authority: the target day comes from the campaign
+            // calendar; the Core holdfast clock is a projection the
+            // holdfast_core owner re-syncs to this day during the tick.
+            int targetDay = _campaignDay.Calendar.CurrentDay + 1;
 
-            // Re-entrance guard: if a previous CommitAdvance is still in flight,
-            // or if the player hammered the button for an already-completed day,
-            // refuse the second call. This is the only place that owns the gate.
-            if (!_campaignDay.TryBegin(targetDay))
+            // Single entry point: CampaignDayCoordinator owns the advance, re-entrancy gate, and order.
+            var args = _campaignDay.Advance(targetDay, new CampaignDayPersistenceAdapter(this));
+            if (args == null)
             {
-                _statusLabel.Text = $"Day {targetDay} re-entrant guard tripped (skipped duplicate).";
+                _statusLabel.Text = $"Day {targetDay} advance rejected (already in flight or stale day).";
+                return;
+            }
+
+            if (args.HasFailures)
+            {
+                _statusLabel.Text = $"Day {targetDay} advance failed in {args.FailedReports.Count} owner(s).";
+                GD.PushError($"[Ashfall Godot] Day {targetDay} advance had failures. Halting without committing.");
                 return;
             }
 
             try
             {
-                string delta = _core.TickDay();
-                _simDay = _core.Clock.Day;
-                TickSimDay(_simDay);
-
-                // Notify the coordinator (it tracks the last-advanced day and
-                // lets the host build a typed report from owner results).
-                _campaignDay.Advance(targetDay, new CampaignDayPersistenceAdapter(this));
                 _campaignDayDirty = true;
 
                 _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.DayTransition);
-                _statusLabel.Text = $"Day {_core.Clock.Day} advanced ({delta})";
+                _statusLabel.Text = $"Day {targetDay} advanced successfully.";
                 UpdateHud();
 
-                ShowBriefingForDay(_simDay);
+                ShowBriefingForDay(_simDay, args);
 
                 var settings = AtomicWar.GodotApp.Settings.UserSettingsStore.Current;
                 if (settings.AutoSaveOnDay) SaveAll();
@@ -370,8 +248,6 @@ namespace AtomicWar.GodotApp
                 _advanceConfirmed = false;
                 _advanceCancelled = false;
                 _advanceTimerRemaining = 0;
-                // Release the coordinator's gate so the next click can advance.
-                _campaignDay.EndAdvance();
             }
         }
 
@@ -408,7 +284,7 @@ namespace AtomicWar.GodotApp
         private void OnCensusLevyClicked()
         {
             SetupIceRoad();
-            string result = _core.HonourDemoLevy();
+            string result = _core.HonourCensusLevy();
             _statusLabel.Text = result;
             _codexViewer.Text =
                 "=== CENSUS (Ashfall.Core) ===\n" +

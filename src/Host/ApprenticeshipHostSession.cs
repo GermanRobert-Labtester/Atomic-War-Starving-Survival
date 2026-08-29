@@ -42,7 +42,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Assigned {apprenticeId} under mentor {mentorId} for {targetSkillId}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -53,7 +52,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Cancelled apprenticeship pair {pairId}";
-                RaiseStateChanged();
             }
             return res;
         }

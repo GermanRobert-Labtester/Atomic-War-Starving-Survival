@@ -132,13 +132,10 @@ namespace AtomicWar.GodotApp
         private void WireWarlordExpeditionDanger()
         {
             if (_expeditions == null) return;
-            _expeditions.SetEncounterChanceMultiplier(locationId =>
-            {
-                var w = _yearOfAsh?.Warlord;
-                if (w == null) return 1f;
-                float mod = w.TravelDangerModifier(locationId);
-                return mod > 0f ? 1f + mod : 1f;
-            });
+            // Task 122: the single encounter slot is composed on Main —
+            // warlord danger × wildlife pressure × live location threats —
+            // so every wiring converges instead of overwriting.
+            _expeditions.SetEncounterChanceMultiplier(ComposeExpeditionDangerMultiplier());
         }
 
         /// <summary>

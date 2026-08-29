@@ -41,11 +41,18 @@ namespace AtomicWar.GodotApp
         // Questline master registry (loaded early for expansion quest ID validation)
         private QuestlineMasterCatalog _questlineMaster = null!;
 
+        // Unified Campaign Consequence and Flag Ledger
+        private readonly Ashfall.Core.Flags.CampaignConsequenceLedger _consequenceLedger = new Ashfall.Core.Flags.CampaignConsequenceLedger();
+        public Ashfall.Core.Flags.CampaignConsequenceLedger ConsequenceLedger => _consequenceLedger;
+
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private Ashfall.Core.Events.SimpleEventBus _eventBus = new Ashfall.Core.Events.SimpleEventBus();
         private AtomicWar.GodotApp.Host.HostEventAdapter _hostEventAdapter = null!;
         private string _dataDir = string.Empty;
-        private int _simDay = 4;
+        // Task #112: the campaign calendar is the single day authority; this
+        // read-only projection is the only way host code reads it. (1 until
+        // SetupCampaignDay initializes the coordinator.)
+        private int _simDay => _campaignDay?.Calendar?.CurrentDay ?? 1;
 
         // Diagnostics strip throttling. Engine.GetVersionInfo() allocates a Godot
         // Dictionary, so the version string is resolved once and cached for the process.

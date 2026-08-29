@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
+using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core.Medical
 {
@@ -141,6 +142,126 @@ namespace Ashfall.Core.Medical
             OnWithdrawalStarted?.Invoke(survivorId, itemId);
             RaiseChanged();
             return true;
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a managed detox start command.
+        /// Shares the same validation path as <see cref="BeginManagedDetox"/>.
+        /// </summary>
+        public CommandPreview PreviewBeginManagedDetox(string survivorId, string itemId, long stateVersion = 0)
+        {
+            var dep = Require(survivorId, itemId);
+            if (dep == null)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, "missing_dependency", "medical.missing_dependency", stateVersion);
+            if (dep.dependencyLevel < DependencyThreshold)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, "below_threshold", "medical.below_threshold", stateVersion);
+            if (dep.inManagedDetox)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, "already_in_treatment", "medical.already_in_treatment", stateVersion);
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "dependency_level", -dep.dependencyLevel }
+            };
+
+            return CommandPreview.Available(
+                PlayerCommandCode.TreatmentStart,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "medical.preview_managed_detox");
+        }
+
+        /// <summary>
+        /// Execute a managed detox start using the same validation path as <see cref="PreviewBeginManagedDetox"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteBeginManagedDetox(string survivorId, string itemId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewBeginManagedDetox(survivorId, itemId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.TreatmentStart, preview.StateVersion, currentStateVersion);
+
+            bool ok = BeginManagedDetox(survivorId, itemId);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.TreatmentStart,
+                    ActionResult.Failed("execute_failed", "medical.execute_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            var dep = Require(survivorId, itemId);
+            var deltas = new Dictionary<string, double>();
+            if (dep != null)
+                deltas["dependency_level"] = -dep.dependencyLevel;
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.TreatmentStart,
+                ActionResult.Success("medical.managed_detox_started", deltas),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a cold-turkey start command.
+        /// Shares the same validation path as <see cref="BeginColdTurkey"/>.
+        /// </summary>
+        public CommandPreview PreviewBeginColdTurkey(string survivorId, string itemId, long stateVersion = 0)
+        {
+            var dep = Require(survivorId, itemId);
+            if (dep == null)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, "missing_dependency", "medical.missing_dependency", stateVersion);
+            if (dep.dependencyLevel < DependencyThreshold)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, "below_threshold", "medical.below_threshold", stateVersion);
+            if (dep.inColdTurkey)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, "already_in_treatment", "medical.already_in_treatment", stateVersion);
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "dependency_level", -dep.dependencyLevel }
+            };
+
+            return CommandPreview.Available(
+                PlayerCommandCode.TreatmentStart,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "medical.preview_cold_turkey");
+        }
+
+        /// <summary>
+        /// Execute a cold-turkey start using the same validation path as <see cref="PreviewBeginColdTurkey"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteBeginColdTurkey(string survivorId, string itemId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewBeginColdTurkey(survivorId, itemId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.TreatmentStart, preview.StateVersion, currentStateVersion);
+
+            bool ok = BeginColdTurkey(survivorId, itemId);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.TreatmentStart,
+                    ActionResult.Failed("execute_failed", "medical.execute_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            var dep = Require(survivorId, itemId);
+            var deltas = new Dictionary<string, double>();
+            if (dep != null)
+                deltas["dependency_level"] = -dep.dependencyLevel;
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.TreatmentStart,
+                ActionResult.Success("medical.cold_turkey_started", deltas),
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         // ── Tick ──────────────────────────────────────────────────────

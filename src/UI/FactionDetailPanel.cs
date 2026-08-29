@@ -113,62 +113,26 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by
+            // res://assets/ui/panels/FactionDetailPanel.tscn. SceneBinder resolves
+            // typed unique-name nodes into the four content slots; sibling bind
+            // logic in this file is unchanged.
+            var binder = new SceneBinder(this, typeof(FactionDetailPanel));
+            binder.Require<VBoxContainer>("InfoContainer");
+            binder.Require<VBoxContainer>("DiplomacyContainer");
+            binder.Require<VBoxContainer>("TradeContainer");
+            binder.Require<VBoxContainer>("EventsContainer");
+            binder.Require<Label>("Title");
+            binder.Require<Button>("CloseButton");
+
+            _infoContainer = binder.Get<VBoxContainer>("InfoContainer");
+            _diplomacyContainer = binder.Get<VBoxContainer>("DiplomacyContainer");
+            _tradeContainer = binder.Get<VBoxContainer>("TradeContainer");
+            _eventsContainer = binder.Get<VBoxContainer>("EventsContainer");
+            _titleLabel = binder.Get<Label>("Title");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.03f, 0.04f, 0.05f, 0.96f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var scroll = new ScrollContainer();
-            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
-            scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
-            AddChild(scroll);
-
-            var center = new CenterContainer();
-            center.SetAnchorsPreset(LayoutPreset.FullRect);
-            center.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            center.SizeFlagsVertical = SizeFlags.ExpandFill;
-            scroll.AddChild(center);
-
-            var rootBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            rootBox.CustomMinimumSize = new Vector2(760, 0);
-            center.AddChild(rootBox);
-
-            _titleLabel = AshfallUiHelpers.MakeTitle("FACTION DIPLOMATIC DOSSIER", Ashfall.Core.UI.Theme.FontSizeH1);
-            _titleLabel.HorizontalAlignment = HorizontalAlignment.Center;
-            rootBox.AddChild(_titleLabel);
-
-            var sub = AshfallUiHelpers.MakeMetadata("Comprehensive diplomatic standing, treaty protocols, and trade specialization profile.");
-            sub.HorizontalAlignment = HorizontalAlignment.Center;
-            sub.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            rootBox.AddChild(sub);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _infoContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_infoContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _diplomacyContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_diplomacyContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _tradeContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_tradeContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _eventsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_eventsContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO FACTIONS [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(220, 42);
-            rootBox.AddChild(btnClose);
         }
 
         public void Open()

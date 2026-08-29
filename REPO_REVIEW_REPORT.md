@@ -391,3 +391,92 @@ The per-slot `campaign.json` envelope is now the single authoritative save:
 - **Known follow-up (out of scope):** in-memory restore without file
   explosion (`ICampaignSaveSection` remains the seam); multi-generation
   retention beyond the single `.bak`.
+
+---
+
+## Task #101 — Expedition Vehicle & Weapon-Condition Logistics (2026-08-28) — COMPLETE
+
+- Vehicles change real outcomes: dispatch preparation gates on exact fuel
+  need (depleted tank refuses with a refuel message), burns fuel + wear via
+  `PrepareForExpedition`, builds a per-tick profile from vehicle condition
+  (worn ⇒ mid-route breakdown risk); driven sorties travel faster and haul
+  more; a seeded breakdown reverts the remainder to foot.
+- Weapon condition flows through ONE authority: equipment-condition
+  instances (Weapon family) project into combat loadouts, engagement wear
+  writes back at encounter end, and readiness/jam risk feed the expedition
+  estimate (degraded weapon raises effective encounter risk up to +50%).
+- UI: DISPATCH PREPARATION block (vehicle/weapon selectors, refuel top-up,
+  live estimate line); dispatch routed through the host (gates kept).
+- Persistence: expedition section = `ExpeditionAggregateState` (sorties +
+  garage), legacy shapes migrate, `vehicles.json` is authoritative.
+- Verification: Core 4395/4399 (4 failures = concurrent session's
+  uncommitted HostCli onboarding files, pre-existing); `--expedition-selftest`
+  10/10 demo + 9/9 vehicle gates; data-integrity + bridge selftests PASS;
+  host builds 0 errors. Cross-tool review required (≥2 coupled variables:
+  fuel/condition/readiness).
+
+---
+
+## Task #111 — Campaign-Day Coordinator Migration: Residual Gap Closure (2026-08-28) — COMPLETE
+
+The core migration landed earlier (commit 5c0f9046: coordinator, 17 phase
+owners, fail-closed, tests). This pass closed the four audited residuals:
+
+- **Retry-restore (substep 7 made real):** a failed fail-closed advance arms
+  a pending restore; a retry of the same day rolls owners implementing the
+  new `IPreDaySnapshotRestore` back (reverse order) before ticking — no
+  double-applied days. Pinned by 4 new coordinator tests (rollback works,
+  failed rollback stays fail-closed, success clears, stale day dropped).
+- **Real snapshots on the 5 stateful owners:** holdfast_core (clock — the
+  double-day hazard), survivors_needs, weather_world, expeditions_caravans
+  (aggregate + caravans), economy_market.
+- **economy_market owner (phase 2):** the market now advances daily through
+  the coordinator via `EconomyHostSession.TickDay(day, rng)` on the economy
+  RNG stream. INTENTIONAL BEHAVIOR CHANGE: the market previously only moved
+  through a dead demo button; economy pacing may shift — flag for balance.
+- **Demo cleanup (substep 5):** nine dead On*Clicked handlers and their
+  orphaned Demo host methods deleted (Economy/Caravan/World/Medical/
+  Maritime/Expedition incl. TickDemoHours); Maritime's live menu button
+  calls StartDive; the census-levy menu button kept, promoted to
+  `HonourCensusLevy`.
+- **Source gate widened (substep 12):** every src/Main*.cs partial now
+  scanned — TickSimDay only in Main.Holdfast.cs + Main.UiTests.* drivers;
+  `_campaignDay.Advance` only in Main.Holdfast.cs.
+
+Verification: Core 4400/4404 (4 failures = concurrent session's uncommitted
+HostCli onboarding files, pre-existing); host 0 errors (2 warnings in the
+same concurrent files); expedition/data-integrity/save-load selftests PASS;
+gate + coordinator suites green.
+
+---
+
+## Task #112 — Campaign Calendar Authority: Residual Gap Closure (2026-08-28) — COMPLETE
+
+Core delivery landed earlier (8029aa69: ICampaignCalendar, adapters,
+reconciler, gates, doc). This pass closed the audited residuals:
+
+- **Calendar now LEADS**: CommitAdvance derives targetDay from
+  `Calendar.CurrentDay + 1`; the Core holdfast clock is a projection
+  landed by the holdfast_core owner and re-synced FROM the calendar on
+  restore/new-game/reconciliation (three stray calendar writes removed).
+- **Reconciler wired** into SetupCampaignDay (was dead code): legacy
+  section days (campaign_day/holdfast/duty_roster/economy/year_of_ash)
+  reconcile before the envelope is adopted; disagreements emit
+  [CALENDAR_MISMATCH]; a later section upgrades an older envelope.
+- **Fallbacks removed**: _simDay projects the calendar only; radio and
+  phase0 read the projection, not the holdfast clock.
+- **Duty roster off-by-one fixed**: TickDay no longer self-advances; the
+  roster clock equals the campaign day after every advance.
+- **Gate widened**: Calendar.SetDay / AdvanceDays / sim-day self-mutation
+  forbidden across Main partials + UI (allowlist: Holdfast sync sites,
+  UiTests drivers); engine-internal ISimClock ticks in src/Host stay
+  legitimate (substep 2).
+- **Live projection-agreement gates**: silent_foundry_uitest now asserts
+  holdfast clock == market day == roster clock == calendar adapters after
+  real advances, plus calendar save/reload round-trip.
+- BEHAVIOR NOTE: reconciliation may now advance a campaign whose
+  campaign_day section lagged a subsystem section (documented priority
+  campaign_day > holdfast > max). Verification: coordinator/calendar
+  suites 34/34; Core 4418/4422 (4 = concurrent session's uncommitted
+  HostCli onboarding files); silent_foundry_uitest projection gates 8/8
+  (its factions-panel failure pre-exists, reproduced on a stashed tree).
