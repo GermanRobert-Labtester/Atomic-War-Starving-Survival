@@ -82,8 +82,10 @@ namespace AtomicWar.GodotApp
                 }
                 else sb.Append(c);
             }
-            // The gates spell it "selftest", not "self_test".
-            return sb.ToString().Replace("_self_test", "_selftest");
+            // The gates spell these without an underscore before "test".
+            return sb.ToString()
+                .Replace("_self_test", "_selftest")
+                .Replace("_ui_test", "_uitest");
         }
     }
 }
