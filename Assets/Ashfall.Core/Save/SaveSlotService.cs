@@ -243,58 +243,108 @@ public class SaveSlotService
         if (envelope == null)
             return AggregateValidationResult.Invalid("Aggregate envelope is null.");
 
-            var errors = new List<string>();
-            var sectionErrors = new List<string>();
+        var errors = new List<string>();
+        var sectionErrors = new List<string>();
+        bool isCurrent = envelope.manifestVersion == CampaignEnvelopeBuilder.CurrentEnvelopeVersion;
 
-            // Version ladder: V1 (filename-keyed sections) and the current
-            // version are both loadable; V1 migrates in memory via
-            // MigrateToCurrent. Anything newer than what this build knows is
-            // rejected — a future-format save must not be silently truncated.
-            if (envelope.manifestVersion != 1 &&
-                envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
-                errors.Add($"Unsupported manifest version: {envelope.manifestVersion}");
+        // Version ladder: V1 is retained for the migration path, while the
+        // current registry-keyed format is the only format accepted as a
+        // current-generation authority. Future formats are never truncated.
+        if (envelope.manifestVersion != 1 && !isCurrent)
+            errors.Add($"Unsupported manifest version: {envelope.manifestVersion}");
+
+        if (envelope.manifest == null)
+            errors.Add("Aggregate envelope manifest is null.");
 
         if (envelope.sections == null || envelope.sections.Count == 0)
             errors.Add("Aggregate envelope contains no sections.");
 
-        // Validate each section independently.
+        var seenNames = new HashSet<string>(StringComparer.Ordinal);
         if (envelope.sections != null)
         {
             for (int i = 0; i < envelope.sections.Count; i++)
             {
-                SaveSectionEnvelope section = envelope.sections[i];
+                SaveSectionEnvelope? section = envelope.sections[i];
+                if (section == null)
+                {
+                    sectionErrors.Add($"Section {i} is null.");
+                    continue;
+                }
+
                 if (string.IsNullOrWhiteSpace(section.sectionName))
+                {
                     sectionErrors.Add($"Section {i}: sectionName is empty.");
+                }
+                else if (isCurrent)
+                {
+                    bool reservedLegacy = string.Equals(
+                        section.sectionName, LegacyImportSectionName, StringComparison.Ordinal);
+                    if (!reservedLegacy && !SaveSectionRegistry.SectionFileNames.ContainsKey(section.sectionName))
+                        sectionErrors.Add($"Section {i} ({section.sectionName}): unknown registry section.");
 
-            if (string.IsNullOrEmpty(section.payloadJson))
-                sectionErrors.Add($"Section {i} ({section.sectionName}): payloadJson is empty.");
+                    if (!seenNames.Add(section.sectionName))
+                        sectionErrors.Add($"Section {i} ({section.sectionName}): duplicate section.");
 
-            if (!string.IsNullOrEmpty(section.payloadJson) && !string.IsNullOrEmpty(section.checksum))
-            {
-                string expected = ComputeSectionChecksum(section);
-                if (!string.Equals(section.checksum, expected, StringComparison.Ordinal))
-                    sectionErrors.Add($"Section {i} ({section.sectionName}): checksum mismatch.");
-            }
-            else if (string.IsNullOrEmpty(section.checksum) && !string.IsNullOrEmpty(section.payloadJson))
-            {
-                sectionErrors.Add($"Section {i} ({section.sectionName}): checksum is empty for a non-empty payload.");
-            }
+                    if (!reservedLegacy &&
+                        section.schemaVersion != SaveSectionRegistry.SchemaVersionFor(section.sectionName))
+                    {
+                        sectionErrors.Add(
+                            $"Section {i} ({section.sectionName}): schema version {section.schemaVersion} " +
+                            $"does not match registry version {SaveSectionRegistry.SchemaVersionFor(section.sectionName)}.");
+                    }
+                }
 
-            if (!string.IsNullOrEmpty(envelope.manifest.generationId) &&
-                !string.IsNullOrEmpty(section.generationId) &&
-                !string.Equals(envelope.manifest.generationId, section.generationId, StringComparison.Ordinal))
-            {
-                sectionErrors.Add($"Section {i} ({section.sectionName}): generation mismatch (manifest '{envelope.manifest.generationId}', section '{section.generationId}').");
+                if (string.IsNullOrWhiteSpace(section.payloadJson))
+                    sectionErrors.Add($"Section {i} ({section.sectionName}): payloadJson is empty.");
+
+                if (string.IsNullOrWhiteSpace(section.checksum))
+                {
+                    sectionErrors.Add($"Section {i} ({section.sectionName}): checksum is empty for a non-empty payload.");
+                }
+                else if (!string.IsNullOrWhiteSpace(section.payloadJson))
+                {
+                    string expected = ComputeSectionChecksum(section);
+                    if (!string.Equals(section.checksum, expected, StringComparison.Ordinal))
+                        sectionErrors.Add($"Section {i} ({section.sectionName}): checksum mismatch.");
+                }
+
+                if (envelope.manifest != null &&
+                    !string.IsNullOrEmpty(envelope.manifest.generationId) &&
+                    !string.IsNullOrEmpty(section.generationId) &&
+                    !string.Equals(envelope.manifest.generationId, section.generationId, StringComparison.Ordinal))
+                {
+                    sectionErrors.Add(
+                        $"Section {i} ({section.sectionName}): generation mismatch " +
+                        $"(manifest '{envelope.manifest.generationId}', section '{section.generationId}').");
+                }
             }
         }
+
+        // A current envelope must identify the slot it claims to represent.
+        // V1 remains permissive because it is an on-disk compatibility format
+        // and is migrated in memory before it becomes current.
+        if (isCurrent && envelope.manifest != null)
+        {
+            if (!string.IsNullOrEmpty(envelope.manifest.profileId.Value) &&
+                !string.IsNullOrEmpty(envelope.manifest.slotId.Value))
+            {
+                // Identity is checked by the slot-aware load path. The shape
+                // validator intentionally has no requested profile/slot input.
+            }
         }
 
-        // Validate aggregate checksum.
         if (errors.Count == 0 && sectionErrors.Count == 0)
         {
-            string expected = ComputeAggregateChecksum(envelope);
-            if (!string.Equals(envelope.aggregateChecksum, expected, StringComparison.Ordinal))
-                errors.Add("Aggregate checksum mismatch.");
+            if (string.IsNullOrWhiteSpace(envelope.aggregateChecksum))
+            {
+                errors.Add("Aggregate checksum is empty.");
+            }
+            else
+            {
+                string expected = ComputeAggregateChecksum(envelope);
+                if (!string.Equals(envelope.aggregateChecksum, expected, StringComparison.Ordinal))
+                    errors.Add("Aggregate checksum mismatch.");
+            }
         }
 
         if (errors.Count > 0 || sectionErrors.Count > 0)
@@ -313,81 +363,62 @@ public class SaveSlotService
     }
 
     /// <summary>
-    /// Write an aggregate envelope atomically: write to a temp file, validate,
-    /// then replace the active envelope. Returns true on success.
+    /// Write an aggregate envelope atomically: validate the complete candidate,
+    /// then commit campaign.json through the shared temp-file replacement path.
+    /// The previous current-generation envelope is never replaced by a partial
+    /// or invalid payload.
     /// </summary>
     public bool WriteAggregateAtomically(SaveProfileId profileId, SaveSlotId slotId, AggregateSaveEnvelope envelope)
     {
         if (envelope == null) throw new ArgumentNullException(nameof(envelope));
 
         string targetPath = GetAggregatePath(profileId, slotId);
-        string? dir = Path.GetDirectoryName(targetPath);
-        if (!string.IsNullOrEmpty(dir) && !_files.DirectoryExists(dir))
-            _files.CreateDirectory(dir);
-
-        string tempPath = targetPath + ".tmp";
-        string backupPath = targetPath + ".bak";
-
         try
         {
-            // Ensure section checksums are populated before computing the aggregate checksum.
+            if (envelope.sections == null)
+            {
+                _log.Error($"SaveSlotService: aggregate for slot '{slotId}' has no section list.");
+                return false;
+            }
+
+            // Direct legacy callers may omit per-section checksums. Preserve
+            // that compatibility by filling only missing checksums; a supplied
+            // non-empty checksum is always verified and never overwritten.
             for (int i = 0; i < envelope.sections.Count; i++)
             {
-                var section = envelope.sections[i];
-                if (string.IsNullOrEmpty(section.checksum) && !string.IsNullOrEmpty(section.payloadJson))
+                SaveSectionEnvelope? section = envelope.sections[i];
+                if (section == null) continue;
+                if (string.IsNullOrEmpty(section.checksum) && !string.IsNullOrWhiteSpace(section.payloadJson))
                 {
                     section.checksum = ComputeSectionChecksum(section);
                     envelope.sections[i] = section;
                 }
             }
 
-            // Serialize envelope.
             envelope.aggregateChecksum = ComputeAggregateChecksum(envelope);
-            string raw = _json.Serialize(envelope);
-
-            // Write temp file.
-            _files.WriteAllText(tempPath, raw);
-
-            // Read back and validate.
-            string readBack = _files.ReadAllText(tempPath);
-            if (string.IsNullOrWhiteSpace(readBack))
-            {
-                _log.Error("SaveSlotService: atomic write produced empty temp file.");
-                return false;
-            }
-
-            var parsed = _json.Deserialize<AggregateSaveEnvelope>(readBack);
-            if (parsed == null)
-            {
-                _log.Error("SaveSlotService: atomic write temp file failed to parse.");
-                return false;
-            }
-
-            var validation = ValidateAggregate(parsed);
+            var validation = ValidateAggregate(envelope);
             if (!validation.IsValid)
             {
-                throw new InvalidOperationException($"SaveSlotService: atomic write validation failed: {string.Join("; ", validation.Errors)}");
+                _log.Error(
+                    $"SaveSlotService: aggregate validation failed before commit for slot '{slotId}': " +
+                    string.Join("; ", validation.Errors));
+                return false;
             }
 
-            // Move previous active to backup, then temp to active.
-            if (_files.FileExists(targetPath))
+            string raw = _json.Serialize(envelope);
+            if (string.IsNullOrWhiteSpace(raw))
             {
-                try
-                {
-                    string existing = _files.ReadAllText(targetPath);
-                    _files.WriteAllText(backupPath, existing);
-                }
-                catch (Exception ex)
-                {
-                    _log.Warn($"SaveSlotService: could not create backup '{backupPath}': {ex.Message}");
-                }
+                _log.Error($"SaveSlotService: aggregate serialization produced an empty payload for slot '{slotId}'.");
+                return false;
             }
 
-            _files.WriteAllText(targetPath, readBack);
-            if (_files.FileExists(tempPath))
-                _files.DeleteFile(tempPath);
-
-            return true;
+            return SaveEnvelopeHelper.TryWriteAtomic(
+                targetPath,
+                raw,
+                fileIO: _files,
+                createBackup: true,
+                log: _log,
+                logTag: $"SaveSlotService:{slotId.Value}");
         }
         catch (Exception ex)
         {
@@ -403,16 +434,21 @@ public class SaveSlotService
     /// </summary>
     public SaveLoadResult TryLoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
     {
-        if (IsIronManTerminal(profileId, slotId))
-        {
-            return SaveLoadResult.Fail(
-                SaveLoadStatus.IronManBlocked,
-                $"Save slot '{slotId.Value}' is sealed (Iron Man terminal defeat). Manual restore blocked.");
-        }
-
         string path = GetAggregatePath(profileId, slotId);
         if (!_files.FileExists(path))
         {
+            // An empty/new slot has no campaign authority yet. Preserve the
+            // historical terminal-manifest guard for that legacy state, but
+            // never let manifest.json override an existing campaign.json.
+            var manifestOnly = LoadManifest(profileId, slotId);
+            if (manifestOnly != null &&
+                manifestOnly.ironManTerminalState == IronManTerminalState.TerminalLoss)
+            {
+                return SaveLoadResult.Fail(
+                    SaveLoadStatus.IronManBlocked,
+                    $"Save slot '{slotId.Value}' is sealed (Iron Man terminal defeat). Manual restore blocked.");
+            }
+
             return SaveLoadResult.Fail(
                 SaveLoadStatus.MissingFile,
                 $"Save file for slot '{slotId.Value}' was not found.");
@@ -463,24 +499,61 @@ public class SaveSlotService
                 $"Save data for slot '{slotId.Value}' could not be parsed. Live session preserved.");
         }
 
-            var validation = ValidateAggregate(envelope);
-            if (!validation.IsValid)
+        AggregateValidationResult validation;
+        try
+        {
+            validation = ValidateAggregate(envelope);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: aggregate validation threw for slot '{slotId}': {ex.Message}");
+            QuarantineCorruptSave(profileId, slotId, path, $"Validation error: {ex.Message}");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save data for slot '{slotId.Value}' failed validation. Live session preserved.",
+                new[] { ex.Message });
+        }
+
+        if (!validation.IsValid)
+        {
+            QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", validation.Errors));
+            bool isChecksumFailure = validation.Errors.Any(e => e.IndexOf("checksum", StringComparison.OrdinalIgnoreCase) >= 0);
+            var status = isChecksumFailure ? SaveLoadStatus.ChecksumMismatch : SaveLoadStatus.CorruptData;
+            string msg = isChecksumFailure
+                ? $"Save data for slot '{slotId.Value}' failed checksum validation (corrupted or modified). Live session preserved."
+                : $"Save data for slot '{slotId.Value}' failed validation ({string.Join(", ", validation.Errors)}). Live session preserved.";
+            return SaveLoadResult.Fail(status, msg, validation.Errors);
+        }
+
+        // Older envelopes migrate to the current format in memory; the
+        // on-disk file is rewritten as current on the next successful save.
+        if (envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+        {
+            try
             {
-                QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", validation.Errors));
-                bool isChecksumFailure = validation.Errors.Any(e => e.IndexOf("checksum", StringComparison.OrdinalIgnoreCase) >= 0);
-                var status = isChecksumFailure ? SaveLoadStatus.ChecksumMismatch : SaveLoadStatus.CorruptData;
-                string msg = isChecksumFailure
-                    ? $"Save data for slot '{slotId.Value}' failed checksum validation (corrupted or modified). Live session preserved."
-                    : $"Save data for slot '{slotId.Value}' failed validation ({string.Join(", ", validation.Errors)}). Live session preserved.";
-                return SaveLoadResult.Fail(status, msg, validation.Errors);
+                envelope = MigrateToCurrent(envelope, _log);
             }
+            catch (Exception ex)
+            {
+                _log.Warn($"SaveSlotService: legacy aggregate migration failed for slot '{slotId}': {ex.Message}");
+                return SaveLoadResult.Fail(
+                    SaveLoadStatus.CorruptData,
+                    $"Save data for slot '{slotId.Value}' could not be migrated. Live session preserved.",
+                    new[] { ex.Message });
+            }
+        }
 
-            // Older envelopes migrate to the current format in memory; the
-            // on-disk file is rewritten as current on the next save.
-            if (envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
-                envelope = MigrateToCurrent(envelope);
+        // The terminal policy is part of the campaign envelope once one
+        // exists. A stale manifest projection cannot unblock or block it.
+        if (envelope.manifest != null &&
+            envelope.manifest.ironManTerminalState == IronManTerminalState.TerminalLoss)
+        {
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.IronManBlocked,
+                $"Save slot '{slotId.Value}' is sealed (Iron Man terminal defeat). Manual restore blocked.");
+        }
 
-            return SaveLoadResult.Ok(envelope, $"Save slot '{slotId.Value}' loaded successfully.");
+        return SaveLoadResult.Ok(envelope, $"Save slot '{slotId.Value}' loaded successfully.");
     }
 
         /// <summary>
@@ -527,6 +600,12 @@ public class SaveSlotService
             var dropped = new List<string>();
             foreach (var section in envelope.sections ?? new List<SaveSectionEnvelope>())
             {
+                if (section == null)
+                {
+                    dropped.Add("(null)");
+                    continue;
+                }
+
                 bool reserved = string.Equals(section.sectionName, LegacyImportSectionName, StringComparison.Ordinal);
                 if (reserved)
                 {
@@ -536,6 +615,7 @@ public class SaveSlotService
                         schemaVersion = section.schemaVersion,
                         payloadJson = section.payloadJson,
                         checksum = section.checksum,
+                        generationId = section.generationId,
                     };
                     sections.Add(kept);
                     continue;
@@ -611,14 +691,32 @@ public class SaveSlotService
     /// </summary>
     public bool IsIronManTerminal(SaveProfileId profileId, SaveSlotId slotId)
     {
-        var manifest = LoadManifest(profileId, slotId);
-        if (manifest == null)
-            return false;
+        string aggregatePath = GetAggregatePath(profileId, slotId);
+        if (_files.FileExists(aggregatePath))
+        {
+            try
+            {
+                string raw = _files.ReadAllText(aggregatePath);
+                if (string.IsNullOrWhiteSpace(raw)) return false;
+                var envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
+                // campaign.json is authoritative whenever it exists. If it is
+                // malformed, TryLoadAggregate will report corruption instead
+                // of allowing the manifest projection to decide policy.
+                return envelope?.manifest != null &&
+                       envelope.manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"SaveSlotService: failed to read aggregate envelope for terminal check on slot '{slotId}': {ex.Message}");
+                return false;
+            }
+        }
 
-        // TerminalLoss seals the slot regardless of campaign mode. Iron Man is
-        // the historical producer; run-finalization (Task 121) now marks any
-        // ended campaign TerminalLoss, and both must block continuation.
-        return manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+        // A slot created before its first aggregate commit has only a
+        // manifest. Keep that empty-slot compatibility behavior.
+        var manifest = LoadManifest(profileId, slotId);
+        return manifest != null &&
+               manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
     }
 
     /// <summary>
@@ -630,6 +728,36 @@ public class SaveSlotService
     /// </summary>
     public bool MarkTerminal(SaveProfileId profileId, SaveSlotId slotId, int finalDay)
     {
+        string aggregatePath = GetAggregatePath(profileId, slotId);
+        if (_files.FileExists(aggregatePath))
+        {
+            var loaded = TryLoadAggregate(profileId, slotId);
+            if (loaded.Status == SaveLoadStatus.IronManBlocked)
+                return true; // idempotent terminal mark
+            if (!loaded.IsSuccess || loaded.Envelope?.manifest == null)
+                return false;
+
+            loaded.Envelope.manifest.ironManTerminalState = IronManTerminalState.TerminalLoss;
+            loaded.Envelope.manifest.currentDay = finalDay;
+            loaded.Envelope.aggregateChecksum = ComputeAggregateChecksum(loaded.Envelope);
+            if (!WriteAggregateAtomically(profileId, slotId, loaded.Envelope))
+                return false;
+
+            try
+            {
+                // manifest.json is only a compatibility projection. The
+                // aggregate commit above is the authoritative terminal state.
+                SaveManifest(profileId, slotId, loaded.Envelope.manifest);
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"SaveSlotService: terminal manifest projection failed for slot '{slotId}': {ex.Message}");
+            }
+            return true;
+        }
+
+        // Preserve the pre-aggregate behavior for an empty slot that has only
+        // a manifest on disk.
         var manifest = LoadManifest(profileId, slotId);
         if (manifest == null)
             return false;
@@ -810,7 +938,15 @@ public class SaveSlotService
         {
             for (int i = 0; i < envelope.sections.Count; i++)
             {
-                SaveSectionEnvelope s = envelope.sections[i];
+                SaveSectionEnvelope? s = envelope.sections[i];
+                if (s == null)
+                {
+                    sb.Append("section[").Append(i).Append("].name=\n");
+                    sb.Append("section[").Append(i).Append("].version=\n");
+                    sb.Append("section[").Append(i).Append("].checksum=\n");
+                    sb.Append("section[").Append(i).Append("].payload=\n");
+                    continue;
+                }
                 sb.Append("section[").Append(i).Append("].name=").Append(s.sectionName ?? string.Empty).Append('\n');
                 sb.Append("section[").Append(i).Append("].version=").Append(s.schemaVersion).Append('\n');
                 sb.Append("section[").Append(i).Append("].checksum=").Append(s.checksum ?? string.Empty).Append('\n');

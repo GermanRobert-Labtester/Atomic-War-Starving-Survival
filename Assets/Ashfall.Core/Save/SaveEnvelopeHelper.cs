@@ -87,20 +87,21 @@ namespace Ashfall.Core.Save
             string? logTag = null)
         {
             if (string.IsNullOrWhiteSpace(path)) return false;
+            if (string.IsNullOrWhiteSpace(payload)) return false;
 
             var files = fileIO ?? DefaultFileIO;
             string tag = logTag ?? "SaveEnvelopeHelper";
+            string tempPath = path + ".tmp";
 
             try
             {
-                string dir = Path.GetDirectoryName(path)!;
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !files.DirectoryExists(dir))
-                {
-                    if (files is FileSystemIO)
-                        Directory.CreateDirectory(dir);
-                }
+                    files.CreateDirectory(dir);
 
-                // Create backup if requested and original exists
+                // Create backup if requested and original exists. A backup is
+                // deliberately best-effort: failure here must not replace the
+                // authoritative file or turn a valid save into a partial one.
                 if (createBackup && files.FileExists(path))
                 {
                     try
@@ -115,9 +116,14 @@ namespace Ashfall.Core.Save
                     }
                 }
 
-                // Atomic write via temp file
-                string tempPath = path + ".tmp";
+                // Write and read the complete payload before replacing the
+                // target. FileSystemIO uses rename-over-target, while virtual
+                // test/adaptor implementations fall back to their own atomic
+                // write primitive.
                 files.WriteAllText(tempPath, payload);
+                string readBack = files.ReadAllText(tempPath);
+                if (string.IsNullOrWhiteSpace(readBack))
+                    throw new InvalidOperationException("temporary save payload is empty");
 
                 if (File.Exists(tempPath))
                 {
@@ -125,7 +131,10 @@ namespace Ashfall.Core.Save
                 }
                 else
                 {
-                    files.WriteAllText(path, payload);
+                    // IFileIO implementations without a physical rename still
+                    // get a complete payload write; never leave the temp copy as
+                    // an apparent current-generation authority.
+                    files.WriteAllText(path, readBack);
                 }
 
                 Interlocked.Increment(ref s_totalAtomicWrites);
@@ -135,6 +144,18 @@ namespace Ashfall.Core.Save
             {
                 log?.Error($"[{tag}] Save failed for '{path}': {ex.Message}");
                 return false;
+            }
+            finally
+            {
+                try
+                {
+                    if (files.FileExists(tempPath))
+                        files.DeleteFile(tempPath);
+                }
+                catch (Exception cleanupEx)
+                {
+                    log?.Warn($"[{tag}] Temporary save cleanup failed for '{tempPath}': {cleanupEx.Message}");
+                }
             }
         }
 

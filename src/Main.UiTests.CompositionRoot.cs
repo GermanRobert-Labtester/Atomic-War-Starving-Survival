@@ -94,14 +94,82 @@ namespace AtomicWar.GodotApp
                 if (!panelConstructionPass) break;
             }
 
-            bool pass = composeConstructed && idempotent && panelConstructionPass;
+            // ── Step 4: StartNewGame() composition & fallback switch no-op verification ──
+            ResetAllSessions();
+            ResetComposeCampaignCallCount();
+
+            // Run StartNewGame flow
+            StartNewGame();
+
+            bool startNewGameComposed = (ComposeCampaignCallCount == 1);
+            if (!startNewGameComposed)
+            {
+                GD.PrintErr($"[CompositionRootUiTest] StartNewGame failed to call ComposeCampaign() exactly once: callCount={ComposeCampaignCallCount}");
+            }
+
+            var postNewGameServices = CaptureNonUiFieldValues();
+
+            // Verify core services were instantiated by StartNewGame()'s ComposeCampaign()
+            bool coreServicesPresent = _campaignDay != null &&
+                                       _survivors != null &&
+                                       _inventory != null &&
+                                       _world != null &&
+                                       _medical != null &&
+                                       _powerGrid != null &&
+                                       _startingLevel != null &&
+                                       _holdfastTerminal != null;
+
+            if (!coreServicesPresent)
+            {
+                GD.PrintErr("[CompositionRootUiTest] Core services missing after StartNewGame()");
+            }
+
+            // Verify that subsequent OpenPlayerPanel calls on the fresh game state
+            // perform zero service re-allocations (SetupXxx in fallback switch are no-ops).
+            bool fallbackNoOpsPass = true;
+            string? fallbackFailure = null;
+            int fallbackPanelsTested = 0;
+
+            foreach (var panelId in panelIds)
+            {
+                var before = CaptureNonUiFieldValues();
+                OpenPlayerPanel(panelId);
+                CloseAllOverlayPanels();
+                var after = CaptureNonUiFieldValues();
+
+                fallbackPanelsTested++;
+
+                foreach (var kv in before)
+                {
+                    if (kv.Value == null && after[kv.Key] == null) continue;
+                    if (kv.Value != null && !kv.Value.Equals(after[kv.Key]))
+                    {
+                        fallbackNoOpsPass = false;
+                        fallbackFailure = $"{panelId} altered service {kv.Key} after StartNewGame()";
+                        break;
+                    }
+                }
+
+                if (!fallbackNoOpsPass) break;
+            }
+
+            bool pass = composeConstructed &&
+                        idempotent &&
+                        panelConstructionPass &&
+                        startNewGameComposed &&
+                        coreServicesPresent &&
+                        fallbackNoOpsPass;
 
             GD.Print($"[CompositionRootUiTest] constructed={constructed} idempotent={idempotent} " +
-                     $"panelsTested={panelsTested} panelConstructionPass={panelConstructionPass}");
+                     $"panelsTested={panelsTested} panelConstructionPass={panelConstructionPass} " +
+                     $"startNewGameComposed={startNewGameComposed} coreServicesPresent={coreServicesPresent} " +
+                     $"fallbackNoOpsPass={fallbackNoOpsPass} (tested {fallbackPanelsTested} fallback panels)");
             if (idempotencyFailure != null)
                 GD.PrintErr($"[CompositionRootUiTest] Idempotency failure: {idempotencyFailure}");
             if (panelConstructionFailure != null)
                 GD.PrintErr($"[CompositionRootUiTest] Panel construction failure: {panelConstructionFailure}");
+            if (fallbackFailure != null)
+                GD.PrintErr($"[CompositionRootUiTest] Fallback no-op failure: {fallbackFailure}");
 
             HostCli.EmitSummary("composition_root_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);

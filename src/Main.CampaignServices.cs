@@ -6,6 +6,10 @@ namespace AtomicWar.GodotApp
     public partial class Main : Control
     {
         private bool _isComposing;
+        private int _composeCampaignCallCount;
+
+        public int ComposeCampaignCallCount => _composeCampaignCallCount;
+        public void ResetComposeCampaignCallCount() => _composeCampaignCallCount = 0;
 
         private void RequireComposed(string caller)
         {
@@ -18,6 +22,7 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public void ComposeCampaign()
         {
+            _composeCampaignCallCount++;
             _isComposing = true;
             try
             {

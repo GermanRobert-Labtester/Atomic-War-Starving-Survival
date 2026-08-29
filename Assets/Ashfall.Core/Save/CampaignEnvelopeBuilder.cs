@@ -26,25 +26,43 @@ namespace Ashfall.Core.Save
 
         /// <summary>
         /// Build a V2 envelope. Payloads must be keyed by registry section
-        /// key; empty/null payloads are skipped (the section is legitimately
-        /// absent, e.g. its subsystem was never created this campaign).
+        /// key. Missing keys represent a subsystem that was never created and
+        /// are therefore omitted; an explicitly captured empty payload is
+        /// omitted for an optional registry section and is rejected for a
+        /// required section when <paramref name="rejectEmptyPayloads"/> is
+        /// true.
         /// </summary>
         /// <exception cref="ArgumentException">
-        /// Thrown when <paramref name="payloads"/> contains a key that is not
-        /// in <see cref="SaveSectionRegistry"/> — callers treat this as an
-        /// abort-the-save condition, keeping the previous envelope intact.
+        /// Thrown when <paramref name="payloads"/> contains an unknown key, or
+        /// when strict capture mode receives an empty required payload. The
+        /// caller must abort the save and keep the previous envelope intact.
         /// </exception>
         public static AggregateSaveEnvelope Build(
             IReadOnlyDictionary<string, string> payloads,
             SaveManifest manifest)
         {
+            return Build(payloads, manifest, rejectEmptyPayloads: false);
+        }
+
+        /// <summary>
+        /// Build a V2 envelope with an explicit capture-failure policy. Hosts
+        /// use strict mode so a failed required capture can never be silently
+        /// turned into an absent section; the two-argument overload remains
+        /// compatible with legacy callers that only use this pure packer.
+        /// </summary>
+        public static AggregateSaveEnvelope Build(
+            IReadOnlyDictionary<string, string> payloads,
+            SaveManifest manifest,
+            bool rejectEmptyPayloads)
+        {
+            if (payloads == null) throw new ArgumentNullException(nameof(payloads));
             if (manifest == null) throw new ArgumentNullException(nameof(manifest));
 
             var unknown = new List<string>();
             foreach (var key in payloads.Keys)
             {
-                if (!SaveSectionRegistry.SectionFileNames.ContainsKey(key))
-                    unknown.Add(key);
+                if (string.IsNullOrWhiteSpace(key) || !SaveSectionRegistry.SectionFileNames.ContainsKey(key))
+                    unknown.Add(key ?? "(null)");
             }
             if (unknown.Count > 0)
                 throw new ArgumentException(
@@ -52,13 +70,25 @@ namespace Ashfall.Core.Save
                     ". The campaign envelope is registry-whitelisted.");
 
             if (string.IsNullOrEmpty(manifest.generationId))
-                manifest.generationId = $"gen_{manifest.slotId.Value}_{manifest.lastSaveTick}";
+                manifest.generationId = $"gen_{manifest.slotId.Value ?? string.Empty}_{manifest.lastSaveTick}";
 
             var sections = new List<SaveSectionEnvelope>();
             foreach (var meta in SaveSectionRegistry.All)
             {
-                if (!payloads.TryGetValue(meta.SectionKey, out var payload)) continue;
-                if (string.IsNullOrWhiteSpace(payload)) continue;
+                if (!payloads.TryGetValue(meta.SectionKey, out var payload))
+                    continue;
+
+                if (string.IsNullOrWhiteSpace(payload))
+                {
+                    if (rejectEmptyPayloads && meta.RequiresSetup)
+                    {
+                        throw new ArgumentException(
+                            $"Section '{meta.SectionKey}' captured an empty payload. " +
+                            "The aggregate save was aborted rather than omitting a required section.",
+                            nameof(payloads));
+                    }
+                    continue;
+                }
 
                 var section = new SaveSectionEnvelope
                 {
