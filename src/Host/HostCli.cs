@@ -127,7 +127,9 @@ namespace AtomicWar.GodotApp
         ContentUtilizationSelfTest,
         SelfTestManifest,
         ListSelfTests,
-        RuntimeScaleSelfTest
+        RuntimeScaleSelfTest,
+        CampaignFuzzSelfTest,
+        CompositionRootSelfTest
     }
 
     /// <summary>
@@ -371,6 +373,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.UiAccessibilitySelfTest;
             if (Has(args, "--scene-binding-selftest") || Has(args, "--scene-bindings-selftest"))
                 return HostCliAction.SceneBindingSelfTest;
+            if (Has(args, "--campaign-fuzz-selftest"))
+                return HostCliAction.CampaignFuzzSelfTest;
+            if (Has(args, "--composition-root-selftest"))
+                return HostCliAction.CompositionRootSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -394,6 +400,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --scene-binding-selftest / --scene-bindings-selftest Headless-instantiate every registered production scene and validate each unique_name_in_owner binding contract (Ticket #125 scene-ownership gate); exits 0 when all required nodes resolve with the expected Godot types");
             GD.Print("  --content-utilization-selftest / --content-utilization Scan every JSON catalog under StreamingAssets/Data, classify each by reachable consumer (gameplay / UI / codex / orphan), write artifacts/content-utilization.{json,md}, and run the CI gate against artifacts/content-utilization-baseline.json (Ticket #127 content-runtime gate)");
             GD.Print("  --standalone-selftest    SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance");
+            GD.Print("  --campaign-fuzz-selftest      Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite");
+            GD.Print("  --composition-root-selftest   Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131)");
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
             GD.Print("  --arbitration-selftest   CrossingArbitrationHeadlessDemo");

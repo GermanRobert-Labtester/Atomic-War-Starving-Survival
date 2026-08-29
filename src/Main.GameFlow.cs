@@ -105,16 +105,9 @@ namespace AtomicWar.GodotApp
             // Ensure an active save slot is selected before initializing sessions
             _saveLoadHost?.SelectOrCreateDefaultSlot("slot_1");
 
-            // Initialize Holdfast & Starting Level
-            SetupHoldfastRuntime();
-            _holdfastTerminal.PressNewLedger();
-            _holdfastTerminal.OpenTerminal();
+            // Compose all campaign-owned services before any panel opens.
+            ComposeCampaign();
 
-            SetupStartingLevel();
-            SetupEventsHost();
-            SetupExpansionQuests();
-            SetupThirdonary();
-            SetupExpandedShelterSystems();
             _openingProtocolModal.Bind(_startingLevel);
             _openingProtocolModal.Open();
 

@@ -18,6 +18,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupEventsHost()
         {
+            if (_eventsHost != null) return;
             _eventsHost = new EventsHostSession(new Ashfall.Core.SystemTextJsonSerializer(), new Ashfall.Core.FileSystemIO());
             AddChild(_eventsHost);
         }

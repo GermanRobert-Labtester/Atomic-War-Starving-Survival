@@ -43,6 +43,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupSurvivorRelations()
         {
+            if (_survivorRelations != null) return;
             SetupCampaignDay();
             var srState = SurvivorRelationsSaveStore.TryLoad() ?? new SurvivorRelationsState();
             var srSys = new SurvivorRelationsSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Social).Rng, new GodotLog());

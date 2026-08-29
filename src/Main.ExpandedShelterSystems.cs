@@ -62,7 +62,7 @@ namespace AtomicWar.GodotApp
             SetupStartingLevel();
             SetupWorld();
 
-            _sharedResearch = new ResearchSystem(log: new GodotLog());
+            _sharedResearch ??= new ResearchSystem(log: new GodotLog());
 
             SetupWaterTreatment();
             SetupAirlockSecurity();

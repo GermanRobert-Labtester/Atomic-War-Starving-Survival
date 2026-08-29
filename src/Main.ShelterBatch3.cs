@@ -57,6 +57,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupSumpFlooding()
         {
+            if (_sumpFlooding != null) return;
             SetupCampaignDay();
             var sfState = SumpFloodingSaveStore.TryLoad() ?? new SumpFloodingState();
             var sfWeather = _world.Weather;
@@ -75,6 +76,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupDecontamination()
         {
+            if (_decontamination != null) return;
             SetupCampaignDay();
             var dcState = DecontaminationSaveStore.TryLoad() ?? new DecontaminationState();
             var dcInv = _inventory.Inventory;
@@ -94,6 +96,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupKitchenNutrition()
         {
+            if (_kitchenNutrition != null) return;
             SetupCampaignDay();
             var knState = KitchenNutritionSaveStore.TryLoad() ?? new KitchenNutritionState();
             var knInv = _inventory.Inventory;
@@ -111,6 +114,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupEquipmentCondition()
         {
+            if (_equipmentCondition != null) return;
             SetupCampaignDay();
             var ecState = EquipmentConditionSaveStore.TryLoad() ?? new EquipmentConditionState();
             var ecInv = _inventory.Inventory;
@@ -132,6 +136,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupLibraryStudy(ResearchSystem sharedResearch)
         {
+            if (_libraryStudy != null) return;
             var lsState = LibraryStudySaveStore.TryLoad() ?? new LibraryStudyState();
             var lsSkills = new SkillProgressionSystem();
             var lsResearch = sharedResearch;
@@ -185,6 +190,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupMentalHealthCrisis()
         {
+            if (_mentalHealthCrisis != null) return;
             SetupCampaignDay();
             var mhState = MentalHealthCrisisSaveStore.TryLoad() ?? new MentalHealthState();
             var mhNeeds = _survivors.Needs;

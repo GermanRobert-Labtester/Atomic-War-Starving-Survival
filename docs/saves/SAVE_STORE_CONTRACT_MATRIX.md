@@ -1,6 +1,6 @@
 # ASHFALL — Save-Store Contract Matrix & Completeness Authority
 
-**Last Verified:** 2026-08-29<br>
+**Last Verified:** 2026-08-30<br>
 **Total Save Stores:** 66 classes<br>
 **Total Static Persistence Methods:** 72 methods<br>
 **Checksum-Protected Stores:** 66/66 (100.0%)<br>
@@ -34,7 +34,7 @@
 | 6 | `CaravanSaveStore` | [`src/Host/CaravanSaveStore.cs`](../../src/Host/CaravanSaveStore.cs) | `caravan` | `caravan_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 7 | `CaregivingSaveStore` | [`src/Host/CaregivingSaveStore.cs`](../../src/Host/CaregivingSaveStore.cs) | `caregiving` | `caregiving_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 8 | `ChemicalDependencySaveStore` | [`src/Host/ChemicalDependencySaveStore.cs`](../../src/Host/ChemicalDependencySaveStore.cs) | `chemical_dependency` | `chemical_dependency_save.json` | `TryLoad()` | ✅ | ✅ | `BareSaveStoreSealTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+2 more)* |
-| 9 | `CombatSaveStore` | [`src/Host/CombatSaveStore.cs`](../../src/Host/CombatSaveStore.cs) | `combat` | `combat_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignConsequenceLedgerTests.cs`, `CombatSystemTests.cs` *(+7 more)* |
+| 9 | `CombatSaveStore` | [`src/Host/CombatSaveStore.cs`](../../src/Host/CombatSaveStore.cs) | `combat` | `combat_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignConsequenceLedgerTests.cs`, `CombatSystemTests.cs` *(+8 more)* |
 | 10 | `ContractorRosterSaveStore` | [`src/Host/ContractorRosterHostSession.cs`](../../src/Host/ContractorRosterHostSession.cs) | `contractor_roster` | `contractor_roster_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 11 | `CraftingSaveStore` | [`src/Host/CraftingSaveStore.cs`](../../src/Host/CraftingSaveStore.cs) | `crafting` | `crafting_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `EndToEndPlayerJourneyTests.cs` *(+4 more)* |
 | 12 | `DailyBriefingSaveStore` | [`src/Host/DailyBriefingSaveStore.cs`](../../src/Host/DailyBriefingSaveStore.cs) | `daily_briefing` | `daily_briefing_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
@@ -60,7 +60,7 @@
 | 32 | `MaritimeSaveStore` | [`src/Host/MaritimeSaveStore.cs`](../../src/Host/MaritimeSaveStore.cs) | `maritime` | `maritime_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 33 | `MedicalSaveStore` | [`src/Host/MedicalSaveStore.cs`](../../src/Host/MedicalSaveStore.cs) | `medical` | `medical_save.json` | `TryLoad()` | ✅ | ✅ | `AudioConditionSystemTests.cs`, `CampaignConsequenceLedgerTests.cs` *(+11 more)* |
 | 34 | `MedicalWardSaveStore` | [`src/Host/MedicalWardSaveStore.cs`](../../src/Host/MedicalWardSaveStore.cs) | `medical_ward` | `medical_ward_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `EndToEndPlayerJourneyTests.cs` *(+1 more)* |
-| 35 | `MemorialSaveStore` | [`src/Host/MemorialSaveStore.cs`](../../src/Host/MemorialSaveStore.cs) | `memorial` | `memorial_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignCalendarTests.cs`, `CampaignDayCoordinatorSourceGateTests.cs` *(+3 more)* |
+| 35 | `MemorialSaveStore` | [`src/Host/MemorialSaveStore.cs`](../../src/Host/MemorialSaveStore.cs) | `memorial` | `memorial_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignCalendarTests.cs`, `CampaignDayCoordinatorSourceGateTests.cs` *(+4 more)* |
 | 36 | `MentalHealthCrisisSaveStore` | [`src/Host/MentalHealthCrisisHostSession.cs`](../../src/Host/MentalHealthCrisisHostSession.cs) | `mental_health_crisis` | `mental_health_crisis_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 37 | `MoralChoiceSaveStore` | [`src/Host/MoralChoiceSaveStore.cs`](../../src/Host/MoralChoiceSaveStore.cs) | `moral_choice` | `moral_choice_save.json` | `Save()`, `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 38 | `MusterSaveStore` | [`src/Host/MusterSaveStore.cs`](../../src/Host/MusterSaveStore.cs) | `muster` | `muster_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
@@ -69,7 +69,7 @@
 | 41 | `PhantomMemorySaveStore` | [`src/Host/PhantomMemorySaveStore.cs`](../../src/Host/PhantomMemorySaveStore.cs) | `phantom_memory` | `phantom_memory_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 42 | `Phase0SaveStore` | [`src/Host/Phase0SaveStore.cs`](../../src/Host/Phase0SaveStore.cs) | `phase0` | `phase0_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 43 | `PowerGridSaveStore` | [`src/Host/PowerGridSaveStore.cs`](../../src/Host/PowerGridSaveStore.cs) | `power_grid` | `power_grid_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
-| 44 | `RadioSaveStore` | [`src/Host/RadioSaveStore.cs`](../../src/Host/RadioSaveStore.cs) | `radio` | `radio_save.json` | `TryLoad()` | ✅ | ✅ | `AudioConditionSystemTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+1 more)* |
+| 44 | `RadioSaveStore` | [`src/Host/RadioSaveStore.cs`](../../src/Host/RadioSaveStore.cs) | `radio` | `radio_save.json` | `TryLoad()` | ✅ | ✅ | `AudioConditionSystemTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+2 more)* |
 | 45 | `RegionalTreatySaveStore` | [`src/Host/RegionalTreatySaveStore.cs`](../../src/Host/RegionalTreatySaveStore.cs) | `regional_treaty` | `regional_treaty_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 46 | `ShelterAssignmentSaveStore` | [`src/Host/ShelterAssignmentHostSession.cs`](../../src/Host/ShelterAssignmentHostSession.cs) | `shelter_assignment` | `shelter_assignment_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 47 | `ShelterScheduleSaveStore` | [`src/Host/ShelterScheduleSaveStore.cs`](../../src/Host/ShelterScheduleSaveStore.cs) | `shelter_schedule` | `shelter_schedule_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |

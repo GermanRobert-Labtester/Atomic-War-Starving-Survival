@@ -134,6 +134,12 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.SevenDayDeterministicSmokeSelfTest:
                     GetTree().Quit(HostCli.RunSevenDayDeterministicSmokeSelfTest(_dataDir));
                     return;
+                case HostCliAction.CampaignFuzzSelfTest:
+                    GetTree().Quit(HostCli.RunCampaignFuzzSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CompositionRootSelfTest:
+                    RunCompositionRootUiTestAndQuit();
+                    return;
                 case HostCliAction.UiAccessibilitySelfTest:
                     GetTree().Quit(HostCli.RunUiAccessibilitySelfTest());
                     return;

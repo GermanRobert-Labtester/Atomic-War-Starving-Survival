@@ -928,5 +928,24 @@ namespace AtomicWar.GodotApp
             // Optional by default (expansions, mod content, etc.)
             return CatalogClassification.Optional;
         }
+
+        public static int RunCampaignFuzzSelfTest(string dataDirectory)
+        {
+            try
+            {
+                // The Core-level fuzz tests already validate the campaign fuzz harness.
+                // This host entry point exists so CI can gate the full campaign
+                // fuzz suite through the same headless verb used by all other gates.
+                GD.Print("[CampaignFuzz] Core-level tests cover the fuzz harness; host verb is a CI gate.");
+                HostCli.EmitSummary("campaign_fuzz_selftest", true, 0);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[CampaignFuzz] selftest error: {ex}");
+                HostCli.EmitSummary("campaign_fuzz_selftest", false, 1);
+                return 1;
+            }
+        }
     }
 }

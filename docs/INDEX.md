@@ -1,13 +1,13 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 132 | **Last Verified:** 2026-08-29
+**Total Indexed Documents:** 129 | **Last Verified:** 2026-08-30
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 126 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 125 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 2 |
-| 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 4 |
+| 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
@@ -17,7 +17,6 @@ The following documents share identical or near-identical filenames across root,
 
 | Filename | Copies / Locations | Canonical Location | Notes |
 |---|---|---|---|
-| `manifest.md` | `assets/sprites/AI_Generated/manifest.md`<br>`tools/asset_migration/legacy_tooling/AI_Generated/manifest.md` | `assets/sprites/AI_Generated/manifest.md` | Root vs docs mirror |
 | `ASSET_GALLERY.md` | `docs/ui/ASSET_GALLERY.md`<br>`docs/visual/ASSET_GALLERY.md` | `docs/ui/ASSET_GALLERY.md` | Root vs docs mirror |
 
 ---
@@ -37,15 +36,16 @@ The following documents share identical or near-identical filenames across root,
 
 ---
 
-## 1. Living System Architecture & Governance (7 documents)
+## 1. Living System Architecture & Governance (8 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
 | 🟢 `CURRENT` | [`AGENTS.md`](../AGENTS.md) | **PROJECT: ASHFALL (working title) — 2D Atomic-War Survival** — Original 2D survival-management game set after a nuclear exchange. Inspired by the survival-management genre; do **no... |
 | 🟢 `CURRENT` | [`README.md`](../README.md) | **ASHFALL: Atomic War – Starving Survival** — 2D post-nuclear survival-management game. Godot 4.7 .NET (C#) is the only |
-| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-08-29<br> |
+| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-08-30<br> |
 | 🟢 `CURRENT` | [`docs/architecture/CAMPAIGN_CALENDAR_AUTHORITY.md`](architecture/CAMPAIGN_CALENDAR_AUTHORITY.md) | **ASHFALL Campaign Calendar Authority & Time Invariants** — This document specifies the authoritative campaign calendar hierarchy, time domains, clock projections, and reconcili... |
 | 🟢 `CURRENT` | [`docs/architecture/CORE_SYSTEMS_CATALOG.md`](architecture/CORE_SYSTEMS_CATALOG.md) | **ASHFALL Core Domain Subsystems & Host Seams Catalog** — **Authoritative Architecture Map** \| **Generated:** 2026-08-29 \| **Systems Documented:** 34 |
+| 🟢 `CURRENT` | [`docs/architecture/SURVIVOR_SAVE_MIGRATION_MATRIX.md`](architecture/SURVIVOR_SAVE_MIGRATION_MATRIX.md) | **ASHFALL — Survivor Save Migration Matrix** — **Task:** #132 — host-independent survivor migration |
 | 🟢 `CURRENT` | [`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`](architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md) | **ASHFALL — Triad Drift Gate & Subsystem Save Ownership** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`sources.md`](../sources.md) | **Atomic War: Starving Survival — Comprehensive Codebase Exploration Report** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
 
@@ -64,9 +64,9 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/saves/SAVE_FUZZ_REPORT.md`](saves/SAVE_FUZZ_REPORT.md) | **ASHFALL Save System Fuzz Audit — Phase 1 (Persistence Surface)** — **Skill:** ashfall-save-fuzz · **Mode:** read-only surface map |
 | 🟢 `CURRENT` | [`docs/saves/battery/ALL_BATTERY.md`](saves/battery/ALL_BATTERY.md) | **ASHFALL Save System Fuzz — Phase 2 (Round-Trip Battery)** — **Skill:** ashfall-save-fuzz · **Mode:** round-trip battery |
 | 🟢 `CURRENT` | [`docs/saves/battery/EXPEDITION_BATTERY.md`](saves/battery/EXPEDITION_BATTERY.md) | **ASHFALL Save System Fuzz — Phase 2 (Round-Trip Battery)** — **Skill:** ashfall-save-fuzz · **Mode:** round-trip battery |
-| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-08-29<br> |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-08-30<br> |
 
-## 4. Expansions (01–10 Master Plans & Context) (25 documents)
+## 4. Expansions (01–10 Master Plans & Context) (24 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -94,7 +94,6 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/expansions/expansion_11_the_long_line_creative_pack.md`](expansions/expansion_11_the_long_line_creative_pack.md) | **ASHFALL — Expansion Proposal 11: THE LONG LINE** — **Proposed internal id:** `expansion_11_the_long_line` |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_the_holdfast_creative_pack.md`](expansions/expansion_the_holdfast_creative_pack.md) | **ASHFALL: THE HOLDFAST — Creative Pack** — **Internal id:** `expansion_the_holdfast` |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_the_holdfast_plan.md`](expansions/expansion_the_holdfast_plan.md) | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE HOLDFAST |
-| 🔵 `GENERATED` | [`prompt_assets/ASHFALL_PROMPT_CATALOG_EXPANSION.md`](../prompt_assets/ASHFALL_PROMPT_CATALOG_EXPANSION.md) | **ASHFALL — Prompt Catalog Expansion** — This file is a **continuation**, not a replacement. Two prompt libraries already exist and remain valid: |
 
 ## 5. UI, UX & Visual Systems (31 documents)
 
@@ -161,10 +160,11 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md`](systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md) | **ASHFALL — Skill Progression Core Port Plan (Phase 14 design) — SHIPPED at Phase 18** — **Status:** design SHIPPED at Phase 18. Files: |
 | 🟢 `CURRENT` | [`docs/systems/STANDING_RECORD_CORE_PORT_PLAN.md`](systems/STANDING_RECORD_CORE_PORT_PLAN.md) | **Standing Record Core Port Plan** — **Target:** Promote the Standing Record (Expansion 03) from read-only |
 
-## 8. Developer Tooling, Skills & QA (6 documents)
+## 8. Developer Tooling, Skills & QA (7 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
+| 🟢 `CURRENT` | [`docs/hygiene/REPO_HYGIENE_REPORT.md`](hygiene/REPO_HYGIENE_REPORT.md) | **ASHFALL — Repository Hygiene Report** — These directories are owned by AI coding assistants, aider, composio, etc. |
 | 🟢 `CURRENT` | [`docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`](qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md) | **Manual Smoke-Test Checklist — Audio & User Settings Recovery Behavior** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/qa/MANUAL_PLAYTHROUGH_CHECKLIST.md`](qa/MANUAL_PLAYTHROUGH_CHECKLIST.md) | **Manual Playthrough Checklist — Day 1 → Day 2 Milestone** — **Environment:** Desktop Godot 4.7+ (.NET), launch via `godot --path .` or editor Play. |
 | 🟢 `CURRENT` | [`docs/qa/TEST_LAYOUT_CONVENTIONS.md`](qa/TEST_LAYOUT_CONVENTIONS.md) | **ASHFALL Test Suite Layout & Conventions** — All unit, integration, simulation, and contract test files are organized by domain under `Ashfall.Core.Tests/`: |
@@ -172,7 +172,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (37 documents)
+## 9. General Project Guides & Archive Reference (33 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -202,14 +202,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/agents/AGENTS_SYNC_REPORT.md`](agents/AGENTS_SYNC_REPORT.md) | **ASHFALL Agent-Rulebook Synchronization Report** — **Canonical source:** `AGENTS.md`<br> |
 | 🟢 `CURRENT` | [`docs/agents/AGENT_SKILLS_INDEX.md`](agents/AGENT_SKILLS_INDEX.md) | **ASHFALL Multi-Agent Skills Registry & Taxonomy Index** — **Total Registered Skills:** `79`<br> |
 | 🟢 `CURRENT` | [`docs/audio/AUDIO_CUE_CATALOG.md`](audio/AUDIO_CUE_CATALOG.md) | **ASHFALL Audio Cue Architecture Catalog** — **Total Registered Cues:** `49`<br> |
-| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-08-29<br> |
+| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-08-30<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
-| 🟢 `CURRENT` | [`mistral_plans/AGENTS.mistral-plans.md`](../mistral_plans/AGENTS.mistral-plans.md) | **PROJECT: ASHFALL (working title) — 2D Atomic-War Survival** — Original 2D survival-management game set after a nuclear exchange. Inspired by the survival-management genre; do **no... |
-| 🟢 `CURRENT` | [`mistral_plans/ASH_FALL_ALPHA_0.8_DEVELOPMENT_PLAN.md`](../mistral_plans/ASH_FALL_ALPHA_0.8_DEVELOPMENT_PLAN.md) | **ASHFALL ALPHA 0.8 DEVELOPMENT PLAN** — **Milestone**: ASHFALL Alpha 0.8 = Modular host + fully connected Shelter 2D viewport + functional visual Wasteland map |
 | 🟢 `CURRENT` | [`scripts/README.md`](../scripts/README.md) | **ASHFALL — Script Catalog & Lifecycle Index** — This document catalogs all developer tools, CI gates, asset pipelines, and maintenance utilities under `scripts/`, cl... |
 | 🟢 `CURRENT` | [`summaries/README.md`](../summaries/README.md) | **ASHFALL: Atomic War - Starving Survival** — This folder contains the complete summary and canvas-style exported PDF reports for the forensic optimization and deb... |
 | 🟢 `CURRENT` | [`tools/README.md`](../tools/README.md) | **ASHFALL — Non-Runtime Tools & Utilities Catalog** — **Date:** 2026-08-27<br> |
-| 🟢 `CURRENT` | [`tools/asset_migration/legacy_tooling/AI_Generated/manifest.md`](../tools/asset_migration/legacy_tooling/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
-| 🔵 `GENERATED` | [`prompt_assets/prompt-optimizer-skill.md`](../prompt_assets/prompt-optimizer-skill.md) | **UNIVERSAL PROMPT OPTIMIZER — Full Skill Reference** — name: prompt-optimizer |
 | 🟡 `HISTORICAL` | [`docs/ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md) | **ASHFALL Historical Documentation & External Archive Index** — This repository maintains a lean, living documentation corpus in `docs/` representing active, authoritative game spec... |
 | 🟡 `HISTORICAL` | [`docs/forensics/survivor_aggregate_FORENSIC_REPORT.md`](forensics/survivor_aggregate_FORENSIC_REPORT.md) | **1. Target** — Establish one canonical survivor identity and lifecycle model for the entire ASHFALL campaign, with domain-owned muta... |
