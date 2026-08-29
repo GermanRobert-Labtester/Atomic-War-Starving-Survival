@@ -66,6 +66,9 @@
     },
     {
       "gate_id": "data_integrity",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Data Authority Integrity Gate (129+ Catalogs)",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --data-integrity-selftest",
@@ -76,6 +79,9 @@
     },
     {
       "gate_id": "bridge_removal",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Bridge Shim Removal Confirmation Gate",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --bridge-selftest",
@@ -86,6 +92,9 @@
     },
     {
       "gate_id": "asset_registry",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Asset Registry Resolution Gate",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --asset-registry-selftest",
@@ -96,6 +105,9 @@
     },
     {
       "gate_id": "player_panels_uitest",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Player UI Panels Construction & Binding",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --player-panels-uitest",
@@ -106,6 +118,9 @@
     },
     {
       "gate_id": "panel_bind_lifecycle",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Panel Bind/Unbind/Rebind Lifecycle Self-Test",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --panel-bind-lifecycle-selftest",
@@ -116,6 +131,9 @@
     },
     {
       "gate_id": "save_load_failure",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Save/Load UI Failure Paths Self-Test",
       "category": "Save Stores & Persistence",
       "command": "godot --headless --path . -- --save-load-ui-failure-selftest",
@@ -126,6 +144,9 @@
     },
     {
       "gate_id": "holdfast_save",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Holdfast S1 Save Store Self-Test",
       "category": "Save Stores & Persistence",
       "command": "godot --headless --path . -- --holdfast-save-selftest",
@@ -136,6 +157,9 @@
     },
     {
       "gate_id": "inventory_save",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Inventory Save Store Self-Test",
       "category": "Save Stores & Persistence",
       "command": "godot --headless --path . -- --inventory-save-selftest",
@@ -146,6 +170,9 @@
     },
     {
       "gate_id": "journal_save",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Journal Save Store Self-Test",
       "category": "Save Stores & Persistence",
       "command": "godot --headless --path . -- --journal-save-selftest",
@@ -156,6 +183,9 @@
     },
     {
       "gate_id": "playable_shell",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Playable Shell Campaign Smoke Self-Test",
       "category": "Campaign Smoke",
       "command": "godot --headless --path . -- --playable-shell-selftest",
@@ -166,6 +196,9 @@
     },
     {
       "gate_id": "day1_onboarding",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Day 1 Onboarding & Shelter Survival Self-Test",
       "category": "Campaign Smoke",
       "command": "godot --headless --path . -- --day1-selftest",
@@ -176,6 +209,9 @@
     },
     {
       "gate_id": "expansions_completeness",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Expansions 01-10 Completeness Self-Test",
       "category": "Campaign Smoke",
       "command": "godot --headless --path . -- --expansions-selftest",
