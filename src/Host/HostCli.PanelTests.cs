@@ -714,9 +714,13 @@ namespace AtomicWar.GodotApp
                     preRestore.Thirst = 99f;
                 }
 
-                int spuriousDeaths = 0;
-                string deadId = string.Empty;
-                session.OnSurvivorDied += (id, cause, detail) => { spuriousDeaths++; deadId = id; };
+                int deathsForProbe = 0;
+                var allDeaths = new System.Collections.Generic.List<string>();
+                session.OnSurvivorDied += (id, cause, detail) =>
+                {
+                    allDeaths.Add($"{id}({cause})");
+                    if (string.Equals(id, probeId, StringComparison.Ordinal)) deathsForProbe++;
+                };
 
                 session.RestoreSave(saved);
 
@@ -734,13 +738,23 @@ namespace AtomicWar.GodotApp
                 pass &= ghostEvicted;
 
                 // Advance well past the point the stale object would have died.
+                //
+                // Scoped to the probed survivor deliberately. Other demo survivors
+                // may legitimately die in this window — survivor_gunner_mikhail is
+                // seeded acuteRad at 80 HP and BuildExposure places him outside in a
+                // 40 mSv/hr zone with no shielding, so his dose crosses the 80
+                // AcuteThreshold within ~2h and the -5 HP/hr drain kills him around
+                // hour 18. That is gameplay, not a ghost. D1's invariant is only
+                // that a PRE-RESTORE object cannot announce a death for a survivor
+                // whose restored state is alive.
                 session.TickHour(24f);
 
-                bool noSpuriousDeath = spuriousDeaths == 0 && session.Find(probeId)?.IsAliveState == true;
-                GD.Print(noSpuriousDeath
-                    ? "[PASS] D1: no stale-object death reported for a survivor alive in the restored save"
-                    : $"[FAIL] D1: {spuriousDeaths} death(s) reported after restore (id='{deadId}')");
-                pass &= noSpuriousDeath;
+                bool probeAlive = session.Find(probeId)?.IsAliveState == true;
+                bool noGhostDeath = deathsForProbe == 0 && probeAlive;
+                GD.Print(noGhostDeath
+                    ? $"[PASS] D1: no stale-object death for '{probeId}' (restored state alive; unrelated deaths: {(allDeaths.Count == 0 ? "none" : string.Join(", ", allDeaths))})"
+                    : $"[FAIL] D1: {deathsForProbe} death(s) reported for '{probeId}' after restore (alive={probeAlive}; all deaths: {string.Join(", ", allDeaths)})");
+                pass &= noGhostDeath;
             }
             catch (Exception e)
             {
