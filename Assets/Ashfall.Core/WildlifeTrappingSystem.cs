@@ -74,15 +74,25 @@ namespace Ashfall.Core
             return ActionResult.Success("trapping.trap_set");
         }
 
-        public ActionResult CheckTraps()
+        /// <summary>Baseline catch rate (Unity parity: 50%).</summary>
+        public const float BaseCatchChance = 0.5f;
+
+        /// <summary>
+        /// Baseline roll. <paramref name="densityMultiplier"/> scales the chance
+        /// with live wildlife pressure — the sector pack population the migration
+        /// system reports. 1.0 keeps the authored 50% rate; the result clamps to
+        /// a believable band so empty ground still occasionally feeds a snare.
+        /// </summary>
+        public ActionResult CheckTraps(float densityMultiplier = 1f)
         {
+            float catchChance = Math.Clamp(BaseCatchChance * densityMultiplier, 0.05f, 0.95f);
             int caught = 0;
             foreach (var site in _state.trapSites)
             {
                 if (site.hasCatch || site.setDay <= 0) continue;
                 if (_currentDay < site.checkDay) continue;
 
-                if (_rng.NextDouble() < 0.5f) // 50% catch rate
+                if (_rng.NextDouble() < catchChance)
                 {
                     site.hasCatch = true;
                     site.catchSpecies = _rng.NextDouble() < 0.3f ? "rabbit" : "rat";
@@ -131,10 +141,15 @@ namespace Ashfall.Core
             return ActionResult.Success("trapping.toxin_removed");
         }
 
-        public void TickDay(int day)
+        /// <summary>
+        /// Advance the day and auto-check eligible snares.
+        /// <paramref name="densityMultiplier"/> carries live wildlife pressure
+        /// (sector pack population) into the catch rolls; 1.0 is authored rate.
+        /// </summary>
+        public void TickDay(int day, float densityMultiplier = 1f)
         {
             _currentDay = day;
-            CheckTraps();
+            CheckTraps(densityMultiplier);
         }
 
         public WildlifeTrappingState CaptureState() => CloneState(_state);

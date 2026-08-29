@@ -23,6 +23,7 @@ namespace Ashfall.Core.Random
         public const string Maritime = "maritime";
         public const string Psychology = "psychology";
         public const string Events = "events";
+        public const string WorldEvolution = "world_evolution";
     }
 
     /// <summary>Domain-isolated deterministic RNG stream derived from a campaign master seed.</summary>

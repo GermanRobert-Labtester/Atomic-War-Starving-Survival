@@ -19,6 +19,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action<List<ExpeditionLootEntry>>? OnLootDeposited;
 
         private ExpeditionHostSession? _expeditionHost;
+        private WorldHostSession? _worldHost;
         private SurvivorsHostSession? _survivorsHost;
         private InventoryHostSession? _inventoryHost;
 
@@ -71,7 +72,8 @@ namespace AtomicWar.GodotApp.UI
             ExpeditionHostSession expeditionHost,
             SurvivorsHostSession? survivorsHost = null,
             InventoryHostSession? inventoryHost = null,
-            Ashfall.Core.EquipmentConditionSystem? equipment = null)
+            Ashfall.Core.EquipmentConditionSystem? equipment = null,
+            WorldHostSession? world = null)
         {
             if (_expeditionHost != null)
             {
@@ -83,6 +85,7 @@ namespace AtomicWar.GodotApp.UI
             _survivorsHost = survivorsHost;
             _inventoryHost = inventoryHost;
             _equipment = equipment;
+            _worldHost = world;
 
             if (_expeditionHost != null)
             {
@@ -386,6 +389,18 @@ namespace AtomicWar.GodotApp.UI
                 desc.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
                 card.AddChild(desc);
 
+                // Task 122: live world state — ownership, spoilage, ruin, threats.
+                var worldLine = BuildWorldStateLine(def.id);
+                if (!string.IsNullOrEmpty(worldLine))
+                {
+                    var worldLabel = AshfallUiHelpers.MakeMono(worldLine);
+                    worldLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                        worldLine.Contains("RUINED") || worldLine.Contains("threat(s)")
+                            ? Ashfall.Core.UI.Theme.Critical
+                            : Ashfall.Core.UI.Theme.Pale));
+                    card.AddChild(worldLabel);
+                }
+
                 // Dispatch Bar
                 var dispatchRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                 string defId = def.id;
@@ -430,6 +445,19 @@ namespace AtomicWar.GodotApp.UI
                 panel.AddChild(card);
                 _targetsContainer.AddChild(panel);
             }
+        }
+
+        /// <summary>Live evolving-world line for a target location, or null when untouched ground.</summary>
+        private string? BuildWorldStateLine(string locationId)
+        {
+            if (_worldHost == null || string.IsNullOrEmpty(locationId)) return null;
+            var rec = _worldHost.LocationEvolution?.TryGetRecord(locationId);
+            if (rec == null) return null;
+
+            string owner = rec.currentOwner == "none" ? "unclaimed" : rec.currentOwner.Replace("faction_", "");
+            string state = rec.isRuined ? " · RUINED" : string.Empty;
+            string threats = rec.activeThreats.Count > 0 ? $" · {rec.activeThreats.Count} threat(s)" : string.Empty;
+            return $"WORLD: {owner} · {rec.lootDepletionFactor:P0} spoilage{state}{threats}";
         }
 
         // ── Dispatch preparation helpers ──────────────────────────────

@@ -37,6 +37,9 @@ namespace AtomicWar.GodotApp
             // Phase 4: Expeditions, World, Factions & Quests
             _campaignDay.Register("expeditions_caravans", new ExpeditionsCaravansDayOwner(this), phase: 4);
             _campaignDay.Register("narrative_quests_verdict", new NarrativeQuestsVerdictDayOwner(this), phase: 4);
+            // Task 122: ticks after expeditions (ordinal 'w' > 'e') so it reads
+            // fresh sortie results, and after narrative for fresh faction dominance.
+            _campaignDay.Register("world_evolution", new EvolvingWorldDayOwner(this), phase: 4);
 
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
@@ -372,6 +375,198 @@ namespace AtomicWar.GodotApp
                 _m._caravans.TickRoute();
 
                 events.Add(new DayStateChangeEvent("expeditions_caravans_ticked", "expeditions_caravans", null, null, day));
+            }
+        }
+
+        /// <summary>
+        /// Task 122 — the world changes because of time and player action:
+        /// feeds live weather into landmark decay and location contamination,
+        /// runs seeded wildlife migration, records expedition consequences on
+        /// locations, bridges faction dominance into ownership, shifts market
+        /// scarcity with wildlife pressure, and surfaces every major change
+        /// through briefing events, journal lines, and radio intercepts.
+        /// </summary>
+        private sealed class EvolvingWorldDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private LocationEvolutionSaveState? _locSnapshot;
+            private WildlifeSaveState? _wildSnapshot;
+            private LandmarkSaveState? _landSnapshot;
+            private readonly HashSet<string> _processedExpeditions = new HashSet<string>();
+            private string _lastDominantFaction = string.Empty;
+
+            public EvolvingWorldDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupWorld();
+                _locSnapshot = _m._world.LocationEvolution?.CaptureState();
+                _wildSnapshot = _m._world.Wildlife?.CaptureState();
+                _landSnapshot = _m._world.Landmarks?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_locSnapshot != null) _m._world.LocationEvolution?.RestoreState(_locSnapshot);
+                if (_wildSnapshot != null) _m._world.Wildlife?.RestoreState(_wildSnapshot);
+                if (_landSnapshot != null) _m._world.Landmarks?.RestoreState(_landSnapshot);
+                _processedExpeditions.Clear();
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupWorld();
+                var world = _m._world;
+
+                var kind = world.Weather.Current;
+                bool hazard = kind == WeatherKind.FalloutStorm || kind == WeatherKind.BlackRain;
+                float ashfallMm = Main.AshfallMmFor(kind);
+
+                // Pre-tick deltas we report on.
+                var collapsedBefore = CollapsedSet(world);
+                var sectorsBefore = SectorMap(world);
+                var ownersBefore = OwnerMap(world);
+
+                // ── The world moves ──
+                world.Landmarks?.TickDay(day, ashfallMm);
+                world.LocationEvolution?.TickDay(day,
+                    new LocationEvolutionInputs(world.Weather.OutdoorRadModifier, hazard),
+                    _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.WorldEvolution, day, 0));
+                world.Wildlife?.TickDay(day,
+                    _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.WorldEvolution, day, 1));
+
+                // ── Landmark collapses → warning, journal ──
+                if (world.Landmarks != null)
+                {
+                    foreach (var lm in world.Landmarks.State.landmarks)
+                    {
+                        if (lm == null || !lm.isCollapsed || lm.collapseDay != day) continue;
+                        if (collapsedBefore.Contains(lm.landmarkId)) continue;
+                        events.Add(new DayStateChangeEvent("hazard_warning", "world_evolution",
+                            $"Landmark collapsed: {lm.landmarkId}", $"at {lm.locationId} (day {day})", lm.structuralIntegrity));
+                        _m.SetupJournal();
+                        _m._journal.TryAddRawEntry($"world_{lm.landmarkId}_collapse",
+                            $"🔺 {lm.landmarkId} came down at {lm.locationId}. The skyline is poorer by one shape.",
+                            null!, day);
+                    }
+                }
+
+                // ── Pack migrations → radio intercepts ──
+                if (world.Wildlife != null)
+                {
+                    int reported = 0;
+                    var after = SectorMap(world);
+                    foreach (var pack in world.Wildlife.State.packs)
+                    {
+                        if (pack == null || reported >= 3) continue;
+                        if (sectorsBefore.TryGetValue(pack.packId, out var before)
+                            && before != pack.currentSectorId)
+                        {
+                            events.Add(new DayStateChangeEvent("radio_intercept", "world_evolution",
+                                "wildlife net", $"{pack.packId} sighted moving {before} into {pack.currentSectorId}", pack.population));
+                            reported++;
+                        }
+                        if (pack.isRabid && pack.lastThreatFiredDay == day)
+                        {
+                            events.Add(new DayStateChangeEvent("hazard_warning", "world_evolution",
+                                $"Rabid {pack.speciesId}", $"{pack.packId} turned in {pack.currentSectorId}", pack.aggressionScore));
+                        }
+                    }
+                }
+
+                // ── Expedition consequences on locations ──
+                _m.SetupExpeditions();
+                var expeditions = _m._expeditions.Engine.CaptureState();
+                if (expeditions != null)
+                {
+                    foreach (var ex in expeditions)
+                    {
+                        if (ex == null || string.IsNullOrEmpty(ex.expeditionId)) continue;
+                        if (ex.phase != (int)ExpeditionPhase.Completed && ex.phase != (int)ExpeditionPhase.Failed) continue;
+                        if (!_processedExpeditions.Add(ex.expeditionId)) continue;
+                        if (string.IsNullOrEmpty(ex.locationId) || world.LocationEvolution == null) continue;
+
+                        if (ex.phase == (int)ExpeditionPhase.Completed)
+                        {
+                            world.LocationEvolution.MarkCleared(ex.locationId, day);
+                            events.Add(new DayStateChangeEvent("expedition_milestone", "world_evolution",
+                                ex.locationId, "swept clean — salvage thins here for a while", 1));
+                        }
+                        else
+                        {
+                            world.LocationEvolution.MarkVisited(ex.locationId, day);
+                            world.LocationEvolution.AddThreat(ex.locationId, LocationEvolutionSystem.ThreatSquatters);
+                            events.Add(new DayStateChangeEvent("hazard_warning", "world_evolution",
+                                ex.locationId, "sortie lost — stragglers now haunt the ground", 1));
+                        }
+                    }
+                }
+
+                // ── Faction dominance → location ownership ──
+                _m.SetupYearOfAsh();
+                string dominant = _m._yearOfAsh?.FactionWar?.DominantFactionId ?? string.Empty;
+                if (!string.IsNullOrEmpty(dominant) && dominant != _lastDominantFaction)
+                {
+                    bool firstObservation = _lastDominantFaction.Length == 0;
+                    _lastDominantFaction = dominant;
+                    if (!firstObservation && world.Seeds?.location_seeds != null)
+                    {
+                        foreach (var seed in world.Seeds.location_seeds)
+                        {
+                            if (seed == null || seed.owner != dominant) continue;
+                            var before = ownersBefore.TryGetValue(seed.location_id, out var o) ? o : null;
+                            if (before == dominant) continue;
+                            world.LocationEvolution?.SetLocationOwner(seed.location_id, dominant);
+                            events.Add(new DayStateChangeEvent("hazard_warning", "world_evolution",
+                                seed.location_id, $"control passes to {dominant}", 1));
+                            _m.SetupJournal();
+                            _m._journal.TryAddRawEntry($"world_{seed.location_id}_owner_{dominant}",
+                                $"🔻 {seed.location_id} answer to {dominant} now. Flags change; the ground stays.",
+                                null!, day);
+                        }
+                    }
+                }
+
+                // ── Wildlife pressure → market scarcity & trapping density ──
+                _m.SetupEvolvingWorldInfluence();
+                float ratio = world.Wildlife?.GetGlobalPopulationRatio() ?? 1f;
+                var goods = EvolvingWorldSeeder.ScarcityGoods(world.Seeds);
+                if (goods.Count > 0)
+                {
+                    float delta = ratio < 0.6f ? 0.02f : ratio < 0.85f ? 0.005f : ratio > 1.2f ? -0.005f : 0f;
+                    if (Math.Abs(delta) > 0f)
+                    {
+                        _m.SetupEconomy();
+                        foreach (var g in goods)
+                            _m._economy.Market.AdjustDemand(g, delta);
+                    }
+                }
+
+                events.Add(new DayStateChangeEvent("world_evolution_ticked", "world_evolution", null, null, day));
+            }
+
+            private static HashSet<string> CollapsedSet(WorldHostSession world)
+            {
+                var set = new HashSet<string>();
+                foreach (var lm in world.Landmarks?.State.landmarks ?? new List<LandmarkStatusRecord>())
+                    if (lm != null && lm.isCollapsed) set.Add(lm.landmarkId);
+                return set;
+            }
+
+            private static Dictionary<string, string> SectorMap(WorldHostSession world)
+            {
+                var map = new Dictionary<string, string>();
+                foreach (var p in world.Wildlife?.State.packs ?? new List<WildlifePackRecord>())
+                    if (p != null) map[p.packId] = p.currentSectorId;
+                return map;
+            }
+
+            private static Dictionary<string, string> OwnerMap(WorldHostSession world)
+            {
+                var map = new Dictionary<string, string>();
+                foreach (var m in world.LocationEvolution?.State.mutations ?? new List<LocationMutationRecord>())
+                    if (m != null) map[m.locationId] = m.currentOwner;
+                return map;
             }
         }
 
