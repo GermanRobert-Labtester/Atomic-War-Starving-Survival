@@ -348,11 +348,33 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public static int RunExpeditionSelfTest()
         {
+            // The headless demo and the vehicle gates are BOTH part of this gate, so
+            // the PASS/FAIL summary must be emitted exactly once, after both have
+            // run. This previously emitted the summary straight after the demo and
+            // only then ran the vehicle gates, so "EXPEDITION_SELFTEST PASS" was
+            // already on stdout before nine further gates executed — a vehicle
+            // failure could not unprint it, and CI scraping the summary saw green.
             var report = ExpeditionHeadlessDemo.Run(new GodotLog());
-            GD.Print(report.Summary);
-            int baseResult = EmitSummaryFromHeadlessReport("expedition_selftest", report);
-            int vehicleResult = RunExpeditionVehicleLogisticsGates();
-            return baseResult != 0 || vehicleResult != 0 ? 1 : 0;
+            GD.Print(report?.Summary ?? "[ExpeditionHeadlessDemo] null report");
+
+            bool demoPassed = report != null && report.Passed;
+            int demoPassCount = report?.PassedCount ?? 0;
+            int demoFailCount = report != null ? report.FailedCount : 1;
+
+            var vehicle = RunExpeditionVehicleLogisticsGates();
+
+            bool passed = demoPassed && vehicle.failures == 0;
+            string details = passed
+                ? $"headless demo + {vehicle.passed} vehicle gate(s)"
+                : $"demo {(demoPassed ? "PASS" : "FAIL")} ({demoFailCount} failed), vehicle gates {vehicle.failures} failed of {vehicle.passed + vehicle.failures}";
+
+            return EmitSummary(
+                "expedition_selftest",
+                passed,
+                passed ? 0 : 1,
+                demoPassCount + vehicle.passed,
+                demoFailCount + vehicle.failures,
+                details);
         }
 
         /// <summary>
@@ -360,86 +382,136 @@ namespace AtomicWar.GodotApp
         /// driven travel beats foot, estimate math matches the selection, the
         /// weapon-condition bridge feeds readiness into estimates, and the
         /// in-flight vehicle state survives the aggregate save round-trip.
+        ///
+        /// <para>Returns counts rather than an exit code so the caller can fold them
+        /// into a single summary. Exceptions are contained here and converted into a
+        /// counted failure that names the gate that threw, so one crashing gate can
+        /// neither abort the run silently nor be mistaken for a pass.</para>
         /// </summary>
-        private static int RunExpeditionVehicleLogisticsGates()
+        private static (int passed, int failures) RunExpeditionVehicleLogisticsGates()
         {
-            int errors = 0;
+            int passed = 0;
+            int failures = 0;
+            string stage = "V0: vehicle gate setup";
+
             void Check(bool ok, string label)
             {
-                if (ok) GD.Print($"[PASS] {label}");
-                else { GD.PrintErr($"[FAIL] {label}"); errors++; }
+                if (ok) { GD.Print($"[PASS] {label}"); passed++; }
+                else { GD.PrintErr($"[FAIL] {label}"); failures++; }
             }
 
-            var session = new ExpeditionHostSession();
-
-            // Garage: an inline catalog (no FS dependence), quad acquired fresh.
-            session.Vehicles.LoadCatalog(new VehicleCatalog
+            try
             {
-                vehicles = new System.Collections.Generic.List<VehicleDefinition>
+                var session = new ExpeditionHostSession();
+
+                stage = "V1 garage setup";
+                // Garage: an inline catalog (no FS dependence), quad acquired fresh.
+                session.Vehicles.LoadCatalog(new VehicleCatalog
                 {
-                    new VehicleDefinition
+                    vehicles = new System.Collections.Generic.List<VehicleDefinition>
                     {
-                        vehicle_id = ExpeditionHostSession.StarterVehicleId,
-                        display_name = "Utility Quad",
-                        max_fuel = 40f,
-                        cargo_capacity = 90f,
-                        speed_multiplier = 1.3f,
-                        fuel_consumption_per_km = 0.3f,
-                    },
+                        new VehicleDefinition
+                        {
+                            vehicle_id = ExpeditionHostSession.StarterVehicleId,
+                            display_name = "Utility Quad",
+                            max_fuel = 40f,
+                            cargo_capacity = 90f,
+                            speed_multiplier = 1.3f,
+                            fuel_consumption_per_km = 0.3f,
+                        },
+                    }
+                });
+                Check(session.Vehicles.AcquireVehicle(ExpeditionHostSession.StarterVehicleId).Status == ActionResult.StatusKind.Success,
+                    "V1: starter quad acquired into the garage.");
+
+                stage = "V2/V3 travel estimates";
+                // Estimate: vehicle is faster and carries fuel cost; foot does not.
+                string target = "loc_the_allotments";
+                var foot = session.EstimateExpedition(target, ExpeditionStance.Stealth)!.Value.estimate;
+                var driven = session.EstimateExpedition(target, ExpeditionStance.Stealth, ExpeditionHostSession.StarterVehicleId)!.Value.estimate;
+                Check(!foot.usingVehicle && foot.fuelRequired == 0f, "V2: foot estimate has no fuel cost.");
+                Check(driven.usingVehicle && driven.fuelRequired > 0f && driven.totalTicks < foot.totalTicks,
+                    "V3: vehicle estimate is faster with fuel cost.");
+
+                stage = "V4 weapon-condition readiness";
+                // Weapon-condition bridge feeds readiness into the encounter risk.
+                var inv = new Ashfall.Core.Inventory.Inventory();
+                var equipment = new EquipmentConditionSystem(new SeededRng(7), inv, new CraftingSystem(inv));
+                equipment.RegisterItem("eq_gate_rifle", "weapon_bolt_rifle", "survivor_a", EquipmentFamily.Weapon);
+                equipment.UseItem("eq_gate_rifle", 85f); // condition 15 → degraded readiness
+                float readiness = Ashfall.Core.Combat.WeaponEquipmentBridge.Readiness(equipment, "eq_gate_rifle");
+                var degraded = session.EstimateExpedition(target, ExpeditionStance.Stealth, "", readiness, Ashfall.Core.Combat.WeaponEquipmentBridge.JamRisk(equipment, "eq_gate_rifle"))!.Value.estimate;
+                Check(readiness < 1f && degraded.encounterRiskPerTick > foot.encounterRiskPerTick,
+                    "V4: degraded weapon readiness raises the encounter-risk estimate.");
+
+                stage = "V5 fuel gate blocks dispatch";
+                // Dispatch preparation: fuel gate blocks, then a full tank passes
+                // and the sortie starts with the vehicle profile attached.
+                session.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.fuel = 0.5f;
+                var refused = session.StartExpedition("survivor_a", target, ExpeditionStance.Stealth, vehicleId: ExpeditionHostSession.StarterVehicleId);
+                Check(!refused.IsSuccess && session.Engine.ActiveCount == 0,
+                    "V5: depleted fuel blocks dispatch with a refuel message.");
+
+                stage = "V6 fueled dispatch starts a sortie";
+                session.Vehicles.Refuel(ExpeditionHostSession.StarterVehicleId, 60f);
+                var sent = session.DispatchSortie("survivor_a", target, ExpeditionStance.Stealth, 1, ExpeditionHostSession.StarterVehicleId);
+
+                // Assert the sortie exists BEFORE indexing it. Indexing a missing key
+                // threw KeyNotFoundException here, which aborted the remaining gates.
+                bool dispatched = session.Engine.ActiveCount == 1
+                    && session.Engine.Active.ContainsKey("survivor_a");
+                if (!dispatched)
+                {
+                    Check(false,
+                        $"V6: fueled dispatch starts a vehicle sortie with a speed profile. " +
+                        $"(DispatchSortie returned {DescribeDispatch(sent)}; ActiveCount={session.Engine.ActiveCount})");
+                    GD.PrintErr("[FAIL] V7-V9 skipped: no active sortie to exercise.");
+                    failures += 3;
+                    return (passed, failures);
                 }
-            });
-            Check(session.Vehicles.AcquireVehicle(ExpeditionHostSession.StarterVehicleId).Status == ActionResult.StatusKind.Success,
-                "V1: starter quad acquired into the garage.");
 
-            // Estimate: vehicle is faster and carries fuel cost; foot does not.
-            string target = "loc_the_allotments";
-            var foot = session.EstimateExpedition(target, ExpeditionStance.Stealth)!.Value.estimate;
-            var driven = session.EstimateExpedition(target, ExpeditionStance.Stealth, ExpeditionHostSession.StarterVehicleId)!.Value.estimate;
-            Check(!foot.usingVehicle && foot.fuelRequired == 0f, "V2: foot estimate has no fuel cost.");
-            Check(driven.usingVehicle && driven.fuelRequired > 0f && driven.totalTicks < foot.totalTicks,
-                "V3: vehicle estimate is faster with fuel cost.");
+                var active = session.Engine.Active["survivor_a"];
+                Check(active.vehicleId == ExpeditionHostSession.StarterVehicleId && active.vehicleSpeedMultiplier > 1f,
+                    "V6: fueled dispatch starts a vehicle sortie with a speed profile.");
 
-            // Weapon-condition bridge feeds readiness into the encounter risk.
-            var inv = new Ashfall.Core.Inventory.Inventory();
-            var equipment = new EquipmentConditionSystem(new SeededRng(7), inv, new CraftingSystem(inv));
-            equipment.RegisterItem("eq_gate_rifle", "weapon_bolt_rifle", "survivor_a", EquipmentFamily.Weapon);
-            equipment.UseItem("eq_gate_rifle", 85f); // condition 15 → degraded readiness
-            float readiness = Ashfall.Core.Combat.WeaponEquipmentBridge.Readiness(equipment, "eq_gate_rifle");
-            var degraded = session.EstimateExpedition(target, ExpeditionStance.Stealth, "", readiness, Ashfall.Core.Combat.WeaponEquipmentBridge.JamRisk(equipment, "eq_gate_rifle"))!.Value.estimate;
-            Check(readiness < 1f && degraded.encounterRiskPerTick > foot.encounterRiskPerTick,
-                "V4: degraded weapon readiness raises the encounter-risk estimate.");
+                stage = "V7 mid-route breakdown";
+                // Force a deterministic mid-route breakdown and confirm the
+                // aggregate round-trip keeps the in-flight vehicle state.
+                active.vehicleBreakdownChancePerTick = 1f; // guaranteed next travel tick
+                session.TickHours(1f);
+                Check(active.vehicleBrokenDown, "V7: seeded mid-route breakdown flips the sortie to foot.");
 
-            // Dispatch preparation: fuel gate blocks, then a full tank passes
-            // and the sortie starts with the vehicle profile attached.
-            session.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.fuel = 0.5f;
-            var refused = session.StartExpedition("survivor_a", target, ExpeditionStance.Stealth, vehicleId: ExpeditionHostSession.StarterVehicleId);
-            Check(!refused.IsSuccess && session.Engine.ActiveCount == 0,
-                "V5: depleted fuel blocks dispatch with a refuel message.");
-            session.Vehicles.Refuel(ExpeditionHostSession.StarterVehicleId, 60f);
-            var sent = session.DispatchSortie("survivor_a", target, ExpeditionStance.Stealth, 1, ExpeditionHostSession.StarterVehicleId);
-            var active = session.Engine.Active["survivor_a"];
-            Check(session.Engine.ActiveCount == 1 && active.vehicleId == ExpeditionHostSession.StarterVehicleId && active.vehicleSpeedMultiplier > 1f,
-                "V6: fueled dispatch starts a vehicle sortie with a speed profile.");
+                stage = "V8 aggregate save round-trip";
+                var aggregate = session.CaptureSaveAggregate();
+                var restored = new ExpeditionHostSession();
+                restored.RestoreSaveAggregate(aggregate);
+                Check(restored.Engine.Active.ContainsKey("survivor_a") &&
+                      restored.Engine.Active["survivor_a"].vehicleBrokenDown &&
+                      restored.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId) != null,
+                    "V8: aggregate save round-trip restores the sortie and the garage.");
 
-            // Force a deterministic mid-route breakdown and confirm the
-            // aggregate round-trip keeps the in-flight vehicle state.
-            active.vehicleBreakdownChancePerTick = 1f; // guaranteed next travel tick
-            session.TickHours(1f);
-            Check(active.vehicleBrokenDown, "V7: seeded mid-route breakdown flips the sortie to foot.");
+                stage = "V9 garage repair";
+                // Repair clears the breakdown and tops the condition.
+                restored.RepairVehicle(ExpeditionHostSession.StarterVehicleId, 100f);
+                Check(restored.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.condition >= 100f,
+                    "V9: garage repair restores the vehicle.");
+            }
+            catch (System.Exception ex)
+            {
+                GD.PrintErr($"[FAIL] expedition vehicle gates threw during \"{stage}\": {ex.GetType().Name}: {ex.Message}");
+                GD.PrintErr(ex.ToString());
+                failures++;
+            }
 
-            var aggregate = session.CaptureSaveAggregate();
-            var restored = new ExpeditionHostSession();
-            restored.RestoreSaveAggregate(aggregate);
-            Check(restored.Engine.Active["survivor_a"].vehicleBrokenDown &&
-                  restored.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId) != null,
-                "V8: aggregate save round-trip restores the sortie and the garage.");
-
-            // Repair clears the breakdown and tops the condition.
-            restored.RepairVehicle(ExpeditionHostSession.StarterVehicleId, 100f);
-            Check(restored.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.condition >= 100f,
-                "V9: garage repair restores the vehicle.");
-            return errors == 0 ? 0 : 1;
+            return (passed, failures);
         }
+
+        /// <summary>Short description of a dispatch result for gate diagnostics.</summary>
+        private static string DescribeDispatch(Ashfall.Core.PlayerCommand.CommandResult result)
+            => $"{result.ActionResult.Status}" +
+               (string.IsNullOrEmpty(result.FailureCode) ? string.Empty : $"/{result.FailureCode}") +
+               (string.IsNullOrEmpty(result.MessageKey) ? string.Empty : $" \"{result.MessageKey}\"") +
+               $" expectedVersion={result.ExpectedStateVersion} actualVersion={result.ActualStateVersion}";
 
         /// <summary>The UnityEngine.* compatibility shim (src/Bridge/) has been fully removed.
         /// This selftest is retained as a stable CLI verb so CI/documentation references do not
