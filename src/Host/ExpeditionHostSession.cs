@@ -206,6 +206,15 @@ namespace AtomicWar.GodotApp
             long? stateVersion = null)
         {
             long version = stateVersion ?? StateVersion;
+
+            // Adjudicate caller staleness BEFORE this call mutates anything.
+            // Vehicle preparation below burns fuel and rolls wear, which bumps
+            // StateVersion; comparing the pre-prepare version against the
+            // post-prepare version rejected every successful vehicle dispatch as a
+            // stale preview, and did so only after the fuel had been spent.
+            if (version != StateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.ExpeditionDispatch, version, StateVersion);
+
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
             if (ExtraBlocked != null && ExtraBlocked(locationId))
@@ -224,7 +233,11 @@ namespace AtomicWar.GodotApp
                 profile = BuildProfile(vehicleId);
             }
 
-            var result = Engine.ExecuteStart(def, survivorId, staminaBudget, stance, vehicle: profile, expectedStateVersion: version, currentStateVersion: StateVersion);
+            // Staleness was adjudicated before preparation, so compare the current
+            // version against itself here — preparation's own mutation must not
+            // invalidate the dispatch it is preparing for.
+            long preparedVersion = StateVersion;
+            var result = Engine.ExecuteStart(def, survivorId, staminaBudget, stance, vehicle: profile, expectedStateVersion: preparedVersion, currentStateVersion: preparedVersion);
             if (result.IsSuccess)
             {
                 RaiseStateChanged();
@@ -351,6 +364,12 @@ namespace AtomicWar.GodotApp
             long? stateVersion = null)
         {
             long version = stateVersion ?? StateVersion;
+
+            // Same rule as StartExpedition: reject a stale caller version before
+            // preparation spends fuel, then compare current-to-current afterwards.
+            if (version != StateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.ExpeditionDispatch, version, StateVersion);
+
             var def = ExpeditionDefinitionRegistry.Get(locationId)
                       ?? Definitions.Find(d => d.id == locationId);
             if (def == null)
@@ -369,7 +388,8 @@ namespace AtomicWar.GodotApp
                 profile = BuildProfile(vehicleId);
             }
 
-            var result = Engine.ExecuteStart(def, survivorId, day, stance, vehicle: profile, expectedStateVersion: version, currentStateVersion: StateVersion);
+            long dispatchVersion = StateVersion;
+            var result = Engine.ExecuteStart(def, survivorId, day, stance, vehicle: profile, expectedStateVersion: dispatchVersion, currentStateVersion: dispatchVersion);
             if (result.IsSuccess)
             {
                 RaiseStateChanged();
