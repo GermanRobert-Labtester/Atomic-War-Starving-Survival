@@ -5,6 +5,7 @@ using System.Text.Json;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Greenhouse;
+using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
@@ -125,6 +126,79 @@ namespace AtomicWar.GodotApp
             LastEvent = $"Plot {plotIndex + 1}: Irrigated with {waterUnits:0} units of {(tainted ? "irradiated" : "clean")} water.";
             RaiseStateChanged();
             return true;
+        }
+
+        public CommandResult PreviewTreatBlight(int plotIndex)
+        {
+            string treatmentId = GreenhouseExpansionCatalog.Items.BlightTreatment;
+            bool hasTreatment = InventoryHost != null && InventoryHost.Inventory.CountById(treatmentId) >= 1;
+            bool hasIodine = InventoryHost != null && InventoryHost.Inventory.CountById("iodine_pills") >= 1;
+
+            if (!hasTreatment && !hasIodine)
+            {
+                return new CommandResult(
+                    PlayerCommandCode.GreenhouseTreatBlight,
+                    ActionResult.Failed("no_treatment", "greenhouse.no_treatment"),
+                    StateVersion, StateVersion);
+            }
+
+            var plot = plotIndex >= 0 && plotIndex < System.Plots.Count ? System.Plots[plotIndex] : null;
+            if (plot == null || plot.stage == (int)GreenhouseStage.Failed || plot.blight <= 0f)
+            {
+                return new CommandResult(
+                    PlayerCommandCode.GreenhouseTreatBlight,
+                    ActionResult.Failed("invalid_target", "greenhouse.invalid_target"),
+                    StateVersion, StateVersion);
+            }
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.GreenhouseTreatBlight,
+                ActionResult.Success("greenhouse.preview_treat_blight"),
+                StateVersion, StateVersion);
+        }
+
+        public CommandResult ExecuteTreatBlight(int plotIndex)
+        {
+            string treatmentId = GreenhouseExpansionCatalog.Items.BlightTreatment;
+            if (InventoryHost != null && InventoryHost.Inventory.CountById(treatmentId) < 1)
+            {
+                // Fallback to chemical wash / iodine if available
+                if (InventoryHost.Inventory.CountById("iodine_pills") >= 1)
+                {
+                    InventoryHost.Remove("iodine_pills", 1);
+                    var p = plotIndex >= 0 && plotIndex < System.Plots.Count ? System.Plots[plotIndex] : null;
+                    if (p != null) p.blight = Math.Max(0f, p.blight - 0.5f);
+                    LastEvent = $"Plot {plotIndex + 1}: Applied iodine chemical wash. Blight reduced.";
+                    RaiseStateChanged();
+                    return CommandResult.FromSuccess(
+                        PlayerCommandCode.GreenhouseTreatBlight,
+                        ActionResult.Success("greenhouse.blight_partial"),
+                        StateVersion, StateVersion + 1);
+                }
+
+                LastEvent = "Cannot treat blight: no blight treatment or iodine pills available.";
+                return new CommandResult(
+                    PlayerCommandCode.GreenhouseTreatBlight,
+                    ActionResult.Failed("no_treatment", "greenhouse.no_treatment"),
+                    StateVersion, StateVersion);
+            }
+
+            if (System.ExecuteTreatBlight(plotIndex, expectedStateVersion: StateVersion, currentStateVersion: StateVersion).IsSuccess)
+            {
+                string consumed = treatmentId;
+                InventoryHost?.Remove(consumed, 1);
+                LastEvent = $"Plot {plotIndex + 1}: Blight eradicated using {consumed}.";
+                RaiseStateChanged();
+                return CommandResult.FromSuccess(
+                    PlayerCommandCode.GreenhouseTreatBlight,
+                    ActionResult.Success("greenhouse.blight_treated"),
+                    StateVersion, StateVersion + 1);
+            }
+
+            return new CommandResult(
+                PlayerCommandCode.GreenhouseTreatBlight,
+                ActionResult.Failed("execute_failed", "greenhouse.execute_failed"),
+                StateVersion, StateVersion);
         }
 
         public bool TreatBlight(int plotIndex)

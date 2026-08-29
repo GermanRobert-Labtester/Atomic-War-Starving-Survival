@@ -128,68 +128,19 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by res://assets/ui/panels/DutyRosterDetailPanel.tscn; SceneBinder resolves typed unique-name nodes once.
+            // Sibling refresh code is unchanged.
+            var binder = new SceneBinder(this, typeof(DutyRosterDetailPanel));
+            binder.Require<VBoxContainer>("AssignmentsList");
+            binder.Require<VBoxContainer>("ShiftsList");
+            binder.Require<VBoxContainer>("PerformanceList");
+            binder.Require<Button>("CloseButton");
+            _assignmentsList = binder.Get<VBoxContainer>("AssignmentsList");
+            _shiftsList = binder.Get<VBoxContainer>("ShiftsList");
+            _performanceList = binder.Get<VBoxContainer>("PerformanceList");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("DUTY ROSTER DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Assignments section
-            _lblAssignmentsTitle = AshfallUiHelpers.MakeSectionHeader("CURRENT ASSIGNMENTS");
-            vbox.AddChild(_lblAssignmentsTitle);
-
-            _assignmentsList = new VBoxContainer();
-            _assignmentsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _assignmentsList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_assignmentsList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Shifts section
-            _lblShiftsTitle = AshfallUiHelpers.MakeSectionHeader("SHIFT SCHEDULE");
-            vbox.AddChild(_lblShiftsTitle);
-
-            _shiftsList = new VBoxContainer();
-            _shiftsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _shiftsList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_shiftsList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Performance section
-            _lblPerformanceTitle = AshfallUiHelpers.MakeSectionHeader("WORKER PERFORMANCE");
-            vbox.AddChild(_lblPerformanceTitle);
-
-            _performanceList = new VBoxContainer();
-            _performanceList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _performanceList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_performanceList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()

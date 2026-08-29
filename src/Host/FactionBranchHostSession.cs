@@ -18,16 +18,16 @@ namespace AtomicWar.GodotApp
         public FactionBranchHostSession(FactionBranchCoordinator coordinator)
         {
             Coordinator = coordinator ?? throw new ArgumentNullException(nameof(coordinator));
-            Coordinator.OnStateChanged += RaiseStateChanged;
+            Coordinator.OnStateChanged += () => RaiseStateChanged();
         }
 
-        public static FactionBranchHostSession CreateDefault(string dataDir)
+        public static FactionBranchHostSession CreateDefault(string dataDir, IFlagLedger? flags = null)
         {
             var coordinator = FactionBranchCoordinator.LoadFromData(
                 dataDir,
                 new FileSystemIO(),
                 new SystemTextJsonSerializer(),
-                new InMemoryFlagLedger(),
+                flags ?? new CampaignConsequenceLedger(),
                 new GodotLog());
             return new FactionBranchHostSession(coordinator);
         }

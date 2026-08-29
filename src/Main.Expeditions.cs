@@ -135,7 +135,8 @@ namespace AtomicWar.GodotApp
             if (!_inventory.Inventory.TryConsumeBill(bill))
                 return $"Not enough fuel aboard ({needed} needed).";
             SaveInventory();
-            return _expeditions.RefuelVehicle(vehicleId, units);
+            var r = _expeditions.RefuelVehicle(vehicleId, units);
+            return r.IsSuccess ? $"Refueled {vehicleId}." : $"Cannot refuel {vehicleId}: {r.FailureCode}.";
         }
 
         private void SaveCombat()

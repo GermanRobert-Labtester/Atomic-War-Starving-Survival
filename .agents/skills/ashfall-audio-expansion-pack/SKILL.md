@@ -1,3 +1,8 @@
+---
+name: ashfall-audio-expansion-pack
+description: Creates expansion audio packs (radio, echoes, ambient, SFX), registers AudioManager cues, wires the EventBridge, and runs ashfall-audio-qa validation.
+---
+
 # ASHFALL Asset Expansion Skill: ashfall-audio-expansion-pack
 
 ## Overview

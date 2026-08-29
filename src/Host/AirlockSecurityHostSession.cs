@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.PlayerCommand;
 
 namespace AtomicWar.GodotApp
 {
@@ -61,6 +62,17 @@ namespace AtomicWar.GodotApp
                 LastEvent = $"Security incident resolved: {decision}";
             }
             return res;
+        }
+
+        public CommandResult RepairDoor(float amount)
+        {
+            var result = System.ExecuteRepairDoor(amount, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
+            {
+                LastEvent = $"Blast door repaired: {result.FailureCode}";
+                RaiseStateChanged();
+            }
+            return result;
         }
 
         public void TickDay(int day)

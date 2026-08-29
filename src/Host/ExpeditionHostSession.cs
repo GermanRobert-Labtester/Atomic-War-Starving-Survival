@@ -4,6 +4,7 @@ using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.IO;
 using Ashfall.Core.Narrative;
+using Ashfall.Core.PlayerCommand;
 
 #pragma warning disable CS8618
 
@@ -196,31 +197,44 @@ namespace AtomicWar.GodotApp
         /// <summary>Production API to start an expedition to a specified location.
         /// When a vehicleId is given, dispatch preparation runs the garage's
         /// fuel burn, wear, and prep-breakdown roll before the sortie starts.</summary>
-        public string StartExpedition(
+        public CommandResult StartExpedition(
             string survivorId,
             string locationId,
             ExpeditionStance stance = ExpeditionStance.Stealth,
             int staminaBudget = 40,
-            string vehicleId = "")
+            string vehicleId = "",
+            long? stateVersion = null)
         {
+            long version = stateVersion ?? StateVersion;
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
-                return $"Crossing gate is closed — no vouch. Cannot dispatch to {locationId}.";
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
             if (ExtraBlocked != null && ExtraBlocked(locationId))
-                return $"Route blocked: cannot dispatch to {locationId} right now (seasonal or sealed).";
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
             var def = ExpeditionDefinitionRegistry.Get(locationId)
                       ?? Definitions.Find(d => d.id == locationId);
-            if (def == null) return $"Unknown expedition target: {locationId}";
+            if (def == null)
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "unknown_target", "expedition.unknown_target", version);
 
             ExpeditionVehicleProfile? profile = null;
             if (!string.IsNullOrEmpty(vehicleId))
             {
                 string? prepared = PrepareVehicleForDispatch(def, vehicleId);
-                if (prepared != null) return prepared;
+                if (prepared != null)
+                    return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "vehicle_unready", prepared, version);
                 profile = BuildProfile(vehicleId);
             }
 
-            bool ok = Engine.Start(def, survivorId, staminaBudget, stance, vehicle: profile);
-            return ok ? $"Sent {survivorId} to {def.displayName}{(profile != null ? $" by {profile.vehicleId}" : "")}." : "Expedition start refused (already active or invalid).";
+            var result = Engine.ExecuteStart(def, survivorId, staminaBudget, stance, vehicle: profile, expectedStateVersion: version, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
+            {
+                RaiseStateChanged();
+                LastEvent = $"Sent {survivorId} to {def.displayName}{(profile != null ? $" by {profile.vehicleId}" : "")}.";
+            }
+            else
+            {
+                LastEvent = $"Expedition start refused: {result.FailureCode}.";
+            }
+            return result;
         }
 
         /// <summary>
@@ -255,21 +269,27 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Refuel from carried fuel units (inventory consumption is the caller's concern).</summary>
-        public string RefuelVehicle(string vehicleId, float units)
+        public CommandResult RefuelVehicle(string vehicleId, float units)
         {
             var r = Vehicles.Refuel(vehicleId, units);
-            return r.Status == ActionResult.StatusKind.Success
-                ? $"Refueled {vehicleId}."
-                : $"Cannot refuel {vehicleId}: {r.Status}.";
+            var result = r.Status == ActionResult.StatusKind.Success
+                ? CommandResult.FromSuccess(PlayerCommandCode.RepairVehicle, ActionResult.Success("vehicle.refueled"), StateVersion, StateVersion + 1)
+                : new CommandResult(PlayerCommandCode.RepairVehicle, ActionResult.Blocked(r.FailureCode, "vehicle.refuel_failed"), StateVersion, StateVersion);
+            if (result.IsSuccess) RaiseStateChanged();
+            LastEvent = result.IsSuccess ? $"Refueled {vehicleId}." : $"Cannot refuel {vehicleId}: {result.FailureCode}.";
+            return result;
         }
 
         /// <summary>Repair a garage vehicle by the given condition amount.</summary>
-        public string RepairVehicle(string vehicleId, float amount)
+        public CommandResult RepairVehicle(string vehicleId, float amount)
         {
             var r = Vehicles.Repair(vehicleId, amount);
-            return r.Status == ActionResult.StatusKind.Success
-                ? $"Repaired {vehicleId}."
-                : $"Cannot repair {vehicleId}: {r.Status}.";
+            var result = r.Status == ActionResult.StatusKind.Success
+                ? CommandResult.FromSuccess(PlayerCommandCode.RepairVehicle, ActionResult.Success("vehicle.repaired", new Dictionary<string, double> { ["condition"] = amount }), StateVersion, StateVersion + 1)
+                : new CommandResult(PlayerCommandCode.RepairVehicle, ActionResult.Blocked(r.FailureCode, "vehicle.repair_failed"), StateVersion, StateVersion);
+            if (result.IsSuccess) RaiseStateChanged();
+            LastEvent = result.IsSuccess ? $"Repaired {vehicleId}." : $"Cannot repair {vehicleId}: {result.FailureCode}.";
+            return result;
         }
 
         /// <summary>
@@ -314,7 +334,7 @@ namespace AtomicWar.GodotApp
             };
         }
 
-        public string StartDemoExpedition(string survivorId, string locationId)
+        public CommandResult StartDemoExpedition(string survivorId, string locationId)
             => StartExpedition(survivorId, locationId);
 
         /// <summary>
@@ -322,34 +342,46 @@ namespace AtomicWar.GodotApp
         /// sortie start in one call, with the caller's day (the UI keeps its
         /// own day semantics). Returns the player-facing result message.
         /// </summary>
-        public string DispatchSortie(
+        public CommandResult DispatchSortie(
             string survivorId,
             string locationId,
             ExpeditionStance stance,
             int day,
-            string vehicleId = "")
+            string vehicleId = "",
+            long? stateVersion = null)
         {
+            long version = stateVersion ?? StateVersion;
             var def = ExpeditionDefinitionRegistry.Get(locationId)
                       ?? Definitions.Find(d => d.id == locationId);
-            if (def == null) return $"Unknown expedition target: {locationId}";
+            if (def == null)
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "unknown_target", "expedition.unknown_target", version);
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
-                return $"Crossing gate is closed — no vouch. Cannot dispatch to {locationId}.";
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
             if (ExtraBlocked != null && ExtraBlocked(locationId))
-                return $"Route blocked: cannot dispatch to {locationId} right now (seasonal or sealed).";
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
 
             ExpeditionVehicleProfile? profile = null;
             if (!string.IsNullOrEmpty(vehicleId))
             {
                 string? prepared = PrepareVehicleForDispatch(def, vehicleId);
-                if (prepared != null) return prepared;
+                if (prepared != null)
+                    return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "vehicle_unready", prepared, version);
                 profile = BuildProfile(vehicleId);
             }
 
-            bool ok = Engine.Start(def, survivorId, day, stance, vehicle: profile);
-            if (!ok) return "Expedition start refused (already active or invalid).";
-            return profile != null
-                ? $"{survivorId} rolls out for {def.displayName} in the {Vehicles.GetVehicle(vehicleId)?.displayName ?? vehicleId}."
-                : $"{survivorId} sets out on foot for {def.displayName}.";
+            var result = Engine.ExecuteStart(def, survivorId, day, stance, vehicle: profile, expectedStateVersion: version, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
+            {
+                RaiseStateChanged();
+                LastEvent = profile != null
+                    ? $"{survivorId} rolls out for {def.displayName} in the {Vehicles.GetVehicle(vehicleId)?.displayName ?? vehicleId}."
+                    : $"{survivorId} sets out on foot for {def.displayName}.";
+            }
+            else
+            {
+                LastEvent = $"Expedition start refused: {result.FailureCode}.";
+            }
+            return result;
         }
 
         /// <summary>Production API to advance active expeditions by the specified duration.</summary>

@@ -148,62 +148,25 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by
+            // res://assets/ui/panels/MapDetailPanel.tscn. SceneBinder resolves
+            // typed unique-name nodes; sibling bind logic is unchanged.
+            var binder = new SceneBinder(this, typeof(MapDetailPanel));
+            binder.Require<VBoxContainer>("InfoContainer");
+            binder.Require<VBoxContainer>("HazardsContainer");
+            binder.Require<VBoxContainer>("LayoutsContainer");
+            binder.Require<VBoxContainer>("SalvageContainer");
+            binder.Require<Label>("Title");
+            binder.Require<Button>("CloseButton");
+
+            _infoContainer = binder.Get<VBoxContainer>("InfoContainer");
+            _hazardsContainer = binder.Get<VBoxContainer>("HazardsContainer");
+            _layoutsContainer = binder.Get<VBoxContainer>("LayoutsContainer");
+            _salvageContainer = binder.Get<VBoxContainer>("SalvageContainer");
+            _titleLabel = binder.Get<Label>("Title");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.03f, 0.04f, 0.05f, 0.96f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var scroll = new ScrollContainer();
-            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
-            scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
-            AddChild(scroll);
-
-            var center = new CenterContainer();
-            center.SetAnchorsPreset(LayoutPreset.FullRect);
-            center.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            center.SizeFlagsVertical = SizeFlags.ExpandFill;
-            scroll.AddChild(center);
-
-            var rootBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            rootBox.CustomMinimumSize = new Vector2(760, 0);
-            center.AddChild(rootBox);
-
-            _titleLabel = AshfallUiHelpers.MakeTitle("SECTOR INTELLIGENCE DOSSIER", Ashfall.Core.UI.Theme.FontSizeH1);
-            _titleLabel.HorizontalAlignment = HorizontalAlignment.Center;
-            rootBox.AddChild(_titleLabel);
-
-            var sub = AshfallUiHelpers.MakeMetadata("Declassified cartographic data, environmental radiation scans, and structural blueprints.");
-            sub.HorizontalAlignment = HorizontalAlignment.Center;
-            sub.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            rootBox.AddChild(sub);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _infoContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_infoContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _hazardsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_hazardsContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _layoutsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_layoutsContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _salvageContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_salvageContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO MAP [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(220, 42);
-            rootBox.AddChild(btnClose);
         }
 
         public void Open()

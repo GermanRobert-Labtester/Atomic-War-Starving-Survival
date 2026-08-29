@@ -115,18 +115,5 @@ namespace AtomicWar.GodotApp
             };
         }
 
-        /// <summary>One-line world state for panels: ownership, spoil, ruin, threats.</summary>
-        private string? WorldLineFor(string locationId)
-        {
-            if (_world == null || string.IsNullOrEmpty(locationId)) return null;
-            var rec = _world.LocationEvolution?.TryGetRecord(locationId);
-            if (rec == null) return null;
-
-            string owner = rec.currentOwner == "none" ? "unclaimed" : rec.currentOwner.Replace("faction_", "");
-            string spoil = $"{rec.lootDepletionFactor:P0} spoilage";
-            string state = rec.isRuined ? " · RUINED" : string.Empty;
-            string threats = rec.activeThreats.Count > 0 ? $" · {rec.activeThreats.Count} threat(s)" : string.Empty;
-            return $"WORLD: {owner} · {spoil}{state}{threats}";
         }
-    }
 }

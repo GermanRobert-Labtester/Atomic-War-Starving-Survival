@@ -123,6 +123,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.UiAccessibilitySelfTest:
                     GetTree().Quit(HostCli.RunUiAccessibilitySelfTest());
                     return;
+                case HostCliAction.SceneBindingSelfTest:
+                    GetTree().Quit(SceneBindingSelfTest.Run());
+                    return;
                 case HostCliAction.CombatSelfTest:
                     GetTree().Quit(HostCli.RunCombatSelfTest(_dataDir));
                     return;
@@ -326,6 +329,12 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.OnboardingJourneySelfTest:
                     GetTree().Quit(HostCli.RunOnboardingJourneySelfTest(_dataDir));
+                    return;
+                case HostCliAction.ContentUtilizationSelfTest:
+                    GetTree().Quit(ContentUtilizationSelfTest.Run(
+                        ProjectSettings.GlobalizePath("res://"), _dataDir,
+                        ProjectSettings.GlobalizePath("res://Assets/Ashfall.Core"),
+                        ProjectSettings.GlobalizePath("res://src")));
                     return;
             }
 

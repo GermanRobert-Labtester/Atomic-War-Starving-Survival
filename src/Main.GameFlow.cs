@@ -70,8 +70,12 @@ namespace AtomicWar.GodotApp
                 summary.AppendLine("[!] Note: StreamingAssets/Data folder not found at relative path.");
             }
 
+            // Ticket #127: Replace misleading "connected" metric with accurate
+            // utilization-aware status. File enumeration only proves discovery.
+            // The utilization graph is generated separately via --content-utilization-selftest.
             if (_statusLabel != null)
-                _statusLabel.Text = $"Ready: {jsonCount} JSON Game Catalogs connected.";
+                _statusLabel.Text = $"Archive: {jsonCount} JSON catalogs discovered.\n" +
+                    "Run --content-utilization-selftest for utilization analysis.";
             if (_codexViewer != null)
                 _codexViewer.Text = summary.ToString();
         }

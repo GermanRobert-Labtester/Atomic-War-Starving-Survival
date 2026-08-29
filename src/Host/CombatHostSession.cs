@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Combat;
+using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Inventory;
 
 namespace AtomicWar.GodotApp
@@ -311,10 +312,19 @@ namespace AtomicWar.GodotApp
             return r.Message;
         }
 
-        public string ActionRepair(string subjectId)
+        public CommandResult ActionRepair(string subjectId)
         {
-            var r = Engine.PlayerFieldRepair(subjectId, new SeededRng(RollSeed()));
-            return r.Message;
+            var r = Engine.ExecutePlayerFieldRepair(subjectId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (r.IsSuccess)
+            {
+                LastEvent = r.FailureCode == string.Empty ? "Field repair completed." : $"Field repair: {r.FailureCode}";
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Field repair refused: {r.FailureCode}.";
+            }
+            return r;
         }
 
         public string ActionMoveLane(string subjectId, CombatLane lane)

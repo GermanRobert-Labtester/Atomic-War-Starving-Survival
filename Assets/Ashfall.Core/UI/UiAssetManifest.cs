@@ -12,13 +12,13 @@ namespace Ashfall.Core.UI
     /// </summary>
     public static class UiAssetManifest
     {
-        public const string TitleBackground = "Assets/ui/Textures/Backgrounds/title_screen_bg.png";
-        public const string InventoryBackground = "Assets/ui/Textures/Backgrounds/inventory_bg.png";
-        public const string MedicalBackground = "Assets/ui/Textures/Backgrounds/medical_bg.png";
-        public const string GameOverBackground = "Assets/ui/Textures/Backgrounds/game_over_bg.png";
+        public const string TitleBackground = "assets/ui/Textures/Backgrounds/title_screen_bg.png";
+        public const string InventoryBackground = "assets/ui/Textures/Backgrounds/inventory_bg.png";
+        public const string MedicalBackground = "assets/ui/Textures/Backgrounds/medical_bg.png";
+        public const string GameOverBackground = "assets/ui/Textures/Backgrounds/game_over_bg.png";
 
-        public const string PanelBackground = "Assets/UI/Textures/panel_bg_9slice.png";
-        public const string HeaderBar = "Assets/UI/Textures/header_bar_9slice.png";
+        public const string PanelBackground = "assets/ui/Textures/panel_bg_9slice.png";
+        public const string HeaderBar = "assets/ui/Textures/header_bar_9slice.png";
 
         public static IReadOnlyList<string> MainMenuBackgrounds { get; } = new[]
         {

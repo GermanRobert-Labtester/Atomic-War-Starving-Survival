@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Greenhouse;
+using Ashfall.Core.PlayerCommand;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -212,6 +213,58 @@ namespace Ashfall.Core
             if (plot == null) return false;
             ResetPlot(plot);
             return true;
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a blight treatment command.
+        /// Shares the same validation path as <see cref="TreatBlight"/>.
+        /// </summary>
+        public CommandPreview PreviewTreatBlight(int plotIndex, long stateVersion = 0)
+        {
+            var plot = PlotAt(plotIndex);
+            if (plot == null)
+                return CommandPreview.Unavailable(PlayerCommandCode.GreenhouseTreatBlight, "invalid_plot", "greenhouse.invalid_plot", stateVersion);
+            if (plot.stage == (int)GreenhouseStage.Failed)
+                return CommandPreview.Unavailable(PlayerCommandCode.GreenhouseTreatBlight, "plot_failed", "greenhouse.plot_failed", stateVersion);
+            if (plot.blight <= 0f)
+                return CommandPreview.Unavailable(PlayerCommandCode.GreenhouseTreatBlight, "no_blight", "greenhouse.no_blight", stateVersion);
+
+            return CommandPreview.Available(
+                PlayerCommandCode.GreenhouseTreatBlight,
+                stateVersion,
+                new Dictionary<string, double> { { "plot_index", plotIndex }, { "blight_cured", 1 } },
+                isIrreversible: false,
+                messageKey: "greenhouse.preview_treat_blight");
+        }
+
+        /// <summary>
+        /// Execute a blight treatment using the same validation path as <see cref="PreviewTreatBlight"/>.
+        /// Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteTreatBlight(int plotIndex, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewTreatBlight(plotIndex, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.GreenhouseTreatBlight, preview.StateVersion, currentStateVersion);
+
+            string consumedTreatmentId;
+            bool ok = TreatBlight(plotIndex, out consumedTreatmentId);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.GreenhouseTreatBlight,
+                    ActionResult.Failed("execute_failed", "greenhouse.execute_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.GreenhouseTreatBlight,
+                ActionResult.Success("greenhouse.blight_treated",
+                    new Dictionary<string, double> { { "plot_index", plotIndex }, { "consumed_treatment", 1 } }),
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         public bool TreatBlight(int plotIndex, out string consumedTreatmentId)

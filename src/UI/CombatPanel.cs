@@ -192,7 +192,7 @@ namespace AtomicWar.GodotApp.UI
 
             var row2 = Row();
             row2.AddChild(Btn("CLEAR JAM", () => DoAction(() => _combat.ActionClearJam("survivor_yuki"))));
-            row2.AddChild(Btn("REPAIR", () => DoAction(() => _combat.ActionRepair("survivor_yuki"))));
+            row2.AddChild(Btn("REPAIR", () => DoAction(() => _combat.ActionRepair("survivor_yuki").MessageKey)));
             row2.AddChild(Btn("DECON FLUSH", () => DoAction(_combat.ActionDecontaminate)));
             row2.AddChild(Btn("LAST STAND", () => DoAction(() => _combat.ActionLastStand("survivor_yuki"))));
             vbox.AddChild(row2);

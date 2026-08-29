@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-08-27<br>
-**Total Registered Actions:** 92 entries / 140 flag tokens (aliases included)
+**Last Verified:** 2026-08-28<br>
+**Total Registered Actions:** 93 entries / 142 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -85,6 +85,7 @@
 | `--duty-roster-uitest` | — | Duty Roster panel UI construction, role assignments, and shift scheduling |
 | `--economy-uitest` | — | Economy market panel UI construction, price shock display, and barter grid |
 | `--expedition-panel-uitest` | `--expedition-panel-lifecycle` | Expedition panel encounter-notice lifecycle: open→surface→close→reopen→surface |
+| `--onboarding-journey-selftest` | `--onboarding-selftest` | First-hour onboarding journey: protocol → inspect → rationing → assignment → weather → inventory-use → day-advance, with resume after save/load and no-resource-fabrication |
 | `--holdfast-runtime-uitest` | `--holdfast-runtime-ui-test`, `--holdfast-runtime-selftest` | Godot Holdfast terminal browse → trade → failed trade → save → reload |
 | `--inventory-uitest` | `--inventory-selftest` | Inventory panel UI construction, item grid, and slot binding |
 | `--journal-uitest` | — | Build ledger UI, cycle tabs, quit |

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.PlayerCommand;
 
 namespace AtomicWar.GodotApp
 {
@@ -42,15 +43,19 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public bool AssignWatch(IList<string> survivorIds)
+        public CommandResult AssignWatch(IList<string> survivorIds)
         {
-            bool ok = System.AssignWatch(survivorIds);
-            if (ok)
+            var result = System.ExecuteAssignWatch(survivorIds, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
             {
                 LastEvent = "Assigned watch sentries to Waystation A";
                 RaiseStateChanged();
             }
-            return ok;
+            else
+            {
+                LastEvent = $"Watch assignment refused: {result.FailureCode}.";
+            }
+            return result;
         }
 
         public void Resupply()

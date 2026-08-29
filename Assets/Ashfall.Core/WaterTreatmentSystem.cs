@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
+using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core
 {
@@ -172,6 +173,73 @@ namespace Ashfall.Core
 
         // ── Treatment Jobs ──────────────────────────────────────────────────
 
+        /// <summary>
+        /// Side-effect-free preview of a water treatment start command.
+        /// Shares the same validation path as <see cref="StartTreatment"/>.
+        /// </summary>
+        public CommandPreview PreviewStartTreatment(TreatmentMode mode, float inputAmount, long stateVersion = 0)
+        {
+            if (inputAmount <= 0)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, "invalid_amount", "water.invalid_amount", stateVersion);
+            if (_state.isProcessing)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, "already_processing", "water.already_processing", stateVersion);
+
+            ActionResult? check = mode switch
+            {
+                TreatmentMode.CharcoalFiltration => CheckInput(WaterType.Raw, inputAmount, _state.charcoalSupply, CharcoalPerUnit * inputAmount),
+                TreatmentMode.Distillation => CheckInput(WaterType.Brackish, inputAmount, _state.distillationFuel, FuelPerDistillationUnit * inputAmount),
+                TreatmentMode.ReverseOsmosis => CheckInput(WaterType.Brackish, inputAmount, _state.filterIntegrity, FilterDegradePerUnit * inputAmount),
+                TreatmentMode.Decontamination => CheckInput(WaterType.Irradiated, inputAmount, _state.charcoalSupply, CharcoalPerUnit * inputAmount * 2),
+                _ => ActionResult.Failed("invalid_mode", "water.invalid_mode")
+            };
+
+            if (check.HasValue && check.Value.Status != ActionResult.StatusKind.Success)
+            {
+                string failureCode = check.Value.FailureCode;
+                string messageKey = check.Value.MessageKey;
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentStart, failureCode, messageKey, stateVersion);
+            }
+
+            var projected = new Dictionary<string, double>();
+            projected["input"] = inputAmount;
+            projected["mode"] = (int)mode;
+
+            return CommandPreview.Available(
+                PlayerCommandCode.TreatmentStart,
+                stateVersion,
+                projected,
+                isIrreversible: false,
+                messageKey: "water.preview_start");
+        }
+
+        /// <summary>
+        /// Execute a water treatment start using the same validation path as <see cref="PreviewStartTreatment"/>.
+        /// Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteStartTreatment(TreatmentMode mode, float inputAmount, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewStartTreatment(mode, inputAmount, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.TreatmentStart, preview.StateVersion, currentStateVersion);
+
+            var result = StartTreatment(mode, inputAmount);
+            if (!result.IsSuccess)
+                return new CommandResult(
+                    PlayerCommandCode.TreatmentStart,
+                    result,
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.TreatmentStart,
+                result,
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
         /// <summary>Start a treatment job of the given mode.</summary>
         public ActionResult StartTreatment(TreatmentMode mode, float inputAmount)
         {
@@ -249,6 +317,48 @@ namespace Ashfall.Core
                     { "target", _state.processingTarget },
                     { "remaining", Math.Max(0, _state.processingTarget - _state.processingProgress) }
                 });
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a water treatment cancel command.
+        /// </summary>
+        public CommandPreview PreviewCancelTreatment(long stateVersion = 0)
+        {
+            if (!_state.isProcessing)
+                return CommandPreview.Unavailable(PlayerCommandCode.TreatmentCancel, "not_processing", "water.not_processing", stateVersion);
+
+            return CommandPreview.Available(
+                PlayerCommandCode.TreatmentCancel,
+                stateVersion,
+                isIrreversible: false,
+                messageKey: "water.preview_cancel");
+        }
+
+        /// <summary>
+        /// Execute a water treatment cancel. Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteCancelTreatment(long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewCancelTreatment(expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.TreatmentCancel, preview.StateVersion, currentStateVersion);
+
+            var result = CancelTreatment();
+            if (!result.IsSuccess)
+                return new CommandResult(
+                    PlayerCommandCode.TreatmentCancel,
+                    result,
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.TreatmentCancel,
+                result,
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         /// <summary>Cancel the active treatment job. Wastes the input water.</summary>

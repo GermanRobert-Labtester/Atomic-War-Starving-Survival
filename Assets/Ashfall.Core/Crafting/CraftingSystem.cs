@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core.Inventory;
+using Ashfall.Core.PlayerCommand;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 
 namespace Ashfall.Core.Crafting
@@ -125,6 +126,110 @@ namespace Ashfall.Core.Crafting
             });
             OnCraftStarted?.Invoke(recipe);
             return true;
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a craft action.
+        /// Shares the same validation path as <see cref="StartCraft"/>.
+        /// </summary>
+        public CommandPreview PreviewCraft(Recipe recipe, string? crafterId = null, long stateVersion = 0)
+        {
+            if (recipe == null)
+                return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "missing_recipe", "craft.missing_recipe", stateVersion);
+
+            if (!string.IsNullOrEmpty(recipe.requiredStationId))
+            {
+                var station = GetStation(recipe.requiredStationId);
+                if (station == null || !station.IsOperational)
+                    return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "station_unavailable", "craft.station_unavailable", stateVersion);
+            }
+
+            if (_isCraftResultAllowed != null
+                && recipe.result != null
+                && !string.IsNullOrEmpty(recipe.result.id)
+                && !_isCraftResultAllowed(recipe.result.id))
+            {
+                return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "result_restricted", "craft.result_restricted", stateVersion);
+            }
+
+            float costMult = GetCraftCostMultiplier(crafterId);
+            var bill = BuildIngredientBill(recipe, costMult);
+            var validation = _inventory.ValidateTransaction(bill);
+            if (!validation.IsValid)
+                return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "insufficient_ingredients", "craft.insufficient_ingredients", stateVersion);
+
+            if (recipe.result != null && recipe.resultAmount > 0 && !_inventory.CanAdd(recipe.result, recipe.resultAmount))
+                return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "inventory_full", "craft.inventory_full", stateVersion);
+
+            if (IsMoonshineRecipe(recipe)
+                && _canCraftMoonshine != null
+                && !_canCraftMoonshine(crafterId))
+            {
+                return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "moonshine_restricted", "craft.moonshine_restricted", stateVersion);
+            }
+
+            var projected = new Dictionary<string, double>();
+            if (bill != null)
+            {
+                foreach (var kv in bill.GetAggregatedCosts())
+                    projected[kv.Key] = -(double)kv.Value;
+                foreach (var kv in bill.GetAggregatedGrants())
+                    projected[kv.Key] = (double)kv.Value;
+            }
+            if (recipe.result != null && recipe.resultAmount > 0)
+                projected[recipe.result.id] = (double)recipe.resultAmount;
+
+            float duration = recipe.craftingTimeHours;
+            if (crafterId != null && _crafterCraftTimeMultiplier != null)
+                duration *= _crafterCraftTimeMultiplier(crafterId);
+
+            return CommandPreview.Available(
+                PlayerCommandCode.CraftStart,
+                stateVersion,
+                projected,
+                duration,
+                isIrreversible: false,
+                messageKey: "craft.preview_available");
+        }
+
+        /// <summary>
+        /// Execute a craft command using the same validation path as <see cref="PreviewCraft"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteCraft(Recipe recipe, string? crafterId = null, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewCraft(recipe, crafterId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.CraftStart, preview.StateVersion, currentStateVersion);
+
+            bool ok = StartCraft(recipe, crafterId);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.CraftStart,
+                    ActionResult.Failed("execute_failed", "craft.execute_failed"),
+                    expectedStateVersion, currentStateVersion);
+
+            var deltas = new Dictionary<string, double>();
+            float costMult = GetCraftCostMultiplier(crafterId);
+            var bill = BuildIngredientBill(recipe, costMult);
+            if (bill != null)
+            {
+                foreach (var kv in bill.GetAggregatedCosts())
+                    deltas[kv.Key] = -(double)kv.Value;
+                foreach (var kv in bill.GetAggregatedGrants())
+                    deltas[kv.Key] = (double)kv.Value;
+            }
+            if (recipe.result != null && recipe.resultAmount > 0)
+                deltas[recipe.result.id] = (double)recipe.resultAmount;
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.CraftStart,
+                ActionResult.Success("craft.started", deltas),
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         public void Tick(float gameHours)

@@ -1,3 +1,8 @@
+---
+name: ashfall-expansion-scaffold
+description: "Automates Phase 1–5 skeleton generation for new ASHFALL expansions: system classes, data authority, GameBootstrap stubs, tests, and documentation."
+---
+
 # ASHFALL Expansion System Skill: ashfall-expansion-scaffold
 
 ## Overview

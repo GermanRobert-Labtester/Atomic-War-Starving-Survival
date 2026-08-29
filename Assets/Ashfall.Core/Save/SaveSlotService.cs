@@ -603,8 +603,11 @@ public class SaveSlotService
     }
 
     /// <summary>
-    /// Check whether a slot is in an iron-man terminal state and should reject
-    /// manual restore.
+    /// Check whether a slot is in a terminal (run-finalized) state and should
+    /// reject manual restore. Any campaign — iron-man or normal — whose run has
+    /// been finalized as a loss is sealed: the envelope remains on disk as an
+    /// inspectable memorial/archive, but normal continuation is blocked so a
+    /// completed campaign cannot resurrect through a stale aggregate save.
     /// </summary>
     public bool IsIronManTerminal(SaveProfileId profileId, SaveSlotId slotId)
     {
@@ -612,8 +615,29 @@ public class SaveSlotService
         if (manifest == null)
             return false;
 
-        return manifest.mode == CampaignMode.IronMan &&
-               manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+        // TerminalLoss seals the slot regardless of campaign mode. Iron Man is
+        // the historical producer; run-finalization (Task 121) now marks any
+        // ended campaign TerminalLoss, and both must block continuation.
+        return manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+    }
+
+    /// <summary>
+    /// Seal a slot as terminal. Pure Core: flips the manifest's
+    /// ironManTerminalState flag and records the final day. Wall-clock
+    /// stamping remains the host's responsibility (Invariant 4 — Core is
+    /// deterministic; the host owns <see cref="WallClock"/> per task 116).
+    /// Idempotent.
+    /// </summary>
+    public bool MarkTerminal(SaveProfileId profileId, SaveSlotId slotId, int finalDay)
+    {
+        var manifest = LoadManifest(profileId, slotId);
+        if (manifest == null)
+            return false;
+
+        manifest.ironManTerminalState = IronManTerminalState.TerminalLoss;
+        manifest.currentDay = finalDay;
+        SaveManifest(profileId, slotId, manifest);
+        return true;
     }
 
     /// <summary>

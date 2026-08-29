@@ -252,6 +252,7 @@ namespace AtomicWar.GodotApp.UI
                 _triggerLogContainer.AddChild(AshfallUiHelpers.MakeSeparator());
                 _triggerLogContainer.AddChild(AshfallUiHelpers.MakeCritical($"LATEST TRIGGER:\n{_host.LastEvent}"));
             }
+            }
         }
 
         public override void _UnhandledInput(InputEvent @event)

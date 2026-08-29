@@ -1,3 +1,8 @@
+---
+name: ashfall-expansion-balance-pack
+description: Runs seeded headless balance simulations and parameter sweeps for expansion systems, producing evidence-based difficulty and trade reports before merge.
+---
+
 # ASHFALL Expansion System Skill: ashfall-expansion-balance-pack
 
 ## Overview

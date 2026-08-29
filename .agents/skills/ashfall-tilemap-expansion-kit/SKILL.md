@@ -1,3 +1,8 @@
+---
+name: ashfall-tilemap-expansion-kit
+description: Creates expansion tilemap structures, TileSet/Layer configs, and validates them against zone/sector data authority for Godot 4.7+.
+---
+
 # ASHFALL Asset Expansion Skill: ashfall-tilemap-expansion-kit
 
 ## Overview

@@ -1,3 +1,8 @@
+---
+name: ashfall-sprite-family-gen
+description: Generates expansion sprite families and variants, ensuring consistent naming, Godot import presets, and LFS tracking for new art assets.
+---
+
 # ASHFALL Asset Expansion Skill: ashfall-sprite-family-gen
 
 ## Overview

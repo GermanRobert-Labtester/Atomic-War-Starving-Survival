@@ -2,6 +2,7 @@ using System;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.PlayerCommand;
 
 namespace AtomicWar.GodotApp
 {
@@ -42,9 +43,19 @@ namespace AtomicWar.GodotApp
             System.OnStateChanged += () => RaiseStateChanged();
         }
 
-        public bool AssignCaregiver(string caregiverId, string patientId)
+        public CommandResult AssignCaregiver(string caregiverId, string patientId)
         {
-            return System.AssignCaregiver(caregiverId, patientId);
+            var result = System.ExecuteAssignCaregiver(caregiverId, patientId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
+            {
+                LastEvent = $"Assigned {caregiverId} to care for {patientId}.";
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Caregiver assignment refused: {result.FailureCode}.";
+            }
+            return result;
         }
 
         public void UnassignCaregiver(string patientId)

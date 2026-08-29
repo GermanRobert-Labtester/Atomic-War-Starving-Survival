@@ -226,13 +226,34 @@ public partial class SaveLoadHostSession : Node
     }
 
     /// <summary>
+    /// Seal the active slot as terminal (run finalized). Keeps the campaign
+    /// envelope on disk as an inspectable memorial/archive but marks the
+    /// manifest TerminalLoss so continuation and deletion are blocked.
+    /// Returns false when no slot is active.
+    /// </summary>
+    public bool MarkActiveSlotTerminal(int finalDay)
+    {
+        if (_slotService == null || _activeSlotId == null) return false;
+        bool sealed_ = _slotService.MarkTerminal(_currentProfileId, _activeSlotId.Value, finalDay);
+        if (sealed_)
+        {
+            GD.Print($"[SaveLoad] Slot '{_activeSlotId.Value}' marked terminal (day {finalDay}). Final state preserved as memorial.");
+            SlotsChanged?.Invoke();
+        }
+        return sealed_;
+    }
+
+    /// <summary>
     /// Build a slot card for UI display.
     /// </summary>
     public SlotCard BuildSlotCard(SaveSlotId slotId)
     {
         var manifest = GetManifest(slotId);
         bool exists = manifest != null;
-        bool isTerminal = manifest != null && manifest.mode == CampaignMode.IronMan &&
+        // A run-finalized slot is terminal regardless of campaign mode: the
+        // envelope stays as an inspectable memorial, but the slot reads as
+        // sealed so the UI hides its delete/continue affordances.
+        bool isTerminal = manifest != null &&
                           manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
 
         return new SlotCard
@@ -335,27 +356,6 @@ public partial class SaveLoadHostSession : Node
         ActiveSlotChanged?.Invoke(_activeSlotId);
         GD.Print($"[SaveLoad] Imported legacy save to slot: {slotId}");
         return slotId;
-    }
-
-    /// <summary>
-    /// Delete the active slot's campaign envelope (and its backup) so a
-    /// finished run cannot be continued. The manifest is kept — slot history
-    /// and iron-man policy survive; only the save payload is removed.
-    /// </summary>
-    public void ClearActiveSlotEnvelope()
-    {
-        if (_activeSlotId == null || _slotService == null) return;
-        string aggregatePath = _slotService.GetAggregatePath(_currentProfileId, _activeSlotId.Value);
-        try
-        {
-            if (File.Exists(aggregatePath)) File.Delete(aggregatePath);
-            if (File.Exists(aggregatePath + ".bak")) File.Delete(aggregatePath + ".bak");
-            SlotsChanged?.Invoke();
-        }
-        catch (Exception ex)
-        {
-            GD.PrintErr($"[SaveLoad] Failed to clear envelope for slot '{_activeSlotId}': {ex.Message}");
-        }
     }
 
     /// <summary>

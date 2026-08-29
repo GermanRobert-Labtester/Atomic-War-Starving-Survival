@@ -1,3 +1,8 @@
+---
+name: ashfall-expansion-tick-wire
+description: Verifies and wires expansion system tick registration into GameBootstrap and the simulation loop, ensuring new systems are initialized and updated.
+---
+
 # ASHFALL Expansion System Skill: ashfall-expansion-tick-wire
 
 ## Overview

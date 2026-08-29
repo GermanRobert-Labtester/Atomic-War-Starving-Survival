@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core;
+using Ashfall.Core.PlayerCommand;
 
 namespace AtomicWar.GodotApp
 {
@@ -371,6 +372,17 @@ namespace AtomicWar.GodotApp
             if (LocationCount == 0 && QuestCount == 0)
                 return "Duty Roster catalog: empty - check ASHFALL_DATA / Assets/StreamingAssets/Data";
             return $"Duty Roster: {LocationCount} locations · {QuestCount} quests · {MarkCount} marks · {SeasonCount} seasons";
+        }
+
+        public CommandResult AssignDuty(string role, string survivorId)
+        {
+            var result = Roster.ExecuteAssign(role, survivorId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
+            {
+                LastEvent = $"Duty assigned: {role} = {survivorId}";
+                RaiseStateChanged();
+            }
+            return result;
         }
     }
 }

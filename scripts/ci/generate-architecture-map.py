@@ -910,6 +910,34 @@ ARCHITECTURE_GRAPH = {
         "routes": ["factions", "quests"],
         "cli": ["--expansions-selftest"],
         "tests": ["FactionBranchCoordinatorTests", "MilitaryBranchSystemTests", "RebelBranchSystemTests", "IndependentBranchSystemTests", "PrpfStandingSystemTests", "WeightOfChoicesSaveTests"]
+    },
+    "survivor_fate": {
+        "domain": "Campaign & Lore",
+        "core": ["SurvivorFateSystem"],
+        "catalog": [],
+        "host": [],
+        "setup": "SetupSurvivorFate",
+        "ticked": True,
+        "tick_type": "Daily Survivor-Death Cascade",
+        "store": ["SurvivorFateSaveStore"],
+        "ui": ["GameDashboardPanel"],
+        "routes": ["status"],
+        "cli": ["--playable-shell-selftest"],
+        "tests": ["SurvivorFateSystemTests"]
+    },
+    "onboarding": {
+        "domain": "Campaign & Onboarding",
+        "core": ["OnboardingJourney"],
+        "catalog": [],
+        "host": [],
+        "setup": "SetupOnboarding",
+        "ticked": False,
+        "tick_type": "On-Demand (Player Sigil Recording)",
+        "store": ["OnboardingSaveStore"],
+        "ui": ["OnboardingHintPanel"],
+        "routes": ["help"],
+        "cli": ["--onboarding-journey-selftest"],
+        "tests": ["OnboardingJourneyTests"]
     }
 }
 

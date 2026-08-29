@@ -37,7 +37,7 @@ namespace AtomicWar.GodotApp
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
 
-            _moralChoice = new MoralChoiceSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.MoralChoice).Rng);
+            _moralChoice = new MoralChoiceSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.MoralChoice).Rng, flags: _consequenceLedger);
             _moralChoiceDefs = MoralChoiceCatalogLoader.Load(_dataDir, fileIO, json);
 
             // Load branching chain quests and merge into the catalog

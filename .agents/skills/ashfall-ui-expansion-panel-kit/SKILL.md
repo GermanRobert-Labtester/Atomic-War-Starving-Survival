@@ -1,3 +1,8 @@
+---
+name: ashfall-ui-expansion-panel-kit
+description: Generates expansion UI panels, layouts, and theme bindings, ensuring they follow the existing Godot UI system and accessibility rules.
+---
+
 # ASHFALL Asset Expansion Skill: ashfall-ui-expansion-panel-kit
 
 ## Overview

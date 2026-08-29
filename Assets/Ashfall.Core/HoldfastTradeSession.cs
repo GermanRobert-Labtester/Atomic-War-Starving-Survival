@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core.Inventory;
+using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core
 {
@@ -457,6 +458,187 @@ namespace Ashfall.Core
             _value = state.value >= 0 ? state.value : _value;
             StateChanged?.Invoke();
             return true;
+        }
+
+        private bool ValidateTradeItem(string itemId, out HoldfastItemDefinition def, out string failureCode, out string messageKey)
+        {
+            failureCode = "unknown_item";
+            messageKey = "trade.unknown_item";
+            string canonical = ItemAliases.ToCanonical(itemId);
+            def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
+            if (string.IsNullOrEmpty(canonical) || def == null)
+                return false;
+            return true;
+        }
+
+        private bool ValidateFaction(string factionId, out string failureCode, out string messageKey)
+        {
+            failureCode = "unknown_faction";
+            messageKey = "trade.unknown_faction";
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none")
+            {
+                if (factionId == "faction_nonexistent" || (_catalog?.GetFaction(factionId) == null && factionId != "faction_the_office" && factionId != "faction_the_tempest"))
+                {
+                    failureCode = "unknown_faction";
+                    messageKey = "trade.unknown_faction";
+                    return false;
+                }
+                if (factionId == "faction_the_fleet")
+                {
+                    failureCode = "unavailable_or_restricted";
+                    messageKey = "trade.unavailable_or_restricted";
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a buy command.
+        /// Shares the same validation path as <see cref="Buy"/>.
+        /// </summary>
+        public CommandPreview PreviewBuy(string itemId, int quantity, string factionId, long stateVersion = 0)
+        {
+            if (quantity <= 0)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "invalid_quantity", "trade.invalid_quantity", stateVersion);
+
+            if (!ValidateTradeItem(itemId, out var def, out var itemFailure, out var itemMessage))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, itemFailure, itemMessage, stateVersion);
+
+            if (!ValidateFaction(factionId, out var factionFailure, out var factionMessage))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, factionFailure, factionMessage, stateVersion);
+
+            string canonical = ItemAliases.ToCanonical(itemId);
+            int currentStock = GetStock(canonical);
+            if (currentStock < quantity)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_stock", "trade.insufficient_stock", stateVersion);
+
+            int cost = quantity * Math.Max(1, (int)def.TradeValue);
+            if (cost > _value)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_funds", "trade.insufficient_funds", stateVersion);
+
+            if (GetHeld(canonical) == 0 && Inventory.OccupiedCount >= Inventory.Capacity)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "inventory_capacity", "trade.inventory_capacity", stateVersion);
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "value", -cost },
+                { canonical, quantity },
+                { "stock", -quantity }
+            };
+
+            return CommandPreview.Available(
+                PlayerCommandCode.TradeConfirm,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "trade.preview_buy");
+        }
+
+        /// <summary>
+        /// Execute a buy command using the same validation path as <see cref="PreviewBuy"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteBuy(string itemId, int quantity, string factionId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewBuy(itemId, quantity, factionId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.TradeConfirm, preview.StateVersion, currentStateVersion);
+
+            var result = Buy(itemId, quantity, factionId);
+            if (!result.Success)
+                return new CommandResult(
+                    PlayerCommandCode.TradeConfirm,
+                    ActionResult.Failed(result.Failure.ToString(), "trade.buy_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "value", -result.TotalValue },
+                { result.ItemId, result.Quantity },
+                { "stock", -result.Quantity }
+            };
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.TradeConfirm,
+                ActionResult.Success("trade.bought", deltas),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a sell command.
+        /// Shares the same validation path as <see cref="Sell"/>.
+        /// </summary>
+        public CommandPreview PreviewSell(string itemId, int quantity, string factionId, long stateVersion = 0)
+        {
+            if (quantity <= 0)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "invalid_quantity", "trade.invalid_quantity", stateVersion);
+
+            if (!ValidateTradeItem(itemId, out var def, out var itemFailure, out var itemMessage))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, itemFailure, itemMessage, stateVersion);
+
+            if (!ValidateFaction(factionId, out var factionFailure, out var factionMessage))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, factionFailure, factionMessage, stateVersion);
+
+            string canonical = ItemAliases.ToCanonical(itemId);
+            int currentlyHeld = GetHeld(canonical);
+            if (currentlyHeld < quantity)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_inventory", "trade.insufficient_inventory", stateVersion);
+
+            int gain = quantity * Math.Max(1, (int)def.TradeValue);
+            var deltas = new Dictionary<string, double>
+            {
+                { "value", gain },
+                { canonical, -quantity },
+                { "stock", quantity }
+            };
+
+            return CommandPreview.Available(
+                PlayerCommandCode.TradeConfirm,
+                stateVersion,
+                deltas,
+                isIrreversible: false,
+                messageKey: "trade.preview_sell");
+        }
+
+        /// <summary>
+        /// Execute a sell command using the same validation path as <see cref="PreviewSell"/>.
+        /// Stale previews (state version mismatch) are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteSell(string itemId, int quantity, string factionId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewSell(itemId, quantity, factionId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.TradeConfirm, preview.StateVersion, currentStateVersion);
+
+            var result = Sell(itemId, quantity, factionId);
+            if (!result.Success)
+                return new CommandResult(
+                    PlayerCommandCode.TradeConfirm,
+                    ActionResult.Failed(result.Failure.ToString(), "trade.sell_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            var deltas = new Dictionary<string, double>
+            {
+                { "value", result.TotalValue },
+                { result.ItemId, -result.Quantity },
+                { "stock", result.Quantity }
+            };
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.TradeConfirm,
+                ActionResult.Success("trade.sold", deltas),
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         public HoldfastTradeSaveState CaptureState()

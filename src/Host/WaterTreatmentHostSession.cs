@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.PlayerCommand;
 
 namespace AtomicWar.GodotApp
 {
@@ -45,36 +46,48 @@ namespace AtomicWar.GodotApp
             };
         }
 
-        public ActionResult StartFiltration(TreatmentMode mode, float amount)
+        public CommandResult StartFiltration(TreatmentMode mode, float amount)
         {
-            var res = System.StartTreatment(mode, amount);
-            if (res.IsSuccess)
+            var result = System.ExecuteStartTreatment(mode, amount, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
             {
                 LastEvent = $"Started {mode} processing {amount:F1}L water.";
                 RaiseStateChanged();
             }
-            return res;
+            else
+            {
+                LastEvent = $"Water treatment refused: {result.FailureCode}.";
+            }
+            return result;
         }
 
-        public ActionResult ReplaceFilter()
+        public CommandResult ReplaceFilter()
         {
-            var res = System.ReplaceFilter();
-            if (res.IsSuccess)
+            var result = System.ReplaceFilter();
+            if (result.IsSuccess)
             {
                 LastEvent = "Replaced sediment/charcoal filter membrane.";
                 RaiseStateChanged();
             }
-            return res;
+            return new CommandResult(
+                PlayerCommandCode.TreatmentReplaceFilter,
+                result,
+                StateVersion,
+                StateVersion);
         }
 
-        public ActionResult AddWater(WaterType type, float amount)
+        public CommandResult AddWater(WaterType type, float amount)
         {
-            var res = System.AddWater(type, amount);
-            if (res.IsSuccess)
+            var result = System.AddWater(type, amount);
+            if (result.IsSuccess)
             {
                 RaiseStateChanged();
             }
-            return res;
+            return new CommandResult(
+                PlayerCommandCode.TreatmentStart,
+                result,
+                StateVersion,
+                StateVersion);
         }
 
         public void TickDay(int day)

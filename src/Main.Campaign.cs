@@ -91,7 +91,7 @@ namespace AtomicWar.GodotApp
         private void SetupDailyBriefingModal()
         {
             if (_dailyBriefingModal != null) return;
-            _dailyBriefingModal = new DailyBriefingModal();
+            _dailyBriefingModal = PanelSceneLoader.Load<DailyBriefingModal>("res://assets/ui/modals/DailyBriefingModal.tscn");
             _dailyBriefingModal.OnAcknowledged += OnBriefingAcknowledged;
             AddChild(_dailyBriefingModal);
             _dailyBriefingModal.Hide();

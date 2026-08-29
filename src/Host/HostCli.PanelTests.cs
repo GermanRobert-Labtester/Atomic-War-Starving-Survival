@@ -412,11 +412,11 @@ namespace AtomicWar.GodotApp
             // Dispatch preparation: fuel gate blocks, then a full tank passes
             // and the sortie starts with the vehicle profile attached.
             session.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.fuel = 0.5f;
-            string refused = session.StartExpedition("survivor_a", target, ExpeditionStance.Stealth, vehicleId: ExpeditionHostSession.StarterVehicleId);
-            Check(refused.Contains("fuel", StringComparison.OrdinalIgnoreCase) && session.Engine.ActiveCount == 0,
+            var refused = session.StartExpedition("survivor_a", target, ExpeditionStance.Stealth, vehicleId: ExpeditionHostSession.StarterVehicleId);
+            Check(!refused.IsSuccess && session.Engine.ActiveCount == 0,
                 "V5: depleted fuel blocks dispatch with a refuel message.");
             session.Vehicles.Refuel(ExpeditionHostSession.StarterVehicleId, 60f);
-            string sent = session.DispatchSortie("survivor_a", target, ExpeditionStance.Stealth, 1, ExpeditionHostSession.StarterVehicleId);
+            var sent = session.DispatchSortie("survivor_a", target, ExpeditionStance.Stealth, 1, ExpeditionHostSession.StarterVehicleId);
             var active = session.Engine.Active["survivor_a"];
             Check(session.Engine.ActiveCount == 1 && active.vehicleId == ExpeditionHostSession.StarterVehicleId && active.vehicleSpeedMultiplier > 1f,
                 "V6: fueled dispatch starts a vehicle sortie with a speed profile.");
@@ -2659,8 +2659,8 @@ namespace AtomicWar.GodotApp
                 var target = expeditions.Definitions[0];
                 Check(target != null && target.id == "loc_the_allotments", "target is The Works Allotment Commune");
 
-                string startMsg = expeditions.StartExpedition("survivor_dr_sarah_chen", target!.id);
-                Check(expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
+                var startResult = expeditions.StartExpedition("survivor_dr_sarah_chen", target!.id);
+                Check(startResult.IsSuccess && expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
                 var activeExp = expeditions.Engine.Active["survivor_dr_sarah_chen"];
                 Check(activeExp != null && activeExp.phase == (int)ExpeditionPhase.Outbound, "expedition starts in Outbound phase");
 
@@ -2739,7 +2739,7 @@ namespace AtomicWar.GodotApp
 
                 // 5.5 Start craft → queue grows
                 int craftBandageBefore = craftInv.CountById("bandage");
-                string craftStartMsg = craftSession.Start("recipe_bandage");
+                var craftStartResult = craftSession.Start("recipe_bandage");
                 Check(craftSession.Engine.ActiveCraftCount == 1, "StartCraft queues one entry");
 
 
@@ -2748,8 +2748,8 @@ namespace AtomicWar.GodotApp
                 Check(mechAfter < 5, $"ingredient count decreased after start (was 5, now {mechAfter})");
 
                 // 5.7 Invalid recipe ID → Start returns error, queue unchanged
-                string badCraftMsg = craftSession.Start("recipe_does_not_exist");
-                Check(badCraftMsg != null && badCraftMsg.Length > 0, "invalid recipe ID returns non-empty error message");
+                var badCraftResult = craftSession.Start("recipe_does_not_exist");
+                Check(!badCraftResult.IsSuccess, "invalid recipe ID returns blocked/failed result");
                 Check(craftSession.Engine.ActiveCraftCount == 1, "invalid recipe does not grow queue");
 
 

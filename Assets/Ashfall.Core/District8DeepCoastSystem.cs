@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.PlayerCommand;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -399,6 +400,63 @@ namespace Ashfall.Core
         /// dock needs the structural bill paid; a damaged perimeter
         /// (salvage-immediate) forces a heavier scrap-only shoring bill first.
         /// </summary>
+        /// <summary>
+        /// Side-effect-free preview of a deep berth repair command.
+        /// Shares the same preconditions as <see cref="TryRepairDeepBerth"/>.
+        /// </summary>
+        public CommandPreview PreviewRepairDeepBerth(int day, long stateVersion = 0)
+        {
+            if (_state.berthRepaired)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairBerth, "already_repaired", "deepcoast.already_repaired", stateVersion);
+            if (_state.stage < (int)DeepCoastStage.DockAccessible)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairBerth, "stage_too_low", "deepcoast.stage_too_low", stateVersion);
+
+            var projected = new Dictionary<string, double>();
+            if (!_state.fleetLevyActive)
+            {
+                var bill = BerthRepairBill();
+                foreach (var kv in bill)
+                    projected[kv.Key] = -(double)kv.Value;
+            }
+            projected["structural_integrity"] = 100;
+
+            return CommandPreview.Available(
+                PlayerCommandCode.RepairBerth,
+                stateVersion,
+                projected,
+                isIrreversible: true,
+                messageKey: "deepcoast.preview_repair_berth");
+        }
+
+        /// <summary>
+        /// Execute a deep berth repair using the same preconditions as <see cref="PreviewRepairDeepBerth"/>.
+        /// Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteRepairDeepBerth(int day, Func<IReadOnlyDictionary<string, int>, bool> tryConsumeBill, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewRepairDeepBerth(day, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.RepairBerth, preview.StateVersion, currentStateVersion);
+
+            bool ok = TryRepairDeepBerth(day, tryConsumeBill);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.RepairBerth,
+                    ActionResult.Failed("execute_failed", "deepcoast.execute_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.RepairBerth,
+                ActionResult.Success("deepcoast.berth_repaired"),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
+
         public bool TryRepairDeepBerth(int day, Func<IReadOnlyDictionary<string, int>, bool> tryConsumeBill)
         {
             if (_state.berthRepaired) return false;

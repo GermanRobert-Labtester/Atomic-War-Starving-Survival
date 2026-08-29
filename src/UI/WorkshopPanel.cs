@@ -62,96 +62,29 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125 follow-up: layout chrome owned by
+            // res://assets/ui/panels/WorkshopPanel.tscn. SceneBinder resolves
+            // the typed unique-name slots; sibling bind logic is unchanged.
+            var binder = new SceneBinder(this, typeof(WorkshopPanel));
+            binder.Require<VBoxContainer>("RelicListContainer");
+            binder.Require<VBoxContainer>("DetailContainer");
+            binder.Require<Label>("JobHeader");
+            binder.Require<ProgressBar>("JobProgressBar");
+            binder.Require<Label>("JobDetails");
+            binder.Require<Button>("CancelJobButton");
+            binder.Require<Button>("CloseButton");
 
-            var root = new PanelContainer();
-            root.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(root);
+            _relicListContainer = binder.Get<VBoxContainer>("RelicListContainer");
+            _detailContainer = binder.Get<VBoxContainer>("DetailContainer");
+            _activeJobHeader = binder.Get<Label>("JobHeader");
+            _activeJobProgressBar = binder.Get<ProgressBar>("JobProgressBar");
+            _activeJobDetails = binder.Get<Label>("JobDetails");
+            _cancelJobButton = binder.Get<Button>("CancelJobButton");
+            binder.Get<Button>("CloseButton").Pressed += () => { Visible = false; OnClose?.Invoke(); };
 
-            var mainVBox = new VBoxContainer();
-            mainVBox.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
-            root.AddChild(mainVBox);
-
-            // Header
-            var headerHBox = new HBoxContainer();
-            headerHBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-
-            var title = new Label();
-            title.Text = "THE WORKSHOP // RELIC REVERSE ENGINEERING";
-            title.AddThemeFontSizeOverride("font_size", 20);
-            title.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
-            headerHBox.AddChild(title);
-
-            headerHBox.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
-
-            var closeBtn = new Button();
-            closeBtn.Text = " [X] CLOSE ";
-            closeBtn.Pressed += () => { Visible = false; OnClose?.Invoke(); };
-            headerHBox.AddChild(closeBtn);
-
-            mainVBox.AddChild(headerHBox);
-
-            // Active Job Card
-            var jobCard = new PanelContainer();
-            jobCard.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            var jobBox = new VBoxContainer();
-            jobBox.AddThemeConstantOverride("separation", 6);
-            jobCard.AddChild(jobBox);
-
-            _activeJobHeader = new Label();
+            // Default state strings match the previous panel-authored defaults.
             _activeJobHeader.Text = "WORKSHOP STATUS: IDLE";
-            _activeJobHeader.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
-            jobBox.AddChild(_activeJobHeader);
-
-            _activeJobProgressBar = new ProgressBar();
-            _activeJobProgressBar.MinValue = 0;
-            _activeJobProgressBar.MaxValue = 100;
-            _activeJobProgressBar.CustomMinimumSize = new Vector2(0, 18);
-            jobBox.AddChild(_activeJobProgressBar);
-
-            var jobFooter = new HBoxContainer();
-            _activeJobDetails = new Label();
             _activeJobDetails.Text = "No active reconstruction or teardown job.";
-            _activeJobDetails.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            jobFooter.AddChild(_activeJobDetails);
-
-            _cancelJobButton = new Button();
-            _cancelJobButton.Text = " ABORT JOB ";
-            _cancelJobButton.Pressed += OnCancelJobClicked;
-            jobFooter.AddChild(_cancelJobButton);
-
-            jobBox.AddChild(jobFooter);
-            mainVBox.AddChild(jobCard);
-
-            // Two-column layout: Left = Relic List, Right = Selected Relic Details
-            var bodyHBox = new HBoxContainer();
-            bodyHBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            bodyHBox.SizeFlagsVertical = SizeFlags.ExpandFill;
-            bodyHBox.AddThemeConstantOverride("separation", DesignTheme.SpacingLg);
-
-            // Left scroll
-            var leftScroll = new ScrollContainer();
-            leftScroll.CustomMinimumSize = new Vector2(400, 0);
-            leftScroll.SizeFlagsVertical = SizeFlags.ExpandFill;
-
-            _relicListContainer = new VBoxContainer();
-            _relicListContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            _relicListContainer.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-            leftScroll.AddChild(_relicListContainer);
-            bodyHBox.AddChild(leftScroll);
-
-            // Right scroll / detail
-            var rightScroll = new ScrollContainer();
-            rightScroll.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            rightScroll.SizeFlagsVertical = SizeFlags.ExpandFill;
-
-            _detailContainer = new VBoxContainer();
-            _detailContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            _detailContainer.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
-            rightScroll.AddChild(_detailContainer);
-            bodyHBox.AddChild(rightScroll);
-
-            mainVBox.AddChild(bodyHBox);
 
             RefreshView();
         }

@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp
             if (!System.IO.Directory.Exists(dataDir))
                 dataDir = System.IO.Path.Combine(System.AppContext.BaseDirectory, "Assets/StreamingAssets/Data");
 
-            _factionBranch = FactionBranchHostSession.CreateDefault(dataDir);
+            _factionBranch = FactionBranchHostSession.CreateDefault(dataDir, flags: _consequenceLedger);
             _factionBranch.StateChanged += () => _factionBranchDirty = true;
 
             if (_factionBranch.TryLoad())

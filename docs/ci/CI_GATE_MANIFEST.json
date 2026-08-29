@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 30,
-  "fast_tier_count": 30,
+  "total_gates": 32,
+  "fast_tier_count": 32,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -301,6 +301,26 @@
       "command": "bash scripts/ci/lfs-health-check.sh",
       "timeout_seconds": 30,
       "expected_summary": "GIT LFS HEALTH CHECK PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "legacy_asset_path",
+      "name": "Legacy Asset Path Gate (Ticket #124)",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/legacy-asset-path-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "Legacy Asset Path Gate PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "legacy_reference",
+      "name": "Legacy Reference Gate (Ticket #124)",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/legacy-reference-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "Legacy Reference Gate PASSED",
       "classification": "fast",
       "critical": true
     }

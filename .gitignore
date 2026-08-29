@@ -243,3 +243,9 @@ codex_alt_*.png
 
 # Snapshot diff captures (scratch — never commit)
 /snapshot-capture/
+
+# Ticket #127 content-utilization artifacts (runtime reports regenerated
+# each --content-utilization-selftest run). The baseline is committed so
+# the CI orphan-regression gate has a stable seed across clones.
+/artifacts/content-utilization.json
+/artifacts/content-utilization.md

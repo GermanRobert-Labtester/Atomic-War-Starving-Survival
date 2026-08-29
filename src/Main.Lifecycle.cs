@@ -43,7 +43,6 @@ namespace AtomicWar.GodotApp
                 onReset: () =>
                 {
                     _survivors = null!;
-                    _survivorsDirty = false;
                 }));
 
             // Inventory
@@ -54,7 +53,6 @@ namespace AtomicWar.GodotApp
                 onReset: () =>
                 {
                     _inventory = null!;
-                    _inventoryDirty = false;
                 }));
 
             // Duty Roster
@@ -278,6 +276,20 @@ namespace AtomicWar.GodotApp
                 dependsOn: new[] { "survivors", "inventory", "world_weather" },
                 saveSectionKey: "expanded_shelter",
                 onReset: ResetExpandedShelterSessions));
+
+            // First-Hour Onboarding Journey (Task 120)
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "onboarding",
+                dependsOn: Array.Empty<string>(),
+                saveSectionKey: "onboarding",
+                onReset: () =>
+                {
+                    _onboardingJourney = null!;
+                    _onboardingDirty = false;
+                    if (_onboardingHintPanel != null && _onboardingHintPanel.IsInsideTree())
+                        RemoveChild(_onboardingHintPanel);
+                    _onboardingHintPanel = null!;
+                }));
         }
 
         /// <summary>

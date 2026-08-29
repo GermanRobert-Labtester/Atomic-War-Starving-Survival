@@ -153,6 +153,7 @@ namespace AtomicWar.GodotApp
             SetupExpansions();
             SetupGreenhouse();
             SetupExpandedShelterSystems();
+            SetupOnboarding();
 
             UpdateHud();
         }
@@ -193,25 +194,6 @@ namespace AtomicWar.GodotApp
             _statusLabel.Text = "Save loaded. The ledger continues.";
         }
 
-        /// <summary>Remove the holdfast base + trade saves (and backup) so a
-        /// completed run cannot be continued into an immediate game-over loop.
-        /// With the envelope-primary save the authoritative copy is the active
-        /// slot's campaign envelope, so that (and its backup) goes too.</summary>
-        private void ClearContinuableSaves()
-        {
-            if (System.IO.File.Exists(HoldfastSaveStore.SavePath))
-                System.IO.File.Delete(HoldfastSaveStore.SavePath);
-            if (System.IO.File.Exists(HoldfastTradeSaveStore.SavePath))
-                System.IO.File.Delete(HoldfastTradeSaveStore.SavePath);
-            if (System.IO.File.Exists(HoldfastTradeSaveStore.BackupPath))
-                System.IO.File.Delete(HoldfastTradeSaveStore.BackupPath);
-
-            if (_saveLoadHost?.ActiveSlotId != null)
-            {
-                _saveLoadHost.ClearActiveSlotEnvelope();
-            }
-        }
-
         private void SaveAll() => SaveAll(playCue: true);
 
         private void SaveAll(bool playCue)
@@ -249,6 +231,7 @@ namespace AtomicWar.GodotApp
             SavePowerGrid();
             SaveMedicalWard();
             SaveMemorial();
+            SaveOnboarding();
             // ── Audit-PR triad repairs ───────────────────────────────────
             SaveSilentFoundry();
             SaveDisease();
@@ -257,6 +240,7 @@ namespace AtomicWar.GodotApp
             // ─────────────────────────────────────────────────────────────
             SaveAllExpandedShelterSystems();
             SaveSurvivorSocial();
+            SaveSurvivorFate();
             SaveCampaignDay();
             if (playCue)
                 _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);

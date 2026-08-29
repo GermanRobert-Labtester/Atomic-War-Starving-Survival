@@ -103,7 +103,7 @@ namespace AtomicWar.GodotApp
         {
             clock = clock ?? new ClockSimClock();
             bus = bus ?? new SimpleEventBus();
-            flags = flags ?? new InMemoryFlagLedger();
+            flags = flags ?? new Ashfall.Core.Flags.CampaignConsequenceLedger();
             radioRng = radioRng ?? new SeededRng(8841209);
 
             var locations = VerdictCatalogLoader.LoadLocations(dataDir, s_files, s_json);

@@ -1,0 +1,161 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1safe_crack_modal_ashfall"]
+
+[ext_resource type="Script" path="res://src/UI/SafeCrackModalContent.cs" id="1_safe_content"]
+
+[node name="SafeCrackContent" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Root" type="VBoxContainer" parent="Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HeaderLabel" type="Label" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SAFE CRACKING"
+theme_override_font_sizes/font_size = 20
+
+[node name="Sep1" type="HSeparator" parent="Margin/Root"]
+layout_mode = 2
+
+[node name="SafeInfoLabel" type="Label" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Safe: —"
+autowrap_mode = 3
+
+[node name="DifficultyLabel" type="Label" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Difficulty: —"
+
+[node name="AttemptsLabel" type="Label" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Attempts: —"
+
+[node name="NoiseLabel" type="Label" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Noise: —"
+
+[node name="ToolLabel" type="Label" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tool Condition: —"
+
+[node name="Sep2" type="HSeparator" parent="Margin/Root"]
+layout_mode = 2
+
+[node name="GuessRow" type="HBoxContainer" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GuessPrompt" type="Label" parent="Margin/Root/GuessRow"]
+layout_mode = 2
+text = "Guess: "
+
+[node name="Tumbler0" type="SpinBox" parent="Margin/Root/GuessRow"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 9.0
+value = 0.0
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tumbler1" type="SpinBox" parent="Margin/Root/GuessRow"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 9.0
+value = 0.0
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tumbler2" type="SpinBox" parent="Margin/Root/GuessRow"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 9.0
+value = 0.0
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tumbler3" type="SpinBox" parent="Margin/Root/GuessRow"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 9.0
+value = 0.0
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tumbler4" type="SpinBox" parent="Margin/Root/GuessRow"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 9.0
+value = 0.0
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tumbler5" type="SpinBox" parent="Margin/Root/GuessRow"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 9.0
+value = 0.0
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FeedbackLabel" type="Label" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LootLabel" type="Label" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Sep3" type="HSeparator" parent="Margin/Root"]
+layout_mode = 2
+
+[node name="ButtonRow" type="HBoxContainer" parent="Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AttemptButton" type="Button" parent="Margin/Root/ButtonRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Attempt"
+
+[node name="AccessibleButton" type="Button" parent="Margin/Root/ButtonRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Accessible Attempt"
+
+[node name="TransferLootButton" type="Button" parent="Margin/Root/ButtonRow"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Transfer Loot"
+
+[node name="AbandonButton" type="Button" parent="Margin/Root/ButtonRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Abandon"

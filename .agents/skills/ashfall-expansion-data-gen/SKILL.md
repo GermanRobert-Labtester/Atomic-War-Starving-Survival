@@ -1,3 +1,8 @@
+---
+name: ashfall-expansion-data-gen
+description: Bulk-generates 20–50 JSON data entries for expansion domains from CSV prompts and validates them with --data-integrity-selftest.
+---
+
 # ASHFALL Expansion System Skill: ashfall-expansion-data-gen
 
 ## Overview

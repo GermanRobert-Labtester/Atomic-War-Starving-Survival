@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.StartingLevel;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.YearOfAsh;
@@ -66,6 +67,17 @@ namespace AtomicWar.GodotApp
                 RaiseStateChanged();
             }
             return res;
+        }
+
+        public CommandResult RepairPipe(string pipeId, float repairAmount = 20f)
+        {
+            var result = System.ExecuteRepairPipe(pipeId, repairAmount, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (result.IsSuccess)
+            {
+                LastEvent = $"Pipe repaired: {result.FailureCode}";
+                RaiseStateChanged();
+            }
+            return result;
         }
 
         public void TickDay(int day)

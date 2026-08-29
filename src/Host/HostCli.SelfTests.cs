@@ -370,7 +370,7 @@ namespace AtomicWar.GodotApp
                 // 4. Fleet clears the route for free.
                 Check(host.ClearPerimeter(182).Contains("open"), "fleet clears the perimeter free");
                 Check(host.ClearChannel(183).Contains("reachable"), "fleet cuts the channel free");
-                Check(host.RepairBerth(184).Contains("operational"), "fleet stands the berth up free");
+                Check(host.RepairBerth(184).MessageKey.Contains("operational"), "fleet stands the berth up free");
                 Check(host.DeepCoast.Stage == DeepCoastStage.DeepBerthOperational, "berth operational");
                 Check(host.DockExpeditionAvailable, "dock expedition available once accessible");
 
@@ -537,7 +537,7 @@ namespace AtomicWar.GodotApp
             {
                 var clock = new Ashfall.Core.Clock.SimClock();
                 var bus = new SimpleEventBus();
-                var flags = new InMemoryFlagLedger();
+                var flags = new Ashfall.Core.Flags.CampaignConsequenceLedger();
                 var rng = new SeededRng(8841209);
 
                 var machineLog = new MachineLogSystem();

@@ -88,7 +88,9 @@ namespace Ashfall.Core.Save
             new("mental_health_crisis", "SaveMentalHealthCrisis", "SetupMentalHealthCrisis", "psychology", "Psychological trauma and psych ward"),
             new("shelter_assignment", "SaveShelterAssignment", "SetupShelterAssignment", "shelter", "Room assignments and living quarters"),
             new("survivor_social", "SaveSurvivorSocial", "SetupSurvivorSocial", "social", "Leadership, friction, ration conflict, trauma bonds, skill atrophy"),
-            new("weight_of_choices", "SaveFactionBranch", "SetupFactionBranch", "factions", "Weight of choices faction branch progression and PoNR commitments")
+            new("survivor_fate", "SaveSurvivorFate", "SetupSurvivorFate", "memorial", "Unified survivor-death ledger: one immutable fate record per deceased survivor"),
+            new("weight_of_choices", "SaveFactionBranch", "SetupFactionBranch", "factions", "Weight of choices faction branch progression and PoNR commitments"),
+            new("onboarding", "SaveOnboarding", "SetupOnboarding", "onboarding", "First-hour onboarding journey progress, dismissed hints, assistance level, completion")
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -165,7 +167,9 @@ namespace Ashfall.Core.Save
                 { "mental_health_crisis", "mental_health_crisis_save.json" },
                 { "shelter_assignment", "shelter_assignment_save.json" },
                 { "survivor_social", "survivor_social_save.json" },
+                { "survivor_fate", "survivor_fate_save.json" },
                 { "weight_of_choices", "weight_of_choices_save.json" },
+                { "onboarding", "onboarding_save.json" },
             };
 
         /// <summary>

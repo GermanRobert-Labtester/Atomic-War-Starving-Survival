@@ -120,9 +120,11 @@ namespace AtomicWar.GodotApp
         SaveStoreChecksumSelfTest,
         SevenDayDeterministicSmokeSelfTest,
         UiAccessibilitySelfTest,
+        SceneBindingSelfTest,
         UiSnapshotSelfTest,
         UiSnapshotRegenerate,
         OnboardingJourneySelfTest,
+        ContentUtilizationSelfTest,
         SelfTestManifest,
         ListSelfTests
     }
@@ -184,6 +186,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ShelterHazardLoopSelfTest;
             if (Has(args, "--ui-layout-selftest") || Has(args, "--layout-selftest"))
                 return HostCliAction.UiLayoutSelfTest;
+            if (Has(args, "--content-utilization-selftest") || Has(args, "--content-utilization"))
+                return HostCliAction.ContentUtilizationSelfTest;
             if (Has(args, "--settings-selftest") || Has(args, "--settings-test"))
                 return HostCliAction.SettingsSelfTest;
             if (Has(args, "--playable-shell-selftest") || Has(args, "--shell-selftest") || Has(args, "--playable-loop-selftest"))
@@ -362,6 +366,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.SevenDayDeterministicSmokeSelfTest;
             if (Has(args, "--ui-accessibility-selftest") || Has(args, "--ui-access-selftest") || Has(args, "--accessibility-selftest"))
                 return HostCliAction.UiAccessibilitySelfTest;
+            if (Has(args, "--scene-binding-selftest") || Has(args, "--scene-bindings-selftest"))
+                return HostCliAction.SceneBindingSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -381,6 +387,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --panel-bind-lifecycle-selftest / --panel-bind-selftest / --panel-lifecycle-selftest Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch");
             GD.Print("  --save-load-ui-failure-selftest / --save-load-failure-selftest / --save-load-failure-uitest / --save-load-selftest Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact");
             GD.Print("  --save-store-checksum-selftest / --save-store-checksums-selftest / --checksum-sweep-selftest Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)");
+            GD.Print("  --scene-binding-selftest / --scene-bindings-selftest Headless-instantiate every registered production scene and validate each unique_name_in_owner binding contract (Ticket #125 scene-ownership gate); exits 0 when all required nodes resolve with the expected Godot types");
+            GD.Print("  --content-utilization-selftest / --content-utilization Scan every JSON catalog under StreamingAssets/Data, classify each by reachable consumer (gameplay / UI / codex / orphan), write artifacts/content-utilization.{json,md}, and run the CI gate against artifacts/content-utilization-baseline.json (Ticket #127 content-runtime gate)");
             GD.Print("  --standalone-selftest    SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance");
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
