@@ -9,11 +9,15 @@ Usage:
   python3 scripts/ci/agent-fast-verify.py --domain persistence
   python3 scripts/ci/agent-fast-verify.py --domain data
   python3 scripts/ci/agent-fast-verify.py --domain ui
+  python3 scripts/ci/agent-fast-verify.py --domain expansion
+  python3 scripts/ci/agent-fast-verify.py --domain audio
+  python3 scripts/ci/agent-fast-verify.py --domain schema
+  python3 scripts/ci/agent-fast-verify.py --domain smoke
   python3 scripts/ci/agent-fast-verify.py --domain core
   python3 scripts/ci/agent-fast-verify.py --domain docs
   python3 scripts/ci/agent-fast-verify.py --domain fast
   python3 scripts/ci/agent-fast-verify.py --domain all
-  python3 scripts/ci/agent-fast-verify.py --domain persistence --json
+  python3 scripts/ci/agent-fast-verify.py --list-domains
 """
 
 import sys
@@ -31,6 +35,7 @@ DOMAIN_GATES = {
         {"name": "SaveStoreChecksumSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--save-store-checksum-selftest"]},
         {"name": "SaveLoadUiFailureSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--save-load-ui-failure-selftest"]},
         {"name": "SaveStoreCoverageTests", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "FullyQualifiedName~SaveStore"]},
+        {"name": "CampaignEnvelopeFuzzTests", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "CampaignEnvelopeFuzzTests"]},
     ],
     "data": [
         {"name": "DataIntegritySelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--data-integrity-selftest"]},
@@ -52,6 +57,17 @@ DOMAIN_GATES = {
         {"name": "SilentFoundrySelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--silent-foundry-selftest"]},
         {"name": "ExpansionsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-expansions-catalog.py", "--check"]},
     ],
+    "audio": [
+        {"name": "AudioCueIntegrity", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "AudioCueIntegrityTests"]},
+        {"name": "AudioCatalogDrift", "cmd": ["python3", "scripts/ci/generate-audio-catalog.py", "--check"]},
+        {"name": "AudioEventTests", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "AudioEventIntegrationTests"]},
+    ],
+    "schema": [
+        {"name": "JsonSchemaPolicyGate", "cmd": ["python3", "scripts/ci/json-schema-policy-gate.py"]},
+        {"name": "PersistentFilenameGate", "cmd": ["python3", "scripts/ci/persistent-filename-gate.py"]},
+        {"name": "CatalogRegistryDrift", "cmd": ["python3", "scripts/ci/generate-catalog-registry.py", "--check"]},
+        {"name": "AgentSkillsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-agent-skills-catalog.py", "--check"]},
+    ],
     "smoke": [
         {"name": "SevenDaySmokeSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--7-day-smoke-selftest"]},
         {"name": "PlayableShellSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--playable-shell-selftest"]},
@@ -67,6 +83,8 @@ DOMAIN_GATES = {
         {"name": "DocLinkPortability", "cmd": ["python3", "scripts/ci/normalize-doc-links.py", "--check"]},
         {"name": "AgentRuleIntegrity", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "AgentRuleIntegrityTests"]},
         {"name": "AgentRulebooksSync", "cmd": ["python3", "scripts/ci/sync-agent-rulebooks.py", "--check"]},
+        {"name": "AgentSkillsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-agent-skills-catalog.py", "--check"]},
+        {"name": "AudioCatalogDrift", "cmd": ["python3", "scripts/ci/generate-audio-catalog.py", "--check"]},
     ],
     "fast": [
         {"name": "SceneLint", "cmd": ["python3", "scripts/ci/scene-lint.py"]},
@@ -77,6 +95,8 @@ DOMAIN_GATES = {
         {"name": "CatalogRegistryDrift", "cmd": ["python3", "scripts/ci/generate-catalog-registry.py", "--check"]},
         {"name": "UiPanelCatalogDrift", "cmd": ["python3", "scripts/ci/generate-ui-panel-catalog.py", "--check"]},
         {"name": "ExpansionsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-expansions-catalog.py", "--check"]},
+        {"name": "AudioCatalogDrift", "cmd": ["python3", "scripts/ci/generate-audio-catalog.py", "--check"]},
+        {"name": "AgentSkillsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-agent-skills-catalog.py", "--check"]},
     ]
 }
 
@@ -101,96 +121,136 @@ def run_gate(gate_info, timeout_sec=180):
         return {
             "name": name,
             "cmd": " ".join(cmd),
-            "exit_code": 124,
+            "exit_code": -1,
             "status": "TIMEOUT",
             "duration_sec": round(elapsed, 2),
             "stdout": "",
-            "stderr": f"Command timed out after {timeout_sec}s (Rule 7 escalation required)."
+            "stderr": f"Gate timed out after {timeout_sec}s"
         }
-    except Exception as e:
+    except Exception as ex:
         elapsed = time.time() - start
         return {
             "name": name,
             "cmd": " ".join(cmd),
-            "exit_code": 1,
+            "exit_code": -1,
             "status": "ERROR",
             "duration_sec": round(elapsed, 2),
             "stdout": "",
-            "stderr": str(e)
+            "stderr": str(ex)
         }
 
-def write_failure_artifact(artifact_path, failed_results, total_count, domain):
-    p = pathlib.Path(artifact_path)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    report = {
-        "domain": domain,
-        "total_gates": total_count,
-        "failed_count": len(failed_results),
-        "failures": failed_results
+def list_domains():
+    print("=============================================================================")
+    print("  ASHFALL FAST-VERIFY DOMAIN REGISTRY")
+    print("=============================================================================")
+    print(f"{'Domain':<16} {'Gates':<8} {'Typical Est.':<14} {'Description'}")
+    print("-----------------------------------------------------------------------------")
+    desc_map = {
+        "persistence": "Save stores, campaign envelope fuzzing & checksums",
+        "data": "Data authority catalogs, utilization & registry drift",
+        "ui": "Scene unique-name contracts, UI accessibility & scene lint",
+        "expansion": "Expansions 01-11 completeness & domain self-tests",
+        "audio": "Audio cue catalog integrity & audio event tests",
+        "schema": "JSON schema policy, catalog & skill registry drift",
+        "smoke": "7-Day deterministic replay & playable shell smoke",
+        "core": "Host compilation & xUnit Core test suite",
+        "docs": "Documentation index, links & agent rulebooks",
+        "fast": "Lightweight drift & linter pre-flight suite",
+        "all": "Full union of all domain verification gates",
     }
-    p.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    for d, gates in DOMAIN_GATES.items():
+        cnt = len(gates)
+        est = "~2-5s" if cnt < 5 else "~10-25s"
+        desc = desc_map.get(d, "Domain verification gates")
+        print(f"{d:<16} {cnt:<8} {est:<14} {desc}")
+    print(f"{'all':<16} {'~30':<8} {'~30-50s':<14} {'Full union of all domain verification gates'}")
+    print("=============================================================================\n")
 
 def main():
     parser = argparse.ArgumentParser(description="Domain-Aware Fast Verification Runner")
-    parser.add_argument("--domain", choices=["persistence", "data", "ui", "expansion", "smoke", "core", "docs", "fast", "all"], default="fast", help="Target domain")
+    parser.add_argument("--domain", "-d", choices=list(DOMAIN_GATES.keys()) + ["all"], default="fast",
+                        help="Target domain to verify (default: fast)")
     parser.add_argument("--json", action="store_true", help="Output results in JSON format")
-    parser.add_argument("--timeout", type=int, default=180, help="Default command timeout in seconds (default 180s)")
-    parser.add_argument("--fail-artifact", type=str, default="", help="Path to write failure artifact JSON if any gate fails")
+    parser.add_argument("--fail-artifact", help="Write failure details to a markdown artifact on failure")
+    parser.add_argument("--list-domains", action="store_true", help="List all available verification domains")
+    parser.add_argument("--timeout", type=int, default=180, help="Per-gate timeout in seconds (Rule 7: 180s default)")
+
     args = parser.parse_args()
 
-    targets = []
+    if args.list_domains:
+        list_domains()
+        sys.exit(0)
+
     if args.domain == "all":
+        # Deduplicated ordered list of all gates across all domains
         seen = set()
-        for dom, gates in DOMAIN_GATES.items():
-            if dom == "fast": continue
-            for g in gates:
+        gates_to_run = []
+        for d in ["persistence", "data", "ui", "expansion", "audio", "schema", "smoke", "core", "docs"]:
+            for g in DOMAIN_GATES[d]:
                 if g["name"] not in seen:
-                    targets.append(g)
                     seen.add(g["name"])
+                    gates_to_run.append(g)
     else:
-        targets = DOMAIN_GATES.get(args.domain, [])
+        gates_to_run = DOMAIN_GATES[args.domain]
 
     if not args.json:
         print(f"=== ASHFALL Agent Fast-Verify [{args.domain.upper()}] ===")
-        print(f"Running {len(targets)} verification gates (timeout: {args.timeout}s)...\n")
+        print(f"Running {len(gates_to_run)} verification gates (timeout: {args.timeout}s)...\n")
 
     results = []
-    overall_pass = True
+    failed_count = 0
 
-    for gate in targets:
+    for g in gates_to_run:
         if not args.json:
-            print(f"▶ [{gate['name']}] ... ", end="", flush=True)
-        res = run_gate(gate, timeout_sec=args.timeout)
+            print(f"▶ [{g['name']}] ... ", end="", flush=True)
+
+        res = run_gate(g, timeout_sec=args.timeout)
         results.append(res)
+
         if res["status"] != "PASS":
-            overall_pass = False
+            failed_count += 1
             if not args.json:
                 print(f"FAILED ({res['duration_sec']}s)")
-                if res['stderr']:
-                    print(f"  Error: {res['stderr']}")
+                err_msg = res["stderr"] or res["stdout"]
+                if err_msg:
+                    snippet = err_msg.splitlines()[-3:] if len(err_msg.splitlines()) > 3 else err_msg.splitlines()
+                    print(f"  Error: {' '.join(snippet)}")
         else:
             if not args.json:
                 print(f"PASS ({res['duration_sec']}s)")
 
-    if not overall_pass and args.fail_artifact:
-        failed = [r for r in results if r["status"] != "PASS"]
-        write_failure_artifact(args.fail_artifact, failed, len(results), args.domain)
+    is_success = failed_count == 0
 
     if args.json:
-        output = {
+        output_payload = {
             "domain": args.domain,
-            "total_gates": len(results),
-            "passed": sum(1 for r in results if r["status"] == "PASS"),
-            "failed": sum(1 for r in results if r["status"] != "PASS"),
-            "overall_status": "PASS" if overall_pass else "FAIL",
+            "status": "PASS" if is_success else "FAIL",
+            "total": len(gates_to_run),
+            "passed": len(gates_to_run) - failed_count,
+            "failed": failed_count,
             "results": results
         }
-        print(json.dumps(output, indent=2))
+        print(json.dumps(output_payload, indent=2))
     else:
-        passed_cnt = sum(1 for r in results if r["status"] == "PASS")
-        print(f"\nSummary: {passed_cnt}/{len(results)} gates passed. Overall: {'PASS' if overall_pass else 'FAIL'}")
+        print(f"\nSummary: {len(gates_to_run) - failed_count}/{len(gates_to_run)} gates passed. Overall: {'PASS' if is_success else 'FAIL'}\n")
 
-    sys.exit(0 if overall_pass else 1)
+    if not is_success and args.fail_artifact:
+        fail_path = pathlib.Path(args.fail_artifact)
+        fail_path.parent.mkdir(parents=True, exist_ok=True)
+        lines = [f"# Fast-Verify [{args.domain.upper()}] Failure Report\n"]
+        for r in results:
+            if r["status"] != "PASS":
+                lines.append(f"## ❌ {r['name']}")
+                lines.append(f"- **Command:** `{r['cmd']}`")
+                lines.append(f"- **Duration:** {r['duration_sec']}s")
+                lines.append(f"- **Exit Code:** {r['exit_code']}\n")
+                lines.append("```text")
+                lines.append(r["stderr"] or r["stdout"] or "No error output")
+                lines.append("```\n")
+        fail_path.write_text("\n".join(lines), encoding="utf-8")
+        print(f"Wrote failure artifact to {fail_path}")
+
+    sys.exit(0 if is_success else 1)
 
 if __name__ == "__main__":
     main()

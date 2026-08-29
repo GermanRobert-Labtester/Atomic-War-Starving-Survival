@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 128 | **Last Verified:** 2026-08-29
+**Total Indexed Documents:** 130 | **Last Verified:** 2026-08-29
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 123 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 125 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 1 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 4 |
 
@@ -171,7 +171,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (34 documents)
+## 9. General Project Guides & Archive Reference (36 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -199,6 +199,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/HoldfastPlaytestHandoff.md`](HoldfastPlaytestHandoff.md) | **Holdfast Playtest Handoff** — **Environment:** Desktop Godot 4.7.1+ (.NET), display available (`$DISPLAY=:0`). |
 | 🟢 `CURRENT` | [`docs/MORAL_CHOICE_SYSTEM.md`](MORAL_CHOICE_SYSTEM.md) | **ASHFALL: ATOMIC WAR - MORAL CHOICE SYSTEM** — *60 Quests, 8 Branching Paths, World Impact Without UI Clutter* |
 | 🟢 `CURRENT` | [`docs/agents/AGENTS_SYNC_REPORT.md`](agents/AGENTS_SYNC_REPORT.md) | **ASHFALL Agent-Rulebook Synchronization Report** — **Canonical source:** `AGENTS.md`<br> |
+| 🟢 `CURRENT` | [`docs/agents/AGENT_SKILLS_INDEX.md`](agents/AGENT_SKILLS_INDEX.md) | **ASHFALL Multi-Agent Skills Registry & Taxonomy Index** — **Total Registered Skills:** `79`<br> |
+| 🟢 `CURRENT` | [`docs/audio/AUDIO_CUE_CATALOG.md`](audio/AUDIO_CUE_CATALOG.md) | **ASHFALL Audio Cue Architecture Catalog** — **Total Registered Cues:** `49`<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-08-29<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`mistral_plans/AGENTS.mistral-plans.md`](../mistral_plans/AGENTS.mistral-plans.md) | **PROJECT: ASHFALL (working title) — 2D Atomic-War Survival** — Original 2D survival-management game set after a nuclear exchange. Inspired by the survival-management genre; do **no... |

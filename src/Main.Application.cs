@@ -117,6 +117,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.SaveStoreChecksumSelfTest:
                     GetTree().Quit(HostCli.RunSaveStoreChecksumSelfTest(_dataDir));
                     return;
+                case HostCliAction.RuntimeScaleSelfTest:
+                    GetTree().Quit(HostCli.RunRuntimeScaleSelfTest(_dataDir));
+                    return;
                 case HostCliAction.SevenDayDeterministicSmokeSelfTest:
                     GetTree().Quit(HostCli.RunSevenDayDeterministicSmokeSelfTest(_dataDir));
                     return;

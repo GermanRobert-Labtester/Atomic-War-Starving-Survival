@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 38,
-  "fast_tier_count": 38,
+  "total_gates": 42,
+  "fast_tier_count": 42,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -379,6 +379,46 @@
       "name": "UI Scene Unique Node Contract Test Gate (xUnit)",
       "category": "Build & Tests",
       "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter UiPanelContractTests --nologo",
+      "timeout_seconds": 60,
+      "expected_summary": "Passed!",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "audio_catalog_drift",
+      "name": "Audio Cue Catalog Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-audio-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "AUDIO_CUE_CATALOG.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "agent_skills_catalog_drift",
+      "name": "Multi-Agent Skills Index Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-agent-skills-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "AGENT_SKILLS_INDEX.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "audio_cue_integrity_gate",
+      "name": "Audio Cue Static Contract & Bus Gate (xUnit)",
+      "category": "Build & Tests",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter AudioCueIntegrityTests --nologo",
+      "timeout_seconds": 60,
+      "expected_summary": "Passed!",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "campaign_envelope_fuzz_test",
+      "name": "Campaign Envelope Fuzzing & Mutation Gate (xUnit)",
+      "category": "Build & Tests",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter CampaignEnvelopeFuzzTests --nologo",
       "timeout_seconds": 60,
       "expected_summary": "Passed!",
       "classification": "fast",
