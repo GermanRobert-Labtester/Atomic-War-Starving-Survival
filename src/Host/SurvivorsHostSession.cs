@@ -376,6 +376,20 @@ namespace AtomicWar.GodotApp
         public void RestoreSave(SurvivorsSaveState save)
         {
             if (save == null || save.survivors == null) return;
+
+            // Defect D1: clearing RosterState drops the host's references but does
+            // NOT remove them from the Needs simulation, so the previous campaign's
+            // states stayed registered as ghosts. A ghost kept decaying and could
+            // reach 0 HP, raising OnDied and reporting the death of a survivor who
+            // is alive in the loaded campaign. Unregister before dropping the
+            // references — the same order SevenDayDeterministicSmokeTest already
+            // uses. NeedsSystem.Register now also evicts by id as a second line of
+            // defence, so a future caller cannot recreate this.
+            for (int i = 0; i < RosterState.Count; i++)
+            {
+                if (RosterState[i] != null) Needs.Unregister(RosterState[i]);
+            }
+
             RosterState.Clear();
             _radStates.Clear();
             foreach (var slice in save.survivors)

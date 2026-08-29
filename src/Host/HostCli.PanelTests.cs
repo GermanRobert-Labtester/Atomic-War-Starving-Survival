@@ -690,6 +690,63 @@ namespace AtomicWar.GodotApp
                 GD.Print("[FAIL] save/load round-trip probe threw: " + e.Message);
                 pass = false;
             }
+            try
+            {
+                // Defect D1 (Task #132 P1-A): RestoreSave must not leave the previous
+                // campaign's needs states registered in the simulation. A leaked
+                // ghost keeps decaying and can reach 0 HP, raising OnDied and
+                // reporting the death of a survivor who is alive in the loaded save.
+                // Core covers the mechanism; this covers the real host path, which
+                // Ashfall.Core.Tests cannot reach.
+                var session = new SurvivorsHostSession();
+                session.SeedDemoRoster();
+                int rosterSize = session.RosterState.Count;
+
+                const string probeId = "survivor_dr_sarah_chen";
+                var preRestore = session.Find(probeId);
+                var saved = session.CaptureSave();
+
+                // Push the soon-to-be-stale object to the edge of death.
+                if (preRestore != null)
+                {
+                    preRestore.Health = 0.2f;
+                    preRestore.Hunger = 99f;
+                    preRestore.Thirst = 99f;
+                }
+
+                int spuriousDeaths = 0;
+                string deadId = string.Empty;
+                session.OnSurvivorDied += (id, cause, detail) => { spuriousDeaths++; deadId = id; };
+
+                session.RestoreSave(saved);
+
+                bool noGhosts = session.Needs.RegisteredCount == rosterSize;
+                GD.Print(noGhosts
+                    ? $"[PASS] D1: restore leaves one needs state per survivor ({session.Needs.RegisteredCount} for {rosterSize})"
+                    : $"[FAIL] D1: restore leaked needs registrations ({session.Needs.RegisteredCount} registered for {rosterSize} survivors)");
+                pass &= noGhosts;
+
+                var afterRestore = session.Needs.Get(probeId);
+                bool ghostEvicted = afterRestore != null && !ReferenceEquals(afterRestore, preRestore);
+                GD.Print(ghostEvicted
+                    ? "[PASS] D1: needs lookup resolves to the restored state, not the pre-restore object"
+                    : "[FAIL] D1: needs lookup still resolves to the pre-restore object");
+                pass &= ghostEvicted;
+
+                // Advance well past the point the stale object would have died.
+                session.TickHour(24f);
+
+                bool noSpuriousDeath = spuriousDeaths == 0 && session.Find(probeId)?.IsAliveState == true;
+                GD.Print(noSpuriousDeath
+                    ? "[PASS] D1: no stale-object death reported for a survivor alive in the restored save"
+                    : $"[FAIL] D1: {spuriousDeaths} death(s) reported after restore (id='{deadId}')");
+                pass &= noSpuriousDeath;
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] D1 stale-restore probe threw: " + e.Message);
+                pass = false;
+            }
             return EmitSummary("survivors_selftest", pass, pass ? 0 : 1);
         }
 
