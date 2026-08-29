@@ -138,3 +138,84 @@ git worktree remove --force /tmp/wt
 Note that a fresh worktree is a poor environment for the full suite:
 `test_core_suite` and `godot_import` exceed their manifest timeouts on a
 cold build, and the drift gates regenerate against different state.
+
+
+---
+
+## Addendum — a fourth false-green mechanism (found during P1-A)
+
+**Godot self-tests silently run a stale binary when the build fails.**
+
+`godot --headless --path . -- --<gate>` loads
+`.godot/mono/temp/bin/Debug/Ashfall.dll`. If `dotnet build Ashfall.csproj`
+fails, that DLL is simply left at its last successful build, and the gate runs
+happily against old code and reports PASS.
+
+Observed directly:
+
+```
+host compile errors: 6
+stale dll timestamp: 22:41:42
+now:                 22:57:25
+gate says: [HOST_SELFTEST] bridge_selftest PASS
+gate says: [HOST_SELFTEST_SUMMARY] ... status=PASS exit_code=0
+```
+
+A gate reporting PASS 16 minutes after the code stopped compiling is not
+evidence of anything.
+
+### Consequence for every verification claim
+
+A host self-test result is meaningless unless the build that preceded it
+succeeded. Always assert the build first:
+
+```bash
+dotnet build Ashfall.csproj --nologo || { echo "BUILD FAILED — gate results are stale"; exit 1; }
+godot --headless --path . -- --survivors-selftest
+```
+
+`scripts/ci/run-gates.py` happens to be safe here because
+`build_godot_host` is gate 5 and runs before the host gates — but only when the
+suite is run in full. Running a single host gate with `--gate <id>` does **not**
+rebuild first, so a single-gate invocation can report PASS off stale bytes.
+
+### Recommended hardening (not implemented — outside Task #132)
+
+Either make each host gate depend on a successful `build_godot_host`, or have
+the host print and the runner verify a build fingerprint. Filed as a validation
+finding rather than fixed, because it changes gate infrastructure rather than
+survivor code.
+
+---
+
+## Addendum — working tree instability during P1-A
+
+At the start of P1-A the working tree carried seven uncommitted Task #131 files.
+Partway through, it carried **51 modified `src/` files (780 insertions, 722
+deletions)**, four of which do not compile:
+
+| File | Symptom |
+|---|---|
+| `src/Main.Phase0.cs` | truncated mid-expression, spliced into `ConstructPhase0()` |
+| `src/Main.ShelterBatch3.cs` | truncated mid-expression, spliced into `ConstructKitchenNutrition()` |
+| `src/Main.ShelterInfrastructure.cs` | syntax errors |
+| `src/Main.ShelterSocial.cs` | syntax errors |
+
+Example corruption:
+
+```csharp
+if (CaptureSection("phantom_memory", Phantom        private void ConstructPhase0()
+```
+
+The change set is consistent with Task #131's composition-root refactor in
+progress (`_Ready()` losing its `SetupJournal()`/`SetupIceRoad()`/
+`SetupDutyRoster()`/`SetupExpansions()`/`SetupYearOfAsh()`/`SetupMoralChoice()`
+calls as they move into `ComposeCampaign()`), so it appears to be another actor
+working the same checkout concurrently rather than disk corruption.
+
+**None of those files were touched by Task #132**, and none were staged or
+committed by it. Task #132's own committed work is unaffected: `dotnet test`
+remains green at 4857/4857 because Core does not depend on `src/`.
+
+Consequence: no host self-test can be executed or trusted until the host
+compiles again. Core-only phases remain verifiable.
