@@ -109,13 +109,6 @@ namespace AtomicWar.GodotApp.UI
             _bodyLabel.AddThemeColorOverride("default_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             _scroll.AddChild(_bodyLabel);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _titleLabel.TooltipText = "Daily Briefing Report Title";
-            _bodyLabel.TooltipText = "Daily Briefing Summary — Use [Up]/[Down] arrow keys or mouse wheel to scroll";
-            _skipButton.TooltipText = "Instantly reveal complete briefing text [Tab]";
-            _ackButton.TooltipText = "Acknowledge daily briefing and resume gameplay [Enter] / [Space]";
-
             var footer = new HBoxContainer();
             footer.AddThemeConstantOverride("separation", 8);
             _ackLabel = AshfallUiHelpers.MakeMono("PRESS [ENTER] / [SPACE] / [ACK] TO CONTINUE");
@@ -124,8 +117,13 @@ namespace AtomicWar.GodotApp.UI
 
             _ackButton = AshfallUiHelpers.MakeButton("ACKNOWLEDGE", () => Acknowledge());
             _ackButton.CustomMinimumSize = new Vector2(150, 36);
+            _ackButton.TooltipText = "Acknowledge daily briefing and resume gameplay [Enter] / [Space]";
             footer.AddChild(_ackButton);
             vbox.AddChild(footer);
+
+            _titleLabel.TooltipText = "Daily Briefing Report Title";
+            _bodyLabel.TooltipText = "Daily Briefing Summary — Use [Up]/[Down] arrow keys or mouse wheel to scroll";
+            _skipButton.TooltipText = "Instantly reveal complete briefing text [Tab]";
         }
 
         public override void _Process(double delta)

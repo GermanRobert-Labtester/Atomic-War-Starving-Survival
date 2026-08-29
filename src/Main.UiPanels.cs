@@ -182,7 +182,7 @@ namespace AtomicWar.GodotApp
             AddChild(_workshopPanel);
 
             // ── Pharma Lab panel (compounding & distillation) ──
-            _pharmaLabPanel = PanelSceneLoader.Load<PharmaLabPanel>("res://assets/ui/panels/PharmaLabPanel.tscn");
+            _pharmaLabPanel = new PharmaLabPanel();
             _pharmaLabPanel.OnClose += ClosePharmaLabPanel;
             AddChild(_pharmaLabPanel);
 
@@ -497,7 +497,7 @@ namespace AtomicWar.GodotApp
             AddChild(_eventDetailPanel);
 
             // ── Opening Protocol Directives Modal (Day 1 vertical slice) ──
-            _openingProtocolModal = PanelSceneLoader.Load<OpeningProtocolModal>("res://assets/ui/modals/OpeningProtocolModal.tscn");
+            _openingProtocolModal = new OpeningProtocolModal();
             _openingProtocolModal.OnClose += CloseOpeningProtocolModal;
             _openingProtocolModal.OnRationPolicySelected += policy =>
             {

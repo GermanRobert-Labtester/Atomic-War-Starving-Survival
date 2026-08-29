@@ -103,7 +103,7 @@ namespace AtomicWar.GodotApp
             _kitchenNutrition = new KitchenNutritionHostSession(knSys, knInv, knNeeds);
             if (_kitchenNutritionPanel != null && _kitchenNutritionPanel.IsInsideTree())
                 RemoveChild(_kitchenNutritionPanel);
-            _kitchenNutritionPanel = PanelSceneLoader.Load<KitchenNutritionPanel>("res://assets/ui/panels/KitchenNutritionPanel.tscn");
+            _kitchenNutritionPanel = new KitchenNutritionPanel();
             _kitchenNutritionPanel.Bind(_kitchenNutrition);
             _kitchenNutritionPanel.Visible = false;
             AddChild(_kitchenNutritionPanel);

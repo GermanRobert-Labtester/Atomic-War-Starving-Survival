@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b1water_treatment_panel_ashfall"]
 
-[ext_resource type="Script" path="res://src/UI/WaterTreatmentPanel.cs" id="1_water"]
+[ext_resource type="Script" path="res://src/UI/WaterTreatmentPanelContent.cs" id="1_water"]
 
 [node name="WaterTreatmentPanel" type="Control"]
 visible = false

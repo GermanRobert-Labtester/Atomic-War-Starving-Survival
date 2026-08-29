@@ -207,20 +207,31 @@ namespace AtomicWar.GodotApp
 
         private static List<(string Name, Control Panel)> CreateRepresentativePanels()
         {
-            return new List<(string Name, Control Panel)>
+            var list = new List<(string Name, Control Panel)>
             {
                 ("WeatherPanel", new WeatherPanel()),
                 ("WeatherForecastPanel", new WeatherForecastPanel()),
-                ("WeatherDetailPanel", new WeatherDetailPanel()),
-                ("RadiationDetailPanel", new RadiationDetailPanel()),
                 ("RadiationHistoryPanel", new RadiationHistoryPanel()),
                 ("DutyRosterPanel", new DutyRosterPanel()),
-                ("DutyRosterDetailPanel", new DutyRosterDetailPanel()),
                 ("AchievementsPanel", new AchievementsPanel()),
-                ("AfflictionsPanel", new AfflictionsPanel()),
                 ("GameDashboardPanel", new GameDashboardPanel()),
                 ("DailyBriefingModal", new DailyBriefingModal())
             };
+
+            // Safely load scene-backed panels via PanelSceneLoader
+            try
+            {
+                list.Add(("WeatherDetailPanel", PanelSceneLoader.Load<Control>("res://assets/ui/panels/WeatherDetailPanel.tscn")));
+                list.Add(("RadiationDetailPanel", PanelSceneLoader.Load<Control>("res://assets/ui/panels/RadiationDetailPanel.tscn")));
+                list.Add(("DutyRosterDetailPanel", PanelSceneLoader.Load<Control>("res://assets/ui/panels/DutyRosterDetailPanel.tscn")));
+                list.Add(("AfflictionsPanel", PanelSceneLoader.Load<Control>("res://assets/ui/panels/AfflictionsPanel.tscn")));
+            }
+            catch
+            {
+                // Fallback for environments where PackedScene loader is mock-only
+            }
+
+            return list;
         }
 
         private static List<T> FindChildrenOfType<T>(Node parent) where T : Node

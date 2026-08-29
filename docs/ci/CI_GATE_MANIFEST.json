@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 32,
-  "fast_tier_count": 32,
+  "total_gates": 38,
+  "fast_tier_count": 38,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -321,6 +321,66 @@
       "command": "bash scripts/ci/legacy-reference-gate.sh",
       "timeout_seconds": 30,
       "expected_summary": "Legacy Reference Gate PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "core_systems_catalog_drift",
+      "name": "Core Systems & Host Seams Catalog Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-core-systems-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "CORE_SYSTEMS_CATALOG.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "catalog_registry_drift",
+      "name": "Data Authority Catalog Registry Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-catalog-registry.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "agent_rulebooks_sync",
+      "name": "Multi-Agent Rulebooks Synchronization Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/sync-agent-rulebooks.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "All 12 client rulebooks are in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "ui_panel_catalog_drift",
+      "name": "UI Panel Architecture Guide Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-ui-panel-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "UI_PANEL_ARCHITECTURE_GUIDE.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "expansions_catalog_drift",
+      "name": "Expansions 01-11 Master Catalog Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-expansions-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "EXPANSIONS_MASTER_CATALOG.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "ui_panel_contracts_test",
+      "name": "UI Scene Unique Node Contract Test Gate (xUnit)",
+      "category": "Build & Tests",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter UiPanelContractTests --nologo",
+      "timeout_seconds": 60,
+      "expected_summary": "Passed!",
       "classification": "fast",
       "critical": true
     }

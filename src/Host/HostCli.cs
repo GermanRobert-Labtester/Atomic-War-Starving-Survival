@@ -126,7 +126,8 @@ namespace AtomicWar.GodotApp
         OnboardingJourneySelfTest,
         ContentUtilizationSelfTest,
         SelfTestManifest,
-        ListSelfTests
+        ListSelfTests,
+        RuntimeScaleSelfTest
     }
 
     /// <summary>

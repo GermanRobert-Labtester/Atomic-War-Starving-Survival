@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-08-28<br>
-**Total Registered Actions:** 93 entries / 142 flag tokens (aliases included)
+**Last Verified:** 2026-08-29<br>
+**Total Registered Actions:** 102 entries / 153 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -24,6 +24,8 @@
 | `--panel-bind-lifecycle-selftest` | `--panel-bind-selftest`, `--panel-lifecycle-selftest` | Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch |
 | `--save-load-ui-failure-selftest` | `--save-load-failure-selftest`, `--save-load-failure-uitest`, `--save-load-selftest` | Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact |
 | `--save-store-checksum-selftest` | `--save-store-checksums-selftest`, `--checksum-sweep-selftest` | Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard) |
+| `--scene-binding-selftest` | `--scene-bindings-selftest` | Headless-instantiate every registered production scene and validate each unique_name_in_owner binding contract (Ticket #125 scene-ownership gate); exits 0 when all required nodes resolve with the expected Godot types |
+| `--content-utilization-selftest` | `--content-utilization` | Scan every JSON catalog under StreamingAssets/Data, classify each by reachable consumer (gameplay / UI / codex / orphan), write artifacts/content-utilization.{json,md}, and run the CI gate against artifacts/content-utilization-baseline.json (Ticket #127 content-runtime gate) |
 | `--standalone-selftest` | — | SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance |
 | `--arbitration-selftest` | — | CrossingArbitrationHeadlessDemo |
 | `--black-flotilla-selftest` | `--maritime-selftest`, `--expansion-09-selftest` | The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip |
@@ -45,6 +47,13 @@
 | `--ice-road-tick-demo` | — | Unlock, clerk, 30 day ticks, print catalog + briefing |
 | `--ledger-debt-selftest` | — | LedgerDebtHeadlessDemo |
 | `--moral-choice-selftest` | — | Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks |
+| `--evolving-world-selftest` | — | Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario |
+| `--selftest-manifest` | — | Emit the machine-readable self-test manifest JSON (scripts/ci/generate-selftest-manifest.py) |
+| `--test-manifest` | — | Alias for --selftest-manifest |
+| `--list-selftests` | — | List every registered selftest and run its signature live (runtime/CLI parity audit) |
+| `--list-tests` | — | Alias for --list-selftests |
+| `--selftests` | — | Alias for --list-selftests |
+| `--list-selftest` | — | Alias for --list-selftests |
 | `--muster-selftest` | `--expansion-06-selftest` | MusterHeadlessDemo (Exp 06 the Muster) |
 | `--phase0-selftest` | — | Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip |
 | `--silent-foundry-selftest` | — | Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip |

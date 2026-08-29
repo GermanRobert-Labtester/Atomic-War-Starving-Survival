@@ -1,6 +1,6 @@
 # ASHFALL — Evidence-Derived Architecture & Verification Graph
 
-**Last Verified:** 2026-08-28<br>
+**Last Verified:** 2026-08-29<br>
 **Total Subsystems Mapped:** 65/65 (100.0%)<br>
 **Verified End-to-End Coverage:** 63/65 (96.9% across all 6 vertical layers)<br>
 **Status Breakdown:** Implemented: 65/65 | Constructed: 63/65 | Ticked: 65/65 | Persisted: 65/65 | Routed: 65/65 | Tested: 65/65<br>
@@ -809,7 +809,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **Setup Method:** `Main.SetupCombat()` | **Cadence:** `On-Demand (Turn-Based)`
 - **UI Routes:** `combat`, `combat_detail`
 - **Verified Source Files:**
-  - Core System: [`Assets/Ashfall.Core/Combat/TacticalCombatSystem.cs`](../../Assets/Ashfall.Core/Combat/TacticalCombatSystem.cs)
+  - Core System: [`Assets/Ashfall.Core/Combat/TacticalCombatSystem.Actions.cs`](../../Assets/Ashfall.Core/Combat/TacticalCombatSystem.Actions.cs)
   - Core System: [`Assets/Ashfall.Core/Survivors/CombatTraumaSystem.cs`](../../Assets/Ashfall.Core/Survivors/CombatTraumaSystem.cs)
   - Host Session: [`src/Host/CombatHostSession.cs`](../../src/Host/CombatHostSession.cs)
   - Save Store: [`src/Host/CombatSaveStore.cs`](../../src/Host/CombatSaveStore.cs)
