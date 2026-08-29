@@ -155,6 +155,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupArchiveDesk()
         {
+            if (_archiveDesk != null) return;
             var adState = ArchiveDeskSaveStore.TryLoad() ?? new ArchiveDeskState();
             var adJournal = _journal;
             var adKnowledge = new KnowledgeBase();
