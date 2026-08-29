@@ -482,6 +482,17 @@
       ],
       "status": "confirmed by inspection; not yet fixed; scheduled with the Needs/Radiation migration (Phase 22/24) or as an isolated fix",
       "structural_fix": "component stores keyed by SurvivorId with 0-or-1 cardinality make duplicate-id registration unrepresentable"
+    },
+    {
+      "id": "D2",
+      "severity": "high",
+      "site": "src/Host/HostCli.PanelTests.cs:420 (RunExpeditionVehicleLogisticsGates, gate V6)",
+      "symptom": "System.Collections.Generic.KeyNotFoundException: The given key 'survivor_a' was not present in the dictionary.",
+      "mechanism": "session.DispatchSortie(\"survivor_a\", ...) does not produce an active sortie, so session.Engine.Active[\"survivor_a\"] throws. Gates V1-V5 pass; V6 onward never run.",
+      "second_defect": "the harness prints EXPEDITION_SELFTEST PASS even though the gate throws, and the process then fails to exit (observed exit code 124 under timeout). A canonical CI gate can therefore report PASS while crashing, which means the 9 vehicle gates AGENTS.md claims are pinned are not actually all being exercised.",
+      "provenance": "PRE-EXISTING, not introduced by Task #132 P0. Verified by removing all six new Core files, rebuilding, and re-running the gate: the identical exception occurs. src/Host/HostCli.PanelTests.cs is unmodified since commit 4d1feb89.",
+      "status": "reported, not fixed — outside Task #132 scope (expedition vehicle logistics, Task #101)",
+      "relevance_to_132": "Phase 19 requires expedition participation to reconcile with survivor lifecycle. This gate must be green before the expedition domain can be migrated, because it is the contract that would detect a regression."
     }
   ],
 
