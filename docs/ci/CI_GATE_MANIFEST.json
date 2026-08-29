@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 42,
-  "fast_tier_count": 42,
+  "total_gates": 44,
+  "fast_tier_count": 44,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -217,6 +217,32 @@
       "command": "godot --headless --path . -- --expansions-selftest",
       "timeout_seconds": 60,
       "expected_summary": "EXPANSIONS_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "survivors_selftest",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Survivor Needs, Radiation & Restore Integrity Self-Test",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --survivors-selftest",
+      "timeout_seconds": 90,
+      "expected_summary": "SURVIVORS_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "expedition_selftest",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Expedition Loop & Vehicle Logistics Self-Test",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --expedition-selftest",
+      "timeout_seconds": 90,
+      "expected_summary": "EXPEDITION_SELFTEST PASS",
       "classification": "fast",
       "critical": true
     },
