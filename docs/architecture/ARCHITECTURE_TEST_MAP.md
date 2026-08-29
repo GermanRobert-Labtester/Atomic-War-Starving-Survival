@@ -809,7 +809,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **Setup Method:** `Main.SetupCombat()` | **Cadence:** `On-Demand (Turn-Based)`
 - **UI Routes:** `combat`, `combat_detail`
 - **Verified Source Files:**
-  - Core System: [`Assets/Ashfall.Core/Combat/TacticalCombatSystem.Actions.cs`](../../Assets/Ashfall.Core/Combat/TacticalCombatSystem.Actions.cs)
+  - Core System: [`Assets/Ashfall.Core/Combat/TacticalCombatSystem.cs`](../../Assets/Ashfall.Core/Combat/TacticalCombatSystem.cs)
   - Core System: [`Assets/Ashfall.Core/Survivors/CombatTraumaSystem.cs`](../../Assets/Ashfall.Core/Survivors/CombatTraumaSystem.cs)
   - Host Session: [`src/Host/CombatHostSession.cs`](../../src/Host/CombatHostSession.cs)
   - Save Store: [`src/Host/CombatSaveStore.cs`](../../src/Host/CombatSaveStore.cs)

@@ -174,6 +174,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupContractorRoster()
         {
+            if (_contractorRoster != null) return;
             SetupCampaignDay();
             var crState = ContractorRosterSaveStore.TryLoad() ?? new ContractorRosterState();
             var crInv = _inventory.Inventory;
@@ -235,6 +236,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupShelterAssignment()
         {
+            if (_shelterAssignment != null) return;
             SetupCampaignDay();
             _shelterAssignment = ShelterAssignmentHostSession.CreateDefault(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng);
             if (!_shelterAssignment.TryLoad())
