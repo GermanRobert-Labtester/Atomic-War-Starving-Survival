@@ -8,6 +8,7 @@
 #   3. Zero Guid.NewGuid()
 #   4. Zero serializer bypasses (JsonUtility, Newtonsoft.Json, BinaryFormatter)
 #   5. Zero wall-clock drift (DateTime.Now, DateTime.UtcNow)
+#      Exempt: IWallClock.cs — the documented single wall-clock port/adapter.
 #   6. Zero Thread.Sleep
 # =============================================================================
 
@@ -25,10 +26,16 @@ violations=0
 check_pattern() {
     local label="$1"
     local pattern="$2"
+    # Optional: basename of a single sanctioned port/adapter exempt from THIS check.
+    local exempt_file="${3:-}"
 
     # Search non-comment lines
     local matches
     matches=$(grep -rnE "$pattern" "$CORE_DIR" --include="*.cs" || true)
+
+    if [ -n "$exempt_file" ] && [ -n "$matches" ]; then
+        matches=$(echo "$matches" | grep -v "/${exempt_file}:" || true)
+    fi
 
     # Filter out pure comment lines (leading whitespace followed by // or *)
     local real_matches=""
@@ -55,7 +62,14 @@ check_pattern "Zero Engine Namespaces" "using[[:space:]]+(UnityEngine|UnityEdito
 check_pattern "Zero System.Random / Nondeterministic RNG" "(new[[:space:]]+System\.Random|new[[:space:]]+Random\(|System\.Random|UnityEngine\.Random)"
 check_pattern "Zero Guid.NewGuid()" "Guid\.NewGuid\(\)"
 check_pattern "Zero Legacy Serializer Bypasses" "(JsonUtility|Newtonsoft|BinaryFormatter)"
-check_pattern "Zero Wall-Clock Simulation Drift" "(DateTime\.Now|DateTime\.UtcNow)"
+# IWallClock.cs is the documented single port/adapter for non-simulation
+# wall-clock metadata (diagnostic logs, file timestamps, save metadata). It is
+# exempt here for the same reason and with the same wording as
+# Ashfall.Core.Tests/Tooling/ForbiddenCoreApiGateTests.cs and
+# Ashfall.Core.Tests/CoreInvariantSourceTests.cs. Wall-clock values must never
+# drive simulation state, campaign day progression, or deterministic checksums;
+# simulation time comes from IClock / ISimClock.
+check_pattern "Zero Wall-Clock Simulation Drift" "(DateTime\.Now|DateTime\.UtcNow)" "IWallClock.cs"
 check_pattern "Zero Thread.Sleep" "Thread\.Sleep\("
 
 if [ "$violations" -gt 0 ]; then
