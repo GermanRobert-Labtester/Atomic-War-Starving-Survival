@@ -429,6 +429,12 @@ namespace Ashfall.Core.Tests
             Assert.Contains(radio, r => r.id == "radio_garrison_martial_edict");
             Assert.Contains(radio, r => r.id == "radio_granite_arsenal_mobilization_broadcast");
             Assert.Contains(radio, r => r.id == "radio_day_360_beacon_silence");
+            var carrierBroadcast = radio.Find(r => r.id == "radio_142_carrier_discovery");
+            Assert.NotNull(carrierBroadcast);
+            Assert.Equal("radio_vo_ch3_ash_road", carrierBroadcast!.audio_cue);
+            var bunkerDistress = radio.Find(r => r.id == "radio_bunker_19_distress_call");
+            Assert.NotNull(bunkerDistress);
+            Assert.Equal("radio_vo_kind_parley", bunkerDistress!.audio_cue);
             foreach (var r in radio)
             {
                 Assert.False(string.IsNullOrEmpty(r.message), r.id + " message unbound");

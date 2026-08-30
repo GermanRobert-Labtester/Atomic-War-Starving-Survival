@@ -19,22 +19,21 @@ namespace AtomicWar.GodotApp
         private readonly HashSet<string> _playedBroadcastKeys = new();
 
         /// <summary>
-        /// Static mapping from faction event categories to voice-over clip resource names.
-        /// Only factions/categories with actual WAV assets in assets/audio/radio/ are mapped.
-        /// Missing mappings fall back to radio static only (safe no-op for audio).
+        /// Static mapping retained for legacy event names, now resolving to stable
+        /// catalog IDs rather than direct resource file names.
         /// </summary>
         private static readonly Dictionary<string, string> s_voiceOverMap = new()
         {
-            { "vo_kind_parley", "vo_kind_parley" },
-            { "vo_kind_hatch", "vo_kind_hatch" },
-            { "vo_ch3_ash_road", "vo_ch3_ash_road" },
-            { "vo_ch7_milband", "vo_ch7_milband" },
-            { "vo_ch11_stockpile", "vo_ch11_stockpile" },
+            { "vo_kind_parley", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoKindParley },
+            { "vo_kind_hatch", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoKindHatch },
+            { "vo_ch3_ash_road", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoCh3AshRoad },
+            { "vo_ch7_milband", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoCh7Milband },
+            { "vo_ch11_stockpile", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoCh11Stockpile },
         };
 
         /// <summary>
         /// Fired when a new (non-duplicate) broadcast is intercepted.
-        /// Carries the intercept and the resolved voice-over clip name (null if none).
+        /// Carries the intercept and the resolved voice-over cue ID (null if none).
         /// </summary>
         public event Action<RadioIntercept, string?>? BroadcastIntercepted;
 
@@ -102,15 +101,20 @@ namespace AtomicWar.GodotApp
                 ? $"Dead air at {CurrentFrequency:0.00} MHz."
                 : $"Intercepted {intercept.Callsign} at {CurrentFrequency:0.00} MHz.";
 
-            // Audio: radio static on every tune
-            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayRadioStatic();
+            // Audio: a tuner motion always produces static; a received station
+            // adds a short lock confirmation before any authored voice clip.
+            var audio = AtomicWar.GodotApp.Audio.AudioManager.Instance;
+            audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioTune);
+            audio?.PlayRadioStatic();
+            if (!string.IsNullOrWhiteSpace(intercept.FactionId))
+                audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioSignalLock);
 
             // Audio: voice-over only for new (non-duplicate) broadcasts with a mapped clip
             string? voiceOverClip = ResolveVoiceOver(intercept);
             string broadcastKey = MakeBroadcastKey(intercept);
             if (voiceOverClip != null && _playedBroadcastKeys.Add(broadcastKey))
             {
-                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayVoiceOver(voiceOverClip);
+                audio?.PlayVoiceOverCue(voiceOverClip);
             }
 
             BroadcastIntercepted?.Invoke(intercept, voiceOverClip);
@@ -139,8 +143,10 @@ namespace AtomicWar.GodotApp
             LastIntercept = beacon;
 
             LastEvent = $"Emergency beacon broadcast on {CurrentFrequency:0.00} MHz.";
-            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayVoiceOver("vo_kind_parley");
-            BroadcastIntercepted?.Invoke(beacon, "vo_kind_parley");
+            string cueId = AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoKindParley;
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioMorse);
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayVoiceOverCue(cueId);
+            BroadcastIntercepted?.Invoke(beacon, cueId);
             RaiseStateChanged();
             return LastEvent;
         }
@@ -179,6 +185,7 @@ namespace AtomicWar.GodotApp
             if (ok)
             {
                 LastEvent = $"Recorded DF bearing {obs.bearingDegrees:000}° on {CurrentFrequency:0.00} MHz ({Triangulation.GetObservationCount(sigId)} obs).";
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioMorse);
                 RaiseStateChanged();
             }
             return ok;
@@ -264,7 +271,7 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Resolve a voice-over clip name for this intercept.
+        /// Resolve a voice-over cue ID for this intercept.
         /// Returns null if no clip is mapped for this faction/event combination.
         /// </summary>
         private static string? ResolveVoiceOver(RadioIntercept intercept)
@@ -275,7 +282,7 @@ namespace AtomicWar.GodotApp
             // Event-kind-based mapping for vo_kind_* clips
             if (intercept.Kind == RadioEventKind.ParleyResolution &&
                 s_voiceOverMap.ContainsKey("vo_kind_parley"))
-                return "vo_kind_parley";
+                return s_voiceOverMap["vo_kind_parley"];
 
             // Fallback: message-text matching (backward compatible)
             foreach (var kvp in s_voiceOverMap)

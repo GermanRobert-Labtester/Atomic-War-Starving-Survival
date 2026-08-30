@@ -8,7 +8,8 @@
       "source": "Continental Maritime Rescue Coordination (Aurora Borealis)",
       "message": "CZC ZCZC 014 340 0014 FROM: CONTINENTAL MARITIME RESCUE COORDINATION (ICEBREAKER AURORA BOREALIS) TO: ALL SUBTERRANEAN SHELTERS SECTOR 4 AND 8. MARITIME EVACUATION CORRIDOR REMAINS OPEN AT NORTHERN SOUND ANCHORAGE. VESSEL MAINTAINS STEAM. DEPARTURE LOCKED DAY 360 AT FIRST LIGHT. MANIFEST RESTRICTED TO CERTIFIED LOW-RAD RESIDENTS AND REGISTERED SEED CUSTODIANS. ACKNOWLEDGE ON 142.850 WITH SHELTER SERIAL AND HEADCOUNT.",
       "signalStrength": "S7",
-      "isEmergency": true
+      "isEmergency": true,
+      "audio_cue": "radio_vo_ch3_ash_road"
     },
     {
       "id": "radio_garrison_martial_edict",
@@ -17,7 +18,8 @@
       "source": "Iron Garrison Logistics Directorate",
       "message": "By order of the Military Governor, all subterranean shelters within five kilometres of the rail line are placed under Martial Allocation Schedule 14. Turn out all excess fuel reserves, stored grain exceeding twelve kilograms per occupant, and any functioning machine-tool components at Checkpoint Gamma by Tuesday morning. Shelters failing to comply will be classified as non-compliant supply caches.",
       "signalStrength": "S9",
-      "isEmergency": false
+      "isEmergency": false,
+      "audio_cue": "radio_vo_ch7_milband"
     },
     {
       "id": "radio_cult_ash_sign_liturgy",
@@ -26,7 +28,8 @@
       "source": "Voice of the Vitrified Crater",
       "message": "Do not scrape the soot from your windowpanes, brothers. The ash is the veil of His mercy. The ice came because the world was unclean and required a cold sheet. On the three-hundredth day, the water will run black from the hills. Drink of the black water and be sealed. Those who hide in concrete with brass locks are already dead; their tombs are only warm.",
       "signalStrength": "S4",
-      "isEmergency": false
+      "isEmergency": false,
+      "audio_cue": "radio_vo_kind_hatch"
     },
     {
       "id": "radio_d9_protocol_null_carrier",
@@ -44,7 +47,8 @@
       "source": "The Works Public Council (Allotment Station)",
       "message": "This is Ottilie Frayne at the Allotments. We have thirty kilograms of winter-hardened rye seed ready for germination, but our third glasshouse boiler has fractured its copper manifold. We will trade five bushels of seed potatoes and two gallons of medicinal spirit for three brass valve fittings (3-inch) or twenty liters of glycol antifreeze. Bring terms to the greenhouse door at noon.",
       "signalStrength": "S6",
-      "isEmergency": false
+      "isEmergency": false,
+      "audio_cue": "radio_vo_ch11_stockpile"
     },
     {
       "id": "radio_deep_thaw_radon_advisory",
@@ -62,7 +66,8 @@
       "source": "Bunker 19 (High Granite)",
       "message": "MAYDAY MAYDAY. Bunker 19 calling any station on 142.850. Our intake flue is completely iced shut. Indoor temperature is minus sixteen. Generator died four hours ago. We have eighteen women and children in the annex. If anyone has heating elements or a cutting torch, we are at Mile Marker 14 on the old pass road. Please acknowledge...",
       "signalStrength": "S3",
-      "isEmergency": true
+      "isEmergency": true,
+      "audio_cue": "radio_vo_kind_parley"
     },
     {
       "id": "radio_hydro_baron_water_schedule",

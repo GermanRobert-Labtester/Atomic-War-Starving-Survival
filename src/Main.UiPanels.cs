@@ -171,6 +171,7 @@ namespace AtomicWar.GodotApp
             // ── Audio manager (buses + playback) ──
             _audio = new AudioManager();
             AddChild(_audio);
+            _audio.PlayMainMenuMusic();
 
             // ── Player-facing game shell ──
             // The old developer workbench remains available behind the DEV CONSOLE

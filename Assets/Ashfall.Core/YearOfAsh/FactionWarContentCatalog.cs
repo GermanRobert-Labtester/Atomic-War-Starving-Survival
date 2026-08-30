@@ -193,6 +193,7 @@ namespace Ashfall.Core.YearOfAsh
         public string message = string.Empty;
         public string signalStrength = string.Empty;
         public bool isEmergency;
+        public string audio_cue = string.Empty;
     }
 
     [Serializable]

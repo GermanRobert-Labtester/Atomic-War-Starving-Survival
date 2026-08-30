@@ -15,6 +15,7 @@ namespace Ashfall.Core.Narrative
         public string title;
         public string transcript;
         public string[] tags;
+        public string audio_cue;
     }
 
     [Serializable]

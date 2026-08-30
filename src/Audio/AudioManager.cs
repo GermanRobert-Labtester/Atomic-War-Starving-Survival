@@ -63,6 +63,7 @@ namespace AtomicWar.GodotApp.Audio
 
         private bool _headless;
         private AudioEventBridge? _eventBridge;
+        private ShelterAudioController? _shelterAudio;
         private IAudioDomainProvider? _domainProvider;
         private Action? _settingsChangedHandler;
 
@@ -80,6 +81,7 @@ namespace AtomicWar.GodotApp.Audio
             AudioSettings.Instance.OnSettingsChanged += _settingsChangedHandler;
 
             _eventBridge = new AudioEventBridge(this);
+            _shelterAudio = new ShelterAudioController(this);
             _domainProvider = GetParent() as IAudioDomainProvider;
             RefreshDomainBindings();
 
@@ -176,6 +178,8 @@ namespace AtomicWar.GodotApp.Audio
         {
             _eventBridge?.Dispose();
             _eventBridge = null;
+            _shelterAudio?.Dispose();
+            _shelterAudio = null;
             _domainProvider = null;
 
             if (_settingsChangedHandler != null)
@@ -205,7 +209,11 @@ namespace AtomicWar.GodotApp.Audio
                 _domainProvider.AudioCombat,
                 _domainProvider.AudioCrafting,
                 _domainProvider.AudioExpeditions,
-                _domainProvider.AudioDisease);
+                _domainProvider.AudioDisease,
+                _domainProvider.AudioSurvivorFate);
+            _shelterAudio?.Subscribe(
+                _domainProvider.AudioPowerGrid,
+                _domainProvider.AudioStartingLevel);
         }
 
         // ── Cue-based playback (primary API) ────────────────────
@@ -279,6 +287,18 @@ namespace AtomicWar.GodotApp.Audio
         public void StopAmbience()
         {
             StopLoopsOnBus(AudioBusNames.Ambience);
+            // Shelter infrastructure uses independent buses so players can mix
+            // them separately, but it still belongs to the active-run ambience
+            // lifecycle and must not bleed through the menu or game-over screen.
+            StopCue(AudioCueCatalog.ShelterGenerator);
+            StopCue(AudioCueCatalog.ShelterVentilation);
+        }
+
+        /// <summary>Stops a loop cue without touching other loops on its bus.</summary>
+        public void StopCue(string cueId)
+        {
+            if (string.IsNullOrWhiteSpace(cueId)) return;
+            StopLoop(cueId);
         }
 
         public void PlayMainMenuMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/main_menu.ogg"));
@@ -294,8 +314,31 @@ namespace AtomicWar.GodotApp.Audio
 
         public void PlayRadioStatic() => PlayCue(AudioCueCatalog.RadioStatic);
 
+        /// <summary>
+        /// Play a registered radio voice cue. Keeping radio speech in the cue
+        /// catalog gives it the same resource validation, trim, and cooldown
+        /// behavior as every other runtime sound.
+        /// </summary>
+        public void PlayVoiceOverCue(string cueId)
+        {
+            var cue = AudioCueCatalog.Resolve(cueId);
+            if (cue == null || cue.Bus != AudioBusNames.Voice)
+            {
+                LogMissingOnce($"radio-voice-cue:{cueId}");
+                return;
+            }
+
+            PlayCueDef(cue);
+        }
+
         public void PlayVoiceOver(string resourceName)
         {
+            if (AudioCueCatalog.Contains(resourceName))
+            {
+                PlayVoiceOverCue(resourceName);
+                return;
+            }
+
             string path = $"res://assets/audio/radio/{resourceName}.wav";
             var stream = LoadStream(path);
             if (stream == null) return;

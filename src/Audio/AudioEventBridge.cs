@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Combat;
 using Ashfall.Core.Crafting;
 using Ashfall.Core.Disease;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Radiation;
+using Ashfall.Core.Shelter;
+using Ashfall.Core.StartingLevel;
+using Ashfall.Core.Survivors;
 using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp.Audio
@@ -21,6 +25,9 @@ namespace AtomicWar.GodotApp.Audio
         CraftingSystem? AudioCrafting { get; }
         ExpeditionSystem? AudioExpeditions { get; }
         DiseaseSystem? AudioDisease { get; }
+        SurvivorFateSystem? AudioSurvivorFate { get; }
+        PowerGridSystem? AudioPowerGrid { get; }
+        StartingLevelSystem? AudioStartingLevel { get; }
     }
 
     /// <summary>
@@ -37,6 +44,8 @@ namespace AtomicWar.GodotApp.Audio
         private CraftingSystem? _crafting;
         private ExpeditionSystem? _expeditions;
         private DiseaseSystem? _disease;
+        private SurvivorFateSystem? _survivorFate;
+        private readonly Dictionary<string, float> _radiationDoseBySurvivor = new(StringComparer.Ordinal);
         private bool _disposed;
 
         public AudioEventBridge(AudioManager audio)
@@ -59,7 +68,8 @@ namespace AtomicWar.GodotApp.Audio
             TacticalCombatSystem? combat = null,
             CraftingSystem? crafting = null,
             ExpeditionSystem? expeditions = null,
-            DiseaseSystem? disease = null)
+            DiseaseSystem? disease = null,
+            SurvivorFateSystem? survivorFate = null)
         {
             ThrowIfDisposed();
             BindRadiation(radiation);
@@ -68,6 +78,7 @@ namespace AtomicWar.GodotApp.Audio
             BindCrafting(crafting);
             BindExpeditions(expeditions);
             BindDisease(disease);
+            BindSurvivorFate(survivorFate);
         }
 
         public void BindRadiation(RadiationSystem? radiation)
@@ -77,11 +88,23 @@ namespace AtomicWar.GodotApp.Audio
                 return;
 
             if (_radiation != null)
+            {
                 _radiation.OnStatusGained -= OnRadiationStatusGained;
+                _radiation.OnDoseChanged -= OnRadiationDoseChanged;
+            }
 
             _radiation = radiation;
+            _radiationDoseBySurvivor.Clear();
             if (_radiation != null)
+            {
+                foreach (SurvivorRadState survivor in _radiation.Registered)
+                {
+                    if (survivor != null && !string.IsNullOrEmpty(survivor.Id))
+                        _radiationDoseBySurvivor[survivor.Id] = survivor.RadiationDose;
+                }
                 _radiation.OnStatusGained += OnRadiationStatusGained;
+                _radiation.OnDoseChanged += OnRadiationDoseChanged;
+            }
         }
 
         public void BindWeather(WeatherSystem? weather)
@@ -208,6 +231,10 @@ namespace AtomicWar.GodotApp.Audio
             {
                 _disease.OnOutbreakDeclared -= OnOutbreakDeclared;
                 _disease.OnInfection -= OnInfection;
+                _disease.OnQuarantineStarted -= OnQuarantineStarted;
+                _disease.OnQuarantineEnded -= OnQuarantineEnded;
+                _disease.OnOutbreakContained -= OnOutbreakContained;
+                _disease.OnOutcomeResolved -= OnOutcomeResolved;
             }
 
             _disease = disease;
@@ -215,11 +242,50 @@ namespace AtomicWar.GodotApp.Audio
             {
                 _disease.OnOutbreakDeclared += OnOutbreakDeclared;
                 _disease.OnInfection += OnInfection;
+                _disease.OnQuarantineStarted += OnQuarantineStarted;
+                _disease.OnQuarantineEnded += OnQuarantineEnded;
+                _disease.OnOutbreakContained += OnOutbreakContained;
+                _disease.OnOutcomeResolved += OnOutcomeResolved;
             }
         }
 
         private void OnOutbreakDeclared(string diseaseId) => _playCue(AudioCueCatalog.MedCoughing);
         private void OnInfection(string survivorId, string diseaseId) => _playCue(AudioCueCatalog.MedHeartbeat);
+        private void OnQuarantineStarted(string survivorId, string diseaseId) => _playCue(AudioCueCatalog.MedQuarantineSeal);
+        private void OnQuarantineEnded(string survivorId, string diseaseId) => _playCue(AudioCueCatalog.MedQuarantineClear);
+        private void OnOutbreakContained(string diseaseId, bool prevented) => _playCue(AudioCueCatalog.MedQuarantineClear);
+
+        private void OnOutcomeResolved(string survivorId, string diseaseId, bool recovered)
+        {
+            // Fatal outcomes enter the all-cause SurvivorFate pipeline, which
+            // owns the distinct loss cue. Recovery gets the quieter clearance
+            // feedback here; AudioManager's cue cooldown absorbs same-tick
+            // recovery + automatic quarantine-release pairs.
+            if (recovered)
+                _playCue(AudioCueCatalog.MedQuarantineClear);
+        }
+
+        /// <summary>
+        /// Binds the unified Core death pipeline rather than individual sources.
+        /// The fate system emits only after its idempotent all-cause cascade, so
+        /// one real campaign loss produces one death cue.
+        /// </summary>
+        public void BindSurvivorFate(SurvivorFateSystem? survivorFate)
+        {
+            ThrowIfDisposed();
+            if (ReferenceEquals(_survivorFate, survivorFate))
+                return;
+
+            if (_survivorFate != null)
+                _survivorFate.OnSurvivorFate -= OnSurvivorFate;
+
+            _survivorFate = survivorFate;
+            if (_survivorFate != null)
+                _survivorFate.OnSurvivorFate += OnSurvivorFate;
+        }
+
+        private void OnSurvivorFate(SurvivorFateEvent fate) =>
+            _playCue(AudioCueCatalog.MedSurvivorDeath);
 
         private void OnRadiationStatusGained(SurvivorRadState state, SurvivorStatus status)
         {
@@ -232,6 +298,20 @@ namespace AtomicWar.GodotApp.Audio
 
             if (cueId != null)
                 _playCue(cueId);
+        }
+
+        private void OnRadiationDoseChanged(SurvivorRadState state, float dose)
+        {
+            if (state == null) return;
+            string id = string.IsNullOrEmpty(state.Id) ? "__anonymous" : state.Id;
+            float previousDose = _radiationDoseBySurvivor.TryGetValue(id, out float previous)
+                ? previous
+                : 0f;
+            _radiationDoseBySurvivor[id] = dose;
+
+            // A click denotes new exposure, not treatment or a restored save state.
+            if (dose > previousDose + 0.01f)
+                _playCue(AudioCueCatalog.RadGeigerBurst);
         }
 
         private void OnWeatherChanged(WeatherKind kind)
@@ -274,7 +354,10 @@ namespace AtomicWar.GodotApp.Audio
                 return;
 
             if (_radiation != null)
+            {
                 _radiation.OnStatusGained -= OnRadiationStatusGained;
+                _radiation.OnDoseChanged -= OnRadiationDoseChanged;
+            }
             if (_weather != null)
                 _weather.OnWeatherChanged -= OnWeatherChanged;
             if (_combat != null)
@@ -295,14 +378,22 @@ namespace AtomicWar.GodotApp.Audio
             {
                 _disease.OnOutbreakDeclared -= OnOutbreakDeclared;
                 _disease.OnInfection -= OnInfection;
+                _disease.OnQuarantineStarted -= OnQuarantineStarted;
+                _disease.OnQuarantineEnded -= OnQuarantineEnded;
+                _disease.OnOutbreakContained -= OnOutbreakContained;
+                _disease.OnOutcomeResolved -= OnOutcomeResolved;
             }
+            if (_survivorFate != null)
+                _survivorFate.OnSurvivorFate -= OnSurvivorFate;
 
             _radiation = null;
+            _radiationDoseBySurvivor.Clear();
             _weather = null;
             _combat = null;
             _crafting = null;
             _expeditions = null;
             _disease = null;
+            _survivorFate = null;
             _disposed = true;
         }
 
@@ -318,5 +409,6 @@ namespace AtomicWar.GodotApp.Audio
         internal bool HasCraftingBinding => _crafting != null;
         internal bool HasExpeditionsBinding => _expeditions != null;
         internal bool HasDiseaseBinding => _disease != null;
+        internal bool HasSurvivorFateBinding => _survivorFate != null;
     }
 }

@@ -358,7 +358,15 @@ namespace Ashfall.Core
             "paper_scrap", "item_teddy_bear", "crayon", "ammo_9x19", "blood_bag",
             "item_suitcase_locked", "fat_rendered", "industrial_bleach", "bone_saw",
             "ammonia_tank", "cardboard_box", "cigarette_pack_sealed",
-            "acoustic_foam_panel", "item_anchor_notes"
+            "acoustic_foam_panel", "item_anchor_notes",
+            // Godot host presentation IDs. These cues are registered by the
+            // host-side AudioCueCatalog rather than a gameplay JSON catalog, but
+            // authored radio broadcasts may reference them through audio_cue.
+            "radio_vo_ch3_ash_road", "radio_vo_ch7_milband",
+            "radio_vo_ch11_stockpile", "radio_vo_kind_hatch",
+            "radio_vo_kind_parley", "radio_vo_verdict_meter",
+            "radio_vo_verdict_eden", "radio_vo_verdict_count",
+            "radio_vo_verdict_geophone", "radio_vo_verdict_reckoning"
         };
 
         private sealed class Ctx

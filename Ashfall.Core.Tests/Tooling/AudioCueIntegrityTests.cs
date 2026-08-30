@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Xunit;
 
@@ -93,6 +94,35 @@ namespace Ashfall.Core.Tests.Tooling
                 Assert.DoesNotContain(val, seen);
                 seen.Add(val);
             }
+        }
+
+        [Fact]
+        public void AuthoredRadioAudioCues_ResolveToCatalogEntries()
+        {
+            var constants = new HashSet<string>(StringComparer.Ordinal);
+            var constPattern = new Regex(@"public\s+const\s+string\s+\w+\s*=\s*""([^""]+)"";");
+            foreach (Match match in constPattern.Matches(File.ReadAllText(CatalogPath)))
+                constants.Add(match.Groups[1].Value);
+
+            var files = new[] { "year_of_ash_radio.json", "verdict_radio.json" };
+            int authoredCueCount = 0;
+            foreach (string file in files)
+            {
+                string path = Path.Combine(GetRepositoryRoot(), "Assets", "StreamingAssets", "Data", file);
+                using var doc = JsonDocument.Parse(File.ReadAllText(path));
+                foreach (JsonElement broadcast in doc.RootElement.GetProperty("broadcasts").EnumerateArray())
+                {
+                    if (!broadcast.TryGetProperty("audio_cue", out JsonElement cue))
+                        continue;
+
+                    string? cueId = cue.GetString();
+                    Assert.False(string.IsNullOrWhiteSpace(cueId), $"{file} has an empty audio_cue");
+                    Assert.Contains(cueId!, constants);
+                    authoredCueCount++;
+                }
+            }
+
+            Assert.Equal(10, authoredCueCount);
         }
     }
 }

@@ -96,6 +96,16 @@ namespace AtomicWar.GodotApp.Audio
         public const string RadioTune = "radio_tune";
         public const string RadioSignalLock = "radio_signal_lock";
         public const string RadioMorse = "radio_morse";
+        public const string RadioVoCh3AshRoad = "radio_vo_ch3_ash_road";
+        public const string RadioVoCh7Milband = "radio_vo_ch7_milband";
+        public const string RadioVoCh11Stockpile = "radio_vo_ch11_stockpile";
+        public const string RadioVoKindHatch = "radio_vo_kind_hatch";
+        public const string RadioVoKindParley = "radio_vo_kind_parley";
+        public const string RadioVoVerdictMeter = "radio_vo_verdict_meter";
+        public const string RadioVoVerdictEden = "radio_vo_verdict_eden";
+        public const string RadioVoVerdictCount = "radio_vo_verdict_count";
+        public const string RadioVoVerdictGeophone = "radio_vo_verdict_geophone";
+        public const string RadioVoVerdictReckoning = "radio_vo_verdict_reckoning";
 
         // Shelter / Resources
         public const string ShelterDoorOpen = "shelter_door_open";
@@ -118,6 +128,9 @@ namespace AtomicWar.GodotApp.Audio
         // Medical
         public const string MedHeartbeat = "med_heartbeat";
         public const string MedCoughing = "med_coughing";
+        public const string MedSurvivorDeath = "med_survivor_death";
+        public const string MedQuarantineSeal = "med_quarantine_seal";
+        public const string MedQuarantineClear = "med_quarantine_clear";
 
         // Danger
         public const string DangerExplosion = "danger_explosion";
@@ -167,8 +180,8 @@ namespace AtomicWar.GodotApp.Audio
             // Weather
             Reg(WeatherAlert, "res://assets/audio/sfx/sfx_alarm_klaxon.mp3", AudioBusNames.Alerts, vol: -2f, cooldown: 5f);
             Reg(WeatherFalloutStorm, "res://assets/audio/sfx/sfx_fallout_storm_approach.mp3", AudioBusNames.Sfx, cooldown: 10f);
-            Reg(WeatherBlackRain, "res://assets/audio/sfx/sfx_contamination_warning.mp3", AudioBusNames.Alerts, cooldown: 10f);
-            Reg(WeatherBlizzard, "res://assets/audio/sfx/sfx_wind_gust_harsh.mp3", AudioBusNames.Sfx, cooldown: 10f);
+            Reg(WeatherBlackRain, "res://assets/audio/sfx/sfx_weather_black_rain.wav", AudioBusNames.Alerts, cooldown: 10f);
+            Reg(WeatherBlizzard, "res://assets/audio/sfx/sfx_weather_blizzard.wav", AudioBusNames.Sfx, cooldown: 10f);
             Reg(WeatherWindGust, "res://assets/audio/sfx/sfx_wind_gust_harsh.mp3", AudioBusNames.Sfx, vol: -8f, cooldown: 3f);
 
             // Ambience
@@ -184,12 +197,22 @@ namespace AtomicWar.GodotApp.Audio
             Reg(RadioTune, "res://assets/audio/sfx/sfx_radio_tune.mp3", AudioBusNames.Voice, cooldown: 1f);
             Reg(RadioSignalLock, "res://assets/audio/sfx/sfx_radio_signal_lock.mp3", AudioBusNames.Voice, cooldown: 1f);
             Reg(RadioMorse, "res://assets/audio/sfx/sfx_morse_key.mp3", AudioBusNames.Voice, cooldown: 0.5f);
+            Reg(RadioVoCh3AshRoad, "res://assets/audio/radio/vo_ch3_ash_road.wav", AudioBusNames.Voice, vol: -2.5f, cooldown: 2f);
+            Reg(RadioVoCh7Milband, "res://assets/audio/radio/vo_ch7_milband.wav", AudioBusNames.Voice, vol: -4.7f, cooldown: 2f);
+            Reg(RadioVoCh11Stockpile, "res://assets/audio/radio/vo_ch11_stockpile.wav", AudioBusNames.Voice, vol: -2.3f, cooldown: 2f);
+            Reg(RadioVoKindHatch, "res://assets/audio/radio/vo_kind_hatch_relay.wav", AudioBusNames.Voice, vol: -6f, cooldown: 2f);
+            Reg(RadioVoKindParley, "res://assets/audio/radio/vo_kind_parley_beacon.wav", AudioBusNames.Voice, vol: -6f, cooldown: 2f);
+            Reg(RadioVoVerdictMeter, "res://assets/audio/radio/vo_verdict_meter.wav", AudioBusNames.Voice, vol: -6f, cooldown: 2f);
+            Reg(RadioVoVerdictEden, "res://assets/audio/radio/vo_verdict_eden.wav", AudioBusNames.Voice, vol: -6f, cooldown: 2f);
+            Reg(RadioVoVerdictCount, "res://assets/audio/radio/vo_verdict_count.wav", AudioBusNames.Voice, vol: -6f, cooldown: 2f);
+            Reg(RadioVoVerdictGeophone, "res://assets/audio/radio/vo_verdict_geophone.wav", AudioBusNames.Voice, vol: -6f, cooldown: 2f);
+            Reg(RadioVoVerdictReckoning, "res://assets/audio/radio/vo_verdict_reckoning.wav", AudioBusNames.Voice, vol: -6f, cooldown: 2f);
 
             // Shelter
             Reg(ShelterDoorOpen, "res://assets/audio/sfx/sfx_bunker_door_open.mp3", AudioBusNames.Sfx, cooldown: 2f);
             Reg(ShelterDoorSeal, "res://assets/audio/sfx/sfx_bunker_door_seal.mp3", AudioBusNames.Sfx, cooldown: 2f);
-            Reg(ShelterVentilation, "res://assets/audio/sfx/sfx_ventilation_fan.mp3", AudioBusNames.Ambience, loop: true, vol: -12f);
-            Reg(ShelterGenerator, "res://assets/audio/sfx/sfx_generator_cough.mp3", AudioBusNames.Ambience, vol: -10f, cooldown: 8f);
+            Reg(ShelterVentilation, "res://assets/audio/sfx/sfx_ventilation_fan.mp3", AudioBusNames.Ventilation, loop: true, vol: -12f);
+            Reg(ShelterGenerator, "res://assets/audio/sfx/sfx_generator_cough.mp3", AudioBusNames.Generator, loop: true, vol: -16f);
             Reg(ShelterPipeClang, "res://assets/audio/sfx/sfx_pipe_clang.mp3", AudioBusNames.Sfx, vol: -6f, cooldown: 5f);
             Reg(ShelterWaterDrip, "res://assets/audio/sfx/sfx_water_drip_cave.mp3", AudioBusNames.Ambience, loop: true, vol: -15f);
             Reg(ShelterAirFilter, "res://assets/audio/sfx/sfx_air_filter_degrade.mp3", AudioBusNames.Alerts, cooldown: 10f);
@@ -206,10 +229,13 @@ namespace AtomicWar.GodotApp.Audio
             // Medical
             Reg(MedHeartbeat, "res://assets/audio/sfx/sfx_heartbeat_slow.mp3", AudioBusNames.Sfx, vol: -6f, cooldown: 5f);
             Reg(MedCoughing, "res://assets/audio/sfx/sfx_coughing_fit.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 8f);
+            Reg(MedSurvivorDeath, "res://assets/audio/sfx/sfx_survivor_death.wav", AudioBusNames.Medical, vol: -6f, cooldown: 3f);
+            Reg(MedQuarantineSeal, "res://assets/audio/sfx/sfx_med_quarantine_seal.wav", AudioBusNames.Medical, vol: -7f, cooldown: 1f);
+            Reg(MedQuarantineClear, "res://assets/audio/sfx/sfx_med_quarantine_clear.wav", AudioBusNames.Medical, vol: -8f, cooldown: 0.75f);
 
             // Danger
             Reg(DangerExplosion, "res://assets/audio/sfx/sfx_distant_explosion.mp3", AudioBusNames.Sfx, cooldown: 15f);
-            Reg(DangerAlarmKlaxon, "res://assets/audio/sfx/sfx_alarm_klaxon.mp3", AudioBusNames.Alerts, cooldown: 10f);
+            Reg(DangerAlarmKlaxon, "res://assets/audio/sfx/sfx_danger_alarm_klaxon.wav", AudioBusNames.Alerts, cooldown: 10f);
             Reg(DangerGlassBreak, "res://assets/audio/sfx/sfx_glass_break_small.mp3", AudioBusNames.Sfx, cooldown: 1f);
             Reg(DangerDebris, "res://assets/audio/sfx/sfx_debris_impact.mp3", AudioBusNames.Sfx, cooldown: 3f);
 

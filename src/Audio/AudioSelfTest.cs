@@ -5,7 +5,11 @@ using System.IO;
 using System.Text.Json;
 using Ashfall.Core;
 using Ashfall.Core.Combat;
+using Ashfall.Core.Disease;
 using Ashfall.Core.Radiation;
+using Ashfall.Core.Shelter;
+using Ashfall.Core.StartingLevel;
+using Ashfall.Core.Survivors;
 using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp.Audio
@@ -66,6 +70,13 @@ namespace AtomicWar.GodotApp.Audio
                 AudioCueCatalog.ActionItemPickup, AudioCueCatalog.DangerAlarmKlaxon,
                 AudioCueCatalog.SaveSuccess, AudioCueCatalog.DayTransition,
                 AudioCueCatalog.GameOver,
+                AudioCueCatalog.MedSurvivorDeath,
+                AudioCueCatalog.MedQuarantineSeal, AudioCueCatalog.MedQuarantineClear,
+                AudioCueCatalog.RadioVoCh3AshRoad, AudioCueCatalog.RadioVoCh7Milband,
+                AudioCueCatalog.RadioVoCh11Stockpile, AudioCueCatalog.RadioVoKindHatch,
+                AudioCueCatalog.RadioVoKindParley, AudioCueCatalog.RadioVoVerdictMeter,
+                AudioCueCatalog.RadioVoVerdictEden, AudioCueCatalog.RadioVoVerdictCount,
+                AudioCueCatalog.RadioVoVerdictGeophone, AudioCueCatalog.RadioVoVerdictReckoning,
             };
             foreach (string cueId in requiredCues)
             {
@@ -80,7 +91,12 @@ namespace AtomicWar.GodotApp.Audio
 
             // ── 2. Bus Topology ─────────────────────────────────
             GD.Print("[AudioSelfTest] --- Bus Topology ---");
-            string[] expectedBuses = { "Master", "Music", "Ambience", "SFX", "UI", "Voice", "Alerts" };
+            string[] expectedBuses = {
+                AudioBusNames.Master, AudioBusNames.Music, AudioBusNames.Ambience,
+                AudioBusNames.Sfx, AudioBusNames.Ui, AudioBusNames.Voice,
+                AudioBusNames.Alerts, AudioBusNames.Generator, AudioBusNames.Ventilation,
+                AudioBusNames.Radio, AudioBusNames.Medical, AudioBusNames.Surface,
+            };
             foreach (var kvp in AudioCueCatalog.All)
             {
                 bool validBus = false;
@@ -103,13 +119,29 @@ namespace AtomicWar.GodotApp.Audio
                 "res://assets/audio/music/main_menu.ogg",
                 "res://assets/audio/music/gameplay_underscore.ogg",
                 "res://assets/audio/radio/radio_static_hiss.wav",
+                "res://assets/audio/radio/vo_ch3_ash_road.wav",
+                "res://assets/audio/radio/vo_ch7_milband.wav",
+                "res://assets/audio/radio/vo_ch11_stockpile.wav",
+                "res://assets/audio/radio/vo_kind_hatch_relay.wav",
+                "res://assets/audio/radio/vo_kind_parley_beacon.wav",
+                "res://assets/audio/radio/vo_verdict_meter.wav",
+                "res://assets/audio/radio/vo_verdict_eden.wav",
+                "res://assets/audio/radio/vo_verdict_count.wav",
+                "res://assets/audio/radio/vo_verdict_geophone.wav",
+                "res://assets/audio/radio/vo_verdict_reckoning.wav",
                 "res://assets/audio/sfx/sfx_bunker_door_open.mp3",
                 "res://assets/audio/sfx/sfx_crafting_assemble.mp3",
                 "res://assets/audio/sfx/sfx_ventilation_fan.mp3",
                 "res://assets/audio/sfx/sfx_fallout_storm_approach.mp3",
+                "res://assets/audio/sfx/sfx_weather_black_rain.wav",
+                "res://assets/audio/sfx/sfx_weather_blizzard.wav",
                 "res://assets/audio/sfx/sfx_geiger_burst.mp3",
                 "res://assets/audio/sfx/sfx_heartbeat_slow.mp3",
+                "res://assets/audio/sfx/sfx_survivor_death.wav",
+                "res://assets/audio/sfx/sfx_med_quarantine_seal.wav",
+                "res://assets/audio/sfx/sfx_med_quarantine_clear.wav",
                 "res://assets/audio/sfx/sfx_alarm_klaxon.mp3",
+                "res://assets/audio/sfx/sfx_danger_alarm_klaxon.wav",
             };
             foreach (string resPath in keyAssets)
             {
@@ -228,15 +260,30 @@ namespace AtomicWar.GodotApp.Audio
             foreach (string cueId in gameFlowCues)
                 Check($"Game flow cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
-            string[] radCues = { AudioCueCatalog.RadAlertAcute, AudioCueCatalog.RadAlertChronic, AudioCueCatalog.RadGeigerBurst };
+            string[] radCues = {
+                AudioCueCatalog.RadAlertAcute, AudioCueCatalog.RadAlertChronic,
+                AudioCueCatalog.RadGeigerBurst, AudioCueCatalog.RadGeigerLoop,
+            };
             foreach (string cueId in radCues)
                 Check($"Radiation cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
+
+            string[] medicalCues = {
+                AudioCueCatalog.MedHeartbeat, AudioCueCatalog.MedCoughing,
+                AudioCueCatalog.MedSurvivorDeath, AudioCueCatalog.MedQuarantineSeal,
+                AudioCueCatalog.MedQuarantineClear,
+            };
+            foreach (string cueId in medicalCues)
+                Check($"Medical cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
             string[] weatherCues = { AudioCueCatalog.WeatherAlert, AudioCueCatalog.WeatherFalloutStorm, AudioCueCatalog.WeatherBlackRain, AudioCueCatalog.WeatherBlizzard };
             foreach (string cueId in weatherCues)
                 Check($"Weather cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
-            string[] shelterCues = { AudioCueCatalog.ShelterDoorOpen, AudioCueCatalog.ShelterDoorSeal, AudioCueCatalog.ShelterVentilation, AudioCueCatalog.ShelterAirFilter };
+            string[] shelterCues = {
+                AudioCueCatalog.ShelterDoorOpen, AudioCueCatalog.ShelterDoorSeal,
+                AudioCueCatalog.ShelterVentilation, AudioCueCatalog.ShelterGenerator,
+                AudioCueCatalog.ShelterAirFilter,
+            };
             foreach (string cueId in shelterCues)
                 Check($"Shelter cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
@@ -244,7 +291,15 @@ namespace AtomicWar.GodotApp.Audio
             foreach (string cueId in actionCues)
                 Check($"Action cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
-            string[] radioCues = { AudioCueCatalog.RadioStatic, AudioCueCatalog.RadioTune, AudioCueCatalog.RadioSignalLock };
+            string[] radioCues = {
+                AudioCueCatalog.RadioStatic, AudioCueCatalog.RadioTune, AudioCueCatalog.RadioSignalLock,
+                AudioCueCatalog.RadioMorse, AudioCueCatalog.RadioVoCh3AshRoad,
+                AudioCueCatalog.RadioVoCh7Milband, AudioCueCatalog.RadioVoCh11Stockpile,
+                AudioCueCatalog.RadioVoKindHatch, AudioCueCatalog.RadioVoKindParley,
+                AudioCueCatalog.RadioVoVerdictMeter, AudioCueCatalog.RadioVoVerdictEden,
+                AudioCueCatalog.RadioVoVerdictCount, AudioCueCatalog.RadioVoVerdictGeophone,
+                AudioCueCatalog.RadioVoVerdictReckoning,
+            };
             foreach (string cueId in radioCues)
                 Check($"Radio cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
@@ -288,19 +343,67 @@ namespace AtomicWar.GodotApp.Audio
             radiation.Register(survivor);
             bridge.BindRadiation(radiation);
             radiation.Expose(survivor, 100f, 1f);
+            Check("Bridge maps rising radiation dose to a Geiger burst",
+                emittedCues.Count >= 5 && emittedCues[3] == AudioCueCatalog.RadGeigerBurst,
+                ref pass, ref fail);
             Check("Bridge maps acute radiation status to its alert cue",
-                emittedCues.Count == 4 && emittedCues[3] == AudioCueCatalog.RadAlertAcute,
+                emittedCues.Count == 5 && emittedCues[4] == AudioCueCatalog.RadAlertAcute,
                 ref pass, ref fail);
             radiation.SeedLifetimeExposure(survivor, RadiationSystem.ChronicLifetimeThreshold);
             Check("Bridge maps chronic radiation status to its alert cue",
-                emittedCues.Count == 5 && emittedCues[4] == AudioCueCatalog.RadAlertChronic,
+                emittedCues.Count == 6 && emittedCues[5] == AudioCueCatalog.RadAlertChronic,
+                ref pass, ref fail);
+
+            var survivorFate = new SurvivorFateSystem();
+            bridge.BindSurvivorFate(survivorFate);
+            survivorFate.ReportDeath("audio_selftest_death", SurvivorDeathCause.Needs);
+            Check("Bridge maps the unified survivor-death event to its distinct cue",
+                emittedCues.Count == 7 && emittedCues[6] == AudioCueCatalog.MedSurvivorDeath,
+                ref pass, ref fail);
+            bridge.BindSurvivorFate(survivorFate);
+            survivorFate.ReportDeath("audio_selftest_death_second", SurvivorDeathCause.Combat);
+            Check("Rebinding survivor fate does not duplicate the death cue",
+                emittedCues.Count == 8 && emittedCues[7] == AudioCueCatalog.MedSurvivorDeath,
                 ref pass, ref fail);
 
             bridge.Dispose();
             secondWeather.ForceWeather(WeatherKind.Blizzard);
             radiation.AdministerIodine(survivor);
+            survivorFate.ReportDeath("audio_selftest_death_after_dispose", SurvivorDeathCause.Disease);
             Check("Disposing the bridge detaches every domain handler",
-                emittedCues.Count == 5, ref pass, ref fail);
+                emittedCues.Count == 8, ref pass, ref fail);
+
+            // Disease bridge lifecycle and patient-facing transitions.
+            var diseaseEmitted = new List<string>();
+            var diseaseBridge = new AudioEventBridge(diseaseEmitted.Add);
+            var disease = new DiseaseSystem();
+            var diseaseCatalog = new DiseaseCatalog();
+            const string audioTestDisease = "disease_audio_selftest";
+            diseaseCatalog.Add(new DiseaseDefinition
+            {
+                id = audioTestDisease,
+                vector = DiseaseVectorNames.Air,
+                illness_days = 1,
+                infectivity = 0f,
+                lethality = 0f,
+            });
+            disease.BindCatalog(diseaseCatalog);
+            diseaseBridge.BindDisease(disease);
+            disease.Infect("audio_patient", audioTestDisease, 1);
+            disease.Quarantine("audio_patient", audioTestDisease);
+            disease.EndQuarantine("audio_patient", audioTestDisease);
+            disease.TickDaily(2, Array.Empty<string>());
+            Check("Disease bridge maps infection, quarantine, and recovery transitions",
+                diseaseEmitted.Count == 4
+                && diseaseEmitted[0] == AudioCueCatalog.MedHeartbeat
+                && diseaseEmitted[1] == AudioCueCatalog.MedQuarantineSeal
+                && diseaseEmitted[2] == AudioCueCatalog.MedQuarantineClear
+                && diseaseEmitted[3] == AudioCueCatalog.MedQuarantineClear,
+                ref pass, ref fail);
+            diseaseBridge.Dispose();
+            disease.Infect("audio_patient_after_dispose", audioTestDisease, 3);
+            Check("Disposing the disease bridge detaches every disease handler",
+                diseaseEmitted.Count == 4, ref pass, ref fail);
 
             // Combat bridge lifecycle
             var combatEmitted = new List<string>();
@@ -318,6 +421,39 @@ namespace AtomicWar.GodotApp.Audio
             combatBridge.Dispose();
             Check("Disposing the combat bridge detaches the handler",
                 !combatBridge.HasCombatBinding, ref pass, ref fail);
+
+            // Shelter controller lifecycle and threshold behaviour.
+            var shelterEmitted = new List<string>();
+            var shelterStopped = new List<string>();
+            var shelterAudio = new ShelterAudioController(shelterEmitted.Add, shelterStopped.Add);
+            var startingLevel = new StartingLevelSystem();
+            var powerGrid = new PowerGridSystem(
+                new PowerGridState
+                {
+                    GenerationWatts = 100f,
+                    FuelUnits = 10f,
+                    BatteryCapacityWh = 100f,
+                    BatteryReserveWh = 100f,
+                },
+                new[] { new PowerGridRoom("audio_shelter", "Audio Shelter", 10f) },
+                new SeededRng(77));
+            shelterAudio.Subscribe(powerGrid, startingLevel);
+            Check("Shelter controller starts generator and ventilation loops",
+                shelterEmitted.Count == 2
+                && shelterEmitted[0] == AudioCueCatalog.ShelterGenerator
+                && shelterEmitted[1] == AudioCueCatalog.ShelterVentilation,
+                ref pass, ref fail);
+            var hazardousAir = startingLevel.CaptureState();
+            hazardousAir.airFilterHealthPercent = 45f;
+            hazardousAir.airHazardWarning = true;
+            startingLevel.RestoreState(hazardousAir);
+            Check("Shelter controller alerts when the air filter becomes hazardous",
+                shelterEmitted.Contains(AudioCueCatalog.ShelterAirFilter), ref pass, ref fail);
+            shelterAudio.Dispose();
+            Check("Shelter controller stops infrastructure loops on disposal",
+                shelterStopped.Contains(AudioCueCatalog.ShelterGenerator)
+                && shelterStopped.Contains(AudioCueCatalog.ShelterVentilation),
+                ref pass, ref fail);
 
             // ── Summary ─────────────────────────────────────────
             GD.Print($"[AudioSelfTest] --- SUMMARY ---");
