@@ -143,9 +143,9 @@ namespace AtomicWar.GodotApp
                 {
                     if (File.Exists(tmpPath)) File.Delete(tmpPath);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    /* cleanup: best-effort temp file delete */
+                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
                 }
             }
 
@@ -223,9 +223,9 @@ namespace AtomicWar.GodotApp
                 {
                     if (File.Exists(tmpPath)) File.Delete(tmpPath);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    /* cleanup: best-effort temp file delete */
+                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
                 }
             }
 
@@ -330,9 +330,9 @@ namespace AtomicWar.GodotApp
                 {
                     if (File.Exists(tmpPath)) File.Delete(tmpPath);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    /* cleanup: best-effort temp file delete */
+                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
                 }
             }
 
@@ -820,9 +820,9 @@ namespace AtomicWar.GodotApp
                 {
                     if (File.Exists(tmpPath)) File.Delete(tmpPath);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    /* cleanup: best-effort temp file delete */
+                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
                 }
             }
 
@@ -962,9 +962,9 @@ namespace AtomicWar.GodotApp
                 {
                     if (File.Exists(tmpPath)) File.Delete(tmpPath);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    /* cleanup: best-effort temp file delete */
+                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
                 }
             }
 
@@ -1057,9 +1057,9 @@ namespace AtomicWar.GodotApp
                 {
                     if (System.IO.File.Exists(tmpPath)) System.IO.File.Delete(tmpPath);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    /* cleanup: best-effort temp file delete */
+                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
                 }
             }
 
@@ -1192,9 +1192,9 @@ namespace AtomicWar.GodotApp
                 {
                     if (File.Exists(tmpPath)) File.Delete(tmpPath);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    /* cleanup: best-effort temp file delete */
+                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
                 }
             }
 

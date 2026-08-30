@@ -44,8 +44,9 @@ namespace AtomicWar.GodotApp
             {
                 catalogCount = CatalogFileSystem.EnumerateJsonFiles(files, dataDirectory, SearchOption.TopDirectoryOnly).Length;
             }
-            catch
+            catch (Exception ex)
             {
+                GD.PrintErr("[DATA] Failed to enumerate catalog files: " + ex.Message);
                 catalogCount = 0;
             }
             GD.Print(report.Summary + " — " + report.ErrorCount + " errors, "
