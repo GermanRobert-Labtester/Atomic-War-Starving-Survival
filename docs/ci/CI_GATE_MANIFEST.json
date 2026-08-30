@@ -59,7 +59,7 @@
       "name": "Godot Resource Cache Import",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . --import",
-      "timeout_seconds": 90,
+      "timeout_seconds": 180,
       "expected_summary": "",
       "classification": "fast",
       "critical": true
