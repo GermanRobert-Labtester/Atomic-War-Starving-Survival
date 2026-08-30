@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "collection_id": "dweller_dependency_backstories",
+  "description": "Plan 09 / 9B Content \u2014 survivor-voice vignettes that surface prior dependency on the four ChemicalDependencyKind classes. Designed to be discovered: the medical ward writer pulls one of these lines when assigning a detox plan or making the dependency checkpoint. Each entry is short, restrained, and ties to a real substance class. Tone: same house voice as the rest of the narrative authority \u2014 cold, exhausted, no moral judgement.",
+  "backstories": [
+    {
+      "backstory_id": "dep_mae_mae_opioid_maintenance",
+      "kind": "Opioid",
+      "survivor_id": "survivor_mae_mae",
+      "voice": "First-person, offhand, addressed to the medical log.",
+      "summary": "Carried a daily dose from the pharmacy department before the bombs; switched to bunker's stock during the early ration triage. Maintains a low steady dose by choice. Refuses cold-turkey on principle: it broke one of her people last winter and she did not forgive the bunk for it.",
+      "prose": "I started on a hundred milligrams of morphine when the pharmacy was still standing. The bunk tried the cold-turkey thing once, on a man named Rettke, on day forty-two. He screamed the second night and went out into the grey on the third. I have been on eighty milligrams ever since. Do not try to take me off. Ask the pharmacist for a maintenance bottle. The dose is eighty. If you have to drop it, we drop ten a week.",
+      "tags": [
+        "opioid",
+        "maintenance",
+        "advocated"
+      ]
+    },
+    {
+      "backstory_id": "dep_ged_ged_alcohol_steady",
+      "kind": "Alcohol",
+      "survivor_id": "survivor_ged_ged",
+      "voice": "First-person, defensive, addressed to whoever is reading this aloud.",
+      "summary": "Three-day-a-week drinker before the bombs; full-time drinker after. Steady now, not cheerful. The bunker whisky ration is part of his evening shift; the dosage slipped the first month in and never came back.",
+      "prose": "The wheat got us vodka. I drank the wheat. I do not apologize for the wheat. The bunk did not give me a hobby when it gave me a bunk, so I gave myself one. Two fingers of vodka at dinner and a half of a beer on Sundays. That is my dose today. That is my dose every day. If you take it, I will find something worse. Vodka is the leash I picked. Ask me to taper and I will split the bottle with you. Refuse the bottle and I will drink what you do not pour. Either way the dose is daily; the bunk has one and so do I.",
+      "tags": [
+        "alcohol",
+        "managed",
+        "leash"
+      ]
+    },
+    {
+      "backstory_id": "dep_wren_wren_stimulant_cliff",
+      "kind": "Stimulant",
+      "survivor_id": "survivor_wren_wren",
+      "voice": "Second-person, frayed, addressed to the on-shift chemist.",
+      "summary": "Pre-war stimulant user, slipped into bunk-stock caffeine pills during the depot collapse. Manages on a small morning dose; the off-day crashes almost broke the night-watch twice.",
+      "prose": "Here's what happens: I take the pill at six. I take the second pill at noon. I do not take the pill at three because I do not want to sleep until morning, and I do not want to wake up at midnight. A pill, then a pill, and after that, a long nothing. Withdrawal is not the climb down. Withdrawal is the floor. I have hit it three times. Each time I lost something I cannot name. So morning. Six. Tops out by twelve. Then maybe a half.",
+      "tags": [
+        "stimulant",
+        "ceiling",
+        "tapered"
+      ]
+    },
+    {
+      "backstory_id": "dep_kai_kai_sedative_exit",
+      "kind": "Sedative",
+      "survivor_id": "survivor_kai_kai",
+      "voice": "First-person, terse, addressed to the bunk log.",
+      "summary": "Pre-war anti-anxiety regimen. Tried cold-turkey in the first year of the bunker; the third sleepless night almost cost a bunkmate. Has been tapering monthly ever since. Leaves a note for the next on-shift medic.",
+      "prose": "Sleeping pills ended in April of the second year. I tried cold. I did not sleep for five nights and on the fourth I took a spoon from the ration kit and left it in my bunkmate's pillow. I have not been cold-turkey since. I drop a quarter-tab every month. I will probably drop the last quarter in my sleep. Write in my chart that I had help, that the bunk paid attention, and that this is what helped me: a half-glass of stabilization tea, a reading lamp at ten, and someone who would not let me bargain on the dose.",
+      "tags": [
+        "sedative",
+        "tapered",
+        "supervised"
+      ]
+    },
+    {
+      "backstory_id": "dep_vox_vox_alcohol_loss",
+      "kind": "Alcohol",
+      "survivor_id": "survivor_vox_vox",
+      "voice": "Third-person obituary voice, written by the diarist.",
+      "summary": "Heavy drinker brought in by a coalition camp. Sober for six weeks in the bunker, then a fellow bunkmate's death sent her back to the bottle. Did not survive the second withdrawal.",
+      "prose": "She had been sober six weeks. She had spoken at the meeting about the difference between a sober bunk and a wet one. The vote had gone three to two in favor of the dry rec, that month. When Oleta died, she went back to the bottle for four days and then took herself to the cold-turkey kit. The bunk watched because the bunk had watched before. She did not make it to the third night. We have written it the way we believe she would have wanted: plainly, with the cause of death listed as the second withdrawal, the first having been the more survivable one.",
+      "tags": [
+        "alcohol",
+        "mortality",
+        "cold_turkey"
+      ]
+    },
+    {
+      "backstory_id": "dep_orin_orin_opioid_relapse_after_stress",
+      "kind": "Opioid",
+      "survivor_id": "survivor_orin_orin",
+      "voice": "First-person, factual, addressed to the next medic.",
+      "summary": "Clean for nine weeks after a managed detox. Took a stress hit during the failed foraging run on day eighty-four and the bunk's ChemicalDependencySystem flagged him back up to threshold. He wrote the report himself so the next medic could see the curve.",
+      "prose": "Day eighty-four we lost the bags in the canyon. I came back in, I sat in the bunk, and the thinking started. The withdrawl started before the dose system did. First time one of the stressors pushed me past the line in writing. The medic's notes say 'cross-up event, source: failed_run, magnitude close to one'. The notes are correct. I dipped into the pharmacy and stayed on maintenance for a week. The after that week I am back to taper. The point of writing this down is that you can read me out loud when a new bunk-mate does this in front of you, and they will hear it better from someone who said it first.",
+      "tags": [
+        "opioid",
+        "stress_relapse",
+        "self_documented"
+      ]
+    }
+  ]
+}
