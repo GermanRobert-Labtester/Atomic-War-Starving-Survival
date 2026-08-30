@@ -44,6 +44,11 @@ namespace AtomicWar.GodotApp
             {
                 RaiseStateChanged();
             };
+
+            // A ventilation hazard (filter saturation / CO breakthrough) is the
+            // survival-critical alert the air-filter cue exists for.
+            System.Ventilation.OnHazardWarning += _ =>
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ShelterAirFilter);
         }
 
         public ActionResult QueueCase(string specimenId, string procedureId, string medicId, int currentDay)

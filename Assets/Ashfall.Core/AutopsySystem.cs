@@ -60,6 +60,9 @@ namespace Ashfall.Core
         private int _currentDay;
 
         public AutopsyState State => _state;
+        /// <summary>Owned ventilation subsystem; host code subscribes to its
+        /// hazard warnings without the Core layer depending on audio.</summary>
+        public VentilationSystem Ventilation => _ventilation;
         public event Action<AutopsyCase> OnCaseCompleted;
         public event Action OnAutopsyChanged;
 
