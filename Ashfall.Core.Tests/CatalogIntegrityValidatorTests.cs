@@ -151,6 +151,65 @@ namespace Ashfall.Core.Tests
                 + string.Join("\n", report.Errors));
         }
 
+        /// <summary>
+        /// Authority rule: a catalog whose root is a JSON object must declare a
+        /// top-level schema_version. A new catalog added without it silently bypasses
+        /// the migration ladder, so the integrity selftest must fail the build.
+        /// </summary>
+        [Fact]
+        public void RootObjectCatalogMissingSchemaVersionIsAnError()
+        {
+            var report = ValidateScratch((scratch) =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "unversioned_catalog.json"),
+                    "{\"items\":[{\"id\":\"item_orphan_knife\"}]}");
+            });
+
+            Assert.False(report.Clean,
+                "a root-object catalog without schema_version must fail the gate");
+            Assert.Contains(report.Errors, line =>
+                line.Contains("unversioned_catalog.json")
+                && line.Contains("schema_version"));
+        }
+
+        /// <summary>
+        /// A root-object catalog that declares schema_version must not trip the
+        /// rule. Pairs with the missing-field test above to prove the gate is
+        /// checking presence, not rejecting every object root.
+        /// </summary>
+        [Fact]
+        public void RootObjectCatalogWithSchemaVersionPassesTheRule()
+        {
+            var report = ValidateScratch((scratch) =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "versioned_catalog.json"),
+                    "{\"schema_version\":1,\"items\":[{\"id\":\"item_can_tin\"}]}");
+            });
+
+            Assert.True(report.Clean,
+                "a versioned root-object catalog must pass the gate:\n"
+                + string.Join("\n", report.Errors));
+        }
+
+        /// <summary>
+        /// Bare-array (legacy list) roots carry no per-file metadata slot, so the
+        /// schema_version rule must exempt them — otherwise the existing list-shaped
+        /// catalogs and test fixtures would falsely fail.
+        /// </summary>
+        [Fact]
+        public void BareArrayRootIsExemptFromSchemaVersionRule()
+        {
+            var report = ValidateScratch((scratch) =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "list_catalog.json"),
+                    "[{\"id\":\"item_scrap_metal\"}]");
+            });
+
+            Assert.True(report.Clean,
+                "a bare-array root must not be flagged for missing schema_version:\n"
+                + string.Join("\n", report.Errors));
+        }
+
         private static CatalogIntegrityReport ValidateScratch(Action<string> seed)
         {
             string scratch = Path.Combine(Path.GetTempPath(), "ashfall_integrity_" + Guid.NewGuid().ToString("N"));

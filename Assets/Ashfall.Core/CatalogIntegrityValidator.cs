@@ -422,6 +422,7 @@ namespace Ashfall.Core
                 {
                     using (doc)
                     {
+                        RequireSchemaVersion(doc.RootElement, leaf, report);
                         Walk(doc.RootElement, ctx.File, ctx);
                     }
                 }
@@ -477,6 +478,21 @@ namespace Ashfall.Core
                 report.Error("catalog '" + path + "': catalog read failure (" + ex.GetType().Name + "): " + ex.Message);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Authority rule: every catalog whose root is a JSON object must declare a
+        /// top-level <c>schema_version</c>. A catalog added without it silently
+        /// bypasses the migration ladder (a V1 loader would never see a V2 field),
+        /// so the integrity selftest must fail the build rather than load
+        /// unversioned data. Bare-array roots (legacy list catalogs) are exempt:
+        /// they carry no per-file metadata slot.
+        /// </summary>
+        private static void RequireSchemaVersion(JsonElement root, string file, CatalogIntegrityReport report)
+        {
+            if (root.ValueKind != JsonValueKind.Object) return;
+            if (!root.TryGetProperty("schema_version", out _))
+                report.Error("catalog '" + file + "': missing required top-level 'schema_version'");
         }
 
         private static void Walk(JsonElement element, string path, Ctx ctx)
