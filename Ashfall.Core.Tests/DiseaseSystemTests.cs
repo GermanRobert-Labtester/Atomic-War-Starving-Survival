@@ -312,8 +312,24 @@ namespace Ashfall.Core.Tests
             Assert.Equal(ExpansionHubSave.CurrentSaveVersion, decoded.saveVersion);
             Assert.NotNull(decoded.disease);
             Assert.True(decoded.disease.air_filtration);
-            // One simulation row per authored disease (cholera, flu, blood, spore, ARS, fungal, typhoid).
-            Assert.Equal(7, decoded.disease.diseases.Count);
+            // One simulation row per authored disease (Plan 09 9A deepened the
+            // catalog from 7 to 15; this test must count whatever the live
+            // catalog ships, not a hardcoded floor). The seven legacy diseases
+            // are still required to remain — this is the regression pin.
+            Assert.True(decoded.disease.diseases.Count >= 7,
+                "save envelope dropped below the legacy 7-disease floor");
+            string[] legacyDiseases =
+            {
+                DiseaseIds.Cholera, DiseaseIds.ZoonoticFlu, DiseaseIds.BloodFever,
+                DiseaseIds.SporeBlight, "disease_acute_radiation_syndrome",
+                "disease_fungal_respiratory", "disease_typhoid_waterborne",
+            };
+            foreach (string id in legacyDiseases)
+            {
+                Assert.True(decoded.disease.diseases.Exists(d => d.disease_id == id),
+                    $"legacy disease '{id}' missing from save envelope");
+            }
+
             var spore = decoded.disease.diseases.Find(d => d.disease_id == DiseaseIds.SporeBlight);
             Assert.NotNull(spore);
             Assert.Equal(3, spore.infected.Count);
