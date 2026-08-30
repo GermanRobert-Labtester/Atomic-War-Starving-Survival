@@ -125,6 +125,16 @@ namespace AtomicWar.GodotApp.Audio
         public const string DangerGlassBreak = "danger_glass_break";
         public const string DangerDebris = "danger_debris";
 
+        // Combat
+        public const string CombatStart = "combat_start";
+        public const string CombatFire = "combat_fire";
+        public const string CombatJam = "combat_jam";
+        public const string CombatReload = "combat_reload";
+        public const string CombatHit = "combat_hit";
+        public const string CombatDowned = "combat_downed";
+        public const string CombatVictory = "combat_victory";
+        public const string CombatDefeat = "combat_defeat";
+
         // Game flow
         public const string GameOver = "game_over";
         public const string SaveSuccess = "save_success";
@@ -202,6 +212,16 @@ namespace AtomicWar.GodotApp.Audio
             Reg(DangerAlarmKlaxon, "res://assets/audio/sfx/sfx_alarm_klaxon.mp3", AudioBusNames.Alerts, cooldown: 10f);
             Reg(DangerGlassBreak, "res://assets/audio/sfx/sfx_glass_break_small.mp3", AudioBusNames.Sfx, cooldown: 1f);
             Reg(DangerDebris, "res://assets/audio/sfx/sfx_debris_impact.mp3", AudioBusNames.Sfx, cooldown: 3f);
+
+            // Combat
+            Reg(CombatStart, "res://assets/audio/sfx/sfx_combat_start.mp3", AudioBusNames.Alerts, vol: -2f, cooldown: 5f);
+            Reg(CombatFire, "res://assets/audio/sfx/sfx_combat_gunshot.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 0.3f);
+            Reg(CombatJam, "res://assets/audio/sfx/sfx_combat_jam.mp3", AudioBusNames.Sfx, vol: -6f, cooldown: 1f);
+            Reg(CombatReload, "res://assets/audio/sfx/sfx_combat_reload.mp3", AudioBusNames.Sfx, vol: -6f, cooldown: 0.5f);
+            Reg(CombatHit, "res://assets/audio/sfx/sfx_combat_hit.mp3", AudioBusNames.Sfx, vol: -5f, cooldown: 0.3f);
+            Reg(CombatDowned, "res://assets/audio/sfx/sfx_combat_downed.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 1f);
+            Reg(CombatVictory, "res://assets/audio/sfx/sfx_combat_victory.mp3", AudioBusNames.Sfx, vol: -6f, cooldown: 5f);
+            Reg(CombatDefeat, "res://assets/audio/sfx/sfx_combat_defeat.mp3", AudioBusNames.Music, vol: -8f, cooldown: 5f);
 
             // Game flow
             Reg(GameOver, "res://assets/audio/music/main_menu.ogg", AudioBusNames.Music, vol: -10f);

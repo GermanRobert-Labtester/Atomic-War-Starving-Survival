@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Ashfall.Core;
+using Ashfall.Core.Combat;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.World;
 
@@ -247,6 +248,10 @@ namespace AtomicWar.GodotApp.Audio
             foreach (string cueId in radioCues)
                 Check($"Radio cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
+            string[] combatCues = { AudioCueCatalog.CombatStart, AudioCueCatalog.CombatFire, AudioCueCatalog.CombatJam, AudioCueCatalog.CombatReload, AudioCueCatalog.CombatHit, AudioCueCatalog.CombatDowned, AudioCueCatalog.CombatVictory, AudioCueCatalog.CombatDefeat };
+            foreach (string cueId in combatCues)
+                Check($"Combat cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
+
             // ── 7. Lifecycle Safety ─────────────────────────────
             GD.Print("[AudioSelfTest] --- Lifecycle Safety ---");
             Check("AudioCueCatalog.All is non-null", AudioCueCatalog.All != null, ref pass, ref fail);
@@ -296,6 +301,23 @@ namespace AtomicWar.GodotApp.Audio
             radiation.AdministerIodine(survivor);
             Check("Disposing the bridge detaches every domain handler",
                 emittedCues.Count == 5, ref pass, ref fail);
+
+            // Combat bridge lifecycle
+            var combatEmitted = new List<string>();
+            var combatBridge = new AudioEventBridge(combatEmitted.Add);
+            var combat = new TacticalCombatSystem();
+            combatBridge.BindCombat(combat);
+            var player = new CombatantState { Id = "audio_st_player", Name = "Tester", IsPlayer = true, Health = 100f, MaxHealth = 100f };
+            combat.BeginEncounter("audio_st_enc", "", "loc", "Test Location", 1, 42, new[] { player }, null, 1, 50f);
+            Check("Bridge maps encounter_start to combat_start cue",
+                combatEmitted.Count == 1 && combatEmitted[0] == AudioCueCatalog.CombatStart,
+                ref pass, ref fail);
+            combatBridge.BindCombat(combat);
+            Check("Rebinding the same combat system does not duplicate handlers",
+                combatBridge.HasCombatBinding, ref pass, ref fail);
+            combatBridge.Dispose();
+            Check("Disposing the combat bridge detaches the handler",
+                !combatBridge.HasCombatBinding, ref pass, ref fail);
 
             // ── Summary ─────────────────────────────────────────
             GD.Print($"[AudioSelfTest] --- SUMMARY ---");

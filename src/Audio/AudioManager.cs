@@ -201,7 +201,8 @@ namespace AtomicWar.GodotApp.Audio
 
             _eventBridge.SubscribeAll(
                 _domainProvider.AudioRadiation,
-                _domainProvider.AudioWeather);
+                _domainProvider.AudioWeather,
+                _domainProvider.AudioCombat);
         }
 
         // ── Cue-based playback (primary API) ────────────────────
@@ -277,8 +278,8 @@ namespace AtomicWar.GodotApp.Audio
             StopLoopsOnBus(AudioBusNames.Ambience);
         }
 
-        public void PlayMainMenuMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/main_menu.wav"));
-        public void PlayGameplayMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/gameplay_underscore.wav"));
+        public void PlayMainMenuMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/main_menu.ogg"));
+        public void PlayGameplayMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/gameplay_underscore.ogg"));
 
         public void StopMusic()
         {

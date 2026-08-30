@@ -2,7 +2,7 @@
 
 > **Living Architecture Authority**: Documents all registered audio cues, target Godot audio buses, asset resource paths, loop behavior, volume trim, and cooldown timers in `src/Audio/AudioCueCatalog.cs`.
 
-**Total Registered Cues:** `49`<br>
+**Total Registered Cues:** `57`<br>
 **Last Verified:** `2026-08-30`<br>
 **Drift Gated:** `python3 scripts/ci/generate-audio-catalog.py --check`
 
@@ -33,6 +33,7 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 
 | Cue ID | Target Bus | Resource Path | Loop | Volume Trim | Cooldown | Asset Status |
 |---|---|---|---|---|---|---|
+| `combat_start` | `Alerts` | `res://assets/audio/sfx/sfx_combat_start.mp3` | No | -2 dB | 5s | ✅ Exists |
 | `danger_alarm_klaxon` | `Alerts` | `res://assets/audio/sfx/sfx_alarm_klaxon.mp3` | No | 0 dB | 10s | ✅ Exists |
 | `rad_alert_acute` | `Alerts` | `res://assets/audio/sfx/sfx_radiation_alarm.mp3` | No | -2 dB | 5s | ✅ Exists |
 | `rad_alert_chronic` | `Alerts` | `res://assets/audio/sfx/sfx_radiation_alarm.mp3` | No | -6 dB | 10s | ✅ Exists |
@@ -45,6 +46,7 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `shelter_generator` | `Ambience` | `res://assets/audio/sfx/sfx_generator_cough.mp3` | No | -10 dB | 8s | ✅ Exists |
 | `shelter_ventilation` | `Ambience` | `res://assets/audio/sfx/sfx_ventilation_fan.mp3` | Yes | -12 dB | — | ✅ Exists |
 | `shelter_water_drip` | `Ambience` | `res://assets/audio/sfx/sfx_water_drip_cave.mp3` | Yes | -15 dB | — | ✅ Exists |
+| `combat_defeat` | `Music` | `res://assets/audio/sfx/sfx_combat_defeat.mp3` | No | -8 dB | 5s | ✅ Exists |
 | `game_over` | `Music` | `res://assets/audio/music/main_menu.ogg` | No | -10 dB | — | ✅ Exists |
 | `music_gameplay` | `Music` | `res://assets/audio/music/gameplay_underscore.ogg` | No | -8 dB | — | ✅ Exists |
 | `music_menu` | `Music` | `res://assets/audio/music/main_menu.ogg` | No | -6 dB | — | ✅ Exists |
@@ -55,6 +57,12 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `action_repair` | `Sfx` | `res://assets/audio/sfx/sfx_repair_wrench.mp3` | No | 0 dB | 0.5s | ✅ Exists |
 | `action_trade` | `Sfx` | `res://assets/audio/sfx/sfx_trade_exchange.mp3` | No | 0 dB | 0.5s | ✅ Exists |
 | `action_water_pour` | `Sfx` | `res://assets/audio/sfx/sfx_water_pour.mp3` | No | 0 dB | 0.5s | ✅ Exists |
+| `combat_downed` | `Sfx` | `res://assets/audio/sfx/sfx_combat_downed.mp3` | No | -4 dB | 1s | ✅ Exists |
+| `combat_fire` | `Sfx` | `res://assets/audio/sfx/sfx_combat_gunshot.mp3` | No | -4 dB | 0.3s | ✅ Exists |
+| `combat_hit` | `Sfx` | `res://assets/audio/sfx/sfx_combat_hit.mp3` | No | -5 dB | 0.3s | ✅ Exists |
+| `combat_jam` | `Sfx` | `res://assets/audio/sfx/sfx_combat_jam.mp3` | No | -6 dB | 1s | ✅ Exists |
+| `combat_reload` | `Sfx` | `res://assets/audio/sfx/sfx_combat_reload.mp3` | No | -6 dB | 0.5s | ✅ Exists |
+| `combat_victory` | `Sfx` | `res://assets/audio/sfx/sfx_combat_victory.mp3` | No | -6 dB | 5s | ✅ Exists |
 | `danger_debris` | `Sfx` | `res://assets/audio/sfx/sfx_debris_impact.mp3` | No | 0 dB | 3s | ✅ Exists |
 | `danger_explosion` | `Sfx` | `res://assets/audio/sfx/sfx_distant_explosion.mp3` | No | 0 dB | 15s | ✅ Exists |
 | `danger_glass_break` | `Sfx` | `res://assets/audio/sfx/sfx_glass_break_small.mp3` | No | 0 dB | 1s | ✅ Exists |

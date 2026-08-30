@@ -1,5 +1,6 @@
 using System;
 using Ashfall.Core;
+using Ashfall.Core.Combat;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.World;
 
@@ -13,6 +14,7 @@ namespace AtomicWar.GodotApp.Audio
     {
         RadiationSystem? AudioRadiation { get; }
         WeatherSystem? AudioWeather { get; }
+        TacticalCombatSystem? AudioCombat { get; }
     }
 
     /// <summary>
@@ -25,6 +27,7 @@ namespace AtomicWar.GodotApp.Audio
         private readonly Action<string> _playCue;
         private RadiationSystem? _radiation;
         private WeatherSystem? _weather;
+        private TacticalCombatSystem? _combat;
         private bool _disposed;
 
         public AudioEventBridge(AudioManager audio)
@@ -43,11 +46,13 @@ namespace AtomicWar.GodotApp.Audio
         /// </summary>
         public void SubscribeAll(
             RadiationSystem? radiation = null,
-            WeatherSystem? weather = null)
+            WeatherSystem? weather = null,
+            TacticalCombatSystem? combat = null)
         {
             ThrowIfDisposed();
             BindRadiation(radiation);
             BindWeather(weather);
+            BindCombat(combat);
         }
 
         public void BindRadiation(RadiationSystem? radiation)
@@ -76,6 +81,45 @@ namespace AtomicWar.GodotApp.Audio
             _weather = weather;
             if (_weather != null)
                 _weather.OnWeatherChanged += OnWeatherChanged;
+        }
+
+        public void BindCombat(TacticalCombatSystem? combat)
+        {
+            ThrowIfDisposed();
+            if (ReferenceEquals(_combat, combat))
+                return;
+
+            if (_combat != null)
+                _combat.OnCombatEvent -= OnCombatEvent;
+
+            _combat = combat;
+            if (_combat != null)
+                _combat.OnCombatEvent += OnCombatEvent;
+        }
+
+        private void OnCombatEvent(CombatState state, CombatEvent evt)
+        {
+            string? cueId = evt.Kind switch
+            {
+                "encounter_start" => AudioCueCatalog.CombatStart,
+                "fire" => AudioCueCatalog.CombatFire,
+                "suppress" => AudioCueCatalog.CombatFire,
+                "weapon_jam" => AudioCueCatalog.CombatJam,
+                "reload" => AudioCueCatalog.CombatReload,
+                "clear_jam" => AudioCueCatalog.CombatReload,
+                "downed" => AudioCueCatalog.CombatDowned,
+                "death" => AudioCueCatalog.CombatDowned,
+                "mutual_kill" => AudioCueCatalog.CombatDowned,
+                "victory" => AudioCueCatalog.CombatVictory,
+                "defeat" => AudioCueCatalog.CombatDefeat,
+                "trap" => AudioCueCatalog.CombatHit,
+                "retreat_fail" => AudioCueCatalog.CombatHit,
+                "enemy_fire" when evt.Detail.Contains("hits") => AudioCueCatalog.CombatHit,
+                _ => null,
+            };
+
+            if (cueId != null)
+                _playCue(cueId);
         }
 
         private void OnRadiationStatusGained(SurvivorRadState state, SurvivorStatus status)
@@ -123,9 +167,12 @@ namespace AtomicWar.GodotApp.Audio
                 _radiation.OnStatusGained -= OnRadiationStatusGained;
             if (_weather != null)
                 _weather.OnWeatherChanged -= OnWeatherChanged;
+            if (_combat != null)
+                _combat.OnCombatEvent -= OnCombatEvent;
 
             _radiation = null;
             _weather = null;
+            _combat = null;
             _disposed = true;
         }
 
@@ -137,5 +184,6 @@ namespace AtomicWar.GodotApp.Audio
 
         internal bool HasRadiationBinding => _radiation != null;
         internal bool HasWeatherBinding => _weather != null;
+        internal bool HasCombatBinding => _combat != null;
     }
 }

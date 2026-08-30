@@ -16,11 +16,14 @@
 The audio system is structurally complete but almost entirely **unwired**.
 
 - **49 cues** are registered, and all 49 resource paths resolve to files on disk (0 silent).
-- Only **7 of those 49 cues** are actually triggered by game code. The remaining **42 are
+- **13 of those 49 cues** are actually triggered by game code (via `PlayCue`, the
+  `AudioEventBridge`, and `AudioManager` convenience methods). The remaining **36 are
   dead registrations** — defined in the catalog, never played.
 - `AudioEventBridge` subscribes to exactly **2 Core domains** (Radiation, Weather) out of
   ~15 event-emitting systems. Combat, medical, economy, expeditions, crafting, shelter,
-  UI, and radio are all silent.
+  and radio are all silent.
+- **Bug found:** `PlayGameplayMusic()` and `PlayMainMenuMusic()` referenced `.wav` paths
+  but the assets are `.ogg` — gameplay music silently failed to load. Fixed in 7B.
 - **118 radio broadcasts** across 4 JSON files carry **0 audio references**. **5 VO files**
   exist on disk but no cue or JSON entry points to them.
 - **19 of 22 weather states** produce no sound on transition (only FalloutStorm, BlackRain,
@@ -38,8 +41,8 @@ subscription, not new asset production.
    `AudioCueCatalog.RegisterAll()`.
 2. Extracted all `event Action<...>` declarations across `Assets/Ashfall.Core/` (excluding
    HeadlessDemo/Test files) to enumerate the full trigger surface.
-3. Grepped `src/` for `PlayCue` / `NotifyGameFlow` call sites outside the `Audio/` folder
-   to find which cues are actually fired.
+3. Grepped `src/` for `PlayCue` / `NotifyGameFlow` / convenience-method call sites
+   outside the `Audio/` folder to find which cues are actually fired.
 4. Cross-referenced every `res://` cue path against `find assets/audio -type f` to verify
    on-disk resolution.
 5. Enumerated `WeatherKind` enum values (22 states) and `CombatEvent.Kind` strings (26 kinds)
@@ -47,28 +50,33 @@ subscription, not new asset production.
 6. Confirmed 0 `audio_cue` fields in all 4 radio JSON files.
 7. Ran `generate-audio-catalog.py --check` — passes (catalog doc in sync, 49 cues).
 8. **Limitation:** `AudioSelfTest` requires the Godot runtime (`ResourceLoader`,
-   `ProjectSettings`) and cannot be executed in this environment. The selftest's
-   resource-resolution assertions were verified statically by file-existence check
-   instead. All 49 paths resolve.
+   `ProjectSettings`). Godot is available at `/home/robertsrff/.local/bin/godot` but the
+   initial audit pass verified resource resolution statically by file-existence check.
+   All 49 paths resolve. The selftest should be run after 7B code changes.
 
 ---
 
 ## 3. Trigger Coverage Matrix
 
-### 3.1 Cues that ARE triggered (7 / 49)
+### 3.1 Cues that ARE triggered (13 / 49)
 
 | Cue ID | Domain | Trigger site | Event source |
 |---|---|---|---|
-| `rad_alert_acute` | Radiation | `AudioEventBridge.OnRadiationStatusGained` | `RadiationSystem.OnStatusGained` (AcuteRadiationSickness) |
+| `rad_alert_acute` | Radiation | `AudioEventBridge` + `PlayRadiationAlert()` | `RadiationSystem.OnStatusGained` / `SurvivorsHostSession.cs:128` |
 | `rad_alert_chronic` | Radiation | `AudioEventBridge.OnRadiationStatusGained` | `RadiationSystem.OnStatusGained` (ChronicIllness) |
 | `weather_fallout_storm` | Weather | `AudioEventBridge.OnWeatherChanged` | `WeatherSystem.OnWeatherChanged` (FalloutStorm) |
 | `weather_black_rain` | Weather | `AudioEventBridge.OnWeatherChanged` | `WeatherSystem.OnWeatherChanged` (BlackRain) |
 | `weather_blizzard` | Weather | `AudioEventBridge.OnWeatherChanged` | `WeatherSystem.OnWeatherChanged` (Blizzard) |
-| `day_transition` | Game flow | `Main.Holdfast.cs:237` | Direct `PlayCue` |
-| `game_over` | Game flow | `Main.GameFlow.cs:512` | Direct `PlayCue` |
-| `save_success` | Game flow | `Main.SaveOrchestrator.cs:302` | Direct `PlayCue` |
+| `weather_alert` | Weather | `PlayWeatherAlert()` | `WorldHostSession.cs:56` |
+| `day_transition` | Game flow | Direct `PlayCue` | `Main.Holdfast.cs:237` |
+| `game_over` | Game flow | Direct `PlayCue` | `Main.GameFlow.cs:512` |
+| `save_success` | Game flow | Direct `PlayCue` | `Main.SaveOrchestrator.cs:302` |
+| `ui_click` | UI | `PlayUiClick()` | `AshfallUiHelpers.cs:541` |
+| `radio_static` | Radio | `PlayRadioStatic()` | `RadioHostSession.cs:106` |
+| `music_gameplay` | Music | `PlayGameplayMusic()` | `Main.GameFlow.cs:97` (was broken — `.wav` path, fixed in 7B) |
+| `amb_bunker` | Ambience | `StartBunkerAmbience()` | `Main.GameFlow.cs:98` |
 
-### 3.2 Cues that are NOT triggered (42 / 49)
+### 3.2 Cues that are NOT triggered (36 / 49)
 
 | Domain | Registered cues | Wired? |
 |---|---|---|
@@ -326,7 +334,7 @@ encounters it in a normal session.
 ## 11. Recommendations for 7B / 7C
 
 ### 7B (cue + VO production) — priority order
-1. **Wire the 42 dead cues first.** Most gaps are host-side `PlayCue` calls and
+1. **Wire the 36 dead cues first.** Most gaps are host-side `PlayCue` calls and
    `AudioEventBridge` subscriptions, not new assets. This alone fixes gaps #1-4, #6, #9-17.
 2. **Produce distinct assets** for the 6 differentiation problems in Section 5
    (`weather_black_rain`, `weather_blizzard`, `danger_alarm_klaxon`, `game_over`,
@@ -346,7 +354,7 @@ encounters it in a normal session.
 4. Add state-transition stings for weather onset (storm-rising sting before the storm bed).
 
 ### Environment limitation
-No Godot binary is available in this environment. `AudioSelfTest`, `--audio-selftest`,
-and `--data-integrity-selftest` cannot be executed here. All 7A verification was done via
-static analysis and the catalog generator `--check` gate. 7B/7C code changes should be
-verified by running the selftest in a Godot-equipped environment before commit.
+Godot is available at `/home/robertsrff/.local/bin/godot`. The `--audio-selftest` and
+`--data-integrity-selftest` can be run after 7B/7C code changes. The initial 7A audit
+verified resource resolution statically; 7B changes should be verified by running the
+selftest before commit.
