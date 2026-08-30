@@ -13,6 +13,7 @@ using Ashfall.Core.World;
 using Ashfall.Core.Crafting;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Narrative;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -91,6 +92,7 @@ namespace AtomicWar.GodotApp
             var vmState = VinylMoraleSaveStore.TryLoad() ?? new VinylMoraleState();
             var vmSys = new VinylMoraleSystem(new GodotLog());
             vmSys.RestoreState(vmState);
+            LoadVinylRecordCatalog(vmSys);
             _vinylMorale = new VinylMoraleHostSession(vmSys);
             _vinylMorale.DayProvider = () => _simDay;
             if (_vinylMoralePanel != null && _vinylMoralePanel.IsInsideTree())
@@ -99,6 +101,46 @@ namespace AtomicWar.GodotApp
             _vinylMoralePanel.Bind(_vinylMorale);
             _vinylMoralePanel.Visible = false;
             AddChild(_vinylMoralePanel);
+        }
+
+        /// <summary>
+        /// Load the pre-war vinyl record archive (narrative/vinyl_record_archive.json)
+        /// into the VinylMoraleSystem. The archive uses the Narrative VinylRecordEntry
+        /// shape (rich archival metadata); the morale system uses VinylRecordDefinition
+        /// (playback-focused). This bridges the two without a second catalog file.
+        /// Missing file is non-fatal — the system runs with an empty catalog (headless tests).
+        /// </summary>
+        private void LoadVinylRecordCatalog(VinylMoraleSystem system)
+        {
+            string path = System.IO.Path.Combine(_dataDir, "narrative", "vinyl_record_archive.json");
+            if (!System.IO.File.Exists(path)) return;
+            string json = System.IO.File.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(json)) return;
+
+            var file = new SystemTextJsonSerializer().Deserialize<VinylRecordsFile>(json);
+            if (file?.records == null) return;
+
+            var defs = new List<VinylRecordDefinition>(file.records.Count);
+            foreach (var r in file.records)
+            {
+                if (r == null || string.IsNullOrEmpty(r.record_id)) continue;
+                // Genre: prefer the first tag (e.g. "classical", "jazz", "folk");
+                // IsRareCulturalRecord checks genre for classical/jazz/symphony/hymnal.
+                string genre = (r.tags != null && r.tags.Length > 0) ? r.tags[0] : string.Empty;
+                defs.Add(new VinylRecordDefinition
+                {
+                    record_id = r.record_id,
+                    display_name = !string.IsNullOrEmpty(r.title) ? r.title : r.record_id,
+                    genre = genre,
+                    morale_daily_bonus = r.daily_morale_modifier,
+                    flashback_suppression = 0f,
+                    audio_cue_id = string.Empty,
+                    description = !string.IsNullOrEmpty(r.dweller_resonance_notes)
+                        ? r.dweller_resonance_notes
+                        : (r.needle_audio_texture ?? string.Empty)
+                });
+            }
+            system.LoadCatalog(defs);
         }
 
         private void SaveVinylMorale()

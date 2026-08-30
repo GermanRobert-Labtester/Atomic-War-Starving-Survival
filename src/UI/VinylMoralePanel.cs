@@ -73,8 +73,8 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (_host != null)
                 {
-                    _host.AcquireRecord("vinyl_amber_nights_1969");
-                    _host.PlayRecord("vinyl_amber_nights_1969");
+                    _host.AcquireRecord("record_04_midnight_in_moscow_jazz_octet");
+                    _host.PlayRecord("record_04_midnight_in_moscow_jazz_octet");
                 }
             };
             buttonRow.AddChild(_playBtn);
