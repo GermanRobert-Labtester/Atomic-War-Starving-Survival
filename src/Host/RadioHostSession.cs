@@ -272,7 +272,12 @@ namespace AtomicWar.GodotApp
             if (string.IsNullOrWhiteSpace(intercept.FactionId))
                 return null;
 
-            // Try faction-specific mapping first, then generic event kind
+            // Event-kind-based mapping for vo_kind_* clips
+            if (intercept.Kind == RadioEventKind.ParleyResolution &&
+                s_voiceOverMap.ContainsKey("vo_kind_parley"))
+                return "vo_kind_parley";
+
+            // Fallback: message-text matching (backward compatible)
             foreach (var kvp in s_voiceOverMap)
             {
                 if (intercept.Message != null &&

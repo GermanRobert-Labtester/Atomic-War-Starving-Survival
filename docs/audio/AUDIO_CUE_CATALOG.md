@@ -47,7 +47,7 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `shelter_ventilation` | `Ambience` | `res://assets/audio/sfx/sfx_ventilation_fan.mp3` | Yes | -12 dB | — | ✅ Exists |
 | `shelter_water_drip` | `Ambience` | `res://assets/audio/sfx/sfx_water_drip_cave.mp3` | Yes | -15 dB | — | ✅ Exists |
 | `combat_defeat` | `Music` | `res://assets/audio/sfx/sfx_combat_defeat.mp3` | No | -8 dB | 5s | ✅ Exists |
-| `game_over` | `Music` | `res://assets/audio/music/main_menu.ogg` | No | -10 dB | — | ✅ Exists |
+| `game_over` | `Music` | `res://assets/audio/music/game_over.ogg` | No | -10 dB | — | ✅ Exists |
 | `music_gameplay` | `Music` | `res://assets/audio/music/gameplay_underscore.ogg` | No | -8 dB | — | ✅ Exists |
 | `music_menu` | `Music` | `res://assets/audio/music/main_menu.ogg` | No | -6 dB | — | ✅ Exists |
 | `action_crafting` | `Sfx` | `res://assets/audio/sfx/sfx_crafting_assemble.mp3` | No | 0 dB | 1s | ✅ Exists |
@@ -66,7 +66,7 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `danger_debris` | `Sfx` | `res://assets/audio/sfx/sfx_debris_impact.mp3` | No | 0 dB | 3s | ✅ Exists |
 | `danger_explosion` | `Sfx` | `res://assets/audio/sfx/sfx_distant_explosion.mp3` | No | 0 dB | 15s | ✅ Exists |
 | `danger_glass_break` | `Sfx` | `res://assets/audio/sfx/sfx_glass_break_small.mp3` | No | 0 dB | 1s | ✅ Exists |
-| `day_transition` | `Sfx` | `res://assets/audio/sfx/sfx_pipe_clang.mp3` | No | -12 dB | 2s | ✅ Exists |
+| `day_transition` | `Sfx` | `res://assets/audio/sfx/sfx_day_bell.mp3` | No | -8 dB | 2s | ✅ Exists |
 | `med_coughing` | `Sfx` | `res://assets/audio/sfx/sfx_coughing_fit.mp3` | No | -4 dB | 8s | ✅ Exists |
 | `med_heartbeat` | `Sfx` | `res://assets/audio/sfx/sfx_heartbeat_slow.mp3` | No | -6 dB | 5s | ✅ Exists |
 | `rad_geiger_burst` | `Sfx` | `res://assets/audio/sfx/sfx_geiger_burst.mp3` | No | 0 dB | 2s | ✅ Exists |

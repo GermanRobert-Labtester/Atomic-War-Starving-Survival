@@ -1,6 +1,7 @@
 using System;
 using Ashfall.Core;
 using Ashfall.Core.Combat;
+using Ashfall.Core.Crafting;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.World;
 
@@ -15,6 +16,7 @@ namespace AtomicWar.GodotApp.Audio
         RadiationSystem? AudioRadiation { get; }
         WeatherSystem? AudioWeather { get; }
         TacticalCombatSystem? AudioCombat { get; }
+        CraftingSystem? AudioCrafting { get; }
     }
 
     /// <summary>
@@ -28,6 +30,7 @@ namespace AtomicWar.GodotApp.Audio
         private RadiationSystem? _radiation;
         private WeatherSystem? _weather;
         private TacticalCombatSystem? _combat;
+        private CraftingSystem? _crafting;
         private bool _disposed;
 
         public AudioEventBridge(AudioManager audio)
@@ -47,12 +50,14 @@ namespace AtomicWar.GodotApp.Audio
         public void SubscribeAll(
             RadiationSystem? radiation = null,
             WeatherSystem? weather = null,
-            TacticalCombatSystem? combat = null)
+            TacticalCombatSystem? combat = null,
+            CraftingSystem? crafting = null)
         {
             ThrowIfDisposed();
             BindRadiation(radiation);
             BindWeather(weather);
             BindCombat(combat);
+            BindCrafting(crafting);
         }
 
         public void BindRadiation(RadiationSystem? radiation)
@@ -122,6 +127,25 @@ namespace AtomicWar.GodotApp.Audio
                 _playCue(cueId);
         }
 
+        public void BindCrafting(CraftingSystem? crafting)
+        {
+            ThrowIfDisposed();
+            if (ReferenceEquals(_crafting, crafting))
+                return;
+
+            if (_crafting != null)
+                _crafting.OnCraftCompleted -= OnCraftCompleted;
+
+            _crafting = crafting;
+            if (_crafting != null)
+                _crafting.OnCraftCompleted += OnCraftCompleted;
+        }
+
+        private void OnCraftCompleted(Recipe recipe)
+        {
+            _playCue(AudioCueCatalog.ActionCrafting);
+        }
+
         private void OnRadiationStatusGained(SurvivorRadState state, SurvivorStatus status)
         {
             string? cueId = status switch
@@ -141,7 +165,18 @@ namespace AtomicWar.GodotApp.Audio
             {
                 WeatherKind.FalloutStorm => AudioCueCatalog.WeatherFalloutStorm,
                 WeatherKind.BlackRain => AudioCueCatalog.WeatherBlackRain,
+                WeatherKind.BloodRain => AudioCueCatalog.WeatherBlackRain,
                 WeatherKind.Blizzard => AudioCueCatalog.WeatherBlizzard,
+                WeatherKind.IceStorm => AudioCueCatalog.WeatherBlizzard,
+                WeatherKind.Ashfall => AudioCueCatalog.WeatherFalloutStorm,
+                WeatherKind.AcidSnow => AudioCueCatalog.WeatherBlackRain,
+                WeatherKind.BlackSnow => AudioCueCatalog.WeatherBlizzard,
+                WeatherKind.EMPStorm => AudioCueCatalog.WeatherAlert,
+                WeatherKind.GlassStorm => AudioCueCatalog.WeatherAlert,
+                WeatherKind.RadHail => AudioCueCatalog.WeatherAlert,
+                WeatherKind.AshLightning => AudioCueCatalog.WeatherAlert,
+                WeatherKind.BioFog => AudioCueCatalog.WeatherWindGust,
+                WeatherKind.ParticulateFog => AudioCueCatalog.WeatherWindGust,
                 _ => null,
             };
 
@@ -169,10 +204,13 @@ namespace AtomicWar.GodotApp.Audio
                 _weather.OnWeatherChanged -= OnWeatherChanged;
             if (_combat != null)
                 _combat.OnCombatEvent -= OnCombatEvent;
+            if (_crafting != null)
+                _crafting.OnCraftCompleted -= OnCraftCompleted;
 
             _radiation = null;
             _weather = null;
             _combat = null;
+            _crafting = null;
             _disposed = true;
         }
 
@@ -185,5 +223,6 @@ namespace AtomicWar.GodotApp.Audio
         internal bool HasRadiationBinding => _radiation != null;
         internal bool HasWeatherBinding => _weather != null;
         internal bool HasCombatBinding => _combat != null;
+        internal bool HasCraftingBinding => _crafting != null;
     }
 }

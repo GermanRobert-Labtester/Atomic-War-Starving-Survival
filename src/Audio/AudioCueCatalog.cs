@@ -224,9 +224,9 @@ namespace AtomicWar.GodotApp.Audio
             Reg(CombatDefeat, "res://assets/audio/sfx/sfx_combat_defeat.mp3", AudioBusNames.Music, vol: -8f, cooldown: 5f);
 
             // Game flow
-            Reg(GameOver, "res://assets/audio/music/main_menu.ogg", AudioBusNames.Music, vol: -10f);
+            Reg(GameOver, "res://assets/audio/music/game_over.ogg", AudioBusNames.Music, vol: -10f);
             Reg(SaveSuccess, "res://assets/audio/ui/ui_confirm.wav", AudioBusNames.Ui, vol: -10f, cooldown: 1f);
-            Reg(DayTransition, "res://assets/audio/sfx/sfx_pipe_clang.mp3", AudioBusNames.Sfx, vol: -12f, cooldown: 2f);
+            Reg(DayTransition, "res://assets/audio/sfx/sfx_day_bell.mp3", AudioBusNames.Sfx, vol: -8f, cooldown: 2f);
         }
 
         private static void Reg(string id, string path, string bus,
