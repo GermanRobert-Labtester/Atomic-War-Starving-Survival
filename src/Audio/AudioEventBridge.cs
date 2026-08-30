@@ -2,6 +2,7 @@ using System;
 using Ashfall.Core;
 using Ashfall.Core.Combat;
 using Ashfall.Core.Crafting;
+using Ashfall.Core.Disease;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.World;
@@ -19,6 +20,7 @@ namespace AtomicWar.GodotApp.Audio
         TacticalCombatSystem? AudioCombat { get; }
         CraftingSystem? AudioCrafting { get; }
         ExpeditionSystem? AudioExpeditions { get; }
+        DiseaseSystem? AudioDisease { get; }
     }
 
     /// <summary>
@@ -34,6 +36,7 @@ namespace AtomicWar.GodotApp.Audio
         private TacticalCombatSystem? _combat;
         private CraftingSystem? _crafting;
         private ExpeditionSystem? _expeditions;
+        private DiseaseSystem? _disease;
         private bool _disposed;
 
         public AudioEventBridge(AudioManager audio)
@@ -55,7 +58,8 @@ namespace AtomicWar.GodotApp.Audio
             WeatherSystem? weather = null,
             TacticalCombatSystem? combat = null,
             CraftingSystem? crafting = null,
-            ExpeditionSystem? expeditions = null)
+            ExpeditionSystem? expeditions = null,
+            DiseaseSystem? disease = null)
         {
             ThrowIfDisposed();
             BindRadiation(radiation);
@@ -63,6 +67,7 @@ namespace AtomicWar.GodotApp.Audio
             BindCombat(combat);
             BindCrafting(crafting);
             BindExpeditions(expeditions);
+            BindDisease(disease);
         }
 
         public void BindRadiation(RadiationSystem? radiation)
@@ -183,6 +188,29 @@ namespace AtomicWar.GodotApp.Audio
         private void OnExpeditionCompleted(ExpeditionState state) => _playCue(AudioCueCatalog.ActionItemPickup);
         private void OnExpeditionFailed(ExpeditionState state, string reason) => _playCue(AudioCueCatalog.DangerDebris);
 
+        public void BindDisease(DiseaseSystem? disease)
+        {
+            ThrowIfDisposed();
+            if (ReferenceEquals(_disease, disease))
+                return;
+
+            if (_disease != null)
+            {
+                _disease.OnOutbreakDeclared -= OnOutbreakDeclared;
+                _disease.OnInfection -= OnInfection;
+            }
+
+            _disease = disease;
+            if (_disease != null)
+            {
+                _disease.OnOutbreakDeclared += OnOutbreakDeclared;
+                _disease.OnInfection += OnInfection;
+            }
+        }
+
+        private void OnOutbreakDeclared(string diseaseId) => _playCue(AudioCueCatalog.MedCoughing);
+        private void OnInfection(string survivorId, string diseaseId) => _playCue(AudioCueCatalog.MedHeartbeat);
+
         private void OnRadiationStatusGained(SurvivorRadState state, SurvivorStatus status)
         {
             string? cueId = status switch
@@ -252,11 +280,18 @@ namespace AtomicWar.GodotApp.Audio
                 _expeditions.OnExpeditionFailed -= OnExpeditionFailed;
             }
 
+            if (_disease != null)
+            {
+                _disease.OnOutbreakDeclared -= OnOutbreakDeclared;
+                _disease.OnInfection -= OnInfection;
+            }
+
             _radiation = null;
             _weather = null;
             _combat = null;
             _crafting = null;
             _expeditions = null;
+            _disease = null;
             _disposed = true;
         }
 
@@ -271,5 +306,6 @@ namespace AtomicWar.GodotApp.Audio
         internal bool HasCombatBinding => _combat != null;
         internal bool HasCraftingBinding => _crafting != null;
         internal bool HasExpeditionsBinding => _expeditions != null;
+        internal bool HasDiseaseBinding => _disease != null;
     }
 }
