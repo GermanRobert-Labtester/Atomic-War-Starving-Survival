@@ -29,6 +29,8 @@ namespace Ashfall.Core.PlayerCommand
 
         // ── Treatment ─────────────────────────────────────────────────
         public const string TreatmentStart = "treatment.start";
+        public const string TreatmentDiagnose = "treatment.diagnose";
+        public const string TreatmentProtocol = "treatment.protocol";
         public const string TreatmentTick = "treatment.tick";
         public const string TreatmentCancel = "treatment.cancel";
         public const string TreatmentReplaceFilter = "treatment.replace_filter";

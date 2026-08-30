@@ -37,7 +37,24 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void ValidatorFlagsAnUnknownPrefixedId()
+        public void ValidatorReportsMalformedJsonWithFileAndExceptionContext()
+        {
+            var report = ValidateScratch((scratch) =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "broken_catalog.json"),
+                    "{\"schema_version\":1,\"items\":[}");
+            });
+
+            Assert.False(report.Clean,
+                "malformed authored JSON must not disappear as an empty catalog");
+            Assert.Contains(report.Errors, line =>
+                line.Contains("broken_catalog.json")
+                && line.Contains("malformed JSON")
+                && line.Contains("JsonReaderException"));
+        }
+
+        [Fact]
+        public void ValidatorFlagsAnUnknownPrefixedReference()
         {
             // Fault injection: a fabricated id must be reported, proving the
             // gate actually detects dangling references (it is not vacuous).

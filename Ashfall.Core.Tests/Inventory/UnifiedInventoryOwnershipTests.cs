@@ -85,6 +85,50 @@ namespace Ashfall.Core.Tests
             Assert.Equal(80, tradeSession.PlayerValue);            // 70 + (1 * 10) = 80
         }
 
+        /// <summary>
+        /// Regression for a production data-loss bug: TryRestoreState used to
+        /// call Inventory.Clear() unconditionally, and when a backing player
+        /// inventory is wired (the real Main composition path — see
+        /// Main.Holdfast.cs's SetupHoldfastRuntime), that Clear() call reached
+        /// through to the SAME shared authoritative inventory every other
+        /// system reads/writes. Restoring Holdfast trade state therefore
+        /// silently discarded unrelated player items (food, water, gear) that
+        /// were never Holdfast trade holdings. The fix routes the
+        /// backing-inventory case entirely through the non-destructive
+        /// InventoryMigrator merge instead of clearing first.
+        /// </summary>
+        [Fact]
+        public void TryRestoreState_WithBackingInventory_DoesNotDiscardUnrelatedPlayerItems()
+        {
+            var catalog = new HoldfastCatalog();
+            catalog.Items.Register(new HoldfastItemDefinition("item_triplicate_carbon", "Triplicate Carbon", "Trade good", 5f, 0.3f));
+
+            var playerInventory = new Ashfall.Core.Inventory.Inventory();
+            // Items the player holds that have NOTHING to do with Holdfast
+            // trade — exactly the class of data the bug destroyed.
+            playerInventory.Add(new ItemDefinition { id = "canned_food", displayName = "Canned Food", stackMax = 99, weight = 1f }, 4);
+            playerInventory.Add(new ItemDefinition { id = "clean_water", displayName = "Clean Water", stackMax = 99, weight = 1f }, 6);
+
+            var tradeSession = new HoldfastTradeSession(catalog, startingValue: 100, playerInventory: playerInventory);
+
+            var savedTradeState = new HoldfastTradeSaveState
+            {
+                value = 88,
+                held = new Dictionary<string, int> { { "item_triplicate_carbon", 1 } },
+                stock = new Dictionary<string, int> { { "item_triplicate_carbon", 19 } }
+            };
+
+            bool restored = tradeSession.TryRestoreState(savedTradeState, out string error);
+
+            Assert.True(restored, error);
+            Assert.Equal(4, playerInventory.CountById("canned_food"));
+            Assert.Equal(6, playerInventory.CountById("clean_water"));
+            Assert.Equal(1, playerInventory.CountById("item_triplicate_carbon"));
+            Assert.Equal(1, tradeSession.GetHeld("item_triplicate_carbon"));
+            Assert.Equal(19, tradeSession.GetStock("item_triplicate_carbon"));
+            Assert.Equal(88, tradeSession.PlayerValue);
+        }
+
         [Fact]
         public void LegacySaveMigration_MergesHoldings_WithoutDuplication()
         {

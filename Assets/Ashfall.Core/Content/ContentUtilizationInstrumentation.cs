@@ -176,6 +176,28 @@ namespace Ashfall.Core.Content
         /// <summary>Merge instrumentation data into a utilization graph.</summary>
         public void MergeInto(ContentUtilizationGraph graph)
         {
+            // Per-catalog: which definition ids were selected/consumed, so a
+            // catalog's MaxStage reflects the highest stage actually observed
+            // for content that belongs to it (not just "was queried at all").
+            var selectedByCatalog = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+            var consumedByCatalog = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+            foreach (var ev in _events)
+            {
+                if (string.IsNullOrEmpty(ev.Catalog) || string.IsNullOrEmpty(ev.DefinitionId)) continue;
+                if (ev.Stage == UtilizationStage.SELECTED)
+                {
+                    if (!selectedByCatalog.TryGetValue(ev.Catalog, out var set))
+                        selectedByCatalog[ev.Catalog] = set = new HashSet<string>(StringComparer.Ordinal);
+                    set.Add(ev.DefinitionId);
+                }
+                else if (ev.Stage == UtilizationStage.EFFECT_PRODUCED)
+                {
+                    if (!consumedByCatalog.TryGetValue(ev.Catalog, out var set))
+                        consumedByCatalog[ev.Catalog] = set = new HashSet<string>(StringComparer.Ordinal);
+                    set.Add(ev.DefinitionId);
+                }
+            }
+
             foreach (var cat in graph.Catalogs)
             {
                 if (WasCatalogQueried(cat.Path))
@@ -183,6 +205,16 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.QUERIED;
                     cat.BestEvidence = EvidenceTier.RUNTIME;
                     cat.QueriedCount = 1;
+                }
+                if (selectedByCatalog.TryGetValue(cat.Path, out var selectedIds) && selectedIds.Count > 0)
+                {
+                    cat.MaxStage = UtilizationStage.SELECTED;
+                    cat.BestEvidence = EvidenceTier.RUNTIME;
+                }
+                if (consumedByCatalog.TryGetValue(cat.Path, out var consumedIds) && consumedIds.Count > 0)
+                {
+                    cat.MaxStage = UtilizationStage.EFFECT_PRODUCED;
+                    cat.BestEvidence = EvidenceTier.RUNTIME;
                 }
             }
         }

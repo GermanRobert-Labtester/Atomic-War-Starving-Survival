@@ -71,7 +71,7 @@ namespace AtomicWar.GodotApp
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "expansions",
                 dependsOn: new[] { "core_holdfast" },
-                saveSectionKey: "crossing",
+                saveSectionKey: "expansion_hub",
                 onReset: () =>
                 {
                     _expansions?.Dispose();
@@ -83,7 +83,7 @@ namespace AtomicWar.GodotApp
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "expeditions",
                 dependsOn: new[] { "survivors", "inventory" },
-                saveSectionKey: "expeditions",
+                saveSectionKey: "expedition",
                 onReset: () =>
                 {
                     if (_expeditions != null)
@@ -150,6 +150,9 @@ namespace AtomicWar.GodotApp
                     _narrative?.Dispose();
                     _narrative = null!;
                     _narrativeDirty = false;
+                    _hostEventAdapter?.Dispose();
+                    _hostEventAdapter = null!;
+                    _hostEventAdapterDirty = false;
                     _radio?.Dispose();
                     _radio = null!;
                     _radioTerminal = null!;
@@ -209,7 +212,7 @@ namespace AtomicWar.GodotApp
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "caravans",
                 dependsOn: new[] { "economy" },
-                saveSectionKey: "caravans",
+                saveSectionKey: "caravan",
                 onReset: () =>
                 {
                     _caravans?.Dispose();
@@ -274,7 +277,7 @@ namespace AtomicWar.GodotApp
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "expanded_shelter_batch",
                 dependsOn: new[] { "survivors", "inventory", "world_weather" },
-                saveSectionKey: "expanded_shelter",
+                lifecycleGroup: SaveSectionRegistry.ExpandedShelterLifecycleGroup,
                 onReset: ResetExpandedShelterSessions));
 
             // First-Hour Onboarding Journey (Task 120)
@@ -299,6 +302,8 @@ namespace AtomicWar.GodotApp
         public void ResetAllSessionsInMemory()
         {
             RegisterLifecycleParticipants();
+            _sectionPayloads.Clear();
+            _sectionCaptureFailed = false;
             _lifecycleRegistry.ResetAll();
             GD.Print("[Ashfall Godot] Lifecycle: all in-memory sessions reset in reverse dependency order.");
         }

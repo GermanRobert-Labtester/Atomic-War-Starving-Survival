@@ -84,7 +84,7 @@ All tools and maintenance utilities are organized into three strict lifecycle ti
 | **Script Loop Auditor** | [`tools/audit_loops.sh`](../../tools/audit_loops.sh) | `MAINTENANCE-ONLY` | Shell CI | Static analyzer for shell script loop constructs. |
 | **Transcript Exporter** | [`tools/export_transcript_to_desktop.py`](../../tools/export_transcript_to_desktop.py) | `MAINTENANCE-ONLY` | Operations | Extracts and formats agent JSONL conversation logs. |
 | **Audio Synthesis Tool** | [`tools/generate_audio.py`](../../tools/generate_audio.py) | `MAINTENANCE-ONLY` | Audio | Generates diegetic audio streams from text prompts. |
-| **ElevenLabs SFX Tool** | [`tools/generate_elevenlabs_sfx.py`](../../tools/generate_elevenlabs_sfx.py) | `MAINTENANCE-ONLY` | Audio | Sound effect generation via ElevenLabs API integration. |
+| **ElevenLabs SFX Tool** | [`tools/generate_elevenlabs_sfx.py`](../../tools/generate_elevenlabs_sfx.py) | `MAINTENANCE-ONLY` | Audio | Selective SFX planning plus explicit reviewed-asset acceptance; direct API generation stays opt-in. |
 | **Visual Asset Auditor** | [`tools/visual_asset_audit.py`](../../tools/visual_asset_audit.py) | `MAINTENANCE-ONLY` | Art Assets | Audits 2000+ textures for missing bindings and orphan assets. |
 | **Visual Wiring Tracer** | [`tools/visual_wiring_trace.py`](../../tools/visual_wiring_trace.py) | `MAINTENANCE-ONLY` | UI / Assets | Traces asset references across Godot scenes and UI code. |
 | **Visual Baseline Updater** | [`tools/visual_wiring_baseline.py`](../../tools/visual_wiring_baseline.py) | `MAINTENANCE-ONLY` | Art Assets | Computes asset usage baselines for regression detection. |

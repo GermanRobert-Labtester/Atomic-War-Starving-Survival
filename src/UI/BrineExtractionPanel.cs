@@ -54,6 +54,12 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        public void Open()
+        {
+            Visible = true;
+            RefreshView();
+        }
+
         public void Unbind()
         {
             if (_foundryHost != null)

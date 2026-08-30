@@ -76,8 +76,15 @@ namespace AtomicWar.GodotApp
             _boundWeaponConditionAtStart.Clear();
         }
 
-        /// <summary>Wire the engine's host ports to real inventory + survivor sessions when present.</summary>
-        public void WireRealState()
+        /// <summary>
+        /// Wire the engine's host ports to real inventory + survivor sessions
+        /// when present. <paramref name="markCombatSurvived"/> is an explicit
+        /// callback rather than a new session-reference property: the combat
+        /// host doesn't otherwise depend on Phase0/trauma tracking, and a
+        /// required-effect port is small enough to pass directly without
+        /// widening the session's dependency surface.
+        /// </summary>
+        public void WireRealState(Action<string>? markCombatSurvived = null)
         {
             var prior = Engine.Ports ?? CombatHostPorts.NoOp();
 
@@ -143,7 +150,7 @@ namespace AtomicWar.GodotApp
                 consumeItem,
                 prior.RaiseTrauma,
                 grantLoot,
-                prior.MarkCombatSurvived);
+                markCombatSurvived ?? prior.MarkCombatSurvived);
         }
 
         /// <summary>
@@ -164,6 +171,29 @@ namespace AtomicWar.GodotApp
 
         public static CombatHostSession Create(string dataDir)
         {
+            // The weapon/ammo/material catalog is the data authority
+            // (combat_catalog.json). Without loading it here, every real
+            // PlayerFire() call in production silently returns "Unknown
+            // weapon" (CombatCatalog.GetWeapon returns null) and the
+            // encounter can only ever resolve by the enemy attacking an
+            // unarmed-in-effect player — combat was never actually being
+            // fought. Clear+reload is safe to call every time a session is
+            // created: the catalog is a static registry shared by the whole
+            // process, and the data authority never changes mid-session.
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                try
+                {
+                    CombatCatalogLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[Combat] combat_catalog.json load failed, falling back to defaults: {ex.Message}");
+                }
+            }
+            if (CombatCatalog.GetWeapon("weapon_assault_rifle") == null)
+                CombatCatalog.SeedDefaults();
+
             var session = new CombatHostSession();
             var save = CombatSaveStore.TryLoad();
             if (save != null)

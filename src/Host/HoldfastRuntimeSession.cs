@@ -57,7 +57,15 @@ namespace AtomicWar.GodotApp
             ? (int)Math.Clamp(Survivors.Find(PlayerSurvivorId)!.Thirst, 0f, (float)MaxThirst)
             : _fallbackThirst;
 
-        public int Day { get; private set; } = 1;
+        // Day is a live projection of the shared campaign clock (World.Clock),
+        // not an independent counter — HoldfastRuntimeSession itself has no
+        // persisted save state (only its Trade sub-session does), so an
+        // independently-incremented field silently reset to 1 on every
+        // Continue while World.Clock.Day (the real, persisted campaign day)
+        // kept its correct value. Projecting here means the HUD/dashboard/
+        // death-and-victory stats and MarkActiveSlotTerminal all agree with
+        // the same single day authority across a save/reload round-trip.
+        public int Day => World.Clock.Day;
         public bool IsDead => Health <= 0;
         public string DeathCause { get; private set; } = string.Empty;
 
@@ -159,7 +167,11 @@ namespace AtomicWar.GodotApp
         {
             if (IsDead) return "The ledger is closed. No more days to count.";
 
-            Day++;
+            // Day is now a live projection of World.Clock.Day (see the Day
+            // property above). The campaign's HoldfastCoreDayOwner always
+            // calls World.TickDay() (which itself advances World.Clock)
+            // immediately before this method, so the clock has already
+            // moved — advancing it again here would double-increment.
 
             // Fallback decay when running in isolated test harnesses without SurvivorsHostSession
             if (Survivors == null)

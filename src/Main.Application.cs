@@ -140,6 +140,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.CompositionRootSelfTest:
                     RunCompositionRootUiTestAndQuit();
                     return;
+                case HostCliAction.RealCampaignJourneySelfTest:
+                    RunRealCampaignJourneySelfTestAndQuit();
+                    return;
                 case HostCliAction.UiAccessibilitySelfTest:
                     GetTree().Quit(HostCli.RunUiAccessibilitySelfTest());
                     return;

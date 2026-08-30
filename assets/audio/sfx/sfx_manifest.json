@@ -1,5 +1,18 @@
 {
+  "schema_version": 2,
   "generated_by": "elevenlabs_sound_generation",
+  "primary_transport": "elevenlabs_mcp_oauth",
+  "generation_policy": {
+    "candidate_review_required": true,
+    "runtime_formats": [
+      "wav",
+      "ogg"
+    ],
+    "overwrite_existing": false,
+    "intelligible_speech": false,
+    "named_weapon_unique_signature": true,
+    "diy_factory_separation": true
+  },
   "total": 28,
   "success": 28,
   "failed": 0,
@@ -54,7 +67,7 @@
     },
     {
       "id": "sfx_contamination_warning",
-      "prompt": "Low ominous electronic hum building into\u6025\u4fc3 warning tone, hazmat contamination alert, cold industrial facility",
+      "prompt": "Low ominous electronic hum building into an urgent contamination warning tone in a cold industrial facility",
       "duration_target": 2.5,
       "file": "sfx_contamination_warning.mp3"
     },
@@ -144,7 +157,7 @@
     },
     {
       "id": "sfx_radio_signal_lock",
-      "prompt": "Radio finding clear signal through static, audio sharpening into focus, Morse code or voice emerging from noise",
+      "prompt": "Old radio finding a stable signal through static, noise narrowing into a clear carrier tone and Morse pulses, no voice",
       "duration_target": 2.5,
       "file": "sfx_radio_signal_lock.mp3"
     },
@@ -171,6 +184,185 @@
       "prompt": "Medical syringe injection, small needle puncture, plunger pressing, liquid being administered",
       "duration_target": 1.5,
       "file": "sfx_injection.mp3"
+    }
+  ],
+  "accepted_generations": [],
+  "candidate_batches": [
+    {
+      "id": "combat_01",
+      "status": "awaiting_human_audition_and_mastering",
+      "transport": "elevenlabs_mcp_oauth",
+      "flow_id": "nEnfsTbX7fy0azjyS6Ot",
+      "flow_url": "https://elevenlabs.io/app/flows/nEnfsTbX7fy0azjyS6Ot",
+      "model_id": "eleven_text_to_sound_v2",
+      "prompt_influence": 0.7,
+      "concept_count": 12,
+      "generations_per_concept": 4,
+      "candidate_count": 48,
+      "completed_count": 48,
+      "failed_count": 0,
+      "estimated_credits": 1364,
+      "actual_credits": 413.292,
+      "actual_cost_usd": 0.075144,
+      "runtime_promotions": 0,
+      "qa": {
+        "decode_pass": 48,
+        "duration_pass": 48,
+        "duration_max_absolute_error_seconds": 0.04,
+        "format": "mp3",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "true_peak_over_0_db_count": 38,
+        "abnormally_quiet_count": 2,
+        "temporary_qa_root": "/tmp/ashfall_elevenlabs_sfx_candidates/combat_01",
+        "notes": "Temporary candidates require human audition, one-take selection, trimming, and loudness/true-peak mastering before WAV or OGG acceptance. The temporary path is not a project dependency."
+      },
+      "entries": [
+        {
+          "id": "sfx_weapon_cz75_report",
+          "weapon_id": "pistol_cz75_9x19",
+          "role": "report",
+          "duration_target": 1.2,
+          "generation_ids": [
+            "1bb6ck9tjICvoa98QS4W",
+            "PbgJbE5pgkZWEsee4Fr7",
+            "BMxWpD5a4Y4ZFYqajvlX",
+            "ux22fMkdLZ7UAieC1Ffx"
+          ]
+        },
+        {
+          "id": "sfx_weapon_pipe_rifle_report",
+          "weapon_id": "weapon_pipe_rifle",
+          "role": "report",
+          "duration_target": 1.6,
+          "generation_ids": [
+            "TTMi40nktWW64qd9fkyA",
+            "nfePaLLbGugGY70WP8kn",
+            "9PJOQLUR08gTrrnsqtT7",
+            "tYLS86XAg10z6IwjL07W"
+          ]
+        },
+        {
+          "id": "sfx_weapon_scrap_shotgun_report",
+          "weapon_id": "weapon_scrap_shotgun",
+          "role": "report",
+          "duration_target": 1.8,
+          "generation_ids": [
+            "7rS0jSLxC4I7ZSwi2JPr",
+            "KTOqXo0Jes0xRzEQ7WIL",
+            "nne8BkI6DmTj1fwObT3x",
+            "RsgiSjykh6tG63uYyTUH"
+          ]
+        },
+        {
+          "id": "sfx_weapon_bolt_rifle_report",
+          "weapon_id": "weapon_bolt_rifle",
+          "role": "report",
+          "duration_target": 1.6,
+          "generation_ids": [
+            "CNhlNH457jom1ByHpFhD",
+            "LXThyvwPX1UUvi14mNGV",
+            "jcr51g5yMMZdqnpsH8kG",
+            "rMHvhSQCZ9m5ZshfJ7fo"
+          ]
+        },
+        {
+          "id": "sfx_weapon_assault_rifle_burst",
+          "weapon_id": "weapon_assault_rifle",
+          "role": "report",
+          "duration_target": 2.2,
+          "generation_ids": [
+            "dcFrVfzA4yziG5j7a5ei",
+            "ANHmaO9ZWWl5cruTMIfd",
+            "p4McCDacfQ65yqRSG9J2",
+            "94Umt2OVFGe9NsHBrOEj"
+          ]
+        },
+        {
+          "id": "sfx_weapon_lmg_burst",
+          "weapon_id": "weapon_lmg",
+          "role": "report",
+          "duration_target": 3.0,
+          "generation_ids": [
+            "OFIUkz2CqJ2s67vU5nbf",
+            "kLwhOGHTsgpzB7HsnqsI",
+            "2BcWHxLBbdCJprKYFYbE",
+            "6BNwdQku4pbKPVily9IK"
+          ]
+        },
+        {
+          "id": "sfx_weapon_cz75_reload",
+          "weapon_id": "pistol_cz75_9x19",
+          "role": "action",
+          "duration_target": 2.5,
+          "generation_ids": [
+            "KhWUf9CIvhgTH80npTXw",
+            "H8pe44RdS8g8igwwtVu1",
+            "XJdAtbZQbEIoQyJva9Rl",
+            "UdiahyWOj3gB7Hsholae"
+          ]
+        },
+        {
+          "id": "sfx_weapon_pipe_rifle_reload",
+          "weapon_id": "weapon_pipe_rifle",
+          "role": "action",
+          "duration_target": 3.2,
+          "generation_ids": [
+            "7XDTwvpHznsOBG1KrOgp",
+            "J5B43PHkIyhnqu60cwId",
+            "RDm0nZGhxIJLea6vAkLl",
+            "btvAwV9i6kOQGmOvOABt"
+          ]
+        },
+        {
+          "id": "sfx_weapon_scrap_shotgun_reload",
+          "weapon_id": "weapon_scrap_shotgun",
+          "role": "action",
+          "duration_target": 4.0,
+          "generation_ids": [
+            "Y7Qn16E2SpeXV6aGZQY8",
+            "Q5pg4NB2bpd9kJUZw0K8",
+            "kdxPmC0rDOX4GVgtnVPO",
+            "LJYfJUxgcVsWnJQO4TG9"
+          ]
+        },
+        {
+          "id": "sfx_weapon_bolt_rifle_cycle",
+          "weapon_id": "weapon_bolt_rifle",
+          "role": "action",
+          "duration_target": 2.4,
+          "generation_ids": [
+            "ictVh6XG4LuKk8b8MyQg",
+            "keXvi4LoWACky1Kl0321",
+            "ZkRlfLsvy7xBknjeiud5",
+            "FXFg6cms5r0ClQ09GlMe"
+          ]
+        },
+        {
+          "id": "sfx_weapon_assault_rifle_reload",
+          "weapon_id": "weapon_assault_rifle",
+          "role": "action",
+          "duration_target": 3.0,
+          "generation_ids": [
+            "qMB6tID4pAmgzM0kb4DN",
+            "wYA38amGgf4vS7vkbVzl",
+            "edx3OkjMSuqFuJ6v4MlU",
+            "TAMNOkIDSiYwdoD7iXST"
+          ]
+        },
+        {
+          "id": "sfx_weapon_lmg_reload",
+          "weapon_id": "weapon_lmg",
+          "role": "action",
+          "duration_target": 4.5,
+          "generation_ids": [
+            "q6gM38ddIfr1lnX1gZuZ",
+            "04PpboYnqquR820k7iRJ",
+            "PRS4hZdIvqCGpvvCdO9p",
+            "SDCZRmVmUHR0haD5fySd"
+          ]
+        }
+      ]
     }
   ]
 }

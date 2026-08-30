@@ -202,6 +202,54 @@ public class SaveSlotService
     /// </summary>
     public SaveManifest? LoadManifest(SaveProfileId profileId, SaveSlotId slotId)
     {
+        string aggregatePath = GetAggregatePath(profileId, slotId);
+        if (_files.FileExists(aggregatePath))
+        {
+            try
+            {
+                string aggregateRaw = _files.ReadAllText(aggregatePath);
+                if (string.IsNullOrWhiteSpace(aggregateRaw))
+                    return null;
+                var aggregate = _json.Deserialize<AggregateSaveEnvelope>(aggregateRaw);
+                if (aggregate == null)
+                    return null;
+                var validation = ValidateAggregate(aggregate);
+                if (!validation.IsValid)
+                {
+                    _log.Warn($"SaveSlotService: authoritative manifest rejected with invalid campaign envelope for slot '{slotId}': {string.Join("; ", validation.Errors)}");
+                    return null;
+                }
+                if (aggregate.manifest == null ||
+                    string.IsNullOrWhiteSpace(aggregate.manifest.profileId.Value) ||
+                    string.IsNullOrWhiteSpace(aggregate.manifest.slotId.Value) ||
+                    !string.Equals(aggregate.manifest.profileId.Value, profileId.Value, StringComparison.Ordinal) ||
+                    !string.Equals(aggregate.manifest.slotId.Value, slotId.Value, StringComparison.Ordinal))
+                {
+                    _log.Warn($"SaveSlotService: authoritative manifest identity does not match slot '{slotId}'.");
+                    return null;
+                }
+                // Once campaign.json exists, its embedded manifest is the
+                // current-generation authority. Do not fall back to a stale
+                // compatibility manifest when the aggregate is malformed.
+                return aggregate.manifest;
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"SaveSlotService: failed to load authoritative manifest for slot '{slotId}': {ex.Message}");
+                return null;
+            }
+        }
+
+        string quarantinePath = aggregatePath + "." + slotId.Value + QuarantineExtension;
+        if (_files.FileExists(quarantinePath))
+        {
+            // A quarantined aggregate is not a valid campaign authority. Do
+            // not resurrect its stale manifest projection for continue, card,
+            // terminal, or deletion decisions.
+            _log.Warn($"SaveSlotService: refusing stale manifest projection for quarantined slot '{slotId}'.");
+            return null;
+        }
+
         string path = GetManifestPath(profileId, slotId);
         if (!_files.FileExists(path))
             return null;
@@ -259,6 +307,16 @@ public class SaveSlotService
         if (envelope.sections == null || envelope.sections.Count == 0)
             errors.Add("Aggregate envelope contains no sections.");
 
+        if (isCurrent && envelope.manifest != null)
+        {
+            if (string.IsNullOrWhiteSpace(envelope.manifest.generationId))
+                errors.Add("Current aggregate manifest generationId is empty.");
+            if (string.IsNullOrWhiteSpace(envelope.manifest.profileId.Value))
+                errors.Add("Current aggregate manifest profileId is empty.");
+            if (string.IsNullOrWhiteSpace(envelope.manifest.slotId.Value))
+                errors.Add("Current aggregate manifest slotId is empty.");
+        }
+
         var seenNames = new HashSet<string>(StringComparer.Ordinal);
         if (envelope.sections != null)
         {
@@ -304,14 +362,27 @@ public class SaveSlotService
                 else if (!string.IsNullOrWhiteSpace(section.payloadJson))
                 {
                     string expected = ComputeSectionChecksum(section);
-                    if (!string.Equals(section.checksum, expected, StringComparison.Ordinal))
+                    bool checksumMatches = string.Equals(section.checksum, expected, StringComparison.Ordinal);
+                    if (!checksumMatches && !isCurrent)
+                    {
+                        checksumMatches = string.Equals(
+                            section.checksum,
+                            ComputeSectionChecksum(section, includeGenerationId: false),
+                            StringComparison.Ordinal);
+                    }
+
+                    if (!checksumMatches)
                         sectionErrors.Add($"Section {i} ({section.sectionName}): checksum mismatch.");
                 }
 
-                if (envelope.manifest != null &&
-                    !string.IsNullOrEmpty(envelope.manifest.generationId) &&
-                    !string.IsNullOrEmpty(section.generationId) &&
-                    !string.Equals(envelope.manifest.generationId, section.generationId, StringComparison.Ordinal))
+                if (isCurrent && string.IsNullOrWhiteSpace(section.generationId))
+                {
+                    sectionErrors.Add($"Section {i} ({section.sectionName}): generationId is empty.");
+                }
+                else if (envelope.manifest != null &&
+                         !string.IsNullOrEmpty(envelope.manifest.generationId) &&
+                         !string.IsNullOrEmpty(section.generationId) &&
+                         !string.Equals(envelope.manifest.generationId, section.generationId, StringComparison.Ordinal))
                 {
                     sectionErrors.Add(
                         $"Section {i} ({section.sectionName}): generation mismatch " +
@@ -320,19 +391,8 @@ public class SaveSlotService
             }
         }
 
-        // A current envelope must identify the slot it claims to represent.
-        // V1 remains permissive because it is an on-disk compatibility format
-        // and is migrated in memory before it becomes current.
-        if (isCurrent && envelope.manifest != null)
-        {
-            if (!string.IsNullOrEmpty(envelope.manifest.profileId.Value) &&
-                !string.IsNullOrEmpty(envelope.manifest.slotId.Value))
-            {
-                // Identity is checked by the slot-aware load path. The shape
-                // validator intentionally has no requested profile/slot input.
-            }
-        }
-
+        // The slot-aware load and write paths additionally compare these
+        // required identities with their requested profile and slot.
         if (errors.Count == 0 && sectionErrors.Count == 0)
         {
             if (string.IsNullOrWhiteSpace(envelope.aggregateChecksum))
@@ -342,7 +402,16 @@ public class SaveSlotService
             else
             {
                 string expected = ComputeAggregateChecksum(envelope);
-                if (!string.Equals(envelope.aggregateChecksum, expected, StringComparison.Ordinal))
+                bool checksumMatches = string.Equals(envelope.aggregateChecksum, expected, StringComparison.Ordinal);
+                if (!checksumMatches && !isCurrent)
+                {
+                    checksumMatches = string.Equals(
+                        envelope.aggregateChecksum,
+                        ComputeAggregateChecksum(envelope, includeGenerationId: false),
+                        StringComparison.Ordinal);
+                }
+
+                if (!checksumMatches)
                     errors.Add("Aggregate checksum mismatch.");
             }
         }
@@ -405,6 +474,14 @@ public class SaveSlotService
                 return false;
             }
 
+            if (envelope.manifest == null ||
+                !string.Equals(envelope.manifest.profileId.Value, profileId.Value, StringComparison.Ordinal) ||
+                !string.Equals(envelope.manifest.slotId.Value, slotId.Value, StringComparison.Ordinal))
+            {
+                _log.Error($"SaveSlotService: aggregate identity does not match target slot '{slotId}'.");
+                return false;
+            }
+
             string raw = _json.Serialize(envelope);
             if (string.IsNullOrWhiteSpace(raw))
             {
@@ -418,7 +495,12 @@ public class SaveSlotService
                 fileIO: _files,
                 createBackup: true,
                 log: _log,
-                logTag: $"SaveSlotService:{slotId.Value}");
+                logTag: $"SaveSlotService:{slotId.Value}",
+                validatePayload: candidate =>
+                {
+                    var parsed = _json.Deserialize<AggregateSaveEnvelope>(candidate);
+                    return parsed != null && ValidateAggregate(parsed).IsValid;
+                });
         }
         catch (Exception ex)
         {
@@ -525,6 +607,29 @@ public class SaveSlotService
             return SaveLoadResult.Fail(status, msg, validation.Errors);
         }
 
+        if (envelope.manifest != null)
+        {
+            var identityErrors = new List<string>();
+            if (string.IsNullOrWhiteSpace(envelope.manifest.profileId.Value))
+                identityErrors.Add("Envelope profile identity is empty.");
+            else if (!string.Equals(envelope.manifest.profileId.Value, profileId.Value, StringComparison.Ordinal))
+                identityErrors.Add($"Envelope profile '{envelope.manifest.profileId.Value}' does not match requested profile '{profileId.Value}'.");
+
+            if (string.IsNullOrWhiteSpace(envelope.manifest.slotId.Value))
+                identityErrors.Add("Envelope slot identity is empty.");
+            else if (!string.Equals(envelope.manifest.slotId.Value, slotId.Value, StringComparison.Ordinal))
+                identityErrors.Add($"Envelope slot '{envelope.manifest.slotId.Value}' does not match requested slot '{slotId.Value}'.");
+
+            if (identityErrors.Count > 0)
+            {
+                QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", identityErrors));
+                return SaveLoadResult.Fail(
+                    SaveLoadStatus.CorruptData,
+                    $"Save data for slot '{slotId.Value}' has invalid campaign identity. Live session preserved.",
+                    identityErrors);
+            }
+        }
+
         // Older envelopes migrate to the current format in memory; the
         // on-disk file is rewritten as current on the next successful save.
         if (envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
@@ -532,6 +637,16 @@ public class SaveSlotService
             try
             {
                 envelope = MigrateToCurrent(envelope, _log);
+                var migratedValidation = ValidateAggregate(envelope);
+                if (!migratedValidation.IsValid)
+                {
+                    _log.Warn($"SaveSlotService: migrated aggregate failed current-format validation for slot '{slotId}': {string.Join("; ", migratedValidation.Errors)}");
+                    QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", migratedValidation.Errors));
+                    return SaveLoadResult.Fail(
+                        SaveLoadStatus.CorruptData,
+                        $"Save data for slot '{slotId.Value}' could not be validated after migration. Live session preserved.",
+                        migratedValidation.Errors);
+                }
             }
             catch (Exception ex)
             {
@@ -540,6 +655,29 @@ public class SaveSlotService
                     SaveLoadStatus.CorruptData,
                     $"Save data for slot '{slotId.Value}' could not be migrated. Live session preserved.",
                     new[] { ex.Message });
+            }
+        }
+
+        if (envelope.manifest != null)
+        {
+            var migratedIdentityErrors = new List<string>();
+            if (string.IsNullOrWhiteSpace(envelope.manifest.profileId.Value))
+                migratedIdentityErrors.Add("Envelope profile identity is empty after migration.");
+            else if (!string.Equals(envelope.manifest.profileId.Value, profileId.Value, StringComparison.Ordinal))
+                migratedIdentityErrors.Add($"Envelope profile '{envelope.manifest.profileId.Value}' does not match requested profile '{profileId.Value}'.");
+
+            if (string.IsNullOrWhiteSpace(envelope.manifest.slotId.Value))
+                migratedIdentityErrors.Add("Envelope slot identity is empty after migration.");
+            else if (!string.Equals(envelope.manifest.slotId.Value, slotId.Value, StringComparison.Ordinal))
+                migratedIdentityErrors.Add($"Envelope slot '{envelope.manifest.slotId.Value}' does not match requested slot '{slotId.Value}'.");
+
+            if (migratedIdentityErrors.Count > 0)
+            {
+                QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", migratedIdentityErrors));
+                return SaveLoadResult.Fail(
+                    SaveLoadStatus.CorruptData,
+                    $"Save data for slot '{slotId.Value}' has invalid campaign identity after migration. Live session preserved.",
+                    migratedIdentityErrors);
             }
         }
 
@@ -564,6 +702,41 @@ public class SaveSlotService
         /// </summary>
         public AggregateSaveEnvelope? LoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
         {
+            // Preserve the historical, read-only compatibility API for a
+            // minimal V1 envelope whose sections are all unknown to the
+            // current registry. The authoritative host path is TryLoadAggregate
+            // and still fails closed for such a slot; this branch exists only
+            // for legacy inspection callers that need the original manifest.
+            string path = GetAggregatePath(profileId, slotId);
+            if (_files.FileExists(path))
+            {
+                try
+                {
+                    var raw = _files.ReadAllText(path);
+                    var legacy = string.IsNullOrWhiteSpace(raw)
+                        ? null
+                        : _json.Deserialize<AggregateSaveEnvelope>(raw);
+                    if (legacy != null && legacy.manifestVersion == 1 &&
+                        legacy.manifest != null &&
+                        string.Equals(legacy.manifest.profileId.Value, profileId.Value, StringComparison.Ordinal) &&
+                        string.Equals(legacy.manifest.slotId.Value, slotId.Value, StringComparison.Ordinal) &&
+                        legacy.sections != null && legacy.sections.Count > 0 &&
+                        legacy.sections.All(section => section != null &&
+                            (string.IsNullOrWhiteSpace(section.sectionName) ||
+                             !SaveSectionRegistry.TryGetKeyForSectionName(section.sectionName, out _))))
+                    {
+                        var validation = ValidateAggregate(legacy);
+                        if (validation.IsValid)
+                            return legacy;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _log.Warn($"SaveSlotService: legacy inspection compatibility path failed for slot '{slotId}': {ex.Message}");
+                    // Fall through to the authoritative validated path.
+                }
+            }
+
             var result = TryLoadAggregate(profileId, slotId);
             return result.Envelope;
         }
@@ -598,6 +771,14 @@ public class SaveSlotService
 
             var sections = new List<SaveSectionEnvelope>();
             var dropped = new List<string>();
+            string generationId = envelope.manifest?.generationId ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(generationId))
+            {
+                generationId = $"gen_{envelope.manifest?.slotId.Value ?? string.Empty}_{envelope.manifest?.lastSaveTick ?? 0}";
+                if (envelope.manifest != null)
+                    envelope.manifest.generationId = generationId;
+            }
+
             foreach (var section in envelope.sections ?? new List<SaveSectionEnvelope>())
             {
                 if (section == null)
@@ -615,8 +796,9 @@ public class SaveSlotService
                         schemaVersion = section.schemaVersion,
                         payloadJson = section.payloadJson,
                         checksum = section.checksum,
-                        generationId = section.generationId,
+                        generationId = generationId,
                     };
+                    kept.checksum = ComputeSectionChecksum(kept);
                     sections.Add(kept);
                     continue;
                 }
@@ -632,6 +814,7 @@ public class SaveSlotService
                 {
                     sectionName = key!,
                     schemaVersion = SaveSectionRegistry.SchemaVersionFor(key!),
+                    generationId = generationId,
                     payloadJson = section.payloadJson,
                 };
                 migrated.checksum = ComputeSectionChecksum(migrated);
@@ -652,6 +835,27 @@ public class SaveSlotService
             result.aggregateChecksum = ComputeAggregateChecksum(result);
             return result;
         }
+
+    /// <summary>
+    /// Explicitly replace a slot at the new-game boundary. Unlike ordinary
+    /// user-driven deletion this operation intentionally clears a terminal or
+    /// corrupt prior run so StartNewGame cannot inherit its campaign envelope.
+    /// </summary>
+    public bool ResetSlotForNewGame(SaveProfileId profileId, SaveSlotId slotId)
+    {
+        string slotRoot = GetSlotRoot(profileId, slotId);
+        try
+        {
+            if (_files.DirectoryExists(slotRoot))
+                Directory.Delete(slotRoot, recursive: true);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _log.Error($"SaveSlotService: failed to reset slot '{slotId}' for a new game: {ex.Message}");
+            return false;
+        }
+    }
 
     /// <summary>
     /// Delete a slot and all its files. Returns true if the slot was deleted
@@ -694,22 +898,20 @@ public class SaveSlotService
         string aggregatePath = GetAggregatePath(profileId, slotId);
         if (_files.FileExists(aggregatePath))
         {
-            try
+            // Use the same checksum, version, and identity validation as
+            // restore, but through a non-mutating peek: this policy probe is
+            // consulted by SelectSlot/DeleteSlot before the user has taken any
+            // destructive action, so it must never quarantine (move/delete)
+            // the campaign it is only being asked to describe.
+            var peek = PeekAggregateValidity(profileId, slotId);
+            if (peek == AggregatePeekResult.IronManTerminal)
+                return true;
+            if (peek != AggregatePeekResult.Valid)
             {
-                string raw = _files.ReadAllText(aggregatePath);
-                if (string.IsNullOrWhiteSpace(raw)) return false;
-                var envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
-                // campaign.json is authoritative whenever it exists. If it is
-                // malformed, TryLoadAggregate will report corruption instead
-                // of allowing the manifest projection to decide policy.
-                return envelope?.manifest != null &&
-                       envelope.manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+                _log.Warn($"SaveSlotService: terminal policy indeterminate for slot '{slotId}'; blocking destructive/manual access.");
+                return true;
             }
-            catch (Exception ex)
-            {
-                _log.Warn($"SaveSlotService: failed to read aggregate envelope for terminal check on slot '{slotId}': {ex.Message}");
-                return false;
-            }
+            return false;
         }
 
         // A slot created before its first aggregate commit has only a
@@ -717,6 +919,102 @@ public class SaveSlotService
         var manifest = LoadManifest(profileId, slotId);
         return manifest != null &&
                manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+    }
+
+    private enum AggregatePeekResult
+    {
+        Valid,
+        IronManTerminal,
+        Invalid
+    }
+
+    /// <summary>
+    /// Read-only counterpart to <see cref="TryLoadAggregate"/> used by policy
+    /// probes (terminal check ahead of selection/deletion). Applies the same
+    /// read/deserialize/validate/identity/migration checks but never
+    /// quarantines, rewrites, or otherwise mutates the slot on disk. Callers
+    /// that need the full restore/quarantine behavior must keep using
+    /// <see cref="TryLoadAggregate"/>.
+    /// </summary>
+    private AggregatePeekResult PeekAggregateValidity(SaveProfileId profileId, SaveSlotId slotId)
+    {
+        string path = GetAggregatePath(profileId, slotId);
+        if (!_files.FileExists(path))
+            return AggregatePeekResult.Invalid;
+
+        string raw;
+        try
+        {
+            raw = _files.ReadAllText(path);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: failed to read aggregate for terminal peek on slot '{slotId}': {ex.Message}");
+            return AggregatePeekResult.Invalid;
+        }
+
+        if (string.IsNullOrWhiteSpace(raw))
+            return AggregatePeekResult.Invalid;
+
+        AggregateSaveEnvelope? envelope;
+        try
+        {
+            envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: JSON deserialize failed for terminal peek on slot '{slotId}': {ex.Message}");
+            return AggregatePeekResult.Invalid;
+        }
+
+        if (envelope == null)
+            return AggregatePeekResult.Invalid;
+
+        AggregateValidationResult validation;
+        try
+        {
+            validation = ValidateAggregate(envelope);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: validation threw during terminal peek for slot '{slotId}': {ex.Message}");
+            return AggregatePeekResult.Invalid;
+        }
+
+        if (!validation.IsValid)
+            return AggregatePeekResult.Invalid;
+
+        if (envelope.manifest != null)
+        {
+            if (string.IsNullOrWhiteSpace(envelope.manifest.profileId.Value) ||
+                !string.Equals(envelope.manifest.profileId.Value, profileId.Value, StringComparison.Ordinal))
+                return AggregatePeekResult.Invalid;
+
+            if (string.IsNullOrWhiteSpace(envelope.manifest.slotId.Value) ||
+                !string.Equals(envelope.manifest.slotId.Value, slotId.Value, StringComparison.Ordinal))
+                return AggregatePeekResult.Invalid;
+        }
+
+        if (envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+        {
+            try
+            {
+                var migrated = MigrateToCurrent(envelope, _log);
+                var migratedValidation = ValidateAggregate(migrated);
+                if (!migratedValidation.IsValid)
+                    return AggregatePeekResult.Invalid;
+                envelope = migrated;
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"SaveSlotService: migration failed during terminal peek for slot '{slotId}': {ex.Message}");
+                return AggregatePeekResult.Invalid;
+            }
+        }
+
+        return envelope.manifest != null && envelope.manifest.ironManTerminalState == IronManTerminalState.TerminalLoss
+            ? AggregatePeekResult.IronManTerminal
+            : AggregatePeekResult.Valid;
     }
 
     /// <summary>
@@ -894,11 +1192,20 @@ public class SaveSlotService
     /// </summary>
     public static string ComputeSectionChecksum(SaveSectionEnvelope section)
     {
+        return ComputeSectionChecksum(section, includeGenerationId: true);
+    }
+
+    private static string ComputeSectionChecksum(SaveSectionEnvelope section, bool includeGenerationId)
+    {
         if (section == null)
             throw new ArgumentNullException(nameof(section));
 
-        // Canonical form: sectionName + schemaVersion + payloadJson.
-        string canonical = $"{section.sectionName}\n{section.schemaVersion}\n{section.payloadJson ?? string.Empty}";
+        // V1 did not include generationId in its canonical form. Keep that
+        // legacy calculation available only while validating V1 input; every
+        // current-generation write binds the generation into the hash.
+        string canonical = includeGenerationId
+            ? $"{section.sectionName}\n{section.schemaVersion}\n{section.generationId ?? string.Empty}\n{section.payloadJson ?? string.Empty}"
+            : $"{section.sectionName}\n{section.schemaVersion}\n{section.payloadJson ?? string.Empty}";
         byte[] bytes = Encoding.UTF8.GetBytes(canonical);
         using var sha = SHA256.Create();
         byte[] hash = sha.ComputeHash(bytes);
@@ -913,6 +1220,11 @@ public class SaveSlotService
     /// canonical order.
     /// </summary>
     public static string ComputeAggregateChecksum(AggregateSaveEnvelope envelope)
+    {
+        return ComputeAggregateChecksum(envelope, includeGenerationId: true);
+    }
+
+    private static string ComputeAggregateChecksum(AggregateSaveEnvelope envelope, bool includeGenerationId)
     {
         if (envelope == null)
             throw new ArgumentNullException(nameof(envelope));
@@ -932,6 +1244,8 @@ public class SaveSlotService
         sb.Append("campaignName=").Append(envelope.manifest?.campaignName ?? string.Empty).Append('\n');
         sb.Append("ironManTerminalState=").Append((int)(envelope.manifest?.ironManTerminalState ?? IronManTerminalState.Active)).Append('\n');
         sb.Append("lastSaveTimestamp=").Append(envelope.manifest?.lastSaveTimestamp ?? string.Empty).Append('\n');
+        if (includeGenerationId)
+            sb.Append("generationId=").Append(envelope.manifest?.generationId ?? string.Empty).Append('\n');
 
         // Sections in order.
         if (envelope.sections != null)
@@ -943,12 +1257,16 @@ public class SaveSlotService
                 {
                     sb.Append("section[").Append(i).Append("].name=\n");
                     sb.Append("section[").Append(i).Append("].version=\n");
+                    if (includeGenerationId)
+                        sb.Append("section[").Append(i).Append("].generation=\n");
                     sb.Append("section[").Append(i).Append("].checksum=\n");
                     sb.Append("section[").Append(i).Append("].payload=\n");
                     continue;
                 }
                 sb.Append("section[").Append(i).Append("].name=").Append(s.sectionName ?? string.Empty).Append('\n');
                 sb.Append("section[").Append(i).Append("].version=").Append(s.schemaVersion).Append('\n');
+                if (includeGenerationId)
+                    sb.Append("section[").Append(i).Append("].generation=").Append(s.generationId ?? string.Empty).Append('\n');
                 sb.Append("section[").Append(i).Append("].checksum=").Append(s.checksum ?? string.Empty).Append('\n');
                 sb.Append("section[").Append(i).Append("].payload=").Append(s.payloadJson ?? string.Empty).Append('\n');
             }

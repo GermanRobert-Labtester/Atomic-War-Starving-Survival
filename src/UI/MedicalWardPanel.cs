@@ -250,9 +250,12 @@ namespace AtomicWar.GodotApp.UI
 
                     foreach (var proc in _host.System.Procedures)
                     {
+                        // Task #133 P1b: through the host wrapper — pipeline
+                        // treatment first (bandage/chelation), ward log only on
+                        // success; refusals surface in the event log.
                         var btnProc = AshfallUiHelpers.MakeButton($"RUN {proc.DisplayName.ToUpperInvariant()}", () =>
                         {
-                            _host.System.RunProcedure(activeAdmission.PatientId, proc.ProcedureId, _host.SimDay);
+                            _host.RunProcedure(activeAdmission.PatientId, proc.ProcedureId, _host.SimDay);
                             RefreshView();
                         });
                         _inspectorContainer.AddChild(btnProc);

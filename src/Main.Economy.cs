@@ -138,10 +138,15 @@ namespace AtomicWar.GodotApp
             _silentFoundry = AtomicWar.GodotApp.SilentFoundryHostSession.Create(
                 _dataDir, _expansions, _inventory, _journal, market: _economy.Market);
             _silentFoundry.BindPowerAndThermal(_powerGrid?.System, _shelterThermal?.System);
-            // GAP-STUB-03: wire the remaining FactionStanceEngine providers
-            // from Main state so SilentFoundry guild trust reflects actual
-            // campaign day, radiation, and military-survivor presence.
-            _silentFoundry.BindStanceProviders(_simDay, _holdfastRuntime?.Radiation ?? 0f, _survivors);
+            // GAP-STUB-03 (resolved): wire the remaining FactionStanceEngine
+            // providers as live accessors into Main state, not one-time
+            // captured values, so guild trust reflects the campaign's actual
+            // current day, radiation, and military-survivor presence on every
+            // future read — including after the values change post-bind.
+            _silentFoundry.BindStanceProviders(
+                campaignDayProvider: () => _simDay,
+                partyRadiationProvider: () => _holdfastRuntime?.Radiation ?? 0f,
+                survivorsProvider: () => _survivors);
             // Foundry state rides the expansion-hub save (already restored above);
             // state-change events mark the hub save dirty so nothing is lost.
             _silentFoundry.StateChanged += () =>

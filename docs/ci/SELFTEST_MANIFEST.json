@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 89,
-  "headless_test_count": 87,
+  "total_tests": 91,
+  "headless_test_count": 89,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -114,6 +114,21 @@
       "description": "Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)",
       "headless_compatible": true,
       "expected_summary_id": "save_store_checksum_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "runtime_scale_selftest",
+      "action": "RuntimeScaleSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--runtime-scale-selftest",
+      "aliases": [
+        "--runtime-scale",
+        "--performance-selftest",
+        "--perf-selftest"
+      ],
+      "description": "Performance budget validation: 30/180/360-day campaign workloads, day-advance latency, save/load/checksum, allocations, retained memory, and lifecycle leak tests; writes artifacts/runtime-scale-results.json",
+      "headless_compatible": true,
+      "expected_summary_id": "runtime_scale_selftest",
       "timeout_seconds": 30
     },
     {
@@ -1060,6 +1075,20 @@
       "description": "First-hour onboarding journey: protocol\u2192inspect\u2192rationing\u2192assignment\u2192weather\u2192inventory-use\u2192day-advance, with save/load resume and no-resource fabrication",
       "headless_compatible": true,
       "expected_summary_id": "onboarding_journey_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "real_campaign_journey_selftest",
+      "action": "RealCampaignJourneySelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--real-campaign-journey-selftest",
+      "aliases": [
+        "--campaign-journey-selftest",
+        "--real-main-journey-selftest"
+      ],
+      "description": "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)",
+      "headless_compatible": true,
+      "expected_summary_id": "real_campaign_journey_selftest",
       "timeout_seconds": 30
     }
   ]

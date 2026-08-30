@@ -147,8 +147,8 @@ namespace AtomicWar.GodotApp
         private void SaveMoralChoice()
         {
             if (_moralChoice == null) return;
-            CaptureSection("moral_choice", MoralChoiceSaveStore.TryCapturePersisted(_moralChoice.CaptureState()));
-            _moralChoiceDirty = false;
+            if (CaptureSection("moral_choice", MoralChoiceSaveStore.TryCapturePersisted(_moralChoice.CaptureState())))
+                _moralChoiceDirty = false;
         }
 
         private void FlushMoralChoiceIfDirty()

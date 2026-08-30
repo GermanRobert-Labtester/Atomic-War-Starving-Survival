@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Medical;
@@ -15,6 +16,13 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public ChemicalDependencySystem Engine { get; }
         public VigilStateMachine Vigil { get; }
+
+        /// <summary>
+        /// Task #133 unified pipeline. Bound by the host after the inventory,
+        /// survivors, and Phase-0 sessions exist (BindPipeline). Null until
+        /// bound — unbound sessions (headless selftests) keep working unchanged.
+        /// </summary>
+        public MedicalPipelineCoordinator? Pipeline { get; private set; }
 
         public float TotalMoraleDrain { get; private set; }
         public float ActiveCraftingPenalty { get; private set; }
@@ -72,8 +80,85 @@ namespace AtomicWar.GodotApp
                 session.Engine.RestoreState(save);
                 session.LastEvent = "Medical ledger restored from save.";
             }
+
+            // Task #133 chem-dep authority merge: the `medical` section is the
+            // canonical ledger. Rows that only exist in the legacy
+            // `chemical_dependency` section are merged in; the medical section
+            // wins on survivor+item conflicts. Both sections stay in sync on
+            // save (they capture the same shared engine), so this merge is
+            // idempotent and migration-safe in both directions.
+            var legacy = ChemicalDependencySaveStore.TryLoad();
+            if (legacy != null)
+            {
+                int merged = 0;
+                foreach (var svList in legacy.survivors)
+                {
+                    if (svList == null || string.IsNullOrEmpty(svList.survivorId)) continue;
+                    var existing = session.Engine.Ledger.TryGetValue(svList.survivorId, out var deps)
+                        ? deps : null;
+                    foreach (var dep in svList.dependencies)
+                    {
+                        if (dep == null || string.IsNullOrEmpty(dep.itemId)) continue;
+                        bool present = existing != null && existing.Any(d =>
+                            string.Equals(d.itemId, dep.itemId, StringComparison.Ordinal));
+                        if (present) continue;
+                        session.Engine.OnSubstanceConsumed(svList.survivorId, dep.itemId,
+                            ParseDependencyKind(dep.kind));
+                        // OnSubstanceConsumed starts at one dose; adopt the saved level.
+                        var row = session.Engine.Ledger[svList.survivorId]
+                            .First(d => string.Equals(d.itemId, dep.itemId, StringComparison.Ordinal));
+                        row.dependencyLevel = dep.dependencyLevel;
+                        row.inManagedDetox = dep.inManagedDetox;
+                        row.inColdTurkey = dep.inColdTurkey;
+                        row.detoxProgressHours = dep.detoxProgressHours;
+                        merged++;
+                    }
+                }
+                if (merged > 0)
+                    session.LastEvent = $"Medical ledger restored; {merged} legacy dependency row(s) merged.";
+            }
+
+            var pipelineSave = MedicalPipelineSaveStore.TryLoad();
+            if (pipelineSave != null)
+            {
+                // Pipeline bind happens later (BindPipeline); stash the save so
+                // the coordinator restores it when the host completes wiring.
+                session._pendingPipelineSave = pipelineSave;
+            }
             return session;
         }
+
+        private MedicalPipelineSaveState? _pendingPipelineSave;
+
+        private static ChemicalDependencyKind ParseDependencyKind(string? kind)
+        {
+            return kind switch
+            {
+                "Alcohol" => ChemicalDependencyKind.Alcohol,
+                "Stimulant" => ChemicalDependencyKind.Stimulant,
+                "Sedative" => ChemicalDependencyKind.Sedative,
+                _ => ChemicalDependencyKind.Opioid
+            };
+        }
+
+        /// <summary>
+        /// Bind the Task #133 pipeline (built by Main once inventory, survivors,
+        /// and Phase-0 exist) and restore its save slice. Idempotent.
+        /// </summary>
+        public void BindPipeline(MedicalPipelineCoordinator pipeline)
+        {
+            if (Pipeline != null) return;
+            Pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            if (_pendingPipelineSave != null)
+            {
+                Pipeline.RestoreState(_pendingPipelineSave);
+                _pendingPipelineSave = null;
+            }
+            Pipeline.StateChanged += () => RaiseStateChanged();
+        }
+
+        /// <summary>Pipeline save capture for the campaign envelope.</summary>
+        public MedicalPipelineSaveState? CapturePipelineSave() => Pipeline?.CaptureState();
 
         // ── Demo actions ─────────────────────────────────────────────
 

@@ -53,6 +53,7 @@ namespace AtomicWar.GodotApp
             CloseAllOverlayPanels();
             UiNodeDiagnostics.Report(this, "survivors");
 
+            EnsureMedicalPipeline();
             _medicalPanel.Bind(_medical, _survivors, _inventory,
                 _phase0?.Respiratory);
             UiNodeDiagnostics.Mark(this, "medical");

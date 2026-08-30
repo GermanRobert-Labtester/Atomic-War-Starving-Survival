@@ -11,6 +11,13 @@ namespace AtomicWar.GodotApp
     {
         public ChemicalDependencySystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Task #133 P1b: the unified medical pipeline, injected by Main once
+        /// bound. Detox starts go through it (validate → apply); null keeps
+        /// headless/CLI sessions working unchanged.
+        /// </summary>
+        public MedicalPipelineCoordinator? Pipeline { get; set; }
         private Action? _onstatechanged_handler;
         private Action<string, string>? _ondependencyformed_handler;
         private Action<string, string>? _onwithdrawalstarted_handler;

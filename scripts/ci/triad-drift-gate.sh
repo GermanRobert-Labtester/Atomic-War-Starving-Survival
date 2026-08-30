@@ -34,7 +34,10 @@ if not registry_path.is_file():
 # 1. Parse declarative SaveSectionRegistry
 registry_content = registry_path.read_text(encoding="utf-8")
 pattern = re.compile(
-    r'new\s*\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*("[^"]+"|\bnull\b)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"(?:\s*,\s*RequiresSetup:\s*(true|false))?\s*\)'
+    r'new\s*\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*("[^"]+"|\bnull\b)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"'
+    r'(?:\s*,\s*RequiresSetup:\s*(true|false))?'
+    r'(?:\s*,\s*LifecycleGroup:\s*[A-Za-z_][A-Za-z0-9_]*)?'
+    r'\s*\)'
 )
 
 entries = []

@@ -22,6 +22,7 @@ namespace Ashfall.Core.Random
         public const string Foundry = "foundry";
         public const string Maritime = "maritime";
         public const string Psychology = "psychology";
+        public const string Medical = "medical";
         public const string Events = "events";
         public const string WorldEvolution = "world_evolution";
     }

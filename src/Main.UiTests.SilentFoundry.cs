@@ -53,6 +53,26 @@ namespace AtomicWar.GodotApp
             Check(_silentFoundry != null, "host session created");
             Check(_silentFoundryPanel != null, "panel constructed");
             Check(_silentFoundry!.Engine.IsUnlocked == false, "foundry sealed by default");
+
+            // GAP-STUB-03 freshness proof: DayProvider/PartyRadiationProvider
+            // must be live accessors into Main's authoritative campaign state,
+            // not values captured once at BindStanceProviders() call time.
+            // Bind, read, mutate the authoritative source, read again.
+            int dayAtBind = _silentFoundry.GuildStanceEngine.DayProvider();
+            SetupCampaignDay();
+            _campaignDay.Calendar.SetDay(dayAtBind + 37);
+            int dayAfterCalendarAdvance = _silentFoundry.GuildStanceEngine.DayProvider();
+            Check(dayAfterCalendarAdvance == dayAtBind + 37,
+                $"DayProvider tracks live campaign day after advance (before={dayAtBind}, after={dayAfterCalendarAdvance})");
+
+            SetupHoldfastRuntime();
+            var playerRadState = _holdfastRuntime.Survivors?.RadStateFor(_holdfastRuntime.PlayerSurvivorId);
+            Check(playerRadState != null, "player rad state resolves for the freshness probe");
+            float radiationBeforeExposure = _silentFoundry.GuildStanceEngine.PartyRadiationProvider();
+            playerRadState!.RadiationDose = radiationBeforeExposure + 25f;
+            float radiationAfterExposure = _silentFoundry.GuildStanceEngine.PartyRadiationProvider();
+            Check(radiationAfterExposure == radiationBeforeExposure + 25f,
+                $"PartyRadiationProvider tracks live holdfast radiation after exposure (before={radiationBeforeExposure}, after={radiationAfterExposure})");
             // Register foundry items into the shared inventory catalog.
             SetupInventory();
             Check(_inventory.Catalog.Get("item_foundry_plowshare") != null, "foundry items registered in inventory catalog");

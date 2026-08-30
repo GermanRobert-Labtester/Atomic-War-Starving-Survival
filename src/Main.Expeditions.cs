@@ -106,13 +106,19 @@ namespace AtomicWar.GodotApp
             if (_combat != null) return;
             SetupInventory();
             SetupSurvivors();
+            SetupPhase0();
             _combat = CombatHostSession.Create(_dataDir);
             if (_combat != null)
             {
                 _combat.Inventory = _inventory;
                 _combat.Survivors = _survivors;
                 _combat.Equipment = _equipmentCondition?.System;
-                _combat.WireRealState();
+                // MarkCombatSurvived is a required combat effect (see
+                // CombatHostSession.ValidatePorts / WeaponConditionSystem's
+                // UnboundRequiredEffects) that was previously left unwired,
+                // so every surviving combatant's hypervigilance/trauma
+                // tracking silently no-op'd in production.
+                _combat.WireRealState(markCombatSurvived: survivorId => _phase0.RegisterCombatSurvived(survivorId));
                 _combat.ValidatePorts();
                 _combat.StateChanged += () => _combatDirty = true;
                 // Expedition encounters auto-populate a real combat encounter.

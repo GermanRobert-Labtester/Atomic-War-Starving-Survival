@@ -32,6 +32,7 @@ namespace Ashfall.Core
         PanelBindLifecycleSelfTest,
         SaveLoadUiFailureSelfTest,
         SaveStoreChecksumSelfTest,
+        RuntimeScaleSelfTest,
         StandaloneSystemsSelfTest,
 
         // Expansions & Campaign Modules
@@ -117,7 +118,8 @@ namespace Ashfall.Core
         UiSnapshotSelfTest,
         UtilityAiUiTest,
         VerdictUiTest,
-        OnboardingJourneySelfTest
+        OnboardingJourneySelfTest,
+        RealCampaignJourneySelfTest
     }
 
     /// <summary>
@@ -262,6 +264,12 @@ namespace Ashfall.Core
                     "--save-store-checksum-selftest",
                     new[] { "--save-store-checksums-selftest", "--checksum-sweep-selftest" },
                     "Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RuntimeScaleSelfTest,
+                    "Core & System Gates",
+                    "--runtime-scale-selftest",
+                    new[] { "--runtime-scale", "--performance-selftest", "--perf-selftest" },
+                    "Performance budget validation: 30/180/360-day campaign workloads, day-advance latency, save/load/checksum, allocations, retained memory, and lifecycle leak tests; writes artifacts/runtime-scale-results.json"),
                 new HostCliActionDescriptor(
                     HostCliAction.StandaloneSystemsSelfTest,
                     "Core & System Gates",
@@ -753,7 +761,13 @@ namespace Ashfall.Core
                     "UI Tests, Layout & Gameplay Smoke",
                     "--onboarding-journey-selftest",
                     new[] { "--onboarding-selftest" },
-                    "First-hour onboarding journey: protocol→inspect→rationing→assignment→weather→inventory-use→day-advance, with save/load resume and no-resource fabrication")
+                    "First-hour onboarding journey: protocol→inspect→rationing→assignment→weather→inventory-use→day-advance, with save/load resume and no-resource fabrication"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RealCampaignJourneySelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--real-campaign-journey-selftest",
+                    new[] { "--campaign-journey-selftest", "--real-main-journey-selftest" },
+                    "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)")
         };
 
         private static readonly HostCliActionDescriptor[] _configDescriptors = new[]

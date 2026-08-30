@@ -129,7 +129,8 @@ namespace AtomicWar.GodotApp
         ListSelfTests,
         RuntimeScaleSelfTest,
         CampaignFuzzSelfTest,
-        CompositionRootSelfTest
+        CompositionRootSelfTest,
+        RealCampaignJourneySelfTest
     }
 
     /// <summary>
@@ -377,6 +378,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.CampaignFuzzSelfTest;
             if (Has(args, "--composition-root-selftest"))
                 return HostCliAction.CompositionRootSelfTest;
+            if (Has(args, "--real-campaign-journey-selftest") || Has(args, "--campaign-journey-selftest") || Has(args, "--real-main-journey-selftest"))
+                return HostCliAction.RealCampaignJourneySelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -402,6 +405,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --standalone-selftest    SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance");
             GD.Print("  --campaign-fuzz-selftest      Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite");
             GD.Print("  --composition-root-selftest   Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131)");
+            GD.Print("  --real-campaign-journey-selftest / --campaign-journey-selftest / --real-main-journey-selftest Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5)");
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
             GD.Print("  --arbitration-selftest   CrossingArbitrationHeadlessDemo");

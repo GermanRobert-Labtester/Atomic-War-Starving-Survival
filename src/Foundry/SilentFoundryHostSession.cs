@@ -236,13 +236,17 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Wire the remaining FactionStanceEngine providers from Main state
         /// (day, radiation, hated-military check). Called once after construction
-        /// from Main.Economy.SetupEconomy().
+        /// from Main.Economy.SetupEconomy(). Providers are live accessors, not
+        /// captured values: campaignDay/radiationProvider/survivors are invoked
+        /// fresh every time FactionStanceEngine calls them, so guild trust
+        /// reflects the campaign's actual current day/radiation/roster rather
+        /// than whatever those values happened to be at bind time.
         /// </summary>
-        public void BindStanceProviders(int day, float radiation, SurvivorsHostSession survivors)
+        public void BindStanceProviders(Func<int> campaignDayProvider, Func<float> partyRadiationProvider, Func<SurvivorsHostSession?> survivorsProvider)
         {
-            GuildStanceEngine.DayProvider = () => day;
-            GuildStanceEngine.PartyRadiationProvider = () => radiation;
-            GuildStanceEngine.HasHatedMilitarySurvivor = () => HasMilitarySurvivor(survivors);
+            GuildStanceEngine.DayProvider = campaignDayProvider ?? (() => 0);
+            GuildStanceEngine.PartyRadiationProvider = partyRadiationProvider ?? (() => -1f);
+            GuildStanceEngine.HasHatedMilitarySurvivor = () => HasMilitarySurvivor(survivorsProvider?.Invoke());
             GuildStanceEngine.ClampTrustProvider = v => Math.Clamp(v, -100f, 100f);
             GuildStanceEngine.IsMilitaryFaction = id => IsMilitaryFaction(id);
         }
@@ -257,7 +261,7 @@ namespace AtomicWar.GodotApp
                 || factionId.StartsWith("military_", StringComparison.OrdinalIgnoreCase);
         }
 
-        private static bool HasMilitarySurvivor(SurvivorsHostSession survivors)
+        private static bool HasMilitarySurvivor(SurvivorsHostSession? survivors)
         {
             if (survivors?.Roster == null) return false;
             foreach (var entry in survivors.Roster.Roster)

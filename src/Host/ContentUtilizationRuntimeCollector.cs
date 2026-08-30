@@ -139,6 +139,23 @@ namespace AtomicWar.GodotApp
                 for (int i = 0; i < Math.Min(5, count); i++)
                     if (encounters[i]?.id != null)
                         instr.RecordDefinitionQueried("narrative_encounters.json", encounters[i].id, "NarrativeEncounterCatalogLoader.Load", "NarrativeEncounterSystem", 1);
+
+                // Real SELECTED/EFFECT_PRODUCED evidence: drive the actual
+                // production weighted-selection + resolution methods instead
+                // of hand-authoring a fake result. NarrativeEncounterSystem
+                // itself calls Instrumentation.RecordDefinitionSelected /
+                // RecordDefinitionConsumed at its real OnEncounterSelected /
+                // Resolve call sites when this hook is set.
+                if (count > 0)
+                {
+                    var narrative = new NarrativeEncounterSystem();
+                    narrative.Instrumentation = instr;
+                    narrative.RegisterRange(encounters);
+                    var rng = new SeededRng(DefaultSeed);
+                    var selected = narrative.SelectEncounter("Stealth", dangerLevel: 1f, locationId: string.Empty, rng);
+                    if (selected != null && selected.choices != null && selected.choices.Count > 0)
+                        narrative.Resolve(selected.id, selected.choices[0].choiceId, locationId: string.Empty, day: 1);
+                }
             }
             catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] narrative_encounters.json: {ex.Message}"); }
         }
@@ -512,9 +529,6 @@ namespace AtomicWar.GodotApp
 
             instr.RecordDefinitionSelected("survivors.json", "survivor_starting", "SurvivorsHostSession", 1);
             instr.RecordDefinitionConsumed("survivors.json", "survivor_starting", "SurvivorsHostSession", "survivor active", 1);
-
-            instr.RecordDefinitionSelected("narrative_encounters.json", "encounter_day1", "NarrativeEncounterSystem", 1);
-            instr.RecordDefinitionConsumed("narrative_encounters.json", "encounter_day1", "NarrativeEncounterSystem", "encounter resolved", 1);
         }
     }
 }

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 44,
-  "fast_tier_count": 44,
+  "total_gates": 46,
+  "fast_tier_count": 45,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -206,6 +206,32 @@
       "expected_summary": "DAY1_PLAYABLE_SELFTEST PASS",
       "classification": "fast",
       "critical": true
+    },
+    {
+      "gate_id": "real_campaign_journey",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Real Campaign Journey Self-Test (Plans #5/#7/#8/#9)",
+      "category": "Campaign Smoke",
+      "command": "godot --headless --path . -- --real-campaign-journey-selftest",
+      "timeout_seconds": 90,
+      "expected_summary": "REAL_CAMPAIGN_JOURNEY_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "runtime_scale_performance",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Runtime Scale Performance Budget Self-Test (Task 130)",
+      "category": "Performance",
+      "command": "godot --headless --path . -- --runtime-scale-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "RUNTIME_SCALE_SELFTEST PASS",
+      "classification": "performance",
+      "critical": false
     },
     {
       "gate_id": "expansions_completeness",

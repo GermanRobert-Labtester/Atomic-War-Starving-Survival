@@ -15,6 +15,7 @@ Features:
 Usage:
   python3 scripts/ci/run-gates.py                      # Runs all fast-tier gates
   python3 scripts/ci/run-gates.py --tier full          # Runs all full-tier gates
+  python3 scripts/ci/run-gates.py --tier performance   # Runs all performance-tier gates
   python3 scripts/ci/run-gates.py --gate data_integrity # Runs single gate
   python3 scripts/ci/run-gates.py --list               # Lists all registered gates
 """
@@ -186,7 +187,7 @@ def validate_dependencies(all_gates):
 
 def main():
     parser = argparse.ArgumentParser(description="Canonical ASHFALL Gate Runner")
-    parser.add_argument("--tier", choices=["fast", "full", "all"], default="fast",
+    parser.add_argument("--tier", choices=["fast", "full", "performance", "release", "all"], default="fast",
                         help="Filter gates by classification tier (default: fast)")
     parser.add_argument("--gate", type=str, default=None,
                         help="Run a specific gate ID or comma-separated list of gate IDs")

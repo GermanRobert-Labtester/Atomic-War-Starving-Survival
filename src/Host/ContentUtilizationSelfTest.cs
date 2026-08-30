@@ -52,8 +52,12 @@ namespace AtomicWar.GodotApp
                 // Phase 7: Generate manifest
                 GD.Print("[Phase 7] Generating utilization manifest...");
                 string manifestPath = Path.Combine(repoRoot, "artifacts", "content-utilization.json");
-                ContentUtilizationManifest.WriteManifest(graph, manifestPath);
+                string commitHash = TryGetCurrentCommitHash(repoRoot);
+                ContentUtilizationManifest.WriteManifest(graph, manifestPath, commitHash);
                 GD.Print($"  Manifest written to: {manifestPath}");
+                GD.Print(string.IsNullOrEmpty(commitHash)
+                    ? "  Commit provenance: unavailable (not a git checkout or git not on PATH)"
+                    : $"  Commit provenance: {commitHash}");
                 GD.Print();
 
                 // Phase 7: Generate human report
@@ -147,6 +151,38 @@ namespace AtomicWar.GodotApp
                 GD.PrintErr($"Content utilization self-test failed: {ex.Message}");
                 GD.PrintErr(ex.StackTrace);
                 return 1;
+            }
+        }
+
+        /// <summary>
+        /// Best-effort current commit hash for manifest provenance. Returns
+        /// empty string (never throws) when git is unavailable or this is a
+        /// non-repo build — the manifest's GeneratedAt timestamp still
+        /// establishes when the report was produced even without it.
+        /// </summary>
+        private static string TryGetCurrentCommitHash(string repoRoot)
+        {
+            try
+            {
+                var psi = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "git",
+                    Arguments = "rev-parse HEAD",
+                    WorkingDirectory = repoRoot,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+                using var proc = System.Diagnostics.Process.Start(psi);
+                if (proc == null) return string.Empty;
+                string output = proc.StandardOutput.ReadToEnd().Trim();
+                proc.WaitForExit(5000);
+                return proc.ExitCode == 0 ? output : string.Empty;
+            }
+            catch
+            {
+                return string.Empty;
             }
         }
     }

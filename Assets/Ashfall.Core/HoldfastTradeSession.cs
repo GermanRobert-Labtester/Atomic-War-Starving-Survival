@@ -435,17 +435,43 @@ namespace Ashfall.Core
             if (state == null) { error = "null state"; return false; }
             _held.Clear();
             _stock.Clear();
-            Inventory.Clear();
+
+            // When a backing inventory is wired, Inventory IS the shared
+            // authoritative player inventory (Inventory = new
+            // HoldfastTradeInventory(_catalog, _playerInventory) above) — the
+            // same object InventoryHostSession, expeditions, crafting, and
+            // every other system read/write. Clearing it here would silently
+            // discard everything the player holds that isn't Holdfast trade
+            // stock (food, water, medicine, gear) and is not this session's
+            // to own. MigrateHoldfastHeld already performs the correct,
+            // non-destructive merge into that authoritative inventory below;
+            // only the standalone/no-backing-inventory path (tests, or a
+            // trade session with its own private ledger) still owns its
+            // items outright and may safely clear+rebuild them here.
+            if (_playerInventory == null)
+                Inventory.Clear();
+
             if (state.held != null)
             {
-                foreach (var kv in state.held)
+                if (_playerInventory == null)
                 {
-                    string canonical = ItemAliases.ToCanonical(kv.Key);
-                    _held[canonical] = kv.Value;
-                    Inventory.AddItem(canonical, kv.Value);
+                    foreach (var kv in state.held)
+                    {
+                        string canonical = ItemAliases.ToCanonical(kv.Key);
+                        _held[canonical] = kv.Value;
+                        Inventory.AddItem(canonical, kv.Value);
+                    }
                 }
-                if (_playerInventory != null)
+                else
                 {
+                    // _held still tracks "how much of this item is held for
+                    // trade purposes" against the authoritative counts the
+                    // migration establishes/preserves in _playerInventory.
+                    foreach (var kv in state.held)
+                    {
+                        string canonical = ItemAliases.ToCanonical(kv.Key);
+                        _held[canonical] = kv.Value;
+                    }
                     InventoryMigrator.MigrateHoldfastHeld(state, _playerInventory, id =>
                     {
                         var def = _catalog?.GetItem(id);

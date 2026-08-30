@@ -53,6 +53,12 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        public void Open()
+        {
+            Visible = true;
+            RefreshView();
+        }
+
         public override void _Ready()
         {
             BuildUI();

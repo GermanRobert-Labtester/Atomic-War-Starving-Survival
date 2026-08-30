@@ -197,7 +197,15 @@ namespace AtomicWar.GodotApp
             var mhState = MentalHealthCrisisSaveStore.TryLoad() ?? new MentalHealthState();
             var mhNeeds = _survivors.Needs;
             var mhMedical = _medicalWard;
-            _chemicalDependency = new ChemicalDependencyHostSession();
+            // Task #133: one shared chem-dep authority — the MedicalHostSession
+            // engine (already loaded + merged from both save sections). The
+            // chemical_dependency save section is written from this same shared
+            // engine by SaveChemicalDependency, keeping it in sync.
+            SetupMedical();
+            _chemicalDependency = new ChemicalDependencyHostSession(_medical.Engine);
+            // Task #133 P1b: share the pipeline when already bound; otherwise
+            // EnsureMedicalPipeline backfills this reference once it runs.
+            _chemicalDependency.Pipeline = _medical.Pipeline;
             var mhSys = new MentalHealthCrisisSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Psychology, 0, 15), mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster, new GodotLog());
             mhSys.RestoreState(mhState);
             _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster);
@@ -208,8 +216,9 @@ namespace AtomicWar.GodotApp
             _mentalHealthCrisisPanel.Visible = false;
             AddChild(_mentalHealthCrisisPanel);
 
-            var depLoaded = ChemicalDependencySaveStore.TryLoad();
-            if (depLoaded != null) _chemicalDependency.RestoreSave(depLoaded);
+            // Task #133: no separate restore here — the shared engine was already
+            // loaded and merged by MedicalHostSession.Create. Re-restoring the
+            // legacy section would wipe canonical medical-ledger rows.
             if (_chemicalDependencyPanel != null && _chemicalDependencyPanel.IsInsideTree())
                 RemoveChild(_chemicalDependencyPanel);
             _chemicalDependencyPanel = new ChemicalDependencyPanel();
@@ -292,6 +301,30 @@ namespace AtomicWar.GodotApp
             if (_chemicalDependency != null)
                 CaptureSection("chemical_dependency", ChemicalDependencySaveStore.TryCapturePersisted(_chemicalDependency.System.CaptureState()));
         }
-        private void SaveShelterAssignment() => _shelterAssignment?.Save();
+        private void SaveShelterAssignment()
+        {
+            if (_shelterAssignment == null) return;
+
+            var save = new ShelterAssignmentSave
+            {
+                simDay = 0,
+                Rooms = new List<ShelterRoomSave>(),
+                State = _shelterAssignment.System.CaptureState()
+            };
+            foreach (var room in _shelterAssignment.System.Rooms)
+            {
+                save.Rooms.Add(new ShelterRoomSave
+                {
+                    RoomId = room.RoomId,
+                    DisplayName = room.DisplayName,
+                    Capacity = room.Capacity,
+                    RequiredSkillId = room.RequiredSkillId,
+                    WorkstationId = room.WorkstationId
+                });
+            }
+
+            if (CaptureSection("shelter_assignment", ShelterAssignmentSaveStore.TryCapturePersisted(save)))
+                _shelterAssignment.ClearDirty();
+        }
     }
 }

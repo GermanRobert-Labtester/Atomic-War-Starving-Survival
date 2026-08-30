@@ -135,6 +135,8 @@ namespace AtomicWar.GodotApp
             GD.Print(failures == 0
                 ? "RUNTIME_SCALE_SELFTEST PASS"
                 : $"RUNTIME_SCALE_SELFTEST FAIL — {failures} failing check(s)");
+            EmitSummary("runtime_scale_selftest", failures == 0, failures == 0 ? 0 : 1,
+                passedCount: 6 - failures, failedCount: failures);
             return failures == 0 ? 0 : 1;
         }
 

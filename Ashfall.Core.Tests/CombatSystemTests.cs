@@ -185,5 +185,42 @@ namespace Ashfall.Core.Tests
                 Assert.DoesNotContain("combat", report.Errors[i]);
             }
         }
+
+        /// <summary>
+        /// Regression for a production gap where every weapon's caliber
+        /// referenced an ammo id (ammo_357/ammo_12g/ammo_308/ammo_556/
+        /// ammo_762) that existed only in combat_catalog.json — items.json
+        /// (the actual inventory item registry CombatHostSession.WireRealState
+        /// checks via Inventory.CountById) had no matching entries at all. Once
+        /// a live ammo-consumption port is wired (the real Main composition
+        /// path — see Main.Expeditions.cs's SetupCombat), every weapon fire
+        /// silently failed with "No X ammunition" regardless of what the
+        /// player actually carried, because the item could never exist.
+        /// Every combat weapon's caliber must resolve to a real inventory item.
+        /// </summary>
+        [Fact]
+        public void EveryWeaponCaliber_ResolvesToARealInventoryItem()
+        {
+            CombatCatalog.Clear();
+            Assert.True(LoadCombatCatalog(), "combat_catalog.json loads from the data directory");
+
+            var itemCatalog = Ashfall.Core.Inventory.ItemCatalogLoader.LoadCatalog(
+                DataDir(), new FileSystemIO(), new SystemTextJsonSerializer());
+
+            var missing = new List<string>();
+            foreach (string weaponId in CombatCatalog.WeaponIds)
+            {
+                var weapon = CombatCatalog.GetWeapon(weaponId);
+                if (weapon == null || string.IsNullOrEmpty(weapon.caliber)) continue;
+
+                if (itemCatalog.Get(weapon.caliber) == null)
+                    missing.Add($"{weaponId} -> caliber '{weapon.caliber}' has no items.json entry");
+            }
+
+            Assert.True(missing.Count == 0,
+                "Weapon calibers with no matching inventory item (combat ammo can never be consumed from the real player inventory):\n  "
+                + string.Join("\n  ", missing));
+        }
+
     }
 }

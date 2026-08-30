@@ -963,7 +963,10 @@ def scan_codebase_symbols():
 
     reg_text = (REPO_ROOT / "Assets" / "Ashfall.Core" / "Save" / "SaveSectionRegistry.cs").read_text(encoding="utf-8")
     sec_pattern = re.compile(
-        r'new\s*\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*("[^"]+"|\bnull\b)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"(?:\s*,\s*RequiresSetup:\s*(true|false))?\s*\)'
+        r'new\s*\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*("[^"]+"|\bnull\b)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"'
+        r'(?:\s*,\s*RequiresSetup:\s*(true|false))?'
+        r'(?:\s*,\s*LifecycleGroup:\s*[A-Za-z_][A-Za-z0-9_]*)?'
+        r'\s*\)'
     )
     reg_sections = {m.group(1): {
         "save_method": m.group(2),

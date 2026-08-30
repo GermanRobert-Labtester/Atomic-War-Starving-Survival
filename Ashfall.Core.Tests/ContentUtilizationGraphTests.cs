@@ -670,5 +670,93 @@ namespace Ashfall.Core.Tests
             Assert.Equal(UtilizationStage.QUERIED, cat.MaxStage);
             Assert.Equal(EvidenceTier.RUNTIME, cat.BestEvidence);
         }
+
+        [Fact]
+        public void Instrumentation_MergeInto_PromotesMaxStageToSelected()
+        {
+            // Regression for the Ticket #127 gap where MergeInto only ever
+            // promoted a catalog to QUERIED, silently dropping SELECTED and
+            // EFFECT_PRODUCED evidence from the graph/report even when a
+            // real production system (e.g. NarrativeEncounterSystem) had
+            // genuinely recorded them.
+            var instr = new ContentUtilizationInstrumentation();
+            instr.Enabled = true;
+            instr.RecordDefinitionQueried("test.json", "def_001", "GetById", "TestSystem", 1);
+            instr.RecordDefinitionSelected("test.json", "def_001", "TestSystem", 1);
+
+            var graph = new ContentUtilizationGraph();
+            graph.Catalogs.Add(new CatalogEntry
+            {
+                Path = "test.json",
+                Classification = ContentClassification.UNRESOLVED,
+                MaxStage = UtilizationStage.LOADED
+            });
+
+            instr.MergeInto(graph);
+
+            var cat = graph.Catalogs[0];
+            Assert.Equal(UtilizationStage.SELECTED, cat.MaxStage);
+            Assert.Equal(EvidenceTier.RUNTIME, cat.BestEvidence);
+        }
+
+        [Fact]
+        public void Instrumentation_MergeInto_PromotesMaxStageToEffectProduced()
+        {
+            var instr = new ContentUtilizationInstrumentation();
+            instr.Enabled = true;
+            instr.RecordDefinitionQueried("test.json", "def_001", "GetById", "TestSystem", 1);
+            instr.RecordDefinitionSelected("test.json", "def_001", "TestSystem", 1);
+            instr.RecordDefinitionConsumed("test.json", "def_001", "TestSystem", "effect", 1);
+
+            var graph = new ContentUtilizationGraph();
+            graph.Catalogs.Add(new CatalogEntry
+            {
+                Path = "test.json",
+                Classification = ContentClassification.UNRESOLVED,
+                MaxStage = UtilizationStage.LOADED
+            });
+
+            instr.MergeInto(graph);
+
+            var cat = graph.Catalogs[0];
+            Assert.Equal(UtilizationStage.EFFECT_PRODUCED, cat.MaxStage);
+            Assert.Equal(EvidenceTier.RUNTIME, cat.BestEvidence);
+        }
+
+        [Fact]
+        public void NarrativeEncounterSystem_RealSelectionAndResolution_RecordsGenuineInstrumentation()
+        {
+            // Plan #3 proof: SELECTED/EFFECT_PRODUCED evidence sourced from a
+            // real production selection + resolution call, not a hand-authored
+            // literal alongside the instrumentation (as
+            // ContentUtilizationRuntimeCollector previously did for this exact
+            // catalog before this fix).
+            var instr = new ContentUtilizationInstrumentation();
+            instr.Enabled = true;
+
+            var narrative = new Ashfall.Core.Narrative.NarrativeEncounterSystem();
+            narrative.Instrumentation = instr;
+            narrative.RegisterEncounter(new Ashfall.Core.Narrative.EncounterDefinition
+            {
+                id = "enc_test_only",
+                baseWeight = 1f,
+                choices = new List<Ashfall.Core.Narrative.EncounterChoiceDefinition>
+                {
+                    new Ashfall.Core.Narrative.EncounterChoiceDefinition { choiceId = "accept", moraleDelta = 2, guiltDelta = 0 }
+                }
+            });
+
+            var rng = new SeededRng(1234);
+            var selected = narrative.SelectEncounter("Stealth", dangerLevel: 1f, locationId: string.Empty, rng);
+
+            Assert.NotNull(selected);
+            Assert.Equal("enc_test_only", selected!.id);
+            Assert.True(instr.WasDefinitionSelected("enc_test_only"));
+
+            bool resolved = narrative.Resolve("enc_test_only", "accept", locationId: string.Empty, day: 1);
+
+            Assert.True(resolved);
+            Assert.True(instr.WasDefinitionConsumed("enc_test_only"));
+        }
     }
 }

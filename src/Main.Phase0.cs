@@ -83,7 +83,10 @@ namespace AtomicWar.GodotApp
         private void SetupPhase0()
         {
             if (_phase0 != null) return;
-            _phase0 = new Phase0HostSession();
+            SetupMedical();
+            // Task #133: share the MedicalHostSession-owned dependency ledger so
+            // there is exactly one chem-dep authority, and Phase-0 does not tick it.
+            _phase0 = new Phase0HostSession(dependency: _medical.Engine);
             _phase0.StateChanged += () => _phase0Dirty = true;
 
             // ── Wire every Phase-0 effect to the REAL gameplay consumer ──

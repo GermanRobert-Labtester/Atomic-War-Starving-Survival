@@ -13,6 +13,14 @@ namespace AtomicWar.GodotApp
         public int SimDay { get; set; }
         public List<MedicalProcedureDef> Procedures { get; set; } = new List<MedicalProcedureDef>();
 
+        /// <summary>
+        /// Task #133 P1b: the unified medical pipeline, injected by Main once
+        /// bound. When present, procedures with a pipeline treatment
+        /// (bandage/chelation) execute through it before the ward log;
+        /// when null (headless/CLI) the legacy log-only path is preserved.
+        /// </summary>
+        public MedicalPipelineCoordinator? Pipeline { get; set; }
+
         private Action<MedicalWardEvent>? _onwardchanged_handler;
 
         public MedicalWardHostSession(MedicalWardSystem? system = null)
@@ -71,6 +79,21 @@ namespace AtomicWar.GodotApp
         private void RaiseChanged()
         {
             MarkDirty();
+        }
+
+        /// <summary>
+        /// Task #133 P1b: run a ward procedure through the ward-pipeline
+        /// bridge — pipeline treatment first for mapped procedures (the ward
+        /// log is written only on success), log-only otherwise.
+        /// </summary>
+        public MedicalWardProcedureResult RunProcedure(string patientId, string procedureId, int day)
+        {
+            var result = MedicalWardPipelineBridge.RunProcedure(System, Pipeline, patientId, procedureId, day);
+            if (result.Succeeded)
+                LastEvent = $"Procedure {procedureId} completed for {patientId}.";
+            else
+                LastEvent = $"Procedure {procedureId} refused for {patientId}: {result.ReasonCode}.";
+            return result;
         }
     }
 }

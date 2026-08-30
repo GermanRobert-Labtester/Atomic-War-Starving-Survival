@@ -18,6 +18,7 @@ using Ashfall.Core.Flags;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.Legacy;
 using Ashfall.Core.Endgame;
+using Ashfall.Core.Save;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Settings;
 using Ashfall.Core.Settings;
@@ -613,6 +614,12 @@ namespace AtomicWar.GodotApp
             var report = SurvivorsHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
             bool pass = report.Passed;
+            void Check(bool condition, string name)
+            {
+                GD.Print(condition ? "[PASS] " + name : "[FAIL] " + name);
+                pass &= condition;
+            }
+
             try
             {
                 // Host bridge gate (Loop 9 gap): equipped inventory gear must flow
@@ -761,6 +768,148 @@ namespace AtomicWar.GodotApp
                 GD.Print("[FAIL] D1 stale-restore probe threw: " + e.Message);
                 pass = false;
             }
+            try
+            {
+                // H10 contract: exercise the actual host projection, the
+                // checksummed survivors section bytes, and multi-survivor identity.
+                void PopulatePersistenceState(SurvivorsHostSession session, bool reverse)
+                {
+                    if (reverse)
+                    {
+                        session.AddSurvivor("survivor_beta", "Beta");
+                        session.AddSurvivor("survivor_alpha", "Alpha");
+                    }
+                    else
+                    {
+                        session.AddSurvivor("survivor_alpha", "Alpha");
+                        session.AddSurvivor("survivor_beta", "Beta");
+                    }
+
+                    var alpha = session.Find("survivor_alpha")!;
+                    alpha.Hunger = 91.25f;
+                    alpha.Thirst = 2.5f;
+                    alpha.Fatigue = 77f;
+                    alpha.Warmth = 18f;
+                    alpha.Morale = 3f;
+                    alpha.Health = 44.5f;
+                    alpha.Hygiene = 7.5f;
+                    alpha.WasHungerCritical = true;
+                    alpha.WasThirstCritical = false;
+                    alpha.WasWarmthCritical = true;
+                    alpha.MaxHealthCap = 88f;
+                    var alphaRad = session.RadStateFor("survivor_alpha")!;
+                    alphaRad.RadiationDose = 99f;
+                    alphaRad.LifetimeRadiationExposure = 512.5f;
+                    alphaRad.HasRadResistance = true;
+                    alphaRad.RadResistanceHoursRemaining = 2.25f;
+                    alphaRad.IodineProtectionTimer = 6.5f;
+                    alphaRad.HasAcuteRadiationSickness = true;
+                    alphaRad.HasChronicIllness = true;
+                    alphaRad.HasAcuteRadiationSyndrome = true;
+
+                    var beta = session.Find("survivor_beta")!;
+                    beta.Hunger = 0f;
+                    beta.Thirst = 100f;
+                    beta.Fatigue = 0f;
+                    beta.Warmth = 100f;
+                    beta.Morale = 100f;
+                    beta.Health = 100f;
+                    beta.Hygiene = 0f;
+                    beta.MaxHealthCap = 100f;
+                }
+
+                var source = new SurvivorsHostSession();
+                PopulatePersistenceState(source, reverse: false);
+                var captured = source.CaptureSave();
+                string persisted = SurvivorsSaveStore.TryCapturePersisted(captured);
+                Check(!string.IsNullOrEmpty(persisted), "H10 survivors capture emits persisted checksum envelope");
+
+                var json = new SystemTextJsonSerializer();
+                var restoredEnvelope = SaveEnvelopeHelper.RestoreEnvelope<SurvivorsSaveState>(persisted, json);
+                Check(restoredEnvelope.Success && restoredEnvelope.State != null,
+                    "H10 survivors checksum envelope restores successfully");
+                if (restoredEnvelope.Success && restoredEnvelope.State != null)
+                {
+                    var clean = new SurvivorsHostSession();
+                    clean.RestoreSave(restoredEnvelope.State);
+                    var alpha = clean.Find("survivor_alpha")!;
+                    var alphaRad = clean.RadStateFor("survivor_alpha")!;
+                    var beta = clean.Find("survivor_beta")!;
+                    var betaRad = clean.RadStateFor("survivor_beta")!;
+                    bool alphaNeeds = alpha.Hunger == 91.25f && alpha.Thirst == 2.5f
+                        && alpha.Fatigue == 77f && alpha.Warmth == 18f
+                        && alpha.Morale == 3f && alpha.Health == 44.5f
+                        && alpha.Hygiene == 7.5f && alpha.WasHungerCritical
+                        && !alpha.WasThirstCritical && alpha.WasWarmthCritical
+                        && alpha.MaxHealthCap == 88f;
+                    bool alphaRadiation = alphaRad.RadiationDose == 99f
+                        && alphaRad.LifetimeRadiationExposure == 512.5f
+                        && alphaRad.HasRadResistance
+                        && alphaRad.RadResistanceHoursRemaining == 2.25f
+                        && alphaRad.IodineProtectionTimer == 6.5f
+                        && alphaRad.HasAcuteRadiationSickness
+                        && alphaRad.HasChronicIllness
+                        && alphaRad.HasAcuteRadiationSyndrome;
+                    bool betaBoundary = beta.Hunger == 0f && beta.Thirst == 100f
+                        && beta.Fatigue == 0f && beta.Warmth == 100f
+                        && beta.Morale == 100f && beta.Health == 100f
+                        && beta.Hygiene == 0f && betaRad.RadiationDose == 0f
+                        && betaRad.LifetimeRadiationExposure == 0f;
+                    bool identity = clean.Roster.Find("survivor_alpha")?.survivorId == "survivor_alpha"
+                        && clean.Roster.Find("survivor_beta")?.survivorId == "survivor_beta"
+                        && clean.Needs.Get("survivor_alpha")?.Id == "survivor_alpha"
+                        && clean.RadStateFor("survivor_alpha")?.Id == "survivor_alpha";
+                    Check(alphaNeeds, "H10 needs capture/restore preserves mutated fields");
+                    Check(alphaRadiation, "H10 radiation capture/restore preserves full state");
+                    Check(betaBoundary, "H10 zero and boundary values survive capture/restore");
+                    Check(identity, "H10 restored needs/radiation remain attached to canonical survivor ids");
+                    Check(clean.Needs.RegisteredCount == 2 && clean.Radiation.RegisteredCount == 2,
+                        "H10 restore registers exactly one needs and radiation component per survivor");
+                }
+
+                var reordered = new SurvivorsHostSession();
+                PopulatePersistenceState(reordered, reverse: true);
+                string reorderedPersisted = SurvivorsSaveStore.TryCapturePersisted(reordered.CaptureSave());
+                Check(persisted == reorderedPersisted,
+                    "H10 insertion-order differences produce identical persisted bytes and checksum");
+
+                var changed = source.CaptureSave();
+                changed.survivors[0].health += 1f;
+                string changedPersisted = SurvivorsSaveStore.TryCapturePersisted(changed);
+                Check(persisted != changedPersisted,
+                    "H10 meaningful persisted-field changes alter the checksum envelope");
+
+                var mismatch = new SurvivorsSaveState
+                {
+                    survivors = new List<SurvivorSliceState>
+                    {
+                        new SurvivorSliceState { id = "survivor_alpha" }
+                    },
+                    roster = new SurvivorRosterState
+                    {
+                        entries = new List<SurvivorRosterEntry>
+                        {
+                            new SurvivorRosterEntry { survivorId = "survivor_beta", definitionId = "survivor_beta" }
+                        }
+                    }
+                };
+                bool mismatchRejected = false;
+                try
+                {
+                    new SurvivorsHostSession().RestoreSave(mismatch);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    mismatchRejected = ex.Message.Contains("identity", StringComparison.OrdinalIgnoreCase);
+                }
+                Check(mismatchRejected, "H10 mismatched roster and slice identities are rejected");
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] H10 persistence contract probe threw: " + e.Message);
+                pass = false;
+            }
+
             return EmitSummary("survivors_selftest", pass, pass ? 0 : 1);
         }
 

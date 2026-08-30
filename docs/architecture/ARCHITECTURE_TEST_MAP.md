@@ -120,6 +120,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 63 | `waystation` | World & Expeditions | `WaystationSystem` | `locations.json` | `WaystationHostSession` | `WaystationSaveStore` | `WaystationNetworkPanel` | `--shelter-operations-selftest`, `WaystationSystemTests` | ✅ 6/6 |
 | 64 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
 | 65 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
+| 66 | `medical_pipeline` | Survival & Biology | `MedicalPipelineCoordinator`, `DiagnosisKnowledgeStore`, `MedicalReservationLedger`, `MedicalProcedureSchedule` | — *(Projection DTOs; no JSON catalog)* | `MedicalHostSession` | `MedicalPipelineSaveStore` | `MedicalPanel` | `MedicalPipelineTests`, `MedicalPipelineArchitectureGateTests` | ✅ 6/6 |
 
 ---
 
@@ -889,6 +890,18 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 
 ---
 
+### 66. `medical_pipeline` — Unified affliction, diagnosis, and treatment pipeline (Survival & Biology)
+- **Owner Domain:** `medical`
+- **Setup Method:** `Main.EnsureMedicalPipeline()` | **Cadence:** `Daily Scheduled Procedure Resolution (medical_disease day owner)`
+- **UI Routes:** `medical`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs`](../../Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs)
+  - Core Contracts: [`Assets/Ashfall.Core/Medical/AfflictionId.cs`](../../Assets/Ashfall.Core/Medical/AfflictionId.cs), [`Assets/Ashfall.Core/Medical/AfflictionContracts.cs`](../../Assets/Ashfall.Core/Medical/AfflictionContracts.cs), [`Assets/Ashfall.Core/Medical/DiagnosisKnowledgeStore.cs`](../../Assets/Ashfall.Core/Medical/DiagnosisKnowledgeStore.cs), [`Assets/Ashfall.Core/Medical/MedicalReservationLedger.cs`](../../Assets/Ashfall.Core/Medical/MedicalReservationLedger.cs), [`Assets/Ashfall.Core/Medical/MedicalProcedureSchedule.cs`](../../Assets/Ashfall.Core/Medical/MedicalProcedureSchedule.cs), [`Assets/Ashfall.Core/Medical/PatientRecord.cs`](../../Assets/Ashfall.Core/Medical/PatientRecord.cs)
+  - Host Session: [`src/Host/MedicalHostSession.cs`](../../src/Host/MedicalHostSession.cs)
+  - Save Store: [`src/Host/MedicalPipelineSaveStore.cs`](../../src/Host/MedicalPipelineSaveStore.cs)
+  - UI Panel: [`src/UI/MedicalPanel.cs`](../../src/UI/MedicalPanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Medical/MedicalPipelineTests.cs`](../../Ashfall.Core.Tests/Medical/MedicalPipelineTests.cs)
+
 ## 4. Lifecycle Status & Reachability Proof Matrix
 
 | Section Key | Implemented | Constructed | Ticked / Cadence | Persisted | Player-Routed | Tested | E2E Status |
@@ -926,6 +939,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `library_study` | ✅ | ✅ | ✅ `Daily Codex Research Ticks` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `maritime` | ✅ | ✅ | ⚡ `On-Demand (Dive Sortie)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `medical` | ✅ | ✅ | ✅ `Daily Recovery / Affliction` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `medical_pipeline` | ✅ | ✅ | ✅ `Daily Scheduled Procedure Resolution` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `medical_ward` | ✅ | ✅ | ✅ `Daily Bed Inpatient Triage` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `memorial` | ✅ | ✅ | ⚡ `On-Demand (Survivor Fallen Eulogy)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `mental_health_crisis` | ✅ | ✅ | ✅ `Daily Psych Ward Calming Ticks` | ✅ | ✅ | ✅ | **PASS (6/6)** |

@@ -36,7 +36,7 @@ namespace AtomicWar.GodotApp
         // Previously each system held a fresh `new DutyRosterSystem()`, so
         // cross-system busy checks (mentor_busy / caregiver_busy) observed
         // an empty per-instance roster and never blocked.
-        private readonly DutyRosterSystem _expandedShelterRoster = new DutyRosterSystem();
+        private DutyRosterSystem _expandedShelterRoster = new DutyRosterSystem();
 
         // Promoted from SetupExpandedShelterSystems local — Apprenticeship needs
         // the core SurvivorRelationsSystem instance for its constructor.
@@ -376,6 +376,8 @@ namespace AtomicWar.GodotApp
             RemovePanel(_chemicalDependencyPanel); _chemicalDependencyPanel = null!;
             RemovePanel(_phantomMemoryPanel); _phantomMemoryPanel = null!;
             RemovePanel(_travelingCaravanPanel); _travelingCaravanPanel = null!;
+            RemovePanel(_powerGridPanel); _powerGridPanel = null!;
+            RemovePanel(_medicalWardPanel); _medicalWardPanel = null!;
 
             // Dispose / null host sessions
             _waterTreatment?.Dispose(); _waterTreatment = null!;
@@ -403,6 +405,12 @@ namespace AtomicWar.GodotApp
             _chemicalDependency?.Dispose(); _chemicalDependency = null!;
             _shelterAssignment?.Dispose(); _shelterAssignment = null!;
             _travelingCaravan?.Dispose(); _travelingCaravan = null!;
+            _powerGrid?.Dispose(); _powerGrid = null!;
+            _medicalWardSession?.Dispose(); _medicalWardSession = null!;
+            _medicalWard = null!;
+            _factionBranch?.Dispose(); _factionBranch = null!;
+            _factionBranchDirty = false;
+            _expandedShelterRoster = new DutyRosterSystem();
 
             _airlockSecurityDirty = false;
             _shelterThermalDirty = false;
@@ -424,18 +432,14 @@ namespace AtomicWar.GodotApp
             _archiveDeskDirty = false;
             _contractorRosterDirty = false;
             _mentalHealthCrisisDirty = false;
+            _powerGridDirty = false;
+            _medicalWardDirty = false;
 
-            // Delete slot and global save files for expanded shelter systems
-            // (section file names come from the single registry authority)
-            foreach (var file in Ashfall.Core.Save.SaveSectionRegistry.SectionFileNames.Values)
-            {
-                string p = SaveSlotRoot.Resolve(file);
-                if (System.IO.File.Exists(p))
-                    System.IO.File.Delete(p);
-                string globalP = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
-                if (System.IO.File.Exists(globalP))
-                    System.IO.File.Delete(globalP);
-            }
+            // Lifecycle reset is intentionally persistence-free. The expanded
+            // shelter group owns the existing section captures, but it does
+            // not delete slot projections, campaign envelopes, backups, or
+            // global user:// saves. Destructive new-game cleanup remains in
+            // the separately scoped DeleteGlobalSavesOnDisk path.
         }
     }
 }

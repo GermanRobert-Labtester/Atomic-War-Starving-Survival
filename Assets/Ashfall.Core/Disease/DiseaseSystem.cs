@@ -515,6 +515,24 @@ ILog? log = null)
             return patient != null && patient.quarantined;
         }
 
+        /// <summary>
+        /// Read-only infection lookup for the medical pipeline (Task #133 P1).
+        /// Reports days_sick and the quarantine flag without exposing the
+        /// mutable row. No state is created or mutated.
+        /// </summary>
+        public bool TryGetInfection(string survivorId, string diseaseId, out int daysSick, out bool quarantined)
+        {
+            daysSick = 0;
+            quarantined = false;
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(diseaseId)) return false;
+            if (!_byId.TryGetValue(diseaseId, out var entry)) return false;
+            var patient = FindPatient(entry, survivorId);
+            if (patient == null) return false;
+            daysSick = patient.days_sick;
+            quarantined = patient.quarantined;
+            return true;
+        }
+
         private static bool IsContagious(DiseaseEntryState entry, DiseaseInfectionState patient,
             DiseaseDefinition def)
         {

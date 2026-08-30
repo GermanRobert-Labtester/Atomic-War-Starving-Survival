@@ -261,14 +261,54 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private sealed class MedicalDiseaseDayOwner : IDayAdvanceOwner
+        private sealed class MedicalDiseaseDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private static readonly Ashfall.Core.SystemTextJsonSerializer s_json = new Ashfall.Core.SystemTextJsonSerializer();
+            private Ashfall.Core.Medical.ChemicalDependencyLedgerState? _medicalSnapshot;
+            private string? _diseaseSnapshotJson;
+            private Ashfall.Core.Medical.MedicalPipelineSaveState? _pipelineSnapshot;
             public MedicalDiseaseDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupMedical();
+                _medicalSnapshot = _m._medical.CaptureSave();
+                _m.EnsureMedicalPipeline();
+                _pipelineSnapshot = _m._medical.CapturePipelineSave();
+
+                _m.SetupDisease();
+                // DiseaseSystem.CaptureState() returns its live state object by
+                // reference (not a copy), so a plain assignment here would
+                // alias the pre-day baseline to the same instance TickDay
+                // mutates next. Round-trip through JSON — the system's own
+                // save format — to take a true independent snapshot without
+                // adding a new capture contract to Core.
+                _diseaseSnapshotJson = s_json.Serialize(_m._disease.Engine.CaptureState());
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_medicalSnapshot != null)
+                    _m._medical.RestoreSave(_medicalSnapshot);
+                if (_pipelineSnapshot != null && _m._medical.Pipeline != null)
+                    _m._medical.Pipeline.RestoreState(_pipelineSnapshot);
+                if (_diseaseSnapshotJson != null && _m._disease != null)
+                {
+                    var restored = s_json.Deserialize<Ashfall.Core.Disease.DiseaseSystemState>(_diseaseSnapshotJson);
+                    if (restored != null)
+                        _m._disease.Engine.RestoreState(restored);
+                }
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupMedical();
+                _m.EnsureMedicalPipeline();
+
+                // Task #133 medical progression order (documented in the plan):
+                // 1. scheduled procedures resolve (consume + apply at completion)
+                // 2. chemical dependency progression (single tick owner)
+                // 3. disease progression
+                if (_m._medical.Pipeline != null)
+                    _m._medical.Pipeline.AdvanceScheduled(24f, day);
                 _m._medical.TickHours(24f);
 
                 _m.SetupDisease();
@@ -310,11 +350,23 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private sealed class Phase0PsychologyDayOwner : IDayAdvanceOwner
+        private sealed class Phase0PsychologyDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private Phase0EffectsSaveState? _snapshot;
             public Phase0PsychologyDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            // Phase0EffectsSaveState is built fresh by CaptureSave (deep-copied
+            // sub-states), so holding it directly is a true independent snapshot.
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupPhase0();
+                _snapshot = _m._phase0.CaptureSave();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null)
+                    _m._phase0.RestoreSave(_snapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupPhase0();

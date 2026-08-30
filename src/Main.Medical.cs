@@ -64,6 +64,176 @@ namespace AtomicWar.GodotApp
             GD.Print("[Ashfall Godot] Medical host ready.");
         }
 
+        /// <summary>
+        /// Task #133: construct and bind the unified medical pipeline once the
+        /// inventory, survivors, and Phase-0 sessions exist. Idempotent.
+        /// </summary>
+        private void EnsureMedicalPipeline()
+        {
+            SetupMedical();
+            if (_medical.Pipeline != null) return;
+            SetupSurvivors();
+            SetupInventory();
+            SetupPhase0();
+
+            var pipeline = new Ashfall.Core.Medical.MedicalPipelineCoordinator(
+                _inventory.Inventory,
+                new Ashfall.Core.Medical.DiagnosisKnowledgeStore(),
+                new Ashfall.Core.Medical.MedicalReservationLedger(),
+                new Ashfall.Core.Medical.MedicalProcedureSchedule(),
+                sv => ResolvePatientAvailability(sv.Value),
+                () => _simDay);
+
+            var respiratoryDef = new Ashfall.Core.Medical.AfflictionId(Ashfall.Core.Medical.MedicalTreatmentCatalog.RespiratoryDegenerationId);
+            var radiationDef = new Ashfall.Core.Medical.AfflictionId(Ashfall.Core.Medical.MedicalTreatmentCatalog.RadiationSicknessId);
+
+            pipeline.RegisterHandler(new Ashfall.Core.Medical.RespiratoryAfflictionHandler(_phase0.Respiratory));
+            pipeline.RegisterHandler(new Ashfall.Core.Medical.RadiationSicknessAfflictionHandler(
+                getDose: id => _survivors.RadStateFor(id)?.RadiationDose ?? 0f,
+                getPhaseName: GetRadiationPhaseName,
+                hasAcuteSickness: id => _survivors.RadStateFor(id)?.HasAcuteRadiationSickness ?? false,
+                applyIodine: id => { _survivors.AdministerIodine(id); return true; },
+                applyAntiRad: (id, rads) => { _survivors.AdministerAntiRad(id, rads); return true; }));
+            pipeline.RegisterHandler(new Ashfall.Core.Medical.HealthDeficitAfflictionHandler(
+                getHealth: id => _survivors.Find(id)?.Health ?? 100f,
+                getMaxHealth: id => _survivors.Find(id)?.MaxHealthCap ?? 100f,
+                applyHeal: (id, amount) => { _survivors.HealSurvivor(id, amount); return true; }));
+
+            // Task #133 P1b — chemical-dependency detox starts flow through
+            // the pipeline; the shared engine keeps every withdrawal clock.
+            pipeline.RegisterHandler(new Ashfall.Core.Medical.ChemicalDependencyAfflictionHandler(_medical.Engine));
+
+            // Task #133 P1c — observe-only psychology projection: Phase-0
+            // combat trauma, flashbacks, and guilt insomnia surface as
+            // read-only patient rows. The handlers write nothing and own no
+            // clock; phase0_psychology keeps every rule and tick.
+            pipeline.RegisterHandler(new Ashfall.Core.Medical.GuiltInsomniaAfflictionHandler(_phase0.Guilt));
+            pipeline.RegisterHandler(new Ashfall.Core.Medical.SomaticFlashbackAfflictionHandler(_phase0.Flashbacks));
+            pipeline.RegisterHandler(new Ashfall.Core.Medical.CombatTraumaAfflictionHandler(_phase0.CombatTrauma));
+
+            // Task #133 P1 — disease write-path: one handler per authored
+            // disease plus the four camp-wide vector protocols. The disease
+            // domain keeps every clinical rule; the pipeline owns the
+            // validate → consume → apply transaction.
+            SetupDisease();
+            if (_disease != null)
+            {
+                Ashfall.Core.Medical.DiseaseAfflictionHandler.RegisterAll(pipeline, _disease.Engine, _disease.Catalog);
+                Ashfall.Core.Medical.DiseaseProtocolHandler.RegisterAll(pipeline, _disease.Engine);
+
+                // Auto-suspect on live infection (never confirms — the player
+                // identifies the illness explicitly through the examination).
+                _disease.Engine.OnInfection += (survivorId, diseaseId) =>
+                {
+                    if (Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var sv)
+                        && Ashfall.Core.Medical.AfflictionId.IsValid(diseaseId, out _))
+                        pipeline.SuspectFromEvidence(sv, new Ashfall.Core.Medical.AfflictionId(diseaseId), _simDay, "infection_event");
+                };
+
+                MigrateDiseaseSuspicions(pipeline);
+            }
+
+            // Auto-suspect: domain threshold crossings raise the shelter's
+            // knowledge to Suspected (never Confirmed — confirmation is explicit).
+            _phase0.Respiratory.OnSevereCoughStarted += survivorId =>
+            {
+                if (Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var sv))
+                    pipeline.SuspectFromEvidence(sv, respiratoryDef, _simDay, "severe_cough_threshold");
+            };
+            _phase0.RadiationPhase.OnPhaseChanged += (survivorId, oldPhase, newPhase) =>
+            {
+                if (newPhase != Ashfall.Core.Radiation.RadiationSicknessPhase.Healthy &&
+                    Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var sv))
+                    pipeline.SuspectFromEvidence(sv, radiationDef, _simDay, "radiation_phase_" + newPhase);
+            };
+
+            _medical.BindPipeline(pipeline);
+            // Task #133 P1b: share the pipeline with the ward and chem-dep
+            // sessions when already constructed (they backfill from
+            // _medical.Pipeline otherwise, covering every setup order).
+            if (_medicalWardSession != null) _medicalWardSession.Pipeline = pipeline;
+            if (_chemicalDependency != null) _chemicalDependency.Pipeline = pipeline;
+            MigrateLegacyMedicalDiagnoses();
+            GD.Print("[Ashfall Godot] Medical pipeline bound (Task #133).");
+        }
+
+        /// <summary>
+        /// Task #133 P1: restored infections that carry no diagnosis knowledge
+        /// are raised to Suspected (never Confirmed) so a load does not wipe
+        /// the suspicion trail. Idempotent — SuspectFromEvidence only moves
+        /// Unknown episodes.
+        /// </summary>
+        private void MigrateDiseaseSuspicions(Ashfall.Core.Medical.MedicalPipelineCoordinator pipeline)
+        {
+            if (_disease == null || _survivors == null) return;
+            var catalog = _disease.Catalog;
+            for (int i = 0; i < _survivors.RosterState.Count; i++)
+            {
+                var survivor = _survivors.RosterState[i];
+                if (survivor == null || !survivor.IsAlive) continue;
+                for (int d = 0; d < catalog.Diseases.Count; d++)
+                {
+                    var disease = catalog.Diseases[d];
+                    if (disease == null || string.IsNullOrEmpty(disease.id)) continue;
+                    if (!Ashfall.Core.Medical.AfflictionId.IsValid(disease.id, out _)) continue;
+                    if (!_disease.Engine.TryGetInfection(survivor.Id, disease.id, out int _, out bool _)) continue;
+                    pipeline.SuspectFromEvidence(
+                        new Ashfall.Core.Survivors.SurvivorId(survivor.Id),
+                        new Ashfall.Core.Medical.AfflictionId(disease.id),
+                        _simDay, "restored_infection");
+                }
+            }
+        }
+
+        /// <summary>Canonical lifecycle gate for the pipeline (Task #132 semantics; roster is the live authority until the entity store is host-mounted).</summary>
+        private Ashfall.Core.Medical.PatientAvailability ResolvePatientAvailability(string survivorId)
+        {
+            var survivor = _survivors?.Find(survivorId);
+            if (survivor == null) return Ashfall.Core.Medical.PatientAvailability.Blocked("patient_unknown");
+            if (!survivor.IsAlive) return Ashfall.Core.Medical.PatientAvailability.Blocked("patient_dead");
+            return Ashfall.Core.Medical.PatientAvailability.Ok();
+        }
+
+        private string GetRadiationPhaseName(string survivorId)
+        {
+            var phase = _phase0?.RadiationPhase;
+            if (phase != null && phase.Survivors.TryGetValue(survivorId, out var state))
+                return state.Phase.ToString();
+            return "Healthy";
+        }
+
+        /// <summary>
+        /// Legacy-save migration: the pre-pipeline game displayed these
+        /// conditions openly, so restored episodes arrive Confirmed. New
+        /// progression starts Unknown/Suspected; this runs once per load.
+        /// </summary>
+        private void MigrateLegacyMedicalDiagnoses()
+        {
+            var pipeline = _medical.Pipeline;
+            if (pipeline == null) return;
+            var respiratoryDef = new Ashfall.Core.Medical.AfflictionId(Ashfall.Core.Medical.MedicalTreatmentCatalog.RespiratoryDegenerationId);
+            var radiationDef = new Ashfall.Core.Medical.AfflictionId(Ashfall.Core.Medical.MedicalTreatmentCatalog.RadiationSicknessId);
+            for (int i = 0; i < _survivors.RosterState.Count; i++)
+            {
+                var survivor = _survivors.RosterState[i];
+                if (survivor == null) continue;
+                if (_phase0.Respiratory.RespiratoryDegradation(survivor.Id) > 0f)
+                    pipeline.ConfirmForLegacySave(new Ashfall.Core.Survivors.SurvivorId(survivor.Id), respiratoryDef, _simDay);
+                if (!string.Equals(GetRadiationPhaseName(survivor.Id), "Healthy", StringComparison.Ordinal)
+                    || (_survivors.RadStateFor(survivor.Id)?.HasAcuteRadiationSickness ?? false))
+                    pipeline.ConfirmForLegacySave(new Ashfall.Core.Survivors.SurvivorId(survivor.Id), radiationDef, _simDay);
+            }
+        }
+
+        private void SaveMedicalPipeline()
+        {
+            if (_medical?.Pipeline == null) return;
+            var save = _medical.CapturePipelineSave();
+            if (save == null) return;
+            if (CaptureSection("medical_pipeline", MedicalPipelineSaveStore.TryCapturePersisted(save)))
+                GD.Print("[Ashfall Godot] Medical pipeline save written.");
+        }
+
         private void SaveMedical()
         {
             if (_medical == null) return;
@@ -99,6 +269,9 @@ namespace AtomicWar.GodotApp
             _medicalWardSession = new MedicalWardHostSession(_medicalWard);
             _medicalWardSession.Procedures = procs;
             _medicalWardSession.SimDay = _simDay;
+            // Task #133 P1b: share the pipeline when already bound; otherwise
+            // EnsureMedicalPipeline backfills this reference once it runs.
+            _medicalWardSession.Pipeline = _medical?.Pipeline;
             _medicalWardSession.StateChanged += () => _medicalWardDirty = true;
             _medicalWard.OnWardChanged += _ => _medicalWardDirty = true;
             LoadMedicalWard();
@@ -113,16 +286,38 @@ namespace AtomicWar.GodotApp
 
         private void SaveMedicalWard()
         {
-            if (_medicalWardSession == null) return;
+            if (_medicalWardSession == null || _medicalWard == null) return;
             try
             {
                 _medicalWardSession.SimDay = _simDay;
-                _medicalWardSession.Save();
-                _medicalWardDirty = false;
+                var save = new Ashfall.Core.Medical.MedicalWardSave
+                {
+                    simDay = _medicalWardSession.SimDay,
+                    Beds = new List<Ashfall.Core.Medical.MedicalBedSave>(),
+                    Procedures = new List<Ashfall.Core.Medical.MedicalProcedureDef>(_medicalWardSession.Procedures),
+                    State = _medicalWard.CaptureState()
+                };
+                foreach (var bed in _medicalWard.Beds)
+                {
+                    save.Beds.Add(new Ashfall.Core.Medical.MedicalBedSave
+                    {
+                        BedId = bed.BedId,
+                        DisplayName = bed.DisplayName,
+                        Category = (int)bed.Category,
+                        Isolation = bed.Isolation
+                    });
+                }
+
+                if (CaptureSection("medical_ward", MedicalWardSaveStore.TryCapturePersisted(save)))
+                {
+                    _medicalWardDirty = false;
+                    _medicalWardSession.ClearDirty();
+                }
             }
             catch (Exception e)
             {
                 GD.PushWarning("[Ashfall Godot] MedicalWard save failed: " + e.Message);
+                CaptureSection("medical_ward", string.Empty);
             }
         }
 

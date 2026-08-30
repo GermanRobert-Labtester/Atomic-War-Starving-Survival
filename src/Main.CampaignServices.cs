@@ -67,31 +67,11 @@ namespace AtomicWar.GodotApp
 
                 // Expanded shelter systems (last — depends on World/PowerGrid/Inventory/Survivors/MedicalWard/Phase0/Crafting/Journal/Expeditions)
                 SetupExpandedShelterSystems();
-
-                // Domain-specific builders for optional/expansion-gated services
-                ConstructSettlementBuilder();
-                ConstructScavengerBuilder();
             }
             finally
             {
                 _isComposing = false;
             }
-        }
-
-        // -----------------------------------------------------------------
-        // Optional / expansion-gated domain builders
-        // -----------------------------------------------------------------
-
-        private void ConstructSettlementBuilder()
-        {
-            // Placeholder for optional settlement-building composition.
-            // Wire here when the expansion catalog is present.
-        }
-
-        private void ConstructScavengerBuilder()
-        {
-            // Placeholder for optional scavenger-run composition.
-            // Wire here when the expansion catalog is present.
         }
     }
 }

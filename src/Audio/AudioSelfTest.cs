@@ -1,7 +1,11 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using Ashfall.Core;
+using Ashfall.Core.Radiation;
+using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp.Audio
 {
@@ -115,6 +119,19 @@ namespace AtomicWar.GodotApp.Audio
                     exists = File.Exists(osPath);
                 }
                 Check($"Asset exists: {Path.GetFileName(resPath)}", exists, ref pass, ref fail);
+            }
+
+            foreach (var kvp in AudioCueCatalog.All)
+            {
+                if (!kvp.Value.Loop)
+                    continue;
+
+                var stream = ResourceLoader.Load<AudioStream>(kvp.Value.ResourcePath);
+                bool loopCapable = stream is AudioStreamWav
+                    || stream is AudioStreamOggVorbis
+                    || stream is AudioStreamMP3;
+                Check($"Loop cue '{kvp.Key}' uses a supported stream format",
+                    loopCapable, ref pass, ref fail);
             }
 
             // ── 4. Settings Persistence ─────────────────────────
@@ -234,6 +251,51 @@ namespace AtomicWar.GodotApp.Audio
             GD.Print("[AudioSelfTest] --- Lifecycle Safety ---");
             Check("AudioCueCatalog.All is non-null", AudioCueCatalog.All != null, ref pass, ref fail);
             Check("AudioSettings singleton is safe", AudioSettings.Instance != null, ref pass, ref fail);
+
+            var emittedCues = new List<string>();
+            var bridge = new AudioEventBridge(emittedCues.Add);
+            var firstWeather = new WeatherSystem();
+            var secondWeather = new WeatherSystem();
+
+            bridge.BindWeather(firstWeather);
+            firstWeather.ForceWeather(WeatherKind.FalloutStorm);
+            Check("Bridge maps fallout-storm changes to the specific cue",
+                emittedCues.Count == 1 && emittedCues[0] == AudioCueCatalog.WeatherFalloutStorm,
+                ref pass, ref fail);
+
+            bridge.BindWeather(firstWeather);
+            firstWeather.ForceWeather(WeatherKind.Blizzard);
+            Check("Rebinding the same weather system does not duplicate handlers",
+                emittedCues.Count == 2 && emittedCues[1] == AudioCueCatalog.WeatherBlizzard,
+                ref pass, ref fail);
+
+            bridge.BindWeather(secondWeather);
+            firstWeather.ForceWeather(WeatherKind.BlackRain);
+            Check("Replacing a weather system detaches the stale session",
+                emittedCues.Count == 2, ref pass, ref fail);
+            secondWeather.ForceWeather(WeatherKind.BlackRain);
+            Check("Replacement weather system remains live",
+                emittedCues.Count == 3 && emittedCues[2] == AudioCueCatalog.WeatherBlackRain,
+                ref pass, ref fail);
+
+            var radiation = new RadiationSystem();
+            var survivor = new SurvivorRadState { Id = "audio_selftest_survivor" };
+            radiation.Register(survivor);
+            bridge.BindRadiation(radiation);
+            radiation.Expose(survivor, 100f, 1f);
+            Check("Bridge maps acute radiation status to its alert cue",
+                emittedCues.Count == 4 && emittedCues[3] == AudioCueCatalog.RadAlertAcute,
+                ref pass, ref fail);
+            radiation.SeedLifetimeExposure(survivor, RadiationSystem.ChronicLifetimeThreshold);
+            Check("Bridge maps chronic radiation status to its alert cue",
+                emittedCues.Count == 5 && emittedCues[4] == AudioCueCatalog.RadAlertChronic,
+                ref pass, ref fail);
+
+            bridge.Dispose();
+            secondWeather.ForceWeather(WeatherKind.Blizzard);
+            radiation.AdministerIodine(survivor);
+            Check("Disposing the bridge detaches every domain handler",
+                emittedCues.Count == 5, ref pass, ref fail);
 
             // ── Summary ─────────────────────────────────────────
             GD.Print($"[AudioSelfTest] --- SUMMARY ---");

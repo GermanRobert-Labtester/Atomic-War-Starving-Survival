@@ -25,7 +25,10 @@ namespace AtomicWar.GodotApp
         {
             SetupSurvivors();
             SetupPhase0();
-            _phase0Panel.Bind(_phase0, _survivors);
+            // Task #133 P1c: bind the medical pipeline so the panel's inhaler
+            // action consumes inventory through the pipeline like MedicalPanel.
+            EnsureMedicalPipeline();
+            _phase0Panel.Bind(_phase0, _survivors, _medical.Pipeline);
             _phase0Panel.Open();
         }
         public void OpenDutyRosterPanel() => _dutyRosterPanel?.Open();

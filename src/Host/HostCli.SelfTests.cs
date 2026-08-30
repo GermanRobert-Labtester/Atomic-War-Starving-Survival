@@ -43,10 +43,19 @@ namespace AtomicWar.GodotApp
             try
             {
                 catalogCount = CatalogFileSystem.EnumerateJsonFiles(files, dataDirectory, SearchOption.TopDirectoryOnly).Length;
+                if (catalogCount == 0)
+                {
+                    report.Error("catalog enumeration returned zero JSON files for existing data directory: " + dataDirectory);
+                    GD.PrintErr("[DATA] catalog enumeration returned zero JSON files for existing data directory: " + dataDirectory);
+                }
             }
-            catch
+            catch (Exception ex)
             {
                 catalogCount = 0;
+                string message = "catalog enumeration failed for '" + dataDirectory + "' ("
+                    + ex.GetType().Name + "): " + ex.Message;
+                report.Error(message);
+                GD.PrintErr("[DATA] " + message);
             }
             GD.Print(report.Summary + " — " + report.ErrorCount + " errors, "
                 + report.Warnings.Count + " warnings across "

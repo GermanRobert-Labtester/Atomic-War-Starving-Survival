@@ -54,12 +54,23 @@ namespace AtomicWar.GodotApp
         /// </summary>
         internal bool CaptureSection(string sectionKey, string payload)
         {
+            if (string.IsNullOrWhiteSpace(sectionKey))
+            {
+                _sectionCaptureFailed = true;
+                GD.PrintErr("[Ashfall Godot] Capture rejected: section key is empty.");
+                return false;
+            }
+
             if (string.IsNullOrWhiteSpace(payload))
             {
+                // Never allow a failed capture to leave an older generation's
+                // bytes eligible for a later aggregate write.
+                _sectionPayloads.Remove(sectionKey);
                 _sectionCaptureFailed = true;
                 GD.PrintErr($"[Ashfall Godot] Section '{sectionKey}' captured empty — save will be aborted.");
                 return false;
             }
+
             _sectionPayloads[sectionKey] = payload;
             return true;
         }
@@ -85,6 +96,7 @@ namespace AtomicWar.GodotApp
         private void ResetAllSessions()
         {
             ResetAllSessionsInMemory();
+            _saveLoadHost?.ResetSlotForNewGame(new SaveSlotId("slot_1"));
             DeleteGlobalSavesOnDisk();
             GD.Print("[Ashfall Godot] New game: all sessions reset, saves cleared.");
         }
@@ -110,6 +122,12 @@ namespace AtomicWar.GodotApp
                 return false;
             }
 
+            // The slot root now points at the requested campaign. Dispose all
+            // live session instances before setup so guarded SetupXxx methods
+            // cannot retain state, event subscriptions, or panels from the
+            // previously active slot.
+            ResetAllSessionsInMemory();
+
             _state = GameState.Playing;
             if (_mainMenu != null) _mainMenu.Visible = false;
             if (_gameOver != null) _gameOver.Visible = false;
@@ -134,12 +152,14 @@ namespace AtomicWar.GodotApp
             SetupSurvivors();
             SetupInventory();
             SetupMedical();
+            SetupMedicalWard();
             SetupWorld();
             SetupRadio();
             SetupCrafting();
             SetupCaravans();
             SetupExpeditions();
-            SetupNarrative();
+            SetupCombat();
+            SetupNarrative(reloadEventAdapter: true);
             SetupEconomy();
             SetupUtilityAi();
             SetupDutyRoster();
@@ -147,12 +167,23 @@ namespace AtomicWar.GodotApp
             SetupMaritime();
             SetupPhantom();
             SetupPhase0();
+            EnsureMedicalPipeline();
             SetupDoseLedger();
             SetupMuster();
             SetupYearOfAsh();
             SetupExpansions();
+            SetupExpansionQuests();
+            SetupThirdonary();
             SetupGreenhouse();
+            SetupPowerGrid();
+            SetupSilentFoundry();
+            SetupDisease();
+            SetupEncounterChoiceResolver();
+            SetupSurvivorSocial();
+            SetupMemorial();
+            SetupSurvivorFate();
             SetupExpandedShelterSystems();
+            SetupFactionBranch();
             SetupOnboarding();
 
             UpdateHud();
@@ -196,66 +227,88 @@ namespace AtomicWar.GodotApp
 
         private void SaveAll() => SaveAll(playCue: true);
 
-        private void SaveAll(bool playCue)
+        private bool SaveAll(bool playCue)
         {
-            SaveJournal();
-            SaveMoralChoice();
-            SaveHoldfast();
-            SaveHoldfastRuntime();
-            SaveDutyRoster();
-            SaveExpansionHub();
-            SaveExpansionQuests();
-            SaveThirdonary();
-            SavePhantomMemory();
-            SaveDoseLedger();
-            SaveMuster();
-            SaveInventory();
-            SaveSurvivors();
-            SaveEconomy();
-            SaveVerdict();
-            SaveMaritime();
-            SaveExpeditions();
-            SaveCombat();
-            SaveNarrative();
-            SaveEventAdapter();
-            SaveMedical();
-            SaveWorld();
-            SaveCrafting();
-            SaveCaravans();
-            SaveYearOfAsh();
-            SavePhase0();
-            SaveStartingLevel();
-            SaveGreenhouse();
-            SaveRadio();
-            SaveDailyBriefing();
-            SavePowerGrid();
-            SaveMedicalWard();
-            SaveMemorial();
-            SaveOnboarding();
-            // ── Audit-PR triad repairs ───────────────────────────────────
-            SaveSilentFoundry();
-            SaveDisease();
-            SaveWastelandMap();
-            SaveEncounterChoice();
-            // ─────────────────────────────────────────────────────────────
-            SaveAllExpandedShelterSystems();
-            SaveSurvivorSocial();
-            SaveSurvivorFate();
-            SaveCampaignDay();
-            if (playCue)
-                _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
+            // Every invocation is a new capture generation. Never let a
+            // previous campaign, slot, or failed attempt leak into this one.
+            _sectionPayloads.Clear();
+            _sectionCaptureFailed = false;
 
-            // Envelope-primary save: ONE atomic campaign.json write from the
-            // in-memory payload map. A failed capture aborts here so a mixed-
-            // generation snapshot can never be written; the previous envelope
-            // stays intact.
-            if (_sectionCaptureFailed)
+            try
             {
-                _sectionCaptureFailed = false;
-                GD.PrintErr("[Ashfall Godot] SaveAll aborted: one or more sections failed to capture; previous campaign envelope preserved.");
-                return;
+                SaveJournal();
+                SaveMoralChoice();
+                SaveHoldfast();
+                SaveHoldfastRuntime();
+                SaveDutyRoster();
+                SaveExpansionHub();
+                SaveExpansionQuests();
+                SaveThirdonary();
+                SavePhantomMemory();
+                SaveDoseLedger();
+                SaveMuster();
+                SaveInventory();
+                SaveSurvivors();
+                SaveEconomy();
+                SaveVerdict();
+                SaveMaritime();
+                SaveExpeditions();
+                SaveCombat();
+                SaveNarrative();
+                SaveEventAdapter();
+                SaveMedical();
+                SaveMedicalPipeline();
+                SaveWorld();
+                SaveCrafting();
+                SaveCaravans();
+                SaveYearOfAsh();
+                SavePhase0();
+                SaveStartingLevel();
+                SaveGreenhouse();
+                SaveRadio();
+                SaveDailyBriefing();
+                SavePowerGrid();
+                SaveMedicalWard();
+                SaveMemorial();
+                SaveOnboarding();
+                // ── Audit-PR triad repairs ───────────────────────────────
+                SaveSilentFoundry();
+                SaveDisease();
+                SaveWastelandMap();
+                SaveEncounterChoice();
+                // ─────────────────────────────────────────────────────────
+                SaveAllExpandedShelterSystems();
+                SaveSurvivorSocial();
+                SaveSurvivorFate();
+                SaveCampaignDay();
+
+                if (_sectionCaptureFailed)
+                {
+                    GD.PrintErr("[Ashfall Godot] SaveAll aborted: one or more sections failed to capture; previous campaign envelope preserved.");
+                    return false;
+                }
+
+                bool committed = _saveLoadHost != null && _saveLoadHost.SaveAllDirect(_sectionPayloads);
+                if (!committed)
+                {
+                    string reason = _saveLoadHost == null
+                        ? "no save/load host is wired in this context"
+                        : "campaign envelope was not committed";
+                    GD.PrintErr($"[Ashfall Godot] SaveAll failed: {reason}; previous envelope preserved.");
+                    return false;
+                }
+
+                if (playCue)
+                    _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
+                return true;
             }
-            _saveLoadHost?.SaveAllDirect(_sectionPayloads);
+            finally
+            {
+                // The map is a transaction buffer, not a second persistence
+                // authority. Drop it after both success and failure.
+                _sectionPayloads.Clear();
+                _sectionCaptureFailed = false;
+            }
         }
 
     }

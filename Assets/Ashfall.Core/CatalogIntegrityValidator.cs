@@ -418,7 +418,7 @@ namespace Ashfall.Core
                     ? file.Substring(file.LastIndexOf('/') + 1)
                     : Path.GetFileName(file);
                 ctx.File = leaf;
-                if (TryParse(file, files, out JsonDocument doc))
+                if (TryParse(file, files, out JsonDocument doc, report))
                 {
                     using (doc)
                     {
@@ -448,19 +448,33 @@ namespace Ashfall.Core
             return report;
         }
 
-        private static bool TryParse(string path, IFileIO files, out JsonDocument doc)
+        private static bool TryParse(string path, IFileIO files, out JsonDocument doc, CatalogIntegrityReport report)
         {
             doc = null!;
             try
             {
                 string text = files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(text)) return false;
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    report.Error("catalog '" + path + "': empty JSON file (no catalog records can be trusted)");
+                    return false;
+                }
                 doc = JsonDocument.Parse(text);
                 return true;
             }
-            catch (Exception)
+            catch (JsonException ex)
             {
-                /* cleanup: fallback on malformed json */
+                report.Error("catalog '" + path + "': malformed JSON (" + ex.GetType().Name + "): " + ex.Message);
+                return false;
+            }
+            catch (IOException ex)
+            {
+                report.Error("catalog '" + path + "': I/O failure (" + ex.GetType().Name + "): " + ex.Message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                report.Error("catalog '" + path + "': catalog read failure (" + ex.GetType().Name + "): " + ex.Message);
                 return false;
             }
         }

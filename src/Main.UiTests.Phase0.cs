@@ -49,6 +49,7 @@ namespace AtomicWar.GodotApp
             // Drive all ten systems so every condition row renders.
             SetupInventory();
             SetupMedical();
+            EnsureMedicalPipeline();
             _phase0!.CurrentDay = 4;
             _phase0.RecordGuilt("elena_vasquez", "choice_imposed_hardship", 0.8f);
             _phase0.RegisterCombatSurvived("survivor_gunner_mikhail");
@@ -66,7 +67,7 @@ namespace AtomicWar.GodotApp
             _phase0.TickHour(6f);
             _phase0.IsInAshZone = false;
 
-            _phase0Panel!.Bind(_phase0, _survivors);
+            _phase0Panel!.Bind(_phase0, _survivors, _medical.Pipeline);
             _phase0Panel.Open();
 
             bool bound = _phase0Panel.IsBound;

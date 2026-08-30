@@ -84,7 +84,8 @@ namespace Ashfall.Core.Save
             IFileIO? fileIO = null,
             bool createBackup = false,
             ILog? log = null,
-            string? logTag = null)
+            string? logTag = null,
+            Func<string, bool>? validatePayload = null)
         {
             if (string.IsNullOrWhiteSpace(path)) return false;
             if (string.IsNullOrWhiteSpace(payload)) return false;
@@ -124,6 +125,8 @@ namespace Ashfall.Core.Save
                 string readBack = files.ReadAllText(tempPath);
                 if (string.IsNullOrWhiteSpace(readBack))
                     throw new InvalidOperationException("temporary save payload is empty");
+                if (validatePayload != null && !validatePayload(readBack))
+                    throw new InvalidOperationException("temporary save payload failed validation");
 
                 if (File.Exists(tempPath))
                 {

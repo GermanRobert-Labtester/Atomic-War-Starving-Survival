@@ -3,6 +3,7 @@ using System.Collections.Generic;
 #pragma warning disable CS8618
 
 using Ashfall.Core.IO;
+using Ashfall.Core.Content;
 namespace Ashfall.Core.Narrative
 {
     /// <summary>
@@ -22,6 +23,15 @@ namespace Ashfall.Core.Narrative
         public event Action<EncounterDefinition> OnEncounterSelected;
         public event Action<EncounterResolutionRecord> OnEncounterResolved;
         public event Action<NarrativeEncounterState> OnStateChanged;
+
+        /// <summary>
+        /// Optional content-utilization instrumentation (Ticket #127). Null
+        /// during normal gameplay (side-effect free, zero overhead); set by
+        /// diagnostic/self-test harnesses that want SELECTED/EFFECT_PRODUCED
+        /// evidence sourced from this system's own real selection and
+        /// resolution logic rather than a hand-authored literal.
+        /// </summary>
+        public ContentUtilizationInstrumentation? Instrumentation { get; set; }
 
         public NarrativeEncounterSystem(NarrativeEncounterState? state = null)
         {
@@ -79,6 +89,8 @@ namespace Ashfall.Core.Narrative
                 if (roll < acc)
                 {
                     OnEncounterSelected?.Invoke(def);
+                    Instrumentation?.RecordDefinitionSelected(
+                        NarrativeEncounterCatalogLoader.FileName, def.id, nameof(NarrativeEncounterSystem));
                     return def;
                 }
             }
@@ -108,6 +120,10 @@ namespace Ashfall.Core.Narrative
             _state.cumulativeMorale += choice.moraleDelta;
             _state.cumulativeGuilt += choice.guiltDelta;
             OnEncounterResolved?.Invoke(record);
+            Instrumentation?.RecordDefinitionConsumed(
+                NarrativeEncounterCatalogLoader.FileName, encounterId, nameof(NarrativeEncounterSystem),
+                $"morale{(choice.moraleDelta >= 0 ? "+" : "")}{choice.moraleDelta:0.##} guilt{(choice.guiltDelta >= 0 ? "+" : "")}{choice.guiltDelta:0.##}",
+                day);
             RaiseChanged();
             return true;
         }

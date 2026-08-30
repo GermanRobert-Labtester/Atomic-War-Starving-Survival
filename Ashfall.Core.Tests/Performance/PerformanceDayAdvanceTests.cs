@@ -100,13 +100,25 @@ public class PerformanceDayAdvanceTests
         harnessA.AdvanceDays(Math.Min(3, days));
         harnessB.AdvanceDays(Math.Min(3, days));
 
-        double msA = harnessA.AdvanceDays(days);
-        double msB = harnessB.AdvanceDays(days);
+        // A single 30-day run is often sub-millisecond on CI hosts, so scheduler
+        // and JIT noise can dominate the comparison. Use medians of repeated
+        // identical advances while keeping the same-seed workload assertion.
+        var samplesA = new double[5];
+        var samplesB = new double[5];
+        for (int i = 0; i < samplesA.Length; i++)
+        {
+            samplesA[i] = harnessA.AdvanceDays(days);
+            samplesB[i] = harnessB.AdvanceDays(days);
+        }
 
+        Array.Sort(samplesA);
+        Array.Sort(samplesB);
+        double msA = samplesA[samplesA.Length / 2];
+        double msB = samplesB[samplesB.Length / 2];
         double larger = Math.Max(msA, msB);
         double smaller = Math.Min(msA, msB);
         Assert.True(larger == 0 || (larger - smaller) / larger < 0.20,
-            string.Format("Same-seed workloads must produce similar latency (within 20%). Actual: {0:F1}ms vs {1:F1}ms", msA, msB));
+            string.Format("Same-seed workloads must produce similar median latency (within 20%). Actual: {0:F1}ms vs {1:F1}ms", msA, msB));
     }
 
     [Fact]

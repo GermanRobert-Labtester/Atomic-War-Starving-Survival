@@ -17,6 +17,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action<string>? OnRoomToggled;
         public event Action<string, PowerGridRoomPriority>? OnPriorityChanged;
         public event Action<float>? OnFuelAdded;
+        public event Action? OnClose;
 
         private PowerGridHostSession? _session;
         private Label _genLabel = null!;
@@ -165,7 +166,7 @@ namespace AtomicWar.GodotApp.UI
 
             var closeRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
             var closeBtn = AshfallUiHelpers.MakeButton("CLOSE [Esc]",
-                () => Visible = false);
+                () => { Visible = false; OnClose?.Invoke(); });
             closeBtn.CustomMinimumSize = new Vector2(120, 28);
             closeRow.AddChild(closeBtn);
             vbox.AddChild(closeRow);

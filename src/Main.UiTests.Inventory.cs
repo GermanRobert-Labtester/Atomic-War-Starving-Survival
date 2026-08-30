@@ -60,6 +60,27 @@ namespace AtomicWar.GodotApp
             string water = _inventory.Add("clean_water", 4);
             bool waterOk = water.Contains("Added");
 
+            // Plan #10: EquipResult/ConsumeResult must be branchable on a
+            // typed status rather than the message string. Prove success,
+            // unknown-item failure, blocked-but-known-item, and zero
+            // mutation on either failure path.
+            var faceSlotBeforeUnknown = _inventory.Inventory.GetEquipped(EquipSlot.Face);
+            var equipResultBlocked = _inventory.EquipResult("battery"); // held, not equipable -> Blocked
+            bool equipTypedBlockedIsBlockedNotSuccess = equipResultBlocked.Status == ActionResult.StatusKind.Blocked;
+            var unknownItemResult = _inventory.EquipResult("item_does_not_exist_xyz");
+            bool unknownItemIsFailed = unknownItemResult.Status == ActionResult.StatusKind.Failed
+                && unknownItemResult.FailureCode == "unknown_item";
+            var faceSlotAfterUnknown = _inventory.Inventory.GetEquipped(EquipSlot.Face);
+            bool noMutationOnUnknownItemFailure = ReferenceEquals(faceSlotBeforeUnknown, faceSlotAfterUnknown);
+
+            _inventory.Inventory.Unequip(EquipSlot.Face);
+            var equipTypedSuccess = _inventory.EquipResult("gas_mask");
+            bool equipTypedSuccessIsSuccess = equipTypedSuccess.Status == ActionResult.StatusKind.Success;
+
+            var consumeUnknownResult = _inventory.ConsumeResult("item_does_not_exist_xyz");
+            bool consumeUnknownIsFailed = consumeUnknownResult.Status == ActionResult.StatusKind.Failed
+                && consumeUnknownResult.FailureCode == "unknown_item";
+
             int canned = _inventory.Inventory.CountById("canned_food");
             bool itemCheckCount = canned == 6;
             bool protection = _inventory.Inventory.GetEquippedProtection() > 0f;
@@ -72,10 +93,15 @@ namespace AtomicWar.GodotApp
                 && fresh.Inventory.GetEquipped(EquipSlot.Face) != null;
 
             bool pass = panel && catalog && addOk && geigerOk && maskOk && equipOk
-                && working && waterOk && itemCheckCount && protection && roundtrip;
+                && working && waterOk && itemCheckCount && protection && roundtrip
+                && equipTypedBlockedIsBlockedNotSuccess && unknownItemIsFailed && noMutationOnUnknownItemFailure
+                && equipTypedSuccessIsSuccess && consumeUnknownIsFailed;
             GD.Print($"[InventoryUiTest] panel={panel} catalog={catalog} add={addOk} geiger={geigerOk} " +
                      $"mask={maskOk} equip={equipOk} working={working} water={waterOk} " +
-                     $"canned={itemCheckCount} protection={protection} roundtrip={roundtrip}");
+                     $"canned={itemCheckCount} protection={protection} roundtrip={roundtrip} " +
+                     $"typedBlocked={equipTypedBlockedIsBlockedNotSuccess} typedUnknownFailed={unknownItemIsFailed} " +
+                     $"noMutationOnFailure={noMutationOnUnknownItemFailure} typedSuccess={equipTypedSuccessIsSuccess} " +
+                     $"consumeUnknownFailed={consumeUnknownIsFailed}");
             HostCli.EmitSummary("inventory_uitest", pass, pass ? 0 : 1);
             if (System.IO.File.Exists(InventorySaveStore.SavePath))
                 System.IO.File.Delete(InventorySaveStore.SavePath);

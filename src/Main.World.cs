@@ -11,6 +11,7 @@ using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.Shelter;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
@@ -36,7 +37,6 @@ namespace AtomicWar.GodotApp
         private bool _startingLevelDirty;
         private OpeningProtocolModal _openingProtocolModal = null!;
         private PowerGridHostSession _powerGrid = null!;
-        private PowerGridPanel _powerGridPanel = null!;
         private bool _powerGridDirty;
         private GreenhouseHostSession _greenhouse = null!;
         private GreenhousePanel _greenhousePanel = null!;
@@ -254,7 +254,21 @@ namespace AtomicWar.GodotApp
         private void SavePowerGrid()
         {
             if (_powerGrid == null) return;
-            if (_powerGrid.TrySave()) _powerGridDirty = false;
+
+            var save = new PowerGridSave
+            {
+                simDay = _powerGrid.System.State.SimDay,
+                Rooms = new List<PowerGridRoomSave>(),
+                State = _powerGrid.System.State.Capture()
+            };
+            foreach (var room in _powerGrid.System.Rooms)
+                save.Rooms.Add(PowerGridSaveCodec.FromRoom(room));
+
+            if (CaptureSection("power_grid", PowerGridSaveStore.TryCapturePersisted(save)))
+            {
+                _powerGridDirty = false;
+                _powerGrid.ClearDirty();
+            }
         }
 
         private void TickPowerGrid(int day)

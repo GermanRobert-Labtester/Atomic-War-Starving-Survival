@@ -21,6 +21,12 @@ public partial class SaveLoadHostSession : Node
     private SaveSlotId? _activeSlotId;
     private AggregateSaveEnvelope? _activeEnvelope;
     private readonly HashSet<string> _restoredSections = new();
+    private SaveSlotId? _selectionRollbackSlotId;
+    private AggregateSaveEnvelope? _selectionRollbackEnvelope;
+    private string? _selectionRollbackRoot;
+    private HashSet<string>? _selectionRollbackSections;
+    private SaveSlotId? _selectionRollbackTargetSlotId;
+    private bool _hasSelectionRollback;
 
     /// <summary>Active loaded aggregate campaign envelope, or null if no slot loaded.</summary>
     public AggregateSaveEnvelope? ActiveEnvelope => _activeEnvelope;
@@ -59,6 +65,33 @@ public partial class SaveLoadHostSession : Node
             SelectSlot(slotId);
         }
         return slotId;
+    }
+
+    /// <summary>
+    /// Clear the default slot as part of an explicit new-game transition.
+    /// This is intentionally stronger than user-facing DeleteSlot: a new run
+    /// must not inherit an old campaign envelope, derived projections, or
+    /// terminal/corrupt metadata.
+    /// </summary>
+    public bool ResetSlotForNewGame(SaveSlotId slotId)
+    {
+        if (_slotService == null) return false;
+        if (!_slotService.ResetSlotForNewGame(_currentProfileId, slotId))
+            return false;
+
+        if (_activeSlotId.HasValue && _activeSlotId.Value == slotId)
+        {
+            _activeSlotId = null;
+            _activeEnvelope = null;
+            _restoredSections.Clear();
+            ClearSelectionRollback();
+            ClearSlotRoot();
+            ActiveSlotChanged?.Invoke(null);
+        }
+
+        SlotsChanged?.Invoke();
+        GD.Print($"[SaveLoad] Reset slot for new game: {slotId}");
+        return true;
     }
 
     /// <summary>Raised when slot data changes (create, delete, save, load).</summary>
@@ -146,6 +179,7 @@ public partial class SaveLoadHostSession : Node
         _activeSlotId = slotId;
         _activeEnvelope = null;
         _restoredSections.Clear();
+        ClearSelectionRollback();
         ApplySlotRoot();
         SlotsChanged?.Invoke();
         ActiveSlotChanged?.Invoke(_activeSlotId);
@@ -169,6 +203,7 @@ public partial class SaveLoadHostSession : Node
             return false;
         }
 
+        CaptureSelectionRollback(slotId);
         _activeSlotId = slotId;
         _activeEnvelope = null;
         ApplySlotRoot();
@@ -366,6 +401,7 @@ public partial class SaveLoadHostSession : Node
                     _activeSlotId = null;
                     _activeEnvelope = null;
                     _restoredSections.Clear();
+                    ClearSelectionRollback();
                     ClearSlotRoot();
                     ActiveSlotChanged?.Invoke(null);
                 }
@@ -407,6 +443,7 @@ public partial class SaveLoadHostSession : Node
         _activeSlotId = slotId;
         _activeEnvelope = null;
         _restoredSections.Clear();
+        ClearSelectionRollback();
         ApplySlotRoot();
         SlotsChanged?.Invoke();
         ActiveSlotChanged?.Invoke(_activeSlotId);
@@ -461,7 +498,19 @@ public partial class SaveLoadHostSession : Node
     /// </summary>
     public bool SaveEnvelopeFromPayloads(IReadOnlyDictionary<string, string> payloads)
     {
-        if (_activeSlotId == null || _slotService == null) return false;
+        if (_activeSlotId == null || _slotService == null)
+        {
+            // This is a normal, expected early-out for contexts that
+            // deliberately run without a save/load host (e.g. the
+            // composition-root architecture selftest), so it must not read
+            // as an error — but it must never be perfectly silent either;
+            // a caller that expects saves to persist needs to be able to
+            // see why nothing was written.
+            GD.Print(_slotService == null
+                ? "[SaveLoad] SaveEnvelopeFromPayloads skipped: save/load host has no slot service in this context."
+                : "[SaveLoad] SaveEnvelopeFromPayloads skipped: no active slot selected.");
+            return false;
+        }
         if (payloads == null) return false;
 
         try
@@ -475,8 +524,12 @@ public partial class SaveLoadHostSession : Node
             {
                 if (string.IsNullOrWhiteSpace(pair.Value))
                 {
-                    if (SaveSectionRegistry.TryGetSection(pair.Key, out var metadata) &&
-                        metadata != null && metadata.RequiresSetup)
+                    if (!SaveSectionRegistry.TryGetSection(pair.Key, out var metadata) || metadata == null)
+                    {
+                        GD.PrintErr($"[SaveLoad] Aggregate save refused: unknown section '{pair.Key}' captured empty.");
+                        return false;
+                    }
+                    if (metadata.RequiresSetup)
                     {
                         GD.PrintErr($"[SaveLoad] Aggregate save refused: required section '{pair.Key}' captured empty.");
                         return false;
@@ -542,6 +595,7 @@ public partial class SaveLoadHostSession : Node
             }
 
             _activeEnvelope = envelope;
+            ClearSelectionRollback();
             TryWriteManifestProjection(envelope.manifest);
             SlotsChanged?.Invoke();
             GD.Print($"[SaveLoad] Wrote campaign envelope with {envelope.sections.Count} sections (single atomic write).");
@@ -572,6 +626,7 @@ public partial class SaveLoadHostSession : Node
         var aggregateResult = _slotService.TryLoadAggregate(_currentProfileId, slotId);
         if (!aggregateResult.IsSuccess || aggregateResult.Envelope == null)
         {
+            RestoreSelectionAfterFailedLoad(slotId);
             result = aggregateResult;
             LastLoadResult = result;
             OnLoadCompleted?.Invoke(result);
@@ -585,6 +640,7 @@ public partial class SaveLoadHostSession : Node
         // exposing the new envelope or slot root to the rest of the game.
         if (!TryProjectEnvelope(aggregateResult.Envelope, slotId, out var restored, out var projectionErrors))
         {
+            RestoreSelectionAfterFailedLoad(slotId);
             result = SaveLoadResult.Fail(
                 SaveLoadStatus.CorruptData,
                 $"Save slot '{slotId.Value}' could not restore its derived section projections. Live session preserved.",
@@ -606,6 +662,7 @@ public partial class SaveLoadHostSession : Node
         LastLoadResult = result;
         OnLoadCompleted?.Invoke(result);
         ActiveSlotChanged?.Invoke(_activeSlotId);
+        ClearSelectionRollback();
         GD.Print($"[SaveLoad] Unpacked and loaded slot: {slotId} ({_restoredSections.Count} sections)");
         return true;
     }
@@ -674,7 +731,52 @@ public partial class SaveLoadHostSession : Node
 
         string slotRoot = _slotService.GetSlotRoot(_currentProfileId, slotId);
         string stageRoot = Path.Combine(slotRoot, ".campaign_projection_tmp");
+        // A crash between individual per-file moves in the commit loop below
+        // can leave a slot root with a mix of old and new derived/compat
+        // files. campaign.json itself is unaffected (it already committed
+        // before this method runs), and every Continue/TryLoadSlot call
+        // recomputes `desired` from campaign.json and rewrites every file
+        // unconditionally, so a subsequent successful load self-heals the
+        // mix. This marker exists so an interrupted transaction is
+        // detectable by anything that inspects the slot root directly
+        // (diagnostics, selftests) rather than relying on that self-healing
+        // happening to run first.
+        string inProgressMarkerPath = Path.Combine(slotRoot, ".campaign_projection_inprogress");
+        if (File.Exists(inProgressMarkerPath))
+        {
+            // Evidence of a crash during a previous commit loop. campaign.json
+            // remains authoritative and this pass recomputes every derived
+            // file from it unconditionally, so the transaction below still
+            // repairs the slot; only log so the interruption is not silent.
+            GD.PrintErr($"[SaveLoad] Slot '{slotId}' has a leftover projection-in-progress marker from an interrupted commit; re-projecting from campaign.json to repair.");
+        }
+
         var staleFiles = new HashSet<string>(StringComparer.Ordinal);
+        const string legacyProjectionFile = "legacy.json";
+        string legacyTargetPath = Path.Combine(slotRoot, legacyProjectionFile);
+        if (!desired.ContainsKey(legacyProjectionFile) && File.Exists(legacyTargetPath))
+            staleFiles.Add(legacyProjectionFile);
+
+        foreach (var metadata in SaveSectionRegistry.All)
+        {
+            string fileName = SaveSectionRegistry.FileNameFor(metadata.SectionKey)!;
+            if (desired.ContainsKey(fileName)) continue;
+
+            string targetPath = Path.Combine(slotRoot, fileName);
+            if (!File.Exists(targetPath)) continue;
+            if (metadata.RequiresSetup)
+            {
+                // A required derived file without a corresponding aggregate
+                // section is evidence of an out-of-generation projection. Do
+                // not delete it or let it restore stale state: fail closed.
+                errors.Add($"Required section '{metadata.SectionKey}' is absent from campaign.json but has a derived file.");
+            }
+            else
+            {
+                staleFiles.Add(fileName);
+            }
+        }
+
         foreach (string previousSection in _restoredSections)
         {
             if (restoredSections.Contains(previousSection)) continue;
@@ -686,8 +788,12 @@ public partial class SaveLoadHostSession : Node
                 staleFiles.Add(previousFile);
         }
 
+        if (errors.Count > 0)
+            return false;
+
         var originals = new Dictionary<string, string?>(StringComparer.Ordinal);
         bool committed = false;
+        bool markerWritten = false;
         try
         {
             Directory.CreateDirectory(slotRoot);
@@ -712,6 +818,14 @@ public partial class SaveLoadHostSession : Node
                 if (!string.Equals(File.ReadAllText(stagedPath), pair.Value, StringComparison.Ordinal))
                     throw new IOException($"staged projection '{pair.Key}' did not round-trip");
             }
+
+            // All files are staged and verified. Mark the commit phase as
+            // in-progress before the first destructive per-file move so a
+            // crash partway through the loop below leaves unambiguous
+            // evidence on disk, then clear the marker only once every move
+            // and every stale-file deletion has completed.
+            File.WriteAllText(inProgressMarkerPath, DateTime.UtcNow.ToString("o"));
+            markerWritten = true;
 
             // Commit every derived projection only after all staging and reads
             // succeeded. A later failure restores the exact previous files.
@@ -757,6 +871,14 @@ public partial class SaveLoadHostSession : Node
                     errors.Add($"Rollback of '{original.Key}' failed: {rollbackEx.Message}");
                 }
             }
+            // The exception path above already restored every file this
+            // process could reach, so the transaction is not left
+            // in-progress from this process's point of view.
+            if (markerWritten)
+            {
+                try { if (File.Exists(inProgressMarkerPath)) File.Delete(inProgressMarkerPath); }
+                catch (Exception markerEx) { errors.Add($"In-progress marker cleanup failed: {markerEx.Message}"); }
+            }
             return false;
         }
         finally
@@ -772,6 +894,12 @@ public partial class SaveLoadHostSession : Node
                     GD.PrintErr($"[SaveLoad] Projection staging cleanup failed for slot '{slotId}': {cleanupEx.Message}");
                 else
                     errors.Add($"Projection staging cleanup failed: {cleanupEx.Message}");
+            }
+
+            if (committed && markerWritten)
+            {
+                try { if (File.Exists(inProgressMarkerPath)) File.Delete(inProgressMarkerPath); }
+                catch (Exception markerEx) { GD.PrintErr($"[SaveLoad] In-progress marker cleanup failed for slot '{slotId}': {markerEx.Message}"); }
             }
         }
     }
@@ -811,6 +939,56 @@ public partial class SaveLoadHostSession : Node
             lastSaveTimestamp = source.lastSaveTimestamp,
             generationId = source.generationId,
         };
+    }
+
+    private void CaptureSelectionRollback(SaveSlotId targetSlotId)
+    {
+        _selectionRollbackSlotId = _activeSlotId;
+        _selectionRollbackEnvelope = _activeEnvelope;
+        _selectionRollbackRoot = SaveSlotRoot.CurrentRoot;
+        _selectionRollbackSections = new HashSet<string>(_restoredSections, StringComparer.Ordinal);
+        _selectionRollbackTargetSlotId = targetSlotId;
+        _hasSelectionRollback = true;
+    }
+
+    private void ClearSelectionRollback()
+    {
+        _selectionRollbackSlotId = null;
+        _selectionRollbackEnvelope = null;
+        _selectionRollbackRoot = null;
+        _selectionRollbackSections = null;
+        _selectionRollbackTargetSlotId = null;
+        _hasSelectionRollback = false;
+    }
+
+    private void RestoreSelectionAfterFailedLoad(SaveSlotId targetSlotId)
+    {
+        if (!_hasSelectionRollback) return;
+        if (!_selectionRollbackTargetSlotId.HasValue || _selectionRollbackTargetSlotId.Value != targetSlotId)
+        {
+            // A direct load of a different slot must not consume a pending
+            // rollback snapshot created by SelectSlot for another target.
+            ClearSelectionRollback();
+            return;
+        }
+
+        _activeSlotId = _selectionRollbackSlotId;
+        _activeEnvelope = _selectionRollbackEnvelope;
+        _restoredSections.Clear();
+        if (_selectionRollbackSections != null)
+        {
+            foreach (string sectionName in _selectionRollbackSections)
+                _restoredSections.Add(sectionName);
+        }
+
+        if (_activeSlotId == null)
+            ClearSlotRoot();
+        else
+            SaveSlotRoot.CurrentRoot = _selectionRollbackRoot;
+
+        SaveSlotId? restoredSlot = _activeSlotId;
+        ClearSelectionRollback();
+        ActiveSlotChanged?.Invoke(restoredSlot);
     }
 
     /// <summary>

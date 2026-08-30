@@ -404,10 +404,79 @@ namespace AtomicWar.GodotApp
                 }
                 GD.Print("[PASS] Case 7: V1 envelope migrated in memory, stray section dropped, disk untouched.");
 
+                // ── CASE 8: Interrupted projection commit self-heals on next load ──
+                GD.Print("\n[CASE 8] Testing recovery from a leftover projection-in-progress marker...");
+                var interruptedSlotId = new SaveSlotId("slot_interrupted_projection");
+                hostSession.CreateSlot(interruptedSlotId);
+
+                var interruptedPayloads = new Dictionary<string, string>
+                {
+                    { "journal", "{\"entries\":[\"day 9\"]}" },
+                    { "inventory", "{\"water\": 77}" },
+                };
+                if (!hostSession.SaveEnvelopeFromPayloads(interruptedPayloads))
+                {
+                    GD.PrintErr("[FAIL] Case 8: Failed to write initial envelope for interrupted-projection slot.");
+                    return 1;
+                }
+
+                // First load explodes both sections normally.
+                if (!hostSession.TryLoadSlot(interruptedSlotId, out var firstLoadResult) || !firstLoadResult.IsSuccess)
+                {
+                    GD.PrintErr($"[FAIL] Case 8: Initial load of interrupted-projection slot failed: {firstLoadResult.UserMessage}");
+                    return 1;
+                }
+
+                string interruptedSlotRoot = Path.Combine(tempDir, SaveSlotService.SavesBaseDir, "profile-default", "slot-slot_interrupted_projection");
+                string interruptedInventoryFile = Path.Combine(interruptedSlotRoot, "inventory_save.json");
+                string interruptedJournalFile = Path.Combine(interruptedSlotRoot, "journal_save.json");
+
+                // Simulate a crash between the move loop's file writes: leave
+                // the in-progress marker present, corrupt one derived file to
+                // a value that must NOT be trusted, and delete the other to
+                // simulate a half-finished commit. campaign.json itself was
+                // never touched by this simulation.
+                File.WriteAllText(Path.Combine(interruptedSlotRoot, ".campaign_projection_inprogress"), "simulated-crash");
+                File.WriteAllText(interruptedInventoryFile, "{\"water\": -999, \"__stale_pre_crash_value\": true}");
+                if (File.Exists(interruptedJournalFile))
+                    File.Delete(interruptedJournalFile);
+
+                // A subsequent load must recompute every derived file from
+                // campaign.json (still authoritative and untouched), repair
+                // both files, and clear the marker — regardless of the
+                // simulated mid-commit mess left on disk.
+                bool healedLoaded = hostSession.TryLoadSlot(interruptedSlotId, out var healedResult);
+                if (!healedLoaded || !healedResult.IsSuccess)
+                {
+                    GD.PrintErr($"[FAIL] Case 8: Load after simulated interrupted commit failed: {healedResult.UserMessage}");
+                    return 1;
+                }
+                if (File.Exists(Path.Combine(interruptedSlotRoot, ".campaign_projection_inprogress")))
+                {
+                    GD.PrintErr("[FAIL] Case 8: In-progress marker was not cleared after a successful re-projection.");
+                    return 1;
+                }
+                if (!File.Exists(interruptedJournalFile))
+                {
+                    GD.PrintErr("[FAIL] Case 8: Deleted derived journal file was not restored by re-projection.");
+                    return 1;
+                }
+                if (File.ReadAllText(interruptedInventoryFile) != interruptedPayloads["inventory"])
+                {
+                    GD.PrintErr("[FAIL] Case 8: Corrupted derived inventory file was not overwritten with the campaign.json-authoritative payload.");
+                    return 1;
+                }
+                if (!hostSession.RestoredSections.Contains("journal") || !hostSession.RestoredSections.Contains("inventory"))
+                {
+                    GD.PrintErr("[FAIL] Case 8: RestoredSections missing sections after self-healing re-projection.");
+                    return 1;
+                }
+                GD.Print("[PASS] Case 8: Interrupted projection self-healed from campaign.json; marker cleared.");
+
                 panel.QueueFree();
                 hostSession.QueueFree();
 
-                GD.Print("\n=== SAVE-LOAD UI FAILURE-PATH SELF-TEST PASS (7/7 gates verified) ===");
+                GD.Print("\n=== SAVE-LOAD UI FAILURE-PATH SELF-TEST PASS (8/8 gates verified) ===");
                 return 0;
             }
             catch (Exception ex)

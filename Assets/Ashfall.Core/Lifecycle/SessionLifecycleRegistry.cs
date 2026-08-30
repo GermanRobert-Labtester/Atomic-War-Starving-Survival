@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Save;
 
 namespace Ashfall.Core.Lifecycle
 {
@@ -20,12 +21,17 @@ namespace Ashfall.Core.Lifecycle
 
     /// <summary>
     /// Contract for a session or subsystem registered with the lifecycle coordinator.
+    /// A participant owns either a canonical save section or a lifecycle group. A
+    /// group is an in-memory lifecycle boundary; it is never itself a campaign
+    /// section or an on-disk file.
     /// </summary>
     public interface ISessionParticipant
     {
         string ParticipantId { get; }
         IReadOnlyList<string> DependsOn { get; }
         string? SaveSectionKey { get; }
+        string? LifecycleGroup { get; }
+        IReadOnlyList<string> OwnedSaveSectionKeys { get; }
 
         void OnReset();
         void OnDispose();
@@ -33,12 +39,16 @@ namespace Ashfall.Core.Lifecycle
 
     /// <summary>
     /// Lightweight delegate-backed participant for host sessions and panels.
+    /// Save-section aliases are normalized at this lifecycle boundary so the
+    /// participant metadata cannot drift from the current save registry.
     /// </summary>
     public sealed class DelegateSessionParticipant : ISessionParticipant
     {
         public string ParticipantId { get; }
         public IReadOnlyList<string> DependsOn { get; }
         public string? SaveSectionKey { get; }
+        public string? LifecycleGroup { get; }
+        public IReadOnlyList<string> OwnedSaveSectionKeys { get; }
 
         private readonly Action? _onReset;
         private readonly Action? _onDispose;
@@ -48,13 +58,42 @@ namespace Ashfall.Core.Lifecycle
             IReadOnlyList<string>? dependsOn = null,
             string? saveSectionKey = null,
             Action? onReset = null,
-            Action? onDispose = null)
+            Action? onDispose = null,
+            string? lifecycleGroup = null,
+            IReadOnlyList<string>? ownedSaveSectionKeys = null)
         {
             ParticipantId = participantId ?? throw new ArgumentNullException(nameof(participantId));
             DependsOn = dependsOn ?? Array.Empty<string>();
-            SaveSectionKey = saveSectionKey;
+            SaveSectionKey = SaveSectionRegistry.CanonicalizeSectionKey(saveSectionKey);
+            LifecycleGroup = string.IsNullOrWhiteSpace(lifecycleGroup) ? null : lifecycleGroup;
+            OwnedSaveSectionKeys = BuildOwnedSaveSectionKeys(ownedSaveSectionKeys);
             _onReset = onReset;
             _onDispose = onDispose;
+        }
+
+        private IReadOnlyList<string> BuildOwnedSaveSectionKeys(IReadOnlyList<string>? requested)
+        {
+            if (requested == null)
+            {
+                if (SaveSectionKey != null)
+                    requested = new[] { SaveSectionKey };
+                else if (LifecycleGroup != null)
+                    requested = SaveSectionRegistry.SectionKeysForLifecycleGroup(LifecycleGroup);
+                else
+                    requested = Array.Empty<string>();
+            }
+
+            var result = new List<string>(requested.Count);
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var key in requested)
+            {
+                string? canonical = SaveSectionRegistry.CanonicalizeSectionKey(key);
+                if (string.IsNullOrWhiteSpace(canonical) || !seen.Add(canonical))
+                    continue;
+                result.Add(canonical);
+            }
+
+            return result.AsReadOnly();
         }
 
         public void OnReset() => _onReset?.Invoke();

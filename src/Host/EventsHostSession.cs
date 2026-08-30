@@ -7,7 +7,9 @@ namespace AtomicWar.GodotApp.Host
 {
     /// <summary>
     /// ASHFALL — Events Host Session.
-    /// Manages event history, incidents, and narrative progression for the Events Log panel.
+    /// Catalog/read-model for event history, incidents, and narrative progression displayed
+    /// by the Events Log panel. Dynamic trigger progress belongs to HostEventAdapter and is
+    /// persisted through HostEventSaveStore; this session intentionally has no save state.
     /// </summary>
     public partial class EventsHostSession : Node
     {

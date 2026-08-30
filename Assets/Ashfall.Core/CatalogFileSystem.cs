@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // ASHFALL Core: JSON-catalog file enumeration utility.
 
+using System;
 using System.IO;
 
 namespace Ashfall.Core
@@ -29,9 +30,15 @@ namespace Ashfall.Core
             {
                 return files.EnumerateFiles(dataDirectory, "*.json", searchOption);
             }
-            catch
+            catch (Exception ex)
             {
-                /* cleanup: fallback on IO failure */
+                // Enumeration is an optional adapter seam, but an I/O failure
+                // must remain visible to the host instead of becoming a valid
+                // empty catalog set.
+                Ashfall.Core.IO.CatalogDiagnostics.Warn(
+                    dataDirectory,
+                    "JSON file enumeration",
+                    ex);
                 return new string[0];
             }
         }

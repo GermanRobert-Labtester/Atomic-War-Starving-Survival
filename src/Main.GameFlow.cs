@@ -301,6 +301,7 @@ namespace AtomicWar.GodotApp
                     SetupInventory();
                     SetupMedical();
                     SetupPhase0();
+                    EnsureMedicalPipeline();
                     _medicalPanel.Bind(_medical, _survivors, _inventory,
                         _phase0?.Respiratory);
                     _medicalPanel.Open();

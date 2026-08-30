@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
-**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-08-29
-**Total Catalogs:** 411 | **Total Definitions:** 5014 | **Domain Families:** 31
+**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-08-30
+**Total Catalogs:** 411 | **Total Definitions:** 5019 | **Domain Families:** 31
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -175,7 +175,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 |---|---|---|---|---|
 | `holdfast_flavor.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastFlavorCatalog` |
 
-### Items (12 Catalogs, 346 Definitions)
+### Items (12 Catalogs, 351 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -188,7 +188,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `greenhouse_items.json` | 14 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GreenhouseExpansionCatalog` |
 | `holdfast_items.json` | 40 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastItemsCatalog` |
 | `item_description_texts.json` | 0 | `1.0.0` | `OPTIONAL` | `ItemCatalogLoader` |
-| `items.json` | 159 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
+| `items.json` | 164 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
 | `verdict_items.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `year_of_ash_items.json` | 62 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 

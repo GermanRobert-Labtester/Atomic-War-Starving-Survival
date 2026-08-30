@@ -117,6 +117,53 @@ namespace AtomicWar.GodotApp.UI
                         Ashfall.Core.UI.Theme.Warm);
                     RenderedActiveCount++;
                 }
+
+                // Task #133 P1 — disease rows from the pipeline projection.
+                // Identities stay masked until an explicit identify confirms
+                // them; this panel is read-only (actions live in MedicalPanel).
+                // Task #133 P1c — psychology rows (trauma / flashbacks / guilt
+                // insomnia) ride the same PatientRecord projection, read-only.
+                if (_medical?.Pipeline != null
+                    && Ashfall.Core.Survivors.SurvivorId.TryParse(s.Id, out var projectSv))
+                {
+                    var record = new PatientRecordProjector(_medical.Pipeline).Project(projectSv);
+                    foreach (var affliction in record.Afflictions)
+                    {
+                        bool unidentified = string.Equals(
+                            affliction.AfflictionId,
+                            MedicalTreatmentCatalog.UnidentifiedIllnessId,
+                            StringComparison.Ordinal);
+                        bool isDisease = !unidentified
+                            && affliction.AfflictionId.StartsWith("disease_", StringComparison.Ordinal);
+                        bool isPsychology = IsPsychologyAffliction(affliction.AfflictionId);
+                        if (!unidentified && !isDisease && !isPsychology)
+                            continue;
+
+                        if (unidentified)
+                        {
+                            AddAffliction(_activeList,
+                                $"{Name(s.Id)} — {affliction.StageLabel} (unidentified)",
+                                Ashfall.Core.UI.Theme.Warm);
+                        }
+                        else if (isPsychology)
+                        {
+                            // Phase-0 conditions are player-facing; the stage
+                            // label carries the state (severity stays with the
+                            // Phase-0 panel until a diagnosis flow exists).
+                            bool critical = affliction.StageLabel.Contains("CRITICAL", StringComparison.Ordinal);
+                            AddAffliction(_activeList,
+                                $"{Name(s.Id)} — {affliction.StageLabel}",
+                                critical ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm);
+                        }
+                        else
+                        {
+                            AddAffliction(_activeList,
+                                $"{Name(s.Id)} — {affliction.StageLabel} (day {affliction.SeverityValue:0})",
+                                Ashfall.Core.UI.Theme.Critical);
+                        }
+                        RenderedActiveCount++;
+                    }
+                }
             }
 
             if (RenderedActiveCount == 0)
@@ -215,6 +262,14 @@ namespace AtomicWar.GodotApp.UI
             l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             return l;
+        }
+
+        /// <summary>Task #133 P1c: the three observe-only Phase-0 psychology projections.</summary>
+        private static bool IsPsychologyAffliction(string afflictionId)
+        {
+            return afflictionId == MedicalTreatmentCatalog.CombatTraumaId
+                || afflictionId == MedicalTreatmentCatalog.SomaticFlashbackId
+                || afflictionId == MedicalTreatmentCatalog.GuiltInsomniaId;
         }
 
         private static string Name(string id)

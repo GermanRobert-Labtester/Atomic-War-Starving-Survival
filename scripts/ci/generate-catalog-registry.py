@@ -223,7 +223,26 @@ def generate_registry():
     ])
 
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_FILE.write_text("\n".join(lines), encoding="utf-8")
+
+    check_mode = "--check" in sys.argv
+    generated = "\n".join(lines)
+    if check_mode:
+        if not OUTPUT_FILE.is_file():
+            print(f"FAIL: {OUTPUT_FILE} does not exist. Run python3 scripts/ci/generate-catalog-registry.py", file=sys.stderr)
+            sys.exit(1)
+        current = OUTPUT_FILE.read_text(encoding="utf-8")
+        # The "Last Verified" date line is expected to change daily and is not
+        # drift — compare everything else (catalog/definition/family counts
+        # and the full per-family table) for real content drift.
+        current_stable = re.sub(r"\*\*Last Verified:\*\* \d{4}-\d{2}-\d{2}", "**Last Verified:** DATE", current)
+        generated_stable = re.sub(r"\*\*Last Verified:\*\* \d{4}-\d{2}-\d{2}", "**Last Verified:** DATE", generated)
+        if current_stable.strip() != generated_stable.strip():
+            print(f"FAIL: {OUTPUT_FILE} is out of date. Run python3 scripts/ci/generate-catalog-registry.py", file=sys.stderr)
+            sys.exit(1)
+        print(f"OK: {OUTPUT_FILE} is in sync ({total_catalogs} catalogs, {len(by_family)} families, {total_defs} definitions).")
+        return
+
+    OUTPUT_FILE.write_text(generated, encoding="utf-8")
     print(f"Wrote {OUTPUT_FILE} ({total_catalogs} catalogs, {len(by_family)} families, {total_defs} definitions).")
 
 if __name__ == "__main__":
