@@ -86,6 +86,15 @@ namespace Ashfall.Core.Medical
         public event Action<string, float> OnMoraleDrainRequested;     // survivorId, amount
         public event Action<string, float> OnCraftingPenaltyChanged;   // survivorId, factor
         public event Action<string, float> OnCombatPenaltyChanged;     // survivorId, factor
+        // Plan 09 9B — stress-driven relapse hook. Fired exactly once per
+        // ReportStress(...) call, regardless of how many dependencies were
+        // actually nudged. Lets subscribers (telemetry, narrative, audio)
+        // observe the input independently of the system's internal nudges.
+        public event Action<string, string, float> OnStressReported;   // survivorId, source, magnitude
+        // Fired when a dependencyLevel bumped by stress crosses back up to
+        // >= DependencyThreshold from below — analogous to OnDependencyFormed
+        // but distinguishable by source of the trigger.
+        public event Action<string, string, ChemicalDependencyKind> OnDependencyReFormedByStress;
         public event Action OnStateChanged;
 
         public IReadOnlyDictionary<string, List<ChemicalDependencyState>> Ledger => _ledger;
@@ -114,6 +123,68 @@ namespace Ashfall.Core.Medical
             if (dep.dependencyLevel >= DependencyThreshold && !dep.inManagedDetox)
                 OnDependencyFormed?.Invoke(survivorId, itemId);
             RaiseChanged();
+        }
+
+        // ── Stress-driven relapse (Plan 09 9B Core) ──────────────
+
+        /// <summary>
+        /// Report an external stress source for a survivor (guilt spike,
+        /// combat trauma ration cut, etc). Each dependency currently carried
+        /// is nudged by a per-kind, magnitude-clamped delta; survivors in
+        /// managed detox or cold-turkey are left alone because the withdrawal
+        /// path is its own state machine. Returns the number of dependencies
+        /// the call actually bumped, so callers can route follow-up effects
+        /// (morale drainage, narrative beats) only when something moved.
+        /// </summary>
+        /// <remarks>
+        /// This call is idempotent re: state-change notifications: no mutation
+        /// means no <see cref="OnStateChanged"/>; the input-echo
+        /// <see cref="OnStressReported"/> always fires once so telemetry does
+        /// not have to special-case empty ledgers.
+        /// </remarks>
+        public int ReportStress(string survivorId, string source, float magnitude)
+        {
+            // Always echo the input once.
+            OnStressReported?.Invoke(
+                survivorId ?? string.Empty,
+                source ?? string.Empty,
+                magnitude);
+
+            if (string.IsNullOrEmpty(survivorId)) return 0;
+            if (!_ledger.TryGetValue(survivorId, out var deps) || deps.Count == 0)
+                return 0;
+
+            int nudged = 0;
+            for (int i = 0; i < deps.Count; i++)
+            {
+                var dep = deps[i];
+                // Detox owns the survivor's mental state machine; do not
+                // double-count stress as dependency growth — the withdrawal
+                // log already drains morale.
+                if (dep.inColdTurkey || dep.inManagedDetox) continue;
+                if (dep.dependencyLevel <= 0f) continue;
+
+                ChemicalDependencyKind kind = ChemicalDependencyKind.Opioid;
+                if (Enum.TryParse(dep.kind, out ChemicalDependencyKind parsed)) kind = parsed;
+
+                float delta = StressRelapseRules.ComputeDelta(magnitude, kind);
+                if (delta <= 0f) continue;
+
+                float before = dep.dependencyLevel;
+                float after = Math.Min(MaxDependencyLevel, before + delta);
+                if (after <= before) continue; // saturated — nothing moved
+                dep.dependencyLevel = after;
+                nudged++;
+
+                // Cross-up event: dependency just re-formed from a stressed
+                // clean baseline. Distinct from OnDependencyFormed so narrative
+                // + audio can tell "first relapse after a bad week" from
+                // "first dose taken this morning".
+                if (before < DependencyThreshold && after >= DependencyThreshold)
+                    OnDependencyReFormedByStress?.Invoke(survivorId, dep.itemId, kind);
+            }
+            if (nudged > 0) RaiseChanged();
+            return nudged;
         }
 
         // ── Detox programs ────────────────────────────────────────────
