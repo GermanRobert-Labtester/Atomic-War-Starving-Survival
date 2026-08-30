@@ -280,6 +280,7 @@ namespace AtomicWar.GodotApp
             var rad = RadStateFor(survivorId);
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.AdministerIodine(rad);
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionPillBottle);
             LastEvent = $"{survivorId}: iodine administered — {rad.RadResistanceHoursRemaining:F0}h rad resistance.";
             RaiseStateChanged();
             return LastEvent;
@@ -290,6 +291,7 @@ namespace AtomicWar.GodotApp
             var rad = RadStateFor(survivorId);
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.AdministerAntiRad(rad, rads);
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionInjection);
             LastEvent = $"{survivorId}: anti-rad cleared {rads:F0} mSv (dose now {rad.RadiationDose:F0}).";
             RaiseStateChanged();
             return LastEvent;
@@ -310,6 +312,8 @@ namespace AtomicWar.GodotApp
             var rad = RadStateFor(survivorId);
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.Expose(rad, radsPerHour, 1f);
+            if (radsPerHour > 0f)
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadGeigerBurst);
             LastEvent = $"{survivorId}: exposed to {radsPerHour} mSv/hr for 1h (dose {rad.RadiationDose:F0}/100).";
             RaiseStateChanged();
             return LastEvent;

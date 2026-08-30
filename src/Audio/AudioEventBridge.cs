@@ -130,6 +130,9 @@ namespace AtomicWar.GodotApp.Audio
                 "trap" => AudioCueCatalog.CombatHit,
                 "retreat_fail" => AudioCueCatalog.CombatHit,
                 "enemy_fire" when evt.Detail.Contains("hits") => AudioCueCatalog.CombatHit,
+                "repair" => AudioCueCatalog.ActionRepair,
+                "bandage" => AudioCueCatalog.ActionInjection,
+                "bleed" => AudioCueCatalog.MedHeartbeat,
                 _ => null,
             };
 
@@ -169,6 +172,7 @@ namespace AtomicWar.GodotApp.Audio
                 _expeditions.OnVehicleBreakdown -= OnVehicleBreakdown;
                 _expeditions.OnExpeditionCompleted -= OnExpeditionCompleted;
                 _expeditions.OnExpeditionFailed -= OnExpeditionFailed;
+                _expeditions.OnLootAdded -= OnLootAdded;
             }
 
             _expeditions = expeditions;
@@ -179,14 +183,20 @@ namespace AtomicWar.GodotApp.Audio
                 _expeditions.OnVehicleBreakdown += OnVehicleBreakdown;
                 _expeditions.OnExpeditionCompleted += OnExpeditionCompleted;
                 _expeditions.OnExpeditionFailed += OnExpeditionFailed;
+                _expeditions.OnLootAdded += OnLootAdded;
             }
         }
 
         private void OnExpeditionStarted(ExpeditionState state) => _playCue(AudioCueCatalog.ShelterDoorOpen);
         private void OnEncounterTriggered(ExpeditionState state) => _playCue(AudioCueCatalog.CombatStart);
         private void OnVehicleBreakdown(ExpeditionState state) => _playCue(AudioCueCatalog.DangerAlarmKlaxon);
-        private void OnExpeditionCompleted(ExpeditionState state) => _playCue(AudioCueCatalog.ActionItemPickup);
+        private void OnExpeditionCompleted(ExpeditionState state)
+        {
+            _playCue(AudioCueCatalog.ShelterDoorSeal);
+            _playCue(AudioCueCatalog.ActionItemPickup);
+        }
         private void OnExpeditionFailed(ExpeditionState state, string reason) => _playCue(AudioCueCatalog.DangerDebris);
+        private void OnLootAdded(ExpeditionState state) => _playCue(AudioCueCatalog.ActionItemPickup);
 
         public void BindDisease(DiseaseSystem? disease)
         {
@@ -278,6 +288,7 @@ namespace AtomicWar.GodotApp.Audio
                 _expeditions.OnVehicleBreakdown -= OnVehicleBreakdown;
                 _expeditions.OnExpeditionCompleted -= OnExpeditionCompleted;
                 _expeditions.OnExpeditionFailed -= OnExpeditionFailed;
+                _expeditions.OnLootAdded -= OnLootAdded;
             }
 
             if (_disease != null)

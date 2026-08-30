@@ -134,6 +134,7 @@ namespace AtomicWar.GodotApp
 
             _audio?.StopAmbience();
             _audio?.StopMusic();
+            _audio?.PlayMainMenuMusic();
 
             CloseAllOverlayPanels();
 
@@ -183,6 +184,7 @@ namespace AtomicWar.GodotApp
             }
 
             CloseAllOverlayPanels();
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiConfirm);
 
             if (descriptor.OpenAction != null)
             {
