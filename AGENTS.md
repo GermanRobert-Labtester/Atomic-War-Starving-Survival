@@ -151,10 +151,10 @@ Known offenders (do not grow these; migrate logic into Core instead):
 `Assets/StreamingAssets/Data/` is the authority. ScriptableObjects are a Unity-editor convenience generated from JSON, never the source. Never fork data per engine.
 
 Known data issues:
-- 121 ScriptableObject definitions — risk of dual authority
+- ~~121 ScriptableObject definitions — risk of dual authority~~ — RESOLVED (0 ScriptableObjects remain; see H12)
 - 56 narrative JSON files are **untracked in git** — missing on fresh clone (`Assets/StreamingAssets/Data/narrative/`)
-- Property naming mixes `camelCase` and `snake_case` — migrate to `snake_case`
-- Only 35 of ~280 JSON files have `schema_version` — add to all core data files
+- Property naming mixes `camelCase` and `snake_case` — migrate to `snake_case` (migration notes filed per file; rename deferred to a follow-up task — see A11 parity audit)
+- ~~Only 35 of ~280 JSON files have `schema_version`~~ — RESOLVED: all 411 data JSON files (137 root catalogs + 272 narrative + whitelists/documents) carry a top-level `schema_version`; presence is now enforced by `CatalogIntegrityValidator` (a root-object catalog missing it fails `--data-integrity-selftest`), gated by `CatalogIntegrityValidatorTests` (missing→error, present→pass, bare-array root exempt).
 - ~~`world_history.json:15` references "China"~~ — RESOLVED: replaced with a fictional nation ("the Meridian Compact"); all real-country/alliance terms swept from the data authority and gated by `Ashfall.Core.Tests/DataRuleComplianceTests.cs` (no real countries/wars/people).
 
 ---
