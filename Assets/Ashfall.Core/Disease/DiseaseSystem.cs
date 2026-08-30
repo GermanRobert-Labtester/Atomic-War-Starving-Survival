@@ -292,6 +292,97 @@ ILog? log = null)
             RaiseStateChanged();
         }
 
+        // // ── World-trigger arrival (Plan 09 9A follow‑up) ──────────────
+
+        /// <summary>Forwarded by trigger sources so telemetry can audit
+        /// which world event seeded which disease.</summary>
+        public event Action<string, string, string, int>? OnOutbreakTriggered;
+            // (diseaseId, sourceId, reason, infectionsApplied)
+
+        /// <summary>
+        /// Seed a disease through an <see cref="IDiseaseOutbreakSource"/>
+        /// <em>if and only if</em> the source's contract lists the disease
+        /// and the catalog knows the id. Returns an envelope that tells the
+        /// caller what landed — useful so the host can decide whether to
+        /// surface a broadcast or a healer's note without re-querying the
+        /// system.
+        ///
+        /// Candidate selection: on a true trigger, take up to one survivor
+        /// from the candidate pool and <see cref="Infect(string,string,int)"/>
+        /// them. The seed is single-target by design (the disease's natural
+        /// spread picks up the rest). Deterministic given the seeded RNG
+        /// and candidate order.
+        /// </summary>
+        public DiseaseOutbreakResult TriggerOutbreak(
+            IDiseaseOutbreakSource source,
+            string diseaseId,
+            int day,
+            IReadOnlyList<string>? candidates = null)
+        {
+            if (source == null || string.IsNullOrEmpty(diseaseId))
+                return DiseaseOutbreakResult.Empty;
+
+            DiseaseOutbreakResult result;
+            // The catalog check runs BEFORE the contract check so a host
+            // adapter that names a misspelled disease id hears "unknown"
+            // rather than "wrong contract" — same call enters the system
+            // either way, but the reason tells the operator what drifted.
+            if (_catalog.GetById(diseaseId) == null)
+            {
+                _log.Warn($"[Disease] trigger from '{source.SourceId}' rejected — " +
+                          $"unknown disease '{diseaseId}'");
+                result = new DiseaseOutbreakResult(0, 0, 1, 0);
+            }
+            else
+            {
+                // Contract check — protects against host adapters accidentally
+                // seeding an unrelated disease.
+                bool contracted = false;
+                for (int i = 0; i < source.AuthoredDiseaseIds.Count; i++)
+                {
+                    if (string.Equals(source.AuthoredDiseaseIds[i], diseaseId, StringComparison.Ordinal))
+                    {
+                        contracted = true;
+                        break;
+                    }
+                }
+                if (!contracted)
+                {
+                    result = new DiseaseOutbreakResult(0, 1, 0, 0);
+                }
+                else if (candidates == null || candidates.Count == 0)
+                {
+                    // The trigger fired but no survivor is available — we do NOT
+                    // queue the outbreak; the host re-fires on a later day if
+                    // the source remains (a sump flood that hasn't cleared the
+                    // roster shouldn't silently re-arm).
+                    result = new DiseaseOutbreakResult(0, 0, 0, 1);
+                }
+                else
+                {
+                    // Pick a single survivor deterministically. The system's
+                    // seeded RNG is the only random source, so re-running this
+                    // trigger after Restore produces the same pick.
+                    int pick = _rng.Next(0, candidates.Count);
+                    string survivorId = candidates[pick];
+                    Infect(survivorId, diseaseId, day);
+                    result = new DiseaseOutbreakResult(1, 0, 0, 0);
+                }
+            }
+
+            OnOutbreakTriggered?.Invoke(
+                diseaseId,
+                source.SourceId ?? string.Empty,
+                result.InfectionsApplied > 0 ? "applied" :
+                result.RejectedByContract > 0 ? "rejected_by_contract" :
+                result.UnknownDisease > 0 ? "unknown_disease" :
+                result.NoCandidates > 0 ? "no_candidates" : "noop",
+                result.InfectionsApplied);
+            return result;
+        }
+
+        // // ── Spread ─────────────
+
         /// <summary>
         /// Advance one simulation day. Spreads each disease through its vector
         /// against the provided candidate pool (the host's live roster), then
