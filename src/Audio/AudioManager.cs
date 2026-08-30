@@ -203,7 +203,8 @@ namespace AtomicWar.GodotApp.Audio
                 _domainProvider.AudioRadiation,
                 _domainProvider.AudioWeather,
                 _domainProvider.AudioCombat,
-                _domainProvider.AudioCrafting);
+                _domainProvider.AudioCrafting,
+                _domainProvider.AudioExpeditions);
         }
 
         // ── Cue-based playback (primary API) ────────────────────

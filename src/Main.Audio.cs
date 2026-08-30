@@ -1,5 +1,6 @@
 using Ashfall.Core.Combat;
 using Ashfall.Core.Crafting;
+using Ashfall.Core.Expeditions;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.World;
 using AtomicWar.GodotApp.Audio;
@@ -17,5 +18,6 @@ namespace AtomicWar.GodotApp
         WeatherSystem? IAudioDomainProvider.AudioWeather => _world?.Weather;
         TacticalCombatSystem? IAudioDomainProvider.AudioCombat => _combat?.Engine;
         CraftingSystem? IAudioDomainProvider.AudioCrafting => _crafting?.Engine;
+        ExpeditionSystem? IAudioDomainProvider.AudioExpeditions => _expeditions?.Engine;
     }
 }

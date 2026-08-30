@@ -2,6 +2,7 @@ using System;
 using Ashfall.Core;
 using Ashfall.Core.Combat;
 using Ashfall.Core.Crafting;
+using Ashfall.Core.Expeditions;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.World;
 
@@ -17,6 +18,7 @@ namespace AtomicWar.GodotApp.Audio
         WeatherSystem? AudioWeather { get; }
         TacticalCombatSystem? AudioCombat { get; }
         CraftingSystem? AudioCrafting { get; }
+        ExpeditionSystem? AudioExpeditions { get; }
     }
 
     /// <summary>
@@ -31,6 +33,7 @@ namespace AtomicWar.GodotApp.Audio
         private WeatherSystem? _weather;
         private TacticalCombatSystem? _combat;
         private CraftingSystem? _crafting;
+        private ExpeditionSystem? _expeditions;
         private bool _disposed;
 
         public AudioEventBridge(AudioManager audio)
@@ -51,13 +54,15 @@ namespace AtomicWar.GodotApp.Audio
             RadiationSystem? radiation = null,
             WeatherSystem? weather = null,
             TacticalCombatSystem? combat = null,
-            CraftingSystem? crafting = null)
+            CraftingSystem? crafting = null,
+            ExpeditionSystem? expeditions = null)
         {
             ThrowIfDisposed();
             BindRadiation(radiation);
             BindWeather(weather);
             BindCombat(combat);
             BindCrafting(crafting);
+            BindExpeditions(expeditions);
         }
 
         public void BindRadiation(RadiationSystem? radiation)
@@ -146,6 +151,38 @@ namespace AtomicWar.GodotApp.Audio
             _playCue(AudioCueCatalog.ActionCrafting);
         }
 
+        public void BindExpeditions(ExpeditionSystem? expeditions)
+        {
+            ThrowIfDisposed();
+            if (ReferenceEquals(_expeditions, expeditions))
+                return;
+
+            if (_expeditions != null)
+            {
+                _expeditions.OnExpeditionStarted -= OnExpeditionStarted;
+                _expeditions.OnEncounterTriggered -= OnEncounterTriggered;
+                _expeditions.OnVehicleBreakdown -= OnVehicleBreakdown;
+                _expeditions.OnExpeditionCompleted -= OnExpeditionCompleted;
+                _expeditions.OnExpeditionFailed -= OnExpeditionFailed;
+            }
+
+            _expeditions = expeditions;
+            if (_expeditions != null)
+            {
+                _expeditions.OnExpeditionStarted += OnExpeditionStarted;
+                _expeditions.OnEncounterTriggered += OnEncounterTriggered;
+                _expeditions.OnVehicleBreakdown += OnVehicleBreakdown;
+                _expeditions.OnExpeditionCompleted += OnExpeditionCompleted;
+                _expeditions.OnExpeditionFailed += OnExpeditionFailed;
+            }
+        }
+
+        private void OnExpeditionStarted(ExpeditionState state) => _playCue(AudioCueCatalog.ShelterDoorOpen);
+        private void OnEncounterTriggered(ExpeditionState state) => _playCue(AudioCueCatalog.CombatStart);
+        private void OnVehicleBreakdown(ExpeditionState state) => _playCue(AudioCueCatalog.DangerAlarmKlaxon);
+        private void OnExpeditionCompleted(ExpeditionState state) => _playCue(AudioCueCatalog.ActionItemPickup);
+        private void OnExpeditionFailed(ExpeditionState state, string reason) => _playCue(AudioCueCatalog.DangerDebris);
+
         private void OnRadiationStatusGained(SurvivorRadState state, SurvivorStatus status)
         {
             string? cueId = status switch
@@ -206,11 +243,20 @@ namespace AtomicWar.GodotApp.Audio
                 _combat.OnCombatEvent -= OnCombatEvent;
             if (_crafting != null)
                 _crafting.OnCraftCompleted -= OnCraftCompleted;
+            if (_expeditions != null)
+            {
+                _expeditions.OnExpeditionStarted -= OnExpeditionStarted;
+                _expeditions.OnEncounterTriggered -= OnEncounterTriggered;
+                _expeditions.OnVehicleBreakdown -= OnVehicleBreakdown;
+                _expeditions.OnExpeditionCompleted -= OnExpeditionCompleted;
+                _expeditions.OnExpeditionFailed -= OnExpeditionFailed;
+            }
 
             _radiation = null;
             _weather = null;
             _combat = null;
             _crafting = null;
+            _expeditions = null;
             _disposed = true;
         }
 
@@ -224,5 +270,6 @@ namespace AtomicWar.GodotApp.Audio
         internal bool HasWeatherBinding => _weather != null;
         internal bool HasCombatBinding => _combat != null;
         internal bool HasCraftingBinding => _crafting != null;
+        internal bool HasExpeditionsBinding => _expeditions != null;
     }
 }
