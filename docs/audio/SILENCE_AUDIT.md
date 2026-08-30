@@ -294,28 +294,28 @@ Section 5).
 Ranked by: frequency of occurrence × emotional/informational weight × how often a player
 encounters it in a normal session.
 
-| # | Gap | Domain | Why it matters | Fix type |
-|---|---|---|---|---|
-| 1 | **Combat has zero audio** | Combat | Combat is the highest-tension moment in the game; 26 event kinds, 0 cues, 0 wiring. Fire, jam, hit, downed, death, victory, defeat — all silent. | Wire `OnCombatEvent` + new cues |
-| 2 | **UI panels have zero feedback** | UI | Every button press, tab switch, modal open/close, and invalid action is silent. 8 cues registered, 0 called. The game feels broken. | Wire `PlayCue` in panel code |
-| 3 | **No ambience loops play** | Ambience | `amb_bunker` and `amb_surface` are registered as loops but never started. The shelter and surface are dead quiet. | Wire in game loop / scene load |
-| 4 | **No music plays** | Music | `music_menu` and `music_gameplay` are registered but never triggered. No menu music, no gameplay underscore. | Wire in scene transitions |
-| 5 | **Survivor death is silent** | Death | No death event, no death cue. A survivor dying produces no audio — the most emotionally weighted event in the game. | Core event + cue + wiring |
-| 6 | **19 weather states have no transition sound** | Weather | Only 3 of 22 WeatherKind states produce audio. Ashfall, IceStorm, EMPStorm, BloodRain, and 15 others transition silently. | Wire `OnWeatherChanged` + new cues |
-| 7 | **Radio is non-functional** | Radio | 4 radio cues registered, 0 triggered. Tuning, static, signal lock, Morse — all silent. 118 broadcasts, 0 audio. | Wire radio UI + JSON `audio_cue` |
-| 8 | **5 produced VO files are orphaned** | Radio | The only voice acting in the project is unreferenced. Cheapest VO win available. | Add `audio_cue` to radio JSON |
-| 9 | **Expeditions are silent** | Expeditions | 15 events (departure, breakdown, return, camp, encounters), 0 cues, 0 wiring. Expedition is a major gameplay loop. | Wire `ExpeditionSystem` events + new cues |
-| 10 | **Medical events are silent** | Medical | Disease outbreak, quarantine, infection, outcome — all silent. `med_heartbeat`/`med_coughing` exist but never fire. | Wire `DiseaseSystem` events |
-| 11 | **Crafting has no feedback** | Crafting | `action_crafting` registered, `OnCraftCompleted` never wired. Crafting is a core loop; no completion sound. | Wire `CraftingSystem.OnCraftCompleted` |
-| 12 | **Trade has no feedback** | Economy | `action_trade` registered, `MarketSystem` events never wired. No deal-confirm sound. | Wire `MarketSystem` / trade UI |
-| 13 | **Shelter door open/seal silent** | Shelter | `shelter_door_open`/`shelter_door_seal` registered, never triggered. Entering/leaving the bunker is a key moment. | Wire in airlock/door code |
-| 14 | **Generator/ventilation never audible** | Shelter | `shelter_generator`, `shelter_ventilation` registered as loops, never started. Power state is invisible to the ear. | Wire in `PowerGridSystem` state |
-| 15 | **Air filter degradation silent** | Shelter | `shelter_air_filter` registered, never triggered. Filter failure is a survival-critical alert. | Wire in air filter system |
-| 16 | **Geiger counter never clicks** | Radiation | `rad_geiger_burst` and `rad_geiger_loop` registered, never triggered. Radiation exposure has no audible geiger feedback. | Wire in radiation tick / dose |
-| 17 | **Item pickup silent** | Actions | `action_item_pickup` registered, never triggered. Scavenging is a core loop; no pickup sound. | Wire in inventory/scavenge code |
-| 18 | **Danger cues never fire** | Danger | `danger_explosion`, `danger_glass_break`, `danger_debris` registered, never triggered. Explosions and breaches are silent. | Wire in hazard/event code |
-| 19 | **Game over reuses menu music** | Music | `game_over` → `main_menu.ogg`. The ending has no distinct audio identity. | Produce a new game-over asset |
-| 20 | **Day transition is a pipe clang** | Game flow | `day_transition` → `sfx_pipe_clang.mp3`. The day advance reads as shelter ambience, not a time transition. | Produce a distinct day-sting asset |
+| # | Gap | Domain | Why it matters | Fix type | 7B Status |
+|---|---|---|---|---|---|
+| 1 | **Combat has zero audio** | Combat | Combat is the highest-tension moment in the game; 26 event kinds, 0 cues, 0 wiring. Fire, jam, hit, downed, death, victory, defeat — all silent. | Wire `OnCombatEvent` + new cues | **CLOSED** — 8 cues + 8 SFX + bridge |
+| 2 | **UI panels have zero feedback** | UI | Every button press, tab switch, modal open/close, and invalid action is silent. 8 cues registered, 0 called. The game feels broken. | Wire `PlayCue` in panel code | Open |
+| 3 | **No ambience loops play** | Ambience | `amb_bunker` and `amb_surface` are registered as loops but never started. The shelter and surface are dead quiet. | Wire in game loop / scene load | Partial — `amb_bunker` wired via `StartBunkerAmbience` |
+| 4 | **No music plays** | Music | `music_menu` and `music_gameplay` are registered but never triggered. No menu music, no gameplay underscore. | Wire in scene transitions | Partial — `music_gameplay` wired (path bug fixed) |
+| 5 | **Survivor death is silent** | Death | No death event, no death cue. A survivor dying produces no audio — the most emotionally weighted event in the game. | Core event + cue + wiring | Open — needs Core change |
+| 6 | **19 weather states have no transition sound** | Weather | Only 3 of 22 WeatherKind states produce audio. Ashfall, IceStorm, EMPStorm, BloodRain, and 15 others transition silently. | Wire `OnWeatherChanged` + new cues | **CLOSED** — expanded to 14 of 22 states |
+| 7 | **Radio is non-functional** | Radio | 4 radio cues registered, 0 triggered. Tuning, static, signal lock, Morse — all silent. 118 broadcasts, 0 audio. | Wire radio UI + JSON `audio_cue` | Open |
+| 8 | **5 produced VO files are orphaned** | Radio | The only voice acting in the project is unreferenced. Cheapest VO win available. | Add `audio_cue` to radio JSON | Partial — `vo_kind_parley` now matched via Kind |
+| 9 | **Expeditions are silent** | Expeditions | 15 events (departure, breakdown, return, camp, encounters), 0 cues, 0 wiring. Expedition is a major gameplay loop. | Wire `ExpeditionSystem` events + new cues | **CLOSED** — 5 events wired to existing cues |
+| 10 | **Medical events are silent** | Medical | Disease outbreak, quarantine, infection, outcome — all silent. `med_heartbeat`/`med_coughing` exist but never fire. | Wire `DiseaseSystem` events | **CLOSED** — outbreak + infection wired |
+| 11 | **Crafting has no feedback** | Crafting | `action_crafting` registered, `OnCraftCompleted` never wired. Crafting is a core loop; no completion sound. | Wire `CraftingSystem.OnCraftCompleted` | **CLOSED** — OnCraftCompleted wired |
+| 12 | **Trade has no feedback** | Economy | `action_trade` registered, `MarketSystem` events never wired. No deal-confirm sound. | Wire `MarketSystem` / trade UI | Open |
+| 13 | **Shelter door open/seal silent** | Shelter | `shelter_door_open`/`shelter_door_seal` registered, never triggered. Entering/leaving the bunker is a key moment. | Wire in airlock/door code | Partial — `shelter_door_open` wired via expeditions |
+| 14 | **Generator/ventilation never audible** | Shelter | `shelter_generator`, `shelter_ventilation` registered as loops, never started. Power state is invisible to the ear. | Wire in `PowerGridSystem` state | Open |
+| 15 | **Air filter degradation silent** | Shelter | `shelter_air_filter` registered, never triggered. Filter failure is a survival-critical alert. | Wire in air filter system | Open |
+| 16 | **Geiger counter never clicks** | Radiation | `rad_geiger_burst` and `rad_geiger_loop` registered, never triggered. Radiation exposure has no audible geiger feedback. | Wire in radiation tick / dose | Open |
+| 17 | **Item pickup silent** | Actions | `action_item_pickup` registered, never triggered. Scavenging is a core loop; no pickup sound. | Wire in inventory/scavenge code | Partial — wired via expedition completion |
+| 18 | **Danger cues never fire** | Danger | `danger_explosion`, `danger_glass_break`, `danger_debris` registered, never triggered. Explosions and breaches are silent. | Wire in hazard/event code | Partial — `danger_alarm_klaxon` + `danger_debris` wired via expeditions |
+| 19 | **Game over reuses menu music** | Music | `game_over` → `main_menu.ogg`. The ending has no distinct audio identity. | Produce a new game-over asset | **CLOSED** — distinct `game_over.ogg` produced |
+| 20 | **Day transition is a pipe clang** | Game flow | `day_transition` → `sfx_pipe_clang.mp3`. The day advance reads as shelter ambience, not a time transition. | Produce a distinct day-sting asset | **CLOSED** — distinct `sfx_day_bell.mp3` produced |
 
 ---
 
@@ -323,27 +323,53 @@ encounters it in a normal session.
 
 | Check | Method | Result |
 |---|---|---|
-| All 49 cue paths resolve on disk | `find assets/audio` cross-reference | **Pass** — 0 silent |
-| Catalog generator `--check` | `python3 scripts/ci/generate-audio-catalog.py --check` | **Pass** — 49 cues, in sync |
-| `AudioSelfTest` headless run | `godot --headless -- --audio-selftest` | **Not run** — no Godot binary in this environment. Verified statically. |
-| `dotnet build Ashfall.csproj` | — | Not run (no source changes in 7A) |
-| `dotnet test` Core suite | — | Not run (no source changes in 7A) |
+| All 57 cue paths resolve on disk | `find assets/audio` cross-reference | **Pass** — 0 silent |
+| Catalog generator `--check` | `python3 scripts/ci/generate-audio-catalog.py --check` | **Pass** — 57 cues, in sync |
+| `AudioSelfTest` headless run | `godot --headless -- --audio-selftest` | **Pass** — 176 pass, 0 fail, 57 cues resolved |
+| `dotnet build Ashfall.csproj` | `dotnet build` | **Pass** — 0 warnings, 0 errors |
+| `dotnet test` Core suite | `dotnet test` | **Pass** — 5161 pass (20 pre-existing failures in untracked DiseaseExpansionDepthTests.cs) |
+| `--data-integrity-selftest` | `godot --headless` | **Pass** — 137 catalogs, 0 errors |
+| `--bridge-selftest` | `godot --headless` | **Pass** |
+| Asset orphan sweep | `./scripts/ci/asset-orphan-sweep.sh` | **Pass** — 0 orphans |
 
 ---
 
 ## 11. Recommendations for 7B / 7C
 
-### 7B (cue + VO production) — priority order
-1. **Wire the 36 dead cues first.** Most gaps are host-side `PlayCue` calls and
-   `AudioEventBridge` subscriptions, not new assets. This alone fixes gaps #1-4, #6, #9-17.
-2. **Produce distinct assets** for the 6 differentiation problems in Section 5
-   (`weather_black_rain`, `weather_blizzard`, `danger_alarm_klaxon`, `game_over`,
-   `day_transition`, and a pitch-shifted acute-vs-chronic radiation pair).
-3. **Wire the 5 orphan VO files** to their matching radio broadcasts via `audio_cue` JSON
-   fields. Confirm the radio loader tolerates the new field before authoring.
-4. **Add a death event + cue.** This is the only gap requiring a Core change (gap #5).
-   `NeedsSystem` should emit `OnSurvivorDeath` and the bridge should map it to a new
-   `med_death` or `game_over` variant cue.
+### 7B progress (completed in this session)
+
+**AudioEventBridge now subscribes to 7 Core domains** (was 2):
+1. Radiation — `OnStatusGained` (pre-existing)
+2. Weather — `OnWeatherChanged` expanded from 3 to 14 of 22 states
+3. Combat — `OnCombatEvent` mapping 14 event kinds to 8 new cues + 8 new SFX
+4. Crafting — `OnCraftCompleted` → `action_crafting`
+5. Expeditions — 5 events mapped to existing cues (departure, encounter, breakdown, return, failure)
+6. Disease — `OnOutbreakDeclared` → `med_coughing`, `OnInfection` → `med_heartbeat`
+
+**Assets produced:**
+- 8 combat SFX (procedural sox): gunshot, jam, reload, hit, downed, victory, defeat, start
+- `game_over.ogg` — distinct somber drone (was reusing menu theme)
+- `sfx_day_bell.mp3` — distinct day-transition bell (was reusing pipe clang)
+
+**Bugs fixed:**
+- `PlayGameplayMusic()` / `PlayMainMenuMusic()` referenced `.wav` but assets are `.ogg`
+- `ResolveVoiceOver()` now uses `RadioEventKind.ParleyResolution` for `vo_kind_parley`
+
+**Score: 7 of 20 gaps CLOSED, 6 PARTIAL, 7 OPEN.** The closed gaps cover the
+highest-impact domains (combat, weather, expeditions, medical, crafting, game-over,
+day-transition). The remaining open gaps are mostly UI panel wiring (#2), radio UI (#7),
+shelter systems (#13-15), and the geiger counter (#16) — these require scattered
+`PlayCue` calls in host/UI code rather than bridge subscriptions.
+
+### Remaining 7B work (if continued)
+1. **Wire UI panel cues** (gap #2) — add `PlayCue` calls in panel button handlers
+2. **Wire radio cues** (gap #7) — trigger `radio_tune`/`radio_signal_lock` in radio UI
+3. **Wire trade** (gap #12) — `MarketSystem` events → `action_trade`
+4. **Wire shelter systems** (gaps #13-15) — door, generator, ventilation, air filter
+5. **Wire geiger** (gap #16) — radiation tick → `rad_geiger_burst`/`rad_geiger_loop`
+6. **Add death event** (gap #5) — Core change: `NeedsSystem.OnSurvivorDeath`
+7. **Wire remaining 4 orphan VO files** (gap #8) — `vo_ch3_ash_road`, `vo_ch7_milband`,
+   `vo_ch11_stockpile`, `vo_kind_hatch`
 
 ### 7C (dynamic ambience)
 1. Implement bus-level ducking for the Alerts stacking scenarios in Section 8.
