@@ -24,7 +24,14 @@ namespace Ashfall.Core.Maritime
             { "location_automated_abattoir", new[] { Contam_DisgustCascade, Contam_PhantomSmell } },
             { "location_sunshine_daycare", new[] { Contam_ChildCotTrauma, Contam_ThousandYardStare } },
             { "location_quarantine_mile", new[] { Contam_ThousandYardStare } },
-            { "location_regional_blood_bank", new[] { Contam_DisgustCascade, Contam_PhantomSmell } }
+            { "location_regional_blood_bank", new[] { Contam_DisgustCascade, Contam_PhantomSmell } },
+            // Plan 23 — maritime dive-site keys (applied from dive outcomes only,
+            // never from overworld location visits; keyed by site_id so a walkable
+            // coastal anchor never carries wreck trauma).
+            { "site_exp09_flooded_field_hospital", new[] { Contam_ThousandYardStare, Contam_PhantomSmell } },
+            { "site_exp23_brine_cistern", new[] { Contam_DisgustCascade, Contam_PhantomSmell } },
+            { "site_exp09_sunken_submarine", new[] { Contam_ThousandYardStare } },
+            { "site_exp09_wrecked_patrol_craft", new[] { Contam_ThousandYardStare } }
         };
 
         public const int StareDurationDays = 3;
@@ -127,6 +134,88 @@ float moraleAtVisit, string? survivorArchetype = null)
                 case Contam_DisgustCascade: return DisgustBlockedActions;
                 case Contam_ChildCotTrauma: return ChildCotBlockedActions;
                 default: return null;
+            }
+        }
+
+        // ── Dread Texts (Restrained Sensory Atmosphere) ───────────
+        public static readonly string[] RestrainedDreadTexts =
+        {
+            "The flashlight beam catches the doorframe, but the room beyond absorbs the light like wet felt. Nothing moves, which is worse than movement.",
+            "The safety tether rubs against the rusted bulkhead behind you with a sound like teeth against tin.",
+            "Bubbles gather under the rusted ceiling where the air pocket should have been, turning silver and then popping into grease.",
+            "The silt cloud rises from your own footsteps, wiping out the return line one gray yard at a time.",
+            "A small plastic lunchbox, still sealed with a child's name in faded marker, drifts out from beneath the collapsed shelf.",
+            "On the ascent, your fingers are so clamped to the haul line that the companion has to pry them loose one knuckle at a time."
+        };
+
+        // ── Threshold Stages & Recovery ───────────────────────────
+
+        public int GetStage(string survivorId, string currentAssignment = "")
+        {
+            if (!_bySurvivor.TryGetValue(survivorId, out var list) || list == null || list.Count == 0)
+                return 0; // Stage 0: Baseline
+
+            if (HasContamination(survivorId, Contam_ThousandYardStare)
+                && (currentAssignment == "shelter_module_autopsy" || currentAssignment == "shelter_module_bio_latrine"))
+                return 4; // Stage 4: Acute Limit
+
+            if (list.Count >= 2)
+                return 3; // Stage 3: Intrusion
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                var blocked = GetBlockedActions(list[i].Type);
+                if (blocked != null && blocked.Length > 0)
+                    return 2; // Stage 2: Strain
+            }
+
+            return 1; // Stage 1: Unease
+        }
+
+        public string GetUIStatusTag(string survivorId, string currentAssignment = "")
+        {
+            int stage = GetStage(survivorId, currentAssignment);
+            switch (stage)
+            {
+                case 1: return "Unsettled";
+                case 2: return "Task Avoidance";
+                case 3: return "Severe Strain";
+                case 4: return "Mental Break Risk";
+                default: return "Normal";
+            }
+        }
+
+        /// <summary>
+        /// Grounding by a trusted companion reduces contamination duration.
+        /// </summary>
+        public bool GroundSurvivor(string survivorId, string companionId, float bondStrength = 60f)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(companionId)) return false;
+            if (bondStrength < 40f) return false;
+            if (!_bySurvivor.TryGetValue(survivorId, out var list) || list.Count == 0) return false;
+
+            float relief = bondStrength >= 70f ? 1.5f : 1.0f;
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].DaysRemaining = Math.Max(0.1f, list[i].DaysRemaining - relief);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Accelerated recovery through shelter bed rest.
+        /// </summary>
+        public void ApplyShelterRest(string survivorId, float daysRest = 1f)
+        {
+            if (!_bySurvivor.TryGetValue(survivorId, out var list)) return;
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                list[i].DaysRemaining -= daysRest * 1.5f;
+                if (list[i].DaysRemaining <= 0f)
+                {
+                    OnContaminationExpired?.Invoke(survivorId, list[i].Type);
+                    list.RemoveAt(i);
+                }
             }
         }
 
