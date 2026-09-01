@@ -131,11 +131,6 @@ namespace Ashfall.Core.Tests
                 new VariableLootNode { ItemId = "scrap_metal", MinQty = 2, MaxQty = 4, SpawnChance = 1.0f }
             };
             scavenge.SetCurrentDay(60); // phase-2/3 degradation
-            int first = 0, last = 0;
-            for (int i = 0; i < 10; i++)
-            {
-                var rolls = new ProceduralScavengeSystem(new SeededRng(42)).RollLootTable("decay_site", table, 0f, false);
-            }
             // Visit-count decay is the anti-faucet rule; the engine exposes it.
             var s = new ProceduralScavengeSystem(new SeededRng(7));
             s.SetCurrentDay(60);
