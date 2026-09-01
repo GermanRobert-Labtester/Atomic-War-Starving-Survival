@@ -71,6 +71,22 @@ namespace AtomicWar.GodotApp
             var rtState = RegionalTreatySaveStore.TryLoad() ?? new RegionalTreatyState();
             var rtSys = new RegionalTreatySystem(new GodotLog());
             rtSys.RestoreState(rtState);
+            // Plan 25 (25G.7): feed the canonical narrative treaty corpus into the
+            // mechanical system - until now the host never called LoadCatalog, so
+            // Propose/Ratify had nothing to act on in production.
+            if (!string.IsNullOrEmpty(_dataDir))
+            {
+                var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
+                var json = new SystemTextJsonSerializer();
+                string path = fileIO.Combine(_dataDir, "narrative/regional_treaty_protocols.json");
+                if (fileIO.FileExists(path))
+                {
+                    var catalog = new Ashfall.Core.Narrative.RegionalTreatyCatalog();
+                    catalog.Load(fileIO.ReadAllText(path), json);
+                    rtSys.LoadCatalog(
+                        Ashfall.Core.RegionalTreatyFeed.Map(catalog.AllTreaties));
+                }
+            }
             _regionalTreaty = new RegionalTreatyHostSession(rtSys);
             if (_regionalTreatyPanel != null && _regionalTreatyPanel.IsInsideTree())
                 RemoveChild(_regionalTreatyPanel);
