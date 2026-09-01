@@ -29,6 +29,12 @@ namespace Ashfall.Core.Muster
         public int escalationDay = -1;
         public bool musterTriggered;
         public List<MusterRecord> records = new List<MusterRecord>();
+
+        // ── Plan 25 ────────────────────────────────────────────────────
+        /// <summary>Derived political character of the gathering
+        /// (MusterPaths value; empty = never evaluated). Additive field —
+        /// saves from before Plan 25 restore to empty.</summary>
+        public string musterPath = string.Empty;
     }
 
     /// <summary>One questline's selection record.</summary>
@@ -109,6 +115,28 @@ namespace Ashfall.Core.Muster
             RaiseChanged();
         }
 
+        // ── Muster path (Plan 25) ──────────────────────────────────────
+
+        /// <summary>The derived political context of the gathering
+        /// (MusterPaths value; empty until evaluated).</summary>
+        public string MusterPath => _state.musterPath;
+
+        /// <summary>Store an evaluator result. Accepts only known MusterPaths
+        /// values; re-evaluation with the same path is a no-op (idempotent).
+        /// The host calls this after mapping live war/treaty/flag state into a
+        /// MusterPathInput — Core never derives it from war types itself.</summary>
+        public bool SetMusterPath(string path)
+        {
+            if (path != MusterPaths.Negotiated
+                && path != MusterPaths.Victors
+                && path != MusterPaths.Unsettled)
+                return false;
+            if (_state.musterPath == path) return false;
+            _state.musterPath = path;
+            RaiseChanged();
+            return true;
+        }
+
         // ── Approach selection (IApproachQuestline) ────────────────────
 
         public bool SelectApproach(QuestApproach approach) =>
@@ -170,7 +198,8 @@ namespace Ashfall.Core.Muster
             {
                 systemId = _state.systemId,
                 escalationDay = _state.escalationDay,
-                musterTriggered = _state.musterTriggered
+                musterTriggered = _state.musterTriggered,
+                musterPath = _state.musterPath ?? string.Empty
             };
             var ordered = new List<MusterRecord>(_state.records);
             ordered.Sort((a, b) => string.CompareOrdinal(a.questlineId, b.questlineId));
@@ -196,6 +225,7 @@ namespace Ashfall.Core.Muster
             _state.systemId = SystemId;
             _state.escalationDay = saved.escalationDay;
             _state.musterTriggered = saved.musterTriggered;
+            _state.musterPath = saved.musterPath ?? string.Empty;
             _state.records.Clear();
             if (saved.records != null)
             {
