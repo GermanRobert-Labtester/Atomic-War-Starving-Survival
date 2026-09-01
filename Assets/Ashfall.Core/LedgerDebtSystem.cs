@@ -34,6 +34,10 @@ namespace Ashfall.Core
         public int daysRemaining;
         public bool paid;
         public bool forfeited;
+        /// <summary>The creditor absorbed the loss (conseq_forgiveness_rare). No
+        /// payment moved; the balance is simply gone. The record is kept.</summary>
+        public bool forgiven;
+        public int forgivenDay = -1;
     }
 
     [Serializable]
@@ -62,6 +66,7 @@ namespace Ashfall.Core
 
         public event Action<DebtContract> OnContractSigned;
         public event Action<DebtContract> OnContractPaid;
+        public event Action<DebtContract> OnContractForgiven;
         public event Action<DebtContract> OnContractRenegotiated;
         public event Action<DebtContract> OnForfeitTriggered;
         public event Action OnLedgerTampered;
@@ -97,7 +102,7 @@ namespace Ashfall.Core
             if (string.IsNullOrEmpty(forfeit)) return false;
 
             var contract = GetContract(debtorId);
-            if (contract != null && contract.signed && !contract.paid)
+            if (contract != null && contract.signed && !contract.paid && !contract.forgiven)
                 return false; // ink is ink — no new draft over an open debt
             if (contract != null && contract.forfeited && !contract.paid)
                 return false; // unresolved forfeit — the named good is still owed
@@ -106,6 +111,14 @@ namespace Ashfall.Core
             {
                 // Settled ink is archived, never overwritten — a second season's
                 // debt starts from a fresh draft (read twice, same as everyone).
+                _state.contracts.Remove(contract);
+                _state.closedContracts.Add(contract);
+                contract = null;
+            }
+            if (contract != null && contract.forgiven)
+            {
+                // Forgiven ink is archived the same way: the record stands, the
+                // balance is gone, and a new draft starts clean.
                 _state.contracts.Remove(contract);
                 _state.closedContracts.Add(contract);
                 contract = null;
@@ -152,7 +165,7 @@ namespace Ashfall.Core
             for (int i = 0; i < _state.contracts.Count; i++)
             {
                 var c = _state.contracts[i];
-                if (c == null || !c.signed || c.paid || c.forfeited) continue;
+                if (c == null || !c.signed || c.paid || c.forfeited || c.forgiven) continue;
                 c.daysRemaining--;
                 if (c.daysRemaining <= 0)
                 {
@@ -171,11 +184,33 @@ namespace Ashfall.Core
         {
             var contract = GetContract(debtorId);
             if (contract == null || !contract.signed) return false;
-            if (contract.paid) return false;
+            if (contract.paid || contract.forgiven) return false;
 
             contract.paid = true;
             contract.forfeited = false;
             OnContractPaid?.Invoke(contract);
+            RaiseChanged();
+            return true;
+        }
+
+        /// <summary>
+        /// Forgive. The creditor absorbs the loss: the balance is cleared by a
+        /// canonical ledger mutation, no payment moves, the record is kept.
+        /// Allowed on live ink and on a forfeit already due (mercy most often
+        /// arrives late); refused on unsigned drafts and anything already
+        /// settled. Consequence-driven callers (debt_consequence forgiveness)
+        /// and narrative callers share this one path.
+        /// </summary>
+        public bool ForgiveContract(string debtorId, int day)
+        {
+            var contract = GetContract(debtorId);
+            if (contract == null || !contract.signed) return false;
+            if (contract.paid || contract.forgiven) return false;
+
+            contract.forgiven = true;
+            contract.forfeited = false;
+            contract.forgivenDay = day;
+            OnContractForgiven?.Invoke(contract);
             RaiseChanged();
             return true;
         }
@@ -245,11 +280,12 @@ namespace Ashfall.Core
             return true;
         }
 
-        /// <summary>Flat rate, never compounded: principal × (1 + rate). Settled debt owes nothing.</summary>
+        /// <summary>Flat rate, never compounded: principal × (1 + rate). Settled or
+        /// forgiven debt owes nothing.</summary>
         public float TotalOwed(string debtorId)
         {
             var c = GetContract(debtorId);
-            if (c == null || !c.signed || c.paid) return 0f;
+            if (c == null || !c.signed || c.paid || c.forgiven) return 0f;
             return c.principal * (1f + c.rate);
         }
 
@@ -280,7 +316,9 @@ namespace Ashfall.Core
             signedDay = c.signedDay,
             daysRemaining = c.daysRemaining,
             paid = c.paid,
-            forfeited = c.forfeited
+            forfeited = c.forfeited,
+            forgiven = c.forgiven,
+            forgivenDay = c.forgivenDay
         };
 
         private static LedgerDebtSystemState CopyState(LedgerDebtSystemState source)

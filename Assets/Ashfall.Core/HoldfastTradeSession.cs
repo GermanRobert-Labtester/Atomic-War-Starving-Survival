@@ -17,7 +17,8 @@ namespace Ashfall.Core
         UnknownFaction,
         UnavailableOrRestricted,
         InventoryCapacity,
-        InvalidPrice
+        InvalidPrice,
+        Embargoed
     }
 
     public sealed class HoldfastTradeInventorySlot
@@ -254,6 +255,14 @@ namespace Ashfall.Core
         public HoldfastTradeInventory Inventory { get; }
         public string SelectedFactionId { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// Canonical embargo authority hook, bound by the host as
+        /// factionId → embargoed. When set, a suspended counterparty refuses
+        /// both directions of trade; credit eligibility queries the same
+        /// ledger, so credit can never bypass what trade cannot.
+        /// </summary>
+        public Func<string, bool>? EmbargoQuery { get; set; }
+
         public event Action StateChanged;
 
         public HoldfastTradeSession(HoldfastCatalog catalog, long startingValue = 100, Inventory.Inventory? playerInventory = null)
@@ -375,6 +384,9 @@ namespace Ashfall.Core
                     return HoldfastTradeResult.Fail("Unavailable or restricted counterparty: " + factionId, HoldfastTradeFailure.UnavailableOrRestricted);
             }
 
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none" && EmbargoQuery != null && EmbargoQuery(factionId))
+                return HoldfastTradeResult.Fail("Trade with this faction is suspended (embargo).", HoldfastTradeFailure.Embargoed);
+
             if (quantity <= 0)
                 return HoldfastTradeResult.Fail("Quantity must be at least 1.", HoldfastTradeFailure.InvalidQuantity);
 
@@ -412,6 +424,9 @@ namespace Ashfall.Core
                 if (factionId == "faction_the_fleet")
                     return HoldfastTradeResult.Fail("Unavailable or restricted counterparty: " + factionId, HoldfastTradeFailure.UnavailableOrRestricted);
             }
+
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none" && EmbargoQuery != null && EmbargoQuery(factionId))
+                return HoldfastTradeResult.Fail("Trade with this faction is suspended (embargo).", HoldfastTradeFailure.Embargoed);
 
             if (quantity <= 0)
                 return HoldfastTradeResult.Fail("Quantity must be at least 1.", HoldfastTradeFailure.InvalidQuantity);
@@ -533,6 +548,9 @@ namespace Ashfall.Core
 
             if (!ValidateFaction(factionId, out var factionFailure, out var factionMessage))
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, factionFailure, factionMessage, stateVersion);
+
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none" && EmbargoQuery != null && EmbargoQuery(factionId))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "embargoed", "trade.embargoed", stateVersion);
 
             string canonical = ItemAliases.ToCanonical(itemId);
             int currentStock = GetStock(canonical);
