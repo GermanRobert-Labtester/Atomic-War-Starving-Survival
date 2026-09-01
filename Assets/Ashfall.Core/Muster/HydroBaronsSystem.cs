@@ -91,6 +91,16 @@ namespace Ashfall.Core.Muster
         /// collector's relic (reformed/fixed card).</summary>
         public bool QueueChitIsLiveCurrency => _state.plantSeized;
 
+        /// <summary>Plan 25 faction-action seam: apply a signed trust adjustment,
+        /// clamped to the ledger floor of 0 (matching the existing unclamped ceiling).</summary>
+        public float AdjustTrust(float delta)
+        {
+            if (Math.Abs(delta) < 0.001f) return _state.trust;
+            _state.trust = Math.Max(0f, _state.trust + delta);
+            RaiseChanged();
+            return _state.trust;
+        }
+
         public void Activate() { _state.isActive = true; RaiseChanged(); }
 
         // ── Save / Load ────────────────────────────────────────────────

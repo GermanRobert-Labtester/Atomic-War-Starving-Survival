@@ -72,6 +72,26 @@ namespace Ashfall.Core.Muster
             return true;
         }
 
+        /// <summary>Plan 25 faction-action seam: apply a signed members adjustment
+        /// (arrivals, departures, losses), clamped at 0. Requires a formed camp.</summary>
+        public bool AdjustMembers(int delta)
+        {
+            if (!_state.formed || delta == 0) return false;
+            _state.membersRallied = Math.Max(0, _state.membersRallied + delta);
+            RaiseChanged();
+            return true;
+        }
+
+        /// <summary>Plan 25 faction-action seam: apply a signed Garrison-lockout risk
+        /// adjustment, clamped to 0..100. No-op before the camp forms.</summary>
+        public bool AdjustLockoutRisk(int delta)
+        {
+            if (!_state.formed || delta == 0) return false;
+            _state.garrisonLockoutRisk = Math.Max(0, Math.Min(100, _state.garrisonLockoutRisk + delta));
+            RaiseChanged();
+            return true;
+        }
+
         // ── Strategy (Section VI.4) ────────────────────────────────────
 
         /// <summary>
