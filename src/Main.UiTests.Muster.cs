@@ -37,7 +37,7 @@ namespace AtomicWar.GodotApp
 
             bool roster = _currentsRoster != null && _muster.Roster.Count >= 15;
             bool camp = _campWidget != null;
-            bool witnesses = _witnessPanel != null && _muster.Witnesses.Count == 3;
+            bool witnesses = _witnessPanel != null && _muster.Witnesses.Count >= 3;
             bool epilogues = _muster.Epilogues.Count >= 8;
             bool modal = _approachModal != null;
             bool escalate = _muster.Escalate(300).Contains("Muster is open");

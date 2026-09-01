@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "witnesses": [
     {
       "id": "witness_1_checkpoint_conscript",
@@ -7,7 +7,13 @@
       "location_id": "loc_garrison_checkpoint_gamma",
       "knowledge_key": "history_checkpoint_conscripts_confession",
       "day_min": 241,
-      "body": "Three drinks past careful, in a voice that starts brave and drops: Voss was shot by his own staff. Refused a direct order to fire on a Rebuilder grain convoy. 'Don't repeat it,' he says, which he needn't worry about — it is already down in the journal, in ink, in whoever's hand was sent to listen."
+      "priority": 40,
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "Three drinks past careful, in a voice that starts brave and drops: Voss was shot by his own staff. Refused a direct order to fire on a Rebuilder grain convoy. 'Don't repeat it,' he says, which he needn't worry about — it is already down in the journal, in ink, in whoever's hand was sent to listen."
+        }
+      ]
     },
     {
       "id": "witness_2_quartermaster_paperwork",
@@ -15,7 +21,13 @@
       "location_id": "loc_maritime_icebreaker_dock",
       "knowledge_key": "history_quartermasters_paperwork",
       "day_min": 243,
-      "body": "The quartermaster is calm, bored, unbothered: Voss requested reassignment to the coastal evacuation liaison post at the outset of Phase V and nobody has heard from him since. Officers rotate out of the worst postings all the time. The paperwork says the coast. The paperwork is real. That is not the same as the story being true."
+      "priority": 40,
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "The quartermaster is calm, bored, unbothered: Voss requested reassignment to the coastal evacuation liaison post at the outset of Phase V and nobody has heard from him since. Officers rotate out of the worst postings all the time. The paperwork says the coast. The paperwork is real. That is not the same as the story being true."
+        }
+      ]
     },
     {
       "id": "witness_3_signals_intercept",
@@ -23,7 +35,13 @@
       "location_id": "loc_d9_cache_bunker_delta",
       "knowledge_key": "history_the_intercepted_cipher",
       "day_min": 261,
-      "body": "A burst transmission her people flagged and never forwarded up the chain: unregistered, low-power, three weeks after Day 240, using an authentication cipher retired with Voss's old command. It could be him. It could be someone using a code that was never properly decommissioned. Ruhl's assessment, verbatim: 'I don't chase ghosts. I log them.'"
+      "priority": 40,
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "A burst transmission her people flagged and never forwarded up the chain: unregistered, low-power, three weeks after Day 240, using an authentication cipher retired with Voss's old command. It could be him. It could be someone using a code that was never properly decommissioned. Ruhl's assessment, verbatim: 'I don't chase ghosts. I log them.'"
+        }
+      ]
     }
   ]
 }

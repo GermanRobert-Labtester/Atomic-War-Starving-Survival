@@ -214,7 +214,7 @@ namespace AtomicWar.GodotApp
             _witnessPanel.RefreshView(day, _muster.AuthorBias);
             _statusLabel.Text = _muster.Witnesses.Count == 0
                 ? "No witness accounts loaded."
-                : $"Three accounts: {_muster.Witnesses.Count} loaded. Day {day} · {_muster.AuthorBias} author.";
+                : $"{_muster.Witnesses.Count} accounts loaded. Day {day} · {_muster.AuthorBias} author.";
         }
 
         private void OnMusterAuthorBiasClicked()

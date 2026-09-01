@@ -42,14 +42,16 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void WitnessCatalog_LoadsThreeAccounts()
+        public void WitnessCatalog_LoadsTheFoundingAccounts()
         {
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
 
             var witnesses = WitnessCatalogLoader.LoadWitnesses(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            Assert.Equal(3, witnesses.Count);
+            // Plan 25 expands the roster (15+); the three founding accounts must
+            // survive any expansion, and every entry must carry testimony.
+            Assert.True(witnesses.Count >= 3, $"Expected >= 3 witnesses, got {witnesses.Count}");
             Assert.Contains(witnesses, w => w.id == "witness_1_checkpoint_conscript");
             Assert.Contains(witnesses, w => w.id == "witness_2_quartermaster_paperwork");
             Assert.Contains(witnesses, w => w.id == "witness_3_signals_intercept");
@@ -58,6 +60,8 @@ namespace Ashfall.Core.Tests
                 Assert.False(string.IsNullOrEmpty(w.knowledgeKey));
                 Assert.False(string.IsNullOrEmpty(w.locationId));
                 Assert.False(string.IsNullOrEmpty(w.body));
+                Assert.NotEmpty(w.testimonies);
+                Assert.False(string.IsNullOrEmpty(w.testimonies[0].body));
             }
         }
 
