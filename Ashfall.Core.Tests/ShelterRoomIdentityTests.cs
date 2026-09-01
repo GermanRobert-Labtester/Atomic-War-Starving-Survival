@@ -63,7 +63,8 @@ namespace Ashfall.Core.Tests
             {
                 "room_bunker_corridor", "room_storage_bay", "room_bunks", "room_kitchen",
                 "room_clinic", "room_workshop", "room_filtration", "room_airlock",
-                "room_radio_tuner", "room_foundry", "room_greenhouse", "room_main"
+                "room_radio_tuner", "room_foundry", "room_greenhouse", "room_main",
+                "room_water_pump"
             };
             foreach (var roomId in expected)
                 Assert.NotNull(catalog.GetRoomIdentity(roomId));
@@ -74,7 +75,7 @@ namespace Ashfall.Core.Tests
         public void Catalog_HasTwentyVignettes_WithVariedUnlockPaths()
         {
             var catalog = LoadCatalog();
-            Assert.Equal(20, catalog.Vignettes.Count);
+            Assert.Equal(21, catalog.Vignettes.Count);
             var unlocks = catalog.Vignettes
                 .Select(v => v.unlock)
                 .Distinct(StringComparer.Ordinal)

@@ -187,6 +187,21 @@
         "room_fixture_main_boiler_hatch",
         "room_fixture_main_isolation_pad"
       ]
+    },
+    {
+      "id": "room_water_pump",
+      "display_name": "Water Pump",
+      "former_use": "Utility wellhead and pressurisation room for the allocation's greywater loop",
+      "current_use": "Still functional: the hand-pump backup draws from the same shaft as the main",
+      "one_line_history": "The pump room predates the bunker. Its well is older than the concrete above it.",
+      "inspection_summary": "A pressure gauge, a leather-cupped hand pump, and a ledger of flow rates written in pencil on the wall.",
+      "legacy_aliases": [],
+      "fixture_ids": [
+        "room_fixture_pump_pressure_gauge",
+        "room_fixture_pump_leather_cup",
+        "room_fixture_pump_flow_ledger",
+        "room_fixture_pump_well_collar"
+      ]
     }
   ],
   "vignettes": [
@@ -369,6 +384,17 @@
       "unlock": "inspect_room",
       "unlock_day": 0,
       "body": "The filter cartridge slots have a wear pattern on the sealing face that matches the intake housing's mounting lugs. The pattern is not uniform. The left bank wears faster than the right, which means the intake leg is not balanced. The crew know this. They rotate the cartridges by feel and the rotation schedule is kept in their heads. The notch on the pre-filter strap records the change. The notch on the cartridge housing records the replacement. The two notches do not line up, which means the cartridge was replaced without the pre-filter being changed, or vice versa. The last time it happened was three months ago. The time before that was six months before that. The interval is shortening."
+    },
+    {
+      "id": "vignette_water_pump_original_use",
+      "room_id": "room_water_pump",
+      "room_display_name": "Water Pump",
+      "title": "Before the Lock",
+      "time_period": "Pre-Exchange",
+      "body": "The pump room had a schedule. Morning: draw thirty litres and check the gauge. Midday: top the seal and log the flow rate. Evening: bleed the line and hang the leather cup to dry. The schedule is still chalked on the wall above the gauge, but nobody follows it now. The well is the same well. The water is the same water. The arithmetic is different. What changed was not the shaft but the ledger. Before the Exchange, flow was a number. After the Exchange, flow became a ration. The schedule survived the lock. The meaning did not. The wall remembers both.",
+      "unlock": "day_milestone",
+      "unlock_day": 1,
+      "trigger": "inspect_room"
     }
   ],
   "fixtures": [
@@ -812,6 +838,38 @@
       "inspectable": false,
       "art_visible": true,
       "renovation_sensitive": false
+    },
+    {
+      "id": "room_fixture_pump_pressure_gauge",
+      "room_id": "room_water_pump",
+      "art_visible": true,
+      "detail": "A brass pressure gauge with the needle resting at zero and a crack across the face.",
+      "historical_meaning": "The gauge was last replaced during the Exchange. Its crack appeared on the first day of fallout.",
+      "inspectable": false
+    },
+    {
+      "id": "room_fixture_pump_leather_cup",
+      "room_id": "room_water_pump",
+      "art_visible": true,
+      "detail": "A leather cup on a hook beside the hand pump, softened by use and stained dark.",
+      "historical_meaning": "The leather was cut from a seat in the old depot truck. It still holds water.",
+      "inspectable": false
+    },
+    {
+      "id": "room_fixture_pump_flow_ledger",
+      "room_id": "room_water_pump",
+      "art_visible": true,
+      "detail": "A wall ledger of flow rates in pencil, the last entry dated three days before the Exchange.",
+      "historical_meaning": "The handwriting changes halfway through the page. Two people recorded the well.",
+      "inspectable": false
+    },
+    {
+      "id": "room_fixture_pump_well_collar",
+      "room_id": "room_water_pump",
+      "art_visible": true,
+      "detail": "The well collar is cast iron with a rusted chain and a bucket that has no bottom.",
+      "historical_meaning": "The bucket was cut open to use as a strainer. The chain still has the original tag.",
+      "inspectable": false
     }
   ]
 }
