@@ -84,5 +84,26 @@ namespace Ashfall.Core.Tests.Progression
             Assert.True(system.HasMasteredTrade("survivor_1"));
             Assert.True(mastered);
         }
+
+        [Fact]
+        public void LoadAndRegister_MissingCatalog_ReturnsZero_NeverFakeDefault()
+        {
+            // Unwired-code audit: the loader used to return a fake `4` when the
+            // catalog was missing, masking the fact that production never fed
+            // the specialty system. A missing catalog must report 0.
+            string emptyDir = Path.Combine(Path.GetTempPath(), "ashfall-specialty-selftest-" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(emptyDir);
+            try
+            {
+                var system = new TradeSpecialtySystem();
+                int count = TradeSpecialtyCatalogLoader.LoadAndRegister(
+                    system, emptyDir, new FileSystemIO(), new SystemTextJsonSerializer());
+                Assert.Equal(0, count);
+            }
+            finally
+            {
+                Directory.Delete(emptyDir, recursive: true);
+            }
+        }
     }
 }

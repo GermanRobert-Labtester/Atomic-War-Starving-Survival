@@ -521,6 +521,21 @@ namespace AtomicWar.GodotApp
 
         // ── Roster wiring ─────────────────────────────────────────────
 
+        /// <summary>
+        /// Load trade_specialties.json profession patterns into the Phase-0
+        /// specialty system. Without this the wired specialty loop (events,
+        /// save, host hooks) runs with zero patterns and mastery can never
+        /// progress — the catalog is the feeder for CraftItem.
+        /// </summary>
+        public void LoadTradeSpecialties(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            int count = TradeSpecialtyCatalogLoader.LoadAndRegister(
+                TradeSpecialty, dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            if (count > 0)
+                LastEvent = $"Trade specialties loaded: {count} professions";
+        }
+
         /// <summary>Load the phantom_triggers.json catalog into the engine (the authority).</summary>
         public void LoadPhantomRules(string dataDir)
         {

@@ -88,6 +88,9 @@ namespace AtomicWar.GodotApp
             // there is exactly one chem-dep authority, and Phase-0 does not tick it.
             _phase0 = new Phase0HostSession(dependency: _medical.Engine);
             _phase0.StateChanged += () => _phase0Dirty = true;
+            // Feed the specialty catalog — without it the wired specialty loop
+            // runs patternless and mastery can never progress.
+            _phase0.LoadTradeSpecialties(_dataDir);
 
             // ── Wire every Phase-0 effect to the REAL gameplay consumer ──
             SetupSurvivors();

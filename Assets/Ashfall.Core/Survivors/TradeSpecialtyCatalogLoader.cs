@@ -114,7 +114,9 @@ namespace Ashfall.Core.Survivors
                 }
                 return items.Count;
             }
-            return 4; // default hardcoded count
+            // Honest count: a missing/empty catalog must surface as 0 so callers
+            // can diagnose it — never a fake default that masks dead data wiring.
+            return items.Count;
         }
     }
 }
