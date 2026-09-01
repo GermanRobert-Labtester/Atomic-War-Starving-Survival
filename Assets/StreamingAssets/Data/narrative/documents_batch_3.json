@@ -301,6 +301,36 @@
       "transcript": "LAST WILL AND TESTAMENT\n\nI, Kovalenko, Roman Stepanovich, being of sound mind, do hereby bequeath:\n\nTo my wife, Kovalenko, Irina:\nThe blue tin with the money.\nThe storage key.\nThe photograph album.\n\nTo my son, Kovalenko, Andrei:\nThe watch. The compass. The knife.\n\nTo [CROSSED OUT] — [REPLACED] Dr. Vel:\nThe medical books. They will be more useful to you than to me.\n\nWitnessed by:\nPetrov, Dmitry — Day 48\nNovikov, Fyodor — Day 48\n\n[NOTE]\nIf Andrei is not alive, everything goes to the shelter.\nDo not let the garrison take it.",
       "lore_flags": ["flag_lore_will_found"],
       "item_id_source": "item_document_will"
+    },
+    {
+      "doc_id": "doc_debt_default_notice_001",
+      "title": "Final Notice — Shelter Default",
+      "origin": "Creditor Faction Office",
+      "material": "Printed form with rubber stamp",
+      "physical_description": "Official notice with the creditor's seal. The stamp reads FINAL NOTICE in red ink. The paper is crisp and new compared to the surrounding debris.",
+      "transcript": "NOTICE OF DEFAULT\n\nShelter: [SHELTER ID]\nDebt Amount: [AMOUNT]\nMissed Deadline: [DATE]\n\nThe above-named shelter is hereby declared in default.\nAll trade privileges are suspended pending resolution.\nA bounty has been issued for the recovery of outstanding assets.\n\nThis notice serves as final warning.\n\n[STAMP] FINAL NOTICE\n[SIGNATURE — illegible]\n\n[HANDWRITTEN]\nThey know where you live.",
+      "lore_flags": ["flag_lore_debt_default_notice_found"],
+      "item_id_source": "item_document_debt_default_notice"
+    },
+    {
+      "doc_id": "doc_weather_gate_warning_001",
+      "title": "Route Closure — Weather Hazard",
+      "origin": "Route Entrance",
+      "material": "Laminated notice, weather-damaged",
+      "physical_description": "A laminated notice stapled to a post. The lamination is cracked and water has seeped in. The text is barely legible.",
+      "transcript": "⚠ ROUTE CLOSED\n\nDue to severe weather conditions, this route is impassable.\nDo not attempt to cross.\nWait for conditions to improve or use an alternate route.\n\n[HANDWRITTEN]\nThe last group that tried did not come back.\nWait for the weather to clear.\n— Civil Defense",
+      "lore_flags": ["flag_lore_weather_gate_warning_found"],
+      "item_id_source": "item_document_weather_gate_warning"
+    },
+    {
+      "doc_id": "doc_patrol_order_001",
+      "title": "Patrol Order — Sector 6",
+      "origin": "Faction Command Post",
+      "material": "Typed order on manual typewriter",
+      "physical_description": "A concise operational order. The margins contain handwritten annotations in a different hand. One paragraph is underlined twice.",
+      "transcript": "PATROL ORDER — SECTOR 6\n\nRoute: Checkpoint Alpha → Bridge 12 → Rail Junction → Return\nTeam: 4 personnel\nDuration: 12 hours\n\nRules of Engagement:\n1. Stop all travellers. Check identification.\n2. Confiscate unauthorized supplies.\n3. Detain anyone without valid travel documents.\n4. Report all contacts to command.\n\n[HANDWRITTEN]\nIf they have a valid pass, let them through.\nIf they don't, bring them in.\nDo not use force unless provoked.\n\n— Commander",
+      "lore_flags": ["flag_lore_patrol_order_found"],
+      "item_id_source": "item_document_patrol_order"
     }
   ]
 }

@@ -5,28 +5,28 @@
             "id": "elena_vasquez",
             "displayName": "Elena Vasquez",
             "profession": "Paramedic",
-            "bio": "Pre-war biological or psychological maintenance personnel (Paramedic). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "Nine years of night shifts in an ambulance bay taught Elena to sort the dying fast. She still checks wrists for pulses out of habit, and wears her watch strap-first over the cuff so it never catches on gloves.",
             "baseHealth": 100
         },
         {
             "id": "marcus_olejnik",
             "displayName": "Marcus Olejnik",
             "profession": "Mechanical Engineer",
-            "bio": "Pre-war infrastructure technician (Mechanical Engineer). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Marcus kept a turbine hall running on parts that were condemned five years earlier. He talks to machines more easily than to people, and is usually right about what they tell him.",
             "baseHealth": 90
         },
         {
             "id": "suki_tanaka",
             "displayName": "Suki Tanaka",
             "profession": "Farmer",
-            "bio": "Resource acquisition or environmental specialist (Farmer). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "Suki grew tomatoes on a rooftop where everyone said the wind would kill them. She tests soil by taste now, spits twice, and keeps a seed list she intends to outlive her.",
             "baseHealth": 95
         },
         {
             "id": "the_surgeon",
             "displayName": "The Surgeon",
             "profession": "Surgeon",
-            "bio": "Pre-war biological or psychological maintenance personnel (Surgeon). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort. Evaluation markers: skill sanitization expert.",
+            "bio": "Nobody argues with the surgeon's hands, until recently. A tremor has started visiting the left one between operations, and he keeps it pocketed when he walks the wards. He knows his own schedule better than anyone.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_miracle_worker",
             "activeQuestlineId": "quest_the_shaking_hand",
@@ -38,7 +38,7 @@
             "id": "the_pharmacist",
             "displayName": "The Pharmacist",
             "profession": "Pharmacist",
-            "bio": "Pre-war biological or psychological maintenance personnel (Pharmacist). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "The pharmacist counts the shelves twice a day, not because the numbers change, but because it settles her. She knows exactly which bottles are empty and which were refilled with something that is not the label. She has not decided which fact bothers her more.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_alchemist",
             "activeQuestlineId": "quest_the_empty_bottles"
@@ -47,7 +47,7 @@
             "id": "the_vet",
             "displayName": "The Vet",
             "profession": "Veterinarian",
-            "bio": "Pre-war biological or psychological maintenance personnel (Veterinarian). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "The vet used to stitch dogs and prize heifers; now it is whatever breathes. She says the animals came through the exchange quieter and stranger, and keeps a separate kit for bites she does not want to explain.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_zoonotic_expert",
             "activeQuestlineId": "quest_the_rabid_pack"
@@ -56,7 +56,7 @@
             "id": "the_therapist",
             "displayName": "The Therapist",
             "profession": "Therapist",
-            "bio": "Pre-war biological or psychological maintenance personnel (Therapist). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "The therapist listens more than she talks and takes no notes, which people find either holy or alarming. She remembers everything anyway. The settlement's secrets sit in her like water in a cistern, and she is careful not to spill.",
             "baseHealth": 80,
             "latentExpertTrait": "trait_anchor",
             "activeQuestlineId": "quest_the_broken_mind"
@@ -65,7 +65,7 @@
             "id": "the_undertaker",
             "displayName": "The Undertaker",
             "profession": "Undertaker",
-            "bio": "Unclassified biological unit (Undertaker). Processed through standard intake. Assigned to general labor pool pending specialized aptitude testing.",
+            "bio": "The undertaker measured everyone twice out of professional habit before anyone noticed he never flinches. Death was never the problem; the paperwork was. He keeps a ledger of names, locations, and pocket contents, in case anyone ever comes asking.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_death_blind",
             "activeQuestlineId": "quest_the_mass_grave"
@@ -74,7 +74,7 @@
             "id": "the_veteran",
             "displayName": "The Veteran",
             "profession": "Soldier",
-            "bio": "Former tactical or security personnel (Soldier). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "The veteran was army long enough to carry two wars' worth of habits he cannot put down. He sleeps facing the door. On day one he woke up shouting, and it has been the same dream since, and he will not say who is in it.",
             "baseHealth": 110,
             "latentExpertTrait": "trait_warlord",
             "activeQuestlineId": "quest_ghosts_of_day_1"
@@ -83,7 +83,7 @@
             "id": "the_cop",
             "displayName": "The Cop",
             "profession": "Police Officer",
-            "bio": "Former tactical or security personnel (Police Officer). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "The cop still wears the badge, dented and unpolished, mostly so people know somebody is keeping count of wrongs. He walks the same beat every night and writes nothing down. He knows everyone's alibi by heart.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_peacekeeper",
             "activeQuestlineId": "quest_the_precinct"
@@ -92,7 +92,7 @@
             "id": "the_bouncer",
             "displayName": "The Bouncer",
             "profession": "Bouncer",
-            "bio": "Unregistered or irregular biological unit (Bouncer). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The bouncer once stood in a doorway for nine hours because he was told to hold it. That kind of loyalty keeps people alive and gets people killed in equal measure. He does not start fights. He ends them, slowly.",
             "baseHealth": 120,
             "latentExpertTrait": "trait_juggernaut",
             "activeQuestlineId": "quest_the_holdout"
@@ -101,7 +101,7 @@
             "id": "the_hunter",
             "displayName": "The Hunter",
             "profession": "Hunter",
-            "bio": "Resource acquisition or environmental specialist (Hunter). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The hunter reads ash-drift the way other people read weather. He has tracked one white elk since before the exchange and refuses to say why he will not shoot it. His rifle stays oiled. His wall stays empty.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_apex_predator",
             "activeQuestlineId": "quest_the_white_elk"
@@ -110,7 +110,7 @@
             "id": "the_prisoner",
             "displayName": "The Prisoner",
             "profession": "Convict",
-            "bio": "Unregistered or irregular biological unit (Convict). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The prisoner did eight years for a job he maintains was pinned on him, and learned patience in a concrete box. He walked out when the walls came down, carrying the warden's keys and no warden. He still checks exits in every room.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_survivalist",
             "activeQuestlineId": "quest_the_wardens_key"
@@ -119,7 +119,7 @@
             "id": "the_plumber",
             "displayName": "The Plumber",
             "profession": "Plumber",
-            "bio": "Pre-war infrastructure technician (Plumber). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The plumber knows where the city's water goes better than anyone alive, which is a kind of power he does not advertise. He taps pipes and listens with his ear to the metal, and can tell you three floors up which valve is weeping.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_hydraulic_master",
             "activeQuestlineId": "quest_the_city_mains"
@@ -128,7 +128,7 @@
             "id": "the_electrician",
             "displayName": "The Electrician",
             "profession": "Electrician",
-            "bio": "Pre-war infrastructure technician (Electrician). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The electrician walks dead substations like graveyards, gloved, testing for charge that should not be there. He swears one station still hums at night with nothing connected to it. He goes to look, but he does not go inside.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_grid_walker",
             "activeQuestlineId": "quest_the_substation_ghost"
@@ -137,7 +137,7 @@
             "id": "the_architect",
             "displayName": "The Architect",
             "profession": "Architect",
-            "bio": "Pre-war infrastructure technician (Architect). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The architect drew buildings meant to stand a hundred years and lived to see the estimate revised. She carries a tube of blueprints she will not show anyone, and sketches doorways in the dust when she thinks no one is watching.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_vault_builder",
             "activeQuestlineId": "quest_the_blueprints"
@@ -146,7 +146,7 @@
             "id": "the_mechanic",
             "displayName": "The Mechanic",
             "profession": "Mechanic",
-            "bio": "Pre-war infrastructure technician (Mechanic). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The mechanic trusts engines more than people because engines do not lie about what hurts. Half the settlement's machines run on his jury-rigs, and he keeps a shelf of parts that almost worked, because almost is a kind of promise.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_grease_monkey",
             "activeQuestlineId": "quest_the_motorpool"
@@ -155,7 +155,7 @@
             "id": "the_chemist",
             "displayName": "The Chemist",
             "profession": "Chemist",
-            "bio": "Unclassified biological unit (Chemist). Processed through standard intake. Assigned to general labor pool pending specialized aptitude testing.",
+            "bio": "The chemist can make soap from ash and hope from nothing, so the joke goes, though only the first half is true. She keeps a notebook of formulas, some crossed out twice, and will not discuss what she mixed in the first winter.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_synthesizer",
             "activeQuestlineId": "quest_the_lab_ruin"
@@ -164,7 +164,7 @@
             "id": "the_botanist",
             "displayName": "The Botanist",
             "profession": "Botanist",
-            "bio": "Resource acquisition or environmental specialist (Botanist). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The botanist catalogs what still grows, which is a shorter list every season. She presses specimens between pages of a poetry book nobody reads, and guards one drawer she says is not for trade. Inside are seeds, counted like coins.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_gaia",
             "activeQuestlineId": "quest_the_seed_vault"
@@ -173,7 +173,7 @@
             "id": "the_courier",
             "displayName": "The Courier",
             "profession": "Courier",
-            "bio": "Pre-war administrative or civilian specialist (Courier). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The courier memorized routes instead of writing them down, which kept them honest and got two people killed anyway. He walks in his sleep when the weather turns and has to be tied to his bunk. He apologizes every morning, formally.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_wasteland_runner",
             "activeQuestlineId": "quest_the_lost_route"
@@ -182,7 +182,7 @@
             "id": "the_burglar",
             "displayName": "The Burglar",
             "profession": "Burglar",
-            "bio": "Unregistered or irregular biological unit (Burglar). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The burglar says he never stole from anyone who would miss it, which is a thief's arithmetic. He can open four kinds of lock without tools and never touches a handle he has not studied first. Useful, in a settlement full of sealed rooms.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_ghost",
             "activeQuestlineId": "quest_the_bank_heist"
@@ -191,7 +191,7 @@
             "id": "the_meteorologist",
             "displayName": "The Meteorologist",
             "profession": "Meteorologist",
-            "bio": "Resource acquisition or environmental specialist (Meteorologist). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The meteorologist used to forecast weekends; now she forecasts fallout windows, and people pray she is wrong the way they used to pray for sun. She reads the sky from the roof with a cracked scope, and is right more often than she wants to be.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_stormcaller",
             "activeQuestlineId": "quest_the_radar_station"
@@ -200,7 +200,7 @@
             "id": "the_hazmat_tech",
             "displayName": "The Hazmat Tech",
             "profession": "Hazmat Technician",
-            "bio": "Pre-war infrastructure technician (Hazmat Technician). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The hazmat tech has walked into zones that stopped dosimeters and come back humming, and has the patches sewn onto his suit to prove each one. He checks seals twice and jokes about the readings, which worries the people who depend on him.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_rad_walker",
             "activeQuestlineId": "quest_ground_zero"
@@ -209,7 +209,7 @@
             "id": "the_teacher",
             "displayName": "The Teacher",
             "profession": "Teacher",
-            "bio": "Pre-war administrative or civilian specialist (Teacher). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The teacher still rings a hand bell at shift changes because routine is the last classroom he has. He teaches reading to whoever will sit, adults included, and keeps one chair empty at the front for a student who did not make it out.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_polymath",
             "activeQuestlineId": "quest_the_abandoned_school"
@@ -218,7 +218,7 @@
             "id": "the_politician",
             "displayName": "The Politician",
             "profession": "Politician",
-            "bio": "Pre-war administrative or civilian specialist (Politician). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The politician speaks in paragraphs and believes them, which is more frightening than cynicism. He held a ward before; now he holds a room. The speeches got shorter, the promises got bigger, and he remembers every single vote.",
             "baseHealth": 80,
             "latentExpertTrait": "trait_demagogue",
             "activeQuestlineId": "quest_the_rally"
@@ -227,7 +227,7 @@
             "id": "the_priest",
             "displayName": "The Priest",
             "profession": "Priest",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Priest). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The priest buried more people in one winter than in his whole career before it, and his prayers got shorter each time until they were one word. He hears confessions anyway. What he hears there has started showing in his face.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_shepherd",
             "activeQuestlineId": "quest_crisis_of_faith"
@@ -236,7 +236,7 @@
             "id": "the_reporter",
             "displayName": "The Reporter",
             "profession": "Reporter",
-            "bio": "Pre-war administrative or civilian specialist (Reporter). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The reporter asks the questions nobody wants answered, twice, and writes the answers where people can see them. Someone burned her first bulletin. She posted the second the next morning with one extra word, and watches who reads it longest.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_muckraker",
             "activeQuestlineId": "quest_truth_of_day_30"
@@ -245,7 +245,7 @@
             "id": "the_radio_host",
             "displayName": "The Radio Host",
             "profession": "Radio Host",
-            "bio": "Pre-war infrastructure technician (Radio Host). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The radio host kept a dead frequency alive for a year because someone, somewhere, might need to hear a human voice at three in the morning. He still signs off with the old station ID, out of habit or defiance. Sometimes the frequency crackles back. He will not say with what.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_voice_of_the_wastes",
             "activeQuestlineId": "quest_dead_air"
@@ -254,7 +254,7 @@
             "id": "the_chef",
             "displayName": "The Chef",
             "profession": "Chef",
-            "bio": "Pre-war administrative or civilian specialist (Chef). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The chef once plated dinners for people who did not need them; now he stretches one crate of beets into a week of meals and names each one differently. He saves the real recipes for a banquet he insists is coming, written on cards he keeps dry.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_iron_chef",
             "activeQuestlineId": "quest_the_final_harvest"
@@ -263,7 +263,7 @@
             "id": "the_athlete",
             "displayName": "The Athlete",
             "profession": "Athlete",
-            "bio": "Pre-war administrative or civilian specialist (Athlete). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The athlete trained her whole life for races with finish lines. Now she runs the perimeter at dawn, counting laps she never plans to stop counting. She traded her medals for antibiotics within the month, and says that was the only race she ever won.",
             "baseHealth": 110,
             "latentExpertTrait": "trait_tireless",
             "activeQuestlineId": "quest_the_marathon"
@@ -272,7 +272,7 @@
             "id": "the_firefighter",
             "displayName": "The Firefighter",
             "profession": "Firefighter",
-            "bio": "Pre-war administrative or civilian specialist (Firefighter). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The firefighter carried three people out of a tower that was already gone and does not count it as enough. He sleeps in his boots. When the wind shifts he is first up the wall with a bucket and last to come down.",
             "baseHealth": 105,
             "latentExpertTrait": "trait_asbestos",
             "activeQuestlineId": "quest_the_inferno"
@@ -281,7 +281,7 @@
             "id": "the_tailor",
             "displayName": "The Tailor",
             "profession": "Tailor",
-            "bio": "Pre-war administrative or civilian specialist (Tailor). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The tailor measures people once and remembers the numbers forever, which makes funerals hard on her. She sews armor into coats because nobody else thought to, and keeps a locked box of silk she says is for a wedding, someday.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_armorer",
             "activeQuestlineId": "quest_the_kevlar_loom"
@@ -290,7 +290,7 @@
             "id": "the_watchmaker",
             "displayName": "The Watchmaker",
             "profession": "Watchmaker",
-            "bio": "Pre-war administrative or civilian specialist (Watchmaker). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The watchmaker repairs clocks that no longer matter to people who cannot stop winding them. His own stopped at a minute he refuses to name, and he wears it anyway. Time is a habit, he says, and habits can be kept even when they are wrong.",
             "baseHealth": 80,
             "latentExpertTrait": "trait_tinkerer",
             "activeQuestlineId": "quest_broken_chronometer"
@@ -299,7 +299,7 @@
             "id": "the_historian",
             "displayName": "The Historian",
             "profession": "Historian",
-            "bio": "Pre-war administrative or civilian specialist (Historian). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The historian wrote books about disasters that had not happened yet, which is a joke nobody laughs at now. He gathers papers from the ash, any papers, and reads them aloud at meals so the things that happened are at least heard once.",
             "baseHealth": 80,
             "latentExpertTrait": "trait_lorekeeper",
             "activeQuestlineId": "quest_museum_archive"
@@ -308,7 +308,7 @@
             "id": "the_defector",
             "displayName": "The Defector",
             "profession": "Cult Defector",
-            "bio": "Unregistered or irregular biological unit (Cult Defector). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The defector walked out of a commune that promised purity and delivered punishment, and he still carries the brand they gave him for leaving. He flinches at hymns. He is the calmest person in any room with a locked door.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_zealots_bane",
             "activeQuestlineId": "quest_the_cleansing"
@@ -317,7 +317,7 @@
             "id": "the_addict",
             "displayName": "The Addict",
             "profession": "Addict",
-            "bio": "Unregistered or irregular biological unit (Addict). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The addict is honest about the arithmetic of his habit, which is more than most people manage about anything. He was clean for two years before the exchange. He counts the days both directions, and does not always start from the same one.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_chem_resistant",
             "activeQuestlineId": "quest_the_last_stash"
@@ -326,7 +326,7 @@
             "id": "the_parent",
             "displayName": "The Parent",
             "profession": "Parent",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Parent). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The parent does not talk about the crossing, and neither does anyone who was there. What came through with them was a child and a locket. The locket stays closed. The child gets fed first, every meal, without discussion.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_protector",
             "activeQuestlineId": "quest_the_locket"
@@ -335,7 +335,7 @@
             "id": "the_fierce_mother",
             "displayName": "The Fierce Mother",
             "profession": "Mother",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Mother). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The fierce mother held a stairwell with a pry bar while the shelter filled, and has not been able to put the bar down since. She sleeps across the doorway of the room where the children sleep. One crib there is made up, and nobody has used it in months, and nobody folds it away.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_matriarch",
             "activeQuestlineId": "quest_the_empty_crib",
@@ -347,7 +347,7 @@
             "id": "the_exhausted_father",
             "displayName": "The Exhausted Father",
             "profession": "Father",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Father). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The exhausted father promised his children the shelter would be done by winter and built half of it with his own hands, sleeping between pours. The promise is still posted by the door in a child's letters. He reads it every morning like a charge sheet.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_pillar_of_atlas",
             "activeQuestlineId": "quest_the_broken_promise",
@@ -359,7 +359,7 @@
             "id": "the_naive_son",
             "displayName": "The Naive Son",
             "profession": "Child",
-            "bio": "Non-contributing biological unit (Child). Generates zero operational labor output while consuming a fractional caloric allowance. Maintained primarily for long-term demographic viability.",
+            "bio": "The naive son was eight when the sky changed and remembers the before mostly as flavors. He sorts bottle caps by color, assumes every stranger is a trader until proven otherwise, and asks questions in the future tense, which nobody else uses anymore.",
             "baseHealth": 70,
             "latentExpertTrait": "trait_wasteland_scout",
             "activeQuestlineId": "quest_growing_up_fast",
@@ -373,7 +373,7 @@
             "id": "the_hardened_daughter",
             "displayName": "The Hardened Daughter",
             "profession": "Child",
-            "bio": "Non-contributing biological unit (Child). Generates zero operational labor output while consuming a fractional caloric allowance. Maintained primarily for long-term demographic viability.",
+            "bio": "The hardened daughter was first through the breach on day thirty and has never said what was on the other side, though she was eleven at the time. She sharpens things that are not dull. The younger children follow her without being told.",
             "baseHealth": 75,
             "latentExpertTrait": "trait_child_of_the_ash",
             "activeQuestlineId": "quest_first_blood",
@@ -386,7 +386,7 @@
             "id": "the_psychopath",
             "displayName": "The Psychopath",
             "profession": "Outsider",
-            "bio": "Unregistered or irregular biological unit (Outsider). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The psychopath is polite, punctual, and never wastes anything, and the settlement finds this useful when it should find it frightening. He keeps score of favors in a ledger nobody can see. His pulse was checked once after a collapse. It did not rise.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_cold_calculus",
             "activeQuestlineId": "quest_the_perfect_equation",
@@ -399,7 +399,7 @@
             "id": "the_serial_killer",
             "displayName": "The Serial Killer",
             "profession": "Neighbor",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Neighbor). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The serial killer is the settlement's favorite neighbor: first to help lift, quick with soup, remembers everyone's name. Two travelers who wintered here left during the first storm owing him nothing, and he waved them off. The gate log does not show them leaving.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_butcher_of_day_30",
             "activeQuestlineId": "quest_the_mask_slips",
@@ -412,7 +412,7 @@
             "id": "the_liar",
             "displayName": "The Liar",
             "profession": "Storyteller",
-            "bio": "Pre-war administrative or civilian specialist (Storyteller). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The liar tells the truth often enough to stay useful, which is the professional's trick. Every story he tells has exactly one true thing in it, and he lets you guess which one. Nobody has caught him out yet, and he watches people try with something like affection.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_master_manipulator",
             "activeQuestlineId": "quest_the_boy_who_cried_wolf",
@@ -424,7 +424,7 @@
             "id": "the_hoarder",
             "displayName": "The Hoarder",
             "profession": "Collector",
-            "bio": "Unclassified biological unit (Collector). Processed through standard intake. Assigned to general labor pool pending specialized aptitude testing.",
+            "bio": "The hoarder sees an object and sees the day it will be needed, which is always coming and never arrives. His bunk is a warehouse. He lends reluctantly, remembers bitterly, and keeps an inventory of debts more accurate than the settlement's own.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_dragons_hoard",
             "activeQuestlineId": "quest_the_weight_of_gold",
@@ -436,7 +436,7 @@
             "id": "the_general",
             "displayName": "The General",
             "profession": "Military",
-            "bio": "Former tactical or security personnel (Military). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "The general won a battle before the exchange that the histories called necessary and the casualty list called something else. People follow him and resent following him. He holds councils standing up, so no one gets comfortable with what he proposes.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_art_of_war",
             "activeQuestlineId": "quest_court_martial",
@@ -449,7 +449,7 @@
             "id": "the_saboteur",
             "displayName": "The Saboteur",
             "profession": "Rebel",
-            "bio": "Unregistered or irregular biological unit (Rebel). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The saboteur broke things for a cause before the exchange and found she had a gift. She can see the one bolt that brings a machine down, and goes quiet around infrastructure the way others go quiet near water. She was never caught. She volunteers this, often.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_demolitions_expert",
             "activeQuestlineId": "quest_the_final_payload",
@@ -461,7 +461,7 @@
             "id": "the_deserter",
             "displayName": "The Deserter",
             "profession": "Sniper",
-            "bio": "Former tactical or security personnel (Sniper). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "The deserter was the best shot in his unit and the first to leave the line, and both facts live in him without reconciling. He volunteers for watch but never for raids, and his rifle is cleaner than anyone's, which is its own kind of confession.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_ghost_shooter",
             "activeQuestlineId": "quest_holding_the_line",
@@ -473,7 +473,7 @@
             "id": "the_quartermaster",
             "displayName": "The Quartermaster",
             "profession": "Logistics",
-            "bio": "Pre-war administrative or civilian specialist (Logistics). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The quartermaster runs the stores like scripture: weighed, logged, signed for, twice. He denied his own sister an extra blanket once, on the record, and neither of them has mentioned it since. The ledger is the only thing in the settlement he calls his.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_supply_chain_master",
             "activeQuestlineId": "quest_inventory_audit",
@@ -485,7 +485,7 @@
             "id": "the_child_soldier",
             "displayName": "The Child Soldier",
             "profession": "Child",
-            "bio": "Non-contributing biological unit (Child). Generates zero operational labor output while consuming a fractional caloric allowance. Maintained primarily for long-term demographic viability.",
+            "bio": "The child soldier arrived with a rifle taller than she was and would not set it down for three weeks. She is learning, badly, to be a child in the gaps between chores, and guards nap time like it is a post.",
             "baseHealth": 80,
             "latentExpertTrait": "trait_reclaimed_youth",
             "activeQuestlineId": "quest_dropping_the_rifle",
@@ -498,7 +498,7 @@
             "id": "the_empath",
             "displayName": "The Empath",
             "profession": "Counselor",
-            "bio": "Pre-war biological or psychological maintenance personnel (Counselor). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "The empath feels the room's weather before it breaks and has taken to saying so, which nobody thanks her for. Other people's grief moves through her like her own, and some of it is hers now. She takes night inventory because the daytime is too crowded with feelings.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_soul_weaver",
             "activeQuestlineId": "quest_the_sponge",
@@ -510,7 +510,7 @@
             "id": "the_misanthrope",
             "displayName": "The Misanthrope",
             "profession": "Hermit",
-            "bio": "Unregistered or irregular biological unit (Hermit). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The misanthrope worked alone in a room before the exchange and is the only one here who does not miss rooms. He is rude precisely, never unfairly, and fixes what breaks before anyone asks, because he will not owe anyone the favor of asking.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_lone_wolf",
             "activeQuestlineId": "quest_hell_is_other_people",
@@ -522,7 +522,7 @@
             "id": "the_pollyanna",
             "displayName": "The Pollyanna",
             "profession": "Optimist",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Optimist). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The pollyanna finds the silver lining the way water finds leaks, and the settlement needs her and cannot always stand her. She keeps a jar of small good things, written down. When someone dies she reads the jar aloud, and her voice only shakes at the end.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_grounded_optimist",
             "activeQuestlineId": "quest_shattered_glass",
@@ -534,7 +534,7 @@
             "id": "the_martyr",
             "displayName": "The Martyr",
             "profession": "Caregiver",
-            "bio": "Pre-war biological or psychological maintenance personnel (Caregiver). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "The martyr gives away her rations with a cheerfulness that has started to frighten people, and takes the worst shifts as if they were handed to her. She was a caregiver before, she says, as if that explains it. It might.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_living_saint",
             "activeQuestlineId": "quest_the_ultimate_price",
@@ -546,7 +546,7 @@
             "id": "the_arrogant_surgeon",
             "displayName": "The Arrogant Surgeon",
             "profession": "Surgeon",
-            "bio": "Pre-war biological or psychological maintenance personnel (Surgeon). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "The arrogant surgeon operated in a hospital that put his name on a wing, and he believed the wing was earned. He is still brilliant, which is the problem. One patient did not survive his certainty, and he has rearranged the entire ward since, except one bed.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_humbled_healer",
             "activeQuestlineId": "quest_the_botched_job",
@@ -558,7 +558,7 @@
             "id": "the_relapsing_addict",
             "displayName": "The Relapsing Addict",
             "profession": "Addict",
-            "bio": "Unregistered or irregular biological unit (Addict). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The relapsing addict has been clean longer than anyone expected, and does not ask for credit, which is the kind of honesty that makes people trust her. She says her bad days out loud so no one has to guess. The settlement pairs her with a buddy; she pairs the settlement right back.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_clean_and_sober",
             "activeQuestlineId": "quest_cold_turkey",
@@ -570,7 +570,7 @@
             "id": "the_insomniac",
             "displayName": "The Insomniac",
             "profession": "Night Watch",
-            "bio": "Unregistered or irregular biological unit (Night Watch). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The insomniac has seen every hour of every night since the exchange and stopped pretending sleep is coming. He walks the corridors, logs what creaks, and knows the settlement's true schedule, the one after lights-out. People confess things to him because he is there, and because he looks tired enough to keep them.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_the_watcher",
             "activeQuestlineId": "quest_the_long_night",
@@ -582,7 +582,7 @@
             "id": "the_hypochondriac",
             "displayName": "The Hypochondriac",
             "profession": "Patient",
-            "bio": "Non-contributing biological unit (Patient). Generates zero operational labor output while consuming a fractional caloric allowance. Maintained primarily for long-term demographic viability.",
+            "bio": "The hypochondriac counts his own pulse the way others count steps, and keeps a symptom chart that puts him first in line at the clinic every week. The medics roll their eyes. But he caught the water taint last month by being scared of exactly the right thing, and the clinic is quieter about him now.",
             "baseHealth": 85,
             "latentExpertTrait": "trait_hyper_aware",
             "activeQuestlineId": "quest_the_real_illness",
@@ -594,7 +594,7 @@
             "id": "the_pyromaniac",
             "displayName": "The Pyromaniac",
             "profession": "Arsonist",
-            "bio": "Unregistered or irregular biological unit (Arsonist). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The pyromaniac was a welder before, which is the polite version, and watches fire the way others watch water, for what it will do next. He is trusted with the stove and not with fuel, and he knows the difference, which is why he is trusted at all.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_fire_breather",
             "activeQuestlineId": "quest_trial_by_fire",
@@ -606,7 +606,7 @@
             "id": "the_blind_preacher",
             "displayName": "The Blind Preacher",
             "profession": "Preacher",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Preacher). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The blind preacher lost his sight before the exchange and says the darkness afterward was the one mercy nobody else got. He preaches by voices and footsteps, knows who is in the room by how the air moves, and his sermons have stopped being about judgment and started being about company.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_sonar",
             "activeQuestlineId": "quest_a_voice_in_the_dark",
@@ -618,7 +618,7 @@
             "id": "the_prepper",
             "displayName": "The Prepper",
             "profession": "Prepper",
-            "bio": "Unclassified biological unit (Prepper). Processed through standard intake. Assigned to general labor pool pending specialized aptitude testing.",
+            "bio": "The prepper was right, and he never says it because he does not need to. His stores kept the first winter from being a funeral, and his list of what is missing is longer than the settlement's gratitude. He sleeps with a pry bar under the cot and calls it optimism.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_improvised_engineering",
             "activeQuestlineId": "quest_the_bunker_breached",
@@ -630,7 +630,7 @@
             "id": "the_outcast",
             "displayName": "The Outcast",
             "profession": "Mutant",
-            "bio": "Unregistered or irregular biological unit (Mutant). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The outcast took a dose that should have buried him and got stranger instead of sicker, which is exactly what people are afraid of. He walks the hot zones the rest of the shelter marks off maps. He brings back what he finds, and lately he has been bringing back more than he carried in.",
             "baseHealth": 80,
             "latentExpertTrait": "trait_radiotrophic",
             "activeQuestlineId": "quest_embracing_the_glow",
@@ -640,7 +640,7 @@
             "id": "the_feral_orphan",
             "displayName": "The Feral Orphan",
             "profession": "Child",
-            "bio": "Non-contributing biological unit (Child). Generates zero operational labor output while consuming a fractional caloric allowance. Maintained primarily for long-term demographic viability.",
+            "bio": "The feral orphan came in on all fours with a dog pack and has been learning doors ever since, slowly. She eats with her hands when she thinks no one is looking, and shares with the animals first, then with whoever fed her. She is not tame. She is deciding, which is better.",
             "baseHealth": 75,
             "latentExpertTrait": "trait_apex_scavenger",
             "activeQuestlineId": "quest_the_pack",
@@ -653,7 +653,7 @@
             "id": "the_pacifist",
             "displayName": "The Pacifist",
             "profession": "Monk",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Monk). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The pacifist took his vow before the exchange, when vows were cheap, and has kept it since, when they are not. He turns the other cheek with a steadiness that reads as either courage or a dare. Nobody has hit him twice.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_zen_state",
             "activeQuestlineId": "quest_the_ultimate_test",
@@ -665,7 +665,7 @@
             "id": "the_widow",
             "displayName": "The Widow",
             "profession": "Botanist",
-            "bio": "Resource acquisition or environmental specialist (Botanist). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The widow lost her husband in the first week and their garden in the second, and replanted both out of spite. She talks to the seedlings the way she talked to him, and her rows are the straightest in the settlement, which is grief with a harvest attached.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_master_geneticist",
             "activeQuestlineId": "quest_the_last_seed",
@@ -677,7 +677,7 @@
             "id": "the_ex_con",
             "displayName": "The Ex-Con",
             "profession": "Laborer",
-            "bio": "Unclassified biological unit (Laborer). Processed through standard intake. Assigned to general labor pool pending specialized aptitude testing.",
+            "bio": "The ex-con did his time and came out into a world that had sentenced everyone, and finds the equality grimly funny. Nobody trusts him with the stores and everybody trusts him with anything heavy, and he knows exactly what that means. He lifts it anyway.",
             "baseHealth": 110,
             "latentExpertTrait": "trait_the_enforcer",
             "activeQuestlineId": "quest_redemption_arc",
@@ -689,7 +689,7 @@
             "id": "the_sheriff",
             "displayName": "The Sheriff",
             "profession": "Lawman",
-            "bio": "Former tactical or security personnel (Lawman). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "The sheriff kept his county honest for twenty years on the strength of a star he polished himself, and his heart is failing him now like a deputy who quit. He walks slower than he used to and arrives first anyway. When he speaks, even the guilty go quiet, out of something older than fear.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_legend_of_the_wastes",
             "activeQuestlineId": "quest_the_last_ride",
@@ -702,7 +702,7 @@
             "id": "the_former_politician",
             "displayName": "The Former Politician",
             "profession": "Politician",
-            "bio": "Pre-war administrative or civilian specialist (Politician). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The former politician held office before the exchange and calls it the administration, which now refers to four rooms and a stove. His speeches still land. The settlement has started noticing the distance between what he promises and what four rooms can hold. He has not.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_the_statesman",
             "activeQuestlineId": "quest_a_real_leader",
@@ -714,7 +714,7 @@
             "id": "the_tech_bro",
             "displayName": "The Tech Bro",
             "profession": "Engineer",
-            "bio": "Pre-war infrastructure technician (Engineer). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The tech bro founded two companies that promised to disrupt scarcity and is taking the current scarcity personally. He sketches machines on walls with a confidence that has survived every one of them failing, and the annoying thing is that one of them is starting to work.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_cybernetics",
             "activeQuestlineId": "quest_the_hard_reboot",
@@ -727,7 +727,7 @@
             "id": "the_news_anchor",
             "displayName": "The News Anchor",
             "profession": "Anchor",
-            "bio": "Pre-war administrative or civilian specialist (Anchor). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The news anchor read the end of the world from a studio desk with perfect diction and has never forgiven herself for sounding calm. She keeps her posture, her voice, her habit of facing whoever is speaking. When she broadcasts again, she says, it will be the truth, which she describes as the hard part.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_beacon_of_truth",
             "activeQuestlineId": "quest_the_final_broadcast",
@@ -739,7 +739,7 @@
             "id": "the_nomad",
             "displayName": "The Nomad",
             "profession": "Scavenger",
-            "bio": "Resource acquisition or environmental specialist (Scavenger). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The nomad has slept under open sky since the exchange and finds ceilings oppressive, which makes her the settlement's best scout and worst guest. She comes back with maps drawn from memory and leaves again before anyone calls her settled. Each time, her pack is lighter.",
             "baseHealth": 100,
             "latentExpertTrait": "trait_master_pathologist",
             "activeQuestlineId": "quest_putting_down_roots",
@@ -751,7 +751,7 @@
             "id": "the_exec",
             "displayName": "The Exec",
             "profession": "Executive",
-            "bio": "Pre-war administrative or civilian specialist (Executive). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The exec ran a company of nine hundred and remembers every face the way a chess player remembers pieces. He negotiates like it is still quarterly. The settlement is slowly teaching him what people are worth when you cannot fire them, and he is, in his way, a fast study.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_monopolist",
             "activeQuestlineId": "quest_the_golden_parachute",
@@ -763,49 +763,49 @@
             "id": "survivor_cryo_tech",
             "displayName": "The Cryo-Tech",
             "profession": "HVAC Specialist",
-            "bio": "Pre-war infrastructure technician (HVAC Specialist). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The cryo-tech spent ten years keeping other people's cold running and her own opinions to herself. She can coax a dead compressor back with a wrench and bad language, and checks every seal twice, which nobody finds excessive who has seen a thaw.",
             "baseHealth": 90.0
         },
         {
             "id": "survivor_bunker_archivist",
             "displayName": "The Archivist",
             "profession": "Bureaucrat",
-            "bio": "Pre-war administrative or civilian specialist (Bureaucrat). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The bunker archivist was filing shelter paperwork in triplicate while the world ended, and triplicate is why anyone can find anything now. She guards the forms like scripture and knows where every requisition is buried. People bring her problems because she has a drawer for each one.",
             "baseHealth": 75.0
         },
         {
             "id": "survivor_ice_walker",
             "displayName": "The Ice-Walker",
             "profession": "Nomad",
-            "bio": "Unregistered or irregular biological unit (Nomad). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The ice-walker crossed the frozen straits alone when the ice roads were still honest, and arrived with frost in her eyebrows and a map of crevasses in her head. She trades route knowledge for fuel and leaves before the thaw takes anyone. The settlement has started leaving a light on for her.",
             "baseHealth": 100.0
         },
         {
             "id": "survivor_defrosted_aristocrat",
             "displayName": "The Thawed VIP",
             "profession": "Politician",
-            "bio": "Pre-war administrative or civilian specialist (Politician). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The thawed VIP went into the vaults with a staff and came out with a title nobody recognizes anymore. His health is bad, his manners are impeccable, and he is learning, late, how to be useful in a room where no one is required to introduce themselves.",
             "baseHealth": 60.0
         },
         {
             "id": "survivor_thawed_medic",
             "displayName": "The Thawed Surgeon",
             "profession": "Cryo-Medic",
-            "bio": "Pre-war biological or psychological maintenance personnel (Cryo-Medic). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "The thawed surgeon came out of the vault mid-career by her own accounting and has been trying to make up the missed years ever since. Her medicine is from before, which makes her methods old and her hands new, and she asks questions nobody else thinks to ask.",
             "baseHealth": 85.0
         },
         {
             "id": "survivor_ash_diver",
             "displayName": "The Ash-Diver",
             "profession": "Scavenger",
-            "bio": "Resource acquisition or environmental specialist (Scavenger). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The ash-diver goes in where the drifts are deep enough to swim and comes out with things nobody else can reach, and a cough she calls the job. She checks other people's seals before her own, which is either courage or arithmetic.",
             "baseHealth": 110.0
         },
         {
             "id": "survivor_speleologist",
             "displayName": "The Speleologist",
             "profession": "Cave Mapper",
-            "bio": "Resource acquisition or environmental specialist (Cave Mapper). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The speleologist mapped caves before the exchange because the dark was the last honest frontier, and maps them now because they are the last shelter that does not leak. He reads stone like weather and refuses to call any cave safe, which is why people trust him.",
             "baseHealth": 90,
             "traits": [
                 "trait_dark_acclimated"
@@ -815,7 +815,7 @@
             "id": "survivor_sump_diver",
             "displayName": "The Sump-Diver",
             "profession": "Scuba Scavenger",
-            "bio": "Resource acquisition or environmental specialist (Scuba Scavenger). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The sump-diver breathes through a rig of his own making and goes down into the flooded basements where the good things drowned. He comes up grey and counts his haul calmly, and nobody has seen him shake except once, and he will not say what moved down there.",
             "baseHealth": 105,
             "traits": [
                 "trait_thalassophobia_resist"
@@ -825,7 +825,7 @@
             "id": "survivor_mycologist",
             "displayName": "The Mycologist",
             "profession": "Fungus Farmer",
-            "bio": "Resource acquisition or environmental specialist (Fungus Farmer). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The mycologist grows food in the dark, which used to be a punchline and is now the settlement's insurance policy. She talks to her cultures like weather and tastes new growth with a caution that has saved her twice. Her cellar is the warmest place in winter, and smells like it.",
             "baseHealth": 80,
             "traits": [
                 "trait_rot_immunity"
@@ -835,7 +835,7 @@
             "id": "survivor_hydro_engineer",
             "displayName": "The Hydro-Engineer",
             "profession": "Pump Specialist",
-            "bio": "Pre-war infrastructure technician (Pump Specialist). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The hydro-engineer keeps the pumps turning, which is the whole job, and can hear a bearing about to die over the sound of her own breathing. She patched the main line with a sleeve gasket and a prayer in the first winter, and refuses to explain the prayer.",
             "baseHealth": 95,
             "traits": [
                 "trait_dark_acclimated"
@@ -845,7 +845,7 @@
             "id": "survivor_mole",
             "displayName": "The Mole",
             "profession": "Tunnel Rat",
-            "bio": "Resource acquisition or environmental specialist (Tunnel Rat). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The mole dug before the exchange and has been underground ever since, widening the shelter one bucket at a time. He is happiest in a crawl space, measures rooms in arm-spans, and comes up for meals like a man visiting a foreign country.",
             "baseHealth": 85,
             "traits": [
                 "trait_dark_acclimated"
@@ -855,7 +855,7 @@
             "id": "survivor_rot_farmer",
             "displayName": "The Rot Farmer",
             "profession": "Composter",
-            "bio": "Resource acquisition or environmental specialist (Composter). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The rot farmer turns the settlement's waste into soil with a devotion that used to embarrass people. Nothing is thrown away twice near her. She keeps a ledger of what went into each heap, and her compost is the one thing nobody steals, because everyone knows what it cost.",
             "baseHealth": 90,
             "traits": [
                 "trait_rot_immunity"
@@ -865,7 +865,7 @@
             "id": "survivor_sapper",
             "displayName": "The Sapper",
             "profession": "EOD Tech",
-            "bio": "Former tactical or security personnel (EOD Tech). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "The sapper disarmed things before the exchange that were built not to be disarmed, and moves through the wasteland at a walking pace nobody else can stand. He marks ordnance with chalk and patience, and asks only that people respect the chalk.",
             "baseHealth": 95,
             "traits": [
                 "trait_uxo_instinct"
@@ -875,7 +875,7 @@
             "id": "survivor_lineman",
             "displayName": "The Lineman",
             "profession": "Telecomm Tech",
-            "bio": "Pre-war infrastructure technician (Telecomm Tech). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The lineman strung cable for a living before and has started stringing it again between outposts, because a settlement without wires is just a crowd, he says. He climbs what others will not, talks to dead lines sometimes, and swears one of them answers.",
             "baseHealth": 85,
             "traits": [
                 "trait_faraday_paranoia"
@@ -885,7 +885,7 @@
             "id": "survivor_drone_op",
             "displayName": "The Drone Op",
             "profession": "UAV Pilot",
-            "bio": "Resource acquisition or environmental specialist (UAV Pilot). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The drone op flies a machine she built from three wrecks and keeps airborne with spite and solder. What she sees from up there she reports without drama, which makes it worse. She has started drawing maps of things that move at night and leave no tracks.",
             "baseHealth": 80,
             "traits": [
                 "trait_tinnitus"
@@ -895,7 +895,7 @@
             "id": "survivor_acoustic_tech",
             "displayName": "The Acoustic Tech",
             "profession": "Sonar Operator",
-            "bio": "Resource acquisition or environmental specialist (Sonar Operator). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The acoustic tech listened to the ocean for a living before and listens to the ground now, through pipes and stone. She can tell you what is behind a wall by knocking on it, and has stopped volunteering what she hears, which is when people started asking.",
             "baseHealth": 90,
             "traits": [
                 "trait_tinnitus"
@@ -905,7 +905,7 @@
             "id": "survivor_machinist",
             "displayName": "The Machinist",
             "profession": "CNC Operator",
-            "bio": "Pre-war infrastructure technician (CNC Operator). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The machinist makes parts that should not be possible out of scrap that should not be enough, to tolerances he checks with his thumbnail. He does not compliment machines or people, so being handed a job by him is the settlement's highest praise.",
             "baseHealth": 100,
             "traits": [
                 "trait_magnetism_phobia"
@@ -915,7 +915,7 @@
             "id": "survivor_logistician",
             "displayName": "The Logistician",
             "profession": "Supply Chain Mgr",
-            "bio": "Pre-war administrative or civilian specialist (Supply Chain Mgr). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The logistician moved freight before the exchange and moves calories now, and can tell you exactly what the settlement will run out of three weeks before it happens, which has made her both invaluable and unwelcome at meals.",
             "baseHealth": 85,
             "traits": [
                 "trait_uxo_instinct"
@@ -925,7 +925,7 @@
             "id": "survivor_bunker_born",
             "displayName": "The Bunker-Born",
             "profession": "Scavenger/Scrap",
-            "bio": "Resource acquisition or environmental specialist (Scavenger/Scrap). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The bunker-born has never seen a sky that was not a ceiling, and went outside for the first time at nineteen on a dare. He flinches at weather and can strip a machine blindfolded, and the settlement is slowly learning which of those facts to worry about.",
             "baseHealth": 85,
             "traits": [
                 "trait_bunker_born",
@@ -937,7 +937,7 @@
             "id": "survivor_the_waking",
             "displayName": "The Waking",
             "profession": "Patient",
-            "bio": "Non-contributing biological unit (Patient). Generates zero operational labor output while consuming a fractional caloric allowance. Maintained primarily for long-term demographic viability.",
+            "bio": "The waking came out of a coma after the exchange into a world that changed while she slept, and is catching up the way you would read a book someone spoiled. She asks about the before politely, like asking about a country she will never visit.",
             "baseHealth": 70,
             "traits": [
                 "trait_hyperthymesia"
@@ -947,7 +947,7 @@
             "id": "survivor_osteophage",
             "displayName": "The Osteophage",
             "profession": "Scrapper",
-            "bio": "Resource acquisition or environmental specialist (Scrapper). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "The osteophage strips dead buildings down to the skeleton and calls it harvesting. He knows which concrete to trust and which to shore, and keeps a tooth from every structure he has dropped, strung on wire. He calls them trophies. He will not say of what.",
             "baseHealth": 90,
             "traits": [
                 "trait_rot_immunity"
@@ -957,7 +957,7 @@
             "id": "survivor_archivist",
             "displayName": "The Archivist",
             "profession": "Monk/Historian",
-            "bio": "Pre-war administrative or civilian specialist (Monk/Historian). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "The archivist kept the order's records before the exchange and keeps everyone's now, in handwriting so even it looks printed. He writes everything down, including what people would rather he did not, and forgives nothing by filing it, which is its own kind of mercy.",
             "baseHealth": 75,
             "traits": [
                 "trait_artifact_reverence"
@@ -967,7 +967,7 @@
             "id": "survivor_concrete_boss",
             "displayName": "The Concrete Boss",
             "profession": "Foreman",
-            "bio": "Pre-war infrastructure technician (Foreman). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "The concrete boss poured foundations before the exchange and pours them now, and the difference to him is only the weather. He reads crews like mix designs, knows who is about to quit by their boots, and has never lost a wall he personally bet on.",
             "baseHealth": 110,
             "traits": [
                 "trait_concrete_boss",
@@ -978,7 +978,7 @@
             "id": "survivor_uv_penitent",
             "displayName": "The UV Penitent",
             "profession": "Cultist",
-            "bio": "Unregistered or irregular biological unit (Cultist). Demonstrates high adaptability to degraded societal structures. Utility assessed strictly on labor output and risk of insubordination. Monitored for resource diversion.",
+            "bio": "The UV penitent belonged to a congregation that worshipped the lamps, and found out what the lamps were for the hard way. He does his penance on the light shifts, skin peeling, and tells anyone who asks exactly what he believed, so they do not have to find out the way he did.",
             "baseHealth": 80,
             "traits": [
                 "trait_sun_blindness"
@@ -988,7 +988,7 @@
             "id": "aris_thorne",
             "displayName": "Dr. Aris Thorne",
             "profession": "Chief Structural Engineer",
-            "bio": "Pre-war infrastructure technician (Chief Structural Engineer). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Dr. Aris Thorne signed off on the shelter's load calculations before the exchange and has been reading them aloud to the walls since, looking for where he was wrong. He has not found it yet. He sleeps under the beams anyway, which he calls confidence and everyone else calls penance.",
             "baseHealth": 95,
             "latentExpertTrait": "trait_resilient_builder",
             "activeQuestlineId": "quest_the_cracked_floor",
@@ -1002,7 +1002,7 @@
             "id": "maya_lin",
             "displayName": "Maya Lin",
             "profession": "Radio Signal Technician",
-            "bio": "Pre-war infrastructure technician (Radio Signal Technician). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Maya Lin hears signals in the static the instruments do not show, and has stopped mentioning it, mostly. She keeps a log of frequencies that should not have anyone on them. One of them has someone on it, at the same hour, every night.",
             "baseHealth": 80,
             "latentExpertTrait": "trait_voice_of_hope",
             "activeQuestlineId": "quest_the_dying_signal",
@@ -1016,7 +1016,7 @@
             "id": "victor_vance",
             "displayName": "Captain Victor Vance",
             "profession": "Garrison Tactical Commander",
-            "bio": "Former tactical or security personnel (Garrison Tactical Commander). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "Captain Victor Vance held his garrison together for six weeks after the exchange on routine and ammunition, and gave the order he does not discuss on the last of those nights. He commands quietly now, the way he breathes, and stands watch at the wall he chose for the sightline.",
             "baseHealth": 110,
             "latentExpertTrait": "trait_guardian_captain",
             "activeQuestlineId": "quest_the_refugee_mass_influx",
@@ -1030,7 +1030,7 @@
             "id": "elena_rostov",
             "displayName": "Dr. Elena Rostov",
             "profession": "Trauma Surgeon",
-            "bio": "Pre-war biological or psychological maintenance personnel (Trauma Surgeon). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "Dr. Elena Rostov ran trauma through the first winter with steady hands and a locked drawer, because her outcomes were better than they should have been and she knows exactly why. She takes the cases nobody else will touch, which is either atonement or habit. She says both.",
             "baseHealth": 90,
             "latentExpertTrait": "trait_healers_soul",
             "activeQuestlineId": "quest_the_ars_crisis",
@@ -1044,203 +1044,203 @@
             "id": "survivor_family_adult",
             "displayName": "Family Survivor (Adult)",
             "profession": "Parent",
-            "bio": "Civilian unit identified primarily by relational or ideological traits (Parent). Assigned to general labor pool. Psychological baseline currently stable, but requires observation for counter-productive sentimentality.",
+            "bio": "The family survivor arrived carrying one child and leading another, and has fed them first at every meal since, without ceremony. They do not talk about the crossing. They keep a list of things to find - a blanket, a toy, a name - and add to it when the children are not looking.",
             "baseHealth": 85
         },
         {
             "id": "survivor_family_child",
             "displayName": "Family Survivor (Child)",
             "profession": "Child",
-            "bio": "Non-contributing biological unit (Child). Generates zero operational labor output while consuming a fractional caloric allowance. Maintained primarily for long-term demographic viability.",
+            "bio": "The family child draws the shelter in crayon with the door always open, and asks when the sky will be fixed without expecting an answer. They guard the food crate with a stick, very seriously, and fall asleep mid-sentence.",
             "baseHealth": 70
         },
         {
             "id": "alex_raymond",
             "displayName": "Alex Raymond",
             "profession": "Scout",
-            "bio": "Resource acquisition or environmental specialist (Scout). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "Alex maps by walking, one boot in front of the other, and has been farther out than anyone in the settlement will say. He reports the water sources and keeps one route to himself, which he calls the leaving route.",
             "baseHealth": 90
         },
         {
             "id": "jamie_chen",
             "displayName": "Jamie Chen",
             "profession": "Mechanic",
-            "bio": "Pre-war infrastructure technician (Mechanic). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Jamie fixed her first engine at fourteen and has been arguing with engines ever since. She listens with her ear to the block, taps twice when she has a diagnosis, and has never been wrong about the same machine twice.",
             "baseHealth": 85
         },
         {
             "id": "taylor_morgan",
             "displayName": "Taylor Morgan",
             "profession": "Farmer",
-            "bio": "Resource acquisition or environmental specialist (Farmer). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "Taylor farms like it is a negotiation, and usually wins. She plants by a handwritten calendar older than the exchange and trusts it over any instrument, because it has never lied to her once, which is more than she says for people.",
             "baseHealth": 90
         },
         {
             "id": "riley_cooper",
             "displayName": "Riley Cooper",
             "profession": "Medic",
-            "bio": "Pre-war biological or psychological maintenance personnel (Medic). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "Riley stitches, cleans, and lies kindly about how bad it is, because morale is a medication too. She keeps her kit sorted and her fear somewhere else, and the settlement has learned not to ask where.",
             "baseHealth": 85
         },
         {
             "id": "jordan_kim",
             "displayName": "Jordan Kim",
             "profession": "Teacher",
-            "bio": "Pre-war administrative or civilian specialist (Teacher). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "Jordan taught third grade before and teaches everyone now, including adults who pretend not to need it. Lessons happen between chores, and Jordan rations chalk like medicine, because lessons are the one thing the settlement cannot scavenge.",
             "baseHealth": 75
         },
         {
             "id": "casey_garcia",
             "displayName": "Casey Garcia",
             "profession": "Engineer",
-            "bio": "Pre-war infrastructure technician (Engineer). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Casey draws on any available surface, including walls, and the walls are better for it. She solved the water pressure problem on the back of a ration card, and keeps the card, not the credit.",
             "baseHealth": 90
         },
         {
             "id": "morgan_lee",
             "displayName": "Morgan Lee",
             "profession": "Scavenger",
-            "bio": "Resource acquisition or environmental specialist (Scavenger). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "Morgan goes out light and comes back heavy and will not say how she knows where to look. She keeps a folded list of buildings she has already been through, and reads it before every run the way other people check the weather.",
             "baseHealth": 80
         },
         {
             "id": "drew_paterson",
             "displayName": "Drew Paterson",
             "profession": "Guard",
-            "bio": "Former tactical or security personnel (Guard). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "Drew stands watch like a vow, which it is, though he will not say what he is guarding against. He knows everyone's footsteps on the stairs, and has started sleepwalking toward the gate, and the night shift walks him back, gently.",
             "baseHealth": 95
         },
         {
             "id": "cam_nguyen",
             "displayName": "Cam Nguyen",
             "profession": "Chemist",
-            "bio": "Unclassified biological unit (Chemist). Processed through standard intake. Assigned to general labor pool pending specialized aptitude testing.",
+            "bio": "Cam measures twice and mutters once, and the settlement's soap, water tablets, and half its medicine come out of a bench the size of a table. He keeps one experiment locked in a jar and labels it in a hand nobody else in the shelter can read.",
             "baseHealth": 80
         },
         {
             "id": "reese_flores",
             "displayName": "Reese Flores",
             "profession": "Cook",
-            "bio": "Pre-war administrative or civilian specialist (Cook). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "Reese cooks by smell, ration, and memory, and can make beets taste like three different things. She tastes everything twice, once for the pot and once for luck, and feeds herself last, which the settlement has started politely not noticing so she will stop.",
             "baseHealth": 85
         },
         {
             "id": "skylar_walker",
             "displayName": "Skylar Walker",
             "profession": "Radio Operator",
-            "bio": "Pre-war infrastructure technician (Radio Operator). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Skylar works the frequencies in shifts and keeps a log in handwriting so small it looks coded. Someone answered on a dead frequency once, and Skylar logged it, and did not sleep for three days, and never said what was said.",
             "baseHealth": 80
         },
         {
             "id": "hayden_reyes",
             "displayName": "Hayden Reyes",
             "profession": "Builder",
-            "bio": "Pre-war infrastructure technician (Builder). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Hayden builds with whatever is at hand and the structures hold, which surprises everyone except Hayden. He signs his work with one nail driven upside down, and the settlement has started finding them in places he did not build, and nobody explains it.",
             "baseHealth": 95
         },
         {
             "id": "ariana_cruz",
             "displayName": "Ariana Cruz",
             "profession": "Nurse",
-            "bio": "Pre-war biological or psychological maintenance personnel (Nurse). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "Ariana keeps the bed charts so precise the medics diagnose from them, and her bedside manner is the settlement's only luxury. She holds hands for the frightened, whatever they were before, and asks nothing for it, which is somehow the heaviest thing she carries.",
             "baseHealth": 85
         },
         {
             "id": "blake_sullivan",
             "displayName": "Blake Sullivan",
             "profession": "Hunter",
-            "bio": "Resource acquisition or environmental specialist (Hunter). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "Blake reads sign the way you would read a letter, slowly and twice. He hunts alone and shares the kill evenly, and has not told anyone about the tracks he found last month that matched his own boot size but were bare. He hunts farther from them every week.",
             "baseHealth": 90
         },
         {
             "id": "quinn_taylor",
             "displayName": "Quinn Taylor",
             "profession": "Electrician",
-            "bio": "Pre-war infrastructure technician (Electrician). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Quinn rewired half the shelter from salvage in the first month and keeps the lights on by listening to them. Current is honest, she says; it always tells you where it is going. Her pause afterward is the only warning the settlement gets when something in the grid starts lying.",
             "baseHealth": 85
         },
         {
             "id": "dylan_park",
             "displayName": "Dylan Park",
             "profession": "Scout",
-            "bio": "Resource acquisition or environmental specialist (Scout). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "Dylan runs routes fast, remembers them better, and is back before anyone finishes worrying, which is a skill in itself. He keeps a tally of days spent outside versus inside, and the inside number is winning, slowly, the way he planned it.",
             "baseHealth": 88
         },
         {
             "id": "emerson_wu",
             "displayName": "Emerson Wu",
             "profession": "Archivist",
-            "bio": "Pre-war administrative or civilian specialist (Archivist). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "Emerson writes everything down because memory is a supply like any other and runs out. The settlement's records live in three cross-referenced notebooks, and Emerson is the only person here who can tell you what was promised to whom, and when.",
             "baseHealth": 75
         },
         {
             "id": "logan_white",
             "displayName": "Logan White",
             "profession": "Security Chief",
-            "bio": "Former tactical or security personnel (Security Chief). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "Logan keeps the watch rosters and the debt rosters and refuses to say which one is harder. She drilled the settlement's alarm response until it worked without her, which was the point, and still stands up when it runs, which is the person.",
             "baseHealth": 95
         },
         {
             "id": "rowan_king",
             "displayName": "Rowan King",
             "profession": "Storyteller",
-            "bio": "Pre-war administrative or civilian specialist (Storyteller). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "Rowan tells stories by the stove during the long dark and knows exactly when to stop, which is the whole craft. Half of them are from before. The other half he calls true, and he watches faces while telling them, and revises them the next night, word by word.",
             "baseHealth": 80
         },
         {
             "id": "sage_green",
             "displayName": "Sage Green",
             "profession": "Botanist",
-            "bio": "Resource acquisition or environmental specialist (Botanist). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "Sage catalogs every plant that still grows and presses the ones that do not, and the book is heavier every month. She has a theory about what the ash is doing to the roots, and keeps it to herself, because the theory does not end well and neither does saying it aloud.",
             "baseHealth": 85
         },
         {
             "id": "finley_clark",
             "displayName": "Finley Clark",
             "profession": "Tailor",
-            "bio": "Pre-war administrative or civilian specialist (Tailor). Primary pre-war skillsets lack direct survival utility. Reassigned to general labor and logistical tracking. Assessed for potential re-specialization based on physical durability.",
+            "bio": "Finley sews patches that outlast the garment and remembers every measurement ever taken of her. She has been saving good cloth for years and calls it the reserve, and the settlement suspects the reserve is a dress, which Finley neither confirms nor denies.",
             "baseHealth": 80
         },
         {
             "id": "elliot_bennett",
             "displayName": "Elliot Bennett",
             "profession": "Carpenter",
-            "bio": "Pre-war infrastructure technician (Carpenter). Demonstrates proficiency in material salvage and mechanical repair under severe resource constraints. Required for ongoing maintenance of core settlement life-support systems.",
+            "bio": "Elliot works wood like it owes him something, and the results are furniture that will outlast the shelter. He measures twice, swears once, and has built every child in the settlement something small, and every adult nothing, which he says is a matter of grain.",
             "baseHealth": 90
         },
         {
             "id": "jude_ramirez",
             "displayName": "Jude Ramirez",
             "profession": "Guard",
-            "bio": "Former tactical or security personnel (Guard). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "Jude takes the gate shift nobody volunteers for and has taken it so long it is his now, the way posts become property. He lets people in without questions and watches them for three days afterward, and has never been wrong, which he does not call kindness.",
             "baseHealth": 95
         },
         {
             "id": "asher_cole",
             "displayName": "Asher Cole",
             "profession": "Scavenger",
-            "bio": "Resource acquisition or environmental specialist (Scavenger). Trained in identifying and exploiting marginal caloric inputs in high-radiation environments. Essential for extending settlement survival thresholds.",
+            "bio": "Asher goes where the buildings are worst because the pickings are best, and moves through rubble with a patience that reads like respect. He brings back more than salvage sometimes: a clock, a photograph, a book. He leaves them on the common table without a word, and watches who takes them.",
             "baseHealth": 80
         },
         {
             "id": "ren_murphy",
             "displayName": "Ren Murphy",
             "profession": "Medic",
-            "bio": "Pre-war biological or psychological maintenance personnel (Medic). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "Ren learned medicine in the field and says so upfront, which patients find either terrifying or honest. She keeps a kit for the cases she cannot fix and sits with them anyway, because company is a treatment too, and she administers it carefully.",
             "baseHealth": 85
         },
         {
             "id": "survivor_dr_sarah_chen",
             "displayName": "Dr. Sarah Chen",
             "profession": "Trauma Surgeon",
-            "bio": "Pre-war biological or psychological maintenance personnel (Trauma Surgeon). Retains specialized knowledge of physiological repair and resource-efficient triage. Evaluated as a high-value operational asset. Prioritizes caloric efficiency over patient comfort.",
+            "bio": "Dr. Sarah Chen operated for nineteen hours straight on day one of the exchange and has been making up for the ones she lost ever since, one patient at a time. She trusts instruments, then hands, then hope, strictly in that order, and anyone who argues the order has not watched her work.",
             "baseHealth": 100
         },
         {
             "id": "survivor_gunner_mikhail",
             "displayName": "Gunner Mikhail",
             "profession": "Heavy Artillery Loader",
-            "bio": "Former tactical or security personnel (Heavy Artillery Loader). Possesses conditioned responses to kinetic threats and structural vulnerability assessment. High utility for perimeter defense and enforcement of localized caloric rationing.",
+            "bio": "Gunner Mikhail loaded shells for a living and still carries the habit in his shoulders, which are the widest in the settlement. He does not talk about the battery he served with, except once a year, on the same day, when he pours one out and does not say the name.",
             "baseHealth": 100
         }
     ]

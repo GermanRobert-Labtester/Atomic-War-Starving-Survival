@@ -48,6 +48,15 @@ namespace Ashfall.Core.Narrative
 
         [JsonPropertyName("required_item_quantity")]
         public int RequiredItemQuantity { get; set; } = 0;
+
+        // Plan 51 — Document flag integration (backward-compatible default)
+        /// <summary>
+        /// World flag that must be set for this choice to be available.
+        /// Used to gate patrol encounter choices on document discovery.
+        /// Empty = always available. Plan 51 integration point.
+        /// </summary>
+        [JsonPropertyName("required_flag")]
+        public string RequiredFlag { get; set; } = string.Empty;
     }
 
     [Serializable]

@@ -93,7 +93,7 @@ namespace Ashfall.Core
         private WildlifeTrappingState _state = new WildlifeTrappingState();
         private readonly ISeededRng _rng;
         private readonly ILog _log;
-        private int _currentDay;
+        private int _currentDay = 1;
         private float _hunterSkillLevel = 0.0f;
         private WildlifeSelectionContext _selectionContext = WildlifeSelectionContext.Default;
 
@@ -444,6 +444,7 @@ namespace Ashfall.Core
                         site.isToxic = _rng.NextDouble() < 0.2f;
                     }
 
+                    site.hasCatch = true;
                     site.toxinRemoved = false;
                     site.isMeatProcessed = false;
                     site.hidePreserved = false;
@@ -488,6 +489,9 @@ namespace Ashfall.Core
                     caught++;
                     _state.totalCatch++;
                 }
+
+                // Update check day for next interval
+                site.checkDay = _currentDay + site.checkIntervalDays;
 
                 // Plan 36: decrement durability on every eligible check (catch or no-catch)
                 if (site.remainingDurability > 0)

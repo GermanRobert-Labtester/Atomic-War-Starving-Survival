@@ -11,18 +11,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. The Bone Pickers expects results, not hesitation."
+          "text": "The wanderer is still in the snare, and he has stopped begging and started watching you look at his boots."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_01_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Take the boots. Leave him.",
           "set_flag": "flag_bone_pickers_01_advanced"
         },
         {
           "id": "quest_bone_pickers_01_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Cut him loose. Give him the boots back.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ],
@@ -38,18 +38,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. The Bone Pickers expects results, not hesitation."
+          "text": "The caravan's driver holds out his map for you to mark, and his trust is so total it is hard to look at."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_02_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Mark the sinkhole route.",
           "set_flag": "flag_bone_pickers_02_advanced"
         },
         {
           "id": "quest_bone_pickers_02_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Mark the true route. Take the risk.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -64,18 +64,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. The Bone Pickers expects results, not hesitation."
+          "text": "The family's life savings sit on the table: rings, teeth, bullets. Their daughter watches you count it."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_03_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Take the payment. Hand them the sand.",
           "set_flag": "flag_bone_pickers_03_advanced"
         },
         {
           "id": "quest_bone_pickers_03_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Give them a real filter. Log the loss.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -90,18 +90,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. The Bone Pickers expects results, not hesitation."
+          "text": "The medic is still conscious under the beam. He holds out his bag himself and says there is another way, and he is right."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_04_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Cut the arm. Take the bag.",
           "set_flag": "flag_bone_pickers_04_advanced"
         },
         {
           "id": "quest_bone_pickers_04_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Lift the beam. Every hand on it.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -116,18 +116,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. The Bone Pickers expects results, not hesitation."
+          "text": "The camp sleeps around the purifier, children under the adults' arms, and the purifier hums like something alive."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_05_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Strip the purifier quietly.",
           "set_flag": "flag_bone_pickers_05_advanced"
         },
         {
           "id": "quest_bone_pickers_05_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Leave it. Fill their canteens instead.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -142,18 +142,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. The Bone Pickers expects results, not hesitation."
+          "text": "The child has stopped crying and is holding the backpack straps with both hands, waiting to learn what kind of people you are."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_06_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Take the bag. Then the coat.",
           "set_flag": "flag_bone_pickers_06_advanced"
         },
         {
           "id": "quest_bone_pickers_06_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Leave the bag. Feed the kid.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -168,18 +168,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. The Bone Pickers expects results, not hesitation."
+          "text": "The bunker's gatekeeper shows you in himself, pointing out the water lines like a man showing off a garden."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_07_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Map the blind spots.",
           "set_flag": "flag_bone_pickers_07_advanced"
         },
         {
           "id": "quest_bone_pickers_07_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Trade fair. Warn them if you can.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -194,18 +194,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. The Bone Pickers expects results, not hesitation."
+          "text": "The envoy's flag is clean, which means somebody washed it for this. He holds out his papers with both hands."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_08_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Break the knee. Take the rations.",
           "set_flag": "flag_bone_pickers_08_advanced"
         },
         {
           "id": "quest_bone_pickers_08_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Take the papers. Send him back whole.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -220,18 +220,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. The Bone Pickers expects results, not hesitation."
+          "text": "The settlement's last guard stands at the gate without a rifle, holding it by the barrel like a cane."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_09_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Seal the blockade. Wait them out.",
           "set_flag": "flag_bone_pickers_09_advanced"
         },
         {
           "id": "quest_bone_pickers_09_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Lift the line. Mark the place and go.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -246,18 +246,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. The Bone Pickers expects results, not hesitation."
+          "text": "From the ridge you can hear the caravan below, horns and singing. Somebody is singing. The avalanche charges are set, and the detonator is in your hand, and the singing carries."
         }
       ],
       "choices": [
         {
           "id": "quest_bone_pickers_10_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Bring the mountain down.",
           "set_flag": "flag_bone_pickers_10_advanced"
         },
         {
           "id": "quest_bone_pickers_10_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Pull the charges. Let them pass.",
           "set_flag": "flag_bone_pickers_aborted"
         }
       ]
@@ -272,18 +272,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. The Blood Tithe expects results, not hesitation."
+          "text": "The farmers are not watching their crops. They are watching their children watch the crops."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_01_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Burn it to the root.",
           "set_flag": "flag_blood_tithe_01_advanced"
         },
         {
           "id": "quest_blood_tithe_01_abort",
-          "text": "Stop. I won't cross this line, even if the raiders demand blood.",
+          "text": "Refuse the torch. Take the debt another way.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ],
@@ -299,18 +299,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. The Blood Tithe expects results, not hesitation."
+          "text": "The merchant has stopped arguing about price. He looks at the barrel, then at you, doing the arithmetic himself."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_02_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Hold him under.",
           "set_flag": "flag_blood_tithe_02_advanced"
         },
         {
           "id": "quest_blood_tithe_02_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Let him up. Walk away.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -325,18 +325,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. The Blood Tithe expects results, not hesitation."
+          "text": "The monks gave you the good blankets and slept in a ring around the fire, and the raider next to you is testing his blade."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_03_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Wait for sleep. Do it.",
           "set_flag": "flag_blood_tithe_03_advanced"
         },
         {
           "id": "quest_blood_tithe_03_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Wake them at dawn. Leave with your soul.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -351,18 +351,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. The Blood Tithe expects results, not hesitation."
+          "text": "The chains are already sorted by size. Somebody in the gang did the sorting, and that is the part that sticks in your throat."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_04_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "March them south.",
           "set_flag": "flag_blood_tithe_04_advanced"
         },
         {
           "id": "quest_blood_tithe_04_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Cut the chains. Point them at the horizon.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -377,18 +377,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. The Blood Tithe expects results, not hesitation."
+          "text": "The outpost's leader stepped forward first, offering himself for his people, and the raiders started laughing, and he did not flinch."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_05_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Tie him to the crawler.",
           "set_flag": "flag_blood_tithe_05_advanced"
         },
         {
           "id": "quest_blood_tithe_05_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Take their tribute and go.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -403,18 +403,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. The Blood Tithe expects results, not hesitation."
+          "text": "The mothers have gone quiet the way that means they heard everything, and the mud holds the wagons like the earth has decided."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_06_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Sort the children.",
           "set_flag": "flag_blood_tithe_06_advanced"
         },
         {
           "id": "quest_blood_tithe_06_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Pull the wagons free. Let the convoy go.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -429,18 +429,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. The Blood Tithe expects results, not hesitation."
+          "text": "The doctors do not look up from the wounded. One of the wounded is one of ours, and the doctor is still trying to save him, which complicates the order."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_07_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Execute the doctors.",
           "set_flag": "flag_blood_tithe_07_advanced"
         },
         {
           "id": "quest_blood_tithe_07_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Stand guard over the tent instead.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -455,18 +455,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. The Blood Tithe expects results, not hesitation."
+          "text": "The surrendered rifles stand in a pyramid, and the militia waits with empty hands at their sides, and the order comes down the line a second time."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_08_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Open fire.",
           "set_flag": "flag_blood_tithe_08_advanced"
         },
         {
           "id": "quest_blood_tithe_08_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Surrender is surrender.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -481,18 +481,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. The Blood Tithe expects results, not hesitation."
+          "text": "The delegation brought two copies of the ceasefire terms, one for us and one to carry back, and the copies are in a neat hand."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_09_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Pack the crate.",
           "set_flag": "flag_blood_tithe_09_advanced"
         },
         {
           "id": "quest_blood_tithe_09_abort",
-          "text": "Stop. I won't cross this line, even if the raiders demand blood.",
+          "text": "Send back the terms. Sign one.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -507,18 +507,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. The Blood Tithe expects results, not hesitation."
+          "text": "The town's vents are easy to find, and on one of them the children have painted birds. The smoke hose is uncoiled, and the engine idles, and nobody has given the signal."
         }
       ],
       "choices": [
         {
           "id": "quest_blood_tithe_10_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Pump the smoke.",
           "set_flag": "flag_blood_tithe_10_advanced"
         },
         {
           "id": "quest_blood_tithe_10_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Cut the engine. Lift the siege.",
           "set_flag": "flag_blood_tithe_aborted"
         }
       ]
@@ -533,18 +533,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. The Drought Cartel expects results, not hesitation."
+          "text": "The well has cups chained to its rim, generations of cups. The concrete truck is parked beside them."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_01_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Cap the well.",
           "set_flag": "flag_drought_cartel_01_advanced"
         },
         {
           "id": "quest_drought_cartel_01_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Leave the cups. Refuse the pour.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ],
@@ -560,18 +560,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. The Drought Cartel expects results, not hesitation."
+          "text": "The family's tarp is patched in six places, and the water in it is the cleanest water you have seen in weeks."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_02_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Smash the tarp. Pour it out.",
           "set_flag": "flag_drought_cartel_02_advanced"
         },
         {
           "id": "quest_drought_cartel_02_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Log the catcher as registered.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -586,18 +586,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. The Drought Cartel expects results, not hesitation."
+          "text": "The spring is clear enough to see the bottom, and the scout who found it has filled his canteen and stands holding it, waiting."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_03_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Pour in the lead.",
           "set_flag": "flag_drought_cartel_03_advanced"
         },
         {
           "id": "quest_drought_cartel_03_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Log the spring dry. Keep it clean.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -612,18 +612,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. The Drought Cartel expects results, not hesitation."
+          "text": "The pressure valves are marked in chalk, maintained by hand. On the far side of the wall, the slum's laundry hangs from the pipes."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_04_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Turn the valves past red.",
           "set_flag": "flag_drought_cartel_04_advanced"
         },
         {
           "id": "quest_drought_cartel_04_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Leave the valves. Tell the slum instead.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -638,18 +638,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. The Drought Cartel expects results, not hesitation."
+          "text": "The community stands by the reservoir with every container they own, and your tankers are higher than the containers, which is the whole arithmetic."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_05_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Drain the last tenth.",
           "set_flag": "flag_drought_cartel_05_advanced"
         },
         {
           "id": "quest_drought_cartel_05_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Turn the tankers around.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -664,18 +664,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. The Drought Cartel expects results, not hesitation."
+          "text": "The orphanage's ration money sits on the delivery crate, coins, buttons, one ring. The children are lined up for the pour."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_06_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Double the price. Take the barrel back.",
           "set_flag": "flag_drought_cartel_06_advanced"
         },
         {
           "id": "quest_drought_cartel_06_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Deliver the barrel. Eat the loss.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -690,18 +690,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. The Drought Cartel expects results, not hesitation."
+          "text": "The dialysis machines tick in time with the tank's drip. The garden pipe is already laid, and it points the wrong future."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_07_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Reroute the pipe.",
           "set_flag": "flag_drought_cartel_07_advanced"
         },
         {
           "id": "quest_drought_cartel_07_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Leave the tank. Report the garden dry.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -716,18 +716,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. The Drought Cartel expects results, not hesitation."
+          "text": "The trading post's shaft is new and the rope still smells of rope, and the charge is heavy in the hand that is supposed to drop it."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_08_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Drop the charge.",
           "set_flag": "flag_drought_cartel_08_advanced"
         },
         {
           "id": "quest_drought_cartel_08_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Pocket the charge. Walk away.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -742,18 +742,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. The Drought Cartel expects results, not hesitation."
+          "text": "The valley's fields are green in rows, and the rows are straight, and the dam site is above them, and the arithmetic is that the arithmetic kills the rows."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_09_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Build the dam.",
           "set_flag": "flag_drought_cartel_09_advanced"
         },
         {
           "id": "quest_drought_cartel_09_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. The valley keeps its stream.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -768,18 +768,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. The Drought Cartel expects results, not hesitation."
+          "text": "The doors are guarded, and behind the doors the sector is counting its last cups, and the order says wait for the silence, and the waiting has started."
         }
       ],
       "choices": [
         {
           "id": "quest_drought_cartel_10_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Hold the doors. Wait.",
           "set_flag": "flag_drought_cartel_10_advanced"
         },
         {
           "id": "quest_drought_cartel_10_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Break the cordon. Open the hydrants.",
           "set_flag": "flag_drought_cartel_aborted"
         }
       ]
@@ -794,18 +794,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Martial Law expects results, not hesitation."
+          "text": "The stolen ration sits on the tribunal table, moldy. The firing squad is loading, and nobody is looking at the ration."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_01_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Carry out the squad.",
           "set_flag": "flag_martial_law_01_advanced"
         },
         {
           "id": "quest_martial_law_01_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Feed him. Log it resolved.",
           "set_flag": "flag_martial_law_aborted"
         }
       ],
@@ -821,18 +821,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Martial Law expects results, not hesitation."
+          "text": "The worker's hands are still shaped for the machine he works, and he has stopped begging and started holding them behind his back, which is worse."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_02_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Break the hands.",
           "set_flag": "flag_martial_law_02_advanced"
         },
         {
           "id": "quest_martial_law_02_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Put him on light duty.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -847,18 +847,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Martial Law expects results, not hesitation."
+          "text": "She stopped speaking when they grabbed her, and the silence is louder than the speech was, and the car waits with the door open."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_03_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Put her in the car.",
           "set_flag": "flag_martial_law_03_advanced"
         },
         {
           "id": "quest_martial_law_03_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Let her go. Take the reprimand.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -873,18 +873,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Martial Law expects results, not hesitation."
+          "text": "The crowd is unarmed and hungry and holding bags they brought for bread, and the order to load live rounds goes down the line, and the line loads."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_04_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Fire into the crowd.",
           "set_flag": "flag_martial_law_04_advanced"
         },
         {
           "id": "quest_martial_law_04_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Open the granary instead.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -899,18 +899,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Martial Law expects results, not hesitation."
+          "text": "The soldier stands at attention for his own execution because nobody told him to stand at ease, and the squad is his friends."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_05_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Carry out the sentence.",
           "set_flag": "flag_martial_law_05_advanced"
         },
         {
           "id": "quest_martial_law_05_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Take the charge yourself.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -925,18 +925,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Martial Law expects results, not hesitation."
+          "text": "The can of peaches sits on the table, unopened. The family's bags are packed, because they knew what one can costs."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_06_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Put them outside.",
           "set_flag": "flag_martial_law_06_advanced"
         },
         {
           "id": "quest_martial_law_06_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Confiscate the can. Leave the home.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -951,18 +951,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Martial Law expects results, not hesitation."
+          "text": "The petition carries four hundred names, and the names are still being read aloud when the gas order arrives."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_07_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Deploy the gas.",
           "set_flag": "flag_martial_law_07_advanced"
         },
         {
           "id": "quest_martial_law_07_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Carry the petition up.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -977,18 +977,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Martial Law expects results, not hesitation."
+          "text": "The evidence kit is already assembled, and somebody built the scene, and the scene is better work than the man's writing."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_08_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Plant the evidence.",
           "set_flag": "flag_martial_law_08_advanced"
         },
         {
           "id": "quest_martial_law_08_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Burn the kit. Warn the man.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -1003,18 +1003,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Martial Law expects results, not hesitation."
+          "text": "The strikers sit in a ring around the engine, and the engine needs them, and the doors wait on the order, and the order is a hand on the lever."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_09_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Seal the doors. Cut the air.",
           "set_flag": "flag_martial_law_09_advanced"
         },
         {
           "id": "quest_martial_law_09_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Open the doors. Negotiate.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -1029,18 +1029,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Martial Law expects results, not hesitation."
+          "text": "The council stands at the blast wall, and they have dressed for it, and the squad waits for the officer, and the officer waits for you."
         }
       ],
       "choices": [
         {
           "id": "quest_martial_law_10_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Give the order.",
           "set_flag": "flag_martial_law_10_advanced"
         },
         {
           "id": "quest_martial_law_10_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Turn the squad around.",
           "set_flag": "flag_martial_law_aborted"
         }
       ]
@@ -1055,18 +1055,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The volunteer has already rolled up his sleeve. He trusts the room, and the room has a notebook, and the isotope is in the tray."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_01_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Inject the isotope.",
           "set_flag": "flag_guinea_pigs_01_advanced"
         },
         {
           "id": "quest_guinea_pigs_01_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Give him the medicine. Lie about the trial.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ],
@@ -1082,18 +1082,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The debtor signed the form because the form said labor, and the table is set for more than labor."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_02_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Take the kidney.",
           "set_flag": "flag_guinea_pigs_02_advanced"
         },
         {
           "id": "quest_guinea_pigs_02_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Give him a shovel instead.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1108,18 +1108,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The raider has stopped making threats. The notebook lies open to a blank first page, which is somehow the worst part."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_03_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Start the exposure.",
           "set_flag": "flag_guinea_pigs_03_advanced"
         },
         {
           "id": "quest_guinea_pigs_03_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Interrogate the old way.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1134,18 +1134,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "She asked one question, will it hurt, and the room did not answer, and the silence was the answer."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_04_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Wire the electrodes.",
           "set_flag": "flag_guinea_pigs_04_advanced"
         },
         {
           "id": "quest_guinea_pigs_04_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Send her back to the brig.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1160,18 +1160,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "He woke on the table asking about his family, and the synthetic lungs come in a box dated forty-eight hours out."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_05_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Make the swap.",
           "set_flag": "flag_guinea_pigs_05_advanced"
         },
         {
           "id": "quest_guinea_pigs_05_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Send him back asleep.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1186,18 +1186,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "She holds the prenatal chart like something precious, and the dose is in a vial the same color as the vitamins."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_06_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Give her the vial.",
           "set_flag": "flag_guinea_pigs_06_advanced"
         },
         {
           "id": "quest_guinea_pigs_06_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Give her the vitamins. Destroy the dose.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1212,18 +1212,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The tank glows already. The child is small, and has been told it is a game, and the game has a month-long rule."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_07_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Put him in the tank.",
           "set_flag": "flag_guinea_pigs_07_advanced"
         },
         {
           "id": "quest_guinea_pigs_07_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Carry him back yourself.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1238,18 +1238,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The family has shared their last meal inside the cell, and the timer is mounted on the wall, and the timer has not started yet."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_08_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Release the virus. Start the timer.",
           "set_flag": "flag_guinea_pigs_08_advanced"
         },
         {
           "id": "quest_guinea_pigs_08_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Open the cell.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1264,18 +1264,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The volunteer wrote a letter to the progress he believes in, and the letter is sincere, and the chair is real."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_09_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Graft the servos.",
           "set_flag": "flag_guinea_pigs_09_advanced"
         },
         {
           "id": "quest_guinea_pigs_09_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Tell him the truth.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1290,18 +1290,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "Sector 7's scrubber is new and the sector is asleep under it, and the canister is labeled in a hand that did not shake."
         }
       ],
       "choices": [
         {
           "id": "quest_guinea_pigs_10_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Release the plague.",
           "set_flag": "flag_guinea_pigs_10_advanced"
         },
         {
           "id": "quest_guinea_pigs_10_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Report the lab.",
           "set_flag": "flag_guinea_pigs_aborted"
         }
       ]
@@ -1316,18 +1316,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The fishermen are already hauling the net, and the net is heavy, and your hull points at their hull, and the order is confirmed twice."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_01_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Ram. Take the catch.",
           "set_flag": "flag_piracy_mandate_01_advanced"
         },
         {
           "id": "quest_piracy_mandate_01_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Signal them to run.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ],
@@ -1343,18 +1343,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The barge has hung a distress flag already, and the flag is white, and your boarding party carries more than tools."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_02_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Board. Strip her.",
           "set_flag": "flag_piracy_mandate_02_advanced"
         },
         {
           "id": "quest_piracy_mandate_02_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Tow them instead.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1369,18 +1369,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The ferry is going down, and the first swimmers are in the water, and they are swimming toward you because you are the ship that looks like help."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_03_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Shoot the swimmers.",
           "set_flag": "flag_piracy_mandate_03_advanced"
         },
         {
           "id": "quest_piracy_mandate_03_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Throw lines instead.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1395,18 +1395,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The hospital ship's lights are on in the med bay, and you can see them working, and the incendiary crate stands open on your deck."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_04_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Fire the med bay.",
           "set_flag": "flag_piracy_mandate_04_advanced"
         },
         {
           "id": "quest_piracy_mandate_04_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Cover the guns.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1421,18 +1421,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The merchant shook your captain's hand twice and the trade is done, and the drill waits by the waterline, quiet."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_05_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Drill the hull.",
           "set_flag": "flag_piracy_mandate_05_advanced"
         },
         {
           "id": "quest_piracy_mandate_05_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Sail clean.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1447,18 +1447,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The envoy's treaty rides in a waterproof case held out with both hands, and the mast is already rigged, which is the part nobody looks at."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_06_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Hang him.",
           "set_flag": "flag_piracy_mandate_06_advanced"
         },
         {
           "id": "quest_piracy_mandate_06_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Take the treaty in.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1473,18 +1473,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The cruise deck has children on it, and you can hear them from here, and the order says rival again, and the word does not fit the sound."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_07_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Lock them below. Scuttle.",
           "set_flag": "flag_piracy_mandate_07_advanced"
         },
         {
           "id": "quest_piracy_mandate_07_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Let the ship pass.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1499,18 +1499,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The islanders cleared a drop zone and marked it with stones, and the stones are arranged carefully, like people who believe help is coming."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_08_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Drop the waste.",
           "set_flag": "flag_piracy_mandate_08_advanced"
         },
         {
           "id": "quest_piracy_mandate_08_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Drop real food if we have it.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1525,18 +1525,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The seawall has been patched since the storm, fresh work visible from the deck, and somebody painted a line on it showing where the water stood."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_09_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Bombard the wall.",
           "set_flag": "flag_piracy_mandate_09_advanced"
         },
         {
           "id": "quest_piracy_mandate_09_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Log the town empty.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1551,18 +1551,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The port's lights are coming on as evening settles, and the lights are the point, the last on this coast, and the strike plan starts with those lights going out."
         }
       ],
       "choices": [
         {
           "id": "quest_piracy_mandate_10_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Launch the strike.",
           "set_flag": "flag_piracy_mandate_10_advanced"
         },
         {
           "id": "quest_piracy_mandate_10_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Burn the plan instead.",
           "set_flag": "flag_piracy_mandate_aborted"
         }
       ]
@@ -1577,18 +1577,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The collar is welded and still warm, and the shaft mouth breathes cold, and the raider has stopped struggling, which is how you know he understands."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_01_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Send him down.",
           "set_flag": "flag_iron_slaves_01_advanced"
         },
         {
           "id": "quest_iron_slaves_01_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Put him on surface duty.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ],
@@ -1604,18 +1604,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The debtor has been handed a shovel, and the coal glows faintly in the dark, and the glow is the part nobody explains to him."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_02_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Put him on the coal.",
           "set_flag": "flag_iron_slaves_02_advanced"
         },
         {
           "id": "quest_iron_slaves_02_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Restructure the debt.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1630,18 +1630,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The furnace reads a hundred and forty at the rail, and the chains hang ready, and the wrench sits on the foreman's desk, the wrench that started this."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_03_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Chain him up.",
           "set_flag": "flag_iron_slaves_03_advanced"
         },
         {
           "id": "quest_iron_slaves_03_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Work the wrench off him instead.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1656,18 +1656,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The dissidents are still chanting the chant, and the slag detail's gear is piled on the cart, and the gear is not enough, which is the point."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_04_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "March them to the slag.",
           "set_flag": "flag_iron_slaves_04_advanced"
         },
         {
           "id": "quest_iron_slaves_04_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Hear the grievance.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1682,18 +1682,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The surface dweller still believes he was hired. He keeps asking about the wages, and the wages are real, and the blinding is not in the contract."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_05_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Blind him.",
           "set_flag": "flag_iron_slaves_05_advanced"
         },
         {
           "id": "quest_iron_slaves_05_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Send him back topside.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1708,18 +1708,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The stimulant comes in ampoules, one per worker, and the workers line up believing it is medicine, and the line is wrong."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_06_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Inject the line.",
           "set_flag": "flag_iron_slaves_06_advanced"
         },
         {
           "id": "quest_iron_slaves_06_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Mark the quota missed.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1734,18 +1734,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The elderly worker is still breathing and his hands are still shaped for work, and the ash drift stands open, and the order uses the word calories."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_07_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Drag him out.",
           "set_flag": "flag_iron_slaves_07_advanced"
         },
         {
           "id": "quest_iron_slaves_07_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Carry him to the infirmary.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1760,18 +1760,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The crusher is jammed and still turning slow, and the child is small enough, and the room waits for someone to say the part nobody wants to say."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_08_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Send the child in.",
           "set_flag": "flag_iron_slaves_08_advanced"
         },
         {
           "id": "quest_iron_slaves_08_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Shut the crusher down.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1786,18 +1786,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The rest petition sits on the foreman's desk with the new quota sheet under it, and the sheets are the same size, which is the cruelty of it."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_09_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Double it. Pick the lowest.",
           "set_flag": "flag_iron_slaves_09_advanced"
         },
         {
           "id": "quest_iron_slaves_09_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Grant the day.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1812,18 +1812,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The tax list is longer than the Foundry expected and still growing, and the mine doors stand open, and the doors were built to close."
         }
       ],
       "choices": [
         {
           "id": "quest_iron_slaves_10_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "March them in. Seal it.",
           "set_flag": "flag_iron_slaves_10_advanced"
         },
         {
           "id": "quest_iron_slaves_10_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Tear the tax list down.",
           "set_flag": "flag_iron_slaves_aborted"
         }
       ]
@@ -1838,18 +1838,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The sailor coughed twice and apologized twice, and the brig door stands open, and the apology is the part that sticks in your throat."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_01_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Vent the brig.",
           "set_flag": "flag_quarantine_purge_01_advanced"
         },
         {
           "id": "quest_quarantine_purge_01_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Quarantine him with air.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ],
@@ -1865,18 +1865,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The sick ship flies the yellow flag, and the flag hangs steady, and the harbor guns are trained on it, and the guns are for discouragement, and the discouragement is terminal."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_02_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Deny them port.",
           "set_flag": "flag_quarantine_purge_02_advanced"
         },
         {
           "id": "quest_quarantine_purge_02_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Send medicine out.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -1891,18 +1891,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The refugees hold up their sick for you to see, one by one, like a petition, and the flame tanks are already pressurized."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_03_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Burn the deck.",
           "set_flag": "flag_quarantine_purge_03_advanced"
         },
         {
           "id": "quest_quarantine_purge_03_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Pass the antibiotics out.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -1917,18 +1917,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The supply ship's manifest says food, and the crew is mid-decontamination, and the order arrives before they finish, and the order does not wait."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_04_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Sink the ship.",
           "set_flag": "flag_quarantine_purge_04_advanced"
         },
         {
           "id": "quest_quarantine_purge_04_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Let them finish decon.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -1943,18 +1943,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The captain confessed on deck, and the confession was for the crewman, and the crewman is fever-blind already, and the order reads both names."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_05_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Carry out both.",
           "set_flag": "flag_quarantine_purge_05_advanced"
         },
         {
           "id": "quest_quarantine_purge_05_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Maroon the sickness, not the men.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -1969,18 +1969,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The transport flies the medical flag and the research station is waiting for her, and the torpedo tubes are open, and the tubes do not care about the flag."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_06_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Fire the torpedoes.",
           "set_flag": "flag_quarantine_purge_06_advanced"
         },
         {
           "id": "quest_quarantine_purge_06_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Escort her in.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -1995,18 +1995,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The rat is on the mooring line, and the frigate's crew is laughing at it already, and your guns are not laughing, and the frigate has not noticed yet."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_07_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Cut the line. Open fire.",
           "set_flag": "flag_quarantine_purge_07_advanced"
         },
         {
           "id": "quest_quarantine_purge_07_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Burn the line. Wave them in.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -2021,18 +2021,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The ferry's passengers have lined the rail since dawn, and the line is orderly, and the orderliness is the part that breaks your heart."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_08_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Leave them on the reef.",
           "set_flag": "flag_quarantine_purge_08_advanced"
         },
         {
           "id": "quest_quarantine_purge_08_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Send boats out.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -2047,18 +2047,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The town flies the sickness flag, and under the flag the town is coughing, and the ships are forming up, and the formation is for shelling."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_09_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Shell the town.",
           "set_flag": "flag_quarantine_purge_09_advanced"
         },
         {
           "id": "quest_quarantine_purge_09_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Blockade with doctors, not guns.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -2073,18 +2073,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The boarding parties are loading, and the thermometers are being issued with the rifles, and the pairing is the whole policy."
         }
       ],
       "choices": [
         {
           "id": "quest_quarantine_purge_10_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Board. Check. Execute.",
           "set_flag": "flag_quarantine_purge_10_advanced"
         },
         {
           "id": "quest_quarantine_purge_10_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Check without the rifles.",
           "set_flag": "flag_quarantine_purge_aborted"
         }
       ]
@@ -2099,18 +2099,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The first offender is a dock worker who called the tide by its local name, and he does not understand the charge, and that is the part the flogging is for."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_01_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Flog him.",
           "set_flag": "flag_assimilation_protocol_01_advanced"
         },
         {
           "id": "quest_assimilation_protocol_01_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Log the word as accepted.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ],
@@ -2126,18 +2126,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The flag is old, and someone kept it folded for years, and the folding is the part that argues against the burning."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_02_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Burn it. Reassign the dormitory.",
           "set_flag": "flag_assimilation_protocol_02_advanced"
         },
         {
           "id": "quest_assimilation_protocol_02_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Confiscate it and file it.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2152,18 +2152,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The station is playing something with strings in it, and the whole frequency is gentler for it, and the wrecking crew waits for the song to end."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_03_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Smash it. Deafen him.",
           "set_flag": "flag_assimilation_protocol_03_advanced"
         },
         {
           "id": "quest_assimilation_protocol_03_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Let the song finish. Then talk.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2178,18 +2178,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The books are in a pile, and the readers were brought to watch, and one of them reads the titles as they stack, and she is memorizing them."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_04_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Burn the pile.",
           "set_flag": "flag_assimilation_protocol_04_advanced"
         },
         {
           "id": "quest_assimilation_protocol_04_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Seal the library instead.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2204,18 +2204,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The icons are carved from scrap, winters of work, and the oath forms are printed already, and the printing is newer than the carving."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_05_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Smash the icons.",
           "set_flag": "flag_assimilation_protocol_05_advanced"
         },
         {
           "id": "quest_assimilation_protocol_05_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Let them keep their winters.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2230,18 +2230,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The classroom wall still has the lesson on it, and the children are being lined up outside, and the lesson is visible from the line."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_06_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Arrest the teachers.",
           "set_flag": "flag_assimilation_protocol_06_advanced"
         },
         {
           "id": "quest_assimilation_protocol_06_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Close the room. Keep the teachers.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2256,18 +2256,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The first door is closed, and behind it someone sings to a child, and the breach team waits, and the singing does not stop."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_07_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Break the door.",
           "set_flag": "flag_assimilation_protocol_07_advanced"
         },
         {
           "id": "quest_assimilation_protocol_07_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Report the block empty.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2282,18 +2282,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The leaders brought their terms in writing, and the writing is hopeful, and the hope is the part that gets them killed."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_08_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Carry out the assassinations.",
           "set_flag": "flag_assimilation_protocol_08_advanced"
         },
         {
           "id": "quest_assimilation_protocol_08_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Take the terms seriously.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2308,18 +2308,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The pledge hangs everywhere, and the first recital is at dawn, and the settlement recites, and hesitation is being watched, and the watching is the point."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_09_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Enforce the pledge.",
           "set_flag": "flag_assimilation_protocol_09_advanced"
         },
         {
           "id": "quest_assimilation_protocol_09_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Let hesitation stand.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2334,18 +2334,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "Sector 4's archives fit in one room, and the room is full of people who came to stand in it, and they are not leaving, and they have been asked to leave."
         }
       ],
       "choices": [
         {
           "id": "quest_assimilation_protocol_10_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Erase the sector.",
           "set_flag": "flag_assimilation_protocol_10_advanced"
         },
         {
           "id": "quest_assimilation_protocol_10_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Stand in the room with them.",
           "set_flag": "flag_assimilation_protocol_aborted"
         }
       ]
@@ -2360,18 +2360,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The dust storm is small, and the pole is tall, and the disbeliever has stopped laughing, and the rope is in a knot somebody else tied."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_01_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Tie him up.",
           "set_flag": "flag_storm_cult_01_advanced"
         },
         {
           "id": "quest_storm_cult_01_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Bring him inside.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ],
@@ -2387,18 +2387,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The holy water glows faintly in the cup, and the glow is the part the initiate noticed, and the two men holding him have noticed that he noticed."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_02_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Make him drink.",
           "set_flag": "flag_storm_cult_02_advanced"
         },
         {
           "id": "quest_storm_cult_02_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Pour the cup out.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2413,18 +2413,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The scientist brought his charts, and the charts are right, and the ridge is high, and the rod is waiting for a prophet instead of proof."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_03_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Strap him to the rod.",
           "set_flag": "flag_storm_cult_03_advanced"
         },
         {
           "id": "quest_storm_cult_03_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Let him speak instead.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2439,18 +2439,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The elder chants with her lips only now, and the lips are the part the cult noticed, and the gale does not care about lips."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_04_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Carry her out.",
           "set_flag": "flag_storm_cult_04_advanced"
         },
         {
           "id": "quest_storm_cult_04_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Chant for her.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2465,18 +2465,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The child asked the question out loud, and the room went quiet, and the quiet is the part that is being punished."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_05_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Hold him to the sun.",
           "set_flag": "flag_storm_cult_05_advanced"
         },
         {
           "id": "quest_storm_cult_05_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Answer the question instead.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2491,18 +2491,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The rival priest has been speaking calmly this whole time, and the calm is the part they want to stop."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_06_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Silence him.",
           "set_flag": "flag_storm_cult_06_advanced"
         },
         {
           "id": "quest_storm_cult_06_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Let the words stand.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2517,18 +2517,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The family's seals are good, somebody maintained them, and the fog is settling into the valley, and the breach kit is quiet in the dark."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_07_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Breach the seals.",
           "set_flag": "flag_storm_cult_07_advanced"
         },
         {
           "id": "quest_storm_cult_07_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Mark the bunker converted.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2543,18 +2543,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The merchant's crawler is parked for the night, and the blizzard is forecast, and the sabotage is a small job, and the smallness is the cruelty."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_08_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Sabotage the crawler.",
           "set_flag": "flag_storm_cult_08_advanced"
         },
         {
           "id": "quest_storm_cult_08_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Warn him to move on.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2569,18 +2569,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The bunker's vents are marked on the map, and the map is precise, and the storm is coming, and the timing is the whole plan."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_09_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Blow the vents.",
           "set_flag": "flag_storm_cult_09_advanced"
         },
         {
           "id": "quest_storm_cult_09_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Leak the timing to them.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2595,18 +2595,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The hundred have been gathered, and the vortex is audible now, and the priests are chanting, and the chanting is to keep the march moving."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_cult_10_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "March them in.",
           "set_flag": "flag_storm_cult_10_advanced"
         },
         {
           "id": "quest_storm_cult_10_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Break the line. Scatter them.",
           "set_flag": "flag_storm_cult_aborted"
         }
       ]
@@ -2621,18 +2621,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The slum's pump is silent, and you can hear the silence from here, and our secondary pump runs, and the gear is the same part."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_01_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Strip our gear. Send it over.",
           "set_flag": "flag_scrap_network_01_advanced"
         },
         {
           "id": "quest_scrap_network_01_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Our pump keeps the barracks alive.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ],
@@ -2648,18 +2648,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The orphanage's windows are dark, and the cold is visible, and our heating coils are warm, and the warmth is what we would give."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_02_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Pull the coils. Give them heat.",
           "set_flag": "flag_scrap_network_02_advanced"
         },
         {
           "id": "quest_scrap_network_02_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Our barracks freeze first.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2674,18 +2674,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The hospital wall is shored with timbers, and the timbers are bending, and our perimeter plating is steel, and the steel is ours."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_03_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Strip our plating.",
           "set_flag": "flag_scrap_network_03_advanced"
         },
         {
           "id": "quest_scrap_network_03_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Our wall comes first.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2700,18 +2700,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The school rubble is settling, and the children are under it, and our digger is the only machine that can reach them, and the rubble may take the digger too."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_04_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Send the digger in.",
           "set_flag": "flag_scrap_network_04_advanced"
         },
         {
           "id": "quest_scrap_network_04_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Dig by hand instead.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2726,18 +2726,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "Their hydroponics bay is going dark by rows, and the rows are food, and our UV bulbs are rare, and rare is the word for what we would give."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_05_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Send the bulbs.",
           "set_flag": "flag_scrap_network_05_advanced"
         },
         {
           "id": "quest_scrap_network_05_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Our crops come first.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2752,18 +2752,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The dormitory has frost on the inside walls, and our coats are warm, and the lining is the part that makes them warm."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_06_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Rip out our linings.",
           "set_flag": "flag_scrap_network_06_advanced"
         },
         {
           "id": "quest_scrap_network_06_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Winter is coming for us too.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2778,18 +2778,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The radio tower stands dark on the peak, and the storm is moving in, and our spare transmitter is the only one, and the peak is hot."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_07_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Make the climb.",
           "set_flag": "flag_scrap_network_07_advanced"
         },
         {
           "id": "quest_scrap_network_07_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. The peak can wait.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2804,18 +2804,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The camp's air is visible, and the visibility is the problem, and our scrubber is the primary, and primary means ours."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_08_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Pull our scrubber. Give them air.",
           "set_flag": "flag_scrap_network_08_advanced"
         },
         {
           "id": "quest_scrap_network_08_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Our lungs come first.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2830,18 +2830,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The family is sealed on the toxic side, and the breach is small, and our welding fuel is the last, and last is the word for what it will take."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_09_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Burn the fuel. Seal their breach.",
           "set_flag": "flag_scrap_network_09_advanced"
         },
         {
           "id": "quest_scrap_network_09_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Our bulkheads need the fuel.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2856,18 +2856,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The grid is drawn on the map, and the map ends at our reactor, and the reactor is ours, and the lights would be everyone else's."
         }
       ],
       "choices": [
         {
           "id": "quest_scrap_network_10_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Wire it in. Go dark.",
           "set_flag": "flag_scrap_network_10_advanced"
         },
         {
           "id": "quest_scrap_network_10_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Keep our own lights.",
           "set_flag": "flag_scrap_network_aborted"
         }
       ]
@@ -2882,18 +2882,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The raiders are our former brothers, and the brothers know us, and the farm is behind us, and we are unarmed, which is the point."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_01_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Stand between. Take the beating.",
           "set_flag": "flag_broken_spears_01_advanced"
         },
         {
           "id": "quest_broken_spears_01_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Arm ourselves first.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ],
@@ -2909,18 +2909,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The merchant's caravan is loaded, and the route runs through our old territory, and the territory knows us, and the knowing is the risk."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_02_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Escort him through.",
           "set_flag": "flag_broken_spears_02_advanced"
         },
         {
           "id": "quest_broken_spears_02_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. The territory means death.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -2935,18 +2935,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "Our old camp is where it always was, and the family is inside it, and the camp belongs to our former brothers, and the brothers sleep lightly."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_03_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Steal them back.",
           "set_flag": "flag_broken_spears_03_advanced"
         },
         {
           "id": "quest_broken_spears_03_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Negotiate the ransom instead.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -2961,18 +2961,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The outpost fires slow now, and the slowness means they are out, and the ground between is open, and the open is where they will shoot."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_04_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Run the magazines across.",
           "set_flag": "flag_broken_spears_04_advanced"
         },
         {
           "id": "quest_broken_spears_04_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Wait for dark.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -2987,18 +2987,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The raiders come for the camp, and the camp is behind us, and our bodies are the barricade, and the barricade does not shoot back."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_05_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Hold the line. No return fire.",
           "set_flag": "flag_broken_spears_05_advanced"
         },
         {
           "id": "quest_broken_spears_05_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Fire first.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -3013,18 +3013,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The hospital door is locked from the inside, and the scavengers are outside, and we are outside with them, and our weapons are close-quarters."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_06_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Hold the door.",
           "set_flag": "flag_broken_spears_06_advanced"
         },
         {
           "id": "quest_broken_spears_06_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Fall back inside.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -3039,18 +3039,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The monastery is burning, and the texts and the elders are inside, and the fire is hot, and the walking-in is the cost."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_07_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Walk into the fire.",
           "set_flag": "flag_broken_spears_07_advanced"
         },
         {
           "id": "quest_broken_spears_07_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Fight the fire from outside.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -3065,18 +3065,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The convoy outnumbers us, and the slaves wear chains, and the odds are bad, and the chains are worse."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_08_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Ambush the convoy. Break the chains.",
           "set_flag": "flag_broken_spears_08_advanced"
         },
         {
           "id": "quest_broken_spears_08_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Shadow them. Wait for better odds.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -3091,18 +3091,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The children are under the carts, and the grenades are coming, and the distance is short, and the shortness is all the time there is."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_09_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Throw ourselves on them.",
           "set_flag": "flag_broken_spears_09_advanced"
         },
         {
           "id": "quest_broken_spears_09_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Drag the carts over instead.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -3117,18 +3117,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The army comes, and the canyon is narrow, and the narrowness is our advantage, and the advantage is all of us."
         }
       ],
       "choices": [
         {
           "id": "quest_broken_spears_10_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Plant ourselves. Hold the pass.",
           "set_flag": "flag_broken_spears_10_advanced"
         },
         {
           "id": "quest_broken_spears_10_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Evacuate with the town.",
           "set_flag": "flag_broken_spears_aborted"
         }
       ]
@@ -3143,18 +3143,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The traveler is at our gate, and the gate is ours, and our canteens are full, and the fullness is what he needs."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_01_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Empty the canteens.",
           "set_flag": "flag_free_wells_01_advanced"
         },
         {
           "id": "quest_free_wells_01_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. The Barons are watching.",
           "set_flag": "flag_free_wells_aborted"
         }
       ],
@@ -3170,18 +3170,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The farm's crops are turning to dust, and the pipeline valves are right there, and our reserves are luxury, and the luxury is what we would drain."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_02_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Override the valves.",
           "set_flag": "flag_free_wells_02_advanced"
         },
         {
           "id": "quest_free_wells_02_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Execution is the price.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3196,18 +3196,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "Sniper alley lies between us and the hospital, and the barrels are heavy, and the heaviness is what will slow us, and the slowness is where they shoot."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_03_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Carry the barrels.",
           "set_flag": "flag_free_wells_03_advanced"
         },
         {
           "id": "quest_free_wells_03_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Wait for night.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3222,18 +3222,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The orphanage's barrels are toxic, and ours are clean, and the swap is simple, and the drinking afterward is ours."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_04_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Swap the barrels. Drink the runoff.",
           "set_flag": "flag_free_wells_04_advanced"
         },
         {
           "id": "quest_free_wells_04_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Find another way.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3248,18 +3248,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The outpost is dry, and the aquifer is far, and our backs are what we will dig with, and the weeks are what it will take."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_05_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Dig the trench.",
           "set_flag": "flag_free_wells_05_advanced"
         },
         {
           "id": "quest_free_wells_05_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Our backs cannot take the weeks.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3274,18 +3274,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The rival faction is dying, and the filters are heavy, and the crossing is unarmed, and the unarmed part is the point."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_06_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Cross with the filters.",
           "set_flag": "flag_free_wells_06_advanced"
         },
         {
           "id": "quest_free_wells_06_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. They would shoot us on sight.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3300,18 +3300,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The settlement is burning, and the tanker is water, and the forest between is fire, and the fire is what we will drive through."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_07_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Drive through the fire.",
           "set_flag": "flag_free_wells_07_advanced"
         },
         {
           "id": "quest_free_wells_07_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Wait for the fire to pass.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3326,18 +3326,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The well is toxic, and the leak is at the bottom, and the hazmat gear is missing, and the missing is what we dive without."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_08_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Dive. Seal the leak.",
           "set_flag": "flag_free_wells_08_advanced"
         },
         {
           "id": "quest_free_wells_08_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Find a suit first.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3352,18 +3352,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The convoy is in the deep desert, and the desert is deep, and our water bladders are full, and the fullness is what we carry to them, on foot, to death."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_09_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "March with the water.",
           "set_flag": "flag_free_wells_09_advanced"
         },
         {
           "id": "quest_free_wells_09_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. The desert takes the carriers.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3378,18 +3378,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The Barons' control room is ahead, and the reservoir locks are there, and the breaking is permanent, and the permanence is the revolution."
         }
       ],
       "choices": [
         {
           "id": "quest_free_wells_10_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Shatter the locks.",
           "set_flag": "flag_free_wells_10_advanced"
         },
         {
           "id": "quest_free_wells_10_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. The Barons will kill us all.",
           "set_flag": "flag_free_wells_aborted"
         }
       ]
@@ -3404,18 +3404,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The caravan is pinned in the open ash, and our bunker is secure, and the security is what we would leave."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_01_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Charge out. Cover them.",
           "set_flag": "flag_the_defenders_01_advanced"
         },
         {
           "id": "quest_the_defenders_01_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Fire from the bunker.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ],
@@ -3431,18 +3431,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The settlement is squeezed by thugs, and our troops are ready, and the refusal of payment is the point."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_02_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Stand guard. Take nothing.",
           "set_flag": "flag_the_defenders_02_advanced"
         },
         {
           "id": "quest_the_defenders_02_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Protection has a price.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3457,18 +3457,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The looters are coming, and the hospital is behind us, and our wall is bodies, and the bodies do not fire back."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_03_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Form the wall.",
           "set_flag": "flag_the_defenders_03_advanced"
         },
         {
           "id": "quest_the_defenders_03_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Fire warning shots.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3483,18 +3483,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The pacifists wear rags, and our vests are armor, and the hunters want sport, and the sport is what we become, ourselves."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_04_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Trade vests. Draw them off.",
           "set_flag": "flag_the_defenders_04_advanced"
         },
         {
           "id": "quest_the_defenders_04_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Fight the hunters head-on.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3509,18 +3509,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The family is in the field, and the field is mines, and our knives are what we crawl with, and the crawling is the only way."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_05_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Crawl. Clear the path.",
           "set_flag": "flag_the_defenders_05_advanced"
         },
         {
           "id": "quest_the_defenders_05_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Shout for them to stay still.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3535,18 +3535,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The town is under siege, and our mortar shells are the last, and the last is what we fire, and the firing leaves us empty."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_06_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Fire everything.",
           "set_flag": "flag_the_defenders_06_advanced"
         },
         {
           "id": "quest_the_defenders_06_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Keep the last shells.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3561,18 +3561,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The blockade bunker is fortified, and our assault is frontal, and the frontal is suicidal, and the suicide is what breaks the blockade."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_07_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Charge the bunker.",
           "set_flag": "flag_the_defenders_07_advanced"
         },
         {
           "id": "quest_the_defenders_07_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Starve the blockade out instead.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3587,18 +3587,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The trade hub pays the blood tax, and the warlords collect, and our declaration is public, and the publicity is the provocation."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_08_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Declare the protection.",
           "set_flag": "flag_the_defenders_08_advanced"
         },
         {
           "id": "quest_the_defenders_08_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Protect them quietly.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3613,18 +3613,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The slaver camp is guarded, and our weapons are what we leave behind, and the leaving is the infiltration."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_09_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Go in unarmed.",
           "set_flag": "flag_the_defenders_09_advanced"
         },
         {
           "id": "quest_the_defenders_09_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Assault the camp openly.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3639,18 +3639,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The wastes are wide, and our force is thin, and the thinness is what keeps the peace, and the winter is what takes us."
         }
       ],
       "choices": [
         {
           "id": "quest_the_defenders_10_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Establish the peacekeepers.",
           "set_flag": "flag_the_defenders_10_advanced"
         },
         {
           "id": "quest_the_defenders_10_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Keep the force whole.",
           "set_flag": "flag_the_defenders_aborted"
         }
       ]
@@ -3665,18 +3665,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The slum is infected, and our bandages are sterile, and the sterility is what they need, and our own wounds will take the crude thread."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_01_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Give the bandages.",
           "set_flag": "flag_cure_seekers_01_advanced"
         },
         {
           "id": "quest_cure_seekers_01_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Our wounds need the sterile too.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ],
@@ -3692,18 +3692,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The fever spreads, and our blood is what makes the serum, and the drawing leaves us faint, and the fainting is the cost."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_02_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Draw our blood.",
           "set_flag": "flag_cure_seekers_02_advanced"
         },
         {
           "id": "quest_cure_seekers_02_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Search for another source.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3718,18 +3718,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The hot zone is hot, and our protective gear is missing, and the missing is what we walk without, and the fallen are what we walk to."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_03_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Walk in. Give the rad-away.",
           "set_flag": "flag_cure_seekers_03_advanced"
         },
         {
           "id": "quest_cure_seekers_03_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Find gear first.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3744,18 +3744,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The parasite is unknown, and infection is how we would know it, and the volunteering is ours, and the agony comes with it."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_04_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Step forward.",
           "set_flag": "flag_cure_seekers_04_advanced"
         },
         {
           "id": "quest_cure_seekers_04_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Study it another way.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3770,18 +3770,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The crops are starving, and the fertilizer is unproven, and our bodies are the proof, and the poisoning is the risk."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_05_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Test it on ourselves.",
           "set_flag": "flag_cure_seekers_05_advanced"
         },
         {
           "id": "quest_cure_seekers_05_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Test it on the soil first.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3796,18 +3796,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The holding tanks are infected, and the filters are at the bottom, and our diving is what scrubs them, and the disease is what we carry up."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_06_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Dive. Scrub the filters.",
           "set_flag": "flag_cure_seekers_06_advanced"
         },
         {
           "id": "quest_cure_seekers_06_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Drain the tanks first.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3822,18 +3822,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The survivors are breaking, and our sleep is what we give up, and the giving is seventy-two hours, and the hours take our minds with them."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_07_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Stay awake. Comfort them.",
           "set_flag": "flag_cure_seekers_07_advanced"
         },
         {
           "id": "quest_cure_seekers_07_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Sleep. Go back tomorrow.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3848,18 +3848,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The patient is dying, and our marrow is the transplant, and the extraction is agony, and the anesthesia is missing, and the missing is the cost."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_08_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Give the marrow.",
           "set_flag": "flag_cure_seekers_08_advanced"
         },
         {
           "id": "quest_cure_seekers_08_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Find anesthesia first.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3874,18 +3874,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The patient is in agony, and our morphine is all of it, and the all is what they need, and our own injured will suffer without it."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_09_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Give the morphine.",
           "set_flag": "flag_cure_seekers_09_advanced"
         },
         {
           "id": "quest_cure_seekers_09_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Split the dose.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3900,18 +3900,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The vaccine is theoretical, and the gamma is real, and our body is the host, and the chair is where theory becomes cure."
         }
       ],
       "choices": [
         {
           "id": "quest_cure_seekers_10_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Strap in. Activate the core.",
           "set_flag": "flag_cure_seekers_10_advanced"
         },
         {
           "id": "quest_cure_seekers_10_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Test it on tissue first.",
           "set_flag": "flag_cure_seekers_aborted"
         }
       ]
@@ -3926,18 +3926,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The fishing boat is going down, and our cutter is armored, and the armor is heavy, and the heaviness is what might capsize us."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_01_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Risk the cutter. Pull them out.",
           "set_flag": "flag_rescue_armada_01_advanced"
         },
         {
           "id": "quest_rescue_armada_01_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Our cutter cannot take the weight.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ],
@@ -3953,18 +3953,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The merchant ship is bleeding fuel, and the strait is pirates, and our towing makes us slow, and the slowness is the target."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_02_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Tow them through.",
           "set_flag": "flag_rescue_armada_02_advanced"
         },
         {
           "id": "quest_rescue_armada_02_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Escort from a distance.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -3979,18 +3979,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The island is sinking, and our ferries are full, and the fullness is what saves them, and the water over the decks is the cost."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_03_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Overload the ferries.",
           "set_flag": "flag_rescue_armada_03_advanced"
         },
         {
           "id": "quest_rescue_armada_03_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Take half. Come back.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -4005,18 +4005,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The fort is besieged, and our ships are wood, and the shore batteries are heavy, and the firing arc is what we sail through."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_04_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Sail into the arc.",
           "set_flag": "flag_rescue_armada_04_advanced"
         },
         {
           "id": "quest_rescue_armada_04_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Evacuate by night.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -4031,18 +4031,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The port is starving, and our galleys hold the last week, and the last is what we give, and the giving leaves us hungry."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_05_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Empty the galleys.",
           "set_flag": "flag_rescue_armada_05_advanced"
         },
         {
           "id": "quest_rescue_armada_05_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Share half.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -4057,18 +4057,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The coast is hot, and our Geiger counters max out, and the hull is what we will never decontaminate, and the evacuation is why."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_06_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Sail into the hot water.",
           "set_flag": "flag_rescue_armada_06_advanced"
         },
         {
           "id": "quest_rescue_armada_06_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Call for boats from a distance.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -4083,18 +4083,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The refugee fleet sits becalmed, and the fog is toxic, and our rowing is what drags them out, and the dragging is by hand."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_07_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Row them out.",
           "set_flag": "flag_rescue_armada_07_advanced"
         },
         {
           "id": "quest_rescue_armada_07_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Wait for wind.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -4109,18 +4109,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The hospital is under water, and the nurses are trapped in the lower decks, and our diving is with hand tools, and the tools are all we have."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_08_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Dive. Pry the airlocks.",
           "set_flag": "flag_rescue_armada_08_advanced"
         },
         {
           "id": "quest_rescue_armada_08_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Find cutting gear first.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -4135,18 +4135,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "Our sworn enemy is dying, and our ships are clean, and they killed our brothers, and the asylum is what we would give them."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_09_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Take them aboard.",
           "set_flag": "flag_rescue_armada_09_advanced"
         },
         {
           "id": "quest_rescue_armada_09_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. They killed our brothers.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -4161,18 +4161,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The sludge tsunami is coming, and our fleet is all we have, and the grounding is the breakwater, and the breakwater saves the cities."
         }
       ],
       "choices": [
         {
           "id": "quest_rescue_armada_10_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Run the fleet aground.",
           "set_flag": "flag_rescue_armada_10_advanced"
         },
         {
           "id": "quest_rescue_armada_10_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Evacuate the cities instead.",
           "set_flag": "flag_rescue_armada_aborted"
         }
       ]
@@ -4187,18 +4187,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The commune needs shovels, and our presses make casings, and the presses can make either, and the either is the choice."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_01_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Stamp shovels.",
           "set_flag": "flag_plowshares_01_advanced"
         },
         {
           "id": "quest_plowshares_01_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Casings are defense.",
           "set_flag": "flag_plowshares_aborted"
         }
       ],
@@ -4214,18 +4214,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The slum's lungs are failing, and our artillery barrels are steel, and the steel is the mesh, and the mesh is what saves the lungs."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_02_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Melt the barrels.",
           "set_flag": "flag_plowshares_02_advanced"
         },
         {
           "id": "quest_plowshares_02_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. The barrels are the guns.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4240,18 +4240,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The clinics need scalpels, and our commander's armor plate is high-grade, and the grade is what scalpels need."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_03_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Forge the scalpels.",
           "set_flag": "flag_plowshares_03_advanced"
         },
         {
           "id": "quest_plowshares_03_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. The armor is the commander's.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4266,18 +4266,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The hydroponic frames are collapsing, and our anti-air turrets are structural, and the structure is what holds the crops."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_04_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Strip the turrets.",
           "set_flag": "flag_plowshares_04_advanced"
         },
         {
           "id": "quest_plowshares_04_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. The turrets are the defense.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4292,18 +4292,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The refugees need walls, and our armory blast doors are reinforced, and the reinforcement is what makes homes, and the armory is what stands open."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_05_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Give the doors.",
           "set_flag": "flag_plowshares_05_advanced"
         },
         {
           "id": "quest_plowshares_05_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. The armory must stand.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4318,18 +4318,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The food transports are broken, and our personnel carriers have high-torque engines, and the torque is what moves the food."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_06_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Pull the engines.",
           "set_flag": "flag_plowshares_06_advanced"
         },
         {
           "id": "quest_plowshares_06_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. The carriers are the patrols.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4344,18 +4344,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The turbines need bearings, and our missiles have guidance systems, and the guidance is the bearings, and the bearings are the light."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_07_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Cannibalize the guidance.",
           "set_flag": "flag_plowshares_07_advanced"
         },
         {
           "id": "quest_plowshares_07_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. The missiles are deterrence.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4370,18 +4370,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The geothermal pipes are ruptured, and the shafts are boiling, and our welding is by hand, and the burns are the cost."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_08_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Weld the breaches.",
           "set_flag": "flag_plowshares_08_advanced"
         },
         {
           "id": "quest_plowshares_08_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Wait for the pressure to drop.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4396,18 +4396,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The mirrors need polishing, and the steel dust is toxic, and the shifts are eighteen hours, and the blood is what we cough."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_09_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Polish the mirrors.",
           "set_flag": "flag_plowshares_09_advanced"
         },
         {
           "id": "quest_plowshares_09_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Find respirators first.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4422,18 +4422,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The forges are where the guns are made, and our sledgehammers are what end that, and the ending is forever."
         }
       ],
       "choices": [
         {
           "id": "quest_plowshares_10_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Smash the forges.",
           "set_flag": "flag_plowshares_10_advanced"
         },
         {
           "id": "quest_plowshares_10_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Keep the capacity.",
           "set_flag": "flag_plowshares_aborted"
         }
       ]
@@ -4448,18 +4448,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The sailor floats in the water, and his ship is a rival's, and his blood is the same color, and the color is what we treat."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_01_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Pull him aboard.",
           "set_flag": "flag_hospital_ships_01_advanced"
         },
         {
           "id": "quest_hospital_ships_01_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. He is the enemy.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ],
@@ -4475,18 +4475,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "She has been turned away from every port, and our decks are sterile, and the sterility is what we risk, and the risking is the care."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_02_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Bring her in.",
           "set_flag": "flag_hospital_ships_02_advanced"
         },
         {
           "id": "quest_hospital_ships_02_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. The crew comes first.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4501,18 +4501,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "He attacked us yesterday, and today he begs, and our stitches are what he needs, and the wounds are the ones we gave him."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_03_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Stitch his wounds.",
           "set_flag": "flag_hospital_ships_03_advanced"
         },
         {
           "id": "quest_hospital_ships_03_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Let him remember.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4527,18 +4527,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "His leg is severed, and our surgery is twelve hours, and the hours are grueling, and the saving is the point."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_04_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Save the leg.",
           "set_flag": "flag_hospital_ships_04_advanced"
         },
         {
           "id": "quest_hospital_ships_04_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. He is a captain. Execute him.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4553,18 +4553,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The child is contagious, and the isolation room is ours to share, and the hand-holding is the care."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_05_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Stay with the child.",
           "set_flag": "flag_hospital_ships_05_advanced"
         },
         {
           "id": "quest_hospital_ships_05_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Treat through the door.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4579,18 +4579,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The deck heaves, and the storm is outside, and our blood is the transfusion, and the giving happens on a ship that will not hold still."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_06_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Give the blood.",
           "set_flag": "flag_hospital_ships_06_advanced"
         },
         {
           "id": "quest_hospital_ships_06_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Wait for calm water.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4605,18 +4605,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The outpost is infected, and the quarantine is the law, and our supplies are the last, and the breaking is the care."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_07_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Break the quarantine.",
           "set_flag": "flag_hospital_ships_07_advanced"
         },
         {
           "id": "quest_hospital_ships_07_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Deliver from a distance.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4631,18 +4631,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "Their ship is sinking, and the seas are heavy, and our lashing is the bridge, and the stretchers cross on our backs."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_08_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Lash the ships together.",
           "set_flag": "flag_hospital_ships_08_advanced"
         },
         {
           "id": "quest_hospital_ships_08_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Our hulls cannot take the strain.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4657,18 +4657,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The city is dying, and our ship is space, and the space is the triage, and the conversion is every inch."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_09_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Strip the ship. Triage.",
           "set_flag": "flag_hospital_ships_09_advanced"
         },
         {
           "id": "quest_hospital_ships_09_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Keep the crew quarters.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4683,18 +4683,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The engines are what we would shut off, and the reactor is what we would give to the med bays, and the permanence is the sanctuary."
         }
       ],
       "choices": [
         {
           "id": "quest_hospital_ships_10_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Anchor forever. Power the bays.",
           "set_flag": "flag_hospital_ships_10_advanced"
         },
         {
           "id": "quest_hospital_ships_10_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Keep the engines ready.",
           "set_flag": "flag_hospital_ships_aborted"
         }
       ]
@@ -4709,18 +4709,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The silos are full, and the locals starve, and the locks are the quartermaster's, and the night is when we would break them."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_01_advance",
-          "text": "Follow protocol. We need what they have more than they do.",
+          "text": "Break the locks. Distribute.",
           "set_flag": "flag_open_borders_01_advanced"
         },
         {
           "id": "quest_open_borders_01_abort",
-          "text": "Lower your weapons. There has to be another way to survive.",
+          "text": "Refuse. Petition the quartermaster.",
           "set_flag": "flag_open_borders_aborted"
         }
       ],
@@ -4736,18 +4736,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The auto-docs sit in the secure sector, and the clinics go without, and the smuggling is the delivery."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_02_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Smuggle the auto-docs out.",
           "set_flag": "flag_open_borders_02_advanced"
         },
         {
           "id": "quest_open_borders_02_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Request a transfer.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4762,18 +4762,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The fountains are decorative, and the slums are dry, and the marble is what we smash, and the hose is what we run."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_03_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Smash the marble. Run the hose.",
           "set_flag": "flag_open_borders_03_advanced"
         },
         {
           "id": "quest_open_borders_03_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. The fountains are the Compact's face.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4788,18 +4788,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The holotapes are classified, and the settlements are ignorant, and the copying is the treason, and the treason is the education."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_04_advance",
-          "text": "Proceed. This is a liability we cannot afford.",
+          "text": "Copy the tapes. Scatter them.",
           "set_flag": "flag_open_borders_04_advanced"
         },
         {
           "id": "quest_open_borders_04_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Secrets keep us safe.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4814,18 +4814,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The tools are restricted, and the scavengers go without, and the throwing is over the fence, and the fence is the restriction."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_05_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Throw the tools over.",
           "set_flag": "flag_open_borders_05_advanced"
         },
         {
           "id": "quest_open_borders_05_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. Tools are control.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4840,18 +4840,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Dust swirls around your boots. The eyes of your squad lock onto you, waiting for the command. Command expects results, not hesitation."
+          "text": "The dirt farm is worthless, and our infantry is heavy, and the defending is the disobedience, and the disobedience is the protection."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_06_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "March out. Defend the farm.",
           "set_flag": "flag_open_borders_06_advanced"
         },
         {
           "id": "quest_open_borders_06_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. The farm is not ours.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4866,18 +4866,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The wind carries the bitter scent of ozone and desperation. Command expects results, not hesitation."
+          "text": "The scrubber blueprints are guarded, and the wasteland chokes, and the broadcast is the treason, and the treason is the air."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_07_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Broadcast the blueprints.",
           "set_flag": "flag_open_borders_07_advanced"
         },
         {
           "id": "quest_open_borders_07_abort",
-          "text": "Abort. I'd rather die with a clean conscience than live like this.",
+          "text": "Refuse. Secrets are power.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4892,18 +4892,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The fusion core is ours, and their grid is dark, and the cables are unshielded, and the ash is what we drag them through."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_08_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Drag the cables across.",
           "set_flag": "flag_open_borders_08_advanced"
         },
         {
           "id": "quest_open_borders_08_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. The core is ours.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4918,18 +4918,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The ident-chips are citizenship, and the starving go without, and the forging is hundreds, and the hundreds are the access."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_09_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Forge the chips.",
           "set_flag": "flag_open_borders_09_advanced"
         },
         {
           "id": "quest_open_borders_09_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Citizenship is earned.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4944,18 +4944,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The blast doors are what divide us, and the explosive bolts are there, and the jamming is forever, and the forever is the dissolution."
         }
       ],
       "choices": [
         {
           "id": "quest_open_borders_10_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Blow the doors open.",
           "set_flag": "flag_open_borders_10_advanced"
         },
         {
           "id": "quest_open_borders_10_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. The doors are the border.",
           "set_flag": "flag_open_borders_aborted"
         }
       ]
@@ -4970,18 +4970,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The storm is coming, and the camp is unbelievers, and the flare is the warning, and the warning is the Cult's wrath."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_01_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Send the flare.",
           "set_flag": "flag_storm_watch_01_advanced"
         },
         {
           "id": "quest_storm_watch_01_abort",
-          "text": "Refuse the order. Let them be. We take the consequences.",
+          "text": "Refuse. The Cult will see it.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ],
@@ -4997,18 +4997,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The rain is acid, and the outpost is neutral, and our sprint is across open ground, and the burning is the skin."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_02_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Run. Crank the sirens.",
           "set_flag": "flag_storm_watch_02_advanced"
         },
         {
           "id": "quest_storm_watch_02_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Call it in instead.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]
@@ -5023,18 +5023,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The wind is toxic, and the merchants are lost, and our bunker is the shelter, and the giving leaves us exposed."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_03_advance",
-          "text": "Complete the task. In this ash, morality is a luxury we can't afford.",
+          "text": "Give the bunker.",
           "set_flag": "flag_storm_watch_03_advanced"
         },
         {
           "id": "quest_storm_watch_03_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Share the space instead.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]
@@ -5049,18 +5049,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "Shadows stretch long in the harsh light. The reality of the wasteland presses down on you. Command expects results, not hesitation."
+          "text": "The fog is settling in the valley, and the orphanage is below, and our fans are industrial, and the carrying is up the peak."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_04_advance",
-          "text": "Enforce the mandate. Weakness here means death for us tomorrow.",
+          "text": "Carry the fans up.",
           "set_flag": "flag_storm_watch_04_advanced"
         },
         {
           "id": "quest_storm_watch_04_abort",
-          "text": "Stand down. If we do this, we're no better than the monsters in the ash.",
+          "text": "Refuse. Evacuate the orphanage instead.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]
@@ -5075,18 +5075,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "A heavy silence falls over the squad. The click of a safety being disengaged sounds like a thunderclap. Command expects results, not hesitation."
+          "text": "The whiteout is total, and the travelers are lost, and our ropes are the tethers, and the wandering is blind."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_05_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Walk into the whiteout.",
           "set_flag": "flag_storm_watch_05_advanced"
         },
         {
           "id": "quest_storm_watch_05_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Wait for the storm to pass.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]
@@ -5101,18 +5101,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The mud is boiling, and the bridge is collapsed, and our bodies are what hold it, and the crossing is the civilians."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_06_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Stand in the mud. Hold the bridge.",
           "set_flag": "flag_storm_watch_06_advanced"
         },
         {
           "id": "quest_storm_watch_06_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Find another route.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]
@@ -5127,18 +5127,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The swarm follows the storm, and the town is defenseless, and our bait is ourselves, and the drawing-off is into the deep desert."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_07_advance",
-          "text": "We do what we must. Leave the guilt for those who survive the winter.",
+          "text": "Douse ourselves. Draw them off.",
           "set_flag": "flag_storm_watch_07_advanced"
         },
         {
           "id": "quest_storm_watch_07_abort",
-          "text": "Stop. I won't cross this line, even if disobedience means death in the ash.",
+          "text": "Refuse. Warn the town to hide.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]
@@ -5153,18 +5153,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The cold logic of the faction's orders hangs in the air, venomous and clear. Command expects results, not hesitation."
+          "text": "The hurricane is category five, and the tower is the highest, and our broadcast is the evacuation routes, and the wind tears at us."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_08_advance",
-          "text": "Execute the order. The survival of the many outweighs the few.",
+          "text": "Climb. Broadcast.",
           "set_flag": "flag_storm_watch_08_advanced"
         },
         {
           "id": "quest_storm_watch_08_abort",
-          "text": "Defy them. We retain our humanity, whatever the price.",
+          "text": "Refuse. Broadcast from the bunker.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]
@@ -5179,18 +5179,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The Geiger counter clicks rhythmically, a ticking clock against your conscience. Command expects results, not hesitation."
+          "text": "The winter front is endless, and the heating cores are unshielded, and our hands are bare, and the carrying is into the blizzard."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_09_advance",
-          "text": "Take it all. If we don't, the wasteland will just claim them anyway.",
+          "text": "Carry the cores.",
           "set_flag": "flag_storm_watch_09_advanced"
         },
         {
           "id": "quest_storm_watch_09_abort",
-          "text": "Turn away. Some things cost more than they pay out.",
+          "text": "Refuse. Find shielding first.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]
@@ -5205,18 +5205,18 @@
       "stages": [
         {
           "id": "stage_1",
-          "text": "The air is thick with tension. Every second of hesitation is a dangerous gamble. Command expects results, not hesitation."
+          "text": "The weather grid is global, and our life support is the power, and the wiring is permanent, and the slow suffocation is the watch."
         }
       ],
       "choices": [
         {
           "id": "quest_storm_watch_10_advance",
-          "text": "Do it. Sentimentality won't keep us alive; resources will.",
+          "text": "Wire it in. Keep the watch.",
           "set_flag": "flag_storm_watch_10_advanced"
         },
         {
           "id": "quest_storm_watch_10_abort",
-          "text": "Hold. I'm countermanding the order. Prepare for backlash.",
+          "text": "Refuse. Power the grid another way.",
           "set_flag": "flag_storm_watch_aborted"
         }
       ]

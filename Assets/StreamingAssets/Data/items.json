@@ -1062,7 +1062,7 @@
     {
       "id": "item_amnestic_syrup",
       "displayName": "Amnestic Syrup",
-      "description": "A chilled bottle of amnestic syrup, labeled in faded pharmacy script. It induces temporary memory suppression — a mercy in some cases, a liability in others. Worth twenty-two, three tenths of a kilo, five to a stack. The side effects are listed on a label that has mostly peeled away. Doctors used to warn against it. Now they measure doses by eye.",
+      "description": "A chilled bottle of amnestic syrup, labeled in faded pharmacy script. It induces temporary memory suppression \u2014 a mercy in some cases, a liability in others. Worth twenty-two, three tenths of a kilo, five to a stack. The side effects are listed on a label that has mostly peeled away. Doctors used to warn against it. Now they measure doses by eye.",
       "type": "Medical",
       "stackMax": 5,
       "weight": 0.3,
@@ -3182,7 +3182,7 @@
     {
       "id": "item_air_filter_hepa",
       "displayName": "HEPA Filtration Core",
-      "description": "A pleated glass-fiber HEPA filter cartridge for bunker intake fans. It traps particles down to 0.3 microns — fine enough to catch ash and fallout dust, not fine enough to catch vapors. The gray pleating turns black in a month under heavy load. When the pressure differential rises past the red mark, it is clogged and the shelter is breathing through it like a man with wet cloth over his mouth. You do not want to be in the bunker when someone forgets to change it.",
+      "description": "A pleated glass-fiber HEPA filter cartridge for bunker intake fans. It traps particles down to 0.3 microns \u2014 fine enough to catch ash and fallout dust, not fine enough to catch vapors. The gray pleating turns black in a month under heavy load. When the pressure differential rises past the red mark, it is clogged and the shelter is breathing through it like a man with wet cloth over his mouth. You do not want to be in the bunker when someone forgets to change it.",
       "type": "Material",
       "stackMax": 4,
       "weight": 1.5,
@@ -3202,7 +3202,7 @@
     {
       "id": "item_desal_membrane",
       "displayName": "Desalination Membrane",
-      "description": "A spiral-wound polyamide membrane for reverse-osmosis water stacks. Clean side and dirty side are marked with a blue dot and a red dot, and if you install it backward you will pressurize the wrong chamber and blow the seal gasket. The Hydro Barons guard their spares like medicine. The membrane looks like nothing — a white cylinder the size of a thermos — but a working desalination stack without one is just a pressurized pipe full of salt water.",
+      "description": "A spiral-wound polyamide membrane for reverse-osmosis water stacks. Clean side and dirty side are marked with a blue dot and a red dot, and if you install it backward you will pressurize the wrong chamber and blow the seal gasket. The Hydro Barons guard their spares like medicine. The membrane looks like nothing \u2014 a white cylinder the size of a thermos \u2014 but a working desalination stack without one is just a pressurized pipe full of salt water.",
       "type": "Material",
       "stackMax": 2,
       "weight": 0.8,
@@ -3242,7 +3242,7 @@
     {
       "id": "scrap_electronic",
       "displayName": "Electronic Scrap",
-      "description": "A bag of stripped circuit boards, capacitors, loose resistors, and reeled copper trace wire pulled from dead appliances. The boards are scorched along one edge from the EMP. The capacitors may or may not still hold charge — do not touch the leads until you discharge them. The Wire Heads will sort through a bag like this for an hour and come up with something that transmits on a frequency nobody expected.",
+      "description": "A bag of stripped circuit boards, capacitors, loose resistors, and reeled copper trace wire pulled from dead appliances. The boards are scorched along one edge from the EMP. The capacitors may or may not still hold charge \u2014 do not touch the leads until you discharge them. The Wire Heads will sort through a bag like this for an hour and come up with something that transmits on a frequency nobody expected.",
       "type": "Material",
       "stackMax": 50,
       "weight": 0.1,
@@ -3302,7 +3302,7 @@
     {
       "id": "inhaler",
       "displayName": "Improvised Inhaler",
-      "description": "A modified salbutamol aerosol adapted by someone who knew what they were doing — the nozzle is not quite the right diameter and there is cloth tape around the canister join. It opens the airways in a severe ash-dust response fast enough to matter. The dose per press is double the pre-war dose because the formulation is old and the propellant has degraded. The doctor keeps count of what is used and does not say whether she is worried about the supply.",
+      "description": "A modified salbutamol aerosol adapted by someone who knew what they were doing \u2014 the nozzle is not quite the right diameter and there is cloth tape around the canister join. It opens the airways in a severe ash-dust response fast enough to matter. The dose per press is double the pre-war dose because the formulation is old and the propellant has degraded. The doctor keeps count of what is used and does not say whether she is worried about the supply.",
       "type": "Medical",
       "stackMax": 4,
       "weight": 0.15,
@@ -3362,7 +3362,7 @@
     {
       "id": "item_stabilization_tea",
       "displayName": "Stabilization Tea",
-      "description": "A brew of dried valerian root, passionflower tops and a half-handful of chamomile, dried on a bunk-room window. A sedative withdrawal aid: it does not cure the sleeplessness, there is no cure for that, just a clock that the body has to walk around until. The tea makes the night shorter and the tremors less. Kept in the bunk pharmacy for sedative withdrawal — the kind that someone bought down with an over-the-counter prescription and now cannot get past midnight without.",
+      "description": "A brew of dried valerian root, passionflower tops and a half-handful of chamomile, dried on a bunk-room window. A sedative withdrawal aid: it does not cure the sleeplessness, there is no cure for that, just a clock that the body has to walk around until. The tea makes the night shorter and the tremors less. Kept in the bunk pharmacy for sedative withdrawal \u2014 the kind that someone bought down with an over-the-counter prescription and now cannot get past midnight without.",
       "type": "Medical",
       "stackMax": 12,
       "weight": 0.05,
@@ -3592,7 +3592,7 @@
     {
       "id": "ammo_556_subsonic",
       "displayName": "5.56 Subsonic (Odd Lots)",
-      "description": "A mismatched lot of 5.56 subsonic loads, the kind the bullet lube tank churned out before the tank was sold. Quieter than standard 5.56 — about as quiet as 5.56 ever gets, which is to say not quiet at all, but quieter. Three hundred grams, worth nine. The subsonic is what the night-watch leans on when the night is going to be long.",
+      "description": "A mismatched lot of 5.56 subsonic loads, the kind the bullet lube tank churned out before the tank was sold. Quieter than standard 5.56 \u2014 about as quiet as 5.56 ever gets, which is to say not quiet at all, but quieter. Three hundred grams, worth nine. The subsonic is what the night-watch leans on when the night is going to be long.",
       "type": "Ammo",
       "stackMax": 30,
       "weight": 0.3,
@@ -3924,7 +3924,7 @@
     {
       "id": "blueprint_roll",
       "displayName": "Blueprint Roll",
-      "description": "A tube of drafting paper, the kind an engineer carried before the exchange. The blueprint inside is faded but legible — floor plans, elevation marks, a structure that may or may not still stand. The person who carried this believed the drawing was worth more than food. They may have been right.",
+      "description": "A tube of drafting paper, the kind an engineer carried before the exchange. The blueprint inside is faded but legible \u2014 floor plans, elevation marks, a structure that may or may not still stand. The person who carried this believed the drawing was worth more than food. They may have been right.",
       "type": "Document",
       "stackMax": 1,
       "weight": 0.6,
@@ -4024,7 +4024,7 @@
     {
       "id": "empty_toner_cartridge",
       "displayName": "Empty Toner Cartridge",
-      "description": "A plastic toner cartridge from a laser printer that no longer works, the drum scratched and the powder compartment empty. It is light, the size of a shoe, and it still smells faintly of carbon. The residual toner dust inside can be suspended in water and used as ink — a dark, even line that holds on paper longer than most things written after the exchange. Worth three. Office salvage.",
+      "description": "A plastic toner cartridge from a laser printer that no longer works, the drum scratched and the powder compartment empty. It is light, the size of a shoe, and it still smells faintly of carbon. The residual toner dust inside can be suspended in water and used as ink \u2014 a dark, even line that holds on paper longer than most things written after the exchange. Worth three. Office salvage.",
       "type": "Component",
       "stackMax": 10,
       "weight": 0.2,
@@ -4044,7 +4044,7 @@
     {
       "id": "blood_sample",
       "displayName": "Blood Sample",
-      "description": "A sealed glass vial of blood, the type written on a strip of tape that is starting to peel. Taken from a medical supply cabinet or a field kit that someone left behind. It is not useful as medicine in this form. It is useful as a record — proof of who was here, what they carried in their veins, and whether the water they drank was clean. A quarter kilo, worth four to the right buyer.",
+      "description": "A sealed glass vial of blood, the type written on a strip of tape that is starting to peel. Taken from a medical supply cabinet or a field kit that someone left behind. It is not useful as medicine in this form. It is useful as a record \u2014 proof of who was here, what they carried in their veins, and whether the water they drank was clean. A quarter kilo, worth four to the right buyer.",
       "type": "Medical",
       "stackMax": 10,
       "weight": 0.25,
@@ -4344,7 +4344,7 @@
     {
       "id": "matchbook",
       "displayName": "Diner Matchbook",
-      "description": "A cardboard matchbook advertising 'Silver Star Diner — Open 24 Hours'. Twelve cardboard matches remain, unspent.",
+      "description": "A cardboard matchbook advertising 'Silver Star Diner \u2014 Open 24 Hours'. Twelve cardboard matches remain, unspent.",
       "type": "Component",
       "stackMax": 10,
       "weight": 0.02,
@@ -4412,8 +4412,8 @@
       "empShielded": true
     },
     {
-      "id": "dog_tags",
-      "displayName": "Dog Tags",
+      "id": "dog_tags_military",
+      "displayName": "Military Dog Tags",
       "description": "A pair of notched stainless steel tags on a beaded chain, stamped with an army serial number and blood type.",
       "type": "Component",
       "stackMax": 5,
@@ -4615,7 +4615,7 @@
     {
       "id": "item_foundry_weather_canister",
       "displayName": "Weather Canister Shell Body",
-      "description": "A sealed cast cylinder for outdoor instrument housings — barometers, anemometers, and recording thermometers. The Foundry makes these for the weather stations that survived the Exchange, most of which are still transmitting to nobody. The canister is waterproof and radiation-resistant. The instrument inside it may or may not be. The Foundry is responsible for the housing. The instrument is somebody else's problem.",
+      "description": "A sealed cast cylinder for outdoor instrument housings \u2014 barometers, anemometers, and recording thermometers. The Foundry makes these for the weather stations that survived the Exchange, most of which are still transmitting to nobody. The canister is waterproof and radiation-resistant. The instrument inside it may or may not be. The Foundry is responsible for the housing. The instrument is somebody else's problem.",
       "type": "Material",
       "stackMax": 10,
       "weight": 12.0,
@@ -4693,7 +4693,7 @@
     {
       "id": "item_seed_biolum_mushroom",
       "displayName": "Phosphor Cap Culture",
-      "description": "A glass vial of mycelium culture rather than true seed — the Botanist calls it a seed because the concept is easier to communicate. The culture produces the glowing bracket mushroom that grows in the tunnel sections, providing navigational light and protein paste for the infirmary. Handle the vial at room temperature and do not shake it. The mycelium does not forgive rough treatment.",
+      "description": "A glass vial of mycelium culture rather than true seed \u2014 the Botanist calls it a seed because the concept is easier to communicate. The culture produces the glowing bracket mushroom that grows in the tunnel sections, providing navigational light and protein paste for the infirmary. Handle the vial at room temperature and do not shake it. The mycelium does not forgive rough treatment.",
       "type": "Material",
       "stackMax": 20,
       "weight": 0.1,
@@ -4761,7 +4761,7 @@
     {
       "id": "item_seed_leafy_green",
       "displayName": "Winter Cress Seed",
-      "description": "A small paper envelope of mixed leafy vegetable seeds — varieties selected for dense nutrition per square centimeter and fast harvest cycle. The Botanist grows these in the shallowest greenhouse beds and harvests them continuously, a few leaves at a time, rather than pulling the whole plant. Fresh greens are rare enough that their distribution is tracked on the same board as the medical supplies.",
+      "description": "A small paper envelope of mixed leafy vegetable seeds \u2014 varieties selected for dense nutrition per square centimeter and fast harvest cycle. The Botanist grows these in the shallowest greenhouse beds and harvests them continuously, a few leaves at a time, rather than pulling the whole plant. Fresh greens are rare enough that their distribution is tracked on the same board as the medical supplies.",
       "type": "Material",
       "stackMax": 30,
       "weight": 0.05,
@@ -4914,7 +4914,7 @@
     {
       "id": "item_dried_mushrooms",
       "displayName": "Dried Fungal Slices",
-      "description": "Bracket mushrooms from the tunnel beds, sliced thin and dried over the boiler exhaust. They taste of umami and a faint earthiness that is either the substrate or the air in the lower corridors — nobody is entirely sure. Rehydrated in boiling water they plump to something almost satisfying. The Rot Farmers sell dried mushrooms as their primary export. The Botanist grows them as a supplement. The distinction matters to both of them.",
+      "description": "Bracket mushrooms from the tunnel beds, sliced thin and dried over the boiler exhaust. They taste of umami and a faint earthiness that is either the substrate or the air in the lower corridors \u2014 nobody is entirely sure. Rehydrated in boiling water they plump to something almost satisfying. The Rot Farmers sell dried mushrooms as their primary export. The Botanist grows them as a supplement. The distinction matters to both of them.",
       "type": "Food",
       "stackMax": 25,
       "weight": 0.1,
@@ -5072,9 +5072,9 @@
       "empShielded": true
     },
     {
-      "id": "item_air_filter_hepa",
+      "id": "item_air_filter_hepa_hospital",
       "displayName": "Hospital-Grade HEPA Filter Core",
-      "description": "A pleated glass-fiber HEPA filter cartridge for bunker intake fans. It traps particles down to 0.3 microns — fine enough to catch ash and fallout dust, not fine enough to catch vapors. The gray pleating turns black in a month under heavy load. When the pressure differential rises past the red mark, it is clogged and the shelter is breathing through it like a man with wet cloth over his mouth. You do not want to be in the bunker when someone forgets to change it.",
+      "description": "A pleated glass-fiber HEPA filter cartridge for bunker intake fans. It traps particles down to 0.3 microns \u2014 fine enough to catch ash and fallout dust, not fine enough to catch vapors. The gray pleating turns black in a month under heavy load. When the pressure differential rises past the red mark, it is clogged and the shelter is breathing through it like a man with wet cloth over his mouth. You do not want to be in the bunker when someone forgets to change it.",
       "type": "Material",
       "stackMax": 4,
       "weight": 2.0,
@@ -5204,7 +5204,7 @@
     {
       "id": "item_military_radio_module",
       "displayName": "Hardened Military Transceiver Module",
-      "description": "A sealed transceiver module from a military communication system, still in its rubberized shock housing. The module covers the tactical frequency bands and includes a built-in encryption chip that no longer has anyone to encrypt to. The Wire Heads use the module for its transmitter stage — more wattage per battery than anything civilian, and EMP hardened by design. The encryption key is still set to a code from before the Exchange. Nobody has changed it.",
+      "description": "A sealed transceiver module from a military communication system, still in its rubberized shock housing. The module covers the tactical frequency bands and includes a built-in encryption chip that no longer has anyone to encrypt to. The Wire Heads use the module for its transmitter stage \u2014 more wattage per battery than anything civilian, and EMP hardened by design. The encryption key is still set to a code from before the Exchange. Nobody has changed it.",
       "type": "Material",
       "stackMax": 2,
       "weight": 3.2,
@@ -5309,6 +5309,66 @@
       "stackMax": 2,
       "weight": 5.0,
       "tradeValue": 35,
+      "empShielded": false
+    },
+    {
+      "id": "trap_snare",
+      "displayName": "Wire Snare",
+      "description": "A loop of cord or wire set across a game trail, tightened by a springy branch. Cheap enough to deploy more than one, unreliable enough that materials still matter.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 0.3,
+      "tradeValue": 4,
+      "empShielded": false
+    },
+    {
+      "id": "trap_deadfall",
+      "displayName": "Deadfall Trap",
+      "description": "A flat stone or salvaged plate balanced on a trigger stick. Low-tech, material-light, and as old as hunger. The trigger is the hard part.",
+      "type": "Tool",
+      "stackMax": 3,
+      "weight": 2.0,
+      "tradeValue": 3,
+      "empShielded": false
+    },
+    {
+      "id": "trap_pit",
+      "displayName": "Pit Trap",
+      "description": "A concealed pit dug into a game trail, lined with sharpened stakes. Labor-heavy, location-dependent, and capable of stopping something large.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 2.0,
+      "tradeValue": 3,
+      "empShielded": false
+    },
+    {
+      "id": "trap_net",
+      "displayName": "Net Trap",
+      "description": "A mesh of cord or salvaged netting strung between posts or branches. Broader coverage than a snare, higher upfront cost, and more things can go wrong.",
+      "type": "Tool",
+      "stackMax": 3,
+      "weight": 1.5,
+      "tradeValue": 10,
+      "empShielded": false
+    },
+    {
+      "id": "trap_cage",
+      "displayName": "Cage Trap",
+      "description": "A sprung cage of salvaged metal and wire, triggered by weight on a plate. Expensive to build, durable once built. The animal lives inside it.",
+      "type": "Tool",
+      "stackMax": 2,
+      "weight": 4.0,
+      "tradeValue": 20,
+      "empShielded": false
+    },
+    {
+      "id": "trap_bird_snare",
+      "displayName": "Bird Snare",
+      "description": "A fine noose of thread or thin wire set on a perch stick. Lightweight, fast to deploy, and fragile. Frequent small calories with a health-risk shadow.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 0.2,
+      "tradeValue": 3,
       "empShielded": false
     },
     {
@@ -5865,7 +5925,7 @@
     {
       "id": "item_document_casualty_list",
       "displayName": "Typed Casualty Report",
-      "description": "A typed list of names with status columns. The categories shift partway through — from MEDICAL to MISSING to simply a dash. The typing becomes uneven.",
+      "description": "A typed list of names with status columns. The categories shift partway through \u2014 from MEDICAL to MISSING to simply a dash. The typing becomes uneven.",
       "type": "Document",
       "stackMax": 1,
       "weight": 0.03,
@@ -5946,7 +6006,7 @@
     {
       "id": "item_document_journal_fragment",
       "displayName": "Torn Journal Pages",
-      "description": "A few torn pages from a personal journal. The entries describe small routines — meals, weather, a broken window. The last entry stops mid-sentence.",
+      "description": "A few torn pages from a personal journal. The entries describe small routines \u2014 meals, weather, a broken window. The last entry stops mid-sentence.",
       "type": "Document",
       "stackMax": 1,
       "weight": 0.01,
@@ -5977,7 +6037,7 @@
     {
       "id": "item_document_radio_log",
       "displayName": "Handwritten Radio Frequency Log",
-      "description": "A handwritten log of radio frequencies and times. The entries stop on a specific date. The last entry reads: '142.5 — no response. 88.4 — static. 104.7 — silence.'",
+      "description": "A handwritten log of radio frequencies and times. The entries stop on a specific date. The last entry reads: '142.5 \u2014 no response. 88.4 \u2014 static. 104.7 \u2014 silence.'",
       "type": "Document",
       "stackMax": 1,
       "weight": 0.02,
@@ -6013,6 +6073,36 @@
       "stackMax": 1,
       "weight": 0.01,
       "tradeValue": 3,
+      "empShielded": false
+    },
+    {
+      "id": "item_document_debt_default_notice",
+      "displayName": "Creditor Default Notice",
+      "description": "A printed notice from a creditor faction declaring the shelter in default. The notice lists the debt amount, the missed deadline, and the consequences. A stamp reads FINAL NOTICE in red ink.",
+      "type": "Document",
+      "stackMax": 1,
+      "weight": 0.02,
+      "tradeValue": 3,
+      "empShielded": false
+    },
+    {
+      "id": "item_document_weather_gate_warning",
+      "displayName": "Route Closure Warning",
+      "description": "A weather-beaten notice posted at a route entrance. The lamination is cracked and water has seeped in. The warning advises against travel.",
+      "type": "Document",
+      "stackMax": 1,
+      "weight": 0.01,
+      "tradeValue": 1,
+      "empShielded": false
+    },
+    {
+      "id": "item_document_patrol_order",
+      "displayName": "Faction Patrol Order",
+      "description": "A typed patrol order from a faction commander. The order specifies the patrol route, rules of engagement, and what to look for. Margins contain handwritten annotations.",
+      "type": "Document",
+      "stackMax": 1,
+      "weight": 0.02,
+      "tradeValue": 4,
       "empShielded": false
     }
   ]

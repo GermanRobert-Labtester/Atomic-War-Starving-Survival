@@ -125,7 +125,7 @@ namespace AtomicWar.GodotApp
                 if (site != null && Catalog != null && Catalog.Prey.TryGetValue(site.catchSpecies, out var preyDef))
                 {
                     string survivor = string.IsNullOrEmpty(butcherId) ? "unknown" : butcherId;
-                    int day = System.State.trapSites.Count > 0 ? site.setDay : 0;
+                    int day = _currentDay > 0 ? _currentDay : site.setDay;
 
                     // Disease roll (deterministic via system RNG)
                     if (ApplyDisease != null && System.RollDiseaseRisk(preyDef.diseaseRisk))
@@ -236,6 +236,7 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day)
         {
+            _currentDay = day;
             System.TickDay(day);
             int caughtDelta = System.State.totalCatch - _lastSeenCatchTotal;
             _lastSeenCatchTotal = System.State.totalCatch;
@@ -253,6 +254,7 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public event Action<int>? OnCatchPressure;
         private int _lastSeenCatchTotal;
+        private int _currentDay;
 
         public override void Save()
         {

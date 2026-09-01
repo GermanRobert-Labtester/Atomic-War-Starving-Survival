@@ -11,16 +11,103 @@
       "base_hazard_chance": 0.15,
       "primary_hazard_type": "disease",
       "entries": [
-        { "item_id": "bandage", "weight": 35, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "antiseptic", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "antibiotics", "weight": 25, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "morphine", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "surgical_kit", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" },
-        { "item_id": "item_surgical_bone_chisel", "weight": 8, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare", "codex_unlock_id": "codex_surgical_log" },
-        { "item_id": "item_prussian_blue_chelating_pellets", "weight": 12, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "item_air_filter_hepa", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "dirty_water", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common", "hazard_type": "disease", "hazard_chance": 0.2 },
-        { "item_id": "scrap_metal", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" }
+        {
+          "item_id": "bandage",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antibiotics",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_lithium_salts",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_surgical_kit",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_surgical_bone_chisel",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_surgical_log"
+        },
+        {
+          "item_id": "item_prussian_blue_chelating_pellets",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_air_filter_hepa",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "dirty_water",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common",
+          "hazard_type": "disease",
+          "hazard_chance": 0.2
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_triage_record",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_hospital_triage"
+        },
+        {
+          "item_id": "item_document_blood_trail_note",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_hospital_transfer"
+        },
+        {
+          "item_id": "item_document_casualty_list",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_sector4_casualties"
+        }
       ]
     },
     {
@@ -29,18 +116,73 @@
       "display_name": "Freight Rail Marshalling Yard & Roundhouse",
       "description": "Industrial locomotives, maintenance pits, and heavy spare hardware stores.",
       "depletion_model": "finite",
-      "base_hazard_chance": 0.10,
+      "base_hazard_chance": 0.1,
       "primary_hazard_type": "chemical",
       "entries": [
-        { "item_id": "scrap_metal", "weight": 40, "min_quantity": 3, "max_quantity": 6, "rarity_tier": "common" },
-        { "item_id": "mechanical_parts", "weight": 35, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "salvaged_wire", "weight": 25, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "brass_fittings", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "uncommon" },
-        { "item_id": "fuel", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "item_galvanized_rebar", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "repair_kit", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" },
-        { "item_id": "item_high_tensile_steel_culvert_brace", "weight": 8, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare", "codex_unlock_id": "codex_rail_logistics" },
-        { "item_id": "item_welders_glass", "weight": 12, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" }
+        {
+          "item_id": "scrap_metal",
+          "weight": 40,
+          "min_quantity": 3,
+          "max_quantity": 6,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "empty_brass_shell",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "fuel",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_galvanized_rebar",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "soldering_kit",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_high_tensile_steel_culvert_brace",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_rail_logistics"
+        },
+        {
+          "item_id": "item_welders_glass",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        }
       ]
     },
     {
@@ -52,15 +194,78 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "bandage", "weight": 30, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "canned_food", "weight": 25, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "clean_water", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "item_pre_war_photo_album", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "item_cassette_tape", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "item_anchor_notes", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare", "codex_unlock_id": "codex_curriculum_standard" },
-        { "item_id": "item_teddy_bear", "weight": 12, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "scrap_metal", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" }
+        {
+          "item_id": "bandage",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "canned_food",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_pre_war_photo_album",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_cassette_tape",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_anchor_notes",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_curriculum_standard"
+        },
+        {
+          "item_id": "item_teddy_bear",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_civil_defense_poster",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_civil_defense"
+        }
       ]
     },
     {
@@ -69,19 +274,111 @@
       "display_name": "Fortified Munitions & Quartermaster Depot",
       "description": "Reinforced blast bunkers, weapon racks, and standard-issue ration stores.",
       "depletion_model": "finite",
-      "base_hazard_chance": 0.20,
+      "base_hazard_chance": 0.2,
       "primary_hazard_type": "radiation",
       "entries": [
-        { "item_id": "ammo_9x19", "weight": 35, "min_quantity": 15, "max_quantity": 40, "rarity_tier": "common" },
-        { "item_id": "ammo_556", "weight": 30, "min_quantity": 10, "max_quantity": 30, "rarity_tier": "common" },
-        { "item_id": "mre", "weight": 25, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "filter", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "gas_mask", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "knife", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "dosimeter", "weight": 12, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "hazmat_suit", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" },
-        { "item_id": "item_lead_shielded_sample_cask", "weight": 8, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" },
-        { "item_id": "item_co2_scrubber_cartridge", "weight": 10, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" }
+        {
+          "item_id": "ammo_9x19",
+          "weight": 35,
+          "min_quantity": 15,
+          "max_quantity": 40,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "ammo_556",
+          "weight": 30,
+          "min_quantity": 10,
+          "max_quantity": 30,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "water_filter",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "gas_mask",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "military_grade_hatchet",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "dosimeter",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "hazmat_suit",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_lead_shielded_sample_cask",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_co2_scrubber_cartridge",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_military_map",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_deployment_map"
+        },
+        {
+          "item_id": "item_document_field_report",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_sector6_patrol"
+        },
+        {
+          "item_id": "item_document_supply_requisition",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_requisition_4471"
+        },
+        {
+          "item_id": "item_document_patrol_order",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_patrol_order"
+        }
       ]
     },
     {
@@ -93,15 +390,109 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "canned_food", "weight": 35, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "bandage", "weight": 25, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "scrap_metal", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "clean_water", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "iodine_pills", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "flashlight", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "knife", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "item_vinyl_collection", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" }
+        {
+          "item_id": "canned_food",
+          "weight": 35,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "iodine_pills",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "battery",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_grade_hatchet",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_vinyl_collection",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_document_family_photograph",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_family_photo"
+        },
+        {
+          "item_id": "item_document_last_letter",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_unsent_letter"
+        },
+        {
+          "item_id": "item_document_journal_fragment",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_personal_journal"
+        },
+        {
+          "item_id": "item_document_child_drawing",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_child_drawing"
+        },
+        {
+          "item_id": "item_document_will",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_handwritten_will"
+        }
       ]
     },
     {
@@ -113,15 +504,69 @@
       "base_hazard_chance": 0.05,
       "primary_hazard_type": "chemical",
       "entries": [
-        { "item_id": "bandage", "weight": 30, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "filter", "weight": 30, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "gas_mask", "weight": 25, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "antiseptic", "weight": 25, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "flashlight", "weight": 20, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "surgical_kit", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" },
-        { "item_id": "repair_kit", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "item_rebreather_scrubber", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" }
+        {
+          "item_id": "bandage",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "water_filter",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "gas_mask",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_surgical_kit",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "soldering_kit",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_rebreather_scrubber",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
       ]
     },
     {
@@ -133,14 +578,64 @@
       "base_hazard_chance": 0.15,
       "primary_hazard_type": "radiation",
       "entries": [
-        { "item_id": "salvaged_wire", "weight": 35, "min_quantity": 2, "max_quantity": 5, "rarity_tier": "common" },
-        { "item_id": "scrap_metal", "weight": 35, "min_quantity": 2, "max_quantity": 5, "rarity_tier": "common" },
-        { "item_id": "electronic_scrap", "weight": 30, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "filter", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "flashlight", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "dirty_water", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common", "hazard_type": "radiation", "hazard_chance": 0.25 },
-        { "item_id": "item_radon_detector_electret", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" }
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "electronic_scrap",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "water_filter",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "dirty_water",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common",
+          "hazard_type": "radiation",
+          "hazard_chance": 0.25
+        },
+        {
+          "item_id": "item_radon_detector_electret",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
       ]
     },
     {
@@ -152,14 +647,86 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "ammo_9x19", "weight": 40, "min_quantity": 10, "max_quantity": 25, "rarity_tier": "common" },
-        { "item_id": "bandage", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "ammo_556", "weight": 20, "min_quantity": 5, "max_quantity": 15, "rarity_tier": "uncommon" },
-        { "item_id": "knife", "weight": 20, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "flashlight", "weight": 20, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "item_suitcase_locked", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" },
-        { "item_id": "antiseptic", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" }
+        {
+          "item_id": "ammo_9x19",
+          "weight": 40,
+          "min_quantity": 10,
+          "max_quantity": 25,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "ammo_556",
+          "weight": 20,
+          "min_quantity": 5,
+          "max_quantity": 15,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "military_grade_hatchet",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_suitcase_locked",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_barricade_placement",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_barricade_plan"
+        },
+        {
+          "item_id": "item_document_evacuation_list",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_sector7_evacuation"
+        },
+        {
+          "item_id": "item_document_weather_gate_warning",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_weather_gate_warning"
+        }
       ]
     },
     {
@@ -168,17 +735,65 @@
       "display_name": "Heavy Machine Works & Foundry Complex",
       "description": "Metal stamping facilities, CNC lathe shops, and structural scrap piles.",
       "depletion_model": "finite",
-      "base_hazard_chance": 0.10,
+      "base_hazard_chance": 0.1,
       "primary_hazard_type": "chemical",
       "entries": [
-        { "item_id": "scrap_metal", "weight": 45, "min_quantity": 3, "max_quantity": 8, "rarity_tier": "common" },
-        { "item_id": "mechanical_parts", "weight": 35, "min_quantity": 2, "max_quantity": 5, "rarity_tier": "common" },
-        { "item_id": "salvaged_wire", "weight": 30, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "electronic_scrap", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "brass_fittings", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "uncommon" },
-        { "item_id": "fuel", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "item_epoxy_injector", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "item_thermal_paste", "weight": 12, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" }
+        {
+          "item_id": "scrap_metal",
+          "weight": 45,
+          "min_quantity": 3,
+          "max_quantity": 8,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "electronic_scrap",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "empty_brass_shell",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "fuel",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_epoxy_injector",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_thermal_paste",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        }
       ]
     },
     {
@@ -190,14 +805,62 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "canned_food", "weight": 35, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "clean_water", "weight": 25, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "scrap_metal", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "bandage", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "flashlight", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "knife", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "item_teddy_bear", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" }
+        {
+          "item_id": "canned_food",
+          "weight": 35,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_grade_hatchet",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_teddy_bear",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        }
       ]
     },
     {
@@ -206,16 +869,58 @@
       "display_name": "High-Voltage Transformer Substation",
       "description": "Step-down transformers, switchgear banks, and thick copper transmission cables.",
       "depletion_model": "finite",
-      "base_hazard_chance": 0.10,
+      "base_hazard_chance": 0.1,
       "primary_hazard_type": "radiation",
       "entries": [
-        { "item_id": "electronic_scrap", "weight": 40, "min_quantity": 3, "max_quantity": 6, "rarity_tier": "common" },
-        { "item_id": "salvaged_wire", "weight": 40, "min_quantity": 3, "max_quantity": 6, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 25, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "brass_fittings", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "repair_kit", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "item_faraday_mesh", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "rare" },
-        { "item_id": "dosimeter", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" }
+        {
+          "item_id": "electronic_scrap",
+          "weight": 40,
+          "min_quantity": 3,
+          "max_quantity": 6,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 40,
+          "min_quantity": 3,
+          "max_quantity": 6,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "empty_brass_shell",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "soldering_kit",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_faraday_mesh",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "dosimeter",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        }
       ]
     },
     {
@@ -224,17 +929,65 @@
       "display_name": "Industrial Chemical Synthesis Plant",
       "description": "Corrosive chemical tanks, distillation columns, and hazardous reagent drums.",
       "depletion_model": "finite",
-      "base_hazard_chance": 0.30,
+      "base_hazard_chance": 0.3,
       "primary_hazard_type": "chemical",
       "entries": [
-        { "item_id": "fertilizer", "weight": 30, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "charcoal", "weight": 25, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "antiseptic", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "filter", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "item_ammonium_nitrate_sack", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "rare" },
-        { "item_id": "item_glycol_antifreeze_canister", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "item_fungicide_fogger", "weight": 12, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "hazmat_suit", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" }
+        {
+          "item_id": "chemicals",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "charcoal",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "water_filter",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_ammonium_nitrate_sack",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_glycol_antifreeze_canister",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_fungicide_fogger",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "hazmat_suit",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
       ]
     },
     {
@@ -246,13 +999,79 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "scrap_metal", "weight": 30, "min_quantity": 2, "max_quantity": 5, "rarity_tier": "common" },
-        { "item_id": "mechanical_parts", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "canned_food", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "timber", "weight": 25, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "clean_water", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "repair_kit", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" }
+        {
+          "item_id": "scrap_metal",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "canned_food",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "wood_block",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "soldering_kit",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_supply_inventory",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_warehouse_discrepancy"
+        },
+        {
+          "item_id": "item_document_ration_theft_ledger",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_ration_theft"
+        },
+        {
+          "item_id": "item_document_debt_default_notice",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_debt_default"
+        }
       ]
     },
     {
@@ -264,13 +1083,55 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "seeds", "weight": 40, "min_quantity": 2, "max_quantity": 5, "rarity_tier": "common" },
-        { "item_id": "fertilizer", "weight": 30, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "timber", "weight": 25, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "canned_food", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "clean_water", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "charcoal", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "knife", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" }
+        {
+          "item_id": "seed_packets",
+          "weight": 40,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "chemicals",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "wood_block",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "canned_food",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "charcoal",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_grade_hatchet",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        }
       ]
     },
     {
@@ -282,12 +1143,48 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "timber", "weight": 50, "min_quantity": 3, "max_quantity": 8, "rarity_tier": "common" },
-        { "item_id": "charcoal", "weight": 30, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "fuel", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "knife", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "bandage", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "repair_kit", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" }
+        {
+          "item_id": "wood_block",
+          "weight": 50,
+          "min_quantity": 3,
+          "max_quantity": 8,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "charcoal",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "military_grade_hatchet",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "soldering_kit",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        }
       ]
     },
     {
@@ -299,13 +1196,55 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "ammo_9x19", "weight": 30, "min_quantity": 5, "max_quantity": 15, "rarity_tier": "common" },
-        { "item_id": "canned_food", "weight": 30, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "knife", "weight": 25, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "bandage", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "timber", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "flashlight", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "common" },
-        { "item_id": "item_frostbite_salve", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" }
+        {
+          "item_id": "ammo_9x19",
+          "weight": 30,
+          "min_quantity": 5,
+          "max_quantity": 15,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "canned_food",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_grade_hatchet",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "wood_block",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_frostbite_salve",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        }
       ]
     },
     {
@@ -317,13 +1256,55 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "clean_water", "weight": 35, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "bandage", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "charcoal", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "antiseptic", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "item_pre_war_photo_album", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "item_cassette_tape", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "seeds", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" }
+        {
+          "item_id": "clean_water",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "charcoal",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_pre_war_photo_album",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_cassette_tape",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "seed_packets",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        }
       ]
     },
     {
@@ -332,16 +1313,58 @@
       "display_name": "Community Health Outpost & Dispensary",
       "description": "Outpatient consultation rooms, basic medical supplies, and iodine tablets.",
       "depletion_model": "finite",
-      "base_hazard_chance": 0.10,
+      "base_hazard_chance": 0.1,
       "primary_hazard_type": "disease",
       "entries": [
-        { "item_id": "bandage", "weight": 40, "min_quantity": 2, "max_quantity": 5, "rarity_tier": "common" },
-        { "item_id": "antiseptic", "weight": 30, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "antibiotics", "weight": 20, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "iodine_pills", "weight": 20, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "anti_rad", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "uncommon" },
-        { "item_id": "surgical_kit", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" },
-        { "item_id": "dosimeter", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" }
+        {
+          "item_id": "bandage",
+          "weight": 40,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antibiotics",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "iodine_pills",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "anti_rad",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_surgical_kit",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "dosimeter",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        }
       ]
     },
     {
@@ -353,13 +1376,55 @@
       "base_hazard_chance": 0.05,
       "primary_hazard_type": "radiation",
       "entries": [
-        { "item_id": "electronic_scrap", "weight": 35, "min_quantity": 2, "max_quantity": 5, "rarity_tier": "common" },
-        { "item_id": "salvaged_wire", "weight": 30, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "battery", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "item_lead_visor", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" },
-        { "item_id": "item_welders_glass", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "dosimeter", "weight": 15, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "geiger_counter", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" }
+        {
+          "item_id": "electronic_scrap",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_lead_visor",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_welders_glass",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "dosimeter",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "geiger_counter",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
       ]
     },
     {
@@ -371,13 +1436,55 @@
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
       "entries": [
-        { "item_id": "seeds", "weight": 45, "min_quantity": 2, "max_quantity": 6, "rarity_tier": "common" },
-        { "item_id": "fertilizer", "weight": 35, "min_quantity": 2, "max_quantity": 4, "rarity_tier": "common" },
-        { "item_id": "clean_water", "weight": 25, "min_quantity": 1, "max_quantity": 3, "rarity_tier": "common" },
-        { "item_id": "timber", "weight": 15, "min_quantity": 1, "max_quantity": 2, "rarity_tier": "common" },
-        { "item_id": "item_fungicide_fogger", "weight": 12, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "item_air_filter_hepa", "weight": 12, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "uncommon" },
-        { "item_id": "item_ro_membrane", "weight": 10, "min_quantity": 1, "max_quantity": 1, "rarity_tier": "rare" }
+        {
+          "item_id": "seed_packets",
+          "weight": 45,
+          "min_quantity": 2,
+          "max_quantity": 6,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "chemicals",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "wood_block",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_fungicide_fogger",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_air_filter_hepa",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_ro_membrane",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
       ]
     }
   ]

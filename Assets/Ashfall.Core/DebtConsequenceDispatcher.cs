@@ -16,6 +16,7 @@ namespace Ashfall.Core
         private readonly LedgerDebtSystem _ledger;
         private readonly DebtTemplateCatalog _catalog;
         private readonly HashSet<string> _firedConsequences = new HashSet<string>();
+        private Action<string, DebtContract>? _standingHandler;
 
         public event Action<DebtConsequence, DebtContract> OnConsequenceDispatched;
         public event Action<string, DebtContract> OnStandingPenalty;
@@ -32,11 +33,43 @@ namespace Ashfall.Core
             _ledger.OnContractPaid += HandlePaid;
         }
 
-        /// <summary>Detach from ledger events.</summary>
+        /// <summary>
+        /// Connect to FactionWarSystem so standing penalties from debt defaults
+        /// propagate to the authoritative standing system. This is the integration
+        /// point between Plan 40 (debt) and Plan 45 (patrols) — standing loss
+        /// from debt default makes future patrol encounters more hostile.
+        /// </summary>
+        public void ConnectStandingSystem(Func<string, int, bool> modifyStanding)
+        {
+            _standingHandler = (factionId, contract) =>
+            {
+                var consequence = ResolveConsequenceForContract(contract);
+                if (consequence != null && consequence.standingDelta != 0)
+                {
+                    modifyStanding?.Invoke(factionId, consequence.standingDelta);
+                }
+            };
+            OnStandingPenalty += _standingHandler;
+        }
+
+        private DebtConsequence? ResolveConsequenceForContract(DebtContract contract)
+        {
+            if (contract == null || string.IsNullOrEmpty(contract.templateId)) return null;
+            var template = _catalog.GetTemplate(contract.templateId);
+            if (template == null || string.IsNullOrEmpty(template.consequenceId)) return null;
+            return _catalog.GetConsequence(template.consequenceId);
+        }
+
+        /// <summary>Detach from ledger events and standing handler.</summary>
         public void Detach()
         {
             _ledger.OnForfeitTriggered -= HandleForfeit;
             _ledger.OnContractPaid -= HandlePaid;
+            if (_standingHandler != null)
+            {
+                OnStandingPenalty -= _standingHandler;
+                _standingHandler = null;
+            }
         }
 
         /// <summary>Whether a consequence has already fired for this contract.</summary>
@@ -88,11 +121,16 @@ namespace Ashfall.Core
         {
             OnConsequenceDispatched?.Invoke(consequence, contract);
 
+            // Resolve target faction: explicit targetFactionId, or fall back to creditorId
+            string targetFaction = !string.IsNullOrEmpty(consequence.targetFactionId)
+                ? consequence.targetFactionId
+                : contract.creditorId ?? string.Empty;
+
             switch (consequence.effectType)
             {
                 case "standing_loss":
-                    if (!string.IsNullOrEmpty(consequence.targetFactionId))
-                        OnStandingPenalty?.Invoke(consequence.targetFactionId, contract);
+                    if (!string.IsNullOrEmpty(targetFaction))
+                        OnStandingPenalty?.Invoke(targetFaction, contract);
                     break;
 
                 case "embargo":
@@ -101,8 +139,8 @@ namespace Ashfall.Core
                     break;
 
                 case "bounty":
-                    if (!string.IsNullOrEmpty(consequence.targetFactionId))
-                        OnBountyRequested?.Invoke(consequence.targetFactionId, contract);
+                    if (!string.IsNullOrEmpty(targetFaction))
+                        OnBountyRequested?.Invoke(targetFaction, contract);
                     break;
 
                 case "collateral_seizure":
@@ -111,32 +149,32 @@ namespace Ashfall.Core
                     break;
 
                 case "labor_obligation":
-                    if (!string.IsNullOrEmpty(consequence.targetFactionId) && consequence.laborDays > 0)
-                        OnLaborObligation?.Invoke(consequence.targetFactionId, consequence.laborDays, contract);
+                    if (!string.IsNullOrEmpty(targetFaction) && consequence.laborDays > 0)
+                        OnLaborObligation?.Invoke(targetFaction, consequence.laborDays, contract);
                     break;
 
                 case "standing_loss_and_embargo":
-                    if (!string.IsNullOrEmpty(consequence.targetFactionId))
-                        OnStandingPenalty?.Invoke(consequence.targetFactionId, contract);
+                    if (!string.IsNullOrEmpty(targetFaction))
+                        OnStandingPenalty?.Invoke(targetFaction, contract);
                     if (!string.IsNullOrEmpty(consequence.embargoScope))
                         OnEmbargoRequested?.Invoke(consequence.embargoScope, consequence.embargoDurationDays, contract);
                     break;
 
                 case "bounty_and_seizure":
-                    if (!string.IsNullOrEmpty(consequence.targetFactionId))
-                        OnBountyRequested?.Invoke(consequence.targetFactionId, contract);
+                    if (!string.IsNullOrEmpty(targetFaction))
+                        OnBountyRequested?.Invoke(targetFaction, contract);
                     if (!string.IsNullOrEmpty(consequence.collateralItemId))
                         OnCollateralSeizure?.Invoke(consequence.collateralItemId, contract);
                     break;
 
                 case "raid":
-                    if (!string.IsNullOrEmpty(consequence.targetFactionId))
-                        OnBountyRequested?.Invoke(consequence.targetFactionId, contract);
+                    if (!string.IsNullOrEmpty(targetFaction))
+                        OnBountyRequested?.Invoke(targetFaction, contract);
                     break;
 
                 case "treaty_breach":
-                    if (!string.IsNullOrEmpty(consequence.targetFactionId))
-                        OnStandingPenalty?.Invoke(consequence.targetFactionId, contract);
+                    if (!string.IsNullOrEmpty(targetFaction))
+                        OnStandingPenalty?.Invoke(targetFaction, contract);
                     break;
 
                 case "forgiveness":
