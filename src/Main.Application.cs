@@ -278,11 +278,23 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.WorldSelfTest:
                     GetTree().Quit(HostCli.RunWorldSelfTest());
                     return;
+                case HostCliAction.WorldExplorationSelfTest:
+                    GetTree().Quit(HostCli.RunWorldExplorationSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CartographySelfTest:
+                    GetTree().Quit(HostCli.RunCartographySelfTest(_dataDir));
+                    return;
+                case HostCliAction.ExpansionDepthSelfTest:
+                    GetTree().Quit(HostCli.RunExpansionDepthSelfTest(_dataDir));
+                    return;
                 case HostCliAction.EconomySelfTest:
                     GetTree().Quit(HostCli.RunEconomySelfTest(_dataDir));
                     return;
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
+                    return;
+                case HostCliAction.ResearchCatalogSelfTest:
+                    GetTree().Quit(HostCli.RunResearchCatalogSelfTest(_dataDir));
                     return;
                 case HostCliAction.CatalogBootPreflight:
                     GetTree().Quit(HostCli.RunCatalogBootPreflight(_dataDir));
@@ -338,6 +350,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ShelterOperationsSelfTest:
                     GetTree().Quit(HostCli.RunShelterOperationsSelfTest(_dataDir));
                     return;
+                case HostCliAction.ShelterDecorSelfTest:
+                    GetTree().Quit(ShelterDecorSelfTest.Run(_dataDir));
+                    return;
                 case HostCliAction.AudioSelfTest:
                     GetTree().Quit(AtomicWar.GodotApp.Audio.AudioSelfTest.Run());
                     return;
@@ -355,6 +370,15 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.OnboardingJourneySelfTest:
                     GetTree().Quit(HostCli.RunOnboardingJourneySelfTest(_dataDir));
+                    return;
+                case HostCliAction.DynamicWorldSelfTest:
+                    GetTree().Quit(HostCli.RunDynamicWorldSelfTest(_dataDir));
+                    return;
+                case HostCliAction.WastelandInhabitantsSelfTest:
+                    GetTree().Quit(HostCli.RunWastelandInhabitantsSelfTest(_dataDir));
+                    return;
+                case HostCliAction.OralLoreSelfTest:
+                    GetTree().Quit(HostCli.RunOralLoreSelfTest(_dataDir));
                     return;
                 case HostCliAction.ContentUtilizationSelfTest:
                     GetTree().Quit(ContentUtilizationSelfTest.Run(
@@ -418,6 +442,11 @@ namespace AtomicWar.GodotApp
 
         public override void _Process(double delta)
         {
+            // Plan 60 / D6 — the bedside vigil is the only thing in the game allowed to
+            // run on wall-clock time, and only because its <em>duration</em> is the
+            // point. What it changes in the simulation is a boolean (kept / not kept),
+            // so frame rate can never move a campaign outcome.
+            _medical?.TickVigil(delta);
             // The diagnostics strip used to rebuild its string every frame AND call
             // Engine.GetVersionInfo(), which allocates a Godot Dictionary — 60 allocations
             // a second for a version that never changes. Cache the version, refresh ~4x/sec.

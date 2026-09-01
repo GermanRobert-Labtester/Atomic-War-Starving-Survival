@@ -32,7 +32,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseRadiationDetailPanel());
 
             PanelRegistry.ConfigureActions("research",
-                bindAction: () => { _sharedResearch ??= new ResearchSystem(log: new GodotLog()); _researchPanel.Bind(_sharedResearch); },
+                bindAction: () => { _sharedResearch = EnsureSharedResearch(); _researchPanel.Bind(_sharedResearch); },
                 openAction: () => _researchPanel.Open(),
                 closeAction: () => CloseResearchPanel());
 
@@ -384,7 +384,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _questsAtlasPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("research_atlas",
-                bindAction: () => { _researchHostSession ??= ResearchHostSession.Create(); _researchAtlasPanel.Bind(_researchHostSession); },
+                bindAction: () => { _researchHostSession ??= ResearchHostSession.Create(_dataDir, EnsureSharedResearch()); _researchAtlasPanel.Bind(_researchHostSession); },
                 openAction: () => _researchAtlasPanel.Open(),
                 closeAction: () => _researchAtlasPanel.Visible = false);
 

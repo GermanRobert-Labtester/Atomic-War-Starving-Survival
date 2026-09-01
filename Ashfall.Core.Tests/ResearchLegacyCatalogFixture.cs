@@ -177,5 +177,33 @@ namespace Ashfall.Core.Tests
             "knowledge_scavenge_efficiency",
             "knowledge_combat_training",
         };
+
+        /// <summary>
+        /// Load the authoritative research_knowledge.json catalog into a system —
+        /// the test-project replacement for the deleted RegisterDefaults().
+        /// </summary>
+        public static int LoadAuthoritativeCatalogInto(Ashfall.Core.ResearchSystem system)
+        {
+            return ResearchKnowledgeCatalogLoader.LoadAndRegister(
+                system, ResolveDataDir(), new FileSystemIO(), new SystemTextJsonSerializer());
+        }
+
+        private static string ResolveDataDir()
+        {
+            string baseDir = System.AppContext.BaseDirectory;
+            string probe = System.IO.Path.Combine(baseDir, "Assets", "StreamingAssets", "Data");
+            if (System.IO.Directory.Exists(probe)) return probe;
+
+            string dir = baseDir;
+            for (int i = 0; i < 6; i++)
+            {
+                probe = System.IO.Path.Combine(dir, "Assets", "StreamingAssets", "Data");
+                if (System.IO.Directory.Exists(probe)) return probe;
+                var parent = System.IO.Directory.GetParent(dir);
+                if (parent == null) break;
+                dir = parent.FullName;
+            }
+            return probe;
+        }
     }
 }

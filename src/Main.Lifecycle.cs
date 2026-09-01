@@ -234,6 +234,7 @@ namespace AtomicWar.GodotApp
                     _greenhouse = null!;
                     _greenhouseDirty = false;
                     _sharedResearch = null!;
+                    _researchHostSession = null;
                 }));
 
             // Year of Ash & Muster

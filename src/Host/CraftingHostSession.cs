@@ -38,10 +38,26 @@ namespace AtomicWar.GodotApp
             var logger = log ?? new GodotLog();
             Inventory = inventory ?? new InventoryContainer();
             Research = research ?? new ResearchSystem(logger);
-            Research.RegisterDefaults();
             Engine = new CraftingSystem(Inventory);
             Workshop = new WorkshopReverseEngineeringSystem(Inventory, Research, Engine, logger);
             PharmaLab = new PharmaLabSystem(Inventory, rng ?? new SeededRng(1986), logger);
+
+            // Plan 34: award the completed node's breakthrough_item exactly once —
+            // the Core event fires only on the completed transition, never on
+            // save restore, so restored campaigns do not re-grant.
+            Research.OnResearchCompleted += def =>
+            {
+                if (string.IsNullOrEmpty(def.breakthroughItem)) return;
+                if (Inventory.AddById(def.breakthroughItem, 1))
+                {
+                    logger.Info($"[Crafting] breakthrough item granted: {def.breakthroughItem}");
+                    RaiseStateChanged();
+                }
+                else
+                {
+                    logger.Warn($"[Crafting] breakthrough item not granted (unknown item id?): {def.breakthroughItem}");
+                }
+            };
 
             Engine.OnCraftStarted += _ => RaiseStateChanged();
             Engine.OnCraftCompleted += _ => RaiseStateChanged();
@@ -73,6 +89,17 @@ namespace AtomicWar.GodotApp
             var recipes = RecipeCatalogLoader.Load(dataDir, fileIO, serializer, itemCatalog);
 
             var session = new CraftingHostSession(inventory, recipes, research, rng, log);
+
+            // When the session owns its research instance, load the authoritative
+            // research_knowledge.json catalog (Plan 34: JSON is the sole authored
+            // research authority — no hardcoded fallback).
+            if (research == null)
+            {
+                int researchCount = ResearchKnowledgeCatalogLoader.LoadAndRegister(
+                    session.Research, dataDir, fileIO, serializer);
+                if (researchCount == 0)
+                    log?.Warn($"[Crafting] research catalog loaded 0 nodes from {dataDir} — research content unavailable");
+            }
 
             // Load authoritative relic and pharma catalogs from JSON
             var relicCatalog = RelicCatalogLoader.Load(dataDir, fileIO, serializer);

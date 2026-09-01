@@ -164,7 +164,8 @@ namespace Ashfall.Core.Tests
         {
             var inv = new Inventory.Inventory();
             var research = new ResearchSystem();
-            research.RegisterDefaults();
+            // Plan 34: authoritative JSON catalog
+            ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research);
             var crafting = new CraftingSystem(inv);
             var workshop = new WorkshopReverseEngineeringSystem(inv, research, crafting);
 
@@ -310,7 +311,8 @@ namespace Ashfall.Core.Tests
         {
             var inv = new Inventory.Inventory();
             var research = new ResearchSystem();
-            research.RegisterDefaults();
+            // Plan 34: authoritative JSON catalog
+            ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research);
             var crafting = new CraftingSystem(inv);
             var workshop = new WorkshopReverseEngineeringSystem(inv, research, crafting);
             var pharma = new PharmaLabSystem(inv, new SeededRng(42));

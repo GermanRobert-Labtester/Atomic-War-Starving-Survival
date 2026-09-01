@@ -118,7 +118,7 @@ public partial class ResearchAtlasPanel : Control, IBindablePanel
         _statusRail.AddCard("unlocked",  "Unlocked",     "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
         _statusRail.AddCard("active",  "Active",     "—", AshfallMetricCard.Criticality.Normal, minWidth: 100);
         _statusRail.AddCard("completed", "Completed",    "—", AshfallMetricCard.Criticality.Caution, minWidth: 110);
-        _statusRail.AddCard("remaining",  "Science","—", AshfallMetricCard.Criticality.Warn, minWidth: 130);
+        _statusRail.AddCard("remaining",  "Remaining","—", AshfallMetricCard.Criticality.Warn, minWidth: 130);
         _statusRail.AddCard("breakthroughs",  "Breakthroughs",     "—", AshfallMetricCard.Criticality.Normal, minWidth: 130);
 
         var colsCurrents = new[]
@@ -268,17 +268,19 @@ public partial class ResearchAtlasPanel : Control, IBindablePanel
             _statusRail.Set("breakthroughs",  "—", AshfallMetricCard.Criticality.Normal);
             return;
         }
-        // ResearchSystem exposes a 15-node catalog with prerequisite gating and
-        // day-progress ticks. The host session feeds the status rail with live
-        // counts from the engine state envelope.
+        // ResearchSystem exposes the authoritative research_knowledge.json catalog
+        // (56 nodes, Plan 34). The status rail reports live engine counts — the
+        // previously hardcoded fixture numbers are gone.
+        int breakthroughNodes = 0;
+        foreach (var kv in _host.Catalog)
+            if (!string.IsNullOrEmpty(kv.Value.breakthroughItem)) breakthroughNodes++;
 
-        _statusRail.Set("total",  "5", AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("unlocked",  "5", AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("active",  "127", AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("completed", "44", AshfallMetricCard.Criticality.Caution);
-        _statusRail.Set("remaining",  "12", AshfallMetricCard.Criticality.Warn);
-        _statusRail.Set("breakthroughs", _host.ActiveResearchDays > 0 ? _host.ActiveResearchId : "idle",
-            AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("total",  _host.CatalogCount.ToString(), AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("unlocked",  _host.UnlockedCount.ToString(), AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("active",  _host.ActiveResearchDays > 0 ? _host.ActiveResearchId : "idle", AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("completed", _host.CompletedCount.ToString(), AshfallMetricCard.Criticality.Caution);
+        _statusRail.Set("remaining",  System.Math.Max(0, _host.CatalogCount - _host.CompletedCount).ToString(), AshfallMetricCard.Criticality.Warn);
+        _statusRail.Set("breakthroughs",  breakthroughNodes.ToString(), AshfallMetricCard.Criticality.Normal);
     }
 
     private List<(string id, string display, string direction, float dTrust, float anchorCap)> _currentRows = new();

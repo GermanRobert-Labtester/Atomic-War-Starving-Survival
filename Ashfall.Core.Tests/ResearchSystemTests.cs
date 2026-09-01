@@ -1,25 +1,45 @@
 using System;
+using System.IO;
 using System.Linq;
 using Ashfall.Core;
+using Ashfall.Core.IO;
 using Xunit;
 
 namespace Ashfall.Core.Tests
 {
     public class ResearchSystemTests
     {
+        private static string ResolveDataDir()
+        {
+            string baseDir = AppContext.BaseDirectory;
+            string probe = Path.Combine(baseDir, "Assets", "StreamingAssets", "Data");
+            if (Directory.Exists(probe)) return probe;
+
+            string dir = baseDir;
+            for (int i = 0; i < 6; i++)
+            {
+                probe = Path.Combine(dir, "Assets", "StreamingAssets", "Data");
+                if (Directory.Exists(probe)) return probe;
+                var parent = Directory.GetParent(dir);
+                if (parent == null) break;
+                dir = parent.FullName;
+            }
+            return probe;
+        }
+
         private static ResearchSystem BuildEngine(ResearchState state = null)
         {
             var log = new NullLog();
             var engine = new ResearchSystem(log, state);
-            engine.RegisterDefaults();
+            ResearchKnowledgeCatalogLoader.LoadAndRegister(engine, ResolveDataDir(), new FileSystemIO(), new SystemTextJsonSerializer());
             return engine;
         }
 
         [Fact]
-        public void RegisterDefaults_Builds15NodeCatalog()
+        public void AuthoritativeCatalog_LoadsAll56Nodes()
         {
             var engine = BuildEngine();
-            Assert.Equal(15, engine.CatalogCount);
+            Assert.Equal(56, engine.CatalogCount);
         }
 
         [Fact]
@@ -107,13 +127,14 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void RegisterDefaults_CoversAllCanonicalDisciplines()
+        public void Catalog_CoversAllCanonicalDisciplines()
         {
             var engine = BuildEngine();
             var categories = engine.Catalog.Values.Select(k => k.category).Distinct().ToList();
 
             Assert.Contains("survival", categories);
             Assert.Contains("engineering", categories);
+            Assert.Contains("medical", categories);
             Assert.Contains("science", categories);
             Assert.Contains("scavenging", categories);
             Assert.Contains("combat", categories);

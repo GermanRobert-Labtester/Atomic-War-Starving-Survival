@@ -66,6 +66,8 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 9 | `campaign_day` | Campaign & Progression | `CampaignDayCoordinator` | — *(Procedural)* | `CampaignDayCoordinator` | `CampaignDaySaveStore` | `GameDashboardPanel` | `--day1-selftest`, `--day1-to-day2-selftest`, `CampaignDayCoordinatorTests` | ✅ 6/6 |
 | 10 | `daily_briefing` | Campaign & Progression | `DailyBriefingReportBuilder`, `DailyBriefingState` | — *(Procedural)* | `DailyBriefingState` | `DailyBriefingSaveStore` | `DailyBriefingModal` | `--day1-selftest`, `DailyBriefingReportBuilderTests` | ✅ 6/6 |
 | 11 | `library_study` | Campaign & Progression | `LibraryStudySystem` | `library_manuals.json` | `LibraryStudyHostSession` | `LibraryStudySaveStore` | `LibraryStudyPanel` | `--shelter-operations-selftest`, `LibraryStudySystemTests` | ✅ 6/6 |
+| 12 | `research` | Campaign & Progression | `ResearchSystem`, `ResearchKnowledgeCatalogLoader` | `research_knowledge.json` | `ResearchHostSession` | `ResearchSaveStore` | `ResearchPanel`, `ResearchAtlasPanel` | `--research-catalog-selftest`, `ResearchCatalogParityTests`, `ResearchSaveIntegrationTests` | ✅ 6/6 |
+| 67 | `field_guide` | World & Expeditions | `FieldGuideCatalog` | `field_guide_entries.json` *(or procedural)* | `Main.FieldGuide` (world day owner) | `FieldGuideSaveStore` | *(journal/briefing projections)* | `--evolving-world-selftest` | ✅ 6/6 |
 | 12 | `caravan` | Economy & Trade | `TravelingCaravanSystem` | `trade_texts.json` | `TravelingCaravanHostSession` | `CaravanSaveStore` | `TravelingCaravanPanel` | `--caravan-selftest`, `TradeCaravanCatalogTests` | ✅ 6/6 |
 | 13 | `economy` | Economy & Trade | `MarketSystem` | `economy_goods.json` | `EconomyHostSession` | `EconomySaveStore` | `EconomyMarketPanel`, `EconomyDetailPanel` | `--economy-selftest`, `--economy-uitest`, `DynamicEconomyCharacterizationTests` | ✅ 6/6 |
 | 14 | `regional_treaty` | Economy & Trade | `RegionalTreatySystem` | `faction_lore.json` | `RegionalTreatyHostSession` | `RegionalTreatySaveStore` | `RegionalTreatyPanel` | `--shelter-operations-selftest`, `RegionalTreatySaveChecksumTests` | ✅ 6/6 |
@@ -90,7 +92,8 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 33 | `greenhouse` | Shelter & Infrastructure | `GreenhouseSystem` | `greenhouse_items.json` | `GreenhouseHostSession` | `GreenhouseSaveStore` | `GreenhousePanel` | `--greenhouse-selftest`, `GreenhouseSystemTests` | ✅ 6/6 |
 | 34 | `power_grid` | Shelter & Infrastructure | `PowerGridSystem` | `power_grid.json` | `PowerGridHostSession` | `PowerGridSaveStore` | `PowerGridPanel` | `--player-panels-uitest`, `PowerGridSystemTests` | ✅ 6/6 |
 | 35 | `shelter_assignment` | Shelter & Infrastructure | `ShelterAssignmentSystem` | — *(Procedural)* | `ShelterAssignmentHostSession` | `ShelterAssignmentSaveStore` | `ShelterPanel` | `--shelter-operations-selftest`, `ShelterAssignmentSystemTests` | ✅ 6/6 |
-| 36 | `shelter_schedule` | Shelter & Infrastructure | `ShelterScheduleSystem` | `shelter_schedules.json` | `ShelterScheduleHostSession` | `ShelterScheduleSaveStore` | `ShelterSchedulePanel` | `--shelter-operations-selftest`, `ShelterScheduleIntegrationTests` | ✅ 6/6 |
+| 36 | `shelter_decor` | Shelter & Infrastructure | `ShelterDecorSystem` | `items.json` | `ShelterDecorHostSession` | `ShelterDecorSaveStore` | `ShelterDecorPanel` | `--shelter-decor-selftest`, `Plan12CDecorTests` | ✅ 6/6 |
+| 37 | `shelter_schedule` | Shelter & Infrastructure | `ShelterScheduleSystem` | `shelter_schedules.json` | `ShelterScheduleHostSession` | `ShelterScheduleSaveStore` | `ShelterSchedulePanel` | `--shelter-operations-selftest`, `ShelterScheduleIntegrationTests` | ✅ 6/6 |
 | 37 | `shelter_thermal` | Shelter & Infrastructure | `ShelterThermalSystem` | — *(Procedural)* | `ShelterThermalHostSession` | `ShelterThermalSaveStore` | `ShelterThermalPanel` | `--shelter-operations-selftest`, `ShelterThermalSaveChecksumTests` | ✅ 6/6 |
 | 38 | `starting_level` | Shelter & Infrastructure | `StartingLevelSystem` | — *(Procedural)* | `StartingLevelHostSession` | `StartingLevelSaveStore` | `OpeningProtocolModal` | `--playable-shell-selftest`, `StartingLevelSystemTests` | ✅ 6/6 |
 | 39 | `sump_flooding` | Shelter & Infrastructure | `SumpFloodingSystem` | — *(Procedural)* | `SumpFloodingHostSession` | `SumpFloodingSaveStore` | `SumpFloodingPanel` | `--shelter-operations-selftest`, `SumpFloodingSaveChecksumTests` | ✅ 6/6 |
@@ -121,6 +124,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 64 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
 | 65 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
 | 66 | `medical_pipeline` | Survival & Biology | `MedicalPipelineCoordinator`, `DiagnosisKnowledgeStore`, `MedicalReservationLedger`, `MedicalProcedureSchedule` | — *(Projection DTOs; no JSON catalog)* | `MedicalHostSession` | `MedicalPipelineSaveStore` | `MedicalPanel` | `MedicalPipelineTests`, `MedicalPipelineArchitectureGateTests` | ✅ 6/6 |
+| 67 | `ecological_infestation` | World & Expeditions | `EcologicalInfestationSystem` | `ecological_infestations.json`, `disease_catalog.json`, `items.json`, `locations.json` | `Main.EcologicalInfestations` (world_evolution day owner) | `EcologicalInfestationSaveStore` | *(journal/briefing projections; no panel — Phase 6)* | `--evolving-world-selftest`, `EcologicalInfestationSystemTests` | ✅ 6/6 |
 
 ---
 
@@ -250,6 +254,18 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/LibraryStudyHostSession.cs`](../../src/Host/LibraryStudyHostSession.cs)
   - UI Panel: [`src/UI/LibraryStudyPanel.cs`](../../src/UI/LibraryStudyPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/LibraryStudySystemTests.cs`](../../Ashfall.Core.Tests/LibraryStudySystemTests.cs)
+
+### 12. `research` — Research knowledge progress: unlocked, active, and completed nodes (Campaign & Progression)
+- **Owner Domain:** `knowledge`
+- **Setup Method:** *None (lazy)* — `Main.EnsureSharedResearch()` constructs, restores, and loads the catalog on first research consumer
+- **UI Routes:** `research`, `research_atlas`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Research/ResearchSystem.cs`](../../Assets/Ashfall.Core/Research/ResearchSystem.cs)
+  - Catalog Loader: [`Assets/Ashfall.Core/Research/ResearchKnowledgeCatalogLoader.cs`](../../Assets/Ashfall.Core/Research/ResearchKnowledgeCatalogLoader.cs)
+  - Host Session: [`src/Host/ResearchHostSession.cs`](../../src/Host/ResearchHostSession.cs)
+  - Save Store: [`src/Host/ResearchSaveStore.cs`](../../src/Host/ResearchSaveStore.cs)
+  - UI Panel: [`src/UI/ResearchPanel.cs`](../../src/UI/ResearchPanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/ResearchCatalogParityTests.cs`](../../Ashfall.Core.Tests/ResearchCatalogParityTests.cs)
 
 ### 12. `caravan` — Trade caravans, routes, and arrivals (Economy & Trade)
 - **Owner Domain:** `caravans`
@@ -901,6 +917,17 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/MedicalPipelineSaveStore.cs`](../../src/Host/MedicalPipelineSaveStore.cs)
   - UI Panel: [`src/UI/MedicalPanel.cs`](../../src/UI/MedicalPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/MedicalPipelineTests.cs`](../../Ashfall.Core.Tests/Medical/MedicalPipelineTests.cs)
+
+### 67. `ecological_infestation` — Location & shelter ecological infestations (World & Expeditions)
+- **Owner Domain:** `world` (Plan 28)
+- **Setup Method:** `Main.SetupEcologicalInfestation()` | **Cadence:** `Daily trigger pass + consequence tick (world_evolution day owner)`
+- **UI Routes:** briefing events + journal (dedicated panel = later phase)
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Ecology/EcologicalInfestationSystem.cs`](../../Assets/Ashfall.Core/Ecology/EcologicalInfestationSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/ecological_infestations.json`](../../Assets/StreamingAssets/Data/ecological_infestations.json)
+  - Host Session: [`src/Main.EcologicalInfestations.cs`](../../src/Main.EcologicalInfestations.cs)
+  - Save Store: [`src/Host/EcologicalInfestationSaveStore.cs`](../../src/Host/EcologicalInfestationSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs`](../../Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs)
 
 ## 4. Lifecycle Status & Reachability Proof Matrix
 

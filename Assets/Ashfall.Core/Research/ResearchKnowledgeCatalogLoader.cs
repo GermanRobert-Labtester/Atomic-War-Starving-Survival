@@ -100,6 +100,13 @@ namespace Ashfall.Core
             }
         }
 
+        /// <summary>
+        /// Load research_knowledge.json and register every definition. The JSON
+        /// catalog is the sole authored research authority (Plan 34): a missing,
+        /// empty, or malformed file registers nothing and returns 0 — callers
+        /// must surface that as a diagnostic, never fall back to hardcoded
+        /// definitions.
+        /// </summary>
         public static int LoadAndRegister(
             ResearchSystem system,
             string dataDir,
@@ -108,18 +115,11 @@ namespace Ashfall.Core
         {
             if (system == null) return 0;
             var defs = Load(dataDir, fileIO, json);
-            if (defs.Count > 0)
+            foreach (var def in defs)
             {
-                foreach (var def in defs)
-                {
-                    system.Register(def);
-                }
-                return defs.Count;
+                system.Register(def);
             }
-
-            // Fallback to built-in defaults if data file is missing (e.g. unit tests without directory setup)
-            system.RegisterDefaults();
-            return system.CatalogCount;
+            return defs.Count;
         }
 
         /// <summary>

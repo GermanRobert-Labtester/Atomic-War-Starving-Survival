@@ -148,7 +148,7 @@ namespace AtomicWar.GodotApp
         {
             if (_crafting != null) return;
             SetupInventory();
-            _sharedResearch ??= new ResearchSystem(log: new GodotLog());
+            _sharedResearch = EnsureSharedResearch();
             _crafting = CraftingHostSession.Create(_dataDir, _inventory.Inventory, _sharedResearch);
 
             _crafting.Workshop.BindSkillEvaluator(survivorId =>

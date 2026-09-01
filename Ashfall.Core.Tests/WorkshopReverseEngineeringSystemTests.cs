@@ -15,7 +15,8 @@ namespace Ashfall.Core.Tests
         {
             inv = new Inventory.Inventory();
             research = new ResearchSystem();
-            research.RegisterDefaults();
+            // Plan 34: authoritative JSON catalog
+            ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research);
             crafting = new CraftingSystem(inv);
             var workshop = new WorkshopReverseEngineeringSystem(inv, research, crafting);
             workshop.BindSkillEvaluator(_ => 1.0f);

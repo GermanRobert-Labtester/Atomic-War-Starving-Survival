@@ -29,6 +29,7 @@ namespace Ashfall.Core
         BridgeSelfTest,
         CoreSelfTest,
         DataIntegritySelfTest,
+        ResearchCatalogSelfTest,
         PanelBindLifecycleSelfTest,
         SaveLoadUiFailureSelfTest,
         SaveStoreChecksumSelfTest,
@@ -111,6 +112,7 @@ namespace Ashfall.Core
         PlayerPanelsUiTest,
         ShelterHazardLoopSelfTest,
         ShelterOperationsSelfTest,
+        ShelterDecorSelfTest,
         SilentFoundryUiTest,
         SurvivorsUiTest,
         UiLayoutSelfTest,
@@ -247,6 +249,12 @@ namespace Ashfall.Core
                     "--data-integrity-selftest",
                     null,
                     "Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ResearchCatalogSelfTest,
+                    "Core & System Gates",
+                    "--research-catalog-selftest",
+                    null,
+                    "Research knowledge catalog gate (Plan 34): load count, DAG validity, original 15 save-contract nodes, and cross-catalog unlock references (breakthrough items, relic research unlocks, manual/autopsy knowledge grants)"),
                 new HostCliActionDescriptor(
                     HostCliAction.PanelBindLifecycleSelfTest,
                     "Core & System Gates",
@@ -715,6 +723,12 @@ namespace Ashfall.Core
                     "--shelter-operations-selftest",
                     new[] { "--shelter-ops-selftest", "--operations-selftest" },
                     "Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ShelterDecorSelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--shelter-decor-selftest",
+                    new[] { "--shelter-interior-selftest", "--memorial-wall-selftest" },
+                    "Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification"),
                 new HostCliActionDescriptor(
                     HostCliAction.SilentFoundryUiTest,
                     "UI Tests, Layout & Gameplay Smoke",

@@ -110,14 +110,18 @@ namespace Ashfall.Core.Save
             new("decontamination", "SaveDecontamination", "SetupDecontamination", "radiation", "Rad-scrubbing showers and chambers", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("kitchen_nutrition", "SaveKitchenNutrition", "SetupKitchenNutrition", "nutrition", "Rationing recipes and caloric balance", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("library_study", "SaveLibraryStudy", "SetupLibraryStudy", "knowledge", "Research library books and blueprints", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("research", "SaveResearch", null, "knowledge", "Research knowledge progress: unlocked, active, and completed nodes (Plan 34)", RequiresSetup: false, LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("archive_desk", "SaveArchiveDesk", "SetupArchiveDesk", "knowledge", "Document archiving, ink, and scribing", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("contractor_roster", "SaveContractorRoster", "SetupContractorRoster", "personnel", "Hired mercenaries and specialists", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("mental_health_crisis", "SaveMentalHealthCrisis", "SetupMentalHealthCrisis", "psychology", "Psychological trauma and psych ward", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_assignment", "SaveShelterAssignment", "SetupShelterAssignment", "shelter", "Room assignments and living quarters", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_decor", "SaveShelterDecor", "SetupShelterDecor", "shelter", "Room decor placements, memorial plaques, and localized morale items", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("survivor_social", "SaveSurvivorSocial", "SetupSurvivorSocial", "social", "Leadership, friction, ration conflict, trauma bonds, skill atrophy"),
             new("survivor_fate", "SaveSurvivorFate", "SetupSurvivorFate", "memorial", "Unified survivor-death ledger: one immutable fate record per deceased survivor"),
             new("weight_of_choices", "SaveFactionBranch", "SetupFactionBranch", "factions", "Weight of choices faction branch progression and PoNR commitments", LifecycleGroup: ExpandedShelterLifecycleGroup),
-            new("onboarding", "SaveOnboarding", "SetupOnboarding", "onboarding", "First-hour onboarding journey progress, dismissed hints, assistance level, completion")
+            new("onboarding", "SaveOnboarding", "SetupOnboarding", "onboarding", "First-hour onboarding journey progress, dismissed hints, assistance level, completion"),
+            new("ecological_infestation", "SaveEcologicalInfestation", "SetupEcologicalInfestation", "world", "Plan 28 — location and shelter ecological infestations (trigger/clear/tolerate lifecycle)"),
+            new("field_guide", "SaveFieldGuide", "SetupFieldGuide", "world", "Plan 20A/28 — field-guide unlocked-entry ledger (reading-the-land knowledge)")
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -198,14 +202,18 @@ namespace Ashfall.Core.Save
                 { "decontamination", "decontamination_save.json" },
                 { "kitchen_nutrition", "kitchen_nutrition_save.json" },
                 { "library_study", "library_study_save.json" },
+                { "research", "research_save.json" },
                 { "archive_desk", "archive_desk_save.json" },
                 { "contractor_roster", "contractor_roster_save.json" },
                 { "mental_health_crisis", "mental_health_crisis_save.json" },
                 { "shelter_assignment", "shelter_assignment_save.json" },
+                { "shelter_decor", "shelter_decor_save.json" },
                 { "survivor_social", "survivor_social_save.json" },
                 { "survivor_fate", "survivor_fate_save.json" },
                 { "weight_of_choices", "weight_of_choices_save.json" },
                 { "onboarding", "onboarding_save.json" },
+                { "ecological_infestation", "ecological_infestation_save.json" },
+                { "field_guide", "field_guide_save.json" },
             };
 
         /// <summary>

@@ -13,7 +13,8 @@ namespace Ashfall.Core.Tests
         public void AllRelicRecipes_NonEmptyResearchUnlocks_ResolveStaticallyInResearchCatalog()
         {
             var research = new ResearchSystem();
-            research.RegisterDefaults();
+            // Plan 34: authoritative JSON catalog
+            ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research);
 
             string dataDir;
             if (!CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out dataDir))
@@ -52,7 +53,8 @@ namespace Ashfall.Core.Tests
         public void RelicResearchUnlock_SaveLoad_RoundTripsState()
         {
             var research1 = new ResearchSystem();
-            research1.RegisterDefaults();
+            // Plan 34: authoritative JSON catalog
+            ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research1);
 
             string targetId = "knowledge_micro_dosimeter_blueprint";
             research1.UnlockManual(targetId);
@@ -63,7 +65,8 @@ namespace Ashfall.Core.Tests
             Assert.Contains(targetId, saved.completedIds);
 
             var research2 = new ResearchSystem();
-            research2.RegisterDefaults();
+            // Plan 34: authoritative JSON catalog
+            ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research2);
             research2.RestoreState(saved);
 
             var restoredDef = research2.GetKnowledge(targetId);
