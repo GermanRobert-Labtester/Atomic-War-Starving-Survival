@@ -31,6 +31,11 @@ namespace Ashfall.Core.YearOfAsh
     /// </summary>
     public class FactionWarSystem
     {
+        public const string SystemId = "faction_war_system";
+        /// <summary>Standing at or below this is hostile (isHostile). Credit and
+        /// other trust-gated offers must use this constant, never a copied -50.</summary>
+        public const int HostileStandingThreshold = -50;
+
         private readonly FactionWarSystemState _state;
 
         public FactionWarSystemState State => _state;
