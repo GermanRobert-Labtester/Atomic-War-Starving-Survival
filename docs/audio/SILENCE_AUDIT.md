@@ -297,23 +297,23 @@ encounters it in a normal session.
 | # | Gap | Domain | Why it matters | Fix type | 7B Status |
 |---|---|---|---|---|---|
 | 1 | **Combat has zero audio** | Combat | Combat is the highest-tension moment in the game; 26 event kinds, 0 cues, 0 wiring. Fire, jam, hit, downed, death, victory, defeat — all silent. | Wire `OnCombatEvent` + new cues | **CLOSED** — 8 cues + 8 SFX + bridge |
-| 2 | **UI panels have zero feedback** | UI | Every button press, tab switch, modal open/close, and invalid action is silent. 8 cues registered, 0 called. The game feels broken. | Wire `PlayCue` in panel code | Open |
+| 2 | **UI panels have zero feedback** | UI | Every button press, tab switch, modal open/close, and invalid action is silent. 8 cues registered, 0 called. The game feels broken. | Wire `PlayCue` in panel code | Partial — `ui_confirm` on panel open, `ui_invalid_action` on rejected trade |
 | 3 | **No ambience loops play** | Ambience | `amb_bunker` and `amb_surface` are registered as loops but never started. The shelter and surface are dead quiet. | Wire in game loop / scene load | Partial — `amb_bunker` wired via `StartBunkerAmbience` |
 | 4 | **No music plays** | Music | `music_menu` and `music_gameplay` are registered but never triggered. No menu music, no gameplay underscore. | Wire in scene transitions | Partial — `music_gameplay` wired (path bug fixed) |
-| 5 | **Survivor death is silent** | Death | No death event, no death cue. A survivor dying produces no audio — the most emotionally weighted event in the game. | Core event + cue + wiring | Open — needs Core change |
+| 5 | **Survivor death is silent** | Death | No death event, no death cue. A survivor dying produces no audio — the most emotionally weighted event in the game. | Core event + cue + wiring | **CLOSED** — `SurvivorFateSystem.OnSurvivorFate` → `med_survivor_death` cue |
 | 6 | **19 weather states have no transition sound** | Weather | Only 3 of 22 WeatherKind states produce audio. Ashfall, IceStorm, EMPStorm, BloodRain, and 15 others transition silently. | Wire `OnWeatherChanged` + new cues | **CLOSED** — expanded to 14 of 22 states |
-| 7 | **Radio is non-functional** | Radio | 4 radio cues registered, 0 triggered. Tuning, static, signal lock, Morse — all silent. 118 broadcasts, 0 audio. | Wire radio UI + JSON `audio_cue` | Open |
-| 8 | **5 produced VO files are orphaned** | Radio | The only voice acting in the project is unreferenced. Cheapest VO win available. | Add `audio_cue` to radio JSON | Partial — `vo_kind_parley` now matched via Kind |
+| 7 | **Radio is non-functional** | Radio | 4 radio cues registered, 0 triggered. Tuning, static, signal lock, Morse — all silent. 118 broadcasts, 0 audio. | Wire radio UI + JSON `audio_cue` | **CLOSED** — `radio_tune` + `radio_signal_lock` on intercept, 10 VO cues wired |
+| 8 | **5 produced VO files are orphaned** | Radio | The only voice acting in the project is unreferenced. Cheapest VO win available. | Add `audio_cue` to radio JSON | **CLOSED** — 10 VO cues + assets + `audio_cue` in radio JSON |
 | 9 | **Expeditions are silent** | Expeditions | 15 events (departure, breakdown, return, camp, encounters), 0 cues, 0 wiring. Expedition is a major gameplay loop. | Wire `ExpeditionSystem` events + new cues | **CLOSED** — 5 events wired to existing cues |
-| 10 | **Medical events are silent** | Medical | Disease outbreak, quarantine, infection, outcome — all silent. `med_heartbeat`/`med_coughing` exist but never fire. | Wire `DiseaseSystem` events | **CLOSED** — outbreak + infection wired |
+| 10 | **Medical events are silent** | Medical | Disease outbreak, quarantine, infection, outcome — all silent. `med_heartbeat`/`med_coughing` exist but never fire. | Wire `DiseaseSystem` events | **CLOSED** — outbreak, infection, quarantine seal/clear, outcome wired |
 | 11 | **Crafting has no feedback** | Crafting | `action_crafting` registered, `OnCraftCompleted` never wired. Crafting is a core loop; no completion sound. | Wire `CraftingSystem.OnCraftCompleted` | **CLOSED** — OnCraftCompleted wired |
-| 12 | **Trade has no feedback** | Economy | `action_trade` registered, `MarketSystem` events never wired. No deal-confirm sound. | Wire `MarketSystem` / trade UI | Open |
-| 13 | **Shelter door open/seal silent** | Shelter | `shelter_door_open`/`shelter_door_seal` registered, never triggered. Entering/leaving the bunker is a key moment. | Wire in airlock/door code | Partial — `shelter_door_open` wired via expeditions |
-| 14 | **Generator/ventilation never audible** | Shelter | `shelter_generator`, `shelter_ventilation` registered as loops, never started. Power state is invisible to the ear. | Wire in `PowerGridSystem` state | Open |
-| 15 | **Air filter degradation silent** | Shelter | `shelter_air_filter` registered, never triggered. Filter failure is a survival-critical alert. | Wire in air filter system | Open |
-| 16 | **Geiger counter never clicks** | Radiation | `rad_geiger_burst` and `rad_geiger_loop` registered, never triggered. Radiation exposure has no audible geiger feedback. | Wire in radiation tick / dose | Open |
+| 12 | **Trade has no feedback** | Economy | `action_trade` registered, `MarketSystem` events never wired. No deal-confirm sound. | Wire `MarketSystem` / trade UI | **CLOSED** — `action_trade` on Buy/Sell, `ui_invalid_action` on reject |
+| 13 | **Shelter door open/seal silent** | Shelter | `shelter_door_open`/`shelter_door_seal` registered, never triggered. Entering/leaving the bunker is a key moment. | Wire in airlock/door code | Partial — open + seal wired via expedition start/return |
+| 14 | **Generator/ventilation never audible** | Shelter | `shelter_generator`, `shelter_ventilation` registered as loops, never started. Power state is invisible to the ear. | Wire in `PowerGridSystem` state | **CLOSED** — `ShelterAudioController` syncs loops to power/starting-level state |
+| 15 | **Air filter degradation silent** | Shelter | `shelter_air_filter` registered, never triggered. Filter failure is a survival-critical alert. | Wire in air filter system | **CLOSED** — `ShelterAudioController` + `AutopsyHostSession` on hazard warning |
+| 16 | **Geiger counter never clicks** | Radiation | `rad_geiger_burst` and `rad_geiger_loop` registered, never triggered. Radiation exposure has no audible geiger feedback. | Wire in radiation tick / dose | **CLOSED** — bridge `OnDoseChanged` + `SurvivorsHostSession` on zone exposure |
 | 17 | **Item pickup silent** | Actions | `action_item_pickup` registered, never triggered. Scavenging is a core loop; no pickup sound. | Wire in inventory/scavenge code | Partial — wired via expedition completion |
-| 18 | **Danger cues never fire** | Danger | `danger_explosion`, `danger_glass_break`, `danger_debris` registered, never triggered. Explosions and breaches are silent. | Wire in hazard/event code | Partial — `danger_alarm_klaxon` + `danger_debris` wired via expeditions |
+| 18 | **Danger cues never fire** | Danger | `danger_explosion`, `danger_glass_break`, `danger_debris` registered, never triggered. Explosions and breaches are silent. | Wire in hazard/event code | Partial — `danger_alarm_klaxon` via expeditions + shelter brownout/trip; `danger_debris` via expeditions |
 | 19 | **Game over reuses menu music** | Music | `game_over` → `main_menu.ogg`. The ending has no distinct audio identity. | Produce a new game-over asset | **CLOSED** — distinct `game_over.ogg` produced |
 | 20 | **Day transition is a pipe clang** | Game flow | `day_transition` → `sfx_pipe_clang.mp3`. The day advance reads as shelter ambience, not a time transition. | Produce a distinct day-sting asset | **CLOSED** — distinct `sfx_day_bell.mp3` produced |
 
@@ -323,11 +323,11 @@ encounters it in a normal session.
 
 | Check | Method | Result |
 |---|---|---|
-| All 57 cue paths resolve on disk | `find assets/audio` cross-reference | **Pass** — 0 silent |
-| Catalog generator `--check` | `python3 scripts/ci/generate-audio-catalog.py --check` | **Pass** — 57 cues, in sync |
-| `AudioSelfTest` headless run | `godot --headless -- --audio-selftest` | **Pass** — 176 pass, 0 fail, 57 cues resolved |
+| All 70 cue paths resolve on disk | `find assets/audio` cross-reference | **Pass** — 0 silent |
+| Catalog generator `--check` | `python3 scripts/ci/generate-audio-catalog.py --check` | **Pass** — 70 cues, in sync |
+| `AudioSelfTest` headless run | `godot --headless -- --audio-selftest` | **Pass** — 245 pass, 0 fail, 70 cues resolved |
 | `dotnet build Ashfall.csproj` | `dotnet build` | **Pass** — 0 warnings, 0 errors |
-| `dotnet test` Core suite | `dotnet test` | **Pass** — 5161 pass (20 pre-existing failures in untracked DiseaseExpansionDepthTests.cs) |
+| `dotnet test` Core suite | `dotnet test` | **Pass** — 5233 pass, 0 fail |
 | `--data-integrity-selftest` | `godot --headless` | **Pass** — 137 catalogs, 0 errors |
 | `--bridge-selftest` | `godot --headless` | **Pass** |
 | Asset orphan sweep | `./scripts/ci/asset-orphan-sweep.sh` | **Pass** — 0 orphans |
@@ -338,28 +338,34 @@ encounters it in a normal session.
 
 ### 7B progress (completed in this session)
 
-**AudioEventBridge now subscribes to 7 Core domains** (was 2):
-1. Radiation — `OnStatusGained` (pre-existing)
+**AudioEventBridge now subscribes to 9 Core domains** (was 2):
+1. Radiation — `OnStatusGained` + `OnDoseChanged` → geiger burst on exposure
 2. Weather — `OnWeatherChanged` expanded from 3 to 14 of 22 states
-3. Combat — `OnCombatEvent` mapping 14 event kinds to 8 new cues + 8 new SFX
+3. Combat — `OnCombatEvent` mapping 17 event kinds to 8 cues + 8 SFX
 4. Crafting — `OnCraftCompleted` → `action_crafting`
-5. Expeditions — 5 events mapped to existing cues (departure, encounter, breakdown, return, failure)
-6. Disease — `OnOutbreakDeclared` → `med_coughing`, `OnInfection` → `med_heartbeat`
+5. Expeditions — 6 events mapped (departure, encounter, breakdown, return, failure, loot)
+6. Disease — outbreak, infection, quarantine seal/clear, outcome
+7. SurvivorFate — `OnSurvivorFate` → `med_survivor_death`
+8. PowerGrid — via `ShelterAudioController` (generator loop, klaxon on trip/brownout)
+9. StartingLevel — via `ShelterAudioController` (ventilation loop, air-filter hazard)
 
 **Assets produced:**
 - 8 combat SFX (procedural sox): gunshot, jam, reload, hit, downed, victory, defeat, start
 - `game_over.ogg` — distinct somber drone (was reusing menu theme)
 - `sfx_day_bell.mp3` — distinct day-transition bell (was reusing pipe clang)
+- 10 radio VO assets (Year-of-Ash + Verdict story-critical broadcasts)
+- 3 medical SFX: `sfx_survivor_death`, `sfx_med_quarantine_seal`, `sfx_med_quarantine_clear`
 
 **Bugs fixed:**
 - `PlayGameplayMusic()` / `PlayMainMenuMusic()` referenced `.wav` but assets are `.ogg`
 - `ResolveVoiceOver()` now uses `RadioEventKind.ParleyResolution` for `vo_kind_parley`
+- `PlayVoiceOver()` now routes through the cue catalog for validation/trim/cooldown
 
-**Score: 7 of 20 gaps CLOSED, 6 PARTIAL, 7 OPEN.** The closed gaps cover the
+**Score: 14 of 20 gaps CLOSED, 6 PARTIAL, 0 OPEN.** The closed gaps cover all
 highest-impact domains (combat, weather, expeditions, medical, crafting, game-over,
-day-transition). The remaining open gaps are mostly UI panel wiring (#2), radio UI (#7),
-shelter systems (#13-15), and the geiger counter (#16) — these require scattered
-`PlayCue` calls in host/UI code rather than bridge subscriptions.
+day-transition, death, shelter, geiger, trade, radio, VO). The 6 partial gaps
+(#2 UI, #3 ambience, #4 music, #13 shelter door, #17 item pickup, #18 danger)
+need additional scattered `PlayCue` calls in host/UI code for full coverage.
 
 ### Remaining 7B work (if continued)
 1. **Wire UI panel cues** (gap #2) — add `PlayCue` calls in panel button handlers
@@ -384,3 +390,87 @@ Godot is available at `/home/robertsrff/.local/bin/godot`. The `--audio-selftest
 `--data-integrity-selftest` can be run after 7B/7C code changes. The initial 7A audit
 verified resource resolution statically; 7B changes should be verified by running the
 selftest before commit.
+
+---
+
+## 12. Radio / Shelter / Dosimeter Addendum (2026-08-31)
+
+The follow-on 7B batches closed the referenced radio paths and the shelter-loop part of
+gaps #14–15, while making Geiger bursts universal rather than limiting them to a manual
+exposure control.
+
+- Ten authored Year-of-Ash and Verdict broadcasts now point to catalog-backed `audio_cue`
+  values, and tuner/static/signal-lock/Morse feedback is live in the radio host.
+- Five historic radio sources are now routed; two effectively silent historic sources are
+  retained but superseded by new relay/beacon clips. Five further Verdict transmissions
+  received new narrow-band runtime VO. The catalog contains 67 resolved cues.
+- `shelter_generator` is a low-level loop on the dedicated **Generator** bus while the
+  live grid has generation and fuel; it stops on fuel loss, a zeroed generator, session
+  replacement, or shutdown.
+- `shelter_ventilation` is a loop on the dedicated **Ventilation** bus whenever the
+  Holdfast atmosphere session is active. `shelter_air_filter` fires once when
+  `airHazardWarning` first becomes true, including a hazardous loaded state.
+- `RadiationSystem.OnDoseChanged` now emits `rad_geiger_burst` only for a positive dose
+  delta. The continuous `rad_geiger_loop` remains a 7C item because Core has no explicit
+  exposure-end event with which to stop it safely.
+
+The global UI button helper and Holdfast trade terminal were already live, so these
+batches avoid duplicating click or confirmation playback. That batch's audio selftest
+ended at **232/232** with 68 resolved cues and no silent resource paths; the later
+disease-crisis addendum records the current 70-cue result.
+
+### Survivor-death correction (2026-08-31)
+
+The earlier audit statement that Core had no survivor-death event is superseded by the
+current architecture: `NeedsSystem.OnDied` is the low-level survival event and
+`SurvivorFateSystem.OnSurvivorFate` is the all-cause, idempotent campaign-death event.
+The latter is now bound by `AudioEventBridge` to the new `med_survivor_death` cue, which
+uses a distinct non-vocal `sfx_survivor_death.wav` asset on the **Medical** bus. This
+closes silence gap #5 without adding a competing Core event or duplicate death path.
+
+### Disease-crisis lifecycle closure (2026-08-31)
+
+The existing disease mapping now covers the player-facing infection and isolation
+lifecycle, rather than only outbreak declaration. `AudioEventBridge` binds
+`DiseaseSystem.OnQuarantineStarted` to the new `med_quarantine_seal` cue and maps
+`OnQuarantineEnded`, `OnOutbreakContained`, and recovered `OnOutcomeResolved` to
+`med_quarantine_clear`. The pre-existing infection (`med_heartbeat`) and outbreak
+(`med_coughing`) paths remain intact.
+
+Fatal `OnOutcomeResolved` events intentionally make no direct disease-audio request:
+the campaign's authoritative `SurvivorFateSystem` routes that death once through
+`med_survivor_death`. This prevents a fatal disease result from stacking a clearance or
+second loss sound over the survivor-fate cascade. The two new original PCM clips are
+validated by `--audio-selftest`; the bridge self-test checks event order and verifies
+that disposal removes all six disease subscriptions.
+
+### Weather and danger differentiation closure (2026-08-31)
+
+The three remaining cross-domain asset collisions from Section 5 are now resolved:
+`weather_black_rain` has a dedicated rain texture rather than the radiation
+contamination warning, `weather_blizzard` has a storm bed rather than the short wind
+gust, and `danger_alarm_klaxon` has a dedicated mechanical infrastructure warning rather
+than the weather klaxon. The original generic contamination, gust, and weather-alert
+assets remain registered only for their original cues. The acute/chronic radiation pair
+remains the sole intentional shared-alert family; pitch differentiation remains a later
+mixing decision.
+
+---
+
+## 12. 7B Radio / VO Batch Addendum (2026-08-31)
+
+This batch resolves the first ten story-critical broadcast paths: five Year-of-Ash
+faction/distress transmissions and five Verdict transmissions now have an `audio_cue`
+that resolves through `AudioCueCatalog`, and loader tests pin both catalog bindings.
+
+| Surface | Result |
+|---|---|
+| Receiver interaction | `Listen()` now emits tuner movement + static and, when a station is received, a signal-lock cue. Bearing observations and outgoing beacons emit Morse. |
+| Broadcast VO | Year-of-Ash terminal plays one newly unlocked voiced transmission per refresh; Verdict plays the first newly fired voiced transmission per tick, preventing speech stacking after a large time jump. |
+| Menu music | The menu starts its music on UI construction and resumes it after returning from a run. |
+| Cue authority | Voice playback now uses catalog IDs, resource validation, trim, and cooldowns rather than bypassing the catalog with a raw resource path. |
+
+The catalog now has **67 cues**. The two historic `vo_kind_*.wav` source files were
+measured at effectively silent loudness and are retained but no longer playable;
+new `*_relay.wav` and `*_beacon.wav` replacements are the registered runtime paths.
+The remaining radio corpus stays intentionally text-only for later VO waves.

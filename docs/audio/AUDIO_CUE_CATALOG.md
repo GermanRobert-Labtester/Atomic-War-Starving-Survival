@@ -2,7 +2,7 @@
 
 > **Living Architecture Authority**: Documents all registered audio cues, target Godot audio buses, asset resource paths, loop behavior, volume trim, and cooldown timers in `src/Audio/AudioCueCatalog.cs`.
 
-**Total Registered Cues:** `57`<br>
+**Total Registered Cues:** `70`<br>
 **Last Verified:** `2026-08-30`<br>
 **Drift Gated:** `python3 scripts/ci/generate-audio-catalog.py --check`
 
@@ -34,18 +34,20 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | Cue ID | Target Bus | Resource Path | Loop | Volume Trim | Cooldown | Asset Status |
 |---|---|---|---|---|---|---|
 | `combat_start` | `Alerts` | `res://assets/audio/sfx/sfx_combat_start.mp3` | No | -2 dB | 5s | ✅ Exists |
-| `danger_alarm_klaxon` | `Alerts` | `res://assets/audio/sfx/sfx_alarm_klaxon.mp3` | No | 0 dB | 10s | ✅ Exists |
+| `danger_alarm_klaxon` | `Alerts` | `res://assets/audio/sfx/sfx_danger_alarm_klaxon.wav` | No | 0 dB | 10s | ✅ Exists |
 | `rad_alert_acute` | `Alerts` | `res://assets/audio/sfx/sfx_radiation_alarm.mp3` | No | -2 dB | 5s | ✅ Exists |
 | `rad_alert_chronic` | `Alerts` | `res://assets/audio/sfx/sfx_radiation_alarm.mp3` | No | -6 dB | 10s | ✅ Exists |
 | `rad_contamination` | `Alerts` | `res://assets/audio/sfx/sfx_contamination_warning.mp3` | No | 0 dB | 5s | ✅ Exists |
 | `shelter_air_filter` | `Alerts` | `res://assets/audio/sfx/sfx_air_filter_degrade.mp3` | No | 0 dB | 10s | ✅ Exists |
 | `weather_alert` | `Alerts` | `res://assets/audio/sfx/sfx_alarm_klaxon.mp3` | No | -2 dB | 5s | ✅ Exists |
-| `weather_black_rain` | `Alerts` | `res://assets/audio/sfx/sfx_contamination_warning.mp3` | No | 0 dB | 10s | ✅ Exists |
+| `weather_black_rain` | `Alerts` | `res://assets/audio/sfx/sfx_weather_black_rain.wav` | No | 0 dB | 10s | ✅ Exists |
 | `amb_bunker` | `Ambience` | `res://assets/audio/ambience/bunker_ambience.ogg` | Yes | -3 dB | — | ✅ Exists |
 | `amb_surface` | `Ambience` | `res://assets/audio/ambience/surface_ambience.ogg` | Yes | -4 dB | — | ✅ Exists |
-| `shelter_generator` | `Ambience` | `res://assets/audio/sfx/sfx_generator_cough.mp3` | No | -10 dB | 8s | ✅ Exists |
-| `shelter_ventilation` | `Ambience` | `res://assets/audio/sfx/sfx_ventilation_fan.mp3` | Yes | -12 dB | — | ✅ Exists |
 | `shelter_water_drip` | `Ambience` | `res://assets/audio/sfx/sfx_water_drip_cave.mp3` | Yes | -15 dB | — | ✅ Exists |
+| `shelter_generator` | `Generator` | `res://assets/audio/sfx/sfx_generator_cough.mp3` | Yes | -16 dB | — | ✅ Exists |
+| `med_quarantine_clear` | `Medical` | `res://assets/audio/sfx/sfx_med_quarantine_clear.wav` | No | -8 dB | 0.75s | ✅ Exists |
+| `med_quarantine_seal` | `Medical` | `res://assets/audio/sfx/sfx_med_quarantine_seal.wav` | No | -7 dB | 1s | ✅ Exists |
+| `med_survivor_death` | `Medical` | `res://assets/audio/sfx/sfx_survivor_death.wav` | No | -6 dB | 3s | ✅ Exists |
 | `combat_defeat` | `Music` | `res://assets/audio/sfx/sfx_combat_defeat.mp3` | No | -8 dB | 5s | ✅ Exists |
 | `game_over` | `Music` | `res://assets/audio/music/game_over.ogg` | No | -10 dB | — | ✅ Exists |
 | `music_gameplay` | `Music` | `res://assets/audio/music/gameplay_underscore.ogg` | No | -8 dB | — | ✅ Exists |
@@ -74,7 +76,7 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `shelter_door_open` | `Sfx` | `res://assets/audio/sfx/sfx_bunker_door_open.mp3` | No | 0 dB | 2s | ✅ Exists |
 | `shelter_door_seal` | `Sfx` | `res://assets/audio/sfx/sfx_bunker_door_seal.mp3` | No | 0 dB | 2s | ✅ Exists |
 | `shelter_pipe_clang` | `Sfx` | `res://assets/audio/sfx/sfx_pipe_clang.mp3` | No | -6 dB | 5s | ✅ Exists |
-| `weather_blizzard` | `Sfx` | `res://assets/audio/sfx/sfx_wind_gust_harsh.mp3` | No | 0 dB | 10s | ✅ Exists |
+| `weather_blizzard` | `Sfx` | `res://assets/audio/sfx/sfx_weather_blizzard.wav` | No | 0 dB | 10s | ✅ Exists |
 | `weather_fallout_storm` | `Sfx` | `res://assets/audio/sfx/sfx_fallout_storm_approach.mp3` | No | 0 dB | 10s | ✅ Exists |
 | `weather_wind_gust` | `Sfx` | `res://assets/audio/sfx/sfx_wind_gust_harsh.mp3` | No | -8 dB | 3s | ✅ Exists |
 | `save_success` | `Ui` | `res://assets/audio/ui/ui_confirm.wav` | No | -10 dB | 1s | ✅ Exists |
@@ -86,10 +88,21 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `ui_modal_open` | `Ui` | `res://assets/audio/ui/ui_confirm.wav` | No | -3 dB | — | ✅ Exists |
 | `ui_tab_change` | `Ui` | `res://assets/audio/ui/ui_click.wav` | No | 0 dB | 0.05s | ✅ Exists |
 | `ui_warning` | `Ui` | `res://assets/audio/ui/ui_warning.wav` | No | 0 dB | 0.3s | ✅ Exists |
+| `shelter_ventilation` | `Ventilation` | `res://assets/audio/sfx/sfx_ventilation_fan.mp3` | Yes | -12 dB | — | ✅ Exists |
 | `radio_morse` | `Voice` | `res://assets/audio/sfx/sfx_morse_key.mp3` | No | 0 dB | 0.5s | ✅ Exists |
 | `radio_signal_lock` | `Voice` | `res://assets/audio/sfx/sfx_radio_signal_lock.mp3` | No | 0 dB | 1s | ✅ Exists |
 | `radio_static` | `Voice` | `res://assets/audio/radio/radio_static_hiss.wav` | No | -8 dB | 0.5s | ✅ Exists |
 | `radio_tune` | `Voice` | `res://assets/audio/sfx/sfx_radio_tune.mp3` | No | 0 dB | 1s | ✅ Exists |
+| `radio_vo_ch11_stockpile` | `Voice` | `res://assets/audio/radio/vo_ch11_stockpile.wav` | No | -2.3 dB | 2s | ✅ Exists |
+| `radio_vo_ch3_ash_road` | `Voice` | `res://assets/audio/radio/vo_ch3_ash_road.wav` | No | -2.5 dB | 2s | ✅ Exists |
+| `radio_vo_ch7_milband` | `Voice` | `res://assets/audio/radio/vo_ch7_milband.wav` | No | -4.7 dB | 2s | ✅ Exists |
+| `radio_vo_kind_hatch` | `Voice` | `res://assets/audio/radio/vo_kind_hatch_relay.wav` | No | -6 dB | 2s | ✅ Exists |
+| `radio_vo_kind_parley` | `Voice` | `res://assets/audio/radio/vo_kind_parley_beacon.wav` | No | -6 dB | 2s | ✅ Exists |
+| `radio_vo_verdict_count` | `Voice` | `res://assets/audio/radio/vo_verdict_count.wav` | No | -6 dB | 2s | ✅ Exists |
+| `radio_vo_verdict_eden` | `Voice` | `res://assets/audio/radio/vo_verdict_eden.wav` | No | -6 dB | 2s | ✅ Exists |
+| `radio_vo_verdict_geophone` | `Voice` | `res://assets/audio/radio/vo_verdict_geophone.wav` | No | -6 dB | 2s | ✅ Exists |
+| `radio_vo_verdict_meter` | `Voice` | `res://assets/audio/radio/vo_verdict_meter.wav` | No | -6 dB | 2s | ✅ Exists |
+| `radio_vo_verdict_reckoning` | `Voice` | `res://assets/audio/radio/vo_verdict_reckoning.wav` | No | -6 dB | 2s | ✅ Exists |
 
 ---
 
