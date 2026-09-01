@@ -524,6 +524,13 @@ namespace AtomicWar.GodotApp
             return EmitSummaryFromHeadlessReport("muster_selftest", report);
         }
 
+        public static int RunFactionEcologySelfTest(string dataDirectory)
+        {
+            var report = Ashfall.Core.Muster.FactionEcologyHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return EmitSummaryFromHeadlessReport("faction_ecology_selftest", report);
+        }
+
         /// <summary>
         /// The Verdict (Expansion 08) headless gate: machine log, three Reckoning
         /// phases, census carrier, evidence ledger, ending selection, and a

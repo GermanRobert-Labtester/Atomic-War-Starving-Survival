@@ -5,6 +5,7 @@
 // Purpose    : The Muster expansion coalition standings, faction votes, and military escalations
 // ============================================================================
 using System;
+using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Muster;
 using Ashfall.Core.Save;
@@ -12,7 +13,7 @@ using Ashfall.Core.Save;
 namespace AtomicWar.GodotApp
 {
     /// <summary>Combined Muster envelope: escalation state + coalition camp + the six
-    /// Section V current state machines + Hydro-Barons.</summary>
+    /// Section V current state machines + Hydro-Barons + Plan 25 faction ecology.</summary>
     public class MusterHostSave
     {
         public MusterState Muster;
@@ -23,6 +24,11 @@ namespace AtomicWar.GodotApp
         public ScavengerGuildState ScavengerGuild;
         public IronRaidersState IronRaiders;
         public HydroBaronsState HydroBarons;
+
+        // ── Plan 25 (additive; null on saves from before Plan 25) ──────
+        public FactionActionBoardState FactionActions;
+        public List<string> CampScenesSeen;
+
         public string Checksum = string.Empty;
     }
 

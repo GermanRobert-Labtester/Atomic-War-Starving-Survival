@@ -58,6 +58,7 @@ namespace Ashfall.Core
         MoralChoiceSelfTest,
         EvolvingWorldSelfTest,
         MusterSelfTest,
+        FactionEcologySelfTest,
         Phase0SelfTest,
         SilentFoundrySelfTest,
         StandingRecordSelfTest,
@@ -406,6 +407,12 @@ namespace Ashfall.Core
                     "--muster-selftest",
                     new[] { "--expansion-06-selftest" },
                     "MusterHeadlessDemo (Exp 06 the Muster)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.FactionEcologySelfTest,
+                    "Expansions & Campaign Modules",
+                    "--faction-ecology-selftest",
+                    null,
+                    "Plan 25 faction ecology vertical slice: faction action board, E-P1 escalation chain, claimant witness, camp arrivals, muster path"),
                 new HostCliActionDescriptor(
                     HostCliAction.Phase0SelfTest,
                     "Expansions & Campaign Modules",

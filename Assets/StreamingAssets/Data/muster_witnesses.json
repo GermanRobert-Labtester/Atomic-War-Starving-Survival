@@ -42,6 +42,31 @@
           "body": "A burst transmission her people flagged and never forwarded up the chain: unregistered, low-power, three weeks after Day 240, using an authentication cipher retired with Voss's old command. It could be him. It could be someone using a code that was never properly decommissioned. Ruhl's assessment, verbatim: 'I don't chase ghosts. I log them.'"
         }
       ]
+    },
+    {
+      "id": "witness_scavenger_claimant",
+      "witness_name": "The Scavenger Claimant",
+      "location_id": "loc_scavenger_guildhall",
+      "faction_id": "faction_scavenger_guild",
+      "knowledge_key": "history_witness_scavenger_claimant",
+      "day_min": 200,
+      "priority": 30,
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "requires_all_flags": ["flag_favor_scavenger_arbitration_fair"],
+          "body": "She holds up her hand and shows the mark — the shelter's sign, inked beside her claim in the two-color ledger. 'First find is first kept. Your shelter said so, and then your shelter acted like it was true. You would be surprised how rare the second part is. That ruin fed my crew through the thaw.'"
+        },
+        {
+          "variant_id": "failed",
+          "requires_all_flags": ["flag_grievance_scavenger_claim_disputed"],
+          "body": "She does not raise her voice. 'The claim was marked. Dates, witnesses, the whole custom. Your shelter read the doorframe and went in anyway.' A pause. 'I got the site back in the arbitration. What I did not get back was the winter's salvage, and the ledger knows the difference even if you don't.'"
+        },
+        {
+          "variant_id": "absent",
+          "body": "She talks about the ledger, not the shelter: two colors of ink, one for claims, one for the people who kept them. 'Every mark on a doorframe is somebody deciding to be findable. Most winters that is the only law left working. I keep it because it keeps me.'"
+        }
+      ]
     }
   ]
 }

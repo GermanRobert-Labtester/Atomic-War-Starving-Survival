@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "actions": [
+    {
+      "id": "act_salvage_rights_offer",
+      "faction_id": "faction_scavenger_guild",
+      "title": "The Claim Ledger Opens",
+      "text": "A Guild registrar arrives with the two-color ledger under her arm and a ruin's grid reference already circled. The site is claimed. The question is what the shelter does about that.",
+      "min_day": 60,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The registrar does not sit. The shelter is in the ledger's gray margin — names that strip claimed sites do not get terms, they get watched. She reads the grid reference aloud anyway, so nobody can say they were not warned.",
+          "choices": [
+            {
+              "choice_id": "honor_claim_from_distance",
+              "text": "Keep off the claimed grid. Say little.",
+              "effects": {
+                "trust_delta": 1,
+                "flags": ["flag_favor_scavenger_claim_recognized"],
+                "journal": "The shelter kept off a claimed ruin. The Guild noticed."
+              }
+            },
+            {
+              "choice_id": "strip_anyway",
+              "text": "Strip the site anyway. The ledger keeps its gray margin.",
+              "effects": {
+                "trust_delta": -3,
+                "flags": ["flag_grievance_scavenger_claim_disputed"],
+                "journal": "The shelter stripped a Guild-claimed ruin knowing it was claimed."
+              }
+            }
+          ]
+        },
+        {
+          "band": "poor",
+          "text": "The registrar sets the ledger down but keeps a hand on it. Terms first, then the ruin: a finder's share up front, and the Guild's mark on anything carried out. She does not pretend the shelter's name is clean in her book.",
+          "choices": [
+            {
+              "choice_id": "pay_sharp_fee",
+              "text": "Pay the sharp finder's share.",
+              "effects": {
+                "trust_delta": 2,
+                "flags": ["flag_favor_scavenger_claim_recognized"],
+                "journal": "The shelter paid the Guild's finder's share without haggling."
+              }
+            },
+            {
+              "choice_id": "dispute_claim",
+              "text": "Dispute the claim. The ruin predates the ledger.",
+              "effects": {
+                "trust_delta": -2,
+                "flags": ["flag_grievance_scavenger_claim_disputed"],
+                "journal": "The shelter disputed a Guild salvage claim. The dispute went into the ledger."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "The registrar states the custom plainly: the ruin is claimed, the shelter may work the fringe for a finder's share, and the mark on the doorframe means the Guild witnesses who was there first. She waits. Bargains here are ordinary.",
+          "choices": [
+            {
+              "choice_id": "pay_standard_fee",
+              "text": "Pay the standard finder's share.",
+              "effects": {
+                "trust_delta": 3,
+                "flags": ["flag_favor_scavenger_claim_recognized"],
+                "journal": "The shelter took recognized salvage rights at the standard share."
+              }
+            },
+            {
+              "choice_id": "dispute_claim",
+              "text": "Dispute the claim and ask for arbitration.",
+              "effects": {
+                "trust_delta": -2,
+                "flags": ["flag_grievance_scavenger_claim_disputed"],
+                "journal": "The shelter disputed a Guild salvage claim and demanded arbitration."
+              }
+            }
+          ]
+        },
+        {
+          "band": "good",
+          "text": "The registrar almost smiles. The shelter's name sits on the right page of the ledger, and that buys a courtesy: the inner galleries, not just the fringe, at the ordinary share. She marks the doorframe herself.",
+          "choices": [
+            {
+              "choice_id": "honor_first_claim",
+              "text": "Honor the first claim and take the offered galleries.",
+              "effects": {
+                "trust_delta": 4,
+                "flags": ["flag_favor_scavenger_arbitration_fair"],
+                "journal": "The shelter honored a Guild first-claim and was granted the inner galleries."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The registrar brings the ledger and a second chair. The Guild does not offer the inner galleries to allies — it asks them to witness claims. The ruin is almost beside the point; the point is that the shelter's word now counts in the ledger.",
+          "choices": [
+            {
+              "choice_id": "serve_as_witness",
+              "text": "Serve as the shelter's witnessing sign on Guild claims.",
+              "effects": {
+                "trust_delta": 4,
+                "flags": ["flag_favor_scavenger_arbitration_fair"],
+                "journal": "The shelter agreed to witness Guild claims as a trusted sign."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

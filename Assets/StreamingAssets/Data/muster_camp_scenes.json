@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "camp_scene_arrivals",
+      "scene": "arrivals",
+      "min_day": 260,
+      "requires_flags": [],
+      "variants": [
+        {
+          "variant_id": "negotiated",
+          "requires_path": "negotiated",
+          "body": "They come in from the south road in a loose column — Guild markers on the lead cart, a Hydro water-detail flying its tied white rag, two of the Toll's people walking openly beside Coalition deserters as if the war were somebody else's story. At the substation gate somebody has nailed up a plank with the neutral-ground rules burned into it, four lines, no flourishes. Nobody salutes anybody. Everyone counts the banners twice."
+        },
+        {
+          "variant_id": "victors",
+          "requires_path": "victors",
+          "body": "The arrivals come in through a single checkpoint, and the checkpoint flies one banner too many for a neutral ground. Defeated columns surrender their weapons at the wire and get receipts on carbon paper. A Coalition man asks who keeps the receipts and nobody answers. The rules plank is there, four lines, but a sentry stands close enough to read over every shoulder."
+        },
+        {
+          "variant_id": "unsettled",
+          "requires_path": "",
+          "body": "The arrivals trickle in rather than march — small groups, weapons wrapped, eyes doing arithmetic on the tents already pitched. Nobody has claimed the gate, so nobody guards it, and the lack of a guard feels louder than a sentry would. The four rules on the plank are the only thing here everyone agrees to read the same way."
+        }
+      ]
+    }
+  ]
+}

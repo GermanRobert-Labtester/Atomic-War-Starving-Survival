@@ -1219,6 +1219,67 @@
           ]
         }
       ]
+    },
+    {
+      "chainId": "evt_p25_marked_ruin",
+      "band": "escalation",
+      "title": "The Marked Ruin",
+      "factionsInvolved": [
+        "faction_scavenger_guild",
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_p25_marked_ruin_s1",
+          "minDay": 200,
+          "triggerCondition": "Plan 25 (E-P1): fires while the grievance flag from a disputed Guild salvage claim is set (authored by the shelter's handling of act_salvage_rights_offer).",
+          "requiresFlag": "flag_grievance_scavenger_claim_disputed",
+          "producesFlag": "flag_escalation_marked_ruin",
+          "title": "Chalk Over Ink",
+          "bodyText": "Somebody has chalked a Garrison stamp across the Guild's doorframe mark at the grain-silo outbuilding — the two-color ledger's claim, crossed with one stroke of borrowed authority. The Guild's response is characteristically bureaucratic: a registrar arrives, copies the defaced mark into the ledger, and files it as a dispute of record. The Garrison checkpoint, for its part, has started charging a 'documentation fee' to anyone leaving the site with a wheelbarrow. Both sides now have paper. That is how the shelter knows it is serious.",
+          "choices": [
+            {
+              "choiceId": "evt_p25_marked_ruin_s1_c1",
+              "text": "Confirm the Guild's claim to the checkpoint authority — the ledger predates the stamp",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_p25_marked_ruin_s2",
+              "producesFlag": "flag_escalation_marked_ruin_mediated",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": -3
+            },
+            {
+              "choiceId": "evt_p25_marked_ruin_s1_c2",
+              "text": "Back the checkpoint's documentation fee — order is order",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_p25_marked_ruin_s2",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": 4
+            },
+            {
+              "choiceId": "evt_p25_marked_ruin_s1_c3",
+              "text": "Say nothing. The dispute belongs to them.",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_p25_marked_ruin_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_p25_marked_ruin_s2",
+          "minDay": 203,
+          "triggerCondition": "Plan 25 (E-P1): fires three days after evt_p25_marked_ruin_s1 resolves.",
+          "title": "A Symbol With a Grid Reference",
+          "bodyText": "By the end of the week the outbuilding is not a ruin anymore; it is an argument with walls. Guild apprentices walk past it the long way rather than cross the checkpoint's fee line, and Garrison runners have started saluting the chalk stamp as if it had always been there. Nobody has fired anything at anybody. Everybody can feel where this particular kind of paper dispute goes when the weather turns and the silos run low.",
+          "choices": [
+            {
+              "choiceId": "evt_p25_marked_ruin_s2_c1",
+              "text": "Note it in the shelter's own ledger, in ink",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

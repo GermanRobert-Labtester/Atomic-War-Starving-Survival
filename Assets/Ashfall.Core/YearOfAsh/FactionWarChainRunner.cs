@@ -210,6 +210,13 @@ namespace Ashfall.Core.YearOfAsh
                 new ChainResolvedTrigger("evt_d588_ceasefire_by_exhaustion"),
                 new ChainResolvedTrigger("evt_d570_forward_roster_first_action"));
 
+            // ── Plan 25 escalation chains (band: escalation) ─────────────
+            // E-P1 The Marked Ruin: opens only while the shelter's disputed
+            // Guild salvage claim grievance is on the ledger; then a plain
+            // three-day narration tail.
+            t["evt_p25_marked_ruin_s1"] = new FlagTrigger("flag_grievance_scavenger_claim_disputed");
+            t["evt_p25_marked_ruin_s2"] = new DayOffsetTrigger(3, "evt_p25_marked_ruin_s1");
+
             return t;
         }
     }

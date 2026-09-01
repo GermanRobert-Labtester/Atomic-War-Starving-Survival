@@ -23,9 +23,14 @@ namespace AtomicWar.GodotApp
         public ScavengerGuildSystem ScavengerGuild { get; }
         public IronRaidersSystem IronRaiders { get; }
         public HydroBaronsSystem HydroBarons { get; }
+        public FactionActionBoard Board { get; }
         public List<CurrentDefinition> Roster { get; }
         public List<WitnessDefinition> Witnesses { get; }
         public List<EndingDefinition> Epilogues { get; }
+        public List<CampSceneDefinition> CampScenes { get; }
+
+        /// <summary>Camp scenes already staged this campaign (Plan 25 · 25F progression).</summary>
+        public List<string> CampScenesSeen { get; } = new List<string>();
 
         public string LastEvent { get; private set; } = string.Empty;
 
@@ -44,9 +49,11 @@ namespace AtomicWar.GodotApp
             ScavengerGuildSystem scavengerGuild = null!,
             IronRaidersSystem ironRaiders = null!,
             HydroBaronsSystem hydroBarons = null!,
+            FactionActionBoard board = null!,
             List<CurrentDefinition> roster = null!,
             List<WitnessDefinition> witnesses = null!,
-            List<EndingDefinition> epilogues = null!)
+            List<EndingDefinition> epilogues = null!,
+            List<CampSceneDefinition> campScenes = null!)
         {
             Engine = engine ?? new MusterSystem();
             Camp = camp ?? new CoalitionCampSystem();
@@ -56,9 +63,11 @@ namespace AtomicWar.GodotApp
             ScavengerGuild = scavengerGuild ?? new ScavengerGuildSystem();
             IronRaiders = ironRaiders ?? new IronRaidersSystem();
             HydroBarons = hydroBarons ?? new HydroBaronsSystem();
+            Board = board ?? new FactionActionBoard(ScavengerGuild, HydroBarons, IronRaiders, Camp);
             Roster = roster ?? new List<CurrentDefinition>();
             Witnesses = witnesses ?? new List<WitnessDefinition>();
             Epilogues = epilogues ?? new List<EndingDefinition>();
+            CampScenes = campScenes ?? new List<CampSceneDefinition>();
             Engine.OnQuestlineResolved += record =>
             {
                 LastEvent = $"Resolved {record.questlineId} via approach {record.selectedApproach} → {record.endingKey}";
@@ -73,6 +82,7 @@ namespace AtomicWar.GodotApp
             ScavengerGuild.OnStateChanged += _ => RaiseStateChanged();
             IronRaiders.OnStateChanged += _ => RaiseStateChanged();
             HydroBarons.OnStateChanged += _ => RaiseStateChanged();
+            Board.OnStateChanged += _ => RaiseStateChanged();
         }
 
         public static MusterHostSession Create(string dataDir)
@@ -80,6 +90,8 @@ namespace AtomicWar.GodotApp
             var roster = new List<CurrentDefinition>();
             var witnesses = new List<WitnessDefinition>();
             var epilogues = new List<EndingDefinition>();
+            var campScenes = new List<CampSceneDefinition>();
+            var factionActions = new List<FactionActionDefinition>();
             if (!string.IsNullOrEmpty(dataDir))
             {
                 var fileIO = CatalogPath.CreateFileIOForDataDir(dataDir);
@@ -87,9 +99,13 @@ namespace AtomicWar.GodotApp
                 roster = CurrentsCatalogLoader.LoadCurrents(dataDir, fileIO, serializer);
                 witnesses = WitnessCatalogLoader.LoadWitnesses(dataDir, fileIO, serializer);
                 epilogues = EpilogueMatrixLoader.LoadEpilogues(dataDir, fileIO, serializer);
+                campScenes = CampSceneCatalogLoader.LoadScenes(dataDir, fileIO, serializer);
+                factionActions = FactionActionCatalogLoader.LoadActions(dataDir, fileIO, serializer);
             }
 
-            var session = new MusterHostSession(roster: roster, witnesses: witnesses, epilogues: epilogues);
+            var session = new MusterHostSession(
+                roster: roster, witnesses: witnesses, epilogues: epilogues, campScenes: campScenes);
+            session.Board.SetCatalog(factionActions);
             var save = MusterSaveStore.TryLoad();
             if (save != null)
             {
@@ -97,6 +113,40 @@ namespace AtomicWar.GodotApp
                 session.LastEvent = "Muster state restored from save.";
             }
             return session;
+        }
+
+        // ── Faction actions (Plan 25 · 25A) ────────────────────────────
+
+        /// <summary>Resolve a player choice on an available faction action.
+        /// Effects apply through the faction systems' own seams; the resolution
+        /// record persists so a reload cannot re-apply it.</summary>
+        public bool ResolveFactionAction(string actionId, string choiceId, int day)
+        {
+            bool ok = Board.Resolve(actionId, choiceId, day);
+            LastEvent = ok
+                ? $"Faction action resolved: {actionId} / {choiceId} (day {day})."
+                : $"Faction action rejected: {actionId} is not available on day {day}.";
+            RaiseStateChanged();
+            return ok;
+        }
+
+        // ── Camp scenes (Plan 25 · 25F) ────────────────────────────────
+
+        /// <summary>Stage an authored camp scene with the variant matching the
+        /// current muster path and campaign flags. Marks it seen; a seen scene
+        /// does not restage.</summary>
+        public CampSceneSelection? StageCampScene(string sceneId, int day)
+        {
+            var selection = CampSceneDirector.Select(
+                CampScenes, sceneId, day, Engine.MusterPath,
+                Board.IsFlagSet, id => CampScenesSeen.Contains(id));
+            if (selection != null && !CampScenesSeen.Contains(sceneId))
+            {
+                CampScenesSeen.Add(sceneId);
+                LastEvent = $"Camp scene staged: {sceneId} / {selection.VariantId}.";
+                RaiseStateChanged();
+            }
+            return selection;
         }
 
         /// <summary>Epilogue-matrix prose for a resolved ending key (Section XII).</summary>
@@ -183,7 +233,9 @@ namespace AtomicWar.GodotApp
             LongWalk = LongWalk.CaptureState(),
             ScavengerGuild = ScavengerGuild.CaptureState(),
             IronRaiders = IronRaiders.CaptureState(),
-            HydroBarons = HydroBarons.CaptureState()
+            HydroBarons = HydroBarons.CaptureState(),
+            FactionActions = Board.CaptureState(),
+            CampScenesSeen = new List<string>(CampScenesSeen)
         };
 
         public void RestoreSave(MusterHostSave save)
@@ -205,6 +257,11 @@ namespace AtomicWar.GodotApp
                 IronRaiders.RestoreState(save.IronRaiders);
             if (save.HydroBarons != null)
                 HydroBarons.RestoreState(save.HydroBarons);
+            if (save.FactionActions != null)
+                Board.RestoreState(save.FactionActions);
+            CampScenesSeen.Clear();
+            if (save.CampScenesSeen != null)
+                CampScenesSeen.AddRange(save.CampScenesSeen);
         }
     }
 }
