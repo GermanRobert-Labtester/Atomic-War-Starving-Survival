@@ -22,7 +22,9 @@
               "text": "Keep off the claimed grid. Say little.",
               "effects": {
                 "trust_delta": 1,
-                "flags": ["flag_favor_scavenger_claim_recognized"],
+                "flags": [
+                  "flag_favor_scavenger_claim_recognized"
+                ],
                 "journal": "The shelter kept off a claimed ruin. The Guild noticed."
               }
             },
@@ -31,7 +33,9 @@
               "text": "Strip the site anyway. The ledger keeps its gray margin.",
               "effects": {
                 "trust_delta": -3,
-                "flags": ["flag_grievance_scavenger_claim_disputed"],
+                "flags": [
+                  "flag_grievance_scavenger_claim_disputed"
+                ],
                 "journal": "The shelter stripped a Guild-claimed ruin knowing it was claimed."
               }
             }
@@ -46,7 +50,9 @@
               "text": "Pay the sharp finder's share.",
               "effects": {
                 "trust_delta": 2,
-                "flags": ["flag_favor_scavenger_claim_recognized"],
+                "flags": [
+                  "flag_favor_scavenger_claim_recognized"
+                ],
                 "journal": "The shelter paid the Guild's finder's share without haggling."
               }
             },
@@ -55,7 +61,9 @@
               "text": "Dispute the claim. The ruin predates the ledger.",
               "effects": {
                 "trust_delta": -2,
-                "flags": ["flag_grievance_scavenger_claim_disputed"],
+                "flags": [
+                  "flag_grievance_scavenger_claim_disputed"
+                ],
                 "journal": "The shelter disputed a Guild salvage claim. The dispute went into the ledger."
               }
             }
@@ -70,7 +78,9 @@
               "text": "Pay the standard finder's share.",
               "effects": {
                 "trust_delta": 3,
-                "flags": ["flag_favor_scavenger_claim_recognized"],
+                "flags": [
+                  "flag_favor_scavenger_claim_recognized"
+                ],
                 "journal": "The shelter took recognized salvage rights at the standard share."
               }
             },
@@ -79,7 +89,9 @@
               "text": "Dispute the claim and ask for arbitration.",
               "effects": {
                 "trust_delta": -2,
-                "flags": ["flag_grievance_scavenger_claim_disputed"],
+                "flags": [
+                  "flag_grievance_scavenger_claim_disputed"
+                ],
                 "journal": "The shelter disputed a Guild salvage claim and demanded arbitration."
               }
             }
@@ -94,7 +106,9 @@
               "text": "Honor the first claim and take the offered galleries.",
               "effects": {
                 "trust_delta": 4,
-                "flags": ["flag_favor_scavenger_arbitration_fair"],
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
                 "journal": "The shelter honored a Guild first-claim and was granted the inner galleries."
               }
             }
@@ -109,8 +123,455 @@
               "text": "Serve as the shelter's witnessing sign on Guild claims.",
               "effects": {
                 "trust_delta": 4,
-                "flags": ["flag_favor_scavenger_arbitration_fair"],
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
                 "journal": "The shelter agreed to witness Guild claims as a trusted sign."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_claim_arbitration",
+      "faction_id": "faction_scavenger_guild",
+      "title": "Two Teams, One Find",
+      "text": "Two Guild crews came back from the same collapsed parking structure with the same story: their claim, their mark, their find. The ledger has both names in it — somebody double-marked, or somebody lied. The Guild wants a name the crews already trust to sit the arbitration, and lately that name is the shelter's.",
+      "min_day": 80,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The arbitration is a formality in a room the shelter is barely welcome in. The registrar reads the double-mark aloud like a verdict already written, and both crews watch how the outsider leans.",
+          "choices": [
+            {
+              "choice_id": "refuse_seat",
+              "text": "Decline the seat. Guild house, Guild problem.",
+              "effects": {
+                "trust_delta": 0,
+                "flags": [
+                  "flag_grievance_scavenger_arbitration_refused"
+                ],
+                "journal": "The shelter refused to sit the Guild's claim arbitration."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "The registrar lays the ledger open between the two crews: same day, same mark, two inks. Custom says first mark keeps; custom also says a split witnessed by a neutral sign holds better than a ruling nobody signed. The crews wait on the shelter's word, and everyone in the guildhall pretends not to listen.",
+          "choices": [
+            {
+              "choice_id": "recognize_first",
+              "text": "Rule for the first mark, whatever it costs the other crew.",
+              "effects": {
+                "trust_delta": 3,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter ruled the Guild arbitration by the first-mark custom."
+              }
+            },
+            {
+              "choice_id": "order_split",
+              "text": "Order the find split, witnessed in the ledger.",
+              "effects": {
+                "trust_delta": 2,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter split a contested Guild find and both crews signed it."
+              }
+            },
+            {
+              "choice_id": "refuse_seat",
+              "text": "Refuse the seat. Not the shelter's ledger, not the shelter's problem.",
+              "effects": {
+                "trust_delta": -2,
+                "flags": [
+                  "flag_grievance_scavenger_arbitration_refused"
+                ],
+                "journal": "The shelter refused to sit the Guild's claim arbitration."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The registrar hands the shelter the pen, not just the seat. An allied sign can end this with one line in the ledger and both crews will keep it — that is what the color of the shelter's name is worth now.",
+          "choices": [
+            {
+              "choice_id": "recognize_first",
+              "text": "Rule for the first mark and log the precedent.",
+              "effects": {
+                "trust_delta": 4,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter ruled the Guild arbitration by the first-mark custom and set precedent."
+              }
+            },
+            {
+              "choice_id": "order_split",
+              "text": "Order the split and log the crews' agreement.",
+              "effects": {
+                "trust_delta": 4,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter split a contested find as the Guild's trusted sign."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_apprentice_rule_dispute",
+      "faction_id": "faction_scavenger_guild",
+      "title": "The Registrar and the Free Hands",
+      "text": "The Guild is not one voice. The registrars want the apprentice yield cap enforced on every crew working guildhall territory; the free hands — unlicensed scavengers who trade at the guildhall but answer to no ledger — call the cap a leash. Both sides have asked the shelter, separately, to stand with them. Only one answer goes in the book.",
+      "min_day": 100,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The argument arrives twice in one day — first as a registrar's formal request, then as a free hand's bottle-topped version of the same. The cap keeps claimed ruins from being stripped to the rebar; the cap also decides who eats in a bad month. The shelter's word will not settle it, but it will be remembered by whichever side loses.",
+          "choices": [
+            {
+              "choice_id": "back_registrars",
+              "text": "Back the registrars: the cap holds, everywhere.",
+              "effects": {
+                "trust_delta": 3,
+                "flags": [
+                  "flag_favor_scavenger_apprentice_backed"
+                ],
+                "journal": "The shelter backed the Guild registrars on the apprentice yield cap."
+              }
+            },
+            {
+              "choice_id": "back_free_hands",
+              "text": "Back the free hands: work is work, unlicensed or not.",
+              "effects": {
+                "trust_delta": -3,
+                "flags": [
+                  "flag_grievance_scavenger_registrar_defied"
+                ],
+                "journal": "The shelter sided with unlicensed scavengers against the Guild's yield cap."
+              }
+            },
+            {
+              "choice_id": "stay_out",
+              "text": "Tell both sides the shelter trades, it does not govern.",
+              "effects": {
+                "trust_delta": -1,
+                "flags": [],
+                "journal": "The shelter stayed out of the Guild's cap dispute."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_purification_toll",
+      "faction_id": "faction_hydro_barons",
+      "title": "The Purification Toll",
+      "text": "A Hydro water detail has chained the purge valves on the treatment skid the shelter's line runs through, and hung the rate card on the fence: purification isn't free anymore, it's tolled. The card quotes a price in fittings, labor, or water itself, and the queue chit number at the bottom has the shelter's name on it.",
+      "min_day": 70,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The toll card is written in a hand that expects it to be read aloud. Double rate, payment in advance, and a collector who checks names against a list of accounts in arrears. The shelter's account is marked. Water keeps moving through the skid; permission does not.",
+          "choices": [
+            {
+              "choice_id": "pay_double",
+              "text": "Pay the double toll and keep the line.",
+              "effects": {
+                "trust_delta": 1,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_toll_paid"
+                ],
+                "journal": "The shelter paid the Hydro double toll to keep its water line."
+              }
+            },
+            {
+              "choice_id": "default",
+              "text": "Run the line untolled and let them post the account.",
+              "effects": {
+                "trust_delta": -3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_hydro_toll_defaulted"
+                ],
+                "journal": "The shelter defaulted on the Hydro purification toll."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "The collector quotes the standard toll without ceremony: it buys intake priority at the skid for a season, and the Barons' technicians keep the filters swapping on schedule. It is expensive the way a roof is expensive. She has heard every argument about water being a right and answers none of them.",
+          "choices": [
+            {
+              "choice_id": "pay_standard",
+              "text": "Pay the standard toll.",
+              "effects": {
+                "trust_delta": 3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_toll_paid"
+                ],
+                "journal": "The shelter paid the Hydro purification toll at the standard rate."
+              }
+            },
+            {
+              "choice_id": "negotiate_parts",
+              "text": "Offer maintenance labor in place of half the toll.",
+              "effects": {
+                "trust_delta": 2,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter worked off half the Hydro toll in skid labor."
+              }
+            },
+            {
+              "choice_id": "default",
+              "text": "Refuse the toll on principle.",
+              "effects": {
+                "trust_delta": -2,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_hydro_toll_defaulted"
+                ],
+                "journal": "The shelter refused the Hydro purification toll on principle."
+              }
+            }
+          ]
+        },
+        {
+          "band": "good",
+          "text": "The collector barely opens the rate card. Good accounts get the season's toll booked against the Barons' own maintenance schedule — the shelter's filters swapped, its line flushed, at cost. 'Baron's word,' she says, which at the pumphouse means the same as ink.",
+          "choices": [
+            {
+              "choice_id": "take_credit_terms",
+              "text": "Take the cost-price season on the Barons' word.",
+              "effects": {
+                "trust_delta": 4,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_water_accord_honored"
+                ],
+                "journal": "The shelter took cost-price purification on the Barons' word."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_hydro_emergency_appeal",
+      "faction_id": "faction_hydro_barons",
+      "title": "The Appeal From Unit Four",
+      "text": "A Baron's engineer comes to the shelter gate with wet boots and a dry list: the intake screens at Desalination Unit 4 are fouling faster than the spares cover, and the BARONS' OWN repair priority is six weeks out. She needs filter media, or hands, or both. She does not say please. She says what happens to the queue when Unit 4 throttles down.",
+      "min_day": 100,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The list is specific: one advanced filter element, two days of skilled hands, and the Barons' engineer will sign for both in the shelter's favor at the rate card. The queue math is real — a throttled Unit 4 puts every chit holder back a week, the shelter included.",
+          "choices": [
+            {
+              "choice_id": "give_filter",
+              "text": "Give the filter element and two days of hands.",
+              "effects": {
+                "trust_delta": 5,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "item_water_filter_advanced",
+                "item_amount": -1,
+                "flags": [
+                  "flag_favor_hydro_water_accord_honored"
+                ],
+                "journal": "The shelter answered the Barons' emergency appeal with a filter and labor."
+              }
+            },
+            {
+              "choice_id": "give_hands_only",
+              "text": "Send hands, keep the filter element.",
+              "effects": {
+                "trust_delta": 3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter sent skilled hands to Unit Four without parting with filter media."
+              }
+            },
+            {
+              "choice_id": "refuse",
+              "text": "Decline. The shelter's spares are the shelter's.",
+              "effects": {
+                "trust_delta": -3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_hydro_appeal_refused"
+                ],
+                "journal": "The shelter refused the Barons' emergency appeal."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The engineer reads the list once and stops pretending it is a request between strangers. Allied accounts get the truth: Unit 4 has a month, maybe less, and what the Barons need from the shelter is not charity but a partner who shows up before the queue riots.",
+          "choices": [
+            {
+              "choice_id": "give_filter",
+              "text": "Commit the element and the hands, same day.",
+              "effects": {
+                "trust_delta": 5,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "item_water_filter_advanced",
+                "item_amount": -1,
+                "flags": [
+                  "flag_favor_hydro_water_accord_honored"
+                ],
+                "journal": "The shelter stood with the Barons at Unit Four before the queue felt it."
+              }
+            },
+            {
+              "choice_id": "organize_queue_relief",
+              "text": "Organize queue relief among the chit holders instead.",
+              "effects": {
+                "trust_delta": 3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_water_accord_honored"
+                ],
+                "journal": "The shelter organized chit-holder relief while Unit Four was down."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_intake_dispute",
+      "faction_id": "faction_hydro_barons",
+      "title": "Technicians and Collectors",
+      "text": "Not all the Barons wear the same face. The technicians who keep the filters swapping blame the collectors' toll gouging for the intake sabotage that keeps hitting the lines — people do not poison what they can afford. The collectors answer that purity is paid for, or it is luck. The shelter has been asked, by both, to witness the intake audit where the fight will happen.",
+      "min_day": 110,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The audit room smells like chlorine and old grudge. The technicians' numbers are good and the collectors' tempers are better. Whoever the shelter stands beside will own the intake policy for a season, and the other side will remember the audit every time the water tastes wrong.",
+          "choices": [
+            {
+              "choice_id": "back_technicians",
+              "text": "Back the technicians: publish the intake audit openly.",
+              "effects": {
+                "trust_delta": 4,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_intake_audited"
+                ],
+                "journal": "The shelter backed the Hydro technicians' open intake audit."
+              }
+            },
+            {
+              "choice_id": "back_collectors",
+              "text": "Back the collectors: purity is paid for, publish nothing.",
+              "effects": {
+                "trust_delta": -2,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_hydro_intake_disputed"
+                ],
+                "journal": "The shelter backed the Hydro collectors against the open intake audit."
+              }
+            },
+            {
+              "choice_id": "abstain",
+              "text": "Witness without standing beside either.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter witnessed the Hydro intake audit without taking a side."
               }
             }
           ]
