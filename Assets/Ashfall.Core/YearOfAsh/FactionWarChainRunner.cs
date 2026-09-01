@@ -29,6 +29,23 @@ namespace Ashfall.Core.YearOfAsh
         public Func<string, bool> IsChainResolved = _ => false;
         public Func<string, bool> HasVisitedLocation = _ => false;
         public Func<string, int> StageResolvedDay = _ => -1; // -1 = not yet resolved
+
+        /// <summary>Plan 25: campaign flag probe (runner-produced flags plus the
+        /// host's external flag store). Defaults to never-set.</summary>
+        public Func<string, bool> IsFlagSet = _ => false;
+    }
+
+    /// <summary>
+    /// Plan 25: fires while the named campaign flag is set. Escalation chains
+    /// gate their opening stages on grievance flags authored by peacetime
+    /// faction actions and earlier war events. Part of the closed trigger
+    /// grammar — still one explicit FactionWarTriggerTable entry per stage.
+    /// </summary>
+    public sealed class FlagTrigger : FactionWarTrigger
+    {
+        private readonly string _flagId;
+        public FlagTrigger(string flagId) => _flagId = flagId;
+        public override bool IsSatisfied(FactionWarTriggerContext ctx) => ctx.IsFlagSet(_flagId);
     }
 
     /// <summary>Fires once the player has visited the given location (any day).</summary>
@@ -193,6 +210,39 @@ namespace Ashfall.Core.YearOfAsh
                 new ChainResolvedTrigger("evt_d588_ceasefire_by_exhaustion"),
                 new ChainResolvedTrigger("evt_d570_forward_roster_first_action"));
 
+            // ── Plan 25 escalation chains (band: escalation) ─────────────
+            // E-P1 The Marked Ruin: opens only while the shelter's disputed
+            // Guild salvage claim grievance is on the ledger; then a plain
+            // three-day narration tail.
+            t["evt_p25_marked_ruin_s1"] = new FlagTrigger("flag_grievance_scavenger_claim_disputed");
+            t["evt_p25_marked_ruin_s2"] = new DayOffsetTrigger(3, "evt_p25_marked_ruin_s1");
+
+            // ── Plan 25 escalation (E-P2..P6): grievance-gated openings ──
+            // E-P2 The Stopped Convoy: the shelter's defaulted Hydro toll.
+            t["evt_p25_stopped_convoy_s1"] = new FlagTrigger("flag_grievance_hydro_toll_defaulted");
+            // E-P3 Bitter Water: the shelter's refused emergency appeal.
+            t["evt_p25_bitter_water_s1"] = new FlagTrigger("flag_grievance_hydro_appeal_refused");
+            // E-P4 The Empty Chair: the broken raider parley in the den's memory.
+            t["evt_p25_empty_chair_s1"] = new FlagTrigger("flag_grievance_raider_parley_broken");
+            // E-P5 Cistern Toll: siding against the intake audit.
+            t["evt_p25_cistern_toll_blockade_s1"] = new FlagTrigger("flag_grievance_hydro_intake_disputed");
+            // E-P6 Prisoner at the Gate: the fought-over crossing, unsettled.
+            t["evt_p25_prisoner_at_the_gate_s1"] = new FlagTrigger("flag_grievance_raider_passage_fought");
+
+            // ── Plan 25 mid-war context (E-W1..W6): chained to real 06C battles ──
+            t["evt_p25_refugees_from_the_line_s1"] = new ChainResolvedTrigger("evt_d509_border_clash_span44");
+            t["evt_p25_requisition_s1"] = new ChainResolvedTrigger("evt_d503_conscription_lists");
+            t["evt_p25_broken_route_s1"] = new ChainResolvedTrigger("evt_d522_switchback_toll");
+            t["evt_p25_field_hospital_overflow_s1"] = new ChainResolvedTrigger("evt_d533_garrison_offensive_grain_silo");
+            t["evt_p25_deserter_column_s1"] = new ChainResolvedTrigger("evt_d545_ration_plaza_strike");
+            t["evt_p25_retaliation_s1"] = new ChainResolvedTrigger("evt_d552_rebuilders_fracture");
+
+            // ── Plan 25 war weariness (E-R1..R4): culmination pressure ───
+            t["evt_p25_no_more_volunteers_s1"] = new ChainResolvedTrigger("evt_d565_hydro_leverage_break");
+            t["evt_p25_bread_before_bullets_s1"] = new FlagTrigger("flag_war_refugees_arrived");
+            t["evt_p25_quiet_faction_s1"] = new ChainResolvedTrigger("evt_d578_shrine_strike_anomaly");
+            t["evt_p25_refusal_at_dawn_s1"] = new FlagTrigger("flag_peace_faction_forms");
+
             return t;
         }
     }
@@ -229,6 +279,10 @@ namespace Ashfall.Core.YearOfAsh
         public List<FactionWarChainProgress> chains = new List<FactionWarChainProgress>();
         public List<string> visitedLocations = new List<string>();
         public int cumulativeMoraleDelta;
+
+        /// <summary>Plan 25 additive: flags produced by stage/choice producesFlag
+        /// fields. Old saves deserialize with null; the runner re-initializes.</summary>
+        public List<string> producedFlags = new List<string>();
     }
 
     /// <summary>
@@ -263,10 +317,23 @@ namespace Ashfall.Core.YearOfAsh
             _state = state ?? new FactionWarChainRunnerState();
             if (_state.chains == null) _state.chains = new List<FactionWarChainProgress>();
             if (_state.visitedLocations == null) _state.visitedLocations = new List<string>();
+            if (_state.producedFlags == null) _state.producedFlags = new List<string>();
         }
 
         public FactionWarChainRunnerState State => _state;
         public int CumulativeMoraleDelta => _state.cumulativeMoraleDelta;
+
+        // ── Plan 25 injection points (host-owned effects, no Core coupling) ──
+
+        /// <summary>Optional probe into the host's campaign flag store, consulted
+        /// in addition to the runner's own produced flags (e.g. Plan 25 grievance
+        /// flags authored by the FactionActionBoard).</summary>
+        public Func<string, bool>? ExternalFlagProbe;
+
+        /// <summary>Optional sink for choice standing adjustments — the host binds
+        /// FactionWarSystem.ModifyStanding here. Core never touches war standing
+        /// on its own.</summary>
+        public Action<string, int>? StandingDeltaApplier;
 
         /// <summary>Records that the player has visited a location — feeds
         /// PlayerVisitedTrigger for every chain, present and future.</summary>
@@ -308,7 +375,32 @@ namespace Ashfall.Core.YearOfAsh
             var ctx = BuildContext(currentDay);
             if (!trigger.IsSatisfied(ctx)) return null;
 
+            // Plan 25: authored flag gate on the stage itself.
+            if (!string.IsNullOrEmpty(stage.requiresFlag) && !ctx.IsFlagSet(stage.requiresFlag))
+                return null;
+
             return stage;
+        }
+
+        /// <summary>
+        /// Plan 25: whether a choice may be offered for the given stage — a
+        /// choice carrying requiresFlag is hidden until that flag is set. Hosts
+        /// must not render (or speculatively resolve) unavailable choices.
+        /// </summary>
+        public bool IsChoiceAvailable(FactionWarEventStage stage, FactionWarEventChoice choice, int currentDay)
+        {
+            if (stage == null || choice == null) return false;
+            if (string.IsNullOrEmpty(choice.requiresFlag)) return true;
+            return IsFlagSet(choice.requiresFlag);
+        }
+
+        /// <summary>True when the flag was produced by this runner or reported by
+        /// the host's external probe.</summary>
+        public bool IsFlagSet(string flagId)
+        {
+            if (string.IsNullOrEmpty(flagId)) return false;
+            if (_state.producedFlags.Contains(flagId)) return true;
+            return ExternalFlagProbe?.Invoke(flagId) ?? false;
         }
 
         /// <summary>
@@ -353,6 +445,9 @@ namespace Ashfall.Core.YearOfAsh
                 ?? throw new ArgumentException($"Unknown stage '{stageId}' in chain '{chainId}'.", nameof(stageId));
             var choice = stage.choices.FirstOrDefault(c => c.choiceId == choiceId)
                 ?? throw new ArgumentException($"Unknown choice '{choiceId}' in stage '{stageId}'.", nameof(choiceId));
+            if (!IsChoiceAvailable(stage, choice, currentDay))
+                throw new InvalidOperationException(
+                    $"Choice '{choiceId}' in stage '{stageId}' is gated by flag '{choice.requiresFlag}', which is not set.");
 
             var progress = FindProgress(chainId);
             string surfacedStageId = progress?.currentStageId;
@@ -371,9 +466,17 @@ namespace Ashfall.Core.YearOfAsh
             var progress = FindOrCreateProgress(chain.chainId);
             RecordStageResolution(progress, stage.stageId, currentDay);
 
+            // Plan 25: a resolving stage may author a flag regardless of how it resolves.
+            if (!string.IsNullOrEmpty(stage.producesFlag))
+                ProduceFlag(stage.producesFlag);
+
             if (choice != null)
             {
                 _state.cumulativeMoraleDelta += choice.moraleDelta;
+                if (!string.IsNullOrEmpty(choice.producesFlag))
+                    ProduceFlag(choice.producesFlag);
+                if (choice.standingDelta != 0 && !string.IsNullOrEmpty(choice.standingFactionId))
+                    StandingDeltaApplier?.Invoke(choice.standingFactionId, choice.standingDelta);
                 OnStageResolved?.Invoke(chain, stage, choice);
             }
 
@@ -390,6 +493,13 @@ namespace Ashfall.Core.YearOfAsh
             }
         }
 
+        private void ProduceFlag(string flagId)
+        {
+            if (string.IsNullOrEmpty(flagId)) return;
+            if (!_state.producedFlags.Contains(flagId))
+                _state.producedFlags.Add(flagId);
+        }
+
         private static void RecordStageResolution(FactionWarChainProgress progress, string stageId, int day)
         {
             var existing = progress.stageResolutions.FirstOrDefault(r => r.stageId == stageId);
@@ -402,6 +512,7 @@ namespace Ashfall.Core.YearOfAsh
             CurrentDay = currentDay,
             IsChainResolved = IsChainResolved,
             HasVisitedLocation = HasVisited,
+            IsFlagSet = IsFlagSet,
             StageResolvedDay = stageId =>
             {
                 foreach (var progress in _state.chains)
@@ -448,6 +559,7 @@ namespace Ashfall.Core.YearOfAsh
                 schemaVersion = source.schemaVersion,
                 cumulativeMoraleDelta = source.cumulativeMoraleDelta,
                 visitedLocations = new List<string>(source.visitedLocations ?? new List<string>()),
+                producedFlags = new List<string>(source.producedFlags ?? new List<string>()),
                 chains = new List<FactionWarChainProgress>()
             };
             if (source.chains != null)

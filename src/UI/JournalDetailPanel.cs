@@ -99,57 +99,19 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by res://assets/ui/panels/JournalDetailPanel.tscn; SceneBinder resolves typed unique-name nodes once.
+            // Sibling refresh code is unchanged.
+            var binder = new SceneBinder(this, typeof(JournalDetailPanel));
+            binder.Require<VBoxContainer>("EntriesList");
+            binder.Require<VBoxContainer>("CodexList");
+            binder.Require<VBoxContainer>("TabsList");
+            binder.Require<Button>("CloseButton");
+            _entriesList = binder.Get<VBoxContainer>("EntriesList");
+            _codexList = binder.Get<VBoxContainer>("CodexList");
+            _tabsList = binder.Get<VBoxContainer>("TabsList");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("JOURNAL DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblEntriesTitle = AshfallUiHelpers.MakeSectionHeader("RECENT ENTRIES");
-            vbox.AddChild(_lblEntriesTitle);
-            _entriesList = new VBoxContainer();
-            _entriesList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _entriesList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_entriesList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblCodexTitle = AshfallUiHelpers.MakeSectionHeader("CODEX UNLOCKS");
-            vbox.AddChild(_lblCodexTitle);
-            _codexList = new VBoxContainer();
-            _codexList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _codexList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_codexList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblTabsTitle = AshfallUiHelpers.MakeSectionHeader("TAB STATE");
-            vbox.AddChild(_lblTabsTitle);
-            _tabsList = new VBoxContainer();
-            _tabsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _tabsList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_tabsList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
         }
 
         public void Open()

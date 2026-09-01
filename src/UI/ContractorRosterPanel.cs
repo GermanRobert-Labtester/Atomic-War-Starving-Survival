@@ -195,14 +195,7 @@ namespace AtomicWar.GodotApp.UI
             // Populate Contractors and Offers
             if (s.contractors.Count == 0 && s.activeOffers.Count == 0)
             {
-                _contractorList.AddChild(AshfallUiHelpers.MakeMetadata("No active contractors or pending offers."));
-                var btnGenOffer = AshfallUiHelpers.MakeButton("POST RECRUITMENT NOTICE", () =>
-                {
-                    _host.GenerateOffer("mercenary_kane", "Point Scout & Sentry", new List<string> { "Combat", "Stealth" }, 5, 2, 7);
-                    _host.GenerateOffer("scavenger_tora", "Tunnel Breacher", new List<string> { "Engineering" }, 4, 1, 5);
-                    RefreshView();
-                });
-                _contractorList.AddChild(btnGenOffer);
+                _contractorList.AddChild(AshfallUiHelpers.MakeMetadata("No active contractors under payroll or pending guild offers available."));
             }
             else
             {

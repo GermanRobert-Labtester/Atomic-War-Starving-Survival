@@ -555,6 +555,30 @@
         "Unknown party working the slag row at night. Foundry patrol is on the way; do not approach the yard gate.",
         "A sled with no running lights crossed the yard perimeter. Secure the tuyere shed and log the runners."
       ]
+    },
+    "faction_black_flotilla": {
+      "frequency_mhz": 124.2,
+      "callsign": "MOORING WATCH / BLACK FLOTILLA",
+      "intercept_chatter": [
+        "MOORING to all keels. Glass is dropping and the long swell is out of the southeast. Claim lines in to the shelf marks by dark or they read as abandoned.",
+        "CLAIM NOTICE. Lead-punch 4-11, season mark, the mail-steamer off the cape steps is worked water. Tag on the hatch coaming. Cutting her is cutting us.",
+        "ALL STATIONS. Diver down, unmarked, off the Breakwater range. Black ribbon, three knots in the tail. If your pump pulls up a stranger, we pay recovery and ask nothing else.",
+        "LINE REPORT. Three-two fathoms on the western string, forty minutes down, air honest, lead and ladder accounted. The Bell stays down until the families say otherwise.",
+        "MOORING to scattered keels. The picket is raised from the shallows and the crew are ashore under stone. The water that took them is common water now. Claims resume at first light.",
+        "CLAIM ADVISORY. The surge shifted the roadstead — the picket craft shows her keel at low water now. Black-ribbon water. Unmarked salvage there gets answered, not priced."
+      ],
+      "parley_resolution": [
+        "Showing the deep-service ribbon at the exchange gets the tide book opened for you. Strangers buy charts. Kin get the correction, free, the same night it is written.",
+        "Unidentified coaster on the shelf line: heave to, stow iron under the thwarts, show ribbon or register. We board polite once. We are not required to be polite twice."
+      ],
+      "raid_warning": [
+        "MOORING to every mast that reads this: shelter trade is struck off the book while your flag is. The water remembers who cleared the claims. Come squared or stay ashore.",
+        "All marks south of the breakwater are suspended by order of the boom. Nothing crosses, nothing sinks, nothing gets paid until the convoy question is answered. Blame the wrecker, not the water."
+      ],
+      "trade_reaction": [
+        "EXCHANGE NOTES. Sealant kit and line sell faster than rope. We need dry cloth and needles more than we need another saying about the sea. Fair rates on kelp-cured rations for anyone who carries inland.",
+        "Deep report, day mark: the grey door stood open, the black door is shut, and the third ribbon is out. Whoever reads this and knows what a third ribbon costs — mooring berths you tonight."
+      ]
     }
   }
 }

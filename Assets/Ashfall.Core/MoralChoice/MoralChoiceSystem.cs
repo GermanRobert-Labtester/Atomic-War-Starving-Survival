@@ -105,6 +105,7 @@ namespace Ashfall.Core.MoralChoice
 
         private readonly ISeededRng _rng;
         private readonly ILog _log;
+        private readonly Flags.IFlagLedger? _flags;
         private MoralChoiceState _state = new MoralChoiceState();
 
         /// <summary>Branch architecture from moral_choice_chains.json; null until InitializeChainData.</summary>
@@ -116,10 +117,11 @@ namespace Ashfall.Core.MoralChoice
         public event Action<string>? OnThresholdEventFired;
         public event Action<string>? OnBranchLocked;
 
-        public MoralChoiceSystem(ISeededRng rng, ILog? log = null)
+        public MoralChoiceSystem(ISeededRng rng, ILog? log = null, Flags.IFlagLedger? flags = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
+            _flags = flags;
         }
 
         public MoralChoiceState State => _state;
@@ -240,11 +242,12 @@ namespace Ashfall.Core.MoralChoice
             if (string.IsNullOrEmpty(flagId)) return;
             if (!_state.activeFlags.Contains(flagId))
                 _state.activeFlags.Add(flagId);
+            _flags?.Set(flagId, "moral_choice");
         }
 
         /// <summary>Whether a moral flag is currently set.</summary>
         public bool HasFlag(string flagId) =>
-            !string.IsNullOrEmpty(flagId) && _state.activeFlags.Contains(flagId);
+            !string.IsNullOrEmpty(flagId) && (_flags != null ? (_flags.IsSet(flagId) || _state.activeFlags.Contains(flagId)) : _state.activeFlags.Contains(flagId));
 
         // ── Echo quests ────────────────────────────────────────────────
 
@@ -497,6 +500,11 @@ namespace Ashfall.Core.MoralChoice
                 throw new ArgumentException("Moral choice save is missing a valid schemaVersion.", nameof(state));
             }
             _state = Clone(state);
+            if (_flags != null && _state.activeFlags != null)
+            {
+                foreach (var f in _state.activeFlags)
+                    _flags.Set(f, "moral_choice");
+            }
         }
 
         private void FireThresholdEvent(string eventId)

@@ -256,7 +256,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 var btn = AshfallUiHelpers.MakeButton("REPAIR DEEP BERTH 9", () =>
                 {
-                    _statusLabel.Text = _deepCoast.RepairBerth(Day());
+                    _statusLabel.Text = _deepCoast.RepairBerth(Day()).MessageKey;
                     RefreshView();
                 });
                 btn.CustomMinimumSize = new Vector2(220, 36);

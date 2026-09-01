@@ -160,6 +160,146 @@
       "weight": 1.0,
       "tradeValue": 12,
       "durability": 100
+    },
+    {
+      "id": "item_foundry_roof_armor_plate",
+      "displayName": "Heavy Roof-Armor Plate",
+      "description": "Thickened sky-layer armor plate designed to withstand falling structural debris and acid rain fallout.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 60.0,
+      "tradeValue": 95,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_shoring_bracket",
+      "displayName": "Excavation Shoring Bracket",
+      "description": "A heavy cast collar for shoring up deep excavation tunnels, sumps, and salt mine shafts.",
+      "type": "Material",
+      "stackMax": 15,
+      "weight": 10.0,
+      "tradeValue": 35,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_blast_fitting",
+      "displayName": "Blast-Door Hinge Fitting",
+      "description": "Precision alloy bushing and hinge bracket for airlock blast doors and pressure bulkheads.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 18.0,
+      "tradeValue": 85,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_reinforcement_shoe",
+      "displayName": "Foundation Reinforcement Shoe",
+      "description": "An anchored structural support shoe to stabilize subsiding foundation columns in lower blocks.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 22.0,
+      "tradeValue": 50,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_structural_coupling",
+      "displayName": "Heavy Structural Coupling",
+      "description": "A cast iron coupling sleeve connecting heavy power conduits and steam lines across bunker sectors.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 8.0,
+      "tradeValue": 28,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_replacement_die",
+      "displayName": "Tooling Die Set",
+      "description": "High-carbon alloy drop-stamping and forming die set used to rebuild workshop machine tools.",
+      "type": "Tool",
+      "stackMax": 4,
+      "weight": 14.0,
+      "tradeValue": 110,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_drill_blanks",
+      "displayName": "Hardened Drill Blank Set",
+      "description": "Hexagonal tool steel blanks for re-tipping rock drills and salt-mine augers.",
+      "type": "Tool",
+      "stackMax": 12,
+      "weight": 5.0,
+      "tradeValue": 65,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_crucible_spare",
+      "displayName": "Cast Crucible Shell",
+      "description": "Refractory-lined outer shell for foundry cupolas and smelter relining.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 45.0,
+      "tradeValue": 90,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_press_fitting",
+      "displayName": "Hydraulic Press Fitting",
+      "description": "Precision high-pressure hydraulic collar for pharma tablet compactors and workshop presses.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 9.0,
+      "tradeValue": 70,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_bearing_housing",
+      "displayName": "Cast Bearing Housing",
+      "description": "Split-pillow block bearing housing for ventilation blower shafts and turbine rotors.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 24.0,
+      "tradeValue": 95,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_furnace_grate",
+      "displayName": "High-Duty Furnace Grate",
+      "description": "High-heat cast iron grate segment for shelter heating fireboxes and coal boilers.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 25.0,
+      "tradeValue": 60,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_weather_canister",
+      "displayName": "Weather Canister Shell Body",
+      "description": "Abstract aerodynamic shell body cast for atmospheric aerosol dispersion and fallout mitigation.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 12.0,
+      "tradeValue": 75,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_cast_shot",
+      "displayName": "Heavy Cast Shot (canister)",
+      "description": "Chilled lead-iron defensive shot canister used in automated bunker deadfall traps and perimeter barriers.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 6.0,
+      "tradeValue": 30,
+      "durability": 100
+    },
+    {
+      "id": "item_foundry_casing_blanks",
+      "displayName": "Brass-Alloy Casing Blank Set",
+      "description": "Drawn alloy blank cups for high-value Garrison barter and armament treaty quotas.",
+      "type": "Material",
+      "stackMax": 25,
+      "weight": 4.0,
+      "tradeValue": 80,
+      "durability": 100
     }
   ]
 }

@@ -1,16 +1,406 @@
 {
   "schema_version": 1,
-  "description": "Stub quest definitions for moral choice chain references. These quests are gated by moral_choice_chains.json and must exist for catalog integrity.",
+  "description": "Fully fleshed out moral choice chains and merge quest.",
   "quests": [
-    { "id": "quest_moral_merge_" },
-    { "id": "quest_moral_chain_betray_01" },
-    { "id": "quest_moral_chain_betray_02" },
-    { "id": "quest_moral_chain_betray_03" },
-    { "id": "quest_moral_chain_iron_01" },
-    { "id": "quest_moral_chain_iron_02" },
-    { "id": "quest_moral_chain_iron_03" },
-    { "id": "quest_moral_chain_listen_01" },
-    { "id": "quest_moral_chain_listen_02" },
-    { "id": "quest_moral_chain_listen_03" }
+    {
+      "id": "quest_moral_merge_",
+      "display_name": "Ghosts of the Wasteland",
+      "category": "survival",
+      "trigger": "An eerie silence falls over the shelter before the perimeter alarms trigger.",
+      "discovery": "A shadowy figure emerges from the dust storms, flanked by armed mercenaries. It's a face you recognize—a survivor you either saved, abandoned, or exploited months ago.",
+      "location_id": "",
+      "min_day": 100,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Welcome them with open arms, offering sanctuary regardless of past grievances.",
+          "moral_delta": 5,
+          "empathy_delta": 5,
+          "outcome_text": "They lower their weapons. Forgiveness is a rare currency here, but it just bought you a loyal army.",
+          "epitaph": "Believed in redemption, even at the end of the world."
+        },
+        {
+          "label": "Negotiate a cautious alliance, offering supplies for their protection.",
+          "moral_delta": 1,
+          "empathy_delta": 0,
+          "outcome_text": "A tense handshake seals the deal. They will fight for you, but only as long as the rations flow.",
+          "epitaph": "Surviving meant trusting the math, not the man."
+        },
+        {
+          "label": "Refuse entry, commanding your guards to shoot if they take another step.",
+          "moral_delta": -2,
+          "empathy_delta": -2,
+          "outcome_text": "They retreat into the storm, but not before swearing a blood oath to return. You are safe—for tonight.",
+          "epitaph": "Built high walls, but left no room for humanity."
+        },
+        {
+          "label": "Ambush them during parley. Strip their gear and hang the leader as a warning.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "The slaughter is swift and brutal. The bleeding bodies serve as a grim deterrent to any future ghosts.",
+          "epitaph": "Became the very monster the wasteland feared."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_betray_01",
+      "display_name": "A Knife in the Dark",
+      "category": "trust",
+      "trigger": "You notice discrepancies in the armory logs.",
+      "discovery": "Late at night, you find a hidden stash of missing ammunition and a coded ledger. It belongs to Elias, your most trusted lieutenant.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Confront Elias privately, giving him a chance to explain or return the supplies.",
+          "moral_delta": 3,
+          "empathy_delta": 4,
+          "outcome_text": "He breaks down, admitting his family was taken hostage. He needed the ammo for a ransom.",
+          "epitaph": "Chose compassion when paranoia would have been easier."
+        },
+        {
+          "label": "Confiscate the stash quietly and increase guard patrols without naming names.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "outcome_text": "The supplies are secure, but Elias remains a wild card in your ranks.",
+          "epitaph": "Kept the peace by ignoring the war."
+        },
+        {
+          "label": "Expose him publicly, stripping him of his rank and rations.",
+          "moral_delta": -1,
+          "empathy_delta": -2,
+          "outcome_text": "Elias is humiliated and broken. The camp is safer, but morale takes a chilling dive.",
+          "epitaph": "Valued discipline over loyalty."
+        },
+        {
+          "label": "Replace the stolen ammo with defective rounds to kill whoever he's supplying.",
+          "moral_delta": -4,
+          "empathy_delta": -4,
+          "outcome_text": "Days later, Elias is found dead with a shattered rifle in his hands. You smile.",
+          "epitaph": "Punished treachery with ruthless ingenuity."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_betray_02",
+      "display_name": "The Viper's Nest",
+      "category": "trust",
+      "trigger": "A scout returns bleeding, muttering Elias's name.",
+      "discovery": "Elias didn't act alone. He was feeding intel to a raider syndicate planning to hit your water purifier.",
+      "location_id": "",
+      "min_day": 15,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Heal the scout and send a peace envoy to the syndicate to buy them off.",
+          "moral_delta": 4,
+          "empathy_delta": 3,
+          "outcome_text": "It costs dearly, but bloodshed is avoided. For now, the purifier is safe.",
+          "epitaph": "Believed peace was worth any price."
+        },
+        {
+          "label": "Fortify the purifier and wait for their attack, minimizing civilian risk.",
+          "moral_delta": 1,
+          "empathy_delta": 0,
+          "outcome_text": "The raiders break against your defenses. It's a pragmatic victory with minimal losses.",
+          "epitaph": "A steady shield in a broken world."
+        },
+        {
+          "label": "Pre-emptively strike the syndicate's camp, burning their tents and supplies.",
+          "moral_delta": -2,
+          "empathy_delta": -2,
+          "outcome_text": "You leave their camp in ashes. The message is clear: do not cross you.",
+          "epitaph": "Struck first, asked questions never."
+        },
+        {
+          "label": "Capture Elias's co-conspirators in camp and torture them for the syndicate's weaknesses.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "Their screams echo through the night. The intelligence gained is flawless, but the camp fears you.",
+          "epitaph": "Extracted the truth through blood and bone."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_betray_03",
+      "display_name": "Judgment of the Traitor",
+      "category": "trust",
+      "trigger": "Elias is captured trying to slip out of the camp.",
+      "discovery": "He kneels in the dirt before you. He claims he did it to save his dying daughter, held by the raiders.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Pardon him and offer a squad to help rescue his daughter.",
+          "moral_delta": 5,
+          "empathy_delta": 5,
+          "outcome_text": "He weeps in gratitude. The rescue is successful, forging an unbreakable bond.",
+          "epitaph": "Proved that mercy is the ultimate strength."
+        },
+        {
+          "label": "Exile him. He can try to save her alone, but he is dead to this camp.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "He walks into the wasteland alone. You never see him again.",
+          "epitaph": "Dispensed justice without malice."
+        },
+        {
+          "label": "Execute him cleanly for treason. The law must be absolute.",
+          "moral_delta": -2,
+          "empathy_delta": -3,
+          "outcome_text": "A single shot rings out. Order is maintained, though the silence that follows is heavy.",
+          "epitaph": "The law was iron, and so was your heart."
+        },
+        {
+          "label": "Force him to fight a captured raider to the death for his life. Sell tickets.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "The camp howls for blood. Elias dies in the pit, and you profit from his despair.",
+          "epitaph": "Turned tragedy into entertainment."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_iron_01",
+      "display_name": "The Triage Doctrine",
+      "category": "iron",
+      "trigger": "A sickness spreads through the lower decks of the shelter.",
+      "discovery": "The infirmary is out of medicine. You have just enough antibiotics to cure five people, but twenty are infected.",
+      "location_id": "",
+      "min_day": 12,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Divide the doses equally among all twenty, hoping their immune systems pull through.",
+          "moral_delta": 4,
+          "empathy_delta": 4,
+          "outcome_text": "It's a gamble, but most survive. The collective hope strengthens the community.",
+          "epitaph": "Refused to play god with human lives."
+        },
+        {
+          "label": "Give the antibiotics to the five most vital workers (engineers, doctors).",
+          "moral_delta": 0,
+          "empathy_delta": -1,
+          "outcome_text": "The workers recover and the shelter keeps running, but the others perish.",
+          "epitaph": "Calculated survival by the numbers."
+        },
+        {
+          "label": "Lock the infected in a quarantined block and save the medicine for future elites.",
+          "moral_delta": -3,
+          "empathy_delta": -3,
+          "outcome_text": "You listen to them cough to death through the steel door. The medicine remains stockpiled.",
+          "epitaph": "Hoarded salvation for a brighter day."
+        },
+        {
+          "label": "Vent toxic gas into the quarantine block to 'cleanse' the infection instantly.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "The sickness is eradicated in minutes. The screams were brief.",
+          "epitaph": "Cured the disease by killing the host."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_iron_02",
+      "display_name": "Culling the Weak",
+      "category": "iron",
+      "trigger": "Winter sets in early, and the food silos are shockingly low.",
+      "discovery": "A group of elderly survivors volunteers to leave the shelter to save rations for the children.",
+      "location_id": "",
+      "min_day": 30,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Refuse their sacrifice. We all eat half-rations and survive together.",
+          "moral_delta": 5,
+          "empathy_delta": 4,
+          "outcome_text": "Hunger gnaws at everyone, but nobody is left out in the cold.",
+          "epitaph": "Believed no one was expendable."
+        },
+        {
+          "label": "Accept their offer with heavy heart, giving them a solemn farewell ceremony.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "outcome_text": "They march into the snow with dignity. The children will eat this winter.",
+          "epitaph": "Honored the ultimate sacrifice."
+        },
+        {
+          "label": "Force out anyone who can't work, regardless of whether they volunteered.",
+          "moral_delta": -3,
+          "empathy_delta": -4,
+          "outcome_text": "Guards drag the weak and disabled into the blizzard. The remaining workers are terrified into submission.",
+          "epitaph": "Trimmed the fat with a rusty cleaver."
+        },
+        {
+          "label": "Accept their offer, but execute them inside to harvest their meat for the silos.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "The 'mystery stew' keeps the children fed. Only you know the true cost.",
+          "epitaph": "Crossed a line that could never be uncrossed."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_iron_03",
+      "display_name": "The Final Equation",
+      "category": "iron",
+      "trigger": "The generator core is failing. A manual override is required in a lethally radioactive chamber.",
+      "discovery": "Someone must go in and press the button. They will not come out alive.",
+      "location_id": "",
+      "min_day": 45,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Suit up and do it yourself. A true leader leads from the front.",
+          "moral_delta": 5,
+          "empathy_delta": 5,
+          "outcome_text": "You secure the core. As the radiation claims you, you know the shelter will live on.",
+          "epitaph": "Gave everything for the people."
+        },
+        {
+          "label": "Ask for a brave volunteer and promise to look after their family forever.",
+          "moral_delta": 1,
+          "empathy_delta": 2,
+          "outcome_text": "A young engineer steps forward. The core is saved, and you bear the weight of their sacrifice.",
+          "epitaph": "Inspiring loyalty even unto death."
+        },
+        {
+          "label": "Order a dissident prisoner to do it at gunpoint.",
+          "moral_delta": -3,
+          "empathy_delta": -3,
+          "outcome_text": "The prisoner hits the switch before dissolving into ash. A convenient solution.",
+          "epitaph": "Used human lives as disposable tools."
+        },
+        {
+          "label": "Trick a trusting child into climbing inside to 'fix a shiny toy'.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "The core whirs back to life. The child's final cries are drowned out by the machinery.",
+          "epitaph": "Traded innocent blood for electricity."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_listen_01",
+      "display_name": "Whispers in the Static",
+      "category": "listen",
+      "trigger": "You catch a strange frequency on the ham radio.",
+      "discovery": "A faint, trembling voice is reciting old poetry, intercut with coordinates to a pre-war bunker.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Broadcast a comforting response, promising you are listening.",
+          "moral_delta": 4,
+          "empathy_delta": 5,
+          "outcome_text": "The voice breaks into a sob of relief. You gain a friend in the dark.",
+          "epitaph": "Provided a beacon in a sea of static."
+        },
+        {
+          "label": "Write down the coordinates and stay silent so they don't know you're coming.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You have the location of the bunker, and the element of surprise.",
+          "epitaph": "Listened only for the tactical advantage."
+        },
+        {
+          "label": "Jam the frequency. No time for ghost stories distracting the comms team.",
+          "moral_delta": -2,
+          "empathy_delta": -3,
+          "outcome_text": "The channel goes dead. The comms room is quieter, but bleaker.",
+          "epitaph": "Silenced the past to survive the present."
+        },
+        {
+          "label": "Broadcast back fake coordinates to lure them into a feral ghoul den.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "You hear their screams over the radio hours later. Good entertainment.",
+          "epitaph": "Used someone's desperate hope as a weapon."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_listen_02",
+      "display_name": "The Dying Breath",
+      "category": "listen",
+      "trigger": "A wanderer collapses at the shelter gates, coughing up black blood.",
+      "discovery": "In their final moments, they grab your collar and whisper a secret about a flaw in your shelter's air filtration.",
+      "location_id": "",
+      "min_day": 25,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Hold their hand and listen deeply, thanking them before they pass.",
+          "moral_delta": 4,
+          "empathy_delta": 5,
+          "outcome_text": "They die in peace. You fix the filter, saving everyone from impending suffocation.",
+          "epitaph": "Found salvation in the words of the dying."
+        },
+        {
+          "label": "Jot down the mechanical details, ignoring their emotional rambling.",
+          "moral_delta": 1,
+          "empathy_delta": -1,
+          "outcome_text": "The engineering intel is solid. The filter is fixed, though the wanderer dies alone.",
+          "epitaph": "Extracted the data and discarded the soul."
+        },
+        {
+          "label": "Strip their gear before they are fully dead, dismissing their whispers as delirium.",
+          "moral_delta": -3,
+          "empathy_delta": -4,
+          "outcome_text": "You get some decent boots, but weeks later, the air starts tasting metallic.",
+          "epitaph": "Deaf to the warnings that mattered most."
+        },
+        {
+          "label": "Kick them to make them spit out the rest of the secret faster, accelerating their death.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "They choke and die in agony. The secret dies with them.",
+          "epitaph": "Crushed the final spark of life out of impatience."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_chain_listen_03",
+      "display_name": "Out of the Mouths of Babes",
+      "category": "listen",
+      "trigger": "A child in the shelter tugs on your sleeve while you're reviewing patrol maps.",
+      "discovery": "They tell you, matter-of-factly, that the 'scary men in gas masks' aren't monsters—they're just hungry and scared like us.",
+      "location_id": "",
+      "min_day": 50,
+      "max_day": 0,
+      "choices": [
+        {
+          "label": "Sit with the child. Realize they are right, and order your patrols to capture, not kill.",
+          "moral_delta": 5,
+          "empathy_delta": 5,
+          "outcome_text": "You change the rules of engagement. Enemies become prisoners, then allies.",
+          "epitaph": "Let a child's innocence rewrite the laws of war."
+        },
+        {
+          "label": "Pat the child's head and tell them grown-up things are complicated. Keep current orders.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "outcome_text": "The war continues as usual. Innocence remains intact, but ignored.",
+          "epitaph": "Listened, but did not hear."
+        },
+        {
+          "label": "Scold the child for sympathizing with the enemy and assign them double chores.",
+          "moral_delta": -2,
+          "empathy_delta": -3,
+          "outcome_text": "The child cries and learns to stop talking. The shelter grows colder.",
+          "epitaph": "Stamped out compassion before it could bloom."
+        },
+        {
+          "label": "Use the child's trusting nature to lure the masked men into a kill box.",
+          "moral_delta": -5,
+          "empathy_delta": -5,
+          "outcome_text": "The men approach the child in peace, only to be mowed down by your snipers. The child is forever traumatized.",
+          "epitaph": "Weaponized innocence for absolute slaughter."
+        }
+      ]
+    }
   ]
 }

@@ -247,7 +247,7 @@
         },
         {
           "id": "stage_2",
-          "text": "Read Renn. RENN, HALVARD — water engineer — allocated — NOT ARRIVED — 12-B UNCONFIRMED. A dependent line that may be Sela if she is yours to name."
+          "text": "Read Renn. RENN, HALVARD \u2014 water engineer \u2014 allocated \u2014 NOT ARRIVED \u2014 12-B UNCONFIRMED. A dependent line that may be Sela if she is yours to name."
         },
         {
           "id": "stage_3",
@@ -366,7 +366,7 @@
         },
         {
           "id": "holdfast_membrane_let_drop",
-          "text": "You let steam die. 211 people who have not practised this cold. Office legitimacy cracks. Salt may offer a separate bargain — plant over paper. Unifier path hardens because a treaty wants a room that can still hold heat. Children take coats. Attendance is still taken.",
+          "text": "You let steam die. 211 people who have not practised this cold. Office legitimacy cracks. Salt may offer a separate bargain \u2014 plant over paper. Unifier path hardens because a treaty wants a room that can still hold heat. Children take coats. Attendance is still taken.",
           "set_flag": "holdfast_membrane_let_drop"
         }
       ]
@@ -473,6 +473,566 @@
           "id": "write_nothing",
           "text": "The chart stays honest about who this hole was built for. It stays dishonest about who kept it.",
           "set_flag": ""
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_salt_convoy_haul",
+      "display_name": "The Salt Column at Km 14",
+      "type": "expedition",
+      "briefing": "A five-sledge salt convoy from the coast is stalled at Kilometre 14 with cracked runners. The frost is deepening, but the tide is due to turn in twenty-four hours. Deliver hardwood runner braces and escort the cargo before the ice begins to flex.",
+      "prereq_quest_id": "quest_holdfast_the_window",
+      "min_day": 95,
+      "knowledge_key": "lore_hf_salt_haul",
+      "target_location_id": "loc_cut_kilometre_19",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Carry runner hardwood and tallow grease to the stalled sledges at Kilometre 14."
+        },
+        {
+          "id": "stage_2",
+          "text": "Jack the heavy salt sledge and screw new steel-shod runners onto the split ash frame."
+        },
+        {
+          "id": "stage_3",
+          "text": "Escort the column through the slush seam while the ice is still quiet."
+        },
+        {
+          "id": "stage_4",
+          "text": "Deliver the hundred-kilo salt sacks to the weighbridge gate before nightfall."
+        }
+      ],
+      "choices": [
+        {
+          "id": "brace_all_sledges",
+          "text": "Replace runners on all five sledges. The convoy reaches the gate intact.",
+          "set_flag": "flag_hf_salt_convoy_saved"
+        },
+        {
+          "id": "dump_half_cargo",
+          "text": "Abandon the three trailing sledges to save the lead draught animals. Half the salt is lost to the slush.",
+          "set_flag": "flag_hf_salt_convoy_halved"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_scree_blockage_clear",
+      "display_name": "Clear the Scree at Span 4",
+      "type": "expedition",
+      "briefing": "A night tremor dropped forty tons of shale across the southern cut at Span 4. The supply haul from the switchback is completely halted. Pickaxe crews are needed to clear the roadbed before ice re-glazes over the rubble.",
+      "prereq_quest_id": "quest_holdfast_the_window",
+      "min_day": 100,
+      "knowledge_key": "",
+      "target_location_id": "loc_shrine_switchback_waystation",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Take heavy pry bars and survey the rockfall at Span 4."
+        },
+        {
+          "id": "stage_2",
+          "text": "Lever large granite boulders off the frozen ballast into the ravine."
+        },
+        {
+          "id": "stage_3",
+          "text": "Sledge the crushed shale flat to create a smooth runner track."
+        },
+        {
+          "id": "stage_4",
+          "text": "Signal the switchback lookouts that the southern corridor is open."
+        }
+      ],
+      "choices": [
+        {
+          "id": "clear_full_lane",
+          "text": "Clear a double-wide lane for two-way sledge traffic.",
+          "set_flag": "flag_hf_span4_open"
+        },
+        {
+          "id": "clear_narrow_track",
+          "text": "Clear only a single-file footpath and push through immediately.",
+          "set_flag": "flag_hf_span4_narrow"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_rival_sled_overtake",
+      "display_name": "The Fast Sledge Race",
+      "type": "expedition",
+      "briefing": "Independent salt runners from Sector 4 are racing up the marked ice road to buy out the emergency fuel stores at Waystation A. If they corner the stock, prices will quadruple overnight.",
+      "prereq_quest_id": "quest_holdfast_the_window",
+      "min_day": 105,
+      "knowledge_key": "",
+      "target_location_id": "loc_ice_road_gate",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Harness the fast haulage team and push along the wind-scoured outer ice shelf."
+        },
+        {
+          "id": "stage_2",
+          "text": "Spot the rivals lanterns through the blowing spindrift at Kilometre 8."
+        },
+        {
+          "id": "stage_3",
+          "text": "Cut across the unlit salt pan shortcut to overtake their column."
+        },
+        {
+          "id": "stage_4",
+          "text": "Reach Waystation A first and lock in the municipal fuel contracts."
+        }
+      ],
+      "choices": [
+        {
+          "id": "win_race_fair",
+          "text": "Outrun them across the rough ice. The fuel is secured at civic rates.",
+          "set_flag": "flag_hf_fuel_secured_fair"
+        },
+        {
+          "id": "sabotage_sled",
+          "text": "Scatter caltrops on their track. Their lead sledge throws a runner.",
+          "set_flag": "flag_hf_fuel_secured_dirty"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_broken_runner_rescue",
+      "display_name": "Runner Down in the Drift",
+      "type": "expedition",
+      "briefing": "A lone courier carrying blood plasma and medical seals broke an axle three kilometres east of the river barge. The windchill is falling past minus thirty.",
+      "prereq_quest_id": "quest_holdfast_the_window",
+      "min_day": 110,
+      "knowledge_key": "",
+      "target_location_id": "loc_cut_dredger_hulk",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Track the single sledge groove east from the river barge adit."
+        },
+        {
+          "id": "stage_2",
+          "text": "Find the overturned sledge half-buried in a drift."
+        },
+        {
+          "id": "stage_3",
+          "text": "Treat the courier for advanced frostbite and warm the insulated plasma flask."
+        },
+        {
+          "id": "stage_4",
+          "text": "Haul both courier and cargo back to the shelter dispensary."
+        }
+      ],
+      "choices": [
+        {
+          "id": "save_both",
+          "text": "Haul the injured courier and the medical chest together.",
+          "set_flag": "flag_hf_courier_saved"
+        },
+        {
+          "id": "save_plasma_only",
+          "text": "Take only the blood plasma and leave the frozen runner.",
+          "set_flag": "flag_hf_courier_abandoned"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_census_claimant_audit",
+      "display_name": "The Line Item Claimant",
+      "type": "dialogue",
+      "briefing": "A gaunt survivor named Harek arrives at the weighbridge holding a soot-stained pre-war rent ledger, claiming hereditary rights to Room 12 in the sheltered lower tier.",
+      "prereq_quest_id": "quest_holdfast_the_clerk",
+      "min_day": 95,
+      "knowledge_key": "",
+      "target_location_id": "loc_weighbridge",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Cross-reference Hareks paper with Edor Vales master index."
+        },
+        {
+          "id": "stage_2",
+          "text": "Inspect the watermark under lamp oil to check for chemical erasure."
+        },
+        {
+          "id": "stage_3",
+          "text": "Interview the elders in Block B who remember the pre-war tenants."
+        },
+        {
+          "id": "stage_4",
+          "text": "Render a formal verdict on Hareks occupancy claim."
+        }
+      ],
+      "choices": [
+        {
+          "id": "admit_harek",
+          "text": "Authenticate the ledger and assign Harek a bunk in Room 12.",
+          "set_flag": "flag_hf_harek_admitted"
+        },
+        {
+          "id": "reject_harek",
+          "text": "Declare the document void due to water damage and reassign the bunk to working salters.",
+          "set_flag": "flag_hf_harek_rejected"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_census_forged_voucher",
+      "display_name": "The Purple Stamp Fraud",
+      "type": "dialogue",
+      "briefing": "Dozens of forged ration vouchers stamped with an obsolete purple seal have surfaced at the Caravanserai. Trace the source before the food reserves are drained.",
+      "prereq_quest_id": "quest_holdfast_the_clerk",
+      "min_day": 100,
+      "knowledge_key": "",
+      "target_location_id": "loc_cut_merchant_caravanserai",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Confiscate the counterfeit slips from market traders."
+        },
+        {
+          "id": "stage_2",
+          "text": "Analyze the ink chemistry: lampblack mixed with elderberry dye."
+        },
+        {
+          "id": "stage_3",
+          "text": "Corner the engraver operating in the cellar behind the leather stalls."
+        },
+        {
+          "id": "stage_4",
+          "text": "Seize the carved copper stamp and decide the engravers fate."
+        }
+      ],
+      "choices": [
+        {
+          "id": "arrest_forger",
+          "text": "Hand the engraver over to the toll guards for trial.",
+          "set_flag": "flag_hf_forger_arrested"
+        },
+        {
+          "id": "coopt_forger",
+          "text": "Employ the engravers talent to forge trade passes into rival territory.",
+          "set_flag": "flag_hf_forger_coopted"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_census_estate_division",
+      "display_name": "The Partition of Room 14",
+      "type": "dialogue",
+      "briefing": "Chief Machinist Aldis died in his sleep. His three apprentices and an estranged sister are fighting over his toolbox, coal rations, and winter bed allocation.",
+      "prereq_quest_id": "quest_holdfast_the_clerk",
+      "min_day": 105,
+      "knowledge_key": "",
+      "target_location_id": "loc_grange_hall",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Inventory Aldis tools, spare copper pipe, and stamped fuel scrip."
+        },
+        {
+          "id": "stage_2",
+          "text": "Listen to the apprentices arguments regarding shop continuity."
+        },
+        {
+          "id": "stage_3",
+          "text": "Hear the sisters claim regarding kinship support and family debt."
+        },
+        {
+          "id": "stage_4",
+          "text": "Partition the estate and record the final decree in the civic book."
+        }
+      ],
+      "choices": [
+        {
+          "id": "award_apprentices",
+          "text": "Give the machine tools to the workshop apprentices to keep the lathe running.",
+          "set_flag": "flag_hf_tools_to_shop"
+        },
+        {
+          "id": "award_sister",
+          "text": "Award the tools and coal scrip to the sister to settle family debts.",
+          "set_flag": "flag_hf_tools_to_family"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_census_absentee_defense",
+      "display_name": "The Name Left on the Roll",
+      "type": "dialogue",
+      "briefing": "Scavenger Valeri has been overdue from the northern drifts for forty days. The Garrison conscription office wants to strike his name and seize his bunk for new recruits.",
+      "prereq_quest_id": "quest_holdfast_the_clerk",
+      "min_day": 110,
+      "knowledge_key": "",
+      "target_location_id": "loc_conscription_office",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Review Valeris expedition log and his last reported radio coordinates."
+        },
+        {
+          "id": "stage_2",
+          "text": "Present evidence of blizzard delays to the conscription clerk."
+        },
+        {
+          "id": "stage_3",
+          "text": "Pledge a personal deposit of dried rations to keep his claim active."
+        },
+        {
+          "id": "stage_4",
+          "text": "Witness the clerk stamp a twenty-day grace period on the roster."
+        }
+      ],
+      "choices": [
+        {
+          "id": "defend_valeri",
+          "text": "Pay the bond to keep Valeris name protected on the roster.",
+          "set_flag": "flag_hf_valeri_defended"
+        },
+        {
+          "id": "let_strike_name",
+          "text": "Allow the garrison to seize the bunk and take their ration reward.",
+          "set_flag": "flag_hf_valeri_struck"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_brine_boiler_scum",
+      "display_name": "Scale in the Tubes",
+      "type": "expedition",
+      "briefing": "Crystalline calcium carbonate and gypsum scale have choked Boiler 3 at the desalination facility. If acid wash is not pumped within forty-eight hours, the steam jacket will rupture.",
+      "prereq_quest_id": "quest_holdfast_the_plant",
+      "min_day": 95,
+      "knowledge_key": "",
+      "target_location_id": "location_abandoned_desalination",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Collect concentrated sulfuric acid carboys from the chemical store."
+        },
+        {
+          "id": "stage_2",
+          "text": "Flush the primary heat exchanger tubes under high pressure."
+        },
+        {
+          "id": "stage_3",
+          "text": "Scrape the caustic mineral slag out of the bottom blowdown trap."
+        },
+        {
+          "id": "stage_4",
+          "text": "Restart the draft fans and monitor boiler steam pressure."
+        }
+      ],
+      "choices": [
+        {
+          "id": "thorough_acid_flush",
+          "text": "Run a full four-hour acid cycle. Boiler 3 efficiency restored to 95%.",
+          "set_flag": "flag_hf_boiler3_restored"
+        },
+        {
+          "id": "quick_patch",
+          "text": "Perform a hasty bypass. The boiler runs at half capacity with high blowout risk.",
+          "set_flag": "flag_hf_boiler3_compromised"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_salter_work_stoppage",
+      "display_name": "The Wet Shift Grievance",
+      "type": "dialogue",
+      "briefing": "The evaporation yard workers have laid down their shovels. Three men have salt-ulcers on their legs and the foreman has withheld tallow salve rations.",
+      "prereq_quest_id": "quest_holdfast_the_plant",
+      "min_day": 100,
+      "knowledge_key": "",
+      "target_location_id": "loc_the_shallows_market",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Meet the striking salters at the edge of the shallow brine pans."
+        },
+        {
+          "id": "stage_2",
+          "text": "Inspect the chemical burns and salt dermatitis on their shins."
+        },
+        {
+          "id": "stage_3",
+          "text": "Confront Foreman Quist about the withheld medical supplies."
+        },
+        {
+          "id": "stage_4",
+          "text": "Broker a compromise on shift lengths and protective rubber waders."
+        }
+      ],
+      "choices": [
+        {
+          "id": "concede_to_salters",
+          "text": "Force the foreman to release the medical tallow and shorten shifts.",
+          "set_flag": "flag_hf_salters_appeased"
+        },
+        {
+          "id": "enforce_quota",
+          "text": "Side with the foreman and threaten to cut meal rations if production halts.",
+          "set_flag": "flag_hf_salters_forced"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_brine_intake_poisoning",
+      "display_name": "The Grey Silt at Sluice 2",
+      "type": "expedition",
+      "briefing": "A slick of grey alkaline effluent has settled around Pump Station Nine. Two children drinking from the municipal outflow have fallen violently ill.",
+      "prereq_quest_id": "quest_holdfast_the_plant",
+      "min_day": 105,
+      "knowledge_key": "",
+      "target_location_id": "loc_pump_station_nine",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Take water samples from Sluice 2 and test with litmus paper."
+        },
+        {
+          "id": "stage_2",
+          "text": "Trace the discharge upstream to an unmapped drainage culvert."
+        },
+        {
+          "id": "stage_3",
+          "text": "Discover an illicit battery-smelting operation dumping acid wash."
+        },
+        {
+          "id": "stage_4",
+          "text": "Shut down the illicit smelter and deploy activated charcoal filters."
+        }
+      ],
+      "choices": [
+        {
+          "id": "shut_smelter_down",
+          "text": "Dismantle the illegal battery furnace and cleanse the intake.",
+          "set_flag": "flag_hf_intake_cleansed"
+        },
+        {
+          "id": "tax_smelter",
+          "text": "Impose an environmental levy on the smelter in exchange for lead ingots.",
+          "set_flag": "flag_hf_smelter_taxed"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_estuary_water_compact",
+      "display_name": "The Litre and the Dram",
+      "type": "dialogue",
+      "briefing": "Flotilla skiffs are siphoning fresh condensate directly from Lock Gate Four, depriving the downstream greenhouse terraces of irrigation water.",
+      "prereq_quest_id": "quest_holdfast_the_plant",
+      "min_day": 110,
+      "knowledge_key": "",
+      "target_location_id": "loc_lock_gate_four",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Board the Flotilla flagship moored at the lock gate basin."
+        },
+        {
+          "id": "stage_2",
+          "text": "Inspect the greenhouse water levels and withered potato beds."
+        },
+        {
+          "id": "stage_3",
+          "text": "Chair a summit between Flotilla Captain Mallow and the Agronomist."
+        },
+        {
+          "id": "stage_4",
+          "text": "Sign a binding water distribution charter with fixed litre quotas."
+        }
+      ],
+      "choices": [
+        {
+          "id": "favor_greenhouses",
+          "text": "Direct eighty percent of freshwater to the food crops.",
+          "set_flag": "flag_hf_water_to_crops"
+        },
+        {
+          "id": "favor_flotilla",
+          "text": "Grant the Flotilla their fuel-run water quota in exchange for fish rations.",
+          "set_flag": "flag_hf_water_to_flotilla"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_boiler_crack_panic",
+      "display_name": "Cold Smoke in the Conduits",
+      "type": "decision",
+      "briefing": "A hairline fracture in the shelter central heating duct has filled Block D with acrid carbon monoxide while outside temperatures plunge toward minus forty.",
+      "prereq_quest_id": "quest_holdfast_the_hatch",
+      "min_day": 115,
+      "knowledge_key": "",
+      "target_location_id": "player_shelter",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Evacuate coughing residents from Block D into the crowded mess hall."
+        },
+        {
+          "id": "stage_2",
+          "text": "Locate the cracked cast-iron flue inside the crawlspace."
+        },
+        {
+          "id": "stage_3",
+          "text": "Braze the seam with bronze rod and fireproof asbestos paste."
+        },
+        {
+          "id": "stage_4",
+          "text": "Ventilate the toxic smoke through the emergency intake valves."
+        }
+      ],
+      "choices": [
+        {
+          "id": "braze_flue_perfect",
+          "text": "Spend valuable bronze stock to seal the duct permanently.",
+          "set_flag": "flag_hf_flue_welded"
+        },
+        {
+          "id": "patch_with_mud",
+          "text": "Slap refractory clay over the crack and hope it holds through the winter.",
+          "set_flag": "flag_hf_flue_mudded"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_ration_lockup_breach",
+      "display_name": "The Midnight Crowbar",
+      "type": "decision",
+      "briefing": "Desperate survivors from the overflow annex have smashed the outer padlock of the central grain vault after winter rations were cut by a third.",
+      "prereq_quest_id": "quest_holdfast_the_hatch",
+      "min_day": 120,
+      "knowledge_key": "",
+      "target_location_id": "loc_the_allotments",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Confront the angry mob holding torches outside the grain vault."
+        },
+        {
+          "id": "stage_2",
+          "text": "Inspect the damaged door and confirm no seed sacks were stolen."
+        },
+        {
+          "id": "stage_3",
+          "text": "Address their grievances regarding starvation rations and cold bunks."
+        },
+        {
+          "id": "stage_4",
+          "text": "Deliver a ruling on punishment and winter food allocation."
+        }
+      ],
+      "choices": [
+        {
+          "id": "distribute_reserve",
+          "text": "Open an emergency grain sack and distribute warm porridge to defuse the riot.",
+          "set_flag": "flag_hf_grain_released"
+        },
+        {
+          "id": "punish_ringleaders",
+          "text": "Arrest the three crowbar wielders and enforce strict curfew.",
+          "set_flag": "flag_hf_rioters_jailed"
         }
       ]
     }

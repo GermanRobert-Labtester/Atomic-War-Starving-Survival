@@ -18,6 +18,20 @@ namespace Ashfall.Core.Narrative
         public string text = string.Empty;
         public int moraleDelta = 0;
         public int guiltDelta = 0;
+
+        // Plan 49 — Micro-location extensions (backward-compatible defaults)
+        /// <summary>Item ID to grant on choice resolution. Empty = no grant.</summary>
+        public string grantItemId = string.Empty;
+        /// <summary>Quantity of granted item. 0 = no grant.</summary>
+        public int grantItemQuantity = 0;
+        /// <summary>World flag to set on choice resolution. Empty = no flag.</summary>
+        public string setWorldFlag = string.Empty;
+        /// <summary>Journal/codex knowledge key to unlock. Empty = no unlock.</summary>
+        public string journalUnlockId = string.Empty;
+        /// <summary>Location ID to discover via radio triangulation. Empty = no discovery.</summary>
+        public string discoverLocationId = string.Empty;
+        /// <summary>Whether this choice depletes the micro-location (one-time loot).</summary>
+        public bool depletesOnResolve = false;
     }
 
     /// <summary>

@@ -312,8 +312,24 @@ namespace Ashfall.Core.Tests
             Assert.Equal(ExpansionHubSave.CurrentSaveVersion, decoded.saveVersion);
             Assert.NotNull(decoded.disease);
             Assert.True(decoded.disease.air_filtration);
-            // One simulation row per authored disease (cholera, flu, blood, spore, ARS, fungal, typhoid).
-            Assert.Equal(7, decoded.disease.diseases.Count);
+            // One simulation row per authored disease (Plan 09 9A deepened the
+            // catalog from 7 to 15; this test must count whatever the live
+            // catalog ships, not a hardcoded floor). The seven legacy diseases
+            // are still required to remain — this is the regression pin.
+            Assert.True(decoded.disease.diseases.Count >= 7,
+                "save envelope dropped below the legacy 7-disease floor");
+            string[] legacyDiseases =
+            {
+                DiseaseIds.Cholera, DiseaseIds.ZoonoticFlu, DiseaseIds.BloodFever,
+                DiseaseIds.SporeBlight, "disease_acute_radiation_syndrome",
+                "disease_fungal_respiratory", "disease_typhoid_waterborne",
+            };
+            foreach (string id in legacyDiseases)
+            {
+                Assert.True(decoded.disease.diseases.Exists(d => d.disease_id == id),
+                    $"legacy disease '{id}' missing from save envelope");
+            }
+
             var spore = decoded.disease.diseases.Find(d => d.disease_id == DiseaseIds.SporeBlight);
             Assert.NotNull(spore);
             Assert.Equal(3, spore.infected.Count);
@@ -415,6 +431,75 @@ namespace Ashfall.Core.Tests
             {
                 Assert.DoesNotContain("disease", report.Errors[i]);
             }
+        }
+
+        // -----------------------------------------------------------------
+        // Campaign-day rollback invariant (Main.CampaignOwners.MedicalDiseaseDayOwner)
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// CaptureState() intentionally returns the live state object by
+        /// reference (documented at its call site in
+        /// Main.CampaignOwners.MedicalDiseaseDayOwner) so that a
+        /// campaign-day owner cannot use a bare assignment as a pre-day
+        /// snapshot: later mutation would alias the "baseline" too. Pin this
+        /// so the behavior cannot silently change without the day-owner's
+        /// JSON-round-trip workaround being revisited.
+        /// </summary>
+        [Fact]
+        public void CaptureState_ReturnsLiveStateByReference_NotACopy()
+        {
+            var sys = new DiseaseSystem(rng: new Ashfall.Core.SeededRng(4242));
+            sys.BindCatalog(LoadCatalog());
+            sys.Infect("a", DiseaseIds.Cholera, 1);
+
+            var captured = sys.CaptureState();
+            int countBefore = captured.diseases.Find(d => d.disease_id == DiseaseIds.Cholera)!.infected.Count;
+
+            sys.Infect("b", DiseaseIds.Cholera, 1);
+            int countAfterViaLiveSystem = sys.CaptureState().diseases.Find(d => d.disease_id == DiseaseIds.Cholera)!.infected.Count;
+            int countAfterViaOldReference = captured.diseases.Find(d => d.disease_id == DiseaseIds.Cholera)!.infected.Count;
+
+            Assert.True(countAfterViaLiveSystem > countBefore);
+            // The "old" captured reference sees the new infection too, proving
+            // it is the same object, not an independent snapshot.
+            Assert.Equal(countAfterViaLiveSystem, countAfterViaOldReference);
+        }
+
+        /// <summary>
+        /// Proves the exact recovery mechanism MedicalDiseaseDayOwner relies on:
+        /// serialize CaptureState() to JSON before TickDay mutates it, then
+        /// deserialize + RestoreState() to roll back to the pre-day baseline
+        /// after mutation — matching a campaign-day coordinator retry after a
+        /// same-day owner failure elsewhere in the phase.
+        /// </summary>
+        [Fact]
+        public void JsonRoundTripSnapshot_RestoresExactPreDayState_AfterMutation()
+        {
+            var json = new SystemTextJsonSerializer();
+            var sys = new DiseaseSystem(rng: new Ashfall.Core.SeededRng(909));
+            sys.BindCatalog(LoadCatalog());
+            sys.Infect("a", DiseaseIds.Cholera, 5);
+            sys.Infect("b", DiseaseIds.Cholera, 5);
+
+            // Pre-day snapshot: independent copy via the system's own save format.
+            string preDaySnapshotJson = json.Serialize(sys.CaptureState());
+            string preDaySnapshotFingerprint = json.Serialize(sys.GetSnapshot());
+
+            // TickDay mutates: a third infection tips this into an outbreak.
+            sys.Infect("c", DiseaseIds.Cholera, 5);
+            for (int day = 6; day <= 20; day++)
+                sys.TickDaily(day, Roster(6));
+            Assert.NotEqual(preDaySnapshotFingerprint, json.Serialize(sys.GetSnapshot()));
+
+            // Roll back exactly as RestorePreDaySnapshot() does.
+            var restored = json.Deserialize<DiseaseSystemState>(preDaySnapshotJson);
+            Assert.NotNull(restored);
+            sys.RestoreState(restored!);
+
+            Assert.Equal(preDaySnapshotFingerprint, json.Serialize(sys.GetSnapshot()));
+            Assert.Equal(2, sys.GetSnapshot().total_infected);
+            Assert.False(sys.IsInfected("c", DiseaseIds.Cholera), "the post-snapshot infection must not survive rollback");
         }
     }
 }

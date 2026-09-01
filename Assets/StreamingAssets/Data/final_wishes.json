@@ -22,7 +22,7 @@
           "requires_patient": true
         }
       ],
-      "completion_text": "{name}'s final lesson is complete. The student nods — they understand. {name} sets down the scalpel for the last time. 'You'll do fine,' they say. 'You'll do fine.'",
+      "completion_text": "{name}'s final lesson is complete. The student nods \u2014 they understand. {name} sets down the scalpel for the last time. 'You'll do fine,' they say. 'You'll do fine.'",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -95,7 +95,7 @@
         },
         {
           "step_id": "deliver_letter",
-          "description": "Deliver the letter — to a living survivor, or to a grave."
+          "description": "Deliver the letter \u2014 to a living survivor, or to a grave."
         }
       ],
       "completion_text": "{name} seals the letter with trembling hands. 'It says everything I should have said years ago,' they whisper. Whether the recipient ever reads it, {name} is at peace.",
@@ -106,7 +106,7 @@
       "archetype_id": "the_mechanic",
       "wish_type": "retrieve_heirloom",
       "wish_title": "The Lost Wrench",
-      "wish_description": "{name} describes a specific wrench — their father's, their grandfather's before that. 'It's still in my old garage,' they say. 'If someone could bring it back...'",
+      "wish_description": "{name} describes a specific wrench \u2014 their father's, their grandfather's before that. 'It's still in my old garage,' they say. 'If someone could bring it back...'",
       "steps": [
         {
           "step_id": "locate_garage",
@@ -141,7 +141,7 @@
           "description": "Gather the bunker for {name}'s final class."
         }
       ],
-      "completion_text": "The bunker is silent as {name} finishes speaking. Then, one by one, everyone stands. No one claps — that would feel wrong. They just stand, in quiet acknowledgment of a teacher who gave everything.",
+      "completion_text": "The bunker is silent as {name} finishes speaking. Then, one by one, everyone stands. No one claps \u2014 that would feel wrong. They just stand, in quiet acknowledgment of a teacher who gave everything.",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -164,7 +164,7 @@
       "archetype_id": "the_electrician",
       "wish_type": "retrieve_heirloom",
       "wish_title": "The Old Voltmeter",
-      "wish_description": "{name} mentions an old analog voltmeter — the first tool they ever owned. 'My mentor gave it to me when I was sixteen,' they say. 'It's still in the substation control room, if the roof hasn't caved in.'",
+      "wish_description": "{name} mentions an old analog voltmeter \u2014 the first tool they ever owned. 'My mentor gave it to me when I was sixteen,' they say. 'It's still in the substation control room, if the roof hasn't caved in.'",
       "steps": [
         {
           "step_id": "reach_substation",
@@ -177,6 +177,44 @@
         }
       ],
       "completion_text": "The voltmeter's needle still swings true when {name} tests it on a live circuit. They hold it for a long moment, then hang it on the bunker wall. 'So the next electrician knows where they came from,' they say.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_quartermaster",
+      "wish_type": "die_with_dignity",
+      "wish_title": "The Final Audit",
+      "wish_description": "{name} refuses to lay down until the quarterly inventory is balanced. 'I brought us this far by counting every grain of rice,' they say, coughing into a rag. 'I will not leave a broken ledger for the next poor bastard.'",
+      "steps": [
+        {
+          "step_id": "gather_ledgers",
+          "description": "Collect the scattered inventory logs from the past three months."
+        },
+        {
+          "step_id": "balance_the_books",
+          "description": "Sit with {name} through the night as they meticulously cross-reference every calorie consumed against the supply."
+        }
+      ],
+      "completion_text": "{name} draws a perfectly straight red line under the final tally, closes the ledger, and hands you the pen. 'We are in the black for exactly six more days,' they whisper. 'Good luck.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_miner",
+      "wish_type": "die_with_dignity",
+      "wish_title": "The Sound of the Seam",
+      "wish_description": "{name} asks to be carried down to the lowest excavated level of the bunker. 'I don't want to die listening to the generators,' they say. 'I want to hear the bedrock shifting. I want to hear the earth.'",
+      "steps": [
+        {
+          "step_id": "descend_to_bedrock",
+          "description": "Carry {name} past the warning signs down to Level 5, where the concrete ends and the raw granite begins."
+        },
+        {
+          "step_id": "sit_in_silence",
+          "description": "Wait in total darkness with {name} until the deep subterranean acoustic shifts can be heard."
+        }
+      ],
+      "completion_text": "In the pitch black, a deep, resonant groan echoes through the granite. It is a terrifying sound to surface dwellers, but {name} smiles in the dark. 'She's settling,' they say. 'We're safe here.'",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     }

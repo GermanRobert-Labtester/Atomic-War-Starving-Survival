@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "sites": [
+    {
+      "site_id": "excavation_command_vault",
+      "location_id": "loc_excavation_command_vault",
+      "display_name": "Collapsed Civil Defense Command Vault",
+      "description": "A buried regional continuity command bunker constructed to survive strategic nuclear strikes. Blast damage collapsed the surface approach, leaving deeper operational rooms partially pressurized.",
+      "max_depth_meters": 120.0,
+      "required_progress": 160.0,
+      "structural_risk": 0.38,
+      "required_tools": [
+        "tools_precision",
+        "shovel"
+      ],
+      "shoring_materials": [
+        "scrap_metal",
+        "mechanical_parts"
+      ],
+      "hazard_type": "hazard_radiation_hotspot",
+      "relic_reward_id": "item_comm_codebook_alpha",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 20.0,
+          "label": "Cratered Rubble Approach",
+          "risk": 0.25
+        },
+        {
+          "depth_meters": 55.0,
+          "label": "Collapsed Service Conduit",
+          "risk": 0.38
+        },
+        {
+          "depth_meters": 90.0,
+          "label": "Reinforced Command Shell",
+          "risk": 0.28
+        },
+        {
+          "depth_meters": 120.0,
+          "label": "Sealed Operations Center",
+          "risk": 0.52
+        }
+      ],
+      "journal_entry_id": "journal_excavation_command_vault"
+    },
+    {
+      "site_id": "excavation_utility_tunnels",
+      "location_id": "loc_excavation_utility_tunnels",
+      "display_name": "Utility Tunnel Network",
+      "description": "Subterranean municipal service corridors and conduit trunks running beneath the old district grid. Flooded sections and silted pipes conceal pre-war electrical salvage and emergency maintenance tools.",
+      "max_depth_meters": 65.0,
+      "required_progress": 95.0,
+      "structural_risk": 0.22,
+      "required_tools": [
+        "tools_precision",
+        "wrench"
+      ],
+      "shoring_materials": [
+        "scrap_wood",
+        "metal_sheet"
+      ],
+      "hazard_type": "hazard_flood",
+      "relic_reward_id": "tools_precision",
+      "loot_table": "salvage_common",
+      "depth_bands": [
+        {
+          "depth_meters": 15.0,
+          "label": "Service Access Hatch",
+          "risk": 0.15
+        },
+        {
+          "depth_meters": 38.0,
+          "label": "Flooded Conduit Junction",
+          "risk": 0.26
+        },
+        {
+          "depth_meters": 65.0,
+          "label": "Main Infrastructure Sump",
+          "risk": 0.35
+        }
+      ],
+      "journal_entry_id": "journal_excavation_utility_tunnels"
+    },
+    {
+      "site_id": "excavation_metro_interchange",
+      "location_id": "loc_excavation_metro_interchange",
+      "display_name": "Buried Metro Interchange",
+      "description": "A multi-tier transit nexus crushed under collapsed concrete avenues. Damp platform recesses foster spore mold colonies among abandoned commuter baggage and maintenance gear.",
+      "max_depth_meters": 105.0,
+      "required_progress": 145.0,
+      "structural_risk": 0.42,
+      "required_tools": [
+        "shovel",
+        "crowbar"
+      ],
+      "shoring_materials": [
+        "steel_columns",
+        "hydraulic_jack"
+      ],
+      "hazard_type": "hazard_spore_mold",
+      "relic_reward_id": "item_logistics_cipher_sheet",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 25.0,
+          "label": "Collapsed Ticket Concourse",
+          "risk": 0.30
+        },
+        {
+          "depth_meters": 55.0,
+          "label": "Sub-Platform Mezzanine",
+          "risk": 0.42
+        },
+        {
+          "depth_meters": 80.0,
+          "label": "Mold-Choked Track Tunnel",
+          "risk": 0.50
+        },
+        {
+          "depth_meters": 105.0,
+          "label": "Sealed Express Dispatch Platform",
+          "risk": 0.58
+        }
+      ],
+      "journal_entry_id": "journal_excavation_metro_interchange"
+    },
+    {
+      "site_id": "excavation_mine_shaft",
+      "location_id": "loc_excavation_mine_shaft",
+      "display_name": "Industrial Mine Shaft Adit 4",
+      "description": "A deep extraction adit bored into fractured granitic bedrock. Rotting timber supports and pockets of trapped methane create extreme cave-in hazards protecting rich industrial machinery.",
+      "max_depth_meters": 150.0,
+      "required_progress": 190.0,
+      "structural_risk": 0.55,
+      "required_tools": [
+        "pickaxe",
+        "hydraulic_jack"
+      ],
+      "shoring_materials": [
+        "timber_beams",
+        "hydraulic_jack"
+      ],
+      "hazard_type": "hazard_methane_pocket",
+      "relic_reward_id": "heavy_industrial_motor",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 30.0,
+          "label": "Weathered Mine Collar",
+          "risk": 0.32
+        },
+        {
+          "depth_meters": 70.0,
+          "label": "Fractured Gallery Level 1",
+          "risk": 0.55
+        },
+        {
+          "depth_meters": 115.0,
+          "label": "Timbered Drift Level 2",
+          "risk": 0.65
+        },
+        {
+          "depth_meters": 150.0,
+          "label": "Flooded Ore Sump & Machine Pocket",
+          "risk": 0.75
+        }
+      ],
+      "journal_entry_id": "journal_excavation_mine_shaft"
+    },
+    {
+      "site_id": "excavation_archive_bunker",
+      "location_id": "loc_excavation_archive_bunker",
+      "display_name": "Sealed Archive Bunker",
+      "description": "A climate-isolated subterranean depository housing pre-war technological patents and civil registries. Damp air locks hold aggressive spore mold around hardened vault vaults.",
+      "max_depth_meters": 85.0,
+      "required_progress": 135.0,
+      "structural_risk": 0.32,
+      "required_tools": [
+        "tools_precision",
+        "crowbar"
+      ],
+      "shoring_materials": [
+        "reinforced_arches",
+        "scrap_metal"
+      ],
+      "hazard_type": "hazard_spore_mold",
+      "relic_reward_id": "item_archive_index_cylinder",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 15.0,
+          "label": "Debris Trench Access",
+          "risk": 0.18
+        },
+        {
+          "depth_meters": 45.0,
+          "label": "Microfilm Catalog Ante-Chamber",
+          "risk": 0.32
+        },
+        {
+          "depth_meters": 85.0,
+          "label": "Master Climate Vault",
+          "risk": 0.46
+        }
+      ],
+      "journal_entry_id": "journal_excavation_archive_bunker"
+    },
+    {
+      "site_id": "excavation_drainage_network",
+      "location_id": "loc_excavation_drainage_network",
+      "display_name": "Drainage Network Sluice 09",
+      "description": "Stormwater culverts and overflow sluices converted into illicit smuggling routes before the bombardment. Silt and contaminated backwash hide sealed waterproof caches.",
+      "max_depth_meters": 45.0,
+      "required_progress": 75.0,
+      "structural_risk": 0.20,
+      "required_tools": [
+        "shovel",
+        "wrench"
+      ],
+      "shoring_materials": [
+        "scrap_wood",
+        "scrap_metal"
+      ],
+      "hazard_type": "hazard_flood",
+      "relic_reward_id": "water_filter",
+      "loot_table": "salvage_common",
+      "depth_bands": [
+        {
+          "depth_meters": 12.0,
+          "label": "Culvert Silt Layer",
+          "risk": 0.12
+        },
+        {
+          "depth_meters": 28.0,
+          "label": "Cracked Service Channel",
+          "risk": 0.22
+        },
+        {
+          "depth_meters": 45.0,
+          "label": "Submerged Siphon Chamber",
+          "risk": 0.32
+        }
+      ],
+      "journal_entry_id": "journal_excavation_drainage_network"
+    },
+    {
+      "site_id": "excavation_storage_chamber",
+      "location_id": "loc_excavation_storage_chamber",
+      "display_name": "Forgotten Storage Chamber 14",
+      "description": "An auxiliary military logistics cache sealed in haste during civil evacuation. Unstable masonry slabs overhang intact pallets of rations and industrial spares.",
+      "max_depth_meters": 75.0,
+      "required_progress": 110.0,
+      "structural_risk": 0.34,
+      "required_tools": [
+        "crowbar",
+        "shovel"
+      ],
+      "shoring_materials": [
+        "scrap_metal",
+        "mechanical_parts"
+      ],
+      "hazard_type": "hazard_toxic_air",
+      "relic_reward_id": "spring_mechanism",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 20.0,
+          "label": "Loading Bay Collapse",
+          "risk": 0.25
+        },
+        {
+          "depth_meters": 48.0,
+          "label": "Intermediate Staging Void",
+          "risk": 0.35
+        },
+        {
+          "depth_meters": 75.0,
+          "label": "Sealed Logistics Vault",
+          "risk": 0.48
+        }
+      ],
+      "journal_entry_id": "journal_excavation_storage_chamber"
+    },
+    {
+      "site_id": "excavation_civilian_shelter",
+      "location_id": "loc_excavation_civilian_shelter",
+      "display_name": "Pre-War Civilian Shelter B-12",
+      "description": "A privately funded neighborhood shelter built beneath a residential complex. Shorter excavation depths yield domestic survival gear, medical supplies, and handwritten diaries.",
+      "max_depth_meters": 40.0,
+      "required_progress": 65.0,
+      "structural_risk": 0.18,
+      "required_tools": [
+        "shovel",
+        "crowbar"
+      ],
+      "shoring_materials": [
+        "scrap_wood",
+        "scrap_metal"
+      ],
+      "hazard_type": "hazard_toxic_air",
+      "relic_reward_id": "music_box_comb",
+      "loot_table": "salvage_common",
+      "depth_bands": [
+        {
+          "depth_meters": 10.0,
+          "label": "Basement Masonry Fill",
+          "risk": 0.10
+        },
+        {
+          "depth_meters": 24.0,
+          "label": "Stairwell Air-Lock Rubble",
+          "risk": 0.20
+        },
+        {
+          "depth_meters": 40.0,
+          "label": "Civilian Bunking Quarters",
+          "risk": 0.28
+        }
+      ],
+      "journal_entry_id": "journal_excavation_civilian_shelter"
+    }
+  ]
+}

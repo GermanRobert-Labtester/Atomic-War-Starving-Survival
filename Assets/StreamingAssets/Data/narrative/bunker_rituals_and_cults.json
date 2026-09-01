@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "collection_id": "bunker_sociological_aberrations",
+  "rituals": [
+    {
+      "ritual_id": "ritual_01_the_boiler_tithe",
+      "name": "The Boiler Tithe",
+      "origin_sector": "Heavy Maintenance",
+      "sociological_summary": "A widespread but unspoken belief among the engineering crew that the primary steam boiler requires a biological toll to maintain its pressure rating. When the pressure gauge drops below 180 PSI, the duty engineer deliberately pricks their thumb on the gauge casing and wipes a single drop of blood onto the intake valve before shoveling the coal.",
+      "administrative_action": "Ignored by management. The ritual takes 4 seconds and the engineers refuse to work the boiler without doing it. Tetanus boosters increased for engineering staff.",
+      "tags": ["ritual", "boiler", "blood", "engineering"]
+    },
+    {
+      "ritual_id": "ritual_02_the_filter_communion",
+      "name": "The Communion of Ash",
+      "origin_sector": "Ventilation Gallery",
+      "sociological_summary": "Every 90 days when the primary intake scrubbers are replaced, the senior ventilation technician rips a tiny, fingernail-sized piece off the dirtiest paper filter and swallows it dry. It is believed this 'internalizes the ash' and proves to the wasteland that the bunker cannot be choked.",
+      "administrative_action": "Strictly forbidden by the Medical Officer due to heavy metal toxicity. The ritual continues in secret. Senior technicians show a 14% increase in lung capacity, likely psychological.",
+      "tags": ["ritual", "ash", "filter", "communion"]
+    },
+    {
+      "ritual_id": "ritual_03_the_ledger_saints",
+      "name": "Veneration of the Quartermaster",
+      "origin_sector": "Logistics & Supply",
+      "sociological_summary": "In the absence of organized religion, Quartermaster Finch has been elevated to a quasi-deific figure among the lower bunks. Dwellers bow their heads when passing the supply depot. They believe that if Finch draws a red line through your name in the ledger, you are spiritually dead and your physical death is just a formality.",
+      "administrative_action": "Quartermaster Finch requested a transfer to Hydroponics due to 'excessive staring'. Request denied. Finch issued a private security detail to prevent religious fanaticism.",
+      "tags": ["cult", "quartermaster", "ledger", "rations"]
+    },
+    {
+      "ritual_id": "ritual_04_the_hollow_knocking",
+      "name": "The Perimeter Tap",
+      "origin_sector": "Perimeter Patrol",
+      "sociological_summary": "Security patrols walking the outermost corridors have adopted a pattern of tapping their batons against the concrete walls exactly three times at every corner. When asked, guards state it is to check for hollow cavities. In truth, it is a localized superstition meant to 'ward off the ghosts of the surface'.",
+      "administrative_action": "Sanctioned. The acoustic tapping actually helps detect structural micro-fractures in the concrete. The superstition serves a practical acoustic purpose.",
+      "tags": ["ritual", "security", "ghosts", "acoustic"]
+    },
+    {
+      "ritual_id": "ritual_05_the_airlock_exile",
+      "name": "The Nameless Exile",
+      "origin_sector": "General Population",
+      "sociological_summary": "When a dweller is sentenced to surface exile, it is customary for the remaining population to immediately forget their name. Any mention of an exiled dweller's name is met with total silence. Their bunk is scrubbed with lye, and their rations are divided without a word.",
+      "administrative_action": "Encouraged by HR. Erasing the social memory of exiles reduces the psychological trauma of seeing family members march into the radioactive ash.",
+      "tags": ["ritual", "exile", "memory", "taboo"]
+    }
+  ]
+}

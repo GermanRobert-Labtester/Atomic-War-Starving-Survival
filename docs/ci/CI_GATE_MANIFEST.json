@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 30,
-  "fast_tier_count": 30,
+  "total_gates": 46,
+  "fast_tier_count": 45,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -66,6 +66,9 @@
     },
     {
       "gate_id": "data_integrity",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Data Authority Integrity Gate (129+ Catalogs)",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --data-integrity-selftest",
@@ -76,6 +79,9 @@
     },
     {
       "gate_id": "bridge_removal",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Bridge Shim Removal Confirmation Gate",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --bridge-selftest",
@@ -86,6 +92,9 @@
     },
     {
       "gate_id": "asset_registry",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Asset Registry Resolution Gate",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --asset-registry-selftest",
@@ -96,6 +105,9 @@
     },
     {
       "gate_id": "player_panels_uitest",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Player UI Panels Construction & Binding",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --player-panels-uitest",
@@ -106,6 +118,9 @@
     },
     {
       "gate_id": "panel_bind_lifecycle",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Panel Bind/Unbind/Rebind Lifecycle Self-Test",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . -- --panel-bind-lifecycle-selftest",
@@ -116,6 +131,9 @@
     },
     {
       "gate_id": "save_load_failure",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Save/Load UI Failure Paths Self-Test",
       "category": "Save Stores & Persistence",
       "command": "godot --headless --path . -- --save-load-ui-failure-selftest",
@@ -126,6 +144,9 @@
     },
     {
       "gate_id": "holdfast_save",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Holdfast S1 Save Store Self-Test",
       "category": "Save Stores & Persistence",
       "command": "godot --headless --path . -- --holdfast-save-selftest",
@@ -136,6 +157,9 @@
     },
     {
       "gate_id": "inventory_save",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Inventory Save Store Self-Test",
       "category": "Save Stores & Persistence",
       "command": "godot --headless --path . -- --inventory-save-selftest",
@@ -146,6 +170,9 @@
     },
     {
       "gate_id": "journal_save",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Journal Save Store Self-Test",
       "category": "Save Stores & Persistence",
       "command": "godot --headless --path . -- --journal-save-selftest",
@@ -156,6 +183,9 @@
     },
     {
       "gate_id": "playable_shell",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Playable Shell Campaign Smoke Self-Test",
       "category": "Campaign Smoke",
       "command": "godot --headless --path . -- --playable-shell-selftest",
@@ -166,6 +196,9 @@
     },
     {
       "gate_id": "day1_onboarding",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Day 1 Onboarding & Shelter Survival Self-Test",
       "category": "Campaign Smoke",
       "command": "godot --headless --path . -- --day1-selftest",
@@ -175,12 +208,67 @@
       "critical": true
     },
     {
+      "gate_id": "real_campaign_journey",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Real Campaign Journey Self-Test (Plans #5/#7/#8/#9)",
+      "category": "Campaign Smoke",
+      "command": "godot --headless --path . -- --real-campaign-journey-selftest",
+      "timeout_seconds": 90,
+      "expected_summary": "REAL_CAMPAIGN_JOURNEY_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "runtime_scale_performance",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Runtime Scale Performance Budget Self-Test (Task 130)",
+      "category": "Performance",
+      "command": "godot --headless --path . -- --runtime-scale-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "RUNTIME_SCALE_SELFTEST PASS",
+      "classification": "performance",
+      "critical": false
+    },
+    {
       "gate_id": "expansions_completeness",
+      "depends_on": [
+        "build_godot_host"
+      ],
       "name": "Expansions 01-10 Completeness Self-Test",
       "category": "Campaign Smoke",
       "command": "godot --headless --path . -- --expansions-selftest",
       "timeout_seconds": 60,
       "expected_summary": "EXPANSIONS_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "survivors_selftest",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Survivor Needs, Radiation & Restore Integrity Self-Test",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --survivors-selftest",
+      "timeout_seconds": 90,
+      "expected_summary": "SURVIVORS_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "expedition_selftest",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Expedition Loop & Vehicle Logistics Self-Test",
+      "category": "Host Selftests & Lifecycle",
+      "command": "godot --headless --path . -- --expedition-selftest",
+      "timeout_seconds": 90,
+      "expected_summary": "EXPEDITION_SELFTEST PASS",
       "classification": "fast",
       "critical": true
     },
@@ -301,6 +389,126 @@
       "command": "bash scripts/ci/lfs-health-check.sh",
       "timeout_seconds": 30,
       "expected_summary": "GIT LFS HEALTH CHECK PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "legacy_asset_path",
+      "name": "Legacy Asset Path Gate (Ticket #124)",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/legacy-asset-path-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "Legacy Asset Path Gate PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "legacy_reference",
+      "name": "Legacy Reference Gate (Ticket #124)",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/legacy-reference-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "Legacy Reference Gate PASSED",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "core_systems_catalog_drift",
+      "name": "Core Systems & Host Seams Catalog Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-core-systems-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "CORE_SYSTEMS_CATALOG.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "catalog_registry_drift",
+      "name": "Data Authority Catalog Registry Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-catalog-registry.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "agent_rulebooks_sync",
+      "name": "Multi-Agent Rulebooks Synchronization Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/sync-agent-rulebooks.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "All 12 client rulebooks are in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "ui_panel_catalog_drift",
+      "name": "UI Panel Architecture Guide Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-ui-panel-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "UI_PANEL_ARCHITECTURE_GUIDE.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "expansions_catalog_drift",
+      "name": "Expansions 01-11 Master Catalog Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-expansions-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "EXPANSIONS_MASTER_CATALOG.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "ui_panel_contracts_test",
+      "name": "UI Scene Unique Node Contract Test Gate (xUnit)",
+      "category": "Build & Tests",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter UiPanelContractTests --nologo",
+      "timeout_seconds": 60,
+      "expected_summary": "Passed!",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "audio_catalog_drift",
+      "name": "Audio Cue Catalog Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-audio-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "AUDIO_CUE_CATALOG.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "agent_skills_catalog_drift",
+      "name": "Multi-Agent Skills Index Drift Gate",
+      "category": "Architecture & Catalog Gates",
+      "command": "python3 scripts/ci/generate-agent-skills-catalog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "AGENT_SKILLS_INDEX.md is in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "audio_cue_integrity_gate",
+      "name": "Audio Cue Static Contract & Bus Gate (xUnit)",
+      "category": "Build & Tests",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter AudioCueIntegrityTests --nologo",
+      "timeout_seconds": 60,
+      "expected_summary": "Passed!",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "campaign_envelope_fuzz_test",
+      "name": "Campaign Envelope Fuzzing & Mutation Gate (xUnit)",
+      "category": "Build & Tests",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter CampaignEnvelopeFuzzTests --nologo",
+      "timeout_seconds": 60,
+      "expected_summary": "Passed!",
       "classification": "fast",
       "critical": true
     }

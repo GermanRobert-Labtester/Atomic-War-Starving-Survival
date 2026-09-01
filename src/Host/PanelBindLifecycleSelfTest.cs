@@ -238,7 +238,11 @@ namespace AtomicWar.GodotApp
                 // ── GATE 5: ResearchPanel Bind -> Unbind -> Rebind Test ──
                 GD.Print("\n[Gate 5] Testing ResearchPanel node lifecycle...");
                 var research = new ResearchSystem(log: new GodotLog());
-                research.RegisterDefaults();
+                // Plan 34: load the authoritative research_knowledge.json catalog —
+                // no hardcoded fallback exists anymore.
+                string gate5DataDir = string.IsNullOrEmpty(dataDirectory) ? "Assets/StreamingAssets/Data" : dataDirectory;
+                ResearchKnowledgeCatalogLoader.LoadAndRegister(
+                    research, gate5DataDir, new FileSystemIO(), new SystemTextJsonSerializer());
                 research.UnlockManual("knowledge_water_basics");
 
                 var researchPanel = new ResearchPanel();

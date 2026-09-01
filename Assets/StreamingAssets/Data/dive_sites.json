@@ -5,53 +5,834 @@
       "site_id": "site_exp09_ss_sovereign",
       "name": "S.S. Sovereign Wreck",
       "oxygen_budget_ticks": 120,
-      "base_noise_floor": 0.50,
+      "base_noise_floor": 0.5,
       "keeper_thread_id": "q_keeper_of_logs",
       "rooms": [
-        { "room_type": "deckhouse", "hazard_level": 1, "search_difficulty": 0.3 },
-        { "room_type": "companionway", "hazard_level": 2, "search_difficulty": 0.5 },
-        { "room_type": "hold_approach", "hazard_level": 3, "search_difficulty": 0.7 },
-        { "room_type": "the_hold", "hazard_level": 4, "search_difficulty": 0.9 }
-      ]
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 1,
+          "search_difficulty": 0.3
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 2,
+          "search_difficulty": 0.5
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 3,
+          "search_difficulty": 0.7
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 4,
+          "search_difficulty": 0.9
+        }
+      ],
+      "location_id": "loc_settlement_cape_beacon",
+      "discovery": "Charted from the Cape Beacon commune's logbook; the mail-steamer's stern still breaks at low water.",
+      "safes": [
+        {
+          "id": "safe_exp09_sovereign_purser",
+          "displayName": "Purser's Locker Safe",
+          "roomId": "the_hold",
+          "difficulty": 4,
+          "maxAttempts": 9,
+          "noisePerAttempt": 0.22,
+          "alarmThreshold": 0.8,
+          "loot": [
+            {
+              "itemId": "item_fleet_log_cylinder",
+              "minQuantity": 1,
+              "maxQuantity": 1,
+              "weightKg": 0.8
+            },
+            {
+              "itemId": "ammo_9x19",
+              "minQuantity": 1,
+              "maxQuantity": 4,
+              "weightKg": 0.2
+            }
+          ]
+        }
+      ],
+      "loot_table": [
+        {
+          "itemId": "brass_fittings",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.5
+        },
+        {
+          "itemId": "paper_scrap",
+          "minQty": 2,
+          "maxQty": 8,
+          "spawnChance": 0.6,
+          "degradationChance": 0.35
+        },
+        {
+          "itemId": "item_ro_resin",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.25,
+          "degradationChance": 0.2,
+          "degradedItemId": "scrap_mechanical"
+        }
+      ],
+      "tide_window": "slack"
     },
     {
       "site_id": "site_exp09_ferry_terminal",
       "name": "The Drowned Ferry Terminal",
       "oxygen_budget_ticks": 90,
-      "base_noise_floor": 0.60,
+      "base_noise_floor": 0.6,
       "keeper_thread_id": null,
       "rooms": [
-        { "room_type": "deckhouse", "hazard_level": 2, "search_difficulty": 0.4 },
-        { "room_type": "companionway", "hazard_level": 3, "search_difficulty": 0.6 },
-        { "room_type": "hold_approach", "hazard_level": 4, "search_difficulty": 0.8 },
-        { "room_type": "the_hold", "hazard_level": 5, "search_difficulty": 1.0 }
-      ]
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 2,
+          "search_difficulty": 0.4
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 3,
+          "search_difficulty": 0.6
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 4,
+          "search_difficulty": 0.8
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 5,
+          "search_difficulty": 1.0
+        }
+      ],
+      "location_id": "loc_frozen_river_ferry_crossing",
+      "discovery": "Visible from the ice-road ferry crossing on any clear day; the ramp still points at the water.",
+      "loot_table": [
+        {
+          "itemId": "cloth",
+          "minQty": 2,
+          "maxQty": 5,
+          "spawnChance": 0.45,
+          "degradationChance": 0.2
+        },
+        {
+          "itemId": "cigarette_pack_sealed",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.15
+        },
+        {
+          "itemId": "scrap_mechanical",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.4
+        }
+      ],
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp09_barge_flotilla",
       "name": "The Barge Flotilla (Upstream Mooring)",
       "oxygen_budget_ticks": 100,
-      "base_noise_floor": 0.40,
+      "base_noise_floor": 0.4,
       "keeper_thread_id": null,
       "rooms": [
-        { "room_type": "deckhouse", "hazard_level": 1, "search_difficulty": 0.2 },
-        { "room_type": "companionway", "hazard_level": 2, "search_difficulty": 0.4 },
-        { "room_type": "hold_approach", "hazard_level": 3, "search_difficulty": 0.6 },
-        { "room_type": "the_hold", "hazard_level": 3, "search_difficulty": 0.7 }
-      ]
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 1,
+          "search_difficulty": 0.2
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 2,
+          "search_difficulty": 0.4
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 3,
+          "search_difficulty": 0.6
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 3,
+          "search_difficulty": 0.7
+        }
+      ],
+      "location_id": "loc_black_flotilla_outpost",
+      "discovery": "The Flotilla's own mooring hulks; the quartermaster trades the approach for honest cargo.",
+      "loot_table": [
+        {
+          "itemId": "item_sea_ration",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.35,
+          "degradationChance": 0.2,
+          "degradedItemId": "spoiled_canned_food"
+        },
+        {
+          "itemId": "item_claim_tag_stamped",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        },
+        {
+          "itemId": "pipe_wrench",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        }
+      ],
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp09_naval_patrol",
       "name": "The Patrol Craft (Hull-Down, Port Side)",
       "oxygen_budget_ticks": 80,
-      "base_noise_floor": 0.70,
+      "base_noise_floor": 0.7,
       "keeper_thread_id": null,
       "rooms": [
-        { "room_type": "deckhouse", "hazard_level": 2, "search_difficulty": 0.5 },
-        { "room_type": "companionway", "hazard_level": 3, "search_difficulty": 0.7 },
-        { "room_type": "hold_approach", "hazard_level": 4, "search_difficulty": 0.85 },
-        { "room_type": "the_hold", "hazard_level": 5, "search_difficulty": 1.0 }
-      ]
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 2,
+          "search_difficulty": 0.5
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 3,
+          "search_difficulty": 0.7
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 4,
+          "search_difficulty": 0.85
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 5,
+          "search_difficulty": 1.0
+        }
+      ],
+      "location_id": "loc_maritime_icebreaker_dock",
+      "contamination_key": "site_exp09_wrecked_patrol_craft",
+      "discovery": "The deep-coast survey marks it hull-down off the icebreaker dock, port side to the shelf.",
+      "safes": [
+        {
+          "id": "safe_exp09_naval_patrol_armory",
+          "displayName": "Picket Armory Locker",
+          "roomId": "the_hold",
+          "difficulty": 4,
+          "maxAttempts": 9,
+          "noisePerAttempt": 0.25,
+          "alarmThreshold": 0.8,
+          "loot": [
+            {
+              "itemId": "ammo_9x19",
+              "minQuantity": 2,
+              "maxQuantity": 6,
+              "weightKg": 0.2
+            },
+            {
+              "itemId": "medical_kit",
+              "minQuantity": 1,
+              "maxQuantity": 3,
+              "weightKg": 0.5
+            }
+          ]
+        }
+      ],
+      "loot_table": [
+        {
+          "itemId": "scrap_metal",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.55,
+          "degradationChance": 0.2
+        },
+        {
+          "itemId": "ammo_9x19",
+          "minQty": 0,
+          "maxQty": 3,
+          "spawnChance": 0.2,
+          "degradationChance": 0.35
+        }
+      ],
+      "tide_window": "any"
+    },
+    {
+      "site_id": "site_exp09_sunken_submarine",
+      "name": "The Half-Submerged Barrik",
+      "oxygen_budget_ticks": 70,
+      "base_noise_floor": 0.8,
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 3,
+          "search_difficulty": 0.5
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 4,
+          "search_difficulty": 0.7
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 5,
+          "search_difficulty": 0.9
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 5,
+          "search_difficulty": 1.0
+        }
+      ],
+      "keeper_thread_id": null,
+      "location_id": "loc_shelf_service_channel",
+      "required_item_id": "item_sealed_dive_lamp",
+      "required_item_count": 1,
+      "contamination_key": "site_exp09_sunken_submarine",
+      "discovery": "Lotte Verrill's wreck notes name the Barrik's berth — for a sealed lamp and no questions.",
+      "loot_table": [
+        {
+          "itemId": "item_fleet_log_cylinder",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        },
+        {
+          "itemId": "scrap_electronic",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.4,
+          "degradationChance": 0.25
+        }
+      ],
+      "tide_window": "unsafe_at_peak"
+    },
+    {
+      "site_id": "site_exp09_flooded_metro",
+      "name": "The Floored Metro Concourse",
+      "oxygen_budget_ticks": 110,
+      "base_noise_floor": 0.45,
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 1,
+          "search_difficulty": 0.3
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 2,
+          "search_difficulty": 0.5
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 3,
+          "search_difficulty": 0.7
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 4,
+          "search_difficulty": 0.85
+        }
+      ],
+      "keeper_thread_id": null,
+      "location_id": "loc_overflow_alloc_11",
+      "discovery": "The Overflow grid maps mark the concourse as standing water; the Flotilla marked it 'quiet water, watch the gravel'.",
+      "loot_table": [
+        {
+          "itemId": "canned_food",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.4,
+          "degradationChance": 0.3,
+          "degradedItemId": "spoiled_canned_food"
+        },
+        {
+          "itemId": "paper_scrap",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.6,
+          "degradationChance": 0.3
+        },
+        {
+          "itemId": "crayon",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.2
+        }
+      ],
+      "tide_window": "low"
+    },
+    {
+      "site_id": "site_exp09_submerged_convoy",
+      "name": "The Submerged Convoy (Three Trucks)",
+      "oxygen_budget_ticks": 95,
+      "base_noise_floor": 0.55,
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 2,
+          "search_difficulty": 0.4
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 3,
+          "search_difficulty": 0.6
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 3,
+          "search_difficulty": 0.7
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 4,
+          "search_difficulty": 0.85
+        }
+      ],
+      "keeper_thread_id": null,
+      "location_id": "location_crashed_icebreaker_convoy",
+      "discovery": "The convoy never made the turn at Aurora Borealis Anchorage Shoal; three trucks stand on the shelf edge.",
+      "loot_table": [
+        {
+          "itemId": "fuel",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.22,
+          "degradationChance": 0.2
+        },
+        {
+          "itemId": "item_ice_tyre_set",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.15
+        },
+        {
+          "itemId": "scrap_mechanical",
+          "minQty": 1,
+          "maxQty": 5,
+          "spawnChance": 0.5,
+          "degradationChance": 0.25
+        }
+      ],
+      "tide_window": "any"
+    },
+    {
+      "site_id": "site_exp09_drowned_fuel_depot",
+      "name": "The Drowned Fuel Depot (Lower Dock)",
+      "oxygen_budget_ticks": 85,
+      "base_noise_floor": 0.65,
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 2,
+          "search_difficulty": 0.5
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 3,
+          "search_difficulty": 0.65
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 4,
+          "search_difficulty": 0.85
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 4,
+          "search_difficulty": 0.95
+        }
+      ],
+      "keeper_thread_id": null,
+      "location_id": "loc_hydro_baron_desal_plant_4",
+      "required_item_id": "item_salvage_cutting_tool",
+      "discovery": "The Hydro-Barons' intake charts show a lower dock the schedules never mention.",
+      "loot_table": [
+        {
+          "itemId": "fuel",
+          "minQty": 1,
+          "maxQty": 2,
+          "spawnChance": 0.3,
+          "degradationChance": 0.15
+        },
+        {
+          "itemId": "item_process_barrel",
+          "minQty": 1,
+          "maxQty": 2,
+          "spawnChance": 0.3
+        }
+      ],
+      "tide_window": "any"
+    },
+    {
+      "site_id": "site_exp09_offshore_relay",
+      "name": "The Offshore Radio Relay Station",
+      "oxygen_budget_ticks": 75,
+      "base_noise_floor": 0.7,
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 3,
+          "search_difficulty": 0.5
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 4,
+          "search_difficulty": 0.7
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 5,
+          "search_difficulty": 0.85
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 5,
+          "search_difficulty": 1.0
+        }
+      ],
+      "keeper_thread_id": null,
+      "location_id": "loc_coastal_fog_signal_station",
+      "discovery": "The High Bluff foghorn's compressed-air log lists the relay run that stopped answering.",
+      "loot_table": [
+        {
+          "itemId": "scrap_electronic",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.4,
+          "degradationChance": 0.25
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.2
+        }
+      ],
+      "tide_window": "falling"
+    },
+    {
+      "site_id": "site_exp09_flooded_field_hospital",
+      "name": "The Flooded Quarantine Barge",
+      "oxygen_budget_ticks": 90,
+      "base_noise_floor": 0.5,
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 2,
+          "search_difficulty": 0.35
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 3,
+          "search_difficulty": 0.55
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 4,
+          "search_difficulty": 0.75
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 4,
+          "search_difficulty": 0.9
+        }
+      ],
+      "keeper_thread_id": null,
+      "location_id": "loc_settlement_cape_beacon",
+      "contamination_key": "site_exp09_flooded_field_hospital",
+      "discovery": "The quarantine barge shows on the commune's oldest charts, still moored where the surge left it.",
+      "loot_table": [
+        {
+          "itemId": "medical_kit",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.35,
+          "degradationChance": 0.2
+        },
+        {
+          "itemId": "blood_bag",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        },
+        {
+          "itemId": "spoiled_blood_bag",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.3
+        }
+      ],
+      "tide_window": "falling"
+    },
+    {
+      "site_id": "site_exp09_wrecked_patrol_craft",
+      "name": "The Wrecked Flotilla Picket Craft",
+      "oxygen_budget_ticks": 85,
+      "base_noise_floor": 0.65,
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 2,
+          "search_difficulty": 0.45
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 3,
+          "search_difficulty": 0.65
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 4,
+          "search_difficulty": 0.8
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 5,
+          "search_difficulty": 0.95
+        }
+      ],
+      "keeper_thread_id": null,
+      "location_id": "loc_shelf_roadstead_crane",
+      "contamination_key": "site_exp09_wrecked_patrol_craft",
+      "discovery": "The picket's mast still shows at slack water off the roadstead crane; the Flotilla dives it only for the crew's effects.",
+      "loot_table": [
+        {
+          "itemId": "item_ships_bell_picket",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.55
+        }
+      ],
+      "tide_window": "any"
+    },
+    {
+      "site_id": "site_exp09_submerged_siphon",
+      "name": "The Submerged Siphon & Pump Station",
+      "oxygen_budget_ticks": 105,
+      "base_noise_floor": 0.4,
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 1,
+          "search_difficulty": 0.3
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 2,
+          "search_difficulty": 0.5
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 3,
+          "search_difficulty": 0.65
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 4,
+          "search_difficulty": 0.8
+        }
+      ],
+      "keeper_thread_id": null,
+      "location_id": "loc_hydro_baron_desal_plant_4",
+      "discovery": "The siphon station's intake grille shows at low water; the barons never paid to have it looked at.",
+      "loot_table": [
+        {
+          "itemId": "scrap_mechanical",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.45
+        },
+        {
+          "itemId": "clean_water",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.3,
+          "degradationChance": 0.1,
+          "degradedItemId": "irradiated_water"
+        }
+      ],
+      "tide_window": "high"
+    },
+    {
+      "site_id": "site_exp23_payroll_strongroom",
+      "name": "The Harbor-Master's Payroll Strongroom",
+      "oxygen_budget_ticks": 80,
+      "base_noise_floor": 0.75,
+      "keeper_thread_id": null,
+      "location_id": "loc_maritime_icebreaker_dock",
+      "required_item_id": "item_salvage_cutting_tool",
+      "contamination_key": "",
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 2,
+          "search_difficulty": 0.4
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 3,
+          "search_difficulty": 0.6
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 4,
+          "search_difficulty": 0.8
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 5,
+          "search_difficulty": 1.0
+        }
+      ],
+      "safes": [
+        {
+          "id": "safe_exp23_payroll_vault",
+          "displayName": "Payroll Safe",
+          "roomId": "the_hold",
+          "difficulty": 5,
+          "maxAttempts": 10,
+          "noisePerAttempt": 0.25,
+          "alarmThreshold": 0.75,
+          "loot": [
+            {
+              "itemId": "item_claim_tag_stamped",
+              "minQuantity": 1,
+              "maxQuantity": 2,
+              "weightKg": 0.1
+            },
+            {
+              "itemId": "medical_kit",
+              "minQuantity": 1,
+              "maxQuantity": 3,
+              "weightKg": 0.5
+            },
+            {
+              "itemId": "ammo_9x19",
+              "minQuantity": 2,
+              "maxQuantity": 6,
+              "weightKg": 0.2
+            }
+          ]
+        },
+        {
+          "id": "safe_exp23_harbor_ledger_box",
+          "displayName": "Harbor Ledger Box",
+          "roomId": "hold_approach",
+          "difficulty": 3,
+          "maxAttempts": 8,
+          "noisePerAttempt": 0.18,
+          "alarmThreshold": 0.85,
+          "loot": [
+            {
+              "itemId": "sealed_government_document",
+              "minQuantity": 1,
+              "maxQuantity": 2,
+              "weightKg": 0.2
+            },
+            {
+              "itemId": "paper_scrap",
+              "minQuantity": 3,
+              "maxQuantity": 9,
+              "weightKg": 0.05
+            }
+          ]
+        }
+      ],
+      "loot_table": [
+        {
+          "itemId": "paper_scrap",
+          "minQty": 2,
+          "maxQty": 9,
+          "spawnChance": 0.55,
+          "degradationChance": 0.3
+        },
+        {
+          "itemId": "item_claim_tag_stamped",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.15
+        }
+      ],
+      "discovery": "Uma Tarran sells the strongroom bearing for two claim tags and no questions.",
+      "tide_window": "any"
+    },
+    {
+      "site_id": "site_exp23_brine_cistern",
+      "name": "The Brine Cistern Gallery",
+      "oxygen_budget_ticks": 95,
+      "base_noise_floor": 0.5,
+      "keeper_thread_id": "",
+      "location_id": "loc_settlement_cape_beacon",
+      "required_item_id": "item_rebreather_canister",
+      "required_item_count": 1,
+      "contamination_key": "site_exp23_brine_cistern",
+      "rooms": [
+        {
+          "room_type": "deckhouse",
+          "hazard_level": 2,
+          "search_difficulty": 0.35
+        },
+        {
+          "room_type": "companionway",
+          "hazard_level": 3,
+          "search_difficulty": 0.55
+        },
+        {
+          "room_type": "hold_approach",
+          "hazard_level": 4,
+          "search_difficulty": 0.8
+        },
+        {
+          "room_type": "the_hold",
+          "hazard_level": 5,
+          "search_difficulty": 1.0
+        }
+      ],
+      "safes": [],
+      "loot_table": [
+        {
+          "itemId": "item_marine_sealant_kit",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.2,
+          "degradationChance": 0.25
+        },
+        {
+          "itemId": "industrial_bleach",
+          "minQty": 1,
+          "maxQty": 2,
+          "spawnChance": 0.3
+        },
+        {
+          "itemId": "iodine_pills",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.22,
+          "degradationChance": 0.2
+        },
+        {
+          "itemId": "item_ro_resin",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.3,
+          "degradationChance": 0.2,
+          "degradedItemId": "scrap_mechanical"
+        }
+      ],
+      "discovery": "The commune's cistern charts stop one gallery short; Lotte Verrill will say why for a sealed lamp.",
+      "tide_window": "any"
     }
   ]
 }

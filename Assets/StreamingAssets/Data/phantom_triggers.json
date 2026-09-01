@@ -5,25 +5,52 @@
       "background_id": "child_refugee",
       "triggers": [
         {
+          "trigger_id": "phantom_trigger_child_shoe",
           "item_category": "childhood",
+          "item_id": "childs_mitten",
           "motivation_chance": 0.3,
-          "description": "The child's shoe sits in the rubble like a question nobody answered. {name} stares at it, and for a moment the bunker walls dissolve into a memory of playing in a yard that no longer exists.",
-          "motivation_text": "{name} tucks the toy into their pocket. 'Someone should remember,' they say quietly, and their hands steady on their work for the rest of the shift.",
-          "breakdown_text": "{name} can't look away from the small shoe. They set it down with trembling hands, then turn to the wall. No work gets done for hours."
+          "description": "A single child's shoe, the synthetic sole stiff with dried mud. {name} holds it by the heel. The laces are tied in a double knot.",
+          "motivation_text": "{name} places the shoe on a shelf. 'Secure the perimeter,' they say, their voice flat.",
+          "breakdown_text": "{name} drops the shoe and stares at the concrete wall. They do not report for their next shift rotation.",
+          "affinity_background": "child_refugee",
+          "morale_payload": 15.0,
+          "guilt_payload": 0.0
         },
         {
+          "trigger_id": "phantom_trigger_child_photograph",
           "item_category": "photograph",
+          "item_id": "worn_photograph",
           "motivation_chance": 0.5,
-          "description": "A charred photograph, edges curled by heat. A family — or what was a family — smiles up from the emulsion. {name} recognizes something in the faces.",
-          "motivation_text": "{name} studies the photograph, then nods once. 'They made it this far,' they whisper. A quiet resolve settles over them.",
-          "breakdown_text": "{name} presses the photograph to their chest and sinks to the floor. The sobs are silent, but the whole bunker feels them."
+          "description": "A charred photograph, the emulsion bubbled from heat. A family stands in front of a house. {name} studies the height of the youngest figure.",
+          "motivation_text": "{name} slides the photo into their pocket. 'We have work to do,' they state, returning to the task list.",
+          "breakdown_text": "{name} presses the photograph flat against the table. They sit in silence until the generator cycles down.",
+          "affinity_background": "child_refugee",
+          "morale_payload": 15.0,
+          "guilt_payload": 0.0
         },
         {
+          "trigger_id": "phantom_trigger_child_letter",
           "item_category": "correspondence",
+          "item_id": "undelivered_mail",
           "motivation_chance": 0.4,
-          "description": "An unread letter, postmarked the morning the missiles launched. {name} holds it like it might crumble if they breathe wrong.",
-          "motivation_text": "{name} reads the letter aloud to no one in particular. When they finish, they fold it carefully and return to work with renewed purpose.",
-          "breakdown_text": "{name} reads the first line and stops. They can't continue. The letter stays in their pocket, unread, for days."
+          "description": "A sealed letter. The postmark is dated the morning the network went down. {name} weighs the envelope in their palm.",
+          "motivation_text": "{name} breaks the seal, reads the single page, and burns it in the stove. They return to their station.",
+          "breakdown_text": "{name} refuses to open the envelope. They place it in their footlocker and do not speak for thirty-six hours.",
+          "affinity_background": "child_refugee",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_p4_child_mitten",
+          "item_category": "childhood",
+          "item_id": "childs_mitten",
+          "motivation_chance": 0.35,
+          "description": "A red wool mitten with a rusted safety pin attached to the cuff. The wool smells faintly of damp earth.",
+          "motivation_text": "{name} unpins the rusted safety pin, adding it to the scrap tin. 'Usable metal,' they note.",
+          "breakdown_text": "{name} holds the mitten in both hands. The missing pair is an unsolved equation. They sit motionless on the floor.",
+          "affinity_background": "child_refugee",
+          "morale_payload": 10.0,
+          "guilt_payload": 5.0
         }
       ]
     },
@@ -31,25 +58,64 @@
       "background_id": "former_soldier",
       "triggers": [
         {
+          "trigger_id": "phantom_trigger_soldier_dog_tags",
           "item_category": "military",
+          "item_id": "dog_tags",
           "motivation_chance": 0.2,
-          "description": "Dog tags, half-melted, still readable. {name} knows the format — name, blood type, religion. They've filled out too many casualty cards.",
-          "motivation_text": "{name} pockets the tags. 'I'll remember them,' they say. Their posture straightens. The soldier is back on duty.",
-          "breakdown_text": "{name} reads the name on the tag and goes pale. They knew this person. The thousand-yard stare returns, and they don't speak for the rest of the day."
+          "description": "A pair of identification tags on a beaded chain. Half-melted, but the blood type is still legible. {name} reads the stamp format.",
+          "motivation_text": "{name} drops the tags into the supply bin. 'Material acquired,' they report, posture rigid.",
+          "breakdown_text": "{name} reads the designation on the tag. Their jaw locks. They refuse all commands for the remainder of the day.",
+          "affinity_background": "former_soldier",
+          "morale_payload": 15.0,
+          "guilt_payload": 10.0
         },
         {
+          "trigger_id": "phantom_trigger_soldier_medal",
           "item_category": "personal_item",
+          "item_id": "tarnished_medal",
           "motivation_chance": 0.4,
-          "description": "A tarnished medal, still in its presentation box. {name} picks it up and turns it over in their hands. The ribbon is singed.",
-          "motivation_text": "{name} sets the medal on the shelf. 'Someone earned this,' they say. 'Today, so will I.'",
-          "breakdown_text": "{name} stares at the medal for a long time. 'We all earned medals,' they finally say. 'None of them mattered.'"
+          "description": "A tarnished service medal in a cracked plastic presentation box. The ribbon is singed.",
+          "motivation_text": "{name} closes the box. 'The brass can be melted down,' they say, moving back to the workbench.",
+          "breakdown_text": "{name} stares at the tarnished metal. 'We were issued these instead of rations.' They return to their cot.",
+          "affinity_background": "former_soldier",
+          "morale_payload": 14.0,
+          "guilt_payload": 0.0
         },
         {
+          "trigger_id": "phantom_trigger_soldier_dressing_kit",
           "item_category": "medical",
+          "item_id": "field_dressing_kit",
           "motivation_chance": 0.3,
-          "description": "A field dressing kit, still sealed. {name} checks the expiration date — three weeks after the war started. Still good.",
-          "motivation_text": "{name} pockets the kit. 'This can still save someone,' they say. The medic's instinct hasn't dulled.",
-          "breakdown_text": "{name} opens the kit and arranges the contents in a neat line. 'I ran out of these on Day 2,' they say. 'We used torn shirts instead.'"
+          "description": "A military field dressing kit, the vacuum seal still intact. {name} checks the lot number and expiration date.",
+          "motivation_text": "{name} logs the kit into the medical inventory. 'Viable sterile supplies,' they note. The medic's drill holds.",
+          "breakdown_text": "{name} traces the intact seal. 'We ran out of these on the second day.' They abandon their post.",
+          "affinity_background": "former_soldier",
+          "morale_payload": 12.0,
+          "guilt_payload": 5.0
+        },
+        {
+          "trigger_id": "phantom_trigger_p5_engraved_lighter",
+          "item_category": "personal_item",
+          "item_id": "engraved_lighter",
+          "motivation_chance": 0.35,
+          "description": "A petrol lighter engraved with a unit designation. The wheel strikes on the first try. It smells heavily of kerosene.",
+          "motivation_text": "{name} snaps the lighter shut. 'Functional ignition source. Good for the stockpile.'",
+          "breakdown_text": "{name} stares into the small yellow flame until the casing burns their fingers. They do not react to the burn.",
+          "affinity_background": "former_soldier",
+          "morale_payload": 12.0,
+          "guilt_payload": 8.0
+        },
+        {
+          "trigger_id": "phantom_trigger_p6_service_medal",
+          "item_category": "military",
+          "item_id": "tarnished_medal",
+          "motivation_chance": 0.25,
+          "description": "A bronze campaign medal. The pin mechanism on the ribbon is bent at a sharp angle.",
+          "motivation_text": "{name} straightens the pin with a pair of pliers. 'Salvageable hardware.'",
+          "breakdown_text": "{name} drops the medal on the concrete floor. 'They issued these while the rail lines burned.' They walk out of the room.",
+          "affinity_background": "former_soldier",
+          "morale_payload": 10.0,
+          "guilt_payload": 12.0
         }
       ]
     },
@@ -57,25 +123,52 @@
       "background_id": "nurse",
       "triggers": [
         {
+          "trigger_id": "phantom_trigger_nurse_stethoscope",
           "item_category": "medical",
+          "item_id": "stethoscope",
           "motivation_chance": 0.5,
-          "description": "A stethoscope, tubing cracked but bell intact. {name} hangs it around their neck without thinking — the gesture is pure muscle memory.",
-          "motivation_text": "{name} taps the bell of the stethoscope. 'Still works,' they say with a half-smile. They move through the bunker checking on everyone.",
-          "breakdown_text": "{name} listens to their own heartbeat through the stethoscope. 'I used to do this for the children first,' they say. 'The little ones were always most scared.'"
+          "description": "A stethoscope. The rubber tubing is stiff and cracking, but the diaphragm is intact. {name} hooks it around their neck instinctively.",
+          "motivation_text": "{name} taps the diaphragm. 'Still acoustic,' they note. They adjust the earpieces and return to the triage logs.",
+          "breakdown_text": "{name} places the bell against their own chest, listening to the heavy thump. They sit with their eyes closed for hours.",
+          "affinity_background": "nurse",
+          "morale_payload": 16.0,
+          "guilt_payload": 0.0
         },
         {
+          "trigger_id": "phantom_trigger_nurse_patient_chart",
           "item_category": "correspondence",
+          "item_id": "undelivered_mail",
           "motivation_chance": 0.4,
-          "description": "A patient chart, names redacted by water damage. {name} traces the handwriting. They know these abbreviations.",
-          "motivation_text": "{name} studies the chart and nods. 'This patient made it,' they say with certainty. The victory, however small, fuels them.",
-          "breakdown_text": "{name} can't stop reading the chart. 'I had a patient just like this,' they whisper. 'I don't know if they survived.'"
+          "description": "A water-damaged patient chart attached to a rust-stained clipboard. {name} traces the faded medical shorthand.",
+          "motivation_text": "{name} reads the chart. 'Discharged to home,' they read aloud. They set the clipboard down and resume inventory.",
+          "breakdown_text": "{name} cannot stop reading the chart. 'I didn't discharge this one,' they whisper. 'The beds were full.' They do not sleep.",
+          "affinity_background": "nurse",
+          "morale_payload": 12.0,
+          "guilt_payload": 5.0
         },
         {
+          "trigger_id": "phantom_trigger_nurse_staff_photo",
           "item_category": "photograph",
+          "item_id": "family_photograph",
           "motivation_chance": 0.4,
-          "description": "A hospital staff photo, radiation-fogged but recognizable. {name} points at the figures one by one.",
-          "motivation_text": "{name} smiles at the photo. 'That was Dr. Chen. Best diagnostician I ever saw.' They work with renewed precision.",
-          "breakdown_text": "{name} counts the faces in the photo. 'Twelve of us,' they say. 'I'm the only one left.'"
+          "description": "A hospital staff photograph. The film is radiation-fogged, but the scrubs and faces are recognizable.",
+          "motivation_text": "{name} studies the photo. 'Shift B. Good diagnostics team.' They fold the photo away and stand.",
+          "breakdown_text": "{name} counts the faces. 'Twelve in the ward,' they say quietly. 'I'm the only one left.' They miss the next rationing cycle.",
+          "affinity_background": "nurse",
+          "morale_payload": 12.0,
+          "guilt_payload": 8.0
+        },
+        {
+          "trigger_id": "phantom_trigger_w2_nurse_fob_watch",
+          "item_category": "work_tool",
+          "item_id": "nurse_fob_watch",
+          "motivation_chance": 0.5,
+          "description": "An upside-down fob watch with a red seconds hand for timing pulses. {name} touches the crown, counting out fifteen seconds by pure reflex.",
+          "motivation_text": "{name} pins the watch to their jacket. 'Sixty beats means another minute won,' they say, moving toward the bunks.",
+          "breakdown_text": "{name} watches the red hand sweep. 'We had eighty beds and four IV bags. I just kept counting pulses until they stopped.'",
+          "affinity_background": "nurse",
+          "morale_payload": 15.0,
+          "guilt_payload": 6.0
         }
       ]
     },
@@ -83,18 +176,40 @@
       "background_id": "teacher",
       "triggers": [
         {
+          "trigger_id": "phantom_trigger_teacher_notebook",
           "item_category": "correspondence",
+          "item_id": "pocket_notebook",
           "motivation_chance": 0.5,
-          "description": "A child's notebook, arithmetic problems still legible in pencil. {name} turns the pages slowly.",
-          "motivation_text": "{name} finds a blank page and writes a new lesson at the top. 'The children who survive will need this,' they say.",
-          "breakdown_text": "{name} reads a name written in clumsy letters on the cover. 'Sarah was in my third-period class,' they say. 'She'd be fourteen now.'"
+          "description": "A spiral-bound notebook. Inside are arithmetic problems written in heavy, uneven pencil. {name} turns the pages.",
+          "motivation_text": "{name} finds a blank page and writes out a mechanical diagram. 'The survivors will need practical instruction.'",
+          "breakdown_text": "{name} reads the name on the cover. 'Sarah was in third period,' they state. 'She would be fourteen today.' They sit staring at the wall.",
+          "affinity_background": "teacher",
+          "morale_payload": 14.0,
+          "guilt_payload": 0.0
         },
         {
+          "trigger_id": "phantom_trigger_teacher_chalk",
           "item_category": "childhood",
+          "item_id": "childs_drawing",
           "motivation_chance": 0.3,
-          "description": "A box of chalk, colors faded but still usable. {name} picks up a piece and their hand instinctively moves to a wall.",
-          "motivation_text": "{name} starts writing on the concrete wall — simple multiplication tables. 'Education doesn't stop,' they declare.",
-          "breakdown_text": "{name} draws a stick figure on the wall. 'I had thirty-two students,' they say. 'I don't know how many made it.'"
+          "description": "A dusty cardboard box of colored chalk. {name} takes a piece of white chalk and tests it against the concrete.",
+          "motivation_text": "{name} marks out a grid on the wall to track rationing. 'Structure is required,' they state.",
+          "breakdown_text": "{name} draws a crude house on the concrete. 'Thirty-two children in that room,' they say. They drop the chalk and refuse to eat.",
+          "affinity_background": "teacher",
+          "morale_payload": 12.0,
+          "guilt_payload": 5.0
+        },
+        {
+          "trigger_id": "phantom_trigger_w8_teachers_stamp",
+          "item_category": "work_tool",
+          "item_id": "teachers_stamp",
+          "motivation_chance": 0.45,
+          "description": "A wooden rubber stamp reading 'EXCELLENT WORK'. The ink pad is dry. {name} presses it dry against the palm of their hand.",
+          "motivation_text": "{name} looks at the faint red dust on their skin. 'Metrics still matter,' they say, turning back to the ledger.",
+          "breakdown_text": "{name} stares at the wooden handle. 'They worked so hard for a red star,' they whisper. 'None of it stopped the blast wave.'",
+          "affinity_background": "teacher",
+          "morale_payload": 12.0,
+          "guilt_payload": 4.0
         }
       ]
     },
@@ -102,11 +217,16 @@
       "background_id": "electrician",
       "triggers": [
         {
+          "trigger_id": "phantom_trigger_electrician_tester",
           "item_category": "personal_item",
+          "item_id": "engineers_slide_rule",
           "motivation_chance": 0.3,
-          "description": "A voltage tester, casing cracked but still functional. {name} tests it on a known live wire and nods when the light blinks.",
-          "motivation_text": "{name} pockets the tester. 'I can fix the grid with this,' they say, already mentally tracing the wiring diagram.",
-          "breakdown_text": "{name} tests every wire in the bunker, one by one. 'My whole crew was in the substation when it hit,' they finally say. 'The EMP got them before the blast.'"
+          "description": "A voltage tester pen, the plastic casing cracked but the indicator LED intact. {name} tests it against a live battery terminal. It blinks.",
+          "motivation_text": "{name} clips the tester to their collar. 'I can patch the grid with this,' they say, already tracing the conduit lines.",
+          "breakdown_text": "{name} presses the tester against a dead wire. 'My crew was in the substation,' they say. 'The EMP got them before the flash did.'",
+          "affinity_background": "electrician",
+          "morale_payload": 14.0,
+          "guilt_payload": 0.0
         }
       ]
     },
@@ -114,11 +234,144 @@
       "background_id": "machinist",
       "triggers": [
         {
+          "trigger_id": "phantom_trigger_machinist_micrometer",
           "item_category": "personal_item",
+          "item_id": "machinist_caliper",
           "motivation_chance": 0.3,
-          "description": "A micrometer, still in its felt-lined case. {name} checks the calibration against a known standard.",
-          "motivation_text": "{name} slips the micrometer into their pocket. 'Precision still matters,' they say, and their next craft job is flawless.",
-          "breakdown_text": "{name} measures everything in the bunker — gaps in the walls, thickness of the hatch, width of the cracks. 'Tolerances are slipping,' they mutter. 'Everything is slipping.'"
+          "description": "A micrometer still in its felt-lined wooden box. {name} zeroes the anvil against a piece of scrap steel.",
+          "motivation_text": "{name} slides the micrometer into a padded pocket. 'Tolerance is the difference between surviving and failing,' they say.",
+          "breakdown_text": "{name} attempts to measure a stress fracture in the concrete wall. 'The tolerances are gone,' they repeat, leaving their tools on the floor.",
+          "affinity_background": "machinist",
+          "morale_payload": 15.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_w3_machinist_caliper",
+          "item_category": "work_tool",
+          "item_id": "machinist_caliper",
+          "motivation_chance": 0.4,
+          "description": "A vernier caliper. The thumb wheel is polished completely smooth from decades of use. {name} slides the jaw closed.",
+          "motivation_text": "{name} inspects the zero alignment. 'If we measure true, the patch will hold,' they state, returning to the air scrubber.",
+          "breakdown_text": "{name} drops the caliper. 'We machined to half a thousandth. Now we tie it together with rusty wire.' They do not finish the repair.",
+          "affinity_background": "machinist",
+          "morale_payload": 14.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "farmer",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_w5_farm_ledger",
+          "item_category": "correspondence",
+          "item_id": "farm_ledger",
+          "motivation_chance": 0.45,
+          "description": "A harvest ledger recording bushels of rye, rainfall data, and frost dates. The last twenty years are meticulously documented.",
+          "motivation_text": "{name} reads the soil notes from a drought year. 'The dirt recovers,' they say, assigning themselves an extra ration-prep shift.",
+          "breakdown_text": "{name} traces the final, unfinished column of ink. 'Three hundred acres in the ground. It burned before the harvest.' They stare at the page.",
+          "affinity_background": "farmer",
+          "morale_payload": 16.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_p3_recipe_card",
+          "item_category": "correspondence",
+          "item_id": "recipe_card",
+          "motivation_chance": 0.4,
+          "description": "An index card with penciled notes for pickling. A marginal note reads: 'Save three jars for spring planting.'",
+          "motivation_text": "{name} reviews the salt ratios. 'We can adjust this for the dried protein,' they say, moving to the kitchen station.",
+          "breakdown_text": "{name} stares at the card. 'They saved three jars every year,' they whisper. 'There is no spring planting.' They leave the kitchen.",
+          "affinity_background": "farmer",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "engineer",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_w6_tram_punch",
+          "item_category": "work_tool",
+          "item_id": "tram_punch",
+          "motivation_chance": 0.35,
+          "description": "A nickel-plated ticket punch that cuts a five-pointed star. {name} depresses the lever, producing a sharp, mechanical click.",
+          "motivation_text": "{name} cycles the punch twice more. 'Systems require schedules,' they state, returning to the maintenance log.",
+          "breakdown_text": "{name} stares at the punch. 'The 6:15 was fully loaded when the sirens triggered. It never reached the terminus.' They sit down.",
+          "affinity_background": "engineer",
+          "morale_payload": 10.0,
+          "guilt_payload": 5.0
+        },
+        {
+          "trigger_id": "phantom_trigger_w7_mechanic_gloves",
+          "item_category": "work_tool",
+          "item_id": "mechanic_gloves",
+          "motivation_chance": 0.4,
+          "description": "Heavy split-leather work gloves, black with industrial grease. The right thumb has been repaired with heavy copper wire.",
+          "motivation_text": "{name} pulls on the stiff leather. 'These have rebuilt turbines,' they say, moving toward the failing generator.",
+          "breakdown_text": "{name} rubs the copper stitching. 'The man who wore these locked himself in the reactor hall to drop the rods.' They refuse to wear them.",
+          "affinity_background": "engineer",
+          "morale_payload": 14.0,
+          "guilt_payload": 8.0
+        }
+      ]
+    },
+    {
+      "background_id": "laborer",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_w1_foreman_whistle",
+          "item_category": "work_tool",
+          "item_id": "foreman_whistle",
+          "motivation_chance": 0.35,
+          "description": "A heavy brass foundry whistle. The internal pea rattles with the cadence of a shift change.",
+          "motivation_text": "{name} turns the brass in their palm. 'First whistle is warning, second is work,' they state, beginning the shift.",
+          "breakdown_text": "{name} grips the whistle. 'The foreman blew this twice for evacuation before the roof collapsed.' They remain frozen.",
+          "affinity_background": "laborer",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_w4_miners_tag",
+          "item_category": "work_tool",
+          "item_id": "miners_tag",
+          "motivation_chance": 0.3,
+          "description": "A stamped brass miner's tag, number 142. Designed to hang on the surface board until the crew returned to daylight.",
+          "motivation_text": "{name} polishes the number with a thumb. 'You take a tag, you pull your shift, you return it.'",
+          "breakdown_text": "{name} stares at the tag. 'This never went back on the surface board. They're still down there.' They do not report for work.",
+          "affinity_background": "laborer",
+          "morale_payload": 10.0,
+          "guilt_payload": 6.0
+        }
+      ]
+    },
+    {
+      "background_id": "urban_survivor",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_p8_house_key",
+          "item_category": "personal_item",
+          "item_id": "family_apartment_key",
+          "motivation_chance": 0.3,
+          "description": "A brass door key on a leather fob stamped '4B'. The high-rise it locked was incinerated in the first hour.",
+          "motivation_text": "{name} drops the key into a scrap bucket. 'Brass melts. We need the raw material,' they say.",
+          "breakdown_text": "{name} turns the key in their fingers. 'I locked the deadbolt when the sirens started. As if a wooden door mattered.'",
+          "affinity_background": "urban_survivor",
+          "morale_payload": 10.0,
+          "guilt_payload": 5.0
+        },
+        {
+          "trigger_id": "phantom_trigger_p7_pocket_notebook",
+          "item_category": "correspondence",
+          "item_id": "pocket_notebook",
+          "motivation_chance": 0.35,
+          "description": "A pocket notebook of daily errands, dry cleaner receipts, and phone numbers. The entries stop mid-sentence on page fourteen.",
+          "motivation_text": "{name} tears out the used pages to use as tinder. 'Clean paper for the ledger,' they state.",
+          "breakdown_text": "{name} reads the final entry: 'Pick up anniversary cake at 5.' They close the book and walk away.",
+          "affinity_background": "urban_survivor",
+          "morale_payload": 8.0,
+          "guilt_payload": 0.0
         }
       ]
     },
@@ -126,25 +379,124 @@
       "background_id": "generic",
       "triggers": [
         {
-          "item_category": "photograph",
-          "motivation_chance": 0.5,
-          "description": "A photograph of strangers, edges burned. {name} studies the faces — someone's parents, someone's children.",
-          "motivation_text": "{name} props the photograph against the wall. 'They'd want us to keep going,' they say.",
-          "breakdown_text": "{name} can't stop looking at the photograph. 'These people had lives,' they whisper. 'Whole lives.'"
-        },
-        {
-          "item_category": "correspondence",
-          "motivation_chance": 0.4,
-          "description": "A letter, never sent. The ink is smeared by what might be rain or might be tears. {name} handles it carefully.",
-          "motivation_text": "{name} reads the letter and folds it neatly. 'We're still here to read it,' they say. 'That counts for something.'",
-          "breakdown_text": "{name} reads the letter twice, then sets it down. 'Some letters shouldn't be read alone,' they say."
-        },
-        {
+          "trigger_id": "phantom_trigger_p1_wedding_ring",
           "item_category": "personal_item",
-          "motivation_chance": 0.2,
-          "description": "A wedding ring, still on a skeletal finger. {name} doesn't try to remove it.",
-          "motivation_text": "{name} says a quiet word over the remains. 'Rest now,' they say, and move forward with a heavy but steady heart.",
-          "breakdown_text": "{name} sits beside the remains for an hour. 'I had someone too,' they finally say, and then nothing more."
+          "item_id": "wedding_ring",
+          "motivation_chance": 0.25,
+          "description": "A plain gold band. The inner curve is worn thin from decades of friction against skin.",
+          "motivation_text": "{name} places the ring in the trade lockbox. 'High-value barter item,' they note mechanically.",
+          "breakdown_text": "{name} holds the ring in their palm. The metal is freezing cold. They sit in silence for the rest of the shift.",
+          "affinity_background": "generic",
+          "morale_payload": 12.0,
+          "guilt_payload": 8.0
+        },
+        {
+          "trigger_id": "phantom_trigger_p2_family_photograph",
+          "item_category": "photograph",
+          "item_id": "family_photograph",
+          "motivation_chance": 0.45,
+          "description": "A color photograph. One figure is blurry from running back after setting the mechanical shutter timer.",
+          "motivation_text": "{name} slides the photo into their pack. 'Proof of prior habitation,' they state.",
+          "breakdown_text": "{name} stares at the blurred figure. 'They were all dead two hours after this was taken.' They refuse to work.",
+          "affinity_background": "generic",
+          "morale_payload": 14.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_generic_correspondence",
+          "item_category": "correspondence",
+          "item_id": "undelivered_mail",
+          "motivation_chance": 0.4,
+          "description": "An unsent letter. The ink is heavily smeared by water damage.",
+          "motivation_text": "{name} reads the legible sentences, then files it. 'Archived for the record.'",
+          "breakdown_text": "{name} attempts to read the smeared ink. They set it down and refuse to speak to anyone.",
+          "affinity_background": "generic",
+          "morale_payload": 10.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_o1_bus_ticket",
+          "item_category": "ordinary_object",
+          "item_id": "bus_ticket",
+          "motivation_chance": 0.3,
+          "description": "A paper transit transfer for the 7:15 AM line, punched twice. Standard commuter issue.",
+          "motivation_text": "{name} uses the paper to shim a wobbly workbench leg. 'Practical application.'",
+          "breakdown_text": "{name} reads the timestamp. 'They were on the bus when the flash hit.' They abandon their station.",
+          "affinity_background": "generic",
+          "morale_payload": 6.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_o2_shopping_list",
+          "item_category": "ordinary_object",
+          "item_id": "shopping_list",
+          "motivation_chance": 0.35,
+          "description": "A scrap of paper listing butter, flour, and birthday candles. Three items are crossed out.",
+          "motivation_text": "{name} writes shelter inventory on the blank side. 'Paper is paper.'",
+          "breakdown_text": "{name} traces the uncrossed words. 'They never got the candles.' They skip their meal ration.",
+          "affinity_background": "generic",
+          "morale_payload": 8.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_o3_enamel_mug",
+          "item_category": "ordinary_object",
+          "item_id": "enamel_mug",
+          "motivation_chance": 0.4,
+          "description": "A speckled blue tin mug. The rim is chipped black where teeth rested against it every morning.",
+          "motivation_text": "{name} clips the mug to their belt. 'Durable container. We'll boil water in it.'",
+          "breakdown_text": "{name} runs a finger over the chipped enamel. 'My father had one like this,' they whisper. They do not report for work.",
+          "affinity_background": "generic",
+          "morale_payload": 8.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_o4_cheap_comb",
+          "item_category": "ordinary_object",
+          "item_id": "cheap_comb",
+          "motivation_chance": 0.3,
+          "description": "A plastic pocket comb. Three teeth are broken off.",
+          "motivation_text": "{name} drops it in the wash basin. 'Hygiene protocol dictates we boil this before use.'",
+          "breakdown_text": "{name} looks at the broken plastic teeth. 'They threw these away by the gross. Now it's the only one left.'",
+          "affinity_background": "generic",
+          "morale_payload": 6.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_o5_matchbook",
+          "item_category": "ordinary_object",
+          "item_id": "matchbook",
+          "motivation_chance": 0.35,
+          "description": "A cardboard matchbook advertising a 24-hour diner. Seven matches remain.",
+          "motivation_text": "{name} strikes a match to test the phosphorus. 'Dry ignition source. Add to the stockpile.'",
+          "breakdown_text": "{name} reads the address on the cover. 'That entire grid square is a glass crater.' They drop the matches.",
+          "affinity_background": "generic",
+          "morale_payload": 6.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_o6_receipt",
+          "item_category": "ordinary_object",
+          "item_id": "creased_receipt",
+          "motivation_chance": 0.25,
+          "description": "A faded thermal receipt for three cans of peaches and a newspaper.",
+          "motivation_text": "{name} crumples the receipt. 'Useless paper. Throw it in the stove.'",
+          "breakdown_text": "{name} stares at the timestamp. 'Two hours later the sirens began.' They refuse to speak.",
+          "affinity_background": "generic",
+          "morale_payload": 6.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "trigger_o7_keyring_charm",
+          "item_category": "ordinary_object",
+          "item_id": "keyring_charm",
+          "motivation_chance": 0.3,
+          "description": "A cheap brass four-leaf clover keyring from a gas station.",
+          "motivation_text": "{name} tosses the charm into the scrap tin. 'Usable brass for the smelter.'",
+          "breakdown_text": "{name} stares at the four leaves. 'Not lucky enough,' they whisper, walking away from their station.",
+          "affinity_background": "generic",
+          "morale_payload": 6.0,
+          "guilt_payload": 0.0
         }
       ]
     }

@@ -1,4 +1,0 @@
-The CI is failing because it's missing the Unity license information.
-Since this is related to Github Secrets, there is nothing to change in the codebase to fix this specific failure.
-
-I will formulate my PR submission with a note indicating this.

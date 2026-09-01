@@ -19,8 +19,9 @@ namespace AtomicWar.GodotApp
             SetupSurvivors();
             SetupSurvivorRelations();
             SetupDutyRoster();
+            SetupCampaignDay();
 
-            var rng = new SeededRng(1986);
+            var rng = _campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Social).Rng;
             _survivorSocial = new SurvivorSocialCoordinator(
                 rng,
                 _survivors.Needs,

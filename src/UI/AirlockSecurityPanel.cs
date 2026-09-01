@@ -118,6 +118,11 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("visitor", s.hasActiveIncident ? $"{s.visitorType} ({s.visitorId})" : "NO VISITORS", s.hasActiveIncident ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("admissions", s.totalAdmissions.ToString(), AshfallMetricCard.Criticality.Normal);
 
+            if (_admitBtn != null) _admitBtn.Disabled = !s.hasActiveIncident;
+            if (_quarantineBtn != null) _quarantineBtn.Disabled = !s.hasActiveIncident;
+            if (_turnAwayBtn != null) _turnAwayBtn.Disabled = !s.hasActiveIncident;
+            if (_cycleDoorBtn != null) _cycleDoorBtn.Disabled = false;
+
             if (_detailText != null)
             {
                 _detailText.Text = $"Blast Door Integrity: {s.blastDoorIntegrity:F0}% | Alertness: {s.alertness:F0}%\n" +

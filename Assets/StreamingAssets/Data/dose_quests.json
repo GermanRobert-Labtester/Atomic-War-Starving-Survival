@@ -228,6 +228,408 @@
           "choices": []
         }
       ]
+    },
+    {
+      "questlineId": "quest_the_falsified_reading",
+      "title": "The Falsified Reading",
+      "synopsis": "A discrepancy is discovered between a scavenger's booked ledger band and recent field survey telemetry. Decide whether to correct the ledger or protect the worker.",
+      "factionTag": "none",
+      "minDay": 60,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_falsified_audit",
+          "title": "The Inked Discrepancy",
+          "narrativePrompt": "Dr. Vel lays two sheets beside each other in Room Six. The field survey recorded 340 mSv across the canal crossing, but the ledger line has been overwritten in faded graphite as 85 mSv. A worker with that low a reading keeps their surface clearance; the true reading would place them on the sick list. Dr. Vel watches you with her red pencil.",
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_correct_falsified_reading",
+              "text": "Restore the true figure in red pencil. Truth over compassion.",
+              "nextStageId": "stage_falsified_corrected",
+              "moraleDelta": -2,
+              "guiltDelta": 0,
+              "outcomeNarrative": "Dr. Vel strikes through the graphite and writes 340 in red. The worker is pulled from surface expeditions immediately. The book is preserved, but the corridor is bitter."
+            },
+            {
+              "choiceId": "choice_protect_worker_record",
+              "text": "Leave the pencil figure. Let the worker keep their clearance.",
+              "nextStageId": "stage_falsified_concealed",
+              "moraleDelta": 1,
+              "guiltDelta": 2,
+              "grantItemId": "item_forged_clean_bill_chit",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The false line remains. The worker retains their clearance and returns to the surface, carrying biological radiation that the book pretends not to see."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_falsified_corrected",
+          "title": "The Red Line",
+          "narrativePrompt": "The ledger is accurate. The worker sits on the bench outside Room Six, staring at their hands.",
+          "isTerminal": true,
+          "choices": []
+        },
+        {
+          "stageId": "stage_falsified_concealed",
+          "title": "Pencil Mercy",
+          "narrativePrompt": "The record holds a lie. The dial remembers, but the paper keeps the peace for now.",
+          "isTerminal": true,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_the_stolen_dosimeter",
+      "title": "The Stolen Dosimeter",
+      "synopsis": "A calibrated quartz dosimeter vanishes from the tool rack before a critical boiler overhaul. Find where it went.",
+      "factionTag": "none",
+      "minDay": 80,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_stolen_dosimeter_investigate",
+          "title": "Empty Peg",
+          "narrativePrompt": "Piet Abar's bench has a gap in the felt tray. Dosimeter Tag 14 was taken during the night shift. Without it, whoever repairs the steam pipe in the sub-basement will work unmeasured — or someone took it to mask their own escalating burden.",
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_recover_dosimeter_confront",
+              "text": "Confront the boiler technician and demand the return of the meter.",
+              "nextStageId": "stage_stolen_dosimeter_recovered",
+              "moraleDelta": -1,
+              "guiltDelta": 0,
+              "grantItemId": "item_calibrated_dosimeter",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The technician gives up the meter from inside their boot. The reading inside is already 280 mSv. They stole it so they wouldn't be benched before earning their family's ration share."
+            },
+            {
+              "choiceId": "choice_substitute_uncalibrated_spare",
+              "text": "Issue an uncalibrated surplus meter and ignore the theft.",
+              "nextStageId": "stage_stolen_dosimeter_unmeasured",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "item_dosimeter_tag",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "An old surplus meter with unknown drift is handed out. The repair proceeds, but whatever number it records will be a guess wrapped in brass."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_stolen_dosimeter_recovered",
+          "title": "Recovered Meter",
+          "narrativePrompt": "The calibrated instrument is back on Piet's bench, its high reading logged in the ledger.",
+          "isTerminal": true,
+          "choices": []
+        },
+        {
+          "stageId": "stage_stolen_dosimeter_unmeasured",
+          "title": "Drifting Count",
+          "narrativePrompt": "Work goes on with uncalibrated tools. The ledger receives numbers that Piet will not certify.",
+          "isTerminal": true,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_child_over_the_limit",
+      "title": "Child Over the Limit",
+      "synopsis": "An adolescent worker crosses into the Amber band. Saria Voss and Dr. Vel dispute whether they must be barred from workshop shifts.",
+      "factionTag": "none",
+      "minDay": 110,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_child_limit_dispute",
+          "title": "The Chalk Line",
+          "narrativePrompt": "Saria Voss stands in the doorway of the register hall, blocking Dr. Vel's ledger. The fourteen-year-old apprentice at the lathe clocked 115 mSv on their badge. By shelter rules, that books an Amber band and bars them from machine shop shifts. Saria argues the child's body is still growing and the number will panic the family; Dr. Vel insists the rule exists precisely because they are growing.",
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_enforce_child_restriction",
+              "text": "Enforce the Amber restriction. Reassign the child to safe library duties.",
+              "nextStageId": "stage_child_limit_reassigned",
+              "moraleDelta": -1,
+              "guiltDelta": 0,
+              "outcomeNarrative": "The child is taken off the machine roster and assigned to cataloging paper in the archive. The lathe loses a pair of hands, but the child's exposure stops climbing."
+            },
+            {
+              "choiceId": "choice_grant_apprentice_waiver",
+              "text": "Issue a workshop apprentice waiver. The shelter needs machined parts.",
+              "nextStageId": "stage_child_limit_waived",
+              "moraleDelta": 1,
+              "guiltDelta": 2,
+              "grantItemId": "item_shielded_badge_case",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "A waiver slip is tucked into the badge case. Saria leaves the room without speaking. The lathe keeps running, and the apprentice's tag accumulates another week of workshop dust."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_child_limit_reassigned",
+          "title": "Archive Quiet",
+          "narrativePrompt": "The child works quietly among the manuals. Their badge remains resting on the Green peg.",
+          "isTerminal": true,
+          "choices": []
+        },
+        {
+          "stageId": "stage_child_limit_waived",
+          "title": "The Machined Price",
+          "narrativePrompt": "Parts are produced on schedule. The apprentice's badge is shielded on paper, exposed in life.",
+          "isTerminal": true,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_the_register_audit",
+      "title": "The Register Audit",
+      "synopsis": "Piet Abar detects a 15% calibration drift across last month's survey meters. Decide how to resolve the compromised records.",
+      "factionTag": "none",
+      "minDay": 130,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_audit_decision",
+          "title": "The Drifted Month",
+          "narrativePrompt": "Piet sits with three disassembled survey meters on his felt mat. A hairspring fatigue in the master reference bench means every reading taken between Day 100 and Day 130 read 15% lower than reality. Dozens of survivors classified as Green or low Amber are physically deeper in burden than the book states.",
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_retest_and_recalculate_all",
+              "text": "Recalibrate every meter and recalculate all affected entries.",
+              "nextStageId": "stage_audit_recalculated",
+              "moraleDelta": -3,
+              "guiltDelta": 0,
+              "grantItemId": "item_calibration_key",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "Piet applies the calibration key and Dr. Vel works through the night adjusting twenty pages. Several workers discover they are in Amber or Red. The truth is restored, but morale takes a heavy blow."
+            },
+            {
+              "choiceId": "choice_quarantine_drift_quietly",
+              "text": "Fix the meters going forward; do not retroactively alter the past records.",
+              "nextStageId": "stage_audit_suppressed",
+              "moraleDelta": 1,
+              "guiltDelta": 2,
+              "outcomeNarrative": "The meters are reset, but the past pages stay unedited. Piet files the drift report in his private drawer. The past is allowed to remain artificially gentle."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_audit_recalculated",
+          "title": "Corrected Ledger",
+          "narrativePrompt": "Every line in the ledger now matches calibrated truth. The shelter faces its reality with open eyes.",
+          "isTerminal": true,
+          "choices": []
+        },
+        {
+          "stageId": "stage_audit_suppressed",
+          "title": "Quiet Standard",
+          "narrativePrompt": "Future readings will be honest; past readings remain comfortable fictions.",
+          "isTerminal": true,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_black_market_clean_bill",
+      "title": "Black-Market Clean Bill",
+      "synopsis": "Forged Green-band clearance chits circulate in the corridors. Intercept the network or let the trade continue.",
+      "factionTag": "none",
+      "minDay": 160,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_clean_bill_raid",
+          "title": "The Stamped Slips",
+          "narrativePrompt": "A scavenger is caught at the Screening Station with a counterfeit clearance chit bearing a crude stencil of Dr. Vel's stamp. For five ration tins, a rogue clerk has been selling Green-band passes to workers desperate to avoid quarantine or sick-list restrictions.",
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_shut_down_forgery_ring",
+              "text": "Shut down the ring, seize the stencils, and audit the screening checkpoint.",
+              "nextStageId": "stage_clean_bill_cleared",
+              "moraleDelta": -1,
+              "guiltDelta": 0,
+              "outcomeNarrative": "The stencils are destroyed and the rogue clerk is reassigned to waste duty. Entry screening at the station is reinforced with dual-signature verification."
+            },
+            {
+              "choiceId": "choice_confiscate_and_leverage",
+              "text": "Confiscate the forged chits for institutional intelligence without public arrests.",
+              "nextStageId": "stage_clean_bill_exploited",
+              "moraleDelta": 0,
+              "guiltDelta": 2,
+              "grantItemId": "item_forged_clean_bill_chit",
+              "grantItemQuantity": 2,
+              "outcomeNarrative": "You pocket the forged chits. The black market retreats underground, and you hold papers that can open doors without Dr. Vel's knowledge."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_clean_bill_cleared",
+          "title": "Secure Checkpoint",
+          "narrativePrompt": "The screening station turnstiles click with verified stamps. Forgery is stamped out.",
+          "isTerminal": true,
+          "choices": []
+        },
+        {
+          "stageId": "stage_clean_bill_exploited",
+          "title": "Paper Levers",
+          "narrativePrompt": "You hold the forged slips. The ledger remains clean on the surface, compromised in the margins.",
+          "isTerminal": true,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_the_broken_calibration_chain",
+      "title": "The Broken Calibration Chain",
+      "synopsis": "The sealed reference source crystal used to calibrate shelter dosimeters has developed a micro-fracture. Repair it or guess.",
+      "factionTag": "none",
+      "minDay": 180,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_calibration_crystal_broken",
+          "title": "Fissure in the Standard",
+          "narrativePrompt": "Piet Abar holds up the lead container with trembling tongs. The cesium reference source inside has fractured, leaking particulate into its casing and making its baseline emission rate unstable. Without a calibrated standard, no dosimeter in the shelter can be accurately tuned.",
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_rebuild_calibration_standard",
+              "text": "Allocate lead shielding and precision tools to build a new standard chamber.",
+              "nextStageId": "stage_calibration_standard_rebuilt",
+              "moraleDelta": 0,
+              "guiltDelta": 0,
+              "grantItemId": "item_calibrated_dosimeter",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "Piet solders a new sealed chamber. The calibration chain is restored, and dosimeter tuning returns to laboratory precision."
+            },
+            {
+              "choiceId": "choice_operate_on_drift_estimates",
+              "text": "Rely on historical mathematical drift curves rather than spending scarce lead.",
+              "nextStageId": "stage_calibration_drift_accepted",
+              "moraleDelta": -1,
+              "guiltDelta": 1,
+              "outcomeNarrative": "Piet sets aside his tools with a sigh. Future readings will be calculated from decay tables and estimates. The dials will speak, but only in approximations."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_calibration_standard_rebuilt",
+          "title": "True Calibration",
+          "narrativePrompt": "The new bench standard hums within its lead jacket. Every measurement in the shelter has an anchor again.",
+          "isTerminal": true,
+          "choices": []
+        },
+        {
+          "stageId": "stage_calibration_drift_accepted",
+          "title": "Calculated Guesses",
+          "narrativePrompt": "The math replaces the crystal. The error bars grow wider with every passing week.",
+          "isTerminal": true,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_exposure_for_the_essential_worker",
+      "title": "Exposure for Essential Worker",
+      "synopsis": "The shelter's lead power engineer crosses into the Red band hours before a critical generator breakdown. Choose whether to order them back into the bay.",
+      "factionTag": "none",
+      "minDay": 210,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_essential_worker_dilemma",
+          "title": "The Generator & The Red Band",
+          "narrativePrompt": "The primary diesel turbine is throwing sparks, threatening a complete blackout of hydroponics and air filtration. The only survivor with the engineering skill to rebuild the governor valve is already at 320 mSv in the Dose Ledger. Entering the turbine pit now will push them toward Black band and irreversible sickness.",
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_authorize_engineer_emergency_shift",
+              "text": "Authorize an emergency override. The grid must stay online.",
+              "nextStageId": "stage_essential_worker_overridden",
+              "moraleDelta": -2,
+              "guiltDelta": 3,
+              "grantItemId": "item_chelation_decorporation_course",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The engineer enters the turbine pit with a chelation kit and tools. The generator is saved and the power hum returns, but the engineer's badge reads 450 mSv upon return. Sister Omah begins preparing a bed in Room Seven."
+            },
+            {
+              "choiceId": "choice_protect_engineer_accept_rolling_blackouts",
+              "text": "Refuse the override. Protect the engineer and institute rolling power cuts.",
+              "nextStageId": "stage_essential_worker_spared",
+              "moraleDelta": -1,
+              "guiltDelta": 0,
+              "outcomeNarrative": "The engineer remains on the sick list. The turbine is throttled down, plunging half the shelter into darkness, but a life is not spent for electricity."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_essential_worker_overridden",
+          "title": "Power Bought in Rem",
+          "narrativePrompt": "The lights stay bright. In Room Seven, the cost of that brightness lies under a wool blanket.",
+          "isTerminal": true,
+          "choices": []
+        },
+        {
+          "stageId": "stage_essential_worker_spared",
+          "title": "Dark Corridor",
+          "narrativePrompt": "The corridors are dim, but the engineer lives to teach an apprentice when the crisis passes.",
+          "isTerminal": true,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_the_missing_page",
+      "title": "The Missing Page",
+      "synopsis": "A page detailing early post-Exchange fallout exposures for founding families has been torn from the master ledger.",
+      "factionTag": "none",
+      "minDay": 230,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_missing_page_inquest",
+          "title": "Torn Binding",
+          "narrativePrompt": "Dr. Vel discovers that Sheet 04 — recording the first forty-eight hours of fallout penetration into Bunker Bay A — was cleanly sliced from the cloth binding with a surgical scalpel. Those records show which founding families received lethal doses before ventilation was sealed.",
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_recover_and_rebind_page",
+              "text": "Search the senior quarters, recover the sheet, and sew it back into the master ledger.",
+              "nextStageId": "stage_missing_page_rebound",
+              "moraleDelta": -2,
+              "guiltDelta": 0,
+              "grantItemId": "item_dose_ledger",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The sheet is found hidden beneath a floorplate in the council chamber. Dr. Vel threads waxed linen through the spine and binds it back in place. The founding families' sacrifice and secrets are permanently preserved."
+            },
+            {
+              "choiceId": "choice_bury_the_founding_secrets",
+              "text": "Allow the missing page to remain lost. The past cannot be healed by ink.",
+              "nextStageId": "stage_missing_page_forgotten",
+              "moraleDelta": 1,
+              "guiltDelta": 2,
+              "outcomeNarrative": "The torn stub remains in the book. Dr. Vel draws a single red line across the gap. The founders' history becomes an unprovable rumor, and the living move on."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_missing_page_rebound",
+          "title": "Complete Record",
+          "narrativePrompt": "Every page is intact. The ledger tells the whole story from Day One, unedited and unspared.",
+          "isTerminal": true,
+          "choices": []
+        },
+        {
+          "stageId": "stage_missing_page_forgotten",
+          "title": "The Red Stub",
+          "narrativePrompt": "A single red mark marks the gap in history. What happened in Bay A stays between the concrete and the dead.",
+          "isTerminal": true,
+          "choices": []
+        }
+      ]
     }
   ]
 }

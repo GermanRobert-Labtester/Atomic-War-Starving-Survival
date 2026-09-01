@@ -27,7 +27,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void Load_FindsThreeLocationsFiveItemsFourQuests()
+        public void Load_FindsExpandedLocationsItemsQuests()
         {
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
@@ -35,13 +35,13 @@ namespace Ashfall.Core.Tests
             var catalog = DoseContentCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
 
-            Assert.Equal(3, catalog.locations.Count);
-            Assert.Equal(5, catalog.items.Count);
-            Assert.Equal(4, catalog.quests.Count);
+            Assert.Equal(5, catalog.locations.Count);
+            Assert.Equal(9, catalog.items.Count);
+            Assert.Equal(12, catalog.quests.Count);
         }
 
         [Fact]
-        public void Locations_AreTheThreeStandingRooms()
+        public void Locations_AreTheFiveStandingRooms()
         {
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
@@ -53,6 +53,8 @@ namespace Ashfall.Core.Tests
             Assert.Contains("loc_the_dose_room", ids);
             Assert.Contains("loc_the_calibration_bench", ids);
             Assert.Contains("loc_the_childrens_baseline_board", ids);
+            Assert.Contains("loc_the_register_hall", ids);
+            Assert.Contains("loc_the_screening_station", ids);
         }
 
         [Fact]
@@ -70,6 +72,10 @@ namespace Ashfall.Core.Tests
             Assert.Contains("item_dosimeter_tag", ids);
             Assert.Contains("item_palliative_morphine", ids);
             Assert.Contains("item_cohort_first_board", ids);
+            Assert.Contains("item_calibrated_dosimeter", ids);
+            Assert.Contains("item_forged_clean_bill_chit", ids);
+            Assert.Contains("item_chelation_decorporation_course", ids);
+            Assert.Contains("item_shielded_badge_case", ids);
         }
 
         [Fact]
@@ -80,7 +86,7 @@ namespace Ashfall.Core.Tests
 
             var catalog = DoseContentCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            Assert.Equal(4, catalog.quests.Count);
+            Assert.Equal(12, catalog.quests.Count);
 
             foreach (var q in catalog.quests)
             {
@@ -183,9 +189,8 @@ namespace Ashfall.Core.Tests
             var session = DoseContentHostHarness.Create(dataDir);
             var questSystem = new QuestlineSystem();
             int registered = session.RegisterContentQuests(questSystem);
-            Assert.Equal(4, registered);
-            foreach (var id in new[] { "quest_the_dose_the_first_reading", "quest_the_sick_of_room_seven",
-                "quest_the_childs_number", "quest_the_signed_hour" })
+            Assert.Equal(12, registered);
+            foreach (var id in DoseQuestMigration.CanonicalQuestlineIds)
                 Assert.NotNull(questSystem.FindDefinition(id));
         }
 

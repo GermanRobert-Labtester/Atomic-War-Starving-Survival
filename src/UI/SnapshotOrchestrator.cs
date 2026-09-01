@@ -57,6 +57,7 @@ namespace AtomicWar.GodotApp.UI
         private List<(Node, bool)> _hidden = new();
         private string _outPath = "";
         private Node? _mountedPanel;
+        private IDisposable? _fixtureOwner;
 
         enum Phase { Idle, Mounted, FramesWait, Reshow, RenderOnce, Read, Cleanup, Done }
         private Phase _phase = Phase.Idle;
@@ -68,6 +69,7 @@ namespace AtomicWar.GodotApp.UI
             public string PanelCtor;
             public int Width;
             public int Height;
+            public Func<Node, IDisposable?>? FixtureFactory;
         }
 
         /// <summary>Legacy capture-only entry: writes PNGs into outputRoot.</summary>
@@ -109,6 +111,7 @@ namespace AtomicWar.GodotApp.UI
                     PanelCtor = t.PanelCtor,
                     Width = t.Width,
                     Height = t.Height,
+                    FixtureFactory = t.FixtureFactory,
                 });
             _phase = Phase.Idle;
             SetProcess(true);
@@ -207,6 +210,7 @@ namespace AtomicWar.GodotApp.UI
                 wrap.AddChild(inst);
                 mounted = inst;
             }
+            _fixtureOwner = _current.FixtureFactory?.Invoke(mounted);
             try { mounted!.Call("Open"); } catch (Exception ex) { GD.PrintErr($"[SnapshotOrchestrator] Open call failed: {ex.Message}"); }
 
             var hostRoot = (Engine.GetMainLoop() as SceneTree)?.Root;
@@ -338,6 +342,8 @@ namespace AtomicWar.GodotApp.UI
         {
             RestoreOverlays(_hidden);
             _hidden.Clear();
+            _fixtureOwner?.Dispose();
+            _fixtureOwner = null;
             if (_sub != null)
             {
                 var hostRoot = (Engine.GetMainLoop() as SceneTree)?.Root;

@@ -121,6 +121,12 @@ namespace Ashfall.Core.Tests
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
             Assert.NotNull(radio);
             Assert.Equal(13, radio.Count);
+            var meter = radio.Find(r => r.id == "radio_verdict_meter_reads_1142");
+            Assert.NotNull(meter);
+            Assert.Equal("radio_vo_verdict_meter", meter!.audio_cue);
+            var reckoning = radio.Find(r => r.id == "radio_verdict_reckoning_call");
+            Assert.NotNull(reckoning);
+            Assert.Equal("radio_vo_verdict_reckoning", reckoning!.audio_cue);
             var seen = new HashSet<string>();
             foreach (var r in radio)
             {

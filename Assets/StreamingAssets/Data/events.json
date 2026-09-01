@@ -1327,6 +1327,3546 @@
       "bodyText": "The teacher has mastered the pre-war trade of their profession. The bunker keeps school hours now, and the children keep them too. In the ledger of what the bunker preserves, there is a page for that.",
       "weight": 1,
       "minDay": 40
+    },
+    {
+      "id": "narrative_miller_milestone_1",
+      "title": "Grist Handler",
+      "bodyText": "The miller sorts coarse grain from chaff using improvised sieves. The first batch of flour is rough and grey, but it holds together in the dough.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_miller_milestone_2",
+      "title": "Grain Refiner",
+      "bodyText": "With a newly dressed millstone and balanced spindle, the flour comes out fine and white. The morning mash turns into proper loaves.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_miller_mastery",
+      "title": "Master of the Millstone",
+      "bodyText": "The miller calibrates stone gap and moisture content by touch alone. Not a single grain of harvest is wasted in milling.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_miller",
+      "title": "Master Miller",
+      "bodyText": "The miller's hands know the flour now by the way it falls from the millstone — too coarse and the bread won't hold, too fine and it absorbs all the water and bakes into something hard enough to break a tooth. The bread on Day Two tasted of survival. The bread today tastes of craft, which is a different thing and means something for morale that you cannot measure on a ration board.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_wireman_milestone_1",
+      "title": "Cable Splicer",
+      "bodyText": "The wireman splices burned copper conduits with heat-shrink tape. Flickering hallway lights stabilize under steady current.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_wireman_milestone_2",
+      "title": "Circuit Layer",
+      "bodyText": "A dedicated sub-distribution line means the hydroponics bay and the clinic no longer compete for power at peak demand. Before the split, a motor startup in the workshop would dim the clinic lights for three seconds. Surgeries were scheduled around the generator cycle. That is no longer true. The generator still dictates the pace of this shelter, but it dictates it with one less arbitrary cruelty.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_wireman_mastery",
+      "title": "Linesman of the Deep",
+      "bodyText": "The bunker electrical system has been balanced end to end. The ground faults have been eliminated. The transformer hum — the sixty-cycle moan that everyone stopped hearing after the second month because it was always there — is gone. The silence where it was is louder than the hum. Two people came to ask the Electrician if something had broken. She told them no. Something had been fixed. It was a distinction she took a certain pride in making.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_wireman",
+      "title": "Master Wireman",
+      "bodyText": "Two hundred meters of cable run through concrete and rebar, every splice tight, every junction box sealed against moisture. The Electrician knows where every circuit goes without looking at the diagram because she drew the diagram. The shelter runs on things that nobody sees unless they break. The wire is the one nobody sees until everything breaks. It has not broken. That is the mastery.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_bone_setter_milestone_1",
+      "title": "Fracture Tender",
+      "bodyText": "A fractured fibula set without anesthetic using traction cord looped over the bunk frame and a folded towel as the fulcrum. The patient bit through the corner of a leather belt and did not cry out, which was a mercy for everyone else in the medical bay. The bone is straight now. By next month it will be load-bearing. By spring, it will carry the person into the field again. Medicine in this shelter is measured in springs.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_bone_setter_milestone_2",
+      "title": "Orthopedic Aligner",
+      "bodyText": "Compound crush injuries from the tunnel collapse — the kind where bone fragments through skin and there is nothing clean about any of it — are now being set with pins salvaged from orthopedic kits and plaster cast from ground limestone. Three patients who should have lost the use of a limb have the use of a limb. The bone setter has read the pre-war orthopedic manual so many times that the spine has cracked. They have taped it closed.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_bone_setter_mastery",
+      "title": "Master Osteopath",
+      "bodyText": "Complex joint dislocations are set now without the long deliberation that used to happen before each procedure. The bone setter's hands move with the kind of certainty that comes from having done the same thing enough times to have made every possible mistake and learned from each one. The last patient discharged walked out under their own power and said nothing, which is the highest compliment available in the medical bay.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_bone_setter",
+      "title": "Master Bone Setter",
+      "bodyText": "There are people walking on both legs in this shelter today who, three months ago, were told by everyone including themselves that they would not walk again. The bone setter does not take pride in that easily — they know the difference between luck and skill and they know how many times luck was the larger part. But the skill was there. The patients walked. That is what mastered means in a place where the alternative was permanent.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_preservationist_milestone_1",
+      "title": "Curer",
+      "bodyText": "The first salted meat rack hung above the boiler in the curing room fills the sub-level with a smell that is part salt, part smoke, part something more biological that you learn to ignore. Cold-smoking over compressed peat chips takes eight hours per batch and produces a product that lasts fourteen days without refrigeration. Fourteen days is two expeditions. Two expeditions is the difference between empty-handed and supplied.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_preservationist_milestone_2",
+      "title": "Canner",
+      "bodyText": "Sealing glass jars with paraffin wax and processing them in a boiling water bath is the oldest preservation technique that still works when the glass is not cracked and the wax is not contaminated and the water is actually boiling and not just steaming. All of those conditions are now reliably met in this shelter. The pantry board shows three weeks of preserved stores for the first time. Nobody says anything. Everybody reads the board.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_preservationist_mastery",
+      "title": "Master of Provisions",
+      "bodyText": "The preservationist has pressure-canned the last of the autumn mushroom harvest and vacuum-sealed the oilseed cake into blocks. The cold room holds six months of stable rations for the current population count. Six months is the longest this shelter has ever been ahead of its supply problem. It does not feel like security. After this long, the habit of anxiety does not break easily. But it is different. Something is different.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_preservationist",
+      "title": "Master Preservationist",
+      "bodyText": "The preservationist taught three people the sealing protocol and the spoilage check before they would accept the mastery designation. They said a master who keeps the knowledge to themselves is just a single point of failure. The pantry is now maintained by four people who all know the method, which means the method survives even if the person does not. In this shelter, that is not morbidity. That is planning.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_radio_tech_milestone_1",
+      "title": "Static Listener",
+      "bodyText": "The ionospheric hum was not interference. The ionospheric hum was the ionosphere itself — charged and disturbed and not at all the neutral medium it was before the Exchange. The radio technician learned to tune the antenna capacitors against the hum rather than through it. The result is three new distant stations that were broadcasting all along but below the noise floor. One of them has been broadcasting the same emergency loop for a hundred and forty days. Nobody has answered it.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_radio_tech_milestone_2",
+      "title": "Frequency Calibrator",
+      "bodyText": "The vacuum tubes pulled from the clinic's old portable unit are the right size for the main transceiver, but they had dried out and the emission was erratic. Heating the anode slowly and allowing the getter to re-activate took six hours and a lot of patience. The result was clean reception on two frequencies that had been unreadable. One of them is encrypted. The other is not. The unencrypted one is a weather station that is still running its automated loop: clear, cold, minus eleven.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_radio_tech_mastery",
+      "title": "Master of the Ether",
+      "bodyText": "Directional antennas aimed and rotated from inside the bunker using a periscope mount the radio technician built from a pipe section and two mirrors. The map on the wall behind the radio now has seventeen stations plotted by bearing — two military, three faction, five civilian emergency, four automated loops, and three unknowns that transmit in patterns that could be data or could be nothing. The radio technician is working on the unknowns. There is something in them.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_radio_technician",
+      "title": "Master Radio Technician",
+      "bodyText": "Every distress call, weather shift, faction broadcast, and encrypted signal within range of this shelter now reaches the radio technician's log within minutes of transmission. The log is sixty pages long. The radio technician reads it back to themselves every morning. There is nothing in it they will miss. You cannot afford to miss a distress call when the signal only reaches you once.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_grower_milestone_1",
+      "title": "Sprout Tender",
+      "bodyText": "The first green shoots in compost-amended trays are the color of something nobody has seen in a long time. Radish first, because radish is fast and asking for spinach before you have radish is exactly the kind of optimism that gets people hurt. But radish is growing. The Botanist pressed a thumb against the first seedling to check the root resistance and said nothing, but made a mark in their log with what looked like satisfaction.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_grower_milestone_2",
+      "title": "Hydroponic Cultivator",
+      "bodyText": "pH strips, conductivity meters, and nutrient concentrations managed per crop cycle rather than approximate. The hydroponic trays that were producing sixty percent of theoretical maximum are now producing ninety-three percent. The gap was mineral balance and dissolved oxygen. The Botanist found the gap by keeping exact records and is now somewhat alarmed that they are producing more food than the shelter population requires, because the only place surplus food has ever gone in this shelter is trouble.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_grower_mastery",
+      "title": "Master Agronomist",
+      "bodyText": "Canopy pruning and artificial day cycles — the grow lights on a twenty-two hour rhythm rather than twenty-four, which stresses the plants productively without harming them — now produce a continuous harvest rather than a batch cycle. There is no day in the shelter where fresh food is unavailable. That is a sentence that would have been incomprehensible three months ago. The Botanist wrote it in their log and underlined it once.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_greenhouse_grower",
+      "title": "Master Greenhouse Grower",
+      "bodyText": "The holdfast greenhouse operates without the Botanist's direct intervention for forty-eight hours at a stretch. Everything the Botanist knows about keeping plants alive underground is in the procedure manual they wrote and the three people they trained and the sixty-four varieties of seed stored in the cold cabinet behind the pump. The shelter will grow food after the Botanist. That is the mastery. The mastery is making yourself redundant in the most essential possible way.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_surveyor_milestone_1",
+      "title": "Pace Counter",
+      "bodyText": "Step counts and compass headings, recorded against fixed landmarks, produce a navigable map of the ash field to the east. It is not a precise map. The landmarks are: a collapsed water tower, a bus that is not going anywhere, a painted concrete post that used to say something before the paint burned off. But you can go east and come back again, and you can tell someone exactly how to repeat the route without accompanying them, which is the definition of a usable map.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_surveyor_milestone_2",
+      "title": "Triangulator",
+      "bodyText": "Theodolite readings taken from two known points allow triangulation of a third. The surveyor spent three days establishing the baseline and a week taking sightings. The result is a map of the western district accurate to within thirty meters — good enough to plan an expedition route without walking into a sinkhole you did not know was there. Three sinkholes have already been found this way. The map is worth the week.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_surveyor_mastery",
+      "title": "Master Cartographer",
+      "bodyText": "The subterranean fissure network beneath the shelter has been fully mapped from geophone readings and core borings. The surface sinkhole risk zones are marked in red on the expedition planning board. Every route the shelter uses now avoids those zones by a safety margin. The surveyor cannot prevent the ground from moving. They can tell you exactly where it moved and exactly what to avoid. In the ash field, that is the same as prevention.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_surveyor",
+      "title": "Master Surveyor",
+      "bodyText": "The shelter's map library is forty-one sheets of hand-drawn cartography, each one indexed, each one dated, each one annotated with the hazard conditions on the day it was surveyed. The surveyor teaches expedition leaders to read the maps by terrain feature, not by memory. Every expedition leader who comes back alive is partly the surveyor's achievement. The surveyor does not claim that credit. The data claims it for them.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_appraiser_milestone_1",
+      "title": "Scrap Sorter",
+      "bodyText": "Alloy sorting by hardness test and spark grind has saved the workshop from three bad batches of scrap that would have produced tools that cracked on the first use. The appraiser knows the difference between cast iron and wrought iron by the sound of the grinder and the color of the spark trail. That knowledge costs nothing to apply and has already saved more in failed components than the appraiser's entire resource allocation.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_appraiser_milestone_2",
+      "title": "Relic Evaluator",
+      "bodyText": "A capacitor bank pulled from a rack the scrap crew was about to melt down for its copper has been identified, tested, and rated at eighty percent of original capacity. The rack is now in the electronics workshop. The Wire Heads have been told. They were grateful in the particular way that electronics people are grateful — they said very little and immediately started planning modifications. That is gratitude from the Wire Heads.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_appraiser_mastery",
+      "title": "Master Appraiser",
+      "bodyText": "The shelter's barter ledger now reflects actual assessed value rather than agreed fiction. The Syndicate representatives were uncomfortable with this for one negotiation cycle and have since accepted it because the appraiser's assessments have been proven accurate more times than they have been wrong, and in a market where trust is the operating currency, that is a stronger position than any caravan of goods.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_salvage_appraiser",
+      "title": "Master Salvage Appraiser",
+      "bodyText": "The appraiser has assessed everything that has come through the shelter gates for eighty days. They know what the shelter has, what it is worth, and what it should be traded for. That knowledge, documented in the valuation ledger, belongs to the shelter and not to any single person. The appraiser made that point explicitly when they handed the ledger to the quartermaster and asked them to countersign each assessment. Institutional knowledge. Not personal.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_apiarist_milestone_1",
+      "title": "Hive Attendant",
+      "bodyText": "Three wooden hive boxes in the sub-level growing room, each with a mesh ventilation panel and a sugar syrup feeder modified from a laboratory burette. The bees do not know they are underground. They find the grow lights acceptable and the temperature stable and the foraging range limited but workable. They have not died. After sixty days underground, surviving bees are not an achievement. They are a precedent.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_apiarist_milestone_2",
+      "title": "Colony Keeper",
+      "bodyText": "The first honey harvest from the underground hives: two hundred and forty grams, amber, slightly darker than surface honey because the bees are foraging on whatever the Botanist grows rather than open wildflower. The flavor is strange and good. The wax from the comb is already in the medical bay for salve base. The remaining honey went to the infirmary for wound dressing and then to the kitchen for the bread, in that order, which tells you something about priorities.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_apiarist_mastery",
+      "title": "Master Apiarist",
+      "bodyText": "The hives have been split twice and the second colony is fully established. The original queen is producing at full capacity in a new box. Three thousand bees underground, pollinating crops that would be less productive without them, producing wax and honey as secondary yield, and asking for nothing except sugar water and a stable temperature. The apiarist calls this the most cooperative labor arrangement in the shelter, which is not entirely a joke.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_apiarist",
+      "title": "Master Apiarist",
+      "bodyText": "The hum from the sub-level growing room is constant now — the bees working, the Botanist working, the two operations interdependent and both better for it. The apiarist does not romanticize the bees. They are insects responding to stimulus and they will sting you if you open the hive wrong. But they are alive and producing and they were brought through the end of the world in a wooden box carried down two flights of stairs on the first day. That earns a kind of respect.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_metallurgist_milestone_1",
+      "title": "Crucible Tender",
+      "bodyText": "Scrap rebar melted in a refractory clay crucible over a coke forge at eighteen hundred degrees Celsius and poured into sand molds — workable foundry iron, rough but usable. The first pour cracked three molds and produced nothing. The second pour cracked one mold and produced two useful ingots. The third pour produced four clean ingots and the metallurgist did not say anything except to note the mold geometry that worked in the reference log.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_metallurgist_milestone_2",
+      "title": "Smelter",
+      "bodyText": "Manganese at two percent and carbon black added as flux shifts the iron from cast grade to tool steel. The metallurgist can tell the difference by the behavior of the melt — the color of the pour, the way it flows into the mold, the crystalline pattern of the cooled surface. The first test blade held an edge for three days of use before needing re-sharpening. The second held an edge for six days. The third is still in service.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_metallurgist_mastery",
+      "title": "Master Founder",
+      "bodyText": "A pump impeller cast in sand, machined on the lathe, pressed onto the shaft with an interference fit. Zero casting voids found on inspection. The pump runs quieter than the original because the impeller is balanced closer to true than the factory part was. The metallurgist does not explain why a salvage-cast impeller would outperform a factory part. They accept that it does and document the mold geometry in the technical file.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_metallurgist",
+      "title": "Master Metallurgist",
+      "bodyText": "Scrap metal enters the foundry and leaves as parts that work. That is the whole sentence. The metallurgist does not require recognition for this. They require coke, charcoal flux, clean clay, and time. Given those things, they produce the metal components that everything else in the shelter depends on. They have never missed a production commitment. That is the only professional record they keep and it is the only one that matters.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_water_tech_milestone_1",
+      "title": "Filter Hand",
+      "bodyText": "The filter column is six layers: coarse gravel at the base to trap sediment, medium gravel above it for mechanical filtration, fine sand in the middle, crushed activated charcoal for chemical sorption, a second fine sand layer to retain the charcoal particles, and a fine mesh screen at the outlet. The water that comes out the bottom is not clean by pre-war standards. It is clean enough. It has been clean enough for forty days. Nobody has gotten sick from it.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_water_tech_milestone_2",
+      "title": "Still Operator",
+      "bodyText": "A solar condensing still running on reflected light from the south-facing bunker window produces twelve liters of distillate per day when the light is good, which in the current atmosphere is three days per week. On the other four days, the filter column and chlorine titration protocol handle the load. The Hydro Barons have noticed that the shelter's water independence is increasing and have adjusted their tariff negotiations accordingly. The water technician considers this a compliment.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_water_tech_mastery",
+      "title": "Master Hydrologist",
+      "bodyText": "The deep well pump draws from an aquifer thirty-two meters below the shelter floor. The pump is submersible, the cable is insulated, and the pressure tank in the pump room maintains four atmospheres of delivery pressure to all living quarters. The water technician rebuilt the pump from service manual and salvaged components over sixty days. When they started, the shelter was rationing at two liters per person per day. The current allocation is six liters.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_water_technician",
+      "title": "Master Water Technician",
+      "bodyText": "Pure water from the tap in the sleeping quarters. Hot water from the solar-heated drum in the wash room on the days when there is enough sun. The water technician does not describe their work as remarkable. They describe it as solved. The problem of clean water in this shelter has been solved. Other problems remain. The water technician is already thinking about those other problems.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_tailor_milestone_1",
+      "title": "Garment Mender",
+      "bodyText": "Patching canvas and wool takes needle, thread, and an understanding of where the fabric is still sound and where the next tear will happen. The tailor maps the stress lines by holding the garment up to the light and following the grain. A patch that bridges a stress line lasts three times longer than a patch that covers only the visible damage. The survivors who came back from the last expedition with their jackets intact rather than failing at the seams noticed.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_tailor_milestone_2",
+      "title": "Pattern Cutter",
+      "bodyText": "A rubberized expedition suit takes forty hours of work and a full sheet of salvaged neoprene. The lead lining adds weight and stiffness. The wrist seals are the hardest part — they must grip without cutting circulation, flex without tearing, and seal against particulate infiltration in a thirty-knot ash squall. The tailor has solved the wrist seal with a double-rolled cuff and a pull-tab cinch. The scouts tested it in the field. It works.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_tailor_mastery",
+      "title": "Master Clothier",
+      "bodyText": "The thermal-barrier parka is the shelter's best piece of cold-weather equipment. Salvage insulation quilted between two layers of salvage canvas, hood sealed with drawstring to leave only the mask aperture exposed, vent panels at the armpits for heat management during work. The blizzard rating has not been formally tested because the blizzards are real and not a testing environment. But three scouts wore the parkas through the worst storm of the winter and came back with all their fingers.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_tailor",
+      "title": "Master Tailor",
+      "bodyText": "Every survivor in the shelter has durable outer garments, functional gloves, and footwear that will not fail in the cold. The tailor assessed each person's kit before winter and repaired or replaced what would not last. That assessment took twelve days. Nobody asked the tailor to do it. They did it because nobody else was going to and because a shelter where someone freezes for lack of a functional zipper is a shelter that did not need to lose that person.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "apprenticeship_completion_rough_repairs",
+      "title": "The First Solo Repair",
+      "bodyText": "Eli's apprentice turned the elbow joint alone today. The packing went in clean, the thread tape was the right width, and the joint held when Marcus ran the test pressure. The apprentice did not say anything. Eli did not say anything. The bunker was quiet for the rest of the evening.",
+      "weight": 1.4,
+      "minDay": 30,
+      "conditions": {
+        "RequireChildCohort": true
+      },
+      "choices": [
+        {
+          "choiceId": "praise_apprentice",
+          "text": "Tell the apprentice, in front of the bunker, that it held.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "apprentice_praised",
+              "worldFlagValue": true
+            },
+            {
+              "setWorldFlag": "app_rough_repairs_complete",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "silent_recognition",
+          "text": "Say nothing. The apprentice will learn that work is its own reward.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "app_rough_repairs_complete",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apprenticeship_completion_field_dressing",
+      "title": "First Assist, Then Closure",
+      "bodyText": "The apprentice closed a wound alone today, under Sasha's eye. The thread did not break, the dressing held, the patient walked out to the cot without wincing. Sasha asked the apprentice to write the time and the line in the log. The apprentice wrote it as if she had been writing it for years.",
+      "weight": 1.4,
+      "minDay": 30,
+      "conditions": {
+        "RequireChildCohort": true
+      },
+      "choices": [
+        {
+          "choiceId": "document_lesson",
+          "text": "File it in the medic log and the apprenticeship record.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "setWorldFlag": "app_field_dressing_complete",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "stage_second_closure",
+          "text": "Send the apprentice to the second closure the next shift.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "app_field_dressing_complete",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apprenticeship_completion_signal_ear",
+      "title": "A Second Try at the Numbers",
+      "bodyText": "The radio apprentice wrote the numbers station transmission twice in two nights without being asked, in the same hand, on the same slips of paper, and slipped them under the operator's door before dawn. The operator confirmed both. Neither was a fluke.",
+      "weight": 1.2,
+      "minDay": 35,
+      "conditions": {
+        "RequireChildCohort": true
+      },
+      "choices": [
+        {
+          "choiceId": "promote_to_listener",
+          "text": "Add the apprentice to the listening rotation. Saturday only.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "app_signal_ear_complete",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apprenticeship_completion_workshop_sense",
+      "title": "The First Ingot She Pulled Alone",
+      "bodyText": "The forge apprentice pulled the ingot at the right beat, with the master standing two metres back and not saying anything. The ingot went onto the cooling rail without the master touching the rail. The Forge daughter did not say anything either. The apprentices do not say anything. The forge is the kind of work that prefers quiet hands.",
+      "weight": 1.2,
+      "minDay": 50,
+      "conditions": {
+        "RequireChildCohort": true
+      },
+      "choices": [
+        {
+          "choiceId": "shift_to_morning_forge",
+          "text": "Move the apprentice to the morning forge shift permanently.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "setWorldFlag": "app_workshop_sense_complete",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apprenticeship_completion_watchful",
+      "title": "Ninety Minutes at the Hatch",
+      "bodyText": "The hatch watcher's hands were shaking at minute four. By minute forty-five, they were not. The Geiger counter did not exceed a number the bunker accepts. The radio said nothing the bunker did not expect. The morning shift relieved at the appointed minute. The watcher stepped back into the bunker as if the post had never been held by anyone else before.",
+      "weight": 1.3,
+      "minDay": 30,
+      "conditions": {
+        "RequireChildCohort": true
+      },
+      "choices": [
+        {
+          "choiceId": "extend_roster",
+          "text": "Add the watcher to the regular hatch rotation, twice a week.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "setWorldFlag": "app_watchful_complete",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apprenticeship_completion_steady_hands",
+      "title": "First Solo Triage Walk",
+      "bodyText": "The understudy walked the patient-by-name triaged intake line at 03:00 with no patients in the corridor, so she had to imagine them. She imagined two of them. The protocol let her through. The triage line is not a skill you learn by accident. The triage line is a skill you learn by walking it.",
+      "weight": 1.2,
+      "minDay": 40,
+      "conditions": {
+        "RequireChildCohort": true
+      },
+      "choices": [
+        {
+          "choiceId": "add_walk_letter",
+          "text": "Put the understudy on the second-pass letter. She earned it.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "app_steady_hands_complete",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schooling_curriculum_choice",
+      "title": "The Children's Hour",
+      "bodyText": "There are four teachers and four hours. The teacher in the cold room says the children need to read because the only books left are the ones the adults are willing to speak aloud. The forge teacher says the children need to feel the coke so they know when it is right and when it is wrong. The medic says the children need the steady hands. The armorer says the children need the rifle so they know when to put it down. There is only one hour a day. Pick.",
+      "weight": 1.5,
+      "minDay": 20,
+      "conditions": {
+        "RequireChildCohort": true
+      },
+      "choices": [
+        {
+          "choiceId": "choose_letters",
+          "text": "The Reading Hour. Reading first.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "schooling_path",
+              "worldFlagValue": "letters"
+            },
+            {
+              "scheduleEventId": "schooling_letters_first_lesson",
+              "scheduleOnDay": 30
+            }
+          ]
+        },
+        {
+          "choiceId": "choose_mechanics",
+          "text": "The Mechanical Hour. Hands first.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "schooling_path",
+              "worldFlagValue": "mechanics"
+            },
+            {
+              "scheduleEventId": "schooling_mechanics_first_lesson",
+              "scheduleOnDay": 30
+            }
+          ]
+        },
+        {
+          "choiceId": "choose_medicine",
+          "text": "The First Stitches. The medic teacher gets the hour.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "schooling_path",
+              "worldFlagValue": "medicine"
+            },
+            {
+              "scheduleEventId": "schooling_medicine_first_lesson",
+              "scheduleOnDay": 30
+            }
+          ]
+        },
+        {
+          "choiceId": "choose_marksmanship",
+          "text": "The Burned-Out Rifle. Better that the children know it than the rifle know the children.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "schooling_path",
+              "worldFlagValue": "marksmanship"
+            },
+            {
+              "scheduleEventId": "schooling_marksmanship_first_lesson",
+              "scheduleOnDay": 30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coming_of_age_first_surface",
+      "title": "Day Ninety-Four, Outside",
+      "bodyText": "The hatch opened this morning with a child on the perimeter walk, in clean clothes. The Geiger counter climbed to 1.4 on the dial, then 1.6, then settled. The child walked one hundred metres into the scrub. She did not turn around. By minute four, she had stopped looking up. The hatch lead did not have to catch her.",
+      "weight": 2.0,
+      "minDay": 90,
+      "conditions": {
+        "RequireChildCohort": true,
+        "RequireMaturationEligible": true
+      },
+      "choices": [
+        {
+          "choiceId": "record_maturation",
+          "text": "Mark the child as matured in the cohort ledger.",
+          "moraleDelta": 8.0,
+          "effects": [
+            {
+              "setWorldFlag": "child_matured",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "post_maturation_watch_readiness",
+              "scheduleOnDay": 91
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coming_of_age_first_watch",
+      "title": "Solo Watch, Clockwise",
+      "bodyText": "The hatch watcher's hands were already accustomed to the shape of the receiver and the click of the counter. The Geiger counter was quiet. Nothing came in over the radio that did not already belong to the bunker. The hatch did not move. The morning shift took over at the appointed minute. The watcher did not say anything when stepping inside. The watch was not heroic. The watch was the watch.",
+      "weight": 2.0,
+      "minDay": 95,
+      "conditions": {
+        "RequireChildCohort": true,
+        "RequireMaturationEligible": true
+      },
+      "choices": [
+        {
+          "choiceId": "promote_to_roster",
+          "text": "Add the watcher to the standing hatch rotation.",
+          "moraleDelta": 6.0,
+          "effects": [
+            {
+              "setWorldFlag": "child_matured_via_watch",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "post_maturation_watch_readiness",
+              "scheduleOnDay": 96
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "orphan_adoption_warmarms",
+      "title": "The Quiet Adoption",
+      "bodyText": "A casualty orphan from the winter convoy was folded into the bunker's census without ceremony. The adults who took the child in were not the biological parents of any child. The cot is shared now. The ration is shared now. There is no ceremony, only a place setting at the next meal. The bunker was kind about it in the way the bunker is kind about quiet things.",
+      "weight": 1.8,
+      "minDay": 60,
+      "conditions": {
+        "RequireCasualtyOrphan": true
+      },
+      "choices": [
+        {
+          "choiceId": "warmarms_keep",
+          "text": "Keep the casualty orphan with the warm-arms couple.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "orphan_home",
+              "worldFlagValue": "warmarms"
+            }
+          ]
+        },
+        {
+          "choiceId": "warmarms_rotate",
+          "text": "Put the orphan on the council-sheet rotation instead.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "orphan_home",
+              "worldFlagValue": "rotation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "orphan_adoption_fierce_mother",
+      "title": "The Fierce Mother's House",
+      "bodyText": "The casualty orphan is on the council-sheet rotation with the Fierce Mother and the Vet, on plain ink, in plain text. The Fierce Mother sleeps with one hand on the dog. The Vet sleeps with one hand on the knife. The orphan slept, finally, on the second night, with one hand on nothing. That was the small victory.",
+      "weight": 1.7,
+      "minDay": 60,
+      "conditions": {
+        "RequireCasualtyOrphan": true
+      },
+      "choices": [
+        {
+          "choiceId": "extend_rotation",
+          "text": "Continue the rotation past the council-sheet thirty-day limit.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "setWorldFlag": "orphan_home",
+              "worldFlagValue": "extended_rotation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "orphan_adoption_grange",
+      "title": "Plot 114",
+      "bodyText": "A casualty orphan was assigned, by plot number, to a farmer couple who still held the allotment waiting list from before. The plot was 114. It was a plum number on the list. The adults said the plum number killed the convoy that carried the child's old family and were immediately sorry for saying so. The child looked at the plum number and said nothing for the rest of the day.",
+      "weight": 1.6,
+      "minDay": 60,
+      "conditions": {
+        "RequireCasualtyOrphan": true
+      },
+      "choices": [
+        {
+          "choiceId": "honour_list",
+          "text": "Keep the plot number on the allotment list, plum spelling and all.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "setWorldFlag": "orphan_home",
+              "worldFlagValue": "allotment_114"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "orphan_adoption_archive",
+      "title": "A Hundred and Four",
+      "bodyText": "The municipal archive adopted four orphans when the bunker census crossed the binder threshold for the first time. The newest intake was logged under the next four open plot numbers. The binder was three days late because of the intake cycle, and the older children carried the new binders to the new shelf before the new children learned which shelf it was.",
+      "weight": 1.5,
+      "minDay": 60,
+      "conditions": {
+        "RequireCasualtyOrphan": true
+      },
+      "choices": [
+        {
+          "choiceId": "log_archive_intake",
+          "text": "Log the intake in the binder. The binder is on the new shelf.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "orphan_home",
+              "worldFlagValue": "archive"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schooling_letters_first_lesson",
+      "title": "The Reading Hour: First Lesson",
+      "bodyText": "The cold room smells of unwashed lamp oil and the alphabet chart is curling at the corners because the room is damp. The teacher holds the letter with a thumb on the floor and reads it twice. The children read it back in uneven stitches. The teacher reads it a third time because that is what teachers do when the room is damp. Nobody asks what the letters mean yet. The letters are enough for one hour.",
+      "weight": 1.0,
+      "minDay": 30,
+      "conditions": {
+        "RequireWorldFlag": "schooling_path",
+        "WorldFlagValue": "letters"
+      },
+      "choices": [
+        {
+          "choiceId": "open_next_letter",
+          "text": "Open the next letter on the chart.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "scheduleEventId": "schooling_letters_first_lesson",
+              "scheduleOnDay": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schooling_mechanics_first_lesson",
+      "title": "The Mechanical Hour: First Lesson",
+      "bodyText": "The forge daughter shows the children the coke and asks them to listen to it the way she listens to it. The coke makes a sound the children cannot yet hear. Tomorrow it will be the same sound and the children will have heard it once. The third sound is when the children know what they are listening to. The coke does not change; the listener does.",
+      "weight": 1.0,
+      "minDay": 30,
+      "conditions": {
+        "RequireWorldFlag": "schooling_path",
+        "WorldFlagValue": "mechanics"
+      },
+      "choices": [
+        {
+          "choiceId": "return_to_basement",
+          "text": "Take the children to the basement pump for the second lesson.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "scheduleEventId": "schooling_mechanics_first_lesson",
+              "scheduleOnDay": 33
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schooling_medicine_first_lesson",
+      "title": "First Stitches: The First Lesson",
+      "bodyText": "The medic teacher lays out the needle, the thread, the dressing, the saline, and the gloves on the infirmary floor. She says the names of each of them in the same order she will say them in the field. The children repeat the names back. Tomorrow one of the children will pick up a needle at the right end for the first time. The medic will watch.",
+      "weight": 1.0,
+      "minDay": 30,
+      "conditions": {
+        "RequireWorldFlag": "schooling_path",
+        "WorldFlagValue": "medicine"
+      },
+      "choices": [
+        {
+          "choiceId": "infuse_practice_dressing",
+          "text": "Hand the children the saline and the dressing for a practice run.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "scheduleEventId": "schooling_medicine_first_lesson",
+              "scheduleOnDay": 33
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schooling_marksmanship_first_lesson",
+      "title": "The Burned-Out Rifle: Disassembly",
+      "bodyText": "The unloaded rifle was put on the storeroom shelf in pieces, on a cloth, in good light, and the children stood around it in a ring. The armorer showed them how the bolt came out first. The bolt came out first. Then the spring. Then the action. The children took it apart without fumbling, because there were no surprises in it. There were only parts.",
+      "weight": 1.0,
+      "minDay": 30,
+      "conditions": {
+        "RequireWorldFlag": "schooling_path",
+        "WorldFlagValue": "marksmanship"
+      },
+      "choices": [
+        {
+          "choiceId": "do_reassembly_in_dim",
+          "text": "Reassemble in the dim. That is the lesson that decides whether the child owns the rifle or the rifle owns the child.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "scheduleEventId": "schooling_marksmanship_first_lesson",
+              "scheduleOnDay": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_maturation_watch_readiness",
+      "title": "First Watch, Listed",
+      "bodyText": "The watcher's name is now on the standing hatch rotation, twice a week, in pencil, on the wall sheet above the duty board. The pencil will become a pen when the watcher has held the post for a full month without complaint. The pencil is the corridor between role and habit.",
+      "weight": 1.0,
+      "minDay": 91,
+      "conditions": {
+        "RequireChildCohort": true,
+        "RequireMaturationEligible": true
+      },
+      "choices": [
+        {
+          "choiceId": "schedule_first_standby",
+          "text": "Put the watcher on the next open standby slot.",
+          "moraleDelta": 4.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "weather_fallout_storm_breach_scare",
+      "title": "Fallout Storm: Hatch Seal Breach",
+      "bodyText": "The storm is howling at the hatch like a living thing, and the dosimeter on the wall has climbed five points in the last hour. The wind is driving fine grey ash through the seal, and the rubber gasket is not the same thickness it was this morning. In the airlock, the air tastes metallic, the way it tastes before the dose starts to show. You can hear the ash against the metal, a steady hiss like sand against glass. The seal can hold, or it can be patched, or it can be ignored, and the difference between the three is the number of people who will be coughing tomorrow. The storm is not done yet, and the hatch is not as tight as it was. The gasket is the only thing between the bunker and the sky, and the sky is not friendly tonight.",
+      "weight": 2.5,
+      "minDay": 3,
+      "conditions": {
+        "MinDay": 3,
+        "RequireWeather": "FalloutStorm"
+      },
+      "choices": [
+        {
+          "choiceId": "patch_seal",
+          "text": "Strip rubber from the stores and patch the seal.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "duct_tape",
+              "itemAmount": -2
+            },
+            {
+              "itemId": "cloth",
+              "itemAmount": -2
+            },
+            {
+              "targetNeed": "radiation",
+              "needDelta": -2.0
+            }
+          ]
+        },
+        {
+          "choiceId": "brace_and_wait",
+          "text": "Brace the hatch. Ride it out. Trust the gasket.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 8.0
+            }
+          ]
+        },
+        {
+          "choiceId": "send_outside",
+          "text": "Send someone outside to seal the hatch from the outside.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 15.0
+            },
+            {
+              "setWorldFlag": "hatch_sealed_from_outside",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_fallout_storm_filter_strain",
+      "title": "Fallout Storm: Filter Strain",
+      "bodyText": "The air filtration unit is running at full capacity, and the filter indicator is dropping faster than a clock. The storm is pushing ash into the intake, and the filter is catching it, and the filter has only so much catching left. The gauge shows hours, not days, at this rate. If the filter clogs completely, the air in the bunker turns to the same air that is outside, and the air outside is not air, it is fallout with a breeze. You can swap the filter now and spend the spare, or you can throttle the intake and hope the pressure holds, or you can let it run and count the hours. The gauge does not care about the count. It is just a needle, and the needle is moving in one direction.",
+      "weight": 2.0,
+      "minDay": 5,
+      "conditions": {
+        "MinDay": 5,
+        "RequireWeather": "FalloutStorm"
+      },
+      "choices": [
+        {
+          "choiceId": "swap_filter",
+          "text": "Swap in the spare filter. Spend the insurance.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "air_filter",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "throttle_intake",
+          "text": "Throttle the intake. Less air, less ash, less time.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 3.0
+            }
+          ]
+        },
+        {
+          "choiceId": "let_it_run",
+          "text": "Let it run. Replace it when it dies.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 6.0
+            },
+            {
+              "itemId": "air_filter",
+              "itemAmount": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_black_rain_contamination",
+      "title": "Black Rain: Water Contamination",
+      "bodyText": "The rain is black, and it is hitting the roof in sheets, and it sounds like someone throwing gravel. It runs off the eaves in dark streaks, and the water barrels are collecting it, and the barrels are the only water you have. The rain is radioactive. It always is. But this rain is worse than the last rain, and the barrels are full of it, and the dosimeter near the barrels is reading in numbers that are not a suggestion. You can pour it out and be thirsty, or you can boil it and hope, or you can run the purifier on overtime and burn the filter. The rain keeps coming down, black and heavy, and the barrels are filling.",
+      "weight": 2.0,
+      "minDay": 4,
+      "conditions": {
+        "MinDay": 4,
+        "RequireWeather": "BlackRain"
+      },
+      "choices": [
+        {
+          "choiceId": "pour_out",
+          "text": "Pour the barrels out. Start over when the rain cleans.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "itemId": "dirty_water",
+              "itemAmount": -5
+            }
+          ]
+        },
+        {
+          "choiceId": "boil_it",
+          "text": "Boil what you can. The fire is cheaper than the dose.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "itemId": "fuel",
+              "itemAmount": -2
+            },
+            {
+              "targetNeed": "radiation",
+              "needDelta": 4.0
+            }
+          ]
+        },
+        {
+          "choiceId": "run_purifier",
+          "text": "Run the purifier on overtime. Burn the filter.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "water_filter",
+              "itemAmount": -1
+            },
+            {
+              "targetNeed": "radiation",
+              "needDelta": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_black_rain_outdoor_exposure",
+      "title": "Black Rain: Caught in the Open",
+      "bodyText": "One of your people is still outside when the black rain starts. The radio crackles: they are two hours out, the rain came faster than the weather report, and they are sheltering under a collapsed roof with the rain pooling at their feet. The rain is black and the water is rising and the dosimeter on their belt is clicking. They can wait it out, or they can run, or you can send someone out with a tarp and a second mask. Every minute they stay in the rain, the dose climbs. Every minute someone else is out there, the dose climbs for them too. The radio is still open. The silence between transmissions is the sound of the rain on the roof.",
+      "weight": 2.0,
+      "minDay": 6,
+      "conditions": {
+        "MinDay": 6,
+        "RequireWeather": "BlackRain"
+      },
+      "choices": [
+        {
+          "choiceId": "wait_it_out",
+          "text": "Tell them to stay put. The rain will pass.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 12.0
+            }
+          ]
+        },
+        {
+          "choiceId": "run_home",
+          "text": "Tell them to run. Get to the hatch.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 18.0
+            }
+          ]
+        },
+        {
+          "choiceId": "send_rescue",
+          "text": "Send someone out with a tarp and a second mask.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "itemId": "hazmat_suit",
+              "itemAmount": -1
+            },
+            {
+              "targetNeed": "radiation",
+              "needDelta": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_emp_storm_electronics",
+      "title": "EMP Storm: Electronics Failure",
+      "bodyText": "A flash of light on the horizon, then the radio dies mid-sentence. The lights flicker and half of them do not come back. The fusion reactor detonated in the city, the one that has been critical since the exchange, and the EMP pulse came with it, a wave of nothing that fried every unshielded circuit in the valley. The dosimeter is still working — it is mechanical, thank the old engineers. The radio is dead, the geiger counter is dead, the handheld radio is dead, and the battery charger is a brick. The bunker runs on what still works, and what still works is the generator, the purifier, and the people. Everything else needs either a faraday cage or a prayer, and the faraday cage is in the stores.",
+      "weight": 2.5,
+      "minDay": 10,
+      "conditions": {
+        "MinDay": 10,
+        "RequireWeather": "EMPStorm"
+      },
+      "choices": [
+        {
+          "choiceId": "shield_what_you_can",
+          "text": "Wrap the surviving electronics in the faraday mesh.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "itemId": "item_faraday_mesh",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "run_mechanical",
+          "text": "Go mechanical. Radios are a luxury. Breathe the quiet.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "setWorldFlag": "bunker_running_dark",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "scavenge_electronics",
+          "text": "Scavenge what you can from the dead devices and rebuild.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "itemId": "electronic_scrap",
+              "itemAmount": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_emp_storm_radio_blackout",
+      "title": "EMP Storm: Radio Blackout",
+      "bodyText": "The band is silent. Not static, not the distant carrier wave of the settlement broadcast, not the automated military frequency. Silence, the kind of silence that means the transmitters are gone. The EMP took them, or the storm is still in the air, or something else has happened that the radio would have told you about if the radio still worked. The bunker is deaf now. No weather, no trader calls, no distress signals, no news of the world. For the first time since the exchange, you are truly alone, and the silence is heavier than the static ever was. Someone suggests repurposing the antenna for scrap. Someone else starts writing down the frequencies they remember, just in case. The radio sits in the corner, dark, and the silence fills the room like water.",
+      "weight": 1.5,
+      "minDay": 10,
+      "conditions": {
+        "MinDay": 10,
+        "RequireWeather": "EMPStorm"
+      },
+      "choices": [
+        {
+          "choiceId": "keep_listening",
+          "text": "Keep someone on the radio. The silence is information too.",
+          "moraleDelta": 0.0,
+          "effects": []
+        },
+        {
+          "choiceId": "repurpose_antenna",
+          "text": "Repurpose the antenna for scrap. The radio is dead.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "itemId": "scrap_metal",
+              "itemAmount": 2
+            }
+          ]
+        },
+        {
+          "choiceId": "build_faraday",
+          "text": "Build a faraday cage for the surviving radios. Prepare for the next one.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "itemId": "copper_wire_10m_of_10m",
+              "itemAmount": -2
+            },
+            {
+              "itemId": "scrap_metal",
+              "itemAmount": -2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_acid_snow_roof_corrosion",
+      "title": "Acid Snow: Roof Corrosion",
+      "bodyText": "The snow is not white. It is grey-green, and it hisses when it touches metal. The roof of the bunker is groaning under the weight of it, and the acid in the snow is eating through the sealant, the paint, the thin layer of protection that was already thin before the exchange. The roof is the bunker's skin, and the skin is being dissolved one flake at a time. If the acid reaches the structural beams, the roof is a problem you cannot fix with a mop and a bucket. If it reaches the wiring, the lights go out. If it reaches the hatch mechanism, the hatch does not open. The snow keeps falling, grey-green, patient, and the roof is counting the hours.",
+      "weight": 2.0,
+      "minDay": 8,
+      "conditions": {
+        "MinDay": 8,
+        "RequireWeather": "AcidSnow"
+      },
+      "choices": [
+        {
+          "choiceId": "shovel_and_seal",
+          "text": "Clear the snow and reseal the roof with what you have.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "chemicals",
+              "itemAmount": -2
+            },
+            {
+              "itemId": "scrap_metal",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "let_it_slide",
+          "text": "Let it slide. The roof was built for worse.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "roof_corrosion_untreated",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "tarp_cover",
+          "text": "Cover the roof with tarps. It buys time, not a solution.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "itemId": "cloth",
+              "itemAmount": -4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_acid_snow_gear_damage",
+      "title": "Acid Snow: Gear Damage",
+      "bodyText": "The acid snow has gotten into the airlock, tracked in on boots, and it is eating through the gear stored in the alcove. The gas mask straps are brittle, the rubber cracking where the acid touched. The hazmat suit has a pale spot on the chest where the material is thinning. The spare boots are dissolving at the soles. The gear that keeps people alive outside is being degraded by the weather that is outside, and the weather does not care that it is inside now. The alcove is a small room and the damage is not yet fatal, but the gear is not replaceable, and the acid is not apologetic. You can treat the gear now, or you can replace it later, and later is more expensive than now.",
+      "weight": 1.5,
+      "minDay": 8,
+      "conditions": {
+        "MinDay": 8,
+        "RequireWeather": "AcidSnow"
+      },
+      "choices": [
+        {
+          "choiceId": "neutralize_and_treat",
+          "text": "Neutralize the acid with chemicals and treat the gear.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "chemicals",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "wash_with_water",
+          "text": "Wash everything with clean water. Waste the water, save the gear.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "ignore_minor",
+          "text": "It is minor. The gear will hold for another season.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "acid_gear_untreated",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_bio_fog_spore_exposure",
+      "title": "Bio-Fog: Spore Exposure",
+      "bodyText": "The fog rolled in at dawn, thick and yellow-green, and it smells like a greenhouse that has been rotting for months. It is alive. The spores are in the air, and the air is in the bunker, and three people have started coughing, a wet cough that comes from deep in the chest. The medic says it is fungal, the kind that grows in the lungs and takes months to clear. The filter is catching some of it, but not all, and the fog is sitting on the valley like a blanket. You can seal the vents and let the air go stale, or you can burn what you have to kill the spores, or you can let the fog do what it does and treat the coughs as they come. The fog is patient. The spores are already inside.",
+      "weight": 2.0,
+      "minDay": 12,
+      "conditions": {
+        "MinDay": 12,
+        "RequireWeather": "BioFog"
+      },
+      "choices": [
+        {
+          "choiceId": "seal_vents",
+          "text": "Seal the vents. Stale air is better than spore air.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 2.0
+            }
+          ]
+        },
+        {
+          "choiceId": "burn_spores",
+          "text": "Burn sulphur in the vents. Kill the spores at the source.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "sulphur",
+              "itemAmount": -2
+            },
+            {
+              "itemId": "fuel",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "treat_coughs",
+          "text": "Treat the coughs as they come. The fog will pass.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "itemId": "antibiotics",
+              "itemAmount": -2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_bio_fog_visibility",
+      "title": "Bio-Fog: Zero Visibility",
+      "bodyText": "You cannot see the hatch from the periscope. The fog is that thick, a yellow-green wall that stops at the glass and goes no further. The sentry reports that the perimeter is gone, the road is gone, the landmarks are gone, and the only thing that exists is the fog and the sound of things moving in it. The scouting party is overdue, and the radio is a hiss of interference, and the fog is alive with the sound of feet and the rustle of things that do not want to be seen. You can send someone out with a rope and a flare, or you can wait for the fog to lift, or you can fire a flare into the fog and hope. The fog does not move. It sits, and the sound of things moving in it does not stop.",
+      "weight": 1.5,
+      "minDay": 12,
+      "conditions": {
+        "MinDay": 12,
+        "RequireWeather": "BioFog"
+      },
+      "choices": [
+        {
+          "choiceId": "send_rope_team",
+          "text": "Send a rope team to find the scouting party.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "itemId": "rope",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "wait_fog_lift",
+          "text": "Wait. The fog will lift. The scouts know the way.",
+          "moraleDelta": -3.0,
+          "effects": []
+        },
+        {
+          "choiceId": "fire_flare",
+          "text": "Fire a flare into the fog. Give them a beacon.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "flare_fired_into_biofog",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_blizzard_frozen_pipes",
+      "title": "Blizzard: Frozen Pipes",
+      "bodyText": "The cold is a physical thing, a weight that presses on the walls and finds the cracks. The water pipes in the bunker have frozen, and the pump is grinding against ice, and the only water that is moving is the water in the bottles. The temperature outside is minus thirty, and the temperature inside is dropping, and the heater is running on fuel that is running out. You can thaw the pipes with the last of the fuel, or you can drain the system and live on bottles, or you can let the pipes freeze and hope they do not burst. The pipes are old and the cold is new and the math is simple: water expands when it freezes, and metal does not stretch. The pipes are counting the hours.",
+      "weight": 2.0,
+      "minDay": 5,
+      "conditions": {
+        "MinDay": 5,
+        "RequireWeather": "Blizzard"
+      },
+      "choices": [
+        {
+          "choiceId": "thaw_with_fuel",
+          "text": "Thaw the pipes with the last of the fuel. Waste the heat, save the water.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "itemId": "fuel",
+              "itemAmount": -3
+            }
+          ]
+        },
+        {
+          "choiceId": "drain_system",
+          "text": "Drain the system. Live on bottles until the thaw.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "let_them_freeze",
+          "text": "Let them freeze. Hope they do not burst.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "setWorldFlag": "pipes_frozen_gamble",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_blizzard_structure_load",
+      "title": "Blizzard: Snow Load on the Roof",
+      "bodyText": "The snow is drifting against the bunker, piling up on the roof, and the beams are creaking under the weight. The roof was designed for weather, but not this weather, not three metres of snow that came in two days and is still falling. The beams are groaning, a sound you can hear through the concrete, and the ceiling in the storage room has a hairline crack that was not there yesterday. If the roof fails, the bunker is a hole in the snow, and the snow is the only thing left. You can clear the roof and risk the cold, or you can brace the beams from inside, or you can trust the engineering. The beams are still groaning, and the crack is still growing, and the snow is still falling.",
+      "weight": 2.0,
+      "minDay": 5,
+      "conditions": {
+        "MinDay": 5,
+        "RequireWeather": "Blizzard"
+      },
+      "choices": [
+        {
+          "choiceId": "clear_roof",
+          "text": "Send a crew up to clear the roof. Risk the cold, save the beams.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 3.0
+            }
+          ]
+        },
+        {
+          "choiceId": "brace_beams",
+          "text": "Brace the beams from inside. Spend the wood, save the roof.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "itemId": "scrap_wood",
+              "itemAmount": -4
+            },
+            {
+              "itemId": "scrap_metal",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "trust_engineering",
+          "text": "Trust the engineering. The roof was built for this.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "setWorldFlag": "roof_trusted_in_blizzard",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_glass_storm_wind_hazard",
+      "title": "Glass Storm: Wind-Borne Shards",
+      "bodyText": "The wind is carrying glass, fragments of every window that shattered in the exchange, lifted from the ruins and driven at the bunker at sixty kilometres an hour. The periscope lens is already scratched, a web of fine lines that turns the outside world into a blur. The exterior equipment is being sandblasted: the antenna, the hatch mechanism, the air intake. The sound is a constant tinkling, a high-pitched rain of shards hitting metal. If the wind shifts, it will hit the solar panels. If it lasts another day, the air intake will be clogged with glass dust. You can armor the exterior, or you can wait for the wind to die, or you can send someone out to clear the intakes. The wind is not dying. The glass keeps coming.",
+      "weight": 2.0,
+      "minDay": 14,
+      "conditions": {
+        "MinDay": 14,
+        "RequireWeather": "GlassStorm"
+      },
+      "choices": [
+        {
+          "choiceId": "armor_exterior",
+          "text": "Armor the exterior intakes with scrap metal.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "scrap_metal",
+              "itemAmount": -4
+            }
+          ]
+        },
+        {
+          "choiceId": "wait_wind",
+          "text": "Wait for the wind to die. Close the external vents.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 2.0
+            }
+          ]
+        },
+        {
+          "choiceId": "clear_intakes",
+          "text": "Send someone out to clear the intakes. Risk the glass.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "itemId": "bandage",
+              "itemAmount": -1
+            },
+            {
+              "setWorldFlag": "intakes_cleared_glass_storm",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_rad_hail_shielding",
+      "title": "Rad-Hail: Radioactive Impact",
+      "bodyText": "The hail is the size of pebbles, and it is radioactive. Each stone hits the roof with a sharp crack, and the dosimeter near the hatch jumps with every impact. The hail is driving the fallout into the ground, into the air, into the seams of the bunker where the concrete meets the metal. The geiger counter is a steady scream, the kind of sound that gets under the skin. The hail is not just weather; it is ammunition, and the bunker is the target. If the hail breaches the hatch seal, the dose comes inside. If it cracks the periscope, the dose comes inside. If it pools in the airlock, the dose is already inside, waiting for the next person to walk through. The hail keeps coming, and the counter keeps screaming, and the bunker is taking fire from a sky that ran out of mercy.",
+      "weight": 2.5,
+      "minDay": 10,
+      "conditions": {
+        "MinDay": 10,
+        "RequireWeather": "RadHail"
+      },
+      "choices": [
+        {
+          "choiceId": "seal_and_shelter",
+          "text": "Seal the airlock. Nobody goes out until the hail stops.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "itemId": "duct_tape",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "decon_airlock",
+          "text": "Set up a decontamination station in the airlock.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -3
+            },
+            {
+              "itemId": "cloth",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "ride_it_out",
+          "text": "Ride it out. The hail will pass. The dose is already here.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_ash_lightning_fire_hazard",
+      "title": "Ash Lightning: Fire Hazard",
+      "bodyText": "The lightning is striking the ash dunes, and the ash is burning. The horizon is a line of orange, a low fire that feeds on the accumulated dust of three years of fallout, and the smoke is blowing toward the bunker. The fire is not close enough to threaten the walls, but the smoke is another matter: it carries the ash, the fallout, the fine particles that the filter was not designed to catch. The air intake is pulling in smoke, and the smoke is visible in the ducts, a grey haze that settles on everything. If the fire reaches the fuel dump, the plume will be worse. If the wind shifts, the fire will come closer. The lightning keeps striking, and the ash keeps burning, and the bunker is breathing smoke that is not just smoke.",
+      "weight": 2.0,
+      "minDay": 12,
+      "conditions": {
+        "MinDay": 12,
+        "RequireWeather": "AshLightning"
+      },
+      "choices": [
+        {
+          "choiceId": "seal_intake",
+          "text": "Seal the air intake. Breathe what is already inside.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 3.0
+            }
+          ]
+        },
+        {
+          "choiceId": "fight_fire",
+          "text": "Send a crew to fight the fire at the edge of the ash dunes.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -4
+            },
+            {
+              "targetNeed": "radiation",
+              "needDelta": 8.0
+            }
+          ]
+        },
+        {
+          "choiceId": "wait_and_filter",
+          "text": "Wait and filter. The fire will burn itself out.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "itemId": "air_filter",
+              "itemAmount": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_thermal_inversion_stale_air",
+      "title": "Thermal Inversion: Stale Air",
+      "bodyText": "The air is not moving. A thermal inversion has settled over the valley, a lid of warm air that traps the cold, the ash, the exhaust from the generators, everything, close to the ground. The bunker's air is stale, heavy with the smell of too many bodies in too little space, and the ventilation is not pulling anything fresh in because there is nothing fresh to pull. The CO2 is climbing, not enough to kill, enough to notice. People are tired, headaches, the kind of slow poisoning that comes from breathing the same air too many times. The inversion could last another day, or it could last a week. The only way to get fresh air is to open the hatch, and opening the hatch lets in the ash, the cold, the world. The air is stale, and the bunker is breathing it, and the breathing is getting harder.",
+      "weight": 1.5,
+      "minDay": 15,
+      "conditions": {
+        "MinDay": 15,
+        "RequireWeather": "ThermalInversion"
+      },
+      "choices": [
+        {
+          "choiceId": "scrub_air",
+          "text": "Run the CO2 scrubber. Burn the chemicals, clean the air.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "chemicals",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "open_hatch",
+          "text": "Open the hatch. Let the fresh air in, ash and all.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 4.0
+            }
+          ]
+        },
+        {
+          "choiceId": "endure_it",
+          "text": "Endure it. The inversion will lift. The headaches will pass.",
+          "moraleDelta": -5.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "weather_ice_storm_hatch_jam",
+      "title": "Ice Storm: Hatch Mechanism Jammed",
+      "bodyText": "The ice has sealed the outer hatch. The mechanism is frozen solid, the hinges are locked in a fist of ice, and the manual override lever is frozen in place. The bunker is sealed, which is normally a good thing, but being sealed and being unable to open are two different things. If there is a fire, if the air goes bad, if someone needs to get out, the hatch is not an option. The ice is a centimetre thick and the temperature is still dropping, and the only way to open the hatch is to heat it from the outside, which means someone has to get outside, which means getting through the hatch. The freeze is complete. The hatch is a wall now. The wall is not moving until the ice decides to let it.",
+      "weight": 2.0,
+      "minDay": 8,
+      "conditions": {
+        "MinDay": 8,
+        "RequireWeather": "IceStorm"
+      },
+      "choices": [
+        {
+          "choiceId": "heat_from_inside",
+          "text": "Heat the mechanism from inside. Burn the fuel, free the hatch.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "fuel",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "chemical_deice",
+          "text": "Use chemicals to de-ice the hatch. Corrode the ice, not the metal.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "itemId": "chemicals",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "wait_thaw",
+          "text": "Wait for the thaw. The ice will melt eventually.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "setWorldFlag": "hatch_iced_shut",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_black_snow_carbon_toxicity",
+      "title": "Black Snow: Carbon Toxicity",
+      "bodyText": "The snow is black, not from ash but from soot, the fine carbon particulate from the oil fires that have been burning since the exchange. It coats everything, a black film that gets into the lungs, the water, the food. It is not radioactive, not in the way the ash is, but it is toxic in a different way: the carbon particles are small enough to pass through the filter, small enough to get into the bloodstream, small enough to accumulate in the body like a slow poison. The bunker is black with it. Hands leave black prints, faces are smudged, the water tastes like charcoal. The snow keeps falling, black and fine, and the bunker is breathing it, and the filter is not catching it, and the dose is not the problem. The problem is the carbon, and the carbon is already inside.",
+      "weight": 1.5,
+      "minDay": 10,
+      "conditions": {
+        "MinDay": 10,
+        "RequireWeather": "BlackSnow"
+      },
+      "choices": [
+        {
+          "choiceId": "upgrade_filter",
+          "text": "Upgrade the filter with a finer mesh. Spend the cloth, catch the carbon.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "cloth",
+              "itemAmount": -3
+            }
+          ]
+        },
+        {
+          "choiceId": "seal_and_wait",
+          "text": "Seal the bunker. Wait for the black snow to pass.",
+          "moraleDelta": -3.0,
+          "effects": []
+        },
+        {
+          "choiceId": "wash_everything",
+          "text": "Wash everything. Water, surfaces, hands. Fight the black with the clean.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_blood_rain_morale_horror",
+      "title": "Blood Rain: The Red Sky",
+      "bodyText": "The rain is red. Not the red of rust, not the red of sunset, but the deep red of blood, and it is falling from a sky that is the colour of a bruise. The rain is algae, the medic says, iron oxide, dust from the desert, the medic says, but the rain is red, and it pools on the ground like something that was alive. The children are asking questions, and the adults are not answering, and the water barrels are full of red water that nobody wants to drink. The rain is not toxic, the geiger counter says, but the rain is red, and the red is the colour of everything that went wrong. The bunker is quiet, the kind of quiet that comes after a scream, and the rain keeps falling, red and patient, and nobody is looking at the sky.",
+      "weight": 1.5,
+      "minDay": 12,
+      "conditions": {
+        "MinDay": 12,
+        "RequireWeather": "BloodRain"
+      },
+      "choices": [
+        {
+          "choiceId": "explain_it",
+          "text": "Explain it. Algae, iron oxide, science. The rain is not blood.",
+          "moraleDelta": 5.0,
+          "effects": []
+        },
+        {
+          "choiceId": "let_it_be",
+          "text": "Let it be. Saying it is just rain does not make it less red.",
+          "moraleDelta": -5.0,
+          "effects": []
+        },
+        {
+          "choiceId": "collect_it",
+          "text": "Collect the rain. Red or not, water is water.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "itemId": "dirty_water",
+              "itemAmount": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_algae_bloom_water_toxicity",
+      "title": "Algae Bloom: Water Source Toxicity",
+      "bodyText": "The creek has turned green. A bloom of irradiated algae, fed by the warmth and the runoff from the old chemical plant, has covered the water source in a mat of living green that is toxic to drink and toxic to touch. The water is the bunker's backup supply, the creek that has been running clean since the exchange, and now it is running green, and the green is not clean. The algae is producing toxins that the filter cannot catch, and the fish are floating belly-up, and the smell is the smell of a swamp that has been rotting for a thousand years. You can treat the water with chemicals, or you can find another source, or you can wait for the bloom to die. The creek is green, and the bunker is thirsty, and the algae does not care about either.",
+      "weight": 2.0,
+      "minDay": 14,
+      "conditions": {
+        "MinDay": 14,
+        "RequireWeather": "AlgaeBloom"
+      },
+      "choices": [
+        {
+          "choiceId": "treat_chemically",
+          "text": "Treat the water with chemicals. Kill the algae, save the creek.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "chemicals",
+              "itemAmount": -3
+            }
+          ]
+        },
+        {
+          "choiceId": "find_new_source",
+          "text": "Find a new water source. The creek is lost for the season.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "setWorldFlag": "creek_abandoned_algae",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "wait_bloom",
+          "text": "Wait for the bloom to die. The algae will burn itself out.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_particulate_fog_respiratory",
+      "title": "Particulate Fog: Respiratory Crisis",
+      "bodyText": "The fog is fine, a grey mist that is not water but dust, the accumulated particulate of three years of ash and debris, suspended in the air by a temperature inversion. It gets into the lungs, and the lungs do not forgive it. The bunker's residents are coughing, a dry cough that comes from deep in the chest, and the medic is running out of the herbs that make the tea that calms the cough. The filter is catching some of it, but the filter was designed for fallout, not for micro-dust, and the micro-dust is passing through the filter like it is not there. The fog is not leaving. It is sitting in the valley, and the bunker is sitting in the fog, and the cough is spreading from person to person like a rumor.",
+      "weight": 1.5,
+      "minDay": 10,
+      "conditions": {
+        "MinDay": 10,
+        "RequireWeather": "ParticulateFog"
+      },
+      "choices": [
+        {
+          "choiceId": "brew_tea",
+          "text": "Brew the herbal tea. Calm the coughs, save the morale.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "roots",
+              "itemAmount": -2
+            },
+            {
+              "itemId": "clean_water",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "seal_quarters",
+          "text": "Seal the sleeping quarters. Keep the dust out of the lungs.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "itemId": "cloth",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "endure_cough",
+          "text": "Endure the cough. The fog will lift. The lungs will heal.",
+          "moraleDelta": -5.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "weather_silence_psychological",
+      "title": "The Silence: No Wind, No Birds, No Sound",
+      "bodyText": "The wind has stopped. Not died down, not slowed, stopped. The birds are gone, the insects are gone, the distant rumble of the generators at the settlement is gone. The world is silent in a way it has never been silent before, and the silence is louder than the noise. In the bunker, people are speaking in whispers, and the whispers are too loud. The silence is not peaceful. It is the silence of a world that has forgotten how to make sound, and the memory of sound is fading. The children do not remember birds. The adults do not remember traffic. The silence is the sound of the end, and the end is not a bang, it is a quiet that goes on forever. Someone starts humming, just to hear something. The hum is the only sound in the valley.",
+      "weight": 1.0,
+      "minDay": 20,
+      "conditions": {
+        "MinDay": 20,
+        "RequireWeather": "Silence"
+      },
+      "choices": [
+        {
+          "choiceId": "play_music",
+          "text": "Play the music box. Fill the silence with something human.",
+          "moraleDelta": 8.0,
+          "effects": []
+        },
+        {
+          "choiceId": "embrace_silence",
+          "text": "Embrace the silence. It is the only peace the wasteland offers.",
+          "moraleDelta": 3.0,
+          "effects": []
+        },
+        {
+          "choiceId": "fill_the_void",
+          "text": "Fill the void. Talk, sing, read aloud. Do not let the silence win.",
+          "moraleDelta": 5.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "weather_false_spring_planting_risk",
+      "title": "False Spring: The Thaw That Lies",
+      "bodyText": "The temperature has climbed above freezing for the first time in months, and the snow is melting, and the ground is soft, and the greenhouse is warm. It feels like spring, the kind of spring that makes people want to plant seeds and open the hatch and breathe the air without a mask. But the old hands know: this is a false spring, a thaw that comes in the middle of winter and lasts long enough to trick the plants into sprouting, and then the freeze comes back and kills everything that believed the lie. The greenhouse is full of seedlings that are reaching for the sun, and the sun is warm, and the forecast is for another freeze in three days. You can plant now and risk the freeze, or you can wait and lose the heat, or you can cover the beds and hope. The thaw is warm, and the freeze is coming, and the plants do not know the difference.",
+      "weight": 1.5,
+      "minDay": 20,
+      "conditions": {
+        "MinDay": 20,
+        "RequireWeather": "FalseSpring"
+      },
+      "choices": [
+        {
+          "choiceId": "plant_now",
+          "text": "Plant now. The freeze might miss. The food is worth the risk.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "seed_packets",
+              "itemAmount": -2
+            },
+            {
+              "setWorldFlag": "planted_in_false_spring",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "wait_and_cover",
+          "text": "Wait. Cover the beds. The right time will come.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "itemId": "cloth",
+              "itemAmount": -2
+            }
+          ]
+        },
+        {
+          "choiceId": "heat_greenhouse",
+          "text": "Heat the greenhouse. Burn the fuel, keep the seedlings alive.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "itemId": "fuel",
+              "itemAmount": -3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_silent_spring_memory",
+      "title": "Silent Spring: The Season That Should Sing",
+      "bodyText": "It is spring. The calendar says it is spring, and the sun is warm, and the snow is gone, and the ground is soft. But there are no birds, no insects, no frogs in the creek, no green shoots pushing through the soil. The spring is silent, the way the spring has been silent since the exchange, and the silence is a reminder of everything that did not come back. The old world had birdsong and the hum of bees and the sound of things growing. This world has the wind and the ash and the quiet. The greenhouse is the only green thing in the valley, and the greenhouse is inside, and the inside is not the same as the outside. The spring is silent, and the silence is the sound of the world that was lost, and the world that was lost is not coming back. Someone plants a seed anyway, just to hear the soil move.",
+      "weight": 1.0,
+      "minDay": 30,
+      "conditions": {
+        "MinDay": 30,
+        "RequireWeather": "SilentSpring"
+      },
+      "choices": [
+        {
+          "choiceId": "plant_anyway",
+          "text": "Plant anyway. The birds are gone, but the soil still holds.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "itemId": "seed_packets",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "mourn_together",
+          "text": "Gather everyone. Mourn what was lost. Name the things that are gone.",
+          "moraleDelta": 8.0,
+          "effects": []
+        },
+        {
+          "choiceId": "focus_inside",
+          "text": "Focus on what is inside. The greenhouse is the only spring we have.",
+          "moraleDelta": 3.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "weather_clear_salvage_opportunity",
+      "title": "Clear Sky: The Salvage Window",
+      "bodyText": "The sky is clear, the first truly clear sky in weeks, and the dosimeter outside reads low enough to walk. The roads are visible, the ruins are visible, the world is open in a way it has not been open since the last storm. The scouts are already at the hatch, packs on, maps out, the look of people who have been waiting for a window and just saw it open. The salvage is out there: the collapsed pharmacy, the radio tower, the supply depot that the caravan trader mentioned. The window is open, but the window is not wide. A storm could roll in by evening, or the wind could shift, or the dose could climb. The sky is clear, and the clear sky is a clock, and the clock is running. Every hour in the open is salvage, and every hour of salvage is a risk. The sky is clear, and the clear sky is a question.",
+      "weight": 1.5,
+      "minDay": 5,
+      "conditions": {
+        "MinDay": 5,
+        "RequireWeather": "Clear"
+      },
+      "choices": [
+        {
+          "choiceId": "send_full_team",
+          "text": "Send a full salvage team. The window is open. Fill the packs.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "setWorldFlag": "clear_sky_salvage_sent",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "send_scout_only",
+          "text": "Send a scout only. Map the routes. The salvage can wait.",
+          "moraleDelta": 2.0,
+          "effects": []
+        },
+        {
+          "choiceId": "stay_home",
+          "text": "Stay home. The clear sky is a lie. The dose is never low enough.",
+          "moraleDelta": -3.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "weather_overcast_sunless_depression",
+      "title": "Overcast: The Grey Ceiling",
+      "bodyText": "The sky has been grey for two weeks, a flat grey ceiling that presses down on the valley like a lid. The sun is a rumor, a memory of light that the old hands describe to the children, and the children squint at the sky and try to imagine it. The bunker is dark, and the lamps are running on batteries that are running out, and the darkness is getting into the people the way the cold gets into the concrete. Moods are low, arguments are quick, the silence between words is longer than it was. The grey is not a storm, not a threat, not a crisis. It is a weight, and the weight is the absence of light, and the absence of light is the absence of hope. Someone lights a candle, just to see a flame. The flame is the only colour in the room.",
+      "weight": 1.0,
+      "minDay": 10,
+      "conditions": {
+        "MinDay": 10,
+        "RequireWeather": "Overcast"
+      },
+      "choices": [
+        {
+          "choiceId": "light_candles",
+          "text": "Light the candles. Burn the wax, see the light.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "fuel",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "tell_stories",
+          "text": "Tell stories of the sun. Remind them what it looked like.",
+          "moraleDelta": 5.0,
+          "effects": []
+        },
+        {
+          "choiceId": "endure_grey",
+          "text": "Endure the grey. The sun will come back. It always does.",
+          "moraleDelta": -2.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "weather_rain_water_collection",
+      "title": "Rain: The Collection Race",
+      "bodyText": "The rain is falling, clean rain, the kind of rain that has not passed through an ash cloud and is not carrying fallout and is not black or red or green but clear, the colour of water before the exchange. The barrels are out, the tarps are stretched, every container the bunker owns is open to the sky, and the rain is filling them. This is water you do not have to filter, do not have to boil, do not have to check with the dosimeter. It is a gift, and the gift is measured in litres, and the litres are counting down. The rain will stop, and the barrels will stop filling, and the water that was free will become the water that was, and the bunker will go back to measuring cups. The rain is falling, clean and cold, and the bunker is holding its breath.",
+      "weight": 1.0,
+      "minDay": 3,
+      "conditions": {
+        "MinDay": 3,
+        "RequireWeather": "Rain"
+      },
+      "choices": [
+        {
+          "choiceId": "collect_everything",
+          "text": "Collect everything. Every barrel, every bottle, every drop.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": 5
+            }
+          ]
+        },
+        {
+          "choiceId": "share_the_news",
+          "text": "Share the news on the radio. Let the settlement know the rain is clean.",
+          "moraleDelta": 3.0,
+          "effects": []
+        },
+        {
+          "choiceId": "wash_everything",
+          "text": "Wash everything. Clothes, floors, hands. Use the rain while it lasts.",
+          "moraleDelta": 8.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weather_ashfall_air_quality",
+      "title": "Ashfall: The Grey Tide",
+      "bodyText": "The ash is falling again, a fine grey powder that settles on everything like a second skin. It is not a storm, not the fallout storm that sends the dosimeter screaming, but the steady ashfall that has been the background of every day since the exchange. Today it is heavier, the flakes larger, the colour darker, and the air quality is dropping. The filter is working harder, the intake is coughing, and the ash is finding its way into the seams, the cracks, the spaces between the door and the frame. The bunker is grey with it, a fine layer on every surface, and the grey is in the lungs, the food, the water. The ash is not a crisis. It is a condition, and the condition is permanent, and the permanent is harder to fight than the crisis. Someone wipes a table, and the cloth comes away grey, and the grey is the colour of the world now.",
+      "weight": 1.0,
+      "minDay": 2,
+      "conditions": {
+        "MinDay": 2,
+        "RequireWeather": "Ashfall"
+      },
+      "choices": [
+        {
+          "choiceId": "clean_thoroughly",
+          "text": "Clean everything. Fight the grey with discipline.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "itemId": "cloth",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "accept_the_grey",
+          "text": "Accept the grey. The ash is the world now. Wiping it away does not change it.",
+          "moraleDelta": -3.0,
+          "effects": []
+        },
+        {
+          "choiceId": "seal_tighter",
+          "text": "Seal the bunker tighter. Tape the seams, block the cracks.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "itemId": "duct_tape",
+              "itemAmount": -2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_snoring_feud",
+      "title": "The Snoring Feud",
+      "bodyText": "Two adults in the north corridor have not spoken since the rations meeting. The argument is about the snoring. The snoring is about the bunks. The bunks are not movable. The bunkers are not un-snorable. The wall of the corridor has absorbed enough of the argument that the chalk budget is calling itself an apology.",
+      "weight": 1.0,
+      "minDay": 14,
+      "conditions": {
+        "RequireRoommateFriction": true
+      },
+      "choices": [
+        {
+          "choiceId": "mediate_immediately",
+          "text": "Sit between them at the next meal. Do not say anything. The argument ends when no one says anything.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_snoring_feud_mediated",
+              "worldFlagValue": true
+            },
+            {
+              "targetNeed": "morale",
+              "needDelta": 3.0
+            }
+          ]
+        },
+        {
+          "choiceId": "swap_bunks",
+          "text": "Reassign one adult to the spare cot in the storeroom. The snoring will be the storeroom's problem now.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_snoring_feud_swapped",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_stolen_keepsake",
+      "title": "The Missing Keepsake",
+      "bodyText": "A small wooden bird has gone from the third-bunk's pillow during the last three shifts. It was carved by a child, who has not noticed. The adult whose pillow it lived against has noticed. The pillow has noticed. The wood-cheap corners say nothing about who might have picked it up.",
+      "weight": 1.1,
+      "minDay": 25,
+      "choices": [
+        {
+          "choiceId": "return_to_bunk",
+          "text": "Put it back. The third-bunk's pillow is where the bird was carved for.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_stolen_keepsake",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "friction_stolen_keepsake_after",
+              "scheduleOnDay": 27
+            }
+          ]
+        },
+        {
+          "choiceId": "leave_with_adult",
+          "text": "Leave it where it is. The adult who picked it up needed it more.",
+          "moraleDelta": -6.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_stolen_keepsake_left",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_forbidden_radio_listening",
+      "title": "The Forbidden Dial",
+      "bodyText": "The radio dial was set to 88.5 at 02:00 by someone who did not log the listening. The bunker's radio schedule does not allow 88.5 between 23:00 and 05:00. The bunker's chalk budget has words about this, and the words will be heard.",
+      "weight": 1.2,
+      "minDay": 30,
+      "conditions": {
+        "MinDay": 30
+      },
+      "choices": [
+        {
+          "choiceId": "log_listener_one_time",
+          "text": "Make this a one-time exception in the binder. The dial stays at 88.5 for an hour.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_forbidden_radio_listening",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "set_dial_back_silently",
+          "text": "Reset the dial to the official rotation. Do not name the listener.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_radio_dial_argument",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_work_shirker_accusation",
+      "title": "The Pencil That Was Wrong",
+      "bodyText": "An accusation: three names on the morning forge shift are recorded as the substitute rotation, and only one of those three names showed. The pencil did the work that the missing names refused to do. The pencil will not write down the names of the people who did not show.",
+      "weight": 1.3,
+      "minDay": 35,
+      "choices": [
+        {
+          "choiceId": "investigate_shirker",
+          "text": "Call the missing names to the council sheet. Read the pencil aloud.",
+          "moraleDelta": -8.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_work_shirker_accusation",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "escalation_walkout_conditions",
+              "scheduleOnDay": 37
+            }
+          ]
+        },
+        {
+          "choiceId": "amend_with_pen",
+          "text": "Add pen marks beside the pencil marks. The names will be written tomorrow.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_shirker_amended",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_stealing_sleep_rotation",
+      "title": "Whose Bunk In The Second Hour",
+      "bodyText": "Twice in the last week, somebody has been sleeping in the second-bunk on the south corridor during the second hour of the second watch. They do not belong to the second-bunk's rotation. The bunk did not say anything. The bunk's blanket did.",
+      "weight": 0.9,
+      "minDay": 12,
+      "choices": [
+        {
+          "choiceId": "confront_visitor",
+          "text": "Hand the visitor their own bunk assignation. The corridors are not for visitors.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_visitor_assigned",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "silent_permit",
+          "text": "Say nothing. The bunk has chosen its guest.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_second_bunk_permitted",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_ash_sermon_quiet_hours",
+      "title": "The Sermon After Quiet Hours",
+      "bodyText": "An adult has been speaking the ash cant with the children for the last three nights, after quiet hours, in the cold room. The cant is not in the curriculum. The curriculum is one hour a day. The children are listening for longer than one hour. The chalk budget is collecting evidence.",
+      "weight": 1.0,
+      "minDay": 28,
+      "choices": [
+        {
+          "choiceId": "ban_after_hours",
+          "text": "Move the cold room door to require two signatures after quiet hours. The cant will have to wait.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_ash_cant_banned",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "add_to_curriculum",
+          "text": "Add the cant to the curriculum. The teacher's pencil will write it in.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_ash_cant_admitted",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_inherited_walkout_threat",
+      "title": "The Walkout That Was Inherited",
+      "bodyText": "A survivor threatens to walk out for the first time since the convoy. The threat is to nobody in particular and to everybody in general. The walkout's threat is in the corridor. The walkout's chronicler will write it on tomorrow's pencil.",
+      "weight": 1.1,
+      "minDay": 50,
+      "conditions": {
+        "RequireCohortAdoptionPending": true
+      },
+      "choices": [
+        {
+          "choiceId": "let_them_walkout",
+          "text": "Open the door. They go when they need to go. They come back when they come back.",
+          "moraleDelta": -4.0,
+          "effects": [
+            {
+              "setWorldFlag": "escalation_walkout",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "post_walkout_reconsider",
+              "scheduleOnDay": 53
+            }
+          ]
+        },
+        {
+          "choiceId": "call_a_council",
+          "text": "Call the council. The pencil rolls. The threat rolls too.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_walkout_council_held",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_two_sides_of_chalk",
+      "title": "Chalk Vs Chalk",
+      "bodyText": "The walls are getting legibility. The two sides of the corridor cannot agree on which census number belongs to which stall. One side writes in pencil. One side writes in chalk. The two sides have not spoken for a week. The pencil and the chalk have not spoken for a week either.",
+      "weight": 1.0,
+      "minDay": 22,
+      "choices": [
+        {
+          "choiceId": "compromise_pen_only",
+          "text": "Adopt pen-only on the census board. The chalk is for letters, not numbers.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_chalk_pen_compromise",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "leave_pending",
+          "text": "Leave the dispute for the next council. The corridor will be patient.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_chalk_dispute_pending",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_ration_observation_overheard",
+      "title": "An Overheard Scoop",
+      "bodyText": "The morning ration scoop happened in the corridor at the same hour. Three adults watched. Two said nothing. One said too much. The one that said too much will not un-say the thing during the next shift.",
+      "weight": 0.9,
+      "minDay": 24,
+      "conditions": {
+        "RequireRationUnevenAllocation": true
+      },
+      "choices": [
+        {
+          "choiceId": "meet_in_private",
+          "text": "Pull the speaker into the council sheet. Without a witness. The corridor has enough.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_ration_observation_discreet",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "open_meditation",
+          "text": "Open the floor at the next council. The corridor heard it; the council can too.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_ration_observation_open",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_ration_stolen_dry_rations",
+      "title": "The Dry-Ration Loss",
+      "bodyText": "Three tins of dry rations are missing from the back shelf. The tally says three. The shelf's mood says three. The bunkers do not need a count to know the count. The dry rations are not for anyone's bunk.",
+      "weight": 1.2,
+      "minDay": 30,
+      "conditions": {
+        "RequireRationTheft": true
+      },
+      "choices": [
+        {
+          "choiceId": "lock_the_bulk_stores",
+          "text": "Put a lock on the bulk store. The bunk that did not want lock will not say so.",
+          "moraleDelta": -3.0,
+          "effects": [
+            {
+              "setWorldFlag": "faction_stores_locked",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "double_the_signal",
+          "text": "Tally twice a day for a week. The pencil was made for this.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_hoarded_tins_first_sign",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ration_uneven_scoop_third_day",
+      "title": "The Scoop That Went Uneven",
+      "bodyText": "The third day in a row the morning scoop has been uneven. The bowl on the left stack has been fuller than the bowl on the right stack. The bowl's thicker. The bowl is also the one the lead medic cuts from. The discrepancy is small. The discrepancy is not kind.",
+      "weight": 1.1,
+      "minDay": 28,
+      "conditions": {
+        "RequireRationUnevenAllocation": true
+      },
+      "choices": [
+        {
+          "choiceId": "rotate_scoop_role",
+          "text": "Rotate who holds the scoop. The lead medic releases the spoon at dawn.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_scoop_rotated",
+              "worldFlagValue": true
+            },
+            {
+              "targetNeed": "hunger",
+              "needDelta": -2.0
+            }
+          ]
+        },
+        {
+          "choiceId": "double_ration_lead",
+          "text": "Acknowledge the double scoop. The lead is permitted extra until the schedule catches up.",
+          "moraleDelta": -6.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_double_lead_ack",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ration_hoarded_tins_first_sign",
+      "title": "The First Tin Disappears",
+      "bodyText": "The first tin of sardines has gone from the back shelf under what may be a deliberate act of triage. The tally knows. The bunk knows. The person who took the tin knows. The first tin established a precedent.",
+      "weight": 1.2,
+      "minDay": 35,
+      "conditions": {
+        "RequireRationUnevenAllocation": true
+      },
+      "choices": [
+        {
+          "choiceId": "log_first_tin_loss",
+          "text": "Log the loss on the council sheet. The pencil is not for blaming. The pencil is for counting.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_first_tin_logged",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "share_the_pretend_first_tin",
+          "text": "Share a tin on the next scoop. The imaginary first tin cannot be missed if the next tin is shared.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_tin_shared_response",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ration_feast_day_demand",
+      "title": "Feast Day Is Not A Holiday",
+      "bodyText": "Two adults have requested a feast scoop for the second anniversary of the bunker opening. The feast scoop is not in the schedule. The schedule is why the feast scoop can be discussed without ceremony. The feast scoop has been scheduled now.",
+      "weight": 1.0,
+      "minDay": 80,
+      "choices": [
+        {
+          "choiceId": "honor_feast_request",
+          "text": "Honor the feast scoop. The pencil rounds; the bowl rounds; the calendar rounds.",
+          "moraleDelta": 6.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_feast_honored",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "defer_feast_request",
+          "text": "Defer to next quarter's review. The schedule is the schedule.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_feast_deferred",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ration_sick_gets_more_dispute",
+      "title": "The Sick Get More",
+      "bodyText": "The sick in the infirmary get extra. The medic's pencil wrote the extra. The dwellers' pencil did not get to disagree. The extra is medic-grade and not negotiable at the scoop. The extra is, however, the next council sheet's first item.",
+      "weight": 1.1,
+      "minDay": 40,
+      "choices": [
+        {
+          "choiceId": "confirm_medic_extra",
+          "text": "Confirm the medic's extra on the council sheet. The infirmary is the infirmary.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_medic_extra_canon",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "make_extra_auditable",
+          "text": "Audit the medic's extra in the next quarter. The pencil wants receipts.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_medic_extra_audit",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ration_theft_with_evidence",
+      "title": "A Tin With Bearings",
+      "bodyText": "A tin was taken. A tin was seen by someone who did not need it. The sawdust block fell out of someone's pocket. The sawdust block has a fingerprint. The fingerprint is from the second-bunk. The second-bunk has the lead medic's spoon in the morning.",
+      "weight": 1.3,
+      "minDay": 50,
+      "conditions": {
+        "RequireRationTheft": true
+      },
+      "choices": [
+        {
+          "choiceId": "confront_in_private",
+          "text": "Pull the second-bunk into the council sheet. The fingerprint is the evidence. The council sheet is the verdict.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_theft_second_bunk_named",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "escalation_sabotage_investigated",
+              "scheduleOnDay": 51
+            }
+          ]
+        },
+        {
+          "choiceId": "tally_more_often",
+          "text": "Tally twice a day for a week. The pencil sits down. The lead does not name.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_double_tally_week",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ration_resentment_kindling",
+      "title": "Resentment In Slow Motion",
+      "bodyText": "The pencil wrote four kinds of resentment lines this week. The first was at the scoop. The second was at the sick list. The third was at the walking-out procession. The fourth is at the corridor clock. The resentment has not crossed 0.70 in any line. The resentment is below the threshold. The resentment is below the threshold by design.",
+      "weight": 1.1,
+      "minDay": 45,
+      "conditions": {
+        "RequireResentmentBuffer": true
+      },
+      "choices": [
+        {
+          "choiceId": "mediate_quietly",
+          "text": "Pull the four pencils to one meal, alone. The resentment will name itself or it will not.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_resentment_mediated",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "let_it_run",
+          "text": "Let the resentment settle below the threshold. Below the threshold is where ration conflict is supposed to live.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "ration_resentment_allowed",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "escalation_walkout",
+      "title": "The Walkout",
+      "bodyText": "Three adults have made the corridor door move. They walked out at dawn. They said they would. The corridor door is still warm. The pencil does not write warm. The dawn is cooler than warm.",
+      "weight": 1.2,
+      "minDay": 55,
+      "choices": [
+        {
+          "choiceId": "let_walkout_run",
+          "text": "The corridor is theirs to walk out of. The corridor is theirs to walk back into.",
+          "moraleDelta": -8.0,
+          "effects": [
+            {
+              "setWorldFlag": "escalation_walkout_reconsidered",
+              "worldFlagValue": true
+            },
+            {
+              "targetNeed": "morale",
+              "needDelta": -5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "escalation_sabotage",
+      "title": "The Lead Pipe Went Out",
+      "bodyText": "The lead pipe for the second-bunk's circulation was pulled before dawn. The lead pipe was left on the concrete with no hands. The hands were not cold. The hands were not shaken. The hands were someone's.",
+      "weight": 1.3,
+      "minDay": 90,
+      "choices": [
+        {
+          "choiceId": "investigate_now",
+          "text": "Pull the council sheet out. The lead pipe will be next to the pencil at the council sheet.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "setWorldFlag": "escalation_sabotage_investigated",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "escalation_challenge_to_leadership",
+              "scheduleOnDay": 92
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "escalation_challenge_to_leadership",
+      "title": "The Chalk Under The Doorway",
+      "bodyText": "There is chalk under the leadership doorway. The chalk says nothing in particular. The chalk says nothing in particular, on a Friday, with forty-eight hours to a council sheet meeting.",
+      "weight": 1.4,
+      "minDay": 80,
+      "choices": [
+        {
+          "choiceId": "acknowledge_the_chalk",
+          "text": "Acknowledge the chalk at the next council sheet. The doorway is one of the surroundings.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "escalation_challenge_acknowledged",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "step_down_quietly",
+          "text": "Step down before the council sheet. Leadership returns the chalk to its owner.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "setWorldFlag": "escalation_leadership_stepdown",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "escalation_walkout_reconsidered",
+      "title": "The Walkout Comes Back",
+      "bodyText": "The corridor door is cool now. The same three adults came back at noon. They did not announce their return. They walked back in past the chair that the chalk had been sitting on for the four hours they were walking. The chair was occupied. The chair was not surprised.",
+      "weight": 1.0,
+      "minDay": 60,
+      "choices": [
+        {
+          "choiceId": "welcome_back",
+          "text": "Hand them a bowl. The bowl does not ask questions. The corridor has just enough bowl.",
+          "moraleDelta": 4.0,
+          "effects": [
+            {
+              "setWorldFlag": "escalation_walkout_welcomed",
+              "worldFlagValue": true
+            },
+            {
+              "targetNeed": "hunger",
+              "needDelta": -3.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friction_stolen_keepsake_after",
+      "title": "After The Keepsake",
+      "bodyText": "The carved bird is back on the third-bunk's pillow. The third-bunk is the only one that knows how to be folded that way. The third-bunk is the only one that will remember the second-place pillow tomorrow. The third-bunk has decided to be still tonight.",
+      "weight": 0.8,
+      "minDay": 27,
+      "conditions": {
+        "RequireWorldFlag": "friction_stolen_keepsake"
+      },
+      "choices": [
+        {
+          "choiceId": "silence_thanks",
+          "text": "Say nothing about it. The pillow says enough.",
+          "moraleDelta": 2.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "escalation_walkout_conditions",
+      "title": "Before The Walkout",
+      "bodyText": "The pencil has written the conditions for the corridor doorway to open. The pencil's conditions are: write when you leave, write why you leave, write when you come back. The doorway writes nothing. The doorway watches the pencil.",
+      "weight": 1.0,
+      "minDay": 37,
+      "conditions": {
+        "RequireWorldFlag": "friction_work_shirker_accusation"
+      },
+      "choices": [
+        {
+          "choiceId": "set_conditions_pencil",
+          "text": "Set the conditions in the binder. The doorway follows the binder.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_walkout_conditions_set",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_walkout_reconsider",
+      "title": "Reconsidering The Walkout",
+      "bodyText": "The walkout's threat does not need another walkout. The walkout's threat needs a pencil. The walkout reconsidered with a pencil. The pencil was shorter than yesterday's pencil.",
+      "weight": 1.0,
+      "minDay": 53,
+      "choices": [
+        {
+          "choiceId": "ask_for_a_walkout_letter",
+          "text": "Ask for a written walkout letter. The pencil will be there.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_walkout_letter_written",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_belief_first_conviction",
+      "title": "The First Testimony",
+      "bodyText": "Following a harrowing rad-hazard shift, a survivor gathers peers in the lower workshop. Holding up a charred iron fitting and a handful of grey grit, they speak not of despair, but of purpose: whether through the memory of the Ash Witnesses, the labor of the Rebuilders, or the listening watch of the radio dial, survival must be more than waiting for filters to choke.",
+      "weight": 1.5,
+      "minDay": 10,
+      "choices": [
+        {
+          "choiceId": "choice_support_testimony",
+          "text": "Acknowledge their words. The bunker needs conviction to endure.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "setWorldFlag": "belief_movement_encouraged",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_caution_testimony",
+          "text": "Urge focus on physical duties. Ideology must not distract from maintenance.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "setWorldFlag": "belief_pragmatic_caution_set",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_belief_quiet_comfort",
+      "title": "The Still Hour",
+      "bodyText": "A quiet observance takes place in the dormitory corner after shift change. Adherents sit in shared silence, reciting the names of former dwellers and breathing in time with the intake pulse. The atmosphere settles tense nerves that sedatives failed to soothe.",
+      "weight": 1.2,
+      "minDay": 12,
+      "choices": [
+        {
+          "choiceId": "choice_permit_quiet_hour",
+          "text": "Allow the observance to continue uninterrupted.",
+          "moraleDelta": 2.5,
+          "effects": [
+            {
+              "setWorldFlag": "dormitory_observance_respected",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_enforce_lights_out",
+          "text": "Strictly enforce sleep regulations and extinguish remaining candles.",
+          "moraleDelta": -1.5,
+          "effects": [
+            {
+              "setWorldFlag": "friction_vent_sleeping_dispute",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_belief_practice_dispute",
+      "title": "The Candle in the Duct",
+      "bodyText": "A machinist angrily confronts members of a belief movement who left a tallow stub burning in an air intake niche during their dawn vigil. The mechanic argues it wastes precious fat and risks soot fouling; the believers argue the light was a memorial beacon for a lost shift.",
+      "weight": 1.0,
+      "minDay": 18,
+      "choices": [
+        {
+          "choiceId": "choice_side_with_mechanic",
+          "text": "Confiscate unauthorized fuel. Operational safety precedes ritual.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_ritual_fuel_curtailed",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_designate_safe_niche",
+          "text": "Designate an unventilated stone alcove for safe memorial lights.",
+          "moraleDelta": 1.5,
+          "effects": [
+            {
+              "setWorldFlag": "safe_memorial_alcove_established",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_belief_schism_interpretation",
+      "title": "The Split Reading",
+      "bodyText": "Two factions within the shelter's movement clash over an interpreted sign. One group argues that mounting surface storms mean the shelter must permanently seal itself against the wicked outside; the other insists it is a mandate to dispatch scouts and find surviving enclaves.",
+      "weight": 0.8,
+      "minDay": 25,
+      "choices": [
+        {
+          "choiceId": "choice_mediate_schism",
+          "text": "Call a joint council to reconcile their views through practical shelter priorities.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "belief_schism_mediated",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_let_debate_run",
+          "text": "Remain neutral and let each group work out its own convictions.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "belief_schism_unresolved",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_belief_crisis_of_conviction",
+      "title": "The Silent Dial",
+      "bodyText": "After two weeks of devotionally monitoring a repeating radio pattern, the frequency abruptly flattens into endless automated test carrier tone. A devout Listener dweller sits before the radio with trembling hands, questioning months of faith.",
+      "weight": 0.9,
+      "minDay": 22,
+      "choices": [
+        {
+          "choiceId": "choice_console_listener",
+          "text": "Offer personal comfort. Meaning comes from our care for each other, not the radio.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "listener_crisis_comforted",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_reassign_to_labor",
+          "text": "Reassign them immediately to workshop shifts to break the fixation.",
+          "moraleDelta": -0.5,
+          "effects": [
+            {
+              "setWorldFlag": "friction_radio_frequency_fear",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_belief_charismatic_voice",
+      "title": "The Preacher at the Pump",
+      "bodyText": "A survivor with intense presence begins speaking daily near the water treatment filtration bay. Their words draw an attentive crowd across shifts, blending mechanical duty with moral obligation to preserve humanity's soul.",
+      "weight": 1.0,
+      "minDay": 28,
+      "choices": [
+        {
+          "choiceId": "choice_grant_informal_standing",
+          "text": "Recognize their moral influence and consult them on shelter morale decisions.",
+          "moraleDelta": 2.5,
+          "effects": [
+            {
+              "setWorldFlag": "charismatic_speaker_consulted",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_warn_against_demagoguery",
+          "text": "Remind them that leadership is collective and orders flow through formal roster lines.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "charismatic_speaker_reined_in",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_belief_leadership_collision",
+      "title": "The Refusal of the Order",
+      "bodyText": "An emergency order to scrap an old memorial lathe or work through a sacred remembrance day meets coordinated non-violent refusal from movement members. They stand with linked arms before the workshop bulkhead.",
+      "weight": 0.7,
+      "minDay": 35,
+      "choices": [
+        {
+          "choiceId": "choice_negotiate_compromise_shift",
+          "text": "Negotiate a compromise shift schedule that preserves the memorial artifact.",
+          "moraleDelta": 1.5,
+          "effects": [
+            {
+              "setWorldFlag": "leadership_belief_compromise_reached",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_demand_strict_compliance",
+          "text": "Threaten ration deductions and demand immediate obedience to leadership.",
+          "moraleDelta": -3.5,
+          "effects": [
+            {
+              "setWorldFlag": "leadership_coercion_enforced",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_belief_high_stakes_blindspot",
+      "title": "The Signal in the Storm",
+      "bodyText": "During a severe fallout storm, movement adherents claim they received an authentic distress signal from a holy valley site. They demand a dispatch sortie immediately, despite lethal surface rad counts.",
+      "weight": 0.8,
+      "minDay": 40,
+      "choices": [
+        {
+          "choiceId": "choice_refuse_storm_sortie",
+          "text": "Hard refusal. No scout will be sacrificed for an unverified prophecy.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_spoken_name_blame",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_prepare_shielded_scout",
+          "text": "Authorize an intensely shielded reconnaissance only after storm peak passes.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "shielded_recon_scheduled",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_grief_conflict_exhaustion_overwork",
+      "title": "Work as Flight",
+      "bodyText": "Following the death of a close partner, a survivor has worked three consecutive double shifts in the hydroponic trench, refusing sleep and trembling from exhaustion. Shift peers worry they will collapse into the brine tanks.",
+      "weight": 1.2,
+      "minDay": 8,
+      "choices": [
+        {
+          "choiceId": "choice_order_mandatory_bunk_rest",
+          "text": "Order them off the roster and assign a companion to stay with them in the dormitory.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "grief_exhaustion_intervened",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_allow_light_duty",
+          "text": "Transition them to low-risk seated inventory tallying so they stay occupied.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "grief_light_duty_assigned",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_grief_conflict_bunk_reassignment",
+      "title": "The Contested Mattress",
+      "bodyText": "With a newly arrived survivor sleeping on cold hallway concrete, leadership seeks to assign them to a recently deceased dweller's bunk. The deceased's bunk neighbor fiercely blocks the ladder, demanding the twenty-four hour empty-bunk custom be honored.",
+      "weight": 1.1,
+      "minDay": 14,
+      "choices": [
+        {
+          "choiceId": "choice_honor_empty_bunk_custom",
+          "text": "Honor the empty-bunk night. Provide extra blankets in the common room for tonight.",
+          "moraleDelta": 1.5,
+          "effects": [
+            {
+              "setWorldFlag": "empty_bunk_custom_upheld",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_assign_bunk_immediately",
+          "text": "The living take precedence over the dead. Assign the mattress immediately.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_lucky_bunk_dispute",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_grief_conflict_belongings_dispute",
+      "title": "The Dead Man's Boots",
+      "bodyText": "A deceased scout left behind insulated rubber boots in pristine condition. The expedition team demands them for the surface locker; the deceased's closest companion insists they remain in the personal footlocker as a keepsake.",
+      "weight": 1.0,
+      "minDay": 16,
+      "choices": [
+        {
+          "choiceId": "choice_pool_boots_for_expeditions",
+          "text": "Transfer the boots to the expedition pool. Cold feet on the surface kill.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "friction_hot_token_confiscation",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_grant_keepsake_compromise",
+          "text": "Allow the companion to keep an inscribed strap while releasing the boots for utility.",
+          "moraleDelta": 1.5,
+          "effects": [
+            {
+              "setWorldFlag": "keepsake_compromise_accepted",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_grief_conflict_reckless_wish",
+      "title": "The Unfinished Promise",
+      "bodyText": "A survivor demands authorization to venture to a hazardous radio tower to complete a fallen comrade's unfulfilled Final Wish. The route is notoriously treacherous.",
+      "weight": 0.8,
+      "minDay": 20,
+      "choices": [
+        {
+          "choiceId": "choice_forbid_reckless_sortie",
+          "text": "Forbid the journey. We do not throw living lives after completed deaths.",
+          "moraleDelta": -1.5,
+          "effects": [
+            {
+              "setWorldFlag": "reckless_wish_sortie_forbidden",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_authorize_partnered_recovery",
+          "text": "Authorize the expedition only if a veteran scout accompanies them.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "partnered_wish_recovery_cleared",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_migration_steppe_herds_arrival",
+      "title": "Highland Feral Goat Sighting",
+      "bodyText": "Scout lookouts on the surface blast berm report a line of shaggy, thick-horned feral goats descending from the highland bluffs toward the lower scrub basin. Their winter coats are heavy with grey frost, and their hooves kick up small dust plumes along the highway embankment. The herd offers a prime, temporary hunting window before wolves push them further south.",
+      "weight": 2.0,
+      "minDay": 60,
+      "maxDay": 119,
+      "choices": [
+        {
+          "choiceId": "choice_dispatch_intercept_snare_crew",
+          "text": "Dispatch an expedition team to set heavy snare lines along the defile.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_goat_snare_set",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_allow_herd_quiet_passage",
+          "text": "Let the herd pass undisturbed to avoid drawing predator attention.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_goat_passage_unmolested",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_migration_coastal_carp_run_begins",
+      "title": "Estuary Mirror Carp Surge",
+      "bodyText": "The river water churns with heavy silver-scaled mirror carp pushing upriver against the spring thaw current. Their armored backs break the brown foam as they congregate in shallow gravel shoals. For the next several weeks, basket nets and weir traps along the riverbank can yield substantial fresh protein.",
+      "weight": 2.5,
+      "minDay": 120,
+      "maxDay": 199,
+      "choices": [
+        {
+          "choiceId": "choice_deploy_river_weir_traps",
+          "text": "Construct willow weir baskets to harvest spawning carp in bulk.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_carp_weir_active",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_sample_water_radioactivity",
+          "text": "Assay the river current for dissolved isotope runoff before harvesting.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_carp_tested_clean",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_migration_moth_blight_front_descent",
+      "title": "Ghost Moth Swarm Front",
+      "bodyText": "A warm humid wind carries a pale, undulating cloud of ghost moths inland across the lowlands. Thousands of fluttering wings beat against outer intake grates, leaving sticky white web fibers and powdery scales that quickly choke air filters and threaten outdoor cultivation beds.",
+      "weight": 1.5,
+      "minDay": 200,
+      "maxDay": 239,
+      "choices": [
+        {
+          "choiceId": "choice_seal_and_burn_intake_perimeter",
+          "text": "Batton intake cowls and burn sulfur torches around exterior vents.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_moth_defenses_sealed",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_sweep_pupae_emergency_protein",
+          "text": "Send sweepers with scrapers to harvest silk pupae clusters for roasting.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_moth_protein_harvested",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_migration_ash_boar_sounder_crossing",
+      "title": "Ash Boar Sounder Crossing",
+      "bodyText": "A dozen massive, bristled ash boars churn the river mudbank, rooting deep into acorn scrub and tearing apart rotting railway ties. Their heavy tusks gouge the soil, exposing buried cables and pre-war drainage pipes. A disciplined hunting party could harvest heavy pork rations, but a cornered sounder will crush unarmored scouts.",
+      "weight": 1.8,
+      "minDay": 240,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_ambush_boar_sounder",
+          "text": "Stalk the sounder at the creek crossing with heavy caliber rifles.",
+          "moraleDelta": 2.5,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_boar_pork_secured",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_wait_out_boar_passage",
+          "text": "Hold position and allow the sounder to disperse into the oak hills.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_boar_passed_peacefully",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_migration_iron_crow_pylon_roost",
+      "title": "Iron Crow Railway Flyway",
+      "bodyText": "Hundreds of metallic-sheened crows descend onto the rusted steel transmission towers along the railway cut. Their rhythmic cawing echoes across the valley as they roost for the night before continuing south. Flocks of this size strip dead wood of grubs and clean the tracks of carrion, leaving clear signs of predator activity down the line.",
+      "weight": 1.2,
+      "minDay": 240,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_read_crow_flight_trajectory",
+          "text": "Analyze the crows' flight vectors to pinpoint fresh carrion or predator locations.",
+          "moraleDelta": 1.5,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_crow_intel_logged",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_migration_lowland_hare_eruption",
+      "title": "Lowland Cotton Hare Population Boom",
+      "bodyText": "Following a mild thaw, cotton hares have multiplied across the southern floodplains. Their white summer coats flash across the heather as hundreds of young feed on succulent scrub shoots. Snares set along hedgerows can double their typical catch over the next week.",
+      "weight": 2.0,
+      "minDay": 120,
+      "maxDay": 199,
+      "choices": [
+        {
+          "choiceId": "choice_expand_snare_grid_floodplain",
+          "text": "Double the snare line density across the floodplain brush.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_hare_trapping_surplus",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_eco_war_blocks_grazing_corridor",
+      "title": "Faction Gunfire Blocks Migration Corridor",
+      "bodyText": "Mortar fire and fortified barricades at the highway junction have severed the traditional descent route for feral goat herds. Cut off from winter foraging, the starving animals are forced into dense predator-rich canyon defiles, causing herd numbers to plummet while ravenous wolf packs circle closer to perimeter watchposts.",
+      "weight": 1.2,
+      "minDay": 60,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_scout_alternate_defile",
+          "text": "Mark an unmined defile to guide remnant herds away from gunfire.",
+          "moraleDelta": 1.5,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_goat_route_rerouted",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "choice_fortify_perimeter_against_predators",
+          "text": "Double perimeter sentries against starving wolf packs stalking the corridor.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_wolf_defenses_doubled",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_eco_contaminated_run_toxic_carp",
+      "title": "Toxic Slag Runoff Taints River Fish",
+      "bodyText": "A ruptured tailings dam upstream has discharged acidic heavy-isotope slurry into the river. Dead mirror carp float belly-up along the reeds, their gills stained bright copper. Any fish harvested without thorough decontamination will cause severe radiation sickness.",
+      "weight": 1.0,
+      "minDay": 120,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_quarantine_river_harvest",
+          "text": "Post biohazard flags and suspend all river netting until currents flush clean.",
+          "moraleDelta": -2.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_river_harvest_quarantined",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_eco_blight_decimates_forage",
+      "title": "Moth Blight Decimates Surface Forage",
+      "bodyText": "Caterpillar swarms from the recent moth bloom have stripped wild berry canes, willow saplings, and wild grain patches down to bare wood. With natural vegetation devastated, ground rodents are invading agricultural silos and shelter pantries searching for sustenance.",
+      "weight": 1.1,
+      "minDay": 200,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_secure_shelter_grain_stores",
+          "text": "Seal all grain barrels with bitumen pitch and set poison traps in corridors.",
+          "moraleDelta": -1.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_silo_anti_pest_sealed",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_eco_ash_storm_grounds_flock",
+      "title": "Acidic Ash Storm Grounds Passage Flock",
+      "bodyText": "A violent fallout squall caught a flock of iron crows mid-flight, coating their feathers in corrosive gypsum sludge and forcing hundreds of grounded birds into the shelter's surface intake berm. Their distressed alarm calls are attracting scavenging rad dogs to the gate.",
+      "weight": 1.0,
+      "minDay": 1,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_clear_grounded_birds",
+          "text": "Clear the intake area and drive off lurking wild dogs with warning shots.",
+          "moraleDelta": 1.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_intake_cleared_of_flock",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_eco_scavenger_kettle_intercept",
+      "title": "Scavenger Kettle Circling Downwind",
+      "bodyText": "A spiral of crows and ash gulls is circling low over an overgrown culvert two kilometers down the rail line. Such kettles indicate a fresh carcass or an abandoned scavenger haul before ground predators have claimed it.",
+      "weight": 1.5,
+      "minDay": 1,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_race_to_carcass_site",
+          "text": "Dispatch a rapid scout pair to salvage the carcass before wolves arrive.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_carcass_salvage_secured",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_eco_boar_rut_wallow_ambush",
+      "title": "Fresh Boar Wallower Discovered",
+      "bodyText": "Scouts have identified an active boar wallow in the creek muds, rich with musky scent and fresh hoof impressions. Setting a staked deadfall trap before dusk guarantees a heavy game catch when the sounder returns to bathe.",
+      "weight": 1.3,
+      "minDay": 120,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_stake_boar_wallow_trap",
+          "text": "Construct heavy timber deadfalls over the wallow crossing.",
+          "moraleDelta": 2.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_wallow_trap_primed",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_eco_harvest_vacated_hornet_comb",
+      "title": "Abandoned Slag Hornet Comb",
+      "bodyText": "Winter frost has killed off an exterior slag hornet colony in the quarry overhang. The papery carton hangs silent and cold, packed with uncontaminated comb wax and medicinal propolis resin ready for safe harvesting.",
+      "weight": 1.0,
+      "minDay": 60,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_harvest_quarry_comb",
+          "text": "Cut down the winter comb for medical and sealing supplies.",
+          "moraleDelta": 2.5,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_hornet_comb_harvested",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "event_eco_bioremediation_mat_discovery",
+      "title": "Bio-Remediation Fungal Mat Assay",
+      "bodyText": "In a damp concrete overflow drainage ditch, an unusual black-and-gold fungal mat has colonized mineral sludge. Preliminary dosimeter sweeps show the living mycelium is actively absorbing and concentrating radioactive isotopes from runoff water, leaving the outflow significantly cleaner.",
+      "weight": 1.2,
+      "minDay": 30,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_culture_bioremediation_fungus",
+          "text": "Collect spore cultures to seed shelter wastewater filtration channels.",
+          "moraleDelta": 3.0,
+          "effects": [
+            {
+              "setWorldFlag": "eco_flag_bioremediation_cultured",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
     }
   ]
 }

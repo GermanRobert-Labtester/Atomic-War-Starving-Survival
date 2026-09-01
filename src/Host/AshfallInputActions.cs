@@ -208,5 +208,42 @@ namespace AtomicWar.GodotApp
             tab = 0;
             return false;
         }
+
+        /// <summary>
+        /// Returns the human-readable prompt string for an action (e.g. "[J]" or "[F1]")
+        /// derived dynamically from the runtime InputMap rather than hardcoding keys in tutorial copy.
+        /// </summary>
+        public static string GetActionPrompt(string action)
+        {
+            if (InputMap.HasAction(action))
+            {
+                var events = InputMap.ActionGetEvents(action);
+                foreach (var ev in events)
+                {
+                    if (ev is InputEventKey key)
+                    {
+                        string keyStr = OS.GetKeycodeString(key.PhysicalKeycode != Key.None ? key.PhysicalKeycode : key.Keycode);
+                        if (!string.IsNullOrEmpty(keyStr))
+                            return $"[{keyStr}]";
+                    }
+                }
+            }
+
+            // Fallback default prompts if headless / uninitialized
+            return action switch
+            {
+                Close => "[Esc]",
+                Confirm => "[Enter]",
+                NextTab => "[Tab]",
+                Journal => "[J]",
+                Help => "[F1]",
+                Forecast => "[F]",
+                WeatherHistory => "[H]",
+                Events => "[E]",
+                Expeditions => "[X]",
+                Holdfast => "[T]",
+                _ => $"[{action}]"
+            };
+        }
     }
 }

@@ -40,23 +40,37 @@ namespace Ashfall.Core
 
         public bool Assign(string role, string survivorId)
         {
-            if (!IsKnownRole(role)) return false;
+            return AssignWithResult(role, survivorId).IsSuccess;
+        }
 
-            // Duplicate-role rule: one survivor holds at most one assignment.
+        public ActionResult AssignWithResult(string role, string survivorId)
+        {
+            var validation = ValidateAssign(role, survivorId);
+            if (!validation.IsSuccess)
+                return validation;
+
+            bool cleared = string.IsNullOrEmpty(survivorId);
+            AssignInternal(role, survivorId);
+            return cleared
+                ? ActionResult.Success("duty_roster.cleared")
+                : ActionResult.Success("duty_roster.assigned");
+        }
+
+        public ActionResult ValidateAssign(string role, string survivorId)
+        {
+            if (!IsKnownRole(role))
+                return ActionResult.Blocked("unknown_role", "duty_roster.unknown_role");
             if (string.IsNullOrEmpty(survivorId))
-            {
-                // Clearing: no duplicate concern.
-                return AssignInternal(role, null!);
-            }
+                return ActionResult.Success("duty_roster.cleared");
             DutyRosterRow row = _getRow(survivorId);
-            if (row == null) return false;
-            if (!CanAssign(row)) return false;
-
+            if (row == null)
+                return ActionResult.Blocked("unknown_survivor", "duty_roster.unknown_survivor");
+            if (!CanAssign(row))
+                return ActionResult.Blocked("cannot_assign", "duty_roster.cannot_assign");
             string currentRole = GetRoleOf(survivorId)!;
             if (currentRole != null && currentRole != role)
-                return false; // already assigned elsewhere
-
-            return AssignInternal(role, survivorId);
+                return ActionResult.Blocked("already_assigned", "duty_roster.already_assigned");
+            return ActionResult.Success("duty_roster.assigned");
         }
 
         private bool AssignInternal(string role, string survivorId)

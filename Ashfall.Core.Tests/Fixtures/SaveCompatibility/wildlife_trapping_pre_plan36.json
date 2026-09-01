@@ -1,0 +1,43 @@
+{
+  "SchemaVersion": 1,
+  "State": {
+    "systemId": "wildlife_trapping",
+    "trapSites": [
+      {
+        "siteId": "perimeter_north",
+        "assignedHunterId": "hunter_1",
+        "baitType": "bait_grain_lure",
+        "trapType": "snare",
+        "setDay": 12,
+        "checkDay": 14,
+        "checkIntervalDays": 2,
+        "hasCatch": false,
+        "catchSpecies": "",
+        "carcassYield": 0.0,
+        "isToxic": false,
+        "toxinRemoved": false,
+        "isMeatProcessed": false,
+        "hidePreserved": false
+      },
+      {
+        "siteId": "perimeter_south",
+        "assignedHunterId": "hunter_2",
+        "baitType": "bait_scrap_meat",
+        "trapType": "deadfall",
+        "setDay": 10,
+        "checkDay": 12,
+        "checkIntervalDays": 2,
+        "hasCatch": true,
+        "catchSpecies": "rat",
+        "carcassYield": 0.45,
+        "isToxic": true,
+        "toxinRemoved": false,
+        "isMeatProcessed": false,
+        "hidePreserved": false
+      }
+    ],
+    "totalCatch": 7,
+    "totalToxicRemoved": 2
+  },
+  "Checksum": "legacy_fixture_checksum"
+}

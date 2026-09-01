@@ -556,6 +556,510 @@
           "set_flag": "mutation_gazetteer_scraped"
         }
       ]
+    },
+    {
+      "id": "quest_record_vault_breach_forensics",
+      "display_name": "The Blasted Sump",
+      "type": "expedition",
+      "briefing": "Reconstruct the final hours of the Command Vault before the airlock was breached. Compare the oxygen scrubber logs with spent brass casing locations to determine if the garrison mutinied.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 80,
+      "knowledge_key": "lore_sr_vault_breach",
+      "target_location_id": "loc_excavation_command_vault",
+      "complete_mutation": "mutation_command_vault_breached",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Inspect the dog-bolt torch scars on the outer vault door."
+        },
+        {
+          "id": "stage_2",
+          "text": "Map the cartridge ejection patterns in the security anteroom."
+        },
+        {
+          "id": "stage_3",
+          "text": "Recover the charred teleprinter log from the dispatch terminal."
+        },
+        {
+          "id": "stage_4",
+          "text": "Synthesize the timeline: mutiny followed by external sealing."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_mutiny_truth",
+          "text": "Record the mutiny evidence in the civic chronicle.",
+          "set_flag": "flag_sr_vault_mutiny_proven"
+        },
+        {
+          "id": "seal_command_record",
+          "text": "Suppress the mutiny records to preserve military reputation.",
+          "set_flag": "flag_sr_vault_mutiny_suppressed"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_metro_derailment_triage",
+      "display_name": "Platform 3 Siding",
+      "type": "expedition",
+      "briefing": "Train 14 sits derailed in the darkness beyond Platform 3. The dispatch clock stopped at 08:42. Investigate whether the track switch was thrown intentionally to trap civilian evacuees.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 85,
+      "knowledge_key": "",
+      "target_location_id": "loc_excavation_metro_interchange",
+      "complete_mutation": "mutation_metro_dossier_found",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Examine the manual track switch lever in the signal tower."
+        },
+        {
+          "id": "stage_2",
+          "text": "Recover the ticket collectors brass ticket punch and passenger manifest."
+        },
+        {
+          "id": "stage_3",
+          "text": "Inspect the carriage luggage racks for government evacuation crates."
+        },
+        {
+          "id": "stage_4",
+          "text": "Determine who threw the switch and lock the history in the record."
+        }
+      ],
+      "choices": [
+        {
+          "id": "blame_signalman",
+          "text": "Attribute the crash to deliberate sabotage by the stationmaster.",
+          "set_flag": "flag_sr_metro_sabotage"
+        },
+        {
+          "id": "blame_overload",
+          "text": "Conclude the derailment was caused by panic and structural track fracture.",
+          "set_flag": "flag_sr_metro_fracture"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_mine_shaft_adit_collapse",
+      "display_name": "Adit 4 Shift Rota",
+      "type": "expedition",
+      "briefing": "Thirty-four brass shift tokens remain on the pegboard outside Adit 4. Descend into the coal gallery and discover whether the miners escaped through the emergency ventilation raise.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_excavation_mine_shaft",
+      "complete_mutation": "mutation_mine_shaft_cleared",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Count the unclaimed brass tokens on the lamp cabin board."
+        },
+        {
+          "id": "stage_2",
+          "text": "Navigate past flooded coal seams to the Adit 4 barricade."
+        },
+        {
+          "id": "stage_3",
+          "text": "Read the chalk inscriptions left on the timber cribbing."
+        },
+        {
+          "id": "stage_4",
+          "text": "Recover the foreman pocket ledger detailing their survival days."
+        }
+      ],
+      "choices": [
+        {
+          "id": "inscribe_miners_memorial",
+          "text": "Chalk their names onto the surface shaft headframe.",
+          "set_flag": "flag_sr_miners_memorialized"
+        },
+        {
+          "id": "salvage_equipment_quiet",
+          "text": "Strip the miners brass carburetors without registering their names.",
+          "set_flag": "flag_sr_miners_looted"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_archive_burn_layer",
+      "display_name": "The Smoldering Index",
+      "type": "expedition",
+      "briefing": "A layer of magnesium slag fills Archive Vault 3. Sift the residue to reconstruct burned directives regarding the evacuation of District 8.",
+      "prereq_quest_id": "quest_record_the_book",
+      "min_day": 95,
+      "knowledge_key": "",
+      "target_location_id": "loc_excavation_archive_bunker",
+      "complete_mutation": "mutation_archive_index_scraped",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Collect heat-fused carbon fragments from drawer column G."
+        },
+        {
+          "id": "stage_2",
+          "text": "Treat the ash sheets with glycerine to reveal faint typewriter impressions."
+        },
+        {
+          "id": "stage_3",
+          "text": "Transcribe Directive 88-Delta regarding preferential shelter priority."
+        },
+        {
+          "id": "stage_4",
+          "text": "File the recovered directive in the central dossier."
+        }
+      ],
+      "choices": [
+        {
+          "id": "publish_directive",
+          "text": "Expose the preferential evacuation quota to the public.",
+          "set_flag": "flag_sr_directive_published"
+        },
+        {
+          "id": "hold_for_blackmail",
+          "text": "Keep the evidence secret to leverage against surviving officials.",
+          "set_flag": "flag_sr_directive_blackmail"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_sluice_failure_verdict",
+      "display_name": "The Broken Pinion at Gate 4",
+      "type": "expedition",
+      "briefing": "Examine the sheared gear teeth on Sluice Gate 4. Did the coastal flood barrier fail due to poor metallurgy or did a technician intentionally cut the gear pins?",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 100,
+      "knowledge_key": "",
+      "target_location_id": "loc_lock_gate_four",
+      "complete_mutation": "mutation_lock4_sluice_repaired",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Inspect the sheared bronze pinion teeth with a magnifying loupe."
+        },
+        {
+          "id": "stage_2",
+          "text": "Locate the maintenance logs in the lockmasters cabin."
+        },
+        {
+          "id": "stage_3",
+          "text": "Identify the saw marks in the keyway slot."
+        },
+        {
+          "id": "stage_4",
+          "text": "Reconcile the metallurgical findings into a site dossier."
+        }
+      ],
+      "choices": [
+        {
+          "id": "report_sabotage",
+          "text": "Confirm deliberate industrial sabotage in the lock record.",
+          "set_flag": "flag_sr_gate4_sabotaged"
+        },
+        {
+          "id": "report_fatigue",
+          "text": "Record catastrophic storm surge fatigue as the official cause.",
+          "set_flag": "flag_sr_gate4_fatigue"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_seed_bank_purge_trace",
+      "display_name": "The Emptied Canister",
+      "type": "expedition",
+      "briefing": "Canister 44 in the Seed Library Annex was emptied and resealed with common grain. Trace the missing cold-hardy wheat seeds through pre-war checkout cards.",
+      "prereq_quest_id": "quest_record_the_book",
+      "min_day": 105,
+      "knowledge_key": "",
+      "target_location_id": "loc_seed_library_annex",
+      "complete_mutation": "mutation_seed_annex_cataloged",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Weigh Canister 44 and verify the seal wax discrepancy."
+        },
+        {
+          "id": "stage_2",
+          "text": "Check the checkout card for Agronomist Lindas signature."
+        },
+        {
+          "id": "stage_3",
+          "text": "Search the basement cold-frame for hidden germination vials."
+        },
+        {
+          "id": "stage_4",
+          "text": "Recover the true frost-resistant seed stock."
+        }
+      ],
+      "choices": [
+        {
+          "id": "deliver_to_rebuilders",
+          "text": "Deliver the heirloom seeds to the agricultural community.",
+          "set_flag": "flag_sr_seeds_to_rebuilders"
+        },
+        {
+          "id": "keep_in_shelter_vault",
+          "text": "Store the seeds securely in your own emergency vault.",
+          "set_flag": "flag_sr_seeds_to_vault"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_sub_basement_blueprint",
+      "display_name": "The Unmapped Annex",
+      "type": "expedition",
+      "briefing": "A discrepancy in the exterior wall thickness of the Logistics Reserve suggests a concealed sub-basement room omitted from the official blueprint.",
+      "prereq_quest_id": "quest_record_grease_pencil",
+      "min_day": 110,
+      "knowledge_key": "",
+      "target_location_id": "loc_logistics_reserve_cache",
+      "complete_mutation": "mutation_sub_basement_blueprint",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Measure the basement masonry with a surveyor plumb-line."
+        },
+        {
+          "id": "stage_2",
+          "text": "Locate the false brickwork behind the coal bunker."
+        },
+        {
+          "id": "stage_3",
+          "text": "Breach the mortar seam to reveal the hidden supply annex."
+        },
+        {
+          "id": "stage_4",
+          "text": "Catalog the preserved pre-war antibiotic ampoules and surgical steel."
+        }
+      ],
+      "choices": [
+        {
+          "id": "update_public_map",
+          "text": "Draw the annex onto the public warehouse plan.",
+          "set_flag": "flag_sr_annex_mapped"
+        },
+        {
+          "id": "keep_annex_secret",
+          "text": "Conceal the entrance again for exclusive shelter access.",
+          "set_flag": "flag_sr_annex_secret"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_transit_vent_shaft_route",
+      "display_name": "Bypass Duct 11-East",
+      "type": "expedition",
+      "briefing": "The main security turnstiles at Transit Authority HQ are permanently welded shut. Search the mechanical ducts for an unblocked bypass route.",
+      "prereq_quest_id": "quest_record_grease_pencil",
+      "min_day": 115,
+      "knowledge_key": "",
+      "target_location_id": "loc_transit_authority_hq",
+      "complete_mutation": "mutation_transit_maps",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Inspect the intake louvres behind the HVAC fan bank."
+        },
+        {
+          "id": "stage_2",
+          "text": "Crawl through Duct 11-East past frozen bird carcasses."
+        },
+        {
+          "id": "stage_3",
+          "text": "Kick out the interior ceiling grille above the central archive."
+        },
+        {
+          "id": "stage_4",
+          "text": "Unlock the inner security door from the inside."
+        }
+      ],
+      "choices": [
+        {
+          "id": "prop_door_open",
+          "text": "Wedge the security door open with an iron crowbar.",
+          "set_flag": "flag_sr_transit_door_propped"
+        },
+        {
+          "id": "maintain_duct_only",
+          "text": "Leave the door locked and keep the vent duct as a secret entrance.",
+          "set_flag": "flag_sr_transit_duct_only"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_cold_store_sublevel",
+      "display_name": "Brine Tank Subfloor",
+      "type": "expedition",
+      "briefing": "A flooded basement under Atlantic Cold Store contains submerged copper evaporator coils. Map the layout before the sea ice cracks.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 120,
+      "knowledge_key": "",
+      "target_location_id": "loc_cold_store_atlantic",
+      "complete_mutation": "mutation_cold_store_sublevel",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Wade into the knee-deep saltwater sump beneath the packing floor."
+        },
+        {
+          "id": "stage_2",
+          "text": "Survey the brine tank manifolds and copper refrigeration tubing."
+        },
+        {
+          "id": "stage_3",
+          "text": "Sketch the drainage valve network onto your expedition pad."
+        },
+        {
+          "id": "stage_4",
+          "text": "Salvage sixty kilos of industrial copper pipe without triggering a wall collapse."
+        }
+      ],
+      "choices": [
+        {
+          "id": "salvage_copper_clean",
+          "text": "Carefully unbolt the coils without damaging structural supports.",
+          "set_flag": "flag_sr_coldstore_copper_salvaged"
+        },
+        {
+          "id": "blow_wall_drain",
+          "text": "Blast a drainage hole through the outer foundation wall.",
+          "set_flag": "flag_sr_coldstore_wall_blown"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_utility_junction_crossover",
+      "display_name": "Conduit Chamber 7",
+      "type": "expedition",
+      "briefing": "The gas and high-voltage electrical conduits intersect at Chamber 7. Align the conflicting utility drawings to bypass a collapsed boulevard.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 125,
+      "knowledge_key": "",
+      "target_location_id": "loc_excavation_utility_tunnels",
+      "complete_mutation": "mutation_utility_junction_crossover",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Trace the yellow gas main and black high-voltage cable runs."
+        },
+        {
+          "id": "stage_2",
+          "text": "Compare the 1982 electrical schematic with the 1991 municipal overlay."
+        },
+        {
+          "id": "stage_3",
+          "text": "Isolate the live telephone junction box and test line voltage."
+        },
+        {
+          "id": "stage_4",
+          "text": "Open the subterranean transit crawlway to the western district."
+        }
+      ],
+      "choices": [
+        {
+          "id": "splice_power_cable",
+          "text": "Tap the live municipal cable to power the underground tunnel lights.",
+          "set_flag": "flag_sr_tunnel_lights_lit"
+        },
+        {
+          "id": "leave_dark_bypass",
+          "text": "Keep the junction dark to avoid attracting scavenger patrols.",
+          "set_flag": "flag_sr_tunnel_kept_dark"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_unmarked_plaque",
+      "display_name": "A Name on the Abutment",
+      "type": "expedition",
+      "briefing": "Locate the unmarked graves of eight ironworkers who died erecting Railway Span 44 during the evacuation winter, and chisel their initials into the granite abutment.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 130,
+      "knowledge_key": "lore_sr_span44_workers",
+      "target_location_id": "loc_railway_span_44_alpha",
+      "complete_mutation": "mutation_the_unmarked_plaque",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Recover the payroll sheet from the construction shanty rubble."
+        },
+        {
+          "id": "stage_2",
+          "text": "Locate the eight burial mounds beneath the frozen ballast."
+        },
+        {
+          "id": "stage_3",
+          "text": "Use a hardened steel chisel to inscribe their names into Pier 4."
+        },
+        {
+          "id": "stage_4",
+          "text": "Place an iron rivet on each carved name in the traditional ceremony."
+        }
+      ],
+      "choices": [
+        {
+          "id": "complete_memorial_chisel",
+          "text": "Inscribe all eight names in deep, permanent Roman lettering.",
+          "set_flag": "flag_sr_span44_memorial_complete"
+        },
+        {
+          "id": "paint_quick_crosses",
+          "text": "Slap red primer paint crosses on the concrete and move on.",
+          "set_flag": "flag_sr_span44_memorial_hasty"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_last_watch_beacon",
+      "display_name": "The Cairn at Summit 9",
+      "type": "expedition",
+      "briefing": "Ascend the frozen ridge to the Summit Relay Spire. Recover the final transmission log of the mountain watch team and ignite their memorial beacon.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 135,
+      "knowledge_key": "lore_sr_summit_watch",
+      "target_location_id": "loc_summit_relay",
+      "complete_mutation": "mutation_the_last_watch_beacon",
+      "fail_mutation": "",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Climb the ice-sheathed iron rungs up the radio mast."
+        },
+        {
+          "id": "stage_2",
+          "text": "Recover the magnetic tape cassette from the weather-hardened transmitter."
+        },
+        {
+          "id": "stage_3",
+          "text": "Stack granite stones around the base of the mast to build a five-foot cairn."
+        },
+        {
+          "id": "stage_4",
+          "text": "Fill the iron brazier with diesel fuel and light the high beacon."
+        }
+      ],
+      "choices": [
+        {
+          "id": "light_high_beacon",
+          "text": "Light the summit brazier. The flame is visible across three valleys.",
+          "set_flag": "flag_sr_summit_beacon_lit"
+        },
+        {
+          "id": "keep_cairn_dark",
+          "text": "Erect the stone cairn silently without lighting the fuel.",
+          "set_flag": "flag_sr_summit_cairn_dark"
+        }
+      ]
     }
   ]
 }

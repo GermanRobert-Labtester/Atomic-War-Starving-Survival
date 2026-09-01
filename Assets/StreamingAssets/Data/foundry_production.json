@@ -371,6 +371,500 @@
         "shelter",
         "armor"
       ]
+    },
+    {
+      "product_id": "foundry_prod_roof_armor_plate",
+      "display_name": "Heavy Roof-Armor Plate",
+      "category": "structural_armor",
+      "result_item_id": "item_foundry_roof_armor_plate",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 15
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 3
+        }
+      ],
+      "labor_hours": 18,
+      "cast_hours": 6,
+      "fuel_units": 9,
+      "water_litres": 120,
+      "skill_target": 0.65,
+      "quality_target": 80,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "shelter",
+      "notes": "Thick overhead plating to withstand acid fallout, glass storms, and structural deadfall.",
+      "tags": [
+        "foundry",
+        "structural",
+        "armor",
+        "sky_layer"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_shoring_bracket",
+      "display_name": "Excavation Shoring Bracket",
+      "category": "structural_bracket",
+      "result_item_id": "item_foundry_shoring_bracket",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 8
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 6,
+      "cast_hours": 3,
+      "fuel_units": 3,
+      "water_litres": 45,
+      "skill_target": 0.45,
+      "quality_target": 68,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "excavation",
+      "notes": "Reinforced structural collar for sub-level excavation shafts and salt mine galleries.",
+      "tags": [
+        "foundry",
+        "mining",
+        "excavation",
+        "infrastructure"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_blast_fitting",
+      "display_name": "Blast-Door Hinge Fitting",
+      "category": "structural_fitting",
+      "result_item_id": "item_foundry_blast_fitting",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 12
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 2
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 14,
+      "cast_hours": 5,
+      "fuel_units": 7,
+      "water_litres": 95,
+      "skill_target": 0.6,
+      "quality_target": 78,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "defense",
+      "notes": "Chilled-bushing hinge assembly for primary air-locks and blast door portals.",
+      "tags": [
+        "foundry",
+        "airlock",
+        "blast_door",
+        "heavy"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_reinforcement_shoe",
+      "display_name": "Foundation Reinforcement Shoe",
+      "category": "structural_support",
+      "result_item_id": "item_foundry_reinforcement_shoe",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 9
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 10,
+      "cast_hours": 4,
+      "fuel_units": 5,
+      "water_litres": 65,
+      "skill_target": 0.5,
+      "quality_target": 74,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "shelter",
+      "notes": "Load-spreading shoe anchored into bedrock to arrest lower-block subsidence.",
+      "tags": [
+        "foundry",
+        "foundation",
+        "bedrock",
+        "support"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_structural_coupling",
+      "display_name": "Heavy Structural Coupling",
+      "category": "structural_coupling",
+      "result_item_id": "item_foundry_structural_coupling",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 7
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
+      ],
+      "labor_hours": 6,
+      "cast_hours": 3,
+      "fuel_units": 3,
+      "water_litres": 40,
+      "skill_target": 0.45,
+      "quality_target": 70,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "infrastructure",
+      "notes": "Interlocking sleeve for heavy power conduits, high-pressure steam, and ventilation spines.",
+      "tags": [
+        "foundry",
+        "pipe",
+        "conduit",
+        "utility"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_replacement_die",
+      "display_name": "Tooling Die Set",
+      "category": "tooling_die",
+      "result_item_id": "item_foundry_replacement_die",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 8
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 2
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 12,
+      "cast_hours": 4,
+      "fuel_units": 5,
+      "water_litres": 75,
+      "skill_target": 0.65,
+      "quality_target": 80,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "workshop",
+      "notes": "Hardened drop-forging and stamping die for maintaining workshop sheet-metal formers.",
+      "tags": [
+        "foundry",
+        "tooling",
+        "machining",
+        "workshop"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_drill_blanks",
+      "display_name": "Hardened Drill Blank Set",
+      "category": "drill_blank",
+      "result_item_id": "item_foundry_drill_blanks",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 6
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 1
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
+      ],
+      "labor_hours": 8,
+      "cast_hours": 3,
+      "fuel_units": 4,
+      "water_litres": 50,
+      "skill_target": 0.55,
+      "quality_target": 78,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "mining",
+      "notes": "Tempered hexagonal tool steel blanks for re-tipping rock drills and salt-mine augers.",
+      "tags": [
+        "foundry",
+        "drilling",
+        "mining",
+        "tooling"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_crucible_spare",
+      "display_name": "Cast Crucible Shell",
+      "category": "crucible_spare",
+      "result_item_id": "item_foundry_crucible_spare",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 10
+        },
+        {
+          "item_id": "item_foundry_firebrick",
+          "amount": 4
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 14,
+      "cast_hours": 5,
+      "fuel_units": 7,
+      "water_litres": 80,
+      "skill_target": 0.6,
+      "quality_target": 76,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "foundry",
+      "notes": "Heavy cast crucible housing lined with refractory brick. Essential for hearth re-lining.",
+      "tags": [
+        "foundry",
+        "hearth",
+        "refractory",
+        "cupola"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_press_fitting",
+      "display_name": "Hydraulic Press Fitting",
+      "category": "press_fitting",
+      "result_item_id": "item_foundry_press_fitting",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 7
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 1
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 8,
+      "cast_hours": 3,
+      "fuel_units": 4,
+      "water_litres": 60,
+      "skill_target": 0.55,
+      "quality_target": 75,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "workshop",
+      "notes": "High-pressure cylinder boss for pharma tableting machines and hydraulic presses.",
+      "tags": [
+        "foundry",
+        "hydraulic",
+        "pharma",
+        "press"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_bearing_housing",
+      "display_name": "Cast Bearing Housing",
+      "category": "bearing_housing",
+      "result_item_id": "item_foundry_bearing_housing",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 11
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 2
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 12,
+      "cast_hours": 5,
+      "fuel_units": 6,
+      "water_litres": 90,
+      "skill_target": 0.65,
+      "quality_target": 79,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "infrastructure",
+      "notes": "Split-pillow block bearing housing for ventilation blower shafts and turbine rotors.",
+      "tags": [
+        "foundry",
+        "bearing",
+        "turbine",
+        "blower"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_furnace_grate",
+      "display_name": "High-Duty Furnace Grate",
+      "category": "furnace_grate",
+      "result_item_id": "item_foundry_furnace_grate",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 12
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 3
+        }
+      ],
+      "labor_hours": 14,
+      "cast_hours": 5,
+      "fuel_units": 7,
+      "water_litres": 85,
+      "skill_target": 0.55,
+      "quality_target": 77,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "shelter",
+      "notes": "Heat-resistant cast iron grate segment for shelter heating fireboxes and coal boilers.",
+      "tags": [
+        "foundry",
+        "boiler",
+        "heating",
+        "thermal"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_weather_canister",
+      "display_name": "Weather Canister Shell Body",
+      "category": "abstract_ordnance",
+      "result_item_id": "item_foundry_weather_canister",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 10
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 2
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 12,
+      "cast_hours": 4,
+      "fuel_units": 6,
+      "water_litres": 80,
+      "skill_target": 0.6,
+      "quality_target": 78,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "defense",
+      "notes": "Thick-walled aerodynamic canister shell for aerosol cloud seeding and weather fallout intervention.",
+      "tags": [
+        "foundry",
+        "weather",
+        "defense",
+        "aerosol"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_cast_shot",
+      "display_name": "Heavy Cast Shot (canister)",
+      "category": "abstract_ordnance",
+      "result_item_id": "item_foundry_cast_shot",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 8
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
+      ],
+      "labor_hours": 6,
+      "cast_hours": 2,
+      "fuel_units": 3,
+      "water_litres": 35,
+      "skill_target": 0.4,
+      "quality_target": 66,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "defense",
+      "notes": "Chilled lead-iron spherical shot canister for defensive deadfall barriers and perimeter traps.",
+      "tags": [
+        "foundry",
+        "defense",
+        "perimeter",
+        "shot"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_casing_blanks",
+      "display_name": "Brass-Alloy Casing Blank Set",
+      "category": "abstract_ordnance",
+      "result_item_id": "item_foundry_casing_blanks",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 6
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 3
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 10,
+      "cast_hours": 4,
+      "fuel_units": 5,
+      "water_litres": 70,
+      "skill_target": 0.7,
+      "quality_target": 82,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "trade",
+      "notes": "Drawn alloy blank cups for high-value Garrison barter and armament treaty quotas.",
+      "tags": [
+        "foundry",
+        "trade",
+        "garrison",
+        "accord"
+      ]
     }
   ]
 }

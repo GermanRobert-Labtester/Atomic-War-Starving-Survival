@@ -40,6 +40,38 @@
       "tradeValue": 0,
       "category": "story",
       "description": "A section of chalkboard carried out of the children's corridor, numbers and half-erased guesses still legible. A memory of a baseline that was argued over, never settled."
+    },
+    {
+      "id": "item_calibrated_dosimeter",
+      "name": "Calibrated Quartz Dosimeter",
+      "weightKg": 0.25,
+      "tradeValue": 65,
+      "category": "tool",
+      "description": "A precision quartz-fiber electroscope dosimeter verified against Piet's calibration bench, giving trusted measurement readings without flux uncertainty."
+    },
+    {
+      "id": "item_forged_clean_bill_chit",
+      "name": "Forged Clean-Bill Chit",
+      "weightKg": 0.02,
+      "tradeValue": 50,
+      "category": "story",
+      "description": "A stamped administrative ledger slip bearing an imitation of Dr. Vel's red pencil signature, certifying Green-band classification regardless of true physical burden."
+    },
+    {
+      "id": "item_chelation_decorporation_course",
+      "name": "Chelation Decorporation Course",
+      "weightKg": 0.35,
+      "tradeValue": 85,
+      "category": "medical",
+      "description": "A clinical course of calcium trisodium DTPA and zinc-calcium decorporation ampoules, prescribed strictly for internal isotope ingestion management."
+    },
+    {
+      "id": "item_shielded_badge_case",
+      "name": "Lead-Shielded Badge Case",
+      "weightKg": 0.6,
+      "tradeValue": 30,
+      "category": "tool",
+      "description": "A lead-lined alloy badge holder designed to protect dormant photographic dosimeter film from ambient background fogging before assignment."
     }
   ]
 }

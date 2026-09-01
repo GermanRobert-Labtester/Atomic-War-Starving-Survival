@@ -3,6 +3,7 @@ using System.Collections.Generic;
 #pragma warning disable CS8618
 using Godot;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Audio;
 using Ashfall.Core.UI;
 using Ashfall.Core;
 using Ashfall.Core.YearOfAsh;
@@ -17,6 +18,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
     public partial class RadioBroadcastTerminal : PanelContainer
     {
         private readonly List<YearOfAshRadioEntry> _broadcasts = new List<YearOfAshRadioEntry>();
+        private readonly HashSet<string> _playedAudioBroadcasts = new HashSet<string>(StringComparer.Ordinal);
         private VBoxContainer _logContainer;
         private Label _lblHeader;
 
@@ -58,6 +60,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             var loaded = YearOfAshCatalogLoader.LoadRadioBroadcasts(dataDir, fileIO, json);
 
             _broadcasts.Clear();
+            _playedAudioBroadcasts.Clear();
             _broadcasts.AddRange(loaded);
             RefreshView(180);
         }
@@ -72,9 +75,19 @@ namespace AtomicWar.GodotApp.YearOfAsh
             }
 
             int visibleCount = 0;
+            string? firstNewVoiceCue = null;
             foreach (var b in _broadcasts)
             {
                 if (currentDay < b.dayTrigger) continue;
+
+                // The terminal can reveal several old messages after a large day
+                // jump. Emit only one newly-unlocked VO per refresh so speech
+                // remains intelligible; unplayed messages remain eligible on the
+                // next terminal refresh.
+                if (firstNewVoiceCue == null &&
+                    !string.IsNullOrWhiteSpace(b.audio_cue) &&
+                    _playedAudioBroadcasts.Add(b.id))
+                    firstNewVoiceCue = b.audio_cue;
 
                 var panel = new PanelContainer();
                 var vbox = new VBoxContainer();
@@ -108,6 +121,9 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 emptyLbl.AddThemeFontSizeOverride("font_size", 10);
                 _logContainer.AddChild(emptyLbl);
             }
+
+            if (firstNewVoiceCue != null)
+                AudioManager.Instance?.PlayVoiceOverCue(firstNewVoiceCue);
         }
     }
 }

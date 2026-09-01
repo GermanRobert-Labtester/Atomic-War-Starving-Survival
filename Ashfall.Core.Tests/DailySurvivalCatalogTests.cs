@@ -28,9 +28,9 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(catalog);
             Assert.Equal(8, catalog.JournalEntries.Count);
             Assert.Equal(8, catalog.BotanicalEntries.Count);
-            Assert.Equal(7, catalog.FolkloreEntries.Count);
+            Assert.Equal(19, catalog.FolkloreEntries.Count);
             Assert.Equal(7, catalog.FraudEntries.Count);
-            Assert.Equal(30, catalog.TotalCount);
+            Assert.Equal(42, catalog.TotalCount);
         }
 
         [Fact]

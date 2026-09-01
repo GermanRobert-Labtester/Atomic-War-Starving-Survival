@@ -33,7 +33,10 @@ public partial class AshfallMetricCard : PanelContainer
     public AshfallMetricCard(string label, string value, Criticality criticality = Criticality.Normal,
         int minWidth = 120)
     {
-        CustomMinimumSize = new Vector2(minWidth, 44);
+        // Two stacked rows (label above value); 44px could not hold both
+        // lines once margins were paid, so the mono value painted over the
+        // Barlow label wherever the text runs met.
+        CustomMinimumSize = new Vector2(minWidth, 56);
         SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
 
         var sb = new StyleBoxFlat
@@ -51,27 +54,31 @@ public partial class AshfallMetricCard : PanelContainer
         margin.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingXs);
         AddChild(margin);
 
+        var rows = new VBoxContainer();
+        rows.AddThemeConstantOverride("separation", 0);
+        margin.AddChild(rows);
+
         _labelLbl = new Label
         {
             Text = label?.ToUpperInvariant() ?? string.Empty,
-            VerticalAlignment = VerticalAlignment.Top
+            VerticalAlignment = VerticalAlignment.Center
         };
         _labelLbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
         _labelLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
         var labelFont = AshfallUiHelpers.LoadFont("res://assets/fonts/BarlowCondensed-Regular.ttf");
         if (labelFont != null) _labelLbl.AddThemeFontOverride("font", labelFont);
-        margin.AddChild(_labelLbl);
+        rows.AddChild(_labelLbl);
 
         _valueLbl = new Label
         {
             Text = value ?? string.Empty,
-            VerticalAlignment = VerticalAlignment.Bottom
+            VerticalAlignment = VerticalAlignment.Center
         };
         _valueLbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeMono);
         _valueLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
         var monoFont = AshfallUiHelpers.LoadFont("res://assets/fonts/ShareTechMono-Regular.ttf");
         if (monoFont != null) _valueLbl.AddThemeFontOverride("font", monoFont);
-        margin.AddChild(_valueLbl);
+        rows.AddChild(_valueLbl);
 
         _labelText = label ?? string.Empty;
         _valueText = value ?? string.Empty;

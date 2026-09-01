@@ -57,6 +57,12 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        public void Open()
+        {
+            Visible = true;
+            RefreshView();
+        }
+
         public override void _Ready()
         {
             BuildUI();
@@ -141,13 +147,13 @@ namespace AtomicWar.GodotApp.UI
             if (device.isStationOccupied)
             {
                 // Try to complete
-                string result = _doseHost.CompleteCalibrationDemo(_selectedDeviceTag, currentDay + 1);
+                string result = _doseHost.CompleteCalibration(_selectedDeviceTag, currentDay + 1);
                 _calibrationLabel.Text = result;
             }
             else
             {
                 // Start calibration
-                string result = _doseHost.StartCalibrationDemo(_selectedDeviceTag, currentDay);
+                string result = _doseHost.StartCalibration(_selectedDeviceTag, currentDay);
                 _calibrationLabel.Text = result;
             }
             RefreshView();
@@ -156,7 +162,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnReplaceBattery()
         {
             if (_doseHost == null) return;
-            string result = _doseHost.ReplaceBatteryDemo(_selectedDeviceTag);
+            string result = _doseHost.ReplaceBattery(_selectedDeviceTag);
             _calibrationLabel.Text = result;
             RefreshView();
         }
@@ -164,7 +170,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnServiceSensor()
         {
             if (_doseHost == null) return;
-            string result = _doseHost.ServiceSensorDemo(_selectedDeviceTag);
+            string result = _doseHost.ServiceSensor(_selectedDeviceTag);
             _calibrationLabel.Text = result;
             RefreshView();
         }

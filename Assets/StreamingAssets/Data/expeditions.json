@@ -8,6 +8,7 @@
       "dangerLevel": 2,
       "encounterChancePerTick": 0.12,
       "baseStaminaDrainPerHour": 2.0,
+      "scavenging_table_id": "table_loot_farm",
       "lootCategories": [
         "scrap_metal",
         "clean_water",
@@ -22,11 +23,735 @@
       "dangerLevel": 4,
       "encounterChancePerTick": 0.18,
       "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_power_substation",
       "lootCategories": [
         "dosimeter",
         "copper_wire",
         "fuel",
         "item_hydro_baron_queue_chit"
+      ]
+    },
+    {
+      "id": "suburban_house",
+      "displayName": "Suburban House",
+      "distanceTicks": 2,
+      "dangerLevel": 2,
+      "encounterChancePerTick": 0.14,
+      "baseStaminaDrainPerHour": 2.0,
+      "scavenging_table_id": "table_loot_apartment_block",
+      "lootCategories": [
+        "canned_food",
+        "cloth",
+        "battery",
+        "book"
+      ]
+    },
+    {
+      "id": "rural_gas_station",
+      "displayName": "Rural Gas Station",
+      "distanceTicks": 3,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_industrial_district",
+      "lootCategories": [
+        "fuel",
+        "scrap_metal",
+        "mechanical_parts",
+        "canned_food"
+      ]
+    },
+    {
+      "id": "concert_hall_ruins",
+      "displayName": "Concert Hall Ruins",
+      "distanceTicks": 3,
+      "dangerLevel": 2,
+      "encounterChancePerTick": 0.14,
+      "baseStaminaDrainPerHour": 2.0,
+      "lootCategories": [
+        "cloth",
+        "scrap_wood",
+        "book",
+        "battery"
+      ]
+    },
+    {
+      "id": "family_bunker_backyard_shed",
+      "displayName": "Family Bunker: Backyard Shed",
+      "distanceTicks": 2,
+      "dangerLevel": 2,
+      "encounterChancePerTick": 0.14,
+      "baseStaminaDrainPerHour": 2.0,
+      "lootCategories": [
+        "canned_soup",
+        "box_of_nails_10",
+        "duct_tape",
+        "seed_packets"
+      ]
+    },
+    {
+      "id": "old_library_cache",
+      "displayName": "Old Library Cache",
+      "distanceTicks": 5,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_school",
+      "lootCategories": [
+        "book",
+        "childrens_books",
+        "blueprint_roll",
+        "cloth"
+      ]
+    },
+    {
+      "id": "ruined_garage",
+      "displayName": "Ruined Garage",
+      "distanceTicks": 4,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_warehouse",
+      "lootCategories": [
+        "mechanical_parts",
+        "metal_pipe",
+        "trap_body_grip",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "collapsed_building",
+      "displayName": "Collapsed Building",
+      "distanceTicks": 4,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "lootCategories": [
+        "scrap_metal",
+        "wooden_plank",
+        "box_of_nails_10",
+        "concrete_mix"
+      ]
+    },
+    {
+      "id": "loc_grange_hall",
+      "displayName": "The Grange Hall",
+      "distanceTicks": 2,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_farm",
+      "lootCategories": [
+        "seed_packets",
+        "scrap_wood",
+        "canned_food",
+        "rope"
+      ]
+    },
+    {
+      "id": "loc_apiary_rows",
+      "displayName": "The Apiary Rows",
+      "distanceTicks": 3,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "lootCategories": [
+        "item_honey_pot",
+        "roots",
+        "berries",
+        "clean_water"
+      ]
+    },
+    {
+      "id": "loc_school_gymnasium",
+      "displayName": "School Gymnasium",
+      "distanceTicks": 3,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_school",
+      "lootCategories": [
+        "bandage",
+        "canned_soup",
+        "cloth",
+        "childrens_books"
+      ]
+    },
+    {
+      "id": "loc_water_station",
+      "displayName": "Water Station",
+      "distanceTicks": 2,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_chemical_plant",
+      "lootCategories": [
+        "clean_water",
+        "water_filter",
+        "water_purification_tablets",
+        "trap_fish"
+      ]
+    },
+    {
+      "id": "prewar_medical_cache",
+      "displayName": "Pre-War Medical Cache",
+      "distanceTicks": 6,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_hospital",
+      "lootCategories": [
+        "antibiotics",
+        "medical_kit",
+        "bandage",
+        "splint"
+      ]
+    },
+    {
+      "id": "electrical_substation",
+      "displayName": "Electrical Substation",
+      "distanceTicks": 6,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_power_substation",
+      "lootCategories": [
+        "electronic_scrap",
+        "battery",
+        "scrap_metal",
+        "mechanical_parts"
+      ]
+    },
+    {
+      "id": "checkpoint_kilo_armory",
+      "displayName": "Checkpoint Kilo Armory",
+      "distanceTicks": 6,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "lootCategories": [
+        "ammo_9x19",
+        "military_mre",
+        "bandage",
+        "gas_mask"
+      ]
+    },
+    {
+      "id": "convoy_echo7_cache",
+      "displayName": "Convoy Echo-7 Cache",
+      "distanceTicks": 7,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "lootCategories": [
+        "fuel_canister",
+        "mechanical_parts",
+        "canned_food",
+        "battery"
+      ]
+    },
+    {
+      "id": "loc_seed_library_annex",
+      "displayName": "Seed Library Annex",
+      "distanceTicks": 3,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "lootCategories": [
+        "seed_packets",
+        "growing_manual",
+        "chemicals",
+        "clean_water"
+      ]
+    },
+    {
+      "id": "loc_veterinary_surgery",
+      "displayName": "Large-Animal Surgery",
+      "distanceTicks": 4,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "lootCategories": [
+        "bandage",
+        "antibiotics",
+        "field_surgical_kit",
+        "alcohol"
+      ]
+    },
+    {
+      "id": "loc_cider_press",
+      "displayName": "The Cider Press",
+      "distanceTicks": 4,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "lootCategories": [
+        "canned_food",
+        "sugar",
+        "clean_water",
+        "scrap_wood"
+      ]
+    },
+    {
+      "id": "loc_ration_queue_plaza",
+      "displayName": "Ration Plaza",
+      "distanceTicks": 3,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "lootCategories": [
+        "canned_food",
+        "dried_rations",
+        "cloth",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "loc_conscription_office",
+      "displayName": "District Conscription Office",
+      "distanceTicks": 3,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "lootCategories": [
+        "book",
+        "ammo_9x19",
+        "military_mre",
+        "bandage"
+      ]
+    },
+    {
+      "id": "loc_municipal_archive",
+      "displayName": "Municipal Archive",
+      "distanceTicks": 4,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "lootCategories": [
+        "book",
+        "blueprint_roll",
+        "pocket_notebook",
+        "alcohol"
+      ]
+    },
+    {
+      "id": "loc_dentists_row",
+      "displayName": "Dentists' Row",
+      "distanceTicks": 4,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "lootCategories": [
+        "antibiotics",
+        "alcohol",
+        "tweezers",
+        "bandage"
+      ]
+    },
+    {
+      "id": "loc_printworks",
+      "displayName": "The Printworks",
+      "distanceTicks": 4,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "lootCategories": [
+        "chemicals",
+        "chemical_solvent",
+        "book",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "loc_weighbridge",
+      "displayName": "The Weighbridge",
+      "distanceTicks": 5,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "lootCategories": [
+        "mechanical_parts",
+        "scrap_metal",
+        "fuel",
+        "diesel_fuel"
+      ]
+    },
+    {
+      "id": "loc_motel_verity",
+      "displayName": "The Verity Motel",
+      "distanceTicks": 6,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "lootCategories": [
+        "canned_food",
+        "cloth",
+        "bandage",
+        "clean_water"
+      ]
+    },
+    {
+      "id": "hospital_pharmacy",
+      "displayName": "Hospital Pharmacy",
+      "distanceTicks": 8,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "lootCategories": [
+        "antibiotics",
+        "medical_kit",
+        "anti_rad",
+        "iodine_pills"
+      ]
+    },
+    {
+      "id": "loc_terrace_pumphouse",
+      "displayName": "Terrace Pumphouse",
+      "distanceTicks": 5,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "lootCategories": [
+        "water_filter",
+        "metal_pipe",
+        "clean_water",
+        "mechanical_parts"
+      ]
+    },
+    {
+      "id": "loc_garrison_checkpoint_gamma",
+      "displayName": "Checkpoint Gamma",
+      "distanceTicks": 5,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 2.5,
+      "lootCategories": [
+        "ammo_9x19",
+        "military_mre",
+        "gas_mask",
+        "bandage"
+      ]
+    },
+    {
+      "id": "loc_grain_silo",
+      "displayName": "The Grain Exchange",
+      "distanceTicks": 4,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 2.2,
+      "lootCategories": [
+        "canned_food",
+        "seed_packets",
+        "cloth",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "abandoned_hospital",
+      "displayName": "Abandoned Hospital",
+      "distanceTicks": 4,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.22,
+      "baseStaminaDrainPerHour": 3.0,
+      "lootCategories": [
+        "medical_kit",
+        "antibiotics",
+        "anti_rad",
+        "field_surgical_kit"
+      ]
+    },
+    {
+      "id": "loc_transit_authority_hq",
+      "displayName": "Transit Authority",
+      "distanceTicks": 5,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.22,
+      "baseStaminaDrainPerHour": 3.0,
+      "lootCategories": [
+        "mechanical_parts",
+        "electronic_scrap",
+        "battery",
+        "fuel"
+      ]
+    },
+    {
+      "id": "loc_department_store",
+      "displayName": "Vansen's Department Store",
+      "distanceTicks": 5,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.22,
+      "baseStaminaDrainPerHour": 3.0,
+      "lootCategories": [
+        "cloth",
+        "canned_food",
+        "battery",
+        "medkit"
+      ]
+    },
+    {
+      "id": "loc_public_swimming_baths",
+      "displayName": "Municipal Baths",
+      "distanceTicks": 4,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.22,
+      "baseStaminaDrainPerHour": 3.0,
+      "lootCategories": [
+        "clean_water",
+        "chemicals",
+        "water_purification_tablets",
+        "metal_pipe"
+      ]
+    },
+    {
+      "id": "loc_recovery_yard",
+      "displayName": "Recovery Yard",
+      "distanceTicks": 6,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.22,
+      "baseStaminaDrainPerHour": 3.0,
+      "lootCategories": [
+        "scrap_metal",
+        "steel_rebar",
+        "mechanical_parts",
+        "engine"
+      ]
+    },
+    {
+      "id": "loc_diesel_tank_farm",
+      "displayName": "Tank Farm 4-East",
+      "distanceTicks": 7,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.22,
+      "baseStaminaDrainPerHour": 3.0,
+      "lootCategories": [
+        "fuel",
+        "diesel_fuel",
+        "fuel_canister",
+        "metal_pipe"
+      ]
+    },
+    {
+      "id": "loc_radio_relay_mast",
+      "displayName": "Relay Mast 12",
+      "distanceTicks": 8,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.22,
+      "baseStaminaDrainPerHour": 3.0,
+      "lootCategories": [
+        "electronic_scrap",
+        "vacuum_tube",
+        "handheld_radio",
+        "aa_batteries"
+      ]
+    },
+    {
+      "id": "loc_st_brigids_almshouse",
+      "displayName": "St Brigid's Almshouse",
+      "distanceTicks": 6,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.24,
+      "baseStaminaDrainPerHour": 3.2,
+      "lootCategories": [
+        "bandage",
+        "medical_kit",
+        "canned_food",
+        "cloth"
+      ]
+    },
+    {
+      "id": "loc_ordnance_shoulder",
+      "displayName": "The Ordnance Shoulder",
+      "distanceTicks": 8,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.24,
+      "baseStaminaDrainPerHour": 3.2,
+      "lootCategories": [
+        "ammo_762",
+        "ammo_12g",
+        "ammunition_brass",
+        "smokeless_powder"
+      ]
+    },
+    {
+      "id": "loc_lock_gate_four",
+      "displayName": "Lock Gate Four",
+      "distanceTicks": 10,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.24,
+      "baseStaminaDrainPerHour": 3.2,
+      "lootCategories": [
+        "mechanical_parts",
+        "clean_water",
+        "metal_pipe",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "loc_pump_station_nine",
+      "displayName": "Pump Station Nine",
+      "distanceTicks": 11,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.24,
+      "baseStaminaDrainPerHour": 3.2,
+      "lootCategories": [
+        "water_filter",
+        "mechanical_parts",
+        "fuel",
+        "air_filter"
+      ]
+    },
+    {
+      "id": "loc_the_shallows_market",
+      "displayName": "The Shallows",
+      "distanceTicks": 13,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.24,
+      "baseStaminaDrainPerHour": 3.2,
+      "lootCategories": [
+        "currency",
+        "dried_rations",
+        "fuel",
+        "military_mre"
+      ]
+    },
+    {
+      "id": "location_flooded_subway_depot",
+      "displayName": "Flooded Subway Depot",
+      "distanceTicks": 7,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.24,
+      "baseStaminaDrainPerHour": 3.2,
+      "lootCategories": [
+        "mechanical_parts",
+        "electronic_scrap",
+        "metal_pipe",
+        "clean_water"
+      ]
+    },
+    {
+      "id": "government_bunker",
+      "displayName": "Government Bunker",
+      "distanceTicks": 8,
+      "dangerLevel": 8,
+      "encounterChancePerTick": 0.26,
+      "baseStaminaDrainPerHour": 3.5,
+      "lootCategories": [
+        "military_mre",
+        "military_radio",
+        "rad_away",
+        "anti_rad"
+      ]
+    },
+    {
+      "id": "location_geo_thermal_plant_ruins",
+      "displayName": "Geo-Thermal Plant Ruins",
+      "distanceTicks": 12,
+      "dangerLevel": 8,
+      "encounterChancePerTick": 0.26,
+      "baseStaminaDrainPerHour": 3.5,
+      "lootCategories": [
+        "mechanical_parts",
+        "electronic_scrap",
+        "battery",
+        "solar_cell"
+      ]
+    },
+    {
+      "id": "location_silent_observatory",
+      "displayName": "The Silent Observatory",
+      "distanceTicks": 14,
+      "dangerLevel": 8,
+      "encounterChancePerTick": 0.26,
+      "baseStaminaDrainPerHour": 3.5,
+      "lootCategories": [
+        "vacuum_tube",
+        "electronic_scrap",
+        "handheld_radio",
+        "battery"
+      ]
+    },
+    {
+      "id": "location_arcology_sector_4",
+      "displayName": "Arcology Sector 4",
+      "distanceTicks": 16,
+      "dangerLevel": 9,
+      "encounterChancePerTick": 0.28,
+      "baseStaminaDrainPerHour": 3.8,
+      "lootCategories": [
+        "electronic_scrap",
+        "solar_cell",
+        "medical_kit",
+        "military_mre"
+      ]
+    },
+    {
+      "id": "location_ministry_of_truth_bunker",
+      "displayName": "Ministry of Truth Bunker",
+      "distanceTicks": 12,
+      "dangerLevel": 9,
+      "encounterChancePerTick": 0.28,
+      "baseStaminaDrainPerHour": 3.8,
+      "lootCategories": [
+        "book",
+        "blueprint_roll",
+        "military_radio",
+        "anti_rad"
+      ]
+    },
+    {
+      "id": "location_the_dead_hand_core",
+      "displayName": "The Dead Hand Core",
+      "distanceTicks": 18,
+      "dangerLevel": 10,
+      "encounterChancePerTick": 0.3,
+      "baseStaminaDrainPerHour": 4.0,
+      "lootCategories": [
+        "rad_away",
+        "anti_rad",
+        "geiger_counter",
+        "electronic_scrap"
+      ]
+    },
+    {
+      "id": "loc_settlement_tinkers_notch",
+      "displayName": "Tinker's Notch Market",
+      "distanceTicks": 3,
+      "dangerLevel": 2,
+      "encounterChancePerTick": 0.1,
+      "baseStaminaDrainPerHour": 1.5,
+      "lootCategories": [
+        "electronic_scrap",
+        "copper_wire",
+        "battery",
+        "clean_water"
+      ]
+    },
+    {
+      "id": "loc_settlement_pilgrim_hearth",
+      "displayName": "The Pilgrim's Hearth Priory",
+      "distanceTicks": 4,
+      "dangerLevel": 2,
+      "encounterChancePerTick": 0.08,
+      "baseStaminaDrainPerHour": 1.2,
+      "lootCategories": [
+        "medical_kit",
+        "bandages",
+        "clean_water",
+        "scrap_wood"
+      ]
+    },
+    {
+      "id": "loc_settlement_brine_pans",
+      "displayName": "Brine-Pan Hollow Salt Camp",
+      "distanceTicks": 4,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.12,
+      "baseStaminaDrainPerHour": 1.8,
+      "lootCategories": [
+        "item_crossing_traded_salt",
+        "clean_water",
+        "food_rations",
+        "scrap_metal"
       ]
     }
   ]

@@ -70,8 +70,12 @@ namespace AtomicWar.GodotApp
                 summary.AppendLine("[!] Note: StreamingAssets/Data folder not found at relative path.");
             }
 
+            // Ticket #127: Replace misleading "connected" metric with accurate
+            // utilization-aware status. File enumeration only proves discovery.
+            // The utilization graph is generated separately via --content-utilization-selftest.
             if (_statusLabel != null)
-                _statusLabel.Text = $"Ready: {jsonCount} JSON Game Catalogs connected.";
+                _statusLabel.Text = $"Archive: {jsonCount} JSON catalogs discovered.\n" +
+                    "Run --content-utilization-selftest for utilization analysis.";
             if (_codexViewer != null)
                 _codexViewer.Text = summary.ToString();
         }
@@ -98,16 +102,12 @@ namespace AtomicWar.GodotApp
             // and delete the store files so Continue stays disabled for a fresh run.
             ResetAllSessions();
 
-            // Initialize Holdfast & Starting Level
-            SetupHoldfastRuntime();
-            _holdfastTerminal.PressNewLedger();
-            _holdfastTerminal.OpenTerminal();
+            // Ensure an active save slot is selected before initializing sessions
+            _saveLoadHost?.SelectOrCreateDefaultSlot("slot_1");
 
-            SetupStartingLevel();
-            SetupEventsHost();
-            SetupExpansionQuests();
-            SetupThirdonary();
-            SetupExpandedShelterSystems();
+            // Compose all campaign-owned services before any panel opens.
+            ComposeCampaign();
+
             _openingProtocolModal.Bind(_startingLevel);
             _openingProtocolModal.Open();
 
@@ -134,6 +134,7 @@ namespace AtomicWar.GodotApp
 
             _audio?.StopAmbience();
             _audio?.StopMusic();
+            _audio?.PlayMainMenuMusic();
 
             CloseAllOverlayPanels();
 
@@ -183,6 +184,7 @@ namespace AtomicWar.GodotApp
             }
 
             CloseAllOverlayPanels();
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiConfirm);
 
             if (descriptor.OpenAction != null)
             {
@@ -227,7 +229,7 @@ namespace AtomicWar.GodotApp
                     // Lazily create when the expanded-shelter setup hasn't run;
                     // SetupExpandedShelterSystems assigns a fresh instance on
                     // new-game/continue so the panel always rebinds to current state.
-                    _sharedResearch ??= new ResearchSystem(log: new GodotLog());
+                    _sharedResearch = EnsureSharedResearch();
                     _researchPanel.Bind(_sharedResearch);
                     _researchPanel.Open();
                     break;
@@ -288,6 +290,7 @@ namespace AtomicWar.GodotApp
                     _inventoryOverlay.Bind(_inventory);
                     _inventoryOverlay.RefreshView();
                     _inventoryOverlay.Open();
+                    ObserveSigil("store.opened");
                     break;
                 case "crafting":
                     SetupCrafting();
@@ -300,6 +303,7 @@ namespace AtomicWar.GodotApp
                     SetupInventory();
                     SetupMedical();
                     SetupPhase0();
+                    EnsureMedicalPipeline();
                     _medicalPanel.Bind(_medical, _survivors, _inventory,
                         _phase0?.Respiratory);
                     _medicalPanel.Open();
@@ -313,7 +317,7 @@ namespace AtomicWar.GodotApp
                     _expeditions.CrossingGate = _expansions.Vouch;
                     SetupSurvivors();
                     SetupInventory();
-                    _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+                    _expeditionPanel.Bind(_expeditions, _survivors, _inventory, _equipmentCondition?.System);
                     _expeditionPanel.Open();
                     break;
                 case "weather":
@@ -341,7 +345,8 @@ namespace AtomicWar.GodotApp
                     SetupSurvivors();
                     SetupWorld();
                     SetupInventory();
-                    _shelterPanel.Bind(_survivors, _world, _inventory);
+                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog());
+                    _shelterPanel.SetMachineTellCatalog(GetMachineTellCatalog());
                     _shelterPanel.Open();
                     break;
                 case "factions":
@@ -381,6 +386,7 @@ namespace AtomicWar.GodotApp
                     SetupExpansions();
                     SetupSilentFoundry();
                     _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+                    _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog());
                     _silentFoundryPanel.Open();
                     break;
                 case "trade":
@@ -457,6 +463,7 @@ namespace AtomicWar.GodotApp
                     SetupDutyRoster();
                     SetupSurvivors();
                     _dutyRosterPanel.Bind(_dutyRoster, _survivors);
+                    _dutyRosterPanel.OnAssignmentChanged += () => ObserveSigil("duty.assigned");
                     _dutyRosterPanel.Open();
                     break;
                 case "duty_roster_detail":
@@ -478,6 +485,7 @@ namespace AtomicWar.GodotApp
                 case "apprenticeship":
                 case "shelter_thermal":
                 case "shelter_schedule":
+                case "shelter_decor":
                 case "autopsy_report":
                 case "waystation_network":
                 case "chemical_dependency":
@@ -511,10 +519,27 @@ namespace AtomicWar.GodotApp
             // Save final state
             SaveAll();
 
-            // A finished run must not be continuable: the saved state is a dead
-            // (or won) ledger. Clear the holdfast saves so ReturnToMenu keeps the
-            // Continue button disabled instead of resurrecting an ended run.
-            ClearContinuableSaves();
+            // Run finalization (Task 121): seal the active slot as terminal.
+            // The full campaign envelope stays on disk as an inspectable
+            // memorial/archive — the final state is preserved — but the
+            // manifest is marked TerminalLoss, which blocks SelectSlot,
+            // DeleteSlot, and TryLoadAggregate, so a completed campaign cannot
+            // resurrect through a stale aggregate save. This replaces the old
+            // selective deletion of three Holdfast files (which abandoned the
+            // other 58 sections and still left the slot continuable).
+            FinalizeTerminalRun();
+        }
+
+        /// <summary>
+        /// Seal the active save slot as terminal after a game-over / victory.
+        /// Keeps the envelope as the memorial archive; blocks continuation.
+        /// </summary>
+        private void FinalizeTerminalRun()
+        {
+            if (_saveLoadHost == null) return;
+            int finalDay = _holdfastRuntime != null ? _holdfastRuntime.Day : _simDay;
+            _saveLoadHost.MarkActiveSlotTerminal(finalDay);
+            UpdateContinueButton();
         }
 
 
@@ -586,7 +611,8 @@ namespace AtomicWar.GodotApp
                 AirWarning = _startingLevel?.System.State.airHazardWarning ?? false,
                 FilterDutyAssignee = intakeAssignee,
                 Forecast = _world.Weather.PeekForecast(3),
-                LastEvent = lastEvent
+                LastEvent = lastEvent,
+                MachineTellText = BuildMachineTellText()
             });
         }
 
@@ -661,7 +687,10 @@ namespace AtomicWar.GodotApp
         {
             SetupIceRoad();
             _core.UnlockAndClerk();
-            _simDay = _core.Clock.Day;
+            SetupCampaignDay();
+            // Calendar-led: a new campaign starts at the calendar's day; the
+            // holdfast clock follows.
+            _core.Clock.SetDay(_campaignDay.Calendar.CurrentDay);
             _statusLabel.Text = $"Holdfast unlocked. Clerk at the hatch. Day {_core.Clock.Day}. Tick the ice road.";
             _codexViewer.Text =
                 "=== ICE ROAD (Ashfall.Core) ===\n" +

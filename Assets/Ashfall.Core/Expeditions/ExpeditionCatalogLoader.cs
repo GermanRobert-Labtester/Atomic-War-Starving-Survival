@@ -15,6 +15,7 @@ namespace Ashfall.Core.Expeditions
         public float encounterChancePerTick { get; set; } = 0.12f;
         public float baseStaminaDrainPerHour { get; set; } = 2.0f;
         public List<string>? lootCategories { get; set; }
+        public string? scavenging_table_id { get; set; }
     }
 
     /// <summary>
@@ -107,7 +108,8 @@ namespace Ashfall.Core.Expeditions
                         dangerLevel = dto.dangerLevel > 0 ? dto.dangerLevel : 1,
                         encounterChancePerTick = encounterChance,
                         baseStaminaDrainPerHour = drain,
-                        lootCategories = dto.lootCategories != null ? new List<string>(dto.lootCategories) : new List<string>()
+                        lootCategories = dto.lootCategories != null ? new List<string>(dto.lootCategories) : new List<string>(),
+                        scavenging_table_id = dto.scavenging_table_id ?? string.Empty
                     };
 
                     seen.Add(def.id);

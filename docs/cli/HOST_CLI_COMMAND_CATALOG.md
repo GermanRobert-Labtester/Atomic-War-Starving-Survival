@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-08-27<br>
-**Total Registered Actions:** 92 entries / 140 flag tokens (aliases included)
+**Last Verified:** 2026-08-30<br>
+**Total Registered Actions:** 106 entries / 162 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -24,7 +24,13 @@
 | `--panel-bind-lifecycle-selftest` | `--panel-bind-selftest`, `--panel-lifecycle-selftest` | Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch |
 | `--save-load-ui-failure-selftest` | `--save-load-failure-selftest`, `--save-load-failure-uitest`, `--save-load-selftest` | Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact |
 | `--save-store-checksum-selftest` | `--save-store-checksums-selftest`, `--checksum-sweep-selftest` | Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard) |
+| `--runtime-scale-selftest` | `--runtime-scale`, `--performance-selftest`, `--perf-selftest` | Performance budget validation: 30/180/360-day campaign workloads, day-advance latency, save/load/checksum, allocations, retained memory, and lifecycle leak tests; writes artifacts/runtime-scale-results.json |
+| `--scene-binding-selftest` | `--scene-bindings-selftest` | Headless-instantiate every registered production scene and validate each unique_name_in_owner binding contract (Ticket #125 scene-ownership gate); exits 0 when all required nodes resolve with the expected Godot types |
+| `--content-utilization-selftest` | `--content-utilization` | Scan every JSON catalog under StreamingAssets/Data, classify each by reachable consumer (gameplay / UI / codex / orphan), write artifacts/content-utilization.{json,md}, and run the CI gate against artifacts/content-utilization-baseline.json (Ticket #127 content-runtime gate) |
 | `--standalone-selftest` | — | SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance |
+| `--campaign-fuzz-selftest` | — | Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite |
+| `--composition-root-selftest` | — | Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131) |
+| `--real-campaign-journey-selftest` | `--campaign-journey-selftest`, `--real-main-journey-selftest` | Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5) |
 | `--arbitration-selftest` | — | CrossingArbitrationHeadlessDemo |
 | `--black-flotilla-selftest` | `--maritime-selftest`, `--expansion-09-selftest` | The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip |
 | `--brine-selftest` | `--salt-steam-selftest` | BrineWaterHeadlessDemo (S2 salt & steam) |
@@ -45,6 +51,13 @@
 | `--ice-road-tick-demo` | — | Unlock, clerk, 30 day ticks, print catalog + briefing |
 | `--ledger-debt-selftest` | — | LedgerDebtHeadlessDemo |
 | `--moral-choice-selftest` | — | Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks |
+| `--evolving-world-selftest` | — | Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario |
+| `--selftest-manifest` | — | Emit the machine-readable self-test manifest JSON (scripts/ci/generate-selftest-manifest.py) |
+| `--test-manifest` | — | Alias for --selftest-manifest |
+| `--list-selftests` | — | List every registered selftest and run its signature live (runtime/CLI parity audit) |
+| `--list-tests` | — | Alias for --list-selftests |
+| `--selftests` | — | Alias for --list-selftests |
+| `--list-selftest` | — | Alias for --list-selftests |
 | `--muster-selftest` | `--expansion-06-selftest` | MusterHeadlessDemo (Exp 06 the Muster) |
 | `--phase0-selftest` | — | Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip |
 | `--silent-foundry-selftest` | — | Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip |
@@ -85,6 +98,7 @@
 | `--duty-roster-uitest` | — | Duty Roster panel UI construction, role assignments, and shift scheduling |
 | `--economy-uitest` | — | Economy market panel UI construction, price shock display, and barter grid |
 | `--expedition-panel-uitest` | `--expedition-panel-lifecycle` | Expedition panel encounter-notice lifecycle: open→surface→close→reopen→surface |
+| `--onboarding-journey-selftest` | `--onboarding-selftest` | First-hour onboarding journey: protocol → inspect → rationing → assignment → weather → inventory-use → day-advance, with resume after save/load and no-resource-fabrication |
 | `--holdfast-runtime-uitest` | `--holdfast-runtime-ui-test`, `--holdfast-runtime-selftest` | Godot Holdfast terminal browse → trade → failed trade → save → reload |
 | `--inventory-uitest` | `--inventory-selftest` | Inventory panel UI construction, item grid, and slot binding |
 | `--journal-uitest` | — | Build ledger UI, cycle tabs, quit |
@@ -94,6 +108,7 @@
 | `--player-panels-uitest` | `--player-panels-ui-test` | Bind and render Survivors, Medical, Weather, Radio, Shelter panels |
 | `--shelter-hazard-loop-selftest` | `--shelter-hazard-selftest`, `--duty-roster-loop-selftest` | Shelter hazard loop and duty roster assignment verification |
 | `--shelter-operations-selftest` | `--shelter-ops-selftest`, `--operations-selftest` | Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification |
+| `--shelter-decor-selftest` | `--shelter-interior-selftest`, `--memorial-wall-selftest` | Live decor catalog, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification |
 | `--silent-foundry-uitest` | — | Silent Foundry trade panel UI construction, binding, and trade loop |
 | `--survivors-uitest` | — | Survivors panel UI construction, roster cards, and affliction badges |
 | `--ui-layout-selftest` | `--layout-selftest` | Verify fixed 1920x1080 UI layout bounds, responsive containers, and panel alignments |

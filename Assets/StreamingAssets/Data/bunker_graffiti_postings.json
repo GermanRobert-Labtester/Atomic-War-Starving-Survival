@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "collection_id": "bunker_graffiti_postings",
+  "postings": [
+    {
+      "id": "graffiti_radio_dial_set",
+      "title": "A Note On The Radio Dial",
+      "text": "Whoever set the radio to 88.5 yesterday: the bunker's chalk budget is not infinite, and there were children in the corridor. Leave the dial alone or leave a note that says what you wanted to hear.",
+      "triggerWorldFlag": "friction_forbidden_radio_listening",
+      "minDay": 5,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_stealing_tins_chalk",
+      "title": "Three Tins Of Sardines, Computational",
+      "text": "We counted the tins before bed and again at dawn. The count went up because someone had the sense to use the broken shell to record what the new count is. The count went down because someone had the sense to use the daylight to record what they took.",
+      "triggerWorldFlag": "ration_first_tin_logged",
+      "minDay": 30,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_sleeping_bunks_cold",
+      "title": "The Third Bunk, Upper, Cold",
+      "text": "Whoever moved the third-bunk blankets to the second-bunk has not heard the third-bunk when it cools. The third-bunk cools faster. The third-bunk is colder on the bones. The third-bunk remembers.",
+      "triggerWorldFlag": "friction_stolen_keepsake",
+      "minDay": 25,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_duty_board_edit",
+      "title": "Pencil Has A History",
+      "text": "Someone edited the duty board in pencil while it was supposed to be in pen. The shift that follows the edit will run one listener short. We do not have one listener to spare. Do not edit the duty board.",
+      "triggerWorldFlag": "friction_work_shirker_accusation",
+      "minDay": 10,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_about_the_dog",
+      "title": "On The Dog",
+      "text": "The dog is not yours. The dog is not anyone's. The dog decided to stay. The dog eats what the dog is given. Do not give the dog to the children. The children will give the dog the children's ration.",
+      "triggerWorldFlag": "friction_second_bunk_permitted",
+      "minDay": 20,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_list_for_the_morning",
+      "title": "The Morning's Bare-Handed List",
+      "text": "Salt. Water. The pump wrench, the one that fits the elbow joint. A match. A needle. A piece of thread. The bunk's chalk. The pencil. Another piece of chalk. The morning does not need much except the people who believe in it.",
+      "triggerWorldFlag": "ration_scoop_rotated",
+      "minDay": 1,
+      "weight": 0.7
+    },
+    {
+      "id": "graffiti_walkout_door_chalk",
+      "title": "If The Door Wants",
+      "text": "If the door wants to go outside in front of you, let it. The door's bruising is not ours. The door has not read the duty board. The door does not know it is shift change. If you push first, the door will remember that too.",
+      "triggerWorldFlag": "escalation_walkout",
+      "minDay": 50,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_on_the_two_sides",
+      "title": "On The Two Sides Of The Hallway",
+      "text": "There are two sides of the hallway. One side has the older chalk. The other side has the newer chalk. The newer chalk is doing fine, thanks. The older chalk is just here. The hallway is bigger than the chalk expects it to be.",
+      "triggerWorldFlag": "friction_radio_dial_argument",
+      "minDay": 12,
+      "weight": 0.7
+    },
+    {
+      "id": "graffiti_after_walkout",
+      "title": "After The Walkout, A Letter",
+      "text": "We left because we said we would. We came back because we said we would. The middles of these are not in the diary. The middles live in the corridor. The middles stay.",
+      "triggerWorldFlag": "escalation_walkout_reconsidered",
+      "minDay": 60,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_ration_day_three",
+      "title": "Day Three Of The Smaller Rations",
+      "text": "Day three of smaller rations. The bellies ring at odd hours. Two of us set the alarm for the morning bell and the morning bell rang anyway. The bellies wrote their own schedule. The bellies were correct.",
+      "triggerWorldFlag": "ration_scoop_rotated",
+      "minDay": 70,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_sabotage_ledger",
+      "title": "The Ledger Of The Lead",
+      "text": "Someone pulled the lead pipe before dawn. The pen marks on the lead are not mine. The pen marks have authority. The pen marks will be answered by the next shift's chalk. The next shift's chalk has the votes.",
+      "triggerWorldFlag": "escalation_sabotage_investigated",
+      "minDay": 90,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_challenge_to_the_lead",
+      "title": "The Chalk That Asked",
+      "text": "Whoever left the chalk under the leadership doorway: the council sheet has been read. The doorway does not vote on the council sheet. The doorway does, however, file complaints in the way the doorway has always filed complaints \u2014 by which I mean nothing, and which the cottage industry of bunker leadership will read as: everything.",
+      "triggerWorldFlag": "escalation_challenge_acknowledged",
+      "minDay": 80,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_door_tap_tally",
+      "title": "Two Chalk Knuckles by the Inner Dog",
+      "text": "Two vertical chalk slashes right above the dog-leg airlock handle. Scuffed clean every Saturday by the swab detail, drawn back on by Sunday morning. Two taps before you step into the rubber suit. Nobody asks who holds the chalk.",
+      "triggerWorldFlag": "friction_spoken_name_blame",
+      "minDay": 3,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_under_bunk_scratch",
+      "title": "Letters in the Pine Slats",
+      "text": "A cluster of carved initials beneath the fourth bunk lower: 'M.O.', 'E.V.', 'S.T.' and three straight lines sealed with yellow tallow. The children call it the quiet register.",
+      "triggerWorldFlag": "friction_lucky_bunk_dispute",
+      "minDay": 15,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_vent_walker_drawing",
+      "title": "Three Brass Knees on the Duct",
+      "text": "Drawn in chimney soot on the galvanized intake casing: a creature with three segmented legs, an asbestos hood, and ears like turbine blades. Underneath in shaky child script: 'HE LISTENS AT NIGHT.'",
+      "triggerWorldFlag": "friction_vent_sleeping_dispute",
+      "minDay": 8,
+      "weight": 0.8
+    },
+    {
+      "id": "graffiti_geiger_click_ladder",
+      "title": "The Click Ladder",
+      "text": "Ten chalk tick marks rising up the door jamb like ladder rungs. Rungs one through four are circled in green; rungs five through ten are crossed out in red wax pencil with the word 'RUN' scrawled at the top.",
+      "triggerWorldFlag": "friction_hot_token_confiscation",
+      "minDay": 5,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_crossed_out_frequencies",
+      "title": "The Radio Alcove Roster",
+      "text": "Scratched into the limestone behind the receiver: '88.5 DEAD / 94.2 NOISE / 101.4 NUMBER LADY AT DAWN / 106.0 DO NOT ANSWER.' Someone spent forty hours listening with their chin on the table.",
+      "triggerWorldFlag": "friction_radio_frequency_fear",
+      "minDay": 20,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_false_window_sketch",
+      "title": "A Square of Sky on Level 3",
+      "text": "A neat rectangle drawn with a hoarded blue grease pencil on the blank concrete bulkhead of Dormitory B. Inside the square: two clouds shaped like potato sacks and a yellow circle. A note taped beside it reads: 'Do not paint over. Teacher approved.'",
+      "triggerWorldFlag": "friction_ritual_fuel_curtailed",
+      "minDay": 12,
+      "weight": 0.9
+    }
+  ]
+}

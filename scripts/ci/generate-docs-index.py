@@ -46,7 +46,7 @@ def classify_doc(rel_path: str, content: str, title: str):
     c_upper = content.upper()
     r_lower = rel_path.lower()
 
-    if "deprecated_audits" in r_lower or "junk_" in r_lower or "historical" in r_lower or "repo_review_report.md" in r_lower:
+    if "deprecated_audits" in r_lower or "docs/archive" in r_lower or "junk_" in r_lower or "historical" in r_lower or "repo_review_report.md" in r_lower:
         status = "HISTORICAL"
     elif "SAVE_STORE_CONTRACT_MATRIX.md" in rel_path or "CLI_COMMANDS_REFERENCE" in rel_path or "STITCH_GENERATED_UI_INVENTORY" in rel_path:
         status = "GENERATED"
@@ -64,7 +64,7 @@ def classify_doc(rel_path: str, content: str, title: str):
         status = "CURRENT"
 
     # 2. Category classification
-    if rel_path in ["AGENTS.md", "README.md"] or rel_path.startswith("docs/architecture/"):
+    if rel_path in ["AGENTS.md", "README.md", "sources.md"] or rel_path.startswith("docs/architecture/"):
         category = "1. Living System Architecture & Governance"
     elif rel_path in ["docs/CI.md"] or rel_path.startswith("docs/ci/"):
         category = "2. CI, Fast-Tier Gates & Verification"
@@ -75,17 +75,13 @@ def classify_doc(rel_path: str, content: str, title: str):
     elif rel_path.startswith("docs/ui/") or rel_path.startswith("docs/visual/") or "UI" in rel_path:
         category = "5. UI, UX & Visual Systems"
     elif rel_path.startswith("docs/lore/") or rel_path.startswith("docs/narrative/"):
-        category = "6. Lore, Gazetteer & World Design"
-    elif rel_path.startswith("docs/forensics/") or rel_path.startswith("docs/audit/") or rel_path.startswith("docs/debug/") or rel_path.startswith("docs/qa/") or rel_path.startswith("docs/superpowers/"):
-        category = "7. Forensics, Phase Logs & System Audits"
-    elif rel_path.startswith("docs/ai-art/") or rel_path.startswith("prompt_assets/"):
-        category = "8. AI Art & Prompt Generation Catalogs"
-    elif rel_path.startswith("scripts/maintenance/") or rel_path.startswith("docs/skills/"):
-        category = "9. Maintenance & Developer Tooling"
-    elif rel_path.startswith("deprecated_audits/") or rel_path.startswith("docs/deprecated_audits/"):
-        category = "10. Quarantined & Historical Audits"
+        category = "6. Lore, Narrative & World Design"
+    elif rel_path.startswith("docs/data/") or rel_path.startswith("docs/systems/"):
+        category = "7. Data Authority & Subsystem Catalogs"
+    elif rel_path.startswith("scripts/maintenance/") or rel_path.startswith("docs/skills/") or rel_path.startswith("docs/tools/") or rel_path.startswith("docs/qa/") or rel_path.startswith("docs/health/") or rel_path.startswith("docs/hygiene/"):
+        category = "8. Developer Tooling, Skills & QA"
     else:
-        category = "11. General Project Guides & Summaries"
+        category = "9. General Project Guides & Archive Reference"
 
     # 3. Summary extraction
     summary = ""
@@ -176,6 +172,21 @@ def generate_index_markdown(docs, verified_date):
         lines.append(f"| `{name}` | {paths_str} | {canonical_loc} | {notes} |")
 
     lines.extend([
+        "",
+        "---",
+        "",
+        "## AI Agent Fast Map (Subsystem Routing)",
+        "",
+        "| Subsystem / Domain | Authoritative Specification | Key C# Location | Verification Verb |",
+        "|---|---|---|---|",
+        "| **Core Directives & Invariants** | [`AGENTS.md`](../AGENTS.md) | `Assets/Ashfall.Core/` | `dotnet test` |",
+        "| **Data Authority & Catalogs** | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | `Assets/StreamingAssets/Data/` | `--data-integrity-selftest` |",
+        "| **Save Architecture & Envelopes** | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | `Assets/Ashfall.Core/Save/` | `--save-store-checksum-selftest` |",
+        "| **Host CLI & Self-Test Verbs** | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | `src/Host/HostCli*.cs` | `python3 scripts/ci/run-gates.py --list` |",
+        "| **UI Panels, Theming & Modals** | [`docs/ui/README_UI_SYSTEM.md`](ui/README_UI_SYSTEM.md) | `src/UI/`, `assets/ui/` | `--scene-binding-selftest` |",
+        "| **Expansions 01–10 Specs** | [`docs/ASHFALL_EXPANSION_CONTEXT_ATLAS.md`](ASHFALL_EXPANSION_CONTEXT_ATLAS.md) | `Assets/Ashfall.Core/Expansions/` | `--expansions-completeness-selftest` |",
+        "| **Audio Pipeline & Cues** | [`docs/systems/AUDIO_SYSTEM.md`](systems/AUDIO_SYSTEM.md) | `src/Audio/` | `ashfall-audio-qa` |",
+        "| **CI Gates & Fast-Tier Runner** | [`docs/CI.md`](CI.md) | `scripts/ci/` | `python3 scripts/ci/run-gates.py` |",
         "",
         "---",
         ""

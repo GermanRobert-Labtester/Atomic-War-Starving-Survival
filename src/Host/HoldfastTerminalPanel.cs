@@ -132,6 +132,7 @@ namespace AtomicWar.GodotApp
             var result = _session.Trade.Buy(_selectedItemId, (int)_tradeQuantity.Value, _selectedFactionId);
             if (result.Success)
             {
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionTrade);
                 _session.HasPurchasedThisSession = true;
                 _dispatch?.OnPurchase(result.ItemId, result.Quantity, result.TotalValue, _selectedFactionId);
                 if (_session.HasPurchasedThisSession && _session.Trade.GetHeld(_selectedItemId) == result.Quantity)
@@ -143,6 +144,7 @@ namespace AtomicWar.GodotApp
             }
             else
             {
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiInvalidAction);
                 _dispatch?.OnRejected(result, _selectedFactionId);
             }
             ShowTradeResult(result);
@@ -156,12 +158,14 @@ namespace AtomicWar.GodotApp
             var result = _session.Trade.Sell(_selectedItemId, (int)_tradeQuantity.Value, _selectedFactionId);
             if (result.Success)
             {
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionTrade);
                 _dispatch?.OnSale(result.ItemId, result.Quantity, result.TotalValue, _selectedFactionId);
                 if (_session.Trade.GetHeld(result.ItemId) == 0)
                     _dispatch?.OnHoldingEmptied(result.ItemId, _selectedFactionId);
             }
             else
             {
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiInvalidAction);
                 _dispatch?.OnRejected(result, _selectedFactionId);
             }
             ShowTradeResult(result);

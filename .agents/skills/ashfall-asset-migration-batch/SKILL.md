@@ -1,3 +1,8 @@
+---
+name: ashfall-asset-migration-batch
+description: Batch-migrates Unity-era assets into the Godot-native assets/ tree, configures Git LFS, ports import presets, validates case sensitivity, and updates assets.json for the asset gate.
+---
+
 # ASHFALL Asset Expansion Skill: ashfall-asset-migration-batch
 
 ## Overview

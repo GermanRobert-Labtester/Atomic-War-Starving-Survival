@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "configurations": [
+    {
+      "id": "sky_armor_sandbag_layer",
+      "name": "Improvised Sandbag Layer",
+      "description": "Stacked burlap sacks filled with dry soil and gravel, braced with timber struts. Protects against light shrapnel but degrades rapidly under direct kinetic hits.",
+      "tier": "improvised",
+      "material_tier": "Dirt",
+      "default_thickness_meters": 0.8,
+      "blast_resistance_mj": 5.0,
+      "attenuation_factor": 0.60,
+      "degradation_rate": 0.35,
+      "composition": [
+        {
+          "item_id": "scrap_wood",
+          "quantity": 4
+        },
+        {
+          "item_id": "cloth",
+          "quantity": 6
+        }
+      ],
+      "repair_cost": [
+        {
+          "item_id": "scrap_wood",
+          "quantity": 1
+        },
+        {
+          "item_id": "cloth",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "sky_armor_scrap_overlay",
+      "name": "Scrap-Plate Overlay",
+      "description": "Overlapping salvage steel plates bolted across roof framing. Provides resilient deflection against low-velocity orbital debris.",
+      "tier": "improvised",
+      "material_tier": "Wood",
+      "default_thickness_meters": 1.0,
+      "blast_resistance_mj": 12.0,
+      "attenuation_factor": 0.45,
+      "degradation_rate": 0.25,
+      "composition": [
+        {
+          "item_id": "scrap_metal",
+          "quantity": 8
+        },
+        {
+          "item_id": "mechanical_parts",
+          "quantity": 4
+        }
+      ],
+      "repair_cost": [
+        {
+          "item_id": "scrap_metal",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "id": "sky_armor_reinforced_concrete",
+      "name": "Reinforced Concrete Slab",
+      "description": "Poured aggregate cement laced with scrap steel rebar. High mass and blast dampening offer durable long-term orbital mitigation.",
+      "tier": "reinforced",
+      "material_tier": "ReinforcedConcrete",
+      "default_thickness_meters": 1.5,
+      "blast_resistance_mj": 37.5,
+      "attenuation_factor": 0.20,
+      "degradation_rate": 0.15,
+      "composition": [
+        {
+          "item_id": "scrap_metal",
+          "quantity": 10
+        },
+        {
+          "item_id": "chemicals",
+          "quantity": 4
+        },
+        {
+          "item_id": "scrap_wood",
+          "quantity": 4
+        }
+      ],
+      "repair_cost": [
+        {
+          "item_id": "scrap_metal",
+          "quantity": 3
+        },
+        {
+          "item_id": "chemicals",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "sky_armor_steel_hull_plating",
+      "name": "Steel Hull Plating",
+      "description": "Heavy naval and industrial pressure-hull plate welded directly over bunker arches. Excellent resistance against hypervelocity kinetic penetrators.",
+      "tier": "reinforced",
+      "material_tier": "LeadSheeting",
+      "default_thickness_meters": 1.2,
+      "blast_resistance_mj": 45.0,
+      "attenuation_factor": 0.05,
+      "degradation_rate": 0.12,
+      "composition": [
+        {
+          "item_id": "scrap_metal",
+          "quantity": 14
+        },
+        {
+          "item_id": "mechanical_parts",
+          "quantity": 6
+        },
+        {
+          "item_id": "fuel",
+          "quantity": 2
+        }
+      ],
+      "repair_cost": [
+        {
+          "item_id": "scrap_metal",
+          "quantity": 4
+        },
+        {
+          "item_id": "mechanical_parts",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "sky_armor_composite_military",
+      "name": "Composite Military-Grade Armor",
+      "description": "Layered tungsten-carbide tiles and shock-absorbing ceramic matrix. Top-tier kinetic and radiation shielding designed for military continuity vaults.",
+      "tier": "military_grade",
+      "material_tier": "TungstenComposite",
+      "default_thickness_meters": 2.0,
+      "blast_resistance_mj": 160.0,
+      "attenuation_factor": 0.01,
+      "degradation_rate": 0.08,
+      "composition": [
+        {
+          "item_id": "scrap_metal",
+          "quantity": 20
+        },
+        {
+          "item_id": "electronic_scrap",
+          "quantity": 8
+        },
+        {
+          "item_id": "mechanical_parts",
+          "quantity": 10
+        }
+      ],
+      "repair_cost": [
+        {
+          "item_id": "scrap_metal",
+          "quantity": 5
+        },
+        {
+          "item_id": "electronic_scrap",
+          "quantity": 2
+        },
+        {
+          "item_id": "mechanical_parts",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "sky_armor_emergency_blast_canopy",
+      "name": "Emergency Blast Canopy",
+      "description": "A sacrificial pitched timber and sheet canopy designed for rapid deployment ahead of predicted orbital debris showers.",
+      "tier": "improvised",
+      "material_tier": "Wood",
+      "default_thickness_meters": 0.6,
+      "blast_resistance_mj": 8.0,
+      "attenuation_factor": 0.50,
+      "degradation_rate": 0.40,
+      "composition": [
+        {
+          "item_id": "scrap_wood",
+          "quantity": 6
+        },
+        {
+          "item_id": "cloth",
+          "quantity": 4
+        },
+        {
+          "item_id": "scrap_metal",
+          "quantity": 2
+        }
+      ],
+      "repair_cost": [
+        {
+          "item_id": "scrap_wood",
+          "quantity": 2
+        },
+        {
+          "item_id": "cloth",
+          "quantity": 2
+        }
+      ]
+    }
+  ]
+}

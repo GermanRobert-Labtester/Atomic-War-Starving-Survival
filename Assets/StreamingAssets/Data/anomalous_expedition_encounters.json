@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "encounters": [
+    {
+      "encounter_id": "encounter_the_mirrored_scout",
+      "title": "The Mirrored Casualty",
+      "description": "Your scout team enters a collapsed subway tunnel. Pinned beneath a concrete slab is a frozen corpse. Upon rolling the body over, the scout realizes the corpse is wearing their exact hazard suit, bearing their exact serial number, and features a custom boot-repair the scout performed yesterday. The corpse's geiger counter is ticking backwards.",
+      "threat_level": 4,
+      "outcomes": [
+        {
+          "action": "Loot the Corpse",
+          "survival_chance": 0.8,
+          "success_text": "The scout stripped the gear from their own corpse with cold detachment. The inventory ledger shows a +1 surplus in hazard suits. The paradox was not documented on the official form.",
+          "failure_text": "While unbuckling the helmet, the corpse's eyes opened. The scout fled in terror, abandoning half their gear in the tunnel."
+        },
+        {
+          "action": "Incinerate the Anomaly",
+          "survival_chance": 1.0,
+          "success_text": "Protocol 7 dictates that all temporal anomalies be purged. The scout burned the corpse using three days worth of kerosene, returning empty-handed but sane.",
+          "failure_text": ""
+        }
+      ]
+    },
+    {
+      "encounter_id": "encounter_the_metric_forest",
+      "title": "The Metric Forest",
+      "description": "The expedition crosses into a sector of petrified woods. Every tree is spaced in a perfect, equidistant 2.0-meter grid. The branches grow at precise 90-degree angles. When a scout chops into a trunk for firewood, it bleeds warm, pressurized hydraulic fluid instead of sap.",
+      "threat_level": 3,
+      "outcomes": [
+        {
+          "action": "Harvest the Hydraulic Sap",
+          "survival_chance": 0.6,
+          "success_text": "The team tapped the trees like maples, draining 40 liters of high-grade machine lubricant. The forest remained perfectly, silently still as they bled it dry.",
+          "failure_text": "As the third tree was tapped, the grid shifted. The trees physically moved, closing in and crushing the scout team in a geometrically perfect square."
+        }
+      ]
+    }
+  ]
+}

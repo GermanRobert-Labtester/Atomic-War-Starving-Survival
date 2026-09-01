@@ -27,7 +27,7 @@ namespace Ashfall.Core
         public List<string> discoveredCaches = new List<string>();
     }
 
-    public sealed class LocationEvolutionSystem
+    public sealed partial class LocationEvolutionSystem
     {
         public const string SystemId = "location_evolution";
         private LocationEvolutionSaveState _state = new LocationEvolutionSaveState();

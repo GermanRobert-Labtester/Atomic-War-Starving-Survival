@@ -16,15 +16,42 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public ResearchSystem Engine { get; }
         public string LastEvent { get; private set; } = string.Empty;
-        public static ResearchHostSession Create()
+
+        /// <summary>
+        /// Create a research host session bound to <paramref name="engine"/> (or a
+        /// fresh one) and load the authoritative research_knowledge.json catalog
+        /// (Plan 34: JSON is the sole authored research authority — no hardcoded
+        /// fallback; an empty load is surfaced as a diagnostic).
+        /// </summary>
+        public static ResearchHostSession Create(string dataDir, ResearchSystem? engine = null)
         {
-            return new ResearchHostSession();
+            return new ResearchHostSession(dataDir, engine);
         }
 
-        private ResearchHostSession()
+        private ResearchHostSession(string? dataDir, ResearchSystem? engine)
         {
-            Engine = new ResearchSystem(log: new NullLog());
-            Engine.RegisterDefaults();
+            Engine = engine ?? new ResearchSystem(log: new NullLog());
+            if (!string.IsNullOrEmpty(dataDir))
+                LoadCatalog(dataDir);
+        }
+
+        /// <summary>Load the research_knowledge.json catalog into the Core system (the authority).</summary>
+        public void LoadCatalog(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var fileIO = new Ashfall.Core.FileSystemIO();
+            var serializer = new Ashfall.Core.SystemTextJsonSerializer();
+            int count = ResearchKnowledgeCatalogLoader.LoadAndRegister(Engine, dataDir, fileIO, serializer);
+            if (count > 0)
+            {
+                LastEvent = $"Research catalog loaded: {count} nodes";
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = "Research catalog MISSING or empty — research content unavailable";
+                Godot.GD.PrintErr($"[Research] research_knowledge.json missing/empty under {dataDir} — no fallback is provided (Plan 34)");
+            }
         }
 
         public bool IsUnlocked => Engine.State.expansionUnlocked;

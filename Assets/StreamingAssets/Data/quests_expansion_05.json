@@ -3,20 +3,20 @@
     "quests": [
         {
             "id": "quest_scavenger_alliance",
-            "title": "The Scavenger Alliance",
-            "description": "A desperate faction of scavengers offers an alliance, but their loyalty is questionable.",
+            "title": "Local Salvage Conglomeration",
+            "description": "An independent salvage team requests a formal integration of operations.",
             "type": "diplomacy",
             "minDay": 30,
             "maxDay": 120,
             "factionTag": "scavengers",
-            "synopsis": "The scavengers of Sector 7 have grown tired of fighting over scraps. They propose an alliance with your bunker, but their leader's motives are unclear.",
+            "synopsis": "A semi-organized group of local scavengers has proposed merging logistics. They offer raw labor in exchange for structural protection and medical overhead.",
             "prerequisites": [
                 "survivors_10"
             ],
             "choices": [
                 {
                     "id": "scavenger_alliance_accept",
-                    "text": "Accept the alliance",
+                    "text": "Execute formal integration",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -29,11 +29,11 @@
                             "value": 50
                         }
                     ],
-                    "consequences": "The scavengers bring supplies but also reveal they've been raiding a nearby settlement. Your reputation with other factions suffers."
+                    "consequences": "You absorb their numbers. The caloric strain spikes, but the immediate influx of raw materials stabilizes winter projections."
                 },
                 {
                     "id": "scavenger_alliance_reject",
-                    "text": "Reject the offer",
+                    "text": "Deny integration",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -41,32 +41,32 @@
                             "value": -15
                         }
                     ],
-                    "consequences": "The scavengers leave in anger, but you avoid entangling yourself in their schemes. They may return as enemies later."
+                    "consequences": "You refuse the overhead. The team attempts independent operations and is subsequently liquidated by regional hostiles."
                 },
                 {
                     "id": "scavenger_alliance_investigate",
-                    "text": "Investigate their claims first",
+                    "text": "Exploit as disposable assets",
                     "effects": [],
-                    "consequences": "You discover the scavengers have been stealing from a desperate farming community. This could be used as leverage or reported."
+                    "consequences": "You accept the merger but assign the new units exclusively to high-rad zones. The material yield is massive; the units expire shortly after."
                 }
             ]
         },
         {
             "id": "quest_farmers_bargain",
-            "title": "The Farmer's Bargain",
-            "description": "A group of farmers offers a trade agreement for fresh food in exchange for protection.",
+            "title": "Agricultural Output Deficit",
+            "description": "Hydroponic yields have dropped below baseline. A local agrarian collective offers seeds for security.",
             "type": "trade",
             "minDay": 25,
             "maxDay": 100,
             "factionTag": "farmers",
-            "synopsis": "The farmers of Green Sector 3 have a surplus of food but need protection from raiders. They propose a regular trade agreement.",
+            "synopsis": "A nearby agrarian outpost claims to have radiation-resistant seed stock. They require armed details to secure their perimeter in exchange for a percentage of the yield.",
             "prerequisites": [
                 "survivors_8"
             ],
             "choices": [
                 {
                     "id": "farmers_bargain_accept",
-                    "text": "Accept the trade agreement",
+                    "text": "Deploy security detail",
                     "effects": [
                         {
                             "type": "resource",
@@ -79,11 +79,11 @@
                             "value": 25
                         }
                     ],
-                    "consequences": "The farmers deliver food regularly, but you must assign guards to protect their fields. This consumes survivor labor."
+                    "consequences": "You commit armed units to their perimeter. The resulting crop yield offsets the caloric cost of the security detail."
                 },
                 {
                     "id": "farmers_bargain_reject",
-                    "text": "Reject the offer",
+                    "text": "Deny support",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -91,11 +91,11 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The farmers are disappointed but understand. They may seek protection from another group."
+                    "consequences": "You keep your arms local. The agrarian outpost is overrun within a week; the seed stock is lost to the sector."
                 },
                 {
                     "id": "farmers_bargain_cheat",
-                    "text": "Try to cheat them",
+                    "text": "Requisition seed stock",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -103,52 +103,52 @@
                             "value": -30
                         }
                     ],
-                    "consequences": "The farmers discover your deception and refuse to trade. They spread rumors about your dishonesty."
+                    "consequences": "You dispatch the armed detail to seize the seeds directly. The outpost is neutralized. The seeds are acquired without ongoing obligations."
                 }
             ]
         },
         {
             "id": "quest_radio_signal",
-            "title": "Mysterious Radio Signal",
-            "description": "A strange radio signal is detected from a nearby ruin. It could be survivors... or something else.",
+            "title": "Unidentified Encrypted Broadcast",
+            "description": "The communication array has locked onto a repeating, encrypted transmission.",
             "type": "exploration",
             "minDay": 40,
             "maxDay": 150,
             "factionTag": "neutral",
-            "synopsis": "A weak but repeating signal is coming from the ruins of an old military outpost. It could be survivors in need, or a trap.",
+            "synopsis": "A high-powered signal is broadcasting on a loop. It may contain coordinates to an intact pre-war cache, or it may be a standard hostile lure protocol.",
             "prerequisites": [
                 "survivors_12"
             ],
             "choices": [
                 {
                     "id": "radio_signal_investigate",
-                    "text": "Send an expedition to investigate",
+                    "text": "Allocate processing cycles",
                     "effects": [],
-                    "consequences": "The expedition finds a group of survivors who claim to be scientists studying radiation effects. They offer valuable data in exchange for shelter."
+                    "consequences": "You burn fuel to run the decryption subroutines. The resulting coordinates lead to a functional medical cache. The expenditure is justified."
                 },
                 {
                     "id": "radio_signal_ignore",
-                    "text": "Ignore the signal",
+                    "text": "Ignore transmission",
                     "effects": [],
-                    "consequences": "The signal continues, but you avoid potential danger. However, you may miss an opportunity for new allies or technology."
+                    "consequences": "You save the fuel. The signal degrades and is eventually lost to background radiation."
                 },
                 {
                     "id": "radio_signal_destroy",
-                    "text": "Destroy the source of the signal",
+                    "text": "Broadcast response",
                     "effects": [],
-                    "consequences": "The signal stops, but you never learn if it was a threat or a lifeline. Some survivors may see this as an act of aggression."
+                    "consequences": "You ping the source. The signal ceases immediately. Two days later, a heavily armed recon element probes your perimeter."
                 }
             ]
         },
         {
             "id": "quest_medical_supply_run",
-            "title": "Medical Supply Run",
-            "description": "A nearby settlement is in desperate need of medical supplies. Will you risk an expedition to help them?",
+            "title": "Pharmaceutical Acquisition",
+            "description": "Medical reserves are insufficient to manage projected winter ailments. A high-risk acquisition is necessary.",
             "type": "aid",
             "minDay": 35,
             "maxDay": 110,
             "factionTag": "neutral",
-            "synopsis": "The settlement of Riverside has lost most of their medical supplies in a raid. They beg for help, offering rare medical knowledge in return.",
+            "synopsis": "A ruined clinical facility in Sector 3 is confirmed to hold intact pharmaceutical stocks. The structure is heavily irradiated and structurally unsound.",
             "prerequisites": [
                 "survivors_10",
                 "medical_supplies_low"
@@ -156,7 +156,7 @@
             "choices": [
                 {
                     "id": "medical_run_help",
-                    "text": "Organize a supply run",
+                    "text": "Execute acquisition",
                     "effects": [
                         {
                             "type": "resource",
@@ -169,11 +169,11 @@
                             "value": 30
                         }
                     ],
-                    "consequences": "The expedition succeeds, but one survivor is injured in the process. The settlement offers to teach your medics advanced techniques."
+                    "consequences": "The team returns with the pharmaceuticals. One unit sustains lethal structural trauma. A net gain in medical capacity versus a net loss in labor."
                 },
                 {
                     "id": "medical_run_refuse",
-                    "text": "Refuse to help",
+                    "text": "Abort acquisition",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -181,11 +181,11 @@
                             "value": -20
                         }
                     ],
-                    "consequences": "The settlement is left to suffer. They may hold a grudge or seek help from another group."
+                    "consequences": "You preserve the labor pool. The medical deficit remains, and projected winter attrition rates are adjusted upward."
                 },
                 {
                     "id": "medical_run_ambush",
-                    "text": "Set an ambush for raiders",
+                    "text": "Contract independent operatives",
                     "effects": [
                         {
                             "type": "resource",
@@ -198,19 +198,19 @@
                             "value": -25
                         }
                     ],
-                    "consequences": "You recover some supplies from raiders, but the settlement is unaware of your involvement. Their suffering continues."
+                    "consequences": "You hire unaffiliated scavengers to clear the clinic. They deliver the supplies but retain a significant operational cut."
                 }
             ]
         },
         {
             "id": "quest_black_flotilla_trade",
-            "title": "Black Flotilla Trade Negotiation",
-            "description": "The notorious Black Flotilla offers a lucrative trade deal, but their reputation precedes them.",
+            "title": "Flotilla Exchange Protocol",
+            "description": "The Black Flotilla has arrived at the boundary markers, offering high-value technology for bulk calories.",
             "type": "trade",
             "minDay": 50,
             "maxDay": 180,
             "factionTag": "black_flotilla",
-            "synopsis": "The Black Flotilla, a group of raiders turned traders, offers rare pre-war technology in exchange for food and fuel.",
+            "synopsis": "The Flotilla requires immense caloric input to maintain their maritime operations. They offer sealed pre-war hardware in exchange for your food reserves.",
             "prerequisites": [
                 "survivors_15",
                 "fuel_50"
@@ -218,7 +218,7 @@
             "choices": [
                 {
                     "id": "black_flotilla_trade_accept",
-                    "text": "Accept the trade",
+                    "text": "Execute bulk transfer",
                     "effects": [
                         {
                             "type": "resource",
@@ -236,11 +236,11 @@
                             "value": 15
                         }
                     ],
-                    "consequences": "The trade is completed, but some survivors are uneasy about dealing with the Flotilla. Their reputation may affect morale."
+                    "consequences": "You transfer the requested tonnage of grain. The hardware is functional and significantly upgrades your water purification efficiency."
                 },
                 {
                     "id": "black_flotilla_trade_refuse",
-                    "text": "Refuse the offer",
+                    "text": "Deny transaction",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -248,11 +248,11 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The Flotilla leaves, but not before making threats. They may return as enemies."
+                    "consequences": "You refuse the terms. The Flotilla departs without incident, but your name is removed from their priority route."
                 },
                 {
                     "id": "black_flotilla_trade_cheat",
-                    "text": "Try to cheat them",
+                    "text": "Attempt material deception",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -260,19 +260,19 @@
                             "value": -40
                         }
                     ],
-                    "consequences": "The Flotilla discovers your deception and attacks your supply caravan on the way back. You lose resources and reputation."
+                    "consequences": "You cut the grain sacks with sawdust. The Flotilla inspectors detect the anomaly, confiscate the shipment, and designate your settlement hostile."
                 }
             ]
         },
         {
             "id": "quest_bunker_upgrade",
-            "title": "Bunker Expansion Project",
-            "description": "The survivors propose expanding the bunker to accommodate more people and better facilities.",
+            "title": "Structural Expansion Initiative",
+            "description": "Population density has reached critical limits. Expansion into Sector 4 is proposed.",
             "type": "construction",
             "minDay": 60,
             "maxDay": 200,
             "factionTag": "neutral",
-            "synopsis": "With morale improving, the survivors suggest expanding the bunker to improve living conditions and prepare for future threats.",
+            "synopsis": "The current living quarters are at 140% capacity, leading to increased disease transmission. Expanding into the collapsed Sector 4 requires heavy labor and material investment.",
             "prerequisites": [
                 "survivors_20",
                 "construction_materials_100"
@@ -280,7 +280,7 @@
             "choices": [
                 {
                     "id": "bunker_upgrade_fast",
-                    "text": "Rush the expansion",
+                    "text": "Authorize rapid expansion",
                     "effects": [
                         {
                             "type": "bunker_capacity",
@@ -291,11 +291,11 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The expansion is completed quickly, but shoddy workmanship leads to structural issues. Repairs will be needed soon."
+                    "consequences": "The sector is cleared quickly, but poor shoring leads to a minor cave-in. The space is usable, but requires constant maintenance."
                 },
                 {
                     "id": "bunker_upgrade_slow",
-                    "text": "Take it slow and steady",
+                    "text": "Execute reinforced clearance",
                     "effects": [
                         {
                             "type": "bunker_capacity",
@@ -306,25 +306,25 @@
                             "value": 5
                         }
                     ],
-                    "consequences": "The expansion is completed with high quality. Survivors are proud of their work and morale improves."
+                    "consequences": "The expansion is slow and consumes massive amounts of steel framing. The resulting sector is highly stable and reduces overall disease vectors."
                 },
                 {
                     "id": "bunker_upgrade_cancel",
-                    "text": "Cancel the project",
+                    "text": "Deny expansion",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Some may leave to find better living conditions elsewhere."
+                    "consequences": "Population density remains critical. You enforce stricter rationing to offset the inevitable medical overhead."
                 }
             ]
         },
         {
             "id": "quest_radiation_study",
-            "title": "Radiation Study Expedition",
-            "description": "Scientists from a distant settlement want to study the radiation effects in your area.",
+            "title": "Meridian Compact Survey",
+            "description": "A survey team from the Meridian Compact requests access to your local radiation telemetry.",
             "type": "science",
             "minDay": 70,
             "maxDay": 220,
             "factionTag": "scientists",
-            "synopsis": "A team of radiation scientists from the Meridian Compact offers to study the radiation patterns in your sector in exchange for data sharing.",
+            "synopsis": "A well-equipped team from the Meridian Compact wishes to install monitoring equipment in your territory. They offer shared data access in return.",
             "prerequisites": [
                 "survivors_12",
                 "radiation_data_available"
@@ -332,7 +332,7 @@
             "choices": [
                 {
                     "id": "radiation_study_allow",
-                    "text": "Allow them to study",
+                    "text": "Authorize installation",
                     "effects": [
                         {
                             "type": "resource",
@@ -340,11 +340,11 @@
                             "value": 15
                         }
                     ],
-                    "consequences": "The scientists provide valuable data on radiation patterns, helping you plan safer expeditions and bunker expansions."
+                    "consequences": "The equipment is installed. The telemetry data allows you to optimize scavenging routes, avoiding unseen high-rad pockets."
                 },
                 {
                     "id": "radiation_study_refuse",
-                    "text": "Refuse their request",
+                    "text": "Deny access",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -352,32 +352,32 @@
                             "value": -15
                         }
                     ],
-                    "consequences": "The scientists leave, but the Meridian Compact may view your refusal as uncooperative. Future collaborations may be difficult."
+                    "consequences": "You refuse their presence. The team departs smoothly, logging your settlement as uncooperative in their central database."
                 },
                 {
                     "id": "radiation_study_spy",
-                    "text": "Use them as unwitting spies",
+                    "text": "Exploit hardware",
                     "effects": [],
-                    "consequences": "You learn valuable information about other settlements' activities, but if discovered, your reputation will suffer greatly."
+                    "consequences": "You allow the installation, then strip the equipment for rare earth metals once the team departs. The Compact ceases all communication."
                 }
             ]
         },
         {
             "id": "quest_survivor_rescue",
-            "title": "Survivor Rescue Mission",
-            "description": "A lone survivor is spotted injured near the perimeter. Rescue them or leave them to their fate?",
+            "title": "Perimeter Asset Recovery",
+            "description": "An injured unit has collapsed near the outer warning wire.",
             "type": "rescue",
             "minDay": 20,
             "maxDay": 90,
             "factionTag": "neutral",
-            "synopsis": "A lone survivor, injured and dehydrated, is spotted near the bunker's perimeter. They beg for help, claiming to have valuable information.",
+            "synopsis": "A unit lies motionless near the perimeter, displaying signs of severe dehydration and physical trauma. They represent both a potential labor asset and a medical burden.",
             "prerequisites": [
                 "survivors_8"
             ],
             "choices": [
                 {
                     "id": "survivor_rescue_help",
-                    "text": "Rescue the survivor",
+                    "text": "Execute recovery",
                     "effects": [
                         {
                             "type": "survivor_count",
@@ -388,43 +388,43 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "The survivor reveals they were part of a larger group that was raided. They offer to join your bunker and share their skills."
+                    "consequences": "You expend medical supplies to stabilize the unit. Upon recovery, they are integrated into the labor pool, providing specialized mechanical skills."
                 },
                 {
                     "id": "survivor_rescue_leave",
-                    "text": "Leave them to their fate",
+                    "text": "Maintain perimeter",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -5
                         }
                     ],
-                    "consequences": "The survivor dies. Survivors who witnessed this are shaken, and some question the bunker's morality."
+                    "consequences": "You do not engage. The unit expires by nightfall. The biological remains are processed for salvage."
                 },
                 {
                     "id": "survivor_rescue_ambush",
-                    "text": "Ambush and interrogate them",
+                    "text": "Extract intelligence",
                     "effects": [],
-                    "consequences": "The survivor reveals information about a nearby raider camp, but their fate weighs on the survivors' consciences."
+                    "consequences": "You administer minimal stimulants to interrogate the unit about local hostiles before they expire. The intelligence is actionable."
                 }
             ]
         },
         {
             "id": "quest_raider_peace_offer",
-            "title": "Raider Peace Offer",
-            "description": "A raider faction offers a temporary truce in exchange for tribute.",
+            "title": "Hostile Faction Extortion",
+            "description": "A local hostile element demands regular material tribute in exchange for operational stability.",
             "type": "diplomacy",
             "minDay": 45,
             "maxDay": 130,
             "factionTag": "raiders",
-            "synopsis": "The raiders of Sector 5, led by a charismatic but ruthless leader, offer a truce. They demand tribute in exchange for not attacking your bunker.",
+            "synopsis": "The hostile group controlling Sector 5 has proposed a 'security tariff'. Paying it depletes resources; refusing it guarantees armed conflict.",
             "prerequisites": [
                 "survivors_15"
             ],
             "choices": [
                 {
                     "id": "raider_peace_accept",
-                    "text": "Accept the truce",
+                    "text": "Authorize tariff payment",
                     "effects": [
                         {
                             "type": "resource",
@@ -437,11 +437,11 @@
                             "value": 20
                         }
                     ],
-                    "consequences": "The truce holds for a while, but the raiders grow bolder over time. Some survivors resent paying tribute."
+                    "consequences": "You transfer the requested materials. The hostiles cease perimeter harassment, but the economic drain severely impacts internal operations."
                 },
                 {
                     "id": "raider_peace_refuse",
-                    "text": "Refuse and prepare for war",
+                    "text": "Reject tariff",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -449,11 +449,11 @@
                             "value": -25
                         }
                     ],
-                    "consequences": "The raiders attack within days. Your bunker must defend itself, risking lives and resources."
+                    "consequences": "You refuse the demand. The hostiles initiate a coordinated assault on your perimeter, forcing a heavy expenditure of ammunition to repel them."
                 },
                 {
                     "id": "raider_peace_negotiate",
-                    "text": "Try to negotiate better terms",
+                    "text": "Negotiate reduced tariff",
                     "effects": [
                         {
                             "type": "resource",
@@ -461,19 +461,19 @@
                             "value": -15
                         }
                     ],
-                    "consequences": "The raiders agree to a smaller tribute, but they remain a threat. Your survivors are relieved but uneasy."
+                    "consequences": "You negotiate a lower payment rate. The hostiles accept, but maintain a threatening posture. The economic drain is manageable but persistent."
                 }
             ]
         },
         {
             "id": "quest_expedition_equipment",
-            "title": "Expedition Equipment Upgrade",
-            "description": "Upgrade your expedition gear to improve safety and efficiency.",
+            "title": "Expedition Hardware Overhaul",
+            "description": "Current scavenging gear is degrading. An overhaul utilizing pre-war tech is proposed.",
             "type": "crafting",
             "minDay": 55,
             "maxDay": 160,
             "factionTag": "neutral",
-            "synopsis": "The survivors suggest upgrading your expedition gear with scavenged pre-war technology to improve safety and efficiency.",
+            "synopsis": "Surface operations are suffering due to failing environmental seals and degraded optics. Overhauling the gear requires a significant investment of rare components.",
             "prerequisites": [
                 "survivors_10",
                 "technology_5"
@@ -481,7 +481,7 @@
             "choices": [
                 {
                     "id": "expedition_upgrade_full",
-                    "text": "Upgrade all expedition gear",
+                    "text": "Authorize full overhaul",
                     "effects": [
                         {
                             "type": "expedition_safety",
@@ -493,36 +493,36 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The upgrades are successful, and expeditions return with more resources and fewer injuries."
+                    "consequences": "You expend the components. The upgraded gear significantly reduces radiation exposure and increases the caloric yield of surface operations."
                 },
                 {
                     "id": "expedition_upgrade_partial",
-                    "text": "Upgrade only critical gear",
+                    "text": "Authorize partial overhaul",
                     "effects": [
                         {
                             "type": "expedition_safety",
                             "value": 8
                         }
                     ],
-                    "consequences": "The critical upgrades improve safety, but some expeditions still face unnecessary risks."
+                    "consequences": "You repair only the critical seals. Surface teams remain functional, but continue to suffer minor environmental degradation."
                 },
                 {
                     "id": "expedition_upgrade_cancel",
-                    "text": "Cancel the project",
+                    "text": "Deny resource expenditure",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Some may question the leadership's priorities."
+                    "consequences": "You conserve the components. Surface operations continue to suffer high attrition rates and low yields."
                 }
             ]
         },
         {
             "id": "quest_medical_experiment",
-            "title": "Medical Experiment",
-            "description": "A desperate medic proposes an untested medical procedure to cure radiation sickness.",
+            "title": "Experimental Rad-Purge Protocol",
+            "description": "The medical officer proposes testing an unverified chemical compound to treat radiation sickness.",
             "type": "medical",
             "minDay": 65,
             "maxDay": 190,
             "factionTag": "neutral",
-            "synopsis": "Dr. Elena Vasquez, a skilled but reckless medic, proposes an experimental treatment for radiation sickness using scavenged pre-war drugs.",
+            "synopsis": "Medical Officer Vasquez has synthesized a compound from degraded pre-war pharmaceuticals. It may reverse severe radiation poisoning, or it may induce rapid organ failure.",
             "prerequisites": [
                 "survivors_12",
                 "radiation_sickness_cases_2"
@@ -530,7 +530,7 @@
             "choices": [
                 {
                     "id": "medical_experiment_try",
-                    "text": "Allow the experiment",
+                    "text": "Authorize human trials",
                     "effects": [
                         {
                             "type": "survivor_health",
@@ -538,43 +538,43 @@
                             "value": 30
                         }
                     ],
-                    "consequences": "The treatment works! The survivors are cured, and Dr. Vasquez gains respect. However, the experimental drug has side effects."
+                    "consequences": "The compound is administered. The radiation sickness is reversed, but the subjects suffer permanent, localized nerve damage. A net positive for the labor pool."
                 },
                 {
                     "id": "medical_experiment_refuse",
-                    "text": "Refuse the experiment",
+                    "text": "Deny human trials",
                     "effects": [],
-                    "consequences": "The survivors with radiation sickness worsen. Some may not survive."
+                    "consequences": "You refuse the protocol. The irradiated subjects degrade and expire according to standard medical projections."
                 },
                 {
                     "id": "medical_experiment_spy",
-                    "text": "Use the experiment as a cover to test on captives",
+                    "text": "Test on hostile captives",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -20
                         }
                     ],
-                    "consequences": "The treatment works, but survivors are horrified by the unethical methods. Some may leave the bunker."
+                    "consequences": "The compound is tested on detained hostiles. The efficacy is confirmed with no risk to your own labor pool. The data is logged."
                 }
             ]
         },
         {
             "id": "quest_scout_training",
-            "title": "Scout Training Program",
-            "description": "Establish a training program to improve your scouts' skills and survival rates.",
+            "title": "Surface Orientation Program",
+            "description": "Implement a structured training program for surface operatives to reduce attrition.",
             "type": "training",
             "minDay": 40,
             "maxDay": 140,
             "factionTag": "neutral",
-            "synopsis": "The survivors propose a training program to improve scouts' skills, reduce risks, and increase the success rate of expeditions.",
+            "synopsis": "Untrained units assigned to surface detail are expiring at a 40% rate. A formalized training program would reduce this, but requires experienced units to cease labor and instruct.",
             "prerequisites": [
                 "survivors_15"
             ],
             "choices": [
                 {
                     "id": "scout_training_full",
-                    "text": "Implement full training program",
+                    "text": "Implement full curriculum",
                     "effects": [
                         {
                             "type": "scout_efficiency",
@@ -585,79 +585,79 @@
                             "value": 5
                         }
                     ],
-                    "consequences": "The training is successful. Scouts return with more resources and fewer injuries. Survivors feel more secure."
+                    "consequences": "The training consumes significant operational time, but the survival rate of new operatives increases dramatically. Long-term caloric yield improves."
                 },
                 {
                     "id": "scout_training_partial",
-                    "text": "Train only the most experienced scouts",
+                    "text": "Implement minimal briefing",
                     "effects": [
                         {
                             "type": "scout_efficiency",
                             "value": 10
                         }
                     ],
-                    "consequences": "The program is partially successful, but inexperienced scouts still face unnecessary risks."
+                    "consequences": "You provide basic hazard orientation. Attrition drops slightly, but remains a constant drain on the population."
                 },
                 {
                     "id": "scout_training_cancel",
-                    "text": "Cancel the program",
+                    "text": "Maintain current protocol",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Some may question the leadership's commitment to safety."
+                    "consequences": "You assign units directly to the surface. The high attrition rate continues, forcing you to constantly seek new personnel."
                 }
             ]
         },
         {
             "id": "quest_food_storage_theft",
-            "title": "Food Storage Theft",
-            "description": "Someone is stealing food from the bunker's storage. Investigate and stop the thief.",
+            "title": "Caloric Inventory Discrepancy",
+            "description": "An audit of the central storage reveals a persistent deficit in caloric reserves.",
             "type": "investigation",
             "minDay": 30,
             "maxDay": 120,
             "factionTag": "neutral",
-            "synopsis": "Food is disappearing from the bunker's storage. Survivors are suspicious, and morale is dropping. Someone must be stealing it.",
+            "synopsis": "High-density rations are being removed from secure storage outside of authorized distribution windows. The leak must be plugged before it impacts winter projections.",
             "prerequisites": [
                 "survivors_10"
             ],
             "choices": [
                 {
                     "id": "food_theft_investigate",
-                    "text": "Investigate discreetly",
+                    "text": "Execute covert surveillance",
                     "effects": [],
-                    "consequences": "You discover a starving survivor stealing food to feed their sick child. The community debates whether to punish them or help."
+                    "consequences": "You identify a unit siphoning calories for an unregistered dependent. You confiscate the stolen mass and reassign the unit to heavy labor."
                 },
                 {
                     "id": "food_theft_accuse",
-                    "text": "Accuse someone publicly",
+                    "text": "Initiate aggressive search",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -15
                         }
                     ],
-                    "consequences": "The accused is innocent, but the accusation causes tension and distrust among survivors."
+                    "consequences": "A sweep of all quarters recovers the missing rations, but the indiscriminate search protocol damages operational cohesion."
                 },
                 {
                     "id": "food_theft_ignore",
-                    "text": "Ignore the theft",
+                    "text": "Write off the deficit",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -10
                         }
                     ],
-                    "consequences": "The theft continues, and survivors grow resentful. Some may start stealing for themselves."
+                    "consequences": "You adjust the ledger to account for the loss. The thefts continue, steadily eroding your operational margin."
                 }
             ]
         },
         {
             "id": "quest_medical_triage",
-            "title": "Medical Triage Decision",
-            "description": "A critical medical emergency requires triage. Who do you save first?",
+            "title": "Mass Casualty Triage",
+            "description": "A localized thermal event has resulted in multiple casualties exceeding medical capacity.",
             "type": "medical",
             "minDay": 50,
             "maxDay": 170,
             "factionTag": "neutral",
-            "synopsis": "A radiation storm hits, and multiple survivors are injured. The medic must triage who to treat first, but the decision will have consequences.",
+            "synopsis": "A structural fire has produced six severe burn casualties. You possess sufficient pharmaceutical assets to stabilize only two. Selection is required.",
             "prerequisites": [
                 "survivors_12",
                 "medical_emergency"
@@ -665,7 +665,7 @@
             "choices": [
                 {
                     "id": "medical_triage_save_leader",
-                    "text": "Save the bunker leader first",
+                    "text": "Prioritize high-value assets",
                     "effects": [
                         {
                             "type": "survivor_health",
@@ -677,11 +677,11 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "The leader survives, but other survivors question the decision. Some may feel abandoned."
+                    "consequences": "You stabilize the chief engineer and the primary medic. The remaining four units expire. Operational capacity is maintained at the cost of raw labor."
                 },
                 {
                     "id": "medical_triage_save_most_valuable",
-                    "text": "Save the most skilled survivor",
+                    "text": "Prioritize likely survivors",
                     "effects": [
                         {
                             "type": "survivor_health",
@@ -689,80 +689,80 @@
                             "value": 50
                         }
                     ],
-                    "consequences": "The skilled survivor survives and can continue contributing, but others feel devalued."
+                    "consequences": "You stabilize the two youngest, healthiest units. The specialized personnel expire, forcing you to rely on untrained replacements."
                 },
                 {
                     "id": "medical_triage_save_random",
-                    "text": "Save randomly",
+                    "text": "Distribute assets equally",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -15
                         }
                     ],
-                    "consequences": "The decision feels arbitrary, and survivors are left feeling helpless and resentful."
+                    "consequences": "You divide the pharmaceuticals among all six. The dosage is insufficient. All six units expire within 48 hours."
                 }
             ]
         },
         {
             "id": "quest_survivor_leadership",
-            "title": "Survivor Leadership Challenge",
-            "description": "A charismatic survivor challenges your leadership. Do you allow a vote or suppress the challenge?",
+            "title": "Command Structure Challenge",
+            "description": "An asset is challenging current operational directives, creating inefficiencies.",
             "type": "politics",
             "minDay": 80,
             "maxDay": 250,
             "factionTag": "neutral",
-            "synopsis": "Marcus Olejnik, a respected but ambitious survivor, challenges your leadership. The bunker must decide whether to hold a vote or suppress the challenge.",
+            "synopsis": "Unit Marcus-2 has begun openly questioning the caloric distribution models and labor assignments, causing measurable drops in shift productivity.",
             "prerequisites": [
                 "survivors_25"
             ],
             "choices": [
                 {
                     "id": "leadership_challenge_allow_vote",
-                    "text": "Allow a vote",
+                    "text": "Re-assert command hierarchy",
                     "effects": [],
-                    "consequences": "Marcus wins the vote. You lose leadership but gain his respect. The bunker enters a new era of democracy."
+                    "consequences": "You enforce strict disciplinary protocols. Efficiency returns to baseline, though the unit continues to harbor unauthorized opinions."
                 },
                 {
                     "id": "leadership_challenge_suppress",
-                    "text": "Suppress the challenge",
+                    "text": "Execute expulsion",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -20
                         }
                     ],
-                    "consequences": "Marcus is exiled or imprisoned. Survivors are divided, and some may leave to join his supporters."
+                    "consequences": "The unit is stripped of gear and expelled. The labor pool decreases, but operational cohesion reaches 100%."
                 },
                 {
                     "id": "leadership_challenge_compromise",
-                    "text": "Compromise and share leadership",
+                    "text": "Re-assign to command",
                     "effects": [
                         {
                             "type": "morale",
                             "value": 5
                         }
                     ],
-                    "consequences": "Marcus becomes co-leader. The bunker benefits from both perspectives, but conflicts may arise."
+                    "consequences": "You integrate the unit into the logistics planning team. Their models prove mathematically sound, increasing overall output."
                 }
             ]
         },
         {
             "id": "quest_raider_ambush",
-            "title": "Raider Ambush",
-            "description": "Your expedition is ambushed by raiders. Fight, flee, or negotiate?",
+            "title": "Hostile Interception",
+            "description": "An acquisition team has engaged a hostile element in transit.",
             "type": "combat",
             "minDay": 35,
             "maxDay": 130,
             "factionTag": "raiders",
-            "synopsis": "An expedition to Sector 4 is ambushed by raiders. The survivors must decide whether to fight, flee, or attempt to negotiate.",
+            "synopsis": "A surface team returning from Sector 4 reports active engagement with an armed hostile force. They request tactical authorization.",
             "prerequisites": [
                 "survivors_10"
             ],
             "choices": [
                 {
                     "id": "raider_ambush_fight",
-                    "text": "Stand and fight",
+                    "text": "Authorize lethal force",
                     "effects": [
                         {
                             "type": "survivor_health",
@@ -774,22 +774,22 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The raiders are repelled, but your expedition suffers losses. The survivors are shaken but proud."
+                    "consequences": "The team engages and neutralizes the hostiles. Significant ammunition is expended, but the acquired materials are secured."
                 },
                 {
                     "id": "raider_ambush_flee",
-                    "text": "Flee and abandon supplies",
+                    "text": "Order tactical retreat",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -15
                         }
                     ],
-                    "consequences": "The expedition escapes, but they lose valuable supplies. Survivors question the leadership's decision."
+                    "consequences": "The team drops the heavy salvage to increase mobility and breaks contact. The personnel are preserved; the materials are lost."
                 },
                 {
                     "id": "raider_ambush_negotiate",
-                    "text": "Attempt to negotiate",
+                    "text": "Authorize material concession",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -797,26 +797,26 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "The raiders agree to let the expedition go in exchange for half the supplies. The survivors are relieved but resentful."
+                    "consequences": "The team abandons half their load as a distraction and withdraws. A mathematically acceptable compromise between life and asset loss."
                 }
             ]
         },
         {
             "id": "quest_bunker_defense",
-            "title": "Bunker Defense Drill",
-            "description": "Prepare the bunker for a potential raider attack with a defense drill.",
+            "title": "Perimeter Readiness Drill",
+            "description": "Current combat readiness metrics are theoretical. A physical stress test is required.",
             "type": "defense",
             "minDay": 60,
             "maxDay": 200,
             "factionTag": "neutral",
-            "synopsis": "The survivors suggest holding a defense drill to prepare for a potential raider attack. This will test the bunker's readiness and morale.",
+            "synopsis": "Simulating a breach will verify the integrity of internal bulkheads and the response time of armed units. It will also consume operational time and minor resources.",
             "prerequisites": [
                 "survivors_20"
             ],
             "choices": [
                 {
                     "id": "bunker_defense_drill_full",
-                    "text": "Hold a full-scale drill",
+                    "text": "Execute full simulation",
                     "effects": [
                         {
                             "type": "bunker_defense_rating",
@@ -827,36 +827,36 @@
                             "value": 5
                         }
                     ],
-                    "consequences": "The drill is successful. The bunker is better prepared for an attack, and survivors feel more secure."
+                    "consequences": "The drill reveals critical flaws in Sector 2's firing lines. The flaws are corrected. Operational time is permanently lost."
                 },
                 {
                     "id": "bunker_defense_drill_partial",
-                    "text": "Hold a small-scale drill",
+                    "text": "Execute theoretical review",
                     "effects": [
                         {
                             "type": "bunker_defense_rating",
                             "value": 8
                         }
                     ],
-                    "consequences": "The drill is partially successful, but some systems are overlooked. Survivors are less confident in the bunker's defenses."
+                    "consequences": "You review the defensive models on paper. It saves calories, but leaves the physical execution unverified."
                 },
                 {
                     "id": "bunker_defense_drill_cancel",
-                    "text": "Cancel the drill",
+                    "text": "Cancel simulation",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Some may question the leadership's commitment to safety."
+                    "consequences": "You prioritize continuous labor over combat readiness. The perimeter remains untested."
                 }
             ]
         },
         {
             "id": "quest_survivor_memorial",
-            "title": "Survivor Memorial",
-            "description": "Hold a memorial for the survivors who have passed away.",
+            "title": "Post-Termination Protocol",
+            "description": "Units are requesting an allocation of time and resources to process recent casualties.",
             "type": "community",
             "minDay": 90,
             "maxDay": 270,
             "factionTag": "neutral",
-            "synopsis": "The survivors propose holding a memorial for those who have died. This could improve morale or dredge up painful memories.",
+            "synopsis": "Several assets are requesting a 'memorial' for recently terminated units. This requires suspending labor schedules and expending localized power for non-utilitarian purposes.",
             "prerequisites": [
                 "survivors_15",
                 "deaths_3"
@@ -864,77 +864,77 @@
             "choices": [
                 {
                     "id": "memorial_hold",
-                    "text": "Hold the memorial",
+                    "text": "Authorize limited protocol",
                     "effects": [
                         {
                             "type": "morale",
                             "value": 15
                         }
                     ],
-                    "consequences": "The memorial is a success. Survivors find closure and feel a renewed sense of community."
+                    "consequences": "You allocate one hour of downtime. The units complete their psychological processing and return to labor with a minor efficiency boost."
                 },
                 {
                     "id": "memorial_refuse",
-                    "text": "Refuse to hold the memorial",
+                    "text": "Deny protocol",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -10
                         }
                     ],
-                    "consequences": "Survivors feel their losses are unacknowledged. Some may leave the bunker."
+                    "consequences": "You refuse to halt operations. The units remain at their posts, but error rates in complex tasks increase measurably."
                 },
                 {
                     "id": "memorial_force_attendance",
-                    "text": "Force survivors to attend",
+                    "text": "Mandate attendance",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -20
                         }
                     ],
-                    "consequences": "The memorial is poorly attended. Survivors resent the forced participation and the lack of sensitivity."
+                    "consequences": "You enforce a mandatory processing session. The forced cessation of labor breeds resentment and fails to achieve the desired psychological reset."
                 }
             ]
         },
         {
             "id": "quest_food_rationing",
-            "title": "Food Rationing Crisis",
-            "description": "Food supplies are critically low. Impose rationing or risk starvation?",
+            "title": "Caloric Distribution Revision",
+            "description": "Current reserves require an immediate downward revision of standard caloric intake.",
             "type": "survival",
             "minDay": 45,
             "maxDay": 150,
             "factionTag": "neutral",
-            "synopsis": "Food supplies are critically low, and rationing is necessary to survive the winter. The survivors must decide how to distribute the remaining food.",
+            "synopsis": "Winter projections indicate a 20% shortfall in grain reserves. A revised rationing model must be implemented immediately to prevent total depletion.",
             "prerequisites": [
                 "food_20"
             ],
             "choices": [
                 {
                     "id": "food_rationing_equal",
-                    "text": "Equal rationing for all",
+                    "text": "Implement baseline reduction",
                     "effects": [
                         {
                             "type": "morale",
                             "value": 5
                         }
                     ],
-                    "consequences": "The rationing is fair, and survivors accept the decision. However, some may still go hungry."
+                    "consequences": "All units receive a 20% reduction. General fatigue increases, but the math balances. No units face immediate starvation."
                 },
                 {
                     "id": "food_rationing_priority",
-                    "text": "Prioritize skilled survivors",
+                    "text": "Implement tiered reduction",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -15
                         }
                     ],
-                    "consequences": "The skilled survivors survive, but others feel abandoned. Resentment grows in the bunker."
+                    "consequences": "Non-essential units receive a 40% reduction; critical assets maintain standard intake. The non-essential pool suffers severe physical degradation."
                 },
                 {
                     "id": "food_rationing_steal",
-                    "text": "Steal food from other survivors",
+                    "text": "Acquire external assets",
                     "effects": [
                         {
                             "type": "morale",
@@ -946,26 +946,26 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "You gain food, but the theft is discovered. Survivors are horrified, and trust is broken."
+                    "consequences": "You authorize a raid on a weaker neighboring outpost. You secure sufficient calories to maintain the current distribution model."
                 }
             ]
         },
         {
             "id": "quest_technology_scavenging",
-            "title": "Technology Scavenging Expedition",
-            "description": "Send an expedition to scavenge for pre-war technology in a dangerous ruin.",
+            "title": "High-Value Hardware Acquisition",
+            "description": "A structurally compromised tower is confirmed to hold intact silicon architecture.",
             "type": "exploration",
             "minDay": 50,
             "maxDay": 180,
             "factionTag": "neutral",
-            "synopsis": "A new ruin has been discovered, rumored to contain pre-war technology. An expedition is sent to scavenge, but the ruin is dangerous.",
+            "synopsis": "An unstable ruin contains intact computing hardware. The retrieval requires units to navigate failing concrete at high elevation.",
             "prerequisites": [
                 "survivors_12"
             ],
             "choices": [
                 {
                     "id": "tech_scavenge_full",
-                    "text": "Send a full expedition",
+                    "text": "Deploy specialized team",
                     "effects": [
                         {
                             "type": "resource",
@@ -977,11 +977,11 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The expedition returns with valuable technology, but one survivor is injured. The bunker gains new capabilities."
+                    "consequences": "The hardware is secured. One unit suffers a complex fracture from falling debris. The tech provides a net gain in automated system control."
                 },
                 {
                     "id": "tech_scavenge_small",
-                    "text": "Send a small team",
+                    "text": "Deploy minimal team",
                     "effects": [
                         {
                             "type": "resource",
@@ -989,25 +989,25 @@
                             "value": 8
                         }
                     ],
-                    "consequences": "The small team returns safely with some technology, but the ruin's dangers mean more could have been recovered."
+                    "consequences": "A two-unit team retrieves only the most accessible components. The risk is minimized; the yield is suboptimal."
                 },
                 {
                     "id": "tech_scavenge_abandon",
-                    "text": "Abandon the expedition",
+                    "text": "Cancel acquisition",
                     "effects": [],
-                    "consequences": "The expedition is lost, and the bunker gains no new technology. Survivors question the decision to send them in the first place."
+                    "consequences": "You deem the structural risk unacceptable. The hardware remains in the ruin until the tower inevitably collapses."
                 }
             ]
         },
         {
             "id": "quest_medical_training",
-            "title": "Medical Training Program",
-            "description": "Establish a medical training program to improve the bunker's healthcare capabilities.",
+            "title": "Triage Proficiency Initiative",
+            "description": "The primary medical officer requests operational time to instruct secondary units in basic triage.",
             "type": "training",
             "minDay": 60,
             "maxDay": 200,
             "factionTag": "neutral",
-            "synopsis": "Dr. Elena Vasquez proposes a medical training program to improve the bunker's healthcare capabilities and reduce deaths from minor injuries.",
+            "synopsis": "Distributing medical knowledge reduces the single-point-of-failure risk of the primary medic. It requires pulling active units from their standard shifts.",
             "prerequisites": [
                 "survivors_15",
                 "medical_supplies_10"
@@ -1015,7 +1015,7 @@
             "choices": [
                 {
                     "id": "medical_training_full",
-                    "text": "Implement full training",
+                    "text": "Authorize comprehensive instruction",
                     "effects": [
                         {
                             "type": "medical_efficiency",
@@ -1026,43 +1026,43 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "The training is successful. The bunker's healthcare improves, and fewer survivors die from minor injuries."
+                    "consequences": "Three units achieve basic medical proficiency. Mortality rates from minor trauma decrease, offsetting the initial labor loss."
                 },
                 {
                     "id": "medical_training_partial",
-                    "text": "Train only the most interested survivors",
+                    "text": "Authorize limited instruction",
                     "effects": [
                         {
                             "type": "medical_efficiency",
                             "value": 10
                         }
                     ],
-                    "consequences": "The program is partially successful, but many survivors remain untrained."
+                    "consequences": "Only one unit is trained as a backup. The operational impact is minimal, but the systemic risk remains high."
                 },
                 {
                     "id": "medical_training_cancel",
-                    "text": "Cancel the program",
+                    "text": "Deny instruction",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Dr. Vasquez may reconsider her role in the bunker."
+                    "consequences": "You refuse to divert labor. The primary medic remains the sole point of failure for all biological repairs."
                 }
             ]
         },
         {
             "id": "quest_survivor_skills_assessment",
-            "title": "Survivor Skills Assessment",
-            "description": "Assess the skills of your survivors to better allocate labor and improve efficiency.",
+            "title": "Labor Optimization Audit",
+            "description": "A comprehensive audit of unit capabilities is proposed to maximize efficiency.",
             "type": "management",
             "minDay": 40,
             "maxDay": 140,
             "factionTag": "neutral",
-            "synopsis": "The survivors propose assessing everyone's skills to better allocate labor and improve the bunker's efficiency. This will help assign roles and improve morale.",
+            "synopsis": "Current labor assignments are based on initial intake data. A full reassessment could uncover misallocated skills, but requires halting production for the duration of the audit.",
             "prerequisites": [
                 "survivors_15"
             ],
             "choices": [
                 {
                     "id": "skills_assessment_full",
-                    "text": "Conduct a full assessment",
+                    "text": "Execute comprehensive audit",
                     "effects": [
                         {
                             "type": "labor_efficiency",
@@ -1073,36 +1073,36 @@
                             "value": 5
                         }
                     ],
-                    "consequences": "The assessment is successful. Labor is allocated more efficiently, and survivors feel their skills are valued."
+                    "consequences": "The audit reveals several inefficiencies. Reassigning units based on the new data results in a 12% increase in overall structural output."
                 },
                 {
                     "id": "skills_assessment_partial",
-                    "text": "Assess only critical roles",
+                    "text": "Execute targeted audit",
                     "effects": [
                         {
                             "type": "labor_efficiency",
                             "value": 8
                         }
                     ],
-                    "consequences": "The assessment is partially successful, but many survivors remain in roles that don't suit their skills."
+                    "consequences": "You audit only the mechanical and medical teams. The minor reassignments provide a negligible boost to efficiency."
                 },
                 {
                     "id": "skills_assessment_refuse",
-                    "text": "Refuse the assessment",
+                    "text": "Deny audit",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Some may feel their skills are unappreciated."
+                    "consequences": "Operations continue uninterrupted. Hidden inefficiencies remain permanently embedded in the labor structure."
                 }
             ]
         },
         {
             "id": "quest_bunker_medical_bay",
-            "title": "Medical Bay Expansion",
-            "description": "Expand the bunker's medical bay to improve healthcare capabilities.",
+            "title": "Clinical Facility Expansion",
+            "description": "The current medical bay lacks the physical space to process projected winter casualties.",
             "type": "construction",
             "minDay": 70,
             "maxDay": 220,
             "factionTag": "neutral",
-            "synopsis": "The survivors propose expanding the medical bay to improve healthcare capabilities and reduce deaths from injuries and illnesses.",
+            "synopsis": "Expanding the clinic into an adjacent storage zone requires stripping the zone of its shelving and redirecting environmental controls to maintain sterilization protocols.",
             "prerequisites": [
                 "survivors_20",
                 "construction_materials_150"
@@ -1110,7 +1110,7 @@
             "choices": [
                 {
                     "id": "medical_bay_expand",
-                    "text": "Expand the medical bay",
+                    "text": "Authorize structural expansion",
                     "effects": [
                         {
                             "type": "medical_capacity",
@@ -1121,17 +1121,17 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "The expansion is successful. The bunker can now treat more injuries and illnesses, improving survival rates."
+                    "consequences": "The clinic is expanded. The increased capacity allows for simultaneous surgical procedures, reducing overall mortality rates."
                 },
                 {
                     "id": "medical_bay_refuse",
-                    "text": "Refuse the expansion",
+                    "text": "Deny expansion",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Dr. Vasquez may reconsider her role in the bunker."
+                    "consequences": "The clinic remains at capacity. Surplus casualties are treated in standard quarters, drastically increasing infection rates."
                 },
                 {
                     "id": "medical_bay_cheap",
-                    "text": "Use cheap, low-quality materials",
+                    "text": "Authorize rapid, unsanitized expansion",
                     "effects": [
                         {
                             "type": "medical_capacity",
@@ -1142,69 +1142,69 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The expansion is completed, but the poor materials lead to structural issues. Repairs will be needed soon."
+                    "consequences": "You clear the space quickly but fail to route proper environmental controls. The new beds are usable, but post-operative infection remains a constant hazard."
                 }
             ]
         },
         {
             "id": "quest_survivor_romance",
-            "title": "Survivor Romance",
-            "description": "Two survivors have developed feelings for each other. Do you acknowledge their relationship or ignore it?",
+            "title": "Unauthorized Biological Bonding",
+            "description": "Two units have established an exclusive biological and psychological bond outside operational parameters.",
             "type": "community",
             "minDay": 100,
             "maxDay": 300,
             "factionTag": "neutral",
-            "synopsis": "Two survivors, Alex and Jamie, have developed romantic feelings for each other. The bunker must decide whether to acknowledge their relationship or ignore it.",
+            "synopsis": "Units Alex-3 and Jamie-4 are dedicating off-shift time to each other. This exclusive bonding can lead to localized favoritism and compromised decision-making during crisis events.",
             "prerequisites": [
                 "survivors_25"
             ],
             "choices": [
                 {
                     "id": "romance_acknowledge",
-                    "text": "Acknowledge their relationship",
+                    "text": "Log and monitor",
                     "effects": [
                         {
                             "type": "morale",
                             "value": 10
                         }
                     ],
-                    "consequences": "The relationship is acknowledged, and the survivors are happy. Other survivors may follow their example, improving morale."
+                    "consequences": "You officially record the bond but take no action. The units maintain standard efficiency, though the risk of compromised crisis response remains active."
                 },
                 {
                     "id": "romance_ignore",
-                    "text": "Ignore their relationship",
+                    "text": "Ignore the anomaly",
                     "effects": [],
-                    "consequences": "The relationship continues in secret. Some survivors disapprove, but most ignore it."
+                    "consequences": "You take no official notice. The bond continues, occasionally causing minor scheduling friction among other units."
                 },
                 {
                     "id": "romance_ban",
-                    "text": "Ban romantic relationships",
+                    "text": "Enforce strict separation",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -15
                         }
                     ],
-                    "consequences": "The ban is unpopular. Survivors resent the intrusion into their personal lives, and morale drops."
+                    "consequences": "You reassign the units to opposing shifts and separate sectors. The bond is broken, resulting in a temporary but severe drop in their individual output."
                 }
             ]
         },
         {
             "id": "quest_fuel_crisis",
-            "title": "Fuel Crisis",
-            "description": "Fuel reserves are critically low. Do you send an expedition to scavenge or conserve what little you have?",
+            "title": "Combustible Liquid Deficit",
+            "description": "Diesel reserves are nearing the zero-line. The primary generators will fail in 72 hours.",
             "type": "survival",
             "minDay": 55,
             "maxDay": 170,
             "factionTag": "neutral",
-            "synopsis": "Fuel reserves are critically low, and the bunker must decide whether to send an expedition to scavenge for more or conserve the remaining fuel.",
+            "synopsis": "Without a rapid influx of combustible liquids, the settlement will lose all thermal and electrical generation. A high-risk acquisition run is mandatory.",
             "prerequisites": [
                 "fuel_10"
             ],
             "choices": [
                 {
                     "id": "fuel_scavenge",
-                    "text": "Send an expedition to scavenge",
+                    "text": "Execute high-risk acquisition",
                     "effects": [
                         {
                             "type": "resource",
@@ -1216,17 +1216,17 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The expedition returns with fuel, but one survivor is injured. The bunker can continue operating normally."
+                    "consequences": "The team secures a functional fuel tanker. The casualty rate is high, but the settlement's power grid is secured for the fiscal quarter."
                 },
                 {
                     "id": "fuel_conserve",
-                    "text": "Conserve the remaining fuel",
+                    "text": "Initiate emergency conservation",
                     "effects": [],
-                    "consequences": "The bunker conserves fuel, but some systems must be shut down to save power. Survivors are uncomfortable but safe."
+                    "consequences": "You shut down all non-essential power. The bunker goes dark and freezing. You stretch the remaining fuel, but the cold claims the weakest units."
                 },
                 {
                     "id": "fuel_steal",
-                    "text": "Steal fuel from another settlement",
+                    "text": "Liquidate assets for fuel",
                     "effects": [
                         {
                             "type": "resource",
@@ -1239,64 +1239,64 @@
                             "value": -20
                         }
                     ],
-                    "consequences": "The fuel is obtained, but the theft is discovered. The settlement may retaliate, and your reputation suffers."
+                    "consequences": "You sell a massive portion of your medical and ammunition reserves to a passing caravan in exchange for their fuel supply. You are powered, but defenseless."
                 }
             ]
         },
         {
             "id": "quest_survivor_disappearance",
-            "title": "Survivor Disappearance",
-            "description": "A survivor has gone missing. Investigate their disappearance and find out what happened.",
+            "title": "Unaccounted Personnel",
+            "description": "An asset has failed to report for three consecutive shifts. Initiate search protocols or log as acceptable loss.",
             "type": "investigation",
             "minDay": 30,
             "maxDay": 120,
             "factionTag": "neutral",
-            "synopsis": "One of your survivors, Maria, has gone missing. The bunker must investigate her disappearance and find out what happened to her.",
+            "synopsis": "Unit Maria-7 failed to report for the hydroponics shift. The asset represents a significant caloric investment. Options are limited to expending further calories on retrieval or writing off the deficit.",
             "prerequisites": [
                 "survivors_10"
             ],
             "choices": [
                 {
                     "id": "disappearance_investigate",
-                    "text": "Conduct a thorough investigation",
+                    "text": "Deploy search detail",
                     "effects": [],
-                    "consequences": "Maria is found alive, having been injured and unable to return. She reveals she was attacked by raiders."
+                    "consequences": "The search detail returns empty-handed, having burned two days of operational calories. The asset is officially logged as terminated."
                 },
                 {
                     "id": "disappearance_accuse",
-                    "text": "Accuse someone of foul play",
+                    "text": "Execute sector quarantine",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -15
                         }
                     ],
-                    "consequences": "The accusation is false, but it causes tension and distrust among survivors."
+                    "consequences": "Sector lockdown prevents further immediate losses, but halts all external resource gathering. The asset remains unaccounted for."
                 },
                 {
                     "id": "disappearance_ignore",
-                    "text": "Ignore the disappearance",
+                    "text": "Log as acceptable loss",
                     "effects": [],
-                    "consequences": "Maria is never found. Survivors are left wondering if anyone cares about their safety."
+                    "consequences": "The asset is crossed off the manifest. The saved rations are redistributed. Efficiency improves marginally."
                 }
             ]
         },
         {
             "id": "quest_bunker_power_crisis",
-            "title": "Bunker Power Crisis",
-            "description": "The bunker's power generator is failing. Repair it or risk losing power and heat.",
+            "title": "Primary Generator Degradation",
+            "description": "The central turbine is operating at 40% efficiency. Immediate intervention required to prevent thermal collapse.",
             "type": "survival",
             "minDay": 65,
             "maxDay": 200,
             "factionTag": "neutral",
-            "synopsis": "The bunker's power generator is failing, and the bunker is at risk of losing power and heat. The survivors must decide whether to repair it or find an alternative power source.",
+            "synopsis": "The main diesel turbine is shedding load. If the core temperature drops below operational thresholds, the water cyclers will freeze and burst.",
             "prerequisites": [
                 "power_50"
             ],
             "choices": [
                 {
                     "id": "power_repair",
-                    "text": "Repair the generator",
+                    "text": "Execute emergency overhaul",
                     "effects": [
                         {
                             "type": "power",
@@ -1307,48 +1307,48 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "The generator is repaired, and the bunker regains full power. Survivors are relieved and grateful."
+                    "consequences": "You cannibalize secondary systems to repair the turbine. Power is restored, but the structural redundancy is permanently compromised."
                 },
                 {
                     "id": "power_alternative",
-                    "text": "Find an alternative power source",
+                    "text": "Reroute to auxiliary banks",
                     "effects": [
                         {
                             "type": "power",
                             "value": 80
                         }
                     ],
-                    "consequences": "An alternative power source is found, but it is less reliable. Survivors are uneasy about the bunker's future."
+                    "consequences": "You shift load to the chemical batteries. It buys time, but the voltage drop forces a strict rationing of the thermal output."
                 },
                 {
                     "id": "power_ignore",
-                    "text": "Ignore the problem",
+                    "text": "Enforce brownout protocols",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -20
                         }
                     ],
-                    "consequences": "The bunker loses power. Survivors suffer from the cold, and some may not survive the winter."
+                    "consequences": "You shut down non-critical sectors. The temperature in the lower levels drops to lethal ranges. The resulting casualties reduce the overall caloric demand."
                 }
             ]
         },
         {
             "id": "quest_survivor_mental_health",
-            "title": "Survivor Mental Health Crisis",
-            "description": "A survivor is suffering from severe mental health issues. Do you help them or exile them for the safety of the group?",
+            "title": "Psychological Degradation Incident",
+            "description": "An asset is exhibiting erratic behavior, threatening operational cohesion.",
             "type": "medical",
             "minDay": 75,
             "maxDay": 230,
             "factionTag": "neutral",
-            "synopsis": "One of your survivors, Jamie, is suffering from severe mental health issues. The bunker must decide whether to help them or exile them for the safety of the group.",
+            "synopsis": "Unit Jamie-4 is demonstrating severe psychological fracture, interfering with the structural repair schedule and consuming excess medical overhead.",
             "prerequisites": [
                 "survivors_15"
             ],
             "choices": [
                 {
                     "id": "mental_health_help",
-                    "text": "Help Jamie with their mental health",
+                    "text": "Administer chemical restraint",
                     "effects": [
                         {
                             "type": "survivor_health",
@@ -1360,24 +1360,76 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "Jamie recovers and is grateful. The bunker's mental health improves, and survivors feel more secure."
+                    "consequences": "You expend valuable pharmaceuticals to stabilize the unit. They return to minimal functionality, but the medical deficit remains."
                 },
                 {
                     "id": "mental_health_exile",
-                    "text": "Exile Jamie for the safety of the group",
+                    "text": "Execute expulsion protocol",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -20
                         }
                     ],
-                    "consequences": "Jamie is exiled, but survivors are horrified by the decision. Some may leave the bunker in protest."
+                    "consequences": "The unit is escorted to the airlock and expelled. The physical threat is neutralized, though the labor pool is permanently reduced."
                 },
                 {
                     "id": "mental_health_ignore",
-                    "text": "Ignore Jamie's issues",
+                    "text": "Ignore degradation",
                     "effects": [],
-                    "consequences": "Jamie's condition worsens. The bunker's mental health deteriorates, and survivors are left feeling helpless."
+                    "consequences": "The unit continues to degrade until a violent incident forces intervention. The resulting damage to infrastructure costs more than the initial treatment would have."
+                }
+            ]
+        },
+        {
+            "id": "quest_exp09_sunken_submarine",
+            "title": "The Submerged Asset",
+            "description": "The Black Flotilla has provided coordinates for a sunken pre-war vessel. Salvage operations require specialized gear.",
+            "type": "exploration",
+            "minDay": 90,
+            "maxDay": 300,
+            "factionTag": "black_flotilla",
+            "synopsis": "Coordinates and a Flotilla cipher indicate the location of the Half-Submerged Barrik. The vessel is a confirmed war grave. The Flotilla expects an accounting of the interior.",
+            "prerequisites": [
+                "quest_black_flotilla_trade",
+                "item_rebreather_canister",
+                "item_descent_line",
+                "item_sealed_dive_lamp",
+                "flotilla_trust_deep"
+            ],
+            "choices": [
+                {
+                    "id": "barrik_dive_and_memorialize",
+                    "text": "Execute interior survey",
+                    "effects": [
+                        {
+                            "type": "complete_quest",
+                            "target": "quest_exp09_sunken_submarine"
+                        }
+                    ],
+                    "consequences": "You penetrate the flooded hull and log the personnel tags on the bulkhead. You leave the biological remains undisturbed. The Flotilla logs your compliance."
+                },
+                {
+                    "id": "barrik_abort",
+                    "text": "Abort descent",
+                    "effects": [
+                        {
+                            "type": "fail_quest",
+                            "target": "quest_exp09_sunken_submarine"
+                        }
+                    ],
+                    "consequences": "The structural risks exceed operational parameters. You return to the surface. The Flotilla notes your lack of commitment to the task."
+                },
+                {
+                    "id": "barrik_salvage_approach",
+                    "text": "Extract external salvage",
+                    "effects": [
+                        {
+                            "type": "complete_quest",
+                            "target": "quest_exp09_sunken_submarine"
+                        }
+                    ],
+                    "consequences": "You strip the hull of functional brass fittings and pressure gauges. The interior remains sealed. The material yield is acceptable."
                 }
             ]
         }

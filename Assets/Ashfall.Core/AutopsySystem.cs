@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 #pragma warning disable CS8618
 using Ashfall.Core.Medical;
 using Ashfall.Core.Radiation;
@@ -17,15 +18,32 @@ namespace Ashfall.Core
     [Serializable]
     public sealed class AutopsyProcedure
     {
-        public string procedure_id = string.Empty;
-        public string display_name = string.Empty;
-        public List<string> requiredTools = new List<string>();
-        public List<string> requiredConsumables = new List<string>();
-        public float airborneRisk = 0.1f;
-        public float pathogenRisk = 0.05f;
-        public int procedureHours = 4;
-        public List<string> possibleFindings = new List<string>();
-        public List<string> researchUnlocks = new List<string>();
+        [JsonPropertyName("procedure_id")]
+        public string procedure_id { get; set; } = string.Empty;
+
+        [JsonPropertyName("display_name")]
+        public string display_name { get; set; } = string.Empty;
+
+        [JsonPropertyName("required_tools")]
+        public List<string> requiredTools { get; set; } = new List<string>();
+
+        [JsonPropertyName("required_consumables")]
+        public List<string> requiredConsumables { get; set; } = new List<string>();
+
+        [JsonPropertyName("airborne_risk")]
+        public float airborneRisk { get; set; } = 0.1f;
+
+        [JsonPropertyName("pathogen_risk")]
+        public float pathogenRisk { get; set; } = 0.05f;
+
+        [JsonPropertyName("procedure_hours")]
+        public int procedureHours { get; set; } = 4;
+
+        [JsonPropertyName("possible_findings")]
+        public List<string> possibleFindings { get; set; } = new List<string>();
+
+        [JsonPropertyName("research_unlocks")]
+        public List<string> researchUnlocks { get; set; } = new List<string>();
     }
 
     [Serializable]
@@ -60,6 +78,9 @@ namespace Ashfall.Core
         private int _currentDay;
 
         public AutopsyState State => _state;
+        /// <summary>Owned ventilation subsystem; host code subscribes to its
+        /// hazard warnings without the Core layer depending on audio.</summary>
+        public VentilationSystem Ventilation => _ventilation;
         public event Action<AutopsyCase> OnCaseCompleted;
         public event Action OnAutopsyChanged;
 

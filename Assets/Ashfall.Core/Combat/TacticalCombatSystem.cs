@@ -115,6 +115,17 @@ namespace Ashfall.Core.Combat
         /// Begin a combat encounter. Player survivors carry their weapons;
         /// enemies are generated from a count/health template. Returns structured
         /// failure (false) instead of throwing on invalid inputs.
+        ///
+        /// When <paramref name="enemyCombatantIds"/> is non-empty, the i-th
+        /// matching catalog id is resolved through <see cref="CombatantFactory"/>
+        /// so each enemy receives its catalog-derived AI trait fields (stance
+        /// preference, accuracy/damage modifiers, surrender/flee thresholds,
+        /// preferred lane). When the catalog id list is shorter than
+        /// <paramref name="enemyCount"/>, the legacy hand-coded enemy block
+        /// fills the remainder so existing setup callers do not regress. When
+        /// a catalog id is unknown, the row is silently skipped and a debug
+        /// event is appended so a missing registration does not silently turn
+        /// into a no-op.
         /// </summary>
         public bool BeginEncounter(
             string encounterId,
@@ -127,6 +138,7 @@ namespace Ashfall.Core.Combat
             IReadOnlyList<WeaponInstanceState> playerWeapons,
             int enemyCount,
             float enemyHealth,
+            IReadOnlyList<string>? enemyCombatantIds = null,
             ILog? log = null)
         {
             if (string.IsNullOrEmpty(encounterId)
@@ -164,27 +176,58 @@ namespace Ashfall.Core.Combat
             // Link each player combatant to its weapon (first unassigned).
             AssignPlayerWeapons();
 
-            // Generate enemies deterministically.
+            // Generate enemies deterministically. The catalog-derived path is
+            // authoritative when ids are supplied; the legacy hand-coded block
+            // remains the fallback for callers that have not migrated.
+            int spawnedFromCatalog = 0;
             for (int i = 0; i < enemyCount; i++)
             {
-                _state.Combatants.Add(new CombatantState
+                bool placedFromCatalog = false;
+                if (enemyCombatantIds != null && i < enemyCombatantIds.Count)
                 {
-                    Id = "enemy_" + encounterId + "_" + i,
-                    Name = "Raider",
-                    IsPlayer = false,
-                    FactionId = "faction_raiders",
-                    Lane = (int)(i % 3),
-                    Health = enemyHealth,
-                    MaxHealth = enemyHealth,
-                    ArmorRating = 0f,
-                    CoverRating = 0.3f // raiders use rubble cover
-                });
+                    string catalogId = enemyCombatantIds[i];
+                    if (!string.IsNullOrEmpty(catalogId)
+                        && CombatantFactory.TrySpawnFromCatalog(catalogId, out var spawned, out _))
+                    {
+                        // Keep encounter-local id stable for save/load.
+                        var cs = spawned!;
+                        cs.Id = "enemy_" + encounterId + "_" + i;
+                        cs.Health = enemyHealth > 0f ? enemyHealth : cs.Health;
+                        cs.MaxHealth = cs.Health;
+                        _state.Combatants.Add(CloneCombatant(cs));
+                        spawnedFromCatalog++;
+                        AddEvent("enemy_catalog_spawn", cs.Id, "spawned from " + (cs.CatalogId ?? "<none>"));
+                        placedFromCatalog = true;
+                    }
+                    else
+                    {
+                        AddEvent("enemy_catalog_missing", "enemy_" + encounterId + "_" + i,
+                            "CombatantFactory could not resolve '" + catalogId + "'; fell back to legacy enemy block");
+                    }
+                }
+                if (!placedFromCatalog)
+                {
+                    _state.Combatants.Add(new CombatantState
+                    {
+                        Id = "enemy_" + encounterId + "_" + i,
+                        Name = "Raider",
+                        IsPlayer = false,
+                        FactionId = "faction_raiders",
+                        Lane = (int)(i % 3),
+                        Health = enemyHealth,
+                        MaxHealth = enemyHealth,
+                        ArmorRating = 0f,
+                        CoverRating = 0.3f // raiders use rubble cover
+                    });
+                }
             }
 
             // Seed ammo for player weapons that lack a live host catalog.
             SeedWeaponAmmo();
 
             AddEvent("encounter_start", encounterId, "Combat begins at " + (string.IsNullOrEmpty(locationName) ? locationId : locationName));
+            if (spawnedFromCatalog > 0)
+                AddEvent("encounter_composition", encounterId, spawnedFromCatalog + "/" + enemyCount + " enemies spawned from combat catalog");
             OnStateChanged?.Invoke(_state);
             return true;
         }

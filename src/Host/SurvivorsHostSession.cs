@@ -27,8 +27,16 @@ namespace AtomicWar.GodotApp
         public float lifetimeRadiationExposure;
         public bool hasRadResistance;
         public float radResistanceHoursRemaining;
+        public float iodineProtectionTimer;
         public bool hasAcuteSickness;
         public bool hasChronicIllness;
+        public bool hasAcuteRadiationSyndrome;
+        public bool radiationIsAlive = true;
+        public bool wasHungerCritical;
+        public bool wasThirstCritical;
+        public bool wasWarmthCritical;
+        public float maxHealthCap = 100f;
+        public bool isDead;
         public bool isAlive = true;
     }
 
@@ -57,6 +65,26 @@ namespace AtomicWar.GodotApp
         private readonly System.Collections.Generic.Dictionary<string, RadSurvivorWrapper> _radStates;
 
         public string LastEvent { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Raised when a survivor dies through the needs/radiation survival
+        /// loop. Carries the survivor id, the normalized cause, and a detail
+        /// string. The host's SurvivorFateSystem is the subscriber — this is
+        /// the single needs/radiation death feed into the unified pipeline.
+        /// </summary>
+        public event System.Action<string, Ashfall.Core.Survivors.SurvivorDeathCause, string> OnSurvivorDied;
+
+        /// <summary>
+        /// True while the survivor is dying of acute radiation sickness — used
+        /// to attribute a needs death at 0 HP to radiation rather than to
+        /// generic privation. Checked when OnDied fires.
+        /// </summary>
+        private bool IsDyingOfRadiation(string id)
+        {
+            var rad = RadStateFor(id);
+            return rad != null && rad.HasAcuteRadiationSickness;
+        }
+
         private sealed class RadSurvivorWrapper : SurvivorRadState { }
 
         public SurvivorsHostSession()
@@ -82,7 +110,13 @@ namespace AtomicWar.GodotApp
             Needs.OnNeedChanged += (s, kind, v) => RaiseStateChanged();
             Needs.OnDied += s =>
             {
+                // Normalize the cause: a 0-HP death while in acute radiation
+                // sickness is a radiation death; everything else is privation.
+                var cause = IsDyingOfRadiation(s.Id)
+                    ? Ashfall.Core.Survivors.SurvivorDeathCause.Radiation
+                    : Ashfall.Core.Survivors.SurvivorDeathCause.Needs;
                 LastEvent = $"{s.Id} has died.";
+                OnSurvivorDied?.Invoke(s.Id, cause, LastEvent);
                 RaiseStateChanged();
             };
 
@@ -246,6 +280,7 @@ namespace AtomicWar.GodotApp
             var rad = RadStateFor(survivorId);
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.AdministerIodine(rad);
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionPillBottle);
             LastEvent = $"{survivorId}: iodine administered — {rad.RadResistanceHoursRemaining:F0}h rad resistance.";
             RaiseStateChanged();
             return LastEvent;
@@ -256,6 +291,7 @@ namespace AtomicWar.GodotApp
             var rad = RadStateFor(survivorId);
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.AdministerAntiRad(rad, rads);
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionInjection);
             LastEvent = $"{survivorId}: anti-rad cleared {rads:F0} mSv (dose now {rad.RadiationDose:F0}).";
             RaiseStateChanged();
             return LastEvent;
@@ -276,6 +312,8 @@ namespace AtomicWar.GodotApp
             var rad = RadStateFor(survivorId);
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.Expose(rad, radsPerHour, 1f);
+            if (radsPerHour > 0f)
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadGeigerBurst);
             LastEvent = $"{survivorId}: exposed to {radsPerHour} mSv/hr for 1h (dose {rad.RadiationDose:F0}/100).";
             RaiseStateChanged();
             return LastEvent;
@@ -315,11 +353,19 @@ namespace AtomicWar.GodotApp
 
         public SurvivorsSaveState CaptureSave()
         {
-            var save = new SurvivorsSaveState();
-            for (int i = 0; i < RosterState.Count; i++)
+            var save = new SurvivorsSaveState
             {
-                var s = RosterState[i];
+                roster = Roster.CaptureState()
+            };
+            var ordered = new System.Collections.Generic.List<SurvivorNeedsState>(RosterState);
+            ordered.Sort((a, b) => string.CompareOrdinal(a?.Id, b?.Id));
+            for (int i = 0; i < ordered.Count; i++)
+            {
+                var s = ordered[i];
                 if (s == null) continue;
+                if (!SurvivorId.TryParse(s.Id, out _, out string identityError))
+                    throw new InvalidOperationException("Cannot persist survivor needs for invalid id '" + s.Id + "': " + identityError);
+
                 var slice = new SurvivorSliceState
                 {
                     id = s.Id,
@@ -330,7 +376,12 @@ namespace AtomicWar.GodotApp
                     morale = s.Morale,
                     health = s.Health,
                     hygiene = s.Hygiene,
-                    isAlive = s.IsAliveState
+                    wasHungerCritical = s.WasHungerCritical,
+                    wasThirstCritical = s.WasThirstCritical,
+                    wasWarmthCritical = s.WasWarmthCritical,
+                    maxHealthCap = s.MaxHealthCap,
+                    isDead = s.IsDead,
+                    isAlive = s.IsAlive
                 };
                 var rad = RadStateFor(s.Id);
                 if (rad != null)
@@ -339,8 +390,11 @@ namespace AtomicWar.GodotApp
                     slice.lifetimeRadiationExposure = rad.LifetimeRadiationExposure;
                     slice.hasRadResistance = rad.HasRadResistance;
                     slice.radResistanceHoursRemaining = rad.RadResistanceHoursRemaining;
+                    slice.iodineProtectionTimer = rad.IodineProtectionTimer;
                     slice.hasAcuteSickness = rad.HasAcuteRadiationSickness;
                     slice.hasChronicIllness = rad.HasChronicIllness;
+                    slice.hasAcuteRadiationSyndrome = rad.HasAcuteRadiationSyndrome;
+                    slice.radiationIsAlive = rad.IsAlive;
                 }
                 save.survivors.Add(slice);
             }
@@ -350,11 +404,27 @@ namespace AtomicWar.GodotApp
         public void RestoreSave(SurvivorsSaveState save)
         {
             if (save == null || save.survivors == null) return;
+            var roster = ValidateSaveIdentity(save);
+
+            // Remove every old component before dropping host references. Both
+            // systems key simulation state by survivor identity; leaving either
+            // component registered would let a prior campaign tick after load.
+            for (int i = 0; i < RosterState.Count; i++)
+            {
+                if (RosterState[i] != null) Needs.Unregister(RosterState[i]);
+            }
+            for (int i = Radiation.RegisteredCount - 1; i >= 0; i--)
+            {
+                Radiation.Unregister(Radiation.Registered[i]);
+            }
+
+            Roster.RestoreState(roster);
             RosterState.Clear();
             _radStates.Clear();
-            foreach (var slice in save.survivors)
+            var ordered = new System.Collections.Generic.List<SurvivorSliceState>(save.survivors);
+            ordered.Sort((a, b) => string.CompareOrdinal(a?.id, b?.id));
+            foreach (var slice in ordered)
             {
-                if (slice == null || string.IsNullOrEmpty(slice.id)) continue;
                 var s = new SurvivorNeedsState
                 {
                     Id = slice.id,
@@ -365,8 +435,12 @@ namespace AtomicWar.GodotApp
                     Morale = slice.morale,
                     Health = slice.health,
                     Hygiene = slice.hygiene,
+                    WasHungerCritical = slice.wasHungerCritical,
+                    WasThirstCritical = slice.wasThirstCritical,
+                    WasWarmthCritical = slice.wasWarmthCritical,
+                    MaxHealthCap = slice.maxHealthCap,
                     IsAlive = slice.isAlive,
-                    IsDead = !slice.isAlive
+                    IsDead = slice.isDead || !slice.isAlive
                 };
                 RosterState.Add(s);
                 Needs.Register(s);
@@ -377,14 +451,76 @@ namespace AtomicWar.GodotApp
                     LifetimeRadiationExposure = slice.lifetimeRadiationExposure,
                     HasRadResistance = slice.hasRadResistance,
                     RadResistanceHoursRemaining = slice.radResistanceHoursRemaining,
+                    IodineProtectionTimer = slice.iodineProtectionTimer,
                     HasAcuteRadiationSickness = slice.hasAcuteSickness,
                     HasChronicIllness = slice.hasChronicIllness,
-                    IsAlive = slice.isAlive
+                    HasAcuteRadiationSyndrome = slice.hasAcuteRadiationSyndrome,
+                    IsAlive = slice.radiationIsAlive && slice.isAlive
                 };
                 _radStates[slice.id] = rad;
                 Radiation.Register(rad);
             }
             RaiseStateChanged();
+        }
+
+        private SurvivorRosterState ValidateSaveIdentity(SurvivorsSaveState save)
+        {
+            var sliceIds = new System.Collections.Generic.HashSet<string>(StringComparer.Ordinal);
+            for (int i = 0; i < save.survivors.Count; i++)
+            {
+                var slice = save.survivors[i];
+                if (slice == null || string.IsNullOrEmpty(slice.id))
+                    throw new InvalidOperationException("Survivors save contains a null or empty survivor slice at index " + i + ".");
+                if (!SurvivorId.TryParse(slice.id, out _, out string identityError))
+                    throw new InvalidOperationException("Survivors save contains invalid survivor id '" + slice.id + "': " + identityError);
+                if (!sliceIds.Add(slice.id))
+                    throw new InvalidOperationException("Survivors save contains duplicate survivor slice id '" + slice.id + "'.");
+                if (slice.isDead && slice.isAlive)
+                    throw new InvalidOperationException("Survivors save contains contradictory alive/dead flags for survivor '" + slice.id + "'.");
+            }
+
+            if (save.roster != null)
+            {
+                if (save.roster.entries == null)
+                    throw new InvalidOperationException("Survivors save roster entries are null.");
+                var rosterIds = new System.Collections.Generic.HashSet<string>(StringComparer.Ordinal);
+                for (int i = 0; i < save.roster.entries.Count; i++)
+                {
+                    var entry = save.roster.entries[i];
+                    if (entry == null || string.IsNullOrEmpty(entry.survivorId))
+                        throw new InvalidOperationException("Survivors save contains a null or empty roster identity at index " + i + ".");
+                    if (!SurvivorId.TryParse(entry.survivorId, out _, out string identityError))
+                        throw new InvalidOperationException("Survivors save roster contains invalid survivor id '" + entry.survivorId + "': " + identityError);
+                    if (!rosterIds.Add(entry.survivorId))
+                        throw new InvalidOperationException("Survivors save contains duplicate roster survivor id '" + entry.survivorId + "'.");
+                    if (!sliceIds.Contains(entry.survivorId))
+                        throw new InvalidOperationException("Survivors save roster identity '" + entry.survivorId + "' has no needs/radiation slice.");
+                }
+                foreach (string id in sliceIds)
+                {
+                    if (!rosterIds.Contains(id))
+                        throw new InvalidOperationException("Survivors save slice identity '" + id + "' has no roster entry.");
+                }
+                return save.roster;
+            }
+
+            // Pre-roster-envelope saves remain loadable. Rebuild their roster
+            // from the saved slice identities, retaining catalog metadata when
+            // the current host already knows that survivor.
+            var legacy = new SurvivorRosterState();
+            foreach (var slice in save.survivors)
+            {
+                var existing = Roster.Find(slice.id);
+                legacy.entries.Add(new SurvivorRosterEntry
+                {
+                    survivorId = slice.id,
+                    definitionId = existing?.definitionId ?? slice.id,
+                    joinedDay = existing?.joinedDay ?? 0,
+                    isAlive = slice.isAlive,
+                    deathReason = existing?.deathReason ?? string.Empty
+                });
+            }
+            return legacy;
         }
     }
 
@@ -393,5 +529,6 @@ namespace AtomicWar.GodotApp
     {
         public System.Collections.Generic.List<SurvivorSliceState> survivors =
             new System.Collections.Generic.List<SurvivorSliceState>();
+        public SurvivorRosterState? roster;
     }
 }

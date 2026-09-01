@@ -18,6 +18,7 @@ namespace Ashfall.Core
         public string caravanId;
         public string caravanName;
         public string factionId;
+        public string originRegion; // flotilla, foundry, greenhouse, settlement, traplines
         public string currentNodeId;
         public List<string> routeNodeIds = new List<string>();
         public int routeIndex = 0;
@@ -59,7 +60,8 @@ namespace Ashfall.Core
                 _state.activeCaravans = new List<CaravanEntry>();
         }
 
-        public void SpawnCaravan(string caravanId, string name, string factionId, List<string> route)
+        public void SpawnCaravan(string caravanId, string name, string factionId, List<string> route,
+            string originRegion = "settlement")
         {
             if (route == null || route.Count == 0) return;
 
@@ -68,6 +70,7 @@ namespace Ashfall.Core
                 caravanId = caravanId,
                 caravanName = name,
                 factionId = factionId,
+                originRegion = originRegion,
                 currentNodeId = route[0],
                 routeNodeIds = new List<string>(route),
                 routeIndex = 0,
@@ -82,8 +85,47 @@ namespace Ashfall.Core
                 }
             };
 
+            // Add regional specialty stock based on origin
+            AddRegionalSpecialtyStock(caravan, originRegion);
+
             _state.activeCaravans.Add(caravan);
             OnCaravanArrivedAtNode?.Invoke(caravan, caravan.currentNodeId);
+        }
+
+        /// <summary>
+        /// Add regional specialty goods to a caravan based on its origin region.
+        /// Each region carries 2-3 goods not available elsewhere, creating route-planning pressure.
+        /// </summary>
+        private static void AddRegionalSpecialtyStock(CaravanEntry caravan, string region)
+        {
+            switch (region)
+            {
+                case "flotilla":
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "item_desal_membrane", quantity = 2, priceRations = 8 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "item_foundry_brine_pipe", quantity = 3, priceRations = 6 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "item_ro_membrane", quantity = 2, priceRations = 7 });
+                    break;
+                case "foundry":
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "water_filter", quantity = 4, priceRations = 4 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "air_filter", quantity = 3, priceRations = 4 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "mechanical_parts", quantity = 10, priceRations = 1 });
+                    break;
+                case "greenhouse":
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "seed_packets", quantity = 5, priceRations = 6 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "canned_food", quantity = 6, priceRations = 2 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "herbal_tea", quantity = 4, priceRations = 3 });
+                    break;
+                case "traplines":
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "cooked_meat", quantity = 6, priceRations = 3 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "item_frostbite_salve", quantity = 3, priceRations = 4 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "leather_strap", quantity = 8, priceRations = 1 });
+                    break;
+                default: // settlement
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "medical_kit", quantity = 2, priceRations = 6 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "solar_cell", quantity = 2, priceRations = 7 });
+                    caravan.inventory.Add(new CaravanInventoryItem { itemId = "anti_rad", quantity = 2, priceRations = 8 });
+                    break;
+            }
         }
 
         public CaravanEntry? GetCaravanAtNode(string nodeId)
@@ -149,6 +191,7 @@ namespace Ashfall.Core
                         caravanId = c.caravanId,
                         caravanName = c.caravanName,
                         factionId = c.factionId,
+                        originRegion = c.originRegion ?? "settlement",
                         currentNodeId = c.currentNodeId,
                         routeIndex = c.routeIndex,
                         daysAtCurrentNode = c.daysAtCurrentNode,
@@ -194,6 +237,7 @@ namespace Ashfall.Core
                         caravanId = c.caravanId,
                         caravanName = c.caravanName,
                         factionId = c.factionId,
+                        originRegion = c.originRegion ?? "settlement",
                         currentNodeId = c.currentNodeId,
                         routeIndex = c.routeIndex,
                         daysAtCurrentNode = c.daysAtCurrentNode,

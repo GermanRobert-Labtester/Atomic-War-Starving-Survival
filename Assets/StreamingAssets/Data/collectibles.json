@@ -1,0 +1,405 @@
+{
+  "schema_version": 1,
+  "collectibles": [
+    {
+      "item_id": "item_collectible_vinyl_chamber_record",
+      "category": "vinyl",
+      "rarity": "uncommon",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_vinyl_civil_broadcast",
+      "category": "vinyl",
+      "rarity": "rare",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "radio_station",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_vinyl_folk_compilation",
+      "category": "vinyl",
+      "rarity": "uncommon",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_family_portrait",
+      "category": "photograph",
+      "rarity": "common",
+      "effect_type": "morale",
+      "effect_target": "",
+      "effect_value": 2,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_unit_photograph",
+      "category": "photograph",
+      "rarity": "uncommon",
+      "effect_type": "faction_info",
+      "effect_target": "faction_military_history",
+      "effect_value": 0,
+      "location_type": "military",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_civil_defense_poster",
+      "category": "poster",
+      "rarity": "common",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "civic",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_propaganda_poster",
+      "category": "poster",
+      "rarity": "uncommon",
+      "effect_type": "faction_info",
+      "effect_target": "faction_state_propaganda",
+      "effect_value": 0,
+      "location_type": "civic",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_concert_poster",
+      "category": "poster",
+      "rarity": "common",
+      "effect_type": "morale",
+      "effect_target": "",
+      "effect_value": 1,
+      "location_type": "cultural",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_field_medicine_handbook",
+      "category": "book",
+      "rarity": "uncommon",
+      "effect_type": "knowledge",
+      "effect_target": "knowledge_field_medicine",
+      "effect_value": 0,
+      "location_type": "clinic",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_pre_war_novel",
+      "category": "book",
+      "rarity": "common",
+      "effect_type": "morale",
+      "effect_target": "",
+      "effect_value": 2,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_science_magazine",
+      "category": "magazine",
+      "rarity": "common",
+      "effect_type": "knowledge",
+      "effect_target": "knowledge_basic_engineering",
+      "effect_value": 0,
+      "location_type": "school",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_hunting_magazine",
+      "category": "magazine",
+      "rarity": "common",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_diesel_service_manual",
+      "category": "technical_manual",
+      "rarity": "rare",
+      "effect_type": "knowledge",
+      "effect_target": "knowledge_diesel_mechanics",
+      "effect_value": 0,
+      "location_type": "industrial",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_radio_repair_guide",
+      "category": "technical_manual",
+      "rarity": "rare",
+      "effect_type": "knowledge",
+      "effect_target": "knowledge_radio_repair",
+      "effect_value": 0,
+      "location_type": "radio_station",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_water_treatment_handbook",
+      "category": "technical_manual",
+      "rarity": "rare",
+      "effect_type": "knowledge",
+      "effect_target": "knowledge_water_treatment",
+      "effect_value": 0,
+      "location_type": "industrial",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_air_filter_manual",
+      "category": "technical_manual",
+      "rarity": "rare",
+      "effect_type": "knowledge",
+      "effect_target": "knowledge_air_filtration",
+      "effect_value": 0,
+      "location_type": "industrial",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_dosimeter_guide",
+      "category": "technical_manual",
+      "rarity": "rare",
+      "effect_type": "knowledge",
+      "effect_target": "knowledge_radiation_measurement",
+      "effect_value": 0,
+      "location_type": "clinic",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_unit_log_fragment",
+      "category": "military_document",
+      "rarity": "uncommon",
+      "effect_type": "faction_info",
+      "effect_target": "faction_military_operations",
+      "effect_value": 0,
+      "location_type": "military",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_deployment_order",
+      "category": "military_document",
+      "rarity": "uncommon",
+      "effect_type": "faction_info",
+      "effect_target": "faction_military_deployment",
+      "effect_value": 0,
+      "location_type": "military",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_casualty_list",
+      "category": "military_document",
+      "rarity": "rare",
+      "effect_type": "journal_unlock",
+      "effect_target": "journal_casualty_records",
+      "effect_value": 0,
+      "location_type": "military",
+      "unique": true
+    },
+    {
+      "item_id": "item_collectible_mothers_letter",
+      "category": "personal_letter",
+      "rarity": "common",
+      "effect_type": "morale",
+      "effect_target": "",
+      "effect_value": 1,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_soldiers_letter",
+      "category": "personal_letter",
+      "rarity": "uncommon",
+      "effect_type": "journal_unlock",
+      "effect_target": "journal_soldier_letters",
+      "effect_value": 0,
+      "location_type": "military",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_rejection_letter",
+      "category": "personal_letter",
+      "rarity": "common",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_civil_defense_badge",
+      "category": "badge",
+      "rarity": "uncommon",
+      "effect_type": "faction_info",
+      "effect_target": "faction_civil_defense",
+      "effect_value": 0,
+      "location_type": "civic",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_transit_badge",
+      "category": "badge",
+      "rarity": "common",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "civic",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_military_patch",
+      "category": "patch",
+      "rarity": "uncommon",
+      "effect_type": "faction_info",
+      "effect_target": "faction_military_units",
+      "effect_value": 0,
+      "location_type": "military",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_trade_guild_patch",
+      "category": "patch",
+      "rarity": "uncommon",
+      "effect_type": "faction_info",
+      "effect_target": "faction_trade_guilds",
+      "effect_value": 0,
+      "location_type": "industrial",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_childs_doll",
+      "category": "toy",
+      "rarity": "common",
+      "effect_type": "morale",
+      "effect_target": "",
+      "effect_value": 1,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_music_box",
+      "category": "toy",
+      "rarity": "uncommon",
+      "effect_type": "morale",
+      "effect_target": "",
+      "effect_value": 2,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_prayer_book",
+      "category": "religious_object",
+      "rarity": "uncommon",
+      "effect_type": "journal_unlock",
+      "effect_target": "journal_religious_texts",
+      "effect_value": 0,
+      "location_type": "religious",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_prayer_beads",
+      "category": "religious_object",
+      "rarity": "common",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "religious",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_team_pennant",
+      "category": "sports_memorabilia",
+      "rarity": "common",
+      "effect_type": "morale",
+      "effect_target": "",
+      "effect_value": 1,
+      "location_type": "cultural",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_match_program",
+      "category": "sports_memorabilia",
+      "rarity": "common",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "cultural",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_civic_token",
+      "category": "cultural_artifact",
+      "rarity": "uncommon",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "civic",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_folk_craft",
+      "category": "cultural_artifact",
+      "rarity": "uncommon",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "cultural",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_exchange_day_newspaper",
+      "category": "newspaper",
+      "rarity": "rare",
+      "effect_type": "journal_unlock",
+      "effect_target": "journal_exchange_day",
+      "effect_value": 0,
+      "location_type": "civic",
+      "unique": true
+    },
+    {
+      "item_id": "item_collectible_local_newspaper",
+      "category": "newspaper",
+      "rarity": "common",
+      "effect_type": "none",
+      "effect_target": "",
+      "effect_value": 0,
+      "location_type": "residential",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_road_map",
+      "category": "map",
+      "rarity": "uncommon",
+      "effect_type": "location_clue",
+      "effect_target": "loc_road_junction_cache",
+      "effect_value": 0,
+      "location_type": "civic",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_topo_map",
+      "category": "map",
+      "rarity": "rare",
+      "effect_type": "location_clue",
+      "effect_target": "loc_military_outpost",
+      "effect_value": 0,
+      "location_type": "military",
+      "unique": false
+    },
+    {
+      "item_id": "item_collectible_survivor_map",
+      "category": "map",
+      "rarity": "rare",
+      "effect_type": "location_clue",
+      "effect_target": "loc_survivor_cache",
+      "effect_value": 0,
+      "location_type": "residential",
+      "unique": true
+    }
+  ]
+}

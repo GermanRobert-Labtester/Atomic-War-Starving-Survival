@@ -102,7 +102,7 @@
         {
           "good_id": "item_foundry_ice_anchor",
           "demand_delta": 0.3,
-          "reason": "The Cutters buy anchors where they can get them; the foundry's own stock moves slowly."
+          "reason": "The marked lane closes; the foundry's road anchors sit in the yard without haulage."
         }
       ]
     }

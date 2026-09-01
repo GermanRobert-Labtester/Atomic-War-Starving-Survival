@@ -7,7 +7,8 @@ using Ashfall.Core.Journal;
 namespace AtomicWar.GodotApp.Host
 {
     /// <summary>
-    /// Serialized state of host-level event tracking.
+    /// Dynamic state owned by the host event adapter. The catalog/read-model session does
+    /// not mirror this ledger; campaign persistence snapshots it through HostEventSaveStore.
     /// </summary>
     [Serializable]
     public class HostEventState
@@ -32,6 +33,7 @@ namespace AtomicWar.GodotApp.Host
         private readonly IEventBus _eventBus;
         private readonly JournalSystem? _journal;
         private readonly HostEventState _state;
+        private bool _disposed;
 
         public event Action<string, string>? OnEventDispatched;
         public event Action? StateChanged;
@@ -40,7 +42,13 @@ namespace AtomicWar.GodotApp.Host
         {
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
             _journal = journal;
-            _state = state ?? new HostEventState();
+            // Always retain an adapter-owned state object. A caller-supplied load result is
+            // copied below so mutable progress cannot be shared with the persistence layer.
+            _state = new HostEventState();
+            if (state != null)
+            {
+                RestoreState(state);
+            }
 
             SubscribeBus();
         }
@@ -66,6 +74,7 @@ namespace AtomicWar.GodotApp.Host
 
         public void TriggerEvent(string eventId, int currentDay)
         {
+            if (_disposed) return;
             if (string.IsNullOrEmpty(eventId)) return;
             if (!_state.triggeredEventIds.Contains(eventId))
             {
@@ -165,6 +174,23 @@ namespace AtomicWar.GodotApp.Host
             StateChanged?.Invoke();
         }
 
+        /// <summary>
+        /// Detaches this campaign's handlers from the shared event bus. A host
+        /// adapter is campaign-scoped; retaining its subscriptions across a
+        /// slot reset would dispatch old progress into the new campaign.
+        /// </summary>
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+            _eventBus.Unsubscribe(EventThinMarginDisclosure, HandleThinMarginDisclosure);
+            _eventBus.Unsubscribe(EventThirstySeason, HandleThirstySeason);
+            _eventBus.Unsubscribe(EventOsteophageExplanation, HandleOsteophageExplanation);
+            _eventBus.Unsubscribe(EventMeasurementBroadcast, HandleMeasurementBroadcast);
+            OnEventDispatched = null;
+            StateChanged = null;
+        }
+
         // ── Persistence ───────────────────────────────────────────────
 
         public HostEventState CaptureState()
@@ -182,12 +208,20 @@ namespace AtomicWar.GodotApp.Host
         {
             if (state == null) return;
             _state.triggeredEventIds.Clear();
-            _state.triggeredEventIds.AddRange(state.triggeredEventIds);
-            _state.eventTriggerDays.Clear();
-            foreach (var kvp in state.eventTriggerDays)
+            if (state.triggeredEventIds != null)
             {
-                _state.eventTriggerDays[kvp.Key] = kvp.Value;
+                _state.triggeredEventIds.AddRange(state.triggeredEventIds);
             }
+
+            _state.eventTriggerDays.Clear();
+            if (state.eventTriggerDays != null)
+            {
+                foreach (var kvp in state.eventTriggerDays)
+                {
+                    _state.eventTriggerDays[kvp.Key] = kvp.Value;
+                }
+            }
+
             _state.lastDispatchedEvent = state.lastDispatchedEvent ?? string.Empty;
         }
     }

@@ -67,7 +67,7 @@ namespace Ashfall.Core.Inventory
         }
     }
 
-    public class Inventory
+    public class Inventory : IPlayerInventoryPort
     {
         public const float ContaminationDosePerUnit = 50f;
 
@@ -79,10 +79,47 @@ namespace Ashfall.Core.Inventory
 
         public IReadOnlyList<InventorySlot> Slots => _slots;
         public IReadOnlyList<EquippedItem> Equipped => _equipped;
+        public IReadOnlyList<InventorySlot> GetSlots() => _slots;
 
         public event Action<ItemDefinition, int> OnItemAdded;
         public event Action<ItemDefinition, int> OnItemRemoved;
         public event Action OnInventoryChanged;
+
+        public bool HasSufficient(string itemId, int count)
+        {
+            if (string.IsNullOrEmpty(itemId) || count <= 0) return true;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            return CountById(canonical) >= count || CountById(itemId) >= count;
+        }
+
+        public bool TryConsume(string itemId, int count, Action? onCommitted = null)
+        {
+            if (string.IsNullOrEmpty(itemId) || count <= 0) return true;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            if (CountById(canonical) < count && CountById(itemId) < count)
+                return false;
+
+            string targetId = CountById(canonical) >= count ? canonical : itemId;
+            Remove(targetId, count);
+            onCommitted?.Invoke();
+            return true;
+        }
+
+        public bool TryProduce(string itemId, int count, ItemDefinition? def = null)
+        {
+            if (string.IsNullOrEmpty(itemId) || count <= 0) return true;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var itemDef = def ?? new ItemDefinition
+            {
+                id = canonical,
+                displayName = canonical,
+                stackMax = 99,
+                weight = 1f
+            };
+            return Add(itemDef, count);
+        }
+
+        public bool Remove(string itemId, int amount) => RemoveById(itemId, amount);
 
         public int Count(ItemDefinition item)
         {
@@ -93,11 +130,16 @@ namespace Ashfall.Core.Inventory
         public int CountById(string itemId)
         {
             if (string.IsNullOrEmpty(itemId) || _slots == null) return 0;
+            string canonical = ItemAliases.ToCanonical(itemId);
             int total = 0;
             for (int i = 0; i < _slots.Count; i++)
             {
-                if (_slots[i] != null && _slots[i].Item != null && _slots[i].Item.id == itemId)
-                    total += _slots[i].Amount;
+                if (_slots[i] != null && _slots[i].Item != null)
+                {
+                    string slotId = _slots[i].Item.id;
+                    if (slotId == itemId || slotId == canonical || ItemAliases.ToCanonical(slotId) == canonical)
+                        total += _slots[i].Amount;
+                }
             }
             return total;
         }
@@ -578,19 +620,28 @@ namespace Ashfall.Core.Inventory
             foreach (var kv in aggregatedCosts)
             {
                 var def = ResolveDefinition(kv.Key, bill, lookup);
-                totalCostWeight += def.weight * kv.Value;
+                float unitWeight = def != null ? def.weight : 0f;
+                totalCostWeight += unitWeight * kv.Value;
             }
 
             float totalGrantWeight = 0f;
             foreach (var kv in aggregatedGrants)
             {
                 var def = ResolveDefinition(kv.Key, bill, lookup);
-                totalGrantWeight += def.weight * kv.Value;
+                float unitWeight = def != null ? def.weight : 0f;
+                totalGrantWeight += unitWeight * kv.Value;
             }
 
             var validation = ValidateTransaction(bill, lookup);
             return new InventoryTransactionQuote(
                 bill, aggregatedCosts, aggregatedGrants, totalCostWeight, totalGrantWeight, validation);
+        }
+
+        public InventoryTransactionQuote QuoteTransaction(
+            InventoryBill bill,
+            Func<string, ItemDefinition?>? lookup = null)
+        {
+            return Quote(bill, lookup);
         }
 
         /// <summary>

@@ -44,7 +44,18 @@ namespace AtomicWar.GodotApp
             // This ensures the game cannot start with missing or malformed required data.
             ValidateRequiredCatalogs();
 
-            switch (HostCli.Parse(OS.GetCmdlineUserArgs()))
+            // Parse once and keep the action: the catch below needs to name the
+            // gate that threw, and re-parsing there could disagree with what ran.
+            var cliAction = HostCli.Parse(OS.GetCmdlineUserArgs());
+
+            // Every CLI self-test runs inside this guard. Without it an exception
+            // thrown by a gate escapes _Ready(), skipping GetTree().Quit(), so the
+            // process emits no FAIL line and hangs until CI kills it — while any
+            // PASS already printed stays on stdout as the apparent verdict.
+            // A throw must always become a reported FAIL with a non-zero exit.
+            try
+            {
+            switch (cliAction)
             {
                 case HostCliAction.Help:
                     HostCli.PrintHelp();
@@ -90,6 +101,15 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.MoralChoiceSelfTest:
                     GetTree().Quit(HostCli.RunMoralChoiceSelfTest(_dataDir));
                     return;
+                case HostCliAction.EvolvingWorldSelfTest:
+                    GetTree().Quit(HostCli.RunEvolvingWorldSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SelfTestManifest:
+                    GetTree().Quit(HostCli.RunSelfTestManifest(_dataDir));
+                    return;
+                case HostCliAction.ListSelfTests:
+                    GetTree().Quit(HostCli.RunListSelfTests(_dataDir));
+                    return;
                 case HostCliAction.ChemicalDependencySaveSelfTest:
                     GetTree().Quit(HostCli.RunChemicalDependencySaveSelfTest());
                     return;
@@ -108,11 +128,26 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.SaveStoreChecksumSelfTest:
                     GetTree().Quit(HostCli.RunSaveStoreChecksumSelfTest(_dataDir));
                     return;
+                case HostCliAction.RuntimeScaleSelfTest:
+                    GetTree().Quit(HostCli.RunRuntimeScaleSelfTest(_dataDir));
+                    return;
                 case HostCliAction.SevenDayDeterministicSmokeSelfTest:
                     GetTree().Quit(HostCli.RunSevenDayDeterministicSmokeSelfTest(_dataDir));
                     return;
+                case HostCliAction.CampaignFuzzSelfTest:
+                    GetTree().Quit(HostCli.RunCampaignFuzzSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CompositionRootSelfTest:
+                    RunCompositionRootUiTestAndQuit();
+                    return;
+                case HostCliAction.RealCampaignJourneySelfTest:
+                    RunRealCampaignJourneySelfTestAndQuit();
+                    return;
                 case HostCliAction.UiAccessibilitySelfTest:
                     GetTree().Quit(HostCli.RunUiAccessibilitySelfTest());
+                    return;
+                case HostCliAction.SceneBindingSelfTest:
+                    GetTree().Quit(SceneBindingSelfTest.Run());
                     return;
                 case HostCliAction.CombatSelfTest:
                     GetTree().Quit(HostCli.RunCombatSelfTest(_dataDir));
@@ -149,6 +184,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.MusterSelfTest:
                     GetTree().Quit(HostCli.RunMusterSelfTest());
+                    return;
+                case HostCliAction.FactionEcologySelfTest:
+                    GetTree().Quit(HostCli.RunFactionEcologySelfTest(_dataDir));
                     return;
                 case HostCliAction.VerdictSelfTest:
                     GetTree().Quit(HostCli.RunVerdictSelfTest(_dataDir));
@@ -240,11 +278,23 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.WorldSelfTest:
                     GetTree().Quit(HostCli.RunWorldSelfTest());
                     return;
+                case HostCliAction.WorldExplorationSelfTest:
+                    GetTree().Quit(HostCli.RunWorldExplorationSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CartographySelfTest:
+                    GetTree().Quit(HostCli.RunCartographySelfTest(_dataDir));
+                    return;
+                case HostCliAction.ExpansionDepthSelfTest:
+                    GetTree().Quit(HostCli.RunExpansionDepthSelfTest(_dataDir));
+                    return;
                 case HostCliAction.EconomySelfTest:
                     GetTree().Quit(HostCli.RunEconomySelfTest(_dataDir));
                     return;
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
+                    return;
+                case HostCliAction.ResearchCatalogSelfTest:
+                    GetTree().Quit(HostCli.RunResearchCatalogSelfTest(_dataDir));
                     return;
                 case HostCliAction.CatalogBootPreflight:
                     GetTree().Quit(HostCli.RunCatalogBootPreflight(_dataDir));
@@ -300,6 +350,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ShelterOperationsSelfTest:
                     GetTree().Quit(HostCli.RunShelterOperationsSelfTest(_dataDir));
                     return;
+                case HostCliAction.ShelterDecorSelfTest:
+                    GetTree().Quit(ShelterDecorSelfTest.Run(_dataDir));
+                    return;
                 case HostCliAction.AudioSelfTest:
                     GetTree().Quit(AtomicWar.GodotApp.Audio.AudioSelfTest.Run());
                     return;
@@ -315,6 +368,33 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.UiSnapshotRegenerate:
                     BeginSnapshotRun(regenerate: true);
                     return;
+                case HostCliAction.OnboardingJourneySelfTest:
+                    GetTree().Quit(HostCli.RunOnboardingJourneySelfTest(_dataDir));
+                    return;
+                case HostCliAction.DynamicWorldSelfTest:
+                    GetTree().Quit(HostCli.RunDynamicWorldSelfTest(_dataDir));
+                    return;
+                case HostCliAction.WastelandInhabitantsSelfTest:
+                    GetTree().Quit(HostCli.RunWastelandInhabitantsSelfTest(_dataDir));
+                    return;
+                case HostCliAction.OralLoreSelfTest:
+                    GetTree().Quit(HostCli.RunOralLoreSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ContentUtilizationSelfTest:
+                    GetTree().Quit(ContentUtilizationSelfTest.Run(
+                        ProjectSettings.GlobalizePath("res://"), _dataDir,
+                        ProjectSettings.GlobalizePath("res://Assets/Ashfall.Core"),
+                        ProjectSettings.GlobalizePath("res://src")));
+                    return;
+            }
+            }
+            catch (System.Exception ex)
+            {
+                // A gate threw. Report FAIL against the action that was running and
+                // quit non-zero so this can never be scraped as PASS or hang.
+                GetTree().Quit(HostCli.EmitUnhandledSelfTestFailure(
+                    HostCli.SelfTestNameFor(cliAction), ex));
+                return;
             }
 
             AtomicWar.GodotApp.Settings.UserSettingsStore.Apply(AtomicWar.GodotApp.Settings.UserSettingsStore.Current);
@@ -362,6 +442,11 @@ namespace AtomicWar.GodotApp
 
         public override void _Process(double delta)
         {
+            // Plan 60 / D6 — the bedside vigil is the only thing in the game allowed to
+            // run on wall-clock time, and only because its <em>duration</em> is the
+            // point. What it changes in the simulation is a boolean (kept / not kept),
+            // so frame rate can never move a campaign outcome.
+            _medical?.TickVigil(delta);
             // The diagnostics strip used to rebuild its string every frame AND call
             // Engine.GetVersionInfo(), which allocates a Godot Dictionary — 60 allocations
             // a second for a version that never changes. Cache the version, refresh ~4x/sec.

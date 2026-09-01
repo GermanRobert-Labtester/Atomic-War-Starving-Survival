@@ -223,56 +223,56 @@
         },
         {
             "id": "quest_survivor_leadership_election",
-            "title": "Survivor Leadership Election",
-            "description": "Hold an election to determine the bunker's new leader.",
+            "title": "Command Structure Audit",
+            "description": "Personnel are organizing to formally challenge the current command hierarchy.",
             "type": "politics",
             "minDay": 100,
             "maxDay": 300,
             "factionTag": "neutral",
-            "synopsis": "With your leadership in question, the survivors propose holding an election to determine the bunker's new leader.",
+            "synopsis": "A coalition of units has demanded a formalized transition of command, citing recent caloric deficits. They are attempting to institute an electoral protocol to replace your authority.",
             "prerequisites": [
                 "survivors_30"
             ],
             "choices": [
                 {
                     "id": "election_accept",
-                    "text": "Accept the election",
+                    "text": "Concede command",
                     "effects": [],
-                    "consequences": "You lose the election and step down as leader. The survivors elect Marcus Olejnik as the new leader."
+                    "consequences": "You step down. The coalition installs a new director. Your personal caloric allocation is immediately reduced to baseline."
                 },
                 {
                     "id": "election_refuse",
-                    "text": "Refuse the election",
+                    "text": "Deny command transition",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -20
                         }
                     ],
-                    "consequences": "The survivors are divided. Some may leave the bunker, while others stage a coup."
+                    "consequences": "You refuse to acknowledge the protocol. The coalition attempts a labor strike, which you break by withholding rations. Efficiency remains crippled for weeks."
                 },
                 {
                     "id": "election_rig",
-                    "text": "Rig the election to ensure your victory",
+                    "text": "Manipulate outcome",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -30
                         }
                     ],
-                    "consequences": "You win the election, but survivors resent the rigged result. Trust in leadership erodes."
+                    "consequences": "You rig the ballot collection. You retain command, but the obvious manipulation permanently damages the settlement's operational cohesion."
                 }
             ]
         },
         {
             "id": "quest_food_storage_reorganization",
-            "title": "Food Storage Reorganization",
-            "description": "Reorganize the bunker's food storage to reduce waste and improve efficiency.",
+            "title": "Caloric Storage Optimization",
+            "description": "The current organization of the cold-stores is resulting in unacceptable spoilage rates.",
             "type": "management",
             "minDay": 40,
             "maxDay": 140,
             "factionTag": "neutral",
-            "synopsis": "The survivors propose reorganizing the food storage to reduce waste and improve efficiency. This will require labor and time but could save resources in the long run.",
+            "synopsis": "Improper stacking and poor air circulation in the food reserves are causing baseline rations to rot before consumption. Reorganizing the space requires halting all other labor for two shifts.",
             "prerequisites": [
                 "survivors_15",
                 "food_50"
@@ -280,7 +280,7 @@
             "choices": [
                 {
                     "id": "storage_reorg_full",
-                    "text": "Conduct a full reorganization",
+                    "text": "Execute complete optimization",
                     "effects": [
                         {
                             "type": "resource",
@@ -292,11 +292,11 @@
                             "value": 5
                         }
                     ],
-                    "consequences": "The reorganization is successful. Food waste is reduced, and the bunker's food supply lasts longer."
+                    "consequences": "You divert the labor. The reorganization stops the spoilage, securing the winter supply, though the lost operational time delays structural repairs."
                 },
                 {
                     "id": "storage_reorg_partial",
-                    "text": "Reorganize only the most critical areas",
+                    "text": "Execute critical optimization",
                     "effects": [
                         {
                             "type": "resource",
@@ -304,32 +304,32 @@
                             "value": 5
                         }
                     ],
-                    "consequences": "The reorganization is partially successful. Some food is saved, but much is still wasted."
+                    "consequences": "You re-stack only the most perishable items. The spoilage rate is halved, but remains a constant drain on the ledger."
                 },
                 {
                     "id": "storage_reorg_refuse",
-                    "text": "Refuse to reorganize",
+                    "text": "Deny optimization",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Food waste continues, and morale drops as resources dwindle."
+                    "consequences": "Labor continues on schedule. The spoilage continues unchecked, forcing severe rationing later in the season."
                 }
             ]
         },
         {
             "id": "quest_survivor_skill_training",
-            "title": "Survivor Skill Training Program",
-            "description": "Establish a comprehensive training program to improve survivors' skills and efficiency.",
+            "title": "Cross-Disciplinary Labor Initiative",
+            "description": "A proposal to cross-train units to reduce single-point-of-failure vulnerabilities.",
             "type": "training",
             "minDay": 60,
             "maxDay": 200,
             "factionTag": "neutral",
-            "synopsis": "The survivors propose a comprehensive training program to improve everyone's skills and efficiency. This will require time and resources but could greatly benefit the bunker in the long run.",
+            "synopsis": "The settlement relies heavily on isolated specialists. A proposal has been filed to cross-train standard labor units in mechanical and agricultural maintenance.",
             "prerequisites": [
                 "survivors_20"
             ],
             "choices": [
                 {
                     "id": "skill_training_full",
-                    "text": "Implement full training program",
+                    "text": "Implement comprehensive cross-training",
                     "effects": [
                         {
                             "type": "labor_efficiency",
@@ -340,36 +340,36 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "The training program is successful. Survivors' skills improve, and the bunker operates more efficiently."
+                    "consequences": "You divert operational time to the training. General efficiency drops temporarily, but the settlement becomes highly resilient to targeted casualties."
                 },
                 {
                     "id": "skill_training_partial",
-                    "text": "Train only critical roles",
+                    "text": "Implement targeted cross-training",
                     "effects": [
                         {
                             "type": "labor_efficiency",
                             "value": 15
                         }
                     ],
-                    "consequences": "The program is partially successful. Critical roles improve, but many survivors remain untrained."
+                    "consequences": "You train backups only for the water cycler and generator. The vulnerability is reduced, but the agricultural sector remains exposed."
                 },
                 {
                     "id": "skill_training_cancel",
-                    "text": "Cancel the program",
+                    "text": "Deny cross-training",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Survivors' skills remain stagnant, and morale drops."
+                    "consequences": "You maximize immediate output. A subsequent accident claims the primary botanist, and hydroponic yields plummet."
                 }
             ]
         },
         {
             "id": "quest_raider_siege",
-            "title": "Raider Siege Defense",
-            "description": "Your bunker is under siege by a raider faction. Defend or negotiate?",
+            "title": "Sector Blockade",
+            "description": "A hostile faction has established a perimeter blockade, cutting off scavenging routes.",
             "type": "combat",
             "minDay": 85,
             "maxDay": 260,
             "factionTag": "raiders",
-            "synopsis": "The raiders of Sector 5 have surrounded your bunker and are demanding tribute. If you refuse, they will attack. The bunker must decide whether to defend or negotiate.",
+            "synopsis": "Armed hostiles have surrounded the primary exits. They are demanding a transfer of medical supplies and ammunition to lift the blockade. Refusal guarantees a breach attempt.",
             "prerequisites": [
                 "survivors_25",
                 "bunker_defense_rating_10"
@@ -377,7 +377,7 @@
             "choices": [
                 {
                     "id": "siege_defend",
-                    "text": "Defend the bunker",
+                    "text": "Execute defensive protocol",
                     "effects": [
                         {
                             "type": "survivor_health",
@@ -389,11 +389,11 @@
                             "value": -15
                         }
                     ],
-                    "consequences": "The raiders are repelled, but the bunker suffers damage and casualties. Survivors are shaken but proud."
+                    "consequences": "You man the barricades. The hostiles attempt a breach and are repelled, but you expend 40% of your ammunition reserves in the process."
                 },
                 {
                     "id": "siege_negotiate",
-                    "text": "Negotiate with the raiders",
+                    "text": "Authorize material transfer",
                     "effects": [
                         {
                             "type": "resource",
@@ -406,11 +406,11 @@
                             "value": 20
                         }
                     ],
-                    "consequences": "The raiders accept the tribute and leave. Survivors are relieved but resentful of the payment."
+                    "consequences": "You pay the toll. The hostiles withdraw. Your reserves are severely depleted, but the physical structure and personnel remain intact."
                 },
                 {
                     "id": "siege_surrender",
-                    "text": "Surrender to the raiders",
+                    "text": "Execute total surrender",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -422,37 +422,37 @@
                             "value": -5
                         }
                     ],
-                    "consequences": "The raiders take control of the bunker. Survivors are enslaved or killed. Your bunker is lost."
+                    "consequences": "You open the gates. The hostiles strip the settlement of all high-value assets and relegate your personnel to forced labor."
                 }
             ]
         },
         {
             "id": "quest_medical_quarantine",
-            "title": "Medical Quarantine Decision",
-            "description": "A survivor has contracted a mysterious illness. Do you quarantine them or risk spreading the disease?",
+            "title": "Biological Contagion Protocol",
+            "description": "A unit is displaying symptoms of an unidentified, highly communicable pathogen.",
             "type": "medical",
             "minDay": 55,
             "maxDay": 170,
             "factionTag": "neutral",
-            "synopsis": "Alex has contracted a mysterious illness. Symptoms include fever, coughing, and weakness. The bunker must decide whether to quarantine Alex or risk spreading the disease.",
+            "synopsis": "Unit Alex-9 is exhibiting acute respiratory distress and elevated temperature. The pathogen's transmission vector is unknown, but standard modeling suggests high virulency.",
             "prerequisites": [
                 "survivors_15"
             ],
             "choices": [
                 {
                     "id": "quarantine_yes",
-                    "text": "Quarantine Alex",
+                    "text": "Enforce strict quarantine",
                     "effects": [
                         {
                             "type": "morale",
                             "value": 5
                         }
                     ],
-                    "consequences": "Alex is quarantined, and the disease does not spread. Survivors respect the decision, and morale improves."
+                    "consequences": "You isolate the unit in a sealed sector. The pathogen does not spread. The unit's labor is lost for the duration of the quarantine."
                 },
                 {
                     "id": "quarantine_no",
-                    "text": "Do not quarantine Alex",
+                    "text": "Maintain operational integration",
                     "effects": [
                         {
                             "type": "survivor_health",
@@ -463,11 +463,11 @@
                             "value": -15
                         }
                     ],
-                    "consequences": "The disease spreads. Several survivors fall ill, and one dies. Survivors question the leadership's decision."
+                    "consequences": "You keep the unit on shift. The pathogen spreads rapidly. Production halts entirely as 30% of the settlement becomes symptomatic."
                 },
                 {
                     "id": "quarantine_exile",
-                    "text": "Exile Alex to prevent spreading the disease",
+                    "text": "Execute immediate expulsion",
                     "effects": [
                         {
                             "type": "survivor_count",
@@ -478,26 +478,26 @@
                             "value": -20
                         }
                     ],
-                    "consequences": "Alex is exiled, but survivors are horrified by the decision. Trust in leadership erodes."
+                    "consequences": "You force the unit out of the airlock. The contagion risk is eliminated instantly, though the permanent loss of the asset impacts long-term projections."
                 }
             ]
         },
         {
             "id": "quest_survivor_memory_loss",
-            "title": "Survivor Memory Loss Crisis",
-            "description": "A survivor is experiencing severe memory loss. Do you help them or exile them?",
+            "title": "Neurological Degradation",
+            "description": "An asset is experiencing severe cognitive decline, compromising operational efficiency.",
             "type": "medical",
             "minDay": 70,
             "maxDay": 210,
             "factionTag": "neutral",
-            "synopsis": "Jamie has begun experiencing severe memory loss. They forget their own name and cannot perform basic tasks. The bunker must decide whether to help them or exile them.",
+            "synopsis": "Unit Jamie-2 has begun failing to execute basic procedural tasks and cannot recall recent directives. The degradation appears neurological and irreversible.",
             "prerequisites": [
                 "survivors_20"
             ],
             "choices": [
                 {
                     "id": "memory_loss_help",
-                    "text": "Help Jamie with their memory loss",
+                    "text": "Reassign to rudimentary labor",
                     "effects": [
                         {
                             "type": "survivor_health",
@@ -509,11 +509,11 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "Jamie's memory improves slightly, but they are never the same. Survivors respect the effort, and morale improves."
+                    "consequences": "You assign the unit to basic hauling tasks. They require constant supervision, creating a net drag on efficiency, but continue to provide raw muscle."
                 },
                 {
                     "id": "memory_loss_exile",
-                    "text": "Exile Jamie for the safety of the group",
+                    "text": "Execute expulsion",
                     "effects": [
                         {
                             "type": "survivor_count",
@@ -524,25 +524,25 @@
                             "value": -25
                         }
                     ],
-                    "consequences": "Jamie is exiled, but survivors are horrified by the decision. Trust in leadership erodes, and some may leave."
+                    "consequences": "You deem the unit a liability and expel them. The settlement's overall efficiency stabilizes, though the raw labor pool decreases."
                 },
                 {
                     "id": "memory_loss_ignore",
-                    "text": "Ignore Jamie's condition",
+                    "text": "Log as acceptable loss",
                     "effects": [],
-                    "consequences": "Jamie's condition worsens. They become a burden on the group, and morale drops as survivors grow resentful."
+                    "consequences": "You ignore the issue. The unit eventually causes a critical failure in the water filtration system due to a forgotten maintenance step."
                 }
             ]
         },
         {
             "id": "quest_bunker_air_filter_upgrade",
-            "title": "Air Filter Upgrade",
-            "description": "Upgrade the bunker's air filtration system to improve air quality and reduce radiation exposure.",
+            "title": "Atmospheric Filtration Overhaul",
+            "description": "The primary air scrubbers require a massive overhaul to maintain safe particulate levels.",
             "type": "construction",
             "minDay": 90,
             "maxDay": 280,
             "factionTag": "neutral",
-            "synopsis": "The survivors propose upgrading the bunker's air filtration system to improve air quality and reduce radiation exposure. This will require time and resources but could save lives in the long run.",
+            "synopsis": "The carbon filters in the main ventilation shaft are fully saturated. Replacing them requires cannibalizing scarce activated charcoal and halting air circulation for twelve hours.",
             "prerequisites": [
                 "survivors_25",
                 "construction_materials_200"
@@ -550,7 +550,7 @@
             "choices": [
                 {
                     "id": "air_filter_upgrade_full",
-                    "text": "Upgrade the air filtration system",
+                    "text": "Execute full replacement",
                     "effects": [
                         {
                             "type": "air_quality",
@@ -561,43 +561,43 @@
                             "value": 10
                         }
                     ],
-                    "consequences": "The upgrade is successful. Air quality improves, and radiation exposure is reduced. Survivors are grateful."
+                    "consequences": "The new filters are installed. Ambient radiation drops to zero. The 12-hour air stoppage causes minor hypoxia in several units."
                 },
                 {
                     "id": "air_filter_upgrade_partial",
-                    "text": "Upgrade only critical components",
+                    "text": "Execute partial replacement",
                     "effects": [
                         {
                             "type": "air_quality",
                             "value": 10
                         }
                     ],
-                    "consequences": "The upgrade is partially successful. Air quality improves slightly, but radiation exposure remains a concern."
+                    "consequences": "You replace only the intake filter. The air quality improves marginally, but long-term respiratory issues remain statistically probable."
                 },
                 {
                     "id": "air_filter_upgrade_refuse",
-                    "text": "Refuse the upgrade",
+                    "text": "Deny replacement",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Air quality remains poor, and morale drops as survivors suffer from respiratory issues."
+                    "consequences": "You conserve the charcoal. The filters fail completely two weeks later, requiring an emergency evacuation of the lower levels."
                 }
             ]
         },
         {
             "id": "quest_survivor_art_project",
-            "title": "Survivor Art Project",
-            "description": "A group of survivors wants to start an art project to boost morale and creativity.",
+            "title": "Non-Essential Data Archival",
+            "description": "Personnel are requesting resources to document pre-war cultural data.",
             "type": "community",
             "minDay": 110,
             "maxDay": 320,
             "factionTag": "neutral",
-            "synopsis": "A group of survivors, led by Alex, proposes starting an art project to boost morale and creativity. The project will require resources and time but could greatly improve the bunker's atmosphere.",
+            "synopsis": "A coalition of units has requested paper, pigments, and operational downtime to record subjective memories of the pre-war era. This activity yields zero caloric or defensive value.",
             "prerequisites": [
                 "survivors_20"
             ],
             "choices": [
                 {
                     "id": "art_project_allow",
-                    "text": "Allow the art project",
+                    "text": "Authorize resource allocation",
                     "effects": [
                         {
                             "type": "morale",
@@ -609,36 +609,36 @@
                             "value": -10
                         }
                     ],
-                    "consequences": "The art project is a success. Morale improves, and survivors feel a renewed sense of creativity and hope."
+                    "consequences": "You provide the materials. The units complete the archival project. General efficiency increases slightly, though the consumed resources cannot be recovered."
                 },
                 {
                     "id": "art_project_refuse",
-                    "text": "Refuse the art project",
+                    "text": "Deny allocation",
                     "effects": [],
-                    "consequences": "The survivors are disappointed. Morale drops as survivors feel their creative needs are unappreciated."
+                    "consequences": "You refuse the request. The materials are conserved for utilitarian purposes. A minor, persistent drop in operational focus is logged across the involved units."
                 },
                 {
                     "id": "art_project_force",
-                    "text": "Force everyone to participate",
+                    "text": "Mandate participation",
                     "effects": [
                         {
                             "type": "morale",
                             "value": -10
                         }
                     ],
-                    "consequences": "The art project is completed, but survivors resent the forced participation. Morale drops, and some may leave."
+                    "consequences": "You attempt to systematize the project, demanding rigid documentation. The units lose interest. The effort wastes time and produces unusable data."
                 }
             ]
         },
         {
             "id": "quest_technology_sharing",
-            "title": "Technology Sharing Agreement",
-            "description": "A nearby settlement offers a technology sharing agreement in exchange for food and medicine.",
+            "title": "Meridian Compact Data Exchange",
+            "description": "The Meridian Compact offers pre-war schematics in exchange for material resources.",
             "type": "trade",
             "minDay": 60,
             "maxDay": 200,
             "factionTag": "meridian_compact",
-            "synopsis": "The Meridian Compact offers a technology sharing agreement. In exchange for food and medicine, they will provide pre-war technology and blueprints.",
+            "synopsis": "A Meridian envoy has presented a verifiable schematic for a high-efficiency water condenser. They demand a significant transfer of medical supplies and preserved food to release the data.",
             "prerequisites": [
                 "survivors_15",
                 "food_40",
@@ -647,7 +647,7 @@
             "choices": [
                 {
                     "id": "tech_sharing_accept",
-                    "text": "Accept the agreement",
+                    "text": "Execute data exchange",
                     "effects": [
                         {
                             "type": "resource",
@@ -660,11 +660,11 @@
                             "value": 25
                         }
                     ],
-                    "consequences": "The agreement is successful. The bunker gains access to valuable technology, and relations with the Meridian Compact improve."
+                    "consequences": "You transfer the supplies. The schematic is valid, and the new condenser permanently resolves your localized water deficit."
                 },
                 {
                     "id": "tech_sharing_refuse",
-                    "text": "Refuse the agreement",
+                    "text": "Deny exchange",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -672,11 +672,11 @@
                             "value": -15
                         }
                     ],
-                    "consequences": "The Meridian Compact is disappointed but understand. Future collaborations may be difficult."
+                    "consequences": "You refuse to part with the medical supplies. The envoy departs. You retain your immediate medical capacity, but the water deficit remains critical."
                 },
                 {
                     "id": "tech_sharing_cheat",
-                    "text": "Try to cheat the agreement",
+                    "text": "Attempt data theft",
                     "effects": [
                         {
                             "type": "faction_relation",
@@ -684,7 +684,7 @@
                             "value": -40
                         }
                     ],
-                    "consequences": "The Meridian Compact discovers your deception and cuts off all future trade. Your reputation suffers greatly."
+                    "consequences": "You attempt to copy the schematic during the negotiation without payment. The envoy detects the breach, seals the data, and blacklists your settlement."
                 }
             ]
         }

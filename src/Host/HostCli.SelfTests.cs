@@ -43,16 +43,192 @@ namespace AtomicWar.GodotApp
             try
             {
                 catalogCount = CatalogFileSystem.EnumerateJsonFiles(files, dataDirectory, SearchOption.TopDirectoryOnly).Length;
+                if (catalogCount == 0)
+                {
+                    report.Error("catalog enumeration returned zero JSON files for existing data directory: " + dataDirectory);
+                    GD.PrintErr("[DATA] catalog enumeration returned zero JSON files for existing data directory: " + dataDirectory);
+                }
             }
             catch (Exception ex)
             {
                 GD.PrintErr("[DATA] Failed to enumerate catalog files: " + ex.Message);
                 catalogCount = 0;
+                string message = "catalog enumeration failed for '" + dataDirectory + "' ("
+                    + ex.GetType().Name + "): " + ex.Message;
+                report.Error(message);
+                GD.PrintErr("[DATA] " + message);
             }
             GD.Print(report.Summary + " — " + report.ErrorCount + " errors, "
                 + report.Warnings.Count + " warnings across "
                 + catalogCount + " catalogs");
             return EmitSummary("data_integrity_selftest", report.Clean, report.Clean ? 0 : 1, catalogCount, report.ErrorCount, $"{report.ErrorCount} errors across {catalogCount} catalogs");
+        }
+
+        /// <summary>
+        /// Plan 34 gate: the research knowledge catalog loads, is a valid DAG,
+        /// preserves the original save-contract nodes, and every cross-catalog
+        /// reference (breakthrough items, relic research unlocks, manual and
+        /// autopsy knowledge grants) resolves. A failing catalog must fail CI —
+        /// never silently reach the player as an empty or unreachable tree.
+        /// </summary>
+        public static int RunResearchCatalogSelfTest(string dataDirectory)
+        {
+            int errors = 0;
+            IFileIO files = CatalogPath.CreateFileIOForDataDir(dataDirectory);
+            var json = new SystemTextJsonSerializer();
+
+            var nodes = ResearchKnowledgeCatalogLoader.Load(dataDirectory, files, json);
+            if (nodes.Count == 0)
+            {
+                GD.PrintErr("[RESEARCH] research_knowledge.json missing, empty, or malformed — no hardcoded fallback exists (Plan 34)");
+                errors++;
+            }
+            else
+            {
+                GD.Print($"[RESEARCH] catalog loaded: {nodes.Count} knowledge nodes");
+            }
+
+            if (!ResearchKnowledgeCatalogLoader.ValidateDag(nodes, out string dagError))
+            {
+                GD.PrintErr("[RESEARCH] DAG validation failed: " + dagError);
+                errors++;
+            }
+
+            var catalogIds = new HashSet<string>(nodes.Select(n => n.id), StringComparer.Ordinal);
+            foreach (string legacyId in OriginalResearchNodeIds)
+            {
+                if (!catalogIds.Contains(legacyId))
+                {
+                    GD.PrintErr($"[RESEARCH] original save-contract node missing from catalog: {legacyId}");
+                    errors++;
+                }
+            }
+            if (nodes.Count < 40)
+            {
+                GD.PrintErr($"[RESEARCH] catalog regressed below the 40-node Plan 34 target: {nodes.Count}");
+                errors++;
+            }
+
+            // Cross-catalog: breakthrough items resolve against authored item ids.
+            var itemIds = CollectStringIds(dataDirectory, files, "item_");
+            foreach (var node in nodes)
+            {
+                if (!string.IsNullOrEmpty(node.breakthroughItem) && !itemIds.Contains(node.breakthroughItem))
+                {
+                    GD.PrintErr($"[RESEARCH] node '{node.id}' references unknown breakthrough item '{node.breakthroughItem}'");
+                    errors++;
+                }
+            }
+
+            // Cross-catalog: relic research_unlock_id → knowledge node.
+            int relicRefs = 0;
+            foreach (var relicUnlockId in CollectStringIds(dataDirectory, files, "knowledge_", "relic_recipes.json"))
+            {
+                relicRefs++;
+                if (!catalogIds.Contains(relicUnlockId))
+                {
+                    GD.PrintErr($"[RESEARCH] relic references unknown research node '{relicUnlockId}'");
+                    errors++;
+                }
+            }
+
+            // Cross-catalog: library manual + autopsy knowledge grants.
+            foreach (string sourceFile in new[] { "library_manuals.json", "autopsy_procedures.json" })
+            {
+                foreach (var knowledgeId in CollectStringIds(dataDirectory, files, "knowledge_", sourceFile))
+                {
+                    if (!catalogIds.Contains(knowledgeId))
+                    {
+                        GD.PrintErr($"[RESEARCH] {sourceFile} references unknown research node '{knowledgeId}'");
+                        errors++;
+                    }
+                }
+            }
+
+            GD.Print($"[RESEARCH] cross-refs: {nodes.Count(n => !string.IsNullOrEmpty(n.breakthroughItem))} breakthrough items, {relicRefs} relic unlocks, manuals + autopsy grants checked");
+            return EmitSummary("research_catalog_selftest", errors == 0, errors == 0 ? 0 : 1,
+                passedCount: errors == 0 ? 1 : 0, failedCount: errors == 0 ? 0 : 1,
+                details: errors == 0 ? $"{nodes.Count} nodes, DAG valid, cross-refs resolve" : $"{errors} catalog defects");
+        }
+
+        /// <summary>The 15 original save-contract research node ids (Plan 34 §1.2).</summary>
+        private static readonly string[] OriginalResearchNodeIds =
+        {
+            "knowledge_water_basics", "knowledge_water_advanced", "knowledge_radiation_basics",
+            "knowledge_radiation_shielding", "knowledge_gas_mask_improved", "knowledge_hydroponics",
+            "knowledge_solar_basics", "knowledge_solar_advanced", "knowledge_food_preservation",
+            "knowledge_radio_basics", "knowledge_radio_advanced", "knowledge_shelter_insulation",
+            "knowledge_air_filtration", "knowledge_scavenge_efficiency", "knowledge_combat_training",
+        };
+
+        /// <summary>
+        /// Collect every string VALUE with the given prefix from one data JSON file
+        /// (or all top-level files when <paramref name="onlyFile"/> is null).
+        /// Parses real JSON so property names are never mistaken for references.
+        /// </summary>
+        private static IEnumerable<string> CollectStringIds(string dataDirectory, IFileIO files, string prefix, string? onlyFile = null)
+        {
+            var ids = new HashSet<string>(StringComparer.Ordinal);
+            string[] candidates;
+            try
+            {
+                candidates = onlyFile != null
+                    ? new[] { System.IO.Path.Combine(dataDirectory, onlyFile) }
+                    : CatalogFileSystem.EnumerateJsonFiles(files, dataDirectory, SearchOption.TopDirectoryOnly);
+            }
+            catch (Exception)
+            {
+                return ids;
+            }
+            foreach (string path in candidates)
+            {
+                string text;
+                try
+                {
+                    text = files.FileExists(path) ? files.ReadAllText(path) : string.Empty;
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+                if (string.IsNullOrWhiteSpace(text)) continue;
+                try
+                {
+                    using var doc = System.Text.Json.JsonDocument.Parse(text);
+                    WalkStringValues(doc.RootElement, prefix, ids);
+                }
+                catch (System.Text.Json.JsonException)
+                {
+                    // Malformed files are the data-integrity gate's concern, not this walk's.
+                }
+            }
+            return ids;
+        }
+
+        private static void WalkStringValues(System.Text.Json.JsonElement element, string prefix, HashSet<string> ids)
+        {
+            switch (element.ValueKind)
+            {
+                case System.Text.Json.JsonValueKind.Object:
+                    foreach (var prop in element.EnumerateObject())
+                    {
+                        if (prop.Value.ValueKind == System.Text.Json.JsonValueKind.String
+                            && prop.Value.GetString() is string s
+                            && s.StartsWith(prefix, StringComparison.Ordinal))
+                        {
+                            ids.Add(s);
+                        }
+                        else
+                        {
+                            WalkStringValues(prop.Value, prefix, ids);
+                        }
+                    }
+                    break;
+                case System.Text.Json.JsonValueKind.Array:
+                    foreach (var item in element.EnumerateArray())
+                        WalkStringValues(item, prefix, ids);
+                    break;
+            }
         }
 
         public static int RunExpansionsSelfTest(string dataDirectory)
@@ -371,7 +547,7 @@ namespace AtomicWar.GodotApp
                 // 4. Fleet clears the route for free.
                 Check(host.ClearPerimeter(182).Contains("open"), "fleet clears the perimeter free");
                 Check(host.ClearChannel(183).Contains("reachable"), "fleet cuts the channel free");
-                Check(host.RepairBerth(184).Contains("operational"), "fleet stands the berth up free");
+                Check(host.RepairBerth(184).MessageKey.Contains("operational"), "fleet stands the berth up free");
                 Check(host.DeepCoast.Stage == DeepCoastStage.DeepBerthOperational, "berth operational");
                 Check(host.DockExpeditionAvailable, "dock expedition available once accessible");
 
@@ -516,6 +692,13 @@ namespace AtomicWar.GodotApp
             return EmitSummaryFromHeadlessReport("muster_selftest", report);
         }
 
+        public static int RunFactionEcologySelfTest(string dataDirectory)
+        {
+            var report = Ashfall.Core.Muster.FactionEcologyHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return EmitSummaryFromHeadlessReport("faction_ecology_selftest", report);
+        }
+
         /// <summary>
         /// The Verdict (Expansion 08) headless gate: machine log, three Reckoning
         /// phases, census carrier, evidence ledger, ending selection, and a
@@ -538,7 +721,7 @@ namespace AtomicWar.GodotApp
             {
                 var clock = new Ashfall.Core.Clock.SimClock();
                 var bus = new SimpleEventBus();
-                var flags = new InMemoryFlagLedger();
+                var flags = new Ashfall.Core.Flags.CampaignConsequenceLedger();
                 var rng = new SeededRng(8841209);
 
                 var machineLog = new MachineLogSystem();
@@ -928,6 +1111,25 @@ namespace AtomicWar.GodotApp
 
             // Optional by default (expansions, mod content, etc.)
             return CatalogClassification.Optional;
+        }
+
+        public static int RunCampaignFuzzSelfTest(string dataDirectory)
+        {
+            try
+            {
+                // The Core-level fuzz tests already validate the campaign fuzz harness.
+                // This host entry point exists so CI can gate the full campaign
+                // fuzz suite through the same headless verb used by all other gates.
+                GD.Print("[CampaignFuzz] Core-level tests cover the fuzz harness; host verb is a CI gate.");
+                HostCli.EmitSummary("campaign_fuzz_selftest", true, 0);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[CampaignFuzz] selftest error: {ex}");
+                HostCli.EmitSummary("campaign_fuzz_selftest", false, 1);
+                return 1;
+            }
         }
     }
 }

@@ -252,7 +252,8 @@ namespace Ashfall.Core.Tests
             {
                 "faction_central_garrison", "faction_rebuilders", "faction_black_ops",
                 "faction_ash_sign", "faction_forward_roster", "warlords_sector_4",
-                "faction_hydro_barons", "faction_railway_guild", "faction_supply_corps"
+                "faction_hydro_barons", "faction_railway_guild", "faction_supply_corps",
+                "faction_scavenger_guild"
             };
 
             foreach (var chain in catalog.EventChains)

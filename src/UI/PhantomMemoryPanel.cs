@@ -159,7 +159,7 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_relicInspector);
             AshfallUiHelpers.EmptyChildren(_triggerLogContainer);
 
-            var survivors = _host.DemoSurvivors;
+            var survivors = _host.Survivors;
             int survivorCount = survivors.Count;
 
             _statusRail.Set("survivors", survivorCount.ToString(), AshfallMetricCard.Criticality.Normal);
@@ -174,46 +174,55 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // Populate Survivors
-            foreach (var sv in survivors)
+            if (survivorCount == 0)
             {
-                var card = AshfallUiHelpers.MakePanel();
-                var cardMargin = AshfallUiHelpers.MakeMargins(DesignTheme.SpacingXs);
-                card.AddChild(cardMargin);
-                var cardVbox = new VBoxContainer();
-                cardVbox.AddThemeConstantOverride("separation", 3);
-                cardMargin.AddChild(cardVbox);
-
-                var headerRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-                headerRow.AddChild(AshfallUiHelpers.MakeBadgeIcon("badge_somatization", 18));
-                var nameLbl = AshfallUiHelpers.MakeBody(sv.displayName);
-                nameLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-                headerRow.AddChild(nameLbl);
-                cardVbox.AddChild(headerRow);
-
-                var bgLbl = AshfallUiHelpers.MakeMono($"BACKGROUND: [{sv.backgroundId.ToUpperInvariant()}]");
-                bgLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Lethe));
-                cardVbox.AddChild(bgLbl);
-
-                var selectBtn = AshfallUiHelpers.MakeButton($"INSPECT // {sv.survivorId}", () =>
+                _survivorList.AddChild(AshfallUiHelpers.MakeMetadata("No survivors registered in phantom memory roster."));
+            }
+            else
+            {
+                foreach (var sv in survivors)
                 {
-                    _selectedSurvivorId = sv.survivorId;
-                    RefreshView();
-                });
-                selectBtn.CustomMinimumSize = new Vector2(0, 24);
-                cardVbox.AddChild(selectBtn);
+                    var card = AshfallUiHelpers.MakePanel();
+                    var cardMargin = AshfallUiHelpers.MakeMargins(DesignTheme.SpacingXs);
+                    card.AddChild(cardMargin);
+                    var cardVbox = new VBoxContainer();
+                    cardVbox.AddThemeConstantOverride("separation", 3);
+                    cardMargin.AddChild(cardVbox);
 
-                _survivorList.AddChild(card);
+                    var headerRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+                    headerRow.AddChild(AshfallUiHelpers.MakeBadgeIcon("badge_somatization", 18));
+                    var nameLbl = AshfallUiHelpers.MakeBody(sv.displayName);
+                    nameLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                    headerRow.AddChild(nameLbl);
+                    cardVbox.AddChild(headerRow);
+
+                    var bgLbl = AshfallUiHelpers.MakeMono($"BACKGROUND: [{sv.backgroundId.ToUpperInvariant()}]");
+                    bgLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Lethe));
+                    cardVbox.AddChild(bgLbl);
+
+                    var selectBtn = AshfallUiHelpers.MakeButton($"INSPECT // {sv.survivorId}", () =>
+                    {
+                        _selectedSurvivorId = sv.survivorId;
+                        RefreshView();
+                    });
+                    selectBtn.CustomMinimumSize = new Vector2(0, 24);
+                    cardVbox.AddChild(selectBtn);
+
+                    _survivorList.AddChild(card);
+                }
             }
 
             // Relic Scanner & Actions
-            var curSv = survivors.FirstOrDefault(s => s.survivorId == _selectedSurvivorId) ?? survivors[0];
-            _relicInspector.AddChild(AshfallUiHelpers.MakeSectionHeader($"SURVIVOR: {curSv.displayName.ToUpperInvariant()}"));
-            _relicInspector.AddChild(AshfallUiHelpers.MakeDataRow("Survivor ID", curSv.survivorId, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-            _relicInspector.AddChild(AshfallUiHelpers.MakeDataRow("Pre-War Background", curSv.backgroundId, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-            _relicInspector.AddChild(AshfallUiHelpers.MakeDataRow("Selected Relic Item", _selectedItemCategory.ToUpperInvariant(), AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            var curSv = survivors.FirstOrDefault(s => s.survivorId == _selectedSurvivorId) ?? (survivors.Count > 0 ? survivors[0] : null);
+            if (curSv != null)
+            {
+                _relicInspector.AddChild(AshfallUiHelpers.MakeSectionHeader($"SURVIVOR: {curSv.displayName.ToUpperInvariant()}"));
+                _relicInspector.AddChild(AshfallUiHelpers.MakeDataRow("Survivor ID", curSv.survivorId, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+                _relicInspector.AddChild(AshfallUiHelpers.MakeDataRow("Pre-War Background", curSv.backgroundId, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                _relicInspector.AddChild(AshfallUiHelpers.MakeDataRow("Selected Relic Item", _selectedItemCategory.ToUpperInvariant(), AshfallUiHelpers.ToColor(DesignTheme.Warm)));
 
-            _relicInspector.AddChild(AshfallUiHelpers.MakeSeparator());
-            _relicInspector.AddChild(AshfallUiHelpers.MakeSubsectionHeader("PRESENT RELIC ARTIFACT"));
+                _relicInspector.AddChild(AshfallUiHelpers.MakeSeparator());
+                _relicInspector.AddChild(AshfallUiHelpers.MakeSubsectionHeader("PRESENT RELIC ARTIFACT"));
 
             var itemOptions = new[]
             {
@@ -242,6 +251,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _triggerLogContainer.AddChild(AshfallUiHelpers.MakeSeparator());
                 _triggerLogContainer.AddChild(AshfallUiHelpers.MakeCritical($"LATEST TRIGGER:\n{_host.LastEvent}"));
+            }
             }
         }
 

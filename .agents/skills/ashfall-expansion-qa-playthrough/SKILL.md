@@ -1,3 +1,8 @@
+---
+name: ashfall-expansion-qa-playthrough
+description: Automates expansion QA playthrough validation, checking reachability, state gating, and narrative integration for new expansion content.
+---
+
 # ASHFALL Expansion System Skill: ashfall-expansion-qa-playthrough
 
 ## Overview

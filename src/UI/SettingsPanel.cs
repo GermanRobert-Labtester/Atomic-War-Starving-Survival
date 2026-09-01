@@ -34,13 +34,16 @@ namespace AtomicWar.GodotApp.UI
         private Button _btnVSync = null!;
         private OptionButton _optMaxFps = null!;
 
-        // Accessibility
+        // Accessibility & Language
+        private OptionButton _optLanguage = null!;
         private Button _btnHighContrast = null!;
         private Button _btnHazardLabels = null!;
         private Button _btnReducedMotion = null!;
         private Button _btnLargeFonts = null!;
 
         // Gameplay
+        private OptionButton _optTutorialMode = null!;
+        private Button _btnResetTutorials = null!;
         private Button _btnConfirmEndDay = null!;
         private Button _btnVerboseRadio = null!;
         private Button _btnAutoSave = null!;
@@ -230,8 +233,20 @@ namespace AtomicWar.GodotApp.UI
 
             contentVBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // ── 3. ACCESSIBILITY SECTION ───────────────────────────────────
-            contentVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("ACCESSIBILITY & READABILITY"));
+            // ── 3. ACCESSIBILITY & LANGUAGE ───────────────────────────────
+            contentVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("ACCESSIBILITY & LANGUAGE"));
+
+            // Language / Locale
+            var rowLang = MakeSettingRow("Language / Locale");
+            _optLanguage = new OptionButton { CustomMinimumSize = new Vector2(240, 32) };
+            _optLanguage.AddItem("English (US)", 0);
+            _optLanguage.AddItem("[QA] Pseudo-Locale (Expanded)", 1);
+            _optLanguage.ItemSelected += idx =>
+            {
+                _working.Locale = idx == 1 ? "pseudo" : "en";
+            };
+            rowLang.AddChild(_optLanguage);
+            contentVBox.AddChild(rowLang);
 
             var rowHc = MakeSettingRow("High Contrast HUD");
             _btnHighContrast = AshfallUiHelpers.MakeButton("DISABLED", () =>
@@ -266,7 +281,28 @@ namespace AtomicWar.GodotApp.UI
             contentVBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // ── 4. GAMEPLAY PREFERENCES ────────────────────────────────────
-            contentVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("GAMEPLAY PROTOCOLS"));
+            contentVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("GAMEPLAY & ONBOARDING"));
+
+            // Tutorial Mode
+            var rowTut = MakeSettingRow("Tutorial & Guidance");
+            _optTutorialMode = new OptionButton { CustomMinimumSize = new Vector2(240, 32) };
+            _optTutorialMode.AddItem("Full Onboarding & Tutorials", 0);
+            _optTutorialMode.AddItem("Contextual Hints Only", 1);
+            _optTutorialMode.AddItem("Disabled (Veteran Mode)", 2);
+            _optTutorialMode.ItemSelected += idx => _working.TutorialMode = (int)idx;
+            rowTut.AddChild(_optTutorialMode);
+            contentVBox.AddChild(rowTut);
+
+            // Reset Tutorials
+            var rowResetTut = MakeSettingRow("Reset Tutorial Progress");
+            _btnResetTutorials = AshfallUiHelpers.MakeButton("RESET TUTORIALS", () =>
+            {
+                // Reset onboarding journey state in session if accessible
+                _btnResetTutorials.Text = "TUTORIALS RESET";
+            });
+            _btnResetTutorials.CustomMinimumSize = new Vector2(240, 32);
+            rowResetTut.AddChild(_btnResetTutorials);
+            contentVBox.AddChild(rowResetTut);
 
             var rowEndDay = MakeSettingRow("Confirm Before Ending Day");
             _btnConfirmEndDay = AshfallUiHelpers.MakeButton("ENABLED", () =>
@@ -402,6 +438,9 @@ namespace AtomicWar.GodotApp.UI
             if (_lblSfxVol != null) _lblSfxVol.Text = $"{(int)(_working.SfxVolume * 100)}%";
             if (_lblRadioVol != null) _lblRadioVol.Text = $"{(int)(_working.RadioVolume * 100)}%";
             if (_lblAmbienceVol != null) _lblAmbienceVol.Text = $"{(int)(_working.AmbienceVolume * 100)}%";
+
+            if (_optLanguage != null) _optLanguage.Selected = _working.Locale == "pseudo" ? 1 : 0;
+            if (_optTutorialMode != null) _optTutorialMode.Selected = Math.Clamp(_working.TutorialMode, 0, 2);
 
             _btnHighContrast.Text = _working.HighContrast ? "ENABLED" : "DISABLED";
             _btnHazardLabels.Text = _working.HazardTextLabels ? "ENABLED" : "DISABLED";

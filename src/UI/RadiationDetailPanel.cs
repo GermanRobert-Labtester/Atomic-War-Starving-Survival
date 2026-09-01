@@ -169,79 +169,21 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by res://assets/ui/panels/RadiationDetailPanel.tscn; SceneBinder resolves typed unique-name nodes once.
+            // Sibling refresh code is unchanged.
+            var binder = new SceneBinder(this, typeof(RadiationDetailPanel));
+            binder.Require<VBoxContainer>("CurrentData");
+            binder.Require<VBoxContainer>("DosimeterData");
+            binder.Require<VBoxContainer>("ProtectionData");
+            binder.Require<VBoxContainer>("EventsList");
+            binder.Require<Button>("CloseButton");
+            _currentData = binder.Get<VBoxContainer>("CurrentData");
+            _dosimeterData = binder.Get<VBoxContainer>("DosimeterData");
+            _protectionData = binder.Get<VBoxContainer>("ProtectionData");
+            _eventsList = binder.Get<VBoxContainer>("EventsList");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("RADIATION DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Current radiation section
-            _lblCurrentTitle = AshfallUiHelpers.MakeSectionHeader("CURRENT RADIATION");
-            vbox.AddChild(_lblCurrentTitle);
-
-            _currentData = new VBoxContainer();
-            _currentData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _currentData.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_currentData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Dosimeter section
-            _lblDosimeterTitle = AshfallUiHelpers.MakeSectionHeader("DOSIMETER STATUS");
-            vbox.AddChild(_lblDosimeterTitle);
-
-            _dosimeterData = new VBoxContainer();
-            _dosimeterData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _dosimeterData.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_dosimeterData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Protection section
-            _lblProtectionTitle = AshfallUiHelpers.MakeSectionHeader("PROTECTION LEVELS");
-            vbox.AddChild(_lblProtectionTitle);
-
-            _protectionData = new VBoxContainer();
-            _protectionData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _protectionData.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_protectionData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Events section
-            _lblEventsTitle = AshfallUiHelpers.MakeSectionHeader("RADIATION EVENTS");
-            vbox.AddChild(_lblEventsTitle);
-
-            _eventsList = new VBoxContainer();
-            _eventsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _eventsList.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_eventsList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()

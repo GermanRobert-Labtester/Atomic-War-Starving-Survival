@@ -1,0 +1,748 @@
+{
+  "schema_version": 1,
+  "collection_id": "codex_entries",
+  "entries": [
+    {
+      "id": "codex_regions_the_grid",
+      "category": "regions",
+      "display_name": "The Grid",
+      "spoiler_tier": 0,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_ration_queue_plaza",
+      "body": "The pre-war city, named for its street plan and for the thing that stopped. Multi-storey buildings stand, most of them gutted by fire but structurally sound enough to shelter those who hold them. The water runs clean and the streets are swept. The labour that does both is conscripted. Ration queues form at 0600 without being told to. People obey out of a habit that predates the current order and would probably survive it.",
+      "provenance": "canonical",
+      "tags": [
+        "sector_4",
+        "urban",
+        "garrison_territory"
+      ]
+    },
+    {
+      "id": "codex_regions_the_verge",
+      "category": "regions",
+      "display_name": "The Verge",
+      "spoiler_tier": 0,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_grange_hall",
+      "body": "Terraced farmland on the south slope, the only ground in Sector 4 that still produces calories. Run by a show of hands at a weekly council. It is the safest place in the sector and the most quietly frightening, because its safety is conditional on a vote that could go the other way. It is also the only region where a stranger is asked their name before they are asked their business.",
+      "provenance": "canonical",
+      "tags": [
+        "sector_4",
+        "agricultural",
+        "militia_territory"
+      ]
+    },
+    {
+      "id": "codex_regions_the_spine",
+      "category": "regions",
+      "display_name": "The Spine",
+      "spoiler_tier": 0,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_ash_sign_shrine",
+      "body": "The highland ridge to the north. High, dry, and defensible. Pre-war science lived here: observatories, boreholes, a radio telescope, a salt mine repurposed for low-background measurement. The current occupants inherited a landscape of instruments and read them as scripture. Several can operate the instruments correctly. That is worse than if they could not.",
+      "provenance": "canonical",
+      "tags": [
+        "sector_4",
+        "highland",
+        "ridge"
+      ]
+    },
+    {
+      "id": "codex_regions_the_toll",
+      "category": "regions",
+      "display_name": "The Toll",
+      "spoiler_tier": 0,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_weighbridge",
+      "body": "The interstate corridor to the east. Road and bridges. The price of passage is stated up front, the receipt is real, and nobody pretends the arrangement is anything other than what it is. Survivors who have dealt with both will tell you they would rather be robbed here than helped by the Garrison. Everything that moves between regions moves through here and pays.",
+      "provenance": "canonical",
+      "tags": [
+        "sector_4",
+        "interstate",
+        "corridor"
+      ]
+    },
+    {
+      "id": "codex_regions_the_drown",
+      "category": "regions",
+      "display_name": "The Drown",
+      "spoiler_tier": 0,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_lock_gate_four",
+      "body": "The industrial flats to the west. When the lock gates lost power the river took back the land it had been kept off for ninety years, and it took it back with everything still standing. Streets became canals. Basements became depth. No faction claims it. The deepest pre-war records survived here precisely because nobody could reach them.",
+      "provenance": "canonical",
+      "tags": [
+        "sector_4",
+        "flooded",
+        "industrial"
+      ]
+    },
+    {
+      "id": "codex_military_sealed_sites",
+      "category": "locations",
+      "display_name": "Sealed Military Sites",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_missile_silo",
+      "body": "Four sites do not belong to any faction's territory. All four predate the factions and were never surrendered. They were simply left locked. A missile silo in the highlands. A drone hive near the interstate. An automated mortar pit with orders still pending. A core facility beneath the flooded district. The only institution that survived the Exchange with its chain of command fully intact is the one made of machinery.",
+      "provenance": "restricted",
+      "tags": [
+        "military",
+        "sealed",
+        "automated"
+      ]
+    },
+    {
+      "id": "codex_military_missile_silo",
+      "category": "locations",
+      "display_name": "The Sealed Silo",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_missile_silo",
+      "body": "A missile installation in the highland ridge, flagged by the Garrison and avoided by them. The perimeter is intact. The markers are military-grade. Whatever is inside has not been opened, and the people with the best equipment and the most to gain have chosen not to be the ones who check. The silence around it is not ignorance. It is a decision.",
+      "provenance": "restricted",
+      "tags": [
+        "military",
+        "sealed",
+        "highland"
+      ]
+    },
+    {
+      "id": "codex_military_drone_hive",
+      "category": "locations",
+      "display_name": "The Powered Hive",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "location_drone_hive_silo",
+      "body": "A military installation near the interstate corridor. It still has power. The hum can be heard from the road on a still night. No faction has established a perimeter and no faction has breached the walls. The arrangement, such as it is, has held for three years without being discussed.",
+      "provenance": "restricted",
+      "tags": [
+        "military",
+        "powered",
+        "automated"
+      ]
+    },
+    {
+      "id": "codex_military_mortar_pit",
+      "category": "locations",
+      "display_name": "The Mortar Pit",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "location_automated_mortar_pit",
+      "body": "An automated firing position in the eastern corridor. It still has orders. The targeting array tracks on a schedule that no one in Sector 4 has recognised, and no one has tested the response by entering the engagement zone. The pit operates on whatever authority issued its last directive, and that authority has not been rescinded.",
+      "provenance": "restricted",
+      "tags": [
+        "military",
+        "automated",
+        "active_orders"
+      ]
+    },
+    {
+      "id": "codex_locations_grange_hall",
+      "category": "locations",
+      "display_name": "The Grange Hall",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_grange_hall",
+      "body": "Oil lamps, a long table, and a hand-lettered sign asking visitors to leave weapons in the porch. Attendance is recorded in a ledger going back to the first week. The ledger's first page has forty-seven names and twelve rifles noted in the margin. Twenty-two of those names have a small cross beside them now, added later, in a different hand.",
+      "provenance": "eyewitness",
+      "tags": [
+        "verge",
+        "council",
+        "militia"
+      ]
+    },
+    {
+      "id": "codex_locations_ration_plaza",
+      "category": "locations",
+      "display_name": "Ration Plaza",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_ration_queue_plaza",
+      "body": "A civic square with painted queue lines, repainted often. The line forms at 0600 whether or not anyone has announced a distribution. The queue was not ordered. It formed, and then the local authority formalised it. It is the clearest demonstration in the sector that people will organise themselves and then hand the organisation to whoever is armed.",
+      "provenance": "eyewitness",
+      "tags": [
+        "grid",
+        "rationing",
+        "civil_order"
+      ]
+    },
+    {
+      "id": "codex_locations_municipal_archive",
+      "category": "locations",
+      "display_name": "The Municipal Archive",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_municipal_archive",
+      "body": "Rolling stacks, most collapsed. The fire suppression discharged at some point and everything below waist height is a solid grey brick of paper. The sector's civil records, or what remains of them. The local authority has searched it twice for a specific document and not found it, because the document was never filed here. Whatever they are looking for, it was not municipal.",
+      "provenance": "eyewitness",
+      "tags": [
+        "grid",
+        "records",
+        "archive"
+      ]
+    },
+    {
+      "id": "codex_locations_printworks",
+      "category": "locations",
+      "display_name": "The Printworks",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_printworks",
+      "body": "Web presses seized solid. Pallets of undelivered leaflets, still banded, still square. The final broadcasts in paper form: remain in your homes, await further instruction. Eleven tonnes of it, printed the week before, never distributed. Excellent tinder, which everyone knows and most people dislike using.",
+      "provenance": "eyewitness",
+      "tags": [
+        "grid",
+        "pre_war",
+        "media"
+      ]
+    },
+    {
+      "id": "codex_locations_st_brigids",
+      "category": "locations",
+      "display_name": "St Brigid's Almshouse",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_st_brigids_almshouse",
+      "body": "A hospice. Beds made, charts filled in to a date and then not after it. The staff stayed. All charts stop on the same day, which was the day the oxygen ran out. The final entries are in four different handwritings, because by then they were writing for each other.",
+      "provenance": "eyewitness",
+      "tags": [
+        "grid",
+        "hospice",
+        "casualty"
+      ]
+    },
+    {
+      "id": "codex_locations_bridge_seven",
+      "category": "locations",
+      "display_name": "Bridge Seven",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_bridge_seven",
+      "body": "Four lanes over the river gorge, intact, with charges still visibly taped to the underside of the span. The reason the eastern corridor has a single authority. Nobody has verified in five years that the detonator works, and the entire arrangement rests on nobody wanting to be the one who checks.",
+      "provenance": "eyewitness",
+      "tags": [
+        "toll",
+        "bridge",
+        "demolition_charges"
+      ]
+    },
+    {
+      "id": "codex_locations_motel_verity",
+      "category": "locations",
+      "display_name": "The Verity Motel",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_motel_verity",
+      "body": "Twelve units around a dry pool. Neutral ground, enforced by the corridor authority, who charge for the enforcement. Where the sector's factions meet when they have to. Three ceasefires have been signed in unit 7. The Tollman has never attended one and has been paid for all of them.",
+      "provenance": "eyewitness",
+      "tags": [
+        "toll",
+        "neutral_ground",
+        "diplomacy"
+      ]
+    },
+    {
+      "id": "codex_locations_ash_sign_shrine",
+      "category": "locations",
+      "display_name": "The Ash Sign Shrine",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_ash_sign_shrine",
+      "body": "A survey cairn built up with concrete and glass slag into something taller than a person. A dosimeter is mounted at the top, working, at eye height. The dosimeter is not decorative and is not ironic. It is read aloud daily, accurately, as liturgy. The surrounding ground is bare where people have stood to read it. The numbers climb a little higher every year, and the pilgrims keep coming.",
+      "provenance": "eyewitness",
+      "tags": [
+        "spine",
+        "shrine",
+        "devotion"
+      ]
+    },
+    {
+      "id": "codex_locations_switchbacks",
+      "category": "locations",
+      "display_name": "The Switchbacks",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_pilgrim_switchbacks",
+      "body": "Eleven hairpins up the south face, the verges lined with boots. Pairs, placed neatly. Thousands. Ascending pilgrims leave footwear at the point where they commit to continuing. The pairs are not cleared. Some are very small.",
+      "provenance": "eyewitness",
+      "tags": [
+        "spine",
+        "pilgrimage",
+        "devotion"
+      ]
+    },
+    {
+      "id": "codex_locations_lock_gate_four",
+      "category": "locations",
+      "display_name": "Lock Gate Four",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_lock_gate_four",
+      "body": "The gate that failed. Still open, exactly as far as it opened. Lost power mid-cycle and the mechanism seized. The drowned district is not a bomb crater. It is a maintenance failure, which is why it keeps getting deeper. The ironwork is pitted and the winch is frozen. The gate stays where it is, and the water flows through it.",
+      "provenance": "material",
+      "tags": [
+        "drown",
+        "infrastructure",
+        "flood"
+      ]
+    },
+    {
+      "id": "codex_locations_drowned_cinema",
+      "category": "locations",
+      "display_name": "The Odeon",
+      "spoiler_tier": 1,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_drowned_cinema",
+      "body": "Water to the level of row F. The screen is intact. The seats below the waterline are still folded down, because somebody sat in them. Used as a shelter in the first month; the flood came later and slowly. Nobody drowned here. The folded seats are just seats. It reads as a mass grave and is not one, and finding that out is the point.",
+      "provenance": "eyewitness",
+      "tags": [
+        "drown",
+        "flooded",
+        "shelter"
+      ]
+    },
+    {
+      "id": "codex_locations_shallows_market",
+      "category": "locations",
+      "display_name": "The Shallows",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_the_shallows_market",
+      "body": "Nine boats tied into a raft over what used to be a retail park. Trade happens at gunwale height and nobody boards anybody else's hull. Neutral by necessity, the only market where all four factions trade simultaneously, because the water makes ambush arithmetic unfavourable for everyone. The etiquette is absolute and enforced by people who will not explain it twice.",
+      "provenance": "eyewitness",
+      "tags": [
+        "drown",
+        "market",
+        "neutral_ground"
+      ]
+    },
+    {
+      "id": "codex_locations_alloc_12b",
+      "category": "locations",
+      "display_name": "Allocation 12-B",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_alloc_12b",
+      "body": "A subway maintenance level with a stencilled designation and no provisioning whatsoever. Fourteen chalk marks on the wall by the stair, then a gap, then six. It was never a prepared shelter. It was a fallback designation on a form. People sheltered here after the roads closed. Someone kept the water potable for two years using improvised equipment, and the equipment is still in place and still working.",
+      "provenance": "material",
+      "tags": [
+        "drown",
+        "shelter",
+        "improvised"
+      ]
+    },
+    {
+      "id": "codex_locations_records_annex",
+      "category": "locations",
+      "display_name": "Records Annex",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_records_annex",
+      "body": "Reached by boat through a second-storey window. Dry above the waterline, heated, and someone has been dusting. An outpost maintained by a small group who ask no weapons displayed and make an immediate polite request for your full name and the names of your dead. The request is not hostile. It is the entire reason they are here.",
+      "provenance": "eyewitness",
+      "tags": [
+        "drown",
+        "records",
+        "archive"
+      ]
+    },
+    {
+      "id": "codex_locations_kittiwake",
+      "category": "locations",
+      "display_name": "Survey Launch Kittiwake",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_bathymetric_boat",
+      "body": "A river survey boat aground on a submerged roof. Sonar rig intact. The logbook continues eleven days past the Exchange. The last eleven entries map the flooding as it happened, in metres, with timestamps. It is the only accurate chart of the drowned district that exists, and the reason any of it can be navigated at all.",
+      "provenance": "material",
+      "tags": [
+        "drown",
+        "survey",
+        "logbook"
+      ]
+    },
+    {
+      "id": "codex_factions_four_powers",
+      "category": "factions",
+      "display_name": "The Four Powers of Sector 4",
+      "spoiler_tier": 0,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_grange_hall",
+      "body": "Sector 4 is divided among four powers, each holding a sub-region by a different logic. One holds the city by force of habit and firepower. One holds the farmland by consensus and vote. One holds the ridge by devotion and altitude. One holds the road by demolition codes and honest receipts. They do not trust each other. They do not need to. The arrangement has held for three years without a treaty.",
+      "provenance": "canonical",
+      "tags": [
+        "factions",
+        "sector_4",
+        "powers"
+      ]
+    },
+    {
+      "id": "codex_factions_iron_garrison",
+      "category": "factions",
+      "display_name": "The Iron Garrison",
+      "spoiler_tier": 2,
+      "unlock_condition": "meet_faction",
+      "unlock_ref": "iron_garrison",
+      "body": "They hold the city district. Their rule is genuinely functional and genuinely awful: the water is clean, the streets are swept, and the labour that does both is conscripted. Ration queues form at 0600 without being told to. People obey out of a habit that predates the Garrison and would probably survive it. They hold their territory because it is the only sub-region with intact multi-storey buildings, and multi-storey buildings are where you put snipers.",
+      "provenance": "canonical",
+      "tags": [
+        "faction",
+        "garrison",
+        "military",
+        "grid"
+      ]
+    },
+    {
+      "id": "codex_factions_ash_militia",
+      "category": "factions",
+      "display_name": "The Ash Militia",
+      "spoiler_tier": 2,
+      "unlock_condition": "meet_faction",
+      "unlock_ref": "ash_militia",
+      "body": "They hold the southern farmland. The whole sub-region is run by a show of hands at a weekly council. It is the safest place in Sector 4 and the most quietly frightening, because its safety is conditional on a vote that could go the other way. It is also the only region where a stranger is asked their name before they are asked their business.",
+      "provenance": "canonical",
+      "tags": [
+        "faction",
+        "militia",
+        "agricultural",
+        "verge"
+      ]
+    },
+    {
+      "id": "codex_factions_cult_of_ash_sign",
+      "category": "factions",
+      "display_name": "The Cult of the Ash Sign",
+      "spoiler_tier": 2,
+      "unlock_condition": "meet_faction",
+      "unlock_ref": "cult_of_ash_sign",
+      "body": "They hold the highland ridge. The stated reason is that it is closer to the sky. The unstated reason is that it is high, dry, defensible, and the military stopped patrolling above the snowline when the dosimeters started reading wrong. Pre-war science lived here: observatories, boreholes, a radio telescope. The Cult inherited a landscape of instruments and reads them as scripture. Several can operate the instruments correctly. That is worse.",
+      "provenance": "canonical",
+      "tags": [
+        "faction",
+        "cult",
+        "highland",
+        "spine"
+      ]
+    },
+    {
+      "id": "codex_factions_warlords",
+      "category": "factions",
+      "display_name": "The Warlords of Sector 4",
+      "spoiler_tier": 2,
+      "unlock_condition": "meet_faction",
+      "unlock_ref": "warlords_sector_4",
+      "body": "They hold the interstate corridor. The Tollman holds the bridges because he held the demolition codes, and he has never once had to prove he still does. Everything that moves between regions moves through here and pays. The Toll is the most honest sub-region in Sector 4. The price is stated up front, the receipt is real, and nobody pretends the arrangement is anything other than what it is.",
+      "provenance": "canonical",
+      "tags": [
+        "faction",
+        "warlords",
+        "toll",
+        "interstate"
+      ]
+    },
+    {
+      "id": "codex_factions_archivists",
+      "category": "factions",
+      "display_name": "The Archivists of the Before",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_municipal_archive",
+      "body": "A monastic order who venerate pre-war media as ancestral spirits. They tithe in photo albums and cassettes, and pay in morale and encrypted data. The order began with one records clerk who never stopped filing, and a generation of children who watched her and inferred a religion from observed practice. They will not accept a name into their register on one testimony. To register your dead, you must find a second person who knew them.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "archivists",
+        "peaceful",
+        "drown"
+      ]
+    },
+    {
+      "id": "codex_factions_lamplighters",
+      "category": "factions",
+      "display_name": "The Lamplighters",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_the_shallows_market",
+      "body": "They maintain the route beacons: reflector posts on the toll road, pilgrim markers on the switchbacks, channel lights in the drowned district. Every faction protects them, because every faction travels. They want lamp oil, wicks, reflector glass, and batteries. They offer the lit routes themselves, and the second-best map in Sector 4. The rule that defines them: a beacon is lit for whoever is walking. They do not ask who, or why, or which way.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "lamplighters",
+        "peaceful",
+        "routes"
+      ]
+    },
+    {
+      "id": "codex_factions_quiet_house",
+      "category": "factions",
+      "display_name": "The Quiet House",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_motel_verity",
+      "body": "They take the dying that nobody else can care for. Radiation cases past treatment, terminal afflictions, the very old. No payment. No sermon. They ask for exactly two things: the person's name, and one true thing about them. They keep people warm, clean, and not alone. There is a room at the back that no visitor enters. Asked what happens in it, the answer is always the same four words: we make it quiet.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "quiet_house",
+        "peaceful",
+        "end_of_life"
+      ]
+    },
+    {
+      "id": "codex_factions_grain_exchange",
+      "category": "factions",
+      "display_name": "The Grain Exchange",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_grain_exchange",
+      "body": "Not a group of believers. A clearing house. Posted rates, a weighed scale, a chalked board, and four faction representatives who attend because the alternative is worse. It is the only place all four Powers do business at the same table. It has no guards, no charter, and no enforcement mechanism whatsoever. It works for exactly one reason: everybody attending is hungry.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "trade",
+        "exchange",
+        "neutral"
+      ]
+    },
+    {
+      "id": "codex_factions_sun_seekers",
+      "category": "factions",
+      "display_name": "The Sun-Seekers",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_forward_roster_camp",
+      "body": "Surface-dwellers who worship the Ozone Scourge as a cleansing light. They trade only during False Spring, demanding UV visors and welder's glass in exchange for solar tech. They raid violently if they detect that a shelter is hoarding UV protection. They are not seeking death. They are seeking the sun, which they have not properly seen in five years, and they have built an entire theology around the few days a year the sky thins.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "sun_seekers",
+        "dangerous",
+        "surface"
+      ]
+    },
+    {
+      "id": "codex_factions_osteophages",
+      "category": "factions",
+      "display_name": "The Osteophages",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_automated_abattoir",
+      "body": "The Rust-Eaters. Heavy-metal poisoning and pica sufferers who accept toxic tech waste through an airlock and return purified copper wire and scrap metal. They are the darkest transaction in the sector and they are not villains. They are ill, they are organised, and their process works. The detail that does the work: they return the metal clean. Better than you could refine it. You will keep trading with them.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "osteophages",
+        "dangerous",
+        "drown"
+      ]
+    },
+    {
+      "id": "codex_factions_the_tally",
+      "category": "factions",
+      "display_name": "The Tally",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_cut_merchant_caravanserai",
+      "body": "Debt enforcement by written contract. They do not raid, do not extort, and have never once been known to break an agreement, including agreements that end with someone's death. A Tally contract states the debt, the term, the rate, and the forfeit, in plain language, signed by both parties. They will read it back to you before you sign. They are more frightening than the Warlords, because the Warlords can be bargained with.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "tally",
+        "dangerous",
+        "debt"
+      ]
+    },
+    {
+      "id": "codex_factions_undertow",
+      "category": "factions",
+      "display_name": "The Undertow",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_flooded_subway_depot",
+      "body": "Wreckers. They salvage the accidents that happen in the drowned district, and the accidents that happen there happen at a rate that is difficult to explain by water alone. Channel markers move. Ice is thin in places it was thick last week. Nothing has ever been proven. They do not present as a faction. They present as helpful strangers who arrive very quickly. Lucky we were close.",
+      "provenance": "rumor",
+      "tags": [
+        "faction",
+        "undertow",
+        "dangerous",
+        "drown"
+      ]
+    },
+    {
+      "id": "codex_factions_cold_count",
+      "category": "factions",
+      "display_name": "The Cold Count",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_municipal_archive",
+      "body": "Four surviving researchers working the shielded salt chamber in the highlands, where the counters still mean something because the shielding was salvaged from pre-atomic shipwrecks. They are not withholding the answer. They have it. They published it once, on paper, to an audience of nobody, and filed the copy. They want power, shielding, and samples from places nobody sane goes. They offer accurate rad readings and provenance analysis.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "cold_count",
+        "peaceful",
+        "science"
+      ]
+    },
+    {
+      "id": "codex_factions_deserter_coalition",
+      "category": "factions",
+      "display_name": "The Deserter Coalition",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_forward_roster_camp",
+      "body": "Garrison deserters who found each other. A standing capital order applies to every one of them. They are decent people who are wanted for a capital offence, which makes them unpredictable in exactly one way: they cannot ever be seen. They want silence, civilian clothing, and papers. They offer patrol schedules, weapon maintenance nobody else can do, and disciplined fighters who cannot be called on in daylight.",
+      "provenance": "restricted",
+      "tags": [
+        "faction",
+        "deserters",
+        "conditional",
+        "verge"
+      ]
+    },
+    {
+      "id": "codex_factions_provisioned",
+      "category": "factions",
+      "display_name": "The Provisioned",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_ration_queue_plaza",
+      "body": "Private shelter owners who were never on the Continuity Allocation Schedule and did not need to be. They built their own, paid for it themselves, and were proved right. Where others survived by proximity and luck, the Provisioned survived by having been correct in advance, and they have had five years to develop opinions about the difference. They want almost nothing. That is what makes them difficult.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "provisioned",
+        "conditional",
+        "grid"
+      ]
+    },
+    {
+      "id": "codex_factions_long_walk",
+      "category": "factions",
+      "display_name": "The Long Walk",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_eastern_road",
+      "body": "They do not stop. Thirty-odd people moving a continuous circuit of Sector 4 on a route that takes roughly eleven months, because a moving target is not worth raiding and because ground recovers if you leave it alone. They arrive, trade for a day, and go. They will not stay a second night, for anyone, for any offer. They want water, footwear, and news. They offer goods from regions you cannot reach yet and the only accurate sector-wide situation report, delivered once, verbally, by someone already walking away.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "nomads",
+        "peaceful",
+        "circuit"
+      ]
+    },
+    {
+      "id": "codex_factions_scavenger_guild",
+      "category": "factions",
+      "display_name": "The Scavenger Guild",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_scavenger_camp",
+      "body": "Professional salvage, organised as a trade guild: territories, apprenticeships, and a rule against stripping a site below the point where it can be worked again. The rule is economic, not sentimental. A site cut to the frame yields once. They will trade with anyone and they will blacklist a shelter that over-strips a claimed site, and the blacklist is honoured across the whole Guild, permanently.",
+      "provenance": "eyewitness",
+      "tags": [
+        "faction",
+        "scavenger",
+        "conditional",
+        "guild"
+      ]
+    },
+    {
+      "id": "codex_factions_iron_raiders",
+      "category": "factions",
+      "display_name": "The Iron Raiders",
+      "spoiler_tier": 2,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_iron_garrison",
+      "body": "No code. No contract. No ideology. What the Warlords are constantly and inaccurately accused of being. They exist to make the Warlords legible. After an Iron Raider encounter, the posted rates and honest receipts at the Toll read very differently, and you understand why the corridor is tolerated. They want what you have. There is no trade interaction. They are the only group in the sector with nothing to offer, and that absence is the point.",
+      "provenance": "restricted",
+      "tags": [
+        "faction",
+        "raiders",
+        "dangerous",
+        "toll"
+      ]
+    },
+    {
+      "id": "codex_deep_lore_transit_authority",
+      "category": "deep_lore",
+      "display_name": "The Convoy Slots",
+      "spoiler_tier": 3,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_transit_authority_hq",
+      "body": "Wall-sized route maps under glass, annotated in grease pencil with times that do not correspond to any published timetable. The annotations are convoy departure slots. One slot is circled twice, and beside it, in the same hand: held, query on date of birth. The evacuation was routed from this room. The grease pencil marks are the only record of what was held, and what was asked about, and why.",
+      "provenance": "material",
+      "tags": [
+        "grid",
+        "evacuation",
+        "records",
+        "deep_lore"
+      ]
+    },
+    {
+      "id": "codex_deep_lore_low_background_lab",
+      "category": "deep_lore",
+      "display_name": "The Low-Background Laboratory",
+      "spoiler_tier": 3,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_low_background_lab",
+      "body": "Deep in the salt, behind two airlocks. Shielded with steel salvaged from pre-atomic shipwrecks, which is why the counters in here still mean something. It is the only place in Sector 4 that can measure accurately enough to distinguish fallout isotopes by origin. Whoever controls it can prove where a bomb came from. Nobody in Sector 4 wants that proved.",
+      "provenance": "restricted",
+      "tags": [
+        "spine",
+        "laboratory",
+        "measurement",
+        "deep_lore"
+      ]
+    },
+    {
+      "id": "codex_deep_lore_vessels_cell",
+      "category": "deep_lore",
+      "display_name": "The Vessel's Cell",
+      "spoiler_tier": 3,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_the_vessels_cell",
+      "body": "A reactor outbuilding, four metres square, door wedged from the inside. Water jugs stacked against one wall, all empty, all opened. Where the Cult's prophet is said to have emerged unscathed. The room is shielded on three sides by accident of construction, and there are eleven weeks of tally marks on the wall. Both the miracle and the mundane explanation are fully supported by the evidence. Neither can be disproven.",
+      "provenance": "material",
+      "tags": [
+        "spine",
+        "shrine",
+        "deep_lore"
+      ]
+    },
+    {
+      "id": "codex_deep_lore_cold_store",
+      "category": "deep_lore",
+      "display_name": "Atlantic Cold Store",
+      "spoiler_tier": 3,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_cold_store_atlantic",
+      "body": "Twelve thousand cubic metres of freezer, four metres deep in water that has frozen over the top. Contents unknown and, in principle, intact. The largest untouched calorie cache in the sector, unreachable without either restoring the drowned district's pumps or cutting through the ice. Both factions know it is there. Neither has moved. The stalemate is its own kind of architecture.",
+      "provenance": "eyewitness",
+      "tags": [
+        "drown",
+        "cold_store",
+        "stalemate",
+        "deep_lore"
+      ]
+    },
+    {
+      "id": "codex_deep_lore_ordnance_shoulder",
+      "category": "deep_lore",
+      "display_name": "The Ordnance Shoulder",
+      "spoiler_tier": 3,
+      "unlock_condition": "visit_location",
+      "unlock_ref": "loc_ordnance_shoulder",
+      "body": "Two kilometres of hard shoulder marked with paint sticks. The paint is Garrison-issue and the marking stopped partway. Cluster submunitions from a strike that missed the interchange. The survey team marked three hundred and forty and then stopped. The reason they stopped is documented nowhere and is obvious.",
+      "provenance": "restricted",
+      "tags": [
+        "toll",
+        "ordnance",
+        "hazard",
+        "deep_lore"
+      ]
+    }
+  ]
+}

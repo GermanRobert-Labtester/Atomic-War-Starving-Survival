@@ -24,6 +24,7 @@ namespace Ashfall.Core.Inventory
         public float healthEffect { get; set; }
         public float radCleanse { get; set; }
         public float moraleEffect { get; set; }
+        public float decorLocalizedMoraleDelta { get; set; }
         public bool empShielded { get; set; }
         public float tradeValue { get; set; }
         public int tradeTier { get; set; }
@@ -313,6 +314,7 @@ namespace Ashfall.Core.Inventory
                 healthEffect = dto.healthEffect,
                 radCleanse = dto.radCleanse,
                 moraleEffect = dto.moraleEffect,
+                decorLocalizedMoraleDelta = dto.decorLocalizedMoraleDelta,
                 empShielded = dto.empShielded,
                 tradeValue = dto.tradeValue,
                 tradeTier = dto.tradeTier,

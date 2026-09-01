@@ -17,15 +17,15 @@ For full audit reasoning, see
 ## State header
 
 ```
-COVERED:           26 surfaces (29 targets)   ← +1 Phase 28 (Research)   ← +1 Phase 27 (Standing Record)
+COVERED:           27 surfaces (30 targets)   ← +1 Plan 12C (Shelter Interior)   ← +1 Phase 28 (Research)
 PARTIAL:            1 surface  (TradeScreen, INTENTIONAL_CHILD)
 REGRESSION_ONLY:    1 surface  (CraftingPanel drill-down)
 MISSING:            0 surfaces  (ALL SURFACES COVERED)
 DELETED:           17 surfaces (drill-downs, brief modals, dev-only)
-Total tracked:     28 player-facing runtime surfaces (ALL COVERED)
+Total tracked:     29 player-facing runtime surfaces (ALL COVERED)
 ```
 
-**Snapshot fixtures on disk:** 29 distinct byte-distinct target PNGs (+ 5 gallery baselines = 34 total),
+**Snapshot fixtures on disk:** 30 distinct byte-distinct target PNGs (+ 5 gallery baselines = 35 total),
 0 duplicate MD5 groups, 0 blank captures — verified by direct RGBA8 pixel-decode check
 after the Phase 26 SubViewport pipeline fix.
 
@@ -58,6 +58,7 @@ after the Phase 26 SubViewport pipeline fix.
 | `CaravanBarterLedgerPanel` | `caravan_barter_default` | ✔ | `#35` | COVERED |
 | `SurvivalWorkstationPanel` | `survival_workstation_default` | ✔ | `#19` | COVERED |
 | `ShelterHudPanel` | `shelter_hud_default` | ✔ | `#40` | COVERED |
+| `ShelterDecorPanel` | `shelter_decor_default` | ✔ | original Godot continuation | COVERED — populated real catalog/inventory/assignment/memorial fixture |
 | `FactionMatrixPanel` | `faction_matrix_default` | ✔ | `#49`/`#53` | COVERED |
 | `DoseLedgerPanel` | `dose_ledger_default` | ✔ | `#59` | COVERED |
 | `GreenhousePanel` | `greenhouse_default` | ✔ | `#51` | COVERED (Phase 15 Tier-A4 full rewrite) |
@@ -75,7 +76,7 @@ after the Phase 26 SubViewport pipeline fix.
 | `StandingRecordPanel` | `standing_record_atlas_default` (via `StandingRecordAtlasPanel` sub-card) | ✔ | (Expansion 03) | COVERED (Phase 27 Tier-3 sub-card sibling) |
 | `ResearchPanel` | `research_atlas_default` (via `ResearchAtlasPanel` sub-card) | ✔ | (R&D / Library) | COVERED (Phase 28 Tier-3 sub-card sibling) |
 
-28 tracked surfaces total: 26 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY + 0 MISSING.
+29 tracked surfaces total: 27 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY + 0 MISSING.
 
 ---
 
@@ -115,4 +116,4 @@ All former `MISSING` surfaces have been fully resolved with dedicated Core engin
 | `StandingRecordPanel` | Phase 27 | `StandingRecordEngine.cs`, `StandingRecordHostSession.cs`, `StandingRecordAtlasPanel.cs` | `standing_record_atlas_default` | COVERED |
 | `ResearchPanel` | Phase 28 | `ResearchSystem.cs`, `ResearchHostSession.cs`, `ResearchAtlasPanel.cs` | `research_atlas_default` | COVERED |
 
-**0 MISSING surfaces remain.** All 28 tracked player-facing runtime surfaces are fully covered across 29 snapshot targets (26 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY).
+**0 MISSING surfaces remain.** All 29 tracked player-facing runtime surfaces are fully covered across 30 snapshot targets (27 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY).

@@ -249,4 +249,143 @@ public class SaveLoadFailurePathTests
         Assert.Equal(15, result.Envelope.manifest.currentDay);
         Assert.Contains("successfully", result.UserMessage, StringComparison.OrdinalIgnoreCase);
     }
+
+    [Fact]
+    public void TryLoadAggregate_V1AllStraySections_FailsRatherThanSucceedingEmpty()
+    {
+        // Probe: does an all-unknown-section V1 envelope migrate to zero
+        // sections and still report success? ValidateAggregate requires a
+        // non-empty section list, and TryLoadAggregate re-validates after
+        // MigrateToCurrent, so this should fail closed rather than return Ok.
+        string path = UniquePath("v1_all_stray");
+        var service = CreateService(path);
+        var profile = new SaveProfileId("default");
+        var slot = new SaveSlotId("stray_slot");
+        service.CreateSlot(profile, slot);
+        string aggPath = service.GetAggregatePath(profile, slot);
+
+        var strayA = new SaveSectionEnvelope
+        {
+            sectionName = "totally_unknown_section_a",
+            schemaVersion = 1,
+            payloadJson = "{\"x\":1}"
+        };
+        strayA.checksum = SaveSlotService.ComputeSectionChecksum(strayA);
+        var strayB = new SaveSectionEnvelope
+        {
+            sectionName = "totally_unknown_section_b",
+            schemaVersion = 1,
+            payloadJson = "{\"y\":2}"
+        };
+        strayB.checksum = SaveSlotService.ComputeSectionChecksum(strayB);
+
+        var envelope = new AggregateSaveEnvelope
+        {
+            manifestVersion = 1,
+            manifest = new SaveManifest
+            {
+                profileId = profile,
+                slotId = slot,
+                campaignName = "All Stray",
+                currentDay = 3,
+                seed = 7
+            },
+            sections = new List<SaveSectionEnvelope> { strayA, strayB }
+        };
+        envelope.aggregateChecksum = SaveSlotService.ComputeAggregateChecksum(envelope);
+        File.WriteAllText(aggPath, new SystemTextJsonSerializer().Serialize(envelope));
+
+        var result = service.TryLoadAggregate(profile, slot);
+
+        Assert.False(result.IsSuccess);
+        Assert.Null(result.Envelope);
+    }
+
+    [Fact]
+    public void LoadManifest_V1EnvelopeWithForeignIdentity_DoesNotReturnForeignManifest()
+    {
+        // Probe: LoadManifest's aggregate-authority branch runs
+        // ValidateAggregate + identity comparison unconditionally (not gated
+        // on manifestVersion), so a V1 envelope carrying another slot's
+        // identity should already be rejected rather than handed back as the
+        // requested slot's manifest.
+        string path = UniquePath("v1_foreign_manifest");
+        var service = CreateService(path);
+        var profile = new SaveProfileId("default");
+        var requestedSlot = new SaveSlotId("slot_requested");
+        var foreignSlot = new SaveSlotId("slot_foreign");
+        service.CreateSlot(profile, requestedSlot);
+        string aggPath = service.GetAggregatePath(profile, requestedSlot);
+
+        var section = new SaveSectionEnvelope
+        {
+            sectionName = "inventory",
+            schemaVersion = 1,
+            payloadJson = "{\"water\": 5}"
+        };
+        section.checksum = SaveSlotService.ComputeSectionChecksum(section);
+
+        var foreignEnvelope = new AggregateSaveEnvelope
+        {
+            manifestVersion = 1,
+            manifest = new SaveManifest
+            {
+                profileId = profile,
+                slotId = foreignSlot, // Identity belongs to a different slot.
+                campaignName = "Foreign",
+                currentDay = 9,
+                seed = 3
+            },
+            sections = new List<SaveSectionEnvelope> { section }
+        };
+        foreignEnvelope.aggregateChecksum = SaveSlotService.ComputeAggregateChecksum(foreignEnvelope);
+        File.WriteAllText(aggPath, new SystemTextJsonSerializer().Serialize(foreignEnvelope));
+
+        var manifest = service.LoadManifest(profile, requestedSlot);
+
+        Assert.Null(manifest);
+    }
+
+    [Fact]
+    public void WriteAggregateAtomically_V1EnvelopeWithForeignIdentity_IsRejected()
+    {
+        // Probe: WriteAggregateAtomically's identity check compares
+        // envelope.manifest against the profileId/slotId parameters
+        // unconditionally, so a V1 envelope targeting a different slot's
+        // path but carrying foreign identity should be rejected rather than
+        // written.
+        string path = UniquePath("v1_write_foreign_identity");
+        var service = CreateService(path);
+        var profile = new SaveProfileId("default");
+        var targetSlot = new SaveSlotId("slot_target");
+        var foreignSlot = new SaveSlotId("slot_other");
+        service.CreateSlot(profile, targetSlot);
+
+        var section = new SaveSectionEnvelope
+        {
+            sectionName = "inventory",
+            schemaVersion = 1,
+            payloadJson = "{\"water\": 5}"
+        };
+
+        var envelope = new AggregateSaveEnvelope
+        {
+            manifestVersion = 1,
+            manifest = new SaveManifest
+            {
+                profileId = profile,
+                slotId = foreignSlot, // Does not match targetSlot below.
+                campaignName = "Mismatched Write",
+                currentDay = 2,
+                seed = 1
+            },
+            sections = new List<SaveSectionEnvelope> { section }
+        };
+
+        bool written = service.WriteAggregateAtomically(profile, targetSlot, envelope);
+
+        Assert.False(written);
+        string aggPath = service.GetAggregatePath(profile, targetSlot);
+        Assert.False(File.Exists(aggPath));
+    }
 }

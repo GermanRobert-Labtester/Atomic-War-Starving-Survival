@@ -48,6 +48,7 @@ namespace Ashfall.Core.YearOfAsh
         public string message = string.Empty;
         public string signalStrength = string.Empty; // "S7" etc. — the radio signal scale, not a number
         public string source = string.Empty;
+        public string audio_cue = string.Empty;
     }
 
     [Serializable]

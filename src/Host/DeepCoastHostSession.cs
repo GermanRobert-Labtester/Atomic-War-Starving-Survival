@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core;
+using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Maritime;
@@ -133,17 +134,24 @@ namespace AtomicWar.GodotApp
                 + " (or the perimeter is not open).";
         }
 
-        public string RepairBerth(int day)
+        public CommandResult RepairBerth(int day)
         {
             if (DeepCoast.TryRepairDeepBerth(day, TryConsumeBillAtomic))
             {
                 LastEvent = "Berth 9 is operational: winch, hose reels, mooring cable. Dock work can begin.";
                 Note(District8DeepCoastSystem.JournalBerthOperational, "The winch housing opened with the square key — the Commission kept their keys, and someone left a copy under the cable drum. We greased the bitts, re-reeled the hose, and ran the mooring cable end to end. The brass plate says BERTH 9 — ICEBREAKER MAINTENANCE. It says so again now, for the first time in five years, in a way that means work.");
-                return LastEvent;
+                return CommandResult.FromSuccess(
+                    PlayerCommandCode.RepairBerth,
+                    ActionResult.Success("deepcoast.berth_repaired"),
+                    StateVersion, StateVersion + 1);
             }
             var bill = DeepCoast.NextStepBill();
-            return "Berth repair refused — missing materials: " + BillText(bill)
+            LastEvent = "Berth repair refused — missing materials: " + BillText(bill)
                 + " (or the dock is not accessible / the structure is too damaged).";
+            return new CommandResult(
+                PlayerCommandCode.RepairBerth,
+                ActionResult.Failed("missing_materials", "deepcoast.missing_materials"),
+                StateVersion, StateVersion);
         }
 
         // ── Dock operation: expedition handoff → existing dive system ─

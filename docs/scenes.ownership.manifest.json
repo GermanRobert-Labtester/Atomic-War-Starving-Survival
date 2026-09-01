@@ -1,0 +1,373 @@
+{
+  "scenes": [
+    {
+      "ext_resources": [
+        "1_afflictions"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/AfflictionsPanel.tscn",
+      "unique_names": [
+        "ActiveHeader",
+        "ActiveList",
+        "Backdrop",
+        "ChronicHeader",
+        "ChronicList",
+        "CloseButton",
+        "Content",
+        "Dialog",
+        "Frame",
+        "Hint",
+        "Margin",
+        "Title",
+        "TreatmentHeader",
+        "TreatmentList"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_combatdetailpanel"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/CombatDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "BattleHeader",
+        "BattleInfo",
+        "CasualtyData",
+        "CloseButton",
+        "Dialog",
+        "LossesHeader",
+        "OutcomesData",
+        "OutcomesHeader",
+        "TacticsData",
+        "TacticsHeader",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_dutyrosterdetailpane"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/DutyRosterDetailPanel.tscn",
+      "unique_names": [
+        "AssignmentsHeader",
+        "AssignmentsList",
+        "Backdrop",
+        "CloseButton",
+        "Dialog",
+        "PerformanceHeader",
+        "PerformanceList",
+        "ShiftsHeader",
+        "ShiftsList",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_economydetailpanel"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/EconomyDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "CloseButton",
+        "DebtHeader",
+        "DebtList",
+        "Dialog",
+        "MarketHeader",
+        "MarketList",
+        "ResourcesHeader",
+        "ResourcesList",
+        "Title",
+        "TradeHeader",
+        "TradeList"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_eventdetailpanel"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/EventDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "CloseButton",
+        "Dialog",
+        "EventInfoHeader",
+        "EventInfoList",
+        "HistoryHeader",
+        "HistoryList",
+        "NarrativeHeader",
+        "NarrativeList",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_factiondetailpanel"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/FactionDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "CloseButton",
+        "Dialog",
+        "DiplomacyContainer",
+        "DiplomacyHeader",
+        "EventsContainer",
+        "EventsHeader",
+        "InfoContainer",
+        "InfoHeader",
+        "Title",
+        "TradeContainer",
+        "TradeHeader"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_inventory_detail"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/InventoryDetailPanel.tscn",
+      "unique_names": [
+        "Actions",
+        "ActionsHeader",
+        "Backdrop",
+        "CloseButton",
+        "Content",
+        "Dialog",
+        "Frame",
+        "Info",
+        "InfoHeader",
+        "Margin",
+        "Stats",
+        "StatsHeader",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_journaldetailpanel"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/JournalDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "CloseButton",
+        "CodexHeader",
+        "CodexList",
+        "Dialog",
+        "EntriesHeader",
+        "EntriesList",
+        "TabsHeader",
+        "TabsList",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_map_detail"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/MapDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "Center",
+        "CloseButton",
+        "HazardsContainer",
+        "HazardsHeader",
+        "InfoContainer",
+        "InfoHeader",
+        "LayoutsContainer",
+        "LayoutsHeader",
+        "RootBox",
+        "SalvageContainer",
+        "SalvageHeader",
+        "Scroll",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_quest_detail"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/QuestDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "Center",
+        "ChoicesContainer",
+        "ChoicesHeader",
+        "CloseButton",
+        "InfoContainer",
+        "InfoHeader",
+        "RewardsContainer",
+        "RewardsHeader",
+        "RootBox",
+        "Scroll",
+        "StagesContainer",
+        "StagesHeader",
+        "Subtitle",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_radiationdetailpanel"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/RadiationDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "CloseButton",
+        "CurrentData",
+        "CurrentHeader",
+        "Dialog",
+        "DosimeterData",
+        "DosimeterHeader",
+        "EventsHeader",
+        "EventsList",
+        "ProtectionData",
+        "ProtectionHeader",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_survivaldetailpanel"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/SurvivalDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "CloseButton",
+        "Dialog",
+        "HealthData",
+        "HealthHeader",
+        "NeedsData",
+        "NeedsHeader",
+        "RadiationData",
+        "RadiationHeader",
+        "StatusData",
+        "StatusHeader",
+        "Title"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_survivor_detail"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/SurvivorDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "CloseButton",
+        "Content",
+        "Dialog",
+        "Frame",
+        "Margin",
+        "NeedsHeader",
+        "NeedsList",
+        "StatusHeader",
+        "StatusList",
+        "SurvivorInfo",
+        "SurvivorInfoHeader",
+        "Title",
+        "TraitsHeader",
+        "TraitsList"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_weather_detail"
+      ],
+      "kind": "panel",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://assets/ui/panels/WeatherDetailPanel.tscn",
+      "unique_names": [
+        "Backdrop",
+        "CloseButton",
+        "CurrentHeader",
+        "CurrentList",
+        "Dialog",
+        "ForecastHeader",
+        "ForecastList",
+        "Title",
+        "TrendHeader",
+        "TrendList",
+        "WindHeader",
+        "WindList"
+      ]
+    },
+    {
+      "ext_resources": [
+        "1_csharp_test"
+      ],
+      "kind": "other",
+      "production": true,
+      "root_type": "Node",
+      "scene": "res://scenes/CSharpTest.tscn",
+      "unique_names": []
+    },
+    {
+      "ext_resources": [
+        "1",
+        "2"
+      ],
+      "kind": "other",
+      "production": true,
+      "root_type": "Node2D",
+      "scene": "res://scenes/HoldfastInterior.tscn",
+      "unique_names": []
+    },
+    {
+      "ext_resources": [
+        "1_main"
+      ],
+      "kind": "other",
+      "production": true,
+      "root_type": "Control",
+      "scene": "res://scenes/Main.tscn",
+      "unique_names": []
+    },
+    {
+      "ext_resources": [
+        "1_4vqjvqj"
+      ],
+      "kind": "other",
+      "production": true,
+      "root_type": "Node2D",
+      "scene": "res://scenes/WastelandMap.tscn",
+      "unique_names": []
+    }
+  ],
+  "schema_version": 1
+}

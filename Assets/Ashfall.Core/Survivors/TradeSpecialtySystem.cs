@@ -55,6 +55,21 @@ namespace Ashfall.Core.Survivors
                 { "teacher", new List<string> { "book", "chalk", "slate", "journal", "ink", "lesson", "diagram" } }
             };
 
+        public static void RegisterProfessionPatterns(string professionId, IEnumerable<string> patterns)
+        {
+            if (string.IsNullOrEmpty(professionId) || patterns == null) return;
+            if (!ProfessionItemCategories.TryGetValue(professionId, out var list))
+            {
+                list = new List<string>();
+                ProfessionItemCategories[professionId] = list;
+            }
+            foreach (var p in patterns)
+            {
+                if (!string.IsNullOrEmpty(p) && !list.Contains(p))
+                    list.Add(p);
+            }
+        }
+
         // ── Events ─────────────────────────────────────────────────────
         /// <summary>SurvivorId, professionId, milestoneTier (1-3).</summary>
         public event Action<string, string, int> OnSpecialtyMilestone;

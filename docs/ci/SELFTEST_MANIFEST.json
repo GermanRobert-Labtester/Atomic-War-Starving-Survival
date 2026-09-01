@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 87,
-  "headless_test_count": 85,
+  "total_tests": 94,
+  "headless_test_count": 92,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -68,9 +68,20 @@
       "category": "Core & System Gates",
       "primary_flag": "--data-integrity-selftest",
       "aliases": [],
-      "description": "Cross-reference every id in the 129 StreamingAssets catalogs (recipe\u2192item, quest\u2192location, events, door encounters, survivors, factions, ranges, duplicates)",
+      "description": "Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)",
       "headless_compatible": true,
       "expected_summary_id": "data_integrity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "research_catalog_selftest",
+      "action": "ResearchCatalogSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--research-catalog-selftest",
+      "aliases": [],
+      "description": "Research knowledge catalog gate (Plan 34): load count, DAG validity, original 15 save-contract nodes, and cross-catalog unlock references (breakthrough items, relic research unlocks, manual/autopsy knowledge grants)",
+      "headless_compatible": true,
+      "expected_summary_id": "research_catalog_selftest",
       "timeout_seconds": 30
     },
     {
@@ -114,6 +125,21 @@
       "description": "Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)",
       "headless_compatible": true,
       "expected_summary_id": "save_store_checksum_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "runtime_scale_selftest",
+      "action": "RuntimeScaleSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--runtime-scale-selftest",
+      "aliases": [
+        "--runtime-scale",
+        "--performance-selftest",
+        "--perf-selftest"
+      ],
+      "description": "Performance budget validation: 30/180/360-day campaign workloads, day-advance latency, save/load/checksum, allocations, retained memory, and lifecycle leak tests; writes artifacts/runtime-scale-results.json",
+      "headless_compatible": true,
+      "expected_summary_id": "runtime_scale_selftest",
       "timeout_seconds": 30
     },
     {
@@ -380,6 +406,17 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "faction_ecology_selftest",
+      "action": "FactionEcologySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--faction-ecology-selftest",
+      "aliases": [],
+      "description": "Plan 25 faction ecology vertical slice: faction action board, E-P1 escalation chain, claimant witness, camp arrivals, muster path",
+      "headless_compatible": true,
+      "expected_summary_id": "faction_ecology_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "phase0_selftest",
       "action": "Phase0SelfTest",
       "category": "Expansions & Campaign Modules",
@@ -495,6 +532,17 @@
       "description": "Chemical dependency system save store round-trip, tolerance, and withdrawal states",
       "headless_compatible": true,
       "expected_summary_id": "chemical_dependency_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "evolving_world_selftest",
+      "action": "EvolvingWorldSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--evolving-world-selftest",
+      "aliases": [],
+      "description": "Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario",
+      "headless_compatible": true,
+      "expected_summary_id": "evolving_world_selftest",
       "timeout_seconds": 30
     },
     {
@@ -942,6 +990,20 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "shelter_decor_selftest",
+      "action": "ShelterDecorSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--shelter-decor-selftest",
+      "aliases": [
+        "--shelter-interior-selftest",
+        "--memorial-wall-selftest"
+      ],
+      "description": "Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_decor_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "silent_foundry_uitest",
       "action": "SilentFoundryUiTest",
       "category": "UI Tests, Layout & Gameplay Smoke",
@@ -1036,6 +1098,33 @@
       "description": "Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free",
       "headless_compatible": true,
       "expected_summary_id": "verdict_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "onboarding_journey_selftest",
+      "action": "OnboardingJourneySelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--onboarding-journey-selftest",
+      "aliases": [
+        "--onboarding-selftest"
+      ],
+      "description": "First-hour onboarding journey: protocol\u2192inspect\u2192rationing\u2192assignment\u2192weather\u2192inventory-use\u2192day-advance, with save/load resume and no-resource fabrication",
+      "headless_compatible": true,
+      "expected_summary_id": "onboarding_journey_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "real_campaign_journey_selftest",
+      "action": "RealCampaignJourneySelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--real-campaign-journey-selftest",
+      "aliases": [
+        "--campaign-journey-selftest",
+        "--real-main-journey-selftest"
+      ],
+      "description": "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)",
+      "headless_compatible": true,
+      "expected_summary_id": "real_campaign_journey_selftest",
       "timeout_seconds": 30
     }
   ]

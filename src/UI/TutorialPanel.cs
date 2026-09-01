@@ -36,34 +36,37 @@ namespace AtomicWar.GodotApp.UI
         // Real controls — curated to match Main.Application.cs key handlers +
         // the sidebar-driven navigation. No InputMap actions exist in this
         // project, so the list is honest and hand-maintained against the code.
-        private static readonly (string key, string action)[] RealControls =
+        private static (string key, string action)[] GetCurrentControls() => new[]
         {
             ("[Click Sidebar]", "Open shelter systems — Survivors, Inventory, Medical, Map, etc."),
-            ("[Esc]", "Close the current panel or return to menu"),
-            ("[J]", "Open the Journal / Codex"),
-            ("[E]", "Open the Events log"),
-            ("[F]", "Open the Weather forecast"),
-            ("[H]", "Open the Weather history"),
-            ("[1-5]", "Switch Journal tabs (while the Journal is open)"),
-            ("[Enter] / [Space]", "Confirm the daily briefing"),
-            ("[F1]", "Toggle the developer console")
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.Close), "Close current panel or return to main menu"),
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.Journal), "Open the Journal / Field Manual / Codex"),
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.Events), "Open the Events log"),
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.Forecast), "Open the Weather forecast"),
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.WeatherHistory), "Open the Weather history"),
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.Expeditions), "Open the Expeditions management panel"),
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.Holdfast), "Open the Holdfast trade terminal"),
+            ("[1-5]", "Switch Journal tabs (while Journal is open)"),
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.Confirm), "Confirm daily briefing / advance day"),
+            (AshfallInputActions.GetActionPrompt(AshfallInputActions.Help), "Toggle this Tutorial & Help overlay")
         };
 
         // Honest survival basics — aligned with the systems that actually exist.
         private static readonly string[] RealBasics =
         {
-            "Needs — Hunger, Thirst, Fatigue, Warmth, and Morale decay every hour; let any hit critical and Health suffers.",
-            "Radiation — Dose accumulates from fallout zones and storms; above 50 mSv survivors risk acute sickness. Iodine grants temporary resistance.",
-            "Shelter — The bunker's ceiling material attenuates outdoor radiation; upgrade the weakest room first.",
-            "Power — The grid burns fuel to generate watts; a brownout disables systems. Watch the battery reserve.",
-            "Duty Roster — Assign survivors to shifts so needs decay is managed while you scavenge.",
-            "Expeditions — Send survivors to locations for rare resources; they travel, scavenge, and return.",
-            "Weather — Fallout storms and black rain add outdoor radiation modifiers; keep survivors indoors during hazards."
+            "Needs — Hunger, Thirst, Fatigue, Warmth, and Morale decay continuously; when any need hits critical (90+), Health suffers irreversible decay.",
+            "Radiation & Acute Sickness — Dose accumulates from outdoor fallout and storms; above 50 mSv survivors suffer Acute Sickness (-5 HP/hr decay). Administer Rad-Away or Iodine in Medical immediately.",
+            "Water & Rationing — 3 survivors consume ~3.6 clean water units daily. Review inventory runway before advancing days.",
+            "Power & Grid — Air and water filtration consume watts; a power brownout stops filtration and raises indoor radiation.",
+            "Duty Roster — Assign survivors to shifts (Kitchen, Water, Maintenance, Guard) so needs decay is managed while you scavenge.",
+            "Expeditions — Send survivors to scavenge rare resources; verify loadout, gas masks, fuel, and radiation readiness before departure.",
+            "Weather — Fallout storms and black rain add severe outdoor radiation modifiers; keep survivors indoors during hazard alerts."
         };
 
         // Honest tips — no fabricated item behaviour.
         private static readonly string[] RealTips =
         {
+            "Mikhail starts with Acute Radiation on Day 1 — administer Rad-Away in the Medical panel to prevent death within 16 hours.",
             "Keep iodine pills in stock — they grant hours of radiation resistance when a storm hits.",
             "Clean water is scarcer than food — prioritize the water filter and desalination membranes.",
             "A gas mask cuts outdoor dose; a hazmat suit cuts it further, but both degrade with use.",
@@ -89,7 +92,7 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_tipsList);
 
             RenderedControlsCount = 0;
-            foreach (var (key, action) in RealControls)
+            foreach (var (key, action) in GetCurrentControls())
             {
                 var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                 var k = AshfallUiHelpers.MakeMono(key);

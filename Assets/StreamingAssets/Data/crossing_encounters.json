@@ -165,6 +165,83 @@
           "result": "The authentic backers step forward. The quorum holds firm and the hijack fails."
         }
       ]
+    },
+    {
+      "id": "enc_nc_mass_crossing_surge",
+      "name": "Mass Crossing Surge",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "Hundreds of displaced refugees from the southern suburbs gather outside the heavy gate, clamoring for passage before the ash storm hits.",
+      "threat_level": "Crisis",
+      "choices": [
+        {
+          "text": "Deploy fire hoses and non-lethal deterrents to maintain order.",
+          "result": "The crowd retreats to the staging ditches, grumbling but orderly."
+        },
+        {
+          "text": "Open the side wicket and process women and injured first.",
+          "cost_items": [
+            "item_crossing_pledge_slip"
+          ],
+          "result": "Fifty vulnerable refugees are sheltered safely in the lower arcade."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_garrison_iron_blockade",
+      "name": "Garrison Armored Blockade",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "An armored half-track from the Central Garrison parks across the approach road, mounting a heavy machine gun and demanding search rights.",
+      "threat_level": "Military Threat",
+      "choices": [
+        {
+          "text": "Present the formal Charter Demarcation Treaty bearing garrison stamps.",
+          "result": "The commander checks the wax seal and orders his crew to withdraw."
+        },
+        {
+          "text": "Pay a transit indemnity of forty rounds of rifle ammunition.",
+          "cost_items": [
+            "item_crossing_traded_salt"
+          ],
+          "result": "The armored car shifts into reverse and clears the highway lane."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_pestilence_quarantine_lockdown",
+      "name": "Pestilence Quarantine Standoff",
+      "target_location": "loc_crossing_stallrow",
+      "description": "A yellow quarantine banner has been hoisted over the bazaar following three deaths from lung-rot. Armed market guards block all exit points.",
+      "threat_level": "Biological Hazard",
+      "choices": [
+        {
+          "text": "Distribute respirator filters and carbolic disinfectant to stallholders.",
+          "cost_items": [
+            "water_filter"
+          ],
+          "result": "The panic subsides as systematic disinfection begins."
+        },
+        {
+          "text": "Force a passage through the southern barrier with weapons drawn.",
+          "result": "You break through the cordon, but market reputation is severely damaged."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_syndicate_bribe_overture",
+      "name": "The Under-the-Table Voucher",
+      "target_location": "loc_crossing_underwrite_hall",
+      "description": "A syndicate broker in a tailored wool coat offers a leather pouch containing twenty litres of refined diesel fuel to overlook an uninspected munitions crate.",
+      "threat_level": "Corruption Overture",
+      "choices": [
+        {
+          "text": "Reject the bribe and order immediate inspection of the contraband.",
+          "result": "The broker curses, but the munitions are cataloged into the public armory."
+        },
+        {
+          "text": "Accept the fuel and sign the transit manifest without opening the crate.",
+          "result": "The heavy crate rolls through unchecked. Your fuel tanks are filled."
+        }
+      ]
     }
   ],
   "crises": [

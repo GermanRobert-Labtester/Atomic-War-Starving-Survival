@@ -21,17 +21,26 @@ namespace AtomicWar.GodotApp
 
         private readonly ISeededRng _rng;
 
-        public static ShelterAssignmentHostSession CreateDefault(ISeededRng rng)
+        public static ShelterAssignmentHostSession CreateDefault(ISeededRng rng, string? dataDir = null)
         {
-            var rooms = new List<ShelterRoom>
+            var catalog = ShelterRoomCatalogLoader.Load(dataDir ?? string.Empty);
+            var rooms = new List<ShelterRoom>();
+            if (catalog?.rooms != null)
             {
-                new ShelterRoom("room_bunker_corridor", "Central Access Corridor", 0),
-                new ShelterRoom("room_bunks", "Bunks", 4),
-                new ShelterRoom("room_kitchen", "Kitchen", 2, "skill_cooking"),
-                new ShelterRoom("room_clinic", "Clinic", 2, "skill_medic"),
-                new ShelterRoom("room_workshop", "Workshop", 2, "skill_crafting"),
-                new ShelterRoom("room_filtration", "Filtration Stack", 1, "skill_technician")
-            };
+                foreach (var def in catalog.rooms)
+                {
+                    rooms.Add(new ShelterRoom(def.id, def.display_name, def.capacity, def.required_skill_id, def.workstation_id));
+                }
+            }
+            if (rooms.Count == 0)
+            {
+                rooms.Add(new ShelterRoom("room_bunker_corridor", "Central Access Corridor", 0));
+                rooms.Add(new ShelterRoom("room_bunks", "Bunks", 4));
+                rooms.Add(new ShelterRoom("room_kitchen", "Kitchen", 2, "skill_cooking"));
+                rooms.Add(new ShelterRoom("room_clinic", "Clinic", 2, "skill_medic"));
+                rooms.Add(new ShelterRoom("room_workshop", "Workshop", 2, "skill_crafting"));
+                rooms.Add(new ShelterRoom("room_filtration", "Filtration Stack", 1, "skill_technician"));
+            }
             return new ShelterAssignmentHostSession(rooms, new ShelterAssignmentState(), rng);
         }
 

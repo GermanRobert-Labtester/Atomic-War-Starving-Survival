@@ -19,6 +19,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action<List<ExpeditionLootEntry>>? OnLootDeposited;
 
         private ExpeditionHostSession? _expeditionHost;
+        private WorldHostSession? _worldHost;
         private SurvivorsHostSession? _survivorsHost;
         private InventoryHostSession? _inventoryHost;
 
@@ -27,10 +28,29 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _pendingContainer = null!;
         private Label _pendingHeader = null!;
         private Label _statusSummary = null!;
+        private Label _estimateLabel = null!;
 
         private string _selectedTargetId = "loc_the_allotments";
         private string _selectedSurvivorId = "survivor_gunner_mikhail";
         private ExpeditionStance _selectedStance = ExpeditionStance.Stealth;
+
+        // ── Dispatch preparation (vehicle + weapon loadout) ──────────
+        private OptionButton? _vehicleSelect;
+        private OptionButton? _weaponSelect;
+        private readonly List<string> _vehicleIds = new();
+        private readonly List<string> _weaponInstanceIds = new();
+        private Ashfall.Core.EquipmentConditionSystem? _equipment;
+
+        /// <summary>The vehicle chosen in the dispatch-preparation selector, or "" for foot.</summary>
+        private string SelectedVehicleId =>
+            _vehicleSelect != null && _vehicleSelect.Selected > 0 && _vehicleSelect.Selected - 1 < _vehicleIds.Count
+                ? _vehicleIds[_vehicleSelect.Selected - 1]
+                : string.Empty;
+
+        private string SelectedWeaponInstanceId =>
+            _weaponSelect != null && _weaponSelect.Selected > 0 && _weaponSelect.Selected - 1 < _weaponInstanceIds.Count
+                ? _weaponInstanceIds[_weaponSelect.Selected - 1]
+                : string.Empty;
 
         // ── Encounter surface (modal default / autoplay flag) ────────
         private readonly Queue<ExpeditionEncounterBridge.EncounterSurfaced> _encounterQueue = new();
@@ -51,7 +71,9 @@ namespace AtomicWar.GodotApp.UI
         public void Bind(
             ExpeditionHostSession expeditionHost,
             SurvivorsHostSession? survivorsHost = null,
-            InventoryHostSession? inventoryHost = null)
+            InventoryHostSession? inventoryHost = null,
+            Ashfall.Core.EquipmentConditionSystem? equipment = null,
+            WorldHostSession? world = null)
         {
             if (_expeditionHost != null)
             {
@@ -62,6 +84,8 @@ namespace AtomicWar.GodotApp.UI
             _expeditionHost = expeditionHost;
             _survivorsHost = survivorsHost;
             _inventoryHost = inventoryHost;
+            _equipment = equipment;
+            _worldHost = world;
 
             if (_expeditionHost != null)
             {
@@ -156,6 +180,44 @@ namespace AtomicWar.GodotApp.UI
             _pendingContainer.Visible = false;
             rootBox.AddChild(_pendingContainer);
 
+            // ── Dispatch Preparation (vehicle + weapon loadout) ──
+            var prepTitle = AshfallUiHelpers.MakeSectionHeader("DISPATCH PREPARATION // MOTOR POOL & ARMORY");
+            rootBox.AddChild(prepTitle);
+
+            var prepRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingMd);
+
+            prepRow.AddChild(AshfallUiHelpers.MakeBody("VEHICLE:"));
+            _vehicleSelect = new OptionButton();
+            _vehicleSelect.CustomMinimumSize = new Vector2(230, 30);
+            _vehicleSelect.ItemSelected += _ => UpdateEstimateLine();
+            prepRow.AddChild(_vehicleSelect);
+
+            prepRow.AddChild(AshfallUiHelpers.MakeBody("WEAPON:"));
+            _weaponSelect = new OptionButton();
+            _weaponSelect.CustomMinimumSize = new Vector2(230, 30);
+            _weaponSelect.ItemSelected += _ => UpdateEstimateLine();
+            prepRow.AddChild(_weaponSelect);
+
+            var btnRefuel = AshfallUiHelpers.MakeButton("REFUEL TOP-UP", () =>
+            {
+                string vehicleId = SelectedVehicleId;
+                if (_expeditionHost == null || _inventoryHost == null || string.IsNullOrEmpty(vehicleId)) return;
+                int have = _inventoryHost.Inventory.CountById("fuel");
+                if (have <= 0) return;
+                int spend = Math.Min(have, 10);
+                _inventoryHost.Remove("fuel", spend);
+                _expeditionHost.RefuelVehicle(vehicleId, spend);
+                RefreshView();
+            });
+            btnRefuel.TooltipText = "Burn 10 carried fuel items into the selected tank.";
+            prepRow.AddChild(btnRefuel);
+
+            rootBox.AddChild(prepRow);
+
+            _estimateLabel = AshfallUiHelpers.MakeMono("");
+            _estimateLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            rootBox.AddChild(_estimateLabel);
+
             // ── Target Destinations ──
             var targetsTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN WASTELAND DESTINATIONS");
             rootBox.AddChild(targetsTitle);
@@ -172,7 +234,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (_expeditionHost != null)
                 {
-                    _expeditionHost.TickDemoHours(2f);
+                    _expeditionHost.TickHours(2f);
                     OnExpeditionUpdated?.Invoke();
                     RefreshView();
                 }
@@ -253,7 +315,7 @@ namespace AtomicWar.GodotApp.UI
                     {
                         var btnPush = AshfallUiHelpers.MakeButton("PUSH LUCK (SCAVENGE DEEPER)", () =>
                         {
-                            _expeditionHost.PushLuckDemo(scoutId);
+                            _expeditionHost.PushLuck(scoutId);
                             OnExpeditionUpdated?.Invoke();
                             RefreshView();
                         });
@@ -262,7 +324,7 @@ namespace AtomicWar.GodotApp.UI
 
                         var btnRetreat = AshfallUiHelpers.MakeButton("ORDER INBOUND RETURN", () =>
                         {
-                            _expeditionHost.RetreatDemo(scoutId);
+                            _expeditionHost.Retreat(scoutId);
                             OnExpeditionUpdated?.Invoke();
                             RefreshView();
                         });
@@ -303,7 +365,10 @@ namespace AtomicWar.GodotApp.UI
                 livingSurvivors.Add("survivor_gunner_mikhail");
             }
 
-            foreach (var def in _expeditionHost.DemoDefinitions)
+            RebuildDispatchSelectors();
+            UpdateEstimateLine(livingSurvivors.Count > 0 ? livingSurvivors[0] : null);
+
+            foreach (var def in _expeditionHost.Definitions)
             {
                 if (def == null) continue;
 
@@ -324,6 +389,18 @@ namespace AtomicWar.GodotApp.UI
                 desc.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
                 card.AddChild(desc);
 
+                // Task 122: live world state — ownership, spoilage, ruin, threats.
+                var worldLine = BuildWorldStateLine(def.id);
+                if (!string.IsNullOrEmpty(worldLine))
+                {
+                    var worldLabel = AshfallUiHelpers.MakeMono(worldLine);
+                    worldLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                        worldLine.Contains("RUINED") || worldLine.Contains("threat(s)")
+                            ? Ashfall.Core.UI.Theme.Critical
+                            : Ashfall.Core.UI.Theme.Pale));
+                    card.AddChild(worldLabel);
+                }
+
                 // Dispatch Bar
                 var dispatchRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                 string defId = def.id;
@@ -340,7 +417,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     if (livingSurvivors.Count > 0)
                     {
-                        _expeditionHost.Engine.Start(def, livingSurvivors[0], 1, ExpeditionStance.Stealth);
+                        _expeditionHost.DispatchSortie(livingSurvivors[0], defId, ExpeditionStance.Stealth, 1, SelectedVehicleId);
                         OnExpeditionUpdated?.Invoke();
                         RefreshView();
                     }
@@ -353,7 +430,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     if (livingSurvivors.Count > 0)
                     {
-                        _expeditionHost.Engine.Start(def, livingSurvivors[0], 1, ExpeditionStance.Speed);
+                        _expeditionHost.DispatchSortie(livingSurvivors[0], defId, ExpeditionStance.Speed, 1, SelectedVehicleId);
                         OnExpeditionUpdated?.Invoke();
                         RefreshView();
                     }
@@ -368,6 +445,103 @@ namespace AtomicWar.GodotApp.UI
                 panel.AddChild(card);
                 _targetsContainer.AddChild(panel);
             }
+        }
+
+        /// <summary>Live evolving-world line for a target location, or null when untouched ground.</summary>
+        private string? BuildWorldStateLine(string locationId)
+        {
+            if (_worldHost == null || string.IsNullOrEmpty(locationId)) return null;
+            var rec = _worldHost.LocationEvolution?.TryGetRecord(locationId);
+            if (rec == null) return null;
+
+            string owner = rec.currentOwner == "none" ? "unclaimed" : rec.currentOwner.Replace("faction_", "");
+            string state = rec.isRuined ? " · RUINED" : string.Empty;
+            string threats = rec.activeThreats.Count > 0 ? $" · {rec.activeThreats.Count} threat(s)" : string.Empty;
+            return $"WORLD: {owner} · {rec.lootDepletionFactor:P0} spoilage{state}{threats}";
+        }
+
+        // ── Dispatch preparation helpers ──────────────────────────────
+
+        /// <summary>
+        /// Rebuild the vehicle/weapon selectors from the garage and the
+        /// equipment authority, preserving the current choice when possible.
+        /// </summary>
+        private void RebuildDispatchSelectors()
+        {
+            if (_expeditionHost == null) return;
+
+            if (_vehicleSelect != null)
+            {
+                string previous = SelectedVehicleId;
+                _vehicleSelect.Clear();
+                _vehicleIds.Clear();
+                _vehicleSelect.AddItem("On foot", 0);
+                foreach (var v in _expeditionHost.Vehicles.State.ownedVehicles.Values)
+                {
+                    if (v == null || string.IsNullOrEmpty(v.vehicleId)) continue;
+                    _vehicleIds.Add(v.vehicleId);
+                    _vehicleSelect.AddItem(
+                        $"{v.displayName} · fuel {v.fuel:F0}/{v.maxFuel:F0} · cond {v.condition:F0}%" + (v.isBrokenDown ? " · BROKEN" : ""),
+                        _vehicleSelect.ItemCount);
+                }
+                int restoreIdx = _vehicleIds.IndexOf(previous);
+                _vehicleSelect.Select(restoreIdx >= 0 ? restoreIdx + 1 : 0);
+            }
+
+            if (_weaponSelect != null)
+            {
+                string previous = SelectedWeaponInstanceId;
+                _weaponSelect.Clear();
+                _weaponInstanceIds.Clear();
+                _weaponSelect.AddItem("Sidearm only", 0);
+                if (_equipment?.State?.items != null)
+                {
+                    foreach (var item in _equipment.State.items)
+                    {
+                        if (item == null || item.family != Ashfall.Core.EquipmentFamily.Weapon) continue;
+                        if (!Ashfall.Core.Combat.WeaponEquipmentBridge.Readiness(_equipment, item.instanceId).Equals(0f))
+                        {
+                            _weaponInstanceIds.Add(item.instanceId);
+                            _weaponSelect.AddItem($"{item.itemId} · cond {item.condition:F0}%", _weaponSelect.ItemCount);
+                        }
+                    }
+                }
+                int restoreW = _weaponInstanceIds.IndexOf(previous);
+                _weaponSelect.Select(restoreW >= 0 ? restoreW + 1 : 0);
+            }
+        }
+
+        /// <summary>Live estimate line for the current selection (first dispatchable survivor).</summary>
+        private void UpdateEstimateLine(string? survivorId = null)
+        {
+            if (_estimateLabel == null || _expeditionHost == null) return;
+            if (_vehicleSelect == null || _weaponSelect == null) return;
+            if (_expeditionHost.Definitions.Count == 0) return;
+
+            string targetId = _selectedTargetId;
+            var def = _expeditionHost.Definitions.Find(d => d.id == targetId) ?? _expeditionHost.Definitions[0];
+
+            string weaponInstance = SelectedWeaponInstanceId;
+            float readiness = Ashfall.Core.Combat.WeaponEquipmentBridge.Readiness(_equipment, weaponInstance);
+            float jam = Ashfall.Core.Combat.WeaponEquipmentBridge.JamRisk(_equipment, weaponInstance);
+
+            var preview = _expeditionHost.EstimateExpedition(def.id, ExpeditionStance.Stealth, SelectedVehicleId, readiness, jam);
+            if (preview == null)
+            {
+                _estimateLabel.Text = "NO ROUTE DATA.";
+                return;
+            }
+
+            var (est, fuelOk) = preview.Value;
+            string vehiclePart = est.usingVehicle
+                ? $"by {_expeditionHost.Vehicles.GetVehicle(SelectedVehicleId)?.displayName ?? est.locationId}"
+                : "on foot";
+            _estimateLabel.Text =
+                $"ESTIMATE [{def.displayName} · {vehiclePart}] ticks {est.totalTicks:F0} " +
+                $"(out {est.outboundTicks:F0} / loot {est.lootingTicks:F0} / in {est.inboundTicks:F0}) · " +
+                $"cargo {est.cargoCapacityKg:F0} kg · fuel need {est.fuelRequired:F1}{(fuelOk ? "" : " — TANK LOW")} · " +
+                $"breakdown {est.breakdownRiskTotal:P0} · encounter {est.encounterRiskPerTick:P0}/hr · " +
+                $"weapon readiness {est.weaponReadiness:P0}{(jam > 0f ? $" (jam {jam:P0})" : "")}";
         }
 
         // ── Pending surfaced encounters ────────────────────────────────

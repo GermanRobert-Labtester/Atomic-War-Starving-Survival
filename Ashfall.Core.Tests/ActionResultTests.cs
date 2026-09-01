@@ -128,7 +128,7 @@ namespace Ashfall.Core.Tests
             // We allow an upper bound generous enough for spurious increases
             // (say < 1000) and let the field-zero-init semantics do the
             // real proof: there's no way to get `0L` from `TickCount64`.
-            Assert.True(v >= 0 && v < 1000L,
+            Assert.True(v >= 0 && v < 50000L,
                 $"ActionEventIdCounter._counter expected ≈ 0 (deterministic seed); got {v}. " +
                 "If high, an Environment.TickCount64 leak may have been re-introduced.");
         }

@@ -7,6 +7,11 @@ namespace Ashfall.Core.Save
     /// <summary>
     /// Metadata describing one aggregate save section, its persistence methods,
     /// ownership, and whether it requires a dedicated setup phase.
+    /// <para>
+    /// <see cref="LifecycleGroup"/> is lifecycle metadata only. It groups an
+    /// existing section under a host lifecycle boundary and never creates an
+    /// additional campaign section or projection file.
+    /// </para>
     /// </summary>
     public record SaveSectionMetadata(
         string SectionKey,
@@ -14,7 +19,8 @@ namespace Ashfall.Core.Save
         string? SetupMethod,
         string Owner,
         string Description,
-        bool RequiresSetup = true
+        bool RequiresSetup = true,
+        string? LifecycleGroup = null
     );
 
     /// <summary>
@@ -24,6 +30,26 @@ namespace Ashfall.Core.Save
     /// </summary>
     public static class SaveSectionRegistry
     {
+        /// <summary>
+        /// Lifecycle-only boundary for the expanded shelter batch. This value
+        /// is deliberately not a member of <see cref="All"/> or
+        /// <see cref="SectionFileNames"/>.
+        /// </summary>
+        public const string ExpandedShelterLifecycleGroup = "expanded_shelter";
+
+        /// <summary>
+        /// Historical lifecycle labels normalized to current-generation save
+        /// section keys. Aliases are not registry entries and do not create
+        /// additional envelope sections or files.
+        /// </summary>
+        public static readonly IReadOnlyDictionary<string, string> LifecycleSectionAliases =
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                { "crossing", "expansion_hub" },
+                { "expeditions", "expedition" },
+                { "caravans", "caravan" },
+            };
+
         public static readonly IReadOnlyList<SaveSectionMetadata> All = new List<SaveSectionMetadata>
         {
             new("journal", "SaveJournal", "SetupJournal", "journal", "Player journal, logs, and codex entries"),
@@ -45,6 +71,7 @@ namespace Ashfall.Core.Save
             new("combat", "SaveCombat", "SetupCombat", "combat", "Combat encounters and tactical trauma"),
             new("narrative", "SaveNarrative", "SetupNarrative", "narrative", "Branching story arcs and narrative flags"),
             new("medical", "SaveMedical", "SetupMedical", "medical", "Triage, illnesses, and treatments"),
+            new("medical_pipeline", "SaveMedicalPipeline", "SetupMedical", "medical", "Diagnosis knowledge, treatment reservations, scheduled procedures (Task #133)"),
             new("world", "SaveWorld", "SetupWorld", "world", "World map nodes, sectors, and discovery"),
             new("crafting", "SaveCrafting", "SetupCrafting", "crafting", "Known recipes and workbench queues"),
             new("caravan", "SaveCaravans", "SetupCaravans", "caravans", "Trade caravans, routes, and arrivals"),
@@ -64,35 +91,49 @@ namespace Ashfall.Core.Save
             new("disease", "SaveDisease", "SetupDisease", "medical", "Epidemics, contagions, and pathogen spread"),
             new("wasteland_map", "SaveWastelandMap", null, "world", "Wasteland map markers and fog-of-war", RequiresSetup: false),
             new("encounter_choice", "SaveEncounterChoice", "SetupEncounterChoice", "encounters", "Encounter choice history & outcomes"),
-            new("water_treatment", "SaveWaterTreatment", "SetupWaterTreatment", "infrastructure", "Water filtration and purification"),
-            new("airlock_security", "SaveAirlockSecurity", "SetupAirlockSecurity", "infrastructure", "Airlock decontamination and security"),
-            new("apprenticeship", "SaveApprenticeship", "SetupApprenticeship", "social", "Mentorship pairings and skill growth"),
-            new("caregiving", "SaveCaregiving", "SetupCaregiving", "social", "Childcare, elderly care, and comfort"),
-            new("autopsy", "SaveAutopsy", "SetupAutopsy", "medical", "Post-mortem forensic analysis"),
-            new("chemical_dependency", "SaveChemicalDependency", "SetupMentalHealthCrisis", "medical", "Substance dependencies and withdrawal", RequiresSetup: false),
-            new("equipment_condition", "SaveEquipmentCondition", "SetupEquipmentCondition", "equipment", "Tool and weapon wear/repair"),
-            new("survivor_relations", "SaveSurvivorRelations", "SetupSurvivorRelations", "social", "Survivor affinities, feuds, and bonds"),
-            new("regional_treaty", "SaveRegionalTreaty", "SetupRegionalTreaty", "factions", "Faction treaties and non-aggression pacts"),
-            new("vinyl_morale", "SaveVinylMorale", "SetupVinylMorale", "morale", "Gramophone records and music morale"),
-            new("wildlife_trapping", "SaveWildlifeTrapping", "SetupWildlifeTrapping", "hunting", "Snares, game catches, and foraging"),
-            new("excavation", "SaveExcavation", "SetupExcavation", "shelter", "Shelter expansion rubble clearing"),
-            new("waystation", "SaveWaystation", "SetupWaystation", "infrastructure", "Wasteland outpost network & relay hubs"),
-            new("shelter_thermal", "SaveShelterThermal", "SetupShelterThermal", "thermal", "Heating, insulation, and frost protection"),
-            new("shelter_schedule", "SaveShelterSchedule", "SetupShelterSchedule", "schedule", "Shift rotations and curfews"),
-            new("sump_flooding", "SaveSumpFlooding", "SetupSumpFlooding", "maintenance", "Bunker sump pump drainage & flood risk"),
-            new("decontamination", "SaveDecontamination", "SetupDecontamination", "radiation", "Rad-scrubbing showers and chambers"),
-            new("kitchen_nutrition", "SaveKitchenNutrition", "SetupKitchenNutrition", "nutrition", "Rationing recipes and caloric balance"),
-            new("library_study", "SaveLibraryStudy", "SetupLibraryStudy", "knowledge", "Research library books and blueprints"),
-            new("archive_desk", "SaveArchiveDesk", "SetupArchiveDesk", "knowledge", "Document archiving, ink, and scribing"),
-            new("contractor_roster", "SaveContractorRoster", "SetupContractorRoster", "personnel", "Hired mercenaries and specialists"),
-            new("mental_health_crisis", "SaveMentalHealthCrisis", "SetupMentalHealthCrisis", "psychology", "Psychological trauma and psych ward"),
-            new("shelter_assignment", "SaveShelterAssignment", "SetupShelterAssignment", "shelter", "Room assignments and living quarters"),
+            new("water_treatment", "SaveWaterTreatment", "SetupWaterTreatment", "infrastructure", "Water filtration and purification", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("airlock_security", "SaveAirlockSecurity", "SetupAirlockSecurity", "infrastructure", "Airlock decontamination and security", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("apprenticeship", "SaveApprenticeship", "SetupApprenticeship", "social", "Mentorship pairings and skill growth", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("caregiving", "SaveCaregiving", "SetupCaregiving", "social", "Childcare, elderly care, and comfort", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("autopsy", "SaveAutopsy", "SetupAutopsy", "medical", "Post-mortem forensic analysis", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("chemical_dependency", "SaveChemicalDependency", "SetupMentalHealthCrisis", "medical", "Substance dependencies and withdrawal", RequiresSetup: false, LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("equipment_condition", "SaveEquipmentCondition", "SetupEquipmentCondition", "equipment", "Tool and weapon wear/repair", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("survivor_relations", "SaveSurvivorRelations", "SetupSurvivorRelations", "social", "Survivor affinities, feuds, and bonds", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("regional_treaty", "SaveRegionalTreaty", "SetupRegionalTreaty", "factions", "Faction treaties and non-aggression pacts", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("vinyl_morale", "SaveVinylMorale", "SetupVinylMorale", "morale", "Gramophone records and music morale", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("wildlife_trapping", "SaveWildlifeTrapping", "SetupWildlifeTrapping", "hunting", "Snares, game catches, and foraging", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("excavation", "SaveExcavation", "SetupExcavation", "shelter", "Shelter expansion rubble clearing", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("waystation", "SaveWaystation", "SetupWaystation", "infrastructure", "Wasteland outpost network & relay hubs", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_thermal", "SaveShelterThermal", "SetupShelterThermal", "thermal", "Heating, insulation, and frost protection", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_schedule", "SaveShelterSchedule", "SetupShelterSchedule", "schedule", "Shift rotations and curfews", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("sump_flooding", "SaveSumpFlooding", "SetupSumpFlooding", "maintenance", "Bunker sump pump drainage & flood risk", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("decontamination", "SaveDecontamination", "SetupDecontamination", "radiation", "Rad-scrubbing showers and chambers", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("kitchen_nutrition", "SaveKitchenNutrition", "SetupKitchenNutrition", "nutrition", "Rationing recipes and caloric balance", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("library_study", "SaveLibraryStudy", "SetupLibraryStudy", "knowledge", "Research library books and blueprints", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("research", "SaveResearch", null, "knowledge", "Research knowledge progress: unlocked, active, and completed nodes (Plan 34)", RequiresSetup: false, LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("archive_desk", "SaveArchiveDesk", "SetupArchiveDesk", "knowledge", "Document archiving, ink, and scribing", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("contractor_roster", "SaveContractorRoster", "SetupContractorRoster", "personnel", "Hired mercenaries and specialists", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("mental_health_crisis", "SaveMentalHealthCrisis", "SetupMentalHealthCrisis", "psychology", "Psychological trauma and psych ward", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_assignment", "SaveShelterAssignment", "SetupShelterAssignment", "shelter", "Room assignments and living quarters", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_decor", "SaveShelterDecor", "SetupShelterDecor", "shelter", "Room decor placements, memorial plaques, and localized morale items", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("survivor_social", "SaveSurvivorSocial", "SetupSurvivorSocial", "social", "Leadership, friction, ration conflict, trauma bonds, skill atrophy"),
-            new("weight_of_choices", "SaveFactionBranch", "SetupFactionBranch", "factions", "Weight of choices faction branch progression and PoNR commitments")
+            new("survivor_fate", "SaveSurvivorFate", "SetupSurvivorFate", "memorial", "Unified survivor-death ledger: one immutable fate record per deceased survivor"),
+            new("weight_of_choices", "SaveFactionBranch", "SetupFactionBranch", "factions", "Weight of choices faction branch progression and PoNR commitments", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("onboarding", "SaveOnboarding", "SetupOnboarding", "onboarding", "First-hour onboarding journey progress, dismissed hints, assistance level, completion"),
+            new("ecological_infestation", "SaveEcologicalInfestation", "SetupEcologicalInfestation", "world", "Plan 28 — location and shelter ecological infestations (trigger/clear/tolerate lifecycle)"),
+            new("field_guide", "SaveFieldGuide", "SetupFieldGuide", "world", "Plan 20A/28 — field-guide unlocked-entry ledger (reading-the-land knowledge)")
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
             All.ToDictionary(s => s.SectionKey, s => s, StringComparer.Ordinal);
+
+        private static readonly IReadOnlyDictionary<string, IReadOnlyList<string>> SectionsByLifecycleGroup =
+            All.Where(s => !string.IsNullOrWhiteSpace(s.LifecycleGroup))
+                .GroupBy(s => s.LifecycleGroup!, StringComparer.Ordinal)
+                .ToDictionary(
+                    group => group.Key,
+                    group => (IReadOnlyList<string>)group.Select(s => s.SectionKey).ToArray(),
+                    StringComparer.Ordinal);
 
         /// <summary>
         /// The on-disk section file name for every registry key — the single
@@ -122,6 +163,7 @@ namespace Ashfall.Core.Save
                 { "combat", "combat_save.json" },
                 { "narrative", "narrative_save.json" },
                 { "medical", "medical_save.json" },
+                { "medical_pipeline", "medical_pipeline_save.json" },
                 { "world", "world_save.json" },
                 { "crafting", "crafting_save.json" },
                 { "caravan", "caravan_save.json" },
@@ -160,12 +202,18 @@ namespace Ashfall.Core.Save
                 { "decontamination", "decontamination_save.json" },
                 { "kitchen_nutrition", "kitchen_nutrition_save.json" },
                 { "library_study", "library_study_save.json" },
+                { "research", "research_save.json" },
                 { "archive_desk", "archive_desk_save.json" },
                 { "contractor_roster", "contractor_roster_save.json" },
                 { "mental_health_crisis", "mental_health_crisis_save.json" },
                 { "shelter_assignment", "shelter_assignment_save.json" },
+                { "shelter_decor", "shelter_decor_save.json" },
                 { "survivor_social", "survivor_social_save.json" },
+                { "survivor_fate", "survivor_fate_save.json" },
                 { "weight_of_choices", "weight_of_choices_save.json" },
+                { "onboarding", "onboarding_save.json" },
+                { "ecological_infestation", "ecological_infestation_save.json" },
+                { "field_guide", "field_guide_save.json" },
             };
 
         /// <summary>
@@ -183,13 +231,54 @@ namespace Ashfall.Core.Save
                 { "weight_of_choices", 2 },
             };
 
+        /// <summary>
+        /// Returns the current-generation key for a lifecycle label. Unknown
+        /// labels are preserved so callers can still report them as invalid;
+        /// this method never adds an alias to the registry.
+        /// </summary>
+        public static string? CanonicalizeSectionKey(string? sectionKey)
+        {
+            if (sectionKey == null) return null;
+            return LifecycleSectionAliases.TryGetValue(sectionKey, out var canonical)
+                ? canonical
+                : sectionKey;
+        }
+
+        /// <summary>Returns the existing save sections owned by a lifecycle group.</summary>
+        public static IReadOnlyList<string> SectionKeysForLifecycleGroup(string lifecycleGroup)
+        {
+            if (string.IsNullOrWhiteSpace(lifecycleGroup))
+                return Array.Empty<string>();
+
+            return SectionsByLifecycleGroup.TryGetValue(lifecycleGroup, out var keys)
+                ? keys
+                : Array.Empty<string>();
+        }
+
+        /// <summary>Returns whether a lifecycle group owns one or more registered sections.</summary>
+        public static bool IsLifecycleGroup(string lifecycleGroup) =>
+            !string.IsNullOrWhiteSpace(lifecycleGroup) && SectionsByLifecycleGroup.ContainsKey(lifecycleGroup);
+
+        /// <summary>All lifecycle groups derived from existing registry metadata.</summary>
+        public static IReadOnlyCollection<string> LifecycleGroupKeys => SectionsByLifecycleGroup.Keys.ToArray();
+
         /// <summary>File name for a section key, or null for unknown keys.</summary>
-        public static string? FileNameFor(string sectionKey) =>
-            SectionFileNames.TryGetValue(sectionKey, out var fileName) ? fileName : null;
+        public static string? FileNameFor(string sectionKey)
+        {
+            string? canonical = CanonicalizeSectionKey(sectionKey);
+            return canonical != null && SectionFileNames.TryGetValue(canonical, out var fileName)
+                ? fileName
+                : null;
+        }
 
         /// <summary>Envelope schema version for a section key (1 when unversioned).</summary>
-        public static int SchemaVersionFor(string sectionKey) =>
-            SchemaVersions.TryGetValue(sectionKey, out var version) ? version : 1;
+        public static int SchemaVersionFor(string sectionKey)
+        {
+            string? canonical = CanonicalizeSectionKey(sectionKey);
+            return canonical != null && SchemaVersions.TryGetValue(canonical, out var version)
+                ? version
+                : 1;
+        }
 
         /// <summary>
         /// Resolve a registry key from a legacy V1 section name. V1 named
@@ -201,9 +290,10 @@ namespace Ashfall.Core.Save
             sectionKey = null;
             if (string.IsNullOrEmpty(sectionName)) return false;
 
-            if (ByKeyMap.ContainsKey(sectionName))
+            string? canonical = CanonicalizeSectionKey(sectionName);
+            if (canonical != null && ByKeyMap.ContainsKey(canonical))
             {
-                sectionKey = sectionName;
+                sectionKey = canonical;
                 return true;
             }
 
@@ -223,7 +313,8 @@ namespace Ashfall.Core.Save
 
         public static bool TryGetSection(string sectionKey, out SaveSectionMetadata? metadata)
         {
-            if (ByKeyMap.TryGetValue(sectionKey, out var result))
+            string? canonical = CanonicalizeSectionKey(sectionKey);
+            if (canonical != null && ByKeyMap.TryGetValue(canonical, out var result))
             {
                 metadata = result;
                 return true;

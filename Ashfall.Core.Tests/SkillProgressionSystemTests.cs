@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Xunit;
 using Ashfall.Core;
+using Ashfall.Core.IO;
 using Ashfall.Core.Survivors;
 
 namespace Ashfall.Core.Tests;
@@ -11,10 +13,23 @@ namespace Ashfall.Core.Tests;
 ///
 /// Phase 18 task per <c>docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md</c>:
 /// Core behaviour test exercising Train → XpToNext updates → Decay over time.
+/// Authored definitions loaded from <c>skills.json</c>.
 /// </summary>
 public class SkillProgressionSystemTests
 {
     private static ISeededRng MakeRng(int seed = 1401) => new SeededRng(seed);
+
+    private static string ResolveDataDir()
+    {
+        if (CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out string found)) return found;
+        if (CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out found)) return found;
+        throw new InvalidOperationException("StreamingAssets/Data directory not found");
+    }
+
+    private static void PopulateCatalog(SkillProgressionSystem sys)
+    {
+        SkillCatalogLoader.LoadAndRegister(sys, ResolveDataDir(), new FileSystemIO(), new SystemTextJsonSerializer());
+    }
 
     private sealed class TestActor : SkillActor
     {
@@ -42,21 +57,24 @@ public class SkillProgressionSystemTests
     }
 
     [Fact]
-    public void RegisterDefaultSkills_AddsKnownDisciplineSkills()
+    public void CatalogLoader_PopulatesKnownDisciplineSkills()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
-        Assert.True(sys.CatalogCount > 30);
+        PopulateCatalog(sys);
+        Assert.True(sys.CatalogCount >= 145);
         Assert.NotNull(sys.GetSkill("skill_field_dressing"));
         Assert.NotNull(sys.GetSkill("skill_steady_hands"));
-        Assert.True(sys.GetSkill("skill_steady_hands").isExpertSkill);
+        Assert.True(sys.GetSkill("skill_steady_hands")!.isExpertSkill);
+        Assert.NotNull(sys.GetSkill("skill_field_surgery"));
+        Assert.NotNull(sys.GetSkill("skill_water_filtration"));
+        Assert.NotNull(sys.GetSkill("skill_radio_repair"));
     }
 
     [Fact]
     public void RecordAction_AwardsXpAndReachesTier1()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
+        PopulateCatalog(sys);
         var actor = new TestActor("actor_a");
 
         // 11 actions × 5 XP = 55 XP at day 5; threshold 50 -> "skill_field_dressing" should fire.
@@ -71,7 +89,7 @@ public class SkillProgressionSystemTests
     public void TickDaily_DecaysUnusedDisciplineSkillsToDormant()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
+        PopulateCatalog(sys);
         var actor_a = new TestActor("actor_a");
         var actor_b = new TestActor("actor_b");
 
@@ -102,7 +120,7 @@ public class SkillProgressionSystemTests
     public void DormantSkill_ReactivatesWhenPracticed()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
+        PopulateCatalog(sys);
         var actor = new TestActor("actor_reactive");
 
         for (int i = 0; i < 11; i++) sys.RecordAction(actor, "medical", 5f, 5);
@@ -122,7 +140,7 @@ public class SkillProgressionSystemTests
     public void ExpertSkill_GatedToPredeterminedDiscipline()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
+        PopulateCatalog(sys);
 
         var actor_a = new TestActor("actor_medical") { ExpertDiscipline = "medical" };
         var actor_b = new TestActor("actor_crafting") { ExpertDiscipline = "crafting" };
@@ -140,7 +158,7 @@ public class SkillProgressionSystemTests
     public void TryGrantSkill_MilestoneId_BypassesXpThreshold()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
+        PopulateCatalog(sys);
         var actor = new TestActor("actor_b");
         Assert.Null(sys.GetSkill("perk_field_dressing"));
         Assert.True(sys.TryGrantSkill(actor, "skill_anchor", 5));
@@ -151,27 +169,15 @@ public class SkillProgressionSystemTests
     public void Epiphany_TriggersOnDesperateSurvivors()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
+        PopulateCatalog(sys);
         sys.ApplyMorale = (id, value) => { /* no-op */ };
         var lowSurvivor = new TestActor("actor_low") /* Morale default 100 */;
 
-        // Force morale down to < 10 (desperate) without AwardMorale hook by
-        // re-wiring: we cheat via a small adapter that exposes set morale for
-        // the test only.
-        var rng = MakeRng();
-        // Below threshold we need rng.NextDouble() < 0.05 to fire. Pick a seed
-        // that returns < 0.05 on the first call.
         var rng2 = new ForcedDoubleRng(0.01);
-        // Engine clamps to cap; we set the cap to 100 and morale to 5 then
-        // record an action.
         sys.MaxMoraleCap = id => 100f;
         sys.ApplyMorale = (id, value) => { /* host would clamp */ };
 
         for (int i = 0; i < 30; i++) sys.RecordAction(lowSurvivor, "medical", 5f, 5, rng2);
-        // The Epiphany path requires morale below 10, so we need a hook.
-        // Since TestActor returns Morale=100 always, Epiphany won't fire here;
-        // we instead verify that when desperate the code path runs without
-        // throwing. A separate test below uses a hacked adapter.
         Assert.NotNull(lowSurvivor);
     }
 
@@ -179,7 +185,7 @@ public class SkillProgressionSystemTests
     public void Epiphany_PathRunsUnderDrowningMorale()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
+        PopulateCatalog(sys);
         var helplessActor = new MoraleTrackedActor("actor_desperate");
         sys.ApplyMorale = helplessActor.ApplyMoraleFromEngine;
         helplessActor.MoraleValue = 5f; // below threshold
@@ -197,7 +203,7 @@ public class SkillProgressionSystemTests
     public void CaptureState_RoundTripsPreservingAllFields()
     {
         var sys = new SkillProgressionSystem();
-        sys.RegisterDefaultSkills();
+        PopulateCatalog(sys);
         var actor = new TestActor("actor_rt");
         for (int i = 0; i < 11; i++) sys.RecordAction(actor, "medical", 5f, 5);
 
@@ -207,7 +213,7 @@ public class SkillProgressionSystemTests
 
         // Wipe and restore.
         var fresh = new SkillProgressionSystem();
-        fresh.RegisterDefaultSkills();
+        PopulateCatalog(fresh);
         fresh.RestoreState(save, new List<SkillActor> { actor });
         Assert.True(fresh.HasActiveSkill("actor_rt", "skill_field_dressing"));
         Assert.Equal(0.10f, fresh.GetCachedBonus("actor_rt", "medical"), 3);

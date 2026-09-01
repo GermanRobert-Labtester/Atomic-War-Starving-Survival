@@ -29,9 +29,11 @@ namespace Ashfall.Core
         BridgeSelfTest,
         CoreSelfTest,
         DataIntegritySelfTest,
+        ResearchCatalogSelfTest,
         PanelBindLifecycleSelfTest,
         SaveLoadUiFailureSelfTest,
         SaveStoreChecksumSelfTest,
+        RuntimeScaleSelfTest,
         StandaloneSystemsSelfTest,
 
         // Expansions & Campaign Modules
@@ -55,7 +57,9 @@ namespace Ashfall.Core
         IceRoadTickDemo,
         LedgerDebtSelfTest,
         MoralChoiceSelfTest,
+        EvolvingWorldSelfTest,
         MusterSelfTest,
+        FactionEcologySelfTest,
         Phase0SelfTest,
         SilentFoundrySelfTest,
         StandingRecordSelfTest,
@@ -108,6 +112,7 @@ namespace Ashfall.Core
         PlayerPanelsUiTest,
         ShelterHazardLoopSelfTest,
         ShelterOperationsSelfTest,
+        ShelterDecorSelfTest,
         SilentFoundryUiTest,
         SurvivorsUiTest,
         UiLayoutSelfTest,
@@ -115,7 +120,9 @@ namespace Ashfall.Core
         UiSnapshotRegenerate,
         UiSnapshotSelfTest,
         UtilityAiUiTest,
-        VerdictUiTest
+        VerdictUiTest,
+        OnboardingJourneySelfTest,
+        RealCampaignJourneySelfTest
     }
 
     /// <summary>
@@ -243,6 +250,12 @@ namespace Ashfall.Core
                     null,
                     "Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)"),
                 new HostCliActionDescriptor(
+                    HostCliAction.ResearchCatalogSelfTest,
+                    "Core & System Gates",
+                    "--research-catalog-selftest",
+                    null,
+                    "Research knowledge catalog gate (Plan 34): load count, DAG validity, original 15 save-contract nodes, and cross-catalog unlock references (breakthrough items, relic research unlocks, manual/autopsy knowledge grants)"),
+                new HostCliActionDescriptor(
                     HostCliAction.PanelBindLifecycleSelfTest,
                     "Core & System Gates",
                     "--panel-bind-lifecycle-selftest",
@@ -260,6 +273,12 @@ namespace Ashfall.Core
                     "--save-store-checksum-selftest",
                     new[] { "--save-store-checksums-selftest", "--checksum-sweep-selftest" },
                     "Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RuntimeScaleSelfTest,
+                    "Core & System Gates",
+                    "--runtime-scale-selftest",
+                    new[] { "--runtime-scale", "--performance-selftest", "--perf-selftest" },
+                    "Performance budget validation: 30/180/360-day campaign workloads, day-advance latency, save/load/checksum, allocations, retained memory, and lifecycle leak tests; writes artifacts/runtime-scale-results.json"),
                 new HostCliActionDescriptor(
                     HostCliAction.StandaloneSystemsSelfTest,
                     "Core & System Gates",
@@ -397,6 +416,12 @@ namespace Ashfall.Core
                     new[] { "--expansion-06-selftest" },
                     "MusterHeadlessDemo (Exp 06 the Muster)"),
                 new HostCliActionDescriptor(
+                    HostCliAction.FactionEcologySelfTest,
+                    "Expansions & Campaign Modules",
+                    "--faction-ecology-selftest",
+                    null,
+                    "Plan 25 faction ecology vertical slice: faction action board, E-P1 escalation chain, claimant witness, camp arrivals, muster path"),
+                new HostCliActionDescriptor(
                     HostCliAction.Phase0SelfTest,
                     "Expansions & Campaign Modules",
                     "--phase0-selftest",
@@ -460,6 +485,12 @@ namespace Ashfall.Core
                     "--chemical-dependency-save-selftest",
                     null,
                     "Chemical dependency system save store round-trip, tolerance, and withdrawal states"),
+                new HostCliActionDescriptor(
+                    HostCliAction.EvolvingWorldSelfTest,
+                    "Host Domains & Save Stores",
+                    "--evolving-world-selftest",
+                    null,
+                    "Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario"),
                 new HostCliActionDescriptor(
                     HostCliAction.DoseLedgerSelfTest,
                     "Host Domains & Save Stores",
@@ -693,6 +724,12 @@ namespace Ashfall.Core
                     new[] { "--shelter-ops-selftest", "--operations-selftest" },
                     "Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification"),
                 new HostCliActionDescriptor(
+                    HostCliAction.ShelterDecorSelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--shelter-decor-selftest",
+                    new[] { "--shelter-interior-selftest", "--memorial-wall-selftest" },
+                    "Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification"),
+                new HostCliActionDescriptor(
                     HostCliAction.SilentFoundryUiTest,
                     "UI Tests, Layout & Gameplay Smoke",
                     "--silent-foundry-uitest",
@@ -739,7 +776,19 @@ namespace Ashfall.Core
                     "UI Tests, Layout & Gameplay Smoke",
                     "--verdict-uitest",
                     null,
-                    "Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free")
+                    "Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free"),
+                new HostCliActionDescriptor(
+                    HostCliAction.OnboardingJourneySelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--onboarding-journey-selftest",
+                    new[] { "--onboarding-selftest" },
+                    "First-hour onboarding journey: protocol→inspect→rationing→assignment→weather→inventory-use→day-advance, with save/load resume and no-resource fabrication"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RealCampaignJourneySelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--real-campaign-journey-selftest",
+                    new[] { "--campaign-journey-selftest", "--real-main-journey-selftest" },
+                    "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)")
         };
 
         private static readonly HostCliActionDescriptor[] _configDescriptors = new[]

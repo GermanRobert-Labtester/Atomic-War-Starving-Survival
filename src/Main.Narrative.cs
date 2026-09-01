@@ -69,7 +69,6 @@ namespace AtomicWar.GodotApp
             {
                 var save = JournalSaveStore.Load();
                 if (save != null) _journal.RestoreState(save);
-                _simDay = MaxEntryDay();
                 _journalBook.SetEntries(_journal.Entries);
                 _journalBook.ApplyUiState(
                     _journal.HudIsOpen,
@@ -80,22 +79,13 @@ namespace AtomicWar.GodotApp
             }
             else
             {
-                int seededDay = JournalDemoHarness.Seed(_journal, catalogs);
-                _simDay = Math.Max(4, seededDay);
+                JournalDemoHarness.Seed(_journal, catalogs);
                 _journalBook.SetEntries(_journal.Entries);
                 SaveJournal();
                 GD.Print("[Ashfall Godot] Journal seeded with opening-day entries.");
             }
 
             UpdateStatus();
-        }
-
-        private int MaxEntryDay()
-        {
-            int day = 4;
-            for (int i = 0; i < _journal.EntryCount; i++)
-                if (_journal.Entries[i].Day > day) day = _journal.Entries[i].Day;
-            return day;
         }
 
         private void ToggleJournal()
@@ -107,15 +97,26 @@ namespace AtomicWar.GodotApp
         private void SaveJournal()
         {
             if (_journal == null) return;
-            CaptureSection("journal", JournalSaveStore.TryCapturePersisted(_journal.CaptureState()));
-            _journalDirty = false;
+            if (CaptureSection("journal", JournalSaveStore.TryCapturePersisted(_journal.CaptureState())))
+                _journalDirty = false;
         }
 
-        private void SetupEventAdapter()
+        private void SetupEventAdapter(bool reloadFromDisk = false)
         {
-            if (_hostEventAdapter != null) return;
+            if (_hostEventAdapter != null && !reloadFromDisk) return;
+
+            if (_hostEventAdapter != null)
+            {
+                _hostEventAdapter.Dispose();
+                _hostEventAdapter = null!;
+            }
+
             SetupJournal();
             if (_eventBus == null) _eventBus = new Ashfall.Core.Events.SimpleEventBus();
+
+            // The adapter is the sole owner of mutable event progress. Restore the
+            // selected campaign's projected host_event payload before any day tick
+            // can evaluate triggers; the catalog session remains read-only.
             _hostEventAdapter = new AtomicWar.GodotApp.Host.HostEventAdapter(_eventBus, _journal);
             var loadedEventState = HostEventSaveStore.TryLoad();
             if (loadedEventState != null)
@@ -150,12 +151,19 @@ namespace AtomicWar.GodotApp
             if (_hostEventAdapterDirty) SaveEventAdapter();
         }
 
-        private void SetupNarrative()
+        private void SetupNarrative(bool reloadEventAdapter = false)
         {
-            if (_narrative != null) return;
-            _narrative = NarrativeHostSession.Create(_dataDir);
-            _narrative.StateChanged += () => _narrativeDirty = true;
-            GD.Print("[Ashfall Godot] Narrative host ready.");
+            if (_narrative == null)
+            {
+                _narrative = NarrativeHostSession.Create(_dataDir);
+                _narrative.StateChanged += () => _narrativeDirty = true;
+                GD.Print("[Ashfall Godot] Narrative host ready.");
+            }
+
+            // Narrative setup is part of both composition and restore. Initialize
+            // the event adapter here so campaign state is loaded before its first
+            // day-owner evaluation, without coupling it to the catalog read-model.
+            SetupEventAdapter(reloadEventAdapter);
         }
 
         private void SaveNarrative()
@@ -171,7 +179,7 @@ namespace AtomicWar.GodotApp
         private void SaveEventAdapter()
         {
             if (_hostEventAdapter == null) return;
-            if (CaptureSection("host_event", HostEventSaveStore.TryCapturePersisted(_hostEventAdapter.State)))
+            if (CaptureSection("host_event", HostEventSaveStore.TryCapturePersisted(_hostEventAdapter.CaptureState())))
             {
                 _hostEventAdapterDirty = false;
             }
@@ -188,7 +196,7 @@ namespace AtomicWar.GodotApp
         {
             if (_radio != null)
             {
-                _radio.SetDay(_core != null ? _core.Clock.Day : _simDay);
+                _radio.SetDay(_simDay);
                 return;
             }
 

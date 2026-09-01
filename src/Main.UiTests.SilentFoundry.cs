@@ -53,6 +53,26 @@ namespace AtomicWar.GodotApp
             Check(_silentFoundry != null, "host session created");
             Check(_silentFoundryPanel != null, "panel constructed");
             Check(_silentFoundry!.Engine.IsUnlocked == false, "foundry sealed by default");
+
+            // GAP-STUB-03 freshness proof: DayProvider/PartyRadiationProvider
+            // must be live accessors into Main's authoritative campaign state,
+            // not values captured once at BindStanceProviders() call time.
+            // Bind, read, mutate the authoritative source, read again.
+            int dayAtBind = _silentFoundry.GuildStanceEngine.DayProvider();
+            SetupCampaignDay();
+            _campaignDay.Calendar.SetDay(dayAtBind + 37);
+            int dayAfterCalendarAdvance = _silentFoundry.GuildStanceEngine.DayProvider();
+            Check(dayAfterCalendarAdvance == dayAtBind + 37,
+                $"DayProvider tracks live campaign day after advance (before={dayAtBind}, after={dayAfterCalendarAdvance})");
+
+            SetupHoldfastRuntime();
+            var playerRadState = _holdfastRuntime.Survivors?.RadStateFor(_holdfastRuntime.PlayerSurvivorId);
+            Check(playerRadState != null, "player rad state resolves for the freshness probe");
+            float radiationBeforeExposure = _silentFoundry.GuildStanceEngine.PartyRadiationProvider();
+            playerRadState!.RadiationDose = radiationBeforeExposure + 25f;
+            float radiationAfterExposure = _silentFoundry.GuildStanceEngine.PartyRadiationProvider();
+            Check(radiationAfterExposure == radiationBeforeExposure + 25f,
+                $"PartyRadiationProvider tracks live holdfast radiation after exposure (before={radiationBeforeExposure}, after={radiationAfterExposure})");
             // Register foundry items into the shared inventory catalog.
             SetupInventory();
             Check(_inventory.Catalog.Get("item_foundry_plowshare") != null, "foundry items registered in inventory catalog");
@@ -134,7 +154,8 @@ namespace AtomicWar.GodotApp
             _silentFoundry.SyncGuildStanding();
             Check(_silentFoundry.Engine.GetTreatyOutcome(SilentFoundryIds.TreatyBrinePipe, 279) == FoundryTreatyOutcome.NotRatified,
                 "pre-ratification neutral in the live loop");
-            _simDay = 276;
+            SetupCampaignDay();
+            _campaignDay.Calendar.SetDay(276);
             TickSimDay(277);
             TickSimDay(278);
             TickSimDay(279);
@@ -143,6 +164,26 @@ namespace AtomicWar.GodotApp
                 "live TickSimDay reaches the day-280 treaty assessment");
             Check(_silentFoundry.GuildTrust == -6f, "live loop applied the single missed-quota consequence");
             Check(_silentFoundry.Engine.AppliedConsequences.Count == 1, "exactly one consequence from the live window");
+
+            // Task #112 substep 9: after real advances through the coordinator,
+            // every campaign-day projection must agree with the calendar — the
+            // holdfast clock (owner-landed), the market day (economy owner),
+            // the duty roster clock (SyncDay, no self-advance), and the
+            // calendar's own IClock/ISimClock adapters.
+            int calDay = _campaignDay.Calendar.CurrentDay;
+            Check(calDay == 280, "calendar sits on the last advanced day");
+            Check(_core.Clock.Day == calDay, "holdfast clock projection agrees with the calendar");
+            Check(_economy.Market.Day == calDay, "economy market day projection agrees with the calendar");
+            Check(_dutyRoster != null && _dutyRoster.Clock.Day == calDay, "duty roster clock projection agrees with the calendar");
+            Check(_campaignDay.Calendar.AsClock().Day == calDay, "calendar IClock adapter agrees");
+            Check(_campaignDay.Calendar.AsSimClock().DayIndex == calDay, "calendar ISimClock adapter agrees");
+
+            // Save/reload: the coordinator's captured day must round-trip into
+            // a fresh coordinator (projection agreement after reload).
+            var savedCalendar = _campaignDay.CaptureState();
+            var reloaded = new CampaignDayCoordinator();
+            reloaded.RestoreState(savedCalendar);
+            Check(reloaded.Calendar.CurrentDay == calDay, "calendar day survives save/reload");
 
             // Late-treaty host path: the foundry's live tick line (TickDaily) is
             // day-agnostic, so a late treaty fires through the FULL host pipeline

@@ -19,56 +19,105 @@ namespace AtomicWar.GodotApp
         private readonly HashSet<string> _playedBroadcastKeys = new();
 
         /// <summary>
-        /// Static mapping from faction event categories to voice-over clip resource names.
-        /// Only factions/categories with actual WAV assets in assets/audio/radio/ are mapped.
-        /// Missing mappings fall back to radio static only (safe no-op for audio).
+        /// Static mapping retained for legacy event names, now resolving to stable
+        /// catalog IDs rather than direct resource file names.
         /// </summary>
         private static readonly Dictionary<string, string> s_voiceOverMap = new()
         {
-            { "vo_kind_parley", "vo_kind_parley" },
-            { "vo_kind_hatch", "vo_kind_hatch" },
-            { "vo_ch3_ash_road", "vo_ch3_ash_road" },
-            { "vo_ch7_milband", "vo_ch7_milband" },
-            { "vo_ch11_stockpile", "vo_ch11_stockpile" },
+            { "vo_kind_parley", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoKindParley },
+            { "vo_kind_hatch", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoKindHatch },
+            { "vo_ch3_ash_road", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoCh3AshRoad },
+            { "vo_ch7_milband", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoCh7Milband },
+            { "vo_ch11_stockpile", AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoCh11Stockpile },
         };
 
         /// <summary>
         /// Fired when a new (non-duplicate) broadcast is intercepted.
-        /// Carries the intercept and the resolved voice-over clip name (null if none).
+        /// Carries the intercept and the resolved voice-over cue ID (null if none).
         /// </summary>
         public event Action<RadioIntercept, string?>? BroadcastIntercepted;
 
         public FactionRadioEngine Engine { get; }
         public SignalTriangulationSystem Triangulation { get; }
+        public RadioBroadcastCatalog BroadcastCatalog { get; }
+        public RadioStationCatalog Stations { get; }
+        public RadioScheduleCoordinator ScheduleCoordinator { get; }
+        public RadioDistressSystem DistressSystem { get; }
+        public RadioRecordingSystem RecordingSystem { get; }
+        public RadioSignalLog SignalLog { get; }
         public ISeededRng Rng { get; }
         public IReadOnlyList<RadioIntercept> History => _history;
         public int Day { get; private set; }
         public float CurrentFrequency { get; private set; }
         public RadioIntercept? LastIntercept { get; private set; }
+        public ScheduledBroadcastResult? LastScheduledBroadcast { get; private set; }
         public string LastEvent { get; private set; } = string.Empty;
+
         public RadioHostSession(
             FactionRadioEngine engine,
             ISeededRng? rng = null,
             int day = 1,
-            SignalTriangulationSystem? triangulation = null)
+            SignalTriangulationSystem? triangulation = null,
+            RadioBroadcastCatalog? broadcastCatalog = null,
+            RadioStationCatalog? stationCatalog = null,
+            RadioDistressSystem? distressSystem = null,
+            RadioRecordingSystem? recordingSystem = null,
+            RadioSignalLog? signalLog = null)
         {
             Engine = engine ?? new FactionRadioEngine();
             Triangulation = triangulation ?? new SignalTriangulationSystem();
             Rng = rng ?? new SeededRng(DemoSeed);
             Day = Math.Max(1, day);
+
+            BroadcastCatalog = broadcastCatalog ?? new RadioBroadcastCatalog();
+            Stations = stationCatalog ?? new RadioStationCatalog();
+            ScheduleCoordinator = new RadioScheduleCoordinator(BroadcastCatalog, Stations);
+            DistressSystem = distressSystem ?? new RadioDistressSystem();
+            RecordingSystem = recordingSystem ?? new RadioRecordingSystem();
+            SignalLog = signalLog ?? new RadioSignalLog();
+
             CurrentFrequency = FirstFrequency();
             Triangulation.OnStateChanged += _ => RaiseStateChanged();
             Triangulation.OnLocationRevealed += id => { LastEvent = $"Location discovered: {id}"; RaiseStateChanged(); };
+            DistressSystem.OnSignalIntercepted += (def, state) => { LastEvent = $"Distress intercepted: {def.SourceName}"; RaiseStateChanged(); };
+            DistressSystem.OnSignalExpired += (def, state) => { LastEvent = $"Distress expired: {def.SourceName}"; RaiseStateChanged(); };
         }
 
         public static RadioHostSession Create(string dataDir, int day = 1)
         {
-            string path = Path.Combine(dataDir ?? string.Empty, CorpusFileName);
+            string actualDataDir = dataDir ?? string.Empty;
+            string path = Path.Combine(actualDataDir, CorpusFileName);
             if (!File.Exists(path))
-                path = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "StreamingAssets", "Data", CorpusFileName);
+            {
+                actualDataDir = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "StreamingAssets", "Data");
+                path = Path.Combine(actualDataDir, CorpusFileName);
+            }
 
             string json = File.Exists(path) ? File.ReadAllText(path) : string.Empty;
-            var session = new RadioHostSession(FactionRadioEngine.LoadFromJson(json), new SeededRng(DemoSeed), day);
+            var broadcastCatalog = new RadioBroadcastCatalog();
+            broadcastCatalog.LoadFromDataDirectory(actualDataDir, new Ashfall.Core.FileSystemIO(), new Ashfall.Core.SystemTextJsonSerializer());
+
+            var distressSystem = new RadioDistressSystem();
+            string distressPath = Path.Combine(actualDataDir, "radio_distress_signals.json");
+            if (File.Exists(distressPath))
+            {
+                distressSystem.LoadFromJson(File.ReadAllText(distressPath));
+            }
+            string distressExpPath = Path.Combine(actualDataDir, "radio_distress_signals_expansion.json");
+            if (File.Exists(distressExpPath))
+            {
+                distressSystem.LoadFromJson(File.ReadAllText(distressExpPath));
+            }
+
+            var session = new RadioHostSession(
+                FactionRadioEngine.LoadFromJson(json),
+                new SeededRng(DemoSeed),
+                day,
+                null,
+                broadcastCatalog,
+                null,
+                distressSystem);
+
             session.Listen();
             // Persistence: a radio save (checksummed, user://) wins over fresh
             // state — history, played-broadcast dedup keys, and tuned frequency
@@ -85,12 +134,27 @@ namespace AtomicWar.GodotApp
         public void SetDay(int day)
         {
             Day = Math.Max(1, day);
+            DistressSystem.TickDaily(Day);
         }
 
         public string Listen(float? frequencyMhz = null)
         {
             if (frequencyMhz.HasValue)
                 CurrentFrequency = frequencyMhz.Value;
+
+            // Plan 24: Unified scheduling resolution
+            LastScheduledBroadcast = ScheduleCoordinator.Resolve(CurrentFrequency, Day, Rng);
+            if (LastScheduledBroadcast != null && LastScheduledBroadcast.HasTransmission && !LastScheduledBroadcast.IsSilence)
+            {
+                SignalLog.LogIntercept(LastScheduledBroadcast, Day);
+            }
+
+            // Check for distress signal intercept
+            var distress = DistressSystem.FindSignalAtFrequency(CurrentFrequency);
+            if (distress != null)
+            {
+                DistressSystem.Intercept(distress.FrequencyId, Day);
+            }
 
             var intercept = Engine.GetBroadcastAtFrequency(CurrentFrequency, Day, Rng);
             LastIntercept = intercept;
@@ -99,18 +163,29 @@ namespace AtomicWar.GodotApp
                 _history.RemoveAt(0);
 
             LastEvent = string.IsNullOrWhiteSpace(intercept.FactionId)
-                ? $"Dead air at {CurrentFrequency:0.00} MHz."
+                ? (LastScheduledBroadcast != null && LastScheduledBroadcast.HasTransmission && !LastScheduledBroadcast.IsSilence
+                    ? $"Intercepted {LastScheduledBroadcast.StationName} at {CurrentFrequency:0.00} MHz."
+                    : $"Dead air at {CurrentFrequency:0.00} MHz.")
                 : $"Intercepted {intercept.Callsign} at {CurrentFrequency:0.00} MHz.";
 
-            // Audio: radio static on every tune
-            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayRadioStatic();
+            // Audio: a tuner motion always produces static; a received station
+            // adds a short lock confirmation before any authored voice clip.
+            var audio = AtomicWar.GodotApp.Audio.AudioManager.Instance;
+            audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioTune);
+            audio?.PlayRadioStatic();
+            if (!string.IsNullOrWhiteSpace(intercept.FactionId) || (LastScheduledBroadcast != null && LastScheduledBroadcast.HasTransmission && !LastScheduledBroadcast.IsSilence))
+                audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioSignalLock);
 
             // Audio: voice-over only for new (non-duplicate) broadcasts with a mapped clip
             string? voiceOverClip = ResolveVoiceOver(intercept);
+            if (string.IsNullOrEmpty(voiceOverClip) && LastScheduledBroadcast != null && !string.IsNullOrEmpty(LastScheduledBroadcast.AudioCue))
+            {
+                voiceOverClip = LastScheduledBroadcast.AudioCue;
+            }
             string broadcastKey = MakeBroadcastKey(intercept);
             if (voiceOverClip != null && _playedBroadcastKeys.Add(broadcastKey))
             {
-                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayVoiceOver(voiceOverClip);
+                audio?.PlayVoiceOverCue(voiceOverClip);
             }
 
             BroadcastIntercepted?.Invoke(intercept, voiceOverClip);
@@ -139,8 +214,10 @@ namespace AtomicWar.GodotApp
             LastIntercept = beacon;
 
             LastEvent = $"Emergency beacon broadcast on {CurrentFrequency:0.00} MHz.";
-            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayVoiceOver("vo_kind_parley");
-            BroadcastIntercepted?.Invoke(beacon, "vo_kind_parley");
+            string cueId = AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVoKindParley;
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioMorse);
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayVoiceOverCue(cueId);
+            BroadcastIntercepted?.Invoke(beacon, cueId);
             RaiseStateChanged();
             return LastEvent;
         }
@@ -179,6 +256,7 @@ namespace AtomicWar.GodotApp
             if (ok)
             {
                 LastEvent = $"Recorded DF bearing {obs.bearingDegrees:000}° on {CurrentFrequency:0.00} MHz ({Triangulation.GetObservationCount(sigId)} obs).";
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioMorse);
                 RaiseStateChanged();
             }
             return ok;
@@ -264,7 +342,7 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Resolve a voice-over clip name for this intercept.
+        /// Resolve a voice-over cue ID for this intercept.
         /// Returns null if no clip is mapped for this faction/event combination.
         /// </summary>
         private static string? ResolveVoiceOver(RadioIntercept intercept)
@@ -272,7 +350,12 @@ namespace AtomicWar.GodotApp
             if (string.IsNullOrWhiteSpace(intercept.FactionId))
                 return null;
 
-            // Try faction-specific mapping first, then generic event kind
+            // Event-kind-based mapping for vo_kind_* clips
+            if (intercept.Kind == RadioEventKind.ParleyResolution &&
+                s_voiceOverMap.ContainsKey("vo_kind_parley"))
+                return s_voiceOverMap["vo_kind_parley"];
+
+            // Fallback: message-text matching (backward compatible)
             foreach (var kvp in s_voiceOverMap)
             {
                 if (intercept.Message != null &&
@@ -303,9 +386,8 @@ namespace AtomicWar.GodotApp
 
         /// <summary>
         /// Snapshot every authoritative mutable value: ordered intercept history,
-        /// played-broadcast dedup keys (ordinal-sorted for a stable checksum), the
-        /// tuned frequency, and the sim day. The FactionRadioEngine corpus itself
-        /// is static data — never serialized.
+        /// played-broadcast dedup keys, tuned frequency, sim day, discovered stations,
+        /// custom presets, distress signals, signal log, recorded cassettes, and station overrides.
         /// </summary>
         public RadioSaveState CaptureSave()
         {
@@ -331,12 +413,32 @@ namespace AtomicWar.GodotApp
             }
             state.playedBroadcastKeys = new List<string>(_playedBroadcastKeys);
             state.playedBroadcastKeys.Sort(StringComparer.Ordinal);
+
+            // Plan 24 V2 extensions
+            state.discoveredStationIds = SignalLog.CaptureDiscoveredStations();
+            state.customPresets = SignalLog.CapturePresets();
+            state.distressSignals = DistressSystem.CaptureState();
+            state.signalLog = SignalLog.CaptureEntries();
+            state.recordedCassettes = RecordingSystem.CaptureState();
+
+            var overrides = Stations.ExportOverrides();
+            state.stationOverrides = new List<StationStateOverrideEntry>(overrides.Count);
+            foreach (var kvp in overrides)
+            {
+                state.stationOverrides.Add(new StationStateOverrideEntry
+                {
+                    stationId = kvp.Key,
+                    state = (int)kvp.Value
+                });
+            }
+            state.stationOverrides.Sort((a, b) => string.Compare(a.stationId, b.stationId, StringComparison.Ordinal));
+
             return state;
         }
 
         /// <summary>
         /// Rebuild receiver state from a snapshot. Overwrites history, dedup keys,
-        /// frequency, and day; the engine corpus is unchanged.
+        /// frequency, day, discovered stations, distress states, and recorded cassettes.
         /// </summary>
         public void RestoreSave(RadioSaveState state)
         {
@@ -362,18 +464,34 @@ namespace AtomicWar.GodotApp
                     if (!string.IsNullOrEmpty(state.playedBroadcastKeys[i]))
                         _playedBroadcastKeys.Add(state.playedBroadcastKeys[i]);
 
+            // Plan 24 V2 restorations
+            DistressSystem.RestoreState(state.distressSignals);
+            SignalLog.RestoreState(state.signalLog, state.discoveredStationIds, state.customPresets);
+            RecordingSystem.RestoreState(state.recordedCassettes);
+
+            if (state.stationOverrides != null)
+            {
+                var map = new Dictionary<string, RadioStationState>(StringComparer.OrdinalIgnoreCase);
+                foreach (var ov in state.stationOverrides)
+                {
+                    if (ov != null && !string.IsNullOrEmpty(ov.stationId))
+                        map[ov.stationId] = (RadioStationState)ov.state;
+                }
+                Stations.ImportOverrides(map);
+            }
+
             LastEvent = "Radio state restored.";
         }
 
         // ── Triangulation demo actions ────────────────────────────────
 
         /// <summary>Record a directional observation of a signal.</summary>
-        public string RecordObservationDemo(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f)
+        public string RecordObservation(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f, string stationId = "station_alpha")
         {
             var obs = new RadioObservation
             {
                 signalId = signalId,
-                stationId = "station_alpha",
+                stationId = stationId,
                 day = Day,
                 hour = 12f,
                 bearingDegrees = bearing,
@@ -390,8 +508,11 @@ namespace AtomicWar.GodotApp
                 : "Invalid observation.";
         }
 
+        public string RecordObservationDemo(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f)
+            => RecordObservation(signalId, bearing, signalStrength, noise);
+
         /// <summary>Attempt to triangulate a signal.</summary>
-        public string TriangulateDemo(string signalId)
+        public string TriangulateSignal(string signalId)
         {
             var candidate = Triangulation.Triangulate(signalId, Rng);
             if (candidate == null)
@@ -401,6 +522,8 @@ namespace AtomicWar.GodotApp
                 ? $"Triangulation complete! Location {candidate.locationId} discovered (confidence {candidate.confidence:F2}, uncertainty ±{candidate.uncertaintyRadiusKm:F0} km)."
                 : $"Hypothesis: {candidate.locationId} (confidence {candidate.confidence:F2}, uncertainty ±{candidate.uncertaintyRadiusKm:F0} km, {candidate.observationCount} observations).";
         }
+
+        public string TriangulateDemo(string signalId) => TriangulateSignal(signalId);
 
         /// <summary>Get triangulation status for a signal.</summary>
         public string TriangulationStatusLine(string signalId)

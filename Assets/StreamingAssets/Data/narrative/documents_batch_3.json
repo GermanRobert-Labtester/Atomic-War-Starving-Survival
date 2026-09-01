@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "batch_id": "documents_batch_3",
+  "documents": [
+    {
+      "doc_id": "doc_evacuation_roster_001",
+      "title": "Municipal Evacuation Roster — Sector 7",
+      "origin": "District Administrative Office",
+      "material": "Carbon-copy form on yellow paper, three sheets",
+      "physical_description": "Names typed in columns. Seventeen names are crossed out in blue ink. Three are added in pencil. The carbon copy beneath is barely legible.",
+      "transcript": "EVACUATION ROSTER — SECTOR 7 — DAY 12\n\n1. Kuznetsov, A. — BUS 3 — CONFIRMED\n2. Kuznetsova, M. — BUS 3 — CONFIRMED\n3. Petrov, D. — BUS 3 — CONFIRMED\n4. Yeltsina, O. — BUS 4 — CONFIRMED\n5. Morozov, G. — [CROSSED OUT]\n6. Savchenko, I. — BUS 4 — CONFIRMED\n7. Volkov, N. — [CROSSED OUT]\n8. Belova, T. — BUS 5 — CONFIRMED\n9. Kovalenko, R. — [CROSSED OUT]\n10. Shevchenko, L. — BUS 5 — PENDING\n11. Tkachenko, V. — BUS 5 — PENDING\n12. Bondarenko, S. — [CROSSED OUT]\n13. Kravchenko, Y. — [CROSSED OUT]\n14. [PENCIL] Novikov, F. — BUS 6\n15. [PENCIL] Orlova, A. — BUS 6\n16. [PENCIL] — NO NAME — BUS 6\n\nNOTE: Bus 4 delayed. Bus 6 added by order of Sector Marshal.\nCapacity: 42. Boarded: 28. Remaining: 14.",
+      "lore_flags": ["flag_lore_sector7_evacuation_found"],
+      "item_id_source": "item_document_evacuation_list"
+    },
+    {
+      "doc_id": "doc_ration_ledger_001",
+      "title": "Shelter 14 Daily Ration Distribution Log",
+      "origin": "Shelter 14 Storeroom",
+      "material": "Ruled ledger, cloth-bound",
+      "physical_description": "Handwriting becomes uneven from page 6 onward. Serving weights are recorded in grams. Columns grow narrower toward the back cover.",
+      "transcript": "DAY 45 — ADULT RATION: 320g\nDAY 46 — ADULT RATION: 320g\nDAY 47 — ADULT RATION: 300g [NOTE: flour low]\nDAY 48 — ADULT RATION: 280g\nDAY 49 — ADULT RATION: 280g\nDAY 50 — ADULT RATION: 260g [NOTE: council decision]\nDAY 51 — ADULT RATION: 260g\nDAY 52 — ADULT RATION: 240g\nDAY 53 — ADULT RATION: 240g [NOTE: children's portion unchanged]\nDAY 54 — ADULT RATION: 220g\nDAY 55 — [NO ENTRY]\nDAY 56 — ADULT RATION: 200g [NOTE: emergency reserve opened]",
+      "lore_flags": ["flag_lore_shelter14_rations_found"],
+      "item_id_source": "item_document_ration_record"
+    },
+    {
+      "doc_id": "doc_blood_trail_note_001",
+      "title": "Treatment Transfer Instruction",
+      "origin": "Regional Hospital Ward B",
+      "material": "Clinical note paper, folded",
+      "physical_description": "Folded three times. One corner stained dark. The handwriting is clinical and hurried.",
+      "transcript": "TRANSFER ORDER — WARD B → BASEMENT\n\nPatient: Bed 14 — radiation pneumonitis\nPatient: Bed 16 — compound fracture (right femur)\nPatient: Bed 19 — acute gastroenteritis\n\nMove before 18:00. Elevator power will be redirected.\nDo NOT use the east corridor — structural assessment pending.\n\nDr. Vel",
+      "lore_flags": ["flag_lore_hospital_transfer_found"],
+      "item_id_source": "item_document_blood_trail_note"
+    },
+    {
+      "doc_id": "doc_barricade_sketch_001",
+      "title": "Barricade Placement Plan — Bridge Seven Approach",
+      "origin": "Civil Defense Coordination Office",
+      "material": "Municipal form, reverse side used for sketch",
+      "physical_description": "Rough pencil sketch of a road junction with numbered squares. One route circled twice in red crayon.",
+      "transcript": "BRIDGE SEVEN — BARRICADE PLAN\n\n[1] — Main approach — concrete barriers + wire\n[2] — Side street — overturned bus\n[3] — Rail crossing — sandbags\n[4] — River path — OPEN [circled in red]\n\nNOTE: Route 4 stays open for supply convoy.\nDo NOT block. Repeat: DO NOT BLOCK ROUTE 4.\n\nSgt. Morozov",
+      "lore_flags": ["flag_lore_barricade_plan_found"],
+      "item_id_source": "item_document_barricade_placement"
+    },
+    {
+      "doc_id": "doc_sealed_door_001",
+      "title": "Sealed Room Warning — Archive Level 3",
+      "origin": "Municipal Archive Basement",
+      "material": "Printed notice with handwritten amendment",
+      "physical_description": "Official notice taped over a door frame. Additional instructions written in black marker beneath the printed text.",
+      "transcript": "⚠ SEALED — DO NOT ENTER\nRadiation monitoring in progress.\nAccess restricted until further notice.\n\n[HANDWRITTEN]\nDoor was welded shut Day 31.\nSomeone is still inside.\nDo not open without Level 3 authorization.\n— Security",
+      "lore_flags": ["flag_lore_sealed_archive_found"],
+      "item_id_source": "item_document_sealed_door_warning"
+    },
+    {
+      "doc_id": "doc_family_photo_001",
+      "title": "Photograph — Three People, Unknown Location",
+      "origin": "Apartment Block 7, Unit 12",
+      "material": "Photographic paper, writing on reverse",
+      "physical_description": "Color photograph, slightly faded. Three people standing in front of a brick building. Writing on the back in blue ballpoint.",
+      "transcript": "[FRONT: Three people — two adults, one child. Building behind them has a green door. Snow on the ground.]\n\n[REVERSE]\nMama, Papa, and me — New Year 2019\nThe green house on Sadovaya Street\nWe planted the lilac bush that spring",
+      "lore_flags": ["flag_lore_family_photo_found"],
+      "item_id_source": "item_document_family_photograph"
+    },
+    {
+      "doc_id": "doc_military_map_001",
+      "title": "Deployment Map — Northern Perimeter",
+      "origin": "Forward Command Post",
+      "material": "Topographic map with grease-pencil annotations",
+      "physical_description": "Folded map with deployment marks in three colors. The annotations contradict the printed legend in several places.",
+      "transcript": "[MAP ANNOTATIONS]\n\nRED — Original deployment (Day 1-15)\nBLUE — Actual positions (Day 16+)\nGREEN — Retreat route (added Day 22)\n\n[NOTE in margin]\nPositions do not match orders.\nSector 4 never reached the ridge.\nConvoy diverted to the canal.\n\n[UNDERLINED]\nDo not report this to Central.",
+      "lore_flags": ["flag_lore_deployment_map_found"],
+      "item_id_source": "item_document_military_map"
+    },
+    {
+      "doc_id": "doc_broadcast_script_001",
+      "title": "Emergency Broadcast Script — Draft 3",
+      "origin": "Civil Defense Radio Studio",
+      "material": "Typed script with corrections in two hands",
+      "physical_description": "Three pages. Several lines struck through. Final version differs from the typed original.",
+      "transcript": "[DRAFT 3 — FINAL]\n\nThis is the Civil Defense Authority.\nAll residents are instructed to proceed to the nearest designated shelter.\nBring identification documents and a three-day supply of water.\nDo not return to your homes.\n\n[STRUCK THROUGH]\n~~Remain calm. Help is on the way.~~\n~~The situation is under control.~~\n\n[HANDWRITTEN]\nCut the last two lines. Nobody believes them anymore.\n— Director Volkov",
+      "lore_flags": ["flag_lore_broadcast_draft_found"],
+      "item_id_source": "item_document_broadcast_transcript"
+    },
+    {
+      "doc_id": "doc_propaganda_vandalized_001",
+      "title": "Defaced Garrison Recruitment Poster",
+      "origin": "Checkpoint Gamma",
+      "material": "Printed poster with multiple handwritten responses",
+      "physical_description": "Official poster written over by at least four different hands. The original message is barely visible beneath.",
+      "transcript": "[ORIGINAL — partially visible]\nTHE GARRISON PROTECTS. THE GARRISON PROVIDES.\nENLIST TODAY — SERVE YOUR COMMUNITY.\n\n[RESPONSE 1 — red marker]\nPROVIDES WHAT? EMPTY PROMISES.\n\n[RESPONSE 2 — pencil]\nMy son enlisted. Where is he?\n\n[RESPONSE 3 — blue ink]\nThe garrison protects the garrison.\n\n[RESPONSE 4 — scratched into paper]\nLIARS",
+      "lore_flags": ["flag_lore_defaced_poster_found"],
+      "item_id_source": "item_document_vandalized_propaganda"
+    },
+    {
+      "doc_id": "doc_handwritten_warning_001",
+      "title": "Water Point Warning",
+      "origin": "Well #7, Rural Settlement",
+      "material": "Cardboard with charcoal writing",
+      "physical_description": "Large letters. Wire threaded through a hole in one corner. The cardboard is damp at the edges.",
+      "transcript": "DO NOT DRINK\nTESTED DAY 89\nCONTAMINATED\n\nUSE THE SPRING ON THE HILL\nFOLLOW THE PIPE\n\n— ANNA",
+      "lore_flags": ["flag_lore_water_warning_found"],
+      "item_id_source": "item_document_handwritten_warning"
+    },
+    {
+      "doc_id": "doc_maintenance_log_001",
+      "title": "Generator Maintenance Checklist — Unit 3",
+      "origin": "Shelter Utility Room",
+      "material": "Clipboard with carbon-copy checklist",
+      "physical_description": "The same temporary repair is signed off six times. The seventh slot is empty. The pen mark on the last entry trails off the edge.",
+      "transcript": "GENERATOR UNIT 3 — MAINTENANCE LOG\n\nDay 12 — Fuel line patched (temporary) — Signed: Petrov\nDay 19 — Fuel line patched (temporary) — Signed: Petrov\nDay 26 — Fuel line patched (temporary) — Signed: Kovalenko\nDay 33 — Fuel line patched (temporary) — Signed: Kovalenko\nDay 40 — Fuel line patched (temporary) — Signed: Novikov\nDay 47 — Fuel line patched (temporary) — Signed: Novikov\nDay 54 — [EMPTY]\n\n[NOTE at bottom]\nNeed proper replacement part.\nPart number: FL-4471-C\nSupplier: [BLANK]",
+      "lore_flags": ["flag_lore_generator_maintenance_found"],
+      "item_id_source": "item_document_maintenance_record"
+    },
+    {
+      "doc_id": "doc_rejection_list_001",
+      "title": "Shelter 9 Admission Rejection Register",
+      "origin": "Shelter 9 Administration",
+      "material": "Typed list on continuous-feed paper",
+      "physical_description": "Dot-matrix printout. Reason codes beside each name. Several names have no code at all.",
+      "transcript": "SHELTER 9 — ADMISSION REJECTIONS — DAY 15-20\n\nKorolev, P. — CAPACITY\nIvanova, S. — MEDICAL (respiratory)\nSokolov, D. — SECURITY\nFedorova, M. — CAPACITY\nPopov, A. — DEFERRED\nVasilieva, N. — [NO CODE]\nKozlov, V. — CAPACITY\nMikhailova, T. — MEDICAL (pregnancy)\nNovikov, I. — SECURITY\nPetrova, O. — [NO CODE]\nSemenov, G. — DEFERRED\nOrlova, L. — CAPACITY\n\n[NOTE at bottom]\nNo code = no reason recorded.\nAsk Director.",
+      "lore_flags": ["flag_lore_shelter9_rejections_found"],
+      "item_id_source": "item_document_shelter_rejection_list"
+    },
+    {
+      "doc_id": "doc_ration_theft_001",
+      "title": "Unofficial Stock Discrepancy Record",
+      "origin": "Quartermaster Storeroom",
+      "material": "Small notebook, pencil",
+      "physical_description": "Comparison between expected and actual stock levels. Discrepancies recorded without comment.",
+      "transcript": "DAY 30 — Canned food: Expected 240, Actual 232 (-8)\nDAY 31 — Canned food: Expected 232, Actual 226 (-6)\nDAY 32 — Canned food: Expected 226, Actual 220 (-6)\nDAY 33 — Canned food: Expected 220, Actual 218 (-2)\nDAY 34 — Canned food: Expected 218, Actual 210 (-8)\nDAY 35 — Canned food: Expected 210, Actual 208 (-2)\n\n[NOTE]\nLast supply drop: Day 28.\nNo new deliveries.\nSomeone is eating for two.",
+      "lore_flags": ["flag_lore_ration_theft_found"],
+      "item_id_source": "item_document_ration_theft_ledger"
+    },
+    {
+      "doc_id": "doc_water_notice_001",
+      "title": "Water Quality Notice — Pump Station 4",
+      "origin": "Pump Station 4",
+      "material": "Official notice with handwritten correction",
+      "physical_description": "Printed notice posted beside a water pump. A handwritten correction has been added below the official text.",
+      "transcript": "WATER QUALITY NOTICE\nPump Station 4 — Tested Day 67\nResult: SAFE FOR CONSUMPTION\nNext test: Day 74\n\n[HANDWRITTEN]\nRETESTED DAY 69 — NOT SAFE\nDo not drink until further notice.\nThe test kit was expired.\n— Dr. Vel",
+      "lore_flags": ["flag_lore_water_notice_found"],
+      "item_id_source": "item_document_water_notice"
+    },
+    {
+      "doc_id": "doc_repair_note_001",
+      "title": "Ventilation System Repair Checklist",
+      "origin": "Shelter Mechanical Room",
+      "material": "Repair checklist, pen",
+      "physical_description": "Checklist that ends mid-procedure. The last completed step is circled twice. The pen mark trails off the edge of the paper.",
+      "transcript": "VENTILATION UNIT 2 — REPAIR PROCEDURE\n\n1. [DONE] Isolate power supply\n2. [DONE] Remove access panel\n3. [DONE] Inspect fan bearings\n4. [DONE] Replace worn bearing (spare: shelf 3)\n5. [DONE] Lubricate shaft\n6. [CIRCLED] Reassemble housing\n7. [EMPTY]\n8. [EMPTY]\n\n[NOTE]\nBearing was the wrong size.\nNeed: 6205-2RS\nHave: 6204-2RS\nClose but not close enough.",
+      "lore_flags": ["flag_lore_ventilation_repair_found"],
+      "item_id_source": "item_document_repair_note"
+    },
+    {
+      "doc_id": "doc_casualty_list_001",
+      "title": "Sector 4 Casualty Report — Week 3",
+      "origin": "Forward Medical Station",
+      "material": "Typed list on manual typewriter",
+      "physical_description": "Names with status columns. Categories shift partway through. The typing becomes uneven.",
+      "transcript": "SECTOR 4 — CASUALTY REPORT — WEEK 3\n\nKuznetsov, A. — MEDICAL — radiation exposure\nVolkov, N. — MEDICAL — shrapnel wound\nPetrov, D. — MISSING — last seen Day 18\nBelova, T. — MEDICAL — frostbite (both hands)\nMorozov, G. — MISSING\nSavchenko, I. — MEDICAL — respiratory\nKovalenko, R. — —\nShevchenko, L. — —\nTkachenko, V. — MISSING\nBondarenko, S. — —\n\n[NOTE]\nNo code = no information.\nStation was evacuated before records were completed.",
+      "lore_flags": ["flag_lore_sector4_casualties_found"],
+      "item_id_source": "item_document_casualty_list"
+    },
+    {
+      "doc_id": "doc_triage_record_001",
+      "title": "Triage Priority Sheet — Day 44",
+      "origin": "Field Clinic",
+      "material": "Cardboard strips attached to a clipboard",
+      "physical_description": "Numbered strips correspond to patients no longer present. The saline bags above are empty.",
+      "transcript": "TRIAGE — DAY 44\n\n[1] — PRIORITY: IMMEDIATE — Radiation burns (40%)\n[2] — PRIORITY: DELAYED — Fracture (left arm)\n[3] — PRIORITY: MINOR — Laceration (scalp)\n[4] — PRIORITY: IMMEDIATE — Internal bleeding\n[5] — PRIORITY: EXPECTANT — Radiation syndrome (terminal)\n[6] — PRIORITY: DELAYED — Pneumonia\n[7] — PRIORITY: MINOR — Dislocated shoulder\n\n[NOTE]\nPatient 1 transferred to Shelter 14.\nPatient 4 died before transfer.\nPatient 5 — palliative care only.\nNo more saline. Using boiled water for cleaning.",
+      "lore_flags": ["flag_lore_triage_day44_found"],
+      "item_id_source": "item_document_triage_record"
+    },
+    {
+      "doc_id": "doc_last_letter_001",
+      "title": "Unsent Letter — No Address",
+      "origin": "Apartment Block 3, Unit 8",
+      "material": "Lined paper, blue ballpoint",
+      "physical_description": "Folded into an envelope that was never sealed. Handwriting careful at the beginning, rushed at the end. No address on the front.",
+      "transcript": "Dear Masha,\n\nI am writing this because I do not know when I will see you again. The buses came and went. I was not on them.\n\nThe apartment is cold. I have covered the windows with blankets. Your mother's plants are dead. I am sorry about the plants.\n\nI have left money in the blue tin under the sink. There is also a key to the storage unit at the station. Inside you will find the winter clothes and the photograph album.\n\nIf you are reading this, I hope you are warm.\n\nPapa",
+      "lore_flags": ["flag_lore_unsent_letter_found"],
+      "item_id_source": "item_document_last_letter"
+    },
+    {
+      "doc_id": "doc_supply_requisition_001",
+      "title": "Denied Supply Requisition — Form 4471",
+      "origin": "Garrison Supply Office",
+      "material": "Official requisition form with rubber stamp",
+      "physical_description": "SUBSTITUTED stamped across the original request. The approved items are less than half of what was requested.",
+      "transcript": "REQUISITION FORM 4471\n\nREQUESTED:\n- Fuel: 200L\n- Medical supplies: 50 units\n- Canned food: 100 units\n- Water purification tablets: 200\n\nAPPROVED [SUBSTITUTED]:\n- Fuel: 80L\n- Medical supplies: 20 units\n- Canned food: 40 units\n- Water purification tablets: 0\n\nREASON: Supply constraints. Priority allocation to Central Garrison.\n\n[STAMP] DENIED — PARTIAL APPROVAL\n[SIGNATURE — illegible]",
+      "lore_flags": ["flag_lore_requisition_4471_found"],
+      "item_id_source": "item_document_supply_requisition"
+    },
+    {
+      "doc_id": "doc_evacuation_route_map_001",
+      "title": "Public Evacuation Route Map — District 5",
+      "origin": "Municipal Transit Hub",
+      "material": "Printed map with handwritten annotations",
+      "physical_description": "Public evacuation map with blocked-route markings. Three of four printed routes are crossed out.",
+      "transcript": "[MAP ANNOTATIONS]\n\nROUTE A — Main Highway — [CROSSED OUT] Bridge destroyed\nROUTE B — Rail Line — [CROSSED OUT] Flooding\nROUTE C — Canal Path — [CROSSED OUT] Military blockade\nROUTE D — Mountain Pass — [CIRCLED] OPEN\n\n[HANDWRITTEN]\nRoute D is the only way out.\nIt takes 3 days on foot.\nBring water.\n\n[NOTE]\nRoute D closes in winter.\nYou have until Day 60.",
+      "lore_flags": ["flag_lore_evacuation_routes_found"],
+      "item_id_source": "item_document_evacuation_route_map"
+    },
+    {
+      "doc_id": "doc_quarantine_notice_001",
+      "title": "Quarantine Restriction — Shelter 7",
+      "origin": "Shelter 7 Entrance",
+      "material": "Printed notice with second notice stapled over it",
+      "physical_description": "Two notices stapled together. The second has tighter restrictions. Staples are rusted.",
+      "transcript": "[NOTICE 1 — Day 40]\nQUARANTINE — SHELTER 7\nAll residents must remain inside.\nNo entry or exit without medical clearance.\nDuration: 7 days.\n\n[NOTICE 2 — stapled over — Day 43]\nQUARANTINE EXTENDED — SHELTER 7\nAll residents must remain inside.\nNo entry or exit. Period.\nMedical clearance suspended.\nDuration: UNTIL FURTHER NOTICE.\n\n[HANDWRITTEN on Notice 2]\nDo not open the doors.\n— Security",
+      "lore_flags": ["flag_lore_shelter7_quarantine_found"],
+      "item_id_source": "item_document_quarantine_notice"
+    },
+    {
+      "doc_id": "doc_civil_defense_poster_001",
+      "title": "Civil Defense Emergency Procedures Poster",
+      "origin": "School Assembly Hall",
+      "material": "Printed poster, laminated",
+      "physical_description": "Pre-crisis civil defense poster listing emergency procedures. The advice is practical and calm. Someone has written in the margin.",
+      "transcript": "EMERGENCY PROCEDURES\n\n1. Proceed to the nearest designated shelter.\n2. Bring identification and a three-day water supply.\n3. Follow instructions from uniformed personnel.\n4. Do not use elevators.\n5. Remain calm.\n\n[HANDWRITTEN in margin]\nGOOD LUCK",
+      "lore_flags": ["flag_lore_civil_defense_poster_found"],
+      "item_id_source": "item_document_civil_defense_poster"
+    },
+    {
+      "doc_id": "doc_field_report_001",
+      "title": "Garrison Field Report — Sector 6 Patrol",
+      "origin": "Forward Operating Base",
+      "material": "Typed report on manual typewriter",
+      "physical_description": "Concise operational report. Margins contain handwritten annotations in a different hand. One paragraph is underlined twice.",
+      "transcript": "FIELD REPORT — SECTOR 6 PATROL\nDay 38 — 06:00-18:00\nTeam: 4 personnel\n\nRoute: FOB → Bridge 12 → Rail Junction → Return\n\nObservations:\n- Bridge 12 intact but damaged. Vehicle crossing unsafe.\n- Rail Junction: signs of recent habitation. Fire pit warm.\n- No contact with civilians.\n- No contact with hostile forces.\n\n[UNDERLINED]\nRecommend: Do not use Bridge 12 for supply convoys.\n\n[HANDWRITTEN annotation]\nWho was at the rail junction?\nFind out. — Commander",
+      "lore_flags": ["flag_lore_sector6_patrol_found"],
+      "item_id_source": "item_document_field_report"
+    },
+    {
+      "doc_id": "doc_journal_fragment_001",
+      "title": "Personal Journal — Pages 44-46",
+      "origin": "Apartment Block 5, Unit 3",
+      "material": "Torn pages from a cloth-bound journal",
+      "physical_description": "Entries describe small routines. The last entry stops mid-sentence.",
+      "transcript": "Day 52\nFixed the window with tape and cardboard. It still rattles but the draft is less.\n\nDay 53\nMade soup from the last of the potatoes. Added water to stretch it. It tasted like water.\n\nDay 54\nThe radio said the temperature will drop. I moved the blankets closer to the door.\n\nDay 55\nI heard knocking on the wall. Three times. I knocked back. It stopped.\n\nDay 56\nThe knocking came again. This time it was",
+      "lore_flags": ["flag_lore_personal_journal_found"],
+      "item_id_source": "item_document_journal_fragment"
+    },
+    {
+      "doc_id": "doc_death_certificate_001",
+      "title": "Death Certificate — Incomplete",
+      "origin": "District Records Office",
+      "material": "Official certificate form",
+      "physical_description": "Several blank fields. The cause-of-death line contains a question mark. The signature block is empty.",
+      "transcript": "DEATH CERTIFICATE\n\nName: Morozov, Grigory Ivanovich\nDate of Birth: 14 March 1978\nDate of Death: [BLANK]\nPlace of Death: [BLANK]\nCause of Death: ?\nCertifying Physician: [BLANK]\n\n[STAMP] INCOMPLETE — FILE PENDING\n\n[HANDWRITTEN]\nBody not recovered.\nAssumed dead based on last known location.\nCannot certify without remains.",
+      "lore_flags": ["flag_lore_death_certificate_found"],
+      "item_id_source": "item_document_death_certificate"
+    },
+    {
+      "doc_id": "doc_supply_inventory_001",
+      "title": "Warehouse Inventory — Discrepancy Report",
+      "origin": "Central Supply Warehouse",
+      "material": "Inventory sheet, pencil",
+      "physical_description": "Expected and actual stock listed side by side. One crate marked MISSING with a note.",
+      "transcript": "WAREHOUSE INVENTORY — DAY 42\n\nCrate A-01 — Canned food — Expected: 500 — Actual: 500\nCrate A-02 — Canned food — Expected: 500 — Actual: 487 (-13)\nCrate A-03 — Medical supplies — Expected: 200 — Actual: 200\nCrate A-04 — Medical supplies — Expected: 200 — Actual: 185 (-15)\nCrate B-01 — Fuel — Expected: 1000L — Actual: 1000L\nCrate B-02 — Fuel — Expected: 1000L — Actual: 1000L\nCrate C-01 — [MISSING]\n\n[NOTE]\nCrate C-01: See Requisition 4471.\nRequisition 4471: Denied (partial approval).\nCrate never arrived.\nWhere is it?",
+      "lore_flags": ["flag_lore_warehouse_discrepancy_found"],
+      "item_id_source": "item_document_supply_inventory"
+    },
+    {
+      "doc_id": "doc_radio_log_001",
+      "title": "Radio Frequency Monitoring Log",
+      "origin": "Relay Station 8",
+      "material": "Handwritten log, pencil on lined paper",
+      "physical_description": "Entries stop on a specific date. The last entry reads frequencies with no response.",
+      "transcript": "RADIO LOG — RELAY STATION 8\n\nDay 60 — 142.5 MHz — Lineman's Loop — ACTIVE\nDay 60 — 88.4 MHz — Free-Net — ACTIVE\nDay 60 — 104.7 MHz — The Keeper — ACTIVE\n\nDay 65 — 142.5 MHz — Lineman's Loop — WEAK\nDay 65 — 88.4 MHz — Free-Net — ACTIVE\nDay 65 — 104.7 MHz — The Keeper — ACTIVE\n\nDay 70 — 142.5 MHz — no response\nDay 70 — 88.4 MHz — static\nDay 70 — 104.7 MHz — silence\n\n[NOTE]\nAll three frequencies gone in one week.\nCheck the relay. Check the antenna.\nCheck the sky.",
+      "lore_flags": ["flag_lore_radio_silence_found"],
+      "item_id_source": "item_document_radio_log"
+    },
+    {
+      "doc_id": "doc_child_drawing_001",
+      "title": "Child's Drawing — The House",
+      "origin": "Apartment Block 2, Unit 6",
+      "material": "Lined paper, wax crayon",
+      "physical_description": "A child's drawing. The figures are tall and the house is small. A sun occupies the entire upper corner. Labels in an adult's hand.",
+      "transcript": "[DRAWING: Three tall figures inside a small square house. A large yellow sun fills the top right corner. A chimney with smoke. A door with a handle.]\n\n[ADULT'S LABELS]\nMama\nPapa\nMe\nOur house\nThe sun\n\n[CHILD'S WRITING — barely legible]\nI drw the sun becus it is warm",
+      "lore_flags": ["flag_lore_child_drawing_found"],
+      "item_id_source": "item_document_child_drawing"
+    },
+    {
+      "doc_id": "doc_confession_001",
+      "title": "Written Confession — No Name",
+      "origin": "Shelter 11, Hidden Compartment",
+      "material": "Back of a utility form, blue ink",
+      "physical_description": "Handwriting is steady. The author names a specific action, a specific place, and a specific consequence.",
+      "transcript": "I took the medicine from the storeroom on Day 31.\nI knew it was for the children's ward.\nI sold it to the Scavengers for fuel.\nMy daughter was cold.\nI would do it again.\n\nI am writing this because someone will find it and someone will know.\nI am not asking for forgiveness.\nI am writing it down so it is recorded.\n\nThe medicine was antibiotics. Twelve doses.\nThe fuel lasted four days.",
+      "lore_flags": ["flag_lore_confession_found"],
+      "item_id_source": "item_document_confession"
+    },
+    {
+      "doc_id": "doc_will_001",
+      "title": "Handwritten Will — Two Witnesses",
+      "origin": "Shelter 6, Bunk 14",
+      "material": "Lined paper, witnessed by two signatures",
+      "physical_description": "A will assigning specific items to specific people. One name has been crossed out and replaced.",
+      "transcript": "LAST WILL AND TESTAMENT\n\nI, Kovalenko, Roman Stepanovich, being of sound mind, do hereby bequeath:\n\nTo my wife, Kovalenko, Irina:\nThe blue tin with the money.\nThe storage key.\nThe photograph album.\n\nTo my son, Kovalenko, Andrei:\nThe watch. The compass. The knife.\n\nTo [CROSSED OUT] — [REPLACED] Dr. Vel:\nThe medical books. They will be more useful to you than to me.\n\nWitnessed by:\nPetrov, Dmitry — Day 48\nNovikov, Fyodor — Day 48\n\n[NOTE]\nIf Andrei is not alive, everything goes to the shelter.\nDo not let the garrison take it.",
+      "lore_flags": ["flag_lore_will_found"],
+      "item_id_source": "item_document_will"
+    },
+    {
+      "doc_id": "doc_debt_default_notice_001",
+      "title": "Final Notice — Shelter Default",
+      "origin": "Creditor Faction Office",
+      "material": "Printed form with rubber stamp",
+      "physical_description": "Official notice with the creditor's seal. The stamp reads FINAL NOTICE in red ink. The paper is crisp and new compared to the surrounding debris.",
+      "transcript": "NOTICE OF DEFAULT\n\nShelter: [SHELTER ID]\nDebt Amount: [AMOUNT]\nMissed Deadline: [DATE]\n\nThe above-named shelter is hereby declared in default.\nAll trade privileges are suspended pending resolution.\nA bounty has been issued for the recovery of outstanding assets.\n\nThis notice serves as final warning.\n\n[STAMP] FINAL NOTICE\n[SIGNATURE — illegible]\n\n[HANDWRITTEN]\nThey know where you live.",
+      "lore_flags": ["flag_lore_debt_default_notice_found"],
+      "item_id_source": "item_document_debt_default_notice"
+    },
+    {
+      "doc_id": "doc_weather_gate_warning_001",
+      "title": "Route Closure — Weather Hazard",
+      "origin": "Route Entrance",
+      "material": "Laminated notice, weather-damaged",
+      "physical_description": "A laminated notice stapled to a post. The lamination is cracked and water has seeped in. The text is barely legible.",
+      "transcript": "⚠ ROUTE CLOSED\n\nDue to severe weather conditions, this route is impassable.\nDo not attempt to cross.\nWait for conditions to improve or use an alternate route.\n\n[HANDWRITTEN]\nThe last group that tried did not come back.\nWait for the weather to clear.\n— Civil Defense",
+      "lore_flags": ["flag_lore_weather_gate_warning_found"],
+      "item_id_source": "item_document_weather_gate_warning"
+    },
+    {
+      "doc_id": "doc_patrol_order_001",
+      "title": "Patrol Order — Sector 6",
+      "origin": "Faction Command Post",
+      "material": "Typed order on manual typewriter",
+      "physical_description": "A concise operational order. The margins contain handwritten annotations in a different hand. One paragraph is underlined twice.",
+      "transcript": "PATROL ORDER — SECTOR 6\n\nRoute: Checkpoint Alpha → Bridge 12 → Rail Junction → Return\nTeam: 4 personnel\nDuration: 12 hours\n\nRules of Engagement:\n1. Stop all travellers. Check identification.\n2. Confiscate unauthorized supplies.\n3. Detain anyone without valid travel documents.\n4. Report all contacts to command.\n\n[HANDWRITTEN]\nIf they have a valid pass, let them through.\nIf they don't, bring them in.\nDo not use force unless provoked.\n\n— Commander",
+      "lore_flags": ["flag_lore_patrol_order_found"],
+      "item_id_source": "item_document_patrol_order"
+    }
+  ]
+}

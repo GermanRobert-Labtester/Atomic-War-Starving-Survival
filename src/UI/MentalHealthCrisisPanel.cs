@@ -189,12 +189,6 @@ namespace AtomicWar.GodotApp.UI
             if (s.activeCases.Count == 0)
             {
                 _caseList.AddChild(AshfallUiHelpers.MakeMetadata("No survivors currently in psychological crisis."));
-                var btnTrigger = AshfallUiHelpers.MakeButton("SIMULATE TRAUMA BREAKDOWN", () =>
-                {
-                    _host.TriggerCrisis("survivor_gunner_mikhail", 85f, CrisisProfile.AcuteStress);
-                    RefreshView();
-                });
-                _caseList.AddChild(btnTrigger);
             }
             else
             {
@@ -249,23 +243,16 @@ namespace AtomicWar.GodotApp.UI
                 _interventionDesk.AddChild(AshfallUiHelpers.MakeDataRow("Caregiver Assigned", string.IsNullOrEmpty(curCase.assignedCaregiverId) ? "None (Awaiting Intervention)" : FormatSurvivorName(curCase.assignedCaregiverId), AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
 
                 _interventionDesk.AddChild(AshfallUiHelpers.MakeSeparator());
-                _interventionDesk.AddChild(AshfallUiHelpers.MakeSubsectionHeader("TREATMENT PROTOCOLS"));
+                _interventionDesk.AddChild(AshfallUiHelpers.MakeSubsectionHeader("TREATMENT STATUS"));
 
-                var btnCounsel = AshfallUiHelpers.MakeButton("COMMENCE COUNSELING (THE TEACHER)", () =>
+                if (curCase.status == CrisisStatus.InTreatment)
                 {
-                    _host.BeginTreatment(curCase.caseId, "the_teacher", "Counseling");
-                    RefreshView();
-                });
-                btnCounsel.Disabled = curCase.status == CrisisStatus.InTreatment;
-                _interventionDesk.AddChild(btnCounsel);
-
-                var btnElena = AshfallUiHelpers.MakeButton("ADMINISTER SEDATION (ELENA VASQUEZ)", () =>
+                    _interventionDesk.AddChild(AshfallUiHelpers.MakeBody($"Patient is currently undergoing psychiatric treatment under caregiver {FormatSurvivorName(curCase.assignedCaregiverId)}."));
+                }
+                else
                 {
-                    _host.BeginTreatment(curCase.caseId, "elena_vasquez", "Sedation");
-                    RefreshView();
-                });
-                btnElena.Disabled = curCase.status == CrisisStatus.InTreatment;
-                _interventionDesk.AddChild(btnElena);
+                    _interventionDesk.AddChild(AshfallUiHelpers.MakeBody("Assign a designated shelter caregiver or medic through the Duty Roster to commence psychiatric counseling and stabilization protocol."));
+                }
             }
             else
             {

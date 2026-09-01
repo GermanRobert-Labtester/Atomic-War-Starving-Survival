@@ -75,7 +75,7 @@ namespace Ashfall.Core
         /// <summary>Id namespaces recognised as ids. Extend when a catalog introduces a new one.</summary>
         public static readonly string[] IdPrefixes =
         {
-            "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_",
+            "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "disease_", "event_", "recipe_", "relic_", "lore_", "room_", "stage_", "choice_",
             "mutation_", "flag_", "trait_", "anchor_", "season_", "kind_", "clinic_",
             "morph_", "drug_", "co_", "enc_", "narrative_", "dialogue_event_",
@@ -90,7 +90,8 @@ namespace Ashfall.Core
             "contraband_", "glitch_", "telemetry_", "blackbox_", "directive_", "audit_",
             "hydrophone_", "borehole_", "cryopod_", "salt_mine_",
             "liturgy_", "canon_", "hymnal_", "epitaph_",
-            "journal_psych_", "botany_", "folklore_children_", "fraud_ration_",
+            "journal_psych_", "botany_", "folklore_children_", "folklore_", "fraud_ration_",
+            "graffiti_", "ritual_", "superstition_", "memorial_rite_", "mourning_", "schism_",
             "cipher_station_", "alarm_seismic_", "emp_sniffer_", "wiretap_",
             "pathology_autopsy_", "pharma_", "surgery_log_", "sensory_loss_",
             "audit_gate_", "silt_report_", "lead_wall_", "filter_clog_",
@@ -130,7 +131,21 @@ namespace Ashfall.Core
             "tallow_rendering_", "beeswax_clarif_", "wick_braiding_", "candle_dip_",
             "bone_degreasing_", "antler_horn_", "bone_scraping_", "bone_tool_",
             // The Weight of Choices — faction branching system (Military slice).
-            "branch_", "ending_"
+            "branch_", "ending_",
+            // Plan 20 — Wasteland Inhabitants & Field Guide
+            "field_fauna_", "field_flora_", "field_guide_", "char_", "creature_",
+            // Plan 21 — Phantom Memory & Heirloom World Layer
+            "heirloom_", "secret_", "phantom_trigger_",
+            // Plan 22 — Foundry, Greenhouse & Production
+            "foundry_prod_", "crop_",
+            // Plan 26 — Knowledge, Research & Skills: The Progression World
+            "knowledge_", "skill_", "manual_", "procedure_", "finding_",
+            // Plan 28 — Living Wasteland Ecology, Migration & Infestations
+            "species_", "migration_", "infestation_", "eco_chain_",
+            // Plan 36 — Wildlife Trapping Catalog
+            "trap_",
+            // Plan 40 — Ledger Debt Templates
+            "debt_", "conseq_"
         };
 
         /// <summary>
@@ -153,7 +168,19 @@ namespace Ashfall.Core
             "questlineId", "stageId", "firstStageId",
             // The Weight of Choices — faction branching system (Military slice).
             "ponr_flag", "ending_id",
-            "recipe_id", "key"
+            "recipe_id", "key",
+            // Plan 20
+            "choice_id", "chain_id",
+            // Plan 21
+            "heirloom_id", "secret_id", "trigger_id", "gating_flag",
+            // Plan 22
+            "product_id", "internal_divisions",
+            // Plan 26
+            "manual_id", "procedure_id", "possible_findings",
+            // Plan 28
+            "migration_id", "infestation_id", "species_id",
+            // Plan 36
+            "trap_id"
         };
 
         /// <summary>
@@ -173,10 +200,17 @@ namespace Ashfall.Core
             "traitId", "branchId", "scheduleEventId", "dialogue_event_id",
             "requiredFlag", "requiredFlagId", "RequiredFlagId", "RequiredEventFlags",
             "ambushFlag", "cleanWaterRewardFlag", "trait_granted",
-            "latentExpertTrait", "requiredTrait", "roomId", "itemId",
-            "downstream_quest_trigger", "gating_flag", "nextStageId",
+            "latentExpertTrait", "requiredTrait", "itemId",
+            "downstream_quest_trigger", "nextStageId",
             "countermeasure_item_id",
-            "from", "to"
+            "from", "to",
+            // Plan 21
+            "base_item_id", "discovery_source_id",
+            // Plan 40 — Ledger Debt Templates
+            "creditorId", "principalItemId", "consequenceId", "escalationId",
+            "targetFactionId", "collateralItemId",
+            // Plan 46 — Scavenging Tables
+            "scavenging_table_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -192,13 +226,15 @@ namespace Ashfall.Core
         {
             "tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name",
-            "collection_id",
+            "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",
             "callsign", "entry_type", "record_type", "directive_code", "classification",
             "issuing_authority", "vault_id", "audit_type", "sub_level", "auditor_designation",
             "compliance_status", "carrier_id", "timestamp_relative", "telemetry_channel",
             "payload_status", "effective_day_range", "buoy_callsign", "signal_classification",
+            "depletion_model", "primary_hazard_type", "hazard_type", "codex_unlock_id", "location_type", "rarity_tier",
+            "effect_type", "effect_target", "rarity", "ignoreConsequence", "authenticity",
             "borehole_id", "geological_formation", "pod_id", "subject_designation",
             "system_alert", "mine_gallery", "rock_medium", "inscription_tool", "recorder_identity",
             "cult_faction", "liturgy_type", "ritual_sacrament", "synod_chapter", "canon_number",
@@ -351,14 +387,58 @@ namespace Ashfall.Core
             "flag_verdict_shift_charter_restored", "flag_verdict_clerk_met",
             "flag_verdict_call_resolved", "flag_verdict_relay_read",
             "flag_verdict_fuse_advanced", "flag_verdict_wing_slept",
+            "flag_verdict_reid_enrolled", "flag_verdict_vane_enrolled", "flag_verdict_holt_enrolled",
             // Expansion 12 (Vel/Vigil) orphan-knock gating flag — set at runtime by
             // future exp-12 code; registered in whitelists/orphan_knocks.json as a
             // deliberate, canonically-tracked orphan door event.
             "flag_exp07_vel_vigil_knock",
+            "flag_grievance_scavenger_claim_disputed", "flag_escalation_marked_ruin",
+            "flag_escalation_marked_ruin_mediated", "flag_favor_scavenger_claim_recognized",
+            "flag_favor_scavenger_arbitration_fair",
+            // Plan 25 (Faction Ecology & the Muster) — political flags produced at
+            // runtime by the FactionActionBoard / FactionWarChainRunner seams;
+            // producer->consumer map in whitelists/plan25_flags.json.
+            "flag_become_warlord", "flag_escalation_bitter_water", "flag_escalation_bitter_water_investigated", "flag_escalation_cistern_blockade",
+            "flag_escalation_cistern_published", "flag_escalation_empty_chair", "flag_escalation_prisoner_gate", "flag_escalation_prisoner_truth_told",
+            "flag_escalation_stopped_convoy", "flag_favor_coalition_mediation_served", "flag_favor_coalition_rules_first", "flag_favor_coalition_supply_shared",
+            "flag_favor_hydro_intake_audited", "flag_favor_hydro_toll_paid", "flag_favor_hydro_water_accord_honored", "flag_favor_raider_parley_honored",
+            "flag_favor_scavenger_apprentice_backed", "flag_grievance_coalition_mediation_refused", "flag_grievance_coalition_security_backed", "flag_grievance_coalition_supply_refused",
+            "flag_grievance_hydro_appeal_refused", "flag_grievance_hydro_intake_disputed", "flag_grievance_hydro_toll_defaulted", "flag_grievance_raider_code_widened",
+            "flag_grievance_raider_parley_broken", "flag_grievance_raider_passage_evaded", "flag_grievance_raider_passage_fought", "flag_grievance_scavenger_arbitration_refused",
+            "flag_grievance_scavenger_registrar_defied", "flag_messenger_kept", "flag_peace_bread_before_bullets", "flag_peace_faction_forms",
+            "flag_peace_refusal_at_dawn", "flag_peace_volunteers_dry", "flag_war_refugees_arrived", "flag_war_requisition_demand",
+            "flag_war_requisition_met", "flag_war_requisition_refused", "flag_war_shelter_took_wounded", "flag_war_sheltered_retaliation_families",
             "paper_scrap", "item_teddy_bear", "crayon", "ammo_9x19", "blood_bag",
             "item_suitcase_locked", "fat_rendered", "industrial_bleach", "bone_saw",
             "ammonia_tank", "cardboard_box", "cigarette_pack_sealed",
-            "acoustic_foam_panel", "item_anchor_notes"
+            "acoustic_foam_panel", "item_anchor_notes",
+            // Godot host presentation IDs. These cues are registered by the
+            // host-side AudioCueCatalog rather than a gameplay JSON catalog, but
+            // authored radio broadcasts may reference them through audio_cue.
+            "radio_vo_ch3_ash_road", "radio_vo_ch7_milband",
+            "radio_vo_ch11_stockpile", "radio_vo_kind_hatch",
+            "radio_vo_kind_parley", "radio_vo_verdict_meter",
+            "radio_vo_verdict_eden", "radio_vo_verdict_count",
+            "radio_vo_verdict_geophone", "radio_vo_verdict_reckoning",
+            // Plan 29 — shelter runtime room ids. These rooms are authored in CODE
+            // (StartingLevelSystem Day-1 roster, ShelterAssignmentHostSession,
+            // HoldfastInteriorView spatial map), not in a JSON catalog, so tier-1
+            // references to them (shelter_room_identities.json legacy_aliases,
+            // future identity/quirk data) resolve here instead. Keep in sync with
+            // those rosters. Rooms defined in power_grid.json (room_air_filtration,
+            // room_clinic, room_water_pump, room_greenhouse, room_foundry,
+            // room_lighting_main) are data-registered and deliberately NOT listed.
+            "room_bunker_corridor", "room_filtration_stack", "room_storage_bay",
+            "room_bunks_living", "room_radio_tuner",
+            "room_bunks", "room_kitchen", "room_workshop", "room_filtration",
+            "room_airlock",
+            "room_main",  // "Main Vault" — ShelterScheduleHostSession's power room; the Plan 29B generator home (continuity §7.3)
+            // Plan 28/20A — field-guide unlock trigger keywords (runtime only,
+            // not data-authority ids; the field-guide unlock system reads these
+            // strings from unlock_trigger fields).
+            "trap_catch", "combat_encounter", "encounter_sighting",
+            "forage_discovery", "greenhouse_cultivation", "harvest_event",
+            "scout_observation"
         };
 
         private sealed class Ctx
@@ -418,10 +498,11 @@ namespace Ashfall.Core
                     ? file.Substring(file.LastIndexOf('/') + 1)
                     : Path.GetFileName(file);
                 ctx.File = leaf;
-                if (TryParse(file, files, out JsonDocument doc))
+                if (TryParse(file, files, out JsonDocument doc, report))
                 {
                     using (doc)
                     {
+                        RequireSchemaVersion(doc.RootElement, leaf, report);
                         Walk(doc.RootElement, ctx.File, ctx);
                     }
                 }
@@ -448,21 +529,50 @@ namespace Ashfall.Core
             return report;
         }
 
-        private static bool TryParse(string path, IFileIO files, out JsonDocument doc)
+        private static bool TryParse(string path, IFileIO files, out JsonDocument doc, CatalogIntegrityReport report)
         {
             doc = null!;
             try
             {
                 string text = files.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(text)) return false;
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    report.Error("catalog '" + path + "': empty JSON file (no catalog records can be trusted)");
+                    return false;
+                }
                 doc = JsonDocument.Parse(text);
                 return true;
             }
-            catch (Exception)
+            catch (JsonException ex)
             {
-                /* cleanup: fallback on malformed json */
+                report.Error("catalog '" + path + "': malformed JSON (" + ex.GetType().Name + "): " + ex.Message);
                 return false;
             }
+            catch (IOException ex)
+            {
+                report.Error("catalog '" + path + "': I/O failure (" + ex.GetType().Name + "): " + ex.Message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                report.Error("catalog '" + path + "': catalog read failure (" + ex.GetType().Name + "): " + ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Authority rule: every catalog whose root is a JSON object must declare a
+        /// top-level <c>schema_version</c>. A catalog added without it silently
+        /// bypasses the migration ladder (a V1 loader would never see a V2 field),
+        /// so the integrity selftest must fail the build rather than load
+        /// unversioned data. Bare-array roots (legacy list catalogs) are exempt:
+        /// they carry no per-file metadata slot.
+        /// </summary>
+        private static void RequireSchemaVersion(JsonElement root, string file, CatalogIntegrityReport report)
+        {
+            if (root.ValueKind != JsonValueKind.Object) return;
+            if (!root.TryGetProperty("schema_version", out _))
+                report.Error("catalog '" + file + "': missing required top-level 'schema_version'");
         }
 
         private static void Walk(JsonElement element, string path, Ctx ctx)

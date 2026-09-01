@@ -123,7 +123,7 @@ namespace AtomicWar.GodotApp.UI
             addBtn("Scavenger Guild (Claim Map)", onScavengerGuild);
             addBtn("Muster: escalate to Day 260", onMusterEscalate);
             addBtn("Muster: rally a deserter", onMusterRally);
-            addBtn("Muster: three witnesses", onMusterWitnesses);
+            addBtn("Muster: witness accounts", onMusterWitnesses);
 
             // ── Holdfast & Infrastructure ──
             addHeader("HOLDFAST & INFRASTRUCTURE");

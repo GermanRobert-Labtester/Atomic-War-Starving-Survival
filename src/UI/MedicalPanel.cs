@@ -159,18 +159,17 @@ namespace AtomicWar.GodotApp.UI
                     row.AddChild(AshfallUiHelpers.MakeMono($"THI {survivor.Thirst:0}"));
                     card.AddChild(row);
 
-                    // ── Treatment action row ───────────────────────────
+                    // ── Treatment action row (Task #133: all treatments go
+                    //    through the validated pipeline transaction path when
+                    //    the pipeline is bound) ────────────────────────────
                     string targetId = survivor.Id;
                     var actionRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
 
                     var btnHeal = AshfallUiHelpers.MakeButton(
                         $"BANDAGE (+25 HP) [{bandageCount}]", () =>
                         {
-                            if (_inventoryHost != null &&
-                                (_inventoryHost.Inventory.RemoveById("bandage", 1) ||
-                                 _inventoryHost.Inventory.RemoveById("item_bandage", 1)))
+                            if (TryExecuteTreatment(targetId, MedicalTreatmentCatalog.TreatmentBandage))
                             {
-                                _survivorsHost.HealSurvivor(targetId, 25f);
                                 _medicalHost.AddCareEntry(targetId, "Applied sterile bandage.");
                                 OnTreatmentAdministered?.Invoke();
                                 RefreshView();
@@ -183,11 +182,8 @@ namespace AtomicWar.GodotApp.UI
                     var btnIodine = AshfallUiHelpers.MakeButton(
                         $"IODINE (+RESIST) [{iodineCount}]", () =>
                         {
-                            if (_inventoryHost != null &&
-                                (_inventoryHost.Inventory.RemoveById("iodine_pills", 1) ||
-                                 _inventoryHost.Inventory.RemoveById("item_potassium_iodide", 1)))
+                            if (TryExecuteTreatment(targetId, MedicalTreatmentCatalog.TreatmentIodine))
                             {
-                                _survivorsHost.AdministerIodine(targetId);
                                 _medicalHost.AddCareEntry(targetId, "Administered Potassium Iodide.");
                                 OnTreatmentAdministered?.Invoke();
                                 RefreshView();
@@ -200,11 +196,8 @@ namespace AtomicWar.GodotApp.UI
                     var btnRadAway = AshfallUiHelpers.MakeButton(
                         $"ANTI-RAD (−40 mSv) [{radAwayCount}]", () =>
                         {
-                            if (_inventoryHost != null &&
-                                (_inventoryHost.Inventory.RemoveById("rad_away", 1) ||
-                                 _inventoryHost.Inventory.RemoveById("item_rad_away", 1)))
+                            if (TryExecuteTreatment(targetId, MedicalTreatmentCatalog.TreatmentAntiRad))
                             {
-                                _survivorsHost.AdministerAntiRad(targetId, 40f);
                                 _medicalHost.AddCareEntry(targetId, "Administered anti-rad chelation agent.");
                                 OnTreatmentAdministered?.Invoke();
                                 RefreshView();
@@ -253,10 +246,8 @@ namespace AtomicWar.GodotApp.UI
                         string respTargetId = survivor.Id;
                         var btnInhaler = AshfallUiHelpers.MakeButton(inhalerBtnText, () =>
                         {
-                            if (_inventoryHost != null &&
-                                _inventoryHost.Inventory.RemoveById("inhaler", 1))
+                            if (TryExecuteTreatment(respTargetId, MedicalTreatmentCatalog.TreatmentInhaler))
                             {
-                                _respiratory.ApplyInhaler(respTargetId);
                                 _medicalHost.AddCareEntry(respTargetId, "Applied improvised inhaler.");
                                 OnTreatmentAdministered?.Invoke();
                                 RefreshView();
@@ -282,10 +273,8 @@ namespace AtomicWar.GodotApp.UI
                                 $"HERBAL TEA (−{RespiratoryDegenerationSystem.HerbalTeaDegradationReduction:F0}%) [{herbalTeaCount}]",
                                 () =>
                                 {
-                                    if (_inventoryHost != null &&
-                                        _inventoryHost.Inventory.RemoveById("herbal_tea", 1))
+                                    if (TryExecuteTreatment(teaTargetId, MedicalTreatmentCatalog.TreatmentHerbalTea))
                                     {
-                                        _respiratory.ApplyHerbalTea(teaTargetId);
                                         _medicalHost.AddCareEntry(teaTargetId, "Administered herbal tea.");
                                         OnTreatmentAdministered?.Invoke();
                                         RefreshView();
@@ -336,6 +325,8 @@ namespace AtomicWar.GodotApp.UI
 
             _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(_medicalHost.VigilStatusLine()));
 
+            RenderDiseaseSection();
+
             // ── Medical supplies on hand ───────────────────────────────
             if (_inventoryHost == null)
             {
@@ -375,6 +366,196 @@ namespace AtomicWar.GodotApp.UI
             if (count == 0 && fallbackId != null)
                 count = _inventoryHost.Inventory.CountById(fallbackId);
             return count;
+        }
+
+        /// <summary>
+        /// Task #133: submit a validated treatment command through the pipeline
+        /// transaction path. The pipeline — not this panel — decides legality
+        /// (patient, contraindication, medicine, diagnosis) and performs the
+        /// atomic reserve → consume → apply. Returns false (with a status-line
+        /// reason) when blocked; no partial consumption is possible.
+        /// </summary>
+        private bool TryExecuteTreatment(string survivorId, string treatmentId)
+        {
+            var pipeline = _medicalHost?.Pipeline;
+            if (pipeline == null || _survivorsHost == null)
+                return false;
+            if (!Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var sv))
+                return false;
+
+            var result = pipeline.ExecuteTreatment(sv, treatmentId);
+            if (result.Success)
+                return true;
+            GD.PushWarning($"[Medical] treatment {treatmentId} refused for {survivorId}: {result.ReasonCode}");
+            return false;
+        }
+
+        /// <summary>
+        /// Task #133 P1: targeted isolation command — the disease handler is
+        /// chosen per call, so quarantine/release never needs a per-disease
+        /// treatment id. The pipeline still owns every rule.
+        /// </summary>
+        private bool TryExecuteTreatment(string survivorId, string treatmentId, string targetAfflictionId)
+        {
+            var pipeline = _medicalHost?.Pipeline;
+            if (pipeline == null) return false;
+            if (!Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var sv)) return false;
+            if (!Ashfall.Core.Medical.AfflictionId.IsValid(targetAfflictionId, out _)) return false;
+
+            var result = pipeline.ExecuteTreatment(
+                sv, treatmentId, target: new Ashfall.Core.Medical.AfflictionId(targetAfflictionId));
+            if (result.Success)
+                return true;
+            GD.PushWarning($"[Medical] treatment {treatmentId} refused for {survivorId}: {result.ReasonCode}");
+            return false;
+        }
+
+        /// <summary>
+        /// Task #133 P1: untargeted clinical examination through the pipeline.
+        /// The player never names a disease — the examination confirms whatever
+        /// is already suspected, so hidden identities cannot be probed.
+        /// </summary>
+        private bool TryIdentify(string survivorId)
+        {
+            var pipeline = _medicalHost?.Pipeline;
+            if (pipeline == null) return false;
+            if (!Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var sv)) return false;
+
+            var result = pipeline.ExecuteIdentify(sv);
+            if (result.Success)
+                return true;
+            GD.PushWarning($"[Medical] identify refused for {survivorId}: {result.ReasonCode}");
+            return false;
+        }
+
+        /// <summary>Task #133 P1: camp-wide vector protocol through the pipeline.</summary>
+        private bool TryExecuteProtocol(string protocolId)
+        {
+            var pipeline = _medicalHost?.Pipeline;
+            if (pipeline == null) return false;
+
+            var result = pipeline.ExecuteProtocol(protocolId);
+            if (result.Success)
+                return true;
+            GD.PushWarning($"[Medical] protocol {protocolId} refused: {result.ReasonCode}");
+            return false;
+        }
+
+        /// <summary>
+        /// Task #133 P1 — disease ward section: unidentified illnesses (masked),
+        /// confirmed infections with isolation actions, and the camp-wide
+        /// vector protocols. Every action routes through the pipeline; this
+        /// panel owns no clinical rules and never names a disease the pipeline
+        /// has not confirmed.
+        /// </summary>
+        private void RenderDiseaseSection()
+        {
+            var pipeline = _medicalHost?.Pipeline;
+            if (pipeline == null || _survivorsHost == null)
+            {
+                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata("Disease ward offline (pipeline not bound)."));
+                return;
+            }
+
+            _treatmentList.AddChild(AshfallUiHelpers.MakeSeparator());
+            _treatmentList.AddChild(AshfallUiHelpers.MakeSubsectionHeader("DISEASE WARD — ISOLATION & PROTOCOLS"));
+
+            var projector = new PatientRecordProjector(pipeline);
+            bool anyRow = false;
+            foreach (var survivor in _survivorsHost.RosterState)
+            {
+                if (survivor == null || !survivor.IsAliveState) continue;
+                if (!Ashfall.Core.Survivors.SurvivorId.TryParse(survivor.Id, out var sv)) continue;
+                var record = projector.Project(sv);
+
+                foreach (var affliction in record.Afflictions)
+                {
+                    bool unidentified = string.Equals(
+                        affliction.AfflictionId, MedicalTreatmentCatalog.UnidentifiedIllnessId, StringComparison.Ordinal);
+                    bool isDisease = unidentified
+                        || affliction.AfflictionId.StartsWith("disease_", StringComparison.Ordinal);
+                    if (!isDisease) continue;
+
+                    var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                    string label = unidentified
+                        ? $"{FormatSurvivorName(survivor.Id)} — {affliction.StageLabel} (unidentified)"
+                        : $"{FormatSurvivorName(survivor.Id)} — {affliction.StageLabel} · day {affliction.SeverityValue:0}";
+                    var labelNode = AshfallUiHelpers.MakeSmall(label);
+                    labelNode.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                    row.AddChild(labelNode);
+
+                    if (unidentified)
+                    {
+                        string target = survivor.Id;
+                        var btn = AshfallUiHelpers.MakeButton("IDENTIFY", () =>
+                        {
+                            if (TryIdentify(target)) RefreshView();
+                        });
+                        row.AddChild(btn);
+                    }
+                    else
+                    {
+                        string target = survivor.Id;
+                        string diseaseId = affliction.AfflictionId;
+                        bool quarantineOk = pipeline.PreviewTreatment(
+                            sv, MedicalTreatmentCatalog.TreatmentQuarantine,
+                            target: new Ashfall.Core.Medical.AfflictionId(diseaseId)).IsAvailable;
+                        bool releaseOk = pipeline.PreviewTreatment(
+                            sv, MedicalTreatmentCatalog.TreatmentRelease,
+                            target: new Ashfall.Core.Medical.AfflictionId(diseaseId)).IsAvailable;
+
+                        var btnQuarantine = AshfallUiHelpers.MakeButton("ISOLATE", () =>
+                        {
+                            if (TryExecuteTreatment(target, MedicalTreatmentCatalog.TreatmentQuarantine, diseaseId))
+                                RefreshView();
+                        });
+                        btnQuarantine.Disabled = !quarantineOk;
+                        row.AddChild(btnQuarantine);
+
+                        var btnRelease = AshfallUiHelpers.MakeButton("RELEASE", () =>
+                        {
+                            if (TryExecuteTreatment(target, MedicalTreatmentCatalog.TreatmentRelease, diseaseId))
+                                RefreshView();
+                        });
+                        btnRelease.Disabled = !releaseOk;
+                        row.AddChild(btnRelease);
+                    }
+
+                    _treatmentList.AddChild(row);
+                    anyRow = true;
+                }
+            }
+            if (!anyRow)
+                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(
+                    "No suspected or confirmed infections in the shelter."));
+
+            // Camp-wide vector protocols: one application each; the pipeline
+            // consumes the catalog countermeasure through the inventory.
+            foreach (var protocol in pipeline.Protocols.OrderBy(p => p.ProtocolId, StringComparer.Ordinal))
+            {
+                var preview = pipeline.PreviewProtocol(protocol.ProtocolId);
+                var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                var label = AshfallUiHelpers.MakeSmall(
+                    $"{protocol.DisplayName} — {DescribeProtocolCost(protocol)}");
+                label.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                row.AddChild(label);
+
+                string protocolId = protocol.ProtocolId;
+                var btn = AshfallUiHelpers.MakeButton("APPLY", () =>
+                {
+                    if (TryExecuteProtocol(protocolId)) RefreshView();
+                });
+                btn.Disabled = !preview.IsAvailable;
+                btn.TooltipText = preview.IsAvailable ? "ok" : preview.FailureCode;
+                row.AddChild(btn);
+                _treatmentList.AddChild(row);
+            }
+        }
+
+        private static string DescribeProtocolCost(Ashfall.Core.Medical.IMedicalProtocolHandler protocol)
+        {
+            if (protocol.ItemCosts.Count == 0) return "no supplies needed";
+            return string.Join(", ", protocol.ItemCosts.Select(kv => $"{kv.Value}× {kv.Key.Replace('_', ' ')}"));
         }
 
         /// <summary>

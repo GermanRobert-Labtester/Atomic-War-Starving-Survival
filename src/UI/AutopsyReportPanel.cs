@@ -15,7 +15,6 @@ namespace AtomicWar.GodotApp.UI
         private AshfallStatusRail? _statusRail;
         private VBoxContainer _contentStack = null!;
         private Label _detailText = null!;
-        private Button _queueAutopsyBtn = null!;
 
         private AutopsyHostSession? _host;
 
@@ -62,14 +61,6 @@ namespace AtomicWar.GodotApp.UI
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
-
-            _queueAutopsyBtn = AshfallUiHelpers.MakeButton("Queue Standard Post-Mortem",
-                () => _host?.QueueCase("specimen_survivor_01", "procedure_standard_autopsy", "Chief_Medical_Officer", 1));
-            _queueAutopsyBtn.CustomMinimumSize = new Vector2(220, 36);
-            buttonRow.AddChild(_queueAutopsyBtn);
-
-            _contentStack.AddChild(buttonRow);
             _shell.SetContent(_contentStack);
 
             _shell.AttachHeaderCloseButton("CLOSE", () =>

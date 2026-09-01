@@ -21,6 +21,8 @@ namespace AtomicWar.GodotApp.UI
     public partial class ShelterPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        /// <summary>Plan 29 29A: a shelter room hotspot was clicked (canonical or legacy runtime id).</summary>
+        public event Action<string>? RoomSelected;
 
         private VBoxContainer _statusList = null!;
         private VBoxContainer _radiationData = null!;
@@ -47,10 +49,16 @@ namespace AtomicWar.GodotApp.UI
         public bool IsBound => _survivorsHost != null && _worldHost != null;
         public int RenderedStructureCount => _structureList?.GetChildCount() ?? 0;
 
+        public void SetMachineTellCatalog(Ashfall.Core.Shelter.ShelterMachineTellCatalog? catalog)
+        {
+            _interiorView?.SetMachineTellCatalog(catalog);
+        }
+
         public void Bind(
             SurvivorsHostSession survivors,
             WorldHostSession world,
-            InventoryHostSession? inventory = null)
+            InventoryHostSession? inventory = null,
+            ShelterRoomIdentityCatalog? roomIdentities = null)
         {
             if (_survivorsHost != null)
                 _survivorsHost.StateChanged -= RefreshView;
@@ -65,6 +73,8 @@ namespace AtomicWar.GodotApp.UI
                 _survivorsHost.StateChanged += RefreshView;
             if (_worldHost != null)
                 _worldHost.StateChanged += RefreshView;
+
+            _interiorView?.SetRoomIdentityCatalog(roomIdentities);
 
             RefreshView();
         }
@@ -247,6 +257,7 @@ namespace AtomicWar.GodotApp.UI
             _interiorViewportContainer.AddChild(_interiorViewport);
 
             _interiorView = new HoldfastInteriorView();
+            _interiorView.RoomSelected += roomId => RoomSelected?.Invoke(roomId);
             _interiorViewport.AddChild(_interiorView);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());

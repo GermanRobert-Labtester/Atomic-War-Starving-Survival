@@ -8,6 +8,7 @@ using Ashfall.Core.Flags;
 using Ashfall.Core.Verdict;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
+using AtomicWar.GodotApp.Audio;
 using ClockSimClock = Ashfall.Core.Clock.SimClock;
 
 namespace AtomicWar.GodotApp
@@ -103,7 +104,7 @@ namespace AtomicWar.GodotApp
         {
             clock = clock ?? new ClockSimClock();
             bus = bus ?? new SimpleEventBus();
-            flags = flags ?? new InMemoryFlagLedger();
+            flags = flags ?? new Ashfall.Core.Flags.CampaignConsequenceLedger();
             radioRng = radioRng ?? new SeededRng(8841209);
 
             var locations = VerdictCatalogLoader.LoadLocations(dataDir, s_files, s_json);
@@ -167,9 +168,27 @@ namespace AtomicWar.GodotApp
         {
             if (Radio == null) return new System.Collections.Generic.List<string>();
             var fired = Radio.Poll(day, Reckoning.Phase);
+            for (int i = 0; i < fired.Count; i++)
+            {
+                var entry = FindRadioEntry(fired[i]);
+                if (entry != null && !string.IsNullOrWhiteSpace(entry.audio_cue))
+                {
+                    AudioManager.Instance?.PlayCue(AudioCueCatalog.RadioSignalLock);
+                    AudioManager.Instance?.PlayVoiceOverCue(entry.audio_cue);
+                    break;
+                }
+            }
             if (fired.Count > 0) LastEvent = "radio:" + string.Join(";", fired);
             if (fired.Count > 0) RaiseStateChanged();
             return fired;
+        }
+
+        private VerdictCatalogLoader.VerdictRadioEntry? FindRadioEntry(string id)
+        {
+            for (int i = 0; i < RadioEntries.Count; i++)
+                if (string.Equals(RadioEntries[i].id, id, StringComparison.Ordinal))
+                    return RadioEntries[i];
+            return null;
         }
 
         /// <summary>

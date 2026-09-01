@@ -4,7 +4,22 @@ using System.Collections.Generic;
 
 namespace Ashfall.Core.Muster
 {
-    /// <summary>One Section III witness account (muster_witnesses.json).</summary>
+    /// <summary>One conditional testimony variant. Selection is first authored match:
+    /// requiresAnyFlags (≥1 set), requiresAllFlags (all set), forbidsFlags (none set);
+    /// a variant with no conditions is the unconditional fallback.</summary>
+    public class WitnessTestimony
+    {
+        public string variantId = string.Empty;
+        public List<string> requiresAnyFlags = new List<string>();
+        public List<string> requiresAllFlags = new List<string>();
+        public List<string> forbidsFlags = new List<string>();
+        public string body = string.Empty;
+    }
+
+    /// <summary>One Muster witness account (muster_witnesses.json, schema v1 or v2).
+    /// v1 entries carry a flat body; v2 entries may carry faction/subject/priority
+    /// metadata and conditional testimonies. `body` always mirrors the first
+    /// testimony's text so v1-era presentation keeps working.</summary>
     public class WitnessDefinition
     {
         public string id = string.Empty;
@@ -13,19 +28,25 @@ namespace Ashfall.Core.Muster
         public string knowledgeKey = string.Empty;
         public int dayMin;
         public string body = string.Empty;
+
+        // ── v2 ────────────────────────────────────────────────────────
+        public string factionId = string.Empty;
+        public string subjectId = string.Empty;   // npc_*/survivor_* id for alive/dead gating
+        public int priority;                       // ordering: priority desc, then id ordinal
+        public List<WitnessTestimony> testimonies = new List<WitnessTestimony>();
     }
 
     /// <summary>
-    /// Engine-agnostic loader for muster_witnesses.json — the three Harven
-    /// succession accounts (Section III). The framing sentence is composed by
-    /// the journal's JournalVoice pipeline keyed to whoever RECORDED the
-    /// account (the authoring survivor's RiskBiasTrait), never to the
-    /// witness; these records carry only the pre-written body.
+    /// Engine-agnostic loader for muster_witnesses.json. Schema v1 (three flat
+    /// Harven succession accounts) and v2 (Plan 25 conditional testimonies) both
+    /// load; a schema beyond CurrentSchemaVersion is rejected (empty list), never
+    /// partially parsed. Framing is composed by the journal's JournalVoice pipeline
+    /// keyed to whoever RECORDED the account, never to the witness.
     /// </summary>
     public static class WitnessCatalogLoader
     {
         public const string FileName = "muster_witnesses.json";
-        public const int CurrentSchemaVersion = 1;
+        public const int CurrentSchemaVersion = 2;
 
         public static List<WitnessDefinition> LoadWitnesses(
             string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -54,15 +75,42 @@ namespace Ashfall.Core.Muster
                 {
                     var e = entries[i];
                     if (e == null || string.IsNullOrEmpty(e.id)) continue;
-                    result.Add(new WitnessDefinition
+                    var def = new WitnessDefinition
                     {
                         id = e.id,
                         witnessName = e.witness_name ?? string.Empty,
                         locationId = e.location_id ?? string.Empty,
                         knowledgeKey = e.knowledge_key ?? string.Empty,
                         dayMin = e.day_min,
-                        body = e.body ?? string.Empty
-                    });
+                        factionId = e.faction_id ?? string.Empty,
+                        subjectId = e.subject_id ?? string.Empty,
+                        priority = e.priority
+                    };
+                    if (e.testimonies != null && e.testimonies.Count > 0)
+                    {
+                        for (int t = 0; t < e.testimonies.Count; t++)
+                        {
+                            var te = e.testimonies[t];
+                            if (te == null || string.IsNullOrEmpty(te.body)) continue;
+                            var testimony = new WitnessTestimony
+                            {
+                                variantId = te.variant_id ?? string.Empty,
+                                body = te.body
+                            };
+                            CopyFlags(te.requires_any_flags, testimony.requiresAnyFlags);
+                            CopyFlags(te.requires_all_flags, testimony.requiresAllFlags);
+                            CopyFlags(te.forbids_flags, testimony.forbidsFlags);
+                            def.testimonies.Add(testimony);
+                        }
+                    }
+                    if (def.testimonies.Count == 0 && !string.IsNullOrEmpty(e.body))
+                    {
+                        // v1 shape (or a v2 entry that kept a bare body).
+                        def.testimonies.Add(new WitnessTestimony { variantId = "account", body = e.body });
+                    }
+                    if (def.testimonies.Count == 0) continue;
+                    def.body = def.testimonies[0].body;
+                    result.Add(def);
                 }
             }
             catch (System.Exception ex_CATDIAG)
@@ -71,6 +119,13 @@ namespace Ashfall.Core.Muster
                 return result;
             }
             return result;
+        }
+
+        private static void CopyFlags(List<string> source, List<string> target)
+        {
+            if (source == null) return;
+            for (int i = 0; i < source.Count; i++)
+                if (!string.IsNullOrEmpty(source[i])) target.Add(source[i]);
         }
 
         /// <summary>Schema-envelope root for muster_witnesses.json.</summary>
@@ -87,6 +142,20 @@ namespace Ashfall.Core.Muster
             public string location_id;
             public string knowledge_key;
             public int day_min;
+            public string body;
+            // ── v2 ──
+            public string faction_id;
+            public string subject_id;
+            public int priority;
+            public List<TestimonyEntry> testimonies;
+        }
+
+        private class TestimonyEntry
+        {
+            public string variant_id;
+            public List<string> requires_any_flags;
+            public List<string> requires_all_flags;
+            public List<string> forbids_flags;
             public string body;
         }
     }

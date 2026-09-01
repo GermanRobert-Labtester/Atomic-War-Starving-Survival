@@ -135,7 +135,7 @@ namespace AtomicWar.GodotApp.World
                 var marker = _markerScene.Instantiate<MapLocationMarkerView>();
                 marker.NodeId = node.Id;
                 marker.DisplayName = node.DisplayName;
-                marker.DangerLevel = DangerToString(node.Danger);
+                marker.DangerLevel = WorldEscalatedDanger(node, DangerToString(node.Danger));
                 marker.Status = ResolveNodeStatus(node);
                 marker.PositionOffset = new Vector2(0, -30);
                 marker.SetPosition(new Vector2(node.PositionX, node.PositionY));
@@ -159,6 +159,24 @@ namespace AtomicWar.GodotApp.World
             MapNodeDanger.Locked => "locked",
             _ => "none"
         };
+
+        /// <summary>
+        /// Task 122: authored map danger, escalated one step when the live
+        /// evolving-world ledger shows threats or ruin at the location. Never
+        /// demotes, never crosses into gate semantics ("locked").
+        /// </summary>
+        private string WorldEscalatedDanger(MapNode node, string authored)
+        {
+            var rec = _worldHost?.LocationEvolution?.TryGetRecord(node.Id);
+            if (rec == null) return authored;
+            int steps = (rec.activeThreats.Count > 0 ? 1 : 0) + (rec.isRuined ? 1 : 0);
+            if (steps == 0 || authored == "locked") return authored;
+
+            var ladder = new[] { "none", "low", "medium", "high" };
+            int at = System.Array.IndexOf(ladder, authored);
+            if (at < 0) return authored;
+            return ladder[Math.Min(ladder.Length - 1, at + steps)];
+        }
 
         private void OnNodeSelected(string nodeId)
         {

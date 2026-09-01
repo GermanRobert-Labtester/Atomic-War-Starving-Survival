@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Godot;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -18,6 +20,12 @@ namespace AtomicWar.GodotApp.UI
             public string StateHint;
             public int    Width;
             public int    Height;
+            /// <summary>
+            /// Optional host-only deterministic fixture. It binds after the
+            /// panel is constructed but before its first ready/render frame.
+            /// The returned owner is disposed with the temporary viewport.
+            /// </summary>
+            public Func<Node, IDisposable?>? FixtureFactory;
         }
 
         public static readonly Target[] Targets = new[]
@@ -36,6 +44,12 @@ namespace AtomicWar.GodotApp.UI
             new Target{ StableId="survival_workstation_default", Title="Survival Workstation (#19 Stitch)",          PanelCtor="AtomicWar.GodotApp.UI.SurvivalWorkstationPanel",        StateHint="default", Width=1280, Height=800 },
             new Target{ StableId="caravan_barter_default",       Title="Caravan Barter Ledger (#35 Stitch)",         PanelCtor="AtomicWar.GodotApp.UI.CaravanBarterLedgerPanel",      StateHint="default", Width=1280, Height=800 },
             new Target{ StableId="shelter_hud_default",          Title="Shelter HUD (#40 Stitch)",                   PanelCtor="AtomicWar.GodotApp.UI.ShelterHudPanel",                  StateHint="default", Width=1280, Height=800 },
+
+            // Plan 12C — captured against real catalog definitions, an
+            // inventory-backed mount, active room assignments, and a memorial
+            // projection. This intentionally proves the panel is not an empty
+            // scaffold when a campaign session is available.
+            new Target{ StableId="shelter_decor_default",        Title="Shelter Interior & Memorial Wall",            PanelCtor="AtomicWar.GodotApp.UI.ShelterDecorPanel",                 StateHint="populated_fixture", Width=1280, Height=800, FixtureFactory=ShelterDecorSnapshotFixture.Bind },
 
             // Phase 13 — Tier-2 matrices / dashboard panels.
             new Target{ StableId="faction_matrix_default",       Title="Faction Matrix (#49/#53 Stitch)",            PanelCtor="AtomicWar.GodotApp.UI.FactionMatrixPanel",             StateHint="default", Width=1280, Height=800 },

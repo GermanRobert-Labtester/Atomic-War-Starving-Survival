@@ -1,0 +1,138 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1kitchen_nutrition_panel_ash"]
+
+[ext_resource type="Script" path="res://src/UI/KitchenNutritionPanelContent.cs" id="1_kitchen_content"]
+
+[node name="KitchenNutritionContent" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridRow" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="LeftPanel" type="PanelContainer" parent="GridRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(310, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.95
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="LeftMargin" type="MarginContainer" parent="GridRow/LeftPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LeftVBox" type="VBoxContainer" parent="GridRow/LeftPanel/LeftMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LeftHeader" type="Label" parent="GridRow/LeftPanel/LeftMargin/LeftVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "GALLEY RECIPE CATALOG"
+
+[node name="LeftScroll" type="ScrollContainer" parent="GridRow/LeftPanel/LeftMargin/LeftVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RecipeList" type="VBoxContainer" parent="GridRow/LeftPanel/LeftMargin/LeftVBox/LeftScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="CenterPanel" type="PanelContainer" parent="GridRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.2
+
+[node name="CenterMargin" type="MarginContainer" parent="GridRow/CenterPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="CenterVBox" type="VBoxContainer" parent="GridRow/CenterPanel/CenterMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CenterHeader" type="Label" parent="GridRow/CenterPanel/CenterMargin/CenterVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "MEAL PREPARATION & DISPATCH"
+
+[node name="CenterScroll" type="ScrollContainer" parent="GridRow/CenterPanel/CenterMargin/CenterVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PrepStation" type="VBoxContainer" parent="GridRow/CenterPanel/CenterMargin/CenterVBox/CenterScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="RightPanel" type="PanelContainer" parent="GridRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(310, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.95
+
+[node name="RightMargin" type="MarginContainer" parent="GridRow/RightPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="RightVBox" type="VBoxContainer" parent="GridRow/RightPanel/RightMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RightHeader" type="Label" parent="GridRow/RightPanel/RightMargin/RightVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "MEAL SERVING LOG"
+
+[node name="RightScroll" type="ScrollContainer" parent="GridRow/RightPanel/RightMargin/RightVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ServiceLogContainer" type="VBoxContainer" parent="GridRow/RightPanel/RightMargin/RightVBox/RightScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="EventLogSep" type="HSeparator" parent="GridRow/RightPanel/RightMargin/RightVBox"]
+layout_mode = 2
+
+[node name="EventLogLabel" type="Label" parent="GridRow/RightPanel/RightMargin/RightVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+text = "No recent meal events."

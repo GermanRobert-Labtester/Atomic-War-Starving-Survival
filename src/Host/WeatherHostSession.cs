@@ -33,7 +33,7 @@ namespace AtomicWar.GodotApp
             // campaign envelope (WorldHostSave.State is the WorldWeatherState);
             // no standalone weather_save.json write happens here anymore.
             if (!IsDirty) return;
-            IsDirty = false;
+            base.Save();
         }
 
         public void RestoreSave(WorldWeatherState? state)
@@ -50,17 +50,19 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        // ── Sonde demo actions ───────────────────────────────────────
+        // ── Sonde production actions ──────────────────────────────────
 
         /// <summary>Launch a weather sonde.</summary>
-        public string LaunchSondeDemo(int day, float hour = 12f)
+        public string LaunchSonde(int day, float hour = 12f)
         {
             bool ok = Sonde.Launch("sonde_" + day, day, hour, hydrogenAvailable: 1f, batteryAvailable: 1f);
             return ok ? $"Sonde launched at day {day}, hour {hour:F0}." : "Cannot launch sonde (already active or insufficient resources).";
         }
 
+        public string LaunchSondeDemo(int day, float hour = 12f) => LaunchSonde(day, hour);
+
         /// <summary>Advance one sonde flight tick.</summary>
-        public string TickSondeDemo()
+        public string TickSonde()
         {
             if (!Sonde.IsLaunched) return "No active sonde.";
             bool ok = Sonde.Tick(new CoreSeededRng(Sonde.State.launchDay * 31 + Sonde.State.ticksElapsed));
@@ -70,6 +72,8 @@ namespace AtomicWar.GodotApp
             if (state.isRecovered) return $"Sonde recovered at {state.samples[state.samples.Count - 1].altitudeKm:F1} km. Forecast: {state.forecast.Count} days.";
             return $"Sonde tick {state.ticksElapsed}/{state.flightDurationTicks}. Altitude: {Sonde.GetCurrentAltitude():F1} km. Battery: {state.batteryLevel:P0}.";
         }
+
+        public string TickSondeDemo() => TickSonde();
 
         /// <summary>Sonde status line.</summary>
         public string SondeStatusLine()

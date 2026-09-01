@@ -25,21 +25,30 @@ namespace AtomicWar.GodotApp
         {
             SetupSurvivors();
             SetupPhase0();
-            _phase0Panel.Bind(_phase0, _survivors);
+            // Task #133 P1c: bind the medical pipeline so the panel's inhaler
+            // action consumes inventory through the pipeline like MedicalPanel.
+            EnsureMedicalPipeline();
+            _phase0Panel.Bind(_phase0, _survivors, _medical.Pipeline);
             _phase0Panel.Open();
         }
         public void OpenDutyRosterPanel() => _dutyRosterPanel?.Open();
         public void OpenExpeditionPanel() => _expeditionPanel?.Open();
-        public void OpenWeatherPanel() => _weatherPanel?.Open();
+        public void OpenWeatherPanel()
+        {
+            _weatherPanel?.Open();
+            ObserveSigil("weather.read");
+        }
         public void OpenWeatherForecastPanel()
         {
             _weatherForecastPanel?.Bind(_world.Weather);
             _weatherForecastPanel?.Open();
+            ObserveSigil("weather.read");
         }
         public void OpenWeatherHistoryPanel()
         {
             _weatherHistoryPanel?.Bind(_world.Weather);
             _weatherHistoryPanel?.Open();
+            ObserveSigil("weather.read");
         }
         public void OpenQuestsPanel()
         {

@@ -174,6 +174,15 @@ namespace AtomicWar.GodotApp.UI
             return lbl;
         }
 
+        public static Label MakeLabel(string text, int fontSize, Color color)
+        {
+            var lbl = new Label { Text = text };
+            lbl.AddThemeFontSizeOverride("font_size", fontSize);
+            lbl.AddThemeColorOverride("font_color", color);
+            ApplyFont(lbl, FontBarlowRegular);
+            return lbl;
+        }
+
         /// <summary>
         /// Creates a label with an explicit font size and weight. Bold selects the
         /// semi-bold face; otherwise the regular face is used. Used by panel
@@ -434,20 +443,10 @@ namespace AtomicWar.GodotApp.UI
         // Standard header bar texture (margin 12/8/12/8)
         public static StyleBox MakeHeaderFrameStyleBox()
         {
-            var tex = TryLoadTexture("res://assets/ui/Textures/tab_strip.png")
-                   ?? TryLoadTexture("res://assets/ui/tab_strip.svg")
-                   ?? TryLoadTexture("res://assets/ui/Textures/frame_9slice.png");
-            if (tex != null)
-            {
-                return new StyleBoxTexture
-                {
-                    Texture = tex,
-                    TextureMarginLeft = 12,
-                    TextureMarginTop = 8,
-                    TextureMarginRight = 12,
-                    TextureMarginBottom = 8
-                };
-            }
+            // Flat bar. The tab_strip 9-slice used to dress the whole header,
+            // which painted a phantom empty tab slot on every panel and let
+            // long titles run underneath it; the tab plate now lives only
+            // behind the title (MakeTitleTabStyleBox).
             var flat = new StyleBoxFlat
             {
                 BgColor = new Color(Theme.Ink.r, Theme.Ink.g, Theme.Ink.b, 0.95f),
@@ -456,6 +455,7 @@ namespace AtomicWar.GodotApp.UI
             flat.SetBorderWidthAll(1);
             return flat;
         }
+
 
         /// <summary>
         /// Creates the standard header bar with 9-slice background.
@@ -466,6 +466,8 @@ namespace AtomicWar.GodotApp.UI
             header.AddThemeStyleboxOverride("panel", MakeHeaderFrameStyleBox());
             return header;
         }
+
+        public static PanelContainer MakeCard(int minW = 0, int minH = 0) => MakePanel(minW, minH);
 
         /// <summary>
         /// Creates a card container with 9-slice framing and internal margin padding.
@@ -552,6 +554,60 @@ namespace AtomicWar.GodotApp.UI
             };
             return btn;
         }
+
+        /// <summary>
+        /// Creates a disabled button with an explicit tooltip and visual state explaining
+        /// why the action cannot currently be taken, eliminating player guesswork.
+        /// </summary>
+        public static Button MakeDisabledButton(string text, string reasonDisabled)
+        {
+            var btn = MakeButton(text, () => { }, disabled: true);
+            btn.TooltipText = string.IsNullOrEmpty(reasonDisabled) ? "Action currently unavailable" : reasonDisabled;
+            btn.AddThemeColorOverride("font_disabled_color", ToColor(Theme.Dim));
+            return btn;
+        }
+
+        /// <summary>
+        /// Creates a standardized multi-channel severity badge (Icon + Color + Text Label)
+        /// guaranteeing that critical states never communicate by color alone.
+        /// </summary>
+        public static Control MakeSeverityBadge(SeverityLevel level, string text, string? customIcon = null)
+        {
+            var box = MakeHBox(Theme.SpacingXs);
+            box.Alignment = BoxContainer.AlignmentMode.Center;
+
+            string icon = customIcon ?? GetSeverityIcon(level);
+            Color col = GetSeverityColor(level);
+
+            var iconLbl = MakeLabel(icon, Theme.FontSizeMono, col);
+            box.AddChild(iconLbl);
+
+            var textLbl = MakeLabel(text, Theme.FontSizeSmall, col);
+            ApplyFont(textLbl, FontBarlowSemiBold);
+            box.AddChild(textLbl);
+
+            return box;
+        }
+
+        public static Color GetSeverityColor(SeverityLevel level) => level switch
+        {
+            SeverityLevel.Normal => ColorSuccess,
+            SeverityLevel.Attention => ColorWarning,
+            SeverityLevel.Dangerous => ColorRadiation,
+            SeverityLevel.Critical => ColorCritical,
+            SeverityLevel.Unavailable => ColorDim,
+            _ => ColorText
+        };
+
+        public static string GetSeverityIcon(SeverityLevel level) => level switch
+        {
+            SeverityLevel.Normal => "[OK]",
+            SeverityLevel.Attention => "[▲]",
+            SeverityLevel.Dangerous => "[RAD]",
+            SeverityLevel.Critical => "[!]",
+            SeverityLevel.Unavailable => "[X]",
+            _ => "[•]"
+        };
 
         private static void ApplyFont(Button btn, FontFile? font)
         {

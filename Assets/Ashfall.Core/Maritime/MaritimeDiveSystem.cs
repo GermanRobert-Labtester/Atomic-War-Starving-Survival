@@ -248,6 +248,151 @@ namespace Ashfall.Core.Maritime
             OnRoomEntered?.Invoke(0);
         }
 
+        /// <summary>Canonical noise floor of the active site (0 = silent hull, 1 = always loud).</summary>
+        public float CurrentSiteNoiseFloor { get; private set; }
+
+        /// <summary>
+        /// Plan 23 — start a dive from a catalog site definition. Seeds the
+        /// four-room machine from the site's authored room profile (hazard
+        /// ladder), sets air from the site's oxygen budget, and records the
+        /// site's noise floor. Returns false for unknown sites; the legacy
+        /// <see cref="StartDive"/> path is unchanged for old callers/saves.
+        /// </summary>
+        public bool StartDiveAtSite(string diverId, string operatorId, string siteId)
+        {
+            var def = Catalog != null && Catalog.dive_sites != null
+                ? Catalog.dive_sites.FirstOrDefault(s => s != null && s.site_id == siteId)
+                : null;
+            if (def == null) return false;
+
+            CurrentSiteId = def.site_id;
+            DiverDwellerId = diverId ?? string.Empty;
+            CompressorOperatorDwellerId = operatorId ?? string.Empty;
+            MaxAirSupplySeconds = Math.Max(30f, def.oxygen_budget_ticks);
+            AirSupplySeconds = MaxAirSupplySeconds;
+            CurrentRoomIndex = 0;
+            NoiseLevel = 0;
+            IsCompromised = false;
+            _airWarningFired = false;
+            DecompressionRequiredSeconds = 0f;
+            DecompressionProgressSeconds = 0f;
+            IsDecompressing = false;
+            HasDecompressionSickness = false;
+            AccumulatedRadiationDose = 0f;
+            DiverLost = false;
+            IsActive = true;
+            CurrentSiteNoiseFloor = Math.Clamp(def.base_noise_floor, 0f, 1f);
+
+            _rooms.Clear();
+            if (def.rooms != null)
+            {
+                foreach (var r in def.rooms)
+                {
+                    if (r == null) continue;
+                    _rooms.Add(new DiveRoomNode
+                    {
+                        roomType = ParseRoomType(r.room_type),
+                        hazardLevel = Math.Clamp(r.hazard_level, 1, 5)
+                    });
+                }
+            }
+            if (_rooms.Count == 0)
+            {
+                // Pre-Plan-23 catalog fallback: the canonical four-room shape.
+                _rooms.Add(new DiveRoomNode { roomType = DiveRoomType.Deckhouse, hazardLevel = 1 });
+                _rooms.Add(new DiveRoomNode { roomType = DiveRoomType.Companionway, hazardLevel = 2 });
+                _rooms.Add(new DiveRoomNode { roomType = DiveRoomType.HoldApproach, hazardLevel = 3 });
+                _rooms.Add(new DiveRoomNode { roomType = DiveRoomType.DeepHold, hazardLevel = 4 });
+            }
+
+            OnRoomEntered?.Invoke(0);
+            return true;
+        }
+
+        /// <summary>
+        /// Gear gate: true when the diver's owned item ids satisfy the site's
+        /// authored requirement. Pure — the host owns the real inventory.
+        /// </summary>
+        public bool CanStartDive(string siteId, IEnumerable<string>? ownedItemIds, out string missingItem)
+        {
+            missingItem = string.Empty;
+            var def = Catalog != null
+                ? Catalog.dive_sites.FirstOrDefault(s => s != null && s.site_id == siteId)
+                : null;
+            if (def == null || string.IsNullOrEmpty(def.required_item_id)) return true;
+
+            int need = Math.Max(1, def.required_item_count);
+            int have = 0;
+            if (ownedItemIds != null)
+            {
+                foreach (var id in ownedItemIds)
+                    if (id == def.required_item_id) have++;
+            }
+            if (have >= need) { missingItem = string.Empty; return true; }
+            missingItem = def.required_item_id;
+            return false;
+        }
+
+        /// <summary>
+        /// Plan 23 launch gate — combines the gear gate and the site's authored
+        /// tide window (derived from the authoritative campaign day). Returns a
+        /// stable blocker key for UI presentation: "unknown_site",
+        /// "tide:<phase>", or the missing item id. Pure; no state mutation.
+        /// </summary>
+        public bool CanLaunch(string siteId, int campaignDay, IEnumerable<string>? ownedItemIds, out string blocker)
+        {
+            blocker = string.Empty;
+            var def = Catalog != null && Catalog.dive_sites != null
+                ? Catalog.dive_sites.FirstOrDefault(s => s != null && s.site_id == siteId)
+                : null;
+            if (def == null) { blocker = "unknown_site"; return false; }
+
+            var window = DiveSiteTideWindows.Parse(def.tide_window);
+            if (!TideCalendar.IsWindowOpen(window, campaignDay))
+            {
+                blocker = "tide:" + TideCalendar.PhaseName(TideCalendar.PhaseFor(Math.Max(0, campaignDay)));
+                return false;
+            }
+
+            if (!CanStartDive(siteId, ownedItemIds, out var missing))
+            {
+                blocker = missing;
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>Data-driven safes for a site (registered with the SafeCrackingSystem by the host on entry).</summary>
+        public IReadOnlyList<SafeDefinition> GetSafesForSite(string siteId)
+        {
+            var def = Catalog != null
+                ? Catalog.dive_sites.FirstOrDefault(s => s != null && s.site_id == siteId)
+                : null;
+            return def?.safes ?? (IReadOnlyList<SafeDefinition>)Array.Empty<SafeDefinition>();
+        }
+
+        /// <summary>Procedural scavenge table for a site (empty when none authored).</summary>
+        public IReadOnlyList<VariableLootNode> GetLootTableForSite(string siteId)
+        {
+            var def = Catalog != null
+                ? Catalog.dive_sites.FirstOrDefault(s => s != null && s.site_id == siteId)
+                : null;
+            return def?.loot_table ?? (IReadOnlyList<VariableLootNode>)Array.Empty<VariableLootNode>();
+        }
+
+        /// <summary>Canonical room_type string → DiveRoomType; unknown strings fall back to Companionway.</summary>
+        private static DiveRoomType ParseRoomType(string? roomType)
+        {
+            switch (roomType)
+            {
+                case "deckhouse": return DiveRoomType.Deckhouse;
+                case "companionway": return DiveRoomType.Companionway;
+                case "hold_approach": return DiveRoomType.HoldApproach;
+                case "the_hold": return DiveRoomType.DeepHold;
+                default: return DiveRoomType.Companionway;
+            }
+        }
+
         public void Tick(float deltaSeconds)
         {
             if (!IsActive) return;

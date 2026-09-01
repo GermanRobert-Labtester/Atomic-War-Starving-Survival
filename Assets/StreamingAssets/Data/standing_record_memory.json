@@ -228,6 +228,90 @@
       "stratumId": "now",
       "requiredFlag": "mutation_gazetteer_scraped",
       "text": "The cage is empty. Sole cannot complete ground."
+    },
+    {
+      "siteId": "loc_excavation_command_vault",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "The blast-door log shows sixty-two authorized personnel logged into Sector 1 Command before the primary circuit broke."
+    },
+    {
+      "siteId": "loc_excavation_command_vault",
+      "stratumId": "after",
+      "requiredFlag": "mutation_command_vault_breached",
+      "text": "Torch cuts along the dog-bolts tell a different story: the door was sealed from the outside six days after the strike."
+    },
+    {
+      "siteId": "loc_excavation_command_vault",
+      "stratumId": "now",
+      "requiredFlag": "mutation_command_vault_breached",
+      "text": "The sump contains only spent brass and empty emergency ration tins. No bodies remained in the command suite."
+    },
+    {
+      "siteId": "loc_excavation_metro_interchange",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "The platform display board was stuck on 08:42 EXPR 4-NORTH. The conductor clipboard hangs on the stationmaster hook."
+    },
+    {
+      "siteId": "loc_excavation_metro_interchange",
+      "stratumId": "now",
+      "requiredFlag": "mutation_metro_dossier_found",
+      "text": "The third rail was cut manually with a hacksaw, stranding Train 14 inside the tunnel before the shockwave hit."
+    },
+    {
+      "siteId": "loc_excavation_mine_shaft",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "Shift brass tokens on the pegboard show thirty-four miners underground when the power failure sirens triggered."
+    },
+    {
+      "siteId": "loc_excavation_mine_shaft",
+      "stratumId": "now",
+      "requiredFlag": "mutation_mine_shaft_cleared",
+      "text": "A makeshift barricade of timber cribbing and coal sacks blocked Adit 4 from the inside, marked: DO NOT OPEN - GAS."
+    },
+    {
+      "siteId": "loc_excavation_archive_bunker",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "The filing system in Vault 3 used red linen ribbons for emergency wartime directives and green for civil rationing."
+    },
+    {
+      "siteId": "loc_excavation_archive_bunker",
+      "stratumId": "after",
+      "requiredFlag": "mutation_archive_index_scraped",
+      "text": "Every drawer containing letters D through G was incinerated with magnesium thermite before the facility was abandoned."
+    },
+    {
+      "siteId": "loc_lock_gate_four",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "The bronze tidal gauge recorded a sudden two-metre surge twenty minutes after the coastal detonations."
+    },
+    {
+      "siteId": "loc_lock_gate_four",
+      "stratumId": "now",
+      "requiredFlag": "mutation_lock4_sluice_repaired",
+      "text": "The sluice counterweight was wedged open with an iron crowbar bearing the mark of the Municipal Water Board."
+    },
+    {
+      "siteId": "loc_seed_library_annex",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "Seed vault climate logs were maintained in green ink until Day 14, when the compressor diesel ran dry."
+    },
+    {
+      "siteId": "loc_seed_library_annex",
+      "stratumId": "now",
+      "requiredFlag": "mutation_seed_annex_cataloged",
+      "text": "Canister 44 was carefully emptied and refilled with common rye grain, the original wheat seed smuggled north."
+    },
+    {
+      "siteId": "loc_cold_store_atlantic",
+      "stratumId": "now",
+      "requiredFlag": "",
+      "text": "Beneath the ice in Sub-level 2, forty crates of freeze-dried penicillin sit marked: FOR EMERGENCY USE BY DISTRICT 8 ONLY."
     }
   ]
 }

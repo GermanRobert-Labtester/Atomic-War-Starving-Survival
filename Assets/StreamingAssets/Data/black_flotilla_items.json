@@ -196,6 +196,118 @@
       "stackMax": 20,
       "weight": 0.3,
       "tradeValue": 0
+    },
+    {
+      "id": "item_descent_line",
+      "displayName": "Weighted Descent Line",
+      "description": "Thirty fathoms of tarred hemp around a knotted lead weight. The Flotilla coils it in a figure the divers can read by touch. A diver who rides a marked line comes back; one who free-swims a wreck at depth is remembered at the mooring, not at the table.",
+      "type": "Tool",
+      "stackMax": 2,
+      "weight": 6.5,
+      "tradeValue": 22
+    },
+    {
+      "id": "item_sealed_dive_lamp",
+      "displayName": "Sealed Dive Lamp",
+      "description": "A whale-oil lamp rebodied in a brass pressure case with a thick glass port. The Flotilla builds them one at a time and stamps the bezel with the fleet mark. Light is the only argument that works at forty feet.",
+      "type": "Device",
+      "stackMax": 1,
+      "weight": 1.2,
+      "tradeValue": 34,
+      "durability": 60
+    },
+    {
+      "id": "item_salvage_cutting_tool",
+      "displayName": "Salvage Cutting Tool",
+      "description": "A short cold-chisel pry bar with a wrapped grip, ground sharp on both faces. Salvage Fleet marks: notched, named, never lent twice.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 2.2,
+      "tradeValue": 16
+    },
+    {
+      "id": "item_rebreather_canister",
+      "displayName": "Pressure-Rated Rebreather Canister",
+      "description": "A stamped cylinder of scrubber compound, wax-sealed against spray. Salt air kills the granules faster than breath does; the Flotilla packs them dry and dates them honestly.",
+      "type": "Filter",
+      "stackMax": 4,
+      "weight": 0.9,
+      "tradeValue": 22
+    },
+    {
+      "id": "item_escort_challenge_ribbon",
+      "displayName": "Escort Challenge Ribbon",
+      "description": "A strip of grey-dyed cloth stamped with the escort fleet's bar-and-dot code. Shown at a boarding hatch it means 'known traffic, weapons stowed'. Forged ones hang from the outpost fence as a lesson.",
+      "type": "Quest",
+      "stackMax": 1,
+      "weight": 0.05,
+      "tradeValue": 0
+    },
+    {
+      "id": "item_deep_service_ribbon",
+      "description": "A black ribbon woven with a single brass thread, one knot for every line a diver came back down. The Deep Fleet does not award them for depth. It awards them for coming back.",
+      "displayName": "Deep-Service Ribbon",
+      "type": "Quest",
+      "stackMax": 1,
+      "weight": 0.05,
+      "tradeValue": 0
+    },
+    {
+      "id": "item_claim_tag_stamped",
+      "displayName": "Stamped Salvage Claim Tag",
+      "description": "A lead tag punched with a claim mark and the season. Salvage Fleet law is simple: the tag stays on the wreck, the wreck stays yours until you strip it or die.",
+      "type": "Trade",
+      "stackMax": 6,
+      "weight": 0.1,
+      "tradeValue": 12
+    },
+    {
+      "id": "item_sea_ration",
+      "displayName": "Preserved Sea Ration",
+      "description": "Pressed kelp, salt fish, and rendered fat pressed into a waxed brick. Tastes of the harbor it came from, which is the point. Keeps for a season, floats if dropped.",
+      "type": "Food",
+      "stackMax": 10,
+      "weight": 0.4,
+      "tradeValue": 4,
+      "hungerRestore": 14
+    },
+    {
+      "id": "item_brine_protein_tin",
+      "displayName": "Brine-Packed Protein Tin",
+      "description": "A soldered tin of salt-cured fish packed in its own brine. The Flotilla packs a hundred a week and eats most of them; the surplus trades inland at prices the coast pretends not to notice.",
+      "type": "Food",
+      "stackMax": 6,
+      "weight": 0.5,
+      "tradeValue": 5,
+      "hungerRestore": 14
+    },
+    {
+      "id": "item_marine_sealant_kit",
+      "displayName": "Marine Sealant Kit",
+      "description": "A canvas roll of caulking irons, oakum, and a brick of pitch compound. Everything the Flotilla owns floats or leaks, usually both; sealing is their oldest craft and their best barter.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 1.2,
+      "tradeValue": 15
+    },
+    {
+      "id": "item_ships_bell_picket",
+      "displayName": "Picket Craft Ship's Bell",
+      "description": "A green-patina bronze bell, crown still ringed by its lanyard, raised from the Flotilla picket that went down with the convoy war. Deep Fleet custom says a bell rings once for its crew and then belongs to no one.",
+      "type": "Relic",
+      "stackMax": 1,
+      "weight": 6.0,
+      "tradeValue": 18,
+      "moraleEffect": 2
+    },
+    {
+      "id": "item_fleet_log_cylinder",
+      "displayName": "Waterproof Fleet Log Cylinder",
+      "description": "A brass tube, threaded and waxed, built to survive depth. Inside: dive orders, line measurements, and names written in grease pencil by hands that were shaking. The Deep Fleet buries its divers with the cylinder if there is a body to bury.",
+      "type": "Quest",
+      "stackMax": 1,
+      "weight": 0.8,
+      "tradeValue": 0
     }
   ]
 }

@@ -8,10 +8,26 @@ namespace Ashfall.Core
     public class SickBand
     {
         public string survivorId;
-        public int band;              // DoseLedgerSystem.BandGreen..Black
+        public int band;              // DoseLedgerSystem.BandGreen..BandBlack
         public int diagnosedDay;
         public int releaseDay = -1;
         public string palliativePlan; // empty = none assigned
+
+        /// <summary>
+        /// Plan 60 / D5 — which fact produced <see cref="band">band</see>: a dose
+        /// reading (<see cref="SickListSystem.SourceDose"/>) or an illness
+        /// prognosis (<see cref="SickListSystem.SourceIllness"/>). The band ladder is
+        /// shared; its meaning is named, so "red" never silently means two things.
+        /// Additive: saves written before it existed load as <c>dose</c>.
+        /// </summary>
+        public string severitySource;
+
+        /// <summary>
+        /// Origin id for <see cref="severitySource"/> — the disease id when the
+        /// source is illness, empty for dose-named rows. Provenance, not state: no
+        /// system reads it to compute progression.
+        /// </summary>
+        public string sourceId;
     }
 
     [Serializable]
@@ -30,6 +46,12 @@ namespace Ashfall.Core
     {
         public const string SystemId = "sick_list_system";
 
+        /// <summary>Band came from a dose-ledger reading (the original meaning).</summary>
+        public const string SourceDose = "dose";
+
+        /// <summary>Band came from an illness prognosis (DiseaseTriage).</summary>
+        public const string SourceIllness = "illness";
+
         private readonly SickListSystemState _state = new SickListSystemState();
         private readonly Dictionary<string, SickBand> _bands = new Dictionary<string, SickBand>();
 
@@ -42,7 +64,16 @@ namespace Ashfall.Core
         public IReadOnlyList<SickBand> Bands => _state.bands;
 
         /// <summary>Name a survivor into a dose band. Re-diagnosis moves the band; history is kept.</summary>
-        public bool Diagnose(string survivorId, int band, int day)
+        public bool Diagnose(string survivorId, int band, int day) =>
+            Diagnose(survivorId, band, day, SourceDose, null);
+
+        /// <summary>
+        /// Plan 60 / D5 — name a survivor into the shared band ladder and record
+        /// <em>which authority</em> put them there. Passing
+        /// <see cref="SourceIllness"/> with a disease id keeps the sick list a single
+        /// triage surface over two different sources of urgency.
+        /// </summary>
+        public bool Diagnose(string survivorId, int band, int day, string severitySource, string sourceId)
         {
             if (string.IsNullOrEmpty(survivorId)) return false;
             var entry = _bands.TryGetValue(survivorId, out var existing)
@@ -53,6 +84,8 @@ namespace Ashfall.Core
             _bands[survivorId] = entry;
             entry.band = band;
             entry.releaseDay = -1;
+            entry.severitySource = string.IsNullOrEmpty(severitySource) ? SourceDose : severitySource;
+            entry.sourceId = sourceId ?? string.Empty;
             OnDiagnosed?.Invoke(survivorId, band);
             RaiseChanged();
             return true;
@@ -99,7 +132,9 @@ namespace Ashfall.Core
                     band = b.band,
                     diagnosedDay = b.diagnosedDay,
                     releaseDay = b.releaseDay,
-                    palliativePlan = b.palliativePlan
+                    palliativePlan = b.palliativePlan,
+                    severitySource = b.severitySource,
+                    sourceId = b.sourceId
                 });
             }
             return copy;
@@ -122,7 +157,12 @@ namespace Ashfall.Core
                         band = b.band,
                         diagnosedDay = b.diagnosedDay,
                         releaseDay = b.releaseDay,
-                        palliativePlan = b.palliativePlan
+                        palliativePlan = b.palliativePlan,
+                        // Additive fields: a pre-D5 save omits them, and the
+                        // sick list's original meaning was the dose ledger.
+                        severitySource = string.IsNullOrEmpty(b.severitySource)
+                            ? SourceDose : b.severitySource,
+                        sourceId = b.sourceId ?? string.Empty
                     };
                     _bands[b.survivorId] = copy;
                     _state.bands.Add(copy);

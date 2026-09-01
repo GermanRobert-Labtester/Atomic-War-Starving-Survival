@@ -1,0 +1,936 @@
+{
+  "schema_version": 1,
+  "collection_id": "wasteland_travel_encounters_catalog",
+  "encounters": [
+    {
+      "id": "enc_travel_wolf_pack_crossing",
+      "title": "Two-Headed Wolf Pack Scent Line",
+      "category": "Creature",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 4.0,
+      "base_weight": 2.5,
+      "stance_weights": { "Cautious": 0.5, "Balanced": 1.0, "Aggressive": 1.8, "Scavenging": 1.2, "Rapid": 0.8 },
+      "season_tags": ["window_deep_freeze", "window_high_cold", "window_ashfall"],
+      "description": "A pair of two-headed steppe wolves flank the road ridge fifty paces ahead. One skull on each beast scans your team while the other watches the snowy valley below.",
+      "choices": [
+        { "choice_id": "choice_throw_flare", "text": "Throw a magnesium flare between their heads to disorient them.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 2, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_two_headed_wolf" },
+        { "choice_id": "choice_rifle_ambush", "text": "Take aim at the pack leader's shoulder crease with hunting rifles.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_two_headed_wolf" },
+        { "choice_id": "choice_bait_and_bypass", "text": "Drop a chunk of salt meat into the gully and skirt the ridge.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 1, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_two_headed_wolf" }
+      ]
+    },
+    {
+      "id": "enc_travel_slag_beetle_slag_heap",
+      "title": "Titan Slag Beetles at the Ash Trench",
+      "category": "Creature",
+      "region_tags": ["industrial_belt", "dead_suburbs"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 2.0,
+      "stance_weights": { "Cautious": 0.6, "Balanced": 1.0, "Aggressive": 1.5, "Scavenging": 1.8, "Rapid": 0.5 },
+      "season_tags": ["all"],
+      "description": "Three heavy slag-backed beetles are rooting through a smoldering coal berm. Their metallic carapaces clink like shovel blades as they vent sulfur steam.",
+      "choices": [
+        { "choice_id": "choice_harvest_chitin", "text": "Flip the rear beetle with an iron crowbar to harvest armor plates.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_slag_beetle" },
+        { "choice_id": "choice_bypass_downwind", "text": "Circle downwind around the sulfur plume to avoid triggering gas vents.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_slag_beetle" },
+        { "choice_id": "choice_collect_tallow", "text": "Scrape combustible insect tallow from abandoned burrow mounds.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_slag_beetle" }
+      ]
+    },
+    {
+      "id": "enc_travel_timber_tick_canopy",
+      "title": "Dead Pine Timber Tick Cluster",
+      "category": "Creature",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.5,
+      "base_weight": 2.0,
+      "stance_weights": { "Cautious": 0.4, "Balanced": 1.0, "Aggressive": 1.2, "Scavenging": 1.4, "Rapid": 1.2 },
+      "season_tags": ["window_thaw", "window_black_bloom"],
+      "description": "The trail narrows under dead pine boughs laden with walnut-sized gorged timber ticks, their sensory pits twitching toward the expedition's warmth.",
+      "choices": [
+        { "choice_id": "choice_torch_canopy", "text": "Burn a passage with an oil torch before proceeding.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_timber_tick" },
+        { "choice_id": "choice_seal_hoods_rush", "text": "Tighten respirator collars and sprint through the tree line.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -1, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_timber_tick" },
+        { "choice_id": "choice_harvest_anticoagulant", "text": "Carefully spear engorged ticks with long needles for medical extracts.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_timber_tick" }
+      ]
+    },
+    {
+      "id": "enc_travel_bristleback_charge",
+      "title": "Rooting Bristleback Boar",
+      "category": "Creature",
+      "region_tags": ["dead_suburbs", "the_toll"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 1.8,
+      "stance_weights": { "Cautious": 0.5, "Balanced": 1.0, "Aggressive": 2.0, "Scavenging": 1.3, "Rapid": 0.7 },
+      "season_tags": ["all"],
+      "description": "A massive iron-bristled boar violently roots up concrete pavers in search of mycorrhizal fungi, raising its reinforced cranial shield at your footsteps.",
+      "choices": [
+        { "choice_id": "choice_side_flank_shot", "text": "Maneuver to shoot the soft shoulder crease behind its ear.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_bristleback_boar" },
+        { "choice_id": "choice_climb_rubble", "text": "Climb onto an elevated masonry wall until the boar moves on.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_bristleback_boar" },
+        { "choice_id": "choice_scatter_roots", "text": "Toss wild roots into the ditch to divert its charge.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 1, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_bristleback_boar" }
+      ]
+    },
+    {
+      "id": "enc_travel_marsh_adder_slough",
+      "title": "Bioluminescent Adder in the Slough",
+      "category": "Creature",
+      "region_tags": ["coastal_shelf", "the_toll"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 2.2,
+      "stance_weights": { "Cautious": 0.4, "Balanced": 1.0, "Aggressive": 1.1, "Scavenging": 1.6, "Rapid": 0.9 },
+      "season_tags": ["window_thaw", "window_black_bloom", "window_the_turning"],
+      "description": "A glowing green tail tip pulses softly under murky water in the road drainage culvert, waiting for unsuspecting foragers.",
+      "choices": [
+        { "choice_id": "choice_pin_and_milk", "text": "Pin the serpent's neck with a notched stick to extract surgical venom.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_marsh_adder" },
+        { "choice_id": "choice_wade_planks", "text": "Lay wooden planks across the ditch to bypass the pool safely.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_marsh_adder" }
+      ]
+    },
+    {
+      "id": "enc_travel_cave_hyena_den",
+      "title": "Slate Hyena Tunnel Growl",
+      "category": "Creature",
+      "region_tags": ["industrial_belt", "high_scarp"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 4.5,
+      "base_weight": 1.5,
+      "stance_weights": { "Cautious": 0.4, "Balanced": 1.0, "Aggressive": 1.8, "Scavenging": 1.2, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "Guttural, echoing chuckles rise from a collapsed rail drainage adit beside the roadbed. Two slope-backed slate hyenas watch from the darkness.",
+      "choices": [
+        { "choice_id": "choice_flashbang_deterrent", "text": "Hurl a concussive flashbang into the adit to scatter the pack.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 2, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_slate_hyena" },
+        { "choice_id": "choice_stand_and_fight", "text": "Form a firing line and clear the tunnel entrance.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_slate_hyena" },
+        { "choice_id": "choice_wide_berth", "text": "Take the exposed upper ridge path to bypass the tunnel entirely.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_slate_hyena" }
+      ]
+    },
+    {
+      "id": "enc_travel_specter_owl_perch",
+      "title": "Tessarat Specter Owl on the Radio Mast",
+      "category": "Creature",
+      "region_tags": ["dead_suburbs", "high_scarp"],
+      "min_danger_level": 0.0,
+      "max_danger_level": 2.5,
+      "base_weight": 2.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.5, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "A magnificent pure-white specter owl perches motionless atop a rusted microwave tower, watching your party with unblinking amber eyes.",
+      "choices": [
+        { "choice_id": "choice_search_pellets", "text": "Search the base of the mast for regurgitated brass and battery scrap.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_specter_owl" },
+        { "choice_id": "choice_quiet_passage", "text": "Move silently beneath the tower without disturbing its watch.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 1, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_specter_owl" }
+      ]
+    },
+    {
+      "id": "enc_travel_cave_bear_gallery",
+      "title": "Apex Cave Bear Territorial Scrapes",
+      "category": "Creature",
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 3.5,
+      "max_danger_level": 5.0,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 0.2, "Balanced": 0.8, "Aggressive": 2.5, "Scavenging": 0.9, "Rapid": 0.4 },
+      "season_tags": ["window_deep_freeze", "window_high_cold"],
+      "description": "Massive claw gouges score the limestone tunnel mouth ahead. A low infrasonic growl vibrates the gravel under your boots—the atomic cave bear is near.",
+      "choices": [
+        { "choice_id": "choice_retreat_quietly", "text": "Back away slowly into the downwind gorge without making sudden noise.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_cave_bear" },
+        { "choice_id": "choice_heavy_ordnance_trap", "text": "Rig explosive demolition charges across the tunnel arch and engage.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 5, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_cave_bear" },
+        { "choice_id": "choice_sound_decoy_siren", "text": "Launch an acoustic siren flare into the opposite canyon to draw it away.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 3, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_cave_bear" }
+      ]
+    },
+    {
+      "id": "enc_travel_salt_caravan_breakdown",
+      "title": "Stranded Brine-Pan Salt Sled",
+      "category": "Human",
+      "region_tags": ["the_toll", "coastal_shelf"],
+      "min_danger_level": 0.0,
+      "max_danger_level": 2.5,
+      "base_weight": 2.5,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.8, "Scavenging": 1.5, "Rapid": 0.7 },
+      "season_tags": ["all"],
+      "description": "A three-runner salt sled from Brine-Pan Hollow has thrown its wooden axle. Two armed haulers stand guard while the driver frantically jacks the frame.",
+      "choices": [
+        { "choice_id": "choice_offer_mechanical_help", "text": "Use spare mechanical scrap to help repair the broken axle runner.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
+        { "choice_id": "choice_barter_salt_on_spot", "text": "Trade clean water and dry rations for a discounted drum of curing salt.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0 },
+        { "choice_id": "choice_ignore_and_pass", "text": "Keep moving along the high track without getting involved.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_militia_roadblock",
+      "title": "Upland Militia Checkpoint",
+      "category": "Human",
+      "region_tags": ["industrial_belt", "dead_suburbs"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 2.0,
+      "stance_weights": { "Cautious": 0.8, "Balanced": 1.0, "Aggressive": 1.6, "Scavenging": 0.9, "Rapid": 1.1 },
+      "season_tags": ["all"],
+      "description": "Four militia guards behind sandbag revetments flag your party down, demanding identity papers and inspecting baggage for contraband munitions.",
+      "choices": [
+        { "choice_id": "choice_show_standing_papers", "text": "Present faction credentials and submit peacefully to inspection.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0 },
+        { "choice_id": "choice_pay_road_toll", "text": "Pay the transit levy in copper scrap or salt cartridges.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0 },
+        { "choice_id": "choice_flank_bypass_ditch", "text": "Maneuver through the overgrown drainage ditch out of sight.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_fleeing_deserter",
+      "title": "Shivering Conscript in the Culvert",
+      "category": "Human",
+      "region_tags": ["industrial_belt", "high_scarp"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 1.8,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.2, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "A young conscript who deserted from the northern garrison huddles inside a dry drainage culvert, boots wrapped in burlap and shivering from fever.",
+      "choices": [
+        { "choice_id": "choice_share_warmth_medicine", "text": "Share hot broth and fever medication, directing him to the Pilgrim's Hearth.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 4, "guilt_delta": 0 },
+        { "choice_id": "choice_trade_militia_codebook", "text": "Barter rations in exchange for his discarded garrison signal codes.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 1 },
+        { "choice_id": "choice_pass_unnoticed", "text": "Leave the soldier to his fate and press on.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 2 }
+      ]
+    },
+    {
+      "id": "enc_travel_coastal_flotilla_foragers",
+      "title": "Black Flotilla Shore Party",
+      "category": "Human",
+      "region_tags": ["coastal_shelf"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 1.6,
+      "stance_weights": { "Cautious": 0.6, "Balanced": 1.0, "Aggressive": 1.8, "Scavenging": 1.0, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "An armed shore party from the Black Flotilla is filling freshwater drums from an estuary pipe while their motor cutter idles offshore.",
+      "choices": [
+        { "choice_id": "choice_parley_and_trade", "text": "Approach with hands empty and trade dry tobacco for salvaged marine wire.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0 },
+        { "choice_id": "choice_concealed_overwatch", "text": "Remain concealed in the dunes until the cutter departs.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 },
+        { "choice_id": "choice_ambush_for_fuel", "text": "Ambush the shore party to seize their diesel fuel drums.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 3 }
+      ]
+    },
+    {
+      "id": "enc_travel_pilgrim_funeral_cairn",
+      "title": "Ash Pilgrim Burial Cairn",
+      "category": "Human",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 0.0,
+      "max_danger_level": 2.0,
+      "base_weight": 2.2,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 1.4, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "Three hooded pilgrims are stacking river stones over a freshly dug grave beside the road, reciting verses from the Hearth Liturgy.",
+      "choices": [
+        { "choice_id": "choice_add_stone_and_pray", "text": "Place a stone on the cairn and offer a moment of silence.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
+        { "choice_id": "choice_inquire_trail_hazards", "text": "Speak with the elders to learn what killed the traveler ahead.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0 },
+        { "choice_id": "choice_quietly_pass", "text": "Walk softly past the service without interrupting.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_injured_quarry_scout",
+      "title": "Injured Slate Hollow Quarry Scout",
+      "category": "Human",
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 1.9,
+      "stance_weights": { "Cautious": 1.1, "Balanced": 1.0, "Aggressive": 0.8, "Scavenging": 1.2, "Rapid": 0.9 },
+      "season_tags": ["all"],
+      "description": "A stonecutter from Slate Hollow sits against an overturned mine cart with a fractured tibia, his splint coming undone.",
+      "choices": [
+        { "choice_id": "choice_treat_fracture_with_splint", "text": "Apply a clean surgical splint and bandage to stabilize the limb.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 4, "guilt_delta": 0 },
+        { "choice_id": "choice_give_crutch_and_water", "text": "Provide clean water and fashion a sturdy wooden walking crutch.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0 },
+        { "choice_id": "choice_leave_marker", "text": "Mark his location on your map to notify the quarry stewards.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_tinker_itinerant_peddler",
+      "title": "Itinerant Tinker's Cart",
+      "category": "Human",
+      "region_tags": ["dead_suburbs", "industrial_belt"],
+      "min_danger_level": 0.0,
+      "max_danger_level": 2.0,
+      "base_weight": 2.4,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.8, "Scavenging": 1.6, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "A peddler from Tinker's Notch pushes a bicycle-wheeled cart loaded with soldered circuit boards, copper wire bundles, and small glass vials of oil.",
+      "choices": [
+        { "choice_id": "choice_inspect_radio_parts", "text": "Browse his component tray for replacement vacuum tubes and resistors.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0 },
+        { "choice_id": "choice_trade_scrap_for_bulbs", "text": "Exchange heavy scrap iron for light halogen indicator bulbs.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0 },
+        { "choice_id": "choice_pass_by", "text": "Wave and continue along the highway shoulder.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_scrap_claim_standoff",
+      "title": "Scrap Claim Standoff at the Transformer",
+      "category": "Human",
+      "region_tags": ["industrial_belt", "dead_suburbs"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.5,
+      "base_weight": 1.7,
+      "stance_weights": { "Cautious": 0.7, "Balanced": 1.0, "Aggressive": 1.7, "Scavenging": 1.5, "Rapid": 0.7 },
+      "season_tags": ["all"],
+      "description": "Two rival scavenger teams with drawn revolvers are arguing over salvage rights to a massive copper-wound substation transformer.",
+      "choices": [
+        { "choice_id": "choice_mediate_even_split", "text": "Step in as neutral arbitrator to negotiate an equal division of the coils.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
+        { "choice_id": "choice_intimidate_and_claim", "text": "Display heavy weapons to run both crews off and claim the copper yourself.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 2 },
+        { "choice_id": "choice_slip_away", "text": "Slip past while their attention is locked on each other.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_collapsed_culvert_flood",
+      "title": "Suburban Culvert Slush Flood",
+      "category": "Environmental",
+      "region_tags": ["dead_suburbs", "the_toll"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 2.2,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.9, "Scavenging": 1.3, "Rapid": 1.3 },
+      "season_tags": ["window_thaw"],
+      "description": "Rapid melting of contaminated snow has choked the main concrete culvert with frozen debris, flooding forty meters of roadway with radioactive slush.",
+      "choices": [
+        { "choice_id": "choice_pry_debris_gate", "text": "Use prybars to clear the drain grate and lower the water level.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0 },
+        { "choice_id": "choice_scramble_embankment", "text": "Scramble across the muddy railway embankment above the flood.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 },
+        { "choice_id": "choice_wade_slowly", "text": "Wade through the cold slush with hazmat boots.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_hot_radiation_plume",
+      "title": "Hot Radiation Wind Drift",
+      "category": "Environmental",
+      "region_tags": ["industrial_belt", "dead_suburbs"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 4.0,
+      "base_weight": 2.0,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.8, "Scavenging": 1.1, "Rapid": 1.2 },
+      "season_tags": ["window_ashfall", "window_black_bloom"],
+      "description": "Geiger counters scream as a shifting thermal updraft pushes a concentrated plume of radioactive ash across the highway corridor.",
+      "choices": [
+        { "choice_id": "choice_deploy_dosimeter_detour", "text": "Read the wind direction and take a four-kilometer detour through the ravine.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 1, "guilt_delta": 0 },
+        { "choice_id": "choice_don_carbon_masks_rush", "text": "Don fresh carbon masks and push straight through the hot zone.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0 },
+        { "choice_id": "choice_shelter_in_culvert", "text": "Shelter in a sealed concrete drainage pipe until the plume shifts.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_frozen_rail_deadlock",
+      "title": "Frozen Switch Point Deadlock",
+      "category": "Environmental",
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.5,
+      "base_weight": 2.1,
+      "stance_weights": { "Cautious": 0.9, "Balanced": 1.0, "Aggressive": 1.1, "Scavenging": 1.5, "Rapid": 0.8 },
+      "season_tags": ["window_deep_freeze", "window_high_cold"],
+      "description": "An abandoned industrial yard switch point is frozen solid under three inches of black ice, blocking an armored rail wagon from proceeding.",
+      "choices": [
+        { "choice_id": "choice_thaw_with_coal_brazier", "text": "Build a small coal fire under the switch points to free the mechanism.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0 },
+        { "choice_id": "choice_haul_cargo_around", "text": "Unload cargo and carry it on foot across the frozen siding.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -1, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_spore_cough_vent_shaft",
+      "title": "Spore-Cough Lichen on the Roadside Louvre",
+      "category": "Environmental",
+      "region_tags": ["industrial_belt", "dead_suburbs"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.5,
+      "base_weight": 1.8,
+      "stance_weights": { "Cautious": 0.8, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.6, "Rapid": 0.9 },
+      "season_tags": ["all"],
+      "description": "A subterranean bunker intake chimney beside the highway is caked in powdery orange spore-cough lichen, puffing microscopic spores with the breeze.",
+      "choices": [
+        { "choice_id": "choice_scrape_sample", "text": "Scrape a clean sample into a sealed tin for apothecary synthesis.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "unlocks_field_guide_id": "field_flora_spore_cough_lichen" },
+        { "choice_id": "choice_burn_and_clear", "text": "Torch the louvres to sterilize the spore plume for following travelers.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "unlocks_field_guide_id": "field_flora_spore_cough_lichen" },
+        { "choice_id": "choice_hold_breath_pass", "text": "Cover faces with wet bandannas and move quickly past.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_flora_spore_cough_lichen" }
+      ]
+    },
+    {
+      "id": "enc_travel_subterranean_methane_seep",
+      "title": "Subterranean Methane Fissure",
+      "category": "Environmental",
+      "region_tags": ["high_scarp", "industrial_belt"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 1.5,
+      "stance_weights": { "Cautious": 1.4, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 1.1, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "A rotten-egg odor warns of a pressurized gas fissure leaking natural methane across a narrow gorge pass. Sparks from steel crampons could ignite it.",
+      "choices": [
+        { "choice_id": "choice_extinguish_open_flames", "text": "Extinguish all lanterns and navigate by glow-dust lanterns.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0 },
+        { "choice_id": "choice_controlled_burn", "text": "Fire an incendiary arrow from safe distance to vent the pocket in a controlled fireball.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
+        { "choice_id": "choice_ridge_climb_bypass", "text": "Scale the windy upper ridge to avoid the gas concentration entirely.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_unexploded_bomb_crater",
+      "title": "Unexploded Ordnance in the Crater",
+      "category": "Environmental",
+      "region_tags": ["dead_suburbs", "the_toll"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 4.0,
+      "base_weight": 1.9,
+      "stance_weights": { "Cautious": 1.1, "Balanced": 1.0, "Aggressive": 1.2, "Scavenging": 1.8, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "A five-hundred-pound unexploded aerial bomb lies embedded in the roadbed crater, its tail fin rusted but the arming vane intact.",
+      "choices": [
+        { "choice_id": "choice_salvage_explosive_filler", "text": "Carefully unscrew the base plate to scoop out stabilized casting explosives.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 4, "guilt_delta": 0 },
+        { "choice_id": "choice_mark_danger_sign", "text": "Hammer a red warning slate into the dirt to warn future convoys.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0 },
+        { "choice_id": "choice_wide_berth_bypass", "text": "Circle eighty meters around the crater lip through the brush.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_abandoned_postal_depot",
+      "title": "Overturned Rural Delivery Van",
+      "category": "Environmental",
+      "region_tags": ["dead_suburbs", "the_toll"],
+      "min_danger_level": 0.0,
+      "max_danger_level": 2.5,
+      "base_weight": 2.3,
+      "stance_weights": { "Cautious": 0.8, "Balanced": 1.0, "Aggressive": 0.9, "Scavenging": 2.0, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "A pre-war delivery van sits in the ditch, its rear doors rusted shut with tamper-evident security tape still intact.",
+      "choices": [
+        { "choice_id": "choice_crowbar_rear_doors", "text": "Pry the rear cargo doors with an iron bar to search the mailbags.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
+        { "choice_id": "choice_strip_tires_and_battery", "text": "Salvage the heavy rubber tires and alternator from under the hood.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0 },
+        { "choice_id": "choice_pass_unopened", "text": "Leave the cargo undisturbed and continue marching.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_travel_geothermal_warm_spring",
+      "title": "Geothermal Warm Spring Oasis",
+      "category": "Environmental",
+      "region_tags": ["high_scarp", "coastal_shelf"],
+      "min_danger_level": 0.0,
+      "max_danger_level": 2.0,
+      "base_weight": 2.0,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.8, "Scavenging": 1.4, "Rapid": 0.7 },
+      "season_tags": ["window_deep_freeze", "window_high_cold"],
+      "description": "Steam curls from a natural limestone basin fed by geothermal water, surrounded by green moss and edible albino watercress.",
+      "choices": [
+        { "choice_id": "choice_soak_and_recover_morale", "text": "Rest the expedition for two hours, soaking frostbitten feet in the warm water.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 5, "guilt_delta": 0 },
+        { "choice_id": "choice_fill_canteens_and_harvest", "text": "Boil and filter the warm mineral water and harvest edible greens.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "unlocks_field_guide_id": "field_flora_albino_kale" },
+        { "choice_id": "choice_short_rest", "text": "Take a brief drink and press on.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 1, "guilt_delta": 0 }
+      ]
+    },
+    {
+      "id": "enc_chain_pilgrim_stage1",
+      "title": "The Pilgrim's Broken Staff (Chain 1/3)",
+      "category": "Chained",
+      "chain_id": "chain_wandering_pilgrim",
+      "chain_stage": 1,
+      "region_tags": ["the_toll", "high_scarp"],
+      "min_danger_level": 0.0,
+      "max_danger_level": 3.0,
+      "base_weight": 2.5,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "An elderly pilgrim sits on a mile marker with a splintered staff and empty water flask, trying to reach the Pilgrim's Hearth before nightfall.",
+      "choices": [
+        { "choice_id": "choice_give_wood_and_water", "text": "Gift him a carved wood block and full canteen of clean water.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 4, "guilt_delta": 0, "advances_chain_stage": 2 },
+        { "choice_id": "choice_pass_with_blessing", "text": "Offer a spoken prayer and continue your expedition.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 1, "advances_chain_stage": 0 }
+      ]
+    },
+    {
+      "id": "enc_chain_pilgrim_stage2",
+      "title": "The Pilgrim's Guidance at the Fork (Chain 2/3)",
+      "category": "Chained",
+      "chain_id": "chain_wandering_pilgrim",
+      "chain_stage": 2,
+      "prereq_chain_stage": 2,
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 4.0,
+      "base_weight": 3.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "You meet the old pilgrim again near a dangerous scree fork. Recognizing your party, he waves his newly repaired staff toward a safe goat path.",
+      "choices": [
+        { "choice_id": "choice_follow_pilgrim_path", "text": "Follow his guided route to bypass a raider ambush gorge.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 3, "guilt_delta": 0, "advances_chain_stage": 3 },
+        { "choice_id": "choice_scout_ahead_together", "text": "Walk the high crest together, sharing travel rations.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 4, "guilt_delta": 0, "advances_chain_stage": 3 }
+      ]
+    },
+    {
+      "id": "enc_chain_pilgrim_stage3",
+      "title": "The Pilgrim's Legacy at the Hearth (Chain 3/3)",
+      "category": "Chained",
+      "chain_id": "chain_wandering_pilgrim",
+      "chain_stage": 3,
+      "prereq_chain_stage": 3,
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 0.0,
+      "max_danger_level": 2.0,
+      "base_weight": 3.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "At the gates of the Pilgrim's Hearth, the elder presents you with a bundle of consecrated beeswax candles and an ancient illuminated map fragment.",
+      "choices": [
+        { "choice_id": "choice_accept_relic_gift", "text": "Accept the illuminated map fragment and candles with gratitude.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 5, "guilt_delta": 0, "advances_chain_stage": 4 }
+      ]
+    },
+    {
+      "id": "enc_chain_deserter_stage1",
+      "title": "The Garrison Deserter's Plea (Chain 1/3)",
+      "category": "Chained",
+      "chain_id": "chain_deserter_code",
+      "chain_stage": 1,
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.5,
+      "base_weight": 2.5,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "An escaped conscript in ragged military fatigues offers you a sealed ammunition canister if you hide him from a pursuing garrison patrol.",
+      "choices": [
+        { "choice_id": "choice_conceal_in_wagon", "text": "Hide the deserter under canvas tarps and misdirect the patrol.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "advances_chain_stage": 2 },
+        { "choice_id": "choice_turn_over_to_militia", "text": "Hand him over to the militia patrol for a brass bounty.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -3, "guilt_delta": 4, "advances_chain_stage": 0 }
+      ]
+    },
+    {
+      "id": "enc_chain_deserter_stage2",
+      "title": "The Deserter's Workshop Secret (Chain 2/3)",
+      "category": "Chained",
+      "chain_id": "chain_deserter_code",
+      "chain_stage": 2,
+      "prereq_chain_stage": 1,
+      "region_tags": ["dead_suburbs", "industrial_belt"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.5,
+      "base_weight": 3.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "He's wearing a canvas apron now, hands permanently black with solder. The name over the workbench door says someone else's name but the conscript looks up immediately when your party passes. He steps outside into the ash and pulls the workbench door shut behind him. His voice is low: the garrison left a supply locker sealed when they pulled back from the eastern district. He knows the combination. He says it once, written on the back of a receipted part order, and presses it into your hand.",
+      "choices": [
+        { "choice_id": "choice_receive_locker_code", "text": "Accept the supply locker coordinates and access cipher.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "advances_chain_stage": 3 }
+      ]
+    },
+    {
+      "id": "enc_chain_deserter_stage3",
+      "title": "The Armory Cache Harvest (Chain 3/3)",
+      "category": "Chained",
+      "chain_id": "chain_deserter_code",
+      "chain_stage": 3,
+      "prereq_chain_stage": 2,
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 3.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "The locker is set into a retaining wall behind a collapsed carport on the industrial access road, the kind of concrete structure that looks like nothing. The four-digit combination turns correctly on the second try. Inside: ammunition cases, factory-sealed, the green mil-spec coating unbroken. Medical packs, sealed in foil. A single folded map with grid marks in three colors. Whatever the garrison planned here, they never came back for it.",
+      "choices": [
+        { "choice_id": "choice_claim_armory_supplies", "text": "Claim the ammunition and medical supplies for your shelter.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 5, "guilt_delta": 0, "advances_chain_stage": 4 }
+      ]
+    },
+    {
+      "id": "enc_chain_salvage_dispute_stage1",
+      "title": "The Siding Claim Marker (Chain 1/3)",
+      "category": "Chained",
+      "chain_id": "chain_salvage_dispute",
+      "chain_stage": 1,
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 2.5,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "You discover a freshly stamped Iron Siding claim marker nailed to an intact generator building, but wild scavengers are preparing to blow the doors.",
+      "choices": [
+        { "choice_id": "choice_defend_settlement_claim", "text": "Confront the scavengers and protect Iron Siding's legal claim.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "advances_chain_stage": 2 },
+        { "choice_id": "choice_join_looters", "text": "Help the scavengers breach the building for a cut of the copper.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 3, "advances_chain_stage": 0 }
+      ]
+    },
+    {
+      "id": "enc_chain_salvage_dispute_stage2",
+      "title": "The Return to Iron Siding (Chain 2/3)",
+      "category": "Chained",
+      "chain_id": "chain_salvage_dispute",
+      "chain_stage": 2,
+      "prereq_chain_stage": 1,
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 3.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "The Iron Siding master car is a retired freight wagon welded into a permanent position at the yard's east end, its windows replaced with boilerplate and its undercarriage reinforced with poured concrete. Superintendent Korov is a large woman who sits behind a converted dispatch desk and reads reports while two armed staff stand at the door. She has already heard about the generator building. She does not say thank you. She says: 'Tell me what you found inside.'",
+      "choices": [
+        { "choice_id": "choice_report_to_korov", "text": "Report the secured generator site to Korov to arrange a salvage team.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "advances_chain_stage": 3 }
+      ]
+    },
+    {
+      "id": "enc_chain_salvage_dispute_stage3",
+      "title": "The Generator Power Hookup (Chain 3/3)",
+      "category": "Chained",
+      "chain_id": "chain_salvage_dispute",
+      "chain_stage": 3,
+      "prereq_chain_stage": 2,
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 3.0,
+      "base_weight": 3.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "Six Iron Siding crew members in load harnesses drag the generator onto a flatbed cart using a block-and-tackle rig fixed to the building's own ceiling crane. It takes four hours. The machine is alive — the coils intact, the core uncracked — and when they test it with a battery lead the output meter swings. Korov watches from the building door and makes a note in her ledger. She calls you over and shows you the line item she's entered: one trade credit, standing, indefinite.",
+      "choices": [
+        { "choice_id": "choice_claim_salvage_share", "text": "Collect your share of high-grade copper windings and machine tools.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 5, "guilt_delta": 0, "advances_chain_stage": 4 }
+      ]
+    },
+    {
+      "id": "enc_chain_stalker_beast_stage1",
+      "title": "The Giant Claw Marks on the Pylon (Chain 1/3)",
+      "category": "Chained",
+      "chain_id": "chain_stalker_beast",
+      "chain_stage": 1,
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 2.5,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "Fresh, five-toed claw marks the size of shovel blades gouge the steel base of an electric transmission pylon. A trail of crushed stone leads into the upper crags.",
+      "choices": [
+        { "choice_id": "choice_track_the_beast", "text": "Carefully follow the blood spoor and broken stone up the ridge.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "advances_chain_stage": 2 },
+        { "choice_id": "choice_avoid_and_mark", "text": "Mark the danger zone on your map and detour around the valley.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "advances_chain_stage": 0 }
+      ]
+    },
+    {
+      "id": "enc_chain_stalker_beast_stage2",
+      "title": "The Crushed Scavenger Cache (Chain 2/3)",
+      "category": "Chained",
+      "chain_id": "chain_stalker_beast",
+      "chain_stage": 2,
+      "prereq_chain_stage": 1,
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 4.5,
+      "base_weight": 3.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "You discover the cave bear's feeding ground: an overturned steel shipping container crushed like a tin can, with heavy bear fur snagged on the jagged steel.",
+      "choices": [
+        { "choice_id": "choice_prepare_steel_trap", "text": "Set a heavy anchored steel deadfall trap baited with tallow broth.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "advances_chain_stage": 3 },
+        { "choice_id": "choice_harvest_fur_sample", "text": "Collect fur tufts for the field guide and withdraw before its return.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 2, "guilt_delta": 0, "advances_chain_stage": 3 }
+      ]
+    },
+    {
+      "id": "enc_chain_stalker_beast_stage3",
+      "title": "The Apex Bear Confrontation (Chain 3/3)",
+      "category": "Chained",
+      "chain_id": "chain_stalker_beast",
+      "chain_stage": 3,
+      "prereq_chain_stage": 2,
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 3.0,
+      "max_danger_level": 5.0,
+      "base_weight": 3.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "The colossal blind cave bear returns to its lair. Trapped in your deadfall and disoriented by acoustic sirens, it roars a challenge in the mountain pass.",
+      "choices": [
+        { "choice_id": "choice_execute_killing_volley", "text": "Coordinate high-caliber rifle fire to bring down the titan beast.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 6, "guilt_delta": 0, "advances_chain_stage": 4, "unlocks_field_guide_id": "field_fauna_cave_bear" }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_garrison_checkpoint",
+      "title": "Iron Garrison Road Checkpoint",
+      "category": "Human",
+      "faction_id": "iron_garrison",
+      "territory_state": "controlled",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.0,
+      "base_weight": 1.8,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.4 },
+      "season_tags": ["all"],
+      "description": "Two Iron Garrison sentries block the road with a steel barricade painted in regimental stripes. The senior soldier checks a clipboard while the junior keeps a rifle trained on your approach.",
+      "choices": [
+        { "choice_id": "choice_pay_garrison_toll", "text": "Pay the road tax: two tins of canned food per traveller.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food"] },
+        { "choice_id": "choice_show_garrison_pass", "text": "Present a Garrison travel authorization document.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 2, "required_item_id": "sealed_government_document", "required_item_quantity": 1 },
+        { "choice_id": "choice_negotiate_garrison", "text": "Negotiate passage by offering information about road conditions ahead.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 0 },
+        { "choice_id": "choice_avoid_garrison", "text": "Detour through the frozen creek bed to bypass the checkpoint.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_militia_roadblock",
+      "title": "Ash Militia Neighbourhood Watch",
+      "category": "Human",
+      "faction_id": "ash_militia",
+      "territory_state": "controlled",
+      "region_tags": ["dead_suburbs", "industrial_belt"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.5,
+      "base_weight": 1.5,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.8, "Scavenging": 1.2, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "A volunteer militia patrol waves you down at a makeshift barrier of sandbags and shopping carts. They wear armbands cut from ash-stained bedsheets and carry improvised weapons with practised confidence.",
+      "choices": [
+        { "choice_id": "choice_militia_friendly", "text": "Greet them openly and share news from the road.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "ash_militia", "faction_standing_delta": 2 },
+        { "choice_id": "choice_militia_trade", "text": "Offer to trade surplus supplies for safe passage information.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "ash_militia", "faction_standing_delta": 1, "cost_items": ["bandage"] },
+        { "choice_id": "choice_militia_ignore", "text": "Decline to stop and push through the barrier.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -1, "guilt_delta": 0, "faction_id": "ash_militia", "faction_standing_delta": -3 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_railway_convoy",
+      "title": "Railway Guild Armoured Convoy",
+      "category": "Human",
+      "faction_id": "faction_railway_guild",
+      "territory_state": "controlled",
+      "region_tags": ["the_toll", "high_scarp"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.0,
+      "base_weight": 1.2,
+      "stance_weights": { "Cautious": 0.8, "Balanced": 1.0, "Aggressive": 0.5, "Scavenging": 0.6, "Rapid": 1.5 },
+      "season_tags": ["all"],
+      "description": "A flatbed rail trolley armoured with welded scrap plates grinds toward you on the old freight line. Guild engineers in oil-stained coveralls ride shotgun beside a crate of mechanical parts bound for the junction.",
+      "choices": [
+        { "choice_id": "choice_guild_join_escort", "text": "Offer to escort the convoy through the next sector in exchange for passage.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_railway_guild", "faction_standing_delta": 3 },
+        { "choice_id": "choice_guild_trade_parts", "text": "Trade fuel for some of their surplus mechanical parts.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_railway_guild", "faction_standing_delta": 1, "cost_items": ["fuel"] },
+        { "choice_id": "choice_guild_let_pass", "text": "Step aside and let the convoy pass without interaction.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_hydro_escort",
+      "title": "Hydro Baron Water Convoy",
+      "category": "Human",
+      "faction_id": "faction_hydro_barons",
+      "territory_state": "controlled",
+      "region_tags": ["dead_suburbs"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.0,
+      "base_weight": 1.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.4, "Scavenging": 0.8, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "A convoy of insulated water tankers rolls through the district, flanked by Baron enforcers carrying filtration gauntlets and dosimeters. The lead driver signals you to identify yourself.",
+      "choices": [
+        { "choice_id": "choice_baron_identify", "text": "Introduce yourself and your shelter. The Barons value known customers.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_hydro_barons", "faction_standing_delta": 2 },
+        { "choice_id": "choice_baron_buy_water", "text": "Purchase a ration of clean water from the convoy.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "faction_id": "faction_hydro_barons", "faction_standing_delta": 1, "cost_items": ["currency"] },
+        { "choice_id": "choice_baron_avoid", "text": "Keep your distance. The Barons remember faces, and you owe them.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -1, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_warlord_raid",
+      "title": "Warlord Raid Party",
+      "category": "Human",
+      "faction_id": "warlords_sector_4",
+      "territory_state": "contested",
+      "region_tags": ["the_toll", "industrial_belt"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 5.0,
+      "base_weight": 1.5,
+      "stance_weights": { "Cautious": 0.4, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.6, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "A warlord raiding party moves through the contested zone in loose formation — six fighters with scavenged military gear and a supply sled. Their leader spots you and raises a hand: stop or be stopped.",
+      "choices": [
+        { "choice_id": "choice_warlord_comply", "text": "Stop and submit to inspection. Resistance is not worth the risk.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 0 },
+        { "choice_id": "choice_warlord_bribe", "text": "Offer food to let your team pass uninspected.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food", "canned_food"] },
+        { "choice_id": "choice_warlord_flee", "text": "Break into a sprint toward cover. The warlords may not chase.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -3, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": -5 },
+        { "choice_id": "choice_warlord_fight", "text": "Draw weapons and engage the raiding party.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -4, "guilt_delta": 2, "faction_id": "warlords_sector_4", "faction_standing_delta": -15 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_warlord_press_gang",
+      "title": "Warlord Press Gang",
+      "category": "Human",
+      "faction_id": "warlords_sector_4",
+      "territory_state": "contested",
+      "region_tags": ["the_toll"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 0.6, "Balanced": 0.8, "Aggressive": 1.2, "Scavenging": 0.5, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "A warlord recruitment squad has cornered a family of refugees against a collapsed wall. The squad leader is explaining — politely, firmly — that the Sector 4 labour corps needs able bodies. The father is shaking his head.",
+      "choices": [
+        { "choice_id": "choice_press_intervene", "text": "Step between the press gang and the family. Demand they stand down.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": -10 },
+        { "choice_id": "choice_press_negotiate", "text": "Offer supplies in exchange for the family's release.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": -3, "cost_items": ["canned_food", "canned_food", "canned_food", "canned_food", "canned_food"] },
+        { "choice_id": "choice_press_ignore", "text": "Walk past. This is not your fight.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -4, "guilt_delta": 3 },
+        { "choice_id": "choice_press_side_with", "text": "Help the press gang identify able-bodied travellers in exchange for safe passage.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -6, "guilt_delta": 5, "faction_id": "warlords_sector_4", "faction_standing_delta": 8 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_refugee_eviction",
+      "title": "Garrison Refugee Eviction",
+      "category": "Human",
+      "faction_id": "iron_garrison",
+      "territory_state": "controlled",
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.5,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.5, "Scavenging": 0.8, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "Garrison soldiers are clearing a makeshift camp at the edge of a controlled zone. A dozen refugees huddle around a sputtering fire while a sergeant reads from a relocation order. The camp's water barrel is being rolled toward the truck.",
+      "choices": [
+        { "choice_id": "choice_eviction_mediate", "text": "Approach the sergeant and negotiate a delay — the refugees need time to pack.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": -2 },
+        { "choice_id": "choice_eviction_help_refugees", "text": "Help the refugees carry their belongings to the relocation point.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
+        { "choice_id": "choice_eviction_supplies", "text": "Share food and medicine with the refugees before they are moved.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 4, "guilt_delta": 0, "cost_items": ["canned_food", "bandage"] },
+        { "choice_id": "choice_eviction_support_garrison", "text": "Support the eviction — the camp is a security risk in controlled territory.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -3, "guilt_delta": 2, "faction_id": "iron_garrison", "faction_standing_delta": 5 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_foundry_supply",
+      "title": "Ordnance Foundry Supply Convoy",
+      "category": "Human",
+      "faction_id": "faction_ordnance_foundry",
+      "territory_state": "controlled",
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.0,
+      "base_weight": 1.2,
+      "stance_weights": { "Cautious": 0.8, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 1.0, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "A Foundry logistics convoy grinds through the industrial belt — two armoured trucks carrying ammunition crates and tool sets under armed guard. The convoy commander radios your position before deciding whether to engage.",
+      "choices": [
+        { "choice_id": "choice_foundry_trade", "text": "Signal peaceful intent and offer to trade materials for ammunition.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_ordnance_foundry", "faction_standing_delta": 1, "cost_items": ["scrap_metal", "scrap_metal", "scrap_metal"] },
+        { "choice_id": "choice_foundry_info", "text": "Share intelligence about road conditions in exchange for a tool.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_ordnance_foundry", "faction_standing_delta": 2 },
+        { "choice_id": "choice_foundry_ignore", "text": "Stay clear of the convoy. Foundry guards are twitchy.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_supply_corps_convoy",
+      "title": "Supply Corps Relief Convoy",
+      "category": "Human",
+      "faction_id": "faction_supply_corps",
+      "territory_state": "controlled",
+      "region_tags": ["high_scarp", "dead_suburbs"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.0,
+      "base_weight": 1.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.4, "Scavenging": 0.8, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "A Supply Corps relief column passes through — three handcarts loaded with medical kits and rations, escorted by clerks with clipboards and sidearms. The quartermaster nods at your team and checks her manifest.",
+      "choices": [
+        { "choice_id": "choice_corps_request_aid", "text": "Request medical supplies for your shelter. The Corps keeps records of who receives aid.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "faction_id": "faction_supply_corps", "faction_standing_delta": 2 },
+        { "choice_id": "choice_corps_trade", "text": "Trade surplus goods for Corps rations.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_supply_corps", "faction_standing_delta": 1, "cost_items": ["cloth", "cloth", "cloth"] },
+        { "choice_id": "choice_corps_let_pass", "text": "Wave them through. The Corps has its own schedule.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_ash_sign_scouts",
+      "title": "Ash Sign Reconnaissance Team",
+      "category": "Human",
+      "faction_id": "faction_ash_sign",
+      "territory_state": "contested",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 1.0,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.5 },
+      "season_tags": ["all"],
+      "description": "Three Ash Sign scouts emerge from the ash haze — grey-wrapped figures with dosimeters and field notebooks. They have been mapping radiation contours in the contested zone. Their leader studies your team with unsettling calm.",
+      "choices": [
+        { "choice_id": "choice_ashsign_observe", "text": "Ask what they have found. The Ash Sign values those who listen.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_ash_sign", "faction_standing_delta": 2 },
+        { "choice_id": "choice_ashsign_share_data", "text": "Share your own dosimeter readings in exchange for route intelligence.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_ash_sign", "faction_standing_delta": 3 },
+        { "choice_id": "choice_ashsign_avoid", "text": "Keep moving. The Ash Sign's interest in radiation is not your concern.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_cult_recon",
+      "title": "Cult of the Ash Sign Patrol",
+      "category": "Human",
+      "faction_id": "cult_of_ash_sign",
+      "territory_state": "contested",
+      "region_tags": ["the_toll"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 4.5,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 0.8, "Aggressive": 0.5, "Scavenging": 0.6, "Rapid": 0.4 },
+      "season_tags": ["all"],
+      "description": "A Cult patrol moves through the contested zone in silence — five acolytes carrying ash-censers and hand-painted radiation warnings. They stop when they see you, and the eldest begins chanting softly.",
+      "choices": [
+        { "choice_id": "choice_cult_listen", "text": "Stand still and listen to the chant. The Cult respects patience.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "cult_of_ash_sign", "faction_standing_delta": 3 },
+        { "choice_id": "choice_cult_trade_relics", "text": "Offer a pre-war relic in exchange for safe passage through their territory.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "cult_of_ash_sign", "faction_standing_delta": 2, "cost_items": ["tarnished_medal"] },
+        { "choice_id": "choice_cult_flee", "text": "Back away slowly. The Cult's hospitality has limits.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 0, "faction_id": "cult_of_ash_sign", "faction_standing_delta": -2 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_central_garrison_border",
+      "title": "Central Garrison Border Inspection",
+      "category": "Human",
+      "faction_id": "faction_central_garrison",
+      "territory_state": "border",
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.5,
+      "base_weight": 1.5,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.5, "Scavenging": 0.7, "Rapid": 0.4 },
+      "season_tags": ["all"],
+      "description": "A Central Garrison border detail blocks the road at the edge of their jurisdiction — four soldiers in pressed uniforms with a field desk and a stamp kit. The officer asks for your movement authorization and shelter registration number.",
+      "choices": [
+        { "choice_id": "choice_central_comply", "text": "Present your documents and submit to inspection.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_central_garrison", "faction_standing_delta": 2, "required_item_id": "sealed_government_document", "required_item_quantity": 1 },
+        { "choice_id": "choice_central_negotiate", "text": "Explain your mission. The Central Garrison respects purpose.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "faction_central_garrison", "faction_standing_delta": 0 },
+        { "choice_id": "choice_central_bribe", "text": "Slip the officer a tin of rations to expedite the process.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "faction_central_garrison", "faction_standing_delta": 1, "cost_items": ["canned_food"] },
+        { "choice_id": "choice_central_turn_back", "text": "Turn back. The Central Garrison does not forget faces at the border.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_black_ops_ambush",
+      "title": "Black Ops Interception",
+      "category": "Human",
+      "faction_id": "faction_black_ops",
+      "territory_state": "contested",
+      "region_tags": ["industrial_belt", "the_toll"],
+      "min_danger_level": 2.5,
+      "max_danger_level": 5.0,
+      "base_weight": 0.6,
+      "stance_weights": { "Cautious": 0.5, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.4, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "A Black Ops interception team materialises from the ruins — three figures in mismatched military gear with suppressed weapons and signal jammers. Their leader holds up a hand: they want to know who you are and who sent you.",
+      "choices": [
+        { "choice_id": "choice_blackops_identify", "text": "Identify yourself honestly. Black Ops respects transparency — up to a point.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "faction_black_ops", "faction_standing_delta": 1 },
+        { "choice_id": "choice_blackops_intel", "text": "Offer intelligence about other faction movements in exchange for passage.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "faction_black_ops", "faction_standing_delta": 5 },
+        { "choice_id": "choice_blackops_flee", "text": "Run. Black Ops does not take prisoners, but they also do not chase.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -4, "guilt_delta": 0, "faction_id": "faction_black_ops", "faction_standing_delta": -8 },
+        { "choice_id": "choice_blackops_fight", "text": "Engage the interception team. This is what they expected.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -5, "guilt_delta": 3, "faction_id": "faction_black_ops", "faction_standing_delta": -20 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_scavenger_raid",
+      "title": "Scavenger Ambush Party",
+      "category": "Human",
+      "faction_id": "faction_scavengers",
+      "territory_state": "contested",
+      "region_tags": ["industrial_belt", "dead_suburbs"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 4.5,
+      "base_weight": 1.0,
+      "stance_weights": { "Cautious": 0.5, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.6, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "A Scavenger ambush party has set up a choke point in the ruins — four figures behind cover with salvaged weapons and a demand for tribute. Their leader calls out: everything you carry has salvage value, and they intend to collect.",
+      "choices": [
+        { "choice_id": "choice_scav_pay", "text": "Hand over a selection of supplies. The Scavengers are efficient, not cruel.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "faction_scavengers", "faction_standing_delta": 1, "cost_items": ["scrap_metal", "scrap_metal", "electronic_scrap"] },
+        { "choice_id": "choice_scav_trade", "text": "Propose a fair trade — your surplus for their salvage intel.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_scavengers", "faction_standing_delta": 3, "cost_items": ["mechanical_parts"] },
+        { "choice_id": "choice_scav_flee", "text": "Break through the choke point. The Scavengers are spread thin.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -3, "guilt_delta": 0, "faction_id": "faction_scavengers", "faction_standing_delta": -5 },
+        { "choice_id": "choice_scav_fight", "text": "Engage the ambush party. They started this.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -4, "guilt_delta": 1, "faction_id": "faction_scavengers", "faction_standing_delta": -12 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_penal_battalion",
+      "title": "Penal Battalion Labour Column",
+      "category": "Human",
+      "faction_id": "faction_penal_battalion",
+      "territory_state": "contested",
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.0,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.5 },
+      "season_tags": ["all"],
+      "description": "A Penal Battalion labour column trudges through the industrial belt — a dozen convicts in numbered jackets guarded by four wardens with truncheons and a supply cart. The convicts are clearing rubble from a collapsed overpass.",
+      "choices": [
+        { "choice_id": "choice_penal_observe", "text": "Watch from a distance. The Battalion does not welcome spectators.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -1, "guilt_delta": 1 },
+        { "choice_id": "choice_penal_trade_warden", "text": "Approach the wardens and offer to trade tools for information.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_penal_battalion", "faction_standing_delta": 1, "cost_items": ["soldering_kit"] },
+        { "choice_id": "choice_penal_help_convicts", "text": "Slip water to the convicts when the wardens are not looking.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "faction_id": "faction_penal_battalion", "faction_standing_delta": -5, "cost_items": ["clean_water"] }
+      ]
+    }
+  ]
+}

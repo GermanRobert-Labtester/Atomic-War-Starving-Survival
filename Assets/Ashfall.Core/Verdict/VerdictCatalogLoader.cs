@@ -134,6 +134,7 @@ namespace Ashfall.Core.Verdict
             public string message = string.Empty;
             public string signalStrength = string.Empty;
             public string kind = "telemetry";
+            public string audio_cue = string.Empty;
         }
 
         public static List<VerdictRadioEntry> LoadRadio(

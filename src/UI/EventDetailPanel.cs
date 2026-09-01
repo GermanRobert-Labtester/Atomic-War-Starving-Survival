@@ -99,57 +99,19 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by res://assets/ui/panels/EventDetailPanel.tscn; SceneBinder resolves typed unique-name nodes once.
+            // Sibling refresh code is unchanged.
+            var binder = new SceneBinder(this, typeof(EventDetailPanel));
+            binder.Require<VBoxContainer>("EventInfoList");
+            binder.Require<VBoxContainer>("HistoryList");
+            binder.Require<VBoxContainer>("NarrativeList");
+            binder.Require<Button>("CloseButton");
+            _eventInfoList = binder.Get<VBoxContainer>("EventInfoList");
+            _historyList = binder.Get<VBoxContainer>("HistoryList");
+            _narrativeList = binder.Get<VBoxContainer>("NarrativeList");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("EVENT DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblEventInfoTitle = AshfallUiHelpers.MakeSectionHeader("RECENT EVENTS");
-            vbox.AddChild(_lblEventInfoTitle);
-            _eventInfoList = new VBoxContainer();
-            _eventInfoList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _eventInfoList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_eventInfoList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblHistoryTitle = AshfallUiHelpers.MakeSectionHeader("INCIDENTS LOG");
-            vbox.AddChild(_lblHistoryTitle);
-            _historyList = new VBoxContainer();
-            _historyList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _historyList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_historyList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblNarrativeTitle = AshfallUiHelpers.MakeSectionHeader("NARRATIVE PROGRESSION");
-            vbox.AddChild(_lblNarrativeTitle);
-            _narrativeList = new VBoxContainer();
-            _narrativeList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _narrativeList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_narrativeList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
         }
 
         public void Open()

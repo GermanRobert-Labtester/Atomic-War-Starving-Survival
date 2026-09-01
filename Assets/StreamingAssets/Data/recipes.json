@@ -766,6 +766,750 @@
       "resultAmount": 2,
       "craftingTimeHours": 0.5,
       "requiredStationId": ""
+    },
+    {
+      "id": "reload_9x19",
+      "recipeName": "Reload 9x19 (Hand-Load)",
+      "ingredients": [
+        {
+          "itemId": "empty_brass_shell",
+          "amount": 10
+        },
+        {
+          "itemId": "reloading_primer",
+          "amount": 10
+        },
+        {
+          "itemId": "smokeless_powder",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "ammo_9x19",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "reload_22lr",
+      "recipeName": "Reload .22 LR",
+      "ingredients": [
+        {
+          "itemId": "empty_brass_shell",
+          "amount": 50
+        },
+        {
+          "itemId": "smokeless_powder",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "ammo_22lr",
+      "resultAmount": 1,
+      "craftingTimeHours": 0.7,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "reload_357_jhp",
+      "recipeName": "Hand-Load .357 JHP",
+      "ingredients": [
+        {
+          "itemId": "empty_brass_shell",
+          "amount": 12
+        },
+        {
+          "itemId": "reloading_primer",
+          "amount": 12
+        },
+        {
+          "itemId": "smokeless_powder",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "ammo_357_jhp",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.4,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "reload_12g_buck",
+      "recipeName": "Hand-Load 12ga Buckshot",
+      "ingredients": [
+        {
+          "itemId": "empty_brass_shell",
+          "amount": 20
+        },
+        {
+          "itemId": "reloading_primer",
+          "amount": 20
+        },
+        {
+          "itemId": "smokeless_powder",
+          "amount": 1
+        },
+        {
+          "itemId": "cardboard_wad",
+          "amount": 20
+        }
+      ],
+      "resultItemId": "ammo_12g_buck",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "reload_308_incendiary",
+      "recipeName": "Hand-Load .308 Incendiary",
+      "ingredients": [
+        {
+          "itemId": "empty_brass_shell",
+          "amount": 8
+        },
+        {
+          "itemId": "reloading_primer",
+          "amount": 8
+        },
+        {
+          "itemId": "smokeless_powder",
+          "amount": 1
+        },
+        {
+          "itemId": "aluminum_shavings",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "ammo_308_incendiary",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.8,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_pipe_shotgun",
+      "recipeName": "Build Pipe-Shot Shellgun",
+      "ingredients": [
+        {
+          "itemId": "scrap_metal",
+          "amount": 3
+        },
+        {
+          "itemId": "iron_pipe",
+          "amount": 1
+        },
+        {
+          "itemId": "wooden_plank",
+          "amount": 1
+        },
+        {
+          "itemId": "duct_tape",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "weapon_pipe_shotgun",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_nail_driver",
+      "recipeName": "Build Nail-Driver Spike Rifle",
+      "ingredients": [
+        {
+          "itemId": "iron_pipe",
+          "amount": 2
+        },
+        {
+          "itemId": "wooden_plank",
+          "amount": 1
+        },
+        {
+          "itemId": "duct_tape",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "weapon_nail_driver",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_rebar_spear",
+      "recipeName": "Build Rebar Spear & Pipe Launcher",
+      "ingredients": [
+        {
+          "itemId": "iron_pipe",
+          "amount": 1
+        },
+        {
+          "itemId": "wooden_plank",
+          "amount": 1
+        },
+        {
+          "itemId": "leather_strap",
+          "amount": 2
+        },
+        {
+          "itemId": "rope",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "weapon_rebar_spear",
+      "resultAmount": 1,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_molotov_thrower",
+      "recipeName": "Build Fuel-Sling Molotov Rig",
+      "ingredients": [
+        {
+          "itemId": "scrap_metal",
+          "amount": 1
+        },
+        {
+          "itemId": "rope",
+          "amount": 1
+        },
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "empty_tin_can",
+          "amount": 4
+        }
+      ],
+      "resultItemId": "weapon_molotov_thrower",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_advanced_water_purifier",
+      "recipeName": "Rebuild Advanced Water Purifier",
+      "ingredients": [
+        {
+          "itemId": "item_ro_membrane",
+          "amount": 1
+        },
+        {
+          "itemId": "mechanical_parts",
+          "amount": 4
+        },
+        {
+          "itemId": "rubber_hose",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 3
+        }
+      ],
+      "resultItemId": "item_ro_membrane",
+      "resultAmount": 0,
+      "craftingTimeHours": 6.0,
+      "requiredStationId": "water_purifier"
+    },
+    {
+      "id": "craft_desalination_still",
+      "recipeName": "Build Desalination Still",
+      "ingredients": [
+        {
+          "itemId": "item_desal_membrane",
+          "amount": 1
+        },
+        {
+          "itemId": "metal_pipe",
+          "amount": 2
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 4
+        }
+      ],
+      "resultItemId": "item_desal_membrane",
+      "resultAmount": 0,
+      "craftingTimeHours": 8.0,
+      "requiredStationId": "water_purifier"
+    },
+    {
+      "id": "craft_filter_reconditioning",
+      "recipeName": "Recondition Water Filter Element",
+      "ingredients": [
+        {
+          "itemId": "water_filter",
+          "amount": 1
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 2
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "water_filter",
+      "resultAmount": 1,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "water_purifier"
+    },
+    {
+      "id": "craft_canned_rations",
+      "recipeName": "Can Ration Packs",
+      "ingredients": [
+        {
+          "itemId": "cooked_meat",
+          "amount": 2
+        },
+        {
+          "itemId": "roots",
+          "amount": 3
+        },
+        {
+          "itemId": "empty_tin_can",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "canned_food",
+      "resultAmount": 2,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_rendered_fat",
+      "recipeName": "Render Animal Fat",
+      "ingredients": [
+        {
+          "itemId": "raw_meat",
+          "amount": 2
+        },
+        {
+          "itemId": "empty_tin_can",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "cooking_oil",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_herbal_poultice",
+      "recipeName": "Brew Herbal Poultice",
+      "ingredients": [
+        {
+          "itemId": "roots",
+          "amount": 2
+        },
+        {
+          "itemId": "cloth",
+          "amount": 1
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "bandage",
+      "resultAmount": 2,
+      "craftingTimeHours": 0.5,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_distilled_spirits",
+      "recipeName": "Distill Scavenged Spirits",
+      "ingredients": [
+        {
+          "itemId": "roots",
+          "amount": 4
+        },
+        {
+          "itemId": "dirty_water",
+          "amount": 3
+        },
+        {
+          "itemId": "fuel",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "spirits",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "distiller"
+    },
+    {
+      "id": "craft_fuel_gel",
+      "recipeName": "Mix Fuel Gel",
+      "ingredients": [
+        {
+          "itemId": "spirits",
+          "amount": 1
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        },
+        {
+          "itemId": "empty_tin_can",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "fuel",
+      "resultAmount": 2,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "distiller"
+    },
+    {
+      "id": "craft_antiseptic_solution",
+      "recipeName": "Brew Antiseptic Solution",
+      "ingredients": [
+        {
+          "itemId": "spirits",
+          "amount": 1
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 1
+        },
+        {
+          "itemId": "cloth",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "bandage",
+      "resultAmount": 3,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "distiller"
+    },
+    {
+      "id": "craft_textile_repair",
+      "recipeName": "Repair Worn Textiles",
+      "ingredients": [
+        {
+          "itemId": "cloth",
+          "amount": 2
+        },
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "duct_tape",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "cloth",
+      "resultAmount": 4,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_improvised_heater",
+      "recipeName": "Build Improvised Space Heater",
+      "ingredients": [
+        {
+          "itemId": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 2
+        },
+        {
+          "itemId": "empty_tin_can",
+          "amount": 3
+        }
+      ],
+      "resultItemId": "scrap_metal",
+      "resultAmount": 0,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "heater"
+    },
+    {
+      "id": "craft_charcoal_filter",
+      "recipeName": "Make Charcoal Filter",
+      "ingredients": [
+        {
+          "itemId": "scrap_wood",
+          "amount": 3
+        },
+        {
+          "itemId": "cloth",
+          "amount": 1
+        },
+        {
+          "itemId": "empty_tin_can",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "water_filter",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "heater"
+    },
+    {
+      "id": "craft_pickled_tubers",
+      "recipeName": "Pickle Greenhouse Tubers",
+      "ingredients": [
+        {
+          "itemId": "crop_tuber",
+          "amount": 4
+        },
+        {
+          "itemId": "item_preservation_salt",
+          "amount": 2
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_pickled_tubers",
+      "resultAmount": 4,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_dried_mushrooms",
+      "recipeName": "Dry Fungal Slices",
+      "ingredients": [
+        {
+          "itemId": "crop_mushroom",
+          "amount": 6
+        },
+        {
+          "itemId": "cloth",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_dried_mushrooms",
+      "resultAmount": 6,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_smoked_meat_rations",
+      "recipeName": "Smoke Game Rations",
+      "ingredients": [
+        {
+          "itemId": "raw_meat",
+          "amount": 4
+        },
+        {
+          "itemId": "fuel",
+          "amount": 2
+        },
+        {
+          "itemId": "item_preservation_salt",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_smoked_meat",
+      "resultAmount": 4,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_canned_grain_stew",
+      "recipeName": "Can Ash-Grain Potage",
+      "ingredients": [
+        {
+          "itemId": "crop_ash_grain",
+          "amount": 3
+        },
+        {
+          "itemId": "crop_tuber",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 1
+        },
+        {
+          "itemId": "fuel",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "item_canned_grain_stew",
+      "resultAmount": 3,
+      "craftingTimeHours": 2.5,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_salted_fish_meat",
+      "recipeName": "Dry-Salt Flesh Strips",
+      "ingredients": [
+        {
+          "itemId": "raw_meat",
+          "amount": 5
+        },
+        {
+          "itemId": "item_preservation_salt",
+          "amount": 3
+        }
+      ],
+      "resultItemId": "item_salted_meat",
+      "resultAmount": 5,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_rendered_fat_confit",
+      "recipeName": "Prepare Root Confit",
+      "ingredients": [
+        {
+          "itemId": "crop_tuber",
+          "amount": 3
+        },
+        {
+          "itemId": "fuel",
+          "amount": 2
+        },
+        {
+          "itemId": "item_preservation_salt",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_fat_confit",
+      "resultAmount": 3,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_fermented_sauerkraut",
+      "recipeName": "Ferment Winter Cress Crock",
+      "ingredients": [
+        {
+          "itemId": "crop_leafy_green",
+          "amount": 5
+        },
+        {
+          "itemId": "item_preservation_salt",
+          "amount": 2
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_fermented_sauerkraut",
+      "resultAmount": 5,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_honey_preserved_pulp",
+      "recipeName": "Glaze Fruit Mash with Honey",
+      "ingredients": [
+        {
+          "itemId": "crop_tuber",
+          "amount": 4
+        },
+        {
+          "itemId": "item_honey_pot",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_honey_preserved_pulp",
+      "resultAmount": 4,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_dried_herb_packets",
+      "recipeName": "Pack Dried Herbal Infusions",
+      "ingredients": [
+        {
+          "itemId": "crop_medicinal_herb",
+          "amount": 4
+        },
+        {
+          "itemId": "cloth",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_dried_herb_packets",
+      "resultAmount": 4,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_brined_legume_mash",
+      "recipeName": "Prepare Brined Iron-Pea Paste",
+      "ingredients": [
+        {
+          "itemId": "crop_cold_legume",
+          "amount": 4
+        },
+        {
+          "itemId": "item_preservation_salt",
+          "amount": 2
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_brined_legume_mash",
+      "resultAmount": 4,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "stove"
+    },
+    {
+      "id": "craft_trap_improvised_wire",
+      "recipeName": "Craft Improvised Wire Snare",
+      "ingredients": [
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "trap_improvised_wire",
+      "resultAmount": 1,
+      "craftingTimeHours": 0.25,
+      "requiredStationId": ""
+    },
+    {
+      "id": "craft_trap_box",
+      "recipeName": "Craft Box Trap",
+      "ingredients": [
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 1
+        },
+        {
+          "itemId": "box_of_nails_10",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "trap_box",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_trap_fish",
+      "recipeName": "Craft Fish Trap",
+      "ingredients": [
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "rope",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "trap_fish",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "workbench"
     }
   ]
 }

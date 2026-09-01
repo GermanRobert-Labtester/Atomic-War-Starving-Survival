@@ -42,6 +42,28 @@
         "cigarette"
       ],
       "trade_currency": "Fuel, ammunition, obedience"
+    },
+    {
+      "faction_id": "faction_black_flotilla",
+      "buys_at_premium": [
+        "item_marine_sealant_kit",
+        "item_descent_line",
+        "item_sealed_dive_lamp",
+        "item_rebreather_canister",
+        "brass_fittings",
+        "scrap_mechanical",
+        "item_process_barrel",
+        "item_ro_resin",
+        "chart_*",
+        "paper_scrap"
+      ],
+      "refuses": [
+        "jewelry",
+        "book",
+        "family_photograph",
+        "item_teddy_bear"
+      ],
+      "trade_currency": "Dry cloth, medicine, fuel, and salvage with paper on it"
     }
   ],
   "price_shock_rules": [

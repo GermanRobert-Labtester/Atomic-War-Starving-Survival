@@ -14,13 +14,14 @@ namespace AtomicWar.GodotApp
     public sealed class PhantomMemoryHostSession
     : HostSessionBase{
         public PhantomMemoryEngine Engine { get; }
-        public List<PhantomSurvivorSnapshot> DemoSurvivors { get; }
+        public List<PhantomSurvivorSnapshot> Survivors { get; }
+        public List<PhantomSurvivorSnapshot> DemoSurvivors => Survivors;
 
         public string LastEvent { get; private set; } = string.Empty;
         public PhantomMemoryHostSession(PhantomMemoryEngine engine = null!)
         {
             Engine = engine ?? new PhantomMemoryEngine();
-            DemoSurvivors = CreateDemoSurvivors();
+            Survivors = CreateDemoSurvivors();
             LoadDefaultRules();
             Engine.OnPhantomTriggered += (svId, itemId, isMotivation) =>
             {
@@ -78,7 +79,7 @@ namespace AtomicWar.GodotApp
 
         public string ScavengeItem(string survivorId, string itemId)
         {
-            var sv = DemoSurvivors.Find(s => s.survivorId == survivorId);
+            var sv = Survivors.Find(s => s.survivorId == survivorId);
             if (sv == null) return "Unknown survivor.";
             var rng = new SystemSeededRng(42);
             var outcome = Engine.OnItemScavenged(sv, itemId, rng);
@@ -92,8 +93,8 @@ namespace AtomicWar.GodotApp
 
         public string TickDemo()
         {
-            for (int i = 0; i < DemoSurvivors.Count; i++)
-                Engine.TickHour(DemoSurvivors[i].survivorId, 1f);
+            for (int i = 0; i < Survivors.Count; i++)
+                Engine.TickHour(Survivors[i].survivorId, 1f);
             LastEvent = "Phantom timers ticked.";
             RaiseStateChanged();
             return LastEvent;
@@ -164,13 +165,22 @@ namespace AtomicWar.GodotApp
                     {
                         var t = entry.triggers[j];
                         if (t == null) continue;
-                        engine.RegisterRule(
-                            entry.background_id,
-                            t.item_category,
-                            t.motivation_chance,
-                            t.description,
-                            t.motivation_text,
-                            t.breakdown_text);
+                        engine.RegisterRuleDetailed(new PhantomTriggerRule
+                        {
+                            triggerId = !string.IsNullOrEmpty(t.trigger_id) ? t.trigger_id : $"rule_{entry.background_id}_{t.item_category}",
+                            itemCategory = t.item_category ?? string.Empty,
+                            itemId = t.item_id ?? string.Empty,
+                            motivationChance = t.motivation_chance,
+                            descriptionKey = t.description ?? string.Empty,
+                            motivationText = t.motivation_text ?? string.Empty,
+                            breakdownText = t.breakdown_text ?? string.Empty,
+                            affinityTrait = t.affinity_trait ?? string.Empty,
+                            loreOnly = t.lore_only,
+                            moralePayload = t.morale_payload,
+                            guiltPayload = t.guilt_payload,
+                            gatingFlag = t.gating_flag ?? string.Empty,
+                            repeatable = t.repeatable
+                        }, entry.background_id);
                     }
                 }
             }

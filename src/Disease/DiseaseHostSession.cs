@@ -21,7 +21,23 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; set; } = string.Empty;
         public event Action? StateChanged;
 
+        /// <summary>
+        /// Raised when a disease outcome resolves to death. Carries the
+        /// survivor id and the disease id. The host's SurvivorFateSystem is
+        /// the subscriber — the single disease death feed into the pipeline.
+        /// </summary>
+        public event Action<string, string>? OnSurvivorDied;
+
         private Func<IReadOnlyList<string>>? _populationProvider;
+
+        /// <summary>Plan 60 / D4 — the campaign's current sim day, so a protocol is
+        /// armed with the day it was actually applied and the ward can show how
+        /// long each countermeasure still holds.</summary>
+        private Func<int>? _dayProvider;
+
+        public void BindDayProvider(Func<int>? dayProvider) => _dayProvider = dayProvider;
+
+        private int Day => _dayProvider?.Invoke() ?? 0;
 
         public DiseaseHostSession(DiseaseSystem engine, DiseaseCatalog catalog)
         {
@@ -39,6 +55,8 @@ namespace AtomicWar.GodotApp
             Engine.OnOutcomeResolved += (s, d, recovered) =>
             {
                 LastEvent = (recovered ? s + " recovered from " : s + " died of ") + d;
+                if (!recovered)
+                    OnSurvivorDied?.Invoke(s, d);
                 StateChanged?.Invoke();
             };
             Engine.OnStateChanged += _ => StateChanged?.Invoke();
@@ -48,6 +66,73 @@ namespace AtomicWar.GodotApp
         public void BindPopulationProvider(Func<IReadOnlyList<string>> provider)
         {
             _populationProvider = provider;
+        }
+
+        /// <summary>
+        /// Plan 60 / D3 — bind the single item authority so a treatment dose is spent
+        /// like every other consumed thing in the game. The Core engine owns the
+        /// clinical decision; it never holds an inventory. An unwired supply channel
+        /// makes treatment refuse loudly rather than pretend, so a host that forgets to
+        /// bind is caught by its own selftest instead of by a player.
+        /// </summary>
+        public void BindSupply(Func<string, int, bool>? consume)
+        {
+            Engine.TryConsumeItem = consume;
+        }
+
+        /// <summary>
+        /// Treat one patient with one item. Returns a host-readable line; the reason
+        /// codes come from Core so the wording and the rule cannot drift apart.
+        /// </summary>
+        public DiseaseTreatmentResult Treat(string survivorId, string diseaseId, string itemId, int day)
+        {
+            var result = Engine.TryTreat(survivorId, diseaseId, itemId, day);
+            LastEvent = result.Accepted
+                ? survivorId + " treated with " + itemId + " (" + result.Role + ")"
+                  + (result.Cured ? " — cured" : string.Empty)
+                : "Treatment refused (" + result.Reason + "): " + itemId + " for " + survivorId;
+            StateChanged?.Invoke();
+            return result;
+        }
+
+        /// <summary>
+        /// Items authorised as treatment for a disease, for the ward UI. Read-only
+        /// projection of the catalog — the panel must not keep its own drug list.
+        /// </summary>
+        public IReadOnlyList<DiseaseTreatment> AuthorizedTreatments(string diseaseId)
+        {
+            var def = Catalog.GetById(diseaseId);
+            if (def == null || def.treatments == null) return System.Array.Empty<DiseaseTreatment>();
+            return def.treatments;
+        }
+
+        /// <summary>
+        /// Plan 60 / D2 — the clinical picture for one patient, assembled by Core
+        /// (<see cref="DiseaseTriage.PictureOf"/>) so no surface invents its own
+        /// reading of the same person. The bed is where a medic makes the diagnosis,
+        /// so the named illness is shown here; surfaces that a layperson reads show
+        /// signs without the identification instead.
+        /// </summary>
+        public DiseaseClinicalPicture? ClinicalPicture(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return null;
+            var patients = Engine.GetSnapshot()?.patients;
+            if (patients == null) return null;
+
+            DiseaseClinicalPicture? worst = null;
+            for (int i = 0; i < patients.Count; i++)
+            {
+                var p = patients[i];
+                if (p == null || p.survivor_id != survivorId) continue;
+                var def = Catalog.GetById(p.disease_id);
+                if (def == null) continue;
+                var picture = DiseaseTriage.PictureOf(
+                    def, p.days_sick,
+                    Engine.GetEffectiveLethality(survivorId, p.disease_id),
+                    p.treatments_applied);
+                if (worst == null || (int)picture.Stage > (int)worst.Stage) worst = picture;
+            }
+            return worst;
         }
 
         public void TickDaily(int day)
@@ -85,27 +170,38 @@ namespace AtomicWar.GodotApp
 
         public string PurifyWater()
         {
-            Engine.PurifyWater();
+            Engine.PurifyWater(Day);
             return "Water stores purified — waterborne vectors blocked.";
         }
 
         public string SealVents()
         {
-            Engine.SealVents();
+            Engine.SealVents(Day);
             return "Ventilators sealed — airborne vectors blocked.";
         }
 
         public string SterilizeTools()
         {
-            Engine.SterilizeTools();
+            Engine.SterilizeTools(Day);
             return "Surgical tools sterilised — bloodborne vectors blocked.";
         }
 
         public string ToggleAirFiltration(bool active)
         {
-            Engine.SetAirFiltration(active);
+            Engine.SetAirFiltration(active, Day);
             return active ? "Air filtration engaged — spore vectors blocked."
                 : "Air filtration offline — spore vectors active.";
+        }
+
+        /// <summary>Plan 60 / D4 — one protocol readout cell: "ON·2d" with the
+        /// days the countermeasure still holds, "ON" when it holds until
+        /// disengaged, "off" when the vector is live again.</summary>
+        private string ProtocolCell(string vectorName, bool active)
+        {
+            int left = Engine.ProtocolDaysRemaining(vectorName, Day);
+            if (!active || left < 0) return "off";
+            if (left == int.MaxValue) return "ON";
+            return $"ON·{left}d";
         }
 
         public string StatusLine()
@@ -151,10 +247,10 @@ namespace AtomicWar.GodotApp
                       .Append(p.quarantined ? "  ✔ ISOLATED" : (p.contagious ? "  ★ HIGH RISK" : "  (incubating)"));
                 }
             }
-            sb.Append("\nProtocols: water ").Append(State.water_purified ? "ON" : "off")
-              .Append(" · vents ").Append(State.vents_sealed ? "ON" : "off")
-              .Append(" · tools ").Append(State.tools_sterilized ? "ON" : "off")
-              .Append(" · air ").Append(State.air_filtration ? "ON" : "off");
+            sb.Append("\nProtocols: water ").Append(ProtocolCell(DiseaseVectorNames.Water, State.water_purified))
+              .Append(" · vents ").Append(ProtocolCell(DiseaseVectorNames.Air, State.vents_sealed))
+              .Append(" · tools ").Append(ProtocolCell(DiseaseVectorNames.Blood, State.tools_sterilized))
+              .Append(" · air ").Append(ProtocolCell(DiseaseVectorNames.Spore, State.air_filtration));
             return sb.ToString();
         }
 

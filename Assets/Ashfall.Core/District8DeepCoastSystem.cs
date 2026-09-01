@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.PlayerCommand;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -89,6 +90,12 @@ namespace Ashfall.Core
 
         // Daily-tick guard: degradation applies once per calendar day.
         public int lastTickDay = -1;
+
+        // ── Plan 23 — coastal storm surge (single producer path) ──
+        // WeatherSystem → this system's daily tick is the ONLY authority for
+        // coastal surge state. -1 = never; day numbers otherwise.
+        public int surgeActiveDay = -1;   // day the current surge began (-1 none)
+        public int surgeLastStormDay = -1; // last day a surge-grade storm hit
 
         /// <summary>True when the route reached the given stage or beyond.</summary>
         public bool AtLeast(DeepCoastStage s) => stage >= (int)s;
@@ -239,7 +246,7 @@ namespace Ashfall.Core
             !string.IsNullOrEmpty(nodeId) && _byId.ContainsKey(nodeId);
 
         public bool CanStartDockOperation =>
-            _state.AtLeast(DeepCoastStage.DeepBerthOperational) && !IsDockOperationActive;
+            _state.AtLeast(DeepCoastStage.DeepBerthOperational) && !IsDockOperationActive && !IsSurgeActive;
 
         public float TravelHours(string nodeId)
         {
@@ -399,6 +406,63 @@ namespace Ashfall.Core
         /// dock needs the structural bill paid; a damaged perimeter
         /// (salvage-immediate) forces a heavier scrap-only shoring bill first.
         /// </summary>
+        /// <summary>
+        /// Side-effect-free preview of a deep berth repair command.
+        /// Shares the same preconditions as <see cref="TryRepairDeepBerth"/>.
+        /// </summary>
+        public CommandPreview PreviewRepairDeepBerth(int day, long stateVersion = 0)
+        {
+            if (_state.berthRepaired)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairBerth, "already_repaired", "deepcoast.already_repaired", stateVersion);
+            if (_state.stage < (int)DeepCoastStage.DockAccessible)
+                return CommandPreview.Unavailable(PlayerCommandCode.RepairBerth, "stage_too_low", "deepcoast.stage_too_low", stateVersion);
+
+            var projected = new Dictionary<string, double>();
+            if (!_state.fleetLevyActive)
+            {
+                var bill = BerthRepairBill();
+                foreach (var kv in bill)
+                    projected[kv.Key] = -(double)kv.Value;
+            }
+            projected["structural_integrity"] = 100;
+
+            return CommandPreview.Available(
+                PlayerCommandCode.RepairBerth,
+                stateVersion,
+                projected,
+                isIrreversible: true,
+                messageKey: "deepcoast.preview_repair_berth");
+        }
+
+        /// <summary>
+        /// Execute a deep berth repair using the same preconditions as <see cref="PreviewRepairDeepBerth"/>.
+        /// Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteRepairDeepBerth(int day, Func<IReadOnlyDictionary<string, int>, bool> tryConsumeBill, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewRepairDeepBerth(day, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.RepairBerth, preview.StateVersion, currentStateVersion);
+
+            bool ok = TryRepairDeepBerth(day, tryConsumeBill);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.RepairBerth,
+                    ActionResult.Failed("execute_failed", "deepcoast.execute_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.RepairBerth,
+                ActionResult.Success("deepcoast.berth_repaired"),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
+
         public bool TryRepairDeepBerth(int day, Func<IReadOnlyDictionary<string, int>, bool> tryConsumeBill)
         {
             if (_state.berthRepaired) return false;
@@ -549,7 +613,51 @@ namespace Ashfall.Core
             if (_state.perimeterCleared && _state.structuralIntegrity < BerthRepairMinIntegrity && !_state.berthRepaired)
                 _state.contaminationLevel = Math.Min(1f, _state.contaminationLevel + 0.02f);
 
+            TickSurge(day, weather);
             RaiseChanged();
+        }
+
+        // ── Plan 23 — storm surge (authoritative coastal crisis state) ──
+        // WeatherSystem → this daily tick is the ONLY producer of coastal surge
+        // state. Transient flooding is derived; the surge episode (start day)
+        // persists so old saves and reloads cannot reroll a crisis.
+
+        public const int SurgeRecedeLagDays = 2;           // calm days before the water drops
+        public const float SurgeDailyContamination = 0.10f;
+        public const string JournalSurgeBegan = "dc8_surge_began";
+        public const string JournalSurgeAftermath = "dc8_surge_aftermath";
+
+        /// <summary>True while the coast is under an active storm surge.</summary>
+        public bool IsSurgeActive => _state.surgeActiveDay >= 0;
+
+        /// <summary>Day the current surge began (-1 when none).</summary>
+        public int SurgeActiveDay => _state.surgeActiveDay;
+
+        /// <summary>Dock operations are suspended while the surge runs.</summary>
+        public bool IsSurgeBlockingDock => _state.surgeActiveDay >= 0;
+
+        /// <summary>Surge-grade weather: fallout storms and black rain drive the sea over the shelf.</summary>
+        public static bool IsSurgeGradeWeather(WeatherKind weather) =>
+            weather == WeatherKind.FalloutStorm || weather == WeatherKind.BlackRain;
+
+        private void TickSurge(int day, WeatherKind weather)
+        {
+            if (IsSurgeGradeWeather(weather))
+            {
+                _state.surgeLastStormDay = day;
+                if (_state.surgeActiveDay < 0)
+                {
+                    _state.surgeActiveDay = day;
+                    MarkNarrative(JournalSurgeBegan);
+                }
+                _state.contaminationLevel = Math.Min(1f, _state.contaminationLevel + SurgeDailyContamination);
+            }
+            else if (_state.surgeActiveDay >= 0 && day - _state.surgeLastStormDay >= SurgeRecedeLagDays)
+            {
+                // The water drops: the surge recedes and the aftermath fires once.
+                _state.surgeActiveDay = -1;
+                MarkNarrative(JournalSurgeAftermath);
+            }
         }
 
         // ── Helpers ───────────────────────────────────────────────────
@@ -650,6 +758,8 @@ namespace Ashfall.Core
             to.dockOperationDiverId = from.dockOperationDiverId;
             to.dockOperationStartedDay = from.dockOperationStartedDay;
             to.lastTickDay = from.lastTickDay;
+            to.surgeActiveDay = from.surgeActiveDay;
+            to.surgeLastStormDay = from.surgeLastStormDay;
             to.narrativeMarkers = new List<string>();
             if (from.narrativeMarkers != null)
                 for (int i = 0; i < from.narrativeMarkers.Count; i++)

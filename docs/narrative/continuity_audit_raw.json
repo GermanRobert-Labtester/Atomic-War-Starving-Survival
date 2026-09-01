@@ -39,7 +39,7 @@
     "thread": "flour_number",
     "pattern": "flour",
     "match": "flour",
-    "context": "rm beer condensate, the automated iron funnel traps yield forty-five kilograms of live roaches weekly. The insects are autoclaved at 120°C, dried on steam coils, and milled into grey 'Tier-3 Survival Flour' providing 62% digestible crude protein.\"\n    }\n  ]\n}"
+    "context": "rm beer condensate, the automated iron funnel traps yield forty-five kilograms of live roaches weekly. The insects are autoclaved at 120°C, dried on steam coils, and milled into grey 'Tier-3 Survival Flour' providing 62% digestible crude protein.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/armored_locomotive_manifests.json",
@@ -228,14 +228,14 @@
     "thread": "flour_number",
     "pattern": "flour",
     "match": "flour",
-    "context": "_bronze\",\n        \"yield_recovery\"\n      ],\n      \"prose\": \"Passing coarse bran flakes through a high-velocity rotating brush duster lined with 40-mesh phosphor-bronze wire cloth scoured off adherent flour dust. The mechanical scouring recovered an extra 3.5% flour yield that would otherwise have been lost to animal feed.\"\n    }\n  ]\n}"
+    "context": "_bronze\",\n        \"yield_recovery\"\n      ],\n      \"prose\": \"Passing coarse bran flakes through a high-velocity rotating brush duster lined with 40-mesh phosphor-bronze wire cloth scoured off adherent flour dust. The mechanical scouring recovered an extra 3.5% flour yield that would otherwise have been lost to animal feed.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/bolting_silk_mesh_reports.json",
     "thread": "flour_number",
     "pattern": "flour",
     "match": "flour",
-    "context": "Passing coarse bran flakes through a high-velocity rotating brush duster lined with 40-mesh phosphor-bronze wire cloth scoured off adherent flour dust. The mechanical scouring recovered an extra 3.5% flour yield that would otherwise have been lost to animal feed.\"\n    }\n  ]\n}"
+    "context": "Passing coarse bran flakes through a high-velocity rotating brush duster lined with 40-mesh phosphor-bronze wire cloth scoured off adherent flour dust. The mechanical scouring recovered an extra 3.5% flour yield that would otherwise have been lost to animal feed.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/brine_pickling_barrel_spoilage.json",
@@ -1491,6 +1491,20 @@
     "context": "in axes.\"\n    },\n    {\n      \"id\": \"deckle_mould_wove_wire_mesh_uniform_calender\",\n      \"mould_frame_id\": \"CARTOGRAPHY_WOVE_MOULD_05\",\n      \"wire_mesh_count_per_inch\": 80.0,\n      \"sheet_width_mm\": 420.0,\n      \"sheet_length_mm\": 594.0,\n      \"timestamp_relative\": \"YEAR_12_MOULD_01\",\n      \"tags\": [\n        \"paper_making\",\n        \"deckle_mould\",\n        \"wove_paper\",\n        \"fine_mesh\",\n        "
   },
   {
+    "file": "Data/narrative/deep_lore_texts.json",
+    "thread": "flour_number",
+    "pattern": "fourteen",
+    "match": "fourteen",
+    "context": "inema\",\n      \"title\": \"The Projection Booth\",\n      \"body\": \"Two projectors, one threaded with a reel that has run to its end and stopped. The booth has been lived in: a mattress, a chemical toilet, fourteen empty cans of food opened with a can opener that is still sitting on the shelf. The person who lived here watched the same film on repeat until the bulb failed, then sat in the dark. The mattress is "
+  },
+  {
+    "file": "Data/narrative/deep_lore_texts.json",
+    "thread": "flour_number",
+    "pattern": "eleven",
+    "match": "eleven",
+    "context": "\": \"The Cold Chain Log\",\n      \"body\": \"A clipboard hanging by the main centrifuge, still attached to a pen on a retractable cord. The log records storage-unit temperatures at four-hour intervals for eleven days after the Exchange. The entries are meticulous. On the twelfth day, the handwriting changes. The new hand writes a single line: supply exhausted, no further collection possible, may God forgive "
+  },
+  {
     "file": "Data/narrative/diplomatic_contact_records_batch_1.json",
     "thread": "flour_number",
     "pattern": "flour",
@@ -1587,6 +1601,13 @@
     "pattern": "42",
     "match": "42",
     "context": "\"altitude_feet\": 0,\n      \"airspeed_knots\": 0,\n      \"system_health\": \"AIRFRAME_DESTROYED_IMPACT\",\n      \"timestamp_relative\": \"DAY_0003_HOUR_04_BURST\",\n      \"mechanics\": {\n        \"impact_g_force\": 42.6,\n        \"fuel_spill_ignition\": false,\n        \"flight_recorder_survival_status\": \"INTACT\"\n      },\n      \"tags\": [\n        \"drone\",\n        \"crash\",\n        \"flameout\",\n        \"blackbox\",\n       "
+  },
+  {
+    "file": "Data/narrative/dweller_dependency_backstories.json",
+    "thread": "flour_number",
+    "pattern": "forty-two",
+    "match": "forty-two",
+    "context": "forgive the bunk for it.\",\n      \"prose\": \"I started on a hundred milligrams of morphine when the pharmacy was still standing. The bunk tried the cold-turkey thing once, on a man named Rettke, on day forty-two. He screamed the second night and went out into the grey on the third. I have been on eighty milligrams ever since. Do not try to take me off. Ask the pharmacist for a maintenance bottle. The dose is"
   },
   {
     "file": "Data/narrative/dweller_heirlooms_master.json",
@@ -3890,6 +3911,62 @@
     "pattern": "42",
     "match": "42",
     "context": "{\n  \"schema_version\": 1,\n  \"items\": [\n    {\n      \"id\": \"pipeline_sabotage_shaped_charge_crude_breach\",\n      \"pipeline_sector\": \"TRANSLINE_CRUDE_CORRIDOR_MILE_42\",\n      \"pipe_diameter_inches\": 24.0,\n      \"sabotage_method\": \"LINEAR_SHAPED_CHARGE_BREACH\",\n      \"environmental_hazard_severity\": \"CRITICAL_AQUIFER_OIL_BLANKET\",\n      \"timestamp_relative\": \"YEAR_"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "flour_number",
+    "pattern": "flour",
+    "match": "flour",
+    "context": " \"loc_ration_queue_plaza\",\n      \"discovery_source\": \"loot\",\n      \"provenance\": \"restricted\",\n      \"text\": \"WARD B — MONTHLY ALLOCATION, MONTH 6. Headcount: 38 (34 active, 2 bedridden, 2 children). Flour: 76 kg (2 kg/person/week × 38 × 1 week reserve). Protein block: 19 kg (500 g/person/week × 38). Fuel oil: 12L (heating only, night cycle). Brine water: 190L (5L/person/week × 38). DEFICIT NOTE: Flour"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "flour_number",
+    "pattern": "flour",
+    "match": "flour",
+    "context": "Flour: 76 kg (2 kg/person/week × 38 × 1 week reserve). Protein block: 19 kg (500 g/person/week × 38). Fuel oil: 12L (heating only, night cycle). Brine water: 190L (5L/person/week × 38). DEFICIT NOTE: Flour short 8 kg against request. Protein block short 4.5 kg. Substitution: dried fish at 1:1 ratio approved. Residents of Ward B have filed three complaints regarding substitution. Complaints are on file."
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "flour_number",
+    "pattern": "flour",
+    "match": "flour",
+    "context": " CONVOY 9. Vehicle: Armored half-track (#AT-04). Driver: Pell, W. Escort: 2 personnel. Route: Delta (shelter gate → lock gate four → grange hall → return). Cargo: 200L filtered water (8 drums), 40 kg flour (4 sacks), 12 units iodine tablets (sealed), 1 crate medical supplies (marked RED). Departure: Day 130, 0530. ETA return: Day 133. STATUS: Convoy 9 did not return. Day 133 passed. Day 134 passed. Dri"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "flour_number",
+    "pattern": "flour",
+    "match": "flour",
+    "context": "on: slate hollow. Day 303: Reached bridge seven. Ice passable. One animal went through — recovered the pack, lost 8 kg fish. Day 306: Slate hollow. Sold 80 kg fish, 30 kg charcoal. Bought back: 15 kg flour, 6 hides (uncured). Day 310: Departed slate hollow for return. Day 314: Ambush at the rail span. Not bandits — three armed men, demanded half the cargo. Gave them 20 kg fish and 10L oil. No shots fir"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "flour_number",
+    "pattern": "flour",
+    "match": "flour",
+    "context": "turn. Day 314: Ambush at the rail span. Not bandits — three armed men, demanded half the cargo. Gave them 20 kg fish and 10L oil. No shots fired. Day 318: Back at holdfast. Net profit: 4 hides, 12 kg flour, 10L lamp oil minus losses. The road is not worth the road. I will run it again anyway. There is no other work.\",\n      \"tags\": [\"merchant\", \"caravan\", \"ice_road\", \"trade\", \"route\"]\n    },\n    {\n    "
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "flour_number",
+    "pattern": "the number",
+    "match": "the number",
+    "context": "in that leaves the ration line. We do not say who takes the difference. We say the difference exists. The silo is at loc_grain_silo. Go and count the sacks. Count them at dawn and count them at dusk. The number changes. We do not say who moves the sacks. We say the sacks move. If you understand this, you have already begun. Pass this circular to someone who has not begun. Do not pass it to someone who has.\""
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "flour_number",
+    "pattern": "the number",
+    "match": "the number",
+    "context": "our. Not brown. Not green. A colour I do not have a name for. Day 315 — [water damage obscures most of the page. Legible fragment:] ...told me the archive has records from before. Before what. Before the number changed. Before the... [rest illegible]\",\n      \"tags\": [\"diary\", \"personal\", \"motel\", \"unknown_author\", \"fragment\"]\n    },\n    {\n      \"id\": \"doc_machine_terminal_airfiltration\",\n      \"title\": \"Air"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "flour_number",
+    "pattern": "42",
+    "match": "42",
+    "context": "      \"discovery_location\": \"loc_shelter_infirmary\",\n      \"discovery_source\": \"quest\",\n      \"provenance\": \"restricted\",\n      \"text\": \"#41 — Halev, D., age 61. Pulmonary failure. Chronic exposure. #42 — unnamed male, approx 40s. Found outside shelter gate. Radiation burns. No ID. #43 — Toska, R., age 7. Meningitis. No available treatment. #44 — unnamed infant. Stillborn. Mother survived. #45 — Pel"
   },
   {
     "file": "Data/narrative/pneumatic_carrier_capsule_logs.json",
@@ -13458,7 +13535,7 @@
     "thread": "clock_brass_generator",
     "pattern": "bearing",
     "match": "bearing",
-    "context": "   \"topo\",\n        \"tailings_dam\",\n        \"washout\",\n        \"uranium_slurry\"\n      ],\n      \"prose\": \"Contour overlay of the earthen dam breach at Uranium Mine 9. Five million tons of acidic radium-bearing slime swept three miles down the creek bed, burying highway bridges under two meters of toxic grey mud that emits 14 R/hr.\"\n    }\n  ]\n}"
+    "context": "   \"topo\",\n        \"tailings_dam\",\n        \"washout\",\n        \"uranium_slurry\"\n      ],\n      \"prose\": \"Contour overlay of the earthen dam breach at Uranium Mine 9. Five million tons of acidic radium-bearing slime swept three miles down the creek bed, burying highway bridges under two meters of toxic grey mud that emits 14 R/hr.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/surgeons_casebook_batch_2.json",
@@ -14273,6 +14350,41 @@
     "context": "17_MOULD_02\",\n      \"tags\": [\n        \"paper_making\",\n        \"deckle_mould\",\n        \"verdigris\",\n        \"wire_corrosion\",\n        \"pulp_stain\"\n      ],\n      \"prose\": \"Allowing brass moulds to sit damp in unheated storage caused green copper hydroxycarbonate verdigris to bloom across wire junctions. Wet pulp picked up the green oxide, ruining fifty sheets with irregular turquoise stains.\"\n    },\n "
   },
   {
+    "file": "Data/narrative/deep_lore_texts.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "rds as though they were still attached to something.\",\n      \"provenance\": \"eyewitness\",\n      \"spoiler_tier\": 3,\n      \"unlock_condition\": \"reach_deep_lore_site\",\n      \"tags\": [\"grid\", \"civilian\", \"evacuation\", \"casualty\"]\n    },\n    {\n      \"id\": \"deep_lore_regional_blood_bank\",\n      \"location_id\": \"location_regional_blood_bank\",\n      \"title\": \"The Cold Chain Log\",\n      \"body\": \"A clipboard hanging"
+  },
+  {
+    "file": "Data/narrative/deep_lore_texts.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "nce\": \"material\",\n      \"spoiler_tier\": 3,\n      \"unlock_condition\": \"reach_deep_lore_site\",\n      \"tags\": [\"highland\", \"industry\", \"records\", \"abandoned\"]\n    },\n    {\n      \"id\": \"deep_lore_stadium_evacuation_center\",\n      \"location_id\": \"location_stadium_evacuation_center\",\n      \"title\": \"The Registration Tent\",\n      \"body\": \"Under the east concourse, a marquee tent still rigged with guy ropes and "
+  },
+  {
+    "file": "Data/narrative/deep_lore_texts.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "ndition\": \"reach_deep_lore_site\",\n      \"tags\": [\"highland\", \"industry\", \"records\", \"abandoned\"]\n    },\n    {\n      \"id\": \"deep_lore_stadium_evacuation_center\",\n      \"location_id\": \"location_stadium_evacuation_center\",\n      \"title\": \"The Registration Tent\",\n      \"body\": \"Under the east concourse, a marquee tent still rigged with guy ropes and aluminium poles. Inside: a folding table, a box of blank fo"
+  },
+  {
+    "file": "Data/narrative/deep_lore_texts.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "and-painted sign reading FAMILY GROUPS REPORT HERE. The forms are unused. The box is sealed. The sign was painted in haste but in correct orthography, by someone who knew what the forms were for. The evacuation was planned, the infrastructure was in place, and the forms were never filled out. The people who were supposed to sit at this table left before anyone arrived to be registered.\",\n      \"provenanc"
+  },
+  {
+    "file": "Data/narrative/deep_lore_texts.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "o sit at this table left before anyone arrived to be registered.\",\n      \"provenance\": \"eyewitness\",\n      \"spoiler_tier\": 3,\n      \"unlock_condition\": \"reach_deep_lore_site\",\n      \"tags\": [\"grid\", \"evacuation\", \"civil_defence\", \"unfulfilled\"]\n    },\n    {\n      \"id\": \"deep_lore_automated_abattoir\",\n      \"location_id\": \"location_automated_abattoir\",\n      \"title\": \"The Cycle Counter\",\n      \"body\": \"Th"
+  },
+  {
     "file": "Data/narrative/documents_batch_1.json",
     "thread": "dam_evacuation",
     "pattern": "evacuat",
@@ -14382,7 +14494,7 @@
     "thread": "dam_evacuation",
     "pattern": "dam",
     "match": "dam",
-    "context": " the brass hand of the dial clock at 04:55. In five minutes, the master solenoid will hammer the emergency gong three times. Everyone will groan, the air will fill with the smell of unwashed wool and damp chicory, and another endless grey day will begin.\"\n    }\n  ]\n}"
+    "context": " the brass hand of the dial clock at 04:55. In five minutes, the master solenoid will hammer the emergency gong three times. Everyone will groan, the air will fill with the smell of unwashed wool and damp chicory, and another endless grey day will begin.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/education_session_records.json",
@@ -14704,7 +14816,7 @@
     "thread": "dam_evacuation",
     "pattern": "evacuat",
     "match": "evacuat",
-    "context": "s\",\n        \"improvised_repair_guides_batch_2\",\n        \"security_incident_reports_batch_2\"\n      ],\n      \"tags\": [\n        \"generator\",\n        \"exhaust_gasket\",\n        \"carbon_monoxide\",\n        \"evacuation\",\n        \"high_severity\",\n        \"safety\"\n      ]\n    }\n  ]\n}"
+    "context": "s\",\n        \"improvised_repair_guides_batch_2\",\n        \"security_incident_reports_batch_2\"\n      ],\n      \"tags\": [\n        \"generator\",\n        \"exhaust_gasket\",\n        \"carbon_monoxide\",\n        \"evacuation\",\n        \"high_severity\",\n        \"safety\"\n      ]\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/equipment_failure_logs.json",
@@ -14851,7 +14963,7 @@
     "thread": "dam_evacuation",
     "pattern": "dam",
     "match": "dam",
-    "context": "b_id\": \"hc_iron_01\",\n      \"log_text\": \"Found three metres of old jute sacking in the storage room. Already processed fibre. Re-retted two days to separate the strands that had re-bonded with age and damp. Hackled once. The fibre is dry and brittle in places but the sound lengths are usable. A windfall.\"\n    }\n  ]\n}"
+    "context": "b_id\": \"hc_iron_01\",\n      \"log_text\": \"Found three metres of old jute sacking in the storage room. Already processed fibre. Re-retted two days to separate the strands that had re-bonded with age and damp. Hackled once. The fibre is dry and brittle in places but the sound lengths are usable. A windfall.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/field_reports_expansion.json",
@@ -15117,7 +15229,7 @@
     "thread": "dam_evacuation",
     "pattern": "dam",
     "match": "dam",
-    "context": "ic inversion reversed airflow through the external kiln exhaust chimney. Five hundred ppm carbon monoxide gas was pushed down into the adjacent laundry dormitory, sickening twenty-four workers before dampers could be slammed shut.\"\n    }\n  ]\n}"
+    "context": "ic inversion reversed airflow through the external kiln exhaust chimney. Five hundred ppm carbon monoxide gas was pushed down into the adjacent laundry dormitory, sickening twenty-four workers before dampers could be slammed shut.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/lost_tech_manuals.json",
@@ -15398,6 +15510,55 @@
     "pattern": "dam",
     "match": "dam",
     "context": "e_seal\",\n        \"pattern_finish\",\n        \"grain_raise\"\n      ],\n      \"prose\": \"Applying four coats of orange button shellac dissolved in grain alcohol sealed the cherry wood grain against water in damp molding sand. The glass-smooth, waterproof finish prevented grain raising, ensuring over five-hundred flawless mold draws without sand adhesion.\"\n    },\n    {\n      \"id\": \"pattern_maker_matchplate_a"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "dam_evacuation",
+    "pattern": "dam",
+    "match": "dam",
+    "context": "who has.\",\n      \"tags\": [\"faction\", \"circular\", \"currents\", \"propaganda\", \"grain\", \"silos\"]\n    },\n    {\n      \"id\": \"doc_diary_fragment_unknown\",\n      \"title\": \"Diary Fragment — Three Pages, Water-Damaged\",\n      \"author\": \"Unknown (handwriting matches no known shelter resident)\",\n      \"date_era\": \"Year 1, Days 310–315\",\n      \"document_type\": \"personal_diary\",\n      \"discovery_location\": \"loc_mo"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "dam_evacuation",
+    "pattern": "dam",
+    "match": "dam",
+    "context": " Day 312 — I tried to walk to the pumphouse today. Turned back at the bridge. The water under the bridge is the wrong colour. Not brown. Not green. A colour I do not have a name for. Day 315 — [water damage obscures most of the page. Legible fragment:] ...told me the archive has records from before. Before what. Before the number changed. Before the... [rest illegible]\",\n      \"tags\": [\"diary\", \"pers"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "available rubber stock. This is not a permanent fix. Nothing here has a permanent fix.\",\n      \"tags\": [\"fault_report\", \"hatch\", \"hydraulic\", \"shelter_gate\", \"critical\"]\n    },\n    {\n      \"id\": \"doc_evacuation_roster_sector_4\",\n      \"title\": \"Evacuation Roster — Sector 4 Residents, Order 112\",\n      \"author\": \"Consolidation Authority (stamped)\",\n      \"date_era\": \"Year 1, Day 285\",\n      \"document_type"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "nt fix. Nothing here has a permanent fix.\",\n      \"tags\": [\"fault_report\", \"hatch\", \"hydraulic\", \"shelter_gate\", \"critical\"]\n    },\n    {\n      \"id\": \"doc_evacuation_roster_sector_4\",\n      \"title\": \"Evacuation Roster — Sector 4 Residents, Order 112\",\n      \"author\": \"Consolidation Authority (stamped)\",\n      \"date_era\": \"Year 1, Day 285\",\n      \"document_type\": \"evacuation_roster\",\n      \"discovery_loca"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "roster_sector_4\",\n      \"title\": \"Evacuation Roster — Sector 4 Residents, Order 112\",\n      \"author\": \"Consolidation Authority (stamped)\",\n      \"date_era\": \"Year 1, Day 285\",\n      \"document_type\": \"evacuation_roster\",\n      \"discovery_location\": \"loc_conscription_office\",\n      \"discovery_source\": \"quest\",\n      \"provenance\": \"restricted\",\n      \"text\": \"EVACUATION ORDER 112 — SECTOR 4. Effective: Day "
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "ear 1, Day 285\",\n      \"document_type\": \"evacuation_roster\",\n      \"discovery_location\": \"loc_conscription_office\",\n      \"discovery_source\": \"quest\",\n      \"provenance\": \"restricted\",\n      \"text\": \"EVACUATION ORDER 112 — SECTOR 4. Effective: Day 285, 1200 hours. All residents of Sector 4 (allocations 4-A through 4-F) are to report to the transit staging area at the weighbridge by 1000 hours. Personal b"
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "dam_evacuation",
+    "pattern": "evacuat",
+    "match": "evacuat",
+    "context": "ce for assignment review.] This roster is final. Appeals were heard Day 283. The appeals were denied. STAMPED: Consolidation Authority, Sector 4. SIGNED: [illegible]. DATE: Day 284.\",\n      \"tags\": [\"evacuation\", \"roster\", \"sector_4\", \"conscription\", \"relocation\"]\n    },\n    {\n      \"id\": \"doc_bunker_graffiti_transcription\",\n      \"title\": \"Transcription — Wall Markings, Sub-Level 2 Access Corridor\",\n   "
   },
   {
     "file": "Data/narrative/pneumatic_cylinder_leather_assays.json",
@@ -15726,7 +15887,7 @@
     "thread": "dam_evacuation",
     "pattern": "dam",
     "match": "dam",
-    "context": "        \"mold_spoilage\",\n        \"humidity\",\n        \"foxing\"\n      ],\n      \"prose\": \"Prolonged surface rainstorms kept drying loft humidity above 90% for two weeks. *Penicillium* mold colonized the damp sheets hanging on horsehair ropes, producing unsightly olive-green foxing spots that ruined an entire batch of census paper.\"\n    }\n  ]\n}"
+    "context": "        \"mold_spoilage\",\n        \"humidity\",\n        \"foxing\"\n      ],\n      \"prose\": \"Prolonged surface rainstorms kept drying loft humidity above 90% for two weeks. *Penicillium* mold colonized the damp sheets hanging on horsehair ropes, producing unsightly olive-green foxing spots that ruined an entire batch of census paper.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/ragdoll_germination_assays.json",
@@ -16090,7 +16251,7 @@
     "thread": "dam_evacuation",
     "pattern": "dam",
     "match": "dam",
-    "context": "e\",\n        \"grease_scum\",\n        \"map_printing\"\n      ],\n      \"prose\": \"The press operator let the limestone slab dry during a map printing run. The greasy tusche ink adhered immediately to the un-dampened non-image areas, filling contour lines and swamp shading with solid black blotches across fifty reconnaissance maps.\"\n    }\n  ]\n}"
+    "context": "e\",\n        \"grease_scum\",\n        \"map_printing\"\n      ],\n      \"prose\": \"The press operator let the limestone slab dry during a map printing run. The greasy tusche ink adhered immediately to the un-dampened non-image areas, filling contour lines and swamp shading with solid black blotches across fifty reconnaissance maps.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/surface_radiation_topo_sheets.json",
@@ -16342,7 +16503,7 @@
     "thread": "dam_evacuation",
     "pattern": "dam",
     "match": "dam",
-    "context": "\": [\n        \"carpentry\",\n        \"moisture_trap\",\n        \"vapor_barrier\",\n        \"soft_rot\",\n        \"microclimate\"\n      ],\n      \"prose\": \"Installing un-vented polyethylene plastic sheeting over damp concrete sub-bases trapped moisture underneath. The warm 100% relative humidity microclimate fostered rapid soft rot decay, rotting forty linear meters of structural floor sills.\"\n    }\n  ]\n}"
+    "context": "\": [\n        \"carpentry\",\n        \"moisture_trap\",\n        \"vapor_barrier\",\n        \"soft_rot\",\n        \"microclimate\"\n      ],\n      \"prose\": \"Installing un-vented polyethylene plastic sheeting over damp concrete sub-bases trapped moisture underneath. The warm 100% relative humidity microclimate fostered rapid soft rot decay, rotting forty linear meters of structural floor sills.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/typographic_lead_wear_logs.json",
@@ -17416,6 +17577,13 @@
     "context": "or\": 0.01,\n      \"structural_header_spec\": \"Cased borehole to -120m into unconfined dolomite aquifer with multistage turbine pump\",\n      \"catastrophic_failure_mode\": \"Submersible pump motor burnout; borehole casing collapse; aquifer brine intrusion\",\n      \"maintenance_cycle_days\": 30,\n      \"chief_engineer_note\": \"The purest water in the province. 4°C straight out of the dolomite. Keep the check valves "
   },
   {
+    "file": "Data/narrative/bunker_children_folklore.json",
+    "thread": "geothermal_transition",
+    "pattern": "vent.*heat",
+    "match": "vent-walker' who walks on three brass knees. in truth, the noise is the expansion joints groaning when the heat",
+    "context": "       \"folklore\",\n        \"children\",\n        \"bogeyman\",\n        \"vents\",\n        \"ducts\"\n      ],\n      \"prose\": \"Children explain the rhythmic metallic popping in the ductwork as 'The Step of the Vent-Walker' who walks on three brass knees. In truth, the noise is the expansion joints groaning when the heater bank switches between day and night load, but children never leave food wrappers near the grates lest the Walker smell grease.\"\n    },\n    {\n      \"id\": \"folklore_children_the_filter_ghost_rhyme\",\n"
+  },
+  {
     "file": "Data/narrative/bunker_court_verdicts_codex.json",
     "thread": "geothermal_transition",
     "pattern": "steam.*pipe",
@@ -18428,7 +18596,7 @@
     "thread": "geothermal_transition",
     "pattern": "steam.*pipe",
     "match": "steamer. graham diverted alcohol vapor from fermented potato skins into a water-cooled coiled copper pipe",
-    "context": ",\n        \"moonshine\",\n        \"still\",\n        \"condensate\",\n        \"commissary\"\n      ],\n      \"prose\": \"A copper 1/4-inch tubing tap welded into the pressure-relief riser of the industrial potato steamer. Graham diverted alcohol vapor from fermented potato skins into a water-cooled coiled copper pipe inside a paint can, producing two liters of ninety-proof liquor every Saturday night.\"\n    }\n  ]\n}"
+    "context": ",\n        \"moonshine\",\n        \"still\",\n        \"condensate\",\n        \"commissary\"\n      ],\n      \"prose\": \"A copper 1/4-inch tubing tap welded into the pressure-relief riser of the industrial potato steamer. Graham diverted alcohol vapor from fermented potato skins into a water-cooled coiled copper pipe inside a paint can, producing two liters of ninety-proof liquor every Saturday night.\"\n    }\n  ]\n}\n"
   },
   {
     "file": "Data/narrative/ration_records_expansion.json",
@@ -19661,6 +19829,13 @@
     "pattern": "47.*12.*3",
     "match": "47 names, carved in the concrete, in three hands. the first hand carved 12 names. the second hand carved 23",
     "context": "\"tags\": [\n        \"bridge\",\n        \"gap\",\n        \"fall\"\n      ]\n    },\n    {\n      \"id\": \"memorial_21_wall_north\",\n      \"name\": \"The North Wall\",\n      \"text\": \"The north wall of the shelter yard. 47 names, carved in the concrete, in three hands. The first hand carved 12 names. The second hand carved 23. The third hand carved 12 and stopped. The third hand is the one that is still alive. The third hand is the one that does not carve anymore.\",\n      \"type\": \"memorial_wall\",\n      \"tags\": [\n        \""
+  },
+  {
+    "file": "Data/narrative/plan17_discoverable_documents.json",
+    "thread": "ash_trajectory",
+    "pattern": "47.*12.*3",
+    "match": "47). bone ash, 12 kg returned short — carrier denies. iodine pills, 3",
+    "context": "er\",\n      \"discovery_location\": \"loc_the_shallows_market\",\n      \"discovery_source\": \"loot\",\n      \"provenance\": \"restricted\",\n      \"text\": \"Brine water, 440L issued to Holdfast caravan (receipt #1147). Bone ash, 12 kg returned short — carrier denies. Iodine pills, 30 units traded at 4:1 against filtered charcoal. Net deficit on the quarter: 18 litres of distillate. Note: the caravan master's scales read 2% heavy. I have said nothing. The discrepancy funds the re"
   },
   {
     "file": "Data/narrative/quest_narrative_documents.json",

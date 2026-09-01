@@ -188,7 +188,33 @@ namespace AtomicWar.Journal
                     }
                     : JournalCodexRow.Locked(loc.displayName));
             }
+            AppendRoomHistoryRows(rows);
             return rows;
+        }
+
+        /// <summary>
+        /// Plan 29 Task 29A: shelter room-history vignettes render as Places rows
+        /// gated by the room_history_seen_* knowledge key. Locked rows show the
+        /// room, not the vignette title, so the discovery is not spoilt.
+        /// </summary>
+        private void AppendRoomHistoryRows(List<JournalCodexRow> rows)
+        {
+            if (_catalogs?.RoomHistories == null) return;
+            for (int i = 0; i < _catalogs.RoomHistories.Count; i++)
+            {
+                var v = _catalogs.RoomHistories[i];
+                if (v == null || string.IsNullOrEmpty(v.id)) continue;
+                string roomName = v.roomDisplayName ?? v.roomId ?? "Shelter";
+                rows.Add(_journal.IsRoomHistorySeen(v.id)
+                    ? new JournalCodexRow
+                    {
+                        DisplayName = v.title ?? roomName,
+                        Meta = $"Shelter · {roomName}" + (string.IsNullOrEmpty(v.timePeriod) ? "" : $" · {v.timePeriod}"),
+                        Body = v.body ?? string.Empty,
+                        IsLocked = false
+                    }
+                    : JournalCodexRow.Locked($"{roomName} — untold history"));
+            }
         }
 
         private static string BuildLocationMeta(LocationDefinitionData loc)

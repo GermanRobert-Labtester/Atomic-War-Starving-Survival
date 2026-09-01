@@ -83,8 +83,14 @@ namespace AtomicWar.GodotApp
         private void SetupPhase0()
         {
             if (_phase0 != null) return;
-            _phase0 = new Phase0HostSession();
+            SetupMedical();
+            // Task #133: share the MedicalHostSession-owned dependency ledger so
+            // there is exactly one chem-dep authority, and Phase-0 does not tick it.
+            _phase0 = new Phase0HostSession(dependency: _medical.Engine);
             _phase0.StateChanged += () => _phase0Dirty = true;
+            // Feed the specialty catalog — without it the wired specialty loop
+            // runs patternless and mastery can never progress.
+            _phase0.LoadTradeSpecialties(_dataDir);
 
             // ── Wire every Phase-0 effect to the REAL gameplay consumer ──
             SetupSurvivors();
@@ -169,7 +175,7 @@ namespace AtomicWar.GodotApp
             _phase0.ValidateConsumers();
 
             // Environment signals from the real world/shelter hosts.
-            _phase0.CurrentDay = _holdfastRuntime?.Day ?? _simDay;
+            _phase0.CurrentDay = _simDay;
             _phase0.GetFilterHealth = () =>
             {
                 var filter = _expansions?.Waystation?.State != null

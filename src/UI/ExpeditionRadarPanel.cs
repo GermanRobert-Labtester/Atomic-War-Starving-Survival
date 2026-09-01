@@ -59,7 +59,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
     {
         SetAnchorsPreset(LayoutPreset.FullRect);
 
-        _shell = new AshfallDashboardShell("Sortie Radar // Wasteland Movement Network", minWidth: 1100, minHeight: 720);
+        _shell = new AshfallDashboardShell("Sortie Radar // Wasteland Movement Network", minWidth: 1100, minHeight: 640);
         SetContentRoot(_shell);
 
         var categories = new[]
@@ -90,7 +90,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             new AshfallDataGrid.Column { Header = "Loot",     MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Right },
             new AshfallDataGrid.Column { Header = "Encounters", MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Right },
         };
-        _activeGrid = new AshfallDataGrid(activeCols, showHeader: true, minWidth: 720, minHeight: 220);
+        _activeGrid = new AshfallDataGrid(activeCols, showHeader: true, minWidth: 720, minHeight: 165);
         _activeGrid.OnRowSelected += HandleActiveRowSelected;
 
         // ── Targets DataGrid ──
@@ -103,7 +103,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             new AshfallDataGrid.Column { Header = "Loot",     MinWidth = 280, Alignment = AshfallDataGrid.ColumnAlign.Left },
             new AshfallDataGrid.Column { Header = "Status",   MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Left },
         };
-        _targetGrid = new AshfallDataGrid(targetCols, showHeader: true, minWidth: 720, minHeight: 220);
+        _targetGrid = new AshfallDataGrid(targetCols, showHeader: true, minWidth: 720, minHeight: 165);
         _targetGrid.OnRowSelected += HandleTargetRowSelected;
 
         // Stack the two grids vertically with a tab label between them.
@@ -198,7 +198,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         }
 
         int active = _host.Engine.ActiveCount;
-        var defs = _host.DemoDefinitions;
+        var defs = _host.Definitions;
         int blocked = 0;
         int maxDanger = 0;
         int encTotal = 0;
@@ -293,7 +293,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         }
 
         var rows = new List<AshfallDataGrid.Row>();
-        var defs = _host.DemoDefinitions;
+        var defs = _host.Definitions;
         for (int i = 0; i < defs.Count; i++)
         {
             var d = defs[i];
@@ -409,7 +409,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
     {
         if (_host == null) return null;
         int seen = -1;
-        var defs = _host.DemoDefinitions;
+        var defs = _host.Definitions;
         for (int i = 0; i < defs.Count; i++)
         {
             var d = defs[i];

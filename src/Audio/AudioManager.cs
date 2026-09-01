@@ -34,10 +34,14 @@ namespace AtomicWar.GodotApp.Audio
 
         private AudioStreamPlayer _musicPlayerA = null!;
         private AudioStreamPlayer _musicPlayerB = null!;
-        private AudioStreamPlayer _ambiencePlayer = null!;
         private bool _musicActiveA;
         private float _musicCrossfade;
         private bool _crossfading;
+
+        // Loops are keyed by cue ID. Generator, ventilation, Geiger, weather,
+        // and ambience therefore coexist instead of replacing one shared stream.
+        private readonly Dictionary<string, AudioStreamPlayer> _loopPlayers = new();
+        private readonly List<string> _loopKeys = new();
 
         // One-shot pool: bounded to prevent unbounded allocation
         private const int MaxOneShotPlayers = 16;
@@ -58,6 +62,11 @@ namespace AtomicWar.GodotApp.Audio
         // ── Headless detection ──────────────────────────────────
 
         private bool _headless;
+        private AudioEventBridge? _eventBridge;
+        private ShelterAudioController? _shelterAudio;
+        private SurfaceAmbienceController? _surfaceAmbience;
+        private IAudioDomainProvider? _domainProvider;
+        private Action? _settingsChangedHandler;
 
         // ── Lifecycle ───────────────────────────────────────────
 
@@ -69,7 +78,14 @@ namespace AtomicWar.GodotApp.Audio
             SetupBuses();
             SetupPlayers();
             ApplySettings(AudioSettings.Instance);
-            AudioSettings.Instance.OnSettingsChanged += () => ApplySettings(AudioSettings.Instance);
+            _settingsChangedHandler = () => ApplySettings(AudioSettings.Instance);
+            AudioSettings.Instance.OnSettingsChanged += _settingsChangedHandler;
+
+            _eventBridge = new AudioEventBridge(this);
+            _shelterAudio = new ShelterAudioController(this);
+            _surfaceAmbience = new SurfaceAmbienceController(this);
+            _domainProvider = GetParent() as IAudioDomainProvider;
+            RefreshDomainBindings();
 
             GD.Print($"[AudioManager] Ready — {AllBuses.Length + 1} buses, " +
                      $"pool={MaxOneShotPlayers}, headless={_headless}");
@@ -97,13 +113,15 @@ namespace AtomicWar.GodotApp.Audio
             AddChild(_musicPlayerA);
             _musicPlayerB = new AudioStreamPlayer { Bus = AudioBusNames.Music };
             AddChild(_musicPlayerB);
-            _ambiencePlayer = new AudioStreamPlayer { Bus = AudioBusNames.Ambience };
-            AddChild(_ambiencePlayer);
         }
 
         public override void _Process(double delta)
         {
             float dt = (float)delta;
+
+            // Host sessions can be created or cleared after this node is ready.
+            // Reference-equality guards make this cheap when nothing changed.
+            RefreshDomainBindings();
 
             // Music crossfade
             if (_crossfading)
@@ -160,8 +178,47 @@ namespace AtomicWar.GodotApp.Audio
 
         public override void _ExitTree()
         {
+            _eventBridge?.Dispose();
+            _eventBridge = null;
+            _shelterAudio?.Dispose();
+            _shelterAudio = null;
+            _surfaceAmbience?.Dispose();
+            _surfaceAmbience = null;
+            _domainProvider = null;
+
+            if (_settingsChangedHandler != null)
+            {
+                AudioSettings.Instance.OnSettingsChanged -= _settingsChangedHandler;
+                _settingsChangedHandler = null;
+            }
+
+            _loopKeys.Clear();
+            foreach (string key in _loopPlayers.Keys)
+                _loopKeys.Add(key);
+            for (int i = 0; i < _loopKeys.Count; i++)
+                StopLoop(_loopKeys[i]);
+
             if (Instance == this)
                 Instance = null;
+        }
+
+        private void RefreshDomainBindings()
+        {
+            if (_eventBridge == null || _domainProvider == null)
+                return;
+
+            _eventBridge.SubscribeAll(
+                _domainProvider.AudioRadiation,
+                _domainProvider.AudioWeather,
+                _domainProvider.AudioCombat,
+                _domainProvider.AudioCrafting,
+                _domainProvider.AudioExpeditions,
+                _domainProvider.AudioDisease,
+                _domainProvider.AudioSurvivorFate);
+            _shelterAudio?.Subscribe(
+                _domainProvider.AudioPowerGrid,
+                _domainProvider.AudioStartingLevel);
+            _surfaceAmbience?.Subscribe(_domainProvider.AudioWeather);
         }
 
         // ── Cue-based playback (primary API) ────────────────────
@@ -212,7 +269,7 @@ namespace AtomicWar.GodotApp.Audio
 
             if (cue.Loop)
             {
-                PlayLoopStream(stream, cue.Bus, effectiveDb);
+                PlayLoopStream(cue.Id, stream, cue.Bus, effectiveDb);
             }
             else
             {
@@ -229,17 +286,45 @@ namespace AtomicWar.GodotApp.Audio
         public void PlayWeatherAlert() => PlayCue(AudioCueCatalog.WeatherAlert);
 
         public void StartGeiger() => PlayCue(AudioCueCatalog.RadGeigerLoop);
-        public void StartBunkerAmbience() => PlayCue(AudioCueCatalog.AmbBunker);
-        public void StartSurfaceAmbience() => PlayCue(AudioCueCatalog.AmbSurface);
+        public void StartBunkerAmbience()
+        {
+            _surfaceAmbience?.Stop();
+            PlayCue(AudioCueCatalog.AmbBunker);
+        }
+
+        /// <summary>
+        /// Begins the explicit surface listening mode. Its loop follows weather
+        /// while active; an expedition alone never activates it because an
+        /// expedition does not establish the player's listening location.
+        /// </summary>
+        public void StartSurfaceAmbience()
+        {
+            if (_surfaceAmbience != null)
+                _surfaceAmbience.Start();
+            else
+                PlayCue(AudioCueCatalog.AmbSurface);
+        }
 
         public void StopAmbience()
         {
-            _ambiencePlayer.Stop();
-            _ambiencePlayer.Stream = null;
+            _surfaceAmbience?.Stop();
+            StopLoopsOnBus(AudioBusNames.Ambience);
+            // Shelter infrastructure uses independent buses so players can mix
+            // them separately, but it still belongs to the active-run ambience
+            // lifecycle and must not bleed through the menu or game-over screen.
+            StopCue(AudioCueCatalog.ShelterGenerator);
+            StopCue(AudioCueCatalog.ShelterVentilation);
         }
 
-        public void PlayMainMenuMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/main_menu.wav"));
-        public void PlayGameplayMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/gameplay_underscore.wav"));
+        /// <summary>Stops a loop cue without touching other loops on its bus.</summary>
+        public void StopCue(string cueId)
+        {
+            if (string.IsNullOrWhiteSpace(cueId)) return;
+            StopLoop(cueId);
+        }
+
+        public void PlayMainMenuMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/main_menu.ogg"));
+        public void PlayGameplayMusic() => PlayMusicStream(LoadStream("res://assets/audio/music/gameplay_underscore.ogg"));
 
         public void StopMusic()
         {
@@ -251,8 +336,31 @@ namespace AtomicWar.GodotApp.Audio
 
         public void PlayRadioStatic() => PlayCue(AudioCueCatalog.RadioStatic);
 
+        /// <summary>
+        /// Play a registered radio voice cue. Keeping radio speech in the cue
+        /// catalog gives it the same resource validation, trim, and cooldown
+        /// behavior as every other runtime sound.
+        /// </summary>
+        public void PlayVoiceOverCue(string cueId)
+        {
+            var cue = AudioCueCatalog.Resolve(cueId);
+            if (cue == null || cue.Bus != AudioBusNames.Voice)
+            {
+                LogMissingOnce($"radio-voice-cue:{cueId}");
+                return;
+            }
+
+            PlayCueDef(cue);
+        }
+
         public void PlayVoiceOver(string resourceName)
         {
+            if (AudioCueCatalog.Contains(resourceName))
+            {
+                PlayVoiceOverCue(resourceName);
+                return;
+            }
+
             string path = $"res://assets/audio/radio/{resourceName}.wav";
             var stream = LoadStream(path);
             if (stream == null) return;
@@ -353,17 +461,51 @@ namespace AtomicWar.GodotApp.Audio
             _activeOneShots.Add(player);
         }
 
-        private void PlayLoopStream(AudioStream stream, string bus, float volumeDb)
+        private void PlayLoopStream(string loopKey, AudioStream stream, string bus, float volumeDb)
         {
             if (stream is AudioStreamWav wav)
                 wav.LoopMode = AudioStreamWav.LoopModeEnum.Forward;
             else if (stream is AudioStreamOggVorbis ogg)
                 ogg.Loop = true;
+            else if (stream is AudioStreamMP3 mp3)
+                mp3.Loop = true;
 
-            _ambiencePlayer.Stream = stream;
-            _ambiencePlayer.Bus = bus;
-            _ambiencePlayer.VolumeDb = volumeDb;
-            _ambiencePlayer.Play();
+            if (!_loopPlayers.TryGetValue(loopKey, out AudioStreamPlayer? player))
+            {
+                player = new AudioStreamPlayer();
+                _loopPlayers.Add(loopKey, player);
+                AddChild(player);
+            }
+
+            bool streamChanged = !ReferenceEquals(player.Stream, stream);
+            player.Stream = stream;
+            player.Bus = bus;
+            player.VolumeDb = volumeDb;
+            if (streamChanged || !player.Playing)
+                player.Play();
+        }
+
+        private void StopLoop(string loopKey)
+        {
+            if (!_loopPlayers.Remove(loopKey, out AudioStreamPlayer? player))
+                return;
+
+            player.Stop();
+            player.Stream = null;
+            player.QueueFree();
+        }
+
+        private void StopLoopsOnBus(string bus)
+        {
+            _loopKeys.Clear();
+            foreach (var entry in _loopPlayers)
+            {
+                if (entry.Value.Bus == bus)
+                    _loopKeys.Add(entry.Key);
+            }
+
+            for (int i = 0; i < _loopKeys.Count; i++)
+                StopLoop(_loopKeys[i]);
         }
 
         private void PlayMusicStream(AudioStream? stream)
@@ -397,6 +539,7 @@ namespace AtomicWar.GodotApp.Audio
 
         public int MissingAssetCount => _loggedMissing.Count;
         public int ActiveOneShotCount => _activeOneShots.Count;
+        public int ActiveLoopCount => _loopPlayers.Count;
         public int PoolAvailable => _pool.Count;
         public bool IsHeadless => _headless;
 
@@ -417,7 +560,7 @@ namespace AtomicWar.GodotApp.Audio
 
             float volumeDb = cue.DefaultVolumeDb + GetBusVolumeOffset(cue.Bus);
             if (loop)
-                PlayLoopStream(stream, cue.Bus, volumeDb);
+                PlayLoopStream(audioKey, stream, cue.Bus, volumeDb);
             else
                 PlayOneShotStream(stream, cue.Bus, volumeDb);
         }
@@ -425,17 +568,9 @@ namespace AtomicWar.GodotApp.Audio
         public void StopCondition(string audioKey)
         {
             if (string.IsNullOrEmpty(audioKey)) return;
-            // Stop looped ambience by clearing the ambience player if it matches
             var cue = AudioCueCatalog.Resolve(audioKey);
             if (cue == null) return;
-
-            if (_ambiencePlayer.Playing && _ambiencePlayer.Stream != null)
-            {
-                // Only stop if this is the currently looping stream
-                var currentPath = _ambiencePlayer.Stream.ResourcePath;
-                if (currentPath == cue.ResourcePath)
-                    _ambiencePlayer.Stop();
-            }
+            StopLoop(cue.Id);
         }
     }
 }

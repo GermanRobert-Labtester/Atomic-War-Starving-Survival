@@ -39,7 +39,17 @@ namespace Ashfall.Core.Survivors
             { "pragmatic_individualism", new List<string> { "collectivist_solidarity", "military_discipline" } },
             { "collectivist_solidarity", new List<string> { "pragmatic_individualism" } },
             { "superstitious_traditional", new List<string> { "atheist_rationalist" } },
-            { "pacifist", new List<string> { "military_discipline" } }
+            { "pacifist", new List<string> { "military_discipline" } },
+            // Plan 12B — bunk-level philosophical profiles that pair off below.
+            // Same alphabetical order as the original list so a diff is plain.
+            { "belief_ration_collectivist", new List<string> { "belief_every_soul_alone", "belief_ash_nihilist" } },
+            { "belief_every_soul_alone",     new List<string> { "belief_ration_collectivist", "belief_faith_in_rebuild" } },
+            { "belief_faith_in_rebuild",      new List<string> { "belief_every_soul_alone", "belief_ash_nihilist" } },
+            { "belief_ash_nihilist",          new List<string> { "belief_ration_collectivist", "belief_faith_in_rebuild" } },
+            // Plan 30 — Grounded post-Exchange belief movements
+            { "belief_ash_witnesses",         new List<string> { "belief_rebuilders", "pragmatic_individualism", "atheist_rationalist" } },
+            { "belief_rebuilders",            new List<string> { "belief_ash_witnesses", "belief_every_soul_alone", "belief_ash_nihilist" } },
+            { "belief_listeners",             new List<string> { "atheist_rationalist", "military_discipline", "belief_every_soul_alone" } }
         };
 
         public event Action<string, string, float> OnFrictionDetected;

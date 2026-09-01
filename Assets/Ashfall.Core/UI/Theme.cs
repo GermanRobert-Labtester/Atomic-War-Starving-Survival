@@ -6,6 +6,18 @@
 namespace Ashfall.Core.UI
 {
     /// <summary>
+    /// Standardized severity vocabulary for UI alerts, telemetry readouts, and badge styling.
+    /// </summary>
+    public enum SeverityLevel
+    {
+        Normal,
+        Attention,
+        Dangerous,
+        Critical,
+        Unavailable
+    }
+
+    /// <summary>
     /// Ashfall design tokens — colors, spacing, typography sizes.
     /// Extracted from the Figma Make prototype and ported to USS.
     /// All values are authoritative; USS :root blocks must match.
@@ -37,7 +49,7 @@ namespace Ashfall.Core.UI
         public static readonly (float r, float g, float b, float a) Hot = (0.957f, 0.784f, 0.459f, 1f);
 
         /// <summary>Primary text — pale bone. #e6e0d2.</summary>
-        public const string PaleHex = "#E6E0D2";
+        public const string PaleHex = "#C7DCD0"; // Flagship Phosphor Green
         public static readonly (float r, float g, float b, float a) Pale = (0.902f, 0.878f, 0.824f, 1f);
 
         /// <summary>Secondary text — muted grey. #938f84.</summary>
@@ -57,10 +69,10 @@ namespace Ashfall.Core.UI
         public static readonly (float r, float g, float b, float a) Critical = (0.902f, 0.200f, 0.200f, 1f);
 
         // ── Semantic Design Tokens ───────────────────────────────────────
-        public const string SurfaceHex = "#0E1114";
+        public const string SurfaceHex = "#050709"; // Deep Black
         public static readonly (float r, float g, float b, float a) Surface = (0.055f, 0.067f, 0.078f, 1f);
 
-        public const string SurfaceCardHex = "#14191E";
+        public const string SurfaceCardHex = "#090B0D"; // Deep Black Card
         public static readonly (float r, float g, float b, float a) SurfaceCard = (0.078f, 0.098f, 0.118f, 1f);
 
         public static readonly (float r, float g, float b, float a) BackdropOverlay = (0.031f, 0.039f, 0.047f, 0.94f);
@@ -74,7 +86,7 @@ namespace Ashfall.Core.UI
         public const string SuccessHex = "#5CD670";
         public static readonly (float r, float g, float b, float a) Success = (0.361f, 0.839f, 0.439f, 1f);
 
-        public const string WarningHex = "#C97B3A";
+        public const string WarningHex = "#FF6B35"; // Flagship Hazard Orange
         public static readonly (float r, float g, float b, float a) Warning = (0.788f, 0.482f, 0.227f, 1f);
 
         public const string RadiationHex = "#D9A026";
@@ -127,9 +139,9 @@ namespace Ashfall.Core.UI
 
         // ── Corner radius (px) ──────────────────────────────────────────
 
-        public const int RadiusSm = 2;
-        public const int RadiusMd = 4;
-        public const int RadiusLg = 8;
+        public const int RadiusSm = 0; // Brutalist Sharp
+        public const int RadiusMd = 0; // Brutalist Sharp
+        public const int RadiusLg = 0; // Brutalist Sharp
 
         // ── Typography sizes (px) ───────────────────────────────────────
 

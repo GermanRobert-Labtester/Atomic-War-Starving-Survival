@@ -1,8 +1,8 @@
 // ============================================================================
 // Save Store : HostEventSaveStore
-// Core State : Ashfall.Core.HostEventState
-// Host Caller: Main.Narrative / HostEventHostSession
-// Purpose    : Host-level dynamic event triggers, queued incidents, and event history
+// Core State : AtomicWar.GodotApp.Host.HostEventState
+// Host Caller: Main.Narrative / HostEventAdapter
+// Purpose    : Single campaign codec/projection for host-level dynamic event progress
 // ============================================================================
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
@@ -12,10 +12,10 @@ using AtomicWar.GodotApp.Host;
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Persists <see cref="HostEventState"/> as JSON under
-    /// <c>user://host_event_save.json</c> — thin façade over the Core
-    /// SaveStore&lt;T&gt; service (via SaveStoreHub). Checksummed envelope,
-    /// atomic write, and legacy bare-state loading live in the service.
+    /// Persists the adapter-owned <see cref="HostEventState"/> as JSON under
+    /// <c>user://host_event_save.json</c> — the compatibility projection and
+    /// campaign payload use the same Core SaveStore&lt;T&gt; codec via SaveStoreHub.
+    /// Checksummed envelope, atomic write, and legacy bare-state loading live in the service.
     /// </summary>
     public static class HostEventSaveStore
     {

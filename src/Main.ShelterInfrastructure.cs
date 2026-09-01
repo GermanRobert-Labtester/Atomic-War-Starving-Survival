@@ -27,6 +27,7 @@ namespace AtomicWar.GodotApp
         private ShelterThermalHostSession _shelterThermal = null!;
         private ShelterThermalPanel _shelterThermalPanel = null!;
         private bool _shelterThermalDirty;
+        private Ashfall.Core.VentilationSystem _ventilation = null!; // Plan 29 29B: machine tell readings
         private ShelterScheduleHostSession _shelterSchedule = null!;
         private ShelterSchedulePanel _shelterSchedulePanel = null!;
         private bool _shelterScheduleDirty;
@@ -37,9 +38,214 @@ namespace AtomicWar.GodotApp
         private WaystationNetworkPanel _waystationPanel = null!;
         private bool _waystationDirty;
 
+        // Plan 29 Task 29A — shelter room identity overlay (read-only data projection,
+        // loaded once; no condition state, no save section of its own).
+        private ShelterRoomIdentityCatalog? _shelterRoomIdentity;
+
+        /// <summary>Lazy-load the room identity catalog from the data authority. Missing file → empty catalog (overlay, never a dependency).</summary>
+        private ShelterRoomIdentityCatalog? GetShelterRoomIdentityCatalog()
+        {
+            if (_shelterRoomIdentity != null) return _shelterRoomIdentity;
+            _shelterRoomIdentity = ShelterRoomIdentityCatalog.Load(
+                new FileSystemIO(), new SystemTextJsonSerializer(), _dataDir);
+            return _shelterRoomIdentity;
+        }
+
+        // Plan 29 Task 29B — machine tell catalog (read-only data projection, loaded once).
+        private Ashfall.Core.Shelter.ShelterMachineTellCatalog? _machineTellCatalog;
+
+        private Ashfall.Core.Shelter.ShelterMachineTellCatalog GetMachineTellCatalog()
+        {
+            if (_machineTellCatalog != null) return _machineTellCatalog;
+            _machineTellCatalog = Ashfall.Core.Shelter.ShelterMachineTellCatalog.Load(
+                new FileSystemIO(), new SystemTextJsonSerializer(), _dataDir);
+            return _machineTellCatalog;
+        }
+
+        /// <summary>
+        /// Plan 29 29A: a shelter room hotspot was clicked — treat it as inspection.
+        /// Marks the authoritative Day-1 roster inspection (legacy ids tolerated via
+        /// the catalog alias map) and unlocks inspect_room vignettes through the
+        /// JournalSystem knowledge key (journal save owns persistence; old saves
+        /// simply default locked and unlock on the next inspection).
+        /// </summary>
+        private void HandleShelterRoomSelected(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return;
+            var catalog = GetShelterRoomIdentityCatalog();
+            string canonical = catalog?.ResolveRoomId(roomId) ?? roomId;
+
+            if (_startingLevel != null && !_startingLevel.System.InspectRoom(canonical))
+            {
+                var aliases = catalog?.GetLegacyAliases(canonical);
+                if (aliases != null)
+                {
+                    for (int i = 0; i < aliases.Count; i++)
+                        if (_startingLevel.System.InspectRoom(aliases[i])) break;
+                }
+            }
+
+            UnlockRoomHistories(catalog,
+                catalog?.GetUnlockableVignettes(canonical,
+                    ShelterRoomIdentityCatalog.RoomHistoryTrigger.RoomInspected));
+        }
+
+        /// <summary>
+        /// Plan 29 29A: a real repair/maintenance action completed in a shelter room
+        /// (filter service/replace). Raises the repair_performed unlock path only —
+        /// authored vignettes never fire from a decorative interaction.
+        /// </summary>
+        private void HandleShelterRoomRepairPerformed(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return;
+            var catalog = GetShelterRoomIdentityCatalog();
+            UnlockRoomHistories(catalog,
+                catalog?.GetUnlockableVignettes(catalog.ResolveRoomId(roomId),
+                    ShelterRoomIdentityCatalog.RoomHistoryTrigger.RepairPerformed));
+        }
+
+        /// <summary>
+        /// Plan 29 29A: daily milestone pass. Runs once per campaign day from the
+        /// day coordinator (never per frame) and unlocks at most the vignettes whose
+        /// required day has been reached. Journal keys make it idempotent, so a late
+        /// load of an older save catches up once rather than spamming every tick.
+        /// </summary>
+        private void TickShelterRoomHistoryMilestones(int day)
+        {
+            var catalog = GetShelterRoomIdentityCatalog();
+            if (catalog == null) return;
+            UnlockRoomHistories(catalog, catalog.GetDayMilestoneVignettes(day));
+
+            // Plan 29 29B: daily machine glitch pass — journal one-shots, evaluate continuous.
+            TickMachineGlitchEvents(day);
+        }
+
+        /// <summary>Apply an unlock batch through the journal (the single persistence authority).</summary>
+        private void UnlockRoomHistories(ShelterRoomIdentityCatalog? catalog,
+            System.Collections.Generic.IReadOnlyList<RoomHistoryVignette>? vignettes)
+        {
+            if (catalog == null || vignettes == null || _journal == null) return;
+            for (int i = 0; i < vignettes.Count; i++)
+            {
+                if (_journal.UnlockRoomHistorySeen(vignettes[i].id))
+                    _journalDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Plan 29 29B: daily machine glitch pass. Journals one-shot glitches (idempotent
+        /// via journal keys) and evaluates continuous glitches for UI surfacing. Old saves
+        /// default un-noted and reveal once; continuous events re-fire on their cooldown,
+        /// paced by the caller's day bookkeeping.
+        /// </summary>
+        private void TickMachineGlitchEvents(int day)
+        {
+            var catalog = GetMachineTellCatalog();
+            if (catalog == null || catalog.GlitchEvents.Count == 0 || _journal == null) return;
+
+            var readings = BuildMachineReadings();
+            if (readings == null) return;
+
+            bool isNoted(string id) => _journal.IsGlitchNoted(id);
+            for (int m = 0; m < catalog.MachineCount; m++)
+            {
+                string mid = catalog.Machines[m].id;
+                var glitches = catalog.EvaluateGlitchEvents(mid, readings, isNoted);
+                for (int g = 0; g < glitches.Count; g++)
+                {
+                    var gl = glitches[g];
+                    if (string.Equals(gl.repeat_policy, "once", System.StringComparison.Ordinal))
+                    {
+                        _journal.UnlockGlitchNoted(gl.id);
+                    }
+                }
+            }
+        }
+
+        /// <summary>Build MachineConditionReadings from live host systems for tell evaluation.</summary>
+        private Ashfall.Core.Shelter.MachineConditionReadings? BuildMachineReadings()
+        {
+            try
+            {
+                return new Ashfall.Core.Shelter.MachineConditionReadings
+                {
+                    HepaFilterHealth = (float)Math.Clamp(_startingLevel?.System.State.airFilterHealthPercent ?? 100, 0, 100),
+                    HepaRadon = (float)Math.Clamp(_startingLevel?.System.State.radonLevelBqm3 ?? 12, 0, 200),
+                    PowerFuelUnits = (float)Math.Clamp(_powerGrid?.System.State.FuelUnits ?? 0, 0, 200),
+                    PowerBatteryReserve = _powerGrid != null ? (_powerGrid.System.State.BatteryReserveWh / 4000f * 100f) : 100f,
+                    VentilationFilterSaturation = (float)Math.Clamp(_ventilation?.FilterSaturation ?? 0, 0, 100),
+                    WaterFilterIntegrity = (float)Math.Clamp(_waterTreatment?.System.FilterIntegrity ?? 100, 0, 100),
+                    ThermalBoilerFuel = (float)Math.Clamp(_shelterThermal?.System.BoilerFuelLevel ?? 0, 0, 200),
+                    AirlockIncidentActive = _airlockSecurity?.System.HasPendingIncident ?? false,
+                    HazardWeather = _world?.Weather.Current is Ashfall.Core.WeatherKind.FalloutStorm or Ashfall.Core.WeatherKind.BlackRain or Ashfall.Core.WeatherKind.Ashfall
+                };
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>Build a one-line dashboard tell string from live machine readings (§29B.9–29B.13).</summary>
+        public string BuildMachineTellText(ISeededRng? rng = null)
+        {
+            try
+            {
+                var catalog = GetMachineTellCatalog();
+                if (catalog == null || catalog.MachineCount == 0) return string.Empty;
+
+                var readings = BuildMachineReadings();
+                if (readings == null) return string.Empty;
+
+                var fired = new System.Collections.Generic.List<string>();
+                bool isNoted(string id) => _journal != null && _journal.IsGlitchNoted(id);
+                for (int m = 0; m < catalog.MachineCount; m++)
+                {
+                    string mid = catalog.Machines[m].id;
+                    string label = catalog.Machines[m].display_name;
+                    if (string.IsNullOrWhiteSpace(label))
+                    {
+                        label = mid;
+                        if (label.StartsWith("machine_", StringComparison.Ordinal))
+                            label = label.Substring("machine_".Length);
+                    }
+                    // Shorten to a readable tag: "Main Generator & Battery Bank" → "Generator"
+                    if (label.Contains("&", StringComparison.Ordinal))
+                        label = label.Split('&')[0].Trim();
+                    label = label.Replace("Filtration Stack", "HEPA").Replace("Exhaust Plant", "Ventilation").Replace("Brine Still", "Still").Replace("Shelter ", "").Replace("Airlock Machinery", "Airlock");
+                    label = label.ToUpperInvariant();
+
+                    var quirks = catalog.EvaluateQuirks(mid, readings);
+                    for (int q = 0; q < quirks.Count; q++)
+                    {
+                        var qk = quirks[q];
+                        if (string.Equals(qk.kind, "diagnostic", System.StringComparison.Ordinal))
+                            fired.Add($"[{label}] {qk.text_cue}");
+                    }
+
+                    var glitches = catalog.EvaluateGlitchEvents(mid, readings, isNoted);
+                    for (int g = 0; g < glitches.Count; g++)
+                    {
+                        var gl = glitches[g];
+                        fired.Add($"[{label}] {gl.title}");
+                        if (string.Equals(gl.repeat_policy, "once", System.StringComparison.Ordinal) && _journal != null)
+                            _journal.UnlockGlitchNoted(gl.id);
+                    }
+                }
+
+                if (fired.Count == 0) return "NOMINAL";
+                return string.Join(" // ", fired);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
 
         private void SetupWaterTreatment()
         {
+            if (_waterTreatment != null) return;
             var wtState = WaterTreatmentSaveStore.TryLoad() ?? new WaterTreatmentState();
             var wtSys = new WaterTreatmentSystem(new GodotLog());
             wtSys.RestoreState(wtState);
@@ -60,6 +266,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupAirlockSecurity()
         {
+            if (_airlockSecurity != null) return;
             var asState = AirlockSecuritySaveStore.TryLoad() ?? new AirlockSecurityState();
             var asSys = new AirlockSecuritySystem(new SeededRng(1986), new GodotLog());
             asSys.RestoreState(asState);
@@ -80,6 +287,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupShelterThermal()
         {
+            if (_shelterThermal != null) return;
             var stState = ShelterThermalSaveStore.TryLoad() ?? new ShelterThermalState();
             var stNeeds = _survivors.Needs;
             var stStarting = _startingLevel.System;
@@ -103,6 +311,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupShelterSchedule()
         {
+            if (_shelterSchedule != null) return;
             var ssState = ShelterScheduleSaveStore.TryLoad() ?? new ShelterScheduleState();
             var ssPower = _powerGrid.System;
             var ssSys = new ShelterScheduleSystem(ssPower, new GodotLog());
@@ -125,11 +334,13 @@ namespace AtomicWar.GodotApp
 
         private void SetupAutopsy(ResearchSystem sharedResearch)
         {
+            if (_autopsy != null) return;
             var auState = AutopsySaveStore.TryLoad() ?? new AutopsyState();
             var auInv = _inventory.Inventory;
             var auRad = _survivors.Radiation;
             var auStarting = _startingLevel.System;
             var auVent = new VentilationSystem(auStarting);
+            _ventilation = auVent; // Plan 29 29B: expose for machine tell readings
             var auRes = sharedResearch;
             var auMedical = _medicalWard;
             var auSys = new AutopsySystem(new SeededRng(1986), auInv, auRad, auVent, auRes, auMedical, new GodotLog());
@@ -152,6 +363,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupWaystation()
         {
+            if (_waystation != null) return;
             var wsState = WaystationSaveStore.TryLoad() ?? new WaystationSystemState();
             var wsSys = new WaystationSystem();
             wsSys.RestoreState(wsState);

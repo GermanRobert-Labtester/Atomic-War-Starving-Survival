@@ -84,6 +84,28 @@ namespace Ashfall.Core.Settings
                 data.UiScale = 1.0f;
             }
 
+            // Locale
+            if (string.IsNullOrWhiteSpace(data.Locale))
+            {
+                data.Locale = "en";
+            }
+            else
+            {
+                data.Locale = data.Locale.Trim().ToLowerInvariant();
+                if (data.Locale != "en" && data.Locale != "pseudo")
+                {
+                    warnings.Add($"Locale '{data.Locale}' not recognized; defaulting to 'en'");
+                    data.Locale = "en";
+                }
+            }
+
+            // Tutorial Mode (0=All, 1=ContextualOnly, 2=Disabled)
+            if (data.TutorialMode < 0 || data.TutorialMode > 2)
+            {
+                warnings.Add($"TutorialMode {data.TutorialMode} clamped to 0");
+                data.TutorialMode = 0;
+            }
+
             // Max FPS (0 is valid for unlimited, otherwise capped at 360)
             if (data.MaxFps < 0 || data.MaxFps > 360)
             {

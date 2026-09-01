@@ -12,7 +12,9 @@ namespace Ashfall.Core.StartingLevel
     /// </summary>
     public class StartingLevelSystem
     {
-        public const string HoldfastLocationId = "loc_bunker_holdfast";
+        public const string HoldfastLocationId = "loc_holdfast";
+        /// <summary>Pre-Plan-29 save value for the Holdfast location id; migrated on restore (data authority: locations.json).</summary>
+        public const string LegacyHoldfastLocationId = "loc_bunker_holdfast";
 
         public StartingLevelSaveState State { get; private set; } = new StartingLevelSaveState();
 
@@ -88,15 +90,21 @@ namespace Ashfall.Core.StartingLevel
             };
         }
 
-        public void InspectRoom(string roomId)
+        /// <summary>
+        /// Inspect a room of the Day-1 roster. Returns true when the room id is
+        /// known (already-inspected rooms return true without re-logging).
+        /// </summary>
+        public bool InspectRoom(string roomId)
         {
             var room = State.rooms.Find(r => r.roomId == roomId);
-            if (room != null && !room.isInspected)
+            if (room == null) return false;
+            if (!room.isInspected)
             {
                 room.isInspected = true;
                 LogDirective($"Inspected {room.displayName} (Ceiling: {room.material}, {room.attenuation:P0} rad attenuation).");
                 OnStateChanged?.Invoke();
             }
+            return true;
         }
 
         public void UpgradeRoomShielding(string roomId, string material, float attenuation)
@@ -292,7 +300,9 @@ namespace Ashfall.Core.StartingLevel
             State = new StartingLevelSaveState
             {
                 day = save.day,
-                locationId = string.IsNullOrWhiteSpace(save.locationId) ? HoldfastLocationId : save.locationId,
+                locationId = string.IsNullOrWhiteSpace(save.locationId) || string.Equals(save.locationId, LegacyHoldfastLocationId, StringComparison.Ordinal)
+                    ? HoldfastLocationId
+                    : save.locationId,
                 rationPolicy = save.rationPolicy,
                 maintenanceDirective = save.maintenanceDirective,
                 radioProtocol = save.radioProtocol,

@@ -95,7 +95,12 @@
       "id": "quest_deep_well"
     },
     {
-      "id": "quest_dropping_the_rifle"
+      "id": "quest_dropping_the_rifle",
+      "title": "Dropping the Rifle",
+      "synopsis": "The Child Soldier keeps the rifle the way soldiers keep things they shouldn't. A hand-me-down maxim: the rifle kept them alive, the rifle is the only thing that did. The bunker's quiet question is who, in those quiet hours, is going to carry that misread weight away.",
+      "factionTag": "",
+      "status": "active",
+      "narrativeHook": "apprenticeship_medic_or_smith"
     },
     {
       "id": "quest_earning_keep"
@@ -107,7 +112,12 @@
       "id": "quest_embracing_the_glow"
     },
     {
-      "id": "quest_first_blood"
+      "id": "quest_first_blood",
+      "title": "First Blood at the Hatch",
+      "synopsis": "The Hardened Daughter eats with a piece of broken glass wrapped in cloth and watches the door. Someone will eventually have to sit beside her, in silence, until a sound outside is no longer terrifying. Then there is the day she does not flinch at it.",
+      "factionTag": "",
+      "status": "active",
+      "narrativeHook": "mentorship_veteran_pair"
     },
     {
       "id": "quest_garrison_census"
@@ -128,7 +138,12 @@
       "id": "quest_ground_zero"
     },
     {
-      "id": "quest_growing_up_fast"
+      "id": "quest_growing_up_fast",
+      "title": "Growing Up, Fast",
+      "synopsis": "The Naive Son draws animals on the wall and asks questions about birds. The adults answer in halves. The bunker has a list of skills and a calendar that says it is time to start teaching.",
+      "factionTag": "",
+      "status": "active",
+      "narrativeHook": "schooling_curriculum_choice"
     },
     {
       "id": "quest_hell_is_other_people"
@@ -494,7 +509,12 @@
       "id": "quest_the_old_woods"
     },
     {
-      "id": "quest_the_pack"
+      "id": "quest_the_pack",
+      "title": "The Pack",
+      "synopsis": "The Feral Orphan will not eat food that has been cooked or touched. A blanket folded and left on warm concrete stays a blanket folded on warm concrete. There is a list inside the council sheet that says: thirty days, the Vet and the Fierce Mother take turns.",
+      "factionTag": "",
+      "status": "active",
+      "narrativeHook": "orphan_adoption_pair_choice"
     },
     {
       "id": "quest_the_perfect_equation"
@@ -1285,6 +1305,62 @@
       "status": "active"
     },
     {
+      "id": "quest_the_falsified_reading",
+      "title": "The Falsified Reading",
+      "synopsis": "",
+      "factionTag": "",
+      "status": "active"
+    },
+    {
+      "id": "quest_the_stolen_dosimeter",
+      "title": "The Stolen Dosimeter",
+      "synopsis": "",
+      "factionTag": "",
+      "status": "active"
+    },
+    {
+      "id": "quest_child_over_the_limit",
+      "title": "Child Over the Limit",
+      "synopsis": "",
+      "factionTag": "",
+      "status": "active"
+    },
+    {
+      "id": "quest_the_register_audit",
+      "title": "The Register Audit",
+      "synopsis": "",
+      "factionTag": "",
+      "status": "active"
+    },
+    {
+      "id": "quest_black_market_clean_bill",
+      "title": "Black-Market Clean Bill",
+      "synopsis": "",
+      "factionTag": "",
+      "status": "active"
+    },
+    {
+      "id": "quest_the_broken_calibration_chain",
+      "title": "The Broken Calibration Chain",
+      "synopsis": "",
+      "factionTag": "",
+      "status": "active"
+    },
+    {
+      "id": "quest_exposure_for_the_essential_worker",
+      "title": "Exposure for Essential Worker",
+      "synopsis": "",
+      "factionTag": "",
+      "status": "active"
+    },
+    {
+      "id": "quest_the_missing_page",
+      "title": "The Missing Page",
+      "synopsis": "",
+      "factionTag": "",
+      "status": "active"
+    },
+    {
       "id": "quest_scavenger_alliance",
       "title": "The Scavenger Alliance",
       "synopsis": "A desperate faction of scavengers offers an alliance, but their loyalty is questionable.",
@@ -1316,6 +1392,13 @@
       "id": "quest_black_flotilla_trade",
       "title": "Black Flotilla Trade Negotiation",
       "synopsis": "The notorious Black Flotilla offers a lucrative trade deal, but their reputation precedes them.",
+      "factionTag": "black_flotilla",
+      "status": "active"
+    },
+    {
+      "id": "quest_exp09_sunken_submarine",
+      "title": "The Half-Submerged Barrik",
+      "synopsis": "Coordinates and a Flotilla challenge ribbon have led you to the Half-Submerged Barrik. Inside, the remains of a pre-war crew wait in the dark. This is not a salvage run — it is a burial.",
       "factionTag": "black_flotilla",
       "status": "active"
     },
@@ -1458,6 +1541,406 @@
       "synopsis": "Fuel reserves are critically low. Do you send an expedition to scavenge or conserve what little you have?",
       "factionTag": "neutral",
       "status": "active"
+    },
+    {
+      "id": "quest_apprentice_pipefitting",
+      "title": "Eli's Pipe-Fitting Pupil",
+      "synopsis": "Eli was the only one who knew which elbow joint took packing and which one took thread tape. Now there is a second pair of hands that knows, and the second pair is eleven.",
+      "factionTag": "apprentice_arc",
+      "status": "active",
+      "narrativeHook": "apprenticeship_completion:skill_rough_repairs"
+    },
+    {
+      "id": "quest_apprentice_dressing",
+      "title": "Sasha's Suture Line",
+      "synopsis": "Sasha had the steady hands the bunker trusted with the children and the wounded. She has been teaching an apprentice how to clean and close a wound without flinching. The first closure the apprentice did alone was a small one, and it held, and the apprentice did not throw up.",
+      "factionTag": "apprentice_arc",
+      "status": "active",
+      "narrativeHook": "apprenticeship_completion:skill_field_dressing"
+    },
+    {
+      "id": "quest_apprentice_radio",
+      "title": "The Quiet Dial",
+      "synopsis": "The radio operator taught an apprentice the listening hour. The numbers station came in and the apprentice wrote it down without being told, on the second try, while the rest of the bunker slept. The dial is not a skill. The dial is a habit.",
+      "factionTag": "apprentice_arc",
+      "status": "active",
+      "narrativeHook": "apprenticeship_completion:skill_signal_ear"
+    },
+    {
+      "id": "quest_apprentice_recycling",
+      "title": "The Furnace Daughter",
+      "synopsis": "She was always the one who fed the forge. The apprentice learned the rhythm last winter: when the coke is right, when the slag breaks, when the billet is ready and when it is not. The first time she pulled an ingot alone with the master watching, no one clapped. They said nothing, which was the right thing to say.",
+      "factionTag": "apprentice_arc",
+      "status": "active",
+      "narrativeHook": "apprenticeship_completion:skill_workshop_sense"
+    },
+    {
+      "id": "quest_apprentice_hatch",
+      "title": "The Hatch Watcher",
+      "synopsis": "A child took the hatch watch alone for ninety minutes for the first time and the click of the counter was the only sound in the whole bunker for those ninety minutes. The master watched from inside. The watcher's hands were not shaking by minute forty-five.",
+      "factionTag": "apprentice_arc",
+      "status": "active",
+      "narrativeHook": "apprenticeship_completion:skill_watchful"
+    },
+    {
+      "id": "quest_apprentice_triage",
+      "title": "Adaeze's Triage Understudy",
+      "synopsis": "The triage line at 03:00 is the one the bunker runs once a week so the new ones can practice. The first solo triaged patient was not a real patient but the apprentice had to walk through the steps as if she were. The steps held up.",
+      "factionTag": "apprentice_arc",
+      "status": "active",
+      "narrativeHook": "apprenticeship_completion:skill_steady_hands"
+    },
+    {
+      "id": "quest_schooling_curriculum_letters",
+      "title": "The Reading Hour",
+      "synopsis": "The bunker's only alphabet chart lives on a wall in the cold room. The children have to learn to read because the only books left are the ones the adults are willing to speak aloud. The Reading Hour is one hour a day and the children are willing. The Mechanical Hour is a different hour, and they are willing for that one too.",
+      "factionTag": "childhood_path",
+      "status": "active",
+      "narrativeHook": "schooling_letters_unlock"
+    },
+    {
+      "id": "quest_schooling_curriculum_mechanics",
+      "title": "The Mechanical Hour",
+      "synopsis": "The Mechanical Hour starts after the Reading Hour, in the same room, at the same lamp. The children learn which valve does what, and why the pumps sound the way they do when the outflow constipates. The teacher is the same person who taught the last cohort.",
+      "factionTag": "childhood_path",
+      "status": "active",
+      "narrativeHook": "schooling_mechanics_unlock"
+    },
+    {
+      "id": "quest_schooling_curriculum_medicine",
+      "title": "First Stitches",
+      "synopsis": "A child hands the needle, a child hands the thread, and eventually a child closes the first wound she was not the one to make. The teacher is the bunker's only field medic and the class is small and the classroom is the infirmary floor.",
+      "factionTag": "childhood_path",
+      "status": "active",
+      "narrativeHook": "schooling_medicine_unlock"
+    },
+    {
+      "id": "quest_schooling_curriculum_marksmanship",
+      "title": "The Burned-Out Rifle",
+      "synopsis": "There is a rifle with no ammunition, in the storeroom, on a shelf, that the children are taught to disassemble and reassemble in the dark. The first time the disassembled rifle fell back together in the dark, the child did not flinch. Some of the adults were not sure that was a good thing.",
+      "factionTag": "childhood_path",
+      "status": "active",
+      "narrativeHook": "schooling_marksmanship_unlock"
+    },
+    {
+      "id": "quest_adoption_warmarms",
+      "title": "The Quiet Adoption",
+      "synopsis": "A casualty orphan from the winter convoy was folded into the bunker's census without ceremony. The adults who raised the child were not the biological parents of any child. They learned to share a cot and a ration, and they did, because the calendar said the convoy was not coming back.",
+      "factionTag": "childhood_path",
+      "status": "active",
+      "narrativeHook": "adoption_warmarms"
+    },
+    {
+      "id": "quest_adoption_fierce_mother",
+      "title": "The Fierce Mother's House",
+      "synopsis": "The Feral Orphan was assigned a rotation with the Fierce Mother and the Vet, on the council sheet, in plain ink. The Fierce Mother sleeps with one hand on the dog. The Vet sleeps with one hand on the knife. The Orphan slept, finally, with one hand on nothing. That was the small victory.",
+      "factionTag": "childhood_path",
+      "status": "active",
+      "narrativeHook": "adoption_rotational_vigil"
+    },
+    {
+      "id": "quest_adoption_grange",
+      "title": "A Hundred and Fourteen",
+      "synopsis": "A casualty orphan was assigned, by plot number, to a farmer couple who still held the allotment waiting list from before. The plot was 114. It was a plum number on the list. The adults said the plum number killed the convoy that carried the child's old family and were immediately sorry for saying so.",
+      "factionTag": "childhood_path",
+      "status": "active",
+      "narrativeHook": "adoption_grange_plot"
+    },
+    {
+      "id": "quest_adoption_archive",
+      "title": "The Children of the Archive",
+      "synopsis": "The municipal archive adopted four orphans when the bunker census crossed the binder threshold for the first time. The newest intake was logged under the next four open plot numbers. The older children carried the binders to the new shelf before the new children learned which shelf it was.",
+      "factionTag": "childhood_path",
+      "status": "active",
+      "narrativeHook": "adoption_archive_intake"
+    },
+    {
+      "id": "quest_coming_of_age_first_surface",
+      "title": "The First Surface Trip",
+      "synopsis": "The bunker's hatch opened the morning of day ninety-four with a child on the perimeter walk, in clean clothes, with the hatch lead close enough to catch the child's silhouette if the silhouette needed catching. The child walked one hundred metres into the scrub and did not turn around. By minute four, the child had stopped looking up.",
+      "factionTag": "coming_of_age",
+      "status": "active",
+      "narrativeHook": "trigger_maturation"
+    },
+    {
+      "id": "quest_coming_of_age_first_watch",
+      "title": "The First Solo Watch",
+      "synopsis": "Solo watch starts at minute zero and ends when the clock says it ends. The first time a child took the post alone, the Geiger counter was quiet, nothing came in over the radio, and the hatch did not move. The watch was not heroic. The watch was the watch.",
+      "factionTag": "coming_of_age",
+      "status": "active",
+      "narrativeHook": "trigger_maturation"
+    },
+    {
+      "id": "quest_cipher_relay_count",
+      "title": "The Relay Count Cipher",
+      "synopsis": "An eerie five-figure shortwave broadcast loops on 104.5 MHz. Decrypting the coordinates requires Communications Codebook Alpha excavated from the Collapsed Command Vault to unlock Hidden Relay Bunker 09.",
+      "factionTag": "sigint_exploration",
+      "status": "active",
+      "narrativeHook": "cipher_relay_decode"
+    },
+    {
+      "id": "quest_cipher_winter_ledger",
+      "title": "Winter Ledger Decryption",
+      "synopsis": "Automated logistics transmissions report cold-storage inventory offsets. A laminated cipher sheet reveals the Sub-Basement Logistics Reserve.",
+      "factionTag": "sigint_exploration",
+      "status": "active",
+      "narrativeHook": "cipher_winter_decode"
+    },
+    {
+      "id": "quest_cipher_last_rotation",
+      "title": "Last Rotation Dead-Hand",
+      "synopsis": "A military dead-hand standby broadcast prompts for authentication at Waypoint November. Microfilm index cylinder decodes the Dead-Drop Command Shelter coordinates.",
+      "factionTag": "sigint_exploration",
+      "status": "active",
+      "narrativeHook": "cipher_rotation_decode"
+    },
+    {
+      "id": "quest_waystation_alpha_filter_rebuild",
+      "title": "Waystation A: Soot Filter Flush",
+      "synopsis": "Warden Kessel reports severe coal dust clogging the primary ventilation intake at Waystation A in the Cut. Deliver clean water and filter membrane to restore air cycling.",
+      "factionTag": "infrastructure",
+      "status": "active"
+    },
+    {
+      "id": "quest_waystation_switchback_scree_shoring",
+      "title": "Switchback Waystation: Scree Shoring",
+      "synopsis": "Recent rockslides threaten to sweep the lower bunkhouse off the cliff ledge at the Switchback Waystation. Transport structural timbers and scrap metal to reinforce the cribbing.",
+      "factionTag": "infrastructure",
+      "status": "active"
+    },
+    {
+      "id": "quest_waystation_span44_abutment_weld",
+      "title": "Span 44: Railway Abutment Repair",
+      "synopsis": "Foreman Taggart requires mechanical fasteners and welding electrodes to secure the settling western bridge pier on Railway Span 44 before heavy iron convoys can cross.",
+      "factionTag": "infrastructure",
+      "status": "active"
+    },
+    {
+      "id": "quest_waystation_verity_pump_clear",
+      "title": "Verity Motel: Deep Well Desilt",
+      "synopsis": "Fine sand and silt have jammed the deep-aquifer impeller at the Verity Motel staging post. Clean the manifold and replace the drive belt to restore potable water dispensing.",
+      "factionTag": "infrastructure",
+      "status": "active"
+    },
+    {
+      "id": "quest_waystation_coast_lock_sluice_reclaim",
+      "title": "Lock Gate Four: Sluice Valve Reclaim",
+      "synopsis": "Heavy brine scale has frozen the tidal sluice bypass at Lock Gate Four. Apply anti-corrosive solvent and grease to re-open the maritime staging basin.",
+      "factionTag": "infrastructure",
+      "status": "active"
+    },
+    {
+      "id": "quest_waystation_grain_verge_sentry_accord",
+      "title": "Verge Silo: Sentry Ration Accord",
+      "synopsis": "Central Garrison sentries are demanding excess grain tithes at the Verge Silo Waystation. Negotiate a standardized tariff or provide emergency rations to prevent an embargo.",
+      "factionTag": "infrastructure",
+      "status": "active"
+    },
+    {
+      "id": "quest_crossing_asylum_in_the_truss"
+    },
+    {
+      "id": "quest_crossing_contraband_medical_vial"
+    },
+    {
+      "id": "quest_crossing_displaced_kin_roll"
+    },
+    {
+      "id": "quest_crossing_embargo_transit_escort"
+    },
+    {
+      "id": "quest_crossing_flotilla_docking_rights"
+    },
+    {
+      "id": "quest_crossing_quarantine_breach_trial"
+    },
+    {
+      "id": "quest_crossing_the_null_charter_vote"
+    },
+    {
+      "id": "quest_crossing_vehicle_lien_arbitration"
+    },
+    {
+      "id": "quest_holdfast_boiler_crack_panic"
+    },
+    {
+      "id": "quest_holdfast_brine_boiler_scum"
+    },
+    {
+      "id": "quest_holdfast_brine_intake_poisoning"
+    },
+    {
+      "id": "quest_holdfast_broken_runner_rescue"
+    },
+    {
+      "id": "quest_holdfast_census_absentee_defense"
+    },
+    {
+      "id": "quest_holdfast_census_claimant_audit"
+    },
+    {
+      "id": "quest_holdfast_census_estate_division"
+    },
+    {
+      "id": "quest_holdfast_census_forged_voucher"
+    },
+    {
+      "id": "quest_holdfast_estuary_water_compact"
+    },
+    {
+      "id": "quest_holdfast_ration_lockup_breach"
+    },
+    {
+      "id": "quest_holdfast_rival_sled_overtake"
+    },
+    {
+      "id": "quest_holdfast_salt_convoy_haul"
+    },
+    {
+      "id": "quest_holdfast_salter_work_stoppage"
+    },
+    {
+      "id": "quest_holdfast_scree_blockage_clear"
+    },
+    {
+      "id": "quest_record_archive_burn_layer"
+    },
+    {
+      "id": "quest_record_cold_store_sublevel"
+    },
+    {
+      "id": "quest_record_metro_derailment_triage"
+    },
+    {
+      "id": "quest_record_mine_shaft_adit_collapse"
+    },
+    {
+      "id": "quest_record_seed_bank_purge_trace"
+    },
+    {
+      "id": "quest_record_sluice_failure_verdict"
+    },
+    {
+      "id": "quest_record_sub_basement_blueprint"
+    },
+    {
+      "id": "quest_record_the_last_watch_beacon"
+    },
+    {
+      "id": "quest_record_the_unmarked_plaque"
+    },
+    {
+      "id": "quest_record_transit_vent_shaft_route"
+    },
+    {
+      "id": "quest_record_utility_junction_crossover"
+    },
+    {
+      "id": "quest_record_vault_breach_forensics"
+    },
+    {
+      "id": "quest_verdict_alibi_verification"
+    },
+    {
+      "id": "quest_verdict_chain_of_custody"
+    },
+    {
+      "id": "quest_verdict_charter_authentication"
+    },
+    {
+      "id": "quest_verdict_eden_grabs"
+    },
+    {
+      "id": "quest_verdict_forged_evidence_inquest"
+    },
+    {
+      "id": "quest_verdict_machine_interpretation_contest"
+    },
+    {
+      "id": "quest_verdict_prior_verdict_appeal"
+    },
+    {
+      "id": "quest_verdict_reconciled_testimony"
+    },
+    {
+      "id": "quest_verdict_the_hold"
+    },
+    {
+      "id": "quest_verdict_the_mortars_timetable"
+    },
+    {
+      "id": "quest_verdict_the_reckoning_call"
+    },
+    {
+      "id": "quest_verdict_the_shift_charter"
+    },
+    {
+      "id": "quest_verdict_the_summons"
+    },
+    {
+      "id": "quest_verdict_the_tape_silo"
+    },
+    {
+      "id": "quest_verdict_the_warm_range"
+    },
+    {
+      "id": "quest_verdict_witness_subpoena"
+    },
+    {
+      "id": "quest_distress_trapped_mechanic",
+      "title": "Rescue: Trapped Mechanic",
+      "synopsis": "A distress signal on 88.3 MHz reports a mechanic trapped at the rail depot. Her leg is pinned under a beam. She has water for two more days.",
+      "factionTag": "neutral",
+      "status": "active",
+      "signalId": "freq_distress_88_3",
+      "deadlineDays": 3,
+      "rewardItems": ["scrap_metal", "mechanical_parts"],
+      "rewardReputation": 5
+    },
+    {
+      "id": "quest_distress_injured_trader",
+      "title": "Rescue: Injured Trader",
+      "synopsis": "A distress signal on 156.8 MHz reports an injured trader on Route 6. He has trade goods to share if rescued.",
+      "factionTag": "neutral",
+      "status": "active",
+      "signalId": "freq_distress_156_8",
+      "deadlineDays": 2,
+      "rewardItems": ["bandage", "battery", "iodine_pills"],
+      "rewardReputation": 3
+    },
+    {
+      "id": "quest_distress_family_shelter",
+      "title": "Rescue: Family Shelter",
+      "synopsis": "A child's voice on 445.2 MHz reports her mother is sick and unresponsive. The bunker has a blue door and a broken lock.",
+      "factionTag": "neutral",
+      "status": "active",
+      "signalId": "freq_distress_445_2",
+      "deadlineDays": 2,
+      "rewardItems": ["clean_water", "canned_food"],
+      "rewardReputation": 8
+    },
+    {
+      "id": "quest_distress_raider_trap",
+      "title": "Investigation: Raider Lure",
+      "synopsis": "A suspicious signal on 192.4 MHz mentions an unguarded fuel cache. The signal pattern is too consistent to be genuine.",
+      "factionTag": "raiders",
+      "status": "active",
+      "signalId": "freq_distress_192_4",
+      "deadlineDays": 3,
+      "rewardItems": [],
+      "rewardReputation": 0,
+      "warningText": "This is a raider trap. Responding will trigger an ambush."
+    },
+    {
+      "id": "quest_distress_military_patrol",
+      "title": "Rescue: Stranded Military Patrol",
+      "synopsis": "A military distress signal on 901.2 MHz reports Sergeant Voss's patrol six pinned down with two wounded. Ammunition low.",
+      "factionTag": "military",
+      "status": "active",
+      "signalId": "freq_distress_901_2",
+      "deadlineDays": 3,
+      "rewardItems": ["ammo_556", "field_dressing_kit"],
+      "rewardReputation": 10
     }
   ]
 }

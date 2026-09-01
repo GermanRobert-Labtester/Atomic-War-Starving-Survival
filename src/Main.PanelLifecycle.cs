@@ -24,7 +24,30 @@ namespace AtomicWar.GodotApp
                 _combatDetailPanel, _factionDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
                 _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
                 _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
-                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal, _holdfastTerminal
+                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal, _holdfastTerminal,
+                _onboardingHintPanel,
+                _brineExtractionPanel, _expeditionCampPanel, _fireIncidentPanel,
+                _geigerCalibrationPanel, _triangulationPanel, _weatherSondePanel,
+                _powerGridPanel, _expeditionRadarPanel, _doseLedgerPanel,
+                _caravanBarterLedgerPanel, _factionMatrixPanel, _factionsNarrativePanel,
+                _skillMatrixPanel, _survivalWorkstationPanel, _verdictDashboardPanel,
+                _mapAtlasPanel, _maritimeAtlasPanel, _musterAtlasPanel,
+                _questsAtlasPanel, _researchAtlasPanel, _standingRecordAtlasPanel,
+                _combatHudOverlay, _biogasDigesterPanel, _cartographyGisPanel,
+                _printingPressPanel, _siliconSlicingPanel, _geothermalTurbinePanel,
+                _warDogKennelPanel, _isotopeSeparatorPanel, _plasmaSmeltingPanel,
+                _boreholeSeismographPanel, _logisticsAirlockPanel,
+                _cryoPermafrostCorePanel, _basalRadonMigrationPanel,
+                _traumaBondingCohortPanel, _clandestineInsurgencyPanel,
+                _subterraneanDebtLedgerPanel, _surfaceShrapnelAegisPanel,
+                _longWalkExpeditionPanel, _sonicRuptureDrillPanel,
+                _vaultDoorBreachingPanel, _ironCenotaphMemorialPanel,
+                _aquiferTreatyConcessionPanel, _crossingSafeConductVouchPanel,
+                _mechanicalProstheticsLathePanel, _fungalProteinFermenterPanel,
+                _ultrasonicDecontamAirlockPanel,
+                _troposphericRadioRelayPanel, _inductionCupolaFurnacePanel,
+                _heavyMarineDieselGenPanel, _slurryDewateringSumpPanel,
+                _magneticDrumArchivePanel
             };
 
             foreach (Control panel in panels)

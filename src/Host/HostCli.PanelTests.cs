@@ -18,8 +18,10 @@ using Ashfall.Core.Flags;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.Legacy;
 using Ashfall.Core.Endgame;
+using Ashfall.Core.Save;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Settings;
+using AtomicWar.GodotApp.Narrative;
 using Ashfall.Core.Settings;
 using AtomicWar.GodotApp.UI;
 using System;
@@ -348,10 +350,170 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public static int RunExpeditionSelfTest()
         {
+            // The headless demo and the vehicle gates are BOTH part of this gate, so
+            // the PASS/FAIL summary must be emitted exactly once, after both have
+            // run. This previously emitted the summary straight after the demo and
+            // only then ran the vehicle gates, so "EXPEDITION_SELFTEST PASS" was
+            // already on stdout before nine further gates executed — a vehicle
+            // failure could not unprint it, and CI scraping the summary saw green.
             var report = ExpeditionHeadlessDemo.Run(new GodotLog());
-            GD.Print(report.Summary);
-            return EmitSummaryFromHeadlessReport("expedition_selftest", report);
+            GD.Print(report?.Summary ?? "[ExpeditionHeadlessDemo] null report");
+
+            bool demoPassed = report != null && report.Passed;
+            int demoPassCount = report?.PassedCount ?? 0;
+            int demoFailCount = report != null ? report.FailedCount : 1;
+
+            var vehicle = RunExpeditionVehicleLogisticsGates();
+
+            bool passed = demoPassed && vehicle.failures == 0;
+            string details = passed
+                ? $"headless demo + {vehicle.passed} vehicle gate(s)"
+                : $"demo {(demoPassed ? "PASS" : "FAIL")} ({demoFailCount} failed), vehicle gates {vehicle.failures} failed of {vehicle.passed + vehicle.failures}";
+
+            return EmitSummary(
+                "expedition_selftest",
+                passed,
+                passed ? 0 : 1,
+                demoPassCount + vehicle.passed,
+                demoFailCount + vehicle.failures,
+                details);
         }
+
+        /// <summary>
+        /// Task #101 gates: vehicle dispatch preparation (fuel gate + profile),
+        /// driven travel beats foot, estimate math matches the selection, the
+        /// weapon-condition bridge feeds readiness into estimates, and the
+        /// in-flight vehicle state survives the aggregate save round-trip.
+        ///
+        /// <para>Returns counts rather than an exit code so the caller can fold them
+        /// into a single summary. Exceptions are contained here and converted into a
+        /// counted failure that names the gate that threw, so one crashing gate can
+        /// neither abort the run silently nor be mistaken for a pass.</para>
+        /// </summary>
+        private static (int passed, int failures) RunExpeditionVehicleLogisticsGates()
+        {
+            int passed = 0;
+            int failures = 0;
+            string stage = "V0: vehicle gate setup";
+
+            void Check(bool ok, string label)
+            {
+                if (ok) { GD.Print($"[PASS] {label}"); passed++; }
+                else { GD.PrintErr($"[FAIL] {label}"); failures++; }
+            }
+
+            try
+            {
+                var session = new ExpeditionHostSession();
+
+                stage = "V1 garage setup";
+                // Garage: an inline catalog (no FS dependence), quad acquired fresh.
+                session.Vehicles.LoadCatalog(new VehicleCatalog
+                {
+                    vehicles = new System.Collections.Generic.List<VehicleDefinition>
+                    {
+                        new VehicleDefinition
+                        {
+                            vehicle_id = ExpeditionHostSession.StarterVehicleId,
+                            display_name = "Utility Quad",
+                            max_fuel = 40f,
+                            cargo_capacity = 90f,
+                            speed_multiplier = 1.3f,
+                            fuel_consumption_per_km = 0.3f,
+                        },
+                    }
+                });
+                Check(session.Vehicles.AcquireVehicle(ExpeditionHostSession.StarterVehicleId).Status == ActionResult.StatusKind.Success,
+                    "V1: starter quad acquired into the garage.");
+
+                stage = "V2/V3 travel estimates";
+                // Estimate: vehicle is faster and carries fuel cost; foot does not.
+                string target = "loc_the_allotments";
+                var foot = session.EstimateExpedition(target, ExpeditionStance.Stealth)!.Value.estimate;
+                var driven = session.EstimateExpedition(target, ExpeditionStance.Stealth, ExpeditionHostSession.StarterVehicleId)!.Value.estimate;
+                Check(!foot.usingVehicle && foot.fuelRequired == 0f, "V2: foot estimate has no fuel cost.");
+                Check(driven.usingVehicle && driven.fuelRequired > 0f && driven.totalTicks < foot.totalTicks,
+                    "V3: vehicle estimate is faster with fuel cost.");
+
+                stage = "V4 weapon-condition readiness";
+                // Weapon-condition bridge feeds readiness into the encounter risk.
+                var inv = new Ashfall.Core.Inventory.Inventory();
+                var equipment = new EquipmentConditionSystem(new SeededRng(7), inv, new CraftingSystem(inv));
+                equipment.RegisterItem("eq_gate_rifle", "weapon_bolt_rifle", "survivor_a", EquipmentFamily.Weapon);
+                equipment.UseItem("eq_gate_rifle", 85f); // condition 15 → degraded readiness
+                float readiness = Ashfall.Core.Combat.WeaponEquipmentBridge.Readiness(equipment, "eq_gate_rifle");
+                var degraded = session.EstimateExpedition(target, ExpeditionStance.Stealth, "", readiness, Ashfall.Core.Combat.WeaponEquipmentBridge.JamRisk(equipment, "eq_gate_rifle"))!.Value.estimate;
+                Check(readiness < 1f && degraded.encounterRiskPerTick > foot.encounterRiskPerTick,
+                    "V4: degraded weapon readiness raises the encounter-risk estimate.");
+
+                stage = "V5 fuel gate blocks dispatch";
+                // Dispatch preparation: fuel gate blocks, then a full tank passes
+                // and the sortie starts with the vehicle profile attached.
+                session.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.fuel = 0.5f;
+                var refused = session.StartExpedition("survivor_a", target, ExpeditionStance.Stealth, vehicleId: ExpeditionHostSession.StarterVehicleId);
+                Check(!refused.IsSuccess && session.Engine.ActiveCount == 0,
+                    "V5: depleted fuel blocks dispatch with a refuel message.");
+
+                stage = "V6 fueled dispatch starts a sortie";
+                session.Vehicles.Refuel(ExpeditionHostSession.StarterVehicleId, 60f);
+                var sent = session.DispatchSortie("survivor_a", target, ExpeditionStance.Stealth, 1, ExpeditionHostSession.StarterVehicleId);
+
+                // Assert the sortie exists BEFORE indexing it. Indexing a missing key
+                // threw KeyNotFoundException here, which aborted the remaining gates.
+                bool dispatched = session.Engine.ActiveCount == 1
+                    && session.Engine.Active.ContainsKey("survivor_a");
+                if (!dispatched)
+                {
+                    Check(false,
+                        $"V6: fueled dispatch starts a vehicle sortie with a speed profile. " +
+                        $"(DispatchSortie returned {DescribeDispatch(sent)}; ActiveCount={session.Engine.ActiveCount})");
+                    GD.PrintErr("[FAIL] V7-V9 skipped: no active sortie to exercise.");
+                    failures += 3;
+                    return (passed, failures);
+                }
+
+                var active = session.Engine.Active["survivor_a"];
+                Check(active.vehicleId == ExpeditionHostSession.StarterVehicleId && active.vehicleSpeedMultiplier > 1f,
+                    "V6: fueled dispatch starts a vehicle sortie with a speed profile.");
+
+                stage = "V7 mid-route breakdown";
+                // Force a deterministic mid-route breakdown and confirm the
+                // aggregate round-trip keeps the in-flight vehicle state.
+                active.vehicleBreakdownChancePerTick = 1f; // guaranteed next travel tick
+                session.TickHours(1f);
+                Check(active.vehicleBrokenDown, "V7: seeded mid-route breakdown flips the sortie to foot.");
+
+                stage = "V8 aggregate save round-trip";
+                var aggregate = session.CaptureSaveAggregate();
+                var restored = new ExpeditionHostSession();
+                restored.RestoreSaveAggregate(aggregate);
+                Check(restored.Engine.Active.ContainsKey("survivor_a") &&
+                      restored.Engine.Active["survivor_a"].vehicleBrokenDown &&
+                      restored.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId) != null,
+                    "V8: aggregate save round-trip restores the sortie and the garage.");
+
+                stage = "V9 garage repair";
+                // Repair clears the breakdown and tops the condition.
+                restored.RepairVehicle(ExpeditionHostSession.StarterVehicleId, 100f);
+                Check(restored.Vehicles.GetVehicle(ExpeditionHostSession.StarterVehicleId)!.condition >= 100f,
+                    "V9: garage repair restores the vehicle.");
+            }
+            catch (System.Exception ex)
+            {
+                GD.PrintErr($"[FAIL] expedition vehicle gates threw during \"{stage}\": {ex.GetType().Name}: {ex.Message}");
+                GD.PrintErr(ex.ToString());
+                failures++;
+            }
+
+            return (passed, failures);
+        }
+
+        /// <summary>Short description of a dispatch result for gate diagnostics.</summary>
+        private static string DescribeDispatch(Ashfall.Core.PlayerCommand.CommandResult result)
+            => $"{result.ActionResult.Status}" +
+               (string.IsNullOrEmpty(result.FailureCode) ? string.Empty : $"/{result.FailureCode}") +
+               (string.IsNullOrEmpty(result.MessageKey) ? string.Empty : $" \"{result.MessageKey}\"") +
+               $" expectedVersion={result.ExpectedStateVersion} actualVersion={result.ActualStateVersion}";
 
         /// <summary>The UnityEngine.* compatibility shim (src/Bridge/) has been fully removed.
         /// This selftest is retained as a stable CLI verb so CI/documentation references do not
@@ -448,11 +610,77 @@ namespace AtomicWar.GodotApp
             return EmitSummaryFromHeadlessReport("narrative_selftest", report);
         }
 
+        /// <summary>
+        /// Oral Lore Codex self-test: load both catalog files via the host session,
+        /// verify entry count, and exercise query methods (by id, by tag, by genre).
+        /// </summary>
+        public static int RunOralLoreSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else
+                {
+                    GD.Print("[FAIL] " + name);
+                    failures++;
+                }
+            }
+
+            try
+            {
+                var session = new OralLoreHostSession();
+                session.LoadCatalogs(dataDirectory);
+
+                int count = session.AllSongs.Count;
+                GD.Print($"[OralLore] loaded {count} entries from narrative/oral_lore_codex.json + narrative/oral_lore_batch_2.json");
+                Check(count > 0, "oral lore catalog is not empty after load");
+                Check(count == 16, $"oral lore catalog has 16 entries (got {count})");
+
+                // Query by id: pick the first entry and look it up
+                if (count > 0)
+                {
+                    string firstId = session.AllSongs[0].lore_id;
+                    var found = session.GetSong(firstId);
+                    Check(found != null && found.lore_id == firstId, "GetSong returns entry by lore_id");
+                }
+
+                // Query by tag: exercise the tag filter
+                var byTag = session.GetSongsByTag("resistance");
+                GD.Print($"[OralLore] GetByTag(\"resistance\"): {byTag.Count} matches");
+                Check(byTag != null, "GetSongsByTag returns non-null list");
+
+                // Query by genre: exercise the genre filter
+                var byGenre = session.GetSongsByGenre("ballad");
+                GD.Print($"[OralLore] GetByGenre(\"ballad\"): {byGenre.Count} matches");
+                Check(byGenre != null, "GetSongsByGenre returns non-null list");
+
+                // Null/empty guard
+                var nullResult = session.GetSong(null);
+                Check(nullResult == null, "GetSong(null) returns null");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[OralLore] selftest exception: {ex.GetType().Name}: {ex.Message}");
+                failures++;
+            }
+
+            bool passed = failures == 0;
+            return EmitSummary("oral_lore_selftest", passed, passed ? 0 : 1,
+                passed ? 5 : 0, failures, $"{failures} failures");
+        }
+
         public static int RunSurvivorsSelfTest()
         {
             var report = SurvivorsHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
             bool pass = report.Passed;
+            void Check(bool condition, string name)
+            {
+                GD.Print(condition ? "[PASS] " + name : "[FAIL] " + name);
+                pass &= condition;
+            }
+
             try
             {
                 // Host bridge gate (Loop 9 gap): equipped inventory gear must flow
@@ -530,6 +758,219 @@ namespace AtomicWar.GodotApp
                 GD.Print("[FAIL] save/load round-trip probe threw: " + e.Message);
                 pass = false;
             }
+            try
+            {
+                // Defect D1 (Task #132 P1-A): RestoreSave must not leave the previous
+                // campaign's needs states registered in the simulation. A leaked
+                // ghost keeps decaying and can reach 0 HP, raising OnDied and
+                // reporting the death of a survivor who is alive in the loaded save.
+                // Core covers the mechanism; this covers the real host path, which
+                // Ashfall.Core.Tests cannot reach.
+                var session = new SurvivorsHostSession();
+                session.SeedDemoRoster();
+                int rosterSize = session.RosterState.Count;
+
+                const string probeId = "survivor_dr_sarah_chen";
+                var preRestore = session.Find(probeId);
+                var saved = session.CaptureSave();
+
+                // Push the soon-to-be-stale object to the edge of death.
+                if (preRestore != null)
+                {
+                    preRestore.Health = 0.2f;
+                    preRestore.Hunger = 99f;
+                    preRestore.Thirst = 99f;
+                }
+
+                int deathsForProbe = 0;
+                var allDeaths = new System.Collections.Generic.List<string>();
+                session.OnSurvivorDied += (id, cause, detail) =>
+                {
+                    allDeaths.Add($"{id}({cause})");
+                    if (string.Equals(id, probeId, StringComparison.Ordinal)) deathsForProbe++;
+                };
+
+                session.RestoreSave(saved);
+
+                bool noGhosts = session.Needs.RegisteredCount == rosterSize;
+                GD.Print(noGhosts
+                    ? $"[PASS] D1: restore leaves one needs state per survivor ({session.Needs.RegisteredCount} for {rosterSize})"
+                    : $"[FAIL] D1: restore leaked needs registrations ({session.Needs.RegisteredCount} registered for {rosterSize} survivors)");
+                pass &= noGhosts;
+
+                var afterRestore = session.Needs.Get(probeId);
+                bool ghostEvicted = afterRestore != null && !ReferenceEquals(afterRestore, preRestore);
+                GD.Print(ghostEvicted
+                    ? "[PASS] D1: needs lookup resolves to the restored state, not the pre-restore object"
+                    : "[FAIL] D1: needs lookup still resolves to the pre-restore object");
+                pass &= ghostEvicted;
+
+                // Advance well past the point the stale object would have died.
+                //
+                // Scoped to the probed survivor deliberately. Other demo survivors
+                // may legitimately die in this window — survivor_gunner_mikhail is
+                // seeded acuteRad at 80 HP and BuildExposure places him outside in a
+                // 40 mSv/hr zone with no shielding, so his dose crosses the 80
+                // AcuteThreshold within ~2h and the -5 HP/hr drain kills him around
+                // hour 18. That is gameplay, not a ghost. D1's invariant is only
+                // that a PRE-RESTORE object cannot announce a death for a survivor
+                // whose restored state is alive.
+                session.TickHour(24f);
+
+                bool probeAlive = session.Find(probeId)?.IsAliveState == true;
+                bool noGhostDeath = deathsForProbe == 0 && probeAlive;
+                GD.Print(noGhostDeath
+                    ? $"[PASS] D1: no stale-object death for '{probeId}' (restored state alive; unrelated deaths: {(allDeaths.Count == 0 ? "none" : string.Join(", ", allDeaths))})"
+                    : $"[FAIL] D1: {deathsForProbe} death(s) reported for '{probeId}' after restore (alive={probeAlive}; all deaths: {string.Join(", ", allDeaths)})");
+                pass &= noGhostDeath;
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] D1 stale-restore probe threw: " + e.Message);
+                pass = false;
+            }
+            try
+            {
+                // H10 contract: exercise the actual host projection, the
+                // checksummed survivors section bytes, and multi-survivor identity.
+                void PopulatePersistenceState(SurvivorsHostSession session, bool reverse)
+                {
+                    if (reverse)
+                    {
+                        session.AddSurvivor("survivor_beta", "Beta");
+                        session.AddSurvivor("survivor_alpha", "Alpha");
+                    }
+                    else
+                    {
+                        session.AddSurvivor("survivor_alpha", "Alpha");
+                        session.AddSurvivor("survivor_beta", "Beta");
+                    }
+
+                    var alpha = session.Find("survivor_alpha")!;
+                    alpha.Hunger = 91.25f;
+                    alpha.Thirst = 2.5f;
+                    alpha.Fatigue = 77f;
+                    alpha.Warmth = 18f;
+                    alpha.Morale = 3f;
+                    alpha.Health = 44.5f;
+                    alpha.Hygiene = 7.5f;
+                    alpha.WasHungerCritical = true;
+                    alpha.WasThirstCritical = false;
+                    alpha.WasWarmthCritical = true;
+                    alpha.MaxHealthCap = 88f;
+                    var alphaRad = session.RadStateFor("survivor_alpha")!;
+                    alphaRad.RadiationDose = 99f;
+                    alphaRad.LifetimeRadiationExposure = 512.5f;
+                    alphaRad.HasRadResistance = true;
+                    alphaRad.RadResistanceHoursRemaining = 2.25f;
+                    alphaRad.IodineProtectionTimer = 6.5f;
+                    alphaRad.HasAcuteRadiationSickness = true;
+                    alphaRad.HasChronicIllness = true;
+                    alphaRad.HasAcuteRadiationSyndrome = true;
+
+                    var beta = session.Find("survivor_beta")!;
+                    beta.Hunger = 0f;
+                    beta.Thirst = 100f;
+                    beta.Fatigue = 0f;
+                    beta.Warmth = 100f;
+                    beta.Morale = 100f;
+                    beta.Health = 100f;
+                    beta.Hygiene = 0f;
+                    beta.MaxHealthCap = 100f;
+                }
+
+                var source = new SurvivorsHostSession();
+                PopulatePersistenceState(source, reverse: false);
+                var captured = source.CaptureSave();
+                string persisted = SurvivorsSaveStore.TryCapturePersisted(captured);
+                Check(!string.IsNullOrEmpty(persisted), "H10 survivors capture emits persisted checksum envelope");
+
+                var json = new SystemTextJsonSerializer();
+                var restoredEnvelope = SaveEnvelopeHelper.RestoreEnvelope<SurvivorsSaveState>(persisted, json);
+                Check(restoredEnvelope.Success && restoredEnvelope.State != null,
+                    "H10 survivors checksum envelope restores successfully");
+                if (restoredEnvelope.Success && restoredEnvelope.State != null)
+                {
+                    var clean = new SurvivorsHostSession();
+                    clean.RestoreSave(restoredEnvelope.State);
+                    var alpha = clean.Find("survivor_alpha")!;
+                    var alphaRad = clean.RadStateFor("survivor_alpha")!;
+                    var beta = clean.Find("survivor_beta")!;
+                    var betaRad = clean.RadStateFor("survivor_beta")!;
+                    bool alphaNeeds = alpha.Hunger == 91.25f && alpha.Thirst == 2.5f
+                        && alpha.Fatigue == 77f && alpha.Warmth == 18f
+                        && alpha.Morale == 3f && alpha.Health == 44.5f
+                        && alpha.Hygiene == 7.5f && alpha.WasHungerCritical
+                        && !alpha.WasThirstCritical && alpha.WasWarmthCritical
+                        && alpha.MaxHealthCap == 88f;
+                    bool alphaRadiation = alphaRad.RadiationDose == 99f
+                        && alphaRad.LifetimeRadiationExposure == 512.5f
+                        && alphaRad.HasRadResistance
+                        && alphaRad.RadResistanceHoursRemaining == 2.25f
+                        && alphaRad.IodineProtectionTimer == 6.5f
+                        && alphaRad.HasAcuteRadiationSickness
+                        && alphaRad.HasChronicIllness
+                        && alphaRad.HasAcuteRadiationSyndrome;
+                    bool betaBoundary = beta.Hunger == 0f && beta.Thirst == 100f
+                        && beta.Fatigue == 0f && beta.Warmth == 100f
+                        && beta.Morale == 100f && beta.Health == 100f
+                        && beta.Hygiene == 0f && betaRad.RadiationDose == 0f
+                        && betaRad.LifetimeRadiationExposure == 0f;
+                    bool identity = clean.Roster.Find("survivor_alpha")?.survivorId == "survivor_alpha"
+                        && clean.Roster.Find("survivor_beta")?.survivorId == "survivor_beta"
+                        && clean.Needs.Get("survivor_alpha")?.Id == "survivor_alpha"
+                        && clean.RadStateFor("survivor_alpha")?.Id == "survivor_alpha";
+                    Check(alphaNeeds, "H10 needs capture/restore preserves mutated fields");
+                    Check(alphaRadiation, "H10 radiation capture/restore preserves full state");
+                    Check(betaBoundary, "H10 zero and boundary values survive capture/restore");
+                    Check(identity, "H10 restored needs/radiation remain attached to canonical survivor ids");
+                    Check(clean.Needs.RegisteredCount == 2 && clean.Radiation.RegisteredCount == 2,
+                        "H10 restore registers exactly one needs and radiation component per survivor");
+                }
+
+                var reordered = new SurvivorsHostSession();
+                PopulatePersistenceState(reordered, reverse: true);
+                string reorderedPersisted = SurvivorsSaveStore.TryCapturePersisted(reordered.CaptureSave());
+                Check(persisted == reorderedPersisted,
+                    "H10 insertion-order differences produce identical persisted bytes and checksum");
+
+                var changed = source.CaptureSave();
+                changed.survivors[0].health += 1f;
+                string changedPersisted = SurvivorsSaveStore.TryCapturePersisted(changed);
+                Check(persisted != changedPersisted,
+                    "H10 meaningful persisted-field changes alter the checksum envelope");
+
+                var mismatch = new SurvivorsSaveState
+                {
+                    survivors = new List<SurvivorSliceState>
+                    {
+                        new SurvivorSliceState { id = "survivor_alpha" }
+                    },
+                    roster = new SurvivorRosterState
+                    {
+                        entries = new List<SurvivorRosterEntry>
+                        {
+                            new SurvivorRosterEntry { survivorId = "survivor_beta", definitionId = "survivor_beta" }
+                        }
+                    }
+                };
+                bool mismatchRejected = false;
+                try
+                {
+                    new SurvivorsHostSession().RestoreSave(mismatch);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    mismatchRejected = ex.Message.Contains("identity", StringComparison.OrdinalIgnoreCase);
+                }
+                Check(mismatchRejected, "H10 mismatched roster and slice identities are rejected");
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] H10 persistence contract probe threw: " + e.Message);
+                pass = false;
+            }
+
             return EmitSummary("survivors_selftest", pass, pass ? 0 : 1);
         }
 
@@ -900,12 +1341,12 @@ namespace AtomicWar.GodotApp
 
                 // 4. Dive-room progression + air / noise / compromised state.
                 Check(!session.Dive!.IsActive, "dive starts idle");
-                session.StartDiveDemo("diver_selftest", "operator_selftest");
+                session.StartDive("diver_selftest", "operator_selftest");
                 Check(session.Dive.IsActive, "dive launches");
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 120f) < 0.001f, "dive starts at full air (120s)");
-                session.TickDiveDemo(60f);
+                session.TickDive(60f);
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 60f) < 0.001f, "air consumed on tick");
-                session.CrankDiveDemo();
+                session.CrankDiveCompressor();
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 90f) < 0.001f, "compressor crank restores air");
                 bool advanced = session.Dive.AdvanceToNextRoom(50);
                 Check(advanced && session.Dive.CurrentRoomIndex == 1 && session.Dive.NoiseLevel == 50,
@@ -1144,7 +1585,7 @@ namespace AtomicWar.GodotApp
                 session.UnlockAndClerk();
                 for (int i = 0; i < 12; i++)
                     session.TickDay();
-                session.HonourDemoLevy();
+                session.HonourCensusLevy();
 
                 var save = session.CaptureSave();
                 Check(!string.IsNullOrEmpty(save.Checksum), "capture stamps checksum");
@@ -1384,7 +1825,7 @@ namespace AtomicWar.GodotApp
 
                 // ── 5. DiveInstanceRunner ───────────────────────────────
                 var bus = new SimpleEventBus();
-                var flags = new InMemoryFlagLedger();
+                var flags = new Ashfall.Core.Flags.CampaignConsequenceLedger();
                 var rng = new SeededRng(424242);
                 var site = new DiveSiteDefinition("site_test_dive", 120, 0.3, "keeper_thread_0");
                 var dive = new DiveInstanceRunner(bus, flags, rng, site);
@@ -2566,20 +3007,20 @@ namespace AtomicWar.GodotApp
 
                 // ── 2. Wasteland Expedition Scavenging Sortie Verification ──
                 var expeditions = ExpeditionHostSession.Create(dataDirectory);
-                Check(expeditions.DemoDefinitions.Count >= 2, "expedition definitions loaded");
+                Check(expeditions.Definitions.Count >= 2, "expedition definitions loaded");
 
-                var target = expeditions.DemoDefinitions[0];
+                var target = expeditions.Definitions[0];
                 Check(target != null && target.id == "loc_the_allotments", "target is The Works Allotment Commune");
 
-                string startMsg = expeditions.StartDemoExpedition("survivor_dr_sarah_chen", target!.id);
-                Check(expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
+                var startResult = expeditions.StartExpedition("survivor_dr_sarah_chen", target!.id);
+                Check(startResult.IsSuccess && expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
                 var activeExp = expeditions.Engine.Active["survivor_dr_sarah_chen"];
                 Check(activeExp != null && activeExp.phase == (int)ExpeditionPhase.Outbound, "expedition starts in Outbound phase");
 
                 // Advance hours until arrival / looting
                 for (int h = 0; h < 6; h++)
                 {
-                    expeditions.TickDemoHours(2f);
+                    expeditions.TickHours(2f);
                 }
 
                 // Push luck or advance to looting
@@ -2651,7 +3092,7 @@ namespace AtomicWar.GodotApp
 
                 // 5.5 Start craft → queue grows
                 int craftBandageBefore = craftInv.CountById("bandage");
-                string craftStartMsg = craftSession.Start("recipe_bandage");
+                var craftStartResult = craftSession.Start("recipe_bandage");
                 Check(craftSession.Engine.ActiveCraftCount == 1, "StartCraft queues one entry");
 
 
@@ -2660,8 +3101,8 @@ namespace AtomicWar.GodotApp
                 Check(mechAfter < 5, $"ingredient count decreased after start (was 5, now {mechAfter})");
 
                 // 5.7 Invalid recipe ID → Start returns error, queue unchanged
-                string badCraftMsg = craftSession.Start("recipe_does_not_exist");
-                Check(badCraftMsg != null && badCraftMsg.Length > 0, "invalid recipe ID returns non-empty error message");
+                var badCraftResult = craftSession.Start("recipe_does_not_exist");
+                Check(!badCraftResult.IsSuccess, "invalid recipe ID returns blocked/failed result");
                 Check(craftSession.Engine.ActiveCraftCount == 1, "invalid recipe does not grow queue");
 
 

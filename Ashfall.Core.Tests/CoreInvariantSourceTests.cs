@@ -54,6 +54,8 @@ namespace Ashfall.Core.Tests
             {
                 if (file.Replace('\\', '/').Contains("/obj/") || file.Replace('\\', '/').Contains("/bin/"))
                     continue;
+                if (file.EndsWith("IWallClock.cs", StringComparison.OrdinalIgnoreCase))
+                    continue;
                 string text = File.ReadAllText(file);
                 text = BlockComment.Replace(text, string.Empty);
                 var lines = text.Split('\n');

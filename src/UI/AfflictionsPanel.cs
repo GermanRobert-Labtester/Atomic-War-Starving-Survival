@@ -1,39 +1,38 @@
 using System;
-using System.Linq;
-#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
 using Ashfall.Core.Medical;
-using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
-    /// ASHFALL — Afflictions panel.
-    /// Shows current afflictions, chronic conditions, and available treatments,
-    /// bound to the live Medical / Survivors / Respiratory / Inventory sessions.
-    /// Unbound systems render an honest "not monitored" row instead of
-    /// fabricated affliction strings.
+    /// ASHFALL — Afflictions panel showing current afflictions, chronic
+    /// conditions, and available treatments. Bound to the live Medical /
+    /// Survivors / Respiratory / Inventory sessions.
+    ///
+    /// Ticket #125: layout chrome (dialog frame, sections, separators,
+    /// close button, hint) is owned by
+    /// <c>res://assets/ui/panels/AfflictionsPanel.tscn</c>. This binder
+    /// projects presentation data into the dynamic lists (active,
+    /// chronic, treatments) and wires the close action.
     /// </summary>
     public partial class AfflictionsPanel : Control
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblActiveTitle;
-        private VBoxContainer _activeList;
-        private Label _lblChronicTitle;
-        private VBoxContainer _chronicList;
-        private Label _lblTreatmentTitle;
-        private VBoxContainer _treatmentList;
+        private SceneBinder? _binder;
+
+        private VBoxContainer _activeList = null!;
+        private VBoxContainer _chronicList = null!;
+        private VBoxContainer _treatmentList = null!;
+        private Button _closeButton = null!;
+        public bool IsBound { get; private set; }
+        public int RenderedActiveCount { get; private set; }
 
         private MedicalHostSession? _medical;
         private SurvivorsHostSession? _survivors;
         private InventoryHostSession? _inventory;
         private RespiratoryDegenerationSystem? _respiratory;
-
-        public bool IsBound => _medical != null || _survivors != null;
-        public int RenderedActiveCount { get; private set; }
 
         public void Bind(
             MedicalHostSession? medical = null,
@@ -45,7 +44,25 @@ namespace AtomicWar.GodotApp.UI
             _survivors = survivors;
             _inventory = inventory;
             _respiratory = respiratory;
+            IsBound = _medical != null || _survivors != null;
             RefreshView();
+        }
+
+        public override void _Ready()
+        {
+            _binder = new SceneBinder(this, typeof(AfflictionsPanel));
+            _binder.Require<VBoxContainer>("ActiveList");
+            _binder.Require<VBoxContainer>("ChronicList");
+            _binder.Require<VBoxContainer>("TreatmentList");
+            _binder.Require<Button>("CloseButton");
+
+            _activeList = _binder.Get<VBoxContainer>("ActiveList");
+            _chronicList = _binder.Get<VBoxContainer>("ChronicList");
+            _treatmentList = _binder.Get<VBoxContainer>("TreatmentList");
+            _closeButton = _binder.Get<Button>("CloseButton");
+            _closeButton.Pressed += () => OnClose?.Invoke();
+
+            Visible = false;
         }
 
         public void RefreshView()
@@ -100,6 +117,53 @@ namespace AtomicWar.GodotApp.UI
                         Ashfall.Core.UI.Theme.Warm);
                     RenderedActiveCount++;
                 }
+
+                // Task #133 P1 — disease rows from the pipeline projection.
+                // Identities stay masked until an explicit identify confirms
+                // them; this panel is read-only (actions live in MedicalPanel).
+                // Task #133 P1c — psychology rows (trauma / flashbacks / guilt
+                // insomnia) ride the same PatientRecord projection, read-only.
+                if (_medical?.Pipeline != null
+                    && Ashfall.Core.Survivors.SurvivorId.TryParse(s.Id, out var projectSv))
+                {
+                    var record = new PatientRecordProjector(_medical.Pipeline).Project(projectSv);
+                    foreach (var affliction in record.Afflictions)
+                    {
+                        bool unidentified = string.Equals(
+                            affliction.AfflictionId,
+                            MedicalTreatmentCatalog.UnidentifiedIllnessId,
+                            StringComparison.Ordinal);
+                        bool isDisease = !unidentified
+                            && affliction.AfflictionId.StartsWith("disease_", StringComparison.Ordinal);
+                        bool isPsychology = IsPsychologyAffliction(affliction.AfflictionId);
+                        if (!unidentified && !isDisease && !isPsychology)
+                            continue;
+
+                        if (unidentified)
+                        {
+                            AddAffliction(_activeList,
+                                $"{Name(s.Id)} — {affliction.StageLabel} (unidentified)",
+                                Ashfall.Core.UI.Theme.Warm);
+                        }
+                        else if (isPsychology)
+                        {
+                            // Phase-0 conditions are player-facing; the stage
+                            // label carries the state (severity stays with the
+                            // Phase-0 panel until a diagnosis flow exists).
+                            bool critical = affliction.StageLabel.Contains("CRITICAL", StringComparison.Ordinal);
+                            AddAffliction(_activeList,
+                                $"{Name(s.Id)} — {affliction.StageLabel}",
+                                critical ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm);
+                        }
+                        else
+                        {
+                            AddAffliction(_activeList,
+                                $"{Name(s.Id)} — {affliction.StageLabel} (day {affliction.SeverityValue:0})",
+                                Ashfall.Core.UI.Theme.Critical);
+                        }
+                        RenderedActiveCount++;
+                    }
+                }
             }
 
             if (RenderedActiveCount == 0)
@@ -133,7 +197,6 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
 
-            // Chemical dependencies (chronic substance conditions)
             if (_medical?.Engine != null)
             {
                 foreach (var kv in _medical.Engine.Ledger)
@@ -201,6 +264,14 @@ namespace AtomicWar.GodotApp.UI
             return l;
         }
 
+        /// <summary>Task #133 P1c: the three observe-only Phase-0 psychology projections.</summary>
+        private static bool IsPsychologyAffliction(string afflictionId)
+        {
+            return afflictionId == MedicalTreatmentCatalog.CombatTraumaId
+                || afflictionId == MedicalTreatmentCatalog.SomaticFlashbackId
+                || afflictionId == MedicalTreatmentCatalog.GuiltInsomniaId;
+        }
+
         private static string Name(string id)
         {
             if (string.IsNullOrEmpty(id)) return "Unknown";
@@ -215,72 +286,6 @@ namespace AtomicWar.GodotApp.UI
             if (count == 0 && fallbackId != null)
                 count = _inventory.Inventory.CountById(fallbackId);
             return count;
-        }
-
-        public override void _Ready()
-        {
-            SetAnchorsPreset(LayoutPreset.FullRect);
-            Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("AFFLICTIONS & TREATMENTS", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Active afflictions section
-            _lblActiveTitle = AshfallUiHelpers.MakeSectionHeader("ACTIVE AFFLICTIONS");
-            vbox.AddChild(_lblActiveTitle);
-
-            _activeList = new VBoxContainer();
-            _activeList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _activeList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_activeList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Chronic conditions section
-            _lblChronicTitle = AshfallUiHelpers.MakeSectionHeader("CHRONIC CONDITIONS");
-            vbox.AddChild(_lblChronicTitle);
-
-            _chronicList = new VBoxContainer();
-            _chronicList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _chronicList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_chronicList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Treatments section
-            _lblTreatmentTitle = AshfallUiHelpers.MakeSectionHeader("TREATMENTS & MEDICATIONS");
-            vbox.AddChild(_lblTreatmentTitle);
-
-            _treatmentList = new VBoxContainer();
-            _treatmentList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _treatmentList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_treatmentList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()

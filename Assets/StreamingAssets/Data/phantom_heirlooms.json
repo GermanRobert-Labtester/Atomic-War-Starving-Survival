@@ -1,0 +1,527 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "heirloom_id": "heirloom_grandfathers_dosimeter",
+      "base_item_id": "dosimeter",
+      "title": "Grandfather's Dosimeter",
+      "origin": "Civil Defense Radiation Safety Division, Sub-Sector 4",
+      "is_legacy_candidate": true,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Pre-War Baseline",
+          "original_holder": "Technician Paul Thorne",
+          "historical_fragment": "Calibrated each morning against a sealed cesium check source. The needle always zeroed with mechanical obedience."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "The Exchange & Bunker 7",
+          "original_holder": "Evacuee Maya Thorne",
+          "historical_fragment": "Carried in a wool sock. The dial lens cracked when the shelter hatch slammed shut under shelling."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Shelter Continuity",
+          "original_holder": "Current Shelter Lineage",
+          "historical_fragment": "Passed down as a primary survival instrument. The needle still registers background drift."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "kin",
+          "memory_text": "{name} looks through the scratched viewing window. 'He said the invisible dust doesn't sleep. Neither do we.'",
+          "morale_effect": 10.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "nurse",
+          "memory_text": "{name} checks the quartz fiber chamber. 'Static charge holds. A functional diagnostic tool.'",
+          "morale_effect": 12.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} holds the cold brass barrel of the dosimeter, noting the dent in the casing.",
+          "morale_effect": 6.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_mothers_recipe_tin",
+      "base_item_id": "recipe_tin",
+      "title": "Mother's Recipe Tin",
+      "origin": "Family Kitchen, North District",
+      "is_legacy_candidate": true,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Peacetime Kitchen",
+          "original_holder": "Elena Sorokin",
+          "historical_fragment": "Painted blue cornflowers on tin. Filled with yeast bread formulas and holiday cakes written in purple ink."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "First Ashfall Winter",
+          "original_holder": "Vera Sorokin",
+          "historical_fragment": "Pencil substitutions crowded into the margins: dried moss for yeast, beet pulp for sugar, boiled leather water for broth."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Bunker Hearth",
+          "original_holder": "Current Caregiver",
+          "historical_fragment": "A physical record of caloric math, converted into the language of maternal instruction."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "kin",
+          "memory_text": "{name} opens the lid. 'She made sure the children ate before she took her ration.'",
+          "morale_effect": 15.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "cook",
+          "memory_text": "{name} studies the scrawled grain ratios. 'Caloric persistence encoded on tin.'",
+          "morale_effect": 14.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} handles the recipe cards carefully. A ledger of how people used to eat.",
+          "morale_effect": 8.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_regiment_lighter",
+      "base_item_id": "engraved_lighter",
+      "title": "Regiment Lighter",
+      "origin": "7th Frontier Rifle Battalion",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Barracks Issue",
+          "original_holder": "Sergeant Viktor Kovac",
+          "historical_fragment": "Etched with crossed rifles. Struck on night watches along the northern border."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "The Redoubt Siege",
+          "original_holder": "Corporal Danil Kovac",
+          "historical_fragment": "Used to melt lead seals and sterilize needle probes after the medical depot caught fire."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Survivor Keepsake",
+          "original_holder": "Current Veteran",
+          "historical_fragment": "A spark carried out of a battle that erased the regiment from the maps."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "former_soldier",
+          "memory_text": "{name} watches the petrol flame. 'None of the squad made it to the rally point.'",
+          "morale_effect": 8.0,
+          "guilt_effect": 10.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} flicks the wheel. The spark is reliable, smelling of old kerosene.",
+          "morale_effect": 6.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_midwifes_satchel",
+      "base_item_id": "midwife_satchel",
+      "title": "Midwife's Satchel",
+      "origin": "St. Jude Rural Maternity Clinic",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Rural Clinical Practice",
+          "original_holder": "Midwife Klara Lind",
+          "historical_fragment": "Leather satchel carrying clean clamps, silver nitrate, and cloth swaddles."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "Evacuation Triage",
+          "original_holder": "Sister Teresa Lind",
+          "historical_fragment": "Fourteen babies delivered in a flooded railway tunnel during the fallout isolation."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Bunker Nursery",
+          "original_holder": "Current Shelter Medic",
+          "historical_fragment": "The leather is discolored by iodine and rust, but the instruments inside are oiled."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "nurse",
+          "memory_text": "{name} inspects the linen swaddles. 'Life continues, regardless of air quality.'",
+          "morale_effect": 16.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} touches the stiff leather clasp. 'Tools for starting a life, not ending one.'",
+          "morale_effect": 10.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_lighthouse_logbook",
+      "base_item_id": "lighthouse_logbook",
+      "title": "Lighthouse Keeper's Logbook",
+      "origin": "Cape Point Navigation Station",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Coastal Watch",
+          "original_holder": "Keeper Henry Bell",
+          "historical_fragment": "Fountain-pen entries recording barometric pressure, gale warnings, and shipping traffic."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "The Darkening Coast",
+          "original_holder": "Keeper Henry Bell",
+          "historical_fragment": "Entries written by candlelight: '21:00 — St. Anne beacon silent. 23:45 — Radio telemetry dead. Keeping lamp lit manually.'"
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Archival Recovery",
+          "original_holder": "Scout Expedition",
+          "historical_fragment": "Recovered from the lantern gallery. The final page reads: 'Still watching.'"
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "teacher",
+          "memory_text": "{name} turns the thick pages. 'They maintained their post after the state collapsed. A model of utility.'",
+          "morale_effect": 14.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} reads the weather observations. 'Data collection persisted until the end.'",
+          "morale_effect": 8.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_engineers_slide_rule",
+      "base_item_id": "engineers_slide_rule",
+      "title": "Engineer's Slide Rule",
+      "origin": "Municipal Hydro-Electric Authority",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Grid Construction",
+          "original_holder": "Chief Engineer Samuel Vance",
+          "historical_fragment": "Celluloid scales calibrated for turbine efficiency and load-shedding."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "Emergency Substation",
+          "original_holder": "Apprentice Noah Vance",
+          "historical_fragment": "Used by flashlight to calculate battery bank bypasses when automated switches welded shut."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Shelter Infrastructure",
+          "original_holder": "Bunker Maintenance",
+          "historical_fragment": "Immune to EMP. An analog calculating instrument that computes exact mechanical ratios."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "engineer",
+          "memory_text": "{name} slides the cursor smoothly. 'Air intake volume calculations take ten seconds. Superior to broken silicon.'",
+          "morale_effect": 14.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} examines the engraved lines. 'Math survived.'",
+          "morale_effect": 8.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_childs_red_scarf",
+      "base_item_id": "childs_red_scarf",
+      "title": "Child's Red Scarf",
+      "origin": "Evacuation Rail Depot 3",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "School Mornings",
+          "original_holder": "Liliya Morozova",
+          "historical_fragment": "Heavy red wool, knitted for visibility in winter snowfall."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "Depot Stampede",
+          "original_holder": "Anna Morozova",
+          "historical_fragment": "Found on the platform after the final evacuation train sealed its doors."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Memorial Token",
+          "original_holder": "Shelter Lineage",
+          "historical_fragment": "A high-visibility marker. It has lost none of its dye."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "child_refugee",
+          "memory_text": "{name} feels the wool. 'High visibility was a liability during the food riots.'",
+          "morale_effect": 10.0,
+          "guilt_effect": 5.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} touches the soft red wool. 'Useful as a filter if we run out of activated carbon.'",
+          "morale_effect": 10.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_foremans_whistle",
+      "base_item_id": "foreman_whistle",
+      "title": "Foundry Foreman's Whistle",
+      "origin": "Heavy Forge Works #2",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Industrial Shift",
+          "original_holder": "Foreman Grigory Bastion",
+          "historical_fragment": "Carried on a steel lanyard above molten slag ladles. One blast meant crane moving, two meant ladle pour."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "Blast Sirens",
+          "original_holder": "Shift Worker Ilya Bastion",
+          "historical_fragment": "Blown continuously to empty the basement casting pits before the factory stack collapsed."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Work Discipline",
+          "original_holder": "Shelter Work Crew",
+          "historical_fragment": "Used to coordinate hatch seals in zero-visibility dust storms."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "machinist",
+          "memory_text": "{name} holds the heavy brass. 'Acoustic signaling is immune to EMP.'",
+          "morale_effect": 12.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} polishes the brass. 'Solid. Functional. Ready for work.'",
+          "morale_effect": 6.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_train_ticket_book",
+      "base_item_id": "train_ticket_book",
+      "title": "Evacuation Train Ticket Book",
+      "origin": "Central Passenger Rail Authority",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Emergency Directive",
+          "original_holder": "Conductor Pavel Kane",
+          "historical_fragment": "Five hundred priority transit passes for Train 402."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "The Broken Line",
+          "original_holder": "Conductor Pavel Kane",
+          "historical_fragment": "Train 402 stopped sixty miles from the terminus when the power grid failed."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Historical Record",
+          "original_holder": "Archival Keepsake",
+          "historical_fragment": "Passenger names penciled into the margins by survivors who walked the remainder of the route."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "urban_survivor",
+          "memory_text": "{name} reads the stamped destinations. 'Logistics failed. We had to walk.'",
+          "morale_effect": 8.0,
+          "guilt_effect": 6.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} examines the paper. 'Paper records outlasted the infrastructure they documented.'",
+          "morale_effect": 6.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_surgeons_watch",
+      "base_item_id": "tarnished_pocket_watch",
+      "title": "Field Surgeon's Watch",
+      "origin": "Mobile Emergency Surgical Unit 12",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Operating Theatre",
+          "original_holder": "Dr. Aris Thorne",
+          "historical_fragment": "Silver pocket watch timed for anesthesia and tourniquet release."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "Triage Scarcity",
+          "original_holder": "Dr. Elena Vasquez",
+          "historical_fragment": "Crystal cracked during a generator backfire. Used to measure ten-minute tourniquet limits in the fallout ward."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Medical Authority",
+          "original_holder": "Shelter Physician",
+          "historical_fragment": "Ticks at five beats a second. A mechanical reminder that clinical decisions must be made without hesitation."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "the_surgeon",
+          "memory_text": "{name} holds the watch to their ear. 'In triage, seconds separate a clean closure from a corpse. The mechanism doesn't lie.'",
+          "morale_effect": 15.0,
+          "guilt_effect": 8.0
+        },
+        {
+          "affinity_key": "nurse",
+          "memory_text": "{name} checks the second hand. 'Check a pulse with two fingers, never the thumb. Basic protocol.'",
+          "morale_effect": 12.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} watches the second hand advance. 'Time continues. We are just burning it.'",
+          "morale_effect": 6.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_apartment_key",
+      "base_item_id": "family_apartment_key",
+      "title": "Family Apartment Key",
+      "origin": "74 Oak Street, Apartment 4B",
+      "is_legacy_candidate": false,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Peaceful Home",
+          "original_holder": "Markus & Suki",
+          "historical_fragment": "Opened a fourth-floor door every evening. Brass cut by a locksmith fifty years ago."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "The Evacuation",
+          "original_holder": "Markus",
+          "historical_fragment": "Turned in the lock on Day Zero as if the family would return by the weekend."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Memorial Token",
+          "original_holder": "Current Shelter Dweller",
+          "historical_fragment": "The building is a crater of charred rebar. The key is polished from friction."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "urban_survivor",
+          "memory_text": "{name} grips the brass key. 'Home was fourth floor on the left. The building was vaporized.'",
+          "morale_effect": 12.0,
+          "guilt_effect": 4.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} turns the key. 'A tool designed to protect property that no longer exists.'",
+          "morale_effect": 8.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    },
+    {
+      "heirloom_id": "heirloom_pocket_radio",
+      "base_item_id": "civil_defense_radio",
+      "title": "Civil Defense Pocket Radio",
+      "origin": "Sector Emergency Broadcast Relay",
+      "is_legacy_candidate": true,
+      "memorial_eligible": true,
+      "stages": [
+        {
+          "stage_index": 1,
+          "period_label": "Emergency Preparedness",
+          "original_holder": "Warden Frank Sterling",
+          "historical_fragment": "High-impact yellow casing. Stored in a sealed tin with dry-cell batteries."
+        },
+        {
+          "stage_index": 2,
+          "period_label": "The Long Static",
+          "original_holder": "Bunker 12 Radio Watch",
+          "historical_fragment": "The emergency carrier wave hissed until the regional transmitter collapsed on Day 84."
+        },
+        {
+          "stage_index": 3,
+          "period_label": "Wasteland Listener",
+          "original_holder": "Expedition Scout",
+          "historical_fragment": "Picks up faint survivor carriers, harmonic echoes, and distant automated beacon chirps."
+        }
+      ],
+      "holder_memories": [
+        {
+          "affinity_key": "former_soldier",
+          "memory_text": "{name} turns the tuning dial slowly. 'Someone is always broadcasting. It's a matter of filtering the static.'",
+          "morale_effect": 14.0,
+          "guilt_effect": 0.0
+        },
+        {
+          "affinity_key": "generic",
+          "memory_text": "{name} holds the radio to their ear. The white noise is constant.",
+          "morale_effect": 10.0,
+          "guilt_effect": 0.0
+        }
+      ]
+    }
+  ]
+}

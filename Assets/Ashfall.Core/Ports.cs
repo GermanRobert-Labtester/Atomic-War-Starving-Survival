@@ -22,6 +22,18 @@ namespace Ashfall.Core
         void WriteAllText(string path, string contents);
         string Combine(params string[] parts);
 
+        void CreateDirectory(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            try { System.IO.Directory.CreateDirectory(path); } catch { /* cleanup: best-effort directory creation */ }
+        }
+
+        void DeleteFile(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            try { if (System.IO.File.Exists(path)) System.IO.File.Delete(path); } catch { /* cleanup: best-effort file deletion */ }
+        }
+
         /// <summary>
         /// Enumerate files matching a search pattern. Default fallback uses System.IO.
         /// Hosts that virtualize paths (e.g., Godot res:// PCK) should override.

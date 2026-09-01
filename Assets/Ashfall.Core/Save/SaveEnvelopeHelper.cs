@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 
 namespace Ashfall.Core.Save
 {
@@ -23,6 +24,18 @@ namespace Ashfall.Core.Save
     {
         private static readonly IJsonSerializer DefaultSerializer = new SystemTextJsonSerializer();
         private static readonly IFileIO DefaultFileIO = new FileSystemIO();
+        private static long s_totalAtomicWrites = 0L;
+
+        /// <summary>
+        /// Total count of successful atomic writes completed across all save stores.
+        /// Used for headless telemetry and zero-write assertion testing (Task 108).
+        /// </summary>
+        public static long TotalAtomicWrites => Interlocked.Read(ref s_totalAtomicWrites);
+
+        /// <summary>
+        /// Resets the total atomic write counter to zero.
+        /// </summary>
+        public static void ResetAtomicWriteCounter() => Interlocked.Exchange(ref s_totalAtomicWrites, 0L);
 
         /// <summary>
         /// Saves state wrapped in a checksum envelope with atomic file replacement and optional backup.
@@ -71,23 +84,25 @@ namespace Ashfall.Core.Save
             IFileIO? fileIO = null,
             bool createBackup = false,
             ILog? log = null,
-            string? logTag = null)
+            string? logTag = null,
+            Func<string, bool>? validatePayload = null)
         {
             if (string.IsNullOrWhiteSpace(path)) return false;
+            if (string.IsNullOrWhiteSpace(payload)) return false;
 
             var files = fileIO ?? DefaultFileIO;
             string tag = logTag ?? "SaveEnvelopeHelper";
+            string tempPath = path + ".tmp";
 
             try
             {
-                string dir = Path.GetDirectoryName(path)!;
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !files.DirectoryExists(dir))
-                {
-                    if (files is FileSystemIO)
-                        Directory.CreateDirectory(dir);
-                }
+                    files.CreateDirectory(dir);
 
-                // Create backup if requested and original exists
+                // Create backup if requested and original exists. A backup is
+                // deliberately best-effort: failure here must not replace the
+                // authoritative file or turn a valid save into a partial one.
                 if (createBackup && files.FileExists(path))
                 {
                     try
@@ -102,9 +117,16 @@ namespace Ashfall.Core.Save
                     }
                 }
 
-                // Atomic write via temp file
-                string tempPath = path + ".tmp";
+                // Write and read the complete payload before replacing the
+                // target. FileSystemIO uses rename-over-target, while virtual
+                // test/adaptor implementations fall back to their own atomic
+                // write primitive.
                 files.WriteAllText(tempPath, payload);
+                string readBack = files.ReadAllText(tempPath);
+                if (string.IsNullOrWhiteSpace(readBack))
+                    throw new InvalidOperationException("temporary save payload is empty");
+                if (validatePayload != null && !validatePayload(readBack))
+                    throw new InvalidOperationException("temporary save payload failed validation");
 
                 if (File.Exists(tempPath))
                 {
@@ -112,15 +134,31 @@ namespace Ashfall.Core.Save
                 }
                 else
                 {
-                    files.WriteAllText(path, payload);
+                    // IFileIO implementations without a physical rename still
+                    // get a complete payload write; never leave the temp copy as
+                    // an apparent current-generation authority.
+                    files.WriteAllText(path, readBack);
                 }
 
+                Interlocked.Increment(ref s_totalAtomicWrites);
                 return true;
             }
             catch (Exception ex)
             {
                 log?.Error($"[{tag}] Save failed for '{path}': {ex.Message}");
                 return false;
+            }
+            finally
+            {
+                try
+                {
+                    if (files.FileExists(tempPath))
+                        files.DeleteFile(tempPath);
+                }
+                catch (Exception cleanupEx)
+                {
+                    log?.Warn($"[{tag}] Temporary save cleanup failed for '{tempPath}': {cleanupEx.Message}");
+                }
             }
         }
 

@@ -75,8 +75,8 @@ namespace Ashfall.Core.Tests.Tooling
 
                 Assert.True(gate.TryGetProperty("classification", out var classProp), $"Gate '{gateId}' missing 'classification'");
                 string? classification = classProp.GetString();
-                Assert.True(classification == "fast" || classification == "full",
-                    $"Gate '{gateId}' classification must be 'fast' or 'full', got '{classification}'");
+                Assert.True(classification == "fast" || classification == "full" || classification == "performance" || classification == "release",
+                    $"Gate '{gateId}' classification must be 'fast', 'full', 'performance', or 'release', got '{classification}'");
             }
         }
 

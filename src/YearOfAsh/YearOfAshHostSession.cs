@@ -21,6 +21,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         private readonly YearOfAshDeepFreezeSystem _deepFreeze;
         private readonly YearOfAshRadonSystem _radon;
         private WarlordDoctrineSystem _warlord;
+        private FactionWarChainRunner _warRunner;
         private readonly List<SurvivorOccupantSnapshot> _demoRoster;
         private readonly SeededRng _warlordRng;
 
@@ -31,6 +32,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         public YearOfAshDeepFreezeSystem DeepFreeze => _deepFreeze;
         public YearOfAshRadonSystem Radon => _radon;
         public WarlordDoctrineSystem Warlord => _warlord;
+        public FactionWarChainRunner WarRunner => _warRunner;
         public IReadOnlyList<SurvivorOccupantSnapshot> DemoRoster => _demoRoster;
 
         public YearOfAshHostSession(
@@ -40,7 +42,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
             QuestlineSystem quests = null!,
             YearOfAshDeepFreezeSystem deepFreeze = null!,
             YearOfAshRadonSystem radon = null!,
-            WarlordDoctrineSystem warlord = null!)
+            WarlordDoctrineSystem warlord = null!,
+            FactionWarChainRunner warRunner = null!)
         {
             _timeline = timeline ?? new YearOfAshTimelineSystem();
             _encounters = encounters ?? new DoorEncounterSystem();
@@ -49,6 +52,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _deepFreeze = deepFreeze ?? new YearOfAshDeepFreezeSystem();
             _radon = radon ?? new YearOfAshRadonSystem();
             _warlord = warlord ?? new WarlordDoctrineSystem();
+            _warRunner = warRunner ?? new FactionWarChainRunner(new FactionWarContentCatalog());
             _warlordRng = new SeededRng(2026);
             _demoRoster = CreateDefaultDemoRoster();
             WireWarlordConsequences();
@@ -123,6 +127,11 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 for (int i = 0; i < validation.AliasWarnings.Count; i++)
                     GD.Print("[warlord] " + validation.AliasWarnings[i]);
                 session.BindWarlord(session._warlord);
+
+                // Load Faction War content catalog and bind runner
+                var warCatalogLoader = new FactionWarContentCatalogLoader(fileIO, serializer, new GodotLog());
+                var warCatalog = warCatalogLoader.Load(dataDir);
+                session._warRunner = new FactionWarChainRunner(warCatalog);
             }
 
             var existingSave = loadExistingSave ? YearOfAshSaveStore.TryLoad() : null;
@@ -137,6 +146,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         {
             _timeline.AdvanceDay(day);
             _factionWar.SimulateDailyFriction(day);
+            _warRunner.TickDay(day);
             _deepFreeze.TickDailyThermal(day, _timeline.AmbientTemperatureCelsius);
             _radon.TickDailyRadon(day, _timeline.AmbientTemperatureCelsius);
             TickWarlord(day);
@@ -257,7 +267,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 _deepFreeze,
                 _radon,
                 _quests,
-                _warlord);
+                _warlord,
+                _warRunner);
         }
 
         public void RestoreSave(YearOfAshSave save)
@@ -265,7 +276,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
             if (save == null) return;
             YearOfAshSaveCodec.Restore(
                 save, _timeline, _encounters, _factionWar,
-                _deepFreeze, _radon, _quests, _warlord);
+                _deepFreeze, _radon, _quests, _warlord,
+                _warRunner);
             // Verdict quest progress is owned by the Verdict envelope (v3+) and
             // Dose quest progress by the Dose envelope (v2+). After the one-time
             // adoption in their host sessions, strip any quest_verdict_* /

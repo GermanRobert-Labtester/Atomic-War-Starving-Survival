@@ -248,15 +248,28 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string Equip(string itemId)
+        public string Equip(string itemId) => EquipResult(itemId).MessageKey;
+
+        /// <summary>
+        /// Typed equip result. The host's Equip(string) compatibility wrapper
+        /// derives its message from this so both surfaces stay identical;
+        /// new callers should branch on Status rather than parsing text.
+        /// </summary>
+        public ActionResult EquipResult(string itemId)
         {
             var def = Catalog.Get(itemId);
-            if (def == null) return $"Unknown item: {itemId}.";
+            if (def == null)
+            {
+                var failed = ActionResult.Failed("unknown_item", $"Unknown item: {itemId}.");
+                LastEvent = failed.MessageKey;
+                return failed;
+            }
             bool ok = Inventory.Equip(def);
-            LastEvent = ok
-                ? $"Equipped {def.displayName} ({def.equipSlot})."
-                : $"Cannot equip {def.displayName}: not equipable, not held, or slot occupied.";
-            return LastEvent;
+            var result = ok
+                ? ActionResult.Success($"Equipped {def.displayName} ({def.equipSlot}).")
+                : ActionResult.Blocked("cannot_equip", $"Cannot equip {def.displayName}: not equipable, not held, or slot occupied.");
+            LastEvent = result.MessageKey;
+            return result;
         }
 
         public string Unequip(string slotName)
@@ -270,15 +283,29 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string Consume(string itemId, float therapeuticScale = 1f)
+        public string Consume(string itemId, float therapeuticScale = 1f) => ConsumeResult(itemId, therapeuticScale).MessageKey;
+
+        /// <summary>
+        /// Typed consume result. The host's Consume(string, float)
+        /// compatibility wrapper derives its message from this so both
+        /// surfaces stay identical; new callers should branch on Status
+        /// rather than parsing text.
+        /// </summary>
+        public ActionResult ConsumeResult(string itemId, float therapeuticScale = 1f)
         {
             var def = Catalog.Get(itemId);
-            if (def == null) return $"Unknown item: {itemId}.";
+            if (def == null)
+            {
+                var failed = ActionResult.Failed("unknown_item", $"Unknown item: {itemId}.");
+                LastEvent = failed.MessageKey;
+                return failed;
+            }
             bool ok = Inventory.Consume(def, therapeuticScale: therapeuticScale);
-            LastEvent = ok
-                ? $"Consumed 1 × {def.displayName}."
-                : $"Cannot consume {def.displayName}: none held.";
-            return LastEvent;
+            var result = ok
+                ? ActionResult.Success($"Consumed 1 × {def.displayName}.")
+                : ActionResult.Blocked("cannot_consume", $"Cannot consume {def.displayName}: none held.");
+            LastEvent = result.MessageKey;
+            return result;
         }
 
         // ── Status ─────────────────────────────────────────────────────

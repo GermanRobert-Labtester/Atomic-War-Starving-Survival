@@ -102,6 +102,60 @@ namespace AtomicWar.GodotApp
         private SurvivalDetailPanel _survivalDetailPanel = null!;
         private WeatherHistoryPanel _weatherHistoryPanel = null!;
 
+        // ── Additional & Flagship Console Panels ──
+        private BrineExtractionPanel _brineExtractionPanel = null!;
+        private ExpeditionCampPanel _expeditionCampPanel = null!;
+        private FireIncidentPanel _fireIncidentPanel = null!;
+        private GeigerCalibrationPanel _geigerCalibrationPanel = null!;
+        private TriangulationPanel _triangulationPanel = null!;
+        private WeatherSondePanel _weatherSondePanel = null!;
+        private PowerGridPanel _powerGridPanel = null!;
+        private ExpeditionRadarPanel _expeditionRadarPanel = null!;
+        private DoseLedgerPanel _doseLedgerPanel = null!;
+        private CaravanBarterLedgerPanel _caravanBarterLedgerPanel = null!;
+        private FactionMatrixPanel _factionMatrixPanel = null!;
+        private FactionsNarrativePanel _factionsNarrativePanel = null!;
+        private SkillMatrixPanel _skillMatrixPanel = null!;
+        private SurvivalWorkstationPanel _survivalWorkstationPanel = null!;
+        private VerdictDashboardPanel _verdictDashboardPanel = null!;
+        private MapAtlasPanel _mapAtlasPanel = null!;
+        private MaritimeAtlasPanel _maritimeAtlasPanel = null!;
+        private MusterAtlasPanel _musterAtlasPanel = null!;
+        private QuestsAtlasPanel _questsAtlasPanel = null!;
+        private ResearchAtlasPanel _researchAtlasPanel = null!;
+        private StandingRecordAtlasPanel _standingRecordAtlasPanel = null!;
+        private CombatHudOverlay _combatHudOverlay = null!;
+        private AnaerobicBiogasDigesterPanel _biogasDigesterPanel = null!;
+        private SubterraneanCartographyPanel _cartographyGisPanel = null!;
+        private UndergroundPrintingPressPanel _printingPressPanel = null!;
+        private SiliconIngotSlicingPanel _siliconSlicingPanel = null!;
+        private GeothermalSteamTurbinePanel _geothermalTurbinePanel = null!;
+        private WarDogKennelPanel _warDogKennelPanel = null!;
+        private IsotopeSeparatorPanel _isotopeSeparatorPanel = null!;
+        private PlasmaArcSmeltingPanel _plasmaSmeltingPanel = null!;
+        private BoreholeSeismographPanel _boreholeSeismographPanel = null!;
+        private HeavyLogisticsAirlockPanel _logisticsAirlockPanel = null!;
+        private CryogenicPermafrostCorePanel _cryoPermafrostCorePanel = null!;
+        private BasalRadonMigrationPanel _basalRadonMigrationPanel = null!;
+        private TraumaBondingCohortPanel _traumaBondingCohortPanel = null!;
+        private ClandestineInsurgencyPanel _clandestineInsurgencyPanel = null!;
+        private SubterraneanDebtLedgerPanel _subterraneanDebtLedgerPanel = null!;
+        private SurfaceShrapnelAegisPanel _surfaceShrapnelAegisPanel = null!;
+        private LongWalkExpeditionPanel _longWalkExpeditionPanel = null!;
+        private SonicRuptureDrillPanel _sonicRuptureDrillPanel = null!;
+        private VaultDoorBreachingPanel _vaultDoorBreachingPanel = null!;
+        private IronCenotaphMemorialPanel _ironCenotaphMemorialPanel = null!;
+        private AquiferTreatyConcessionPanel _aquiferTreatyConcessionPanel = null!;
+        private CrossingSafeConductVouchPanel _crossingSafeConductVouchPanel = null!;
+        private MechanicalProstheticsLathePanel _mechanicalProstheticsLathePanel = null!;
+        private FungalProteinFermenterPanel _fungalProteinFermenterPanel = null!;
+        private UltrasonicDecontaminationAirlockPanel _ultrasonicDecontamAirlockPanel = null!;
+        private TroposphericRadioRelayPanel _troposphericRadioRelayPanel = null!;
+        private InductionCupolaFurnacePanel _inductionCupolaFurnacePanel = null!;
+        private HeavyMarineDieselGeneratorPanel _heavyMarineDieselGenPanel = null!;
+        private SlurryDewateringSumpPanel _slurryDewateringSumpPanel = null!;
+        private MagneticDrumArchivePanel _magneticDrumArchivePanel = null!;
+
         private void BuildUserInterface()
         {
             // Root full-rect styling
@@ -117,6 +171,7 @@ namespace AtomicWar.GodotApp
             // ── Audio manager (buses + playback) ──
             _audio = new AudioManager();
             AddChild(_audio);
+            _audio.PlayMainMenuMusic();
 
             // ── Player-facing game shell ──
             // The old developer workbench remains available behind the DEV CONSOLE
@@ -130,13 +185,15 @@ namespace AtomicWar.GodotApp
             _dashboard.OnServiceFilterRequested += () =>
             {
                 SetupStartingLevel();
-                _startingLevel?.ServiceAirFilter();
+                if (_startingLevel?.ServiceAirFilter() == true)
+                    HandleShelterRoomRepairPerformed("room_filtration");
                 UpdateHud();
             };
             _dashboard.OnReplaceFilterRequested += () =>
             {
                 SetupStartingLevel();
-                _startingLevel?.ReplaceAirFilter();
+                if (_startingLevel?.ReplaceAirFilter() == true)
+                    HandleShelterRoomRepairPerformed("room_filtration");
                 UpdateHud();
             };
             AddChild(_dashboard);
@@ -169,7 +226,7 @@ namespace AtomicWar.GodotApp
             AddChild(_survivorsOverlay);
 
             // ── Crafting panel (overlay) ──
-            _craftingPanel = new CraftingPanel();
+            _craftingPanel = PanelSceneLoader.Load<CraftingPanel>("res://assets/ui/panels/CraftingPanel.tscn");
             _craftingPanel.OnClose += CloseCraftingPanel;
             _craftingPanel.OnCraftStarted += () => { UpdateHud(); _craftingDirty = true; };
             _craftingPanel.OnOpenWorkshopRequested += () => OpenPlayerPanel("workshop");
@@ -177,7 +234,7 @@ namespace AtomicWar.GodotApp
             AddChild(_craftingPanel);
 
             // ── Workshop panel (relic reverse engineering) ──
-            _workshopPanel = new WorkshopPanel();
+            _workshopPanel = PanelSceneLoader.Load<WorkshopPanel>("res://assets/ui/panels/WorkshopPanel.tscn");
             _workshopPanel.OnClose += CloseWorkshopPanel;
             AddChild(_workshopPanel);
 
@@ -300,6 +357,7 @@ namespace AtomicWar.GodotApp
             // ── Shelter panel (overlay) ──
             _shelterPanel = new ShelterPanel();
             _shelterPanel.OnClose += CloseShelterPanel;
+            _shelterPanel.RoomSelected += HandleShelterRoomSelected; // Plan 29 29A: click = inspect
             AddChild(_shelterPanel);
 
             // ── Greenhouse panel (overlay) ──
@@ -330,17 +388,17 @@ namespace AtomicWar.GodotApp
             AddChild(_mapPanel);
 
             // ── Survivor Detail panel (overlay) ──
-            _survivorDetailPanel = new SurvivorDetailPanel();
+            _survivorDetailPanel = PanelSceneLoader.Load<SurvivorDetailPanel>("res://assets/ui/panels/SurvivorDetailPanel.tscn");
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);
 
             // ── Inventory Detail panel (overlay) ──
-            _inventoryDetailPanel = new InventoryDetailPanel();
+            _inventoryDetailPanel = PanelSceneLoader.Load<InventoryDetailPanel>("res://assets/ui/panels/InventoryDetailPanel.tscn");
             _inventoryDetailPanel.OnClose += CloseInventoryDetailPanel;
             AddChild(_inventoryDetailPanel);
 
             // ── Quest Detail panel (overlay) ──
-            _questDetailPanel = new QuestDetailPanel();
+            _questDetailPanel = PanelSceneLoader.Load<QuestDetailPanel>("res://assets/ui/panels/QuestDetailPanel.tscn");
             _questDetailPanel.OnClose += CloseQuestDetailPanel;
             AddChild(_questDetailPanel);
 
@@ -350,12 +408,12 @@ namespace AtomicWar.GodotApp
             AddChild(_achievementsPanel);
 
             // ── Weather Detail panel (overlay) ──
-            _weatherDetailPanel = new WeatherDetailPanel();
+            _weatherDetailPanel = PanelSceneLoader.Load<WeatherDetailPanel>("res://assets/ui/panels/WeatherDetailPanel.tscn");
             _weatherDetailPanel.OnClose += CloseWeatherDetailPanel;
             AddChild(_weatherDetailPanel);
 
             // ── Radiation Detail panel (overlay) ──
-            _radiationDetailPanel = new RadiationDetailPanel();
+            _radiationDetailPanel = PanelSceneLoader.Load<RadiationDetailPanel>("res://assets/ui/panels/RadiationDetailPanel.tscn");
             _radiationDetailPanel.OnClose += CloseRadiationDetailPanel;
             AddChild(_radiationDetailPanel);
 
@@ -365,22 +423,22 @@ namespace AtomicWar.GodotApp
             AddChild(_eventsLogPanel);
 
             // ── Duty Roster Detail panel (overlay) ──
-            _dutyRosterDetailPanel = new DutyRosterDetailPanel();
+            _dutyRosterDetailPanel = PanelSceneLoader.Load<DutyRosterDetailPanel>("res://assets/ui/panels/DutyRosterDetailPanel.tscn");
             _dutyRosterDetailPanel.OnClose += CloseDutyRosterDetailPanel;
             AddChild(_dutyRosterDetailPanel);
 
             // ── Economy Detail panel (overlay) ──
-            _economyDetailPanel = new EconomyDetailPanel();
+            _economyDetailPanel = PanelSceneLoader.Load<EconomyDetailPanel>("res://assets/ui/panels/EconomyDetailPanel.tscn");
             _economyDetailPanel.OnClose += CloseEconomyDetailPanel;
             AddChild(_economyDetailPanel);
 
             // ── Combat Detail panel (overlay) ──
-            _combatDetailPanel = new CombatDetailPanel();
+            _combatDetailPanel = PanelSceneLoader.Load<CombatDetailPanel>("res://assets/ui/panels/CombatDetailPanel.tscn");
             _combatDetailPanel.OnClose += CloseCombatDetailPanel;
             AddChild(_combatDetailPanel);
 
             // ── Faction Detail panel (overlay) ──
-            _factionDetailPanel = new FactionDetailPanel();
+            _factionDetailPanel = PanelSceneLoader.Load<FactionDetailPanel>("res://assets/ui/panels/FactionDetailPanel.tscn");
             _factionDetailPanel.OnClose += CloseFactionDetailPanel;
             AddChild(_factionDetailPanel);
 
@@ -452,7 +510,7 @@ namespace AtomicWar.GodotApp
             AddChild(_tutorialPanel);
 
             // ── Afflictions panel (overlay) ──
-            _afflictionsPanel = new AfflictionsPanel();
+            _afflictionsPanel = PanelSceneLoader.Load<AfflictionsPanel>("res://assets/ui/panels/AfflictionsPanel.tscn");
             _afflictionsPanel.OnClose += CloseAfflictionsPanel;
             AddChild(_afflictionsPanel);
 
@@ -462,7 +520,7 @@ namespace AtomicWar.GodotApp
             AddChild(_statusPanel);
 
             // ── Survival Detail panel (overlay) ──
-            _survivalDetailPanel = new SurvivalDetailPanel();
+            _survivalDetailPanel = PanelSceneLoader.Load<SurvivalDetailPanel>("res://assets/ui/panels/SurvivalDetailPanel.tscn");
             _survivalDetailPanel.OnClose += CloseSurvivalDetailPanel;
             AddChild(_survivalDetailPanel);
 
@@ -477,7 +535,7 @@ namespace AtomicWar.GodotApp
             AddChild(_radiationHistoryPanel);
 
             // ── Journal Detail panel (overlay) ──
-            _journalDetailPanel = new JournalDetailPanel();
+            _journalDetailPanel = PanelSceneLoader.Load<JournalDetailPanel>("res://assets/ui/panels/JournalDetailPanel.tscn");
             _journalDetailPanel.OnClose += CloseJournalDetailPanel;
             AddChild(_journalDetailPanel);
 
@@ -487,12 +545,12 @@ namespace AtomicWar.GodotApp
             AddChild(_combatHistoryPanel);
 
             // ── Map Detail panel (overlay) ──
-            _mapDetailPanel = new MapDetailPanel();
+            _mapDetailPanel = PanelSceneLoader.Load<MapDetailPanel>("res://assets/ui/panels/MapDetailPanel.tscn");
             _mapDetailPanel.OnClose += CloseMapDetailPanel;
             AddChild(_mapDetailPanel);
 
             // ── Event Detail panel (overlay) ──
-            _eventDetailPanel = new EventDetailPanel();
+            _eventDetailPanel = PanelSceneLoader.Load<EventDetailPanel>("res://assets/ui/panels/EventDetailPanel.tscn");
             _eventDetailPanel.OnClose += CloseEventDetailPanel;
             AddChild(_eventDetailPanel);
 
@@ -511,6 +569,7 @@ namespace AtomicWar.GodotApp
                     author: null!,
                     day: day);
                 UpdateHud();
+                ObserveSigil("protocol.ration");
             };
             _openingProtocolModal.OnMaintenanceDirectiveSelected += directive =>
             {
@@ -535,6 +594,7 @@ namespace AtomicWar.GodotApp
                     author: null!,
                     day: day);
                 UpdateHud();
+                ObserveSigil("protocol.maintenance");
             };
             _openingProtocolModal.OnRadioProtocolSelected += protocol =>
             {
@@ -550,8 +610,218 @@ namespace AtomicWar.GodotApp
                     author: null!,
                     day: day);
                 UpdateHud();
+                ObserveSigil("protocol.radio");
             };
             AddChild(_openingProtocolModal);
+
+            // ── Additional & Flagship Console Panels ──
+            _brineExtractionPanel = new BrineExtractionPanel { Visible = false };
+            _brineExtractionPanel.OnClose += () => _brineExtractionPanel.Visible = false;
+            AddChild(_brineExtractionPanel);
+
+            _expeditionCampPanel = new ExpeditionCampPanel { Visible = false };
+            _expeditionCampPanel.OnClose += () => _expeditionCampPanel.Visible = false;
+            AddChild(_expeditionCampPanel);
+
+            _fireIncidentPanel = new FireIncidentPanel { Visible = false };
+            _fireIncidentPanel.OnClose += () => _fireIncidentPanel.Visible = false;
+            AddChild(_fireIncidentPanel);
+
+            _geigerCalibrationPanel = new GeigerCalibrationPanel { Visible = false };
+            _geigerCalibrationPanel.OnClose += () => _geigerCalibrationPanel.Visible = false;
+            AddChild(_geigerCalibrationPanel);
+
+            _triangulationPanel = new TriangulationPanel { Visible = false };
+            _triangulationPanel.OnClose += () => _triangulationPanel.Visible = false;
+            AddChild(_triangulationPanel);
+
+            _weatherSondePanel = new WeatherSondePanel { Visible = false };
+            _weatherSondePanel.OnClose += () => _weatherSondePanel.Visible = false;
+            AddChild(_weatherSondePanel);
+
+            _powerGridPanel = new PowerGridPanel { Visible = false };
+            _powerGridPanel.OnClose += () => _powerGridPanel.Visible = false;
+            AddChild(_powerGridPanel);
+
+            _expeditionRadarPanel = new ExpeditionRadarPanel { Visible = false };
+            _expeditionRadarPanel.OnClose += () => _expeditionRadarPanel.Visible = false;
+            AddChild(_expeditionRadarPanel);
+
+            _doseLedgerPanel = new DoseLedgerPanel { Visible = false };
+            _doseLedgerPanel.OnClose += () => _doseLedgerPanel.Visible = false;
+            AddChild(_doseLedgerPanel);
+
+            _caravanBarterLedgerPanel = new CaravanBarterLedgerPanel { Visible = false };
+            _caravanBarterLedgerPanel.OnClose += () => _caravanBarterLedgerPanel.Visible = false;
+            AddChild(_caravanBarterLedgerPanel);
+
+            _factionMatrixPanel = new FactionMatrixPanel { Visible = false };
+            _factionMatrixPanel.OnClose += () => _factionMatrixPanel.Visible = false;
+            AddChild(_factionMatrixPanel);
+
+            _factionsNarrativePanel = new FactionsNarrativePanel { Visible = false };
+            _factionsNarrativePanel.OnClose += () => _factionsNarrativePanel.Visible = false;
+            AddChild(_factionsNarrativePanel);
+
+            _skillMatrixPanel = new SkillMatrixPanel { Visible = false };
+            _skillMatrixPanel.OnClose += () => _skillMatrixPanel.Visible = false;
+            AddChild(_skillMatrixPanel);
+
+            _survivalWorkstationPanel = new SurvivalWorkstationPanel { Visible = false };
+            _survivalWorkstationPanel.OnClose += () => _survivalWorkstationPanel.Visible = false;
+            AddChild(_survivalWorkstationPanel);
+
+            _verdictDashboardPanel = new VerdictDashboardPanel { Visible = false };
+            _verdictDashboardPanel.OnClose += () => _verdictDashboardPanel.Visible = false;
+            AddChild(_verdictDashboardPanel);
+
+            _mapAtlasPanel = new MapAtlasPanel { Visible = false };
+            _mapAtlasPanel.OnClose += () => _mapAtlasPanel.Visible = false;
+            AddChild(_mapAtlasPanel);
+
+            _maritimeAtlasPanel = new MaritimeAtlasPanel { Visible = false };
+            _maritimeAtlasPanel.OnClose += () => _maritimeAtlasPanel.Visible = false;
+            AddChild(_maritimeAtlasPanel);
+
+            _musterAtlasPanel = new MusterAtlasPanel { Visible = false };
+            _musterAtlasPanel.OnClose += () => _musterAtlasPanel.Visible = false;
+            AddChild(_musterAtlasPanel);
+
+            _questsAtlasPanel = new QuestsAtlasPanel { Visible = false };
+            _questsAtlasPanel.OnClose += () => _questsAtlasPanel.Visible = false;
+            AddChild(_questsAtlasPanel);
+
+            _researchAtlasPanel = new ResearchAtlasPanel { Visible = false };
+            _researchAtlasPanel.OnClose += () => _researchAtlasPanel.Visible = false;
+            AddChild(_researchAtlasPanel);
+
+            _standingRecordAtlasPanel = new StandingRecordAtlasPanel { Visible = false };
+            _standingRecordAtlasPanel.OnClose += () => _standingRecordAtlasPanel.Visible = false;
+            AddChild(_standingRecordAtlasPanel);
+
+            _combatHudOverlay = new CombatHudOverlay { Visible = false };
+            _combatHudOverlay.OnClose += () => _combatHudOverlay.Visible = false;
+            AddChild(_combatHudOverlay);
+
+            _biogasDigesterPanel = new AnaerobicBiogasDigesterPanel { Visible = false };
+            _biogasDigesterPanel.OnClose += () => _biogasDigesterPanel.Visible = false;
+            AddChild(_biogasDigesterPanel);
+
+            _cartographyGisPanel = new SubterraneanCartographyPanel { Visible = false };
+            _cartographyGisPanel.OnClose += () => _cartographyGisPanel.Visible = false;
+            AddChild(_cartographyGisPanel);
+
+            _printingPressPanel = new UndergroundPrintingPressPanel { Visible = false };
+            _printingPressPanel.OnClose += () => _printingPressPanel.Visible = false;
+            AddChild(_printingPressPanel);
+
+            _siliconSlicingPanel = new SiliconIngotSlicingPanel { Visible = false };
+            _siliconSlicingPanel.OnClose += () => _siliconSlicingPanel.Visible = false;
+            AddChild(_siliconSlicingPanel);
+
+            _geothermalTurbinePanel = new GeothermalSteamTurbinePanel { Visible = false };
+            _geothermalTurbinePanel.OnClose += () => _geothermalTurbinePanel.Visible = false;
+            AddChild(_geothermalTurbinePanel);
+
+            _warDogKennelPanel = new WarDogKennelPanel { Visible = false };
+            _warDogKennelPanel.OnClose += () => _warDogKennelPanel.Visible = false;
+            AddChild(_warDogKennelPanel);
+
+            _isotopeSeparatorPanel = new IsotopeSeparatorPanel { Visible = false };
+            _isotopeSeparatorPanel.OnClose += () => _isotopeSeparatorPanel.Visible = false;
+            AddChild(_isotopeSeparatorPanel);
+
+            _plasmaSmeltingPanel = new PlasmaArcSmeltingPanel { Visible = false };
+            _plasmaSmeltingPanel.OnClose += () => _plasmaSmeltingPanel.Visible = false;
+            AddChild(_plasmaSmeltingPanel);
+
+            _boreholeSeismographPanel = new BoreholeSeismographPanel { Visible = false };
+            _boreholeSeismographPanel.OnClose += () => _boreholeSeismographPanel.Visible = false;
+            AddChild(_boreholeSeismographPanel);
+
+            _logisticsAirlockPanel = new HeavyLogisticsAirlockPanel { Visible = false };
+            _logisticsAirlockPanel.OnClose += () => _logisticsAirlockPanel.Visible = false;
+            AddChild(_logisticsAirlockPanel);
+
+            _cryoPermafrostCorePanel = new CryogenicPermafrostCorePanel { Visible = false };
+            _cryoPermafrostCorePanel.OnClose += () => _cryoPermafrostCorePanel.Visible = false;
+            AddChild(_cryoPermafrostCorePanel);
+
+            _basalRadonMigrationPanel = new BasalRadonMigrationPanel { Visible = false };
+            _basalRadonMigrationPanel.OnClose += () => _basalRadonMigrationPanel.Visible = false;
+            AddChild(_basalRadonMigrationPanel);
+
+            _traumaBondingCohortPanel = new TraumaBondingCohortPanel { Visible = false };
+            _traumaBondingCohortPanel.OnClose += () => _traumaBondingCohortPanel.Visible = false;
+            AddChild(_traumaBondingCohortPanel);
+
+            _clandestineInsurgencyPanel = new ClandestineInsurgencyPanel { Visible = false };
+            _clandestineInsurgencyPanel.OnClose += () => _clandestineInsurgencyPanel.Visible = false;
+            AddChild(_clandestineInsurgencyPanel);
+
+            _subterraneanDebtLedgerPanel = new SubterraneanDebtLedgerPanel { Visible = false };
+            _subterraneanDebtLedgerPanel.OnClose += () => _subterraneanDebtLedgerPanel.Visible = false;
+            AddChild(_subterraneanDebtLedgerPanel);
+
+            _surfaceShrapnelAegisPanel = new SurfaceShrapnelAegisPanel { Visible = false };
+            _surfaceShrapnelAegisPanel.OnClose += () => _surfaceShrapnelAegisPanel.Visible = false;
+            AddChild(_surfaceShrapnelAegisPanel);
+
+            _longWalkExpeditionPanel = new LongWalkExpeditionPanel { Visible = false };
+            _longWalkExpeditionPanel.OnClose += () => _longWalkExpeditionPanel.Visible = false;
+            AddChild(_longWalkExpeditionPanel);
+
+            _sonicRuptureDrillPanel = new SonicRuptureDrillPanel { Visible = false };
+            _sonicRuptureDrillPanel.OnClose += () => _sonicRuptureDrillPanel.Visible = false;
+            AddChild(_sonicRuptureDrillPanel);
+
+            _vaultDoorBreachingPanel = new VaultDoorBreachingPanel { Visible = false };
+            _vaultDoorBreachingPanel.OnClose += () => _vaultDoorBreachingPanel.Visible = false;
+            AddChild(_vaultDoorBreachingPanel);
+
+            _ironCenotaphMemorialPanel = new IronCenotaphMemorialPanel { Visible = false };
+            _ironCenotaphMemorialPanel.OnClose += () => _ironCenotaphMemorialPanel.Visible = false;
+            AddChild(_ironCenotaphMemorialPanel);
+
+            _aquiferTreatyConcessionPanel = new AquiferTreatyConcessionPanel { Visible = false };
+            _aquiferTreatyConcessionPanel.OnClose += () => _aquiferTreatyConcessionPanel.Visible = false;
+            AddChild(_aquiferTreatyConcessionPanel);
+
+            _crossingSafeConductVouchPanel = new CrossingSafeConductVouchPanel { Visible = false };
+            _crossingSafeConductVouchPanel.OnClose += () => _crossingSafeConductVouchPanel.Visible = false;
+            AddChild(_crossingSafeConductVouchPanel);
+
+            _mechanicalProstheticsLathePanel = new MechanicalProstheticsLathePanel { Visible = false };
+            _mechanicalProstheticsLathePanel.OnClose += () => _mechanicalProstheticsLathePanel.Visible = false;
+            AddChild(_mechanicalProstheticsLathePanel);
+
+            _fungalProteinFermenterPanel = new FungalProteinFermenterPanel { Visible = false };
+            _fungalProteinFermenterPanel.OnClose += () => _fungalProteinFermenterPanel.Visible = false;
+            AddChild(_fungalProteinFermenterPanel);
+
+            _ultrasonicDecontamAirlockPanel = new UltrasonicDecontaminationAirlockPanel { Visible = false };
+            _ultrasonicDecontamAirlockPanel.OnClose += () => _ultrasonicDecontamAirlockPanel.Visible = false;
+            AddChild(_ultrasonicDecontamAirlockPanel);
+
+            _troposphericRadioRelayPanel = new TroposphericRadioRelayPanel { Visible = false };
+            _troposphericRadioRelayPanel.OnClose += () => _troposphericRadioRelayPanel.Visible = false;
+            AddChild(_troposphericRadioRelayPanel);
+
+            _inductionCupolaFurnacePanel = new InductionCupolaFurnacePanel { Visible = false };
+            _inductionCupolaFurnacePanel.OnClose += () => _inductionCupolaFurnacePanel.Visible = false;
+            AddChild(_inductionCupolaFurnacePanel);
+
+            _heavyMarineDieselGenPanel = new HeavyMarineDieselGeneratorPanel { Visible = false };
+            _heavyMarineDieselGenPanel.OnClose += () => _heavyMarineDieselGenPanel.Visible = false;
+            AddChild(_heavyMarineDieselGenPanel);
+
+            _slurryDewateringSumpPanel = new SlurryDewateringSumpPanel { Visible = false };
+            _slurryDewateringSumpPanel.OnClose += () => _slurryDewateringSumpPanel.Visible = false;
+            AddChild(_slurryDewateringSumpPanel);
+
+            _magneticDrumArchivePanel = new MagneticDrumArchivePanel { Visible = false };
+            _magneticDrumArchivePanel.OnClose += () => _magneticDrumArchivePanel.Visible = false;
+            AddChild(_magneticDrumArchivePanel);
 
             // ── Game content area ──
             var margin = new MarginContainer();
@@ -814,8 +1084,19 @@ namespace AtomicWar.GodotApp
             bool hasSave = false;
             if (_saveLoadHost != null)
             {
+                // Continue requires at least one slot that is not terminal. A
+                // run-finalized slot is a sealed memorial/archive, not a
+                // continuable save, so it must not enable Continue.
                 var slots = _saveLoadHost.GetSlots();
-                hasSave = slots.Count > 0;
+                for (int i = 0; i < slots.Count; i++)
+                {
+                    var card = _saveLoadHost.BuildSlotCard(slots[i]);
+                    if (card.Exists && !card.IsTerminalIronMan)
+                    {
+                        hasSave = true;
+                        break;
+                    }
+                }
             }
             if (!hasSave)
             {

@@ -294,14 +294,8 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // Quick Enqueue & Incidents
-            _incidentLogContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("QUEUE SCAVENGER"));
-            var btnQueueDemo = AshfallUiHelpers.MakeButton("ENQUEUE HAZMAT RETURNEE", () =>
-            {
-                string id = $"survivor_dweller_{s.queue.Count + 1}";
-                _host.Enqueue(id, "hazmat_suit", 0.75f);
-                RefreshView();
-            });
-            _incidentLogContainer.AddChild(btnQueueDemo);
+            _incidentLogContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("AIRLOCK TELEMETRY"));
+            _incidentLogContainer.AddChild(AshfallUiHelpers.MakeMetadata(queuedCount > 0 ? $"{queuedCount} survivor(s) queued for airlock washdown." : "Airlock decontamination chamber and queue are currently clear."));
 
             _incidentLogContainer.AddChild(AshfallUiHelpers.MakeSeparator());
             _incidentLogContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("AIRLOCK LOGS"));

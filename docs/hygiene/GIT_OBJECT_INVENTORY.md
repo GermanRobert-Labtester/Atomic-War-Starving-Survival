@@ -4,7 +4,7 @@
 > Nothing is pruned, expired, or deleted by this script.
 > All proposed actions require explicit owner approval and a safety backup.
 >
-> **Generated:** 2026-08-27 | **Findings:** 3 | **No action taken**
+> **Generated:** 2026-08-29 | **Findings:** 2 | **No action taken**
 
 ---
 
@@ -12,12 +12,12 @@
 
 | Metric | Value |
 |---|---|
-| Loose objects | 292 (1552 KB) |
-| Pack files | 4 (112832 KB) |
-| `.git/objects/` total | 113M |
-| HEAD reflog entries | 1402 |
+| Loose objects | 51 (280 KB) |
+| Pack files | 5 (118096 KB) |
+| `.git/objects/` total | 117M |
+| HEAD reflog entries | 1544 |
 | HEAD reflog oldest entry | 2026-08-02 21:36:35 +0300 |
-| HEAD reflog newest entry | 2026-08-27 13:39:59 +0300 |
+| HEAD reflog newest entry | 2026-08-30 01:14:40 +0300 |
 
 ---
 
@@ -37,14 +37,14 @@
 
 ## 2. Dangling & Unreachable Objects
 
-Git fsck found **117 dangling objects** that are not reachable from any ref, branch, tag, or reflog entry.
+Git fsck found **144 dangling objects** that are not reachable from any ref, branch, tag, or reflog entry.
 
 | Type | Count | Total Size |
 |---|---|---|
-| Dangling commits | 75 | — |
-| Dangling blobs | 31 | 1022.2 KB |
-| Dangling trees | 11 | — |
-| **Total** | **117** | **≈1022.2 KB (blobs)** |
+| Dangling commits | 93 | — |
+| Dangling blobs | 33 | 1033.0 KB |
+| Dangling trees | 18 | — |
+| **Total** | **144** | **≈1033.0 KB (blobs)** |
 
 > These objects are **already unreachable** from all live refs. They survive only because
 > `git gc` has not yet run with `--prune` (or the reflog expiry window has not elapsed).
@@ -64,6 +64,7 @@ agent sessions (Cline, Cursor, etc.). All are older than 2026-08-04.
 | `081a5e5a58e3` | 2026-08-13 00:03:46 +0300  WIP on cursor/phase11-expansion-ui-integration: f047279 audit: clamp prob |
 | `090486dfb9ad` | 2026-08-11 14:57:40 +0300  On fix/hud-panel-layout: cline checkpoint session=1786439041383_80udy run |
 | `094db3940df8` | 2026-08-07 14:39:39 +0300  On main: wip-mainmenu-step4 |
+| `0b535fa61e10` | 2026-08-30 01:12:47 +0300  WIP on main: 020b1c08 fix(host): add idempotent guard to SetupContractorR |
 | `0b69646a20d9` | 2026-08-13 22:55:17 +0300  On cursor/phase11-expansion-ui-integration: cline checkpoint session=1786 |
 | `114ed95e6da1` | 2026-08-09 21:27:52 +0300  On feat/player-input-in-scene: wip: player input in scene |
 | `117ebc3a60f0` | 2026-08-19 11:51:26 +0300  WIP on refactor/ui-disposal-cleanup-2026-08-19: eb61bdbf feat(ui): introd |
@@ -74,26 +75,34 @@ agent sessions (Cline, Cursor, etc.). All are older than 2026-08-04.
 | `1a6756caf23d` | 2026-08-16 00:57:49 +0300  WIP on cursor/phase11-expansion-ui-integration: cb3620e0 chore: commit re |
 | `1acb83c7dacc` | 2026-08-04 14:38:37 +0300  chore: verify git-lfs install |
 | `1f8722c708c4` | 2026-08-23 15:19:12 +0300  index on audit/fix-batch3-plus-phases: de1c0a1f docs: mark GAP-STUB-03 fu |
+| `224122387c50` | 2026-08-29 11:57:19 +0300  WIP on production-integration-20260827: d1269e50 fix(ui): fit all three c |
 | `22d18d7d341e` | 2026-08-11 14:37:13 +0300  On fix/hud-panel-layout: cline checkpoint session=1786439041383_80udy run |
 | `24b6cf1411a3` | 2026-08-05 17:50:20 +0300  feat: perk forager + guaranteed minimum food |
 | `2733e1a0bc50` | 2026-08-23 21:55:02 +0300  index on audit/fix-batch3-plus-phases: dc740ca7 feat: add Holdfast NPC ca |
 | `2c94b5b205a7` | 2026-08-08 11:42:12 +0300  WIP on fix/post-audit-cleanup: b656062 refactor: demote dormant explosive |
+| `2d8d309e18f9` | 2026-08-29 23:01:34 +0300  WIP on feat/workspace-optimization-phase5: 66009fc1 docs(ci): record two  |
 | `3055168c7a12` | 2026-08-09 23:09:46 +0300  On feat/workbench-panel: cline checkpoint session=1786301394072_z567v run |
 | `34aacea16c1d` | 2026-08-24 20:59:00 +0300  index on audit/fix-batch3-plus-phases: dc740ca7 feat: add Holdfast NPC ca |
 | `3c32646006b5` | 2026-08-23 12:42:57 +0300  index on audit/fix-batch3-plus-phases: de1c0a1f docs: mark GAP-STUB-03 fu |
 | `3daa05b1487f` | 2026-08-13 21:48:35 +0300  On cursor/phase11-expansion-ui-integration: lore-bisect-all |
+| `4236a118afc6` | 2026-08-27 13:57:03 +0300  refactor(save): migrate final batch of 13 codec stores to SaveStore<T> fa |
 | `4298380e4734` | 2026-08-19 12:20:48 +0300  WIP on fix/verdict-panel-clear-children-migration-2026-08-19: f0f67468 fi |
 | `4356dcefbecb` | 2026-08-14 23:23:17 +0300  feat(encounters): port expedition core into Ashfall.Core + Godot host |
+| `43bc821b6c2f` | 2026-08-29 12:00:22 +0300  WIP on production-integration-20260827: d1269e50 fix(ui): fit all three c |
 | `4ea4aec5a242` | 2026-08-11 14:47:30 +0300  On fix/hud-panel-layout: cline checkpoint session=1786439041383_80udy run |
 | `557487004c46` | 2026-08-21 00:51:39 +0300  WIP on fix/remediation-phased: eeff1f79 feat(batch3-phases1-3): implement |
 | `587c53669a06` | 2026-08-11 17:55:18 +0300  On feature/new-content-batch: cline checkpoint session=1786460089557_zx4x |
 | `5be4d2deb00f` | 2026-08-15 01:53:48 +0300  WIP on cursor/phase11-expansion-ui-integration: 55c4855f feat(ui): implem |
+| `5e597d54955f` | 2026-08-29 23:02:09 +0300  WIP on feat/workspace-optimization-phase5: 66009fc1 docs(ci): record two  |
 | `5e7c26d4fe10` | 2026-08-11 15:00:54 +0300  On fix/hud-panel-layout: cline checkpoint session=1786439041383_80udy run |
+| `5eee16ae7857` | 2026-08-29 00:20:38 +0300  WIP on production-integration-20260827: 501d07d4 test(campaign): forbid c |
 | `5f9c60c2cd1a` | 2026-08-16 11:56:32 +0300  On main: phase0-wip |
 | `623022f5298b` | 2026-08-23 14:50:38 +0300  index on audit/fix-batch3-plus-phases: de1c0a1f docs: mark GAP-STUB-03 fu |
+| `692390f6f84d` | 2026-08-27 18:17:06 +0300  WIP on main: 772b4e1e docs: regenerate index after Initiative #41 documen |
 | `6d4f27f81c9f` | 2026-08-08 02:41:32 +0300  fix: persist clock, 15 stub-save systems, and five domain bugs |
 | `6e901dd1a3c5` | 2026-08-16 01:07:20 +0300  WIP on cursor/phase11-expansion-ui-integration: cb3620e0 chore: commit re |
 | `6edad0886c0e` | 2026-08-10 14:23:39 +0300  On fix/hud-panel-layout: cline checkpoint session=1786359879148_hv8ry run |
+| `73bd35e9aa32` | 2026-08-29 23:02:28 +0300  WIP on feat/workspace-optimization-phase5: 66009fc1 docs(ci): record two  |
 | `7bc69db3252e` | 2026-08-23 15:19:12 +0300  untracked files on audit/fix-batch3-plus-phases: de1c0a1f docs: mark GAP- |
 | `8201c7d980a8` | 2026-08-15 02:02:24 +0300  feat(economy): Stage 2 DynamicEconomySystem strangler-fig extraction |
 | `870fddece21b` | 2026-08-19 12:39:22 +0300  WIP on main: 49d18e20 merge(ui): Lane B+C — EmptyChildren helper + retire |
@@ -101,15 +110,19 @@ agent sessions (Cline, Cursor, etc.). All are older than 2026-08-04.
 | `8c21732fb881` | 2026-08-19 11:56:01 +0300  WIP on refactor/ui-disposal-cleanup-2026-08-19: eb61bdbf feat(ui): introd |
 | `8df8ea525c2b` | 2026-08-15 02:03:30 +0300  feat(economy): Stage 2 DynamicEconomySystem strangler-fig extraction |
 | `8e6b87f998d9` | 2026-08-09 23:45:19 +0300  On feat/workbench-panel: cline checkpoint session=1786301394072_z567v run |
+| `90a12c9a762d` | 2026-08-27 20:40:12 +0300  On main: autostash |
 | `90c0c1f6c7d3` | 2026-08-19 18:15:57 +0300  WIP on main: 5bc76b49 Complete expansion wiring and asset batch |
 | `9168ec8c126b` | 2026-08-13 21:47:50 +0300  On cursor/phase11-expansion-ui-integration: lore-bisect |
 | `9176e35af579` | 2026-08-21 01:07:13 +0300  WIP on fix/remediation-phased: eeff1f79 feat(batch3-phases1-3): implement |
 | `91a4de0e5453` | 2026-08-19 12:45:27 +0300  probe: no-verify escape |
 | `97341a0ddb02` | 2026-08-26 15:37:55 +0300  index on audit/fix-batch3-plus-phases: 3fdfe9c8 test(balance): integrate  |
 | `98f6c9a0e37c` | 2026-08-08 11:40:08 +0300  WIP on fix/post-audit-cleanup: b656062 refactor: demote dormant explosive |
+| `9d57d785e764` | 2026-08-29 23:02:47 +0300  WIP on feat/workspace-optimization-phase5: 66009fc1 docs(ci): record two  |
+| `a0c7e86c9905` | 2026-08-29 12:00:50 +0300  WIP on production-integration-20260827: d1269e50 fix(ui): fit all three c |
 | `a5f9a7b72ba8` | 2026-08-11 14:52:04 +0300  On fix/hud-panel-layout: cline checkpoint session=1786439041383_80udy run |
 | `ad9c90e67d69` | 2026-08-23 15:49:02 +0300  On audit/fix-batch3-plus-phases: temp holdfast |
 | `b12a10fc1138` | 2026-08-14 14:18:22 +0300  On cursor/phase11-expansion-ui-integration: cline checkpoint session=1786 |
+| `b5c7a72595fd` | 2026-08-27 18:23:28 +0300  WIP on main: 772b4e1e docs: regenerate index after Initiative #41 documen |
 | `bc24e705af94` | 2026-08-04 23:38:50 +0300  ci: restore ASHFALL gate and pin Unity 6000.5.5f1 |
 | `c9c6d80d5a75` | 2026-08-18 20:12:19 +0300  On main: WIP-shelter-visual-bridge-broken-PH0-stash |
 | `ca445198f9e5` | 2026-08-13 21:51:11 +0300  On cursor/phase11-expansion-ui-integration: lore-all-tracked |
@@ -122,11 +135,16 @@ agent sessions (Cline, Cursor, etc.). All are older than 2026-08-04.
 | `df3abdf3daeb` | 2026-08-15 20:46:28 +0300  WIP on cursor/phase11-expansion-ui-integration: 5371b199 chore: commit se |
 | `dfade542871d` | 2026-08-19 12:38:30 +0300  WIP on main: 28fd7687 merge(assets): Lane A — regenerate 10 missing .impo |
 | `e627a3748305` | 2026-08-15 02:03:16 +0300  feat(economy): Stage 2 DynamicEconomySystem strangler-fig extraction |
+| `e69a1e0adc6c` | 2026-08-27 20:15:20 +0300  WIP on main: 1dbc3217 feat(save): V2 campaign envelope format — registry- |
+| `e72ab1d52992` | 2026-08-29 23:01:48 +0300  WIP on feat/workspace-optimization-phase5: 66009fc1 docs(ci): record two  |
+| `e851a6b8d3d4` | 2026-08-27 18:42:50 +0300  WIP on main: 772b4e1e docs: regenerate index after Initiative #41 documen |
 | `ea6a0e8349a7` | 2026-08-15 01:48:55 +0300  test(economy): A11 slice 1 — RNG characterization + trust-mirroring wirin |
 | `eb8ef575e8e0` | 2026-08-16 01:43:19 +0300  WIP on main: ea61dbbf Merge branch 'cursor/phase11-expansion-ui-integrati |
 | `edfe7cd73bc4` | 2026-08-13 13:49:52 +0300  feat(packages): install Inference Engine (com.unity.ai.inference@2.2.1),  |
 | `ee7b70999863` | 2026-08-14 14:25:04 +0300  WIP on cursor/phase11-expansion-ui-integration: 7f2282c3 feat(nobodys-cha |
+| `eed3f021b943` | 2026-08-29 12:00:41 +0300  WIP on production-integration-20260827: d1269e50 fix(ui): fit all three c |
 | `f349441cfeb9` | 2026-08-12 20:17:42 +0300  On cursor/phase11-expansion-ui-integration: ui-followup |
+| `f994b90542a7` | 2026-08-29 12:41:31 +0300  WIP on production-integration-20260827: d1269e50 fix(ui): fit all three c |
 | `fa591dfeb1a1` | 2026-08-19 12:39:23 +0300  WIP on main: 8b2a6dda merge(ui): Task 1 — move _detailTitle out of transi |
 | `fb7c65bd9ac5` | 2026-08-14 00:46:39 +0300  On cursor/phase11-expansion-ui-integration: cline checkpoint session=1786 |
 | `fcff42fb3122` | 2026-08-19 12:37:01 +0300  WIP on fix/verdict-panel-clear-children-migration-2026-08-19: 241de268 do |
@@ -160,8 +178,10 @@ agent sessions (Cline, Cursor, etc.). All are older than 2026-08-04.
 | `bf6b1258bb99` | 45528 bytes |
 | `d26fe81cfe0e` | 3256 bytes |
 | `598c90bcb0ef` | 3391 bytes |
+| `079bf65d8553` | 8916 bytes |
 | `43a18c5dc0d4` | 65952 bytes |
 | `69a50afc0047` | 5868 bytes |
+| `f3c3c2dda891` | 2127 bytes |
 | `3dd71eb1321e` | 21906 bytes |
 | `3edf20b5e005` | 131598 bytes |
 | `33fff0bf4030` | 76742 bytes |
@@ -220,13 +240,14 @@ git count-objects -v
 
 ## 3. Local-Only Branches
 
-**6 local branch(es)** exist with no matching remote tracking ref.
+**7 local branch(es)** exist with no matching remote tracking ref.
 
 | Branch | Last Commit | Merged to main? |
 |---|---|---|
 
 | `backup-local-work` | 2026-08-26 docs(hygiene): record approved stash drops + recovery SHAs | YES |
 | `feat/asset-coverage-expansion-2026-08-19` | 2026-08-19 feat(assets): Step B — achieve 100% (1,162/1,162) catalog asset resol | NO |
+| `feat/workspace-optimization-phase4` | 2026-08-29 feat(ci): Phase 4 workspace acceleration, UI contracts gate, and 38-g | YES |
 | `fix/wave0-survival-honesty` | 2026-08-08 fix: persist clock, 15 stub-save systems, and five domain bugs | YES |
 | `fix/world-view-resource-lifecycle-2026-08-19` | 2026-08-19 fix(world): Step E — lifecycle resource unreferencing and event clean | NO |
 | `refactor/retire-remaining-queuefree-2026-08-19` | 2026-08-19 refactor(ui): retire remaining QueueFree patterns and add FreeNode/Re | NO |
@@ -282,11 +303,9 @@ Deletion is cosmetic. Recommend deleting **Unity-era and auto-generated** branch
 | Worktree | SHA | Status |
 |---|---|---|
 
-| /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War c2da8d6a [main] |
-| /tmp/ashfall-clean                                             a43c66f9 (detached HEAD) prunable |
-| /tmp/aw-p4                                                     7f2282c3 (detached HEAD) prunable |
+| /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War 8081faaf [main] |
 
-**2 prunable worktree(s)** — these are detached worktrees at
+**0 prunable worktree(s)** — these are detached worktrees at
 `/tmp/ashfall-clean` and `/tmp/aw-p4` that no longer have a branch reference.
 
 ### Retention Policy — Worktrees
@@ -318,14 +337,14 @@ The defaults are appropriate for a single-developer game project. No config chan
 | Category | Count | Decision | When |
 |---|---|---|---|
 | Stashes | 0 | No action | — |
-| Dangling commits (WIP / agent checkpoints) | 75 | **Prune** (age-gated) | Owner approval |
-| Dangling blobs | 31 | **Prune** (age-gated) | Owner approval |
-| Dangling trees | 11 | **Prune** (age-gated) | Owner approval |
+| Dangling commits (WIP / agent checkpoints) | 93 | **Prune** (age-gated) | Owner approval |
+| Dangling blobs | 33 | **Prune** (age-gated) | Owner approval |
+| Dangling trees | 18 | **Prune** (age-gated) | Owner approval |
 | `backup-local-work` | 1 | **Delete** (merged) | Owner approval |
 | `feat/asset-coverage-expansion-2026-08-19` | 1 | **Review before delete** | Owner review |
-| Prunable worktrees | 2 | **`git worktree prune`** | Owner approval |
+| Prunable worktrees | 0 | **`git worktree prune`** | Owner approval |
 | Remote legacy branches | ~5 | **Optional cosmetic delete** | Low priority |
 
 > No prune, expire, or delete command has been run. All proposed actions in this document
 > require explicit owner approval. The repository is in a healthy state — dangling objects
-> total only **~1022.2 KB** in blob data and pose no integrity or size risk.
+> total only **~1033.0 KB** in blob data and pose no integrity or size risk.

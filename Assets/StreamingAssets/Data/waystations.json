@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "waystations": [
+    {
+      "id": "waystation_alpha_cut",
+      "name": "Waystation A — The Cut",
+      "node_id": "loc_cut_abandoned_depot",
+      "region": "industrial_belt",
+      "keeper_name": "Warden Kessel",
+      "specialty": "Industrial Tools & Fasteners",
+      "condition": 85.0,
+      "filter_health": 90.0,
+      "defense_rating": 4,
+      "services": ["trade", "staging", "rest", "filter_recharge"],
+      "stock_item_ids": ["scrap_metal", "scrap_mechanical", "water_filter"],
+      "local_problem": "Filter degradation under heavy coal soot accumulation."
+    },
+    {
+      "id": "waystation_switchback",
+      "name": "The Switchback Waystation",
+      "node_id": "loc_cut_radiation_zone_alpha",
+      "region": "high_scarp",
+      "keeper_name": "Deacon Vane",
+      "specialty": "Cold-Weather Fuel & Thermal Liners",
+      "condition": 80.0,
+      "filter_health": 85.0,
+      "defense_rating": 3,
+      "services": ["trade", "staging", "rest", "blessing"],
+      "stock_item_ids": ["fuel", "clean_water", "medical_kit"],
+      "local_problem": "Scree instability threatening the southern bunkhouse foundation."
+    },
+    {
+      "id": "waystation_span44",
+      "name": "Span 44 Rail Waystation",
+      "node_id": "loc_cut_arsenal_ruin",
+      "region": "industrial_belt",
+      "keeper_name": "Foreman Taggart",
+      "specialty": "Railway Iron & Pneumatic Parts",
+      "condition": 75.0,
+      "filter_health": 80.0,
+      "defense_rating": 5,
+      "services": ["trade", "staging", "repair"],
+      "stock_item_ids": ["scrap_metal", "electronic_scrap", "ammo_308"],
+      "local_problem": "Bridge abutment settling requiring heavy structural shoring."
+    },
+    {
+      "id": "waystation_verity",
+      "name": "Verity Motel Staging Post",
+      "node_id": "loc_cut_merchant_caravanserai",
+      "region": "dead_suburbs",
+      "keeper_name": "Mistress Corvo",
+      "specialty": "Medical Supplies & Clean Water",
+      "condition": 90.0,
+      "filter_health": 95.0,
+      "defense_rating": 3,
+      "services": ["trade", "staging", "rest", "intelligence"],
+      "stock_item_ids": ["medical_kit", "clean_water", "scrap_metal"],
+      "local_problem": "Deep well pump motor seized by fine sand."
+    },
+    {
+      "id": "waystation_coast_lock",
+      "name": "Lock Gate Four Maritime Staging",
+      "node_id": "loc_black_flotilla_outpost",
+      "region": "deep_coast",
+      "keeper_name": "Diver Renn",
+      "specialty": "Saline Iodine & Marine Salvage",
+      "condition": 70.0,
+      "filter_health": 75.0,
+      "defense_rating": 4,
+      "services": ["trade", "staging", "saline_wash"],
+      "stock_item_ids": ["clean_water", "water_filter", "diesel_fuel"],
+      "local_problem": "Sluice gate valve seized by heavy salt crust."
+    },
+    {
+      "id": "waystation_grain_verge",
+      "name": "Verge Silo Waystation",
+      "node_id": "loc_holdfast",
+      "region": "ash_flats",
+      "keeper_name": "Weigher Orlov",
+      "specialty": "Preserved Grain & Honey Comb",
+      "condition": 85.0,
+      "filter_health": 88.0,
+      "defense_rating": 4,
+      "services": ["trade", "staging", "grain_exchange"],
+      "stock_item_ids": ["dried_rations", "clean_water", "scrap_wood"],
+      "local_problem": "Ration quota disputes with garrison sentries."
+    }
+  ]
+}

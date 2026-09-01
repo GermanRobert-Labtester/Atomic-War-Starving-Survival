@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Save;
@@ -184,7 +185,14 @@ namespace AtomicWar.GodotApp.UI
             // Action buttons.
             var btnCreate = AshfallUiHelpers.MakeButton("NEW SLOT", () =>
             {
-                string newId = "slot_" + DateTime.UtcNow.Ticks.ToString("x");
+                // The line below already guarded _session; CreateSlot did not
+                // (CS8602). An unbound panel firing this handler would have thrown.
+                if (_session == null) return;
+                var existing = _session.GetSlots() ?? new List<SaveSlotId>();
+                int nextIdx = 1;
+                while (existing.Any(s => s.Value == $"slot_{nextIdx}"))
+                    nextIdx++;
+                string newId = $"slot_{nextIdx}";
                 var newSlotId = new SaveSlotId(newId);
                 if (_session.CreateSlot(newSlotId))
                 {

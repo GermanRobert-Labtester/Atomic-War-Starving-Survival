@@ -106,6 +106,186 @@
         "hope"
       ],
       "prose": "A beloved myth that the little sapling in Level 4 is drinking up all the sadness from the bunker air, and when it grows forty feet tall, its branches will break through the sixty feet of reinforced concrete ceiling, letting in real green rain and sweet yellow apples for everyone."
+    },
+    {
+      "id": "folklore_children_dosimeter_counting_rhyme",
+      "tradition_type": "GEIGER_COUNTING_RHYME",
+      "origin_sector": "CORRIDOR_FOUR_WEST",
+      "folk_theme": "RADIATION_VELOCITY_AWARENESS",
+      "timestamp_relative": "YEAR_03_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "dosimeter",
+        "counting",
+        "operational_truth"
+      ],
+      "prose": "'Click once, the mouse is asleep in the zinc. / Click twice, the water is bitter to drink. / Click three, click four, click ten in a row: / Drop the tin bucket and run down below!' Chanted by nine-year-olds skipping along the intake manifold pipes. Encodes operational truth: slow clicks permit work, continuous rapid clicks require instant retreat."
+    },
+    {
+      "id": "folklore_children_deep_cold_lullaby",
+      "tradition_type": "BEDTIME_COLD_LULLABY",
+      "origin_sector": "LOWER_DORMITORY_BUNKS",
+      "folk_theme": "THERMAL_SURVIVAL_SOLIDARITY",
+      "timestamp_relative": "YEAR_05_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "lullaby",
+        "cold",
+        "comfort"
+      ],
+      "prose": "'The iron is biting, the blanket is thin, / Tuck the two elbows and pull your knees in. / Breathe on your brother, breathe on the sheet, / Morning comes early with porridge and heat.' Sung by elder siblings in the bottom tiers when the auxiliary heaters cycle down during sub-zero nights."
+    },
+    {
+      "id": "folklore_children_the_outer_door_story",
+      "tradition_type": "CAUTIONARY_NURSERY_TALE",
+      "origin_sector": "AIRLOCK_ANTEROOM",
+      "folk_theme": "PRESSURE_SEAL_INTEGRITY",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "door",
+        "airlock",
+        "taboo"
+      ],
+      "prose": "The story of 'Old Peter who touched the wheel.' Peter wanted to see what color the sky was, so he climbed the dog-leg ladder at three in the morning with a copper pry-bar. The story says his fingers turned into salt the second the latch gave two millimeters of hiss, and now he is the shadow drawn on the airlock floor plate."
+    },
+    {
+      "id": "folklore_children_the_vent_walker_ticking",
+      "tradition_type": "DUCT_BOGEYMAN_MYTH",
+      "origin_sector": "VENTILATION_GALLERY_EAST",
+      "folk_theme": "THERMAL_DUCT_EXPANSION",
+      "timestamp_relative": "YEAR_06_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "bogeyman",
+        "vents",
+        "ducts"
+      ],
+      "prose": "Children explain the rhythmic metallic popping in the ductwork as 'The Step of the Vent-Walker' who walks on three brass knees. In truth, the noise is the expansion joints groaning when the heater bank switches between day and night load, but children never leave food wrappers near the grates lest the Walker smell grease."
+    },
+    {
+      "id": "folklore_children_the_filter_ghost_rhyme",
+      "tradition_type": "CHORE_RHYME",
+      "origin_sector": "PRIMARY_SCRUBBER_BAY",
+      "folk_theme": "FILTER_MAINTENANCE_WARNING",
+      "timestamp_relative": "YEAR_07_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "filter",
+        "ash",
+        "operational_truth"
+      ],
+      "prose": "'Grey paper, white paper, breathe in the hall. / Black paper, thick paper, cough at the wall. / If the grey turns to soot and the impeller screams, / The ash-ghost will swallow your porridge and dreams.' Taught by technicians to keep apprentices attentive: blackened filters indicate dangerous ash breakthrough."
+    },
+    {
+      "id": "folklore_children_three_mask_rule_song",
+      "tradition_type": "RHYTHMIC_EQUIPMENT_DRILL",
+      "origin_sector": "DISPATCH_LOCKER_ROOM",
+      "folk_theme": "RESPIRATOR_CHECK_SEQUENCE",
+      "timestamp_relative": "YEAR_04_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "mask",
+        "drill",
+        "operational_truth"
+      ],
+      "prose": "'One is the valve that flutters the tongue. / Two is the strap that pulls on the lung. / Three is the tin with the green painted stripe: / Seal it and suck till the rubber is tight!' A skipping rhyme that exactly mirrors the three-point respirator seal inspection procedure before leaving staging."
+    },
+    {
+      "id": "folklore_children_red_light_freeze_game",
+      "tradition_type": "EMERGENCY_DISCIPLINE_GAME",
+      "origin_sector": "NURSERY_SECTOR_TWO",
+      "folk_theme": "POWER_OUTAGE_CONTROL",
+      "timestamp_relative": "YEAR_08_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "blackout",
+        "game",
+        "discipline"
+      ],
+      "prose": "'Red light, iron stone, nobody move till the diesel is blown.' When the fluorescent strips fail and the red 12-volt battery emergency circuit kicks in, children instantly sit cross-legged on the floorboards with fists clamped over their ears until the diesel generator roars."
+    },
+    {
+      "id": "folklore_children_the_missing_subfloor",
+      "tradition_type": "SHELTER_GEOGRAPHY_MYTH",
+      "origin_sector": "DRAINAGE_SUMP_CORRIDOR",
+      "folk_theme": "SEALED_LEVEL_EXPLORATION",
+      "timestamp_relative": "YEAR_09_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "myth",
+        "subfloor",
+        "secret"
+      ],
+      "prose": "Children insist that between Level 3 storage and Level 4 sumps there is a 'Floor Three-and-a-Half' where the pre-Exchange blueprints hid three swimming pools full of clean orange juice and thousand-watt sunlamps that never get hot."
+    },
+    {
+      "id": "folklore_children_the_quiet_radio_whisper",
+      "tradition_type": "LISTENING_MYTH",
+      "origin_sector": "RADIO_ALCOVE",
+      "folk_theme": "RADIO_STATIC_INTERPRETATION",
+      "timestamp_relative": "YEAR_11_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "radio",
+        "static",
+        "whisper"
+      ],
+      "prose": "A belief that if you press your ear to the copper lead of the long-wire receiver while everyone in the bunker is holding their breath, the static says the names of every child born underground in alphabetical order."
+    },
+    {
+      "id": "folklore_children_ash_footprint_taboo",
+      "tradition_type": "DECONTAMINATION_TABOO",
+      "origin_sector": "SECONDARY_DECON_STATION",
+      "folk_theme": "SURFACE_ISOTOPE_TRACKING",
+      "timestamp_relative": "YEAR_05_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "taboo",
+        "ash",
+        "operational_truth"
+      ],
+      "prose": "'Step on the chalk, your boots are alive. / Step past the line, not one will survive.' Children refuse to step on any corridor flagstone that carries a faint grey rim from an expedition boot, treating the yellow line as an impassable chasm until the scrub team swabs it with lye."
+    },
+    {
+      "id": "folklore_children_the_last_window_glass",
+      "tradition_type": "SURFACE_SKY_FOLKLORE",
+      "origin_sector": "SCHOOLROOM_DESKS",
+      "folk_theme": "LOST_NATURAL_WORLD_MEMORY",
+      "timestamp_relative": "YEAR_12_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "sky",
+        "window",
+        "memory"
+      ],
+      "prose": "A legend passed down from an elder's sketch: 'The sky was a sheet of cold blue glass that went on for four hundred miles without a ceiling bolt. When birds flew, they did not bump their heads on the pipes.'"
+    },
+    {
+      "id": "folklore_children_name_under_the_bunk",
+      "tradition_type": "CHILDRENS_MEMORIAL_RITE",
+      "origin_sector": "DORMITORY_TIER_FOUR",
+      "folk_theme": "PRIVATE_BEREAVEMENT_PRACTICE",
+      "timestamp_relative": "YEAR_14_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "memorial",
+        "bunk",
+        "grief"
+      ],
+      "prose": "A secret ritual among orphans in Dormitory 4: when a guardian or bunk-mate dies, the child uses a rusty roofing nail to scratch the first letter of their name into the underside of the pine bunk slat, sealed with a dab of candle grease so the adults do not sand it off."
     }
   ]
 }

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "collection_id": "anomalous_radio_intercepts_log",
+  "transcripts": [
+    {
+      "transcript_id": "radio_anomaly_01_the_deficit_station",
+      "frequency_mhz": 99.4,
+      "origin": "Unknown / Internal",
+      "transcript": "[STATIC] ...fourteen kilograms of coal remaining. Eight liters of clean water. The Overseer's pulse is 72 beats per minute. Dwellers 14 and 88 are currently lying to one another about their rations... [STATIC]",
+      "analyst_note": "A numbers station broadcasting on a dead frequency. It is accurately reporting our exact bunker inventory and physiological telemetry in real time. We cannot locate the transmitter. The numbers are filed daily to assist Quartermaster Finch with inventory audits.",
+      "tags": ["creepy", "inventory", "numbers_station", "telemetry"]
+    },
+    {
+      "transcript_id": "radio_anomaly_02_dead_echo",
+      "frequency_mhz": 104.2,
+      "origin": "Bunker 41 (Presumed Destroyed)",
+      "transcript": "[HEAVY DISTORTION] We are trapped in Sector 4. The air is thinning. Please, if anyone can hear this, we need immediate... [LOUD METALLIC CLANG] ...wait, they're breaching the door! [STATIC]",
+      "analyst_note": "A desperate plea for help. However, acoustic analysis of the background noise reveals the exact acoustic signature of our own primary ventilation fan (bearing knock on blade 3). The broadcast is coming from *inside our own walls*, but there is no Sector 4 in this facility.",
+      "tags": ["echo", "ghost", "ventilation", "spooky"]
+    },
+    {
+      "transcript_id": "radio_anomaly_03_the_bureaucratic_lullaby",
+      "frequency_mhz": 12.0,
+      "origin": "Ministry of Preservation",
+      "transcript": "[SYNTHESIZED VOICE] Form 44-B has been processed. Your starvation is fully compliant with municipal guidelines. Please expire in designated zones only to facilitate efficient protein recycling. Thank you for your service. [ELEVATOR MUSIC]",
+      "analyst_note": "Intercepted on shortwave. It loops every 12 hours. Several dwellers have found the hold music 'comforting' and request it be piped into the sleep quarters.",
+      "tags": ["ministry", "cold", "bureaucracy", "starvation"]
+    }
+  ]
+}

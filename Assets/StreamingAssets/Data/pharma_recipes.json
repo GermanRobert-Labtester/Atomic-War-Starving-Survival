@@ -350,6 +350,20 @@
       "dependency_risk": 0.01,
       "required_station": "pharma_bench",
       "category": "antiseptic"
+    },
+    {
+      "recipe_id": "recipe_buprenorphine_taper_kit",
+      "display_name": "Buprenorphine Taper Kit",
+      "input_ids": ["chemicals", "clean_water", "item_lithium_salts"],
+      "input_amounts": [2, 1, 1],
+      "output_item_id": "item_taper_kit_opioid",
+      "output_amount": 1,
+      "base_hours": 4.0,
+      "required_temperature": 78.0,
+      "purity_target": 0.92,
+      "dependency_risk": 0.04,
+      "required_station": "pharma_bench",
+      "category": "antagonist"
     }
   ]
 }

@@ -24,6 +24,22 @@
       "riskLevel": 0,
       "radiationUsv": 0.02,
       "description": "A chalkboard in the children's corridor, numbers in children's chalk and adults' fingers, half-erased guesses and one date. The midwife writes in pencil so the truth can change its mind quietly."
+    },
+    {
+      "id": "loc_the_register_hall",
+      "displayName": "The Central Register Hall",
+      "sector": "bunker",
+      "riskLevel": 0,
+      "radiationUsv": 0.02,
+      "description": "The administrative center of the Dose Ledger institution, where dispute queues, appeal requests, and roster clearance checks converge before Dr. Vel's desk."
+    },
+    {
+      "id": "loc_the_screening_station",
+      "displayName": "Corridor Screening Checkpoint",
+      "sector": "bunker",
+      "riskLevel": 0,
+      "radiationUsv": 0.04,
+      "description": "A narrow decontamination checkpoint with turnstiles, badge deposit slots, and survey meters where returning scavengers are triaged before entering clean bays."
     }
   ]
 }

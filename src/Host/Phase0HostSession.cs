@@ -280,10 +280,17 @@ namespace AtomicWar.GodotApp
         private readonly Dictionary<string, MoralBranchState> _moralStates = new Dictionary<string, MoralBranchState>();
         private readonly Dictionary<string, PhaseProgressionState> _phaseStates = new Dictionary<string, PhaseProgressionState>();
         private readonly ISeededRng _rng;
+        /// <summary>True when this session constructed its own ChemicalDependencySystem (headless selftests). Production shares the MedicalHostSession instance and never ticks it (Task #133).</summary>
+        private readonly bool _ownsDependency;
 
         public Phase0HostSession(int seed = DefaultSeed, ChemicalDependencySystem dependency = null!)
         {
             _rng = new CoreSeededRng(seed);
+            // Task #133: when the host shares the MedicalHostSession-owned
+            // ledger, this session must NOT tick it — MedicalDiseaseDayOwner is
+            // the single dependency tick owner. Self-contained headless
+            // selftests (fresh instance) keep the old behavior.
+            _ownsDependency = dependency == null;
 
             // ── 1. Radiation Phase Progression ───────────────────────────
             RadiationPhase = new RadiationPhaseProgression(new CoreSeededRng(seed));
@@ -514,6 +521,21 @@ namespace AtomicWar.GodotApp
 
         // ── Roster wiring ─────────────────────────────────────────────
 
+        /// <summary>
+        /// Load trade_specialties.json profession patterns into the Phase-0
+        /// specialty system. Without this the wired specialty loop (events,
+        /// save, host hooks) runs with zero patterns and mastery can never
+        /// progress — the catalog is the feeder for CraftItem.
+        /// </summary>
+        public void LoadTradeSpecialties(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            int count = TradeSpecialtyCatalogLoader.LoadAndRegister(
+                TradeSpecialty, dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            if (count > 0)
+                LastEvent = $"Trade specialties loaded: {count} professions";
+        }
+
         /// <summary>Load the phantom_triggers.json catalog into the engine (the authority).</summary>
         public void LoadPhantomRules(string dataDir)
         {
@@ -725,7 +747,8 @@ namespace AtomicWar.GodotApp
                 Guilt.Tick(id, gameHours, CurrentDay);
                 CombatTrauma.Tick(id, gameHours, IsNightTime);
                 Flashbacks.Tick(id, gameHours);
-                Dependency.TickHours(id, gameHours);
+                if (_ownsDependency)
+                    Dependency.TickHours(id, gameHours); // shared ledgers are ticked by MedicalDiseaseDayOwner only (Task #133)
                 Respiratory.TickHours(id, gameHours);
                 FinalWish.Tick(id, gameHours, true);
             }

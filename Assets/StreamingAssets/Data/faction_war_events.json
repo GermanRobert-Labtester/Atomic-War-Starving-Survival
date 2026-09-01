@@ -1219,6 +1219,632 @@
           ]
         }
       ]
+    },
+    {
+      "chainId": "evt_p25_marked_ruin",
+      "band": "escalation",
+      "title": "The Marked Ruin",
+      "factionsInvolved": [
+        "faction_scavenger_guild",
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_p25_marked_ruin_s1",
+          "minDay": 200,
+          "triggerCondition": "Plan 25 (E-P1): fires while the grievance flag from a disputed Guild salvage claim is set (authored by the shelter's handling of act_salvage_rights_offer).",
+          "requiresFlag": "flag_grievance_scavenger_claim_disputed",
+          "producesFlag": "flag_escalation_marked_ruin",
+          "title": "Chalk Over Ink",
+          "bodyText": "Somebody has chalked a Garrison stamp across the Guild's doorframe mark at the grain-silo outbuilding — the two-color ledger's claim, crossed with one stroke of borrowed authority. The Guild's response is characteristically bureaucratic: a registrar arrives, copies the defaced mark into the ledger, and files it as a dispute of record. The Garrison checkpoint, for its part, has started charging a 'documentation fee' to anyone leaving the site with a wheelbarrow. Both sides now have paper. That is how the shelter knows it is serious.",
+          "choices": [
+            {
+              "choiceId": "evt_p25_marked_ruin_s1_c1",
+              "text": "Confirm the Guild's claim to the checkpoint authority — the ledger predates the stamp",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_p25_marked_ruin_s2",
+              "producesFlag": "flag_escalation_marked_ruin_mediated",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": -3
+            },
+            {
+              "choiceId": "evt_p25_marked_ruin_s1_c2",
+              "text": "Back the checkpoint's documentation fee — order is order",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_p25_marked_ruin_s2",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": 4
+            },
+            {
+              "choiceId": "evt_p25_marked_ruin_s1_c3",
+              "text": "Say nothing. The dispute belongs to them.",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_p25_marked_ruin_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_p25_marked_ruin_s2",
+          "minDay": 203,
+          "triggerCondition": "Plan 25 (E-P1): fires three days after evt_p25_marked_ruin_s1 resolves.",
+          "title": "A Symbol With a Grid Reference",
+          "bodyText": "By the end of the week the outbuilding is not a ruin anymore; it is an argument with walls. Guild apprentices walk past it the long way rather than cross the checkpoint's fee line, and Garrison runners have started saluting the chalk stamp as if it had always been there. Nobody has fired anything at anybody. Everybody can feel where this particular kind of paper dispute goes when the weather turns and the silos run low.",
+          "choices": [
+            {
+              "choiceId": "evt_p25_marked_ruin_s2_c1",
+              "text": "Note it in the shelter's own ledger, in ink",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_stopped_convoy",
+      "band": "escalation",
+      "title": "The Stopped Convoy",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_garrison_checkpoint_gamma",
+      "stages": [
+        {
+          "stageId": "evt_p25_stopped_convoy_s1",
+          "minDay": 220,
+          "triggerCondition": "Plan 25 (E-P2): fires while the shelter's defaulted Hydro purification toll is on the account ledger.",
+          "title": "Held at the Checkpoint",
+          "bodyText": "A Barons' water convoy never made it past Checkpoint Gamma. The Garrison's manifest clerk calls it contraband; the Barons' tally-keeper calls it an unpaid protection grudge wearing a uniform. The convoy's driver sits on her running board and refuses to leave the cargo, and the queue behind her grows by the hour. Everyone looks at the shelter, whose own toll account is marked in the same book.",
+          "requiresFlag": "flag_grievance_hydro_toll_defaulted",
+          "producesFlag": "flag_escalation_stopped_convoy",
+          "choices": [
+            {
+              "choiceId": "evt_p25_stopped_convoy_s1_c1",
+              "text": "Post the shelter's own arrears as proof the tolls, not the cargo, are the issue",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_stopped_convoy_s1_c2",
+              "text": "Back the checkpoint - contraband rules are the only rules left",
+              "moraleDelta": -1,
+              "leadsToStageId": "",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_bitter_water",
+      "band": "escalation",
+      "title": "Bitter Water",
+      "factionsInvolved": [
+        "faction_hydro_barons",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_terrace_pumphouse",
+      "stages": [
+        {
+          "stageId": "evt_p25_bitter_water_s1",
+          "minDay": 230,
+          "triggerCondition": "Plan 25 (E-P3): fires while the shelter's refusal of the Barons' emergency appeal stands on the record.",
+          "title": "What the Well Did to the Children",
+          "bodyText": "Three families at the terrace settlement drank from the lower well for a week and spent the next week doing nothing else. The Barons say the aquifer shifted. The terrace elders say the Barons throttled the upper intake to punish non-payers, and the timing fits so well it doesn't need to be true. Nobody can prove either story, and the shelter's refusal of Unit Four's appeal is in everyone's mouth.",
+          "requiresFlag": "flag_grievance_hydro_appeal_refused",
+          "producesFlag": "flag_escalation_bitter_water",
+          "choices": [
+            {
+              "choiceId": "evt_p25_bitter_water_s1_c1",
+              "text": "Send the shelter's test gear and publish what it finds",
+              "moraleDelta": 2,
+              "leadsToStageId": "",
+              "producesFlag": "flag_escalation_bitter_water_investigated"
+            },
+            {
+              "choiceId": "evt_p25_bitter_water_s1_c2",
+              "text": "Repeat the Barons' aquifer line and leave the accusation standing",
+              "moraleDelta": -2,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_empty_chair",
+      "band": "escalation",
+      "title": "The Empty Chair",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_black_ops"
+      ],
+      "locationId": "loc_d9_cache_bunker_delta",
+      "stages": [
+        {
+          "stageId": "evt_p25_empty_chair_s1",
+          "minDay": 240,
+          "triggerCondition": "Plan 25 (E-P4): fires while the shelter's broken raider parley stands in the Toll's memory.",
+          "title": "A Summit With One Seat Turned Away",
+          "bodyText": "The Garrison called a district summit about the checkpoint tariffs and asked every banner to send a voice. The Toll sent a chair. Just a chair, set at the table's end, facing the door - their sign that a parley was broken once and the den does not sit twice. The Garrison chairwoman will not start without the seat filled and will not fill it herself. The shelter holds the only debt both sides will still mention.",
+          "requiresFlag": "flag_grievance_raider_parley_broken",
+          "producesFlag": "flag_escalation_empty_chair",
+          "choices": [
+            {
+              "choiceId": "evt_p25_empty_chair_s1_c1",
+              "text": "Ask the Garrison to send the debt-settler the den names",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_empty_chair_s1_c2",
+              "text": "Let the chair sit empty and start without the Toll",
+              "moraleDelta": -1,
+              "leadsToStageId": "",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_cistern_toll_blockade",
+      "band": "escalation",
+      "title": "Cistern Toll",
+      "factionsInvolved": [
+        "faction_hydro_barons",
+        "faction_ash_sign"
+      ],
+      "locationId": "loc_terrace_pumphouse",
+      "stages": [
+        {
+          "stageId": "evt_p25_cistern_toll_blockade_s1",
+          "minDay": 250,
+          "triggerCondition": "Plan 25 (E-P5): fires while the shelter's siding against the intake audit stands in the Barons' books.",
+          "title": "The Valve That Turns Slowly",
+          "bodyText": "The Barons deny, in writing, that the terrace cistern's feed has been reduced. The feed has been reduced. Ash Sign runners clocked it: four fingers of flow where there were six, adjusted the week the audit fight went against the technicians. No one says blockade. The valve simply turns, slowly, in a room nobody is allowed into, and the paperwork calls it maintenance.",
+          "requiresFlag": "flag_grievance_hydro_intake_disputed",
+          "producesFlag": "flag_escalation_cistern_blockade",
+          "choices": [
+            {
+              "choiceId": "evt_p25_cistern_toll_blockade_s1_c1",
+              "text": "Publish the runners' flow log at the Exchange",
+              "moraleDelta": 1,
+              "leadsToStageId": "",
+              "producesFlag": "flag_escalation_cistern_published"
+            },
+            {
+              "choiceId": "evt_p25_cistern_toll_blockade_s1_c2",
+              "text": "Buy silence with a season's paid toll",
+              "moraleDelta": -1,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_prisoner_at_the_gate",
+      "band": "escalation",
+      "title": "Prisoner at the Gate",
+      "factionsInvolved": [
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_iron_raiders_den",
+      "stages": [
+        {
+          "stageId": "evt_p25_prisoner_at_the_gate_s1",
+          "minDay": 230,
+          "triggerCondition": "Plan 25 (E-P6): fires while the shelter's fought levy stands unsettled with the Toll.",
+          "title": "One of Theirs, One of Ours",
+          "bodyText": "The Toll took a Garrison courier at the crossing the shelter fought over, and now they are holding him under the code - fed, unharmed, and priced. The Garrison, in turn, holds one of the den's young hands caught at the rail yard. The exchange should be simple. It is not, because the den's price is not the prisoner: it is the shelter's public word that the crossing fight was the shelter's doing, not the den's break of parley. The Garrison is listening. So is everyone.",
+          "requiresFlag": "flag_grievance_raider_passage_fought",
+          "producesFlag": "flag_escalation_prisoner_gate",
+          "choices": [
+            {
+              "choiceId": "evt_p25_prisoner_at_the_gate_s1_c1",
+              "text": "Say the truth plainly: the crossing was the shelter's fight",
+              "moraleDelta": 1,
+              "leadsToStageId": "",
+              "producesFlag": "flag_escalation_prisoner_truth_told"
+            },
+            {
+              "choiceId": "evt_p25_prisoner_at_the_gate_s1_c2",
+              "text": "Let the Garrison believe the den broke parley",
+              "moraleDelta": -2,
+              "leadsToStageId": "",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_refugees_from_the_line",
+      "band": "war_context",
+      "title": "Refugees From the Line",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_st_brigids_almshouse",
+      "stages": [
+        {
+          "stageId": "evt_p25_refugees_from_the_line_s1",
+          "minDay": 512,
+          "triggerCondition": "Plan 25 (E-W1): fires once the border clash at Span 44 has run its course and the displaced start walking.",
+          "title": "Walking Wounded From Span 44",
+          "bodyText": "They come up the almshouse road in family clumps, carrying what was nearest when the shelling started: a sewing machine, a dog, a child asleep mid-scream. The almshouse takes the hurt ones. The rest stand in the yard doing arithmetic on the shelter's windows. The battle that made them is three days old and already a place name.",
+          "producesFlag": "flag_war_refugees_arrived",
+          "choices": [
+            {
+              "choiceId": "evt_p25_refugees_from_the_line_s1_c1",
+              "text": "Open the shelter gate for the worst hurt",
+              "moraleDelta": 2,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_refugees_from_the_line_s1_c2",
+              "text": "Point them to the almshouse and send what medicine the shelter can spare",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_refugees_from_the_line_s1_c3",
+              "text": "Keep the gate shut. The shelter cannot feed another war.",
+              "moraleDelta": -2,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_requisition",
+      "band": "war_context",
+      "title": "Requisition",
+      "factionsInvolved": [
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_garrison_checkpoint_gamma",
+      "stages": [
+        {
+          "stageId": "evt_p25_requisition_s1",
+          "minDay": 515,
+          "triggerCondition": "Plan 25 (E-W2): fires once conscription lists are posted and the Garrison's paperwork reaches the shelter door.",
+          "title": "A Form, in Duplicate, for Everything",
+          "bodyText": "The requisition notice is polite the way a summons is polite: the shelter's fuel stock, half its filter inventory, and a list of souls fit for labor, receipted against a victory the form does not date. The clerk who delivers it waits with a pen. Everyone in the district has signed it or made a problem of themselves, and both lists are shorter than last year's.",
+          "producesFlag": "flag_war_requisition_demand",
+          "choices": [
+            {
+              "choiceId": "evt_p25_requisition_s1_c1",
+              "text": "Sign and let the shelter's stores walk to the front",
+              "moraleDelta": -1,
+              "leadsToStageId": "",
+              "producesFlag": "flag_war_requisition_met",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": 4
+            },
+            {
+              "choiceId": "evt_p25_requisition_s1_c2",
+              "text": "Sign the fuel, hide the filters",
+              "moraleDelta": 0,
+              "leadsToStageId": "",
+              "producesFlag": "flag_war_requisition_met"
+            },
+            {
+              "choiceId": "evt_p25_requisition_s1_c3",
+              "text": "Refuse, politely, with a copy kept",
+              "moraleDelta": 1,
+              "leadsToStageId": "",
+              "producesFlag": "flag_war_requisition_refused",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": -4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_broken_route",
+      "band": "war_context",
+      "title": "Broken Route",
+      "factionsInvolved": [
+        "faction_rebuilders",
+        "faction_forward_roster"
+      ],
+      "locationId": "loc_shrine_switchback_waystation",
+      "stages": [
+        {
+          "stageId": "evt_p25_broken_route_s1",
+          "minDay": 525,
+          "triggerCondition": "Plan 25 (E-W3): fires once the switchback toll chain has played out and the artillery has had its say.",
+          "title": "The Waystation Is a Memory",
+          "bodyText": "The switchback waystation is a crater with a roof propped on it, and the road under it is two ruts and a rumor. Caravans are turning back at the shrine. The Roster's toll-takers have moved their line twice in a week, chasing a crossing that keeps being shelled, and every route the shelter uses now is longer, closer to the line, or both.",
+          "choices": [
+            {
+              "choiceId": "evt_p25_broken_route_s1_c1",
+              "text": "Pay the Roster's new long-route toll and keep the convoys moving",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_broken_route_s1_c2",
+              "text": "Stockpile instead of travel through the line's shadow",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_field_hospital_overflow",
+      "band": "war_context",
+      "title": "Field Hospital Overflow",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_st_brigids_almshouse",
+      "stages": [
+        {
+          "stageId": "evt_p25_field_hospital_overflow_s1",
+          "minDay": 536,
+          "triggerCondition": "Plan 25 (E-W4): fires once the garrison offensive at the grain silo has resolved and its wounded have found every doorstep.",
+          "title": "Cots in the Nave",
+          "bodyText": "The almshouse has run out of almshouse. Cots stand in the nave, the crypt takes the ones the surgeons lost, and the wounded from the silo offensive keep arriving faster than the dressings. A Garrison medic and a Rebuilders medic work back to back in silence, because bodies do not check uniforms before they bleed. Someone has to decide whose shelter becomes the overflow ward.",
+          "choices": [
+            {
+              "choiceId": "evt_p25_field_hospital_overflow_s1_c1",
+              "text": "Take the overflow wounded regardless of banner",
+              "moraleDelta": 2,
+              "leadsToStageId": "",
+              "producesFlag": "flag_war_shelter_took_wounded"
+            },
+            {
+              "choiceId": "evt_p25_field_hospital_overflow_s1_c2",
+              "text": "Take only the shelter's own banner's hurt",
+              "moraleDelta": -1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_field_hospital_overflow_s1_c3",
+              "text": "Send dressings instead of doors",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_deserter_column",
+      "band": "war_context",
+      "title": "Deserter Column",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_denial_cut_substation",
+      "stages": [
+        {
+          "stageId": "evt_p25_deserter_column_s1",
+          "minDay": 548,
+          "triggerCondition": "Plan 25 (E-W5): fires once the ration plaza strike chain has run and the first column of done fighters walks.",
+          "title": "They Left Their Rifles Stacked",
+          "bodyText": "They come down the denial cut in loose file, no banners, rifles stacked and left at the crossroads with a chalk note nobody will claim: enough. Garrison patches under new jackets, Rebuilder boots, one kid carrying another's pack. The Coalition camp's sentries do not raise the wire and do not lower it. Every fighter who joins them is a smaller war, and everyone can count.",
+          "choices": [
+            {
+              "choiceId": "evt_p25_deserter_column_s1_c1",
+              "text": "Feed the column through and say nothing to anyone",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_deserter_column_s1_c2",
+              "text": "Tell the Garrison the column came through, as the form requires",
+              "moraleDelta": -2,
+              "leadsToStageId": "",
+              "standingFactionId": "faction_central_garrison",
+              "standingDelta": 3
+            },
+            {
+              "choiceId": "evt_p25_deserter_column_s1_c3",
+              "text": "Offer the shelter's medic for the march-wounds",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_retaliation",
+      "band": "war_context",
+      "title": "Retaliation",
+      "factionsInvolved": [
+        "faction_rebuilders",
+        "faction_ash_sign"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_p25_retaliation_s1",
+          "minDay": 555,
+          "triggerCondition": "Plan 25 (E-W6): fires once the Rebuilders fractured and the people the fracture discarded started settling scores.",
+          "title": "What the Fracture Left Behind",
+          "bodyText": "The Rebuilders' fracture did not stay political. A crew that chose the wrong side of it came back to the silo district and found their names chalked on doors, and by morning two of those doors were ash. The Ash Sign people are sheltering the chalked families; the Rebuilders' rump says provocateurs did it. Everyone knows the arithmetic of reprisal is still open, and the shelter is where the arithmetic comes to hide.",
+          "choices": [
+            {
+              "choiceId": "evt_p25_retaliation_s1_c1",
+              "text": "Take the chalked families in, quietly",
+              "moraleDelta": 2,
+              "leadsToStageId": "",
+              "producesFlag": "flag_war_sheltered_retaliation_families"
+            },
+            {
+              "choiceId": "evt_p25_retaliation_s1_c2",
+              "text": "Broker the rump's investigate-first promise to the families",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_retaliation_s1_c3",
+              "text": "Stay out of another faction's housekeeping",
+              "moraleDelta": -1,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_no_more_volunteers",
+      "band": "weariness",
+      "title": "No More Volunteers",
+      "factionsInvolved": [
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_conscription_office",
+      "stages": [
+        {
+          "stageId": "evt_p25_no_more_volunteers_s1",
+          "minDay": 568,
+          "triggerCondition": "Plan 25 (E-R1): fires once the hydro leverage break has shown everyone what the next year of war costs.",
+          "title": "The Ledger of the Willing",
+          "bodyText": "The conscription office has stopped pretending. The volunteer ledger, open on the counter where pride could read it, shows one name in eleven days, and the name is a man of sixty who signed because his son's name is already carved somewhere. The clerk keeps the pen inked anyway. Armies do not run on ledgers like this one, and the officers reading it know what it says better than anyone.",
+          "producesFlag": "flag_peace_volunteers_dry",
+          "choices": [
+            {
+              "choiceId": "evt_p25_no_more_volunteers_s1_c1",
+              "text": "Leave the ledger open where the street can read it",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_no_more_volunteers_s1_c2",
+              "text": "Ask the clerk to close the office early, before the officers notice",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_bread_before_bullets",
+      "band": "weariness",
+      "title": "Bread Before Bullets",
+      "factionsInvolved": [
+        "faction_rebuilders",
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_p25_bread_before_bullets_s1",
+          "minDay": 572,
+          "triggerCondition": "Plan 25 (E-R2): fires while the refugees from the line are still on the district's conscience and the silo granaries are on its mind.",
+          "title": "A Queue That Forgot the War",
+          "bodyText": "The grain queue outside the Exchange is the longest in district memory, and somewhere in its third hour the queue stopped being about grain. Women are comparing ration books across banners. A Garrison wife is holding a Rebuilder's baby. Somebody starts singing something old and unemployed, and the queue picks it up, and for eleven minutes there is no war in it at all. Then the whistles, and the tarpaulins, and the queues remember their manners.",
+          "requiresFlag": "flag_war_refugees_arrived",
+          "producesFlag": "flag_peace_bread_before_bullets",
+          "choices": [
+            {
+              "choiceId": "evt_p25_bread_before_bullets_s1_c1",
+              "text": "Send the shelter's kettle and whatever boils in it",
+              "moraleDelta": 2,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_bread_before_bullets_s1_c2",
+              "text": "Watch from the Exchange steps and remember the eleven minutes",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_quiet_faction",
+      "band": "weariness",
+      "title": "The Quiet Faction",
+      "factionsInvolved": [
+        "faction_rebuilders",
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_forward_roster_camp",
+      "stages": [
+        {
+          "stageId": "evt_p25_quiet_faction_s1",
+          "minDay": 578,
+          "triggerCondition": "Plan 25 (E-R3): fires once the shrine strike has made the offensive's cost plain to the people paying it.",
+          "title": "A List That Passes Hand to Hand",
+          "bodyText": "It starts as a tea circle and becomes something with rules. Mothers of the silo garrison, Roster widows, a couple of Rebuilders' quartermasters who have seen the stores. They call themselves nothing. They meet when the shelling pauses, and they pass a list from hand to hand: names of the living on one side, names they do not intend to add on the other. The list asks, in careful pencil, for a gathering. Not a surrender. A gathering.",
+          "producesFlag": "flag_peace_faction_forms",
+          "choices": [
+            {
+              "choiceId": "evt_p25_quiet_faction_s1_c1",
+              "text": "Carry the list one camp further, to the Coalition",
+              "moraleDelta": 2,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_quiet_faction_s1_c2",
+              "text": "Copy the list into the shelter's own book first",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_quiet_faction_s1_c3",
+              "text": "Refuse the list - paper like that gets people chalked",
+              "moraleDelta": -1,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_p25_refusal_at_dawn",
+      "band": "weariness",
+      "title": "Refusal at Dawn",
+      "factionsInvolved": [
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_railway_span_44_alpha",
+      "stages": [
+        {
+          "stageId": "evt_p25_refusal_at_dawn_s1",
+          "minDay": 584,
+          "triggerCondition": "Plan 25 (E-R4): fires while the quiet faction's list circulates and before the ceasefire anyone could name.",
+          "title": "The Squad That Sits Down",
+          "bodyText": "At first light, at Span 44, the offensive's Fresh battalion does not form up. A sergeant reads the names of the last battalion out loud, all of them, and then sits on the rail. One by one, so does the squad. The officers have the numbers to make it an atrocity and the sense to know the escorts would not fire. By noon it is not a mutiny; it is a fact: this battalion will not march again. The war does not end here. But everyone at the span has heard the sound a war makes when it starts running out.",
+          "requiresFlag": "flag_peace_faction_forms",
+          "producesFlag": "flag_peace_refusal_at_dawn",
+          "choices": [
+            {
+              "choiceId": "evt_p25_refusal_at_dawn_s1_c1",
+              "text": "Bring water to the sitting squad, and carry word of it",
+              "moraleDelta": 2,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_p25_refusal_at_dawn_s1_c2",
+              "text": "Keep the shelter's name out of it entirely",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

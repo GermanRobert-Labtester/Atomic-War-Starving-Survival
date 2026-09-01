@@ -139,6 +139,263 @@ namespace Ashfall.Core
             Check(restored.CaptureState().rngSeed == twin.CaptureState().rngSeed,
                 "restored system resumes the same RNG stream");
 
+            // -----------------------------------------------------------------
+            // Plan 60 / D3 — treatment is an intervention, not a button.
+            // Before this, ResolveOutcomes rolled the raw authored lethality no
+            // matter what the player did, so "treat this patient" was not a question
+            // the engine could answer. These checks pin the clinical contract: an
+            // item must be authorised for that disease, the window must be honored,
+            // one dose per patient per day, and only a curative role removes the
+            // infection.
+            // -----------------------------------------------------------------
+            if (catalog != null)
+            {
+                var itemIds2 = LoadItemIds(dataDirectory, files, json);
+                int curativeTotal = 0, treatedDiseases = 0, uncured = 0;
+                bool allRolesKnown = true, allItemsResolve = true, reductionBounded = true;
+
+                for (int i = 0; i < catalog.Diseases.Count; i++)
+                {
+                    var d = catalog.Diseases[i];
+                    if (d == null) continue;
+                    if (d.treatments == null || d.treatments.Count == 0) { uncured++; continue; }
+                    treatedDiseases++;
+                    bool hasCurative = false;
+                    for (int t = 0; t < d.treatments.Count; t++)
+                    {
+                        var entry = d.treatments[t];
+                        if (!DiseaseTreatmentRoles.IsKnown(entry.role)) allRolesKnown = false;
+                        if (!itemIds2.Contains(entry.item_id)) allItemsResolve = false;
+                        if (entry.lethality_reduction < 0f || entry.lethality_reduction > 1f) reductionBounded = false;
+                        if (DiseaseTreatmentRoles.IsCurative(entry.role)) { hasCurative = true; curativeTotal++; }
+                    }
+                    if (!hasCurative) uncured++;
+                }
+
+                Check(allRolesKnown, "every authored treatment role is a known clinical role");
+                Check(allItemsResolve, "every authored treatment item resolves in items.json");
+                Check(reductionBounded, "every treatment lethality_reduction stays inside 0..1");
+                Check(treatedDiseases > 0, "the catalog authorises at least one treatment path");
+                Check(curativeTotal > 0, "at least one disease is curable");
+                // An illness the holdfast cannot cure is a legitimate finding; a catalog
+                // where everything is curable would make medicine a formality.
+                // Care is universal; cure is not. Every illness may offer something to do,
+                // but a meaningful share must stay incurable, or medicine becomes a
+                // toggle that erases consequence.
+                Check(uncured > 0, "some illnesses stay incurable (endure, don't optimise)");
+
+                // ---- Plan 60 / D2: clinical tells exist and discriminate ----------
+                // Authored-but-unread text is the failure this project keeps finding,
+                // so the coverage of tells is gated here as well as rendered.
+                int withTell = 0, withTiming = 0, unreadProse = 0;
+                var primaryTells = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                for (int i = 0; i < catalog.Diseases.Count; i++)
+                {
+                    var d = catalog.Diseases[i];
+                    if (d == null) continue;
+                    if (!string.IsNullOrWhiteSpace(d.tell))
+                    {
+                        withTell++;
+                        primaryTells.Add(d.tell);
+                    }
+                    if (!string.IsNullOrWhiteSpace(d.timing_clue)) withTiming++;
+                    if (!string.IsNullOrWhiteSpace(d.guidance)) unreadProse++;
+                }
+                Check(withTell == catalog.Count,
+                    "every illness carries a primary tell (" + withTell + "/" + catalog.Count + ")");
+                Check(withTiming == catalog.Count,
+                    "every illness carries a timing clue, which is how look-alike signs separate");
+                Check(primaryTells.Count == catalog.Count,
+                    "no two illnesses share the same primary tell (a shared key would make diagnosis a coin flip)");
+                Check(unreadProse == catalog.Count,
+                    "every illness carries protocol guidance for the bedside");
+
+                // ---- Plan 60 / D4: protocols are maintenance, not switches -------
+                // The gate the whole slice hangs on: every vector block must be able
+                // to return to false on the day tick alone. A protocol that can only
+                // ever be switched on is not a protocol, it is an achievement.
+                var vectors = new[]
+                {
+                    DiseaseVectorNames.Water, DiseaseVectorNames.Air,
+                    DiseaseVectorNames.Blood, DiseaseVectorNames.Spore,
+                };
+                bool allDurationsAuthored = true;
+                for (int v = 0; v < vectors.Length; v++)
+                    if (catalog.ProtocolDurationDays(vectors[v]) <= 0) allDurationsAuthored = false;
+                Check(allDurationsAuthored,
+                    "every vector protocol carries an authored lapse duration");
+
+                // Fresh system so the lapse scenario cannot perturb the outcome
+                // scenario above (its patients keep their own timeline).
+                var protocolSystem = new DiseaseSystem(rng: new SeededRng(DemoSeed + 41), log: log);
+                protocolSystem.BindCatalog(catalog ?? new DiseaseCatalog());
+                int resetEvents = 0;
+                protocolSystem.OnEventRaised += (eventId, _) =>
+                {
+                    if (eventId == DiseaseIds.EventProtocolReset) resetEvents++;
+                };
+
+                protocolSystem.PurifyWater(200);
+                protocolSystem.SealVents(200);
+                protocolSystem.SterilizeTools(200);
+                protocolSystem.SetAirFiltration(true, 200);
+                Check(protocolSystem.IsVectorBlocked(DiseaseVectorNames.Water)
+                    && protocolSystem.IsVectorBlocked(DiseaseVectorNames.Air)
+                    && protocolSystem.IsVectorBlocked(DiseaseVectorNames.Blood)
+                    && protocolSystem.IsVectorBlocked(DiseaseVectorNames.Spore),
+                    "all four vector protocols engage when applied");
+
+                for (int d = 201; d <= 206; d++) protocolSystem.TickDaily(d, Array.Empty<string>());
+                Check(!protocolSystem.IsVectorBlocked(DiseaseVectorNames.Water)
+                    && !protocolSystem.IsVectorBlocked(DiseaseVectorNames.Air)
+                    && !protocolSystem.IsVectorBlocked(DiseaseVectorNames.Blood)
+                    && !protocolSystem.IsVectorBlocked(DiseaseVectorNames.Spore),
+                    "every vector block returns to false on the day tick alone (no manual reset)");
+                Check(resetEvents >= 4,
+                    "each lapse announces itself (" + resetEvents + " protocol reset events)");
+
+                // The window is exact: applied on day 300 with duration 3, it holds
+                // on day 302 and is gone on day 303 — never one day of grace.
+                protocolSystem.PurifyWater(300);
+                int seedBeforeLapse = protocolSystem.CaptureState().rngSeed;
+                protocolSystem.TickDaily(302, Array.Empty<string>());
+                Check(protocolSystem.IsVectorBlocked(DiseaseVectorNames.Water),
+                    "protocol still holds the day before its window ends");
+                protocolSystem.TickProtocolExpiry(303);
+                Check(!protocolSystem.IsVectorBlocked(DiseaseVectorNames.Water),
+                    "lapses exactly on the authored day");
+                Check(protocolSystem.ProtocolDaysRemaining(DiseaseVectorNames.Water, 305) < 0,
+                    "lapsed protocol reports inactive");
+                Check(protocolSystem.CaptureState().rngSeed == seedBeforeLapse,
+                    "protocol lapse is pure day arithmetic — no RNG consumed");
+
+                // A pre-D4 save (protocol on, no recorded expiry) re-arms on the next
+                // tick and lapses one full window later — the honest reading of an
+                // old save, not a surprise reset.
+                var legacy = new DiseaseSystem(new DiseaseSystemState
+                {
+                    water_purified = true,
+                    water_purified_until_day = 0,
+                    rngSeed = DemoSeed,
+                }, rng: new SeededRng(DemoSeed), log: log);
+                legacy.BindCatalog(catalog ?? new DiseaseCatalog());
+                int waterWindow = (catalog ?? new DiseaseCatalog()).ProtocolDurationDays(DiseaseVectorNames.Water);
+                legacy.TickProtocolExpiry(50);
+                Check(legacy.IsVectorBlocked(DiseaseVectorNames.Water)
+                    && legacy.State.water_purified_until_day == 50 + waterWindow,
+                    "legacy save with a bare protocol re-arms from the current day");
+                for (int d = 51; d < 50 + waterWindow; d++)
+                    legacy.TickProtocolExpiry(d);
+                Check(legacy.IsVectorBlocked(DiseaseVectorNames.Water), "legacy protocol holds through its re-armed window");
+                legacy.TickProtocolExpiry(50 + waterWindow);
+                Check(!legacy.IsVectorBlocked(DiseaseVectorNames.Water),
+                    "legacy protocol lapses one full window after re-arm");
+
+
+                // ---- live intervention behaviour ----
+                var ward = new DiseaseSystem(rng: new SeededRng(2027), log: log);
+                ward.BindCatalog(catalog);
+
+                var spendable = new HashSet<string>(StringComparer.Ordinal) { "antibiotics", "clean_water" };
+                int spent = 0;
+                ward.TryConsumeItem = (itemId, count) =>
+                {
+                    if (count <= 0 || !spendable.Contains(itemId)) return false;
+                    spent += count;
+                    return true;
+                };
+
+                Check(ward.TryTreat("pt_1", DiseaseIds.Cholera, "antibiotics", 5).Reason
+                        == DiseaseTreatmentRefusals.NotPatient,
+                    "nobody can be treated who is not a patient");
+
+                ward.Infect("pt_1", DiseaseIds.Cholera, day: 5);
+                var choleraDef = catalog.GetById(DiseaseIds.Cholera);
+                Check(choleraDef != null && choleraDef.TreatmentFor("clean_water") != null,
+                    "cholera authorises clean water as a treatment");
+                Check(ward.TryTreat("pt_1", DiseaseIds.Cholera, "bandage", 5).Reason
+                        == DiseaseTreatmentRefusals.ItemNotAuthorised,
+                    "an unauthorised item is refused, not consumed");
+                Check(spent == 0, "a refused treatment consumes nothing");
+                Check(ward.TryTreat("pt_1", "disease_not_in_catalog", "antibiotics", 5).Reason
+                        == DiseaseTreatmentRefusals.UnknownDisease,
+                    "an unknown disease is refused");
+
+                var first = ward.TryTreat("pt_1", DiseaseIds.Cholera, "antibiotics", 5);
+                Check(first.Accepted, "a curative dose is accepted inside its window");
+                Check(ward.IsInfected("pt_1", DiseaseIds.Cholera) == false,
+                    "curative treatment removes the infection");
+                var choleraState = ward.GetDiseaseState(DiseaseIds.Cholera);
+                Check(choleraState != null && choleraState.recovered_total >= 1,
+                    "a cured patient is counted as recovered, not silently dropped");
+                Check(spent == 1, "one accepted dose spends exactly one item");
+
+                // Suppressives must not masquerade as cures: septic rust-wound fever is
+                // curable, so treat it non-curatively and confirm the patient remains.
+                ward.Infect("pt_2", DiseaseIds.Cholera, day: 6);
+                var sameDay = ward.TryTreat("pt_2", DiseaseIds.Cholera, "clean_water", 6);
+                Check(sameDay.Accepted, "supportive care is accepted alongside a cure-capable disease");
+                Check(ward.IsInfected("pt_2", DiseaseIds.Cholera),
+                    "a non-curative role never clears an infection");
+                Check(ward.TryTreat("pt_2", DiseaseIds.Cholera, "clean_water", 6).Reason
+                        == DiseaseTreatmentRefusals.AlreadyTreatedToday,
+                    "one dose per patient per day (no click-spam dosing)");
+                Check(ward.GetEffectiveLethality("pt_2", DiseaseIds.Cholera)
+                        < (choleraDef != null ? choleraDef.lethality : 0f),
+                    "treatment improves this patient's odds, not the disease's");
+                Check(Math.Abs(ward.GetEffectiveLethality("pt_9", DiseaseIds.Cholera)
+                        - (choleraDef != null ? choleraDef.lethality : 0f)) < 0.0001f,
+                    "an untreated patient keeps the authored lethality");
+
+                // Window enforcement: cholera's curative is authorised only while
+                // early enough, so late presentation is a real clinical loss.
+                ward.Infect("pt_3", DiseaseIds.Cholera, day: 40);
+                for (int day = 41; day <= 48; day++) ward.TickDaily(day, candidates: null);
+                Check(!ward.IsInfected("pt_3", DiseaseIds.Cholera)
+                        || ward.TryTreat("pt_3", DiseaseIds.Cholera, "antibiotics", 48).Reason
+                            == DiseaseTreatmentRefusals.OutsideWindow,
+                    "treatment outside the authorised window is refused");
+
+                // Supply is the player's constraint, not the engine's silence.
+                spendable.Remove("clean_water");
+                ward.Infect("pt_4", DiseaseIds.Cholera, day: 60);
+                Check(ward.TryTreat("pt_4", DiseaseIds.Cholera, "clean_water", 60).Reason
+                        == DiseaseTreatmentRefusals.SupplyUnavailable,
+                    "no stock means no treatment, with a stated reason");
+
+                // A host that never wires supply must fail loudly, never pretend.
+                var unwired = new DiseaseSystem(rng: new SeededRng(11), log: log);
+                unwired.BindCatalog(catalog);
+                unwired.Infect("pt_5", DiseaseIds.Cholera, day: 1);
+                Check(unwired.TryTreat("pt_5", DiseaseIds.Cholera, "antibiotics", 1).Reason
+                        == DiseaseTreatmentRefusals.NoSupplyChannel,
+                    "an unwired supply channel refuses treatment instead of faking it");
+
+                // Treatment history survives the save the same way the rest of the
+                // clinical picture does.
+                var saveJson = json.Serialize(ward.CaptureState());
+                var reload = new DiseaseSystem(log: log);
+                reload.BindCatalog(catalog);
+                reload.RestoreState(json.Deserialize<DiseaseSystemState>(saveJson)!);
+                var reloadedPatient = reload.GetDiseaseState(DiseaseIds.Cholera)?.infected
+                    .Find(p => p.survivor_id == "pt_2");
+                Check(reloadedPatient == null || reloadedPatient.treatments_applied >= 1,
+                    "treatment history round-trips through the save");
+
+                // Determinism: identical seeds and doses must land on identical odds.
+                float Trace(int seed)
+                {
+                    var s = new DiseaseSystem(rng: new SeededRng(seed), log: NullLog.Instance);
+                    s.BindCatalog(catalog);
+                    s.TryConsumeItem = (_, __) => true;
+                    s.Infect("pt", DiseaseIds.Cholera, day: 3);
+                    s.TryTreat("pt", DiseaseIds.Cholera, "clean_water", 3);
+                    return s.GetEffectiveLethality("pt", DiseaseIds.Cholera);
+                }
+                Check(Math.Abs(Trace(5) - Trace(5)) < 0.0001f,
+                    "treatment outcome is deterministic for the same inputs");
+            }
+
             log.Info("[DiseaseHeadlessDemo] done");
             report.Passed = report.FailedCount == 0;
             report.Summary = "[DiseaseHeadlessDemo] " + report.PassedCount + "/"

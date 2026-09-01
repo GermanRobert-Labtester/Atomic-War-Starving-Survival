@@ -53,6 +53,7 @@ namespace AtomicWar.GodotApp
             CloseAllOverlayPanels();
             UiNodeDiagnostics.Report(this, "survivors");
 
+            EnsureMedicalPipeline();
             _medicalPanel.Bind(_medical, _survivors, _inventory,
                 _phase0?.Respiratory);
             UiNodeDiagnostics.Mark(this, "medical");
@@ -132,9 +133,10 @@ namespace AtomicWar.GodotApp
             SetupJournal();
 
             // 1. ResearchPanel: Open -> Bind -> Close -> Reopen
-            _sharedResearch = new ResearchSystem(log: new GodotLog());
-            _sharedResearch.RegisterDefaults();
-            _sharedResearch.UnlockManual("res_rad_mapping");
+            // Plan 34: shared engine loads the authoritative research_knowledge.json
+            // catalog (no hardcoded fallback); unlock a real catalog ID.
+            _sharedResearch = EnsureSharedResearch();
+            _sharedResearch.UnlockManual("knowledge_water_basics");
             _researchPanel.Bind(_sharedResearch);
             UiNodeDiagnostics.Mark(this, "research-lifecycle");
             _researchPanel.Open();
@@ -173,12 +175,12 @@ namespace AtomicWar.GodotApp
             UiNodeDiagnostics.Report(this, "weather-lifecycle");
 
             // 4. ExpeditionPanel: Open -> Bind -> Close -> Reopen
-            _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+            _expeditionPanel.Bind(_expeditions, _survivors, _inventory, _equipmentCondition?.System);
             UiNodeDiagnostics.Mark(this, "expedition-lifecycle");
             _expeditionPanel.Open();
             _expeditionPanel.Close();
             _expeditionPanel.Unbind();
-            _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+            _expeditionPanel.Bind(_expeditions, _survivors, _inventory, _equipmentCondition?.System);
             _expeditionPanel.Open();
             bool expeditionLifecycle = _expeditionPanel.IsBound && _expeditionPanel.Visible;
             CloseAllOverlayPanels();

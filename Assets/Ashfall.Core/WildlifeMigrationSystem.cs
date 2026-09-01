@@ -20,13 +20,15 @@ namespace Ashfall.Core
         public string speciesId = string.Empty;
         public string currentSectorId = string.Empty;
         public int population = 5;
+        /// <summary>Population at seed time; the baseline population recovery and scarcity read against. 0 on legacy saves.</summary>
+        public int seededPopulation;
         public float aggressionScore = 0.5f;
         public float starvationLevel;
         public bool isRabid;
         public int lastThreatFiredDay = -1;
     }
 
-    public sealed class WildlifeMigrationSystem
+    public sealed partial class WildlifeMigrationSystem
     {
         public const string SystemId = "wildlife_migration";
         private WildlifeSaveState _state = new WildlifeSaveState();
@@ -52,7 +54,8 @@ namespace Ashfall.Core
                 packId = packId,
                 speciesId = speciesId,
                 currentSectorId = sectorId,
-                population = population
+                population = population,
+                seededPopulation = population
             };
             _state.packs.Add(pack);
             return ActionResult.Success("wildlife.pack_registered");
@@ -109,6 +112,7 @@ namespace Ashfall.Core
                     speciesId = p.speciesId,
                     currentSectorId = p.currentSectorId,
                     population = p.population,
+                    seededPopulation = p.seededPopulation,
                     aggressionScore = p.aggressionScore,
                     starvationLevel = p.starvationLevel,
                     isRabid = p.isRabid,

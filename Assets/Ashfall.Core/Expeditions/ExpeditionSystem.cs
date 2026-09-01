@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
+using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core.Expeditions
 {
@@ -161,6 +162,7 @@ namespace Ashfall.Core.Expeditions
         public float encounterChancePerTick = 0.12f;
         public float baseStaminaDrainPerHour = 2.0f;
         public List<string> lootCategories = new List<string>();
+        public string scavenging_table_id = string.Empty;
     }
 
     /// <summary>
@@ -200,6 +202,8 @@ namespace Ashfall.Core.Expeditions
         /// base per-hour drain in ApplyStaminaDrain.
         /// </summary>
         private Func<string, float> _staminaDrainMultiplier;
+
+        public ScavengingTableCatalog? ScavengingCatalog { get; set; }
 
         public event Action<ExpeditionState> OnExpeditionStarted;
         public event Action<ExpeditionState> OnExpeditionTick;
@@ -299,6 +303,165 @@ namespace Ashfall.Core.Expeditions
             OnExpeditionStarted?.Invoke(exp);
             OnStateChanged?.Invoke(exp);
             return true;
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of an expedition dispatch.
+        /// Shares the same validation path as <see cref="Start"/>.
+        /// </summary>
+        public CommandPreview PreviewStart(
+            ExpeditionDefinition def,
+            string survivorId,
+            int day,
+            ExpeditionStance stance = ExpeditionStance.Stealth,
+            bool isNightScavenge = false,
+            bool hasBicycle = false,
+            bool hasFlashlight = false,
+            ExpeditionVehicleProfile? vehicle = null,
+            long stateVersion = 0)
+        {
+            if (def == null || string.IsNullOrEmpty(def.id) || string.IsNullOrEmpty(survivorId))
+                return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionDispatch, "invalid_params", "expedition.invalid_params", stateVersion);
+            if (_active.ContainsKey(survivorId))
+                return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionDispatch, "already_active", "expedition.already_active", stateVersion);
+
+            var projected = new Dictionary<string, double>();
+            var estimate = Estimate(def, stance, isNightScavenge, vehicle);
+            projected["travel_ticks"] = estimate.totalTicks;
+            projected["stamina_cost"] = estimate.totalTicks * (def != null ? def.baseStaminaDrainPerHour : 2.0);
+            if (vehicle != null && !string.IsNullOrEmpty(vehicle.vehicleId))
+                projected["fuel_cost"] = estimate.fuelRequired;
+
+            return CommandPreview.Available(
+                PlayerCommandCode.ExpeditionDispatch,
+                stateVersion,
+                projected,
+                estimate.totalTicks,
+                riskCodes: new[] { "encounter_risk", "stamina_drain" },
+                isIrreversible: true,
+                messageKey: "expedition.preview_available");
+        }
+
+        /// <summary>
+        /// Execute an expedition dispatch using the same validation path as <see cref="PreviewStart"/>.
+        /// Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteStart(
+            ExpeditionDefinition def,
+            string survivorId,
+            int day,
+            ExpeditionStance stance = ExpeditionStance.Stealth,
+            bool isNightScavenge = false,
+            bool hasBicycle = false,
+            bool hasFlashlight = false,
+            ExpeditionVehicleProfile? vehicle = null,
+            long expectedStateVersion = 0,
+            long currentStateVersion = 0)
+        {
+            var preview = PreviewStart(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.ExpeditionDispatch, preview.StateVersion, currentStateVersion);
+
+            bool ok = Start(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.ExpeditionDispatch,
+                    ActionResult.Failed("execute_failed", "expedition.execute_failed"),
+                    expectedStateVersion, currentStateVersion);
+
+            var deltas = new Dictionary<string, double>();
+            foreach (var kv in preview.ProjectedDeltas)
+                deltas[kv.Key] = kv.Value;
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.ExpeditionDispatch,
+                ActionResult.Success("expedition.dispatched", deltas),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a push-luck command during looting.
+        /// </summary>
+        public CommandPreview PreviewPushLuck(string survivorId, long stateVersion = 0)
+        {
+            if (!_active.TryGetValue(survivorId, out var exp))
+                return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionPushLuck, "not_active", "expedition.not_active", stateVersion);
+            if ((ExpeditionPhase)exp.phase != ExpeditionPhase.Looting)
+                return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionPushLuck, "wrong_phase", "expedition.wrong_phase", stateVersion);
+
+            return CommandPreview.Available(
+                PlayerCommandCode.ExpeditionPushLuck,
+                stateVersion,
+                isIrreversible: false,
+                riskCodes: new[] { "injury", "detection" },
+                messageKey: "expedition.push_luck_preview");
+        }
+
+        /// <summary>Execute push-luck using the same validation path as preview.</summary>
+        public CommandResult ExecutePushLuck(string survivorId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewPushLuck(survivorId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.ExpeditionPushLuck, preview.StateVersion, currentStateVersion);
+
+            bool ok = PushLuck(survivorId);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.ExpeditionPushLuck,
+                    ActionResult.Failed("execute_failed", "expedition.execute_failed"),
+                    expectedStateVersion, currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.ExpeditionPushLuck,
+                ActionResult.Success("expedition.push_luck"),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
+        /// <summary>
+        /// Side-effect-free preview of a retreat command during looting.
+        /// </summary>
+        public CommandPreview PreviewRetreat(string survivorId, long stateVersion = 0)
+        {
+            if (!_active.TryGetValue(survivorId, out var exp))
+                return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionRetreat, "not_active", "expedition.not_active", stateVersion);
+            if ((ExpeditionPhase)exp.phase != ExpeditionPhase.Looting)
+                return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionRetreat, "wrong_phase", "expedition.wrong_phase", stateVersion);
+
+            return CommandPreview.Available(
+                PlayerCommandCode.ExpeditionRetreat,
+                stateVersion,
+                isIrreversible: false,
+                messageKey: "expedition.retreat_preview");
+        }
+
+        /// <summary>Execute retreat using the same validation path as preview.</summary>
+        public CommandResult ExecuteRetreat(string survivorId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewRetreat(survivorId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.ExpeditionRetreat, preview.StateVersion, currentStateVersion);
+
+            bool ok = Retreat(survivorId);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.ExpeditionRetreat,
+                    ActionResult.Failed("execute_failed", "expedition.execute_failed"),
+                    expectedStateVersion, currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.ExpeditionRetreat,
+                ActionResult.Success("expedition.retreated"),
+                expectedStateVersion,
+                currentStateVersion + 1);
         }
 
         /// <summary>
@@ -766,20 +929,41 @@ namespace Ashfall.Core.Expeditions
             if (exp.isNightScavenge) chance += 0.1f;   // riskier, richer
             if (rng.NextDouble() >= chance) return;
 
+            var def = ExpeditionDefinitionRegistry.Get(exp.locationId);
+            string tableId = def?.scavenging_table_id ?? string.Empty;
+
+            if (ScavengingCatalog != null && !string.IsNullOrEmpty(tableId))
+            {
+                var rollResult = ScavengingCatalog.RollLoot(tableId, rng);
+                if (rollResult != null && !string.IsNullOrEmpty(rollResult.ItemId))
+                {
+                    const float itemWeight = 1.0f;
+                    float totalWeightToAdd = itemWeight * rollResult.Quantity;
+                    if (exp.currentWeightKg + totalWeightToAdd > exp.maxLootCapacityKg)
+                    {
+                        exp.outcomeText = "Capacity full; the find stays behind.";
+                        return;
+                    }
+
+                    AddLoot(exp, rollResult.ItemId, itemWeight, rollResult.Quantity);
+                    return;
+                }
+            }
+
             // Pick a category (or a generic item when the table is empty).
             string itemId = exp.loot.Count > 0
                 ? PickLootCategory(exp, rng)
                 : "scrap_metal";
             if (string.IsNullOrEmpty(itemId)) itemId = "scrap_metal";
 
-            const float itemWeight = 1.0f;
-            if (exp.currentWeightKg + itemWeight > exp.maxLootCapacityKg)
+            const float fallbackWeight = 1.0f;
+            if (exp.currentWeightKg + fallbackWeight > exp.maxLootCapacityKg)
             {
                 exp.outcomeText = "Capacity full; the find stays behind.";
                 return;
             }
 
-            AddLoot(exp, itemId, itemWeight);
+            AddLoot(exp, itemId, fallbackWeight, 1);
         }
 
         private static string PickLootCategory(ExpeditionState exp, ISeededRng rng)
@@ -795,20 +979,21 @@ namespace Ashfall.Core.Expeditions
             return exp.loot[existing].itemId;
         }
 
-        private void AddLoot(ExpeditionState exp, string itemId, float weightKg)
+        private void AddLoot(ExpeditionState exp, string itemId, float weightKg, int quantity = 1)
         {
+            if (quantity <= 0) quantity = 1;
             for (int i = 0; i < exp.loot.Count; i++)
             {
                 if (exp.loot[i].itemId == itemId)
                 {
-                    exp.loot[i].quantity++;
-                    exp.currentWeightKg += weightKg;
+                    exp.loot[i].quantity += quantity;
+                    exp.currentWeightKg += weightKg * quantity;
                     OnLootAdded?.Invoke(exp);
                     return;
                 }
             }
-            exp.loot.Add(new ExpeditionLootEntry { itemId = itemId, quantity = 1, weightKg = weightKg });
-            exp.currentWeightKg += weightKg;
+            exp.loot.Add(new ExpeditionLootEntry { itemId = itemId, quantity = quantity, weightKg = weightKg * quantity });
+            exp.currentWeightKg += weightKg * quantity;
             OnLootAdded?.Invoke(exp);
         }
 
@@ -952,6 +1137,10 @@ namespace Ashfall.Core.Expeditions
                 isNightScavenge = src.isNightScavenge,
                 hasBicycle = src.hasBicycle,
                 hasFlashlight = src.hasFlashlight,
+                vehicleId = src.vehicleId,
+                vehicleSpeedMultiplier = src.vehicleSpeedMultiplier,
+                vehicleBreakdownChancePerTick = src.vehicleBreakdownChancePerTick,
+                vehicleBrokenDown = src.vehicleBrokenDown,
                 outcomeText = src.outcomeText
             };
             if (src.loot != null)

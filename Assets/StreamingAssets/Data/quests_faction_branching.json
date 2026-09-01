@@ -1,0 +1,5225 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_bone_pickers_01",
+      "display_name": "Bone Pickers - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A lone wanderer is caught in our snare traps. His leg is shattered. The Guild demands we don't waste a bullet\u2014just take his boots and leave him for the ash-hounds.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The wanderer is still in the snare, and he has stopped begging and started watching you look at his boots."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_01_advance",
+          "text": "Take the boots. Leave him.",
+          "set_flag": "flag_bone_pickers_01_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_01_abort",
+          "text": "Cut him loose. Give him the boots back.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_scavenger_guild"
+    },
+    {
+      "id": "quest_bone_pickers_02",
+      "display_name": "Bone Pickers - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A lost caravan begs for coordinates to a safe haven. The Guild orders us to feed them false vectors straight into a highly radioactive sinkhole, then harvest their crawler tomorrow.",
+      "prereq_quest_id": "quest_bone_pickers_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The caravan's driver holds out his map for you to mark, and his trust is so total it is hard to look at."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_02_advance",
+          "text": "Mark the sinkhole route.",
+          "set_flag": "flag_bone_pickers_02_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_02_abort",
+          "text": "Mark the true route. Take the risk.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_bone_pickers_03",
+      "display_name": "Bone Pickers - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A family offers their life savings for a single filter. We are ordered to take the payment, give them a defective filter filled with painted sand, and log it as a fair trade.",
+      "prereq_quest_id": "quest_bone_pickers_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The family's life savings sit on the table: rings, teeth, bullets. Their daughter watches you count it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_03_advance",
+          "text": "Take the payment. Hand them the sand.",
+          "set_flag": "flag_bone_pickers_03_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_03_abort",
+          "text": "Give them a real filter. Log the loss.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_bone_pickers_04",
+      "display_name": "Bone Pickers - Stage 4",
+      "type": "faction_chain",
+      "briefing": "We found a medic trapped under a collapsed beam. Instead of lifting it, the Overseer calculates it is more calorie-efficient to amputate his arm to get his medical bag faster.",
+      "prereq_quest_id": "quest_bone_pickers_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The medic is still conscious under the beam. He holds out his bag himself and says there is another way, and he is right."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_04_advance",
+          "text": "Cut the arm. Take the bag.",
+          "set_flag": "flag_bone_pickers_04_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_04_abort",
+          "text": "Lift the beam. Every hand on it.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_bone_pickers_05",
+      "display_name": "Bone Pickers - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A refugee camp is starving. The Guild sends us in at night not to feed them, but to quietly dismantle their water purifier while they sleep.",
+      "prereq_quest_id": "quest_bone_pickers_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The camp sleeps around the purifier, children under the adults' arms, and the purifier hums like something alive."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_05_advance",
+          "text": "Strip the purifier quietly.",
+          "set_flag": "flag_bone_pickers_05_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_05_abort",
+          "text": "Leave it. Fill their canteens instead.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_bone_pickers_06",
+      "display_name": "Bone Pickers - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A child wanders into our perimeter wearing a pristine pre-war backpack. We are ordered to confiscate the bag. When the child cries, we are told to confiscate the coat as well.",
+      "prereq_quest_id": "quest_bone_pickers_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The child has stopped crying and is holding the backpack straps with both hands, waiting to learn what kind of people you are."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_06_advance",
+          "text": "Take the bag. Then the coat.",
+          "set_flag": "flag_bone_pickers_06_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_06_abort",
+          "text": "Leave the bag. Feed the kid.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_bone_pickers_07",
+      "display_name": "Bone Pickers - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A neutral bunker opens its doors to trade. We are ordered to map their security blind spots so the Guild can slowly bleed their resource lines dry over the winter.",
+      "prereq_quest_id": "quest_bone_pickers_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The bunker's gatekeeper shows you in himself, pointing out the water lines like a man showing off a garden."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_07_advance",
+          "text": "Map the blind spots.",
+          "set_flag": "flag_bone_pickers_07_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_07_abort",
+          "text": "Trade fair. Warn them if you can.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_bone_pickers_08",
+      "display_name": "Bone Pickers - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A peace envoy arrives under a white flag. The Guild demands we shoot him in the knees, take his diplomatic rations, and send him crawling back.",
+      "prereq_quest_id": "quest_bone_pickers_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The envoy's flag is clean, which means somebody washed it for this. He holds out his papers with both hands."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_08_advance",
+          "text": "Break the knee. Take the rations.",
+          "set_flag": "flag_bone_pickers_08_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_08_abort",
+          "text": "Take the papers. Send him back whole.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_bone_pickers_09",
+      "display_name": "Bone Pickers - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A settlement is dying of a localized plague. We are sent to blockade their only exit, waiting for them to die so we can pick the concrete clean.",
+      "prereq_quest_id": "quest_bone_pickers_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The settlement's last guard stands at the gate without a rifle, holding it by the barrel like a cane."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_09_advance",
+          "text": "Seal the blockade. Wait them out.",
+          "set_flag": "flag_bone_pickers_09_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_09_abort",
+          "text": "Lift the line. Mark the place and go.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_bone_pickers_10",
+      "display_name": "Bone Pickers - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final threshold. A massive caravan of free traders is passing through the canyon. The Guild orders us to trigger an engineered avalanche, crushing hundreds to harvest the twisted metal.",
+      "prereq_quest_id": "quest_bone_pickers_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "From the ridge you can hear the caravan below, horns and singing. Somebody is singing. The avalanche charges are set, and the detonator is in your hand, and the singing carries."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_bone_pickers_10_advance",
+          "text": "Bring the mountain down.",
+          "set_flag": "flag_bone_pickers_10_advanced"
+        },
+        {
+          "id": "quest_bone_pickers_10_abort",
+          "text": "Pull the charges. Let them pass.",
+          "set_flag": "flag_bone_pickers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_01",
+      "display_name": "Blood Tithe - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A small dirt farm failed to pay the protection tithe. The Raiders demand we burn their meager crops to the root while the farmers watch.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The farmers are not watching their crops. They are watching their children watch the crops."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_01_advance",
+          "text": "Burn it to the root.",
+          "set_flag": "flag_blood_tithe_01_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_01_abort",
+          "text": "Refuse the torch. Take the debt another way.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_iron_raiders"
+    },
+    {
+      "id": "quest_blood_tithe_02",
+      "display_name": "Blood Tithe - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A water merchant refuses our prices. We are ordered to hold his head underwater in his own supply barrel until he stops thrashing.",
+      "prereq_quest_id": "quest_blood_tithe_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The merchant has stopped arguing about price. He looks at the barrel, then at you, doing the arithmetic himself."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_02_advance",
+          "text": "Hold him under.",
+          "set_flag": "flag_blood_tithe_02_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_02_abort",
+          "text": "Let him up. Walk away.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_03",
+      "display_name": "Blood Tithe - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A group of unarmed monks offer us shelter for the night. The Raiders demand we wait until they sleep, then slit their throats for their robes.",
+      "prereq_quest_id": "quest_blood_tithe_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The monks gave you the good blankets and slept in a ring around the fire, and the raider next to you is testing his blade."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_03_advance",
+          "text": "Wait for sleep. Do it.",
+          "set_flag": "flag_blood_tithe_03_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_03_abort",
+          "text": "Wake them at dawn. Leave with your soul.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_04",
+      "display_name": "Blood Tithe - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A rival gang has been wiped out, leaving only their families. We are ordered to chain them together and march them to the slave markets in the south.",
+      "prereq_quest_id": "quest_blood_tithe_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The chains are already sorted by size. Somebody in the gang did the sorting, and that is the part that sticks in your throat."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_04_advance",
+          "text": "March them south.",
+          "set_flag": "flag_blood_tithe_04_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_04_abort",
+          "text": "Cut the chains. Point them at the horizon.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_05",
+      "display_name": "Blood Tithe - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A defenseless outpost begs for mercy. We are ordered to make an example of their leader by tying him to the front of our crawler as armor.",
+      "prereq_quest_id": "quest_blood_tithe_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The outpost's leader stepped forward first, offering himself for his people, and the raiders started laughing, and he did not flinch."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_05_advance",
+          "text": "Tie him to the crawler.",
+          "set_flag": "flag_blood_tithe_05_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_05_abort",
+          "text": "Refuse. Take their tribute and go.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_06",
+      "display_name": "Blood Tithe - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A refugee convoy is bogged down in the mud. The Raiders order us to separate the children from the parents, keeping only the ones strong enough to hold a rifle.",
+      "prereq_quest_id": "quest_blood_tithe_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The mothers have gone quiet the way that means they heard everything, and the mud holds the wagons like the earth has decided."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_06_advance",
+          "text": "Sort the children.",
+          "set_flag": "flag_blood_tithe_06_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_06_abort",
+          "text": "Pull the wagons free. Let the convoy go.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_07",
+      "display_name": "Blood Tithe - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A hospital tent is treating the wounded from both sides. We are ordered to execute the doctors for 'wasting resources' on the dying.",
+      "prereq_quest_id": "quest_blood_tithe_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The doctors do not look up from the wounded. One of the wounded is one of ours, and the doctor is still trying to save him, which complicates the order."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_07_advance",
+          "text": "Execute the doctors.",
+          "set_flag": "flag_blood_tithe_07_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_07_abort",
+          "text": "Stand guard over the tent instead.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_08",
+      "display_name": "Blood Tithe - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A local militia surrenders their weapons to avoid a massacre. The moment they are disarmed, the Raiders order us to open fire anyway.",
+      "prereq_quest_id": "quest_blood_tithe_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The surrendered rifles stand in a pyramid, and the militia waits with empty hands at their sides, and the order comes down the line a second time."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_08_advance",
+          "text": "Open fire.",
+          "set_flag": "flag_blood_tithe_08_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_08_abort",
+          "text": "Refuse. Surrender is surrender.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_09",
+      "display_name": "Blood Tithe - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A peace delegation arrives to negotiate a ceasefire. We are ordered to send their heads back in a wooden crate to force a total war.",
+      "prereq_quest_id": "quest_blood_tithe_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The delegation brought two copies of the ceasefire terms, one for us and one to carry back, and the copies are in a neat hand."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_09_advance",
+          "text": "Pack the crate.",
+          "set_flag": "flag_blood_tithe_09_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_09_abort",
+          "text": "Send back the terms. Sign one.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_blood_tithe_10",
+      "display_name": "Blood Tithe - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final raid. An entire independent town is sealed inside their walls. The Raiders order us to pump raw diesel smoke into the vents until the screaming stops.",
+      "prereq_quest_id": "quest_blood_tithe_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The town's vents are easy to find, and on one of them the children have painted birds. The smoke hose is uncoiled, and the engine idles, and nobody has given the signal."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_blood_tithe_10_advance",
+          "text": "Pump the smoke.",
+          "set_flag": "flag_blood_tithe_10_advanced"
+        },
+        {
+          "id": "quest_blood_tithe_10_abort",
+          "text": "Cut the engine. Lift the siege.",
+          "set_flag": "flag_blood_tithe_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_01",
+      "display_name": "Drought Cartel - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A local well has been freely shared for years. The Barons demand we cap it with concrete and post armed guards with shoot-to-kill orders.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The well has cups chained to its rim, generations of cups. The concrete truck is parked beside them."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_01_advance",
+          "text": "Cap the well.",
+          "set_flag": "flag_drought_cartel_01_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_01_abort",
+          "text": "Leave the cups. Refuse the pour.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_hydro_barons"
+    },
+    {
+      "id": "quest_drought_cartel_02",
+      "display_name": "Drought Cartel - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A rain catcher is built by a starving family. We are ordered to smash the collection tarp and pour the collected water into the irradiated soil.",
+      "prereq_quest_id": "quest_drought_cartel_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The family's tarp is patched in six places, and the water in it is the cleanest water you have seen in weeks."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_02_advance",
+          "text": "Smash the tarp. Pour it out.",
+          "set_flag": "flag_drought_cartel_02_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_02_abort",
+          "text": "Refuse. Log the catcher as registered.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_03",
+      "display_name": "Drought Cartel - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A hidden spring is discovered by a scouting party. Instead of sharing it, the Barons demand we poison it with lead runoff to ensure total dependency on their supply.",
+      "prereq_quest_id": "quest_drought_cartel_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The spring is clear enough to see the bottom, and the scout who found it has filled his canteen and stands holding it, waiting."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_03_advance",
+          "text": "Pour in the lead.",
+          "set_flag": "flag_drought_cartel_03_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_03_abort",
+          "text": "Log the spring dry. Keep it clean.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_04",
+      "display_name": "Drought Cartel - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A rival's pipeline is delivering water to a slum. We are ordered to sabotage the pressure valves, causing the pipes to violently rupture inside the living quarters.",
+      "prereq_quest_id": "quest_drought_cartel_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The pressure valves are marked in chalk, maintained by hand. On the far side of the wall, the slum's laundry hangs from the pipes."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_04_advance",
+          "text": "Turn the valves past red.",
+          "set_flag": "flag_drought_cartel_04_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_04_abort",
+          "text": "Leave the valves. Tell the slum instead.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_05",
+      "display_name": "Drought Cartel - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A community reservoir is low. The Barons order us to drain the remaining 10% into our own tankers, leaving the community completely dry.",
+      "prereq_quest_id": "quest_drought_cartel_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The community stands by the reservoir with every container they own, and your tankers are higher than the containers, which is the whole arithmetic."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_05_advance",
+          "text": "Drain the last tenth.",
+          "set_flag": "flag_drought_cartel_05_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_05_abort",
+          "text": "Turn the tankers around.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_06",
+      "display_name": "Drought Cartel - Stage 6",
+      "type": "faction_chain",
+      "briefing": "An orphanage is pooling their rations to buy a single barrel of clean water. We are ordered to double the price upon delivery, taking the water back when they can't pay.",
+      "prereq_quest_id": "quest_drought_cartel_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The orphanage's ration money sits on the delivery crate, coins, buttons, one ring. The children are lined up for the pour."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_06_advance",
+          "text": "Double the price. Take the barrel back.",
+          "set_flag": "flag_drought_cartel_06_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_06_abort",
+          "text": "Deliver the barrel. Eat the loss.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_07",
+      "display_name": "Drought Cartel - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A hospital's water tank is keeping the dialysis machines running. The Barons demand we reroute the pipe to feed their private hydroponic garden.",
+      "prereq_quest_id": "quest_drought_cartel_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The dialysis machines tick in time with the tank's drip. The garden pipe is already laid, and it points the wrong future."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_07_advance",
+          "text": "Reroute the pipe.",
+          "set_flag": "flag_drought_cartel_07_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_07_abort",
+          "text": "Leave the tank. Report the garden dry.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_08",
+      "display_name": "Drought Cartel - Stage 8",
+      "type": "faction_chain",
+      "briefing": "An underground aquifer is tapped by a neutral trading post. We are ordered to drop a seismic charge into the shaft, collapsing their only hope of independence.",
+      "prereq_quest_id": "quest_drought_cartel_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The trading post's shaft is new and the rope still smells of rope, and the charge is heavy in the hand that is supposed to drop it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_08_advance",
+          "text": "Drop the charge.",
+          "set_flag": "flag_drought_cartel_08_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_08_abort",
+          "text": "Pocket the charge. Walk away.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_09",
+      "display_name": "Drought Cartel - Stage 9",
+      "type": "faction_chain",
+      "briefing": "The eastern valley relies on a single mountain stream. The Barons demand we dam the river entirely, creating a private lake while the valley turns to bone.",
+      "prereq_quest_id": "quest_drought_cartel_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The valley's fields are green in rows, and the rows are straight, and the dam site is above them, and the arithmetic is that the arithmetic kills the rows."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_09_advance",
+          "text": "Build the dam.",
+          "set_flag": "flag_drought_cartel_09_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_09_abort",
+          "text": "Refuse. The valley keeps its stream.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_drought_cartel_10",
+      "display_name": "Drought Cartel - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final extraction. The Barons order the forced dehydration of an entire sector. Guards are posted at the doors. No water goes in. We simply wait for the silence.",
+      "prereq_quest_id": "quest_drought_cartel_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The doors are guarded, and behind the doors the sector is counting its last cups, and the order says wait for the silence, and the waiting has started."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_drought_cartel_10_advance",
+          "text": "Hold the doors. Wait.",
+          "set_flag": "flag_drought_cartel_10_advanced"
+        },
+        {
+          "id": "quest_drought_cartel_10_abort",
+          "text": "Break the cordon. Open the hydrants.",
+          "set_flag": "flag_drought_cartel_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_01",
+      "display_name": "Martial Law - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A hungry civilian is suspected of stealing a moldy ration block. The Coalition demands a public firing squad to maintain 'military discipline'.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The stolen ration sits on the tribunal table, moldy. The firing squad is loading, and nobody is looking at the ration."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_01_advance",
+          "text": "Carry out the squad.",
+          "set_flag": "flag_martial_law_01_advanced"
+        },
+        {
+          "id": "quest_martial_law_01_abort",
+          "text": "Refuse. Feed him. Log it resolved.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_deserter_coalition"
+    },
+    {
+      "id": "quest_martial_law_02",
+      "display_name": "Martial Law - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A worker falls asleep on a 14-hour shift. We are ordered to break his hands with a rifle butt so he serves as a warning to the others.",
+      "prereq_quest_id": "quest_martial_law_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The worker's hands are still shaped for the machine he works, and he has stopped begging and started holding them behind his back, which is worse."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_02_advance",
+          "text": "Break the hands.",
+          "set_flag": "flag_martial_law_02_advanced"
+        },
+        {
+          "id": "quest_martial_law_02_abort",
+          "text": "Refuse. Put him on light duty.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_03",
+      "display_name": "Martial Law - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A pacifist leader speaks out against the Coalition's brutality. We are ordered to drag her into the dark and ensure she is never seen again.",
+      "prereq_quest_id": "quest_martial_law_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "She stopped speaking when they grabbed her, and the silence is louder than the speech was, and the car waits with the door open."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_03_advance",
+          "text": "Put her in the car.",
+          "set_flag": "flag_martial_law_03_advanced"
+        },
+        {
+          "id": "quest_martial_law_03_abort",
+          "text": "Let her go. Take the reprimand.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_04",
+      "display_name": "Martial Law - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A bread riot breaks out in Sector 4. The Coalition orders us to use live ammunition on the starving crowd until they disperse.",
+      "prereq_quest_id": "quest_martial_law_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The crowd is unarmed and hungry and holding bags they brought for bread, and the order to load live rounds goes down the line, and the line loads."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_04_advance",
+          "text": "Fire into the crowd.",
+          "set_flag": "flag_martial_law_04_advanced"
+        },
+        {
+          "id": "quest_martial_law_04_abort",
+          "text": "Refuse. Open the granary instead.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_05",
+      "display_name": "Martial Law - Stage 5",
+      "type": "faction_chain",
+      "briefing": "One of our own soldiers refuses an order to shoot a child. We are ordered to execute the deserter immediately for insubordination.",
+      "prereq_quest_id": "quest_martial_law_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The soldier stands at attention for his own execution because nobody told him to stand at ease, and the squad is his friends."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_05_advance",
+          "text": "Carry out the sentence.",
+          "set_flag": "flag_martial_law_05_advanced"
+        },
+        {
+          "id": "quest_martial_law_05_abort",
+          "text": "Refuse. Take the charge yourself.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_06",
+      "display_name": "Martial Law - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A family is caught hoarding a single can of peaches. We are ordered to seize their entire bunker and force them out onto the irradiated surface.",
+      "prereq_quest_id": "quest_martial_law_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The can of peaches sits on the table, unopened. The family's bags are packed, because they knew what one can costs."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_06_advance",
+          "text": "Put them outside.",
+          "set_flag": "flag_martial_law_06_advanced"
+        },
+        {
+          "id": "quest_martial_law_06_abort",
+          "text": "Confiscate the can. Leave the home.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_07",
+      "display_name": "Martial Law - Stage 7",
+      "type": "faction_chain",
+      "briefing": "An unarmed crowd gathers to petition for cleaner air. The Coalition demands we deploy chemical tear gas into the confined ventilation block.",
+      "prereq_quest_id": "quest_martial_law_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The petition carries four hundred names, and the names are still being read aloud when the gas order arrives."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_07_advance",
+          "text": "Deploy the gas.",
+          "set_flag": "flag_martial_law_07_advanced"
+        },
+        {
+          "id": "quest_martial_law_07_abort",
+          "text": "Refuse. Carry the petition up.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_08",
+      "display_name": "Martial Law - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A rival political thinker is gaining traction. We are ordered to frame him for a horrific crime and orchestrate a swift, brutal military tribunal.",
+      "prereq_quest_id": "quest_martial_law_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The evidence kit is already assembled, and somebody built the scene, and the scene is better work than the man's writing."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_08_advance",
+          "text": "Plant the evidence.",
+          "set_flag": "flag_martial_law_08_advanced"
+        },
+        {
+          "id": "quest_martial_law_08_abort",
+          "text": "Burn the kit. Warn the man.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_09",
+      "display_name": "Martial Law - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A peaceful strike paralyzes the engine room. We are ordered to seal the blast doors and cut the oxygen until they agree to work.",
+      "prereq_quest_id": "quest_martial_law_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The strikers sit in a ring around the engine, and the engine needs them, and the doors wait on the order, and the order is a hand on the lever."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_09_advance",
+          "text": "Seal the doors. Cut the air.",
+          "set_flag": "flag_martial_law_09_advanced"
+        },
+        {
+          "id": "quest_martial_law_09_abort",
+          "text": "Open the doors. Negotiate.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_martial_law_10",
+      "display_name": "Martial Law - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final purge. The Coalition declares the entire civilian council treasonous. We are ordered to line them up against the blast wall and establish an absolute military junta.",
+      "prereq_quest_id": "quest_martial_law_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The council stands at the blast wall, and they have dressed for it, and the squad waits for the officer, and the officer waits for you."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_martial_law_10_advance",
+          "text": "Give the order.",
+          "set_flag": "flag_martial_law_10_advanced"
+        },
+        {
+          "id": "quest_martial_law_10_abort",
+          "text": "Refuse. Turn the squad around.",
+          "set_flag": "flag_martial_law_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_01",
+      "display_name": "Guinea Pigs - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A sick volunteer comes looking for medicine. The Lamplighters order us to inject them with an untested radioactive isotope to observe the necrosis.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The volunteer has already rolled up his sleeve. He trusts the room, and the room has a notebook, and the isotope is in the tray."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_01_advance",
+          "text": "Inject the isotope.",
+          "set_flag": "flag_guinea_pigs_01_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_01_abort",
+          "text": "Give him the medicine. Lie about the trial.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_lamplighters"
+    },
+    {
+      "id": "quest_guinea_pigs_02",
+      "display_name": "Guinea Pigs - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A desperate debtor offers to work off their debt. We are ordered to surgically remove their kidney without anesthesia to test a new combat coagulant.",
+      "prereq_quest_id": "quest_guinea_pigs_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The debtor signed the form because the form said labor, and the table is set for more than labor."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_02_advance",
+          "text": "Take the kidney.",
+          "set_flag": "flag_guinea_pigs_02_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_02_abort",
+          "text": "Refuse. Give him a shovel instead.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_03",
+      "display_name": "Guinea Pigs - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A captured raider is brought to the lab. We are ordered to expose him to raw gamma radiation until his skin sloughs off, logging his screams in a notebook.",
+      "prereq_quest_id": "quest_guinea_pigs_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The raider has stopped making threats. The notebook lies open to a blank first page, which is somehow the worst part."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_03_advance",
+          "text": "Start the exposure.",
+          "set_flag": "flag_guinea_pigs_03_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_03_abort",
+          "text": "Refuse. Interrogate the old way.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_04",
+      "display_name": "Guinea Pigs - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A political prisoner is handed over. The Lamplighters demand we wire electrodes directly into her cerebral cortex to map pain thresholds.",
+      "prereq_quest_id": "quest_guinea_pigs_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "She asked one question, will it hurt, and the room did not answer, and the silence was the answer."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_04_advance",
+          "text": "Wire the electrodes.",
+          "set_flag": "flag_guinea_pigs_04_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_04_abort",
+          "text": "Refuse. Send her back to the brig.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_05",
+      "display_name": "Guinea Pigs - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A randomly abducted dweller wakes up on the table. We are ordered to replace his healthy lungs with synthetic filters that are known to fail within 48 hours.",
+      "prereq_quest_id": "quest_guinea_pigs_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "He woke on the table asking about his family, and the synthetic lungs come in a box dated forty-eight hours out."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_05_advance",
+          "text": "Make the swap.",
+          "set_flag": "flag_guinea_pigs_05_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_05_abort",
+          "text": "Refuse. Send him back asleep.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_06",
+      "display_name": "Guinea Pigs - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A pregnant woman seeks prenatal care. We are ordered to secretly dose her with mutagenic compounds to see if the fetus develops radiation resistance.",
+      "prereq_quest_id": "quest_guinea_pigs_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "She holds the prenatal chart like something precious, and the dose is in a vial the same color as the vitamins."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_06_advance",
+          "text": "Give her the vial.",
+          "set_flag": "flag_guinea_pigs_06_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_06_abort",
+          "text": "Give her the vitamins. Destroy the dose.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_07",
+      "display_name": "Guinea Pigs - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A healthy child is taken from the nursery. The Lamplighters order us to lock him in a sensory deprivation tank filled with bio-luminescent algae for a month.",
+      "prereq_quest_id": "quest_guinea_pigs_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The tank glows already. The child is small, and has been told it is a game, and the game has a month-long rule."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_07_advance",
+          "text": "Put him in the tank.",
+          "set_flag": "flag_guinea_pigs_07_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_07_abort",
+          "text": "Refuse. Carry him back yourself.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_08",
+      "display_name": "Guinea Pigs - Stage 8",
+      "type": "faction_chain",
+      "briefing": "An entire family unit is placed in a sealed containment cell. We are ordered to introduce a weaponized airborne virus and time how long it takes for them to turn on each other.",
+      "prereq_quest_id": "quest_guinea_pigs_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The family has shared their last meal inside the cell, and the timer is mounted on the wall, and the timer has not started yet."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_08_advance",
+          "text": "Release the virus. Start the timer.",
+          "set_flag": "flag_guinea_pigs_08_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_08_abort",
+          "text": "Refuse. Open the cell.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_09",
+      "display_name": "Guinea Pigs - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A loyal soldier volunteers for a strength enhancement. We are ordered to graft crude cybernetic servos to his spine, permanently paralyzing him in the name of progress.",
+      "prereq_quest_id": "quest_guinea_pigs_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The volunteer wrote a letter to the progress he believes in, and the letter is sincere, and the chair is real."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_09_advance",
+          "text": "Graft the servos.",
+          "set_flag": "flag_guinea_pigs_09_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_09_abort",
+          "text": "Refuse. Tell him the truth.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_guinea_pigs_10",
+      "display_name": "Guinea Pigs - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final experiment. The Lamplighters demand we release a highly contagious, engineered plague into Sector 7 just to test the efficacy of a new air scrubber.",
+      "prereq_quest_id": "quest_guinea_pigs_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Sector 7's scrubber is new and the sector is asleep under it, and the canister is labeled in a hand that did not shake."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_guinea_pigs_10_advance",
+          "text": "Release the plague.",
+          "set_flag": "flag_guinea_pigs_10_advanced"
+        },
+        {
+          "id": "quest_guinea_pigs_10_abort",
+          "text": "Refuse. Report the lab.",
+          "set_flag": "flag_guinea_pigs_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_01",
+      "display_name": "Piracy Mandate - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A small fishing boat is pulling up a rare catch. The Flotilla orders us to ram their hull, steal the fish, and leave them to drown in the freezing black water.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The fishermen are already hauling the net, and the net is heavy, and your hull points at their hull, and the order is confirmed twice."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_01_advance",
+          "text": "Ram. Take the catch.",
+          "set_flag": "flag_piracy_mandate_01_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_01_abort",
+          "text": "Refuse. Signal them to run.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_black_flotilla"
+    },
+    {
+      "id": "quest_piracy_mandate_02",
+      "display_name": "Piracy Mandate - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A cargo barge is disabled. Instead of helping them repair, we are ordered to board, execute the crew, and strip the vessel of every copper wire.",
+      "prereq_quest_id": "quest_piracy_mandate_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The barge has hung a distress flag already, and the flag is white, and your boarding party carries more than tools."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_02_advance",
+          "text": "Board. Strip her.",
+          "set_flag": "flag_piracy_mandate_02_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_02_abort",
+          "text": "Refuse. Tow them instead.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_03",
+      "display_name": "Piracy Mandate - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A refugee ferry is overloaded and sinking. The Flotilla demands we shoot anyone who tries to swim toward our ship, letting the rest go under.",
+      "prereq_quest_id": "quest_piracy_mandate_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The ferry is going down, and the first swimmers are in the water, and they are swimming toward you because you are the ship that looks like help."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_03_advance",
+          "text": "Shoot the swimmers.",
+          "set_flag": "flag_piracy_mandate_03_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_03_abort",
+          "text": "Refuse. Throw lines instead.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_04",
+      "display_name": "Piracy Mandate - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A hospital ship flying a white flag is anchored nearby. We are ordered to fire incendiary rounds into their med-bay and loot the pain meds while they burn.",
+      "prereq_quest_id": "quest_piracy_mandate_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hospital ship's lights are on in the med bay, and you can see them working, and the incendiary crate stands open on your deck."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_04_advance",
+          "text": "Fire the med bay.",
+          "set_flag": "flag_piracy_mandate_04_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_04_abort",
+          "text": "Refuse. Cover the guns.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_05",
+      "display_name": "Piracy Mandate - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A neutral merchant vessel offers fair trade. The Flotilla orders us to accept the trade, then silently drill holes in their hull beneath the waterline as we leave.",
+      "prereq_quest_id": "quest_piracy_mandate_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The merchant shook your captain's hand twice and the trade is done, and the drill waits by the waterline, quiet."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_05_advance",
+          "text": "Drill the hull.",
+          "set_flag": "flag_piracy_mandate_05_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_05_abort",
+          "text": "Refuse. Sail clean.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_06",
+      "display_name": "Piracy Mandate - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A peace envoy's vessel approaches with a treaty. We are ordered to hang the envoy from our highest mast as a warning to the mainland.",
+      "prereq_quest_id": "quest_piracy_mandate_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The envoy's treaty rides in a waterproof case held out with both hands, and the mast is already rigged, which is the part nobody looks at."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_06_advance",
+          "text": "Hang him.",
+          "set_flag": "flag_piracy_mandate_06_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_06_abort",
+          "text": "Refuse. Take the treaty in.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_07",
+      "display_name": "Piracy Mandate - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A rival faction's family cruise is spotted. We are ordered to board, lock the families in the lower decks, and scuttle the ship.",
+      "prereq_quest_id": "quest_piracy_mandate_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The cruise deck has children on it, and you can hear them from here, and the order says rival again, and the word does not fit the sound."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_07_advance",
+          "text": "Lock them below. Scuttle.",
+          "set_flag": "flag_piracy_mandate_07_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_07_abort",
+          "text": "Refuse. Let the ship pass.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_08",
+      "display_name": "Piracy Mandate - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A starving island settlement begs for a supply drop. The Flotilla orders us to drop crates filled with toxic waste into their harbor.",
+      "prereq_quest_id": "quest_piracy_mandate_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The islanders cleared a drop zone and marked it with stones, and the stones are arranged carefully, like people who believe help is coming."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_08_advance",
+          "text": "Drop the waste.",
+          "set_flag": "flag_piracy_mandate_08_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_08_abort",
+          "text": "Refuse. Drop real food if we have it.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_09",
+      "display_name": "Piracy Mandate - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A coastal settlement is recovering from a storm. We are ordered to bombard their seawall, intentionally flooding their fragile hydroponics bays with saltwater.",
+      "prereq_quest_id": "quest_piracy_mandate_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The seawall has been patched since the storm, fresh work visible from the deck, and somebody painted a line on it showing where the water stood."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_09_advance",
+          "text": "Bombard the wall.",
+          "set_flag": "flag_piracy_mandate_09_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_09_abort",
+          "text": "Refuse. Log the town empty.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_piracy_mandate_10",
+      "display_name": "Piracy Mandate - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final piracy. The last free port on the coast is bustling. The Flotilla orders a coordinated night-strike to burn the entire harbor to the waterline and enslave the survivors.",
+      "prereq_quest_id": "quest_piracy_mandate_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The port's lights are coming on as evening settles, and the lights are the point, the last on this coast, and the strike plan starts with those lights going out."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_piracy_mandate_10_advance",
+          "text": "Launch the strike.",
+          "set_flag": "flag_piracy_mandate_10_advanced"
+        },
+        {
+          "id": "quest_piracy_mandate_10_abort",
+          "text": "Refuse. Burn the plan instead.",
+          "set_flag": "flag_piracy_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_01",
+      "display_name": "Iron Slaves - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A captured raider is sentenced to the mines. The Foundry demands we weld a tracking collar to his neck and send him into the deepest, unventilated shaft.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The collar is welded and still warm, and the shaft mouth breathes cold, and the raider has stopped struggling, which is how you know he understands."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_01_advance",
+          "text": "Send him down.",
+          "set_flag": "flag_iron_slaves_01_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_01_abort",
+          "text": "Refuse. Put him on surface duty.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_silent_foundry"
+    },
+    {
+      "id": "quest_iron_slaves_02",
+      "display_name": "Iron Slaves - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A debtor cannot pay his ration tab. We are ordered to seize him and force him to shovel radioactive coal until his lungs bleed.",
+      "prereq_quest_id": "quest_iron_slaves_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The debtor has been handed a shovel, and the coal glows faintly in the dark, and the glow is the part nobody explains to him."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_02_advance",
+          "text": "Put him on the coal.",
+          "set_flag": "flag_iron_slaves_02_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_02_abort",
+          "text": "Refuse. Restructure the debt.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_03",
+      "display_name": "Iron Slaves - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A minor criminal steals a wrench. The Foundry orders us to chain him to the blast furnace, forcing him to endure 140-degree heat for 18 hours a day.",
+      "prereq_quest_id": "quest_iron_slaves_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The furnace reads a hundred and forty at the rail, and the chains hang ready, and the wrench sits on the foreman's desk, the wrench that started this."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_03_advance",
+          "text": "Chain him up.",
+          "set_flag": "flag_iron_slaves_03_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_03_abort",
+          "text": "Refuse. Work the wrench off him instead.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_04",
+      "display_name": "Iron Slaves - Stage 4",
+      "type": "faction_chain",
+      "briefing": "Political dissidents are protesting the harsh conditions. We are ordered to round them up and permanently assign them to the toxic slag-clearing detail.",
+      "prereq_quest_id": "quest_iron_slaves_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The dissidents are still chanting the chant, and the slag detail's gear is piled on the cart, and the gear is not enough, which is the point."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_04_advance",
+          "text": "March them to the slag.",
+          "set_flag": "flag_iron_slaves_04_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_04_abort",
+          "text": "Refuse. Hear the grievance.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_05",
+      "display_name": "Iron Slaves - Stage 5",
+      "type": "faction_chain",
+      "briefing": "Surface dwellers are abducted by scouts. We are ordered to blind them so they can never find their way out of the subterranean labyrinth.",
+      "prereq_quest_id": "quest_iron_slaves_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The surface dweller still believes he was hired. He keeps asking about the wages, and the wages are real, and the blinding is not in the contract."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_05_advance",
+          "text": "Blind him.",
+          "set_flag": "flag_iron_slaves_05_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_05_abort",
+          "text": "Refuse. Send him back topside.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_06",
+      "display_name": "Iron Slaves - Stage 6",
+      "type": "faction_chain",
+      "briefing": "Sick workers are failing to meet the iron quota. The Foundry demands we inject them with aggressive stimulants that will stop their hearts within a week.",
+      "prereq_quest_id": "quest_iron_slaves_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The stimulant comes in ampoules, one per worker, and the workers line up believing it is medicine, and the line is wrong."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_06_advance",
+          "text": "Inject the line.",
+          "set_flag": "flag_iron_slaves_06_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_06_abort",
+          "text": "Refuse. Mark the quota missed.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_07",
+      "display_name": "Iron Slaves - Stage 7",
+      "type": "faction_chain",
+      "briefing": "Elderly laborers collapse from exhaustion. We are ordered to throw them out into the frozen ash rather than waste calories feeding the unproductive.",
+      "prereq_quest_id": "quest_iron_slaves_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The elderly worker is still breathing and his hands are still shaped for work, and the ash drift stands open, and the order uses the word calories."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_07_advance",
+          "text": "Drag him out.",
+          "set_flag": "flag_iron_slaves_07_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_07_abort",
+          "text": "Refuse. Carry him to the infirmary.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_08",
+      "display_name": "Iron Slaves - Stage 8",
+      "type": "faction_chain",
+      "briefing": "Child laborers are small enough to fit in the ore crushers. We are ordered to send them in while the machines are still running to clear jams.",
+      "prereq_quest_id": "quest_iron_slaves_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The crusher is jammed and still turning slow, and the child is small enough, and the room waits for someone to say the part nobody wants to say."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_08_advance",
+          "text": "Send the child in.",
+          "set_flag": "flag_iron_slaves_08_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_08_abort",
+          "text": "Refuse. Shut the crusher down.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_09",
+      "display_name": "Iron Slaves - Stage 9",
+      "type": "faction_chain",
+      "briefing": "Loyal but exhausted citizens beg for a day of rest. The Foundry demands we double their quota and execute the lowest performer at the end of the shift.",
+      "prereq_quest_id": "quest_iron_slaves_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The rest petition sits on the foreman's desk with the new quota sheet under it, and the sheets are the same size, which is the cruelty of it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_09_advance",
+          "text": "Double it. Pick the lowest.",
+          "set_flag": "flag_iron_slaves_09_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_09_abort",
+          "text": "Refuse. Grant the day.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_slaves_10",
+      "display_name": "Iron Slaves - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final tithe. The Foundry declares that everyone unable to pay a massive new iron tax will be forcibly marched into the deep mines and sealed inside forever.",
+      "prereq_quest_id": "quest_iron_slaves_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The tax list is longer than the Foundry expected and still growing, and the mine doors stand open, and the doors were built to close."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_slaves_10_advance",
+          "text": "March them in. Seal it.",
+          "set_flag": "flag_iron_slaves_10_advanced"
+        },
+        {
+          "id": "quest_iron_slaves_10_abort",
+          "text": "Refuse. Tear the tax list down.",
+          "set_flag": "flag_iron_slaves_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_01",
+      "display_name": "Quarantine Purge - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A sailor on a scout vessel coughs twice. The Fleet orders us to lock him in the brig and vent the atmosphere, suffocating him to prevent potential spread.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The sailor coughed twice and apologized twice, and the brig door stands open, and the apology is the part that sticks in your throat."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_01_advance",
+          "text": "Vent the brig.",
+          "set_flag": "flag_quarantine_purge_01_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_01_abort",
+          "text": "Refuse. Quarantine him with air.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_the_fleet"
+    },
+    {
+      "id": "quest_quarantine_purge_02",
+      "display_name": "Quarantine Purge - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A ship reports a mild fever spreading among the crew. We are ordered to fire a warning shot across their bow and deny them port entry until they all die.",
+      "prereq_quest_id": "quest_quarantine_purge_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The sick ship flies the yellow flag, and the flag hangs steady, and the harbor guns are trained on it, and the guns are for discouragement, and the discouragement is terminal."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_02_advance",
+          "text": "Deny them port.",
+          "set_flag": "flag_quarantine_purge_02_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_02_abort",
+          "text": "Refuse. Send medicine out.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_03",
+      "display_name": "Quarantine Purge - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A vessel of refugees arrives, begging for antibiotics. The Fleet demands we spray their deck with liquid fire rather than risk contamination.",
+      "prereq_quest_id": "quest_quarantine_purge_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The refugees hold up their sick for you to see, one by one, like a petition, and the flame tanks are already pressurized."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_03_advance",
+          "text": "Burn the deck.",
+          "set_flag": "flag_quarantine_purge_03_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_03_abort",
+          "text": "Refuse. Pass the antibiotics out.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_04",
+      "display_name": "Quarantine Purge - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A supply ship returns from a red zone with critical food. Because they broke quarantine protocols, we are ordered to sink the ship and the food with it.",
+      "prereq_quest_id": "quest_quarantine_purge_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The supply ship's manifest says food, and the crew is mid-decontamination, and the order arrives before they finish, and the order does not wait."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_04_advance",
+          "text": "Sink the ship.",
+          "set_flag": "flag_quarantine_purge_04_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_04_abort",
+          "text": "Refuse. Let them finish decon.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_05",
+      "display_name": "Quarantine Purge - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A loyalist ship has one sick crewman hidden below deck. We are ordered to board, execute the captain for covering it up, and burn the crewman alive.",
+      "prereq_quest_id": "quest_quarantine_purge_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The captain confessed on deck, and the confession was for the crewman, and the crewman is fever-blind already, and the order reads both names."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_05_advance",
+          "text": "Carry out both.",
+          "set_flag": "flag_quarantine_purge_05_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_05_abort",
+          "text": "Refuse. Maroon the sickness, not the men.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_06",
+      "display_name": "Quarantine Purge - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A medical transport is carrying plague victims to a research facility. The Fleet orders us to intercept and destroy the transport with torpedoes.",
+      "prereq_quest_id": "quest_quarantine_purge_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The transport flies the medical flag and the research station is waiting for her, and the torpedo tubes are open, and the tubes do not care about the flag."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_06_advance",
+          "text": "Fire the torpedoes.",
+          "set_flag": "flag_quarantine_purge_06_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_06_abort",
+          "text": "Refuse. Escort her in.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_07",
+      "display_name": "Quarantine Purge - Stage 7",
+      "type": "faction_chain",
+      "briefing": "An allied frigate requests docking clearance. A single rat is spotted on their mooring line. We are ordered to sever the line and open fire.",
+      "prereq_quest_id": "quest_quarantine_purge_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The rat is on the mooring line, and the frigate's crew is laughing at it already, and your guns are not laughing, and the frigate has not noticed yet."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_07_advance",
+          "text": "Cut the line. Open fire.",
+          "set_flag": "flag_quarantine_purge_07_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_07_abort",
+          "text": "Refuse. Burn the line. Wave them in.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_08",
+      "display_name": "Quarantine Purge - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A passenger ferry is stranded on a reef. Because we cannot verify their medical status, the Fleet orders us to leave them there to starve.",
+      "prereq_quest_id": "quest_quarantine_purge_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The ferry's passengers have lined the rail since dawn, and the line is orderly, and the orderliness is the part that breaks your heart."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_08_advance",
+          "text": "Leave them on the reef.",
+          "set_flag": "flag_quarantine_purge_08_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_08_abort",
+          "text": "Refuse. Send boats out.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_09",
+      "display_name": "Quarantine Purge - Stage 9",
+      "type": "faction_chain",
+      "briefing": "An entire coastal town reports an outbreak of the ash-lung. We are ordered to blockade the harbor and shell the town until nothing moves.",
+      "prereq_quest_id": "quest_quarantine_purge_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The town flies the sickness flag, and under the flag the town is coughing, and the ships are forming up, and the formation is for shelling."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_09_advance",
+          "text": "Shell the town.",
+          "set_flag": "flag_quarantine_purge_09_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_09_abort",
+          "text": "Refuse. Blockade with doctors, not guns.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_quarantine_purge_10",
+      "display_name": "Quarantine Purge - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final purge. The Fleet declares absolute zero-tolerance. We are ordered to systematically board every civilian vessel in the sector and execute anyone with an elevated temperature.",
+      "prereq_quest_id": "quest_quarantine_purge_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The boarding parties are loading, and the thermometers are being issued with the rifles, and the pairing is the whole policy."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_quarantine_purge_10_advance",
+          "text": "Board. Check. Execute.",
+          "set_flag": "flag_quarantine_purge_10_advanced"
+        },
+        {
+          "id": "quest_quarantine_purge_10_abort",
+          "text": "Refuse. Check without the rifles.",
+          "set_flag": "flag_quarantine_purge_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_01",
+      "display_name": "Assimilation Protocol - Stage 1",
+      "type": "faction_chain",
+      "briefing": "Local slang is creeping into the bunker's vocabulary. The Compact orders us to publicly flog anyone caught using non-approved terminology.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The first offender is a dock worker who called the tide by its local name, and he does not understand the charge, and that is the part the flogging is for."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_01_advance",
+          "text": "Flog him.",
+          "set_flag": "flag_assimilation_protocol_01_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_01_abort",
+          "text": "Refuse. Log the word as accepted.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_meridian"
+    },
+    {
+      "id": "quest_assimilation_protocol_02",
+      "display_name": "Assimilation Protocol - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A pre-war flag is found hanging in a dormitory. We are ordered to burn the flag and permanently reassign the dormitory to the waste processing sector.",
+      "prereq_quest_id": "quest_assimilation_protocol_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The flag is old, and someone kept it folded for years, and the folding is the part that argues against the burning."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_02_advance",
+          "text": "Burn it. Reassign the dormitory.",
+          "set_flag": "flag_assimilation_protocol_02_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_02_abort",
+          "text": "Refuse. Confiscate it and file it.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_03",
+      "display_name": "Assimilation Protocol - Stage 3",
+      "type": "faction_chain",
+      "briefing": "An independent radio station is broadcasting old music. The Compact demands we smash their transmitter and deafen the DJ.",
+      "prereq_quest_id": "quest_assimilation_protocol_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The station is playing something with strings in it, and the whole frequency is gentler for it, and the wrecking crew waits for the song to end."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_03_advance",
+          "text": "Smash it. Deafen him.",
+          "set_flag": "flag_assimilation_protocol_03_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_03_abort",
+          "text": "Refuse. Let the song finish. Then talk.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_04",
+      "display_name": "Assimilation Protocol - Stage 4",
+      "type": "faction_chain",
+      "briefing": "Unapproved books are found in a hidden library. We are ordered to incinerate the books and force the readers to watch the ashes burn.",
+      "prereq_quest_id": "quest_assimilation_protocol_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The books are in a pile, and the readers were brought to watch, and one of them reads the titles as they stack, and she is memorizing them."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_04_advance",
+          "text": "Burn the pile.",
+          "set_flag": "flag_assimilation_protocol_04_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_04_abort",
+          "text": "Refuse. Seal the library instead.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_05",
+      "display_name": "Assimilation Protocol - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A native religious gathering is discovered. We are ordered to raid the meeting, smash their icons, and force them to swear allegiance to the Overseer.",
+      "prereq_quest_id": "quest_assimilation_protocol_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The icons are carved from scrap, winters of work, and the oath forms are printed already, and the printing is newer than the carving."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_05_advance",
+          "text": "Smash the icons.",
+          "set_flag": "flag_assimilation_protocol_05_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_05_abort",
+          "text": "Refuse. Let them keep their winters.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_06",
+      "display_name": "Assimilation Protocol - Stage 6",
+      "type": "faction_chain",
+      "briefing": "Dissenting teachers are secretly educating children about democracy. We are ordered to arrest the teachers and send the children to re-education camps.",
+      "prereq_quest_id": "quest_assimilation_protocol_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The classroom wall still has the lesson on it, and the children are being lined up outside, and the lesson is visible from the line."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_06_advance",
+          "text": "Arrest the teachers.",
+          "set_flag": "flag_assimilation_protocol_06_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_06_abort",
+          "text": "Refuse. Close the room. Keep the teachers.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_07",
+      "display_name": "Assimilation Protocol - Stage 7",
+      "type": "faction_chain",
+      "briefing": "Non-compliant parents refuse to hand their children over to the state. The Compact orders us to break down their doors and take the children by force.",
+      "prereq_quest_id": "quest_assimilation_protocol_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The first door is closed, and behind it someone sings to a child, and the breach team waits, and the singing does not stop."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_07_advance",
+          "text": "Break the door.",
+          "set_flag": "flag_assimilation_protocol_07_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_07_abort",
+          "text": "Refuse. Report the block empty.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_08",
+      "display_name": "Assimilation Protocol - Stage 8",
+      "type": "faction_chain",
+      "briefing": "Local leadership attempts to negotiate terms of integration. We are ordered to assassinate them and replace them with loyalist puppets.",
+      "prereq_quest_id": "quest_assimilation_protocol_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The leaders brought their terms in writing, and the writing is hopeful, and the hope is the part that gets them killed."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_08_advance",
+          "text": "Carry out the assassinations.",
+          "set_flag": "flag_assimilation_protocol_08_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_08_abort",
+          "text": "Refuse. Take the terms seriously.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_09",
+      "display_name": "Assimilation Protocol - Stage 9",
+      "type": "faction_chain",
+      "briefing": "The concept of independence is spreading. We are ordered to implement a mandatory daily pledge of absolute submission, penalizing any hesitation.",
+      "prereq_quest_id": "quest_assimilation_protocol_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The pledge hangs everywhere, and the first recital is at dawn, and the settlement recites, and hesitation is being watched, and the watching is the point."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_09_advance",
+          "text": "Enforce the pledge.",
+          "set_flag": "flag_assimilation_protocol_09_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_09_abort",
+          "text": "Refuse. Let hesitation stand.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_assimilation_protocol_10",
+      "display_name": "Assimilation Protocol - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final assimilation. The Compact orders the absolute cultural eradication of Sector 4. We are to wipe all their data banks, burn their archives, and mandate a new state-approved language.",
+      "prereq_quest_id": "quest_assimilation_protocol_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Sector 4's archives fit in one room, and the room is full of people who came to stand in it, and they are not leaving, and they have been asked to leave."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_assimilation_protocol_10_advance",
+          "text": "Erase the sector.",
+          "set_flag": "flag_assimilation_protocol_10_advanced"
+        },
+        {
+          "id": "quest_assimilation_protocol_10_abort",
+          "text": "Refuse. Stand in the room with them.",
+          "set_flag": "flag_assimilation_protocol_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_01",
+      "display_name": "Storm Cult - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A disbeliever scoffs at the Cult's rituals. The Tempest orders us to strip him naked and tie him to a pole outside the airlock during a minor dust storm.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The dust storm is small, and the pole is tall, and the disbeliever has stopped laughing, and the rope is in a knot somebody else tied."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_01_advance",
+          "text": "Tie him up.",
+          "set_flag": "flag_storm_cult_01_advanced"
+        },
+        {
+          "id": "quest_storm_cult_01_abort",
+          "text": "Refuse. Bring him inside.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_the_tempest"
+    },
+    {
+      "id": "quest_storm_cult_02",
+      "display_name": "Storm Cult - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A reluctant initiate refuses to drink the radioactive 'holy water'. We are ordered to hold him down and pour it down his throat.",
+      "prereq_quest_id": "quest_storm_cult_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The holy water glows faintly in the cup, and the glow is the part the initiate noticed, and the two men holding him have noticed that he noticed."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_02_advance",
+          "text": "Make him drink.",
+          "set_flag": "flag_storm_cult_02_advanced"
+        },
+        {
+          "id": "quest_storm_cult_02_abort",
+          "text": "Refuse. Pour the cup out.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_03",
+      "display_name": "Storm Cult - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A captured scientist tries to explain the storms are just weather. The Cult demands we strap him to a lightning rod on the highest ridge.",
+      "prereq_quest_id": "quest_storm_cult_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The scientist brought his charts, and the charts are right, and the ridge is high, and the rod is waiting for a prophet instead of proof."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_03_advance",
+          "text": "Strap him to the rod.",
+          "set_flag": "flag_storm_cult_03_advanced"
+        },
+        {
+          "id": "quest_storm_cult_03_abort",
+          "text": "Refuse. Let him speak instead.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_04",
+      "display_name": "Storm Cult - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A weak elder can no longer chant the prayers. We are ordered to throw her out into the freezing ash because she is 'no longer favored by the gale'.",
+      "prereq_quest_id": "quest_storm_cult_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The elder chants with her lips only now, and the lips are the part the cult noticed, and the gale does not care about lips."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_04_advance",
+          "text": "Carry her out.",
+          "set_flag": "flag_storm_cult_04_advanced"
+        },
+        {
+          "id": "quest_storm_cult_04_abort",
+          "text": "Refuse. Chant for her.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_05",
+      "display_name": "Storm Cult - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A doubting child asks why the sky is green. We are ordered to force the child to stare into the radioactive sun until their retinas burn.",
+      "prereq_quest_id": "quest_storm_cult_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The child asked the question out loud, and the room went quiet, and the quiet is the part that is being punished."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_05_advance",
+          "text": "Hold him to the sun.",
+          "set_flag": "flag_storm_cult_05_advanced"
+        },
+        {
+          "id": "quest_storm_cult_05_abort",
+          "text": "Refuse. Answer the question instead.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_06",
+      "display_name": "Storm Cult - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A rival priest preaches a doctrine of science and logic. The Tempest demands we cut out his tongue and string him up as a wind chime.",
+      "prereq_quest_id": "quest_storm_cult_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The rival priest has been speaking calmly this whole time, and the calm is the part they want to stop."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_06_advance",
+          "text": "Silence him.",
+          "set_flag": "flag_storm_cult_06_advanced"
+        },
+        {
+          "id": "quest_storm_cult_06_abort",
+          "text": "Refuse. Let the words stand.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_07",
+      "display_name": "Storm Cult - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A family of non-believers hides in their bunker. We are ordered to breach their seals and let the toxic fog seep into their living quarters.",
+      "prereq_quest_id": "quest_storm_cult_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The family's seals are good, somebody maintained them, and the fog is settling into the valley, and the breach kit is quiet in the dark."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_07_advance",
+          "text": "Breach the seals.",
+          "set_flag": "flag_storm_cult_07_advanced"
+        },
+        {
+          "id": "quest_storm_cult_07_abort",
+          "text": "Refuse. Mark the bunker converted.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_08",
+      "display_name": "Storm Cult - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A neutral merchant refuses to pay the storm tithe. We are ordered to sabotage his crawler, leaving him stranded in the path of a massive ash blizzard.",
+      "prereq_quest_id": "quest_storm_cult_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The merchant's crawler is parked for the night, and the blizzard is forecast, and the sabotage is a small job, and the smallness is the cruelty."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_08_advance",
+          "text": "Sabotage the crawler.",
+          "set_flag": "flag_storm_cult_08_advanced"
+        },
+        {
+          "id": "quest_storm_cult_08_abort",
+          "text": "Refuse. Warn him to move on.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_09",
+      "display_name": "Storm Cult - Stage 9",
+      "type": "faction_chain",
+      "briefing": "An entire unaligned bunker refuses to convert. The Cult orders us to strategically detonate explosives to collapse their ventilation shafts during a rad-hurricane.",
+      "prereq_quest_id": "quest_storm_cult_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The bunker's vents are marked on the map, and the map is precise, and the storm is coming, and the timing is the whole plan."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_09_advance",
+          "text": "Blow the vents.",
+          "set_flag": "flag_storm_cult_09_advanced"
+        },
+        {
+          "id": "quest_storm_cult_09_abort",
+          "text": "Refuse. Leak the timing to them.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_cult_10",
+      "display_name": "Storm Cult - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final sacrifice. The Tempest declares a Category 5 rad-hurricane is a god demanding a mass offering. We are ordered to march one hundred unwilling civilians out into the howling vortex.",
+      "prereq_quest_id": "quest_storm_cult_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hundred have been gathered, and the vortex is audible now, and the priests are chanting, and the chanting is to keep the march moving."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_cult_10_advance",
+          "text": "March them in.",
+          "set_flag": "flag_storm_cult_10_advanced"
+        },
+        {
+          "id": "quest_storm_cult_10_abort",
+          "text": "Refuse. Break the line. Scatter them.",
+          "set_flag": "flag_storm_cult_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_01",
+      "display_name": "Scrap Network - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A broken water pump is killing a neighboring slum. The Guild realizes we have the only spare gear. We must strip it from our own secondary pump to save them.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The slum's pump is silent, and you can hear the silence from here, and our secondary pump runs, and the gear is the same part."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_01_advance",
+          "text": "Strip our gear. Send it over.",
+          "set_flag": "flag_scrap_network_01_advanced"
+        },
+        {
+          "id": "quest_scrap_network_01_abort",
+          "text": "Refuse. Our pump keeps the barracks alive.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_scavenger_guild"
+    },
+    {
+      "id": "quest_scrap_network_02",
+      "display_name": "Scrap Network - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A failing generator plunges an orphanage into freezing darkness. We are asked to cannibalize our own heating coils, plunging our barracks into the cold, to restore their heat.",
+      "prereq_quest_id": "quest_scrap_network_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The orphanage's windows are dark, and the cold is visible, and our heating coils are warm, and the warmth is what we would give."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_02_advance",
+          "text": "Pull the coils. Give them heat.",
+          "set_flag": "flag_scrap_network_02_advanced"
+        },
+        {
+          "id": "quest_scrap_network_02_abort",
+          "text": "Refuse. Our barracks freeze first.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_03",
+      "display_name": "Scrap Network - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A ruined hospital lacks basic structural support. We must dismantle the armored plating of our own perimeter wall to provide them with load-bearing steel.",
+      "prereq_quest_id": "quest_scrap_network_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hospital wall is shored with timbers, and the timbers are bending, and our perimeter plating is steel, and the steel is ours."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_03_advance",
+          "text": "Strip our plating.",
+          "set_flag": "flag_scrap_network_03_advanced"
+        },
+        {
+          "id": "quest_scrap_network_03_abort",
+          "text": "Refuse. Our wall comes first.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_04",
+      "display_name": "Scrap Network - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A collapsed school traps dozens of children. We must risk our best digging equipment, knowing it will likely be crushed in the unstable rubble, to dig them out.",
+      "prereq_quest_id": "quest_scrap_network_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The school rubble is settling, and the children are under it, and our digger is the only machine that can reach them, and the rubble may take the digger too."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_04_advance",
+          "text": "Send the digger in.",
+          "set_flag": "flag_scrap_network_04_advanced"
+        },
+        {
+          "id": "quest_scrap_network_04_abort",
+          "text": "Refuse. Dig by hand instead.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_05",
+      "display_name": "Scrap Network - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A dying hydroponics bay in a rival bunker threatens them with starvation. We must donate our ultra-rare UV bulbs, cutting our own crop yield in half.",
+      "prereq_quest_id": "quest_scrap_network_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Their hydroponics bay is going dark by rows, and the rows are food, and our UV bulbs are rare, and rare is the word for what we would give."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_05_advance",
+          "text": "Send the bulbs.",
+          "set_flag": "flag_scrap_network_05_advanced"
+        },
+        {
+          "id": "quest_scrap_network_05_abort",
+          "text": "Refuse. Our crops come first.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_06",
+      "display_name": "Scrap Network - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A freezing dormitory begs for insulation. We are asked to tear the thermal lining out of our own winter coats and hand it over.",
+      "prereq_quest_id": "quest_scrap_network_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The dormitory has frost on the inside walls, and our coats are warm, and the lining is the part that makes them warm."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_06_advance",
+          "text": "Rip out our linings.",
+          "set_flag": "flag_scrap_network_06_advanced"
+        },
+        {
+          "id": "quest_scrap_network_06_abort",
+          "text": "Refuse. Winter is coming for us too.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_07",
+      "display_name": "Scrap Network - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A broken radio tower isolates a peaceful settlement from raider warnings. We must climb the irradiated peak during a storm to install our only spare transmitter.",
+      "prereq_quest_id": "quest_scrap_network_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The radio tower stands dark on the peak, and the storm is moving in, and our spare transmitter is the only one, and the peak is hot."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_07_advance",
+          "text": "Make the climb.",
+          "set_flag": "flag_scrap_network_07_advanced"
+        },
+        {
+          "id": "quest_scrap_network_07_abort",
+          "text": "Refuse. The peak can wait.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_08",
+      "display_name": "Scrap Network - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A toxic air filter is choking a refugee camp. We must pull the primary scrubber from our own airlock, risking our own lungs, to give them a breath of clean air.",
+      "prereq_quest_id": "quest_scrap_network_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The camp's air is visible, and the visibility is the problem, and our scrubber is the primary, and primary means ours."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_08_advance",
+          "text": "Pull our scrubber. Give them air.",
+          "set_flag": "flag_scrap_network_08_advanced"
+        },
+        {
+          "id": "quest_scrap_network_08_abort",
+          "text": "Refuse. Our lungs come first.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_09",
+      "display_name": "Scrap Network - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A breached airlock traps a family in a toxic zone. We must use our last remaining welding fuel to seal their breach, leaving us unable to repair our own bulkheads.",
+      "prereq_quest_id": "quest_scrap_network_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The family is sealed on the toxic side, and the breach is small, and our welding fuel is the last, and last is the word for what it will take."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_09_advance",
+          "text": "Burn the fuel. Seal their breach.",
+          "set_flag": "flag_scrap_network_09_advanced"
+        },
+        {
+          "id": "quest_scrap_network_09_abort",
+          "text": "Refuse. Our bulkheads need the fuel.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scrap_network_10",
+      "display_name": "Scrap Network - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The central power grid of the region can be restored, saving thousands. But it requires permanently hardwiring our bunker's core reactor into the grid, leaving us completely powerless.",
+      "prereq_quest_id": "quest_scrap_network_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The grid is drawn on the map, and the map ends at our reactor, and the reactor is ours, and the lights would be everyone else's."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scrap_network_10_advance",
+          "text": "Wire it in. Go dark.",
+          "set_flag": "flag_scrap_network_10_advanced"
+        },
+        {
+          "id": "quest_scrap_network_10_abort",
+          "text": "Refuse. Keep our own lights.",
+          "set_flag": "flag_scrap_network_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_01",
+      "display_name": "Broken Spears - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A bullied farm is being extorted by our former brothers. We must stand unarmed between the raiders and the farmers, taking the beatings meant for them.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The raiders are our former brothers, and the brothers know us, and the farm is behind us, and we are unarmed, which is the point."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_01_advance",
+          "text": "Stand between. Take the beating.",
+          "set_flag": "flag_broken_spears_01_advanced"
+        },
+        {
+          "id": "quest_broken_spears_01_abort",
+          "text": "Refuse. Arm ourselves first.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_iron_raiders"
+    },
+    {
+      "id": "quest_broken_spears_02",
+      "display_name": "Broken Spears - Stage 2",
+      "type": "faction_chain",
+      "briefing": "An extorted merchant is about to lose his livelihood. We must secretly escort his caravan through raider territory, risking execution as traitors if caught.",
+      "prereq_quest_id": "quest_broken_spears_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The merchant's caravan is loaded, and the route runs through our old territory, and the territory knows us, and the knowing is the risk."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_02_advance",
+          "text": "Escort him through.",
+          "set_flag": "flag_broken_spears_02_advanced"
+        },
+        {
+          "id": "quest_broken_spears_02_abort",
+          "text": "Refuse. The territory means death.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_03",
+      "display_name": "Broken Spears - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A kidnapped family is held for ransom. We must raid our own former camp, stealing them back in the dead of night and making permanent enemies of the warlords.",
+      "prereq_quest_id": "quest_broken_spears_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Our old camp is where it always was, and the family is inside it, and the camp belongs to our former brothers, and the brothers sleep lightly."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_03_advance",
+          "text": "Steal them back.",
+          "set_flag": "flag_broken_spears_03_advanced"
+        },
+        {
+          "id": "quest_broken_spears_03_abort",
+          "text": "Refuse. Negotiate the ransom instead.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_04",
+      "display_name": "Broken Spears - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A besieged outpost is running out of ammo. We must draw the raider fire onto ourselves, sprinting across open ground to deliver our last magazines to the defenders.",
+      "prereq_quest_id": "quest_broken_spears_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The outpost fires slow now, and the slowness means they are out, and the ground between is open, and the open is where they will shoot."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_04_advance",
+          "text": "Run the magazines across.",
+          "set_flag": "flag_broken_spears_04_advanced"
+        },
+        {
+          "id": "quest_broken_spears_04_abort",
+          "text": "Refuse. Wait for dark.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_05",
+      "display_name": "Broken Spears - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A starving refugee camp is targeted for a slave raid. We must build a barricade with our own bodies, refusing to fire back even as they shoot us down.",
+      "prereq_quest_id": "quest_broken_spears_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The raiders come for the camp, and the camp is behind us, and our bodies are the barricade, and the barricade does not shoot back."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_05_advance",
+          "text": "Hold the line. No return fire.",
+          "set_flag": "flag_broken_spears_05_advanced"
+        },
+        {
+          "id": "quest_broken_spears_05_abort",
+          "text": "Refuse. Fire first.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_06",
+      "display_name": "Broken Spears - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A hospital is under attack by scavengers looking for drugs. We must lock ourselves outside the blast doors with only melee weapons to hold the horde off.",
+      "prereq_quest_id": "quest_broken_spears_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hospital door is locked from the inside, and the scavengers are outside, and we are outside with them, and our weapons are close-quarters."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_06_advance",
+          "text": "Hold the door.",
+          "set_flag": "flag_broken_spears_06_advanced"
+        },
+        {
+          "id": "quest_broken_spears_06_abort",
+          "text": "Refuse. Fall back inside.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_07",
+      "display_name": "Broken Spears - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A peaceful monastery is targeted for burning. We must walk directly into the flames to pull their sacred texts and elders out, suffering horrific burns.",
+      "prereq_quest_id": "quest_broken_spears_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The monastery is burning, and the texts and the elders are inside, and the fire is hot, and the walking-in is the cost."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_07_advance",
+          "text": "Walk into the fire.",
+          "set_flag": "flag_broken_spears_07_advanced"
+        },
+        {
+          "id": "quest_broken_spears_07_abort",
+          "text": "Refuse. Fight the fire from outside.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_08",
+      "display_name": "Broken Spears - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A rival raider's slaves are being marched to a quarry. We must ambush the convoy, knowing we are hopelessly outnumbered, to break their chains.",
+      "prereq_quest_id": "quest_broken_spears_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The convoy outnumbers us, and the slaves wear chains, and the odds are bad, and the chains are worse."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_08_advance",
+          "text": "Ambush the convoy. Break the chains.",
+          "set_flag": "flag_broken_spears_08_advanced"
+        },
+        {
+          "id": "quest_broken_spears_08_abort",
+          "text": "Refuse. Shadow them. Wait for better odds.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_09",
+      "display_name": "Broken Spears - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A defenseless caravan is caught in a crossfire. We must throw ourselves onto the incoming grenades to shield the children hiding under the carts.",
+      "prereq_quest_id": "quest_broken_spears_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The children are under the carts, and the grenades are coming, and the distance is short, and the shortness is all the time there is."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_09_advance",
+          "text": "Throw ourselves on them.",
+          "set_flag": "flag_broken_spears_09_advanced"
+        },
+        {
+          "id": "quest_broken_spears_09_abort",
+          "text": "Refuse. Drag the carts over instead.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_broken_spears_10",
+      "display_name": "Broken Spears - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final redemption. A massive raider army marches on the last independent town. We must plant ourselves in the narrow canyon pass, ready to die to the last man to buy the town time to evacuate.",
+      "prereq_quest_id": "quest_broken_spears_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The army comes, and the canyon is narrow, and the narrowness is our advantage, and the advantage is all of us."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_broken_spears_10_advance",
+          "text": "Plant ourselves. Hold the pass.",
+          "set_flag": "flag_broken_spears_10_advanced"
+        },
+        {
+          "id": "quest_broken_spears_10_abort",
+          "text": "Refuse. Evacuate with the town.",
+          "set_flag": "flag_broken_spears_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_01",
+      "display_name": "Free Wells - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A thirsty traveler collapses at our gates. The Barons forbid charity. We must secretly bleed our own personal canteens dry to revive him.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The traveler is at our gate, and the gate is ours, and our canteens are full, and the fullness is what he needs."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_01_advance",
+          "text": "Empty the canteens.",
+          "set_flag": "flag_free_wells_01_advanced"
+        },
+        {
+          "id": "quest_free_wells_01_abort",
+          "text": "Refuse. The Barons are watching.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_hydro_barons"
+    },
+    {
+      "id": "quest_free_wells_02",
+      "display_name": "Free Wells - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A dying farm's crops are turning to dust. We must risk execution by manually overriding the pipeline valves, flooding their fields while draining our own luxury reserves.",
+      "prereq_quest_id": "quest_free_wells_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The farm's crops are turning to dust, and the pipeline valves are right there, and our reserves are luxury, and the luxury is what we would drain."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_02_advance",
+          "text": "Override the valves.",
+          "set_flag": "flag_free_wells_02_advanced"
+        },
+        {
+          "id": "quest_free_wells_02_abort",
+          "text": "Refuse. Execution is the price.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_03",
+      "display_name": "Free Wells - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A struggling hospital cannot sanitize its tools. We must haul heavy barrels of pure water on our backs across sniper-alley to deliver them anonymously.",
+      "prereq_quest_id": "quest_free_wells_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Sniper alley lies between us and the hospital, and the barrels are heavy, and the heaviness is what will slow us, and the slowness is where they shoot."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_03_advance",
+          "text": "Carry the barrels.",
+          "set_flag": "flag_free_wells_03_advanced"
+        },
+        {
+          "id": "quest_free_wells_03_abort",
+          "text": "Refuse. Wait for night.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_04",
+      "display_name": "Free Wells - Stage 4",
+      "type": "faction_chain",
+      "briefing": "An orphanage is drinking irradiated runoff. We must swap their toxic barrels with our pristine ones, knowing we will have to drink the runoff ourselves.",
+      "prereq_quest_id": "quest_free_wells_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The orphanage's barrels are toxic, and ours are clean, and the swap is simple, and the drinking afterward is ours."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_04_advance",
+          "text": "Swap the barrels. Drink the runoff.",
+          "set_flag": "flag_free_wells_04_advanced"
+        },
+        {
+          "id": "quest_free_wells_04_abort",
+          "text": "Refuse. Find another way.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_05",
+      "display_name": "Free Wells - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A neutral outpost is cut off from the aquifer. We must spend weeks digging a clandestine trench by hand, breaking our backs to connect them to the main line.",
+      "prereq_quest_id": "quest_free_wells_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The outpost is dry, and the aquifer is far, and our backs are what we will dig with, and the weeks are what it will take."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_05_advance",
+          "text": "Dig the trench.",
+          "set_flag": "flag_free_wells_05_advanced"
+        },
+        {
+          "id": "quest_free_wells_05_abort",
+          "text": "Refuse. Our backs cannot take the weeks.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_06",
+      "display_name": "Free Wells - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A rival faction is dying of a waterborne plague. We must cross enemy lines completely unarmed to deliver the massive industrial filters they need to survive.",
+      "prereq_quest_id": "quest_free_wells_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The rival faction is dying, and the filters are heavy, and the crossing is unarmed, and the unarmed part is the point."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_06_advance",
+          "text": "Cross with the filters.",
+          "set_flag": "flag_free_wells_06_advanced"
+        },
+        {
+          "id": "quest_free_wells_06_abort",
+          "text": "Refuse. They would shoot us on sight.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_07",
+      "display_name": "Free Wells - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A scorched settlement begs for a single drop. We must drive a hijacked water tanker through a blazing forest fire to reach them before they burn.",
+      "prereq_quest_id": "quest_free_wells_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The settlement is burning, and the tanker is water, and the forest between is fire, and the fire is what we will drive through."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_07_advance",
+          "text": "Drive through the fire.",
+          "set_flag": "flag_free_wells_07_advanced"
+        },
+        {
+          "id": "quest_free_wells_07_abort",
+          "text": "Refuse. Wait for the fire to pass.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_08",
+      "display_name": "Free Wells - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A poisoned well threatens a whole sector. We must dive into the toxic sludge without hazmat gear to manually seal the leak at the bottom of the shaft.",
+      "prereq_quest_id": "quest_free_wells_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The well is toxic, and the leak is at the bottom, and the hazmat gear is missing, and the missing is what we dive without."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_08_advance",
+          "text": "Dive. Seal the leak.",
+          "set_flag": "flag_free_wells_08_advanced"
+        },
+        {
+          "id": "quest_free_wells_08_abort",
+          "text": "Refuse. Find a suit first.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_09",
+      "display_name": "Free Wells - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A refugee convoy is trapped in the deep desert. We must march out on foot, carrying nothing but water bladders, risking terminal dehydration to reach them.",
+      "prereq_quest_id": "quest_free_wells_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The convoy is in the deep desert, and the desert is deep, and our water bladders are full, and the fullness is what we carry to them, on foot, to death."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_09_advance",
+          "text": "March with the water.",
+          "set_flag": "flag_free_wells_09_advanced"
+        },
+        {
+          "id": "quest_free_wells_09_abort",
+          "text": "Refuse. The desert takes the carriers.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_free_wells_10",
+      "display_name": "Free Wells - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final mandate. We must storm the Barons' central control room and permanently shatter the locking mechanisms on the main reservoir, declaring water a universal free right for the entire wastes.",
+      "prereq_quest_id": "quest_free_wells_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The Barons' control room is ahead, and the reservoir locks are there, and the breaking is permanent, and the permanence is the revolution."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_free_wells_10_advance",
+          "text": "Shatter the locks.",
+          "set_flag": "flag_free_wells_10_advanced"
+        },
+        {
+          "id": "quest_free_wells_10_abort",
+          "text": "Refuse. The Barons will kill us all.",
+          "set_flag": "flag_free_wells_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_01",
+      "display_name": "The Defenders - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A raided caravan is pinned down. We must abandon our secure bunker and charge into the open ash to lay down covering fire, taking heavy casualties.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The caravan is pinned in the open ash, and our bunker is secure, and the security is what we would leave."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_01_advance",
+          "text": "Charge out. Cover them.",
+          "set_flag": "flag_the_defenders_01_advanced"
+        },
+        {
+          "id": "quest_the_defenders_01_abort",
+          "text": "Refuse. Fire from the bunker.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_deserter_coalition"
+    },
+    {
+      "id": "quest_the_defenders_02",
+      "display_name": "The Defenders - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A weak settlement is extorted by thugs. We must deploy our troops to stand guard around the clock, refusing any payment or food from the grateful townsfolk.",
+      "prereq_quest_id": "quest_the_defenders_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The settlement is squeezed by thugs, and our troops are ready, and the refusal of payment is the point."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_02_advance",
+          "text": "Stand guard. Take nothing.",
+          "set_flag": "flag_the_defenders_02_advanced"
+        },
+        {
+          "id": "quest_the_defenders_02_abort",
+          "text": "Refuse. Protection has a price.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_03",
+      "display_name": "The Defenders - Stage 3",
+      "type": "faction_chain",
+      "briefing": "An unaligned hospital is targeted by looters. We must form a human wall around the perimeter, taking rocks and bullets without returning lethal fire.",
+      "prereq_quest_id": "quest_the_defenders_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The looters are coming, and the hospital is behind us, and our wall is bodies, and the bodies do not fire back."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_03_advance",
+          "text": "Form the wall.",
+          "set_flag": "flag_the_defenders_03_advanced"
+        },
+        {
+          "id": "quest_the_defenders_03_abort",
+          "text": "Refuse. Fire warning shots.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_04",
+      "display_name": "The Defenders - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A group of pacifists are being hunted for sport. We must trade our armored vests for their rags, acting as decoys to draw the hunters away into the lethal red zones.",
+      "prereq_quest_id": "quest_the_defenders_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The pacifists wear rags, and our vests are armor, and the hunters want sport, and the sport is what we become, ourselves."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_04_advance",
+          "text": "Trade vests. Draw them off.",
+          "set_flag": "flag_the_defenders_04_advanced"
+        },
+        {
+          "id": "quest_the_defenders_04_abort",
+          "text": "Refuse. Fight the hunters head-on.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_05",
+      "display_name": "The Defenders - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A fleeing family is caught in a minefield. We must slowly crawl through the dirt with combat knives, risking dismemberment to clear a path for them.",
+      "prereq_quest_id": "quest_the_defenders_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The family is in the field, and the field is mines, and our knives are what we crawl with, and the crawling is the only way."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_05_advance",
+          "text": "Crawl. Clear the path.",
+          "set_flag": "flag_the_defenders_05_advanced"
+        },
+        {
+          "id": "quest_the_defenders_05_abort",
+          "text": "Refuse. Shout for them to stay still.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_06",
+      "display_name": "The Defenders - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A town is under siege by mutants. We must expend our absolute last mortar shells and all our heavy ordinance to break the siege, leaving ourselves completely defenseless.",
+      "prereq_quest_id": "quest_the_defenders_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The town is under siege, and our mortar shells are the last, and the last is what we fire, and the firing leaves us empty."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_06_advance",
+          "text": "Fire everything.",
+          "set_flag": "flag_the_defenders_06_advanced"
+        },
+        {
+          "id": "quest_the_defenders_06_abort",
+          "text": "Refuse. Keep the last shells.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_07",
+      "display_name": "The Defenders - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A captured supply line is starving a region. We must launch a desperate, suicidal frontal assault against a fortified bunker to break the blockade.",
+      "prereq_quest_id": "quest_the_defenders_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The blockade bunker is fortified, and our assault is frontal, and the frontal is suicidal, and the suicide is what breaks the blockade."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_07_advance",
+          "text": "Charge the bunker.",
+          "set_flag": "flag_the_defenders_07_advanced"
+        },
+        {
+          "id": "quest_the_defenders_07_abort",
+          "text": "Refuse. Starve the blockade out instead.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_08",
+      "display_name": "The Defenders - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A bullied trade hub is forced to pay a blood tax. We must march in and publicly declare the hub under our protection, drawing the wrath of three different warlords.",
+      "prereq_quest_id": "quest_the_defenders_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The trade hub pays the blood tax, and the warlords collect, and our declaration is public, and the publicity is the provocation."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_08_advance",
+          "text": "Declare the protection.",
+          "set_flag": "flag_the_defenders_08_advanced"
+        },
+        {
+          "id": "quest_the_defenders_08_abort",
+          "text": "Refuse. Protect them quietly.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_09",
+      "display_name": "The Defenders - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A slaver's camp holds dozens of innocent civilians. We must infiltrate the camp without weapons, staging a massive prison break from the inside out.",
+      "prereq_quest_id": "quest_the_defenders_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The slaver camp is guarded, and our weapons are what we leave behind, and the leaving is the infiltration."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_09_advance",
+          "text": "Go in unarmed.",
+          "set_flag": "flag_the_defenders_09_advanced"
+        },
+        {
+          "id": "quest_the_defenders_09_abort",
+          "text": "Refuse. Assault the camp openly.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_the_defenders_10",
+      "display_name": "The Defenders - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final stand. We must officially establish a permanent, unpaid peacekeeper force across the wastes, spreading our forces so thin that we know most of us will not survive the winter.",
+      "prereq_quest_id": "quest_the_defenders_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The wastes are wide, and our force is thin, and the thinness is what keeps the peace, and the winter is what takes us."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_the_defenders_10_advance",
+          "text": "Establish the peacekeepers.",
+          "set_flag": "flag_the_defenders_10_advanced"
+        },
+        {
+          "id": "quest_the_defenders_10_abort",
+          "text": "Refuse. Keep the force whole.",
+          "set_flag": "flag_the_defenders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_01",
+      "display_name": "Cure Seekers - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A minor infection plagues the slums. We must give up our own sterile bandages and stitch our own wounds with crude thread so they can have the clean supplies.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The slum is infected, and our bandages are sterile, and the sterility is what they need, and our own wounds will take the crude thread."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_01_advance",
+          "text": "Give the bandages.",
+          "set_flag": "flag_cure_seekers_01_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_01_abort",
+          "text": "Refuse. Our wounds need the sterile too.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_lamplighters"
+    },
+    {
+      "id": "quest_cure_seekers_02",
+      "display_name": "Cure Seekers - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A widespread fever requires a rare antigen. We must repeatedly draw our own blood, weakening ourselves to near unconsciousness, to synthesize the serum.",
+      "prereq_quest_id": "quest_cure_seekers_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The fever spreads, and our blood is what makes the serum, and the drawing leaves us faint, and the fainting is the cost."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_02_advance",
+          "text": "Draw our blood.",
+          "set_flag": "flag_cure_seekers_02_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_02_abort",
+          "text": "Refuse. Search for another source.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_03",
+      "display_name": "Cure Seekers - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A radiation outbreak strikes a neutral zone. We must walk into the hot-zone without protective gear to administer the rad-away directly to the fallen.",
+      "prereq_quest_id": "quest_cure_seekers_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hot zone is hot, and our protective gear is missing, and the missing is what we walk without, and the fallen are what we walk to."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_03_advance",
+          "text": "Walk in. Give the rad-away.",
+          "set_flag": "flag_cure_seekers_03_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_03_abort",
+          "text": "Refuse. Find gear first.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_04",
+      "display_name": "Cure Seekers - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A mutant parasite is spreading. To understand it, a scientist must volunteer to be intentionally infected. We step forward, knowing the agony it brings.",
+      "prereq_quest_id": "quest_cure_seekers_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The parasite is unknown, and infection is how we would know it, and the volunteering is ours, and the agony comes with it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_04_advance",
+          "text": "Step forward.",
+          "set_flag": "flag_cure_seekers_04_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_04_abort",
+          "text": "Refuse. Study it another way.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_05",
+      "display_name": "Cure Seekers - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A failing crop disease causes mass starvation. We must test unproven, highly toxic fertilizers on our own bodies to ensure they won't poison the food supply.",
+      "prereq_quest_id": "quest_cure_seekers_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The crops are starving, and the fertilizer is unproven, and our bodies are the proof, and the poisoning is the risk."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_05_advance",
+          "text": "Test it on ourselves.",
+          "set_flag": "flag_cure_seekers_05_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_05_abort",
+          "text": "Refuse. Test it on the soil first.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_06",
+      "display_name": "Cure Seekers - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A waterborne plague threatens the aquifer. We must dive into the freezing, infected holding tanks to manually scrub the filters, guaranteeing we contract the disease.",
+      "prereq_quest_id": "quest_cure_seekers_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The holding tanks are infected, and the filters are at the bottom, and our diving is what scrubs them, and the disease is what we carry up."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_06_advance",
+          "text": "Dive. Scrub the filters.",
+          "set_flag": "flag_cure_seekers_06_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_06_abort",
+          "text": "Refuse. Drain the tanks first.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_07",
+      "display_name": "Cure Seekers - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A mental health crisis grips the traumatized survivors. We must stay awake for 72 hours straight, providing endless counseling and comfort while losing our own minds.",
+      "prereq_quest_id": "quest_cure_seekers_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The survivors are breaking, and our sleep is what we give up, and the giving is seventy-two hours, and the hours take our minds with them."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_07_advance",
+          "text": "Stay awake. Comfort them.",
+          "set_flag": "flag_cure_seekers_07_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_07_abort",
+          "text": "Refuse. Sleep. Go back tomorrow.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_08",
+      "display_name": "Cure Seekers - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A chronic wasteland illness requires a bone marrow transplant. We volunteer to undergo the agonizing extraction process without anesthesia to save a stranger.",
+      "prereq_quest_id": "quest_cure_seekers_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The patient is dying, and our marrow is the transplant, and the extraction is agony, and the anesthesia is missing, and the missing is the cost."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_08_advance",
+          "text": "Give the marrow.",
+          "set_flag": "flag_cure_seekers_08_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_08_abort",
+          "text": "Refuse. Find anesthesia first.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_09",
+      "display_name": "Cure Seekers - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A terminal patient is in unimaginable pain. We must sacrifice our bunker's entire supply of morphine, knowing our own injured will have to suffer in agony.",
+      "prereq_quest_id": "quest_cure_seekers_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The patient is in agony, and our morphine is all of it, and the all is what they need, and our own injured will suffer without it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_09_advance",
+          "text": "Give the morphine.",
+          "set_flag": "flag_cure_seekers_09_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_09_abort",
+          "text": "Refuse. Split the dose.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_cure_seekers_10",
+      "display_name": "Cure Seekers - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final breakthrough. A universal radiation vaccine is theorized, but requires a massive dose of raw gamma radiation to catalyze in a living host. We strap ourselves to the chair and tell them to activate the core.",
+      "prereq_quest_id": "quest_cure_seekers_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The vaccine is theoretical, and the gamma is real, and our body is the host, and the chair is where theory becomes cure."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_cure_seekers_10_advance",
+          "text": "Strap in. Activate the core.",
+          "set_flag": "flag_cure_seekers_10_advanced"
+        },
+        {
+          "id": "quest_cure_seekers_10_abort",
+          "text": "Refuse. Test it on tissue first.",
+          "set_flag": "flag_cure_seekers_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_01",
+      "display_name": "Rescue Armada - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A sinking fishing boat is caught in a squall. We must risk capsizing our own heavily armored cutter to pull the freezing fishermen from the crushing waves.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The fishing boat is going down, and our cutter is armored, and the armor is heavy, and the heaviness is what might capsize us."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_01_advance",
+          "text": "Risk the cutter. Pull them out.",
+          "set_flag": "flag_rescue_armada_01_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_01_abort",
+          "text": "Refuse. Our cutter cannot take the weight.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_black_flotilla"
+    },
+    {
+      "id": "quest_rescue_armada_02",
+      "display_name": "Rescue Armada - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A stranded merchant ship is bleeding fuel. We must tow them through a known pirate strait, making ourselves a massive, slow-moving target.",
+      "prereq_quest_id": "quest_rescue_armada_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The merchant ship is bleeding fuel, and the strait is pirates, and our towing makes us slow, and the slowness is the target."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_02_advance",
+          "text": "Tow them through.",
+          "set_flag": "flag_rescue_armada_02_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_02_abort",
+          "text": "Refuse. Escort from a distance.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_03",
+      "display_name": "Rescue Armada - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A flooded island is slowly slipping beneath the toxic tide. We must overload our transport ferries with so many refugees that water washes over the decks.",
+      "prereq_quest_id": "quest_rescue_armada_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The island is sinking, and our ferries are full, and the fullness is what saves them, and the water over the decks is the cost."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_03_advance",
+          "text": "Overload the ferries.",
+          "set_flag": "flag_rescue_armada_03_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_03_abort",
+          "text": "Refuse. Take half. Come back.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_04",
+      "display_name": "Rescue Armada - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A besieged coastal fort begs for extraction. We must sail our wooden ships directly into the firing arc of their heavy shore batteries to pick them up.",
+      "prereq_quest_id": "quest_rescue_armada_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The fort is besieged, and our ships are wood, and the shore batteries are heavy, and the firing arc is what we sail through."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_04_advance",
+          "text": "Sail into the arc.",
+          "set_flag": "flag_rescue_armada_04_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_04_abort",
+          "text": "Refuse. Evacuate by night.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_05",
+      "display_name": "Rescue Armada - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A starving port city is cut off by land. We must empty our own ship's galleys, giving away our last week of rations to feed the dying dockworkers.",
+      "prereq_quest_id": "quest_rescue_armada_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The port is starving, and our galleys hold the last week, and the last is what we give, and the giving leaves us hungry."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_05_advance",
+          "text": "Empty the galleys.",
+          "set_flag": "flag_rescue_armada_05_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_05_abort",
+          "text": "Refuse. Share half.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_06",
+      "display_name": "Rescue Armada - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A radioactive coastline requires evacuation. We must sail into waters so hot that our Geiger counters max out, knowing the hull will never be decontaminated.",
+      "prereq_quest_id": "quest_rescue_armada_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The coast is hot, and our Geiger counters max out, and the hull is what we will never decontaminate, and the evacuation is why."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_06_advance",
+          "text": "Sail into the hot water.",
+          "set_flag": "flag_rescue_armada_06_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_06_abort",
+          "text": "Refuse. Call for boats from a distance.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_07",
+      "display_name": "Rescue Armada - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A fleet of refugees is caught in a dead calm. We must attach tow cables and physically row our massive ships to drag them out of the stagnant, toxic fog.",
+      "prereq_quest_id": "quest_rescue_armada_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The refugee fleet sits becalmed, and the fog is toxic, and our rowing is what drags them out, and the dragging is by hand."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_07_advance",
+          "text": "Row them out.",
+          "set_flag": "flag_rescue_armada_07_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_07_abort",
+          "text": "Refuse. Wait for wind.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_08",
+      "display_name": "Rescue Armada - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A hospital under water is losing pressure. We must dive into the freezing, crushed lower decks with only hand tools to pry the airlocks open for the trapped nurses.",
+      "prereq_quest_id": "quest_rescue_armada_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hospital is under water, and the nurses are trapped in the lower decks, and our diving is with hand tools, and the tools are all we have."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_08_advance",
+          "text": "Dive. Pry the airlocks.",
+          "set_flag": "flag_rescue_armada_08_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_08_abort",
+          "text": "Refuse. Find cutting gear first.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_09",
+      "display_name": "Rescue Armada - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A dying rival faction begs for asylum. We must invite our sworn enemies aboard our pristine ships, sharing our quarters and our food with the people who killed our brothers.",
+      "prereq_quest_id": "quest_rescue_armada_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Our sworn enemy is dying, and our ships are clean, and they killed our brothers, and the asylum is what we would give them."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_09_advance",
+          "text": "Take them aboard.",
+          "set_flag": "flag_rescue_armada_09_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_09_abort",
+          "text": "Refuse. They killed our brothers.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_rescue_armada_10",
+      "display_name": "Rescue Armada - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The largest maritime evacuation in history. A massive tsunami of radioactive sludge is approaching the mainland. We must deliberately run our entire fleet aground to act as a physical breakwater, sacrificing our ships to save the coastal cities.",
+      "prereq_quest_id": "quest_rescue_armada_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The sludge tsunami is coming, and our fleet is all we have, and the grounding is the breakwater, and the breakwater saves the cities."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_rescue_armada_10_advance",
+          "text": "Run the fleet aground.",
+          "set_flag": "flag_rescue_armada_10_advanced"
+        },
+        {
+          "id": "quest_rescue_armada_10_abort",
+          "text": "Refuse. Evacuate the cities instead.",
+          "set_flag": "flag_rescue_armada_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_01",
+      "display_name": "Plowshares - Stage 1",
+      "type": "faction_chain",
+      "briefing": "Basic shovels are desperately needed by a farming commune. We must halt production of our precious ammunition casings to stamp out farming tools instead.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The commune needs shovels, and our presses make casings, and the presses can make either, and the either is the choice."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_01_advance",
+          "text": "Stamp shovels.",
+          "set_flag": "flag_plowshares_01_advanced"
+        },
+        {
+          "id": "quest_plowshares_01_abort",
+          "text": "Refuse. Casings are defense.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_silent_foundry"
+    },
+    {
+      "id": "quest_plowshares_02",
+      "display_name": "Plowshares - Stage 2",
+      "type": "faction_chain",
+      "briefing": "Water filters are failing in the slums. We must melt down our heavy artillery barrels to forge the intricate mesh needed to save their lungs.",
+      "prereq_quest_id": "quest_plowshares_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The slum's lungs are failing, and our artillery barrels are steel, and the steel is the mesh, and the mesh is what saves the lungs."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_02_advance",
+          "text": "Melt the barrels.",
+          "set_flag": "flag_plowshares_02_advanced"
+        },
+        {
+          "id": "quest_plowshares_02_abort",
+          "text": "Refuse. The barrels are the guns.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_03",
+      "display_name": "Plowshares - Stage 3",
+      "type": "faction_chain",
+      "briefing": "Medical tools are scarce. We must take the high-grade steel meant for our commander's armor and forge delicate scalpels and forceps for the clinics.",
+      "prereq_quest_id": "quest_plowshares_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The clinics need scalpels, and our commander's armor plate is high-grade, and the grade is what scalpels need."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_03_advance",
+          "text": "Forge the scalpels.",
+          "set_flag": "flag_plowshares_03_advanced"
+        },
+        {
+          "id": "quest_plowshares_03_abort",
+          "text": "Refuse. The armor is the commander's.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_04",
+      "display_name": "Plowshares - Stage 4",
+      "type": "faction_chain",
+      "briefing": "Hydroponic frames are collapsing. We must dismantle our anti-aircraft turrets to provide the structural beams needed to keep the crops suspended.",
+      "prereq_quest_id": "quest_plowshares_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hydroponic frames are collapsing, and our anti-air turrets are structural, and the structure is what holds the crops."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_04_advance",
+          "text": "Strip the turrets.",
+          "set_flag": "flag_plowshares_04_advanced"
+        },
+        {
+          "id": "quest_plowshares_04_abort",
+          "text": "Refuse. The turrets are the defense.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_05",
+      "display_name": "Plowshares - Stage 5",
+      "type": "faction_chain",
+      "briefing": "Structural steel is needed for refugee homes. We must strip the reinforced blast doors off our own armory, leaving our weapons completely vulnerable to theft.",
+      "prereq_quest_id": "quest_plowshares_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The refugees need walls, and our armory blast doors are reinforced, and the reinforcement is what makes homes, and the armory is what stands open."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_05_advance",
+          "text": "Give the doors.",
+          "set_flag": "flag_plowshares_05_advanced"
+        },
+        {
+          "id": "quest_plowshares_05_abort",
+          "text": "Refuse. The armory must stand.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_06",
+      "display_name": "Plowshares - Stage 6",
+      "type": "faction_chain",
+      "briefing": "Civilian vehicles are broken down. We must rip the high-torque engines out of our armored personnel carriers to get their food transports running again.",
+      "prereq_quest_id": "quest_plowshares_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The food transports are broken, and our personnel carriers have high-torque engines, and the torque is what moves the food."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_06_advance",
+          "text": "Pull the engines.",
+          "set_flag": "flag_plowshares_06_advanced"
+        },
+        {
+          "id": "quest_plowshares_06_abort",
+          "text": "Refuse. The carriers are the patrols.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_07",
+      "display_name": "Plowshares - Stage 7",
+      "type": "faction_chain",
+      "briefing": "Wind turbines require specialized bearings. We must cannibalize the guidance systems of our remaining missiles to build the generators.",
+      "prereq_quest_id": "quest_plowshares_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The turbines need bearings, and our missiles have guidance systems, and the guidance is the bearings, and the bearings are the light."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_07_advance",
+          "text": "Cannibalize the guidance.",
+          "set_flag": "flag_plowshares_07_advanced"
+        },
+        {
+          "id": "quest_plowshares_07_abort",
+          "text": "Refuse. The missiles are deterrence.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_08",
+      "display_name": "Plowshares - Stage 8",
+      "type": "faction_chain",
+      "briefing": "Geothermal pipes are rupturing. We must climb into the boiling, pressurized shafts by hand to weld the breaches, suffering horrific steam burns.",
+      "prereq_quest_id": "quest_plowshares_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The geothermal pipes are ruptured, and the shafts are boiling, and our welding is by hand, and the burns are the cost."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_08_advance",
+          "text": "Weld the breaches.",
+          "set_flag": "flag_plowshares_08_advanced"
+        },
+        {
+          "id": "quest_plowshares_08_abort",
+          "text": "Refuse. Wait for the pressure to drop.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_09",
+      "display_name": "Plowshares - Stage 9",
+      "type": "faction_chain",
+      "briefing": "Solar mirrors are needed for surface energy. We must polish the steel by hand for 18 hours a day, inhaling the toxic metal dust until we cough blood.",
+      "prereq_quest_id": "quest_plowshares_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The mirrors need polishing, and the steel dust is toxic, and the shifts are eighteen hours, and the blood is what we cough."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_09_advance",
+          "text": "Polish the mirrors.",
+          "set_flag": "flag_plowshares_09_advanced"
+        },
+        {
+          "id": "quest_plowshares_09_abort",
+          "text": "Refuse. Find respirators first.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_plowshares_10",
+      "display_name": "Plowshares - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final conversion. We must permanently and violently smash the weapon forges with sledgehammers, rendering the Foundry incapable of ever producing another gun, committing our future entirely to building civilian life.",
+      "prereq_quest_id": "quest_plowshares_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The forges are where the guns are made, and our sledgehammers are what end that, and the ending is forever."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_plowshares_10_advance",
+          "text": "Smash the forges.",
+          "set_flag": "flag_plowshares_10_advanced"
+        },
+        {
+          "id": "quest_plowshares_10_abort",
+          "text": "Refuse. Keep the capacity.",
+          "set_flag": "flag_plowshares_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_01",
+      "display_name": "Hospital Ships - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A wounded sailor from a rival ship floats in the water. We must pull him aboard and use our scarce antibiotics to save his life.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The sailor floats in the water, and his ship is a rival's, and his blood is the same color, and the color is what we treat."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_01_advance",
+          "text": "Pull him aboard.",
+          "set_flag": "flag_hospital_ships_01_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_01_abort",
+          "text": "Refuse. He is the enemy.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_the_fleet"
+    },
+    {
+      "id": "quest_hospital_ships_02",
+      "display_name": "Hospital Ships - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A sick refugee is turned away from every port. We must bring her into our sterile environment, risking the health of our entire crew.",
+      "prereq_quest_id": "quest_hospital_ships_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "She has been turned away from every port, and our decks are sterile, and the sterility is what we risk, and the risking is the care."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_02_advance",
+          "text": "Bring her in.",
+          "set_flag": "flag_hospital_ships_02_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_02_abort",
+          "text": "Refuse. The crew comes first.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_03",
+      "display_name": "Hospital Ships - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A dying raider who attacked us yesterday begs for help. We must lay him on a clean cot and stitch the wounds we ourselves inflicted.",
+      "prereq_quest_id": "quest_hospital_ships_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "He attacked us yesterday, and today he begs, and our stitches are what he needs, and the wounds are the ones we gave him."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_03_advance",
+          "text": "Stitch his wounds.",
+          "set_flag": "flag_hospital_ships_03_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_03_abort",
+          "text": "Refuse. Let him remember.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_04",
+      "display_name": "Hospital Ships - Stage 4",
+      "type": "faction_chain",
+      "briefing": "An injured rival captain is captured. Instead of executing him, we must perform a complex, grueling 12-hour surgery to save his severed leg.",
+      "prereq_quest_id": "quest_hospital_ships_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "His leg is severed, and our surgery is twelve hours, and the hours are grueling, and the saving is the point."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_04_advance",
+          "text": "Save the leg.",
+          "set_flag": "flag_hospital_ships_04_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_04_abort",
+          "text": "Refuse. He is a captain. Execute him.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_05",
+      "display_name": "Hospital Ships - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A starving child is found with a highly contagious rash. We must isolate ourselves in the room with the child, holding their hand while they recover.",
+      "prereq_quest_id": "quest_hospital_ships_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The child is contagious, and the isolation room is ours to share, and the hand-holding is the care."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_05_advance",
+          "text": "Stay with the child.",
+          "set_flag": "flag_hospital_ships_05_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_05_abort",
+          "text": "Refuse. Treat through the door.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_06",
+      "display_name": "Hospital Ships - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A pregnant mother is going into complicated labor. We must donate our own blood via direct transfusion on the rocking deck of a ship in a storm.",
+      "prereq_quest_id": "quest_hospital_ships_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The deck heaves, and the storm is outside, and our blood is the transfusion, and the giving happens on a ship that will not hold still."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_06_advance",
+          "text": "Give the blood.",
+          "set_flag": "flag_hospital_ships_06_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_06_abort",
+          "text": "Refuse. Wait for calm water.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_07",
+      "display_name": "Hospital Ships - Stage 7",
+      "type": "faction_chain",
+      "briefing": "An infected outpost is quarantined. We must break the quarantine, sailing directly into the hot zone to deliver the last of our medical supplies.",
+      "prereq_quest_id": "quest_hospital_ships_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The outpost is infected, and the quarantine is the law, and our supplies are the last, and the breaking is the care."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_07_advance",
+          "text": "Break the quarantine.",
+          "set_flag": "flag_hospital_ships_07_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_07_abort",
+          "text": "Refuse. Deliver from a distance.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_08",
+      "display_name": "Hospital Ships - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A crippled allied ship is sinking with wounded aboard. We must lash our ships together in heavy seas, acting as a human bridge to carry the stretchers across.",
+      "prereq_quest_id": "quest_hospital_ships_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Their ship is sinking, and the seas are heavy, and our lashing is the bridge, and the stretchers cross on our backs."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_08_advance",
+          "text": "Lash the ships together.",
+          "set_flag": "flag_hospital_ships_08_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_08_abort",
+          "text": "Refuse. Our hulls cannot take the strain.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_09",
+      "display_name": "Hospital Ships - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A coastal epidemic is wiping out a city. We must strip our ship down to the bulkheads, turning every inch of deck space into a makeshift triage center.",
+      "prereq_quest_id": "quest_hospital_ships_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The city is dying, and our ship is space, and the space is the triage, and the conversion is every inch."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_09_advance",
+          "text": "Strip the ship. Triage.",
+          "set_flag": "flag_hospital_ships_09_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_09_abort",
+          "text": "Refuse. Keep the crew quarters.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hospital_ships_10",
+      "display_name": "Hospital Ships - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The ultimate sanctuary. We declare the ocean a universal safe zone. We permanently anchor our warships, turning off the engines forever to divert all reactor power to life support and medical bays, becoming a stationary beacon of healing.",
+      "prereq_quest_id": "quest_hospital_ships_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The engines are what we would shut off, and the reactor is what we would give to the med bays, and the permanence is the sanctuary."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hospital_ships_10_advance",
+          "text": "Anchor forever. Power the bays.",
+          "set_flag": "flag_hospital_ships_10_advanced"
+        },
+        {
+          "id": "quest_hospital_ships_10_abort",
+          "text": "Refuse. Keep the engines ready.",
+          "set_flag": "flag_hospital_ships_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_01",
+      "display_name": "Open Borders - Stage 1",
+      "type": "faction_chain",
+      "briefing": "Excess grain is sitting in our silos while locals starve. We must illegally bypass the quartermaster's locks and distribute it in the dead of night.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The silos are full, and the locals starve, and the locks are the quartermaster's, and the night is when we would break them."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_01_advance",
+          "text": "Break the locks. Distribute.",
+          "set_flag": "flag_open_borders_01_advanced"
+        },
+        {
+          "id": "quest_open_borders_01_abort",
+          "text": "Refuse. Petition the quartermaster.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_meridian"
+    },
+    {
+      "id": "quest_open_borders_02",
+      "display_name": "Open Borders - Stage 2",
+      "type": "faction_chain",
+      "briefing": "Advanced medicine is hoarded for the elites. We must smuggle the auto-docs out of the secure sector and deliver them to the wasteland clinics.",
+      "prereq_quest_id": "quest_open_borders_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The auto-docs sit in the secure sector, and the clinics go without, and the smuggling is the delivery."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_02_advance",
+          "text": "Smuggle the auto-docs out.",
+          "set_flag": "flag_open_borders_02_advanced"
+        },
+        {
+          "id": "quest_open_borders_02_abort",
+          "text": "Refuse. Request a transfer.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_03",
+      "display_name": "Open Borders - Stage 3",
+      "type": "faction_chain",
+      "briefing": "Pure water is flowing into our decorative fountains. We must smash the ornate marble and run a crude rubber hose directly through the blast doors to the slums.",
+      "prereq_quest_id": "quest_open_borders_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The fountains are decorative, and the slums are dry, and the marble is what we smash, and the hose is what we run."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_03_advance",
+          "text": "Smash the marble. Run the hose.",
+          "set_flag": "flag_open_borders_03_advanced"
+        },
+        {
+          "id": "quest_open_borders_03_abort",
+          "text": "Refuse. The fountains are the Compact's face.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_04",
+      "display_name": "Open Borders - Stage 4",
+      "type": "faction_chain",
+      "briefing": "Educational holotapes are classified state secrets. We must slice into the mainframe, copy the data, and scatter the drives across the independent settlements.",
+      "prereq_quest_id": "quest_open_borders_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The holotapes are classified, and the settlements are ignorant, and the copying is the treason, and the treason is the education."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_04_advance",
+          "text": "Copy the tapes. Scatter them.",
+          "set_flag": "flag_open_borders_04_advanced"
+        },
+        {
+          "id": "quest_open_borders_04_abort",
+          "text": "Refuse. Secrets keep us safe.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_05",
+      "display_name": "Open Borders - Stage 5",
+      "type": "faction_chain",
+      "briefing": "Engineering tools are restricted to military personnel. We must throw crates of plasma torches and fusion welders over the perimeter fence to the scavengers.",
+      "prereq_quest_id": "quest_open_borders_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The tools are restricted, and the scavengers go without, and the throwing is over the fence, and the fence is the restriction."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_05_advance",
+          "text": "Throw the tools over.",
+          "set_flag": "flag_open_borders_05_advanced"
+        },
+        {
+          "id": "quest_open_borders_05_abort",
+          "text": "Refuse. Tools are control.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_06",
+      "display_name": "Open Borders - Stage 6",
+      "type": "faction_chain",
+      "briefing": "Military protection is only for citizens. We must disobey orders and march our heavy infantry out to defend a worthless, unaligned dirt farm from raiders.",
+      "prereq_quest_id": "quest_open_borders_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The dirt farm is worthless, and our infantry is heavy, and the defending is the disobedience, and the disobedience is the protection."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_06_advance",
+          "text": "March out. Defend the farm.",
+          "set_flag": "flag_open_borders_06_advanced"
+        },
+        {
+          "id": "quest_open_borders_06_abort",
+          "text": "Refuse. The farm is not ours.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_07",
+      "display_name": "Open Borders - Stage 7",
+      "type": "faction_chain",
+      "briefing": "Technological secrets of radiation scrubbing are heavily guarded. We must commit high treason, broadcasting the blueprints in plaintext on all open radio frequencies.",
+      "prereq_quest_id": "quest_open_borders_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The scrubber blueprints are guarded, and the wasteland chokes, and the broadcast is the treason, and the treason is the air."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_07_advance",
+          "text": "Broadcast the blueprints.",
+          "set_flag": "flag_open_borders_07_advanced"
+        },
+        {
+          "id": "quest_open_borders_07_abort",
+          "text": "Refuse. Secrets are power.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_08",
+      "display_name": "Open Borders - Stage 8",
+      "type": "faction_chain",
+      "briefing": "Unlimited energy access from our fusion core is kept from the locals. We must physically drag heavy, unshielded power cables across the radioactive ash to plug their grid into ours.",
+      "prereq_quest_id": "quest_open_borders_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The fusion core is ours, and their grid is dark, and the cables are unshielded, and the ash is what we drag them through."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_08_advance",
+          "text": "Drag the cables across.",
+          "set_flag": "flag_open_borders_08_advanced"
+        },
+        {
+          "id": "quest_open_borders_08_abort",
+          "text": "Refuse. The core is ours.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_09",
+      "display_name": "Open Borders - Stage 9",
+      "type": "faction_chain",
+      "briefing": "Full citizenship is denied to outsiders. We must forge hundreds of ident-chips, granting the starving masses full access to our pristine underground utopia.",
+      "prereq_quest_id": "quest_open_borders_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The ident-chips are citizenship, and the starving go without, and the forging is hundreds, and the hundreds are the access."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_09_advance",
+          "text": "Forge the chips.",
+          "set_flag": "flag_open_borders_09_advanced"
+        },
+        {
+          "id": "quest_open_borders_09_abort",
+          "text": "Refuse. Citizenship is earned.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_open_borders_10",
+      "display_name": "Open Borders - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final dissolution. We must manually detonate the explosive bolts on the massive titanium blast doors that separate the Compact from the wasteland, permanently jamming them open and declaring the border dissolved forever.",
+      "prereq_quest_id": "quest_open_borders_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The blast doors are what divide us, and the explosive bolts are there, and the jamming is forever, and the forever is the dissolution."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_open_borders_10_advance",
+          "text": "Blow the doors open.",
+          "set_flag": "flag_open_borders_10_advanced"
+        },
+        {
+          "id": "quest_open_borders_10_abort",
+          "text": "Refuse. The doors are the border.",
+          "set_flag": "flag_open_borders_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_01",
+      "display_name": "Storm Watch - Stage 1",
+      "type": "faction_chain",
+      "briefing": "A minor dust storm is approaching a scavenger camp. We must risk the Cult's wrath by sending up a flare to warn the non-believers to take cover.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The storm is coming, and the camp is unbelievers, and the flare is the warning, and the warning is the Cult's wrath."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_01_advance",
+          "text": "Send the flare.",
+          "set_flag": "flag_storm_watch_01_advanced"
+        },
+        {
+          "id": "quest_storm_watch_01_abort",
+          "text": "Refuse. The Cult will see it.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ],
+      "required_faction_alignment": "faction_the_tempest"
+    },
+    {
+      "id": "quest_storm_watch_02",
+      "display_name": "Storm Watch - Stage 2",
+      "type": "faction_chain",
+      "briefing": "A localized acid rain is forming. We must sprint across the exposed plains, our skin burning, to manually crank the warning sirens at the neutral outpost.",
+      "prereq_quest_id": "quest_storm_watch_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The rain is acid, and the outpost is neutral, and our sprint is across open ground, and the burning is the skin."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_02_advance",
+          "text": "Run. Crank the sirens.",
+          "set_flag": "flag_storm_watch_02_advanced"
+        },
+        {
+          "id": "quest_storm_watch_02_abort",
+          "text": "Refuse. Call it in instead.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_03",
+      "display_name": "Storm Watch - Stage 3",
+      "type": "faction_chain",
+      "briefing": "A rad-wind front is shifting unexpectedly. We must surrender our secure bunker to a caravan of lost merchants, leaving ourselves exposed to the toxic gale.",
+      "prereq_quest_id": "quest_storm_watch_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The wind is toxic, and the merchants are lost, and our bunker is the shelter, and the giving leaves us exposed."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_03_advance",
+          "text": "Give the bunker.",
+          "set_flag": "flag_storm_watch_03_advanced"
+        },
+        {
+          "id": "quest_storm_watch_03_abort",
+          "text": "Refuse. Share the space instead.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_04",
+      "display_name": "Storm Watch - Stage 4",
+      "type": "faction_chain",
+      "briefing": "A toxic fog is settling in the valley. We must hike up to the peaks with heavy industrial fans, desperately trying to blow the fog away from the orphanage below.",
+      "prereq_quest_id": "quest_storm_watch_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The fog is settling in the valley, and the orphanage is below, and our fans are industrial, and the carrying is up the peak."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_04_advance",
+          "text": "Carry the fans up.",
+          "set_flag": "flag_storm_watch_04_advanced"
+        },
+        {
+          "id": "quest_storm_watch_04_abort",
+          "text": "Refuse. Evacuate the orphanage instead.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_05",
+      "display_name": "Storm Watch - Stage 5",
+      "type": "faction_chain",
+      "briefing": "A massive ash blizzard blinds the region. We must tie ropes to our waists and wander blindly into the whiteout, acting as human tethers to guide lost travelers home.",
+      "prereq_quest_id": "quest_storm_watch_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The whiteout is total, and the travelers are lost, and our ropes are the tethers, and the wandering is blind."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_05_advance",
+          "text": "Walk into the whiteout.",
+          "set_flag": "flag_storm_watch_05_advanced"
+        },
+        {
+          "id": "quest_storm_watch_05_abort",
+          "text": "Refuse. Wait for the storm to pass.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_06",
+      "display_name": "Storm Watch - Stage 6",
+      "type": "faction_chain",
+      "briefing": "A flash flood of irradiated mud is coming down the canyon. We must stand chest-deep in the boiling sludge to physically hold a collapsed bridge steady while civilians cross.",
+      "prereq_quest_id": "quest_storm_watch_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The mud is boiling, and the bridge is collapsed, and our bodies are what hold it, and the crossing is the civilians."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_06_advance",
+          "text": "Stand in the mud. Hold the bridge.",
+          "set_flag": "flag_storm_watch_06_advanced"
+        },
+        {
+          "id": "quest_storm_watch_06_abort",
+          "text": "Refuse. Find another route.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_07",
+      "display_name": "Storm Watch - Stage 7",
+      "type": "faction_chain",
+      "briefing": "A mutant swarm migration follows the storm. We must douse ourselves in pheromone bait, drawing the horrific creatures away from a defenseless town and into the deep desert.",
+      "prereq_quest_id": "quest_storm_watch_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The swarm follows the storm, and the town is defenseless, and our bait is ourselves, and the drawing-off is into the deep desert."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_07_advance",
+          "text": "Douse ourselves. Draw them off.",
+          "set_flag": "flag_storm_watch_07_advanced"
+        },
+        {
+          "id": "quest_storm_watch_07_abort",
+          "text": "Refuse. Warn the town to hide.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_08",
+      "display_name": "Storm Watch - Stage 8",
+      "type": "faction_chain",
+      "briefing": "A category 5 rad-hurricane is making landfall. We must climb the highest, most exposed radio tower while the wind tears at our flesh to broadcast the evacuation routes.",
+      "prereq_quest_id": "quest_storm_watch_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hurricane is category five, and the tower is the highest, and our broadcast is the evacuation routes, and the wind tears at us."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_08_advance",
+          "text": "Climb. Broadcast.",
+          "set_flag": "flag_storm_watch_08_advanced"
+        },
+        {
+          "id": "quest_storm_watch_08_abort",
+          "text": "Refuse. Broadcast from the bunker.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_09",
+      "display_name": "Storm Watch - Stage 9",
+      "type": "faction_chain",
+      "briefing": "A perpetual winter front threatens to freeze a whole sector. We must march into the heart of the blizzard carrying unshielded nuclear heating cores in our bare hands.",
+      "prereq_quest_id": "quest_storm_watch_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The winter front is endless, and the heating cores are unshielded, and our hands are bare, and the carrying is into the blizzard."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_09_advance",
+          "text": "Carry the cores.",
+          "set_flag": "flag_storm_watch_09_advanced"
+        },
+        {
+          "id": "quest_storm_watch_09_abort",
+          "text": "Refuse. Find shielding first.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_storm_watch_10",
+      "display_name": "Storm Watch - Stage 10",
+      "type": "faction_chain",
+      "briefing": "The final watch. We must establish a global weather safety grid. To power the massive atmospheric sensors, we must permanently wire our own life-support systems into the array, slowly suffocating in our control room so the wasteland can always know when the storms are coming.",
+      "prereq_quest_id": "quest_storm_watch_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The weather grid is global, and our life support is the power, and the wiring is permanent, and the slow suffocation is the watch."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_storm_watch_10_advance",
+          "text": "Wire it in. Keep the watch.",
+          "set_flag": "flag_storm_watch_10_advanced"
+        },
+        {
+          "id": "quest_storm_watch_10_abort",
+          "text": "Refuse. Power the grid another way.",
+          "set_flag": "flag_storm_watch_aborted"
+        }
+      ]
+    }
+  ]
+}

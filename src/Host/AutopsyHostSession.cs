@@ -38,13 +38,17 @@ namespace AtomicWar.GodotApp
             System.OnCaseCompleted += c =>
             {
                 LastEvent = $"[Autopsy] Completed examination for specimen {c.specimenId}: {c.finding}";
-                RaiseStateChanged();
             };
 
             System.OnAutopsyChanged += () =>
             {
                 RaiseStateChanged();
             };
+
+            // A ventilation hazard (filter saturation / CO breakthrough) is the
+            // survival-critical alert the air-filter cue exists for.
+            System.Ventilation.OnHazardWarning += _ =>
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ShelterAirFilter);
         }
 
         public ActionResult QueueCase(string specimenId, string procedureId, string medicId, int currentDay)
@@ -53,7 +57,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Queued autopsy for {specimenId} with {procedureId}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -64,7 +67,6 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Started procedure on case {caseId}";
-                RaiseStateChanged();
             }
             return res;
         }
@@ -86,7 +88,6 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            RaiseStateChanged();
         }
 
         public override void Save()

@@ -1,0 +1,530 @@
+{
+  "schema_version": 1,
+  "artifact": "survivor_identity_inventory",
+  "task": "132",
+  "phase": "1 — Inventory Every Survivor Identifier",
+  "generated": "2026-08-29",
+  "scope": "Assets/Ashfall.Core/**/*.cs + src/**/*.cs (Godot host). Unity legacy tree is deleted.",
+  "method": "Static scan for survivor-identity field names, survivor-keyed stores, and comparer/normalization variants, then per-hit manual classification. Counts are raw token occurrences, not unique declarations.",
+
+  "canonical_target": {
+    "type": "Ashfall.Core.Survivors.SurvivorId",
+    "representation": "readonly struct wrapping a validated string",
+    "equality": "StringComparison.Ordinal",
+    "ordering": "string.CompareOrdinal",
+    "serialization": "bare JSON string (wire-compatible with every existing survivor id field)",
+    "normalization": "none — non-canonical input is rejected, never rewritten"
+  },
+
+  "identifier_token_census": {
+    "note": "Raw occurrence counts of identity-shaped tokens across Core + Godot host. Establishes migration volume for Phase 62 (do NOT blind-replace: several of these are not survivor ids).",
+    "survivorId": 1377,
+    "SurvivorId": 115,
+    "patientId": 94,
+    "caregiverId": 70,
+    "survivorIds": 69,
+    "ownerId": 39,
+    "subjectId": 29,
+    "survivor_id": 24,
+    "PatientId": 20,
+    "OwnerId": 11,
+    "SubjectId": 6,
+    "CaregiverId": 6,
+    "authorId": 5,
+    "AuthorId": 2
+  },
+
+  "identity_authorities": [
+    {
+      "authority": "SurvivorRosterSystem",
+      "file": "Assets/Ashfall.Core/Survivors/SurvivorCatalog.cs",
+      "storage_line": 61,
+      "storage": "Dictionary<string, SurvivorRosterEntry> _byId",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "accepts_null_or_empty": false,
+      "lifecycle_fields": ["isAlive", "deathReason"],
+      "deterministic_iteration": "CaptureState sorts by string.CompareOrdinal; live iteration is insertion order",
+      "role": "closest existing thing to a campaign roster ledger",
+      "migration_target": "SurvivorEntityStore (identity + lifecycle); roster keeps definition catalog + display projection",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "NeedsSystem",
+      "file": "Assets/Ashfall.Core/Survivors/NeedsSystem.cs",
+      "storage_line": 74,
+      "storage": "List<SurvivorNeedsState> _survivors",
+      "key_kind": "campaign_entity_id (SurvivorNeedsState.Id field)",
+      "comparer": "List.Contains = REFERENCE equality for dedupe; Get(id) uses String.Equals ordinal, first match wins",
+      "normalization": "none",
+      "accepts_null_or_empty": true,
+      "lifecycle_fields": ["IsAlive", "IsDead", "IsAliveState"],
+      "deterministic_iteration": "registration order only",
+      "defect": "no per-Id uniqueness — two states with the same Id can both be registered; Get(id) then returns the stale one. See discovered_defects[0].",
+      "migration_target": "NeedsComponent keyed by SurvivorId, referential integrity enforced against SurvivorEntityStore",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "RadiationSystem (survivor list)",
+      "file": "Assets/Ashfall.Core/Radiation/RadiationSystem.cs",
+      "storage_line": 101,
+      "storage": "List<SurvivorRadState> _survivors",
+      "key_kind": "campaign_entity_id (SurvivorRadState.Id field)",
+      "comparer": "List.Contains = REFERENCE equality for dedupe; no id-based lookup at all",
+      "normalization": "none",
+      "accepts_null_or_empty": true,
+      "lifecycle_fields": ["IsAlive"],
+      "deterministic_iteration": "registration order only",
+      "defect": "same no-uniqueness hazard as NeedsSystem",
+      "migration_target": "RadiationComponent keyed by SurvivorId",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "RadiationSystem (dosimeters)",
+      "file": "Assets/Ashfall.Core/Radiation/RadiationSystem.cs",
+      "storage_line": 102,
+      "storage": "Dictionary<string, Dosimeter> _dosimeters",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "accepts_null_or_empty": true,
+      "note": "GetDosimeter(id) CREATES on miss — implicitly asserts survivor existence for any string handed to it",
+      "migration_target": "RadiationComponent sub-field, or dosimeter store keyed by SurvivorId with existence check",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "RadiationPhaseProgression",
+      "file": "Assets/Ashfall.Core/Radiation/RadiationPhaseProgression.cs",
+      "storage_line": 147,
+      "storage": "Dictionary<string, PhaseProgressionState> _survivors",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "migration_target": "RadiationComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "SurvivorFateSystem",
+      "file": "Assets/Ashfall.Core/Survivors/SurvivorFateSystem.cs",
+      "storage_line": 104,
+      "storage": "Dictionary<string, SurvivorFateEvent> _byId",
+      "key_kind": "campaign_entity_id",
+      "comparer": "StringComparer.Ordinal (explicit)",
+      "normalization": "none",
+      "accepts_null_or_empty": false,
+      "lifecycle_fields": ["death record — first report wins, idempotent"],
+      "deterministic_iteration": "CaptureState sorts by day then ordinal id",
+      "role": "the existing death cascade; reactive, not authoritative",
+      "migration_target": "keep as the death-detail/cascade owner; it reports INTO SurvivorEntityStore.TryDie rather than owning existence",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "SurvivorsHostSession (needs mirror)",
+      "file": "src/Host/SurvivorsHostSession.cs",
+      "storage": "List<SurvivorNeedsState> RosterState",
+      "key_kind": "campaign_entity_id",
+      "comparer": "linear scan, == on string (ordinal)",
+      "normalization": "none",
+      "note": "host-side duplicate of NeedsSystem contents; UI reads from here",
+      "migration_target": "read-model projection derived from canonical store (Phase 53)",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "SurvivorsHostSession (RadSurvivorWrapper)",
+      "file": "src/Host/SurvivorsHostSession.cs",
+      "storage": "Dictionary<string, RadSurvivorWrapper> _radStates",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "note": "RadSurvivorWrapper : SurvivorRadState — a host subclass whose existence implies survivor existence independently of Core (Task 132 risk C3, Phase 32)",
+      "migration_target": "delete wrapper; radiation component owned by radiation domain keyed by SurvivorId",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "MedicalWardSystem",
+      "file": "Assets/Ashfall.Core/Medical/MedicalWardSystem.cs",
+      "storage": "List<MedicalAdmissionRecord> in MedicalWardState (PatientId field)",
+      "key_kind": "campaign_entity_id",
+      "comparer": "ordinal",
+      "normalization": "none",
+      "lifecycle_fields": ["MedicalAdmissionStatus: Active/Discharged/Deceased"],
+      "note": "Deceased duplicates death truth; Active is the repo's real 'incapacitated' notion and stays medical-owned (Phase 46)",
+      "migration_target": "MedicalComponent keyed by SurvivorId; admission requires an existing aggregate",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "MemorialSystem",
+      "file": "Assets/Ashfall.Core/Memorial/MemorialSystem.cs",
+      "storage": "List<MemorialEntry> in MemorialState (SurvivorId field)",
+      "key_kind": "campaign_entity_id",
+      "comparer": "ordinal",
+      "normalization": "none",
+      "note": "idempotent post-death record; the only backing for a Memorialized lifecycle state",
+      "migration_target": "historical component; Memorialize transition gated on Dead",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "ExpeditionSystem",
+      "file": "Assets/Ashfall.Core/Expeditions/ExpeditionSystem.cs",
+      "storage_line": 194,
+      "storage": "Dictionary<string, ExpeditionState> _active",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "note": "keyed by survivorId => structurally at most one active expedition per survivor. This is the sole backing for an Away lifecycle state.",
+      "migration_target": "expedition participation reconciled with SurvivorAggregate.Lifecycle == Away and ActiveExpeditionId",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "DutyRosterSystem",
+      "file": "Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs",
+      "storage_line": 189,
+      "storage": "Dictionary<string, DutyRosterRow> _byId + Dictionary<string, string> _assignmentByRole",
+      "key_kind": "campaign_entity_id (rows) / role id -> survivor id (assignments)",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "migration_target": "AssignmentComponent; assignment requires assignment-eligible lifecycle",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "DutyRosterAssignmentEngine",
+      "file": "Assets/Ashfall.Core/DutyRoster/DutyRosterAssignmentEngine.cs",
+      "storage_line": 15,
+      "storage": "Dictionary<string, string> _assignmentByRole",
+      "key_kind": "role id -> campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "migration_target": "AssignmentComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "CaregivingSystem",
+      "file": "Assets/Ashfall.Core/Survivors/CaregivingSystem.cs",
+      "storage_line": 88,
+      "storage": "Dictionary<string, string> _patientToCaregiver + Dictionary<string, float> _bondStrengths",
+      "key_kind": "campaign_entity_id on BOTH sides",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "note": "two-endpoint relation — Phase 27 referential integrity applies to both patient and caregiver",
+      "migration_target": "SocialComponent / AssignmentComponent (two-endpoint)",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "TraumaBondSystem",
+      "file": "Assets/Ashfall.Core/Survivors/TraumaBondSystem.cs",
+      "storage_line": 75,
+      "storage": "Dictionary<string, List<TraumaBondRecordState>> _bondsBySurvivor",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "normalization": "none",
+      "cardinality": "many-per-survivor",
+      "note": "historical social data — must survive death (Phase 21/27)",
+      "migration_target": "SocialComponent, historical retention allowed",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "IdeologicalFrictionSystem",
+      "file": "Assets/Ashfall.Core/Survivors/IdeologicalFrictionSystem.cs",
+      "storage_line": 50,
+      "storage": "Dictionary<string, string> _beliefs",
+      "key_kind": "campaign_entity_id",
+      "comparer": "StringComparer.Ordinal (explicit)",
+      "normalization": "none",
+      "migration_target": "SocialComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "SurvivorSocialCoordinator",
+      "file": "Assets/Ashfall.Core/Survivors/SurvivorSocialCoordinator.cs",
+      "storage_line": 79,
+      "storage": "Dictionary<string, string> _beliefs (composite of 5 sub-states)",
+      "key_kind": "campaign_entity_id",
+      "comparer": "StringComparer.Ordinal (explicit)",
+      "normalization": "none",
+      "migration_target": "SocialComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "CombatTraumaSystem",
+      "file": "Assets/Ashfall.Core/Survivors/CombatTraumaSystem.cs",
+      "storage_line": 57,
+      "storage": "Dictionary<string, CombatTraumaSurvivorState> _bySurvivor",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "migration_target": "PsychologicalComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "GuiltInsomniaSystem",
+      "file": "Assets/Ashfall.Core/Survivors/GuiltInsomniaSystem.cs",
+      "storage_line": 51,
+      "storage": "Dictionary<string, GuiltSurvivorState> _bySurvivor",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "migration_target": "PsychologicalComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "SomaticFlashbackSystem",
+      "file": "Assets/Ashfall.Core/Survivors/SomaticFlashbackSystem.cs",
+      "storage_line": 58,
+      "storage": "Dictionary<string, FlashbackSurvivorState> _bySurvivor",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "migration_target": "PsychologicalComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "RationConflictSystem",
+      "file": "Assets/Ashfall.Core/Survivors/RationConflictSystem.cs",
+      "storage_line": 45,
+      "storage": "Dictionary<string, RationConflictSurvivorState> _bySurvivor",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "migration_target": "SocialComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "RespiratoryDegenerationSystem",
+      "file": "Assets/Ashfall.Core/Medical/RespiratoryDegenerationSystem.cs",
+      "storage_line": 56,
+      "storage": "Dictionary<string, RespiratorySurvivorState> _survivors",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "migration_target": "MedicalComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "SkillProgressionSystem",
+      "file": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
+      "storage_line": 41,
+      "storage": "Dictionary<string, SkillProgressionState> _bySurvivor",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "migration_target": "SkillsComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "SkillAtrophySystem",
+      "file": "Assets/Ashfall.Core/Survivors/SkillAtrophySystem.cs",
+      "storage_line": 39,
+      "storage": "Dictionary<string, AtrophyState> _byActor",
+      "key_kind": "campaign_entity_id (named 'actor')",
+      "comparer": "default (ordinal)",
+      "note": "name drift: 'actor' rather than 'survivor'",
+      "migration_target": "SkillsComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "TradeSpecialtySystem",
+      "file": "Assets/Ashfall.Core/Survivors/TradeSpecialtySystem.cs",
+      "storage_line": 76,
+      "storage": "Dictionary<string, TradeSpecialtySurvivorState> _bySurvivor",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "migration_target": "SkillsComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "LeadershipSystem",
+      "file": "Assets/Ashfall.Core/Survivors/LeadershipSystem.cs",
+      "storage_line": 57,
+      "storage": "Dictionary<string, SurvivorState> _states",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "note": "type named SurvivorState — a THIRD type with a survivor-state-shaped name (alongside SurvivorNeedsState and SurvivorRadState)",
+      "migration_target": "SocialComponent",
+      "status": "not_migrated"
+    },
+    {
+      "authority": "MoraleMarkSystem",
+      "file": "Assets/Ashfall.Core/DutyRoster/MoraleMarkSystem.cs",
+      "storage_line": 33,
+      "storage": "Dictionary<string, MoraleMarkRecord> _byId",
+      "key_kind": "campaign_entity_id",
+      "comparer": "default (ordinal)",
+      "migration_target": "AssignmentComponent / SocialComponent",
+      "status": "not_migrated"
+    }
+  ],
+
+  "not_survivor_identity": [
+    {
+      "candidate": "SurvivorLetterCatalog._byId",
+      "file": "Assets/Ashfall.Core/Narrative/SurvivorLetterCatalog.cs",
+      "line": 35,
+      "comparer": "StringComparer.OrdinalIgnoreCase",
+      "verdict": "NOT a survivor-identity authority",
+      "evidence": "_byId is populated with l.letter_id (line 50) and read by GetById(letterId). The survivor-facing field author_dweller is free text matched by IndexOf substring search (line 72), never used as a key.",
+      "correction": "This refutes the Phase-0 forensic report's HIGH risk #6 / gap #8 ('case-sensitivity outlier creating duplicate survivor identities'). The comparer is a content-id comparer for letters and carries no survivor-identity risk.",
+      "action": "no migration required"
+    },
+    {
+      "candidate": "subjectId (Combat + Flags)",
+      "files": [
+        "Assets/Ashfall.Core/Combat/CombatTypes.cs",
+        "Assets/Ashfall.Core/Combat/TacticalCombatSystem.cs",
+        "Assets/Ashfall.Core/Flags/IFlagLedger.cs",
+        "Assets/Ashfall.Core/Flags/CampaignConsequenceLedger.cs"
+      ],
+      "verdict": "polymorphic subject id — may be a survivor, a faction, a location, or a quest token",
+      "action": "Phase 62: do NOT blanket-convert. Convert only call sites proven to be survivor-scoped."
+    },
+    {
+      "candidate": "ownerId",
+      "file": "Assets/Ashfall.Core/Combat/WeaponEquipmentBridge.cs",
+      "line": 23,
+      "verdict": "equipment owner — survivor-scoped in practice but defaults to \"\" (empty = any owner)",
+      "action": "Phase 29: needs an explicit optional-owner representation before converting to SurvivorId"
+    },
+    {
+      "candidate": "authorId",
+      "file": "Assets/Ashfall.Core/Journal/RiskBiasTrait.cs (ISurvivorAuthor.Id)",
+      "verdict": "journal author — survivor-scoped, but reached through the ISurvivorAuthor abstraction rather than a raw store",
+      "action": "convert with the Journal domain, not as part of identity foundation"
+    },
+    {
+      "candidate": "definitionId",
+      "file": "Assets/Ashfall.Core/Survivors/SurvivorCatalog.cs",
+      "verdict": "CONTENT id (survivors.json), not a campaign entity id",
+      "action": "keep distinct — see definition_vs_entity below"
+    }
+  ],
+
+  "comparer_and_normalization_variants": {
+    "explicit_ordinal": [
+      "SurvivorFateSystem._byId",
+      "IdeologicalFrictionSystem._beliefs",
+      "SurvivorSocialCoordinator._beliefs",
+      "NeedsSystem.Get (String.Equals ordinal)"
+    ],
+    "default_ordinal": [
+      "SurvivorRosterSystem._byId",
+      "RadiationSystem._dosimeters",
+      "RadiationPhaseProgression._survivors",
+      "ExpeditionSystem._active",
+      "DutyRosterSystem._byId",
+      "DutyRosterSystem._assignmentByRole",
+      "DutyRosterAssignmentEngine._assignmentByRole",
+      "CaregivingSystem._patientToCaregiver",
+      "TraumaBondSystem._bondsBySurvivor",
+      "CombatTraumaSystem._bySurvivor",
+      "GuiltInsomniaSystem._bySurvivor",
+      "SomaticFlashbackSystem._bySurvivor",
+      "RationConflictSystem._bySurvivor",
+      "RespiratoryDegenerationSystem._survivors",
+      "SkillProgressionSystem._bySurvivor",
+      "SkillAtrophySystem._byActor",
+      "TradeSpecialtySystem._bySurvivor",
+      "LeadershipSystem._states",
+      "MoraleMarkSystem._byId",
+      "SurvivorsHostSession._radStates"
+    ],
+    "reference_equality_dedupe": [
+      "NeedsSystem._survivors (List.Contains)",
+      "RadiationSystem._survivors (List.Contains)"
+    ],
+    "case_insensitive_on_survivor_identity": [],
+    "culture_sensitive_on_survivor_identity": [],
+    "finding": "Every survivor-identity store is ordinal. Zero case-insensitive and zero culture-sensitive survivor-identity comparisons exist. The only real comparison defect is reference-equality dedupe in NeedsSystem/RadiationSystem, which permits duplicate ids rather than mis-comparing them.",
+    "consequence_for_design": "SurvivorId adopts ordinal equality with NO normalization. Because all 129 authored ids already match ^[a-z0-9_]+$, rejecting non-canonical input cannot break authored content, and over that value set OrdinalIgnoreCase and Ordinal are provably equivalent — so no comparer in the repo can disagree with SurvivorId."
+  },
+
+  "id_grammar_evidence": {
+    "source": "Assets/StreamingAssets/Data/survivors.json",
+    "definition_count": 129,
+    "all_match_regex": "^[a-z0-9_]+$",
+    "uppercase_ids": 0,
+    "leading_or_trailing_underscore": 0,
+    "double_underscore": 0,
+    "case_insensitive_duplicates": 0,
+    "digits_present": 0,
+    "length_min": 7,
+    "length_max": 29,
+    "prefix_distribution": { "the_": 69, "survivor_": 28, "bare_given_name": 32 },
+    "conclusion": "Survivor ids are snake_case with NO single mandatory prefix. A prefix check would reject 101 of 129 authored ids, so SurvivorId validates grammar only, never prefix.",
+    "starting_roster": {
+      "source": "Assets/StreamingAssets/Data/starting_survivors.json",
+      "ids": ["survivor_dr_sarah_chen", "survivor_gunner_mikhail", "elena_vasquez"]
+    }
+  },
+
+  "definition_vs_entity": {
+    "question": "Phase 4 — are SurvivorDefinitionId and SurvivorId 1:1?",
+    "evidence": "SurvivorRosterSystem.Join(definitionId, day) sets survivorId = definitionId and refuses a second join for the same definition (_byId.ContainsKey guard). No code path generates a synthetic survivor.",
+    "verdict": "1:1 today",
+    "decision": "Keep them as SEPARATE fields on the aggregate (SurvivorId + DefinitionId) but do not introduce a distinct SurvivorDefinitionId value type yet. The aggregate records the definition link so a future generated/duplicate survivor needs no identity migration, while today's data keeps DefinitionId == Id.Value."
+  },
+
+  "lifecycle_state_backing": {
+    "note": "Phase 7 requires the state machine to match the game, not the spec's suggested names.",
+    "Resident": { "backed_by": "SurvivorRosterEntry.isAlive == true", "exists": true },
+    "Away": { "backed_by": "ExpeditionSystem._active keyed by survivorId (at most one)", "exists": true },
+    "Dead": { "backed_by": "SurvivorRosterEntry.isAlive == false + SurvivorFateEvent + SurvivorDeathCause", "exists": true },
+    "Memorialized": { "backed_by": "MemorialSystem.Memorialize idempotent post-death record", "exists": true },
+    "Candidate": { "backed_by": null, "exists": false, "reason": "no recruitment/candidate pool exists; pre-join a survivor is a catalog definition with no aggregate" },
+    "Missing": { "backed_by": null, "exists": false, "reason": "zero occurrences of a missing-survivor concept anywhere in Core or the host" },
+    "Incapacitated": { "backed_by": "MedicalAdmissionStatus.Active", "exists": true, "placement": "medical component, NOT the aggregate (Phase 46 — it needs no cross-domain lifecycle authority)" },
+    "adopted_states": ["Unknown", "Resident", "Away", "Dead", "Memorialized"]
+  },
+
+  "discovered_defects": [
+    {
+      "id": "D1",
+      "severity": "high",
+      "site": "src/Host/SurvivorsHostSession.RestoreSave",
+      "root_cause": "NeedsSystem.Register and RadiationSystem.Register dedupe with List.Contains, i.e. reference equality. Neither system enforces per-Id uniqueness.",
+      "mechanism": "RestoreSave clears the host's RosterState and _radStates but never calls Needs.Unregister / Radiation.Unregister for the previously registered state objects. Fresh objects are appended; stale objects stay registered.",
+      "consequences": [
+        "NeedsSystem.Get(id) returns the FIRST match, which is the STALE object — so SurvivorFateSystem.RunCascade's Get(id)/ForceDeath and the grief-morale loop mutate ghosts instead of live survivors",
+        "stale ghosts keep ticking and can reach 0 HP, firing OnDied -> OnSurvivorDied -> ReportDeath, killing a survivor who is alive in the loaded campaign"
+      ],
+      "status": "confirmed by inspection; not yet fixed; scheduled with the Needs/Radiation migration (Phase 22/24) or as an isolated fix",
+      "structural_fix": "component stores keyed by SurvivorId with 0-or-1 cardinality make duplicate-id registration unrepresentable"
+    },
+    {
+      "id": "D2",
+      "severity": "high",
+      "site": "src/Host/HostCli.PanelTests.cs:420 (RunExpeditionVehicleLogisticsGates, gate V6)",
+      "symptom": "System.Collections.Generic.KeyNotFoundException: The given key 'survivor_a' was not present in the dictionary.",
+      "mechanism": "session.DispatchSortie(\"survivor_a\", ...) does not produce an active sortie, so session.Engine.Active[\"survivor_a\"] throws. Gates V1-V5 pass; V6 onward never run.",
+      "second_defect": "the harness prints EXPEDITION_SELFTEST PASS even though the gate throws, and the process then fails to exit (observed exit code 124 under timeout). A canonical CI gate can therefore report PASS while crashing, which means the 9 vehicle gates AGENTS.md claims are pinned are not actually all being exercised.",
+      "provenance": "PRE-EXISTING, not introduced by Task #132 P0. Verified by removing all six new Core files, rebuilding, and re-running the gate: the identical exception occurs. src/Host/HostCli.PanelTests.cs is unmodified since commit 4d1feb89.",
+      "status": "reported, not fixed — outside Task #132 scope (expedition vehicle logistics, Task #101)",
+      "relevance_to_132": "Phase 19 requires expedition participation to reconcile with survivor lifecycle. This gate must be green before the expedition domain can be migrated, because it is the contract that would detect a regression."
+    }
+  ],
+
+  "forensic_report_corrections": [
+    {
+      "claim": "SurvivorLetterCatalog uses StringComparer.OrdinalIgnoreCase for survivor identity (HIGH risk #6, gap #8)",
+      "verdict": "incorrect — keyed by letter_id, not survivor id",
+      "impact": "removes one claimed HIGH risk from the migration map"
+    },
+    {
+      "claim": "CampaignServices lives at Assets/Ashfall.Core/Campaign/CampaignServices.cs:26",
+      "verdict": "incorrect — that file does not exist; CampaignServices is at src/Host/CampaignServices.cs (Task 131, currently uncommitted)"
+    },
+    {
+      "claim": "nine independent string-keyed authorities",
+      "verdict": "undercount — this inventory catalogues 28 survivor-keyed stores across 25 files"
+    },
+    {
+      "claim": "Task #132 dependencies are Task #140, #141, #148",
+      "verdict": "no such tasks exist anywhere in the repository; the only reference is the forensic report's own unknowns list. Task #131 (composition root) does exist and is the real prerequisite."
+    }
+  ],
+
+  "totals": {
+    "survivor_identity_authorities": 28,
+    "files_involved": 25,
+    "distinct_key_representations": 1,
+    "key_representation": "raw string",
+    "comparer_variants_on_survivor_identity": 3,
+    "comparer_variant_names": ["explicit StringComparer.Ordinal", "default (ordinal)", "reference-equality dedupe"],
+    "normalization_variants": 0,
+    "migrated_this_pass": 0,
+    "note": "0 migrated is correct for P0: this pass introduces the canonical identity/lifecycle foundation additively. No domain is cut over until dual-run parity is proven (Phase 50)."
+  }
+}

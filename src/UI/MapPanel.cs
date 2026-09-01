@@ -85,13 +85,25 @@ namespace AtomicWar.GodotApp.UI
 
             int activeSorties = _expeditions?.Engine.ActiveCount ?? 0;
             int totalLocations = _core?.Catalog?.Locations.Count ?? _catalogs?.Locations.Count ?? 0;
-            if (totalLocations == 0 && _expeditions?.DemoDefinitions.Count > 0)
-                totalLocations = _expeditions.DemoDefinitions.Count;
+            if (totalLocations == 0 && _expeditions?.Definitions.Count > 0)
+                totalLocations = _expeditions.Definitions.Count;
 
             var overviewCard = AshfallUiHelpers.MakeCardFrame("SECTOR RECONNAISSANCE SUMMARY", "TACTICAL GRID");
             var ovBox = overviewCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Home Station", "District 8 Holdfast Bunker [Sector 07]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Atmospheric Hazard", weatherStr, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+
+            // Plan 28 Phase 5 (28L) — coarse wildlife presence in the home sector,
+            // discovery-gated by the world session; no population counts, only band.
+            if (_world != null)
+            {
+                string sighting = _world.HomeSectorWildlifeStatus();
+                if (!string.IsNullOrEmpty(sighting))
+                {
+                    ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Wildlife", sighting,
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                }
+            }
 
             // Weather-intelligence route-safety advisory (station + orbital telemetry).
             var intel = _world?.WeatherIntelligence?.BuildReadModel();
@@ -173,9 +185,9 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // Fallback to expedition definitions if list is empty
-            if (locList.Count == 0 && _expeditions?.DemoDefinitions != null)
+            if (locList.Count == 0 && _expeditions?.Definitions != null)
             {
-                foreach (var def in _expeditions.DemoDefinitions)
+                foreach (var def in _expeditions.Definitions)
                 {
                     locList.Add((def.id, def.displayName, "Sector Recon", def.dangerLevel, def.dangerLevel * 2.5f, "Active expedition destination."));
                 }

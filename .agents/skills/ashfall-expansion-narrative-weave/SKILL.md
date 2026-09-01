@@ -1,3 +1,8 @@
+---
+name: ashfall-expansion-narrative-weave
+description: Weaves expansion quests, echoes, radio, and flags into the base narrative graph, running dialog-graph-lint and narrative-continuity checks for orphan and broken connections.
+---
+
 # ASHFALL Expansion System Skill: ashfall-expansion-narrative-weave
 
 ## Overview

@@ -1,257 +1,467 @@
 {
-    "schema_version": 1,
-    "environmental_texts": [
-        {
-            "id": "env_bunker_perimeter_sign",
-            "location": "bunker_perimeter",
-            "text": "BUNKER PERIMETER — AUTHORIZED PERSONNEL ONLY. VIOLATORS WILL BE SHOT ON SIGHT.",
-            "type": "warning",
-            "tags": ["bunker", "warning", "security"]
-        },
-        {
-            "id": "env_scavenger_camp_note",
-            "location": "scavenger_camp",
-            "text": "If you find this, you're either lost or stupid. We don't share unless you've got something to trade. And we don't wait.",
-            "type": "note",
-            "tags": ["scavengers", "trade", "warning"]
-        },
-        {
-            "id": "env_radiation_warning_sign",
-            "location": "radiation_zone",
-            "text": "RADIATION HAZARD — DO NOT ENTER. LEVELS EXCEED SAFE LIMITS. TURN BACK NOW.",
-            "type": "warning",
-            "tags": ["radiation", "danger", "warning"]
-        },
-        {
-            "id": "env_farmers_field_sign",
-            "location": "farmers_field",
-            "text": "KEEP OFF THE CROPS. WE WORK HARD FOR THIS FOOD. TAKE ONLY WHAT YOU NEED.",
-            "type": "warning",
-            "tags": ["farmers", "food", "warning"]
-        },
-        {
-            "id": "env_abandoned_house_diary",
-            "location": "abandoned_house",
-            "text": "Day 47. The baby won't stop crying. We're out of milk. I don't know how much longer we can last. If anyone finds this, please help us. We're in the house with the blue door on Maple Street.",
-            "type": "diary",
-            "tags": ["survivors", "desperation", "help"]
-        },
-        {
-            "id": "env_black_flotilla_marker",
-            "location": "dock_area",
-            "text": "BLACK FLOTILLA DOCKS — TRADE ONLY. NO WEAPONS. NO FIGHTS. VIOLATORS WILL BE THROWN OVERBOARD.",
-            "type": "warning",
-            "tags": ["black_flotilla", "trade", "warning"]
-        },
-        {
-            "id": "env_radio_tower_message",
-            "location": "bunker_perimeter",
-            "text": "This is Station K-7. If you can hear this, you're not alone. We're still here. We're still fighting. Keep going. Don't give up.",
-            "type": "broadcast",
-            "tags": ["radio", "hope", "survivors"]
-        },
-        {
-            "id": "env_military_outpost_sign",
-            "location": "military_outpost",
-            "text": "MILITARY OUTPOST — AUTHORIZED PERSONNEL ONLY. UNAUTHORIZED ENTRY PROHIBITED BY ORDER OF THE MERIDIAN COMPACT.",
-            "type": "warning",
-            "tags": ["military", "warning", "authority"]
-        },
-        {
-            "id": "env_scavenger_trail_marker",
-            "location": "scavenger_trail",
-            "text": "Follow the red flags. They lead to the good stuff. But watch out for the raiders. They like to ambush scavengers.",
-            "type": "directions",
-            "tags": ["scavengers", "directions", "warning"]
-        },
-        {
-            "id": "env_farmers_market_sign",
-            "location": "farmers_market",
-            "text": "FARMERS MARKET — OPEN DAILY. TRADE FOOD FOR PROTECTION. NO WEAPONS ALLOWED INSIDE.",
-            "type": "notice",
-            "tags": ["farmers", "trade", "notice"]
-        },
-        {
-            "id": "env_abandoned_car_diary",
-            "location": "abandoned_car",
-            "text": "Day 112. We found a working car today. It's old, but it runs. We're going to try to make it to the coast. If we don't make it, at least we tried. We're not giving up without a fight.",
-            "type": "diary",
-            "tags": ["survivors", "hope", "journey"]
-        },
-        {
-            "id": "env_raider_camp_warning",
-            "location": "raider_camp",
-            "text": "TURN BACK NOW. YOU ARE ENTERING RAIDER TERRITORY. WE DO NOT NEGOTIATE. WE TAKE. TURN BACK OR DIE.",
-            "type": "warning",
-            "tags": ["raiders", "danger", "warning"]
-        },
-        {
-            "id": "env_medical_station_sign",
-            "location": "medical_station",
-            "text": "MEDICAL STATION — EMERGENCY SERVICES ONLY. NO LOITERING. NO FIGHTING. VIOLATORS WILL BE REMOVED.",
-            "type": "warning",
-            "tags": ["medical", "warning", "services"]
-        },
-        {
-            "id": "env_technology_cache_note",
-            "location": "tech_cache",
-            "text": "Found this while scavenging. It's old, but it might be useful. If you're reading this, you're probably desperate. Take what you need, but leave some for the next person. We're all in this together.",
-            "type": "note",
-            "tags": ["technology", "scavenging", "help"]
-        },
-        {
-            "id": "env_water_tower_sign",
-            "location": "water_tower",
-            "text": "WATER TOWER — DO NOT DRINK THE WATER. IT'S CONTAMINATED. BOIL IT BEFORE USING.",
-            "type": "warning",
-            "tags": ["water", "contamination", "warning"]
-        },
-        {
-            "id": "env_survivor_graffiti",
-            "location": "bunker_wall",
-            "text": "THEY LIED. THE GOVERNMENT LIED. WE'RE ALL GOING TO DIE OUT HERE.",
-            "type": "graffiti",
-            "tags": ["survivors", "despair", "anger"]
-        },
-        {
-            "id": "env_farmers_thank_you",
-            "location": "farmers_field",
-            "text": "Thank you for protecting our fields. We'll never forget your kindness. If you ever need food, come to us. We'll share what we can.",
-            "type": "thank_you",
-            "tags": ["farmers", "gratitude", "alliance"]
-        },
-        {
-            "id": "env_scavenger_threat",
-            "location": "scavenger_camp",
-            "text": "We know you're out there. We see you. If you take what's ours, we'll take from you. And we won't be gentle about it.",
-            "type": "threat",
-            "tags": ["scavengers", "threat", "warning"]
-        },
-        {
-            "id": "env_radiation_storm_shelter_sign",
-            "location": "shelter_station",
-            "text": "RADIATION STORM SHELTER — CAPACITY: 50. IF FULL, FIND ANOTHER SHELTER. DO NOT KNOCK.",
-            "type": "warning",
-            "tags": ["radiation", "shelter", "warning"]
-        },
-        {
-            "id": "env_black_flotilla_threat",
-            "location": "dock_area",
-            "text": "You have until sunset to pay what you owe. If you don't, we'll take it from you. And we won't ask nicely next time.",
-            "type": "threat",
-            "tags": ["black_flotilla", "threat", "warning"]
-        },
-        {
-            "id": "env_abandoned_library_note",
-            "location": "abandoned_library",
-            "text": "Found a book about pre-war history today. It's amazing how much we've lost. Maybe if we learn from the past, we can build a better future. Or maybe it's all just a fantasy now.",
-            "type": "note",
-            "tags": ["knowledge", "history", "reflection"]
-        },
-        {
-            "id": "env_meridian_compact_poster",
-            "location": "settlement_wall",
-            "text": "THE MERIDIAN COMPACT IS HERE TO HELP. WE OFFER MEDICAL AID, FOOD, AND SHELTER. COME TO US IF YOU NEED HELP. WE WILL NOT TURN YOU AWAY.",
-            "type": "announcement",
-            "tags": ["meridian_compact", "help", "announcement"]
-        },
-        {
-            "id": "env_scavenger_treasure_note",
-            "location": "scavenger_hideout",
-            "text": "This is our secret stash. Don't tell anyone. If you're reading this, you're either family or a thief. If you're a thief, we'll find you. And we won't be happy.",
-            "type": "note",
-            "tags": ["scavengers", "treasure", "warning"]
-        },
-        {
-            "id": "env_radiation_zone_diary",
-            "location": "radiation_zone",
-            "text": "Day 88. I shouldn't be here. The radiation is eating away at me. I can feel it in my bones. But I have to keep going. For my family. For my future. I won't give up, even if it kills me.",
-            "type": "diary",
-            "tags": ["radiation", "desperation", "survival"]
-        },
-        {
-            "id": "env_farmers_harvest_sign",
-            "location": "farmers_field",
-            "text": "HARVEST TIME! COME AND GET YOUR FRESH PRODUCE. WE HAVE FRUITS, VEGETABLES, AND GRAINS. ALL ORGANIC AND NON-GMO. (BEFORE THE WAR, ANYWAY.)",
-            "type": "announcement",
-            "tags": ["farmers", "harvest", "food"]
-        },
-        {
-            "id": "env_abandoned_factory_warning",
-            "location": "abandoned_factory",
-            "text": "DANGER: STRUCTURAL INTEGRITY COMPROMISED. DO NOT ENTER. COLLAPSE RISK.",
-            "type": "warning",
-            "tags": ["factory", "danger", "warning"]
-        },
-        {
-            "id": "env_black_flotilla_contract",
-            "location": "dock_area",
-            "text": "CONTRACT: YOU AGREE TO PAY 50% OF YOUR RESOURCES IN EXCHANGE FOR OUR PROTECTION. FAILURE TO PAY WILL RESULT IN CONSEQUENCES.",
-            "type": "contract",
-            "tags": ["black_flotilla", "trade", "contract"]
-        },
-        {
-            "id": "env_meridian_compact_offer",
-            "location": "settlement_center",
-            "text": "THE MERIDIAN COMPACT OFFERS TECHNOLOGY IN EXCHANGE FOR RESOURCES. BRING US FOOD, MEDICINE, OR FUEL. WE WILL GIVE YOU BLUEPRINTS AND DEVICES IN RETURN.",
-            "type": "announcement",
-            "tags": ["meridian_compact", "trade", "technology"]
-        },
-        {
-            "id": "env_scavenger_safe_house_note",
-            "location": "scavenger_safe_house",
-            "text": "This is a safe house. If you're being chased, come here. We'll help you. But you have to help us too. That's the deal.",
-            "type": "note",
-            "tags": ["scavengers", "safe_house", "help"]
-        },
-        {
-            "id": "env_radiation_storm_aftermath",
-            "location": "radiation_zone",
-            "text": "The storm has passed. The air still burns, but the worst is over. We made it. Barely. But we're still here. And that's what matters.",
-            "type": "diary",
-            "tags": ["radiation", "survival", "reflection"]
-        },
-        {
-            "id": "env_farmers_community_board",
-            "location": "farmers_market",
-            "text": "COMMUNITY BOARD: LOST & FOUND. NEED SOMETHING? CHECK HERE. HAVE SOMETHING TO GIVE? POST IT HERE. WE'RE ALL IN THIS TOGETHER.",
-            "type": "board",
-            "tags": ["farmers", "community", "board"]
-        },
-        {
-            "id": "env_black_flotilla_thanks",
-            "location": "dock_area",
-            "text": "Thanks for your business. Come back soon. And next time, bring more.",
-            "type": "thank_you",
-            "tags": ["black_flotilla", "trade", "gratitude"]
-        },
-        {
-            "id": "env_meridian_compact_warning",
-            "location": "settlement_center",
-            "text": "WARNING: THE MERIDIAN COMPACT IS NOT RESPONSIBLE FOR ANY INJURIES OR DEATHS. PROCEED WITH CAUTION.",
-            "type": "warning",
-            "tags": ["meridian_compact", "warning", "disclaimer"]
-        },
-        {
-            "id": "env_scavenger_welcome",
-            "location": "scavenger_camp",
-            "text": "Welcome to our camp. We don't have much, but what we have, we share. But don't take advantage. We know where you sleep.",
-            "type": "welcome",
-            "tags": ["scavengers", "welcome", "hospitality"]
-        },
-        {
-            "id": "env_radiation_zone_reminder",
-            "location": "radiation_zone",
-            "text": "REMINDER: RADIATION LEVELS ARE STILL ELEVATED. LIMIT YOUR TIME OUTSIDE. WEAR PROTECTIVE GEAR IF POSSIBLE.",
-            "type": "reminder",
-            "tags": ["radiation", "reminder", "safety"]
-        },
-        {
-            "id": "env_farmers_threat",
-            "location": "farmers_field",
-            "text": "We know what you did. Stealing from us is a mistake. You won't get away with it. We'll find you. And we'll make you pay.",
-            "type": "threat",
-            "tags": ["farmers", "threat", "warning"]
-        }
-    ]
+  "schema_version": 1,
+  "environmental_texts": [
+    {
+      "id": "env_bunker_perimeter_sign",
+      "location": "bunker_perimeter",
+      "text": "BUNKER PERIMETER — AUTHORIZED PERSONNEL ONLY. VIOLATORS WILL BE SHOT ON SIGHT.",
+      "type": "warning",
+      "tags": [
+        "bunker",
+        "warning",
+        "security"
+      ]
+    },
+    {
+      "id": "env_scavenger_camp_note",
+      "location": "scavenger_camp",
+      "text": "If you find this, you're either lost or stupid. We don't share unless you've got something to trade. And we don't wait.",
+      "type": "note",
+      "tags": [
+        "scavengers",
+        "trade",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_radiation_warning_sign",
+      "location": "radiation_zone",
+      "text": "RADIATION HAZARD — DO NOT ENTER. LEVELS EXCEED SAFE LIMITS. TURN BACK NOW.",
+      "type": "warning",
+      "tags": [
+        "radiation",
+        "danger",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_farmers_field_sign",
+      "location": "farmers_field",
+      "text": "KEEP OFF THE CROPS. WE WORK HARD FOR THIS FOOD. TAKE ONLY WHAT YOU NEED.",
+      "type": "warning",
+      "tags": [
+        "farmers",
+        "food",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_abandoned_house_diary",
+      "location": "abandoned_house",
+      "text": "Day 47. The baby won't stop crying. We're out of milk. I don't know how much longer we can last. If anyone finds this, please help us. We're in the house with the blue door on Maple Street.",
+      "type": "diary",
+      "tags": [
+        "survivors",
+        "desperation",
+        "help"
+      ]
+    },
+    {
+      "id": "env_black_flotilla_marker",
+      "location": "dock_area",
+      "text": "BLACK FLOTILLA DOCKS — TRADE ONLY. NO WEAPONS. NO FIGHTS. VIOLATORS WILL BE THROWN OVERBOARD.",
+      "type": "warning",
+      "tags": [
+        "black_flotilla",
+        "trade",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_radio_tower_message",
+      "location": "bunker_perimeter",
+      "text": "This is Station K-7. If you can hear this, you're not alone. We're still here. We're still fighting. Keep going. Don't give up.",
+      "type": "broadcast",
+      "tags": [
+        "radio",
+        "hope",
+        "survivors"
+      ]
+    },
+    {
+      "id": "env_military_outpost_sign",
+      "location": "military_outpost",
+      "text": "MILITARY OUTPOST — AUTHORIZED PERSONNEL ONLY. UNAUTHORIZED ENTRY PROHIBITED BY ORDER OF THE MERIDIAN COMPACT.",
+      "type": "warning",
+      "tags": [
+        "military",
+        "warning",
+        "authority"
+      ]
+    },
+    {
+      "id": "env_scavenger_trail_marker",
+      "location": "scavenger_trail",
+      "text": "Follow the red flags. They lead to the good stuff. But watch out for the raiders. They like to ambush scavengers.",
+      "type": "directions",
+      "tags": [
+        "scavengers",
+        "directions",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_farmers_market_sign",
+      "location": "farmers_market",
+      "text": "FARMERS MARKET — OPEN DAILY. TRADE FOOD FOR PROTECTION. NO WEAPONS ALLOWED INSIDE.",
+      "type": "notice",
+      "tags": [
+        "farmers",
+        "trade",
+        "notice"
+      ]
+    },
+    {
+      "id": "env_abandoned_car_diary",
+      "location": "abandoned_car",
+      "text": "Day 112. We found a working car today. It's old, but it runs. We're going to try to make it to the coast. If we don't make it, at least we tried. We're not giving up without a fight.",
+      "type": "diary",
+      "tags": [
+        "survivors",
+        "hope",
+        "journey"
+      ]
+    },
+    {
+      "id": "env_raider_camp_warning",
+      "location": "raider_camp",
+      "text": "TURN BACK NOW. YOU ARE ENTERING RAIDER TERRITORY. WE DO NOT NEGOTIATE. WE TAKE. TURN BACK OR DIE.",
+      "type": "warning",
+      "tags": [
+        "raiders",
+        "danger",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_medical_station_sign",
+      "location": "medical_station",
+      "text": "MEDICAL STATION — EMERGENCY SERVICES ONLY. NO LOITERING. NO FIGHTING. VIOLATORS WILL BE REMOVED.",
+      "type": "warning",
+      "tags": [
+        "medical",
+        "warning",
+        "services"
+      ]
+    },
+    {
+      "id": "env_technology_cache_note",
+      "location": "tech_cache",
+      "text": "Found this while scavenging. It's old, but it might be useful. If you're reading this, you're probably desperate. Take what you need, but leave some for the next person. We're all in this together.",
+      "type": "note",
+      "tags": [
+        "technology",
+        "scavenging",
+        "help"
+      ]
+    },
+    {
+      "id": "env_water_tower_sign",
+      "location": "water_tower",
+      "text": "WATER TOWER — DO NOT DRINK THE WATER. IT'S CONTAMINATED. BOIL IT BEFORE USING.",
+      "type": "warning",
+      "tags": [
+        "water",
+        "contamination",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_survivor_graffiti",
+      "location": "bunker_wall",
+      "text": "THEY LIED. THE GOVERNMENT LIED. WE'RE ALL GOING TO DIE OUT HERE.",
+      "type": "graffiti",
+      "tags": [
+        "survivors",
+        "despair",
+        "anger"
+      ]
+    },
+    {
+      "id": "env_farmers_thank_you",
+      "location": "farmers_field",
+      "text": "Thank you for protecting our fields. We'll never forget your kindness. If you ever need food, come to us. We'll share what we can.",
+      "type": "thank_you",
+      "tags": [
+        "farmers",
+        "gratitude",
+        "alliance"
+      ]
+    },
+    {
+      "id": "env_scavenger_threat",
+      "location": "scavenger_camp",
+      "text": "We know you're out there. We see you. If you take what's ours, we'll take from you. And we won't be gentle about it.",
+      "type": "threat",
+      "tags": [
+        "scavengers",
+        "threat",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_radiation_storm_shelter_sign",
+      "location": "shelter_station",
+      "text": "RADIATION STORM SHELTER — CAPACITY: 50. IF FULL, FIND ANOTHER SHELTER. DO NOT KNOCK.",
+      "type": "warning",
+      "tags": [
+        "radiation",
+        "shelter",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_black_flotilla_threat",
+      "location": "dock_area",
+      "text": "You have until sunset to pay what you owe. If you don't, we'll take it from you. And we won't ask nicely next time.",
+      "type": "threat",
+      "tags": [
+        "black_flotilla",
+        "threat",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_abandoned_library_note",
+      "location": "abandoned_library",
+      "text": "Found a book about pre-war history today. It's amazing how much we've lost. Maybe if we learn from the past, we can build a better future. Or maybe it's all just a fantasy now.",
+      "type": "note",
+      "tags": [
+        "knowledge",
+        "history",
+        "reflection"
+      ]
+    },
+    {
+      "id": "env_meridian_compact_poster",
+      "location": "compound_wall",
+      "text": "THE MERIDIAN COMPACT IS HERE TO HELP. WE OFFER MEDICAL AID, FOOD, AND SHELTER. COME TO US IF YOU NEED HELP. WE WILL NOT TURN YOU AWAY.",
+      "type": "announcement",
+      "tags": [
+        "meridian_compact",
+        "help",
+        "announcement"
+      ]
+    },
+    {
+      "id": "env_scavenger_treasure_note",
+      "location": "scavenger_hideout",
+      "text": "This is our secret stash. Don't tell anyone. If you're reading this, you're either family or a thief. If you're a thief, we'll find you. And we won't be happy.",
+      "type": "note",
+      "tags": [
+        "scavengers",
+        "treasure",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_radiation_zone_diary",
+      "location": "radiation_zone",
+      "text": "Day 88. I shouldn't be here. The radiation is eating away at me. I can feel it in my bones. But I have to keep going. For my family. For my future. I won't give up, even if it kills me.",
+      "type": "diary",
+      "tags": [
+        "radiation",
+        "desperation",
+        "survival"
+      ]
+    },
+    {
+      "id": "env_farmers_harvest_sign",
+      "location": "farmers_field",
+      "text": "HARVEST TIME! COME AND GET YOUR FRESH PRODUCE. WE HAVE FRUITS, VEGETABLES, AND GRAINS. ALL ORGANIC AND NON-GMO. (BEFORE THE WAR, ANYWAY.)",
+      "type": "announcement",
+      "tags": [
+        "farmers",
+        "harvest",
+        "food"
+      ]
+    },
+    {
+      "id": "env_abandoned_factory_warning",
+      "location": "abandoned_factory",
+      "text": "DANGER: STRUCTURAL INTEGRITY COMPROMISED. DO NOT ENTER. COLLAPSE RISK.",
+      "type": "warning",
+      "tags": [
+        "factory",
+        "danger",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_black_flotilla_contract",
+      "location": "dock_area",
+      "text": "CONTRACT: YOU AGREE TO PAY 50% OF YOUR RESOURCES IN EXCHANGE FOR OUR PROTECTION. FAILURE TO PAY WILL RESULT IN CONSEQUENCES.",
+      "type": "contract",
+      "tags": [
+        "black_flotilla",
+        "trade",
+        "contract"
+      ]
+    },
+    {
+      "id": "env_meridian_compact_offer",
+      "location": "commune_center",
+      "text": "THE MERIDIAN COMPACT OFFERS TECHNOLOGY IN EXCHANGE FOR RESOURCES. BRING US FOOD, MEDICINE, OR FUEL. WE WILL GIVE YOU BLUEPRINTS AND DEVICES IN RETURN.",
+      "type": "announcement",
+      "tags": [
+        "meridian_compact",
+        "trade",
+        "technology"
+      ]
+    },
+    {
+      "id": "env_scavenger_safe_house_note",
+      "location": "scavenger_safe_house",
+      "text": "This is a safe house. If you're being chased, come here. We'll help you. But you have to help us too. That's the deal.",
+      "type": "note",
+      "tags": [
+        "scavengers",
+        "safe_house",
+        "help"
+      ]
+    },
+    {
+      "id": "env_radiation_storm_aftermath",
+      "location": "radiation_zone",
+      "text": "The storm has passed. The air still burns, but the worst is over. We made it. Barely. But we're still here. And that's what matters.",
+      "type": "diary",
+      "tags": [
+        "radiation",
+        "survival",
+        "reflection"
+      ]
+    },
+    {
+      "id": "env_farmers_community_board",
+      "location": "farmers_market",
+      "text": "COMMUNITY BOARD: LOST & FOUND. NEED SOMETHING? CHECK HERE. HAVE SOMETHING TO GIVE? POST IT HERE. WE'RE ALL IN THIS TOGETHER.",
+      "type": "board",
+      "tags": [
+        "farmers",
+        "community",
+        "board"
+      ]
+    },
+    {
+      "id": "env_black_flotilla_thanks",
+      "location": "dock_area",
+      "text": "Thanks for your business. Come back soon. And next time, bring more.",
+      "type": "thank_you",
+      "tags": [
+        "black_flotilla",
+        "trade",
+        "gratitude"
+      ]
+    },
+    {
+      "id": "env_meridian_compact_warning",
+      "location": "commune_center",
+      "text": "WARNING: THE MERIDIAN COMPACT IS NOT RESPONSIBLE FOR ANY INJURIES OR DEATHS. PROCEED WITH CAUTION.",
+      "type": "warning",
+      "tags": [
+        "meridian_compact",
+        "warning",
+        "disclaimer"
+      ]
+    },
+    {
+      "id": "env_scavenger_welcome",
+      "location": "scavenger_camp",
+      "text": "Welcome to our camp. We don't have much, but what we have, we share. But don't take advantage. We know where you sleep.",
+      "type": "welcome",
+      "tags": [
+        "scavengers",
+        "welcome",
+        "hospitality"
+      ]
+    },
+    {
+      "id": "env_radiation_zone_reminder",
+      "location": "radiation_zone",
+      "text": "REMINDER: RADIATION LEVELS ARE STILL ELEVATED. LIMIT YOUR TIME OUTSIDE. WEAR PROTECTIVE GEAR IF POSSIBLE.",
+      "type": "reminder",
+      "tags": [
+        "radiation",
+        "reminder",
+        "safety"
+      ]
+    },
+    {
+      "id": "env_farmers_threat",
+      "location": "farmers_field",
+      "text": "We know what you did. Stealing from us is a mistake. You won't get away with it. We'll find you. And we'll make you pay.",
+      "type": "threat",
+      "tags": [
+        "farmers",
+        "threat",
+        "warning"
+      ]
+    },
+    {
+      "id": "env_deepcoast_low_tide",
+      "location": "loc_shelf_deep_berth",
+      "text": "LOW WATER. The mudline stands three strides past the chart mark; ladder rungs that were under water at dawn now show weed and old rope scars. The dive windows are open while the mud holds.",
+      "type": "environment",
+      "tags": [
+        "deep_coast",
+        "tide",
+        "planning"
+      ]
+    },
+    {
+      "id": "env_deepcoast_rising_tide",
+      "location": "loc_shelf_service_channel",
+      "text": "THE WATER IS COMING BACK. The channel gravel hisses as the flood pushes in; debris starts moving toward the channel mouth. Anything left on the low line will be under within the hour.",
+      "type": "warning",
+      "tags": [
+        "deep_coast",
+        "tide",
+        "planning"
+      ]
+    },
+    {
+      "id": "env_deepcoast_slack_water",
+      "location": "loc_maritime_icebreaker_dock",
+      "text": "SLACK WATER. The surface has gone flat and greasy between the turns. This is the water the divers bargain for - no pull, no push, and the noise carries farther than anyone likes.",
+      "type": "notice",
+      "tags": [
+        "deep_coast",
+        "tide",
+        "dive"
+      ]
+    },
+    {
+      "id": "env_deepcoast_rip_current",
+      "location": "loc_shelf_service_channel",
+      "text": "THE PULL IS WRONG TODAY. Foam lines run hard past the service channel mouth and the mooring buoys lean against it. The Flotilla board says wait; the water says otherwise.",
+      "type": "warning",
+      "tags": [
+        "deep_coast",
+        "current",
+        "hazard"
+      ]
+    },
+    {
+      "id": "env_deepcoast_storm_pressure",
+      "location": "loc_shelf_perimeter_breakwater",
+      "text": "THE GLASS IS FALLING. The swell has doubled since the last bell and the boom chains are lifting. When the sea comes over the shelf, it comes all at once. Nobody works the dock in this.",
+      "type": "warning",
+      "tags": [
+        "deep_coast",
+        "storm",
+        "surge"
+      ]
+    },
+    {
+      "id": "env_deepcoast_surge_aftermath",
+      "location": "loc_shelf_service_channel",
+      "text": "THE WATER DROPPED OVERNIGHT. The surge left the channel strung with weed, rope, and one field telephone spool nobody can account for. The mud holds shapes it did not hold yesterday.",
+      "type": "notice",
+      "tags": [
+        "deep_coast",
+        "surge",
+        "aftermath"
+      ]
+    }
+  ]
 }

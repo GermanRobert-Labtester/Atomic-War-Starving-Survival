@@ -199,62 +199,26 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
+            // Ticket #125: layout chrome owned by
+            // res://assets/ui/panels/QuestDetailPanel.tscn. SceneBinder resolves
+            // typed unique-name nodes; sibling bind logic in this file is
+            // unchanged.
+            var binder = new SceneBinder(this, typeof(QuestDetailPanel));
+            binder.Require<VBoxContainer>("InfoContainer");
+            binder.Require<VBoxContainer>("StagesContainer");
+            binder.Require<VBoxContainer>("ChoicesContainer");
+            binder.Require<VBoxContainer>("RewardsContainer");
+            binder.Require<Label>("Title");
+            binder.Require<Button>("CloseButton");
+
+            _infoContainer = binder.Get<VBoxContainer>("InfoContainer");
+            _stagesContainer = binder.Get<VBoxContainer>("StagesContainer");
+            _choicesContainer = binder.Get<VBoxContainer>("ChoicesContainer");
+            _rewardsContainer = binder.Get<VBoxContainer>("RewardsContainer");
+            _titleLabel = binder.Get<Label>("Title");
+            binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+
             Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.03f, 0.04f, 0.05f, 0.96f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var scroll = new ScrollContainer();
-            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
-            scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
-            AddChild(scroll);
-
-            var center = new CenterContainer();
-            center.SetAnchorsPreset(LayoutPreset.FullRect);
-            center.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            center.SizeFlagsVertical = SizeFlags.ExpandFill;
-            scroll.AddChild(center);
-
-            var rootBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            rootBox.CustomMinimumSize = new Vector2(760, 0);
-            center.AddChild(rootBox);
-
-            _titleLabel = AshfallUiHelpers.MakeTitle("OPERATION DOSSIER & DIRECTIVE", Ashfall.Core.UI.Theme.FontSizeH1);
-            _titleLabel.HorizontalAlignment = HorizontalAlignment.Center;
-            rootBox.AddChild(_titleLabel);
-
-            var sub = AshfallUiHelpers.MakeMetadata("Detailed mission briefing, step-by-step objectives, decision branches, and reward specifications.");
-            sub.HorizontalAlignment = HorizontalAlignment.Center;
-            sub.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            rootBox.AddChild(sub);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _infoContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_infoContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _stagesContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_stagesContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _choicesContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_choicesContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _rewardsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            rootBox.AddChild(_rewardsContainer);
-
-            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO QUESTS [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(220, 42);
-            rootBox.AddChild(btnClose);
         }
 
         public void Open()

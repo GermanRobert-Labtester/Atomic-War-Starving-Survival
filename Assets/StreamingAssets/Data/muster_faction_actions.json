@@ -1,0 +1,1212 @@
+{
+  "schema_version": 1,
+  "actions": [
+    {
+      "id": "act_salvage_rights_offer",
+      "faction_id": "faction_scavenger_guild",
+      "title": "The Claim Ledger Opens",
+      "text": "A Guild registrar arrives with the two-color ledger under her arm and a ruin's grid reference already circled. The site is claimed. The question is what the shelter does about that.",
+      "min_day": 60,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The registrar does not sit. The shelter is in the ledger's gray margin — names that strip claimed sites do not get terms, they get watched. She reads the grid reference aloud anyway, so nobody can say they were not warned.",
+          "choices": [
+            {
+              "choice_id": "honor_claim_from_distance",
+              "text": "Keep off the claimed grid. Say little.",
+              "effects": {
+                "trust_delta": 1,
+                "flags": [
+                  "flag_favor_scavenger_claim_recognized"
+                ],
+                "journal": "The shelter kept off a claimed ruin. The Guild noticed."
+              }
+            },
+            {
+              "choice_id": "strip_anyway",
+              "text": "Strip the site anyway. The ledger keeps its gray margin.",
+              "effects": {
+                "trust_delta": -3,
+                "flags": [
+                  "flag_grievance_scavenger_claim_disputed"
+                ],
+                "journal": "The shelter stripped a Guild-claimed ruin knowing it was claimed."
+              }
+            }
+          ]
+        },
+        {
+          "band": "poor",
+          "text": "The registrar sets the ledger down but keeps a hand on it. Terms first, then the ruin: a finder's share up front, and the Guild's mark on anything carried out. She does not pretend the shelter's name is clean in her book.",
+          "choices": [
+            {
+              "choice_id": "pay_sharp_fee",
+              "text": "Pay the sharp finder's share.",
+              "effects": {
+                "trust_delta": 2,
+                "flags": [
+                  "flag_favor_scavenger_claim_recognized"
+                ],
+                "journal": "The shelter paid the Guild's finder's share without haggling."
+              }
+            },
+            {
+              "choice_id": "dispute_claim",
+              "text": "Dispute the claim. The ruin predates the ledger.",
+              "effects": {
+                "trust_delta": -2,
+                "flags": [
+                  "flag_grievance_scavenger_claim_disputed"
+                ],
+                "journal": "The shelter disputed a Guild salvage claim. The dispute went into the ledger."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "The registrar states the custom plainly: the ruin is claimed, the shelter may work the fringe for a finder's share, and the mark on the doorframe means the Guild witnesses who was there first. She waits. Bargains here are ordinary.",
+          "choices": [
+            {
+              "choice_id": "pay_standard_fee",
+              "text": "Pay the standard finder's share.",
+              "effects": {
+                "trust_delta": 3,
+                "flags": [
+                  "flag_favor_scavenger_claim_recognized"
+                ],
+                "journal": "The shelter took recognized salvage rights at the standard share."
+              }
+            },
+            {
+              "choice_id": "dispute_claim",
+              "text": "Dispute the claim and ask for arbitration.",
+              "effects": {
+                "trust_delta": -2,
+                "flags": [
+                  "flag_grievance_scavenger_claim_disputed"
+                ],
+                "journal": "The shelter disputed a Guild salvage claim and demanded arbitration."
+              }
+            }
+          ]
+        },
+        {
+          "band": "good",
+          "text": "The registrar almost smiles. The shelter's name sits on the right page of the ledger, and that buys a courtesy: the inner galleries, not just the fringe, at the ordinary share. She marks the doorframe herself.",
+          "choices": [
+            {
+              "choice_id": "honor_first_claim",
+              "text": "Honor the first claim and take the offered galleries.",
+              "effects": {
+                "trust_delta": 4,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter honored a Guild first-claim and was granted the inner galleries."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The registrar brings the ledger and a second chair. The Guild does not offer the inner galleries to allies — it asks them to witness claims. The ruin is almost beside the point; the point is that the shelter's word now counts in the ledger.",
+          "choices": [
+            {
+              "choice_id": "serve_as_witness",
+              "text": "Serve as the shelter's witnessing sign on Guild claims.",
+              "effects": {
+                "trust_delta": 4,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter agreed to witness Guild claims as a trusted sign."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_claim_arbitration",
+      "faction_id": "faction_scavenger_guild",
+      "title": "Two Teams, One Find",
+      "text": "Two Guild crews came back from the same collapsed parking structure with the same story: their claim, their mark, their find. The ledger has both names in it — somebody double-marked, or somebody lied. The Guild wants a name the crews already trust to sit the arbitration, and lately that name is the shelter's.",
+      "min_day": 80,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The arbitration is a formality in a room the shelter is barely welcome in. The registrar reads the double-mark aloud like a verdict already written, and both crews watch how the outsider leans.",
+          "choices": [
+            {
+              "choice_id": "refuse_seat",
+              "text": "Decline the seat. Guild house, Guild problem.",
+              "effects": {
+                "trust_delta": 0,
+                "flags": [
+                  "flag_grievance_scavenger_arbitration_refused"
+                ],
+                "journal": "The shelter refused to sit the Guild's claim arbitration."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "The registrar lays the ledger open between the two crews: same day, same mark, two inks. Custom says first mark keeps; custom also says a split witnessed by a neutral sign holds better than a ruling nobody signed. The crews wait on the shelter's word, and everyone in the guildhall pretends not to listen.",
+          "choices": [
+            {
+              "choice_id": "recognize_first",
+              "text": "Rule for the first mark, whatever it costs the other crew.",
+              "effects": {
+                "trust_delta": 3,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter ruled the Guild arbitration by the first-mark custom."
+              }
+            },
+            {
+              "choice_id": "order_split",
+              "text": "Order the find split, witnessed in the ledger.",
+              "effects": {
+                "trust_delta": 2,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter split a contested Guild find and both crews signed it."
+              }
+            },
+            {
+              "choice_id": "refuse_seat",
+              "text": "Refuse the seat. Not the shelter's ledger, not the shelter's problem.",
+              "effects": {
+                "trust_delta": -2,
+                "flags": [
+                  "flag_grievance_scavenger_arbitration_refused"
+                ],
+                "journal": "The shelter refused to sit the Guild's claim arbitration."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The registrar hands the shelter the pen, not just the seat. An allied sign can end this with one line in the ledger and both crews will keep it — that is what the color of the shelter's name is worth now.",
+          "choices": [
+            {
+              "choice_id": "recognize_first",
+              "text": "Rule for the first mark and log the precedent.",
+              "effects": {
+                "trust_delta": 4,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter ruled the Guild arbitration by the first-mark custom and set precedent."
+              }
+            },
+            {
+              "choice_id": "order_split",
+              "text": "Order the split and log the crews' agreement.",
+              "effects": {
+                "trust_delta": 4,
+                "flags": [
+                  "flag_favor_scavenger_arbitration_fair"
+                ],
+                "journal": "The shelter split a contested find as the Guild's trusted sign."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_apprentice_rule_dispute",
+      "faction_id": "faction_scavenger_guild",
+      "title": "The Registrar and the Free Hands",
+      "text": "The Guild is not one voice. The registrars want the apprentice yield cap enforced on every crew working guildhall territory; the free hands — unlicensed scavengers who trade at the guildhall but answer to no ledger — call the cap a leash. Both sides have asked the shelter, separately, to stand with them. Only one answer goes in the book.",
+      "min_day": 100,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The argument arrives twice in one day — first as a registrar's formal request, then as a free hand's bottle-topped version of the same. The cap keeps claimed ruins from being stripped to the rebar; the cap also decides who eats in a bad month. The shelter's word will not settle it, but it will be remembered by whichever side loses.",
+          "choices": [
+            {
+              "choice_id": "back_registrars",
+              "text": "Back the registrars: the cap holds, everywhere.",
+              "effects": {
+                "trust_delta": 3,
+                "flags": [
+                  "flag_favor_scavenger_apprentice_backed"
+                ],
+                "journal": "The shelter backed the Guild registrars on the apprentice yield cap."
+              }
+            },
+            {
+              "choice_id": "back_free_hands",
+              "text": "Back the free hands: work is work, unlicensed or not.",
+              "effects": {
+                "trust_delta": -3,
+                "flags": [
+                  "flag_grievance_scavenger_registrar_defied"
+                ],
+                "journal": "The shelter sided with unlicensed scavengers against the Guild's yield cap."
+              }
+            },
+            {
+              "choice_id": "stay_out",
+              "text": "Tell both sides the shelter trades, it does not govern.",
+              "effects": {
+                "trust_delta": -1,
+                "flags": [],
+                "journal": "The shelter stayed out of the Guild's cap dispute."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_purification_toll",
+      "faction_id": "faction_hydro_barons",
+      "title": "The Purification Toll",
+      "text": "A Hydro water detail has chained the purge valves on the treatment skid the shelter's line runs through, and hung the rate card on the fence: purification isn't free anymore, it's tolled. The card quotes a price in fittings, labor, or water itself, and the queue chit number at the bottom has the shelter's name on it.",
+      "min_day": 70,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The toll card is written in a hand that expects it to be read aloud. Double rate, payment in advance, and a collector who checks names against a list of accounts in arrears. The shelter's account is marked. Water keeps moving through the skid; permission does not.",
+          "choices": [
+            {
+              "choice_id": "pay_double",
+              "text": "Pay the double toll and keep the line.",
+              "effects": {
+                "trust_delta": 1,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_toll_paid"
+                ],
+                "journal": "The shelter paid the Hydro double toll to keep its water line."
+              }
+            },
+            {
+              "choice_id": "default",
+              "text": "Run the line untolled and let them post the account.",
+              "effects": {
+                "trust_delta": -3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_hydro_toll_defaulted"
+                ],
+                "journal": "The shelter defaulted on the Hydro purification toll."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "The collector quotes the standard toll without ceremony: it buys intake priority at the skid for a season, and the Barons' technicians keep the filters swapping on schedule. It is expensive the way a roof is expensive. She has heard every argument about water being a right and answers none of them.",
+          "choices": [
+            {
+              "choice_id": "pay_standard",
+              "text": "Pay the standard toll.",
+              "effects": {
+                "trust_delta": 3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_toll_paid"
+                ],
+                "journal": "The shelter paid the Hydro purification toll at the standard rate."
+              }
+            },
+            {
+              "choice_id": "negotiate_parts",
+              "text": "Offer maintenance labor in place of half the toll.",
+              "effects": {
+                "trust_delta": 2,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter worked off half the Hydro toll in skid labor."
+              }
+            },
+            {
+              "choice_id": "default",
+              "text": "Refuse the toll on principle.",
+              "effects": {
+                "trust_delta": -2,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_hydro_toll_defaulted"
+                ],
+                "journal": "The shelter refused the Hydro purification toll on principle."
+              }
+            }
+          ]
+        },
+        {
+          "band": "good",
+          "text": "The collector barely opens the rate card. Good accounts get the season's toll booked against the Barons' own maintenance schedule — the shelter's filters swapped, its line flushed, at cost. 'Baron's word,' she says, which at the pumphouse means the same as ink.",
+          "choices": [
+            {
+              "choice_id": "take_credit_terms",
+              "text": "Take the cost-price season on the Barons' word.",
+              "effects": {
+                "trust_delta": 4,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_water_accord_honored"
+                ],
+                "journal": "The shelter took cost-price purification on the Barons' word."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_hydro_emergency_appeal",
+      "faction_id": "faction_hydro_barons",
+      "title": "The Appeal From Unit Four",
+      "text": "A Baron's engineer comes to the shelter gate with wet boots and a dry list: the intake screens at Desalination Unit 4 are fouling faster than the spares cover, and the BARONS' OWN repair priority is six weeks out. She needs filter media, or hands, or both. She does not say please. She says what happens to the queue when Unit 4 throttles down.",
+      "min_day": 100,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The list is specific: one advanced filter element, two days of skilled hands, and the Barons' engineer will sign for both in the shelter's favor at the rate card. The queue math is real — a throttled Unit 4 puts every chit holder back a week, the shelter included.",
+          "choices": [
+            {
+              "choice_id": "give_filter",
+              "text": "Give the filter element and two days of hands.",
+              "effects": {
+                "trust_delta": 5,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "item_water_filter_advanced",
+                "item_amount": -1,
+                "flags": [
+                  "flag_favor_hydro_water_accord_honored"
+                ],
+                "journal": "The shelter answered the Barons' emergency appeal with a filter and labor."
+              }
+            },
+            {
+              "choice_id": "give_hands_only",
+              "text": "Send hands, keep the filter element.",
+              "effects": {
+                "trust_delta": 3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter sent skilled hands to Unit Four without parting with filter media."
+              }
+            },
+            {
+              "choice_id": "refuse",
+              "text": "Decline. The shelter's spares are the shelter's.",
+              "effects": {
+                "trust_delta": -3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_hydro_appeal_refused"
+                ],
+                "journal": "The shelter refused the Barons' emergency appeal."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The engineer reads the list once and stops pretending it is a request between strangers. Allied accounts get the truth: Unit 4 has a month, maybe less, and what the Barons need from the shelter is not charity but a partner who shows up before the queue riots.",
+          "choices": [
+            {
+              "choice_id": "give_filter",
+              "text": "Commit the element and the hands, same day.",
+              "effects": {
+                "trust_delta": 5,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "item_water_filter_advanced",
+                "item_amount": -1,
+                "flags": [
+                  "flag_favor_hydro_water_accord_honored"
+                ],
+                "journal": "The shelter stood with the Barons at Unit Four before the queue felt it."
+              }
+            },
+            {
+              "choice_id": "organize_queue_relief",
+              "text": "Organize queue relief among the chit holders instead.",
+              "effects": {
+                "trust_delta": 3,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_water_accord_honored"
+                ],
+                "journal": "The shelter organized chit-holder relief while Unit Four was down."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_intake_dispute",
+      "faction_id": "faction_hydro_barons",
+      "title": "Technicians and Collectors",
+      "text": "Not all the Barons wear the same face. The technicians who keep the filters swapping blame the collectors' toll gouging for the intake sabotage that keeps hitting the lines — people do not poison what they can afford. The collectors answer that purity is paid for, or it is luck. The shelter has been asked, by both, to witness the intake audit where the fight will happen.",
+      "min_day": 110,
+      "max_day": 0,
+      "once": true,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The audit room smells like chlorine and old grudge. The technicians' numbers are good and the collectors' tempers are better. Whoever the shelter stands beside will own the intake policy for a season, and the other side will remember the audit every time the water tastes wrong.",
+          "choices": [
+            {
+              "choice_id": "back_technicians",
+              "text": "Back the technicians: publish the intake audit openly.",
+              "effects": {
+                "trust_delta": 4,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_hydro_intake_audited"
+                ],
+                "journal": "The shelter backed the Hydro technicians' open intake audit."
+              }
+            },
+            {
+              "choice_id": "back_collectors",
+              "text": "Back the collectors: purity is paid for, publish nothing.",
+              "effects": {
+                "trust_delta": -2,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_hydro_intake_disputed"
+                ],
+                "journal": "The shelter backed the Hydro collectors against the open intake audit."
+              }
+            },
+            {
+              "choice_id": "abstain",
+              "text": "Witness without standing beside either.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter witnessed the Hydro intake audit without taking a side."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_raider_parley",
+      "faction_id": "faction_iron_raiders",
+      "title": "Parley Under Their Code",
+      "text": "A raider emissary sits down out of reach of the window and puts a weapon on the table, muzzle toward herself: the Toll's sign for talk. The code is simple and it is real - a parley opened honestly holds while the parties keep it, and the man who breaks one answers to his own crew. What she wants is a standing exchange: the shelter's scrap metal offered first to the den, in return for the shelter's name moving off the seasonal list.",
+      "min_day": 90,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The emissary's crew watches from the tree line and she talks fast, like the parley is a thing that can be lost. The Toll's den is hungry this season; the list the shelter is on has a date next to it. Terms will be sharp and the guarantee is only her own skin.",
+          "choices": [
+            {
+              "choice_id": "honor_terms",
+              "text": "Take the sharp terms and stand by them.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.15,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter honored a raider parley on sharp terms."
+              }
+            },
+            {
+              "choice_id": "refuse",
+              "text": "Send her back with nothing.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.1,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_raider_parley_broken"
+                ],
+                "journal": "The shelter refused a raider parley."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "Talk goes on for an hour, mostly about what the code does not allow: no burning stores, no touched wells, surrendered people walked to a road and released. The emissary does not dress up what the Toll is. She wants the shelter as a customer, not a friend, and the code she keeps is the only guarantee on the table.",
+          "choices": [
+            {
+              "choice_id": "honor_terms",
+              "text": "Agree to the exchange and keep it.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.2,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter kept a raider parley: scrap first-offer for the seasonal list."
+              }
+            },
+            {
+              "choice_id": "counter_terms",
+              "text": "Counter with a fixed term - one season, then renew.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.1,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter countered a raider parley with a one-season term."
+              }
+            },
+            {
+              "choice_id": "refuse",
+              "text": "Refuse. The shelter does not deal.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.05,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter refused a raider parley without insult."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The emissary leaves the weapon on the table, which among the Toll means something like trust. The den remembers the shelter kept the last bargain: routes that cross Toll ground pass with a nod, and the seasonal list is a formality the list-keepers skip. What she asks now is small - a debt settled between crews, not strangers.",
+          "choices": [
+            {
+              "choice_id": "honor_terms",
+              "text": "Renew the standing exchange, witnessed by both crews.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.2,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter renewed its standing parley with the Toll's den."
+              }
+            },
+            {
+              "choice_id": "broker_internal",
+              "text": "Broker between the den's hardliners and pragmatists.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.25,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter brokered between the Toll's hardliners and pragmatists."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_raider_passage_levy",
+      "faction_id": "faction_iron_raiders",
+      "title": "The Passage Levy",
+      "text": "The route the shelter's expeditions use crosses ground the Toll treats as theirs, and a levy party is waiting at the crossing with a hand-painted rate: one share in ten of what crosses, or the crossing stops being safe for anyone who doesn't fly their mark. They are not hiding that this is a toll, and they are not pretending it is a tax. It is a price for a road.",
+      "min_day": 200,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 20,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The levy party has a captured truck behind it and men on it who look like the truck was captured recently. Rates double for shelters the den doesn't like, and the shelter is not liked. They will take the share or they will take the next convoy, and everyone at the crossing knows which is cheaper.",
+          "choices": [
+            {
+              "choice_id": "pay_levy",
+              "text": "Pay the doubled levy in goods.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.1,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter paid the Toll's doubled passage levy."
+              }
+            },
+            {
+              "choice_id": "run_convoy",
+              "text": "Run the crossing at night and take the risk.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.15,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_raider_passage_evaded"
+                ],
+                "journal": "The shelter ran the Toll crossing at night instead of paying."
+              }
+            },
+            {
+              "choice_id": "fight",
+              "text": "Refuse with force in the open.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.25,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_raider_passage_fought"
+                ],
+                "journal": "The shelter fought the Toll's levy party at the crossing."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "The levy is a share in ten, weighed honestly, receipted in chalk on the convoy's own manifest. The party chief is bored and professional about it. Parley partners get the same rate as anyone; the difference is the den actually keeps its hands off partners' next crossing.",
+          "choices": [
+            {
+              "choice_id": "pay_levy",
+              "text": "Pay the honest tenth and keep the manifest chalk.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.1,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter paid the Toll's passage levy, receipted in chalk."
+              }
+            },
+            {
+              "choice_id": "negotiate_mark",
+              "text": "Buy the Toll's mark instead - a season of crossings.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.2,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter bought a season's passage under the Toll's mark."
+              }
+            },
+            {
+              "choice_id": "divert",
+              "text": "Divert the route and lose the days instead.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter diverted its route around the Toll crossing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_raider_code_dispute",
+      "faction_id": "faction_iron_raiders",
+      "title": "The Toll's Own Argument",
+      "text": "The den is not one voice either. An old crew chief named for the bridge he burned wants the code widened - stores, wells, medicine, nothing spared, because the war taught him what mercy costs. The emissaries and the young hands want the code held exactly because the war taught them the same. The dispute has come to the shelter's door because both sides trade there, and both sides asked.",
+      "min_day": 120,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The old chief makes his case plainly: dead men keep no code, and the den ate from garbage two winters ago because mercy was on the wrong ledger. The emissary answers with the list of wells the Toll never touched and the crews that surrendered and walked away. The shelter's word will not settle the den. It will tip it.",
+          "choices": [
+            {
+              "choice_id": "back_code_holders",
+              "text": "Stand with the emissaries: the code holds.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.15,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter stood with the Toll's emissaries to hold the raider code."
+              }
+            },
+            {
+              "choice_id": "back_hardliners",
+              "text": "Agree with the old chief: winters like this spare nobody.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.2,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_raider_code_widened"
+                ],
+                "journal": "The shelter sided with the Toll's hardliners to widen the raider code."
+              }
+            },
+            {
+              "choice_id": "say_nothing",
+              "text": "Trade, and say nothing about another crew's law.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter stayed out of the Toll's code dispute."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_coalition_mediation_request",
+      "faction_id": "faction_deserter_coalition",
+      "title": "The Mediation Request",
+      "text": "The Coalition Camp exists because exhausted people needed somewhere to sit near their enemies, and it stays alive because somebody settles the arguments small enough to kill a truce. Today's argument is a depot, two caravans, and a deadline.",
+      "min_day": 210,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 25,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "Two caravans have claimed the same collapsed depot, and both threatened to arm before the week is out. The camp's mediators cannot be the arbiter - they house both. A caller comes up the slope with the camp's ask: lend the shelter's name and its record for fair dealing, and sit one afternoon of listening. The camp cannot pay. The camp can only remember.",
+          "choices": [
+            {
+              "choice_id": "sit_mediator",
+              "text": "Lend the shelter's name and sit the mediation.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_mediation_served"
+                ],
+                "journal": "The shelter served as neutral sign in a Coalition Camp mediation."
+              }
+            },
+            {
+              "choice_id": "send_goods_peace",
+              "text": "Send goods as an offset instead of a person.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -3,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter offset a camp dispute with goods instead of a mediator."
+              }
+            },
+            {
+              "choice_id": "decline",
+              "text": "Decline. The shelter is not neutral enough to pretend.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 3,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_mediation_refused"
+                ],
+                "journal": "The shelter declined the Coalition Camp's mediation request."
+              }
+            }
+          ]
+        },
+        {
+          "band": "good",
+          "text": "The ask comes with the camp's own flag folded into the messenger's coat - the standing mark that the shelter's word holds on camp ground. Sitting the mediation under that mark costs the shelter an afternoon and buys it something rarer: a debt the camp keeps in its founding custom, written where the rules are burned into the plank.",
+          "choices": [
+            {
+              "choice_id": "sit_mediator",
+              "text": "Sit the mediation under the camp's mark.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -8,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_mediation_served"
+                ],
+                "journal": "The shelter mediated under the Coalition's standing mark."
+              }
+            },
+            {
+              "choice_id": "decline",
+              "text": "Decline even the honored ask.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_mediation_refused"
+                ],
+                "journal": "The shelter declined a honored Coalition mediation request."
+              }
+            }
+          ]
+        },
+        {
+          "band": "hostile",
+          "text": "The messenger will not come inside the wire. The camp's security detail has been counting the shelter's faces since the informant story made the rounds, and the ask for a mediator is thinner this time - more test than trust. Sitting it would mean working a crowd that has already decided what the shelter is.",
+          "choices": [
+            {
+              "choice_id": "sit_mediator_anyway",
+              "text": "Sit the mediation and take the crowd's suspicion.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -3,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter mediated at the camp despite hostile suspicion."
+              }
+            },
+            {
+              "choice_id": "decline",
+              "text": "Decline, and say why: the mark has to mean something.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 8,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_mediation_refused"
+                ],
+                "journal": "The shelter declined mediation while the camp counted its faces."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_coalition_supply_appeal",
+      "faction_id": "faction_deserter_coalition",
+      "title": "One Pot, Four Banners",
+      "text": "The shared meal is the camp's oldest custom and its most fragile: no banner eats while another banner watches, and the pot holds only what people put in it. The camp's quartermaster keeps the rosters honest. She has run out of honest things to put in the pot.",
+      "min_day": 220,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 25,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The camp's ledger of what it owes is short and what it holds is shorter. The mess tent is down to stretching one pot across four banners, and winter does not care how temporary a political invention is. The ask is plain: whatever the shelter can spare, logged openly, owed publicly.",
+          "choices": [
+            {
+              "choice_id": "give_supply",
+              "text": "Send what the shelter can spare, logged openly.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_supply_shared"
+                ],
+                "journal": "The shelter answered the camp's shared-supply appeal."
+              }
+            },
+            {
+              "choice_id": "promise_later",
+              "text": "Promise a share after the next resupply.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter promised the camp a supply share after resupply."
+              }
+            },
+            {
+              "choice_id": "refuse",
+              "text": "Refuse. The shelter's margin is its own.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_supply_refused"
+                ],
+                "journal": "The shelter refused the camp's shared-supply appeal."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The appeal is barely an appeal anymore - it is a supply schedule between allies, with the shelter's name on the camp's mess roster and the camp's wounded carried toward the shelter's door. What is asked for is the next month's share, and what is offered back is written into the neutral-ground rules themselves.",
+          "choices": [
+            {
+              "choice_id": "give_supply",
+              "text": "Commit the month's share to the mess roster.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 2,
+                "lockout_delta": -8,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_supply_shared"
+                ],
+                "journal": "The shelter committed a month's share to the camp mess; two wounded came in with it."
+              }
+            },
+            {
+              "choice_id": "give_and_join",
+              "text": "Commit the share and take a seat at the camp's own fire.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 3,
+                "lockout_delta": -8,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_supply_shared"
+                ],
+                "journal": "The shelter shared the month's supply and was given a place at the camp fire."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_camp_rules_dispute",
+      "faction_id": "faction_deserter_coalition",
+      "title": "Rules Before Wire",
+      "text": "The camp is not one voice either. Its mediators and its security crew agree the camp must survive; they disagree on what surviving costs, and the disagreement has stopped being polite. The shelter, as the outside party both still deal with, has been asked to weigh in.",
+      "min_day": 230,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The camp's founding custom says every banner gets a voice, and the camp has discovered what that costs: the mediators want the witness rules tightened before someone's testimony gets someone killed, and the security crew wants the wire moved first, because dead neutrals need no rules. Both sides have asked the shelter - the only outside party both still talk to - which comes first.",
+          "choices": [
+            {
+              "choice_id": "back_mediators",
+              "text": "Back the mediators: rules before wire.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_rules_first"
+                ],
+                "journal": "The shelter backed the camp mediators: rules before wire."
+              }
+            },
+            {
+              "choice_id": "back_security",
+              "text": "Back the security crew: wire before rules.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -10,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_security_backed"
+                ],
+                "journal": "The shelter backed the camp security crew: wire before rules."
+              }
+            },
+            {
+              "choice_id": "refuse_choice",
+              "text": "Tell them the order is theirs to choose.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter left the camp's rules-versus-wire choice to the camp."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -46,7 +46,14 @@ public partial class MaritimeAtlasPanel : Control
     private int _selectedIndex = -1;
 
     private MaritimeHostSession? _host;
-    private List<(string siteId, string name, int oxygen, float noiseFloor, string keeper, int rooms)> _sites = new();
+    private List<(string siteId, string name, int oxygen, float noiseFloor, string keeper, int rooms, string tideWindow)> _sites = new();
+    private int _campaignDay;
+
+    /// <summary>
+    /// Authoritative campaign day for tide-window presentation (optional —
+    /// without a day provider the tide column shows the authored rule only).
+    /// </summary>
+    public Func<int>? CampaignDayProvider { get; set; }
 
     public bool IsBound => _host != null;
 
@@ -73,7 +80,8 @@ public partial class MaritimeAtlasPanel : Control
                     site.oxygen_budget_ticks,
                     site.base_noise_floor,
                     site.keeper_thread_id ?? "—",
-                    site.rooms?.Count ?? 4
+                    site.rooms?.Count ?? 4,
+                    site.tide_window ?? "any"
                 ));
             }
         }
@@ -87,16 +95,17 @@ public partial class MaritimeAtlasPanel : Control
                     (int)(site.depthMeters * 2.5f),
                     site.hazardLevel,
                     site.isHazardous ? "q_keeper_of_logs" : "—",
-                    4
+                    4,
+                    "any"
                 ));
             }
         }
         else
         {
-            _sites.Add(("site_exp09_ss_sovereign", "S.S. Sovereign", 120, 0.85f, "q_keeper_of_logs", 4));
-            _sites.Add(("site_exp09_ferry_terminal", "The Drowned Ferry Terminal", 90, 0.60f, "—", 4));
-            _sites.Add(("site_exp09_barge_flotilla", "The Barge Flotilla", 100, 0.40f, "—", 4));
-            _sites.Add(("site_exp09_naval_patrol", "The Patrol Craft", 80, 0.70f, "—", 4));
+            _sites.Add(("site_exp09_ss_sovereign", "S.S. Sovereign", 120, 0.85f, "q_keeper_of_logs", 4, "slack"));
+            _sites.Add(("site_exp09_ferry_terminal", "The Drowned Ferry Terminal", 90, 0.60f, "—", 4, "any"));
+            _sites.Add(("site_exp09_barge_flotilla", "The Barge Flotilla", 100, 0.40f, "—", 4, "any"));
+            _sites.Add(("site_exp09_naval_patrol", "The Patrol Craft", 80, 0.70f, "—", 4, "any"));
         }
     }
 
@@ -331,7 +340,7 @@ public partial class MaritimeAtlasPanel : Control
                 "Dive site state surfaces here when the dive begins."));
             return;
         }
-        var (siteId, name, oxygen, noiseFloor, keeper, rooms) = _sites[_selectedIndex];
+        var (siteId, name, oxygen, noiseFloor, keeper, rooms, tideWindow) = _sites[_selectedIndex];
         _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Site", name,
             AshfallUiHelpers.ToColor(DesignTheme.Warm)));
         _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Site Id", siteId,
@@ -344,6 +353,35 @@ public partial class MaritimeAtlasPanel : Control
             AshfallUiHelpers.ToColor(DesignTheme.Muted)));
         _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Rooms", $"{rooms}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Tide window", TideText(tideWindow),
+            AshfallUiHelpers.ToColor(DesignTheme.Muted)));
+    }
+
+    private string TideText(string rawWindow)
+    {
+        var parsed = Ashfall.Core.Maritime.DiveSiteTideWindows.Parse(rawWindow);
+        if (parsed == Ashfall.Core.Maritime.TideWindow.Any) return "Any tide";
+
+        string rule = until_text(rawWindow, 0);
+        int day = CampaignDayProvider?.Invoke() ?? -1;
+        if (day < 0) return rule; // no day authority: show the authored rule
+
+        int until = Ashfall.Core.Maritime.TideCalendar.DaysUntilOpen(parsed, day);
+        if (until == 0) return rule + " — open now";
+        return rule + " · now: " + Ashfall.Core.Maritime.TideCalendar.PhaseName(Ashfall.Core.Maritime.TideCalendar.PhaseFor(day)).ToLowerInvariant() + ", opens in " + until + " d";
+    }
+
+    private static string until_text(string window, int days)
+    {
+        return window switch
+        {
+            "slack" => "Open at slack water only",
+            "low" => "Open only at low tide",
+            "high" => "Open only at high water",
+            "falling" => "Opens on the falling tide",
+            "unsafe_at_peak" => "Unsafe during peak flow",
+            _ => "Any tide"
+        };
     }
 
     /// <summary>Hard-coded fixture rows for the bound=false case. 1 row per room tile.</summary>

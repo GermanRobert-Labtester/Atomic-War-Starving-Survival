@@ -28,6 +28,30 @@ namespace AtomicWar.GodotApp
         // SetupExpandedShelterSystems; lazily by the research panel route.
         private ResearchSystem _sharedResearch = null!;
 
+        /// <summary>
+        /// Lazily create the shared research engine, restore persisted research
+        /// progress, and load the authoritative research_knowledge.json catalog
+        /// (Plan 34: JSON is the sole authored research authority). All research
+        /// consumers — crafting/workshop, autopsy, library study, research and
+        /// atlas panels — must obtain the engine through this method so the
+        /// campaign has exactly one research instance.
+        /// </summary>
+        private ResearchSystem EnsureSharedResearch()
+        {
+            if (_sharedResearch != null) return _sharedResearch;
+            var saved = ResearchSaveStore.TryLoad();
+            var engine = new ResearchSystem(log: new GodotLog(), state: saved);
+            if (!string.IsNullOrEmpty(_dataDir))
+            {
+                var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
+                int count = ResearchKnowledgeCatalogLoader.LoadAndRegister(engine, _dataDir, fileIO, new SystemTextJsonSerializer());
+                if (count == 0)
+                    GD.PushWarning($"[Ashfall Godot] research_knowledge.json loaded 0 nodes from {_dataDir} — research content unavailable");
+            }
+            _sharedResearch = engine;
+            return engine;
+        }
+
 
 
         // Batch 4 BUG-14 follow-up: a SINGLE shared duty roster passed to
@@ -36,7 +60,7 @@ namespace AtomicWar.GodotApp
         // Previously each system held a fresh `new DutyRosterSystem()`, so
         // cross-system busy checks (mentor_busy / caregiver_busy) observed
         // an empty per-instance roster and never blocked.
-        private readonly DutyRosterSystem _expandedShelterRoster = new DutyRosterSystem();
+        private DutyRosterSystem _expandedShelterRoster = new DutyRosterSystem();
 
         // Promoted from SetupExpandedShelterSystems local — Apprenticeship needs
         // the core SurvivorRelationsSystem instance for its constructor.
@@ -62,7 +86,7 @@ namespace AtomicWar.GodotApp
             SetupStartingLevel();
             SetupWorld();
 
-            _sharedResearch = new ResearchSystem(log: new GodotLog());
+            _sharedResearch = EnsureSharedResearch();
 
             SetupWaterTreatment();
             SetupAirlockSecurity();
@@ -90,6 +114,7 @@ namespace AtomicWar.GodotApp
             SetupContractorRoster();
             SetupMentalHealthCrisis();
             SetupShelterAssignment();   // last — post-wiring to Thermal + Phase0
+            SetupShelterDecor();        // uses the final assignment map + inventory catalog
         }
 
         private void WireWaterTreatmentSumpBridge()
@@ -206,12 +231,21 @@ namespace AtomicWar.GodotApp
             SaveKitchenNutrition();
             SaveEquipmentCondition();
             SaveLibraryStudy();
+            SaveResearch();
             SaveArchiveDesk();
             SaveContractorRoster();
             SaveMentalHealthCrisis();
             SaveChemicalDependency();
             SaveShelterAssignment();
+            SaveShelterDecor();
             SaveFactionBranch();
+        }
+
+        /// <summary>Capture research progress into the campaign envelope (Plan 34: research state must round-trip).</summary>
+        private void SaveResearch()
+        {
+            if (_sharedResearch != null)
+                CaptureSection("research", ResearchSaveStore.TryCapturePersisted(_sharedResearch.CaptureState()));
         }
 
 
@@ -328,6 +362,10 @@ namespace AtomicWar.GodotApp
                 case "traveling_caravan":
                     if (_travelingCaravanPanel != null) { _travelingCaravanPanel.Visible = true; _travelingCaravanPanel.RefreshView(); }
                     break;
+                case "shelter_decor":
+                    SetupShelterDecor();
+                    if (_shelterDecorPanel != null) { _shelterDecorPanel.Visible = true; _shelterDecorPanel.RefreshView(); }
+                    break;
                 case "medical_ward":
                     SetupMedicalWard();
                     if (_medicalWardPanel != null) { _medicalWardPanel.Visible = true; _medicalWardPanel.RefreshView(); }
@@ -376,6 +414,9 @@ namespace AtomicWar.GodotApp
             RemovePanel(_chemicalDependencyPanel); _chemicalDependencyPanel = null!;
             RemovePanel(_phantomMemoryPanel); _phantomMemoryPanel = null!;
             RemovePanel(_travelingCaravanPanel); _travelingCaravanPanel = null!;
+            RemovePanel(_powerGridPanel); _powerGridPanel = null!;
+            RemovePanel(_medicalWardPanel); _medicalWardPanel = null!;
+            RemovePanel(_shelterDecorPanel); _shelterDecorPanel = null!;
 
             // Dispose / null host sessions
             _waterTreatment?.Dispose(); _waterTreatment = null!;
@@ -402,7 +443,14 @@ namespace AtomicWar.GodotApp
             _mentalHealthCrisis?.Dispose(); _mentalHealthCrisis = null!;
             _chemicalDependency?.Dispose(); _chemicalDependency = null!;
             _shelterAssignment?.Dispose(); _shelterAssignment = null!;
+            _shelterDecor?.Dispose(); _shelterDecor = null!;
             _travelingCaravan?.Dispose(); _travelingCaravan = null!;
+            _powerGrid?.Dispose(); _powerGrid = null!;
+            _medicalWardSession?.Dispose(); _medicalWardSession = null!;
+            _medicalWard = null!;
+            _factionBranch?.Dispose(); _factionBranch = null!;
+            _factionBranchDirty = false;
+            _expandedShelterRoster = new DutyRosterSystem();
 
             _airlockSecurityDirty = false;
             _shelterThermalDirty = false;
@@ -424,18 +472,14 @@ namespace AtomicWar.GodotApp
             _archiveDeskDirty = false;
             _contractorRosterDirty = false;
             _mentalHealthCrisisDirty = false;
+            _powerGridDirty = false;
+            _medicalWardDirty = false;
 
-            // Delete slot and global save files for expanded shelter systems
-            // (section file names come from the single registry authority)
-            foreach (var file in Ashfall.Core.Save.SaveSectionRegistry.SectionFileNames.Values)
-            {
-                string p = SaveSlotRoot.Resolve(file);
-                if (System.IO.File.Exists(p))
-                    System.IO.File.Delete(p);
-                string globalP = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
-                if (System.IO.File.Exists(globalP))
-                    System.IO.File.Delete(globalP);
-            }
+            // Lifecycle reset is intentionally persistence-free. The expanded
+            // shelter group owns the existing section captures, but it does
+            // not delete slot projections, campaign envelopes, backups, or
+            // global user:// saves. Destructive new-game cleanup remains in
+            // the separately scoped DeleteGlobalSavesOnDisk path.
         }
     }
 }

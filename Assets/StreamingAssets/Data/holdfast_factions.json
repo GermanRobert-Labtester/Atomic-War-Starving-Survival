@@ -63,6 +63,32 @@
       "signature_quote": "The authenticator wanted a number. A number was found, or a person was asked ashore.",
       "access_rule": "Waiting for a stand-up that uses the same authentication family as a land pad. Some paper only works on land. Blasting is refused. The Ridge is hours and cold.",
       "badge_asset_id": ""
+    },
+    {
+      "id": "faction_black_flotilla",
+      "display_name": "The Black Flotilla",
+      "alignment": "conditional",
+      "home_region": "coastal_shelf",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "item_marine_sealant_kit",
+        "medicine",
+        "fuel",
+        "dried_rations",
+        "charts"
+      ],
+      "offers": [
+        "item_sea_ration",
+        "item_brine_protein_tin",
+        "item_sealed_dive_lamp",
+        "item_descent_line",
+        "dive_coordinates",
+        "storm_warnings"
+      ],
+      "signature_quote": "The sea keeps what it takes. We keep what we raise. Everything else is argument.",
+      "access_rule": "Flag traffic is hailed, boarded, and priced. Marked salvage claims outrange weapons; a claim tag counts as a signature on the water. Unmarked deep work is theirs, not yours.",
+      "badge_asset_id": "faction_icon_black_flotilla"
     }
   ]
 }

@@ -382,4 +382,76 @@ public class SaveSlotServiceTests
         string slotRoot = service.GetSlotRoot(profile, slot);
         Assert.True(File.Exists(Path.Combine(slotRoot, "campaign.json")));
     }
+
+    [Fact]
+    public void IsIronManTerminal_OnCorruptCampaign_DoesNotQuarantine()
+    {
+        // The terminal check is a read-only policy probe consulted by
+        // SelectSlot/DeleteSlot before the user has taken any destructive
+        // action. It must never quarantine (move/delete) the campaign file
+        // it is only being asked to describe — that is reserved for an
+        // explicit load/restore attempt via TryLoadAggregate.
+        string path = UniquePath("ironman_no_quarantine");
+        var service = CreateService(path);
+        var profile = new SaveProfileId("p1");
+        var slot = new SaveSlotId("s1");
+        service.CreateSlot(profile, slot);
+
+        string aggregatePath = service.GetAggregatePath(profile, slot);
+        File.WriteAllText(aggregatePath, "{ not valid json");
+
+        bool result = service.IsIronManTerminal(profile, slot);
+
+        // Indeterminate/invalid campaigns fail closed for the destructive
+        // policy check (blocked = true)...
+        Assert.True(result);
+        // ...but the corrupt file must be left exactly where it was so a
+        // later explicit recovery/load attempt can still inspect it.
+        Assert.True(File.Exists(aggregatePath));
+        Assert.False(File.Exists(aggregatePath + "." + slot.Value + SaveSlotService.QuarantineExtension));
+    }
+
+    [Fact]
+    public void IsIronManTerminal_OnValidNonTerminalCampaign_ReturnsFalseAndPreservesFile()
+    {
+        string path = UniquePath("ironman_valid_preserved");
+        var service = CreateService(path);
+        var profile = new SaveProfileId("p1");
+        var slot = new SaveSlotId("s1");
+        service.CreateSlot(profile, slot);
+
+        var envelope = new AggregateSaveEnvelope
+        {
+            manifestVersion = CampaignEnvelopeBuilder.CurrentEnvelopeVersion,
+            manifest = new SaveManifest
+            {
+                profileId = profile,
+                slotId = slot,
+                campaignName = "Valid",
+                currentDay = 1,
+                seed = 1,
+                generationId = "gen-1",
+                ironManTerminalState = IronManTerminalState.Active
+            },
+            sections = new List<SaveSectionEnvelope>
+            {
+                new SaveSectionEnvelope
+                {
+                    sectionName = "journal",
+                    schemaVersion = SaveSectionRegistry.SchemaVersionFor("journal"),
+                    generationId = "gen-1",
+                    payloadJson = "{}"
+                }
+            }
+        };
+        envelope.sections[0].checksum = SaveSlotService.ComputeSectionChecksum(envelope.sections[0]);
+        envelope.aggregateChecksum = SaveSlotService.ComputeAggregateChecksum(envelope);
+
+        Assert.True(service.WriteAggregateAtomically(profile, slot, envelope));
+
+        string aggregatePath = service.GetAggregatePath(profile, slot);
+        Assert.False(service.IsIronManTerminal(profile, slot));
+        Assert.True(File.Exists(aggregatePath));
+        Assert.False(File.Exists(aggregatePath + "." + slot.Value + SaveSlotService.QuarantineExtension));
+    }
 }

@@ -24,8 +24,6 @@ namespace AtomicWar.GodotApp.UI
         private AshfallStatusRail? _statusRail;
         private VBoxContainer _contentStack = null!;
         private Label _detailText = null!;
-        private Button _assignBtn = null!;
-        private Button _unassignBtn = null!;
 
         private CaregivingHostSession? _host;
 
@@ -75,25 +73,6 @@ namespace AtomicWar.GodotApp.UI
             _detailText = AshfallUiHelpers.MakeBody("", autowrap: true);
             _contentStack.AddChild(_detailText);
 
-            var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
-
-            _assignBtn = AshfallUiHelpers.MakeButton("Demo Assign (caregiver_a → patient_b)", () =>
-            {
-                if (_host != null)
-                    _host.AssignCaregiver("caregiver_a", "patient_b");
-            });
-            _assignBtn.CustomMinimumSize = new Vector2(260, 36);
-            buttonRow.AddChild(_assignBtn);
-
-            _unassignBtn = AshfallUiHelpers.MakeButton("Unassign patient_b", () =>
-            {
-                if (_host != null)
-                    _host.UnassignCaregiver("patient_b");
-            });
-            _unassignBtn.CustomMinimumSize = new Vector2(160, 36);
-            buttonRow.AddChild(_unassignBtn);
-
-            _contentStack.AddChild(buttonRow);
             _shell.SetContent(_contentStack);
 
             _shell.AttachHeaderCloseButton("CLOSE", () =>
@@ -117,8 +96,6 @@ namespace AtomicWar.GodotApp.UI
                 {
                     _detailText.Text = "Caregiving host session is not bound. Bedside tending assignments and bond records are offline.";
                 }
-                if (_assignBtn != null) _assignBtn.Disabled = true;
-                if (_unassignBtn != null) _unassignBtn.Disabled = true;
                 return;
             }
 

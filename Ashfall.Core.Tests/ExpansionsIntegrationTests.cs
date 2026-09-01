@@ -23,7 +23,7 @@ namespace Ashfall.Core.Tests
             var report = HoldfastHeadlessDemo.Run(DataDir());
             Assert.True(report.Passed, report.Summary);
             Assert.True(report.LocationCount >= 26);
-            Assert.Equal(10, report.QuestCount);
+            Assert.True(report.QuestCount >= 10);
         }
 
         [Fact]

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Ashfall.Core.IO;
 namespace Ashfall.Core.Maritime
@@ -11,6 +12,10 @@ namespace Ashfall.Core.Maritime
     /// immersive stage for <see cref="StealthDiveInstance"/>; the instance keeps
     /// its four-room shape and the catalog supplies per-site oxygen budget,
     /// noise floor, keeper questline thread, and room hazard profiles.
+    /// Plan 23 adds optional site-scoped mechanics: coastal location anchor,
+    /// gear gate, contamination key, data-driven safes (SafeCrackingSystem),
+    /// procedural loot tables, and a discovery path. All new fields default
+    /// safe for pre-Plan-23 catalogs and saves.
     /// </summary>
     [Serializable]
     public class DiveSiteRoom
@@ -29,6 +34,50 @@ namespace Ashfall.Core.Maritime
         public float base_noise_floor;
         public string keeper_thread_id = string.Empty;
         public List<DiveSiteRoom> rooms = new List<DiveSiteRoom>();
+
+        // ── Plan 23 (optional enrichment — old saves/catalogs default safe) ──
+
+        /// <summary>Coastal overworld anchor (existing loc_*/location_* id). Empty = chart-only site.</summary>
+        public string location_id = string.Empty;
+
+        /// <summary>Gear gate: item id required to start this dive (empty = no gate).</summary>
+        public string required_item_id = string.Empty;
+
+        /// <summary>How many of the required item are consumed/needed (default 1).</summary>
+        public int required_item_count = 1;
+
+        /// <summary>PsychologicalContaminationSystem key applied on contaminated outcomes (site-scoped).</summary>
+        public string contamination_key = string.Empty;
+
+        /// <summary>Data-driven safes opened through the real SafeCrackingSystem.</summary>
+        public List<SafeDefinition> safes = new List<SafeDefinition>();
+
+        /// <summary>Procedural scavenge table for repeatable site salvage (VariableLootNode grammar).</summary>
+        public List<VariableLootNode> loot_table = new List<VariableLootNode>();
+
+        /// <summary>How this site becomes known to the player (lore/discovery path note).</summary>
+        public string discovery = string.Empty;
+
+        /// <summary>
+        /// Authored tide window: "any" (default), "slack", "low", "high",
+        /// "falling", "unsafe_at_peak". Derived from campaign day via
+        /// <see cref="TideCalendar"/> — no serialized tide state.
+        /// </summary>
+        public string tide_window = "any";
+    }
+
+    /// <summary>Canonical tide_window strings → TideWindow (unknown → Any).</summary>
+    public static class DiveSiteTideWindows
+    {
+        public static TideWindow Parse(string? raw) => raw switch
+        {
+            "slack" => TideWindow.Slack,
+            "low" => TideWindow.LowOnly,
+            "high" => TideWindow.HighOnly,
+            "falling" => TideWindow.FallingOnly,
+            "unsafe_at_peak" => TideWindow.UnsafeAtPeak,
+            _ => TideWindow.Any
+        };
     }
 
     [Serializable]

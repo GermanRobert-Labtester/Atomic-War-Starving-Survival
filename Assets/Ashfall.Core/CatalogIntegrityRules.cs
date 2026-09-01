@@ -17,6 +17,8 @@ namespace Ashfall.Core
             "disease_", "event_", "recipe_", "relic_", "lore_", "room_", "stage_", "choice_",
             "mutation_", "flag_", "trait_", "anchor_", "season_", "kind_", "clinic_",
             "morph_", "drug_", "co_", "enc_", "narrative_", "dialogue_event_",
+            "field_fauna_", "field_flora_", "field_guide_", "char_", "creature_", "settlement_", "territory_", "table_loot_", "scavenge_",
+            "frequency_", "schedule_event_", "hidden_cache_", "archetype_",
             "frequency_", "schedule_event_", "hidden_cache_", "archetype_",
             "belief_profile_", "profession_", "background_", "phantom_background_",
             "pre_war_profession_", "personal_keepsake_item_", "stance_", "belief_",
@@ -28,7 +30,8 @@ namespace Ashfall.Core
             "contraband_", "glitch_", "telemetry_", "blackbox_", "directive_", "audit_",
             "hydrophone_", "borehole_", "cryopod_", "salt_mine_",
             "liturgy_", "canon_", "hymnal_", "epitaph_",
-            "journal_psych_", "botany_", "folklore_children_", "fraud_ration_",
+            "journal_psych_", "botany_", "folklore_children_", "folklore_", "fraud_ration_",
+            "graffiti_", "ritual_", "superstition_", "memorial_rite_", "mourning_", "schism_",
             "cipher_station_", "alarm_seismic_", "emp_sniffer_", "wiretap_",
             "pathology_autopsy_", "pharma_", "surgery_log_", "sensory_loss_",
             "audit_gate_", "silt_report_", "lead_wall_", "filter_clog_",
@@ -68,7 +71,19 @@ namespace Ashfall.Core
             "tallow_rendering_", "beeswax_clarif_", "wick_braiding_", "candle_dip_",
             "bone_degreasing_", "antler_horn_", "bone_scraping_", "bone_tool_",
             // The Weight of Choices — faction branching system (Military slice).
-            "branch_", "ending_"
+            "branch_", "ending_",
+            // Plan 20 — Wasteland Inhabitants & Field Guide
+            "field_fauna_", "field_flora_", "field_guide_", "char_", "creature_",
+            // Plan 21 — Phantom Memory & Heirloom World Layer
+            "heirloom_", "secret_", "phantom_trigger_",
+            // Plan 22 — Foundry, Greenhouse & Production
+            "foundry_prod_", "crop_",
+            // Plan 26 — Knowledge, Research & Skills: The Progression World
+            "knowledge_", "skill_", "manual_", "procedure_", "finding_",
+            // Plan 28 — Living Wasteland Ecology, Migration & Infestations
+            "species_", "migration_", "infestation_", "eco_chain_",
+            // Plan 36 — Wildlife Trapping Catalog
+            "trap_"
         };
 
         /// <summary>
@@ -87,7 +102,19 @@ namespace Ashfall.Core
             "questlineId", "stageId", "firstStageId",
             // The Weight of Choices — faction branching system (Military slice).
             "ponr_flag", "ending_id",
-            "recipe_id", "key", "message_key"
+            "recipe_id", "key", "message_key",
+            // Plan 20
+            "choice_id", "chain_id",
+            // Plan 21
+            "heirloom_id", "secret_id", "trigger_id", "gating_flag",
+            // Plan 22
+            "product_id", "internal_divisions",
+            // Plan 26
+            "manual_id", "procedure_id", "possible_findings",
+            // Plan 28
+            "migration_id", "infestation_id", "species_id",
+            // Plan 36
+            "trap_id"
         };
 
         /// <summary>
@@ -107,10 +134,12 @@ namespace Ashfall.Core
             "traitId", "branchId", "scheduleEventId", "dialogue_event_id",
             "requiredFlag", "requiredFlagId", "RequiredFlagId", "RequiredEventFlags",
             "ambushFlag", "cleanWaterRewardFlag", "trait_granted",
-            "latentExpertTrait", "requiredTrait", "roomId", "itemId",
+            "latentExpertTrait", "requiredTrait", "itemId",
             "downstream_quest_trigger", "gating_flag", "nextStageId",
             "countermeasure_item_id",
-            "from", "to"
+            "from", "to",
+            // Plan 46 — Scavenging Tables
+            "scavenging_table_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -123,9 +152,11 @@ namespace Ashfall.Core
         public static readonly string[] VocabularyKeys =
         {
             "tags", "category", "type", "phase", "severity", "discovery_trigger", "badge_asset_id",
-            "stance", "short_name", "identity", "sink", "notes", "display_name",
-            "collection_id",
+            "stance", "short_name", "identity", "sink", "notes", "display_name", "legacy_aliases",
+            "collection_id", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
+            "depletion_model", "primary_hazard_type", "hazard_type", "codex_unlock_id", "location_type", "rarity_tier",
+            "effect_type", "effect_target", "rarity", "ignoreConsequence", "authenticity",
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",
             "callsign", "entry_type", "record_type", "directive_code", "classification",
             "issuing_authority", "vault_id", "audit_type", "sub_level", "auditor_designation",
@@ -285,10 +316,30 @@ namespace Ashfall.Core
             // future exp-12 code; registered in whitelists/orphan_knocks.json as a
             // deliberate, canonically-tracked orphan door event.
             "flag_exp07_vel_vigil_knock",
-            "paper_scrap", "item_teddy_bear", "crayon", "ammo_9x19", "blood_bag",
+                        // Plan 25 (Faction Ecology & the Muster) — political flags produced at
+            // runtime by the FactionActionBoard / FactionWarChainRunner seams and
+            // consumed across muster_witnesses.json / muster_camp_scenes.json.
+            // Full producer->consumer map: whitelists/plan25_flags.json.
+            "flag_become_warlord", "flag_escalation_bitter_water", "flag_escalation_bitter_water_investigated", "flag_escalation_cistern_blockade",
+            "flag_escalation_cistern_published", "flag_escalation_empty_chair", "flag_escalation_marked_ruin", "flag_escalation_marked_ruin_mediated",
+            "flag_escalation_prisoner_gate", "flag_escalation_prisoner_truth_told", "flag_escalation_stopped_convoy", "flag_favor_coalition_mediation_served",
+            "flag_favor_coalition_rules_first", "flag_favor_coalition_supply_shared", "flag_favor_hydro_intake_audited", "flag_favor_hydro_toll_paid",
+            "flag_favor_hydro_water_accord_honored", "flag_favor_raider_parley_honored", "flag_favor_scavenger_apprentice_backed", "flag_favor_scavenger_arbitration_fair",
+            "flag_favor_scavenger_claim_recognized", "flag_grievance_coalition_mediation_refused", "flag_grievance_coalition_security_backed", "flag_grievance_coalition_supply_refused",
+            "flag_grievance_hydro_appeal_refused", "flag_grievance_hydro_intake_disputed", "flag_grievance_hydro_toll_defaulted", "flag_grievance_raider_code_widened",
+            "flag_grievance_raider_parley_broken", "flag_grievance_raider_passage_evaded", "flag_grievance_raider_passage_fought", "flag_grievance_scavenger_arbitration_refused",
+            "flag_grievance_scavenger_claim_disputed", "flag_grievance_scavenger_registrar_defied", "flag_messenger_kept", "flag_peace_bread_before_bullets",
+            "flag_peace_faction_forms", "flag_peace_refusal_at_dawn", "flag_peace_volunteers_dry", "flag_war_refugees_arrived",
+            "flag_war_requisition_demand", "flag_war_requisition_met", "flag_war_requisition_refused", "flag_war_shelter_took_wounded",
+            "flag_war_sheltered_retaliation_families",
+"paper_scrap", "item_teddy_bear", "crayon", "ammo_9x19", "blood_bag",
             "item_suitcase_locked", "fat_rendered", "industrial_bleach", "bone_saw",
             "ammonia_tank", "cardboard_box", "cigarette_pack_sealed",
-            "acoustic_foam_panel", "item_anchor_notes"
+            "acoustic_foam_panel", "item_anchor_notes",
+            // Plan 20 environmental-text pseudo-location labels (settlement areas used as
+            // descriptive location strings in environmental_texts_expansion_05.json — not
+            // routable map nodes, so not in locations.json)
+            "settlement_wall", "settlement_center"
         };
 
         public static bool IsVocabularyKey(string key) =>

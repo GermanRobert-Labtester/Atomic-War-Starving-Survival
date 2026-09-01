@@ -310,27 +310,21 @@ namespace AtomicWar.GodotApp.UI
                         _dossierContainer.AddChild(AshfallUiHelpers.MakeBody("• Patient is not currently in an active detox protocol. Natural metabolic decay rate: 5%/day clean."));
                     }
 
-                    // Protocols
+                    // Protocols — Task #133 P1b: detox starts route through the
+                    // unified medical pipeline (validate → apply); the domain
+                    // keeps the withdrawal clocks. Buttons mirror the live
+                    // pipeline preview when bound; unbound sessions keep the
+                    // legacy gating.
                     _protocolContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("ADMINISTER TREATMENT"));
 
                     var btnManaged = AshfallUiHelpers.MakeButton("BEGIN MANAGED DETOX (120h)", () =>
-                    {
-                        if (_host.System.BeginManagedDetox(_selectedSurvivorId, _selectedItemId))
-                        {
-                            RefreshView();
-                        }
-                    });
-                    btnManaged.Disabled = activeDep.inManagedDetox || activeDep.dependencyLevel < ChemicalDependencySystem.DependencyThreshold;
+                        ExecuteDetox(MedicalTreatmentCatalog.TreatmentManagedDetox));
+                    btnManaged.Disabled = !DetoxAvailable(MedicalTreatmentCatalog.TreatmentManagedDetox, activeDep);
                     _protocolContainer.AddChild(btnManaged);
 
                     var btnCold = AshfallUiHelpers.MakeButton("COMMENCE COLD TURKEY (72h)", () =>
-                    {
-                        if (_host.System.BeginColdTurkey(_selectedSurvivorId, _selectedItemId))
-                        {
-                            RefreshView();
-                        }
-                    });
-                    btnCold.Disabled = activeDep.inColdTurkey || activeDep.dependencyLevel < ChemicalDependencySystem.DependencyThreshold;
+                        ExecuteDetox(MedicalTreatmentCatalog.TreatmentColdTurkey));
+                    btnCold.Disabled = !DetoxAvailable(MedicalTreatmentCatalog.TreatmentColdTurkey, activeDep);
                     _protocolContainer.AddChild(btnCold);
 
                     _protocolContainer.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -344,6 +338,43 @@ namespace AtomicWar.GodotApp.UI
             else
             {
                 _dossierContainer.AddChild(AshfallUiHelpers.MakeMetadata("Select a patient and substance from the roster to view telemetry."));
+            }
+        }
+
+        /// <summary>
+        /// Task #133 P1b: whether the detox start may be offered. Mirrors the
+        /// live pipeline preview (contraindication + substance selection) when
+        /// the pipeline is bound; falls back to the legacy gating otherwise.
+        /// </summary>
+        private bool DetoxAvailable(string treatmentId, ChemicalDependencyState activeDep)
+        {
+            if (_host == null || activeDep == null || _selectedSurvivorId == null) return false;
+            var pipeline = _host.Pipeline;
+            if (pipeline == null
+                || !Ashfall.Core.Survivors.SurvivorId.TryParse(_selectedSurvivorId, out var sv))
+            {
+                bool inThatProgram = treatmentId == MedicalTreatmentCatalog.TreatmentManagedDetox
+                    ? activeDep.inManagedDetox
+                    : activeDep.inColdTurkey;
+                return !inThatProgram
+                    && activeDep.dependencyLevel >= ChemicalDependencySystem.DependencyThreshold;
+            }
+            return pipeline.PreviewTreatment(sv, treatmentId, targetItem: _selectedItemId).IsAvailable;
+        }
+
+        /// <summary>Task #133 P1b: start a detox program through the pipeline; failures surface in the event log.</summary>
+        private void ExecuteDetox(string treatmentId)
+        {
+            if (_host?.Pipeline == null || _selectedSurvivorId == null || _selectedItemId == null) return;
+            if (!Ashfall.Core.Survivors.SurvivorId.TryParse(_selectedSurvivorId, out var sv)) return;
+            var result = _host.Pipeline.ExecuteTreatment(sv, treatmentId, targetItem: _selectedItemId);
+            if (result.Success)
+            {
+                RefreshView();
+            }
+            else if (_eventLogLabel != null)
+            {
+                _eventLogLabel.Text = $"Refused: {result.ReasonCode}.";
             }
         }
 

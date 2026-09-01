@@ -195,19 +195,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (catalog.Count == 0)
             {
-                _manualList.AddChild(AshfallUiHelpers.MakeMetadata("No manuals in catalog. Click below to register foundational texts."));
-                var btnSeed = AshfallUiHelpers.MakeButton("LOAD FOUNDATIONAL MANUALS", () =>
-                {
-                    _host.LoadCatalog(new List<ManualDefinition>
-                    {
-                        new ManualDefinition { manual_id = "manual_rad_shielding", display_name = "Field Radiation Physics", category = "Science", studyHoursRequired = 16 },
-                        new ManualDefinition { manual_id = "manual_triage_surgery", display_name = "Emergency Trauma Procedures", category = "Medicine", studyHoursRequired = 24 },
-                        new ManualDefinition { manual_id = "manual_hydroponics_nutrients", display_name = "Closed-Loop Hydroponics", category = "Survival", studyHoursRequired = 16 },
-                        new ManualDefinition { manual_id = "manual_tactical_ballistics", display_name = "Ballistics & Small Arms", category = "Combat", studyHoursRequired = 16 }
-                    });
-                    RefreshView();
-                });
-                _manualList.AddChild(btnSeed);
+                _manualList.AddChild(AshfallUiHelpers.MakeMetadata("No manuals cataloged in library archive."));
             }
             else
             {
@@ -269,31 +257,20 @@ namespace AtomicWar.GodotApp.UI
                 _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Archival Status", isCompleted ? "Fully Mastered & Transcribed" : activeJob != null ? $"Under Study ({activeJob.progressHours:F0}/{curManual.studyHoursRequired}h)" : "On Shelf", AshfallUiHelpers.ToColor(isCompleted ? DesignTheme.Lethe : activeJob != null ? DesignTheme.Hot : DesignTheme.Dim)));
 
                 _studyDesk.AddChild(AshfallUiHelpers.MakeSeparator());
-                _studyDesk.AddChild(AshfallUiHelpers.MakeSubsectionHeader("READER DISPATCH"));
+                _studyDesk.AddChild(AshfallUiHelpers.MakeSubsectionHeader("READER STATUS"));
 
-                var btnStartTeacher = AshfallUiHelpers.MakeButton("ASSIGN THE TEACHER TO STUDY", () =>
+                if (isCompleted)
                 {
-                    _host.StartStudy(curManual.manual_id, "the_teacher");
-                    RefreshView();
-                });
-                btnStartTeacher.Disabled = isCompleted || activeJob != null;
-                _studyDesk.AddChild(btnStartTeacher);
-
-                var btnStartElena = AshfallUiHelpers.MakeButton("ASSIGN ELENA VASQUEZ TO STUDY", () =>
+                    _studyDesk.AddChild(AshfallUiHelpers.MakeBody("Manual has been fully mastered and transcribed across the shelter."));
+                }
+                else if (activeJob != null)
                 {
-                    _host.StartStudy(curManual.manual_id, "elena_vasquez");
-                    RefreshView();
-                });
-                btnStartElena.Disabled = isCompleted || activeJob != null;
-                _studyDesk.AddChild(btnStartElena);
-
-                var btnStartMikhail = AshfallUiHelpers.MakeButton("ASSIGN MIKHAIL TO STUDY", () =>
+                    _studyDesk.AddChild(AshfallUiHelpers.MakeBody($"Reader {activeJob.readerId.ToUpperInvariant()} is currently assigned to study ({activeJob.progressHours:F0}/{curManual.studyHoursRequired}h)."));
+                }
+                else
                 {
-                    _host.StartStudy(curManual.manual_id, "survivor_gunner_mikhail");
-                    RefreshView();
-                });
-                btnStartMikhail.Disabled = isCompleted || activeJob != null;
-                _studyDesk.AddChild(btnStartMikhail);
+                    _studyDesk.AddChild(AshfallUiHelpers.MakeBody("Manual is available on archive shelf for reader study assignment through the Duty Roster."));
+                }
             }
             else
             {

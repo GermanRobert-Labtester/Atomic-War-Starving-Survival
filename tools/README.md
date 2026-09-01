@@ -49,7 +49,7 @@ Every tool in `tools/` and related maintenance directories is classified under o
 | [`audit_loops.sh`](audit_loops.sh) | **`MAINTENANCE-ONLY`** | Bash | Shell Hygiene | Scans bash scripts for infinite execution loops or unbound recursion. |
 | [`export_transcript_to_desktop.py`](export_transcript_to_desktop.py) | **`MAINTENANCE-ONLY`** | Python 3 | Dev Operations | Exports structured JSONL agent conversation transcript logs. |
 | [`generate_audio.py`](generate_audio.py) | **`MAINTENANCE-ONLY`** | Python 3 | Audio Pipeline | Generates game audio assets via text-to-speech / audio synthesis. |
-| [`generate_elevenlabs_sfx.py`](generate_elevenlabs_sfx.py) | **`MAINTENANCE-ONLY`** | Python 3 | Audio Pipeline | Batch synthesizes sound effects using ElevenLabs API. |
+| [`generate_elevenlabs_sfx.py`](generate_elevenlabs_sfx.py) | **`MAINTENANCE-ONLY`** | Python 3 | Audio Pipeline | Validates and plans selective ElevenLabs SFX generation; reviewed WAV/OGG acceptance is explicit and non-overwriting. |
 | [`visual_asset_audit.py`](visual_asset_audit.py) | **`MAINTENANCE-ONLY`** | Python 3 | Visual Assets | Forensic auditor for visual assets, missing textures, and sprite bindings. |
 | [`visual_wiring_trace.py`](visual_wiring_trace.py) | **`MAINTENANCE-ONLY`** | Python 3 | Visual Assets | Traces asset references across Godot `.tscn`, `.tres`, and C# UI scripts. |
 | [`visual_wiring_baseline.py`](visual_wiring_baseline.py) | **`MAINTENANCE-ONLY`** | Python 3 | Visual Assets | Computes and updates baseline asset usage counts. |

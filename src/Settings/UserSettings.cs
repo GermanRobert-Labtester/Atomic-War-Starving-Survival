@@ -153,6 +153,19 @@ namespace AtomicWar.GodotApp.Settings
             {
                 GD.Print($"[UserSettingsStore] Display apply notice (headless/unsupported): {ex.Message}");
             }
+
+            // 4. Localization Application
+            try
+            {
+                if (!string.IsNullOrEmpty(data.Locale))
+                {
+                    AtomicWar.GodotApp.Localization.AshfallLocalization.SetLocale(data.Locale);
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.Print($"[UserSettingsStore] Localization apply notice: {ex.Message}");
+            }
         }
 
         private static void ApplyAudio(string busName, float linearVolume, bool muteAll)

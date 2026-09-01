@@ -127,7 +127,7 @@
       ],
       "offers": [
         "contract_credit",
-        "debt_recovery"
+        "tally_debt_collection"
       ],
       "signature_quote": "You've heard it. Do you want it read again? Most people want it read again.",
       "access_rule": "The contract states the debt, the term, the rate, and the forfeit. It is read back before signing, and read again, in full, before enforcement.",

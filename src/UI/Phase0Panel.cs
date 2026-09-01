@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Ashfall.Core.UI;
+using Ashfall.Core.Medical;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
@@ -23,6 +24,10 @@ namespace AtomicWar.GodotApp.UI
 
         private Phase0HostSession? _phase0;
         private SurvivorsHostSession? _survivors;
+        // Task #133 P1c: when bound, the APPLY INHALER action routes through
+        // the medical pipeline (validate → consume → apply), exactly like
+        // MedicalPanel. Unbound, the button stays disabled.
+        private MedicalPipelineCoordinator? _pipeline;
 
         public bool IsBound => _phase0 != null;
         public int RenderedConditionCount => _conditionList?.GetChildCount() ?? 0;
@@ -86,7 +91,7 @@ namespace AtomicWar.GodotApp.UI
             contentBox.AddChild(_commandList);
         }
 
-        public void Bind(Phase0HostSession phase0, SurvivorsHostSession? survivors = null)
+        public void Bind(Phase0HostSession phase0, SurvivorsHostSession? survivors = null, MedicalPipelineCoordinator? pipeline = null)
         {
             if (_phase0 != null)
                 _phase0.StateChanged -= OnPhase0StateChanged;
@@ -94,6 +99,7 @@ namespace AtomicWar.GodotApp.UI
             if (_phase0 != null)
                 _phase0.StateChanged += OnPhase0StateChanged;
             _survivors = survivors;
+            _pipeline = pipeline;
             RefreshView();
         }
 
@@ -206,10 +212,40 @@ namespace AtomicWar.GodotApp.UI
                 _commandList.AddChild(AshfallUiHelpers.MakeButton(
                     $"ADVANCE FINAL WISH — {FormatName(id)}",
                     () => _phase0.AdvanceFinalWish(id, "step_next")));
-                _commandList.AddChild(AshfallUiHelpers.MakeButton(
+                var btnInhaler = AshfallUiHelpers.MakeButton(
                     $"APPLY INHALER — {FormatName(id)}",
-                    () => _phase0.ApplyInhaler(id)));
+                    () => ApplyInhalerThroughPipeline(id));
+                // Task #133 P1c: enabled only when the pipeline is bound and
+                // its preview clears (inhaler in stock, lung damage present,
+                // patient available). Unbound keeps the button disabled.
+                btnInhaler.Disabled = !InhalerPreviewAllowed(id);
+                _commandList.AddChild(btnInhaler);
             }
+        }
+
+        /// <summary>
+        /// Task #133 P1c: the inhaler action runs through the medical
+        /// pipeline's transaction path so it consumes inventory exactly like
+        /// MedicalPanel. This panel never calls the host's raw
+        /// <c>Phase0HostSession.ApplyInhaler</c> (that stays CLI/test-only).
+        /// </summary>
+        private void ApplyInhalerThroughPipeline(string survivorId)
+        {
+            if (_pipeline == null) return;
+            if (!Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var sv)) return;
+
+            var result = _pipeline.ExecuteTreatment(sv, MedicalTreatmentCatalog.TreatmentInhaler);
+            if (!result.Success)
+                GD.PushWarning($"[Phase0] inhaler refused for {survivorId}: {result.ReasonCode}");
+            RefreshView();
+        }
+
+        /// <summary>Preview gate for the inhaler button (side-effect free).</summary>
+        private bool InhalerPreviewAllowed(string survivorId)
+        {
+            if (_pipeline == null) return false;
+            if (!Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var sv)) return false;
+            return _pipeline.PreviewTreatment(sv, MedicalTreatmentCatalog.TreatmentInhaler).IsAvailable;
         }
 
         private static string SeverityLabel(float v)
@@ -245,6 +281,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _phase0.StateChanged -= OnPhase0StateChanged;
             }
+        _pipeline = null;
     }
 
     public override void _ExitTree()

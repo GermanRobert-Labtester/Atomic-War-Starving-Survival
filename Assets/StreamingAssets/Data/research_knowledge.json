@@ -1,0 +1,486 @@
+{
+  "schema_version": 1,
+  "collection_id": "research_knowledge",
+  "knowledge_nodes": [
+    {
+      "id": "knowledge_water_basics",
+      "display_name": "Water Purification Basics",
+      "category": "survival",
+      "description": "Boiling, charcoal filtration, and still-building from salvage.",
+      "days_to_complete": 5,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_water_advanced",
+      "display_name": "Advanced Water Filtration",
+      "category": "survival",
+      "description": "Multi-stage ceramic filters reduce fallout particulate by 90%.",
+      "days_to_complete": 12,
+      "prerequisites": ["knowledge_water_basics"],
+      "breakthrough_item": "item_water_filter_advanced"
+    },
+    {
+      "id": "knowledge_radiation_basics",
+      "display_name": "Radiation Medicine Basics",
+      "category": "medical",
+      "description": "Iodine prophylaxis, chelation agents, and dose-ledger tracking.",
+      "days_to_complete": 5,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_radiation_shielding",
+      "display_name": "Radiation Shielding Materials",
+      "category": "engineering",
+      "description": "Layered lead-cloth, borated polyethylene, and sky-layer armour panels.",
+      "days_to_complete": 15,
+      "prerequisites": ["knowledge_radiation_basics"],
+      "breakthrough_item": "item_radiation_shielding_panel"
+    },
+    {
+      "id": "knowledge_gas_mask_improved",
+      "display_name": "Improved Gas Masks",
+      "category": "engineering",
+      "description": "Charcoal-canister rebuild doubles filter lifespan under heavy fallout.",
+      "days_to_complete": 10,
+      "prerequisites": ["knowledge_radiation_basics"],
+      "breakthrough_item": "item_gas_mask_improved"
+    },
+    {
+      "id": "knowledge_hydroponics",
+      "display_name": "Hydroponic Cultivation",
+      "category": "survival",
+      "description": "Nutrient-film technique in recycled bunker trays yields greens in 14 days.",
+      "days_to_complete": 8,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_solar_basics",
+      "display_name": "Solar Power Basics",
+      "category": "engineering",
+      "description": "Junction-box rebuild and panel-angle tracking from scrap photovoltaic cells.",
+      "days_to_complete": 7,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_solar_advanced",
+      "display_name": "Solar Power Systems",
+      "category": "engineering",
+      "description": "Battery-bank topology and inverter rebuild for overnight draw.",
+      "days_to_complete": 14,
+      "prerequisites": ["knowledge_solar_basics"],
+      "breakthrough_item": "item_solar_inverter"
+    },
+    {
+      "id": "knowledge_food_preservation",
+      "display_name": "Food Preservation",
+      "category": "survival",
+      "description": "Salt-curing, cold-smoking, and vacuum-seal scavenge from ruined canneries.",
+      "days_to_complete": 10,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_radio_basics",
+      "display_name": "Radio Signal Processing",
+      "category": "science",
+      "description": "Direction-finding, squelch calibration, and Morse decoding from static.",
+      "days_to_complete": 6,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_radio_advanced",
+      "display_name": "Encrypted Radio Communication",
+      "category": "science",
+      "description": "One-time pad key exchange and frequency-hopping from salvaged cipher rotors.",
+      "days_to_complete": 12,
+      "prerequisites": ["knowledge_radio_basics"],
+      "breakthrough_item": "item_radio_cipher_rotor"
+    },
+    {
+      "id": "knowledge_shelter_insulation",
+      "display_name": "Shelter Insulation",
+      "category": "engineering",
+      "description": "Spray-foam salvage and thermal-barrier panels cut bunker heat loss by 40%.",
+      "days_to_complete": 8,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_air_filtration",
+      "display_name": "Air Filtration Systems",
+      "category": "engineering",
+      "description": "HEPA-grade filter rebuild extends bunker air-filtration lifespan by 50%.",
+      "days_to_complete": 10,
+      "prerequisites": ["knowledge_shelter_insulation"],
+      "breakthrough_item": "item_air_filter_hepa"
+    },
+    {
+      "id": "knowledge_scavenge_efficiency",
+      "display_name": "Scavenge Efficiency",
+      "category": "scavenging",
+      "description": "Route-mapping and weight-distribution analysis cuts expedition fatigue by 15%.",
+      "days_to_complete": 7,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_combat_training",
+      "display_name": "Combat Training Doctrine",
+      "category": "combat",
+      "description": "Close-quarters drills and cover-fire protocols improve survivor combat readiness.",
+      "days_to_complete": 8,
+      "prerequisites": []
+    },
+    {
+      "id": "knowledge_deep_well_hydraulics",
+      "display_name": "Deep-Well Hydraulics",
+      "category": "survival",
+      "description": "High-pressure submersible pump rebuilding to tap sub-bedrock aquifers.",
+      "days_to_complete": 14,
+      "prerequisites": ["knowledge_water_advanced"],
+      "breakthrough_item": "item_hydraulic_actuator"
+    },
+    {
+      "id": "knowledge_greenhouse_microclimate",
+      "display_name": "Greenhouse Microclimate Engineering",
+      "category": "survival",
+      "description": "Thermal-siphon soil heating and spectral LED augmentation for winter crops.",
+      "days_to_complete": 12,
+      "prerequisites": ["knowledge_hydroponics"]
+    },
+    {
+      "id": "knowledge_cold_canning_preservation",
+      "display_name": "Vacuum-Seal Cold Canning",
+      "category": "survival",
+      "description": "Pressure-canning techniques for long-term storage without grid power.",
+      "days_to_complete": 11,
+      "prerequisites": ["knowledge_food_preservation"],
+      "breakthrough_item": "item_vacuum_seal_canner"
+    },
+    {
+      "id": "knowledge_apiculture_ecology",
+      "display_name": "Bunker Apiculture & Pollination",
+      "category": "survival",
+      "description": "Enclosed beehive management and indoor pollination for seed crops.",
+      "days_to_complete": 9,
+      "prerequisites": ["knowledge_hydroponics"]
+    },
+    {
+      "id": "knowledge_field_trauma_surgery",
+      "display_name": "Field Trauma Surgery",
+      "category": "medical",
+      "description": "Emergency thoracotomy and vascular shunts under blackout conditions.",
+      "days_to_complete": 16,
+      "prerequisites": ["knowledge_radiation_basics"],
+      "breakthrough_item": "item_surgical_kit"
+    },
+    {
+      "id": "knowledge_pathogen_containment",
+      "display_name": "Pathogen Isolation & Quarantine",
+      "category": "medical",
+      "description": "Negative-pressure anterooms and chlorine mist protocols against epidemics.",
+      "days_to_complete": 12,
+      "prerequisites": ["knowledge_radiation_basics"]
+    },
+    {
+      "id": "knowledge_pharmacology_synthesis",
+      "display_name": "Reagent Pharmacology Synthesis",
+      "category": "medical",
+      "description": "Organic solvent extraction of antibiotics and analgesics from mould and bark.",
+      "days_to_complete": 14,
+      "prerequisites": ["knowledge_pathogen_containment"],
+      "breakthrough_item": "item_reagent_clean"
+    },
+    {
+      "id": "knowledge_high_temp_metallurgy",
+      "display_name": "Crucible Metallurgy Practice",
+      "category": "engineering",
+      "description": "Refractory clay lining and flux chemistry for scrap tool-steel casting.",
+      "days_to_complete": 15,
+      "prerequisites": ["knowledge_shelter_insulation"]
+    },
+    {
+      "id": "knowledge_geothermal_tap",
+      "display_name": "Geothermal Heat Exchanger",
+      "category": "engineering",
+      "description": "Deep-loop glycol heat pumps extracting subterranean fissure heat.",
+      "days_to_complete": 18,
+      "prerequisites": ["knowledge_shelter_insulation", "knowledge_solar_advanced"]
+    },
+    {
+      "id": "knowledge_submersible_salvage_rig",
+      "display_name": "Submersible Salvage Rig",
+      "category": "engineering",
+      "description": "Vulcanized rubber diving suits and weighted descent harnesses for submerged hulls.",
+      "days_to_complete": 16,
+      "prerequisites": ["knowledge_gas_mask_improved"],
+      "breakthrough_item": "item_diving_suit_vulcanized"
+    },
+    {
+      "id": "knowledge_atmospheric_cloud_seeding",
+      "display_name": "Silver-Iodide Cloud Seeding",
+      "category": "science",
+      "description": "Pyrotechnic flare dispersion of condensing nuclei to trigger cleansing rainfall.",
+      "days_to_complete": 16,
+      "prerequisites": ["knowledge_radio_basics", "knowledge_radiation_shielding"],
+      "breakthrough_item": "item_cloud_seeding_canister"
+    },
+    {
+      "id": "knowledge_ionospheric_propagation",
+      "display_name": "Ionospheric Waveguide Analysis",
+      "category": "science",
+      "description": "Over-the-horizon radio skip forecasting using geomagnetic sensor loops.",
+      "days_to_complete": 13,
+      "prerequisites": ["knowledge_radio_advanced"]
+    },
+    {
+      "id": "knowledge_seismic_fault_mapping",
+      "display_name": "Seismic Fault Array Mapping",
+      "category": "science",
+      "description": "Triangulated geophone networks predicting aftershocks and subterranean collapses.",
+      "days_to_complete": 11,
+      "prerequisites": ["knowledge_radio_basics"],
+      "breakthrough_item": "item_seismic_detector"
+    },
+    {
+      "id": "knowledge_ruin_structural_survey",
+      "display_name": "Urban Structural Cartography",
+      "category": "scavenging",
+      "description": "Pre-stressed concrete stress analysis to safely breach collapsed skyscraper vaults.",
+      "days_to_complete": 10,
+      "prerequisites": ["knowledge_scavenge_efficiency"]
+    },
+    {
+      "id": "knowledge_field_guide_taxonomy",
+      "display_name": "Wasteland Biological Taxonomy",
+      "category": "scavenging",
+      "description": "Systematic tracking of irradiated flora, fungal mutations, and migration corridors.",
+      "days_to_complete": 9,
+      "prerequisites": ["knowledge_scavenge_efficiency"],
+      "breakthrough_item": "item_field_guide_annotated"
+    },
+    {
+      "id": "knowledge_hazmat_breaching_technique",
+      "display_name": "Thermal Lance Breaching Rig",
+      "category": "scavenging",
+      "description": "Magnesium-core cutting lance deployment to melt bank vault and bunker doors.",
+      "days_to_complete": 14,
+      "prerequisites": ["knowledge_scavenge_efficiency", "knowledge_high_temp_metallurgy"],
+      "breakthrough_item": "item_thermal_lance"
+    },
+    {
+      "id": "knowledge_fortified_chokepoints",
+      "display_name": "Subterranean Chokepoint Fortification",
+      "category": "combat",
+      "description": "Interlocking field-of-fire barricades and blast baffle construction.",
+      "days_to_complete": 11,
+      "prerequisites": ["knowledge_combat_training"]
+    },
+    {
+      "id": "knowledge_defensive_tripwire_arrays",
+      "display_name": "Acoustic & Frag Tripwire Arrays",
+      "category": "combat",
+      "description": "Concealed perimeter perimeter defense rigs providing early warning against raiders.",
+      "days_to_complete": 9,
+      "prerequisites": ["knowledge_combat_training"]
+    },
+    {
+      "id": "knowledge_automated_sentry_doctrine",
+      "display_name": "Automated Sentry Mount Targeting",
+      "category": "combat",
+      "description": "Logic chip integration with pneumatic pan-tilt servo mounts for autonomous sentry guns.",
+      "days_to_complete": 15,
+      "prerequisites": ["knowledge_combat_training", "knowledge_solar_advanced"],
+      "breakthrough_item": "item_sentry_targeting_chip"
+    },
+    {
+      "id": "knowledge_precision_ballistics",
+      "display_name": "Handloaded Match Ballistics",
+      "category": "combat",
+      "description": "Consistent powder titration and concentric brass reaming for long-range defense.",
+      "days_to_complete": 12,
+      "prerequisites": ["knowledge_combat_training"]
+    },
+    {
+      "id": "knowledge_subterranean_fungiculture",
+      "display_name": "Subterranean Fungiculture",
+      "category": "survival",
+      "description": "Cultivating edible oyster and button mushroom mycelium on sterilized cardboard substrate.",
+      "days_to_complete": 10,
+      "prerequisites": ["knowledge_hydroponics"]
+    },
+    {
+      "id": "knowledge_chelation_therapy",
+      "display_name": "Advanced Chelation Protocols",
+      "category": "medical",
+      "description": "Synthesizing EDTA and Prussian Blue regimens to bind and purge ingested heavy radionuclides.",
+      "days_to_complete": 12,
+      "prerequisites": ["knowledge_radiation_basics"]
+    },
+    {
+      "id": "knowledge_heavy_foundry_casting",
+      "display_name": "Heavy Sand Foundry Casting",
+      "category": "engineering",
+      "description": "Refractory sand molding to cast replacement engine blocks, pump housings, and armor plates.",
+      "days_to_complete": 14,
+      "prerequisites": ["knowledge_high_temp_metallurgy"]
+    },
+    {
+      "id": "knowledge_signal_triangulation",
+      "display_name": "Automated Radio Triangulation",
+      "category": "science",
+      "description": "Multi-station phase-locked receiver arrays to pinpoint surface distress beacons and radar sites.",
+      "days_to_complete": 10,
+      "prerequisites": ["knowledge_radio_basics"]
+    },
+    {
+      "id": "knowledge_guerrilla_ambush_tactics",
+      "display_name": "Guerrilla Tunnel Defense Doctrine",
+      "category": "combat",
+      "description": "Tunnel choke traps, false retreats, and acoustic blind-spot exploitation.",
+      "days_to_complete": 10,
+      "prerequisites": ["knowledge_combat_training"]
+    },
+    {
+      "id": "knowledge_micro_dosimeter_blueprint",
+      "display_name": "Micro-Dosimeter Blueprint",
+      "category": "medical",
+      "description": "Circuit schematic for miniaturized solid-state gamma detectors.",
+      "days_to_complete": 6,
+      "prerequisites": [],
+      "breakthrough_item": "item_dosimeter_calibrated"
+    },
+    {
+      "id": "knowledge_water_condenser_blueprint",
+      "display_name": "Atmospheric Water Condenser Blueprint",
+      "category": "engineering",
+      "description": "Peltier condensation array blueprint for extracting humidity from shelter exhaust.",
+      "days_to_complete": 8,
+      "prerequisites": [],
+      "breakthrough_item": "item_desal_membrane"
+    },
+    {
+      "id": "knowledge_signal_amplifier_blueprint",
+      "display_name": "Signal Amplifier Blueprint",
+      "category": "science",
+      "description": "Low-noise FET pre-amplifier design for distant radio signal capture.",
+      "days_to_complete": 6,
+      "prerequisites": [],
+      "breakthrough_item": "item_radio_vacuum_tube"
+    },
+    {
+      "id": "knowledge_battery_reconditioner_blueprint",
+      "display_name": "Battery Reconditioner Blueprint",
+      "category": "engineering",
+      "description": "Pulse-desulfation charger topology to restore dead lead-acid and lithium cells.",
+      "days_to_complete": 8,
+      "prerequisites": [],
+      "breakthrough_item": "item_battery_reconditioned"
+    },
+    {
+      "id": "knowledge_hydroponic_doser_blueprint",
+      "display_name": "Hydroponic Nutrient Doser Blueprint",
+      "category": "survival",
+      "description": "Automated peristaltic dosing schematic for precise nutrient and pH delivery.",
+      "days_to_complete": 7,
+      "prerequisites": [],
+      "breakthrough_item": "item_hydroponic_nutrients"
+    },
+    {
+      "id": "knowledge_uv_sterilizer_blueprint",
+      "display_name": "UV Sterilizer Chamber Blueprint",
+      "category": "medical",
+      "description": "Shortwave germicidal UV-C reactor for medical instrument and water sterilization.",
+      "days_to_complete": 7,
+      "prerequisites": [],
+      "breakthrough_item": "item_surgical_kit"
+    },
+    {
+      "id": "knowledge_hand_centrifuge_blueprint",
+      "display_name": "Hand-Cranked Centrifuge Blueprint",
+      "category": "medical",
+      "description": "High-RPM mechanical separation schematic for blood fractioning and pathogen isolation.",
+      "days_to_complete": 5,
+      "prerequisites": [],
+      "breakthrough_item": "item_reagent_clean"
+    },
+    {
+      "id": "knowledge_seismic_geophone_blueprint",
+      "display_name": "Seismic Geophone Sensor Blueprint",
+      "category": "scavenging",
+      "description": "Piezoelectric ground-vibration sensor array to detect approaching burrowers and cave-ins.",
+      "days_to_complete": 6,
+      "prerequisites": [],
+      "breakthrough_item": "item_seismic_detector"
+    },
+    {
+      "id": "knowledge_turret_controller_blueprint",
+      "display_name": "Automated Turret Controller Blueprint",
+      "category": "combat",
+      "description": "Optical target-tracking logic board for perimeter defense sentry mounts.",
+      "days_to_complete": 10,
+      "prerequisites": [],
+      "breakthrough_item": "item_sentry_targeting_chip"
+    },
+    {
+      "id": "knowledge_encrypted_radio_blueprint",
+      "display_name": "Encrypted Military Transceiver Blueprint",
+      "category": "science",
+      "description": "Frequency-hopping spread spectrum transceiver blueprint for secure long-range communications.",
+      "days_to_complete": 10,
+      "prerequisites": [],
+      "breakthrough_item": "item_military_radio_module"
+    },
+    {
+      "id": "knowledge_radar_scope_blueprint",
+      "display_name": "Doppler Radar Scope Blueprint",
+      "category": "scavenging",
+      "description": "X-band weather and threat radar schematic for long-distance expedition reconnaissance.",
+      "days_to_complete": 9,
+      "prerequisites": [],
+      "breakthrough_item": "item_radar_display_tube"
+    },
+    {
+      "id": "knowledge_power_armor_servo_blueprint",
+      "display_name": "Exoskeleton Actuator Blueprint",
+      "category": "engineering",
+      "description": "High-torque pneumatic servo actuator blueprint for load-bearing exo-frames.",
+      "days_to_complete": 12,
+      "prerequisites": [],
+      "breakthrough_item": "item_hydraulic_actuator"
+    },
+    {
+      "id": "knowledge_vault_breach_blueprint",
+      "display_name": "Thermal Lance Breaching Rig Blueprint",
+      "category": "scavenging",
+      "description": "Magnesium-core thermal cutting torch design to penetrate reinforced blast doors.",
+      "days_to_complete": 8,
+      "prerequisites": [],
+      "breakthrough_item": "item_thermal_lance"
+    },
+    {
+      "id": "knowledge_iff_transponder_blueprint",
+      "display_name": "IFF Transponder Beacon Blueprint",
+      "category": "combat",
+      "description": "Pre-war military friend-or-foe beacon encoder to bypass automated defense grids.",
+      "days_to_complete": 8,
+      "prerequisites": [],
+      "breakthrough_item": "item_iff_beacon"
+    },
+    {
+      "id": "knowledge_cbrn_filter_blueprint",
+      "display_name": "Advanced CBRN Filter Cartridge Blueprint",
+      "category": "survival",
+      "description": "Electrostatic carbon-nanotube particulate filter for full-spectrum nuclear and chemical defense.",
+      "days_to_complete": 9,
+      "prerequisites": [],
+      "breakthrough_item": "item_cbrn_cartridge"
+    },
+    {
+      "id": "knowledge_surgical_robot_blueprint",
+      "display_name": "Surgical Manipulator Assembly Blueprint",
+      "category": "medical",
+      "description": "Micron-precision servo manipulator blueprint for autonomous emergency trauma surgery.",
+      "days_to_complete": 12,
+      "prerequisites": [],
+      "breakthrough_item": "item_surgical_arm_servo"
+    }
+  ]
+}

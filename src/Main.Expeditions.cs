@@ -48,6 +48,7 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             SetupSurvivors();
             _expeditions = ExpeditionHostSession.Create(_dataDir);
+            _expeditions.Flags = _consequenceLedger;
             _expeditions.StateChanged += () => _expeditionDirty = true;
             _expeditions.OnEncounterSurfaced += OnExpeditionEncounterSurfaced;
             _expeditions.Engine.OnExpeditionCompleted += state =>
@@ -93,7 +94,7 @@ namespace AtomicWar.GodotApp
         private void SaveExpeditions()
         {
             if (_expeditions == null) return;
-            if (CaptureSection("expedition", ExpeditionSaveStore.TryCapturePersisted(_expeditions.CaptureSave())))
+            if (CaptureSection("expedition", ExpeditionSaveStore.TryCapturePersisted(_expeditions.CaptureSaveAggregate())))
             {
                 _expeditionDirty = false;
                 GD.Print("[Ashfall Godot] Expedition save written.");
@@ -105,18 +106,43 @@ namespace AtomicWar.GodotApp
             if (_combat != null) return;
             SetupInventory();
             SetupSurvivors();
+            SetupPhase0();
             _combat = CombatHostSession.Create(_dataDir);
             if (_combat != null)
             {
                 _combat.Inventory = _inventory;
                 _combat.Survivors = _survivors;
-                _combat.WireRealState();
+                _combat.Equipment = _equipmentCondition?.System;
+                // MarkCombatSurvived is a required combat effect (see
+                // CombatHostSession.ValidatePorts / WeaponConditionSystem's
+                // UnboundRequiredEffects) that was previously left unwired,
+                // so every surviving combatant's hypervigilance/trauma
+                // tracking silently no-op'd in production.
+                _combat.WireRealState(markCombatSurvived: survivorId => _phase0.RegisterCombatSurvived(survivorId));
                 _combat.ValidatePorts();
                 _combat.StateChanged += () => _combatDirty = true;
                 // Expedition encounters auto-populate a real combat encounter.
                 SetupExpeditionCombatHandoff(_combat);
             }
             GD.Print("[Ashfall Godot] Combat host ready: tactical combat expansion.");
+        }
+
+        /// <summary>
+        /// Refuel a garage vehicle from carried fuel items (1 item = 1 fuel
+        /// unit). Consumes the items first so inventory is never drained
+        /// without a tank fill.
+        /// </summary>
+        private string RefuelVehicleFromInventory(string vehicleId, float units)
+        {
+            if (_expeditions == null || _inventory == null) return "Garage not ready.";
+            int needed = Math.Max(1, (int)Math.Ceiling(units));
+            var bill = new List<string>();
+            for (int i = 0; i < needed; i++) bill.Add("fuel");
+            if (!_inventory.Inventory.TryConsumeBill(bill))
+                return $"Not enough fuel aboard ({needed} needed).";
+            SaveInventory();
+            var r = _expeditions.RefuelVehicle(vehicleId, units);
+            return r.IsSuccess ? $"Refueled {vehicleId}." : $"Cannot refuel {vehicleId}: {r.FailureCode}.";
         }
 
         private void SaveCombat()
@@ -151,7 +177,7 @@ namespace AtomicWar.GodotApp
                 var cs = _combat.Engine.State;
                 bool idle = string.IsNullOrEmpty(cs.EncounterId) || cs.Resolved;
                 if (!idle) return;
-                _combat.StartDemoCombat(state.locationId, state.displayName);
+                _combat.StartCombat(state.locationId, state.displayName);
                 _combatDirty = true;
                 GD.Print($"[Ashfall Godot] Expedition encounter at {state.locationId} spawned combat.");
             };
@@ -160,26 +186,26 @@ namespace AtomicWar.GodotApp
         private void OnExpeditionStartClicked(string locationId)
         {
             SetupExpeditions();
-            _statusLabel.Text = _expeditions.StartDemoExpedition("survivor_gunner_mikhail", locationId)
+            _statusLabel.Text = _expeditions.StartExpedition("survivor_gunner_mikhail", locationId)
                 + "\n" + _expeditions.StatusLine();
         }
 
         private void OnExpeditionTickClicked()
         {
             SetupExpeditions();
-            _statusLabel.Text = _expeditions.TickDemoHours(2f) + "\n" + _expeditions.StatusLine();
+            _statusLabel.Text = _expeditions.TickHours(2f) + "\n" + _expeditions.StatusLine();
         }
 
         private void OnExpeditionDiveClicked()
         {
             SetupExpeditions();
-            _statusLabel.Text = _expeditions.StartDiveDemo();
+            _statusLabel.Text = _expeditions.StartDive();
         }
 
         private void OnExpeditionAdvanceDiveClicked()
         {
             SetupExpeditions();
-            _statusLabel.Text = _expeditions.AdvanceDiveDemo() + "\n" + _expeditions.DiveStatusLine();
+            _statusLabel.Text = _expeditions.AdvanceDive() + "\n" + _expeditions.DiveStatusLine();
         }
 
         private void SaveWastelandMap()

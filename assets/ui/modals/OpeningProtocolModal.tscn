@@ -1,0 +1,201 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1opening_protocol_modal_ashfall"]
+
+[ext_resource type="Script" path="res://src/UI/OpeningProtocolModalContent.cs" id="1_opening_content"]
+
+[node name="OpeningProtocolContent" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.05, 0.06, 0.88)
+
+[node name="Center" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Frame" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(740, 600)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Center/Frame"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="Center/Frame/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Center/Frame/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Center/Frame/Margin/VBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 0
+text = "HOLDFAST PROTOCOL DIRECTIVES"
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.827, 0.667, 0.384, 1)
+
+[node name="CloseButton" type="Button" parent="Center/Frame/Margin/VBox/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 32)
+layout_mode = 2
+text = "CLOSE [Esc]"
+
+[node name="Sep1" type="HSeparator" parent="Center/Frame/Margin/VBox"]
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Center/Frame/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 480)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Content" type="VBoxContainer" parent="Center/Frame/Margin/VBox/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="RationSectionHeader" type="Label" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1. MORNING RATION TRIAGE"
+
+[node name="RationStatus" type="Label" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PENDING // AWAITING RATION DIRECTIVE"
+
+[node name="RationRow" type="HBoxContainer" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RationStandardButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/RationRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "STANDARD (100%)"
+
+[node name="RationHalfButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/RationRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "HALF RATIONS (50%)"
+
+[node name="RationIrradiatedButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/RationRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "IRRADIATED WATER"
+
+[node name="Sep2" type="HSeparator" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+layout_mode = 2
+
+[node name="MaintenanceSectionHeader" type="Label" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "2. MIDDAY MAINTENANCE DIRECTIVE"
+
+[node name="MaintenanceStatus" type="Label" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PENDING // AWAITING SHIFT DIRECTIVE"
+
+[node name="MaintenanceRow" type="HBoxContainer" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MaintServiceButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/MaintenanceRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "SERVICE HEPA FILTER"
+
+[node name="MaintLeadBunkButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/MaintenanceRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "FORTIFY BUNK CEILING"
+
+[node name="MaintCalibrateButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/MaintenanceRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "CALIBRATE DOSIMETERS"
+
+[node name="Sep3" type="HSeparator" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+layout_mode = 2
+
+[node name="RadioSectionHeader" type="Label" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "3. EVENING RADIO TRANSMISSION PROTOCOL"
+
+[node name="RadioStatus" type="Label" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PENDING // AWAITING SIGNAL PROTOCOL"
+
+[node name="RadioRow" type="HBoxContainer" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RadioAckButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/RadioRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "ACKNOWLEDGE BARONS"
+
+[node name="RadioSilenceButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/RadioRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "MAINTAIN SILENCE"
+
+[node name="RadioBeaconButton" type="Button" parent="Center/Frame/Margin/VBox/Scroll/Content/RadioRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 34)
+layout_mode = 2
+text = "BROADCAST BEACON"
+
+[node name="Sep4" type="HSeparator" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+layout_mode = 2
+
+[node name="RecentSectionHeader" type="Label" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RECENT PROTOCOL DIRECTIVES"
+
+[node name="LogList" type="VBoxContainer" parent="Center/Frame/Margin/VBox/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4

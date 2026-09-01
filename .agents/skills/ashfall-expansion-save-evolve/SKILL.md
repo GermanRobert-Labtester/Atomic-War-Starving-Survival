@@ -1,3 +1,8 @@
+---
+name: ashfall-expansion-save-evolve
+description: Evolves expansion save stores and codecs, wiring new sections into the campaign envelope and validating round-trip/legacy migration.
+---
+
 # ASHFALL Expansion System Skill: ashfall-expansion-save-evolve
 
 ## Overview

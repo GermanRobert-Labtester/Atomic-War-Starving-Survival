@@ -84,8 +84,19 @@ namespace AtomicWar.GodotApp
         private void OnInventoryConsumeClicked(string itemId)
         {
             SetupInventory();
-            _statusLabel.Text = _inventory.Consume(itemId);
+            var result = _inventory.ConsumeResult(itemId);
+            _statusLabel.Text = result.IsSuccess ? $"Consumed {itemId}." : result.MessageKey;
             _inventoryPanel.RefreshView();
+            if (result.IsSuccess) ObserveSigil("inventory.used");
+        }
+
+        private void OnInventoryEquipClicked(string itemId)
+        {
+            SetupInventory();
+            var result = _inventory.EquipResult(itemId);
+            _statusLabel.Text = result.IsSuccess ? $"Equipped {itemId}." : result.MessageKey;
+            _inventoryPanel.RefreshView();
+            if (result.IsSuccess) ObserveSigil("inventory.used");
         }
 
         private void OnInventoryCheckClicked()

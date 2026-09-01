@@ -31,6 +31,7 @@ public partial class JournalPanel : Control
     private VBoxContainer _peopleList = null!;
     private VBoxContainer _placesList = null!;
     private VBoxContainer _eventsList = null!;
+    private VBoxContainer _manualList = null!;
 
     // Section headers (scroll targets)
     private Label _lblLogsTitle = null!;
@@ -38,6 +39,7 @@ public partial class JournalPanel : Control
     private Label _lblPeopleTitle = null!;
     private Label _lblPlacesTitle = null!;
     private Label _lblEventsTitle = null!;
+    private Label _lblManualTitle = null!;
 
     /// <summary>Bind the live JournalHostSession.</summary>
     public void Bind(JournalHostSession session) => Bind(session?.System!);
@@ -164,7 +166,42 @@ public partial class JournalPanel : Control
             }
         }
 
+        // ── Field Manual tab: Core survival guidelines & telemetry glossary ──
+        if (_manualList != null)
+        {
+            ClearContainer(_manualList);
+            AddManualEntry(_manualList, "1. Needs & Critical Triage",
+                "Hunger, Thirst, Fatigue, Warmth, and Morale decay hourly. If any need reaches critical threshold (90+), Health suffers rapid decay. Keep water and rations stocked.");
+            AddManualEntry(_manualList, "2. Radiation & Acute Sickness",
+                "Dose accumulates from environmental fallout and storms. Exceeding 50 mSv triggers Acute Radiation Sickness with -5 HP/hr decay. Administer Rad-Away or Iodine in Medical.");
+            AddManualEntry(_manualList, "3. Power Grid & Air Filtration",
+                "Air filtration attenuates indoor radiation but requires continuous power. Maintain battery reserves and fuel the generator to prevent shelter contamination.");
+            AddManualEntry(_manualList, "4. Water Desalination & Rations",
+                "3 survivors consume ~3.6 clean water units daily. Converting irradiated water requires filtration membranes. Review inventory runway before advancing days.");
+            AddManualEntry(_manualList, "5. Expeditions & Waste Readiness",
+                "Scavenging teams face environmental hazards. Equip gas masks, hazmat gear, and check vehicle fuel before departure.");
+            AddManualEntry(_manualList, "6. Status Icon & Severity Glossary",
+                "[OK] Stable (Healthy)  •  [▲] Warning (Attention)  •  [RAD] Radiation Hazard  •  [!] Critical (Lethal Pressure)  •  [X] Disabled / Blocked");
+        }
+
         UpdateTabVisibility();
+    }
+
+    private void AddManualEntry(VBoxContainer container, string title, string body)
+    {
+        var card = AshfallUiHelpers.MakeCard(500, 0);
+        var box = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
+        card.AddChild(box);
+
+        var titleLbl = AshfallUiHelpers.MakeLabel(title, DesignTheme.FontSizeBody, DesignTheme.Warm);
+        box.AddChild(titleLbl);
+
+        var bodyLbl = AshfallUiHelpers.MakeSmall(body, true);
+        bodyLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+        bodyLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        box.AddChild(bodyLbl);
+
+        container.AddChild(card);
     }
 
     private void UpdateTabVisibility()
@@ -271,6 +308,7 @@ public partial class JournalPanel : Control
             new AshfallSidebar.Item { Id = "people",  Label = "People",        Hint = "SURVIVORS MET" },
             new AshfallSidebar.Item { Id = "places",  Label = "Places",        Hint = "LOCATIONS" },
             new AshfallSidebar.Item { Id = "events",  Label = "Events",        Hint = "NARRATIVE" },
+            new AshfallSidebar.Item { Id = "manual",  Label = "Field Manual",  Hint = "SURVIVAL GUIDE" },
         }, "CHAPTERS", "log");
 
         _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());
@@ -339,6 +377,16 @@ public partial class JournalPanel : Control
         _eventsList.CustomMinimumSize = new Vector2(500, 0);
         vbox.AddChild(_eventsList);
 
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        // Field Manual section
+        _lblManualTitle = AshfallUiHelpers.MakeSectionHeader("FIELD SURVIVAL MANUAL // PROTOCOLS");
+        vbox.AddChild(_lblManualTitle);
+        _manualList = new VBoxContainer();
+        _manualList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _manualList.CustomMinimumSize = new Vector2(500, 0);
+        vbox.AddChild(_manualList);
+
         if (_sidebar != null)
         {
             _sidebar.OnSelected += id =>
@@ -350,6 +398,7 @@ public partial class JournalPanel : Control
                     "people" => _lblPeopleTitle,
                     "places" => _lblPlacesTitle,
                     "events" => _lblEventsTitle,
+                    "manual" => _lblManualTitle,
                     _        => null,
                 };
                 if (target != null)

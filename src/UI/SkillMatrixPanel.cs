@@ -408,18 +408,6 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
                 if (s != null && s.IsAliveState && !string.IsNullOrEmpty(s.Id))
                     yield return s.Id;
             }
-            yield break;
-        }
-        if (_skills != null)
-        {
-            // Fall back to whatever the engine knows about. We don't expose a
-            // roster enumerator from SkillProgressionSystem, so we read
-            // GetActiveSkillIds on candidate demo ids.
-            string[] demoIds =
-            {
-                "survivor_dr_sarah_chen", "survivor_gunner_mikhail", "elena_vasquez"
-            };
-            foreach (var id in demoIds) yield return id;
         }
     }
 

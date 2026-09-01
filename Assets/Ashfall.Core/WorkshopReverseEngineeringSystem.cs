@@ -341,33 +341,28 @@ ILog? log = null)
                     if (!string.IsNullOrEmpty(relic.research_unlock_id))
                     {
                         _researchSystem.UnlockManual(relic.research_unlock_id);
-                        var researchResult = _researchSystem.CompleteResearch(relic.research_unlock_id);
-                        if (researchResult)
+                        if (_researchSystem.CompleteResearch(relic.research_unlock_id))
                         {
                             deltas["research_unlocked"] = 1;
                             _state.completionUnlockId = relic.research_unlock_id;
                             messageKey = "workshop.research_complete";
                         }
+                        else if (_researchSystem.GetKnowledge(relic.research_unlock_id) != null)
+                        {
+                            // Already completed through another producer — still a
+                            // successful research outcome for the relic.
+                            _state.completionUnlockId = relic.research_unlock_id;
+                            messageKey = "workshop.research_complete";
+                        }
                         else
                         {
-                            if (_researchSystem.GetKnowledge(relic.research_unlock_id) == null)
-                            {
-                                _researchSystem.Register(new ResearchKnowledgeDef(
-                                    relic.research_unlock_id,
-                                    relic.display_name + " Blueprint",
-                                    "engineering",
-                                    relic.description,
-                                    1));
-                                _researchSystem.UnlockManual(relic.research_unlock_id);
-                                _researchSystem.CompleteResearch(relic.research_unlock_id);
-                                deltas["research_unlocked"] = 1;
-                                _state.completionUnlockId = relic.research_unlock_id;
-                                messageKey = "workshop.research_complete";
-                            }
-                            else
-                            {
-                                messageKey = "workshop.research_complete";
-                            }
+                            // Plan 34: never fabricate research definitions at
+                            // runtime. A relic whose research_unlock_id is absent
+                            // from research_knowledge.json is a data defect —
+                            // surface it, keep the unlock flag, grant nothing.
+                            _log.Warn($"[Workshop] relic '{relic.relic_id}' research unlock '{relic.research_unlock_id}' not in research catalog");
+                            _state.completionUnlockId = relic.research_unlock_id;
+                            messageKey = "workshop.research_complete";
                         }
                     }
                     else

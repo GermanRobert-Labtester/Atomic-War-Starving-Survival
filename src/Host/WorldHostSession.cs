@@ -24,6 +24,43 @@ namespace AtomicWar.GodotApp
         public WastelandMapSystem WastelandMap { get; }
         public SeasonProfileDef Profile { get; private set; }
 
+        /// <summary>
+        /// Seed catalog for the evolving-world trio (loaded once in Create).
+        /// Null when no data dir was provided; hosts read the shelter sector
+        /// and scarcity goods from here.
+        /// </summary>
+        public EvolvingWorldSeedContainer? Seeds { get; private set; }
+
+        public string ShelterSectorId => EvolvingWorldSeeder.ShelterSectorId(Seeds);
+
+        /// <summary>
+        /// Plan 28 Phase 5 (28L) — coarse wildlife sighting for a location,
+        /// via its seed-bound sector. Discovery-gated: unknown ground reads
+        /// empty. "holding" | "passing" | "" (never a population count).
+        /// </summary>
+        public string WildlifeSightingFor(string locationId)
+        {
+            if (Wildlife == null || Seeds?.location_seeds == null) return string.Empty;
+            string? sector = null;
+            foreach (var seed in Seeds.location_seeds)
+                if (seed != null && string.Equals(seed.location_id, locationId, StringComparison.Ordinal))
+                { sector = seed.sector_id; break; }
+            if (string.IsNullOrEmpty(sector)) return string.Empty;
+
+            int pop = Wildlife.GetSectorPackPopulation(sector);
+            if (pop <= 0) return string.Empty;
+            return pop >= 8 ? "wildlife holding" : "wildlife passing";
+        }
+
+        /// <summary>28L overview contract — home-sector wildlife band, no counts.</summary>
+        public string HomeSectorWildlifeStatus()
+        {
+            if (Wildlife == null || string.IsNullOrEmpty(ShelterSectorId)) return string.Empty;
+            int pop = Wildlife.GetSectorPackPopulation(ShelterSectorId);
+            if (pop <= 0) return string.Empty;
+            return pop >= 8 ? "Wildlife: herds reported" : "Wildlife: movement reported";
+        }
+
         public string LastEvent { get; private set; } = string.Empty;
         public WorldHostSession(
             WeatherSystem weather = null!,
@@ -64,6 +101,8 @@ namespace AtomicWar.GodotApp
             {
                 session.Profile = profile;
                 session.Weather.BindProfile(profile, DemoSeed);
+                // Plan 28: the same Plan 19 authority paces wildlife abundance.
+                session.Wildlife.BindSeasonProfile(profile);
             }
             var env = WorldSaveStore.TryLoadEnvelope();
             if (env != null)
@@ -76,19 +115,35 @@ namespace AtomicWar.GodotApp
                 if (env.Landmark != null) session.Landmarks.RestoreState(env.Landmark);
                 session.LastEvent = "World state restored from save.";
             }
+
+            // Evolving-world activation (task 122): load the seed authority,
+            // then seed — AFTER restore, and only into empty ledgers, so a
+            // restored save is never overwritten by the starting world.
+            session.Seeds = !string.IsNullOrEmpty(dataDir)
+                ? EvolvingWorldCatalogLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer())
+                : null;
+            EvolvingWorldSeeder.Seed(session.LocationEvolution, session.Wildlife, session.Landmarks, session.Seeds);
+
+            // Seasonal events activation (Plan 19)
+            var seasonalEvents = !string.IsNullOrEmpty(dataDir)
+                ? SeasonalEventCatalogLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer())
+                : null;
+            if (seasonalEvents != null && seasonalEvents.Count > 0)
+                session.WeatherIntelligence.Seasonal.BindDefinitions(seasonalEvents);
+
             var mapSave = WastelandMapSaveStore.TryLoad();
             if (mapSave != null)
                 session.WastelandMap.RestoreState(mapSave);
             return session;
         }
 
-        // ── Demo actions ─────────────────────────────────────────────
-
-        public string TickDemo(float hours)
+        // ── Production Runtime Actions ───────────────────────────────
+        public void TickHours(float hours)
         {
             Weather.Tick(hours);
-            return $"Tick {hours}h: {Weather.Current} (rolls {Weather.State.rollCount}).";
         }
+
+        // ── Demo actions ─────────────────────────────────────────────
 
         public string ForceDemo(WeatherKind kind)
         {

@@ -1,0 +1,124 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1workshop_panel_ashfall"]
+
+[ext_resource type="Script" path="res://src/UI/WorkshopPanel.cs" id="1_workshop"]
+
+[node name="WorkshopPanel" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_workshop")
+
+theme_override_colors/font_color = Color(0.78, 0.86, 0.81, 1)
+
+[node name="Root" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainVBox" type="VBoxContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Root/MainVBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "THE WORKSHOP // RELIC REVERSE ENGINEERING"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.827, 0.667, 0.384, 1)
+
+[node name="TitleSpacer" type="Control" parent="Root/MainVBox/Header"]
+unique_name_in_owner = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="Root/MainVBox/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "[X] CLOSE"
+
+[node name="JobCard" type="PanelContainer" parent="Root/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JobBox" type="VBoxContainer" parent="Root/MainVBox/JobCard"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="JobHeader" type="Label" parent="Root/MainVBox/JobCard/JobBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "WORKSHOP STATUS: IDLE"
+
+[node name="JobProgressBar" type="ProgressBar" parent="Root/MainVBox/JobCard/JobBox"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 100.0
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="JobFooter" type="HBoxContainer" parent="Root/MainVBox/JobCard/JobBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="JobDetails" type="Label" parent="Root/MainVBox/JobCard/JobBox/JobFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "No active reconstruction or teardown job."
+
+[node name="CancelJobButton" type="Button" parent="Root/MainVBox/JobCard/JobBox/JobFooter"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "ABORT JOB"
+
+[node name="BodyRow" type="HBoxContainer" parent="Root/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="LeftScroll" type="ScrollContainer" parent="Root/MainVBox/BodyRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RelicListContainer" type="VBoxContainer" parent="Root/MainVBox/BodyRow/LeftScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="RightScroll" type="ScrollContainer" parent="Root/MainVBox/BodyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DetailContainer" type="VBoxContainer" parent="Root/MainVBox/BodyRow/RightScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12

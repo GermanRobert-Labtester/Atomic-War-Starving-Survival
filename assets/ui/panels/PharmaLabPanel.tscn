@@ -1,0 +1,164 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1pharma_lab_panel_ashfall"]
+
+[ext_resource type="Script" path="res://src/UI/PharmaLabPanelContent.cs" id="1_pharma_content"]
+
+[node name="PharmaLabContent" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Root" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainVBox" type="VBoxContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Root/MainVBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PHARMACEUTICAL LABORATORY // CHEMICAL COMPOUNDING"
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.78, 0.86, 0.81, 1)
+
+[node name="HeaderSpacer" type="Control" parent="Root/MainVBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="Root/MainVBox/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "[X] CLOSE"
+
+[node name="StatusCard" type="PanelContainer" parent="Root/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatusBox" type="VBoxContainer" parent="Root/MainVBox/StatusCard"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LabStatusHeader" type="Label" parent="Root/MainVBox/StatusCard/StatusBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "LAB STATUS: IDLE"
+
+[node name="DistillationProgressBar" type="ProgressBar" parent="Root/MainVBox/StatusCard/StatusBox"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 100.0
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="Footer" type="HBoxContainer" parent="Root/MainVBox/StatusCard/StatusBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PhaseMetricsLabel" type="Label" parent="Root/MainVBox/StatusCard/StatusBox/Footer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "No active distillation or compounding run."
+
+[node name="CancelBatchButton" type="Button" parent="Root/MainVBox/StatusCard/StatusBox/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "ABORT BATCH"
+
+[node name="CategoryBar" type="HBoxContainer" parent="Root/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="CatAll" type="Button" parent="Root/MainVBox/CategoryBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[ALL]"
+
+[node name="CatChelator" type="Button" parent="Root/MainVBox/CategoryBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[CHELATOR]"
+
+[node name="CatPsychotropic" type="Button" parent="Root/MainVBox/CategoryBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[PSYCHOTROPIC]"
+
+[node name="CatStimulant" type="Button" parent="Root/MainVBox/CategoryBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[STIMULANT]"
+
+[node name="CatEmergency" type="Button" parent="Root/MainVBox/CategoryBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[EMERGENCY]"
+
+[node name="CatAnesthetic" type="Button" parent="Root/MainVBox/CategoryBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[ANESTHETIC]"
+
+[node name="CatAntibiotic" type="Button" parent="Root/MainVBox/CategoryBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[ANTIBIOTIC]"
+
+[node name="CatAntiseptic" type="Button" parent="Root/MainVBox/CategoryBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[ANTISEPTIC]"
+
+[node name="BodyRow" type="HBoxContainer" parent="Root/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="LeftScroll" type="ScrollContainer" parent="Root/MainVBox/BodyRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RecipeListContainer" type="VBoxContainer" parent="Root/MainVBox/BodyRow/LeftScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="RightScroll" type="ScrollContainer" parent="Root/MainVBox/BodyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DetailContainer" type="VBoxContainer" parent="Root/MainVBox/BodyRow/RightScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12

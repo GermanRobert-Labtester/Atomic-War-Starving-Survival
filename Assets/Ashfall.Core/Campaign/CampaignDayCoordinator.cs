@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Random;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.Campaign
@@ -32,6 +33,26 @@ namespace Ashfall.Core.Campaign
 
         private bool _advancing;
         private int _lastAdvancedDay = int.MinValue;
+
+        /// <summary>
+        /// Day of the most recent fail-closed failed advance whose owners may
+        /// hold in-memory mutations. On a retry of the same day, owners
+        /// implementing <see cref="IPreDaySnapshotRestore"/> are rolled back
+        /// before the tick sequence so earlier owners do not double-tick.
+        /// </summary>
+        private int? _pendingRestoreDay;
+
+        /// <summary>The authoritative campaign calendar.</summary>
+        public ICampaignCalendar Calendar { get; }
+
+        /// <summary>The campaign RNG manager managing named domain streams.</summary>
+        public ICampaignRngManager Rng { get; }
+
+        public CampaignDayCoordinator(ICampaignCalendar? calendar = null, ICampaignRngManager? rng = null)
+        {
+            Calendar = calendar ?? new CampaignCalendar(initialDay: 1);
+            Rng = rng ?? new Ashfall.Core.Random.CampaignRngManager();
+        }
 
         /// <summary>
         /// Raised once per successful <see cref="Advance"/> call, after every
@@ -141,39 +162,96 @@ namespace Ashfall.Core.Campaign
         /// <see cref="DayAdvancedEventArgs"/> describing every owner result,
         /// or null when a guard rejects the call (already advancing, or stale
         /// day). The host should treat a null return as "no-op".
+        /// In fail-closed mode (default), any owner failure aborts persistence
+        /// and leaves <see cref="LastAdvancedDay"/> uncommitted.
         /// </summary>
-        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence? persistence = null)
+        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence? persistence = null, bool failClosed = true)
         {
             if (!TryBegin(day)) return null;
 
             var reports = new List<DayOwnerReport>(_owners.Count);
+            bool anyFailure = false;
             try
             {
+                // Phase -1: a previous fail-closed attempt for this same day
+                // left owners partially ticked in memory. Roll them back via
+                // their pre-day snapshots (reverse registration order) before
+                // anything else, so a retry never double-ticks a subsystem
+                // (e.g. a clock owner that advanced before a later failure).
+                if (_pendingRestoreDay.HasValue)
+                {
+                    bool restoreForThisDay = _pendingRestoreDay.Value == day;
+                    _pendingRestoreDay = null;
+                    if (restoreForThisDay)
+                    {
+                        for (int i = _owners.Count - 1; i >= 0; i--)
+                        {
+                            if (_owners[i].Owner is IPreDaySnapshotRestore restorable)
+                            {
+                                try
+                                {
+                                    restorable.RestorePreDaySnapshot(day);
+                                }
+                                catch (Exception)
+                                {
+                                    // A failed rollback leaves state unverifiable —
+                                    // fail this attempt too so nothing commits.
+                                    anyFailure = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Phase 0: Capture pre-day snapshot across all registered owners first.
+                for (int i = 0; i < _owners.Count; i++)
+                {
+                    try
+                    {
+                        _owners[i].Owner.CapturePreDaySnapshot(day);
+                    }
+                    catch (Exception)
+                    {
+                        anyFailure = true;
+                    }
+                }
+
+                // Phase 1: Advance each owner in sorted phase & id order.
                 for (int i = 0; i < _owners.Count; i++)
                 {
                     var reg = _owners[i];
                     DayOwnerReport report;
                     try
                     {
-                        // Capture pre-day snapshot first (idempotent hook).
-                        reg.Owner.CapturePreDaySnapshot(day);
                         var events = new List<DayStateChangeEvent>();
                         reg.Owner.TickDay(day, events);
-                        report = new DayOwnerReport(reg.OwnerId, true, events, null!);
+                        report = new DayOwnerReport(reg.OwnerId, true, events, string.Empty);
                     }
                     catch (Exception e)
                     {
+                        anyFailure = true;
                         report = new DayOwnerReport(reg.OwnerId, false,
                             Array.Empty<DayStateChangeEvent>(), e.Message);
                     }
                     reports.Add(report);
                 }
 
-                // Persistence must happen before the host shows blocking UI.
+                var args = new DayAdvancedEventArgs(day, reports);
+
+                // Fail-closed: an owner failure must not mark the day successfully advanced
+                // or write partial persistent state to disk. Keep the pre-day
+                // baseline alive so a retry can roll owners back first.
+                if (anyFailure && failClosed)
+                {
+                    _pendingRestoreDay = day;
+                    return args;
+                }
+
+                // Persistence must happen once, after all required owners succeed and before briefing display.
                 persistence?.PersistBeforeBriefing(day, reports);
 
                 _lastAdvancedDay = day;
-                var args = new DayAdvancedEventArgs(day, reports);
+                Calendar.SetDay(day);
                 OnDayAdvanced?.Invoke(args);
                 return args;
             }
@@ -204,7 +282,10 @@ namespace Ashfall.Core.Campaign
             return new CampaignDaySave
             {
                 saveVersion = CampaignDaySave.CurrentSaveVersion,
-                lastAdvancedDay = _lastAdvancedDay == int.MinValue ? -1 : _lastAdvancedDay
+                lastAdvancedDay = _lastAdvancedDay == int.MinValue ? -1 : _lastAdvancedDay,
+                masterSeed = Rng.MasterSeed,
+                derivationVersion = Rng.DerivationVersion,
+                streamPositions = Rng.CapturePositions()
             };
         }
 
@@ -213,28 +294,51 @@ namespace Ashfall.Core.Campaign
         {
             if (save == null) return;
             _lastAdvancedDay = save.lastAdvancedDay < 0 ? int.MinValue : save.lastAdvancedDay;
+            if (_lastAdvancedDay > 0)
+                Calendar.SetDay(_lastAdvancedDay);
+            Rng.RestorePositions(save.streamPositions);
         }
     }
 
-    /// <summary>Engine-agnostic contract for a system that participates in daily ticks.</summary>
-    public interface IDayAdvanceOwner
-    {
-        /// <summary>
-        /// Capture a pre-day snapshot for the given <paramref name="day"/>.
-        /// Owners that need a baseline (e.g. consumption accounting) implement
-        /// this; owners that are pure side-effect producers may leave it empty.
-        /// MUST be idempotent. MUST NOT mutate persistent state.
-        /// </summary>
-        void CapturePreDaySnapshot(int day);
+        /// <summary>Engine-agnostic contract for a system that participates in daily ticks.</summary>
+        public interface IDayAdvanceOwner
+        {
+            /// <summary>
+            /// Capture a pre-day snapshot for the given <paramref name="day"/>.
+            /// Owners that need a baseline (e.g. consumption accounting) implement
+            /// this; owners that are pure side-effect producers may leave it empty.
+            /// MUST be idempotent. MUST NOT mutate persistent state.
+            /// </summary>
+            void CapturePreDaySnapshot(int day);
+
+            /// <summary>
+            /// Tick exactly one day. Append typed <see cref="DayStateChangeEvent"/>s
+            /// to <paramref name="events"/> in deterministic order. Implementations
+            /// MUST be idempotent: calling twice on the same day must yield
+            /// identical state and identical event lists.
+            /// </summary>
+            void TickDay(int day, List<DayStateChangeEvent> events);
+        }
 
         /// <summary>
-        /// Tick exactly one day. Append typed <see cref="DayStateChangeEvent"/>s
-        /// to <paramref name="events"/> in deterministic order. Implementations
-        /// MUST be idempotent: calling twice on the same day must yield
-        /// identical state and identical event lists.
+        /// Optional contract for owners whose <see cref="IDayAdvanceOwner.TickDay"/>
+        /// mutates in-memory state that a fail-closed retry must not double-apply.
+        /// Implement it to have <see cref="CampaignDayCoordinator"/> roll you back
+        /// to your pre-day baseline (captured in
+        /// <see cref="IDayAdvanceOwner.CapturePreDaySnapshot"/>) before a retried
+        /// attempt for the same day ticks again. Owners that are naturally
+        /// idempotent need not implement it.
         /// </summary>
-        void TickDay(int day, List<DayStateChangeEvent> events);
-    }
+        public interface IPreDaySnapshotRestore
+        {
+            /// <summary>
+            /// Restore the in-memory state captured by the most recent
+            /// <see cref="IDayAdvanceOwner.CapturePreDaySnapshot"/> call. Called
+            /// in reverse registration order before a retried attempt for the
+            /// same day. MUST NOT throw for a valid snapshot.
+            /// </summary>
+            void RestorePreDaySnapshot(int day);
+        }
 
     /// <summary>
     /// Optional persistence callback the host injects so the coordinator can
@@ -293,13 +397,31 @@ string? primaryId = null, string? secondaryId = null, float numeric = 0f)
         }
     }
 
-    /// <summary>Aggregate event emitted after a successful day advance.</summary>
+    /// <summary>Aggregate event emitted after a day advance attempt.</summary>
     [Serializable]
     public sealed class DayAdvancedEventArgs
     {
         public int Day;
         public DayOwnerReport[] OwnerReports;
         public int OwnerCount => OwnerReports?.Length ?? 0;
+
+        public bool Succeeded => OwnerReports != null && Array.TrueForAll(OwnerReports, static r => r.Succeeded);
+        public bool HasFailures => !Succeeded;
+
+        public IReadOnlyList<DayOwnerReport> FailedReports
+        {
+            get
+            {
+                if (OwnerReports == null) return Array.Empty<DayOwnerReport>();
+                var list = new List<DayOwnerReport>();
+                for (int i = 0; i < OwnerReports.Length; i++)
+                {
+                    if (OwnerReports[i] != null && !OwnerReports[i].Succeeded)
+                        list.Add(OwnerReports[i]);
+                }
+                return list;
+            }
+        }
 
         public DayAdvancedEventArgs() { }
 

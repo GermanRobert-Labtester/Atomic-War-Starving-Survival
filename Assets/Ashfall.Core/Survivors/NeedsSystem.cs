@@ -87,16 +87,87 @@ namespace Ashfall.Core.Survivors
             _isNearHeatSource = isNearHeatSource;
         }
 
+        /// <summary>
+        /// Register a survivor's needs state for simulation.
+        ///
+        /// <para><b>One state per survivor id.</b> Registering a state whose
+        /// <c>Id</c> already belongs to a registered state <i>replaces</i> it in
+        /// place, evicting the older object from the simulation entirely. It does
+        /// not shadow it.</para>
+        ///
+        /// <para>This is defect D1's structural fix. The previous implementation
+        /// de-duplicated with <c>List.Contains</c> — reference equality — so two
+        /// distinct objects sharing one id could both be registered.
+        /// <see cref="Get"/> returned the first, so a stale object won every
+        /// lookup while the simulation ticked both. A host restore that rebuilt
+        /// state objects without unregistering the old ones therefore left ghosts
+        /// that kept decaying, and a ghost reaching 0 Health raised
+        /// <see cref="OnDied"/> for a survivor who was alive in the loaded
+        /// campaign.</para>
+        ///
+        /// <para>Replacement keeps the evicted state's slot so tick order is
+        /// unchanged; reordering the roster would alter simulation results for the
+        /// same seed (AGENTS.md Invariant 4). States with an empty <c>Id</c> cannot
+        /// be keyed and keep the reference-only de-duplication.</para>
+        /// </summary>
         public void Register(SurvivorNeedsState survivor)
         {
-            if (survivor != null && !_survivors.Contains(survivor))
-                _survivors.Add(survivor);
+            if (survivor == null) return;
+            if (_survivors.Contains(survivor)) return;
+
+            if (!string.IsNullOrEmpty(survivor.Id))
+            {
+                for (int i = 0; i < _survivors.Count; i++)
+                {
+                    var existing = _survivors[i];
+                    if (existing == null) continue;
+                    if (!string.Equals(existing.Id, survivor.Id, StringComparison.Ordinal)) continue;
+
+                    // Evict in place: the ghost leaves the simulation, the slot stays.
+                    _survivors[i] = survivor;
+                    return;
+                }
+            }
+
+            _survivors.Add(survivor);
         }
 
         public void Unregister(SurvivorNeedsState survivor)
         {
             _survivors.Remove(survivor);
         }
+
+        /// <summary>
+        /// Remove whatever state is registered for <paramref name="id"/>, if any;
+        /// returns whether something was removed. Lets a caller drop a survivor
+        /// without having to still hold the original object reference.
+        /// </summary>
+        public bool UnregisterById(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return false;
+            for (int i = 0; i < _survivors.Count; i++)
+            {
+                var existing = _survivors[i];
+                if (existing == null) continue;
+                if (!string.Equals(existing.Id, id, StringComparison.Ordinal)) continue;
+                _survivors.RemoveAt(i);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// How many states are registered for simulation. Exposed so callers and
+        /// tests can detect leaked registrations: a restore that forgets to
+        /// unregister leaves ghosts here that keep ticking.
+        /// </summary>
+        public int RegisteredCount => _survivors.Count;
+
+        /// <summary>
+        /// The registered states in simulation order. Read-only view for parity
+        /// comparison and determinism assertions.
+        /// </summary>
+        public System.Collections.Generic.IReadOnlyList<SurvivorNeedsState> Registered => _survivors;
 
         public SurvivorNeedsState? Get(string id)
         {

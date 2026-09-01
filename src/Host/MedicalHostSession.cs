@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 #pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Medical;
@@ -15,6 +17,13 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public ChemicalDependencySystem Engine { get; }
         public VigilStateMachine Vigil { get; }
+
+        /// <summary>
+        /// Task #133 unified pipeline. Bound by the host after the inventory,
+        /// survivors, and Phase-0 sessions exist (BindPipeline). Null until
+        /// bound — unbound sessions (headless selftests) keep working unchanged.
+        /// </summary>
+        public MedicalPipelineCoordinator? Pipeline { get; private set; }
 
         public float TotalMoraleDrain { get; private set; }
         public float ActiveCraftingPenalty { get; private set; }
@@ -63,6 +72,77 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
+        // ── Plan 60 / D6 — the bedside vigil ────────────────────────────
+
+        /// <summary>
+        /// The vigil is the one part of medicine that is allowed to run on real time,
+        /// because the point of it is that the player spends some. What reaches the
+        /// simulation is only whether it was kept, never how long it took, so the
+        /// determinism rule holds (see <see cref="Ashfall.Core.Medical.VigilCare"/>).
+        /// </summary>
+        private Func<int>? _vigilDay;
+        private Ashfall.Core.Flags.IFlagLedger? _vigilFlags;
+        private Func<IReadOnlyList<string>>? _vigilNames;
+        private bool _vigilBound;
+
+        public bool VigilActive => Vigil != null && Vigil.IsActive;
+
+        /// <summary>0..1 presence of the vigil in progress, for the bedside UI only.</summary>
+        public float VigilProgress =>
+            Vigil == null || Vigil.DurationSeconds <= 0f ? 0f
+            : Math.Clamp(Vigil.ElapsedSeconds / Vigil.DurationSeconds, 0f, 1f);
+
+        /// <summary>
+        /// Bind the day, the consequence ledger the record rides in, and the names worth
+        /// reciting (the dead the holdfast has kept). Unbound, a vigil can be started
+        /// but is never recorded — a ward with no ledger must not silently pretend.
+        /// </summary>
+        public void BindVigilContext(
+            Func<int> dayProvider,
+            Ashfall.Core.Flags.IFlagLedger? flags,
+            Func<IReadOnlyList<string>>? namesProvider = null)
+        {
+            _vigilDay = dayProvider;
+            _vigilFlags = flags;
+            _vigilNames = namesProvider;
+            if (_vigilBound) return;
+            _vigilBound = true;
+
+            Vigil.OnVigilCompleted += skipped =>
+            {
+                if (skipped) return;
+                string id = Vigil.DwellerId;
+                if (string.IsNullOrEmpty(id) || _vigilFlags == null) return;
+                Ashfall.Core.Medical.VigilCare.RecordKept(
+                    _vigilFlags, id, _vigilDay?.Invoke() ?? 0);
+                RaiseStateChanged();
+            };
+        }
+
+        /// <summary>
+        /// Sit with someone who is dying. Returns a host-readable line; refusal is
+        /// spoken, not swallowed, because a second vigil at once is a design answer and
+        /// not a silent button that does nothing.
+        /// </summary>
+        public string HoldVigil(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return "No patient named for the vigil.";
+            if (Vigil.IsActive) return $"A vigil is already kept for {Vigil.DwellerId}.";
+
+            Vigil.StartVigil(survivorId, _vigilNames?.Invoke() ?? Array.Empty<string>());
+            RaiseStateChanged();
+            return $"Vigil begun for {survivorId}. Sit with them.";
+        }
+
+        /// <summary>Advance the vigil by real elapsed time. Presence only — see above.</summary>
+        public void TickVigil(double deltaSeconds)
+        {
+            if (Vigil == null || !Vigil.IsActive) return;
+            if (deltaSeconds <= 0d) return;
+            Vigil.Tick((float)deltaSeconds);
+        }
+
+
         public static MedicalHostSession Create(string dataDir)
         {
             var session = new MedicalHostSession();
@@ -72,17 +152,87 @@ namespace AtomicWar.GodotApp
                 session.Engine.RestoreState(save);
                 session.LastEvent = "Medical ledger restored from save.";
             }
+
+            // Task #133 chem-dep authority merge: the `medical` section is the
+            // canonical ledger. Rows that only exist in the legacy
+            // `chemical_dependency` section are merged in; the medical section
+            // wins on survivor+item conflicts. Both sections stay in sync on
+            // save (they capture the same shared engine), so this merge is
+            // idempotent and migration-safe in both directions.
+            var legacy = ChemicalDependencySaveStore.TryLoad();
+            if (legacy != null)
+            {
+                int merged = 0;
+                foreach (var svList in legacy.survivors)
+                {
+                    if (svList == null || string.IsNullOrEmpty(svList.survivorId)) continue;
+                    var existing = session.Engine.Ledger.TryGetValue(svList.survivorId, out var deps)
+                        ? deps : null;
+                    foreach (var dep in svList.dependencies)
+                    {
+                        if (dep == null || string.IsNullOrEmpty(dep.itemId)) continue;
+                        bool present = existing != null && existing.Any(d =>
+                            string.Equals(d.itemId, dep.itemId, StringComparison.Ordinal));
+                        if (present) continue;
+                        session.Engine.OnSubstanceConsumed(svList.survivorId, dep.itemId,
+                            ParseDependencyKind(dep.kind));
+                        // OnSubstanceConsumed starts at one dose; adopt the saved level.
+                        var row = session.Engine.Ledger[svList.survivorId]
+                            .First(d => string.Equals(d.itemId, dep.itemId, StringComparison.Ordinal));
+                        row.dependencyLevel = dep.dependencyLevel;
+                        row.inManagedDetox = dep.inManagedDetox;
+                        row.inColdTurkey = dep.inColdTurkey;
+                        row.detoxProgressHours = dep.detoxProgressHours;
+                        merged++;
+                    }
+                }
+                if (merged > 0)
+                    session.LastEvent = $"Medical ledger restored; {merged} legacy dependency row(s) merged.";
+            }
+
+            var pipelineSave = MedicalPipelineSaveStore.TryLoad();
+            if (pipelineSave != null)
+            {
+                // Pipeline bind happens later (BindPipeline); stash the save so
+                // the coordinator restores it when the host completes wiring.
+                session._pendingPipelineSave = pipelineSave;
+            }
             return session;
         }
 
-        // ── Demo actions ─────────────────────────────────────────────
+        private MedicalPipelineSaveState? _pendingPipelineSave;
 
-        public string DoseDemo(string survivorId, string itemId, ChemicalDependencyKind kind)
+        private static ChemicalDependencyKind ParseDependencyKind(string? kind)
         {
-            Engine.OnSubstanceConsumed(survivorId, itemId, kind);
-            return $"Registered one dose of {itemId} for {survivorId} " +
-                   $"(level {Engine.DependencyLevel(survivorId, itemId):F2}).";
+            return kind switch
+            {
+                "Alcohol" => ChemicalDependencyKind.Alcohol,
+                "Stimulant" => ChemicalDependencyKind.Stimulant,
+                "Sedative" => ChemicalDependencyKind.Sedative,
+                _ => ChemicalDependencyKind.Opioid
+            };
         }
+
+        /// <summary>
+        /// Bind the Task #133 pipeline (built by Main once inventory, survivors,
+        /// and Phase-0 exist) and restore its save slice. Idempotent.
+        /// </summary>
+        public void BindPipeline(MedicalPipelineCoordinator pipeline)
+        {
+            if (Pipeline != null) return;
+            Pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            if (_pendingPipelineSave != null)
+            {
+                Pipeline.RestoreState(_pendingPipelineSave);
+                _pendingPipelineSave = null;
+            }
+            Pipeline.StateChanged += () => RaiseStateChanged();
+        }
+
+        /// <summary>Pipeline save capture for the campaign envelope.</summary>
+        public MedicalPipelineSaveState? CapturePipelineSave() => Pipeline?.CaptureState();
+
+        // ── Demo actions ─────────────────────────────────────────────
 
         public string BeginDetoxDemo(string survivorId, string itemId, bool managed)
         {
@@ -92,14 +242,14 @@ namespace AtomicWar.GodotApp
             return ok ? $"Detox begun for {survivorId} ({itemId})." : "Detox refused (below threshold or unknown).";
         }
 
-        public string TickDemo(float hours)
+        // ── Production Runtime Actions ───────────────────────────────
+        public void TickHours(float hours)
         {
             foreach (var sv in new System.Collections.Generic.List<string>(Engine.Ledger.Keys))
                 Engine.TickHours(sv, hours);
-            return $"Ticked {hours}h: morale drained {TotalMoraleDrain:F1}, " +
-                   $"crafting penalty {ActiveCraftingPenalty:P0}, " +
-                   $"combat penalty {ActiveCombatPenalty:P0}.";
         }
+
+        // ── Demo actions ─────────────────────────────────────────────
 
         public string StatusLine()
         {
@@ -128,20 +278,6 @@ namespace AtomicWar.GodotApp
 
         // ── Vigil (Exp 07) ──────────────────────────────────────────
 
-        public string StartVigilDemo(string dwellerId, string[] names)
-        {
-            Vigil.StartVigil(dwellerId, names);
-            return $"Vigil begun for {dwellerId} ({names.Length} names, {Vigil.DurationSeconds}s).";
-        }
-
-        public string TickVigilDemo(float seconds)
-        {
-            Vigil.Tick(seconds);
-            if (!Vigil.IsActive) return $"Vigil ended. Recited {Vigil.RecitedCount}/{Vigil.Names.Count} names.";
-            return $"Vigil ticking: {Vigil.ElapsedSeconds:F0}/{Vigil.DurationSeconds:F0}s, " +
-                   $"{Vigil.RecitedCount}/{Vigil.Names.Count} names recited.";
-        }
-
         public string SkipVigilDemo()
         {
             if (!Vigil.IsActive) return "No active vigil.";
@@ -152,7 +288,10 @@ namespace AtomicWar.GodotApp
         public string VigilStatusLine()
         {
             if (!Vigil.IsActive && !Vigil.IsCompleted) return "Vigil: idle";
-            if (Vigil.IsCompleted) return $"Vigil: completed (skipped: {Vigil.WasSkipped})";
+            if (Vigil.IsCompleted)
+                return Vigil.WasSkipped
+                    ? "Vigil: left early"
+                    : $"Vigil: kept to the end for {Vigil.DwellerId}";
             return $"Vigil: {Vigil.DwellerId} · {Vigil.ElapsedSeconds:F0}/{Vigil.DurationSeconds:F0}s · " +
                    $"{Vigil.RecitedCount}/{Vigil.Names.Count} names" +
                    (Vigil.PhantomKnockFired ? " · phantom knock" : "");

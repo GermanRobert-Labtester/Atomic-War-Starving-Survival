@@ -910,6 +910,34 @@ ARCHITECTURE_GRAPH = {
         "routes": ["factions", "quests"],
         "cli": ["--expansions-selftest"],
         "tests": ["FactionBranchCoordinatorTests", "MilitaryBranchSystemTests", "RebelBranchSystemTests", "IndependentBranchSystemTests", "PrpfStandingSystemTests", "WeightOfChoicesSaveTests"]
+    },
+    "survivor_fate": {
+        "domain": "Campaign & Lore",
+        "core": ["SurvivorFateSystem"],
+        "catalog": [],
+        "host": [],
+        "setup": "SetupSurvivorFate",
+        "ticked": True,
+        "tick_type": "Daily Survivor-Death Cascade",
+        "store": ["SurvivorFateSaveStore"],
+        "ui": ["GameDashboardPanel"],
+        "routes": ["status"],
+        "cli": ["--playable-shell-selftest"],
+        "tests": ["SurvivorFateSystemTests"]
+    },
+    "onboarding": {
+        "domain": "Campaign & Onboarding",
+        "core": ["OnboardingJourney"],
+        "catalog": [],
+        "host": [],
+        "setup": "SetupOnboarding",
+        "ticked": False,
+        "tick_type": "On-Demand (Player Sigil Recording)",
+        "store": ["OnboardingSaveStore"],
+        "ui": ["OnboardingHintPanel"],
+        "routes": ["help"],
+        "cli": ["--onboarding-journey-selftest"],
+        "tests": ["OnboardingJourneyTests"]
     }
 }
 
@@ -935,7 +963,10 @@ def scan_codebase_symbols():
 
     reg_text = (REPO_ROOT / "Assets" / "Ashfall.Core" / "Save" / "SaveSectionRegistry.cs").read_text(encoding="utf-8")
     sec_pattern = re.compile(
-        r'new\s*\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*("[^"]+"|\bnull\b)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"(?:\s*,\s*RequiresSetup:\s*(true|false))?\s*\)'
+        r'new\s*\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*("[^"]+"|\bnull\b)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"'
+        r'(?:\s*,\s*RequiresSetup:\s*(true|false))?'
+        r'(?:\s*,\s*LifecycleGroup:\s*[A-Za-z_][A-Za-z0-9_]*)?'
+        r'\s*\)'
     )
     reg_sections = {m.group(1): {
         "save_method": m.group(2),

@@ -74,28 +74,6 @@ namespace AtomicWar.GodotApp
             _codexViewer.Text = _economy.StatusLine();
         }
 
-        private void OnEconomyTickClicked()
-        {
-            SetupEconomy();
-            _statusLabel.Text = _economy.TickDemo(1);
-            FlushEconomyIfDirty();
-            _codexViewer.Text = _economy.StatusLine();
-        }
-
-        private void OnEconomyBuyClicked(string itemId, int quantity)
-        {
-            SetupEconomy();
-            _statusLabel.Text = _economy.BuyDemo(itemId, quantity);
-            FlushEconomyIfDirty();
-        }
-
-        private void OnEconomyBarterClicked(string giveId, int giveQty, string takeId)
-        {
-            SetupEconomy();
-            _statusLabel.Text = _economy.BarterDemo(giveId, giveQty, takeId);
-            FlushEconomyIfDirty();
-        }
-
         private void OnEconomySaveClicked()
         {
             SetupEconomy();
@@ -160,10 +138,15 @@ namespace AtomicWar.GodotApp
             _silentFoundry = AtomicWar.GodotApp.SilentFoundryHostSession.Create(
                 _dataDir, _expansions, _inventory, _journal, market: _economy.Market);
             _silentFoundry.BindPowerAndThermal(_powerGrid?.System, _shelterThermal?.System);
-            // GAP-STUB-03: wire the remaining FactionStanceEngine providers
-            // from Main state so SilentFoundry guild trust reflects actual
-            // campaign day, radiation, and military-survivor presence.
-            _silentFoundry.BindStanceProviders(_simDay, _holdfastRuntime?.Radiation ?? 0f, _survivors);
+            // GAP-STUB-03 (resolved): wire the remaining FactionStanceEngine
+            // providers as live accessors into Main state, not one-time
+            // captured values, so guild trust reflects the campaign's actual
+            // current day, radiation, and military-survivor presence on every
+            // future read — including after the values change post-bind.
+            _silentFoundry.BindStanceProviders(
+                campaignDayProvider: () => _simDay,
+                partyRadiationProvider: () => _holdfastRuntime?.Radiation ?? 0f,
+                survivorsProvider: () => _survivors);
             // Foundry state rides the expansion-hub save (already restored above);
             // state-change events mark the hub save dirty so nothing is lost.
             _silentFoundry.StateChanged += () =>
@@ -175,7 +158,10 @@ namespace AtomicWar.GodotApp
                 if (_state == GameState.Playing) UpdateHud();
             };
             if (_silentFoundryPanel != null)
+            {
                 _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+                _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog());
+            }
             // Live market strip: show the guild's real trade access at all times.
             if (_economyPanel != null)
                 _economyPanel.BindStance(_silentFoundry.GuildStanceEngine, Ashfall.Core.Foundry.SilentFoundryIds.FactionId);
@@ -213,7 +199,8 @@ namespace AtomicWar.GodotApp
                 Array.Empty<Ashfall.Core.Economy.ScarcityEntry>(),
                 Array.Empty<Ashfall.Core.Economy.FactionTradePreference>(),
                 Array.Empty<Ashfall.Core.Economy.PriceShockRule>()));
-            _tradePanel.BindSession(_economy, _silentFoundry.GuildStanceEngine, tuning, _tradeRadio, new SeededRng(2026));
+            SetupCampaignDay();
+            _tradePanel.BindSession(_economy, _silentFoundry.GuildStanceEngine, tuning, _tradeRadio, _campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Economy).Rng);
             _tradePanel.SetActiveFaction(Ashfall.Core.Foundry.SilentFoundryIds.FactionId);
             // Live refresh when a treaty consequence moves the guild's standing
             // (subscribe once per open; CloseTradePanel removes it).
@@ -221,26 +208,6 @@ namespace AtomicWar.GodotApp
             _silentFoundry.StateChanged += _tradePanel.RefreshView;
             _tradePanel.Open();
             GD.Print($"[Ashfall Godot] Trade screen open — Foundry Guild stance {_silentFoundry.GuildStance} · trust {_silentFoundry.GuildTrust:F0}");
-        }
-
-        private void OnCaravanSpawnClicked()
-        {
-            SetupCaravans();
-            _statusLabel.Text = _caravans.SpawnDemoCaravan("loc_the_allotments");
-        }
-
-        private void OnCaravanTickClicked()
-        {
-            SetupCaravans();
-            _statusLabel.Text = _caravans.TickDemo() + "\n" + _caravans.StatusLine();
-        }
-
-        private void OnCaravanBuyClicked()
-        {
-            SetupCaravans();
-            int rations = 20;
-            _statusLabel.Text = _caravans.BuyDemo("caravan_menders", "item_clean_water", 2, ref rations)
-                + $" Rations left: {rations}.";
         }
 
         private void CloseEconomyPanel()

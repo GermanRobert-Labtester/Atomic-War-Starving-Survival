@@ -14,6 +14,13 @@ namespace Ashfall.Core
         public int birthDay;
         public bool baselineCorrected;
         public string moralityMemory;  // the story told, not the dose
+        // Plan 12A — maturation flag. Plan 12A is the plan that first
+        // promotes a child into a working survivor; the flag is part of
+        // the per-child DTO so save/load round-trips it cleanly without
+        // a parallel registry. Default false; acquired only via
+        // TryMaturation (one-way, idempotent within the cohort).
+        public bool isMatured;
+        public int maturationDay;
     }
 
     [Serializable]
@@ -37,6 +44,7 @@ namespace Ashfall.Core
 
         public event Action<string, string> OnChildBooked;       // childId, guessBand
         public event Action<string, string> OnBaselineCorrected; // childId, trueBand
+        public event Action<string, int> OnMaturation;           // childId, day  -- Plan 12A
         public event Action<CohortSystemState> OnStateChanged;
 
         public CohortSystemState State => _state;
@@ -83,6 +91,28 @@ namespace Ashfall.Core
         public CohortChild? GetChild(string childId) =>
             _children.TryGetValue(childId, out var c) ? c : null;
 
+        /// <summary>
+        /// Plan 12A: mark a CohortChild as matured at <paramref name="day"/>
+        /// (one-way). The child is not removed from the cohort roster —
+        /// the registry keeps a permanent record — but the boolean makes
+        /// the maturation event queryable for save/load and for downstream
+        /// quest/event gating (e.g. "first solo surface trip"). Returns
+        /// false when the id is unknown, the child has already matured,
+        /// or the day is invalid. Pure event publisher; no roster mutation.
+        /// </summary>
+        public bool TryMaturation(string childId, int day)
+        {
+            if (string.IsNullOrEmpty(childId) || day <= 0) return false;
+            if (!_children.TryGetValue(childId, out var child)) return false;
+            if (child.isMatured) return false;
+
+            child.isMatured = true;
+            child.maturationDay = day;
+            OnMaturation?.Invoke(childId, day);
+            RaiseChanged();
+            return true;
+        }
+
         public CohortSystemState CaptureState()
         {
             // Fresh copy, ordinal-ordered (aliasing + cross-host determinism).
@@ -101,7 +131,9 @@ namespace Ashfall.Core
                     birthDay = c.birthDay,
                     baselineCorrected = c.baselineCorrected,
                     moralityMemory = c.moralityMemory,
-                    parentIds = new List<string>(c.parentIds)
+                    parentIds = new List<string>(c.parentIds),
+                    isMatured = c.isMatured,
+                    maturationDay = c.maturationDay
                 });
             }
             return copy;
@@ -126,7 +158,9 @@ namespace Ashfall.Core
                         birthDay = c.birthDay,
                         baselineCorrected = c.baselineCorrected,
                         moralityMemory = c.moralityMemory,
-                        parentIds = c.parentIds != null ? new List<string>(c.parentIds) : new List<string>()
+                        parentIds = c.parentIds != null ? new List<string>(c.parentIds) : new List<string>(),
+                        isMatured = c.isMatured,
+                        maturationDay = c.maturationDay
                     };
                     _children[c.survivorId] = copy;
                     _state.children.Add(copy);

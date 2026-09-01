@@ -1,6 +1,7 @@
 #pragma warning disable CS0067 // Public API event surface; subscribers arrive with feature wiring
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.PlayerCommand;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.Survivors
@@ -96,6 +97,60 @@ namespace Ashfall.Core.Survivors
         /// Assign a caregiver to a patient. Returns false if invalid.
         /// Automatically unassigns any previous caregiver for the patient.
         /// </summary>
+        /// <summary>
+        /// Side-effect-free preview of a caregiver assignment command.
+        /// Shares the same validation path as <see cref="AssignCaregiver"/>.
+        /// </summary>
+        public CommandPreview PreviewAssignCaregiver(string caregiverId, string patientId, long stateVersion = 0)
+        {
+            if (string.IsNullOrEmpty(caregiverId) || string.IsNullOrEmpty(patientId))
+                return CommandPreview.Unavailable(PlayerCommandCode.AssignCaregiver, "invalid_ids", "caregiving.invalid_ids", stateVersion);
+            if (caregiverId == patientId)
+                return CommandPreview.Unavailable(PlayerCommandCode.AssignCaregiver, "same_survivor", "caregiving.same_survivor", stateVersion);
+            if (IsAlive != null && (!IsAlive(caregiverId) || !IsAlive(patientId)))
+                return CommandPreview.Unavailable(PlayerCommandCode.AssignCaregiver, "not_alive", "caregiving.not_alive", stateVersion);
+            if (CanProvideCare != null && !CanProvideCare(caregiverId))
+                return CommandPreview.Unavailable(PlayerCommandCode.AssignCaregiver, "cannot_provide_care", "caregiving.cannot_provide_care", stateVersion);
+            if (NeedsCare != null && !NeedsCare(patientId))
+                return CommandPreview.Unavailable(PlayerCommandCode.AssignCaregiver, "does_not_need_care", "caregiving.does_not_need_care", stateVersion);
+
+            return CommandPreview.Available(
+                PlayerCommandCode.AssignCaregiver,
+                stateVersion,
+                new Dictionary<string, double> { { "caregiver", 1 }, { "patient", 1 } },
+                isIrreversible: false,
+                messageKey: "caregiving.preview_assign");
+        }
+
+        /// <summary>
+        /// Execute a caregiver assignment using the same validation path as <see cref="PreviewAssignCaregiver"/>.
+        /// Stale previews are rejected without mutation.
+        /// </summary>
+        public CommandResult ExecuteAssignCaregiver(string caregiverId, string patientId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        {
+            var preview = PreviewAssignCaregiver(caregiverId, patientId, expectedStateVersion);
+            if (!preview.IsAvailable)
+                return CommandResult.FromPreview(preview);
+
+            if (preview.StateVersion != currentStateVersion)
+                return CommandResult.StalePreview(PlayerCommandCode.AssignCaregiver, preview.StateVersion, currentStateVersion);
+
+            bool ok = AssignCaregiver(caregiverId, patientId);
+            if (!ok)
+                return new CommandResult(
+                    PlayerCommandCode.AssignCaregiver,
+                    ActionResult.Failed("execute_failed", "caregiving.execute_failed"),
+                    expectedStateVersion,
+                    currentStateVersion);
+
+            return CommandResult.FromSuccess(
+                PlayerCommandCode.AssignCaregiver,
+                ActionResult.Success("caregiving.assigned"),
+                expectedStateVersion,
+                currentStateVersion + 1);
+        }
+
+
         public bool AssignCaregiver(string caregiverId, string patientId)
         {
             if (string.IsNullOrEmpty(caregiverId) || string.IsNullOrEmpty(patientId))

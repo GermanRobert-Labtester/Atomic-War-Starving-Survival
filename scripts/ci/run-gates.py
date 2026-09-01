@@ -15,6 +15,7 @@ Features:
 Usage:
   python3 scripts/ci/run-gates.py                      # Runs all fast-tier gates
   python3 scripts/ci/run-gates.py --tier full          # Runs all full-tier gates
+  python3 scripts/ci/run-gates.py --tier performance   # Runs all performance-tier gates
   python3 scripts/ci/run-gates.py --gate data_integrity # Runs single gate
   python3 scripts/ci/run-gates.py --list               # Lists all registered gates
 """
@@ -121,9 +122,72 @@ def write_failure_artifact(artifact_path, failed_gates, total_gates, start_time,
         f.write("\n".join(lines))
 
 
+def resolve_dependencies(all_gates, selected):
+    """
+    Expand `selected` to include every transitive `depends_on` prerequisite,
+    returned in manifest order.
+
+    Without this, `--gate <id>` on a host-dependent gate runs Godot without
+    building first. Godot then loads the last successfully compiled
+    .godot/mono/temp/bin/Debug/Ashfall.dll, so the gate exercises stale bytes
+    and can report PASS while the current source does not even compile.
+    """
+    by_id = {g.get("gate_id"): g for g in all_gates}
+    wanted = {g.get("gate_id") for g in selected}
+
+    pending = list(wanted)
+    while pending:
+        gid = pending.pop()
+        for dep in by_id.get(gid, {}).get("depends_on", []) or []:
+            if dep not in wanted:
+                wanted.add(dep)
+                pending.append(dep)
+
+    # Manifest order is the execution order, so prerequisites declared earlier
+    # naturally run first.
+    return [g for g in all_gates if g.get("gate_id") in wanted]
+
+
+def validate_dependencies(all_gates):
+    """Return a list of manifest problems: unknown or cyclic dependencies."""
+    by_id = {g.get("gate_id"): g for g in all_gates}
+    order = {g.get("gate_id"): i for i, g in enumerate(all_gates)}
+    problems = []
+
+    for g in all_gates:
+        gid = g.get("gate_id")
+        for dep in g.get("depends_on", []) or []:
+            if dep not in by_id:
+                problems.append(f"gate '{gid}' depends on unknown gate '{dep}'")
+            elif order[dep] > order[gid]:
+                problems.append(
+                    f"gate '{gid}' depends on '{dep}', which is declared later in the manifest; "
+                    f"manifest order is execution order")
+
+    # Cycle detection.
+    state = {}
+
+    def visit(gid, stack):
+        if state.get(gid) == "done":
+            return
+        if state.get(gid) == "active":
+            problems.append("dependency cycle: " + " -> ".join(stack + [gid]))
+            return
+        state[gid] = "active"
+        for dep in by_id.get(gid, {}).get("depends_on", []) or []:
+            if dep in by_id:
+                visit(dep, stack + [gid])
+        state[gid] = "done"
+
+    for g in all_gates:
+        visit(g.get("gate_id"), [])
+
+    return problems
+
+
 def main():
     parser = argparse.ArgumentParser(description="Canonical ASHFALL Gate Runner")
-    parser.add_argument("--tier", choices=["fast", "full", "all"], default="fast",
+    parser.add_argument("--tier", choices=["fast", "full", "performance", "release", "all"], default="fast",
                         help="Filter gates by classification tier (default: fast)")
     parser.add_argument("--gate", type=str, default=None,
                         help="Run a specific gate ID or comma-separated list of gate IDs")
@@ -151,6 +215,13 @@ def main():
 
     all_gates = manifest.get("gates", [])
 
+    dep_problems = validate_dependencies(all_gates)
+    if dep_problems:
+        print("❌ Error: gate manifest dependency problems:", file=sys.stderr)
+        for p in dep_problems:
+            print(f"   - {p}", file=sys.stderr)
+        return 1
+
     # Filter gates
     if args.gate:
         requested_ids = {gid.strip() for gid in args.gate.split(",") if gid.strip()}
@@ -168,8 +239,17 @@ def main():
         print(f"❌ Error: No gates matched tier '{args.tier}'.", file=sys.stderr)
         return 1
 
+    # Pull in prerequisites. A host self-test must never run without a
+    # successful current-source host build in the same invocation.
+    explicit_ids = {g.get("gate_id") for g in gates_to_run}
+    gates_to_run = resolve_dependencies(all_gates, gates_to_run)
+    added = [g.get("gate_id") for g in gates_to_run if g.get("gate_id") not in explicit_ids]
+    if added:
+        print(f"[Prerequisites] Adding {len(added)} required gate(s): {', '.join(added)}")
+
     if args.check_only:
-        print(f"✅ Gate manifest valid: {len(all_gates)} total gates, {len(gates_to_run)} in tier '{args.tier}'.")
+        print(f"✅ Gate manifest valid: {len(all_gates)} total gates, "
+              f"{len(gates_to_run)} in tier '{args.tier}', dependencies resolve cleanly.")
         return 0
 
     fail_fast = not args.no_fail_fast
@@ -185,6 +265,7 @@ def main():
 
     results = []
     failed_gates = []
+    outcome_by_id = {}
     start_all = time.time()
 
     for idx, gate in enumerate(gates_to_run, 1):
@@ -197,6 +278,37 @@ def main():
 
         print(f"\n[{idx}/{len(gates_to_run)}] Running [{category}] {name} ({gid})...")
         sys.stdout.flush()
+
+        # A gate whose prerequisite did not pass must not execute. Running it
+        # anyway is how a host self-test ends up exercising a stale assembly and
+        # reporting PASS against source that does not compile.
+        unmet = [d for d in (gate.get("depends_on") or []) if outcome_by_id.get(d) is not True]
+        if unmet:
+            reason = (f"Host build prerequisite failed; self-test not executed. "
+                      f"Unmet prerequisite(s): {', '.join(unmet)}")
+            print(f"  -> ⛔ BLOCKED: {reason}")
+            res_record = {
+                "gate_id": gid,
+                "name": name,
+                "category": category,
+                "command": cmd,
+                "timeout_seconds": timeout,
+                "expected_summary": expected_summary,
+                "classification": gate.get("classification", "fast"),
+                "passed": False,
+                "blocked": True,
+                "exit_code": 1,
+                "duration": 0.0,
+                "error_reason": reason,
+                "output": ""
+            }
+            results.append(res_record)
+            failed_gates.append(res_record)
+            outcome_by_id[gid] = False
+            if fail_fast:
+                print(f"\n❌ [ABORT] Fail-fast active: stopping on gate '{gid}'.")
+                break
+            continue
 
         gate_start = time.time()
         exit_code = 0
@@ -248,12 +360,14 @@ def main():
             "expected_summary": expected_summary,
             "classification": gate.get("classification", "fast"),
             "passed": passed,
+            "blocked": False,
             "exit_code": exit_code,
             "duration": gate_elapsed,
             "error_reason": error_reason,
             "output": output
         }
         results.append(res_record)
+        outcome_by_id[gid] = passed
 
         if passed:
             print(f"  -> PASS ({gate_elapsed:.2f}s)")

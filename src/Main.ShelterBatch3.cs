@@ -35,6 +35,8 @@ namespace AtomicWar.GodotApp
         private TravelingCaravanPanel _travelingCaravanPanel = null!;
         private TravelingCaravanHostSession _travelingCaravan = null!;
         private ShelterAssignmentHostSession _shelterAssignment = null!;
+        private ShelterDecorHostSession _shelterDecor = null!;
+        private ShelterDecorPanel _shelterDecorPanel = null!;
 
         private SumpFloodingPanel _sumpFloodingPanel = null!;
         private DecontaminationPanel _decontaminationPanel = null!;
@@ -57,11 +59,13 @@ namespace AtomicWar.GodotApp
 
         private void SetupSumpFlooding()
         {
+            if (_sumpFlooding != null) return;
+            SetupCampaignDay();
             var sfState = SumpFloodingSaveStore.TryLoad() ?? new SumpFloodingState();
             var sfWeather = _world.Weather;
             var sfPower = _powerGrid.System;
             var sfDeepFreeze = new YearOfAshDeepFreezeSystem();
-            var sfSys = new SumpFloodingSystem(new SeededRng(1986), sfWeather, sfPower, sfDeepFreeze, new GodotLog());
+            var sfSys = new SumpFloodingSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 10), sfWeather, sfPower, sfDeepFreeze, new GodotLog());
             sfSys.RestoreState(sfState);
             _sumpFlooding = new SumpFloodingHostSession(sfSys, sfWeather, sfPower, sfDeepFreeze);
             if (_sumpFloodingPanel != null && _sumpFloodingPanel.IsInsideTree())
@@ -74,12 +78,14 @@ namespace AtomicWar.GodotApp
 
         private void SetupDecontamination()
         {
+            if (_decontamination != null) return;
+            SetupCampaignDay();
             var dcState = DecontaminationSaveStore.TryLoad() ?? new DecontaminationState();
             var dcInv = _inventory.Inventory;
             var dcRad = _survivors.Radiation;
             var dcAirlock = _airlockSecurity.System;
             var dcStarting = _startingLevel.System;
-            var dcSys = new DecontaminationSystem(new SeededRng(1986), dcRad, dcInv, dcAirlock, dcStarting, new GodotLog());
+            var dcSys = new DecontaminationSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 11), dcRad, dcInv, dcAirlock, dcStarting, new GodotLog());
             dcSys.RestoreState(dcState);
             _decontamination = new DecontaminationHostSession(dcSys, dcRad, dcInv, dcAirlock, dcStarting);
             if (_decontaminationPanel != null && _decontaminationPanel.IsInsideTree())
@@ -92,10 +98,12 @@ namespace AtomicWar.GodotApp
 
         private void SetupKitchenNutrition()
         {
+            if (_kitchenNutrition != null) return;
+            SetupCampaignDay();
             var knState = KitchenNutritionSaveStore.TryLoad() ?? new KitchenNutritionState();
             var knInv = _inventory.Inventory;
             var knNeeds = _survivors.Needs;
-            var knSys = new KitchenNutritionSystem(new SeededRng(1986), knInv, knNeeds, new GodotLog());
+            var knSys = new KitchenNutritionSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 12), knInv, knNeeds, new GodotLog());
             knSys.RestoreState(knState);
             _kitchenNutrition = new KitchenNutritionHostSession(knSys, knInv, knNeeds);
             if (_kitchenNutritionPanel != null && _kitchenNutritionPanel.IsInsideTree())
@@ -108,12 +116,18 @@ namespace AtomicWar.GodotApp
 
         private void SetupEquipmentCondition()
         {
+            if (_equipmentCondition != null) return;
+            SetupCampaignDay();
             var ecState = EquipmentConditionSaveStore.TryLoad() ?? new EquipmentConditionState();
             var ecInv = _inventory.Inventory;
             var ecCrafting = _crafting.Engine;
-            var ecSys = new EquipmentConditionSystem(new SeededRng(1986), ecInv, ecCrafting, new GodotLog());
+            var ecSys = new EquipmentConditionSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 13), ecInv, ecCrafting, new GodotLog());
             ecSys.RestoreState(ecState);
             _equipmentCondition = new EquipmentConditionHostSession(ecSys, ecInv, ecCrafting);
+            // Combat projects its default weapon loadout from this authority
+            // and writes engagement wear back here (WeaponEquipmentBridge).
+            if (_combat != null)
+                _combat.Equipment = ecSys;
             if (_equipmentConditionPanel != null && _equipmentConditionPanel.IsInsideTree())
                 RemoveChild(_equipmentConditionPanel);
             _equipmentConditionPanel = new EquipmentConditionPanel();
@@ -124,6 +138,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupLibraryStudy(ResearchSystem sharedResearch)
         {
+            if (_libraryStudy != null) return;
             var lsState = LibraryStudySaveStore.TryLoad() ?? new LibraryStudyState();
             var lsSkills = new SkillProgressionSystem();
             var lsResearch = sharedResearch;
@@ -142,6 +157,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupArchiveDesk()
         {
+            if (_archiveDesk != null) return;
             var adState = ArchiveDeskSaveStore.TryLoad() ?? new ArchiveDeskState();
             var adJournal = _journal;
             var adKnowledge = new KnowledgeBase();
@@ -160,10 +176,12 @@ namespace AtomicWar.GodotApp
 
         private void SetupContractorRoster()
         {
+            if (_contractorRoster != null) return;
+            SetupCampaignDay();
             var crState = ContractorRosterSaveStore.TryLoad() ?? new ContractorRosterState();
             var crInv = _inventory.Inventory;
             var crExpedition = _expeditions.Engine;
-            var crSys = new ContractorRosterSystem(new SeededRng(1986), crInv, _expandedShelterRoster, crExpedition, new GodotLog());
+            var crSys = new ContractorRosterSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 14), crInv, _expandedShelterRoster, crExpedition, new GodotLog());
             crSys.RestoreState(crState);
             _contractorRoster = new ContractorRosterHostSession(crSys, crInv, _expandedShelterRoster, crExpedition);
             if (_contractorRosterPanel != null && _contractorRosterPanel.IsInsideTree())
@@ -176,11 +194,21 @@ namespace AtomicWar.GodotApp
 
         private void SetupMentalHealthCrisis()
         {
+            if (_mentalHealthCrisis != null) return;
+            SetupCampaignDay();
             var mhState = MentalHealthCrisisSaveStore.TryLoad() ?? new MentalHealthState();
             var mhNeeds = _survivors.Needs;
             var mhMedical = _medicalWard;
-            _chemicalDependency = new ChemicalDependencyHostSession();
-            var mhSys = new MentalHealthCrisisSystem(new SeededRng(1986), mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster, new GodotLog());
+            // Task #133: one shared chem-dep authority — the MedicalHostSession
+            // engine (already loaded + merged from both save sections). The
+            // chemical_dependency save section is written from this same shared
+            // engine by SaveChemicalDependency, keeping it in sync.
+            SetupMedical();
+            _chemicalDependency = new ChemicalDependencyHostSession(_medical.Engine);
+            // Task #133 P1b: share the pipeline when already bound; otherwise
+            // EnsureMedicalPipeline backfills this reference once it runs.
+            _chemicalDependency.Pipeline = _medical.Pipeline;
+            var mhSys = new MentalHealthCrisisSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Psychology, 0, 15), mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster, new GodotLog());
             mhSys.RestoreState(mhState);
             _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster);
             if (_mentalHealthCrisisPanel != null && _mentalHealthCrisisPanel.IsInsideTree())
@@ -190,8 +218,9 @@ namespace AtomicWar.GodotApp
             _mentalHealthCrisisPanel.Visible = false;
             AddChild(_mentalHealthCrisisPanel);
 
-            var depLoaded = ChemicalDependencySaveStore.TryLoad();
-            if (depLoaded != null) _chemicalDependency.RestoreSave(depLoaded);
+            // Task #133: no separate restore here — the shared engine was already
+            // loaded and merged by MedicalHostSession.Create. Re-restoring the
+            // legacy section would wipe canonical medical-ledger rows.
             if (_chemicalDependencyPanel != null && _chemicalDependencyPanel.IsInsideTree())
                 RemoveChild(_chemicalDependencyPanel);
             _chemicalDependencyPanel = new ChemicalDependencyPanel();
@@ -218,13 +247,61 @@ namespace AtomicWar.GodotApp
 
         private void SetupShelterAssignment()
         {
-            _shelterAssignment = ShelterAssignmentHostSession.CreateDefault(new SeededRng(1986));
+            if (_shelterAssignment != null) return;
+            SetupCampaignDay();
+            _shelterAssignment = ShelterAssignmentHostSession.CreateDefault(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng);
             if (!_shelterAssignment.TryLoad())
             {
             }
             _shelterThermal.SetAssignments(_shelterAssignment.System);
             SetupPhase0();
             _phase0.BindShelterAssignment(_shelterAssignment.System);
+        }
+
+        /// <summary>
+        /// Plan 12C final host triad. Placements restore from the campaign
+        /// envelope; item modifiers are rebuilt from the authoritative live
+        /// item catalog, never copied into a save. Existing memorial entries
+        /// are reconciled once so saves authored before this panel gain their
+        /// wall records deterministically.
+        /// </summary>
+        private void SetupShelterDecor()
+        {
+            if (_shelterDecor != null) return;
+
+            SetupSurvivors();
+            SetupInventory();
+            SetupShelterAssignment();
+            SetupMemorial();
+
+            var system = new ShelterDecorSystem();
+            var saved = ShelterDecorSaveStore.TryLoad();
+            if (saved != null)
+                system.RestoreState(saved.Capture());
+
+            _shelterDecor = new ShelterDecorHostSession(
+                system,
+                _shelterAssignment.System,
+                _survivors.Needs,
+                _inventory);
+            _shelterDecor.SetCurrentDay(_simDay);
+            _shelterDecor.LoadCatalogModifiers();
+
+            // This is intentionally idempotent: only legacy memorial entries
+            // without a plaque become new placements, and a duplicate survivor
+            // key is never mounted twice.
+            foreach (var entry in _memorial.Entries)
+            {
+                if (!_shelterDecor.TryMountMemorialPlaque(entry, out var reason))
+                    GD.PushWarning("[Ashfall Godot] Memorial plaque reconcile skipped: " + reason);
+            }
+
+            if (_shelterDecorPanel != null && _shelterDecorPanel.IsInsideTree())
+                RemoveChild(_shelterDecorPanel);
+            _shelterDecorPanel = new ShelterDecorPanel();
+            _shelterDecorPanel.Bind(_shelterDecor);
+            _shelterDecorPanel.Visible = false;
+            AddChild(_shelterDecorPanel);
         }
 
         private void SaveSumpFlooding()
@@ -272,6 +349,37 @@ namespace AtomicWar.GodotApp
             if (_chemicalDependency != null)
                 CaptureSection("chemical_dependency", ChemicalDependencySaveStore.TryCapturePersisted(_chemicalDependency.System.CaptureState()));
         }
-        private void SaveShelterAssignment() => _shelterAssignment?.Save();
+        private void SaveShelterAssignment()
+        {
+            if (_shelterAssignment == null) return;
+
+            var save = new ShelterAssignmentSave
+            {
+                simDay = 0,
+                Rooms = new List<ShelterRoomSave>(),
+                State = _shelterAssignment.System.CaptureState()
+            };
+            foreach (var room in _shelterAssignment.System.Rooms)
+            {
+                save.Rooms.Add(new ShelterRoomSave
+                {
+                    RoomId = room.RoomId,
+                    DisplayName = room.DisplayName,
+                    Capacity = room.Capacity,
+                    RequiredSkillId = room.RequiredSkillId,
+                    WorkstationId = room.WorkstationId
+                });
+            }
+
+            if (CaptureSection("shelter_assignment", ShelterAssignmentSaveStore.TryCapturePersisted(save)))
+                _shelterAssignment.ClearDirty();
+        }
+
+        private void SaveShelterDecor()
+        {
+            if (_shelterDecor == null) return;
+            if (CaptureSection("shelter_decor", ShelterDecorSaveStore.TryCapturePersisted(_shelterDecor.System.State)))
+                _shelterDecor.ClearDirty();
+        }
     }
 }

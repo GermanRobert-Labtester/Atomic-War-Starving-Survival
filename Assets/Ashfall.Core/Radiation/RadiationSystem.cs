@@ -131,9 +131,27 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
 
         public void Register(SurvivorRadState survivor)
         {
-            if (survivor != null && !_survivors.Contains(survivor))
-                _survivors.Add(survivor);
+            if (survivor == null || _survivors.Contains(survivor)) return;
+            if (!string.IsNullOrEmpty(survivor.Id))
+            {
+                for (int i = 0; i < _survivors.Count; i++)
+                {
+                    var existing = _survivors[i];
+                    if (existing == null || !string.Equals(existing.Id, survivor.Id, StringComparison.Ordinal)) continue;
+                    // Replace in place so restore cannot leave two radiation
+                    // components for one survivor and tick order remains stable.
+                    _survivors[i] = survivor;
+                    return;
+                }
+            }
+            _survivors.Add(survivor);
         }
+
+        /// <summary>Number of radiation components registered for simulation.</summary>
+        public int RegisteredCount => _survivors.Count;
+
+        /// <summary>Registered radiation components in deterministic tick order.</summary>
+        public IReadOnlyList<SurvivorRadState> Registered => _survivors;
 
         public void Unregister(SurvivorRadState survivor)
         {

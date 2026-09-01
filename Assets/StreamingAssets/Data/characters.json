@@ -774,6 +774,476 @@
         "clean_water",
         "bandages"
       ]
+    },
+    {
+      "id": "npc_salt_marshal_varn",
+      "display_name": "Marshal Varn",
+      "profession": "Salt Marshal",
+      "bio": "Head of the Brine-Pan Hollow salter council. Manages evaporation pan shifts and salt rationing with iron discipline.",
+      "faction": "none",
+      "region": "the_toll",
+      "first_day": 1,
+      "location_id": "loc_settlement_brine_pans",
+      "wants": [
+        "scrap_mechanical",
+        "charcoal"
+      ],
+      "offers": [
+        "item_crossing_traded_salt",
+        "canned_food"
+      ]
+    },
+    {
+      "id": "npc_salt_trader_elena",
+      "display_name": "Elena Kosh",
+      "profession": "Brine Factor",
+      "bio": "Precision merchant of Brine-Pan Hollow. Trades weighed drums of curing salt and preserved provisions.",
+      "faction": "none",
+      "region": "the_toll",
+      "first_day": 1,
+      "location_id": "loc_settlement_brine_pans",
+      "wants": [
+        "clean_water",
+        "item_seed_grain"
+      ],
+      "offers": [
+        "item_crossing_traded_salt",
+        "dried_rations",
+        "cooking_oil"
+      ]
+    },
+    {
+      "id": "npc_salt_boiler_petyr",
+      "display_name": "Petyr the Boiler",
+      "profession": "Boilerman",
+      "bio": "Master boiler mechanic tending the evaporation flues and steam condensers at Brine-Pan Hollow.",
+      "faction": "none",
+      "region": "the_toll",
+      "first_day": 1,
+      "location_id": "loc_settlement_brine_pans",
+      "wants": [
+        "copper_wire_10m_of_10m",
+        "scrap_mechanical"
+      ],
+      "offers": [
+        "item_crossing_traded_salt"
+      ]
+    },
+    {
+      "id": "npc_switch_master_korov",
+      "display_name": "Master Korov",
+      "profession": "Siding Superintendent",
+      "bio": "Veteran yard superintendent governing Iron Siding's armored boxcar community and defense perimeter.",
+      "faction": "faction_railway_guild",
+      "region": "industrial_belt",
+      "first_day": 1,
+      "location_id": "loc_settlement_iron_siding",
+      "wants": [
+        "ammo_308",
+        "medical_kit"
+      ],
+      "offers": [
+        "scrap_mechanical",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "npc_rail_chandler_bess",
+      "display_name": "Bess the Chandler",
+      "profession": "Rail Chandler",
+      "bio": "Hardware merchant at Iron Siding supplying forged high-tensile track bolts, leaf springs, and mechanical spares.",
+      "faction": "faction_railway_guild",
+      "region": "industrial_belt",
+      "first_day": 1,
+      "location_id": "loc_settlement_iron_siding",
+      "wants": [
+        "fuel",
+        "water_filter"
+      ],
+      "offers": [
+        "scrap_mechanical",
+        "copper_wire_10m_of_10m",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "npc_rivet_smith_milos",
+      "display_name": "Milos the Riveter",
+      "profession": "Track Smith",
+      "bio": "Heavy forge smith at Iron Siding reforging railroad steel into barrier armor and vehicle suspension plates.",
+      "faction": "none",
+      "region": "industrial_belt",
+      "first_day": 1,
+      "location_id": "loc_settlement_iron_siding",
+      "wants": [
+        "charcoal",
+        "scrap_metal"
+      ],
+      "offers": [
+        "scrap_mechanical"
+      ]
+    },
+    {
+      "id": "npc_beacon_keeper_maren",
+      "display_name": "Lightkeeper Maren",
+      "profession": "Lightkeeper",
+      "bio": "Guardian of the Cape Beacon tower, keeping the Fresnel lens turning to guide coastal traffic past reef hazards.",
+      "faction": "none",
+      "region": "coastal_shelf",
+      "first_day": 1,
+      "location_id": "loc_settlement_cape_beacon",
+      "wants": [
+        "fuel",
+        "electronic_scrap"
+      ],
+      "offers": [
+        "clean_water",
+        "item_fungicide_fogger"
+      ]
+    },
+    {
+      "id": "npc_coastal_chandler_orlov",
+      "display_name": "Orlov the Diver",
+      "profession": "Coastal Chandler",
+      "bio": "Marine salvager diving submerged coastal shipwrecks for optical glass, brass fittings, and waterproof wiring.",
+      "faction": "none",
+      "region": "coastal_shelf",
+      "first_day": 1,
+      "location_id": "loc_settlement_cape_beacon",
+      "wants": [
+        "fuel",
+        "clean_water"
+      ],
+      "offers": [
+        "electronic_scrap",
+        "copper_wire_10m_of_10m"
+      ]
+    },
+    {
+      "id": "npc_net_mender_kira",
+      "display_name": "Kira the Weaver",
+      "profession": "Net Weaver",
+      "bio": "Cape Beacon artisan braiding kelp nets, drying iodine kelp, and managing the commune's herbal dispensary.",
+      "faction": "none",
+      "region": "coastal_shelf",
+      "first_day": 1,
+      "location_id": "loc_settlement_cape_beacon",
+      "wants": [
+        "fuel",
+        "clean_water"
+      ],
+      "offers": [
+        "electronic_scrap"
+      ]
+    },
+    {
+      "id": "npc_quarry_steward_darek",
+      "display_name": "Steward Darek",
+      "profession": "Pit Foreman",
+      "bio": "Elected foreman of the Slate Hollow quarry galleries, overseeing structural shoring and stone extraction.",
+      "faction": "none",
+      "region": "high_scarp",
+      "first_day": 1,
+      "location_id": "loc_settlement_slate_hollow",
+      "wants": [
+        "scrap_wood",
+        "clean_water"
+      ],
+      "offers": [
+        "scrap_metal",
+        "charcoal"
+      ]
+    },
+    {
+      "id": "npc_stone_cutter_valya",
+      "display_name": "Valya the Factor",
+      "profession": "Stone Factor",
+      "bio": "Commercial factor at Slate Hollow trading structural building slate, millstones, and fine oil sharpening hones.",
+      "faction": "none",
+      "region": "high_scarp",
+      "first_day": 1,
+      "location_id": "loc_settlement_slate_hollow",
+      "wants": [
+        "clean_water",
+        "medical_kit"
+      ],
+      "offers": [
+        "scrap_metal",
+        "charcoal",
+        "item_scopolamine_root"
+      ]
+    },
+    {
+      "id": "npc_driller_jarek",
+      "display_name": "Jarek the Blaster",
+      "profession": "Powder Hand",
+      "bio": "Experienced blasting technician at Slate Hollow handling industrial explosive charges and gallery adit clearing.",
+      "faction": "none",
+      "region": "high_scarp",
+      "first_day": 1,
+      "location_id": "loc_settlement_slate_hollow",
+      "wants": [
+        "scrap_metal",
+        "scrap_wood"
+      ],
+      "offers": [
+        "charcoal"
+      ]
+    },
+    {
+      "id": "npc_prior_silas",
+      "display_name": "Prior Silas",
+      "profession": "Hearth Prior",
+      "bio": "Guardian of the Pilgrim's Hearth priory, offering geothermal sanctuary, hot broth, and spiritual solace to wanderers.",
+      "faction": "none",
+      "region": "high_scarp",
+      "first_day": 1,
+      "location_id": "loc_settlement_pilgrim_hearth",
+      "wants": [
+        "charcoal",
+        "clean_water"
+      ],
+      "offers": [
+        "medical_kit",
+        "herbal_tea"
+      ]
+    },
+    {
+      "id": "npc_almoner_hanna",
+      "display_name": "Almoner Hanna",
+      "profession": "Priory Almoner",
+      "bio": "Priory apothecary compounding herbal teas, burn salves, and clean bandages for high-altitude travelers.",
+      "faction": "none",
+      "region": "high_scarp",
+      "first_day": 1,
+      "location_id": "loc_settlement_pilgrim_hearth",
+      "wants": [
+        "item_scopolamine_root",
+        "clean_water"
+      ],
+      "offers": [
+        "medical_kit",
+        "herbal_tea",
+        "item_stabilization_tea"
+      ]
+    },
+    {
+      "id": "npc_wayfarer_tobias",
+      "display_name": "Tobias the Pilgrim",
+      "profession": "Pass Guide",
+      "bio": "Dedicated pilgrim scout guiding vulnerable travelers through the treacherous, ice-bound gullies of Switchback Pass.",
+      "faction": "none",
+      "region": "high_scarp",
+      "first_day": 1,
+      "location_id": "loc_settlement_pilgrim_hearth",
+      "wants": [
+        "fuel",
+        "medical_kit"
+      ],
+      "offers": [
+        "herbal_tea"
+      ]
+    },
+    {
+      "id": "npc_market_warden_grimm",
+      "display_name": "Warden Grimm",
+      "profession": "Barrier Warden",
+      "bio": "Chief security warden at Tinker's Notch enforcing market peace, trade arbitration, and perimeter defense.",
+      "faction": "none",
+      "region": "dead_suburbs",
+      "first_day": 1,
+      "location_id": "loc_settlement_tinkers_notch",
+      "wants": [
+        "ammo_308",
+        "clean_water"
+      ],
+      "offers": [
+        "electronic_scrap",
+        "copper_wire_10m_of_10m"
+      ]
+    },
+    {
+      "id": "npc_junk_broker_solomon",
+      "display_name": "Solomon the Broker",
+      "profession": "Component Factor",
+      "bio": "Master broker at Tinker's Notch trading tested circuit boards, copper windings, and precision electronic components.",
+      "faction": "none",
+      "region": "dead_suburbs",
+      "first_day": 1,
+      "location_id": "loc_settlement_tinkers_notch",
+      "wants": [
+        "clean_water",
+        "water_filter"
+      ],
+      "offers": [
+        "electronic_scrap",
+        "copper_wire_10m_of_10m",
+        "water_filter"
+      ]
+    },
+    {
+      "id": "npc_grease_monkey_tess",
+      "display_name": "Tess the Grease-Monkey",
+      "profession": "Engine Tech",
+      "bio": "Lead mechanic at Tinker's Notch rewinding electric motors and maintaining the settlement's wind-turbine generators.",
+      "faction": "none",
+      "region": "dead_suburbs",
+      "first_day": 1,
+      "location_id": "loc_settlement_tinkers_notch",
+      "wants": [
+        "copper_wire_10m_of_10m",
+        "scrap_mechanical"
+      ],
+      "offers": [
+        "copper_wire_10m_of_10m"
+      ]
+    },
+    {
+      "id": "npc_odile_vanter",
+      "display_name": "Odile Vanter",
+      "profession": "Anchormother of the Black Flotilla",
+      "bio": "Came up through the salvage fleet and never stopped pricing things: hulls, favors, funerals. Settles claim disputes between the three fleets with a lead tag and a flat voice. Has buried enough crews to distrust anyone who talks about the sea like a fortune.",
+      "faction": "faction_black_flotilla",
+      "region": "coastal_shelf",
+      "first_day": 150,
+      "location_id": "loc_black_flotilla_outpost",
+      "wants": [
+        "claim_keeping",
+        "inland_medicine"
+      ],
+      "offers": [
+        "claim_arbitration",
+        "mooring_rights",
+        "fleet_introduction"
+      ],
+      "will_not": [
+        "bid_against_a_claim_tag",
+        "order_a_blockade_herself"
+      ],
+      "signature_quote": "The sea keeps what it takes. We keep what we raise. Everything else is argument."
+    },
+    {
+      "id": "npc_cass_polder",
+      "display_name": "Quartermaster Cass Polder",
+      "profession": "Salvage Quartermaster",
+      "bio": "Runs the Flotilla exchange deck and inventories everything twice, once by weight and once by grief. Pays fair for recoverable value and overpays for naming a wreck honestly. Considers the Escort Fleet's hailing discipline a waste of good weather.",
+      "faction": "faction_black_flotilla",
+      "region": "coastal_shelf",
+      "first_day": 150,
+      "location_id": "loc_black_flotilla_outpost",
+      "wants": [
+        "medicine",
+        "item_sea_ration",
+        "dry_textiles",
+        "fuel"
+      ],
+      "offers": [
+        "item_marine_sealant_kit",
+        "item_claim_tag_stamped",
+        "wreck_tonnage_ledger"
+      ],
+      "will_not": [
+        "trade_in_bell_bronze",
+        "discount_a_marked_claim"
+      ],
+      "signature_quote": "Wet cargo loses value by the hour. Name your price before the water does."
+    },
+    {
+      "id": "npc_jorin_hael",
+      "display_name": "Dive-Chief Jorin Hael",
+      "profession": "Deep-Dive Chief",
+      "bio": "Nine lines run past the deep marks, two of them with crews that did not all come back. Speaks in depths and minutes. Trains divers who are mostly young and brave, which are the same problem. Keeps the ribbon board and hates pinning it.",
+      "faction": "faction_black_flotilla",
+      "region": "coastal_shelf",
+      "first_day": 150,
+      "location_id": "loc_shelf_deep_berth",
+      "wants": [
+        "item_rebreather_canister",
+        "air_line_hose"
+      ],
+      "offers": [
+        "item_deep_service_ribbon",
+        "line_instruction",
+        "depth_table"
+      ],
+      "will_not": [
+        "dive_unmarked_water",
+        "send_a_diver_down_on_a_hunch"
+      ],
+      "signature_quote": "Depth is a loan. The water always collects, and it picks the currency."
+    },
+    {
+      "id": "npc_uma_tarran",
+      "display_name": "Codekeeper Uma Tarran",
+      "profession": "Signals Keeper",
+      "bio": "Keeps the Flotilla's band, challenge codes, and burial lists in a wax-sealed ledger chained to the mast. Will teach the coastal code to anyone the Flotilla has vouched for, and nothing at all to anyone it has struck off. Reads every broadcast twice before it goes out.",
+      "faction": "faction_black_flotilla",
+      "region": "coastal_shelf",
+      "first_day": 160,
+      "location_id": "loc_black_flotilla_outpost",
+      "wants": [
+        "paper_scrap",
+        "signal_lamp_parts"
+      ],
+      "offers": [
+        "band_calendar",
+        "claim_registry",
+        "burial_records"
+      ],
+      "will_not": [
+        "broadcast_an_open_code",
+        "read_an_unwitnessed_claim_aloud"
+      ],
+      "signature_quote": "A code is a promise you make to strangers. Keep it short, keep it boring, keep it yours."
+    },
+    {
+      "id": "npc_halloran_vesk",
+      "display_name": "Board Officer Halloran Vesk",
+      "profession": "Escort Convoy Officer",
+      "bio": "Runs the picket line from a refitted pilot cutter and logs every hull that passes the shelf marks. Polite the way a boom barrier is polite. Wants fuel, weapons serials, and traffic lists, in that order. Has never once apologized for an inspection.",
+      "faction": "faction_black_flotilla",
+      "region": "coastal_shelf",
+      "first_day": 150,
+      "location_id": "loc_maritime_icebreaker_dock",
+      "wants": [
+        "fuel",
+        "weapon_serials",
+        "route_intel"
+      ],
+      "offers": [
+        "convoy_schedule",
+        "coastal_hail_safe_passage",
+        "board_referee"
+      ],
+      "will_not": [
+        "open_the_boom_for_an_unribboned_hull",
+        "argue_treaty_with_a_deckhand"
+      ],
+      "signature_quote": "Heave to, show the ribbon, and we will both have a quiet evening."
+    },
+    {
+      "id": "npc_lotte_verrill",
+      "display_name": "Lotte Verrill",
+      "profession": "Struck-Off Diver",
+      "bio": "Was the Deep Fleet's best breath until she came up alone from the Barrik with a log cylinder and no story the ledger would take. Dives unclaimed water now, sells wreck notes to anyone who buys her a lamp. Ties a deep-service knot in her line and refuses to say whose it was.",
+      "faction": "none",
+      "region": "the_drown",
+      "first_day": 170,
+      "location_id": "",
+      "wants": [
+        "item_sealed_dive_lamp",
+        "air_line_hose"
+      ],
+      "offers": [
+        "uncharted_wreck_notes",
+        "contaminated_water_caution"
+      ],
+      "will_not": [
+        "wear_the_deep_ribbon",
+        "dive_claimed_water",
+        "dive_with_a_partnership_she_hasn't_named"
+      ],
+      "signature_quote": "The ledger says I was the only one who came up. The ledger wasn't down there."
     }
   ]
 }

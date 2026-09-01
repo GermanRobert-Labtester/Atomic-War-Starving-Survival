@@ -145,6 +145,21 @@ namespace Ashfall.Core.Survivors
         public void OnSurvivorDied(string deadSurvivorId)
         {
             if (string.IsNullOrEmpty(deadSurvivorId)) return;
+
+            // The leader died: vacate the position immediately. Without this,
+            // CurrentLeaderId dangles at a dead survivor and every later death
+            // exits at the "leader must be alive" guard below, so the camp
+            // would keep a corpse in charge and no succession can ever occur.
+            if (string.Equals(_currentLeaderId, deadSurvivorId, StringComparison.Ordinal))
+            {
+                if (_states.TryGetValue(_currentLeaderId, out var fallen))
+                    fallen.IsDesignatedLeader = false;
+                _currentLeaderId = null!;
+                OnLeaderSteppedDown?.Invoke(deadSurvivorId);
+                OnStateChanged?.Invoke();
+                return;
+            }
+
             if (string.IsNullOrEmpty(_currentLeaderId)) return;
             if (!_states.TryGetValue(_currentLeaderId, out var leader)) return;
 

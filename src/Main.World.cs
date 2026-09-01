@@ -11,6 +11,7 @@ using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.Shelter;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
@@ -36,7 +37,6 @@ namespace AtomicWar.GodotApp
         private bool _startingLevelDirty;
         private OpeningProtocolModal _openingProtocolModal = null!;
         private PowerGridHostSession _powerGrid = null!;
-        private PowerGridPanel _powerGridPanel = null!;
         private bool _powerGridDirty;
         private GreenhouseHostSession _greenhouse = null!;
         private GreenhousePanel _greenhousePanel = null!;
@@ -144,29 +144,11 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void OnWorldTickClicked()
-        {
-            SetupWorld();
-            _statusLabel.Text = _world.TickDemo(6f) + "\n" + _world.StatusLine();
-        }
-
-        private void OnWorldStormClicked()
-        {
-            SetupWorld();
-            _statusLabel.Text = _world.ForceDemo(WeatherKind.FalloutStorm) + "\n" + _world.StatusLine();
-        }
-
-        private void OnWorldSkyArmorClicked(string material)
-        {
-            SetupWorld();
-            _statusLabel.Text = _world.SetSkyArmorDemo(0, material, 1f) + "\n" + _world.SkyArmorStatusLine();
-        }
-
         private void SetupCrafting()
         {
             if (_crafting != null) return;
             SetupInventory();
-            _sharedResearch ??= new ResearchSystem(log: new GodotLog());
+            _sharedResearch = EnsureSharedResearch();
             _crafting = CraftingHostSession.Create(_dataDir, _inventory.Inventory, _sharedResearch);
 
             _crafting.Workshop.BindSkillEvaluator(survivorId =>
@@ -262,7 +244,8 @@ namespace AtomicWar.GodotApp
         private void SetupPowerGrid()
         {
             if (_powerGrid != null) return;
-            var rng = new Ashfall.Core.SeededRng(unchecked(_simDay * 31 + 7));
+            SetupCampaignDay();
+            var rng = _campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng;
             _powerGrid = PowerGridHostSession.CreateDefault(rng);
             _powerGrid.TryLoad();
             _powerGrid.OnStateChanged += () => _powerGridDirty = true;
@@ -271,7 +254,21 @@ namespace AtomicWar.GodotApp
         private void SavePowerGrid()
         {
             if (_powerGrid == null) return;
-            if (_powerGrid.TrySave()) _powerGridDirty = false;
+
+            var save = new PowerGridSave
+            {
+                simDay = _powerGrid.System.State.SimDay,
+                Rooms = new List<PowerGridRoomSave>(),
+                State = _powerGrid.System.State.Capture()
+            };
+            foreach (var room in _powerGrid.System.Rooms)
+                save.Rooms.Add(PowerGridSaveCodec.FromRoom(room));
+
+            if (CaptureSection("power_grid", PowerGridSaveStore.TryCapturePersisted(save)))
+            {
+                _powerGridDirty = false;
+                _powerGrid.ClearDirty();
+            }
         }
 
         private void TickPowerGrid(int day)

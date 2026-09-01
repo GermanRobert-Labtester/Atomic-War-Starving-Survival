@@ -136,8 +136,13 @@ namespace Ashfall.Core.Narrative
 
         public static DailySurvivalCatalog LoadFromDirectory(string directoryPath)
         {
+            return LoadFromDirectory(directoryPath, new FileSystemIO());
+        }
+
+        public static DailySurvivalCatalog LoadFromDirectory(string directoryPath, IFileIO fileIO)
+        {
             var catalog = new DailySurvivalCatalog();
-            if (!Directory.Exists(directoryPath)) return catalog;
+            if (fileIO == null || !fileIO.DirectoryExists(directoryPath)) return catalog;
 
             var options = new JsonSerializerOptions
             {
@@ -148,9 +153,9 @@ namespace Ashfall.Core.Narrative
 
             // 1. Psychological Journals
             string journalPath = Path.Combine(directoryPath, "dweller_psychological_journals.json");
-            if (File.Exists(journalPath))
+            if (fileIO.FileExists(journalPath))
             {
-                var list = CatalogLocator.LoadWrappedList<PsychologicalJournalEntry>(File.ReadAllText(journalPath), options);
+                var list = CatalogLocator.LoadWrappedList<PsychologicalJournalEntry>(fileIO.ReadAllText(journalPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,9 +169,9 @@ namespace Ashfall.Core.Narrative
 
             // 2. Mutated Botanical Logs
             string botanyPath = Path.Combine(directoryPath, "mutated_botanical_logs.json");
-            if (File.Exists(botanyPath))
+            if (fileIO.FileExists(botanyPath))
             {
-                var list = CatalogLocator.LoadWrappedList<MutatedBotanicalEntry>(File.ReadAllText(botanyPath), options);
+                var list = CatalogLocator.LoadWrappedList<MutatedBotanicalEntry>(fileIO.ReadAllText(botanyPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,9 +185,9 @@ namespace Ashfall.Core.Narrative
 
             // 3. Children Folklore
             string folklorePath = Path.Combine(directoryPath, "bunker_children_folklore.json");
-            if (File.Exists(folklorePath))
+            if (fileIO.FileExists(folklorePath))
             {
-                var list = CatalogLocator.LoadWrappedList<ChildrenFolkloreEntry>(File.ReadAllText(folklorePath), options);
+                var list = CatalogLocator.LoadWrappedList<ChildrenFolkloreEntry>(fileIO.ReadAllText(folklorePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,9 +201,9 @@ namespace Ashfall.Core.Narrative
 
             // 4. Ration Fraud Records
             string fraudPath = Path.Combine(directoryPath, "ration_fraud_records.json");
-            if (File.Exists(fraudPath))
+            if (fileIO.FileExists(fraudPath))
             {
-                var list = CatalogLocator.LoadWrappedList<RationFraudEntry>(File.ReadAllText(fraudPath), options);
+                var list = CatalogLocator.LoadWrappedList<RationFraudEntry>(fileIO.ReadAllText(fraudPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "culture_marks_on_the_doorframe",
+      "faction_id": "faction_scavenger_guild",
+      "title": "Marks on the Doorframe",
+      "body": "A Guild claim is two colors of ink and a doorframe: the registrar's mark for the claim, the finder's mark for the person who stood there first, and the date cut into the wood with a nail because paper burns and water lies. Apprentices learn to read frames before they learn to strip sites — who claimed, who witnessed, who died holding it. A doorframe with three generations of marks is not abandoned property. It is a grave with a roof, and the Guild collects rent from the living for the privilege of remembering."
+    },
+    {
+      "id": "culture_finders_share",
+      "faction_id": "faction_scavenger_guild",
+      "title": "The Finder's Share",
+      "body": "Every find divides three ways before anyone argues: a share for the finder, a share for the crew that carried, and a share for the ledger that made the carrying possible. The share is not a tip. It is the price of the Guild having bothered to write anything down — which ruin was claimed, by whom, on what day, witnessed by whom. Free hands sneer at the tithe and stay illiterate; apprentices pay it and inherit the map. Disputes are argued in ink, not steel, and the Guild's proudest boast is how rarely anyone reaches for steel."
+    },
+    {
+      "id": "culture_water_counted_twice",
+      "faction_id": "faction_hydro_barons",
+      "title": "Water Is Counted Twice",
+      "body": "Barons count water at the intake and again at the delivery, and the two numbers are never allowed to meet without paperwork explaining the difference. Children learn the litany before they learn letters: pumped, purified, piped, poured. Wastage is not a moral failure in the Barons' houses — it is an arithmetic failure, which is worse, because arithmetic can be audited. An account that balances is called clean. A Baron who dies with clean accounts gets the good funeral; everyone else gets a smaller funeral and an audit."
+    },
+    {
+      "id": "culture_empty_cups",
+      "faction_id": "faction_hydro_barons",
+      "title": "Empty Cups",
+      "body": "When someone dies of drought — truly of drought, not of the shell that took the pump out — the household sets an empty cup on the sill for a season, counted side up, and pours nothing into it. The cup says what the water ledger cannot: that this death was an accounting problem, that the household did the sums and came up short, that the district should be ashamed in a way that arithmetic cannot express. Barons pass the sills and do not look away. Looking away is for people whose accounts are not clean."
+    },
+    {
+      "id": "culture_what_the_raiders_leave",
+      "faction_id": "faction_iron_raiders",
+      "title": "What the Raiders Leave",
+      "body": "The Toll takes scrap, fuel, and anything that can be priced. The Toll does not touch wells, does not burn stores, does not open the boxes of the dead, and walks surrendered people to a road and lets them walk. The young hands think the code is weakness dressed as custom. The emissaries know better: the code is the Toll's entire balance sheet of goodwill, spent slowly across a district that would otherwise spend bullets. Parley opened honestly holds. Wells stay sweet. The dead keep their boxes. The Toll's own dead are buried with a chalk receipt for everything they never stole."
+    },
+    {
+      "id": "culture_one_pot_four_banners",
+      "faction_id": "faction_deserter_coalition",
+      "title": "One Pot, Four Banners",
+      "body": "The camp's founding custom fits in a sentence: nobody eats while another banner watches, so either everyone eats or everyone takes turns. The pot is communal, the roster is public, and the serving order is wounded, children, elders, everyone — no banner's wounded count as more wounded than another's. It is a small custom. It has survived three attempts to found a flag ceremony around it, one attempt to charge admission, and one winter when the pot was snowmelt and patience. The camp believes, quietly and without doctrine, that if the pot rule can hold, the ceasefire can."
+    }
+  ]
+}

@@ -220,7 +220,7 @@ namespace AtomicWar.GodotApp
                 : "Ending: " + HoldfastEndings.DisplayName(id) + " [" + id + "]";
         }
 
-        public string HonourDemoLevy()
+        public string HonourCensusLevy()
         {
             string[] ids = { "elena_vasquez", "marcus_olejnik", "suki_tanaka" };
             if (!Census.IssueLevy(ids, Clock.Day))

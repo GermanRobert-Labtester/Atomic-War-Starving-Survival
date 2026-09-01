@@ -55,6 +55,12 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        public void Open()
+        {
+            Visible = true;
+            RefreshView();
+        }
+
         public override void _Ready()
         {
             BuildUI();
@@ -133,7 +139,7 @@ namespace AtomicWar.GodotApp.UI
             float bearing = (float)_bearingInput.Value;
             float strength = (float)_strengthInput.Value;
             float noise = (float)_noiseInput.Value;
-            string result = _radioHost.RecordObservationDemo(_activeSignalId, bearing, strength, noise);
+            string result = _radioHost.RecordObservation(_activeSignalId, bearing, strength, noise);
             _feedbackLabel.Text = result;
             RefreshView();
         }
@@ -141,7 +147,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnTriangulatePressed()
         {
             if (_radioHost == null) return;
-            string result = _radioHost.TriangulateDemo(_activeSignalId);
+            string result = _radioHost.TriangulateSignal(_activeSignalId);
             _feedbackLabel.Text = result;
             RefreshView();
         }

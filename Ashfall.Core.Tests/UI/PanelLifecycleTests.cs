@@ -15,7 +15,7 @@ namespace Ashfall.Core.Tests.UI
         public void ResearchPanel_Lifecycle_RebindAndStateContinuity()
         {
             var research = new ResearchSystem();
-            research.RegisterDefaults();
+            ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research);
 
             // Unlock and start research
             research.UnlockManual("knowledge_water_basics");

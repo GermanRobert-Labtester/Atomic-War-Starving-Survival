@@ -77,6 +77,57 @@ namespace Ashfall.Core.Tests
             Assert.Contains("record_quartet", vm2.State.ownedRecordIds);
         }
 
+        [Fact]
+        public void VinylArchive_Loads30Records_WithDistinctMoraleEffects()
+        {
+            string dataDir;
+            if (!CatalogLocator.TryFindDataDirectory(System.IO.Directory.GetCurrentDirectory(), out dataDir))
+                CatalogLocator.TryFindDataDirectory(System.AppContext.BaseDirectory, out dataDir);
+
+            string path = System.IO.Path.Combine(dataDir, "narrative", "vinyl_record_archive.json");
+            Assert.True(System.IO.File.Exists(path), $"vinyl_record_archive.json not found at {path}");
+
+            string json = System.IO.File.ReadAllText(path);
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+            var recordsArray = doc.RootElement.GetProperty("records");
+            Assert.Equal(30, recordsArray.GetArrayLength());
+
+            var defs = new System.Collections.Generic.List<VinylRecordDefinition>();
+            foreach (var r in recordsArray.EnumerateArray())
+            {
+                string rid = r.GetProperty("record_id").GetString()!;
+                string title = r.GetProperty("title").GetString()!;
+                float morale = r.GetProperty("daily_morale_modifier").GetSingle();
+                string genre = r.GetProperty("tags")[0].GetString()!;
+                defs.Add(new VinylRecordDefinition
+                {
+                    record_id = rid,
+                    display_name = title,
+                    genre = genre,
+                    morale_daily_bonus = morale
+                });
+            }
+
+            var vm = Create();
+            vm.LoadCatalog(defs);
+
+            // Verify record 1 (morale = 6) vs record 3 (morale = 8)
+            vm.AcquireRecord("record_01_valse_triste_sibelius_78rpm");
+            vm.AcquireRecord("record_03_rachmaninoff_piano_concerto_2_adagio");
+
+            vm.Play("record_01_valse_triste_sibelius_78rpm");
+            float appliedMorale1 = 0;
+            vm.OnMoraleApplied += m => appliedMorale1 = m;
+            vm.ApplyDailyEffect(1);
+            Assert.Equal(6f, appliedMorale1);
+
+            vm.Play("record_03_rachmaninoff_piano_concerto_2_adagio");
+            float appliedMorale3 = 0;
+            vm.OnMoraleApplied += m => appliedMorale3 = m;
+            vm.ApplyDailyEffect(2);
+            Assert.Equal(8f, appliedMorale3);
+        }
+
         private static VinylMoraleSystem CreateWithRecords()
         {
             var vm = Create();

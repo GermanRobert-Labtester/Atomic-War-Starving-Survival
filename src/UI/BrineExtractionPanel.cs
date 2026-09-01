@@ -54,6 +54,12 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        public void Open()
+        {
+            Visible = true;
+            RefreshView();
+        }
+
         public void Unbind()
         {
             if (_foundryHost != null)
@@ -145,7 +151,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnOpenMine()
         {
             if (_foundryHost == null) return;
-            string result = _foundryHost.OpenSaltMineDemo();
+            string result = _foundryHost.OpenSaltMine();
             _feedbackLabel.Text = result;
             RefreshView();
         }
@@ -153,7 +159,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnTickDay()
         {
             if (_foundryHost == null) return;
-            string result = _foundryHost.TickSaltMineDemo(SimDay); // from bound host or caller
+            string result = _foundryHost.TickSaltMine(SimDay);
             _feedbackLabel.Text = result;
             RefreshView();
         }
@@ -161,7 +167,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnDeliver()
         {
             if (_foundryHost == null) return;
-            string result = _foundryHost.DeliverSaltTreatyDemo(SimDay);
+            string result = _foundryHost.DeliverSaltTreaty(SimDay);
             _feedbackLabel.Text = result;
             RefreshView();
         }

@@ -8,7 +8,8 @@
       "source": "Census Carrier, Machine Registers",
       "message": "11:42. 11:42. 11:42. The meter reads 11:42 and nothing else. A data burst that is three numbers and no hand.",
       "signalStrength": "S1",
-      "kind": "telemetry"
+      "kind": "telemetry",
+      "audio_cue": "radio_vo_verdict_meter"
     },
     {
       "id": "radio_verdict_fuse_serviced",
@@ -35,7 +36,8 @@
       "source": "The Office of Censuses",
       "message": "Off-count is a penalty assessed against the holder.",
       "signalStrength": "S3",
-      "kind": "call"
+      "kind": "call",
+      "audio_cue": "radio_vo_verdict_count"
     },
     {
       "id": "radio_verdict_eden_was_here",
@@ -44,7 +46,8 @@
       "source": "Eden Vale, Tube Bleed",
       "message": "Eden was here. Eleven months of bleed, one day's worth, in the vocabulary of the Weather Service: visibility, pressure, front. She never asked to be counted. She was counted anyway.",
       "signalStrength": "S2",
-      "kind": "witness"
+      "kind": "witness",
+      "audio_cue": "radio_vo_verdict_eden"
     },
     {
       "id": "radio_verdict_count_is_open",
@@ -71,7 +74,8 @@
       "source": "Geophone Pit, Array 1",
       "message": "Tap. Tap. Tap at ploughing, tap at harvest, a tap for every worker who walked the Allotments. The array reads the ground as one slow heartbeat. Unlabeled. Unclaimed.",
       "signalStrength": "S2",
-      "kind": "readings"
+      "kind": "readings",
+      "audio_cue": "radio_vo_verdict_geophone"
     },
     {
       "id": "radio_verdict_valve_accessed_36",
@@ -116,7 +120,8 @@
       "source": "The Office of Censuses — Reckoning",
       "message": "The Office of Censuses is convening. The count is open. All persons having custody of persons must present them. This message will repeat once per hour for three hours, then hold the carrier open until a signature is received.",
       "signalStrength": "S3",
-      "kind": "call"
+      "kind": "call",
+      "audio_cue": "radio_vo_verdict_reckoning"
     }
   ]
 }
