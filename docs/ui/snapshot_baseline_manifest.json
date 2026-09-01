@@ -1,12 +1,12 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "manifest_kind": "snapshot_baseline_fingerprint",
   "generated_for": "Phase 14 \u2014 visual regression baseline",
   "harness": "src/UI/SnapshotHarness.cs",
   "renderer": "Godot 4.7.1 .NET, AMD RADV RENOIR Vulkan 1.4, Forward+, X11 DISPLAY=:0",
   "totals": {
-    "snapshots": 29,
-    "baseline_md5_distinct": 29,
+    "snapshots": 30,
+    "baseline_md5_distinct": 30,
     "duplicate_md5_groups": 0,
     "fresh_snapshots_since_phase13": 14,
     "fresh_snapshots_since_phase14": 13,
@@ -24,7 +24,8 @@
     "unchanged_phase13_snapshots": 0,
     "pipeline_regression_fixes": 1,
     "fresh_snapshots_since_phase27": 1,
-    "fresh_snapshots_since_phase28": 1
+    "fresh_snapshots_since_phase28": 1,
+    "fresh_snapshots_since_plan12c_final": 1
   },
   "policy": {
     "name": "Every snapshot PNG committed under snapshots/ is part of the canonical baseline. --ui-snapshot-uitest re-renders each PNG and compares bytes. Any byte difference is reported as a regression. The fingerprint is MD5 over the raw PNG bytes (no normalization \u2014 the PNG layout is already deterministic thanks to the Godot Vulkan Forward+ pipeline).",
@@ -293,11 +294,20 @@
       "phase_origin": 28,
       "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
       "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "shelter_decor_default",
+      "path": "snapshots/shelter_decor_default.png",
+      "md5": "2ed66f53700b1456094587bf3ae23f13",
+      "size_bytes": 103917,
+      "phase_origin": "Plan 12C Final",
+      "fixture_source": "LIVE_CATALOG + DETERMINISTIC_HOST_FIXTURE",
+      "expected_status": "MATCH"
     }
   ],
   "duplicate_check": {
-    "note": "All 27 snapshots have distinct MD5 fingerprints and zero duplicate MD5 groups. Verified by on-disk byte inspection: see docs/ui/PIPELINE_REGRESSION_FIX.md for the Phase-26 capture-pipeline fix log.",
-    "verified_at": "2026-08-18 (Phase 26 close)"
+    "note": "All 30 snapshots have distinct MD5 fingerprints and zero duplicate MD5 groups. The Plan 12C populated shelter fixture was captured under the same Forward+ X11 environment and inspected before promotion.",
+    "verified_at": "2026-08-31 (Plan 12C Final)"
   },
   "regen_commands": {
     "all_targets": "cd /path/to/workspace && DISPLAY=:0 godot --path . -- --ui-snapshot-uitest",
@@ -305,11 +315,12 @@
     "verify_md5": "cd snapshots && md5sum *.png | sort > /tmp/baseline.md5 && cd .. && diff -u /tmp/baseline.md5 <(grep -oP '\"md5\": \"\\K[^\"]+' docs/ui/snapshot_baseline_manifest.json | sort)"
   },
   "audit_summary": {
-    "phase": "Phase 14",
-    "frame": "Phase 11 (3 pilots) \u2192 Phase 12 (3 pilots + DataGrid) \u2192 Phase 13 (4 NEW + 6 PARTIAL eliminations) \u2192 Phase 14 (no new snapshot, fingerprint + manifest hardening)",
-    "snapshots_added_this_phase": 0,
+    "phase": "Plan 12C Final",
+    "frame": "Phase 11 (3 pilots) \u2192 Phase 12 (3 pilots + DataGrid) \u2192 Phase 13 (4 NEW + 6 PARTIAL eliminations) \u2192 Phase 14 (fingerprint hardening) \u2192 Plan 12C (one populated shelter interior fixture)",
+    "snapshots_added_this_phase": 1,
     "snapshots_rehashed_this_phase": 16,
     "snapshots_unchanged": "16 (12 are unchanged-since-Phase 13 fingerprint; 4 are unchanged-since-Phase 13 fingerprint)"
   },
-  "fresh_snapshots_since_phase15": 1
+  "fresh_snapshots_since_phase15": 1,
+  "plan12c_fixture_md5": "2ed66f53700b1456094587bf3ae23f13"
 }

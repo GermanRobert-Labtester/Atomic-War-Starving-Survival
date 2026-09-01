@@ -43,7 +43,7 @@ for attentive players); a folklore codex (17C); a child who maps the bunker by i
 `MemorialSystem` + `GuiltInsomniaSystem` + relations, so loss has ceremony, not just a flag.
 
 **Files:** `events.json` (mourning events), memorial data, narrative docs, read-only
-`MemorialSystem.cs`, `SurvivorRelationsSystem.cs`, `GuiltInsomniaSystem.cs`, `FinalWishSystem` (06A).
+`MemorialSystem.cs`, `SurvivorRelationsSystem.cs`, `GuiltInsomniaSystem.cs`, `FinalWishSystem` (Plan 65).
 
 **Substeps:**
 1. Read `MemorialSystem` + the grief cascade in `SurvivorRelationsSystem` to map what mourning exists today.
@@ -51,14 +51,14 @@ for attentive players); a folklore codex (17C); a child who maps the bunker by i
 3. Author the mourning arc: acute grief → the empty-shift day → the first laugh after → a memorial — staged over days via existing systems.
 4. Wire rites to grief cascade: a *held* rite softens the cascade; a skipped rite (no time, siege) deepens it.
 5. Author 4 grief-conflict events (someone can't stop working; someone wants the bunk reassigned now; a fight over the deceased's things).
-6. Connect memorial rites to final wishes (06A) and vigil deaths (09C) — a well-mourned death vs. a hard one.
+6. Connect memorial rites to Plan 65 final wishes and vigil deaths (09C) — a well-mourned death vs. a hard one.
 7. Author a memorial-wall accumulation (12C) — the wall grows; reading it is a morale act.
 8. Validate ids; data-integrity selftest; narrative-continuity.
 9. xUnit: rite softens grief cascade, mourning arc stages, memorial-wall accrual, determinism.
 10. Tone review: grief must be restrained and human — no melodrama, no exploitation.
 
 **Next steps:** a yearly day-of-the-dead rite (the bunker remembers everyone at once); a grief
-that becomes a quest (carry the ashes to a place, 06A); mourning interrupted by a crisis (war 06C).
+that becomes a quest (carry the ashes to a place, Plan 65); mourning interrupted by a crisis (war 06C).
 
 ---
 

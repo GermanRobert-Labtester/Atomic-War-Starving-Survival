@@ -60,7 +60,13 @@
       "baseCatchModifier": 0.9,
       "compatiblePrey": ["pheasant", "ash_crow", "contaminated_fowl", "rabbit"],
       "requiresWater": false,
-      "weatherSensitivity": 0.3
+      "weatherSensitivity": 0.3,
+      "bycatchChance": 0.25,
+      "bycatchSpecies": [
+        { "speciesId": "rat", "weight": 3.0 },
+        { "speciesId": "hedgehog", "weight": 2.0 },
+        { "speciesId": "irradiated_squirrel", "weight": 1.0 }
+      ]
     },
     {
       "trap_id": "trap_fish",
@@ -107,7 +113,12 @@
       "baseCatchModifier": 0.7,
       "compatiblePrey": ["pheasant", "ash_crow", "contaminated_fowl"],
       "requiresWater": false,
-      "weatherSensitivity": 0.3
+      "weatherSensitivity": 0.3,
+      "bycatchChance": 0.15,
+      "bycatchSpecies": [
+        { "speciesId": "irradiated_squirrel", "weight": 2.0 },
+        { "speciesId": "rat", "weight": 1.0 }
+      ]
     },
     {
       "trap_id": "trap_body_grip",
@@ -253,7 +264,9 @@
       "migrationSpeciesId": "species_blight_rat",
       "activeSeasons": [],
       "diseaseRisk": 0.35,
-      "contaminationRisk": 0.2
+      "contaminationRisk": 0.2,
+      "diseaseId": "disease_typhoid_waterborne",
+      "contaminationDose": 4.0
     },
     {
       "speciesId": "pheasant",
@@ -285,7 +298,9 @@
       "migrationSpeciesId": "species_iron_crow",
       "activeSeasons": ["window_thaw", "window_black_bloom", "window_the_turning"],
       "diseaseRisk": 0.25,
-      "contaminationRisk": 0.15
+      "contaminationRisk": 0.15,
+      "diseaseId": "disease_blood_fever",
+      "contaminationDose": 6.0
     },
     {
       "speciesId": "mirror_carp",
@@ -333,7 +348,9 @@
       "migrationSpeciesId": "",
       "activeSeasons": [],
       "diseaseRisk": 0.3,
-      "contaminationRisk": 0.35
+      "contaminationRisk": 0.35,
+      "diseaseId": "disease_spore_blight",
+      "contaminationDose": 20.0
     },
     {
       "speciesId": "contaminated_fowl",
@@ -349,7 +366,9 @@
       "migrationSpeciesId": "",
       "activeSeasons": ["window_thaw", "window_black_bloom"],
       "diseaseRisk": 0.4,
-      "contaminationRisk": 0.4
+      "contaminationRisk": 0.4,
+      "diseaseId": "disease_zoonotic_flu",
+      "contaminationDose": 12.0
     },
     {
       "speciesId": "rad_dog",
@@ -365,7 +384,9 @@
       "migrationSpeciesId": "species_rad_dog",
       "activeSeasons": [],
       "diseaseRisk": 0.3,
-      "contaminationRisk": 0.2
+      "contaminationRisk": 0.2,
+      "diseaseId": "disease_zoonotic_flu",
+      "contaminationDose": 8.0
     },
     {
       "speciesId": "muskrat",

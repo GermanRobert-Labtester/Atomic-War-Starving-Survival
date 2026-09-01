@@ -923,6 +923,294 @@
       "dangerLevel": 3,
       "travelHours": 1.0,
       "baseRadsPerHour": 12
+    },
+    {
+      "id": "loc_excavation_command_vault",
+      "displayName": "Collapsed Command Vault",
+      "description": "A reinforced military command installation buried beneath tons of blasted granite. Three distinct strata lead to the hardened communications vault.",
+      "dangerLevel": 7,
+      "travelHours": 3.5,
+      "baseRadsPerHour": 30
+    },
+    {
+      "id": "loc_excavation_utility_tunnels",
+      "displayName": "Utility Tunnel Network",
+      "description": "Subterranean municipal service corridors and conduit trunks that run beneath the old district grid. The mud is knee-deep in the lower sections and the standing water carries a faint chemical tint that the Hydro Barons say is harmless and no one believes them. Bioluminescent mold clings to the pipe joints, throwing enough cold blue light to navigate by if your eyes have adjusted. The tunnels were used as evacuation routes in the first weeks and then as hidey-holes and now as shortcuts by people who know where the dead ends are. Someone has chalked arrows on the conduit elbows, some of them contradictory, all of them unsigned. The sound travels strangely in here and the dripping is constant. Whatever is living in the far runs sounds large enough that most scavengers turn around at the second junction.",
+      "dangerLevel": 4,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_excavation_metro_interchange",
+      "displayName": "Buried Metro Interchange",
+      "description": "A multi-tier transit hub collapsed during the orbital strikes. Deep platform levels remain pressurized pockets holding pre-war civilian relics.",
+      "dangerLevel": 6,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 25
+    },
+    {
+      "id": "loc_excavation_mine_shaft",
+      "displayName": "Industrial Mine Shaft Adit 4",
+      "description": "A heavy extraction shaft dropping into mineral-rich bedrock. High mechanical salvage and lead-ore veins, tempered by severe structural instability.",
+      "dangerLevel": 8,
+      "travelHours": 4.5,
+      "baseRadsPerHour": 40
+    },
+    {
+      "id": "loc_excavation_archive_bunker",
+      "displayName": "Pre-War Archive Bunker",
+      "description": "An underground scientific and administrative depository sealed under blast-hardened vault arches. Holds intact microforms, technical blueprints, and emergency dead-drop records.",
+      "dangerLevel": 5,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 20
+    },
+    {
+      "id": "loc_excavation_drainage_network",
+      "displayName": "Drainage Network Sluice 09",
+      "description": "Stormwater culverts and overflow sluices converted into illicit smuggling routes before the bombardment. Silt and contaminated backwash hide sealed waterproof caches.",
+      "dangerLevel": 3,
+      "travelHours": 1.5,
+      "baseRadsPerHour": 10
+    },
+    {
+      "id": "loc_excavation_storage_chamber",
+      "displayName": "Forgotten Storage Chamber 14",
+      "description": "An auxiliary military logistics cache sealed in haste during civil evacuation. Unstable masonry slabs overhang intact pallets of rations and industrial spares.",
+      "dangerLevel": 6,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 22
+    },
+    {
+      "id": "loc_excavation_civilian_shelter",
+      "displayName": "Pre-War Civilian Shelter B-12",
+      "description": "A privately funded neighborhood shelter built beneath a residential complex. Shorter excavation depths yield domestic survival gear, medical supplies, and handwritten diaries.",
+      "dangerLevel": 2,
+      "travelHours": 1.0,
+      "baseRadsPerHour": 8
+    },
+    {
+      "id": "loc_hidden_relay_bunker",
+      "displayName": "Hidden Relay Bunker 09",
+      "description": "A concealed shortwave relay outpost buried into the cliffside, discovered by decrypting 'The Relay Count' numbers broadcast.",
+      "dangerLevel": 5,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 18
+    },
+    {
+      "id": "loc_logistics_reserve_cache",
+      "displayName": "Sub-Basement Logistics Reserve",
+      "description": "A secure logistics basement cache unlocked using the Winter Ledger cipher sheet. Packed with sealed emergency rations and filtration units.",
+      "dangerLevel": 4,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 12
+    },
+    {
+      "id": "loc_deaddrop_command_shelter",
+      "displayName": "Dead-Drop Command Shelter",
+      "description": "An automated contingency shelter revealed through the Last Rotation dead-hand protocol. Contains classified directives and high-grade technical relics.",
+      "dangerLevel": 6,
+      "travelHours": 3.5,
+      "baseRadsPerHour": 22
+    },
+    {
+      "id": "loc_holdfast",
+      "displayName": "The Holdfast",
+      "description": "The home bunker. Sub-surface reinforced shelter providing life support, workbenches, and secure quarters for the survivors.",
+      "dangerLevel": 0,
+      "travelHours": 0.0,
+      "baseRadsPerHour": 0
+    },
+    {
+      "id": "loc_cut_radiation_zone_alpha",
+      "displayName": "Fallout Zone Alpha",
+      "description": "A high-yield ground zero impact basin saturated with ionizing radiation and pulverized cinder. High-grade military and industrial salvage remains in the melted basement levels.",
+      "dangerLevel": 8,
+      "travelHours": 3.5,
+      "baseRadsPerHour": 75
+    },
+    {
+      "id": "loc_cut_merchant_caravanserai",
+      "displayName": "Merchant Caravanserai",
+      "description": "A fortified pre-war truck stop and weigh yard where wandering barter convoys converge. Low radiation and reliable staging for westward expeditions.",
+      "dangerLevel": 2,
+      "travelHours": 1.5,
+      "baseRadsPerHour": 10
+    },
+    {
+      "id": "loc_cut_abandoned_depot",
+      "displayName": "Abandoned Rail Depot",
+      "description": "A sprawling freight yard with rusted boxcars and freight terminals. An essential transit corridor connecting the industrial belt to the western suburbs.",
+      "dangerLevel": 3,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 20
+    },
+    {
+      "id": "loc_cut_arsenal_ruin",
+      "displayName": "Arsenal Ruin",
+      "description": "The bombed-out munitions storage and armory facility. Fortified vaults contain ballistic components and weapon parts behind collapsed blast doors.",
+      "dangerLevel": 6,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 35
+    },
+    {
+      "id": "loc_black_flotilla_outpost",
+      "displayName": "Black Flotilla Outpost",
+      "description": "A coastal salvage pier and harbor watchtower garrisoned by maritime divers. Controls access to deep-coast marine wrecks and saline processing lanes.",
+      "dangerLevel": 7,
+      "travelHours": 4.0,
+      "baseRadsPerHour": 40
+    },
+    {
+      "id": "loc_settlement_brine_pans",
+      "displayName": "Brine-Pan Hollow",
+      "description": "A fortified salt camp in the tidal estuary. Evaporation pans and steam condensers produce curing salt and preserved provisions under salter council watch.",
+      "dangerLevel": 2,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_settlement_iron_siding",
+      "displayName": "Iron Siding",
+      "description": "A modular rail-car town buried beneath railroad ballast near Span 44. Work gangs forge high-tensile hardware and armor plates from freight car steel.",
+      "dangerLevel": 3,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 20
+    },
+    {
+      "id": "loc_settlement_cape_beacon",
+      "displayName": "Cape Beacon Commune",
+      "description": "A coastal lighthouse community maintaining freshwater cisterns, kelp drying racks, and prism optics on a windswept ocean bluff.",
+      "dangerLevel": 4,
+      "travelHours": 3.5,
+      "baseRadsPerHour": 25
+    },
+    {
+      "id": "loc_settlement_slate_hollow",
+      "displayName": "Slate Hollow Enclave",
+      "description": "A subterranean quarry enclave cut into impervious slate galleries in the High Scarp. Pit crews extract building stone and mill hones shielded from weather.",
+      "dangerLevel": 3,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_settlement_pilgrim_hearth",
+      "displayName": "The Pilgrim's Hearth",
+      "description": "A mountain sanctuary warmed by natural geothermal steam radiators at Switchback Pass. Monks provide hot broth, herbal remedies, and peace-bound rest.",
+      "dangerLevel": 2,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 10
+    },
+    {
+      "id": "loc_settlement_tinkers_notch",
+      "displayName": "Tinker's Notch",
+      "description": "A bustling container and chassis market in the dead suburbs surrounded by an electrified fence. Factor stalls trade copper wire, batteries, and electronic chips.",
+      "dangerLevel": 2,
+      "travelHours": 1.5,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "location_quarry_overlook",
+      "displayName": "Quarry Overlook Waypoint",
+      "description": "A wind-scoured ridge above Slate Hollow Enclave where the old quarry crane platform gives a clear view of the pit entrance and the High Scarp switchbacks.",
+      "dangerLevel": 3,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_grain_exchange",
+      "displayName": "The Grain Exchange",
+      "description": "A converted rail freight terminal serving as the Grain Exchange faction's primary commodity hub. Surplus cereal and root stores are tallied here and rationed outward through a network of licensed brokers.",
+      "dangerLevel": 2,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 10
+    },
+    {
+      "id": "loc_automated_abattoir",
+      "displayName": "Automated Abattoir",
+      "description": "A pre-war industrial slaughterhouse whose hydraulic line-kill systems still operate on stored power cells. The Osteophages use it to process large irradiated game and recycle bone stock for calcium supplement trade.",
+      "dangerLevel": 4,
+      "travelHours": 3.5,
+      "baseRadsPerHour": 20
+    },
+    {
+      "id": "loc_flooded_subway_depot",
+      "displayName": "Flooded Subway Depot",
+      "description": "A drowned underground rail maintenance yard accessed through a half-submerged service hatch. The Undertow faction operates supply caches in the dry upper galleries, moving goods through the waterlogged tunnels by raft.",
+      "dangerLevel": 4,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 25
+    },
+    {
+      "id": "loc_scavenger_camp",
+      "displayName": "Scavenger Guild Camp",
+      "description": "A rotating canvas-and-corrugated-steel encampment operated by the Scavenger Guild. Its position shifts with salvage fronts but the gatehouse marker is always the same: a stripped vehicle axle stood upright as a flagpole.",
+      "dangerLevel": 3,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_iron_garrison",
+      "displayName": "Iron Garrison Headquarters",
+      "description": "The hardened command compound of the Iron Garrison faction, occupying a pre-war civil defense building with reinforced sub-levels. Access is by escort only; civilians who approach the perimeter fence without credentials are turned back at gunpoint.",
+      "dangerLevel": 5,
+      "travelHours": 1.5,
+      "baseRadsPerHour": 10
+    },
+    {
+      "id": "loc_dead_zone",
+      "displayName": "Ecological Dead Zone",
+      "description": "A silent, wind-scoured ash basin where ecological succession completely failed after intense isotope deposition. No insects hum, no lichen clings to the fractured basalt slabs, and desiccated animal carcasses lie uncomposed beneath acidic ash crusts. It stands as a stark warning of total ecological collapse.",
+      "dangerLevel": 7,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 50
+    },
+    {
+      "id": "loc_settlement_ferry_crossing",
+      "displayName": "Ferry Point Exchange",
+      "description": "A bustling river ferry crossing and barter dock in the Drown sector. River barges trade clean drinking water and preserved rations under the Undertow faction's watchful patrols.",
+      "dangerLevel": 3,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_settlement_nine_rails",
+      "displayName": "Nine Rails Junction",
+      "description": "A major rail concourse and trade hub in the Industrial Belt where switching yards meet covered trade docks, overseen by The Office's scheduling clerks.",
+      "dangerLevel": 2,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 10
+    },
+    {
+      "id": "loc_settlement_fort_karkov",
+      "displayName": "Fort Karkov Marshalling Yard",
+      "description": "A heavily fortified rail fortress in the High Scarp controlled by the Deserter Coalition. Armor-plated diesel cars form defensive bastions around machine tooling workshops.",
+      "dangerLevel": 5,
+      "travelHours": 4.0,
+      "baseRadsPerHour": 25
+    },
+    {
+      "id": "loc_settlement_lock_seven",
+      "displayName": "Lock Seven Hydraulic Bastion",
+      "description": "A reinforced concrete sluice gate and hydraulic toll station in the Toll region, controlling water transit and charging tariffs in fuel and mechanical parts.",
+      "dangerLevel": 3,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 20
+    },
+    {
+      "id": "loc_settlement_silo_burrow",
+      "displayName": "New Ceres Silo Collective",
+      "description": "An agricultural commune built into three massive concrete grain silos in the Verge. Farmers cultivate winter grain and barter seeds with passing caravans.",
+      "dangerLevel": 3,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_settlement_st_nicholas",
+      "displayName": "St. Nicholas Spring Sanctuary",
+      "description": "An underground artesian spring and monastic hospital in the Cluster. Silent caretakers offer clean holy water and sterile burn treatment to wounded travelers.",
+      "dangerLevel": 1,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 5
     }
   ]
 }

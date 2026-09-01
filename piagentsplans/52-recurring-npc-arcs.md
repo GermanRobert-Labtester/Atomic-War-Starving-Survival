@@ -36,7 +36,7 @@ personal objective, faction affiliation, and a state that evolves across the cam
   settlement, survive long enough to see spring).
 - faction_affiliation: `faction_*` id — which faction the NPC belongs to (or `independent`).
 - survival_philosophy: how the NPC approaches survival (hoard, share, flee, fight, negotiate).
-- trade_interest: what the NPC buys/sells (feeds existing 13A economy + 16B caravans).
+- trade_interest: what the NPC buys/sells (feeds Plan 13 trade flow + 16B caravans).
 - secret: something the NPC hides (a crime, a betrayal, a pre-war identity, a stash).
 - arc_states: list of temporal states with trigger conditions:
   - state_1 (initial): where the NPC is first encountered (Day range, location, situation).

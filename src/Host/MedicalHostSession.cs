@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 #pragma warning disable CS8618
 using Ashfall.Core;
@@ -70,6 +71,77 @@ namespace AtomicWar.GodotApp
             LastEvent = $"Medical care: {survivorId} — {treatmentDetails}";
             RaiseStateChanged();
         }
+
+        // ── Plan 60 / D6 — the bedside vigil ────────────────────────────
+
+        /// <summary>
+        /// The vigil is the one part of medicine that is allowed to run on real time,
+        /// because the point of it is that the player spends some. What reaches the
+        /// simulation is only whether it was kept, never how long it took, so the
+        /// determinism rule holds (see <see cref="Ashfall.Core.Medical.VigilCare"/>).
+        /// </summary>
+        private Func<int>? _vigilDay;
+        private Ashfall.Core.Flags.IFlagLedger? _vigilFlags;
+        private Func<IReadOnlyList<string>>? _vigilNames;
+        private bool _vigilBound;
+
+        public bool VigilActive => Vigil != null && Vigil.IsActive;
+
+        /// <summary>0..1 presence of the vigil in progress, for the bedside UI only.</summary>
+        public float VigilProgress =>
+            Vigil == null || Vigil.DurationSeconds <= 0f ? 0f
+            : Math.Clamp(Vigil.ElapsedSeconds / Vigil.DurationSeconds, 0f, 1f);
+
+        /// <summary>
+        /// Bind the day, the consequence ledger the record rides in, and the names worth
+        /// reciting (the dead the holdfast has kept). Unbound, a vigil can be started
+        /// but is never recorded — a ward with no ledger must not silently pretend.
+        /// </summary>
+        public void BindVigilContext(
+            Func<int> dayProvider,
+            Ashfall.Core.Flags.IFlagLedger? flags,
+            Func<IReadOnlyList<string>>? namesProvider = null)
+        {
+            _vigilDay = dayProvider;
+            _vigilFlags = flags;
+            _vigilNames = namesProvider;
+            if (_vigilBound) return;
+            _vigilBound = true;
+
+            Vigil.OnVigilCompleted += skipped =>
+            {
+                if (skipped) return;
+                string id = Vigil.DwellerId;
+                if (string.IsNullOrEmpty(id) || _vigilFlags == null) return;
+                Ashfall.Core.Medical.VigilCare.RecordKept(
+                    _vigilFlags, id, _vigilDay?.Invoke() ?? 0);
+                RaiseStateChanged();
+            };
+        }
+
+        /// <summary>
+        /// Sit with someone who is dying. Returns a host-readable line; refusal is
+        /// spoken, not swallowed, because a second vigil at once is a design answer and
+        /// not a silent button that does nothing.
+        /// </summary>
+        public string HoldVigil(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return "No patient named for the vigil.";
+            if (Vigil.IsActive) return $"A vigil is already kept for {Vigil.DwellerId}.";
+
+            Vigil.StartVigil(survivorId, _vigilNames?.Invoke() ?? Array.Empty<string>());
+            RaiseStateChanged();
+            return $"Vigil begun for {survivorId}. Sit with them.";
+        }
+
+        /// <summary>Advance the vigil by real elapsed time. Presence only — see above.</summary>
+        public void TickVigil(double deltaSeconds)
+        {
+            if (Vigil == null || !Vigil.IsActive) return;
+            if (deltaSeconds <= 0d) return;
+            Vigil.Tick((float)deltaSeconds);
+        }
+
 
         public static MedicalHostSession Create(string dataDir)
         {
@@ -216,7 +288,10 @@ namespace AtomicWar.GodotApp
         public string VigilStatusLine()
         {
             if (!Vigil.IsActive && !Vigil.IsCompleted) return "Vigil: idle";
-            if (Vigil.IsCompleted) return $"Vigil: completed (skipped: {Vigil.WasSkipped})";
+            if (Vigil.IsCompleted)
+                return Vigil.WasSkipped
+                    ? "Vigil: left early"
+                    : $"Vigil: kept to the end for {Vigil.DwellerId}";
             return $"Vigil: {Vigil.DwellerId} · {Vigil.ElapsedSeconds:F0}/{Vigil.DurationSeconds:F0}s · " +
                    $"{Vigil.RecitedCount}/{Vigil.Names.Count} names" +
                    (Vigil.PhantomKnockFired ? " · phantom knock" : "");

@@ -89,6 +89,15 @@ namespace Ashfall.Core.Inventory
         public float radCleanse;
         public float moraleEffect;
 
+        /// <summary>
+        /// Additive morale granted once per day to an alive survivor assigned to
+        /// the room where this item is mounted. A value of zero means the item
+        /// is not a shelter-decor morale source. The JSON field is deliberately
+        /// on the item definition so the item catalog remains the only data
+        /// authority for decor modifiers.
+        /// </summary>
+        public float decorLocalizedMoraleDelta;
+
         public bool empShielded;
         public float tradeValue;
         public int tradeTier;
@@ -148,6 +157,7 @@ namespace Ashfall.Core.Inventory
                 healthEffect = healthEffect,
                 radCleanse = radCleanse,
                 moraleEffect = moraleEffect,
+                decorLocalizedMoraleDelta = decorLocalizedMoraleDelta,
                 empShielded = empShielded,
                 tradeValue = tradeValue,
                 tradeTier = tradeTier,

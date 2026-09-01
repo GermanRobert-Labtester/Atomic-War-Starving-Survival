@@ -28,6 +28,87 @@
       "fade_rate_per_day": 0.002,
       "required_item_id": "cloth",
       "required_amount": 1
+    },
+    {
+      "ink_id": "ink_lampblack",
+      "display_name": "Lampblack",
+      "legibility_score": 0.65,
+      "archival_longevity_days": 250,
+      "fade_rate_per_day": 0.004,
+      "required_item_id": "charcoal",
+      "required_amount": 1
+    },
+    {
+      "ink_id": "ink_berry_juice",
+      "display_name": "Berry Juice",
+      "legibility_score": 0.5,
+      "archival_longevity_days": 150,
+      "fade_rate_per_day": 0.007,
+      "required_item_id": "berries",
+      "required_amount": 2
+    },
+    {
+      "ink_id": "ink_chemical_marker",
+      "display_name": "Chemical Marker",
+      "legibility_score": 0.8,
+      "archival_longevity_days": 400,
+      "fade_rate_per_day": 0.003,
+      "required_item_id": "chemical_solvent",
+      "required_amount": 1
+    },
+    {
+      "ink_id": "ink_diluted_toner",
+      "display_name": "Diluted Toner",
+      "legibility_score": 0.75,
+      "archival_longevity_days": 350,
+      "fade_rate_per_day": 0.003,
+      "required_item_id": "empty_toner_cartridge",
+      "required_amount": 1
+    },
+    {
+      "ink_id": "ink_archival_carbon",
+      "display_name": "Archival Carbon",
+      "legibility_score": 0.95,
+      "archival_longevity_days": 600,
+      "fade_rate_per_day": 0.001,
+      "required_item_id": "charcoal",
+      "required_amount": 3
+    },
+    {
+      "ink_id": "ink_improvised_pigment",
+      "display_name": "Improvised Pigment",
+      "legibility_score": 0.55,
+      "archival_longevity_days": 180,
+      "fade_rate_per_day": 0.006,
+      "required_item_id": "mineral_chunk",
+      "required_amount": 2
+    },
+    {
+      "ink_id": "ink_blood_emergency",
+      "display_name": "Blood (Emergency)",
+      "legibility_score": 0.4,
+      "archival_longevity_days": 100,
+      "fade_rate_per_day": 0.01,
+      "required_item_id": "blood_sample",
+      "required_amount": 1
+    },
+    {
+      "ink_id": "ink_sepia",
+      "display_name": "Sepia Wash",
+      "legibility_score": 0.7,
+      "archival_longevity_days": 280,
+      "fade_rate_per_day": 0.004,
+      "required_item_id": "organic_residue",
+      "required_amount": 1
+    },
+    {
+      "ink_id": "ink_mineral_oxide",
+      "display_name": "Mineral Oxide",
+      "legibility_score": 0.6,
+      "archival_longevity_days": 220,
+      "fade_rate_per_day": 0.005,
+      "required_item_id": "scrap_metal",
+      "required_amount": 2
     }
   ]
 }

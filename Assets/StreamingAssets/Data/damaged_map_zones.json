@@ -85,6 +85,86 @@
           "description": "A quartermaster's manifest: 'Armory 7 — Full Stock. EMP-hardened equipment. Authorization code: CHIMERA-7-4-9.'"
         }
       ]
+    },
+    {
+      "zone_id": "crater_ground_zero",
+      "zone_name": "Crater Core Ground Zero",
+      "total_fragments": 3,
+      "hidden_installation_id": "loc_excavation_command_vault",
+      "hidden_installation_name": "Collapsed Command Vault",
+      "installation_description": "Sub-surface tactical command center buried beneath pulverized basalt and ionizing fallout. Heavy lead-shielded blast doors.",
+      "revealed_items": [
+        "military_radio",
+        "military_rations",
+        "ammo_308"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_crater_1",
+          "label": "Hypocenter Thermal Survey",
+          "description": "Infrared survey overlay showing reinforced sub-structures surviving under the ground-zero vitrification ring."
+        },
+        {
+          "fragment_id": "damaged_map_crater_2",
+          "label": "Conduit Routing Diagram",
+          "description": "High-voltage armored cable conduits tracing from the substation directly into the core blast basin."
+        },
+        {
+          "fragment_id": "damaged_map_crater_3",
+          "label": "Dead-Hand Frequency Card",
+          "description": "Laminated card giving the primary beacon interrogation signal for emergency automated vault entry."
+        }
+      ]
+    },
+    {
+      "zone_id": "deep_coast_shelf",
+      "zone_name": "Deep Coast Saline Shelf",
+      "total_fragments": 2,
+      "hidden_installation_id": "loc_deaddrop_command_shelter",
+      "hidden_installation_name": "Dead-Drop Command Shelter",
+      "installation_description": "Submerged maritime relay station situated past the tidal locks. Watertight bulkhead entries accessible at low slack tide.",
+      "revealed_items": [
+        "diesel_fuel",
+        "water_filter",
+        "scrap_metal"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_coast_1",
+          "label": "Bathymetric Sounding Chart",
+          "description": "Nautical chart indicating an artificial underwater trench excavated before the war for intake lines."
+        },
+        {
+          "fragment_id": "damaged_map_coast_2",
+          "label": "Tidal Lock Manual",
+          "description": "Hand-annotated operational manual for Lock Gate Four, indicating sluice bypass timing."
+        }
+      ]
+    },
+    {
+      "zone_id": "high_scarp_ridgeline",
+      "zone_name": "High Scarp & Treeline",
+      "total_fragments": 2,
+      "hidden_installation_id": "loc_hidden_relay_bunker",
+      "hidden_installation_name": "Hidden Relay Bunker 09",
+      "installation_description": "Cliffside communications shelter hidden behind an avalanche gallery scree fall. Preserves intact antenna arrays.",
+      "revealed_items": [
+        "item_comm_codebook_alpha",
+        "electronic_scrap",
+        "medical_kit"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_scarp_1",
+          "label": "Switchback Elevation Map",
+          "description": "Topographical map showing concealed maintenance adits carved into the granite rockface."
+        },
+        {
+          "fragment_id": "damaged_map_scarp_2",
+          "label": "Surveyor's Log Extract",
+          "description": "Field notes from a pre-war cartographer referencing a subterranean cable vault above the snowline."
+        }
+      ]
     }
   ]
 }

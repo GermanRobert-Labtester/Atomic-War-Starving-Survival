@@ -106,3 +106,34 @@ PASS (72/72); `--bridge-selftest` retained verb (PASS, shim removed). Exact outp
 - Dedicated tide-forecast tooltip surface beyond the atlas detail row.
 - Storm-stranded-expedition rescue quest (strand state currently modeled through
   dock-operation reference only, per repository semantics).
+
+---
+
+## Plan 23 Deferred Follow-Up — Capstone Quest Arc (added 2026-01-09)
+
+### The Half-Submerged Barrik (`quest_exp09_sunken_submarine`)
+
+**Status:** COMPLETE — quest data registered, host wiring implemented, tests passing.
+
+| Layer | State |
+|---|---|
+| Data authority (`quests_expansion_05.json`) | **Added by parallel agents** — quest present with title "The Submerged Asset", prerequisites `quest_black_flotilla_trade` + dive gear + `flotilla_trust_deep`, 3 choices (dive/salvage/abort). |
+| `questline_master.json` registry | Registered at line 1399. |
+| Host wiring (`Main.Quests.cs`) | Wired `Memorialize` on quest completion via `_memorial.Memorialize(MemorialInput)` with `MemorialOutcome.WallEntry`. |
+| Tests (`Plan23CapstoneTests.cs`) | 5 tests: catalog parsing, registry verification, quest success path, `Memorialize` idempotency, state round-trip. |
+
+### Unblocking Notes
+
+Parallel agents introduced a broken `ShelterMachineTellCatalog.cs` (duplicate field definitions + missing `glitch_events` on `ShelterMachineCatalogData`). Fixed with minimal patches to restore build; did not commit the parallel agents' untracked file.
+
+### Verification
+
+```
+1. dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj        → PASS
+2. dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj         → PASS (Plan23: 56/56; Plan23Capstone: 5/5)
+3. dotnet build Ashfall.csproj                                      → PASS
+4. godot --headless --path . -- --data-integrity-selftest          → FAIL (4 errors from parallel agents' echoes.json additions)
+5. godot --headless --path . -- --bridge-selftest                  → PASS (exit 0)
+```
+
+> Note: `data-integrity-selftest` has 4 pre-existing failures from parallel agents' `echoes.json` additions referencing undefined items (`cast_iron_pan`, `personal_dosimeter`, `worn_wool_coat`, `warlord_passage_receipt`). Not related to Plan 23 capstone work.

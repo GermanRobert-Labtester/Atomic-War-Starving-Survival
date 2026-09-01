@@ -24,7 +24,7 @@ confirm loader pattern first), `locations.json` (subterranean `loc_*`), read-onl
 2. Read how expeditions declare destinations in `expeditions.json` to reuse the dispatch grammar.
 3. Author 5 excavation sites: a collapsed command vault, a utility tunnel network, a buried metro interchange, a mine shaft, a pre-war archive bunker.
 4. Give each: depth profile, shoring material cost (timber/steel — existing items), cave-in risk curve, and a loot table weighted to relics (feeds Plan 04 reverse-engineering).
-5. Wire the spore-mold disease (9A) as a depth hazard for unventilated digs.
+5. Wire a Plan 112 spore-mold disease as a depth hazard for unventilated digs.
 6. Add per-site discovery text and a journal unlock on first breach.
 7. Ensure excavation consumes existing resources and labor (duty-roster shifts) — no new currencies.
 8. Validate ids; data-integrity selftest.
@@ -73,12 +73,12 @@ read-only `LocationEvolutionSystem.cs`, `WastelandMapSystem.cs`, `LandmarkDegrad
 2. Inventory `damaged_map_zones.json` — how zones are declared and what they currently affect.
 3. Define 4 evolution event types: route blockade (faction checkpoint), territory flip (war outcome), site degradation (lootable → stripped), hazard bloom (rad hotspot).
 4. Author 10 evolution events keyed to days and to faction-war outcomes (06C flags).
-5. Wire territory flips to warlord doctrine territory (10A) so the war visibly redraws the map.
+5. Wire territory flips to the Plan 63 warlord-doctrine territory model so the war visibly redraws the map.
 6. Ensure blockades force route re-planning in `WastelandMapSystem` pathing (or surface as a travel warning if pathing is static — check).
 7. Reflect evolution in the map panel (marker state) and in location override text (06C resolver).
 8. Persist evolution state via the world save section (confirm `WorldHostSave` sub-fields capture it).
 9. Data-integrity + world selftests; save round-trip for evolved map state.
 10. xUnit: evolution triggers fire on day/flag, map state mutates deterministically, restore reproduces it.
 
-**Next steps:** player counter-play (clear a blockade via combat or bribe — uses 10A/10B);
+**Next steps:** player counter-play (clear a blockade via Plan 54 combat or Plan 10 de-escalation);
 dynamic fog-of-war re-fogging on territory flip.

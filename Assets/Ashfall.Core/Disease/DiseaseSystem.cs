@@ -31,6 +31,9 @@ namespace Ashfall.Core.Disease
         public const string EventDied = "disease_death";
         public const string EventProtocolApplied = "disease_protocol_applied";
         public const string EventProtocolReset = "disease_protocol_reset";
+
+        /// <summary>Plan 60 / D3 — a treatment was applied to a patient.</summary>
+        public const string EventTreatmentApplied = "disease_treatment_applied";
     }
 
     // ---------------------------------------------------------------------
@@ -45,6 +48,61 @@ namespace Ashfall.Core.Disease
         public int infected_day = 0;
         public int days_sick = 0;
         public bool quarantined = false;
+
+        /// <summary>
+        /// Plan 60 / D3 — doses of authorised treatment this patient has received.
+        /// Additive: a pre-D3 save loads as 0, i.e. "never treated", the truth.
+        /// </summary>
+        public int treatments_applied = 0;
+
+        /// <summary>
+        /// Accumulated, capped reduction of this disease's lethality <em>for this
+        /// patient</em>. Kept per patient, never on the disease, so treating one case
+        /// cannot silently protect another.
+        /// </summary>
+        public float lethality_reduction = 0f;
+
+        /// <summary>Day of the last accepted treatment (-1 = none).</summary>
+        public int last_treatment_day = -1;
+    }
+
+    /// <summary>
+    /// Plan 60 / D3 — outcome of a treatment attempt. A refusal is a named, player-facing
+    /// fact ("outside the window", "no doses left"), never a silent no-op.
+    /// </summary>
+    public sealed class DiseaseTreatmentResult
+    {
+        public bool Accepted { get; set; }
+        public string Reason { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+        public string ItemId { get; set; } = string.Empty;
+        public string DiseaseId { get; set; } = string.Empty;
+        public string SurvivorId { get; set; } = string.Empty;
+        public float LethalityReduction { get; set; }
+        public bool Cured { get; set; }
+
+        public static DiseaseTreatmentResult Refuse(string reason, string itemId, string diseaseId, string survivorId) =>
+            new DiseaseTreatmentResult
+            {
+                Accepted = false,
+                Reason = reason,
+                ItemId = itemId ?? string.Empty,
+                DiseaseId = diseaseId ?? string.Empty,
+                SurvivorId = survivorId ?? string.Empty,
+            };
+    }
+
+    /// <summary>Named refusal reasons for <see cref="DiseaseSystem.TryTreat"/>.</summary>
+    public static class DiseaseTreatmentRefusals
+    {
+        public const string NotPatient = "not_patient";
+        public const string UnknownDisease = "unknown_disease";
+        public const string NoTreatmentAuthorised = "no_treatment_authorised";
+        public const string ItemNotAuthorised = "item_not_authorised";
+        public const string OutsideWindow = "outside_window";
+        public const string AlreadyTreatedToday = "already_treated_today";
+        public const string NoSupplyChannel = "no_supply_channel";
+        public const string SupplyUnavailable = "supply_unavailable";
     }
 
     /// <summary>Per-disease mutable simulation snapshot (serialized).</summary>
@@ -91,6 +149,15 @@ namespace Ashfall.Core.Disease
         public bool tools_sterilized = false;
         public bool air_filtration = false;
 
+        // Plan 60 / D4 — the day each protocol lapses (day >= until ⇒ expired).
+        // 0 means "not armed": either the protocol is off, or a pre-D4 save had it
+        // on with no recorded expiry (that save re-arms on the next tick and
+        // lapses one duration later, which is the honest reading of an old save).
+        public int water_purified_until_day = 0;
+        public int vents_sealed_until_day = 0;
+        public int tools_sterilized_until_day = 0;
+        public int air_filtration_until_day = 0;
+
         // Preserved across ticks / restores so a reload reproduces the same
         // outcome sequence (determinism invariant).
         public int rngSeed = 0;
@@ -112,6 +179,15 @@ namespace Ashfall.Core.Disease
         public bool quarantined = false;
         public bool contagious = false;          // past incubation, not isolated
         public int contagion_risk_percent = 0;   // infectivity * 100
+
+        /// <summary>Doses of authorised treatment received (Plan 60 / D3).</summary>
+        public int treatments_applied = 0;
+
+        /// <summary>
+        /// Lethality actually in force for this patient after treatment. The surface
+        /// reads this rather than re-deriving it.
+        /// </summary>
+        public float effective_lethality = 0f;
     }
 
     /// <summary>Derived read model for the ward / HUD. Always rebuilt on demand.</summary>
@@ -150,6 +226,13 @@ namespace Ashfall.Core.Disease
         public const int DefaultSeed = 1013;
         public const int OutbreakThreshold = 3;
 
+        /// <summary>
+        /// Plan 60 / D3 — treatment can improve a patient's odds, never make them
+        /// immortal: cumulative lethality reduction is capped, so no accumulation of
+        /// doses turns a lethal disease into a guaranteed survival.
+        /// </summary>
+        public const float MaxLethalityReduction = 0.9f;
+
         // Typed events (established convention — no third bus).
         public event Action<string, string> OnInfection;                    // survivorId, diseaseId
         public event Action<string, string> OnQuarantineStarted;            // survivorId, diseaseId
@@ -157,6 +240,12 @@ namespace Ashfall.Core.Disease
         public event Action<string> OnOutbreakDeclared;                     // diseaseId
         public event Action<string, bool> OnOutbreakContained;              // diseaseId, prevented
         public event Action<string, string, bool> OnOutcomeResolved;        // survivorId, diseaseId, recovered
+
+        /// <summary>
+        /// Plan 60 / D3 — survivorId, diseaseId, itemId, role, day. Raised only for an
+        /// <em>accepted</em> treatment, so a listener never sees a refused attempt.
+        /// </summary>
+        public event Action<string, string, string, string, int>? OnTreatmentApplied;
         public event Action<DiseaseSystemState> OnStateChanged;
         /// <summary>Forwarder for the string event bus (optional).</summary>
         public event Action<string, string> OnEventRaised;                  // eventId, detail
@@ -398,6 +487,11 @@ ILog? log = null)
         /// </param>
         public void TickDaily(int day, IReadOnlyList<string>? candidates = null)
         {
+            // Plan 60 / D4 — protocols are maintenance, not switches. A lapsed one
+            // must come down even if nobody was watching, before any spread roll
+            // reads the vector as still blocked.
+            TickProtocolExpiry(day);
+
             for (int i = 0; i < _entries.Count; i++)
             {
                 var entry = _entries[i];
@@ -490,7 +584,10 @@ ILog? log = null)
 
                 if (patient.days_sick < def.illness_days) continue;
 
-                bool died = def.lethality > 0f && _rng.NextDouble() < def.lethality;
+                // Plan 60 / D3 — the roll is against what is left of the disease for
+                // <em>this</em> patient after treatment, not the raw authored value.
+                float lethal = Math.Max(0f, def.lethality - patient.lethality_reduction);
+                bool died = lethal > 0f && _rng.NextDouble() < lethal;
                 removed.Add(patient);
                 if (died)
                 {
@@ -577,6 +674,122 @@ ILog? log = null)
             Raise(OnQuarantineEnded, DiseaseIds.EventQuarantineEnded,
                 survivorId + " released from quarantine", survivorId, diseaseId);
             RaiseStateChanged();
+        }
+
+        /// <summary>
+        /// Item id → dose count → true when the supply could be spent. Set by the host so
+        /// the disease engine never touches an inventory: consumption stays on the single
+        /// item authority the rest of the game uses, and an unwired host refuses treatment
+        /// loudly instead of pretending it happened.
+        /// </summary>
+        public Func<string, int, bool>? TryConsumeItem;
+
+        /// <summary>
+        /// Plan 60 / D3 — treat one patient with one item.
+        ///
+        /// <para>Everything that decides <em>what treatment means</em> lives in the
+        /// catalog: the item must be an authorised treatment for that disease, its role
+        /// (curative / suppressive / symptomatic / supportive) is authored, and its
+        /// window is enforced by <c>max_days</c>. Callers cannot assert a role, so a
+        /// supportive infusion cannot be smuggled through as a cure.</para>
+        ///
+        /// <para>Deterministic: same state, same day, same item ⇒ same result. One
+        /// accepted dose per patient per day, so repeated clicks cannot drain a stockpile
+        /// or double-dose a patient. Only a <em>curative</em> treatment removes the
+        /// infection; the other roles buy odds, not outcomes.</para>
+        /// </summary>
+        public DiseaseTreatmentResult TryTreat(
+            string survivorId, string diseaseId, string itemId, int day)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(diseaseId)
+                || string.IsNullOrEmpty(itemId))
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.NotPatient, itemId, diseaseId, survivorId);
+
+            if (!_byId.TryGetValue(diseaseId, out var entry))
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.UnknownDisease, itemId, diseaseId, survivorId);
+
+            var patient = FindPatient(entry, survivorId);
+            if (patient == null)
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.NotPatient, itemId, diseaseId, survivorId);
+
+            var def = _catalog.GetById(diseaseId);
+            if (def == null || def.treatments == null || def.treatments.Count == 0)
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.NoTreatmentAuthorised, itemId, diseaseId, survivorId);
+
+            var treatment = def.TreatmentFor(itemId);
+            if (treatment == null)
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.ItemNotAuthorised, itemId, diseaseId, survivorId);
+
+            if (treatment.max_days > 0 && patient.days_sick > treatment.max_days)
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.OutsideWindow, itemId, diseaseId, survivorId);
+
+            if (patient.last_treatment_day == day)
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.AlreadyTreatedToday, itemId, diseaseId, survivorId);
+
+            if (TryConsumeItem == null)
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.NoSupplyChannel, itemId, diseaseId, survivorId);
+
+            if (!TryConsumeItem(itemId, 1))
+                return DiseaseTreatmentResult.Refuse(DiseaseTreatmentRefusals.SupplyUnavailable, itemId, diseaseId, survivorId);
+
+            // ---- accepted ----
+            patient.treatments_applied++;
+            patient.last_treatment_day = day;
+
+            float reduction = Math.Clamp(treatment.lethality_reduction, 0f, 1f);
+            float before = patient.lethality_reduction;
+            patient.lethality_reduction = Math.Min(MaxLethalityReduction, before + reduction);
+            float applied = patient.lethality_reduction - before;
+
+            bool cured = false;
+            if (DiseaseTreatmentRoles.IsCurative(treatment.role))
+            {
+                // Curative means the infection is gone, not that the next roll is
+                // kinder — the patient recovers now and stops being contagious.
+                cured = true;
+                entry.infected.Remove(patient);
+                entry.recovered_total++;
+                Raise(OnOutcomeResolved, DiseaseIds.EventRecovered,
+                    survivorId + " was treated and recovered from " + diseaseId + " (day " + day + ")",
+                    survivorId, diseaseId, true);
+                if (patient.quarantined)
+                    Raise(OnQuarantineEnded, DiseaseIds.EventQuarantineEnded,
+                        survivorId + " left quarantine on cure", survivorId, diseaseId);
+                MaybeContain(entry);
+            }
+
+            Raise(null!, DiseaseIds.EventTreatmentApplied,
+                survivorId + " treated with " + itemId + " (" + treatment.role + ")", survivorId, diseaseId);
+            OnTreatmentApplied?.Invoke(survivorId, diseaseId, itemId, treatment.role, day);
+            RaiseStateChanged();
+
+            return new DiseaseTreatmentResult
+            {
+                Accepted = true,
+                Reason = "treated",
+                Role = treatment.role,
+                ItemId = itemId,
+                DiseaseId = diseaseId,
+                SurvivorId = survivorId,
+                LethalityReduction = applied,
+                Cured = cured,
+            };
+        }
+
+        /// <summary>
+        /// Effective lethality for one patient after their treatment history — what the
+        /// outcome roll uses, exposed so a clinical surface can say "better odds" without
+        /// recomputing it.
+        /// </summary>
+        public float GetEffectiveLethality(string survivorId, string diseaseId)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(diseaseId)) return 0f;
+            var def = _catalog.GetById(diseaseId);
+            if (def == null) return 0f;
+            if (!_byId.TryGetValue(diseaseId, out var entry)) return def.lethality;
+            var patient = FindPatient(entry, survivorId);
+            return patient == null ? def.lethality
+                : Math.Max(0f, def.lethality - patient.lethality_reduction);
         }
 
         /// <summary>True when the survivor is infected, past incubation, and not isolated.</summary>
@@ -702,12 +915,13 @@ ILog? log = null)
             }
         }
 
-        public void PurifyWater()
+        public void PurifyWater(int day = 0)
         {
             if (!_state.water_purified)
             {
                 _state.water_purified = true;
-                RaiseProtocol(DiseaseIds.EventProtocolApplied, "water purified — waterborne vectors blocked");
+                _state.water_purified_until_day = ArmExpiry(day, DiseaseVectorNames.Water);
+                RaiseProtocol(DiseaseIds.EventProtocolApplied, ArmDetail("water purified — waterborne vectors blocked", day, DiseaseVectorNames.Water));
             }
         }
 
@@ -716,16 +930,18 @@ ILog? log = null)
             if (_state.water_purified)
             {
                 _state.water_purified = false;
+                _state.water_purified_until_day = 0;
                 RaiseProtocol(DiseaseIds.EventProtocolReset, "water purification lapsed");
             }
         }
 
-        public void SealVents()
+        public void SealVents(int day = 0)
         {
             if (!_state.vents_sealed)
             {
                 _state.vents_sealed = true;
-                RaiseProtocol(DiseaseIds.EventProtocolApplied, "ventilators sealed — airborne vectors blocked");
+                _state.vents_sealed_until_day = ArmExpiry(day, DiseaseVectorNames.Air);
+                RaiseProtocol(DiseaseIds.EventProtocolApplied, ArmDetail("ventilators sealed — airborne vectors blocked", day, DiseaseVectorNames.Air));
             }
         }
 
@@ -734,16 +950,18 @@ ILog? log = null)
             if (_state.vents_sealed)
             {
                 _state.vents_sealed = false;
+                _state.vents_sealed_until_day = 0;
                 RaiseProtocol(DiseaseIds.EventProtocolReset, "vent seal breached");
             }
         }
 
-        public void SterilizeTools()
+        public void SterilizeTools(int day = 0)
         {
             if (!_state.tools_sterilized)
             {
                 _state.tools_sterilized = true;
-                RaiseProtocol(DiseaseIds.EventProtocolApplied, "surgical tools sterilised — bloodborne vectors blocked");
+                _state.tools_sterilized_until_day = ArmExpiry(day, DiseaseVectorNames.Blood);
+                RaiseProtocol(DiseaseIds.EventProtocolApplied, ArmDetail("surgical tools sterilised — bloodborne vectors blocked", day, DiseaseVectorNames.Blood));
             }
         }
 
@@ -752,16 +970,110 @@ ILog? log = null)
             if (_state.tools_sterilized)
             {
                 _state.tools_sterilized = false;
+                _state.tools_sterilized_until_day = 0;
                 RaiseProtocol(DiseaseIds.EventProtocolReset, "tool sterilisation spent");
             }
         }
 
-        public void SetAirFiltration(bool active)
+        public void SetAirFiltration(bool active, int day = 0)
         {
-            if (_state.air_filtration == active) return;
-            _state.air_filtration = active;
-            RaiseProtocol(active ? DiseaseIds.EventProtocolApplied : DiseaseIds.EventProtocolReset,
-                active ? "air filtration engaged — spore vectors blocked" : "air filtration offline");
+            if (!active)
+            {
+                if (!_state.air_filtration) return;
+                _state.air_filtration = false;
+                _state.air_filtration_until_day = 0;
+                RaiseProtocol(DiseaseIds.EventProtocolReset, "air filtration offline");
+                return;
+            }
+            // Re-engaging while already on silently refreshes the window — the
+            // equivalent of swapping the filters — without re-announcing it.
+            bool wasActive = _state.air_filtration;
+            _state.air_filtration = true;
+            _state.air_filtration_until_day = ArmExpiry(day, DiseaseVectorNames.Spore);
+            _state.air_filtration_until_day = ArmExpiry(day, DiseaseVectorNames.Spore);
+            if (!wasActive)
+                RaiseProtocol(DiseaseIds.EventProtocolApplied,
+                    ArmDetail("air filtration engaged — spore vectors blocked", day, DiseaseVectorNames.Spore));
+        }
+
+        // ----- Plan 60 / D4: protocol expiry -------------------------------------
+
+        /// <summary>Expiry day for a protocol applied on <paramref name="day"/>:
+        /// applied day + authored duration, or 0 when the catalog authors no
+        /// duration (protocol holds until manually disengaged).</summary>
+        private int ArmExpiry(int day, string vectorName)
+        {
+            int duration = _catalog.ProtocolDurationDays(vectorName);
+            if (day <= 0 || duration <= 0) return 0;
+            return day + duration;
+        }
+
+        private string ArmDetail(string appliedDetail, int day, string vectorName)
+        {
+            int duration = _catalog.ProtocolDurationDays(vectorName);
+            return duration > 0
+                ? appliedDetail + $" (holds ~{duration}d)"
+                : appliedDetail;
+        }
+
+        /// <summary>
+        /// Plan 60 / D4 — lapse every expired protocol. Called from the top of
+        /// <see cref="TickDaily"/> so a protocol cannot outlive its authored window
+        /// just because nobody remembered to reset it. Deterministic: pure day
+        /// arithmetic, no rolls, no RNG consumption.
+        /// </summary>
+        public void TickProtocolExpiry(int day)
+        {
+            if (day <= 0) return;
+
+            // Water carries the documented legacy path: a pre-D4 save has the flag
+            // on with no recorded expiry (until_day 0), so it arms on the first
+            // tick after restore and lapses one full window later. The other three
+            // use the same rule — a flag without an armed window re-arms now.
+            if (_state.water_purified)
+            {
+                if (_state.water_purified_until_day == 0)
+                    _state.water_purified_until_day = ArmExpiry(day, DiseaseVectorNames.Water);
+                else if (day >= _state.water_purified_until_day) ResetWaterPurification();
+            }
+            if (_state.vents_sealed)
+            {
+                if (_state.vents_sealed_until_day == 0)
+                    _state.vents_sealed_until_day = ArmExpiry(day, DiseaseVectorNames.Air);
+                else if (day >= _state.vents_sealed_until_day) ResetVentSeal();
+            }
+            if (_state.tools_sterilized)
+            {
+                if (_state.tools_sterilized_until_day == 0)
+                    _state.tools_sterilized_until_day = ArmExpiry(day, DiseaseVectorNames.Blood);
+                else if (day >= _state.tools_sterilized_until_day) ResetToolSterilization();
+            }
+            if (_state.air_filtration)
+            {
+                if (_state.air_filtration_until_day > 0 && day >= _state.air_filtration_until_day)
+                    SetAirFiltration(false, day);
+                else if (_state.air_filtration_until_day == 0)
+                    _state.air_filtration_until_day = ArmExpiry(day, DiseaseVectorNames.Spore);
+            }
+        }
+
+        /// <summary>Days remaining before the protocol lapses (≤ 0: not armed;
+        /// <see cref="int.MaxValue"/>: holds until manually disengaged).</summary>
+        public int ProtocolDaysRemaining(string vectorType, int today)
+        {
+            bool active;
+            int until;
+            switch (DiseaseVectorNames.Parse(vectorType))
+            {
+                case DiseaseVector.Water: active = _state.water_purified; until = _state.water_purified_until_day; break;
+                case DiseaseVector.Air: active = _state.vents_sealed; until = _state.vents_sealed_until_day; break;
+                case DiseaseVector.Blood: active = _state.tools_sterilized; until = _state.tools_sterilized_until_day; break;
+                case DiseaseVector.Spore: active = _state.air_filtration; until = _state.air_filtration_until_day; break;
+                default: return 0;
+            }
+            if (!active) return -1;
+            if (until <= 0) return int.MaxValue;
+            return Math.Max(0, until - today);
         }
 
         private void RaiseProtocol(string eventId, string detail)
@@ -803,6 +1115,12 @@ ILog? log = null)
                         days_sick = patient.days_sick,
                         quarantined = patient.quarantined,
                         contagious = contagious,
+                        // Plan 60 / D3 — treatment history is part of the clinical
+                        // picture, so the read model carries it instead of making the
+                        // surface guess.
+                        treatments_applied = patient.treatments_applied,
+                        effective_lethality = def != null
+                            ? Math.Max(0f, def.lethality - patient.lethality_reduction) : 0f,
                         contagion_risk_percent = def != null
                             ? (int)(Math.Min(1f, Math.Max(0f, def.infectivity)) * 100f) : 0
                     });
@@ -845,6 +1163,10 @@ ILog? log = null)
             _state.vents_sealed = saved.vents_sealed;
             _state.tools_sterilized = saved.tools_sterilized;
             _state.air_filtration = saved.air_filtration;
+            _state.water_purified_until_day = saved.water_purified_until_day;
+            _state.vents_sealed_until_day = saved.vents_sealed_until_day;
+            _state.tools_sterilized_until_day = saved.tools_sterilized_until_day;
+            _state.air_filtration_until_day = saved.air_filtration_until_day;
             _state.rngSeed = saved.rngSeed;
 
             // Deep copy so the caller's DTO (and the save envelope) is not
@@ -880,7 +1202,12 @@ ILog? log = null)
                                 survivor_id = p.survivor_id,
                                 infected_day = p.infected_day,
                                 days_sick = p.days_sick,
-                                quarantined = p.quarantined
+                                quarantined = p.quarantined,
+                                // Additive D3 fields: absent in a pre-D3 save, which
+                                // truthfully means "this patient was never treated".
+                                treatments_applied = p.treatments_applied,
+                                lethality_reduction = p.lethality_reduction,
+                                last_treatment_day = p.last_treatment_day
                             });
                         }
                     }

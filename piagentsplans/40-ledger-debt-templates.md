@@ -47,7 +47,7 @@ pressure with faction and reputation consequences.
    escalation_raid, escalation_faction_war, forgiveness (rare — faction absorbs the loss).
 5. Cross-reference: every `faction_*` id resolves; every `item_*` id exists; every
    `consequence_*` id resolves (TIER-1/TIER-2).
-6. Wire 3 debt templates into trade encounters (existing 13A economy) — traders offer credit
+6. Wire 3 debt templates into Plan 13 trade encounters — traders offer credit
    when the player can't pay upfront.
 7. Validate: `--data-integrity-selftest`; confirm a borrow → accrue interest → due → default
    or repay → consequence loop works in a headless boot; save round-trip for active debts.

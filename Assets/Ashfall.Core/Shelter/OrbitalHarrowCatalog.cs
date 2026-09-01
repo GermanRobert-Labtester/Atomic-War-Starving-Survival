@@ -12,6 +12,8 @@ namespace Ashfall.Core.Shelter
         public string name = string.Empty;
         public string description = string.Empty;
         public string severity = "Minor";
+        public string signal_type = "radar_anomaly";
+        public bool is_false_positive = false;
         public float impact_energy_mj = 10f;
         public int lead_time_days = 3;
         public int affected_cell_spread = 1;
@@ -19,6 +21,7 @@ namespace Ashfall.Core.Shelter
         public string salvage_yield_item_id = string.Empty;
         public int salvage_yield_quantity = 1;
         public string revealed_site_id = string.Empty;
+        public string radio_hook_text = string.Empty;
     }
 
     [Serializable]

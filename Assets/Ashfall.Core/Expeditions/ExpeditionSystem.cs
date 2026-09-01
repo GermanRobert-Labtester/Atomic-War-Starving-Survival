@@ -162,6 +162,7 @@ namespace Ashfall.Core.Expeditions
         public float encounterChancePerTick = 0.12f;
         public float baseStaminaDrainPerHour = 2.0f;
         public List<string> lootCategories = new List<string>();
+        public string scavenging_table_id = string.Empty;
     }
 
     /// <summary>
@@ -201,6 +202,8 @@ namespace Ashfall.Core.Expeditions
         /// base per-hour drain in ApplyStaminaDrain.
         /// </summary>
         private Func<string, float> _staminaDrainMultiplier;
+
+        public ScavengingTableCatalog? ScavengingCatalog { get; set; }
 
         public event Action<ExpeditionState> OnExpeditionStarted;
         public event Action<ExpeditionState> OnExpeditionTick;
@@ -926,20 +929,41 @@ namespace Ashfall.Core.Expeditions
             if (exp.isNightScavenge) chance += 0.1f;   // riskier, richer
             if (rng.NextDouble() >= chance) return;
 
+            var def = ExpeditionDefinitionRegistry.Get(exp.locationId);
+            string tableId = def?.scavenging_table_id ?? string.Empty;
+
+            if (ScavengingCatalog != null && !string.IsNullOrEmpty(tableId))
+            {
+                var rollResult = ScavengingCatalog.RollLoot(tableId, rng);
+                if (rollResult != null && !string.IsNullOrEmpty(rollResult.ItemId))
+                {
+                    const float itemWeight = 1.0f;
+                    float totalWeightToAdd = itemWeight * rollResult.Quantity;
+                    if (exp.currentWeightKg + totalWeightToAdd > exp.maxLootCapacityKg)
+                    {
+                        exp.outcomeText = "Capacity full; the find stays behind.";
+                        return;
+                    }
+
+                    AddLoot(exp, rollResult.ItemId, itemWeight, rollResult.Quantity);
+                    return;
+                }
+            }
+
             // Pick a category (or a generic item when the table is empty).
             string itemId = exp.loot.Count > 0
                 ? PickLootCategory(exp, rng)
                 : "scrap_metal";
             if (string.IsNullOrEmpty(itemId)) itemId = "scrap_metal";
 
-            const float itemWeight = 1.0f;
-            if (exp.currentWeightKg + itemWeight > exp.maxLootCapacityKg)
+            const float fallbackWeight = 1.0f;
+            if (exp.currentWeightKg + fallbackWeight > exp.maxLootCapacityKg)
             {
                 exp.outcomeText = "Capacity full; the find stays behind.";
                 return;
             }
 
-            AddLoot(exp, itemId, itemWeight);
+            AddLoot(exp, itemId, fallbackWeight, 1);
         }
 
         private static string PickLootCategory(ExpeditionState exp, ISeededRng rng)
@@ -955,20 +979,21 @@ namespace Ashfall.Core.Expeditions
             return exp.loot[existing].itemId;
         }
 
-        private void AddLoot(ExpeditionState exp, string itemId, float weightKg)
+        private void AddLoot(ExpeditionState exp, string itemId, float weightKg, int quantity = 1)
         {
+            if (quantity <= 0) quantity = 1;
             for (int i = 0; i < exp.loot.Count; i++)
             {
                 if (exp.loot[i].itemId == itemId)
                 {
-                    exp.loot[i].quantity++;
-                    exp.currentWeightKg += weightKg;
+                    exp.loot[i].quantity += quantity;
+                    exp.currentWeightKg += weightKg * quantity;
                     OnLootAdded?.Invoke(exp);
                     return;
                 }
             }
-            exp.loot.Add(new ExpeditionLootEntry { itemId = itemId, quantity = 1, weightKg = weightKg });
-            exp.currentWeightKg += weightKg;
+            exp.loot.Add(new ExpeditionLootEntry { itemId = itemId, quantity = quantity, weightKg = weightKg * quantity });
+            exp.currentWeightKg += weightKg * quantity;
             OnLootAdded?.Invoke(exp);
         }
 

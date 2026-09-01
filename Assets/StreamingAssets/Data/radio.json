@@ -8,7 +8,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Good morning, citizens. Today's weather: clear skies, high of 22°C. Remember to check your neighborhood radiation shelter assignment. Stay informed, stay safe."
+      "message": "Civil Register, 88.5. Good morning. Dust advisory in effect through midday \u2014 close your intake valves before you boil water. Sector nine water station opens at the sixth hour. Bring your card. The queue will close at capacity. That is all."
     },
     {
       "id": "radio_broadcast_02",
@@ -17,7 +17,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "The Ministry of Civil Defense reminds all households: test your iodine pills monthly. Replace expired filters in your home ventilation units. Preparedness is patriotism."
+      "message": "Civil Register, 88.5. A reminder from the Bureau of Dose Records: quarterly thyroid readings are mandatory for all registered adults. Unrecorded persons cannot claim medical priority. The clinic in the east annex opens tomorrow at dawn. Bring your dose card."
     },
     {
       "id": "radio_broadcast_03",
@@ -26,7 +26,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Community bulletin: The eastern district water purification station will undergo maintenance Tuesday. Bring your own containers. Boil all water before consumption."
+      "message": "Civil Register, 88.5. Community notice. The eastern purification cistern is under maintenance through the third day. Draw your water from the district canteens only. Boiling does not neutralize chemical runoff. Use the tablets. We have enough tablets."
     },
     {
       "id": "radio_broadcast_04",
@@ -35,7 +35,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "A message from the Bureau of Public Health: Annual thyroid screenings are now available at all district clinics. Early detection saves lives. Schedule yours today."
+      "message": "Civil Register, 88.5. The Registry of Persons is accepting updated residence cards at window four. If you have moved or taken in unregistered members, the window is open until the afternoon bell. Unregistered occupants are not covered under the grain allocation. This is a courtesy notice."
     },
     {
       "id": "radio_broadcast_05",
@@ -44,7 +44,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "This is the National Weather Service. A cold front is moving in from the north. Residents in exposed areas should secure outdoor equipment and check heating fuel reserves."
+      "message": "Civil Register, 88.5. A cold front is moving in from the north ridge. Temperature is expected to drop eight degrees by nightfall. All outer shelters should verify heating fuel and seal their exhaust dampers before dark. We do not expect this to be a long cold. We have been wrong before."
     },
     {
       "id": "radio_broadcast_06",
@@ -53,7 +53,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Attention all units. Border surveillance reports increased activity in sector 7. Maintain elevated alert status. All leave canceled until further notice."
+      "message": "Civil Register, 88.5. Notice from the district authority: movement through the eastern checkpoint is suspended pending clearance of a road obstruction. Travelers with Garrison transit papers should report to the south gate. All others wait. We will announce when the road is clear."
     },
     {
       "id": "radio_broadcast_07",
@@ -62,7 +62,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Logistics update: Fuel convoys to northern outposts depart at 0600 tomorrow. Escort teams report to motor pool at 0500. Standard radiation protocols in effect."
+      "message": "Civil Register, 88.5. Fuel convoy to the outer ring departs at first light. If you have a depot requisition stamped in the last ten days, report to the motor yard before the sixth hour. Unsigned manifests will not be loaded. The convoy does not make return trips."
     },
     {
       "id": "radio_broadcast_08",
@@ -71,7 +71,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Signal intelligence briefing: Intercepted communications suggest enemy forces are repositioning artillery in the eastern corridor. All forward units take cover."
+      "message": "Civil Register, 88.5. The census carriers report movement on the outer road that does not match registered caravan schedules. The district authority has been notified. Until clearance is issued, all private travel east of the viaduct is suspended. This is a safety measure."
     },
     {
       "id": "radio_broadcast_09",
@@ -80,7 +80,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Medical corps advisory: Radiation sickness cases at field hospital delta have doubled this week. Requesting additional medical supplies and personnel. Priority one."
+      "message": "Civil Register, 88.5. Radiation ward at the district infirmary is at capacity. Persons presenting with nausea, hair loss, and skin blistering are asked to report to the overflow tent at the outer yard rather than the main entrance. Triage will see you there. Please do not crowd the corridor."
     },
     {
       "id": "radio_broadcast_10",
@@ -89,7 +89,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Training notice: All reservists in zones 4 through 9 report for refresher training next Monday. Bring your protective gear and dosimeters. No exceptions."
+      "message": "Civil Register, 88.5. All unregistered persons residing in zones four through nine are asked to present themselves at the Bureau of Persons by the end of the seventh day. The Bureau does not arrest. It counts. But what it does not count, it cannot protect. Consider this carefully."
     },
     {
       "id": "radio_broadcast_11",
@@ -98,7 +98,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "EMERGENCY ALERT. Fallout detected in your area. Seek shelter immediately. Seal all windows and doors. Do not go outside. Repeat: do not go outside."
+      "message": "Garrison Forward Command, 102.1. EMERGENCY. Fallout plume detected over the industrial quarter. All persons in sectors three and five are ordered to shelter in place immediately. Seal your doors. Close your vents. Do not go to the water point. A Garrison unit is en route with clean water. Stay inside."
     },
     {
       "id": "radio_broadcast_12",
@@ -107,7 +107,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "This is not a test. Multiple detonations confirmed. All citizens proceed to designated shelters. Bring supplies for 72 hours. If you hear sirens, you have ten minutes."
+      "message": "Garrison Forward Command, 102.1. This is not a drill. Multiple detonations have been confirmed in the outer sectors. All non-essential personnel proceed to designated hardened shelter. Your shelter assignment is on your registry card. If you do not have a card, go to the gymnasium on the main road. Move now."
     },
     {
       "id": "radio_broadcast_13",
@@ -116,7 +116,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "Medical emergency broadcast. Radiation levels exceeding safe limits in districts 3, 5, and 8. Evacuation routes are marked. Follow the yellow lines. Do not use main roads."
+      "message": "Garrison Forward Command, 102.1. Radiation readings above threshold in the lower residential districts. Evacuation corridors are marked in yellow. Do not use the main boulevard \u2014 vehicles are blocking it. Use the canal path. If you have someone who cannot walk, mark your door with a red strip and a Garrison runner will come for them."
     },
     {
       "id": "radio_broadcast_14",
@@ -125,7 +125,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "Water contamination confirmed in sector 4 reservoir. Do not drink tap water. Use bottled or boiled water only. Purification tablets distributed at shelter entrances."
+      "message": "Garrison Forward Command, 102.1. Reservoir four is confirmed compromised. Do not drink the tap. Boiling is not sufficient for chemical contamination. Garrison distribution trucks are staging at the old market square with purification tablets. One pack per adult, half pack per child. Bring your card."
     },
     {
       "id": "radio_broadcast_15",
@@ -134,7 +134,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "Attention survivors. Rescue teams are en route to your location. Stay in your shelters. Do not attempt to leave. Repeat: do not leave your shelters. Help is coming."
+      "message": "Garrison Forward Command, 102.1. Attention to all sheltering in the outer ring: Garrison reclamation units are moving toward your position. They are on foot. ETA unknown. Stay in your shelter. Light a signal fire on your roof if you have medical emergencies. Do not come out to meet them \u2014 the route is not yet clear."
     },
     {
       "id": "radio_broadcast_16",
@@ -143,7 +143,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "Food distribution update. Rationing is now in effect. Report to your district center at 0800 tomorrow with your identification cards. One meal per person per day."
+      "message": "Garrison Forward Command, 102.1. Ration authority notice. Standard protocol is in effect. Report to your district center at first light with your identification card. The Garrison allocates one hot meal per adult per day and a dried supplement for children. Medical cases take priority at the dispensary window. No exceptions to card requirement."
     },
     {
       "id": "radio_broadcast_17",
@@ -152,7 +152,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "Health advisory: Symptoms of radiation sickness include nausea, fatigue, and hair loss. If you experience these symptoms, report to the medical station immediately. Take iodine pills as directed."
+      "message": "Garrison Forward Command, 102.1. Health notice. Radiation sickness presents as nausea, fatigue, bleeding gums, and hair loss within days of high exposure. If you have these symptoms, go to the medical station on the north concourse. Do not wait. Early intervention is the difference. Take your iodine tablets if you have them."
     },
     {
       "id": "radio_broadcast_18",
@@ -161,7 +161,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "Security bulletin. Looters have been reported in the southern districts. All citizens are advised to remain indoors after dark. Curfew is in effect from 2000 to 0600."
+      "message": "Garrison Forward Command, 102.1. Security notice. Unauthorized looting in the southern district has resulted in two civilian deaths. Garrison patrols are active after dark. Curfew is in effect from eight in the evening until six in the morning. The Garrison does not enjoy enforcing this. Comply and we will not need to."
     },
     {
       "id": "radio_broadcast_19",
@@ -170,7 +170,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "Weather update: A fallout storm is approaching from the west. Expected to arrive within six hours. Seal all shelters. Turn off ventilation systems. This is not a drill."
+      "message": "Garrison Forward Command, 102.1. Weather warning. A fallout storm front is tracking from the industrial corridor. Arrival estimated in five to seven hours. The Garrison requests all persons seal their shelters immediately. Turn off forced-air ventilation. Fill your water stores now, before the storm. This is not a drill."
     },
     {
       "id": "radio_broadcast_20",
@@ -179,7 +179,7 @@
       "maxDay": 45,
       "intelType": "Military",
       "confidence": 0.75,
-      "message": "Communication breakdown reported in eastern sectors. If you are in zones 6, 7, or 9, you may experience radio static. Alternate frequencies are 91.3 and 95.7."
+      "message": "Garrison Forward Command, 102.1. Relay disruption in the eastern sectors has interrupted civil communications. If you are in zones six, seven, or nine and cannot reach the main frequency, the Garrison is monitoring 91.3 and 95.7 as auxiliary channels. Your district officer knows the alternate procedures. Trust your local chain."
     },
     {
       "id": "radio_broadcast_21",
@@ -188,7 +188,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Warning: Artillery barrage detected. Impact zone: grid reference 47-82. All units in the area take cover immediately. Estimated duration: 20 minutes."
+      "message": "Field intercept, 95.4. Artillery impact zone: industrial quarter, grid reference quadrant forty-seven by eighty-two. All persons in that grid take cover and remain below ground. Garrison battery is returning fire. The exchange is expected to last twenty minutes. Do not leave shelter during the exchange."
     },
     {
       "id": "radio_broadcast_22",
@@ -197,7 +197,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Troop movement reported. Enemy convoy heading north on highway 12. Speed: 40 kph. Estimated arrival at checkpoint alpha: 1400 hours. All units prepare to engage."
+      "message": "Field intercept, 95.4. Vehicle column bearing north on the old highway. Identity unclear \u2014 no transponder codes detected. Speed suggests loaded trucks. Garrison checkpoint alpha has been notified. If you are traveling that road, stop and wait. Do not be the reason an ambush starts."
     },
     {
       "id": "radio_broadcast_23",
@@ -206,7 +206,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Air defense alert. Unidentified aircraft detected at bearing 270, range 50 kilometers. All units man anti-air positions. Prepare for possible strike."
+      "message": "Field intercept, 95.4. Unidentified aircraft sighted tracking west to east at low altitude. No identification markings visible from the ground. Garrison has logged the sighting. If you hear engine noise, stay indoors and away from windows. This is precautionary. We do not know whose it is."
     },
     {
       "id": "radio_broadcast_24",
@@ -215,7 +215,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Reconnaissance report. Enemy forces establishing forward operating base in sector 9. Estimated strength: battalion. Requesting air support. Priority: high."
+      "message": "Field intercept, 95.4. Reconnaissance indicates a fortified camp being established in sector nine near the old water treatment facility. Estimated numbers: thirty or more. The Garrison is classifying this as a contested zone pending identification. Scavenger and civilian transit through that area is advised against."
     },
     {
       "id": "radio_broadcast_25",
@@ -224,7 +224,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Medical evacuation request. Field hospital gamma taking radiation casualties. Need transport to rear area. Urgent. Repeat: urgent."
+      "message": "Field intercept, 95.4. Medical evacuation request transmitted from field station gamma. Multiple high-dose exposure casualties. Requesting clean transport with sealed cabin. If any caravan operator has a sealed vehicle and is within range of sector six, please respond on this frequency. Standard compensation applies."
     },
     {
       "id": "radio_broadcast_26",
@@ -233,7 +233,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Supply convoy ambush reported on route delta. Three vehicles disabled. Requesting immediate reinforcement. Enemy strength: unknown. Proceed with caution."
+      "message": "Field intercept, 95.4. Supply convoy ambushed on route delta between the viaduct and the eastern relay station. Three vehicles stopped, two incapacitated. The goods \u2014 medical, not food \u2014 are at risk. Garrison element responding. Civilians in the area are advised to leave the route until the situation resolves."
     },
     {
       "id": "radio_broadcast_27",
@@ -242,7 +242,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Chemical detection alert. Sensors indicate possible chemical agent in sector 3. All units don protective gear immediately. Await further instructions."
+      "message": "Field intercept, 95.4. Chemical residue detected near the old processing plant in sector three. Origin unknown \u2014 could be industrial runoff, could be deliberate release. Readings are elevated but not immediately lethal. Persons in that area: cover your airways, move upwind, report your location. Garrison is dispatching a hazmat pair."
     },
     {
       "id": "radio_broadcast_28",
@@ -251,7 +251,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Night patrol report. Contact with enemy reconnaissance team at 0200 hours. Two casualties. Enemy withdrew to the east. Pursuit not recommended due to radiation levels."
+      "message": "Field intercept, 95.4. Night patrol reported contact with an armed group at the east trench line at approximately two in the morning. Exchange of fire lasted several minutes. One friendly casualty, condition unknown. The group withdrew east. Garrison is not pursuing in the dark. Light-discipline rules apply until morning."
     },
     {
       "id": "radio_broadcast_29",
@@ -260,7 +260,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Artillery adjustment. Battery 7 correcting fire mission. Danger close. All friendly units clear the target area. Repeat: clear the target area."
+      "message": "Field intercept, 95.4. Fire mission in progress. Artillery battery seven adjusting coordinates. Danger close to the outer perimeter. All Garrison forward elements acknowledge and clear the target corridor. Civilian shelters near the east ridge wall \u2014 move to your secondary interior positions now."
     },
     {
       "id": "radio_broadcast_30",
@@ -269,7 +269,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Command update. Strategic situation deteriorating. All units prepare for possible withdrawal to secondary defensive line. Hold current positions until further notice."
+      "message": "Field intercept, 95.4. Strategic situation in the outer sectors has deteriorated faster than anticipated. All forward outposts are ordered to hold position and conserve ammunition. Do not initiate engagements. The chain of command is intact. Orders will come. Hold."
     },
     {
       "id": "radio_broadcast_31",
@@ -278,7 +278,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "This is an automated emergency broadcast. Radiation levels in this area exceed safe limits. Do not enter without protective equipment. Repeat: do not enter without protective equipment."
+      "message": "This is an automated station. Radiation monitoring post Kestrel-7. Current readings: 1.4 roentgens per hour at the probe. 1.4. This station transmits every six hours without human oversight. If readings are consistent, no personnel are en route. End."
     },
     {
       "id": "radio_broadcast_32",
@@ -287,7 +287,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "Emergency water purification instructions. Boil all water for ten minutes. Add three drops of bleach per liter. Let stand for thirty minutes before consumption."
+      "message": "This is an automated station. Emergency water protocol, broadcast seven. Boil all surface water for ten minutes minimum. Add purification compound at three drops per liter. Rest thirty minutes before consumption. Chemical contamination requires a second treatment cycle. This message repeats every four hours."
     },
     {
       "id": "radio_broadcast_33",
@@ -296,7 +296,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "This is an automated shelter locator signal. If you can hear this broadcast, you are within range of a designated fallout shelter. Proceed to the nearest marked entrance."
+      "message": "This is an automated station. Shelter locator signal, type seven. If you can hear this frequency, you are within three kilometers of a designated hardened shelter. Refer to your civil registration card, reverse side, for the sector map. The shelter is marked with a diagonal orange stripe. End of message."
     },
     {
       "id": "radio_broadcast_34",
@@ -305,7 +305,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "Medical advisory: Iodine pills effective only if taken before radiation exposure. Do not take iodine if already exposed. Seek medical attention immediately."
+      "message": "Automated medical advisory, loop four. Iodine tablets protect the thyroid only when taken before or immediately after exposure. They do not reverse damage. They do not treat sickness. If you are already symptomatic, iodine will not help you. Go to a medical station. Do not waste tablets on the already-ill when the unexposed still need them."
     },
     {
       "id": "radio_broadcast_35",
@@ -314,7 +314,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "Emergency food storage protocols. Canned goods safe for consumption if seals are intact. Discard any cans showing bulging, rust, or damage. When in doubt, do not consume."
+      "message": "Automated food safety advisory. Sealed cans with intact seams remain safe indefinitely. Discard cans that are swollen, weeping, or have opened seams. Do not taste to test. Do not smell to test. Botulism has no odor. The rule is simple: if the seal is broken, it is garbage. No exceptions."
     },
     {
       "id": "radio_broadcast_36",
@@ -323,7 +323,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "This is an automated radiation monitoring station. Current readings: [DATA CORRUPTED]. Next update in six hours. Stay tuned to this frequency for further information."
+      "message": "This is automated radiation monitoring post Kestrel-7. Sensor log \u2014 [DATA CORRUPTED BEYOND RECOVERY]. Sensor array is presumed intact. Next scheduled transmission in six hours. If this message has been received three times without a human response, the area is likely uninhabited. This station will continue to broadcast."
     },
     {
       "id": "radio_broadcast_37",
@@ -332,7 +332,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "Emergency shelter maintenance reminder. Check air filtration systems weekly. Replace filters when indicator shows red. Clean ventilation ducts monthly to prevent blockage."
+      "message": "Automated shelter maintenance reminder, cycle forty-three. Air filtration indicators must be checked weekly. Indicator red means replace. Indicator orange means within two weeks. Do not run a shelter on a failed filter in fallout conditions. The carbon element goes before the HEPA mesh. Log your replacement date."
     },
     {
       "id": "radio_broadcast_38",
@@ -341,7 +341,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "Automated weather warning. Nuclear winter conditions persist. Average temperature: minus 15°C. Ensure adequate heating fuel. Conserve energy. Ration food supplies."
+      "message": "Automated weather station, loop twelve. Nuclear winter conditions persist. Average surface temperature this cycle: minus eleven degrees. Expect extended ice coverage through the northern approach roads. Minimum heating fuel per person per day: two point four kilograms of coal equivalent. Conserve. The cold does not have a schedule."
     },
     {
       "id": "radio_broadcast_39",
@@ -350,7 +350,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "This is an automated survivor locator signal. If you are hearing this broadcast, transmit your location on frequency 99.0. Rescue teams will attempt contact."
+      "message": "This is an automated survivor locator signal. If you are hearing this broadcast, transmit your location on 99.0. This station logs transmissions automatically. Rescue teams are dispatched when resources and security allow. Transmission does not guarantee rescue. But silence guarantees nothing. Transmit."
     },
     {
       "id": "radio_broadcast_40",
@@ -359,7 +359,7 @@
       "maxDay": 120,
       "intelType": "NumbersStation",
       "confidence": 0.4,
-      "message": "Emergency medical protocol. For radiation sickness: rest, hydration, iodine if available. Seek medical shelter immediately. Do not attempt to treat severe cases without training."
+      "message": "Automated medical protocol, loop eight. Radiation sickness management without clinical support: rest, oral hydration, and isolation of vomiting persons from food preparation areas. Potassium iodide if pre-exposure. Prussian blue if ingested contamination is suspected and the compound is available. This station does not have medical supplies to distribute."
     },
     {
       "id": "radio_broadcast_41",
@@ -368,7 +368,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "Seven. Three. Nine. One. Five. Eight. Two. Four. Six. Zero. Seven. Three. Nine. One. Five. Eight. Two. Four. Six. Zero.\" [Repeats for 10 minutes]"
+      "message": "Seven. Three. Nine. One. Five. Eight. Two. Four. Six. Zero. Seven. Three. Nine. One. Five. Eight. Two. Four. Six. Zero. [The sequence repeats without deviation for approximately eleven minutes. No voice identifies the source. The rhythm is precise enough to be mechanical, but the breath between groups is unmistakably human.]"
     },
     {
       "id": "radio_broadcast_42",
@@ -377,7 +377,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "Alpha. Nine. Nine. Bravo. Seven. Three. Charlie. One. Five. Delta. Eight. Two. Echo. Four. Six. Foxtrot. Zero. Seven. Golf. Three. Hotel. Nine.\" [Encoded transmission]"
+      "message": "Alpha. Nine. Nine. Bravo. Seven. Three. Charlie. One. Five. Delta. Eight. Two. Echo. Four. Six. Foxtrot. Zero. Seven. Golf. Three. Hotel. Nine. [Encoded phonetic transmission. No preamble. No callsign. The voice is calm and unhurried, as if reading a familiar text. It begins again at the end without pause.]"
     },
     {
       "id": "radio_broadcast_43",
@@ -386,7 +386,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "Niner. Niner. Niner. Break. Break. Break. This is Station Echo. Coordinates: Four-Seven. Eight-Two. Supply cache confirmed. Repeat: supply cache confirmed."
+      "message": "Niner. Niner. Niner. Break. Break. Break. Station Echo to whoever is copying. Cache confirmed at grid forty-seven by eighty-two. It is dry, it is sealed, and it is inside the derelict grain elevator. The padlock is the old kind. Bring a number four pick or a pry bar. Good luck out there."
     },
     {
       "id": "radio_broadcast_44",
@@ -395,7 +395,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "One. One. Two. Three. Five. Eight. Thirteen. Twenty-one. Thirty-four. Fifty-five. Eighty-nine. One-forty-four.\" [Fibonacci sequence, possibly encoded coordinates]"
+      "message": "One. One. Two. Three. Five. Eight. Thirteen. Twenty-one. Thirty-four. Fifty-five. Eighty-nine. One-forty-four. [The Fibonacci sequence, broadcast without commentary. After the last number, a long pause. Then, quietly, the same voice: 'Still here.' And the sequence begins again.]"
     },
     {
       "id": "radio_broadcast_45",
@@ -404,7 +404,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "Mike. Romeo. Kilo. Seven. Seven. Three. Lima. November. Papa. Two. Two. Nine. Oscar. Quebec. Romeo. Five. Five. One.\" [military phonetic alphabet, encoded message]"
+      "message": "Mike. Romeo. Kilo. Seven. Seven. Three. Lima. November. Papa. Two. Two. Nine. Oscar. Quebec. Romeo. Five. Five. One. [Military phonetic sequence. The voice is young \u2014 possibly a teenager who learned procedure from an older adult. It skips a syllable on 'Quebec' and corrects itself without acknowledgment. The sequence continues regardless.]"
     },
     {
       "id": "radio_broadcast_46",
@@ -413,7 +413,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "Is anyone out there? This is... this is Maria. I'm in the old subway station on 5th street. I have water, but I need medicine. My daughter is sick. Please. If you can hear this..."
+      "message": "Is anyone out there? This is \u2014 my name is Sela. I'm in the old water board offices on the south road. I have two other people with me. One of them is sick \u2014 the throwing-up kind, not the radiation kind, I think. We have water, we have a little food. What we don't have is medicine. If you can hear this, please \u2014 we're in the building with the blue tiles. The ones that aren't broken."
     },
     {
       "id": "radio_broadcast_47",
@@ -422,7 +422,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "Warning to all travelers. The highway north of the city is a death trap. Radiation levels off the charts. I lost two people there. Don't go north. Repeat: don't go north."
+      "message": "Warning. This is a personal warning from someone who went north and came back, which not everyone did. The road past the cooling towers is gone. There is no road. There is rubble and hot ash and the dosimeter pegs in thirty seconds flat. We lost Dani there. I am telling you so you do not lose yours. Do not go north. Find another way or do not go at all."
     },
     {
       "id": "radio_broadcast_48",
@@ -431,7 +431,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "This is the Westside Collective. We have established a safe zone in the old library building. We have food, water, medical supplies. All survivors welcome. Frequency 91.3 for coordination."
+      "message": "This is the Westside Collective on 101.3. We have established a working community in the old library building at the edge of the residential quarter. We have food, water through a slow filter, and a doctor \u2014 a real one, the bone kind, not the feeling-better kind. All survivors are welcome. We have space. We are trying to be the thing that holds. Find us."
     },
     {
       "id": "radio_broadcast_49",
@@ -440,7 +440,7 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "Day 47. Still alive. Found an unlooted pharmacy in sector 6. Lots of medical supplies. But the radiation... my dosimeter won't stop clicking. I don't know how much longer..."
+      "message": "Day forty-seven. Still transmitting. Found an unlooted pharmacy in sector six \u2014 the whole back stockroom was sealed behind a collapsed shelf. Antibiotic packs, burn dressings, two working blood pressure cuffs. I took what I could carry and marked the door with a red X so others can find the rest. The dosimeter is clicking more than it should. I am not thinking about that right now."
     },
     {
       "id": "radio_broadcast_50",
@@ -449,7 +449,142 @@
       "maxDay": 120,
       "intelType": "Survivor",
       "confidence": 0.5,
-      "message": "To whoever is broadcasting on 102.1: We know you're there. We've been listening. If you're military, we need help. If you're not... who's running this frequency?"
+      "message": "To whoever is running 102.1 \u2014 we hear you. Every morning we hear you, clear as anything. We do not know if you are Garrison or something else. We are not asking you to identify yourself. We are asking you to hear us back. We have forty-three people in a converted freight depot and no way to reach the city. If you can, please respond on this frequency. We will be listening all day."
+    },
+    {
+      "id": "radio_broadcast_relay_count",
+      "frequency": 104.5,
+      "minDay": 5,
+      "maxDay": 365,
+      "intelType": "NumbersStation",
+      "confidence": 0.95,
+      "message": "Eight-two-six. Nine-zero-one. Delta-seven. Sequence: four, four, one, nine, two. Standby for encrypted coordinate handshake. [A secondary tone pulse follows \u2014 three long, two short, three long. The tone sequence holds for forty seconds, then cuts to static without announcement.]"
+    },
+    {
+      "id": "radio_broadcast_winter_ledger",
+      "frequency": 94.2,
+      "minDay": 10,
+      "maxDay": 365,
+      "intelType": "LogisticsStream",
+      "confidence": 0.9,
+      "message": "Sub-tier reserve manifest check, sector nine, ledger volume four. Rations logged at four hundred units. Filter stock: eighty cartridges. Medical consignments: sealed and locked under the quartermaster's witness signature. Awaiting authorized key from the district office. This channel is encrypted. If you are not the quartermaster and you are hearing this clearly, report the breach."
+    },
+    {
+      "id": "radio_broadcast_last_rotation",
+      "frequency": 107.8,
+      "minDay": 20,
+      "maxDay": 365,
+      "intelType": "MilitaryDeadHand",
+      "confidence": 1.0,
+      "message": "Command cadre rotation. Terminal alert. All outposts acknowledge. Dead-drop shelter protocol is active at waypoint November. The microfilm index is the third drawer from the bottom. This message has been transmitting for \u2014 [corrupted timestamp]. If the command cadre is alive, they should have already authenticated. If they have not authenticated, proceed under Standing Continuity Order Seven."
+    },
+    {
+      "id": "radio_broadcast_eco_migration_bulletin",
+      "frequency": 88.5,
+      "minDay": 110,
+      "maxDay": 179,
+      "intelType": "Civilian",
+      "confidence": 0.6,
+      "message": "Wildlife net, 88.5. Thaw run underway \u2014 grazers coming down off the high ground in strings of six and more. If you're running snares, run them now; the window closes when the bloom starts. Water crossings at dusk, mind your footing."
+    },
+    {
+      "id": "radio_broadcast_eco_fish_run",
+      "frequency": 96.2,
+      "minDay": 125,
+      "maxDay": 200,
+      "intelType": "Civilian",
+      "confidence": 0.8,
+      "message": "River net, 96.1. The water's awake \u2014 mirror carp moving down the estuary in numbers nobody has logged since before. Wet ground only, and the gulls will show you where. Salt what you can't eat. The ice takes it all back soon enough."
+    },
+    {
+      "id": "radio_broadcast_eco_swarm_warning",
+      "frequency": 104.2,
+      "minDay": 180,
+      "maxDay": 239,
+      "intelType": "Agricultural",
+      "confidence": 0.75,
+      "message": "Station notice for the lowlands. Insect front moving in from the floodplain \u2014 cutworm and moth brood riding the damp air. Screen your trays, seal your grain, pick your rows by lamplight. This one eats before it flies on."
+    },
+    {
+      "id": "radio_broadcast_eco_predator_warning",
+      "frequency": 88.5,
+      "minDay": 60,
+      "maxDay": 119,
+      "intelType": "Survival",
+      "confidence": 0.7,
+      "message": "Advisory, 88.5. Game counts are down across the winter range and the predators know it. Wolves working the fence lines after dark. Keep the kill meat off the perimeter and your stocks latched."
+    },
+    {
+      "id": "radio_broadcast_distress_trapped_mechanic",
+      "frequency": 88.3,
+      "minDay": 5,
+      "maxDay": 45,
+      "intelType": "Distress",
+      "confidence": 0.6,
+      "message": "Distress signal detected on 88.3 MHz. Fragmentary voice transmission. Female voice, signs of distress. References rail depot and trapped position. Signal strength increasing over three-day window."
+    },
+    {
+      "id": "radio_broadcast_distress_injured_trader",
+      "frequency": 156.8,
+      "minDay": 10,
+      "maxDay": 50,
+      "intelType": "Distress",
+      "confidence": 0.65,
+      "message": "Distress signal detected on 156.8 MHz. Male voice, signs of injury. References route 6 and burned gas station. Mentions trade goods. Two-day clarity window."
+    },
+    {
+      "id": "radio_broadcast_distress_repeating_beacon",
+      "frequency": 129.6,
+      "minDay": 15,
+      "maxDay": 60,
+      "intelType": "Distress",
+      "confidence": 0.4,
+      "message": "Automated signal detected on 129.6 MHz. Mechanical tone repeating every thirty seconds. No voice. Five-day clarity window. Source unknown."
+    },
+    {
+      "id": "radio_broadcast_distress_raider_lure",
+      "frequency": 192.4,
+      "minDay": 8,
+      "maxDay": 40,
+      "intelType": "Distress",
+      "confidence": 0.5,
+      "message": "Signal detected on 192.4 MHz. Mentions fuel cache and unguarded supplies. Two-day clarity window. Signal pattern suspicious — no variation in transmission."
+    },
+    {
+      "id": "radio_broadcast_distress_false_flag_settlement",
+      "frequency": 333.6,
+      "minDay": 20,
+      "maxDay": 60,
+      "intelType": "Distress",
+      "confidence": 0.55,
+      "message": "Distress signal detected on 333.6 MHz. Claims to be from Grange Hall settlement. Three-day clarity window. Voice pattern inconsistent with known settlement members."
+    },
+    {
+      "id": "radio_broadcast_distress_encrypted_military",
+      "frequency": 701.3,
+      "minDay": 25,
+      "maxDay": 70,
+      "intelType": "Distress",
+      "confidence": 0.3,
+      "message": "Encrypted burst detected on 701.3 MHz. Military encryption pattern. Five-day clarity window. Contains coded coordinates and authentication sequence."
+    },
+    {
+      "id": "radio_broadcast_distress_child_school",
+      "frequency": 812.5,
+      "minDay": 12,
+      "maxDay": 45,
+      "intelType": "Distress",
+      "confidence": 0.7,
+      "message": "Distress signal detected on 812.5 MHz. Child's voice. References school and collapsed ceiling. Two-day clarity window. High urgency."
+    },
+    {
+      "id": "radio_broadcast_distress_military_patrol",
+      "frequency": 901.2,
+      "minDay": 18,
+      "maxDay": 55,
+      "intelType": "Distress",
+      "confidence": 0.6,
+      "message": "Military distress signal detected on 901.2 MHz. Sergeant identification, references patrol six and ambush. Three-day clarity window. Mentions wounded and low ammunition."
     }
   ]
 }

@@ -101,4 +101,4 @@ validator before authoring.
   unknown condition.
 - Plan 69 (grave epitaphs) — autopsy cause-of-death links to epitaph cause.
 - Plan 55 (crafting recipes) — autopsy tools may need crafting recipes.
-- Existing 27B (body and mind) — autopsy is the medical-investigation layer.
+- Plan 27's consent-aware casework layer consumes autopsy findings.

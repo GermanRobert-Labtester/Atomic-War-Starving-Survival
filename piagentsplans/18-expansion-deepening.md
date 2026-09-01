@@ -25,7 +25,7 @@ ice-road systems.
 2. Map the 38 holdfast locations to roles (settlement, ice-road stop, brine works, hazard) to find quest anchor points.
 3. Author 4 ice-road quests (open the road before thaw, clear a blockage, escort a salt convoy, race a rival).
 4. Author 4 census-claim quests (verify a claimant, expose a fraud, defend a legitimate claim, a disputed inheritance).
-5. Author 4 brine-water quests (a brine-sickness outbreak, a salter's strike, a contaminated intake, a water-rights dispute) — ties to `BrineWaterSystem` + 09A waterborne disease.
+5. Author 4 brine-water quests (a brine-sickness outbreak, a salter's strike, a contaminated intake, a water-rights dispute) — ties to `BrineWaterSystem` + Plan 112/09A waterborne disease.
 6. Author 2 settlement-crisis quests using `holdfast_flavor.json` factions.
 7. Wire quest rewards to real `holdfast_items.json` / standing; no invented rewards.
 8. Validate ids; data-integrity selftest; dialog-graph lint for quest flags.

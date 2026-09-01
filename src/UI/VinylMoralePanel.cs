@@ -43,6 +43,10 @@ namespace AtomicWar.GodotApp.UI
 
 
 
+        private OptionButton _recordSelector = null!;
+        private Label _recordMetadata = null!;
+        private string _selectedRecordId = string.Empty;
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -65,16 +69,42 @@ namespace AtomicWar.GodotApp.UI
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
+            _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            var selectHeader = AshfallUiHelpers.MakeSectionHeader("PRE-WAR ALBUM SELECTION");
+            _contentStack.AddChild(selectHeader);
+
+            var selectRow = new HBoxContainer();
+            selectRow.AddThemeConstantOverride("separation", 10);
+            var selLabel = AshfallUiHelpers.MakeBody("Select Album:");
+            selectRow.AddChild(selLabel);
+
+            _recordSelector = new OptionButton { CustomMinimumSize = new Vector2(350, 36) };
+            _recordSelector.ItemSelected += idx =>
+            {
+                if (_host != null && idx >= 0 && idx < _host.System.State.ownedRecordIds.Count)
+                {
+                    _selectedRecordId = _host.System.State.ownedRecordIds[(int)idx];
+                    UpdateRecordPreview();
+                }
+            };
+            selectRow.AddChild(_recordSelector);
+            _contentStack.AddChild(selectRow);
+
+            _recordMetadata = new Label();
+            _recordMetadata.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _recordMetadata.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
+            _contentStack.AddChild(_recordMetadata);
+
             var buttonRow = new HBoxContainer();
             buttonRow.AddThemeConstantOverride("separation", 10);
 
-            _playBtn = new Button { Text = "Play Pre-War Jazz Album", CustomMinimumSize = new Vector2(180, 36) };
+            _playBtn = new Button { Text = "Play Selected Album", CustomMinimumSize = new Vector2(180, 36) };
             _playBtn.Pressed += () =>
             {
-                if (_host != null)
+                if (_host != null && !string.IsNullOrEmpty(_selectedRecordId))
                 {
-                    _host.AcquireRecord("record_04_midnight_in_moscow_jazz_octet");
-                    _host.PlayRecord("record_04_midnight_in_moscow_jazz_octet");
+                    _host.PlayRecord(_selectedRecordId);
                 }
             };
             buttonRow.AddChild(_playBtn);
@@ -109,12 +139,60 @@ namespace AtomicWar.GodotApp.UI
             if (_detailText != null)
             {
                 string broadcastLine = broadcasting
-                    ? $"Cultural Broadcast: {s.lastBroadcastRecordId} (Day {s.lastBroadcastDay}, {s.lastBroadcastSignalStrength*100f:F0}% signal, {s.broadcastCount} total) — Wanderers may hear this. 150W transmitter load."
+                    ? $"Cultural Broadcast: {s.lastBroadcastRecordId} (Day {s.lastBroadcastDay}, {s.lastBroadcastSignalStrength * 100f:F0}% signal, {s.broadcastCount} total) — Wanderers may hear this. 150W transmitter load."
                     : "Cultural Broadcast: IDLE (rare vinyl required — classical/jazz/symphony or ≥4 morale bonus)";
                 _detailText.Text = $"Turntable State: {(_host.System.IsPlaying ? "ACTIVE" : "STANDBY")} | Power: {(broadcasting ? "150W TX LOAD" : "0W")}\n" +
                                    $"Total Plays: {s.totalPlays} | Last Played: {s.lastPlayedId} (Day {s.lastPlayedDay})\n" +
                                    $"{broadcastLine}\n" +
                                    $"Last Event: {_host.LastEvent}";
+            }
+
+            // Populate selector with owned records deterministically
+            if (_recordSelector != null)
+            {
+                _recordSelector.Clear();
+                if (s.ownedRecordIds.Count == 0)
+                {
+                    _recordSelector.AddItem("(No records acquired)", 0);
+                    _recordSelector.Disabled = true;
+                    _playBtn.Disabled = true;
+                    _recordMetadata.Text = "NO VINYL RECORDS ACQUIRED — Scavenge ruins, search pre-war apartments, or trade with caravans to discover albums.";
+                }
+                else
+                {
+                    _recordSelector.Disabled = false;
+                    _playBtn.Disabled = false;
+                    int selectedIdx = 0;
+                    for (int i = 0; i < s.ownedRecordIds.Count; i++)
+                    {
+                        string rid = s.ownedRecordIds[i];
+                        var def = _host.System.GetRecord(rid);
+                        string label = def != null ? $"{def.display_name} [{def.genre}] (+{def.morale_daily_bonus:F0} Morale)" : rid;
+                        _recordSelector.AddItem(label, i);
+                        if (rid == _selectedRecordId || (string.IsNullOrEmpty(_selectedRecordId) && i == 0))
+                        {
+                            selectedIdx = i;
+                            _selectedRecordId = rid;
+                        }
+                    }
+                    _recordSelector.Selected = selectedIdx;
+                    UpdateRecordPreview();
+                }
+            }
+        }
+
+        private void UpdateRecordPreview()
+        {
+            if (_host == null || string.IsNullOrEmpty(_selectedRecordId) || _recordMetadata == null) return;
+            var def = _host.System.GetRecord(_selectedRecordId);
+            if (def != null)
+            {
+                _recordMetadata.Text = $"Selected: {def.display_name} | Genre: {def.genre} | Daily Morale: +{def.morale_daily_bonus:F0}\n" +
+                                       $"Notes: {def.description}";
+            }
+            else
+            {
+                _recordMetadata.Text = $"Selected ID: {_selectedRecordId}";
             }
         }
 

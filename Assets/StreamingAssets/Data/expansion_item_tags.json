@@ -430,6 +430,217 @@
       "tags": [
         "final_wish_teaching"
       ]
+    },
+    {
+      "item_id": "recipe_card",
+      "tags": [
+        "phantom_correspondence",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "recipe_tin",
+      "tags": [
+        "phantom_personal_item",
+        "heirloom",
+        "personal_keepsake_candidate",
+        "memorial_wall_entry"
+      ]
+    },
+    {
+      "item_id": "childs_mitten",
+      "tags": [
+        "phantom_childhood",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "childs_red_scarf",
+      "tags": [
+        "phantom_personal_item",
+        "heirloom",
+        "personal_keepsake_candidate",
+        "memorial_wall_entry"
+      ]
+    },
+    {
+      "item_id": "engraved_lighter",
+      "tags": [
+        "phantom_personal_item",
+        "heirloom",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "tarnished_medal",
+      "tags": [
+        "phantom_military",
+        "personal_keepsake_candidate",
+        "memorial_wall_entry"
+      ]
+    },
+    {
+      "item_id": "pocket_notebook",
+      "tags": [
+        "phantom_correspondence",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "family_apartment_key",
+      "tags": [
+        "phantom_personal_item",
+        "heirloom",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "foreman_whistle",
+      "tags": [
+        "phantom_work_tool",
+        "heirloom",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "nurse_fob_watch",
+      "tags": [
+        "phantom_work_tool",
+        "phantom_medical",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "machinist_caliper",
+      "tags": [
+        "phantom_work_tool",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "engineers_slide_rule",
+      "tags": [
+        "phantom_work_tool",
+        "heirloom",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "miners_tag",
+      "tags": [
+        "phantom_work_tool",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "farm_ledger",
+      "tags": [
+        "phantom_correspondence",
+        "phantom_work_tool",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "tram_punch",
+      "tags": [
+        "phantom_work_tool",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "mechanic_gloves",
+      "tags": [
+        "phantom_work_tool",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "teachers_stamp",
+      "tags": [
+        "phantom_work_tool",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "bus_ticket",
+      "tags": [
+        "phantom_ordinary_object",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "shopping_list",
+      "tags": [
+        "phantom_ordinary_object",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "enamel_mug",
+      "tags": [
+        "phantom_ordinary_object",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "cheap_comb",
+      "tags": [
+        "phantom_ordinary_object",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "matchbook",
+      "tags": [
+        "phantom_ordinary_object",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "creased_receipt",
+      "tags": [
+        "phantom_ordinary_object",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "keyring_charm",
+      "tags": [
+        "phantom_ordinary_object",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "midwife_satchel",
+      "tags": [
+        "phantom_medical",
+        "heirloom",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "lighthouse_logbook",
+      "tags": [
+        "phantom_correspondence",
+        "heirloom",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "train_ticket_book",
+      "tags": [
+        "phantom_correspondence",
+        "heirloom",
+        "personal_keepsake_candidate"
+      ]
+    },
+    {
+      "item_id": "civil_defense_radio",
+      "tags": [
+        "phantom_personal_item",
+        "heirloom",
+        "personal_keepsake_candidate"
+      ]
     }
   ]
 }

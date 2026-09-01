@@ -234,7 +234,7 @@
     },
     {
       "id": "env_meridian_compact_poster",
-      "location": "settlement_wall",
+      "location": "compound_wall",
       "text": "THE MERIDIAN COMPACT IS HERE TO HELP. WE OFFER MEDICAL AID, FOOD, AND SHELTER. COME TO US IF YOU NEED HELP. WE WILL NOT TURN YOU AWAY.",
       "type": "announcement",
       "tags": [
@@ -300,7 +300,7 @@
     },
     {
       "id": "env_meridian_compact_offer",
-      "location": "settlement_center",
+      "location": "commune_center",
       "text": "THE MERIDIAN COMPACT OFFERS TECHNOLOGY IN EXCHANGE FOR RESOURCES. BRING US FOOD, MEDICINE, OR FUEL. WE WILL GIVE YOU BLUEPRINTS AND DEVICES IN RETURN.",
       "type": "announcement",
       "tags": [
@@ -355,7 +355,7 @@
     },
     {
       "id": "env_meridian_compact_warning",
-      "location": "settlement_center",
+      "location": "commune_center",
       "text": "WARNING: THE MERIDIAN COMPACT IS NOT RESPONSIBLE FOR ANY INJURIES OR DEATHS. PROCEED WITH CAUTION.",
       "type": "warning",
       "tags": [

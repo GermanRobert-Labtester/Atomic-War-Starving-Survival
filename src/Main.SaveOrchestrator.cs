@@ -185,6 +185,8 @@ namespace AtomicWar.GodotApp
             SetupExpandedShelterSystems();
             SetupFactionBranch();
             SetupOnboarding();
+            SetupEcologicalInfestation();
+            SetupFieldGuide();
 
             UpdateHud();
         }
@@ -270,7 +272,10 @@ namespace AtomicWar.GodotApp
                 SavePowerGrid();
                 SaveMedicalWard();
                 SaveMemorial();
+                SaveMemorial();
                 SaveOnboarding();
+                SaveEcologicalInfestation();
+                SaveFieldGuide();
                 // ── Audit-PR triad repairs ───────────────────────────────
                 SaveSilentFoundry();
                 SaveDisease();

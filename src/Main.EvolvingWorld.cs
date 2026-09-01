@@ -51,6 +51,9 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Wildlife pressure on the home sector feeds the snare lines: empty
         /// ground halves the authored catch rate, a booming sector lifts it.
+        /// Plan 28: the day's Plan 19 season window paces abundance — a fish
+        /// run in the thaw, winter-empty ranges in the deep freeze — composed
+        /// with the live sector pack population, clamped to the same band.
         /// </summary>
         private void RefreshTrappingDensity()
         {
@@ -58,9 +61,44 @@ namespace AtomicWar.GodotApp
             SetupWildlifeTrappingIfBound();
             string sector = _world.ShelterSectorId;
             int pop = string.IsNullOrEmpty(sector) ? 0 : _world.Wildlife.GetSectorPackPopulation(sector);
-            _homeTrappingDensity = Math.Clamp(0.5f + pop * 0.1f, 0.4f, 1.5f);
+            float seasonal = WildlifeSeasonalCalendar.SectorAbundanceFactor(
+                _world.Profile, _simDay, sector, _world.Wildlife?.State.packs);
+            _homeTrappingDensity = Math.Clamp((0.5f + pop * 0.1f) * seasonal, 0.4f, 1.5f);
             if (_wildlifeTrapping != null)
+            {
                 _wildlifeTrapping.WildlifeDensityMultiplier = _homeTrappingDensity;
+
+                // Plan 36 Closure II: build live season/migration context
+                var ctx = new WildlifeSelectionContext();
+                var seasonWindow = WildlifeSeasonalCalendar.SeasonWindowForDay(_world.Profile, _simDay);
+                if (seasonWindow != null)
+                    ctx.SeasonWindowId = seasonWindow.id;
+
+                // Populate migration species present in shelter sector
+                if (_world.Wildlife?.State.packs != null && !string.IsNullOrEmpty(sector))
+                {
+                    foreach (var pack in _world.Wildlife.State.packs)
+                    {
+                        if (pack != null && string.Equals(pack.currentSectorId, sector, StringComparison.Ordinal)
+                            && !string.IsNullOrEmpty(pack.speciesId))
+                            ctx.PresentMigrationSpecies.Add(pack.speciesId);
+                    }
+                }
+
+                // Populate abundance factors for catalog prey species
+                if (_wildlifeTrapping.Catalog != null)
+                {
+                    foreach (var prey in _wildlifeTrapping.Catalog.Prey.Values)
+                    {
+                        if (string.IsNullOrEmpty(prey.migrationSpeciesId)) continue;
+                        var archetype = WildlifeSeasonalCalendar.ArchetypeOf(prey.migrationSpeciesId);
+                        float abundance = WildlifeSeasonalCalendar.AbundanceFactor(seasonWindow, archetype);
+                        ctx.AbundanceFactors[prey.speciesId] = abundance;
+                    }
+                }
+
+                _wildlifeTrapping.System.SetSelectionContext(ctx);
+            }
         }
 
         private void SetupWildlifeTrappingIfBound()

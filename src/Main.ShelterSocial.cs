@@ -72,7 +72,7 @@ namespace AtomicWar.GodotApp
             var rtSys = new RegionalTreatySystem(new GodotLog());
             rtSys.RestoreState(rtState);
             // Plan 25 (25G.7): feed the canonical narrative treaty corpus into the
-            // mechanical system - until now the host never called LoadCatalog, so
+            // mechanical system — until now the host never called LoadCatalog, so
             // Propose/Ratify had nothing to act on in production.
             if (!string.IsNullOrEmpty(_dataDir))
             {
@@ -171,8 +171,39 @@ namespace AtomicWar.GodotApp
             SetupCampaignDay();
             var wtrapState = WildlifeTrappingSaveStore.TryLoad() ?? new WildlifeTrappingState();
             var wtrapSys = new WildlifeTrappingSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng, new GodotLog());
+            // Plan 36: load trapping catalog and register prey/bait definitions
+            WildlifeTrappingCatalog? trapCatalog = null;
+            if (!string.IsNullOrEmpty(_dataDir))
+            {
+                var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
+                var json = new SystemTextJsonSerializer();
+                trapCatalog = WildlifeTrappingCatalogLoader.Load(_dataDir, fileIO, json, new GodotLog());
+                if (trapCatalog != null) trapCatalog.RegisterWith(wtrapSys);
+            }
             wtrapSys.RestoreState(wtrapState);
             _wildlifeTrapping = new WildlifeTrappingHostSession(wtrapSys);
+            _wildlifeTrapping.Catalog = trapCatalog;
+            _wildlifeTrapping.Inventory = _inventory;
+            // Plan 36 Closure II: wire disease/contamination delegates to live authorities
+            _wildlifeTrapping.ApplyDisease = (survivorId, diseaseId, day) =>
+            {
+                if (_disease == null) SetupDisease();
+                _disease?.Engine?.Infect(survivorId, diseaseId, day);
+            };
+            _wildlifeTrapping.ApplyContamination = (survivorId, dose) =>
+            {
+                if (_survivors != null && dose > 0f)
+                    _survivors.ExposeToZone(survivorId, dose);
+            };
+            // Plan 28 Phase 3 (overhunt): snare catches thin the local packs
+            // through the migration system's bounded harvest pressure.
+            _wildlifeTrapping.OnCatchPressure += caught =>
+            {
+                if (_world == null) return;
+                var sector = _world.ShelterSectorId;
+                if (!string.IsNullOrEmpty(sector))
+                    _world.Wildlife.ApplyHarvestPressure(sector, caught);
+            };
             if (_wildlifeTrappingPanel != null && _wildlifeTrappingPanel.IsInsideTree())
                 RemoveChild(_wildlifeTrappingPanel);
             _wildlifeTrappingPanel = new WildlifeTrappingPanel();

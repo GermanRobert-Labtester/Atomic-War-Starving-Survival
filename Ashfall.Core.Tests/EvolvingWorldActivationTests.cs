@@ -52,7 +52,7 @@ namespace Ashfall.Core.Tests
             var catalog = LoadSeeds();
             Assert.NotNull(catalog);
             Assert.Equal(11, catalog!.sectors.Count);
-            Assert.Equal(11, catalog.packs.Count);
+            Assert.Equal(13, catalog.packs.Count);
             Assert.Equal(10, catalog.landmarks.Count);
             Assert.Equal(12, catalog.location_seeds.Count);
             Assert.False(string.IsNullOrEmpty(catalog.shelter_sector_id));
@@ -87,7 +87,7 @@ namespace Ashfall.Core.Tests
 
             Assert.Equal(a.wild.State.packs.Count, b.wild.State.packs.Count);
             Assert.Equal(a.land.State.landmarks.Count, b.land.State.landmarks.Count);
-            Assert.Equal(11, a.wild.State.packs.Count);
+            Assert.Equal(13, a.wild.State.packs.Count);
 
             // Re-seeded records keep their seeded baseline.
             Assert.All(a.wild.State.packs, p => Assert.Equal(p.population, p.seededPopulation));

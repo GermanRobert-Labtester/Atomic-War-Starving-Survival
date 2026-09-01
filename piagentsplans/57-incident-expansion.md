@@ -44,7 +44,7 @@ The incident system is wired but starved of content.
    - Environmental (3): fallout storm approach, contaminated water table, ground tremor.
    - Security (3): perimeter breach attempt, unknown visitor at the door (feeds
      `door_encounters.json`), signal intercept near shelter.
-   - Medical (3): disease outbreak (feeds existing 09A), chemical exposure, survivor
+   - Medical (3): disease outbreak (feeds Plan 112 disease content and Plan 09A response), chemical exposure, survivor
      collapse (feeds existing 09B).
    - Social (3): ration dispute (feeds existing 12B), ideological friction (feeds
      existing 25A), grief episode (feeds existing 27C).
@@ -87,6 +87,6 @@ doesn't support player choices, those are data-first and the wiring is a follow-
 ## Follow-on
 - Plan 45 (patrols) — faction patrol incidents feed the faction-territory loop.
 - Plan 43 (settlements) — refugee approach incidents feed settlement relations.
-- Existing 09A/09B (medical) — disease and exposure incidents feed the medical system.
+- Plan 112/09A/09B (disease and medical) — disease and exposure incidents feed the medical system.
 - Existing 12B (friction) — ration dispute and ideological friction incidents.
 - Plan 71 (power grid) — equipment failure incidents feed the power grid.

@@ -1,0 +1,555 @@
+{
+  "schema_version": 1,
+  "collection_id": "shelter_rooms",
+  "rooms": [
+    {
+      "id": "room_bunker_corridor",
+      "display_name": "Central Access Corridor",
+      "description": "Access concourse and structural spine connecting bunker sectors, hatchways, and stairwells.",
+      "function": "Corridor",
+      "capacity": 0,
+      "max_upgrade_level": 3,
+      "required_skill_id": "",
+      "workstation_id": "",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 1 }
+      ],
+      "tags": ["spine", "circulation", "unassignable"]
+    },
+    {
+      "id": "room_bunks_crowded",
+      "display_name": "Crowded Bunkhouse",
+      "description": "Triple-tiered pipe bunks packed wall-to-wall for maximum occupancy at the cost of privacy and comfort.",
+      "function": "Dormitory",
+      "capacity": 6,
+      "max_upgrade_level": 2,
+      "required_skill_id": "",
+      "workstation_id": "",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_wood", "quantity": 6 },
+        { "item_id": "scrap_metal", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_wood", "quantity": 2 }
+      ],
+      "tags": ["residential", "high_density"]
+    },
+    {
+      "id": "room_bunks",
+      "display_name": "Standard Dormitory",
+      "description": "Double-tiered steel bunk frames bolted to concrete slab with personal locker space.",
+      "function": "Dormitory",
+      "capacity": 4,
+      "max_upgrade_level": 3,
+      "required_skill_id": "",
+      "workstation_id": "",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_wood", "quantity": 4 },
+        { "item_id": "scrap_metal", "quantity": 6 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 2 }
+      ],
+      "tags": ["residential", "standard"]
+    },
+    {
+      "id": "room_quarters_private",
+      "display_name": "Partitioned Quarters",
+      "description": "Acoustically insulated private sleeping cubicles providing restorative rest and privacy.",
+      "function": "Dormitory",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "",
+      "workstation_id": "",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_wood", "quantity": 8 },
+        { "item_id": "cloth", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_wood", "quantity": 2 },
+        { "item_id": "cloth", "quantity": 1 }
+      ],
+      "tags": ["residential", "comfort"]
+    },
+    {
+      "id": "room_workshop",
+      "display_name": "General Workshop",
+      "description": "Fabrication benches, vise clamps, and hand tools for general repairs and scrap repurposing.",
+      "function": "Workshop",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_rough_repairs",
+      "workstation_id": "ws_general_bench",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 8 },
+        { "item_id": "mechanical_parts", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 3 }
+      ],
+      "tags": ["crafting", "repair"]
+    },
+    {
+      "id": "room_workshop_heavy",
+      "display_name": "Heavy Machinery Workshop",
+      "description": "Reinforced flooring, overhead crane hoist, and hydraulic presses for engine overhauls.",
+      "function": "Workshop",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_workshop_sense",
+      "workstation_id": "ws_heavy_crane",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 12 },
+        { "item_id": "heavy_industrial_motor", "quantity": 1 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 4 }
+      ],
+      "tags": ["crafting", "heavy_industrial"]
+    },
+    {
+      "id": "room_workshop_precision",
+      "display_name": "Precision Tooling Bench",
+      "description": "Clean room environment with jeweler loupes, soldering irons, and precision instruments.",
+      "function": "Workshop",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_workshop_sense",
+      "workstation_id": "ws_soldering_station",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 6 },
+        { "item_id": "scrap_electronic", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_electronic", "quantity": 2 }
+      ],
+      "tags": ["crafting", "precision"]
+    },
+    {
+      "id": "room_clinic",
+      "display_name": "Field Clinic",
+      "description": "Emergency triage tables, sterile dressings, and disinfectant wash for treating trauma.",
+      "function": "MedicalBay",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_field_dressing",
+      "workstation_id": "ws_triage_table",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_wood", "quantity": 4 },
+        { "item_id": "cloth", "quantity": 6 }
+      ],
+      "repair_cost": [
+        { "item_id": "cloth", "quantity": 2 }
+      ],
+      "tags": ["medical", "triage"]
+    },
+    {
+      "id": "room_ward_clinical",
+      "display_name": "Clinical Surgical Ward",
+      "description": "Sealed operating bay with surgical lighting, oxygen manifold, and surgical instruments.",
+      "function": "MedicalBay",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_steady_hands",
+      "workstation_id": "ws_surgical_light",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 8 },
+        { "item_id": "chemicals", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "chemicals", "quantity": 2 }
+      ],
+      "tags": ["medical", "surgery"]
+    },
+    {
+      "id": "room_ward_quarantine",
+      "display_name": "Isolation Quarantine Bay",
+      "description": "Negative-pressure containment cell with ultraviolet sanitization for infectious outbreaks.",
+      "function": "MedicalBay",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_field_dressing",
+      "workstation_id": "ws_quarantine_cot",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 6 },
+        { "item_id": "cloth", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 2 }
+      ],
+      "tags": ["medical", "quarantine"]
+    },
+    {
+      "id": "room_kitchen",
+      "display_name": "Galley Kitchen",
+      "description": "Three-kettle stove, butchering block, and ration preparation counter with exhaust flue.",
+      "function": "Kitchen",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_ration_stretcher",
+      "workstation_id": "ws_galley_range",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 6 },
+        { "item_id": "scrap_wood", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 2 }
+      ],
+      "tags": ["nutrition", "canteen"]
+    },
+    {
+      "id": "room_storage_bay",
+      "display_name": "General Storage Bay",
+      "description": "Banded wooden shelving and pallet racks for dry rations, raw scrap, and tools.",
+      "function": "Storage",
+      "capacity": 1,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_quartermaster",
+      "workstation_id": "ws_inventory_counter",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_wood", "quantity": 8 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_wood", "quantity": 2 }
+      ],
+      "tags": ["logistics", "general"]
+    },
+    {
+      "id": "room_storage_secure",
+      "display_name": "Reinforced Armored Vault",
+      "description": "Heavy blast-lock room for secure caching of firearms, ammunition, and rare medical isotopes.",
+      "function": "Storage",
+      "capacity": 1,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_watchful",
+      "workstation_id": "ws_secure_safe",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 12 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 3 }
+      ],
+      "tags": ["logistics", "secure"]
+    },
+    {
+      "id": "room_greenhouse_shelter",
+      "display_name": "Subterranean Greenhouse",
+      "description": "Tiered hydroponic growth trays under full-spectrum sodium lamps fed from filtered water.",
+      "function": "Greenhouse",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_mycology",
+      "workstation_id": "ws_hydro_rack",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 8 },
+        { "item_id": "chemicals", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "chemicals", "quantity": 2 }
+      ],
+      "tags": ["agriculture", "hydroponics"]
+    },
+    {
+      "id": "room_radio_tuner",
+      "display_name": "Radio Communications Bay",
+      "description": "Shortwave tuner rack, antenna lead-in, and signal decoding station for monitoring the wasteland.",
+      "function": "RadioRoom",
+      "capacity": 1,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_signal_ear",
+      "workstation_id": "ws_shortwave_desk",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 4 },
+        { "item_id": "scrap_electronic", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_electronic", "quantity": 2 }
+      ],
+      "tags": ["communications", "intel"]
+    },
+    {
+      "id": "room_armory_munitions",
+      "display_name": "Armory & Munitions Depot",
+      "description": "Rifle lockers, cleaning solvent basins, and a reloading press for ammunition refits.",
+      "function": "Armory",
+      "capacity": 1,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_watchful",
+      "workstation_id": "ws_ammo_press",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 10 },
+        { "item_id": "mechanical_parts", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 3 }
+      ],
+      "tags": ["combat", "defense"]
+    },
+    {
+      "id": "room_laboratory_research",
+      "display_name": "Science & Research Lab",
+      "description": "Centrifuges, distillation tubes, and analytical charts for cataloging pre-war engineering archives.",
+      "function": "Laboratory",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_cold_analysis",
+      "workstation_id": "ws_analysis_bench",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 8 },
+        { "item_id": "scrap_electronic", "quantity": 6 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_electronic", "quantity": 2 }
+      ],
+      "tags": ["research", "science"]
+    },
+    {
+      "id": "room_common_mess_hall",
+      "display_name": "Communal Mess Hall",
+      "description": "Long communal benches and notice board where survivors gather for meals, meetings, and morale.",
+      "function": "CommonArea",
+      "capacity": 4,
+      "max_upgrade_level": 3,
+      "required_skill_id": "",
+      "workstation_id": "",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_wood", "quantity": 10 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_wood", "quantity": 2 }
+      ],
+      "tags": ["social", "morale"]
+    },
+    {
+      "id": "room_reading_quiet_room",
+      "display_name": "Quiet Archive & Study",
+      "description": "A quiet reading nook insulated from generator vibration for decompression and technical manual study.",
+      "function": "CommonArea",
+      "capacity": 2,
+      "max_upgrade_level": 2,
+      "required_skill_id": "",
+      "workstation_id": "",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_wood", "quantity": 6 },
+        { "item_id": "cloth", "quantity": 2 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_wood", "quantity": 2 }
+      ],
+      "tags": ["social", "study"]
+    },
+    {
+      "id": "room_airlock",
+      "display_name": "Decontamination Airlock",
+      "description": "Double airtight blast hatch with chemical decontam sprayers and dosimeter staging rack.",
+      "function": "Airlock",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_field_dressing",
+      "workstation_id": "ws_decontam_hose",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 10 },
+        { "item_id": "mechanical_parts", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 3 }
+      ],
+      "tags": ["perimeter", "expedition"]
+    },
+    {
+      "id": "room_generator",
+      "display_name": "Primary Diesel Generator",
+      "description": "Heavy industrial diesel dynamo providing electrical power across main lighting and pump circuits.",
+      "function": "GeneratorRoom",
+      "capacity": 2,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_rough_repairs",
+      "workstation_id": "ws_generator_panel",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 12 },
+        { "item_id": "fuel", "quantity": 2 }
+      ],
+      "repair_cost": [
+        { "item_id": "scrap_metal", "quantity": 4 }
+      ],
+      "tags": ["power", "infrastructure"]
+    },
+    {
+      "id": "room_filtration",
+      "display_name": "Filtration & Scrubber Stack",
+      "description": "HEPA filter banks and activated charcoal canisters providing clean breathable air to the shelter.",
+      "function": "FiltrationStack",
+      "capacity": 1,
+      "max_upgrade_level": 3,
+      "required_skill_id": "skill_rough_repairs",
+      "workstation_id": "ws_blower_motor",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 8 },
+        { "item_id": "cloth", "quantity": 4 }
+      ],
+      "repair_cost": [
+        { "item_id": "cloth", "quantity": 2 }
+      ],
+      "tags": ["life_support", "infrastructure"]
+    }
+  ],
+  "assignment_rules": [
+    {
+      "id": "rule_medical_field_surgery",
+      "name": "Triage & Field Medicine",
+      "description": "Medically trained survivors accelerate wound recovery and reduce medical supply consumption.",
+      "target_room_function": "MedicalBay",
+      "required_skill_id": "skill_field_dressing",
+      "bonus_type": "treatment_efficiency",
+      "bonus_magnitude": 0.25,
+      "penalty_magnitude": -0.10,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_workshop_machinist",
+      "name": "Machinist & Maintenance",
+      "description": "Skilled mechanics improve structural repair speed and minimize part wear.",
+      "target_room_function": "Workshop",
+      "required_skill_id": "skill_rough_repairs",
+      "bonus_type": "repair_speed",
+      "bonus_magnitude": 0.20,
+      "penalty_magnitude": -0.05,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_workshop_precision",
+      "name": "Precision Tooling Focus",
+      "description": "Deep workshop sense boosts yield and crafting reliability on high-tier items.",
+      "target_room_function": "Workshop",
+      "required_skill_id": "skill_workshop_sense",
+      "bonus_type": "crafting_yield",
+      "bonus_magnitude": 0.20,
+      "penalty_magnitude": -0.05,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_radio_communications",
+      "name": "Radio Signal Processing",
+      "description": "Trained signal operators discern faint broadcasts through background ionospheric noise.",
+      "target_room_function": "RadioRoom",
+      "required_skill_id": "skill_signal_ear",
+      "bonus_type": "signal_clarity",
+      "bonus_magnitude": 0.25,
+      "penalty_magnitude": -0.10,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_kitchen_nutrition",
+      "name": "Canteen Ration Mastery",
+      "description": "Skilled cooks stretch limited calories without sacrificing survivor nutrition or morale.",
+      "target_room_function": "Kitchen",
+      "required_skill_id": "skill_ration_stretcher",
+      "bonus_type": "meal_efficiency",
+      "bonus_magnitude": 0.25,
+      "penalty_magnitude": -0.10,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_laboratory_analysis",
+      "name": "Scientific Analysis",
+      "description": "Disciplined researchers accelerate knowledge decoding from recovered technical archives.",
+      "target_room_function": "Laboratory",
+      "required_skill_id": "skill_cold_analysis",
+      "bonus_type": "research_speed",
+      "bonus_magnitude": 0.30,
+      "penalty_magnitude": -0.10,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_greenhouse_botany",
+      "name": "Hydroponic Cultivation",
+      "description": "Hardy growers optimize nutrient feeds to boost harvest yields in artificial lighting.",
+      "target_room_function": "Greenhouse",
+      "required_skill_id": "skill_mycology",
+      "bonus_type": "harvest_yield",
+      "bonus_magnitude": 0.25,
+      "penalty_magnitude": -0.05,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_generator_maintenance",
+      "name": "Turbine & Power Tuning",
+      "description": "Experienced engineers reduce fuel consumption and prevent unexpected grid brownouts.",
+      "target_room_function": "GeneratorRoom",
+      "required_skill_id": "skill_rough_repairs",
+      "bonus_type": "fuel_efficiency",
+      "bonus_magnitude": 0.20,
+      "penalty_magnitude": -0.10,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_armory_service",
+      "name": "Armory Maintenance",
+      "description": "Watchful armorers keep firearms cleaned and expedition equipment primed.",
+      "target_room_function": "Armory",
+      "required_skill_id": "skill_watchful",
+      "bonus_type": "weapon_maintenance",
+      "bonus_magnitude": 0.20,
+      "penalty_magnitude": -0.05,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_storage_logistics",
+      "name": "Logistics Organization",
+      "description": "Organized quartermasters streamline inventory handling and reduce spoilage.",
+      "target_room_function": "Storage",
+      "required_skill_id": "skill_quartermaster",
+      "bonus_type": "handling_speed",
+      "bonus_magnitude": 0.15,
+      "penalty_magnitude": -0.05,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_airlock_decontamination",
+      "name": "Airlock Protocol",
+      "description": "Proper decontamination procedures accelerate expedition turnaround and scrub fallout.",
+      "target_room_function": "Airlock",
+      "required_skill_id": "skill_field_dressing",
+      "bonus_type": "turnaround_speed",
+      "bonus_magnitude": 0.20,
+      "penalty_magnitude": -0.05,
+      "is_hard_gate": false
+    },
+    {
+      "id": "rule_dormitory_caretaker",
+      "name": "Shelter Caretaking",
+      "description": "Attentive caretakers maintain clean living quarters, improving rest quality and morale.",
+      "target_room_function": "Dormitory",
+      "required_skill_id": "skill_hard_living",
+      "bonus_type": "rest_quality",
+      "bonus_magnitude": 0.15,
+      "penalty_magnitude": 0.0,
+      "is_hard_gate": false
+    }
+  ]
+}

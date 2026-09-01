@@ -86,6 +86,7 @@ namespace Ashfall.Core.UI
             R("caregiving",          "Caregiving",                    PanelGroup.Expanded);  // was missing from forwarding
             R("shelter_thermal",     "Shelter Thermal",               PanelGroup.Expanded);
             R("shelter_schedule",    "Shelter Schedule",              PanelGroup.Expanded);
+            R("shelter_decor",       "Shelter Interior & Memorial Wall", PanelGroup.Expanded);
             R("autopsy_report",      "Autopsy Report",                PanelGroup.Expanded);
             R("waystation_network",  "Waystation Network",            PanelGroup.Expanded);
             R("chemical_dependency", "Chemical Dependency",           PanelGroup.Expanded);

@@ -22,6 +22,8 @@ namespace Ashfall.Core
         public List<string> compatiblePrey = new List<string>();
         public bool requiresWater = false;
         public float weatherSensitivity = 0.0f;
+        public float bycatchChance = 0f; // Plan 36 III: probability of bycatch on successful catch
+        public List<BycatchCandidate> bycatchSpecies = new List<BycatchCandidate>(); // Plan 36 III: weighted bycatch pool
     }
 
     [Serializable]
@@ -29,6 +31,16 @@ namespace Ashfall.Core
     {
         public string itemId = string.Empty;
         public int amount = 1;
+    }
+
+    /// <summary>
+    /// Plan 36 III: Weighted bycatch candidate for trap definitions.
+    /// </summary>
+    [Serializable]
+    public sealed class BycatchCandidate
+    {
+        public string speciesId = string.Empty;
+        public float weight = 1.0f;
     }
 
     /// <summary>
@@ -53,6 +65,8 @@ namespace Ashfall.Core
         public List<string> activeSeasons = new List<string>();
         public float diseaseRisk = 0.1f;
         public float contaminationRisk = 0.05f;
+        public string diseaseId = string.Empty; // Plan 36 Closure II: per-species disease mapping
+        public float contaminationDose = 0f; // Plan 36 Closure II: explicit contamination dose in rads
     }
 
     [Serializable]
@@ -127,12 +141,16 @@ namespace Ashfall.Core
         public IReadOnlyDictionary<string, BaitProfile> Baits => _baits;
 
         /// <summary>
-        /// Register all prey and bait entries with the WildlifeTrappingSystem.
-        /// Prey are converted to QuarrySpecies; baits are registered directly.
+        /// Register all trap, prey, and bait entries with the WildlifeTrappingSystem.
+        /// Prey are converted to QuarrySpecies and also registered as PreyDefinitions
+        /// for season/migration filtering. Baits and trap definitions are registered directly.
         /// </summary>
         public void RegisterWith(WildlifeTrappingSystem system)
         {
             if (system == null) return;
+            // Plan 36 III: register trap definitions for bycatch/durability lookup
+            foreach (var t in _traps.Values)
+                system.RegisterTrapDefinition(t);
             foreach (var p in _prey.Values)
             {
                 system.RegisterQuarry(new QuarrySpecies
@@ -147,6 +165,8 @@ namespace Ashfall.Core
                     attractedByBaitIds = new List<string>(p.attractedByBaitIds),
                     minSkillLevel = p.minSkillLevel
                 });
+                // Plan 36: also register prey definition for season/migration filtering
+                system.RegisterPreyDefinition(p);
             }
             foreach (var b in _baits.Values)
             {

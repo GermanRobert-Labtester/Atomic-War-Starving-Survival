@@ -452,8 +452,30 @@ contamination warning, `weather_blizzard` has a storm bed rather than the short 
 gust, and `danger_alarm_klaxon` has a dedicated mechanical infrastructure warning rather
 than the weather klaxon. The original generic contamination, gust, and weather-alert
 assets remain registered only for their original cues. The acute/chronic radiation pair
-remains the sole intentional shared-alert family; pitch differentiation remains a later
-mixing decision.
+is now differentiated as well: chronic radiation has its own lower, distinct alarm
+asset rather than relying on a future pitch-only treatment.
+
+### Optional SFX completion (2026-08-31)
+
+The five optional differentiation assets are complete and registered:
+
+| Need | Live resolution |
+|---|---|
+| Chronic versus acute radiation | `rad_alert_chronic` now uses `sfx_radiation_chronic_alarm.wav`; acute retains its existing alarm. |
+| EMP conditions | `EMPStorm` and `AshLightning` map to `weather_emp_storm`. |
+| Glass hazards | `GlassStorm` and `RadHail` map to `weather_glass_storm`. |
+| Corrosive precipitation | `AcidSnow` and `BloodRain` map to `weather_corrosive_precipitation`. |
+| Surface storm presence (prepared) | `amb_surface_storm` replaces the normal surface loop during storm weather after an explicit host request to start surface ambience. |
+
+Surface ambience deliberately does not use expedition state as a location proxy: an
+expedition proves only that a team is travelling, not that the player-facing scene is on
+the surface. The controller subscribes to `WeatherSystem` while active and stops both
+surface loops on shutdown or when bunker ambience takes over. The current bunker-only
+game flow does not request surface mode, so the loop is intentionally registered and
+tested but inactive until a real surface presentation owns that transition.
+
+Final optional-batch verification: **74 catalog cues resolve**, and
+`--audio-selftest` reports **266 pass, 0 fail**.
 
 ---
 

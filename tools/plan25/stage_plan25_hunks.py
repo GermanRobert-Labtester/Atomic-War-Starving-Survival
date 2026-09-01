@@ -7,8 +7,7 @@ applies the resulting patches to the git index. The working tree is untouched.
 import subprocess, sys
 
 JOBS = [
-    ("Assets/Ashfall.Core/CatalogIntegrityValidator.cs", "validator"),
-    ("src/Host/HostCli.cs", "hostcli"),
+    ("src/Main.ShelterSocial.cs", "sheltersocial"),
 ]
 
 def head(path):
@@ -36,6 +35,13 @@ def make_mine(kind, src):
         )
         block = theirs + open("tools/plan25/validator_block.txt").read() + "\n"
         assert anchor in src, "validator anchor missing in HEAD"
+        return src.replace(anchor, anchor + block, 1)
+    if kind == "sheltersocial":
+        anchor = '''            var rtSys = new RegionalTreatySystem(new GodotLog());
+            rtSys.RestoreState(rtState);
+'''
+        block = open("tools/plan25/sheltersocial_block.txt").read()
+        assert anchor in src, "sheltersocial anchor missing in HEAD"
         return src.replace(anchor, anchor + block, 1)
     if kind == "hostcli":
         anchor = '''            if (Has(args, "--muster-selftest") || Has(args, "--expansion-06-selftest"))

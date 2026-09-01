@@ -108,6 +108,32 @@ namespace Ashfall.Core
             OnRelationsChanged?.Invoke();
         }
 
+        /// <summary>
+        /// Plan 60 / D7 — the other half of every relationship this survivor is in,
+        /// ordinal-sorted and de-duplicated. Used to tell the memorial pipeline who
+        /// actually mourns whom, so grief is applied to the living rather than to a
+        /// whole-shelter average. Returns an empty list for unknown survivors.
+        /// </summary>
+        public IReadOnlyList<string> RelatedIds(string survivorId)
+        {
+            var result = new List<string>();
+            if (string.IsNullOrEmpty(survivorId)) return result;
+
+            for (int i = 0; i < _state.relationships.Count; i++)
+            {
+                var rel = _state.relationships[i];
+                if (rel == null) continue;
+                string other = null;
+                if (rel.dwellerA == survivorId) other = rel.dwellerB;
+                else if (rel.dwellerB == survivorId) other = rel.dwellerA;
+                if (string.IsNullOrEmpty(other) || other == survivorId) continue;
+                if (!result.Contains(other)) result.Add(other);
+            }
+
+            result.Sort(StringComparer.Ordinal);
+            return result;
+        }
+
         public ConflictEntry? TryTriggerConflict()
         {
             if (_state.activeConflicts.Exists(c => !c.isResolved)) return null;

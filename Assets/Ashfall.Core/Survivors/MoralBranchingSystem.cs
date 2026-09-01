@@ -108,6 +108,13 @@ namespace Ashfall.Core.Survivors
             _tracked.Remove(state);
         }
 
+        /// <summary>Get tracked moral branch state by survivor ID.</summary>
+        public MoralBranchState? GetState(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return null;
+            return _tracked.Find(s => string.Equals(s.SurvivorId, survivorId, StringComparison.OrdinalIgnoreCase));
+        }
+
         /// <summary>
         /// Register a moral choice made by the player that affects a survivor.
         /// Choices are categorized as empathy-driven or pragmatism-driven.

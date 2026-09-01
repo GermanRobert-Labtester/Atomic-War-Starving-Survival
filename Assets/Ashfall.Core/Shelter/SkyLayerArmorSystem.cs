@@ -39,6 +39,17 @@ namespace Ashfall.Core.Shelter
             };
         }
 
+        public void InstallConfiguration(int gridX, SkyLayerArmorConfigDef config)
+        {
+            if (config == null) return;
+            SetCellArmor(gridX, config.material_tier, config.default_thickness_meters, 100f);
+        }
+
+        public CeilingCellArmor? GetCell(int gridX)
+        {
+            return _cells.TryGetValue(gridX, out var cell) ? cell : null;
+        }
+
         public float GetAttenuationFactor(int gridX)
         {
             if (!_cells.TryGetValue(gridX, out var cell))

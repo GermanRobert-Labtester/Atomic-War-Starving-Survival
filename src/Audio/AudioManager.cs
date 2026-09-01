@@ -64,6 +64,7 @@ namespace AtomicWar.GodotApp.Audio
         private bool _headless;
         private AudioEventBridge? _eventBridge;
         private ShelterAudioController? _shelterAudio;
+        private SurfaceAmbienceController? _surfaceAmbience;
         private IAudioDomainProvider? _domainProvider;
         private Action? _settingsChangedHandler;
 
@@ -82,6 +83,7 @@ namespace AtomicWar.GodotApp.Audio
 
             _eventBridge = new AudioEventBridge(this);
             _shelterAudio = new ShelterAudioController(this);
+            _surfaceAmbience = new SurfaceAmbienceController(this);
             _domainProvider = GetParent() as IAudioDomainProvider;
             RefreshDomainBindings();
 
@@ -180,6 +182,8 @@ namespace AtomicWar.GodotApp.Audio
             _eventBridge = null;
             _shelterAudio?.Dispose();
             _shelterAudio = null;
+            _surfaceAmbience?.Dispose();
+            _surfaceAmbience = null;
             _domainProvider = null;
 
             if (_settingsChangedHandler != null)
@@ -214,6 +218,7 @@ namespace AtomicWar.GodotApp.Audio
             _shelterAudio?.Subscribe(
                 _domainProvider.AudioPowerGrid,
                 _domainProvider.AudioStartingLevel);
+            _surfaceAmbience?.Subscribe(_domainProvider.AudioWeather);
         }
 
         // ── Cue-based playback (primary API) ────────────────────
@@ -281,11 +286,28 @@ namespace AtomicWar.GodotApp.Audio
         public void PlayWeatherAlert() => PlayCue(AudioCueCatalog.WeatherAlert);
 
         public void StartGeiger() => PlayCue(AudioCueCatalog.RadGeigerLoop);
-        public void StartBunkerAmbience() => PlayCue(AudioCueCatalog.AmbBunker);
-        public void StartSurfaceAmbience() => PlayCue(AudioCueCatalog.AmbSurface);
+        public void StartBunkerAmbience()
+        {
+            _surfaceAmbience?.Stop();
+            PlayCue(AudioCueCatalog.AmbBunker);
+        }
+
+        /// <summary>
+        /// Begins the explicit surface listening mode. Its loop follows weather
+        /// while active; an expedition alone never activates it because an
+        /// expedition does not establish the player's listening location.
+        /// </summary>
+        public void StartSurfaceAmbience()
+        {
+            if (_surfaceAmbience != null)
+                _surfaceAmbience.Start();
+            else
+                PlayCue(AudioCueCatalog.AmbSurface);
+        }
 
         public void StopAmbience()
         {
+            _surfaceAmbience?.Stop();
             StopLoopsOnBus(AudioBusNames.Ambience);
             // Shelter infrastructure uses independent buses so players can mix
             // them separately, but it still belongs to the active-run ambience

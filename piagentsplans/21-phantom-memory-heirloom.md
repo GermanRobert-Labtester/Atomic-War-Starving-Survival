@@ -31,7 +31,7 @@ read-only `PhantomMemoryEngine.cs`, `Phantoms/PhantomTriggerDto.cs`.
 9. Validate all `item_`/trait refs; data-integrity selftest; narrative-continuity (no canon clash).
 10. xUnit: trigger fires on object acquisition, affinity match amplifies, effect applies, save round-trip of seen-triggers.
 
-**Next steps:** the most affecting triggers become final-wish objects (06A); a "returned the
+**Next steps:** the most affecting triggers become Plan 65 final-wish objects; a "returned the
 memento" resolution (give it to the right NPC in 20B) for closure.
 
 ---

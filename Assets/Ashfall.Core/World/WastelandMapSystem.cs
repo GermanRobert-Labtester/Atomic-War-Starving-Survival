@@ -213,6 +213,7 @@ namespace Ashfall.Core.World
                 {
                     if (r.From != current) continue;
                     if (!IsDiscovered(r.To)) continue;
+                    if (IsLocked(r.To) && r.To != toId) continue;
                     float nd = dist[current] + r.DistanceKm;
                     if (nd < dist[r.To])
                     {

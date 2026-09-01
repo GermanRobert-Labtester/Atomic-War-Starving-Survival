@@ -216,6 +216,7 @@ namespace Ashfall.Core.YearOfAsh
             // three-day narration tail.
             t["evt_p25_marked_ruin_s1"] = new FlagTrigger("flag_grievance_scavenger_claim_disputed");
             t["evt_p25_marked_ruin_s2"] = new DayOffsetTrigger(3, "evt_p25_marked_ruin_s1");
+
             // ── Plan 25 escalation (E-P2..P6): grievance-gated openings ──
             // E-P2 The Stopped Convoy: the shelter's defaulted Hydro toll.
             t["evt_p25_stopped_convoy_s1"] = new FlagTrigger("flag_grievance_hydro_toll_defaulted");

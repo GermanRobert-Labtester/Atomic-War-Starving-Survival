@@ -5,10 +5,10 @@
   "invocation": "--ui-snapshot-uitest",
   "renderer": "Godot 4.7.1 .NET, AMD RADV RENOIR Vulkan 1.4, Forward+, X11 DISPLAY=:0 (the project's gl_compatibility + headless pipeline returns null SubViewport textures)",
   "totals": {
-    "targets": 29,
-    "pass": 29,
+    "targets": 30,
+    "pass": 30,
     "fail": 0,
-    "approved_baselines_committed": 29
+    "approved_baselines_committed": 30
   },
   "targets": [
     {
@@ -290,6 +290,38 @@
         "AshfallSidebar",
         "AshfallStatusRail",
         "AshfallDataGrid"
+      ]
+    },
+    {
+      "snapshot_id": "shelter_decor_default",
+      "runtime_surface": "src/UI/ShelterDecorPanel.cs",
+      "runtime_state": "Deterministic populated production seam: two catalog-backed room items, two active bunk assignments, and one memorial-plaque projection. The panel derives storage counts, mounted placement cards, and daily morale from the real host sessions.",
+      "fixture_source": "LIVE_CATALOG + DETERMINISTIC_HOST_FIXTURE (ItemCatalogLoader → InventoryHostSession → ShelterAssignmentHostSession → NeedsSystem → ShelterDecorHostSession)",
+      "viewport_width": 1280,
+      "viewport_height": 800,
+      "ui_scale": 1.0,
+      "seed": 12012,
+      "locale": "en_US",
+      "theme": "Ashfall.Core.UI.DesignTheme",
+      "expected_asset_family": "Text-and-chrome dashboard panel; live item descriptions and modifiers from items.json.",
+      "stitch_reference_id": "(no Stitch mockup — original Godot continuation)",
+      "visual_status": "MATCH — DESIGN_INTENT (populated fixture)",
+      "phase_origin": "Plan 12C Final",
+      "baseline_path": "snapshots/shelter_decor_default.png",
+      "baseline_bytes": 103917,
+      "consumers": [
+        "AshfallDashboardShell",
+        "AshfallStatusRail",
+        "ShelterDecorHostSession",
+        "items.json",
+        "NeedsSystem",
+        "MemorialSystem"
+      ],
+      "regenerate_on": [
+        "ShelterDecorPanel.cs",
+        "ShelterDecorSnapshotFixture.cs",
+        "ShelterDecorHostSession.cs",
+        "items.json decorLocalizedMoraleDelta changes"
       ]
     },
     {
@@ -705,6 +737,7 @@
       "survival_workstation_default",
       "caravan_barter_default",
       "shelter_hud_default",
+      "shelter_decor_default",
       "faction_matrix_default",
       "dose_ledger_default",
       "verdict_dashboard_default",
@@ -744,10 +777,10 @@
     "ERROR_STATE": []
   },
   "regenerated": {
-    "date": "2026-08-26",
-    "reason": "All 29 goldens drifted: every target panel was modified between the Aug-18 baseline (0fb0c340) and the batch-3+ UI wiring work (placeholder panels bound to live host sessions, dashboard nav, shell architecture). Environment verified faithful (near-zero mean RGB shift on low-drift panels); run-to-run captures byte-identical before regeneration.",
+    "date": "2026-08-31",
+    "reason": "Plan 12C Final added one inspected populated shelter-decor baseline. The real-display diff also reported 29 pre-existing unrelated drifts, so this delivery promoted only its own new target and did not overwrite the established corpus.",
     "pipeline": "godot --path . --rendering-method forward_plus -- --ui-snapshot-regenerate (DISPLAY=:0)",
-    "post_regen_diff_gate": "29/29 MATCH, exit 0",
-    "approval": "PENDING — see docs/ui/SNAPSHOT_REGEN_APPROVAL_2026-08-26.md"
+    "post_regen_diff_gate": "shelter_decor_default captured and inspected; global corpus remains 29 unrelated drifts / 0 capture failures",
+    "approval": "Plan 12C fixture baseline promoted after visual inspection; global corpus rebaseline remains separately pending"
   }
 }

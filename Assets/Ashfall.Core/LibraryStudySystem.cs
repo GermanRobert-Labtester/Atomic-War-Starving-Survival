@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 #pragma warning disable CS8618
 using Ashfall.Core.Journal;
 using Ashfall.Core.Survivors;
@@ -18,17 +19,38 @@ namespace Ashfall.Core
     [Serializable]
     public sealed class ManualDefinition
     {
-        public string manual_id = string.Empty;
-        public string display_name = string.Empty;
-        public string category = string.Empty;       // "technical", "medical", "military", etc.
-        public int studyHoursRequired = 10;
-        public float fatiguePerHour = 0.3f;
-        public float moraleEffect = -0.5f;           // studying is draining
-        public List<string> skillXpGrants = new List<string>(); // skill_id, xp_amount pairs
-        public List<string> researchUnlocks = new List<string>();
-        public List<string> knowledgeUnlocks = new List<string>();
-        public List<string> prerequisites = new List<string>();
-        public bool requiresPower = true;
+        [JsonPropertyName("manual_id")]
+        public string manual_id { get; set; } = string.Empty;
+
+        [JsonPropertyName("display_name")]
+        public string display_name { get; set; } = string.Empty;
+
+        [JsonPropertyName("category")]
+        public string category { get; set; } = string.Empty;       // "technical", "medical", "military", etc.
+
+        [JsonPropertyName("study_hours_required")]
+        public int studyHoursRequired { get; set; } = 10;
+
+        [JsonPropertyName("fatigue_per_hour")]
+        public float fatiguePerHour { get; set; } = 0.3f;
+
+        [JsonPropertyName("morale_effect")]
+        public float moraleEffect { get; set; } = -0.5f;           // studying is draining
+
+        [JsonPropertyName("skill_xp_grants")]
+        public List<string> skillXpGrants { get; set; } = new List<string>(); // skill_id, xp_amount pairs
+
+        [JsonPropertyName("research_unlocks")]
+        public List<string> researchUnlocks { get; set; } = new List<string>();
+
+        [JsonPropertyName("knowledge_unlocks")]
+        public List<string> knowledgeUnlocks { get; set; } = new List<string>();
+
+        [JsonPropertyName("prerequisites")]
+        public List<string> prerequisites { get; set; } = new List<string>();
+
+        [JsonPropertyName("requires_power")]
+        public bool requiresPower { get; set; } = true;
     }
 
     [Serializable]

@@ -1,44 +1,80 @@
 {
   "schema_version": 1,
   "id": "default_winter",
-  "displayName": "The Long Winter",
+  "displayName": "The Year of Ash and Ice",
   "weatherCheckIntervalHours": 6.0,
   "seasons": [
     {
-      "id": "window_early",
-      "displayName": "First Thaw",
+      "id": "window_ashfall",
+      "displayName": "Ash Fall",
       "startDay": 0,
-      "clearWeight": 1.0,
-      "rainWeight": 1.2,
-      "overcastWeight": 1.0,
-      "ashfallWeight": 0.6,
-      "falloutStormWeight": 0.2,
-      "blizzardWeight": 0.3,
-      "blackRainWeight": 0.1
+      "clearWeight": 0.8,
+      "rainWeight": 0.5,
+      "overcastWeight": 1.4,
+      "ashfallWeight": 2.2,
+      "falloutStormWeight": 1.0,
+      "blizzardWeight": 0.4,
+      "blackRainWeight": 0.3
     },
     {
-      "id": "window_cold",
+      "id": "window_deep_freeze",
       "displayName": "The Deep Freeze",
       "startDay": 60,
-      "clearWeight": 0.8,
-      "rainWeight": 0.6,
+      "clearWeight": 0.6,
+      "rainWeight": 0.2,
       "overcastWeight": 1.2,
-      "ashfallWeight": 1.0,
+      "ashfallWeight": 0.8,
       "falloutStormWeight": 0.4,
-      "blizzardWeight": 1.8,
+      "blizzardWeight": 2.5,
       "blackRainWeight": 0.2
     },
     {
-      "id": "window_long_winter",
-      "displayName": "The Long Winter",
+      "id": "window_thaw",
+      "displayName": "The Thaw",
+      "startDay": 120,
+      "clearWeight": 1.0,
+      "rainWeight": 2.2,
+      "overcastWeight": 1.2,
+      "ashfallWeight": 0.5,
+      "falloutStormWeight": 0.3,
+      "blizzardWeight": 0.2,
+      "blackRainWeight": 0.8
+    },
+    {
+      "id": "window_black_bloom",
+      "displayName": "The Black Bloom",
+      "startDay": 180,
+      "clearWeight": 0.9,
+      "rainWeight": 1.5,
+      "overcastWeight": 1.1,
+      "ashfallWeight": 1.6,
+      "falloutStormWeight": 0.6,
+      "blizzardWeight": 0.3,
+      "blackRainWeight": 0.9
+    },
+    {
+      "id": "window_high_cold",
+      "displayName": "High Cold",
       "startDay": 240,
       "clearWeight": 0.5,
-      "rainWeight": 0.4,
+      "rainWeight": 0.3,
       "overcastWeight": 1.0,
-      "ashfallWeight": 1.4,
+      "ashfallWeight": 1.2,
       "falloutStormWeight": 0.8,
-      "blizzardWeight": 2.4,
-      "blackRainWeight": 0.5
+      "blizzardWeight": 2.6,
+      "blackRainWeight": 0.4
+    },
+    {
+      "id": "window_the_turning",
+      "displayName": "The Turning",
+      "startDay": 300,
+      "clearWeight": 1.5,
+      "rainWeight": 1.0,
+      "overcastWeight": 1.0,
+      "ashfallWeight": 0.7,
+      "falloutStormWeight": 0.2,
+      "blizzardWeight": 0.5,
+      "blackRainWeight": 0.2
     }
   ]
 }

@@ -38,7 +38,7 @@ ammunition. No arbitrary loot tables.
 - rarity_tier: common / uncommon / rare / unique — each table has a mix; unique items
   appear only in one location type (creates scavenging motivation).
 - hazard_modifier: some loot is contaminated (irradiated medicine, spoiled food, leaking
-  chemicals) — a chance the loot carries a disease or radiation risk (feeds existing 09A).
+  chemicals) — a chance the loot carries a disease or radiation risk (feeds Plan 112/09A).
 - depletion: does the table deplete on scavenging (one-time) or regenerate (renewable)?
   Most urban sites deplete; wilderness/farm sites regenerate slowly.
 
@@ -66,7 +66,7 @@ ammunition. No arbitrary loot tables.
    with table ids for the corresponding location types.
 7. Link 3 tables to journal unlocks (existing 17C codex) — scavenging certain documents
    unlocks codex entries.
-8. Link 2 tables to disease hazards (existing 09A) — contaminated loot has a disease risk.
+8. Link 2 tables to Plan 112 disease hazards (with Plan 09A diagnostic response) — contaminated loot has a disease risk.
 9. Validate: `--data-integrity-selftest`; confirm a scavenging roll produces weighted,
    location-appropriate loot in a headless boot; confirm depletion flags work.
 10. xUnit: table loads, weights sum correctly, loot rolls are deterministic (seeded),
@@ -96,5 +96,5 @@ a fallback (less granular but no Core change).
 - Plan 32 (expedition wiring) — `lootCategories` references these tables.
 - Plan 37 (excavation sites) — deep-strata sites have their own loot tables (relics).
 - Existing 17C (codex) — scavenged documents unlock codex entries.
-- Existing 09A (disease) — contaminated loot carries disease risk.
+- Plan 112/09A (disease and response) — contaminated loot carries disease risk.
 - Plan 47 (collectibles) — collectibles appear as rare/unique entries in scavenging tables.

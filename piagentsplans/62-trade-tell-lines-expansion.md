@@ -77,5 +77,5 @@ confirm where lines go in the JSON structure before authoring.
 
 ## Follow-on
 - Plan 61 (trade scenarios) — scenarios reference tell lines for negotiation options.
-- Existing 13A (economy) — tell lines are the trader-voice layer of the economy.
+- Plan 13 (trade flow) — tell lines are the trader-voice layer of the economy.
 - Plan 45 (patrols) — patrol negotiation encounters can use tell lines.

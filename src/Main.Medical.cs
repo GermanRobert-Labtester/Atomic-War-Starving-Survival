@@ -61,6 +61,30 @@ namespace AtomicWar.GodotApp
                 _medicalDirty = true;
                 _medicalPanel?.RefreshView();
             };
+
+            // Plan 60 / D6 — a vigil the player keeps is care, and care must be
+            // recorded where the campaign remembers it: the consequence ledger already
+            // rides the save, so no new persistence is introduced. The names worth
+            // reciting are the dead this holdfast has already kept.
+            SetupMemorial();
+            _medical.BindVigilContext(
+                () => _simDay,
+                _consequenceLedger,
+                () =>
+                {
+                    var remembered = new List<string>();
+                    if (_memorial?.Entries != null)
+                    {
+                        for (int i = 0; i < _memorial.Entries.Count && remembered.Count < 6; i++)
+                        {
+                            var entry = _memorial.Entries[i];
+                            if (entry == null || string.IsNullOrEmpty(entry.SurvivorId)) continue;
+                            remembered.Add(FormatSurvivorName(entry.SurvivorId));
+                        }
+                    }
+                    return remembered;
+                });
+
             GD.Print("[Ashfall Godot] Medical host ready.");
         }
 
@@ -119,7 +143,7 @@ namespace AtomicWar.GodotApp
             if (_disease != null)
             {
                 Ashfall.Core.Medical.DiseaseAfflictionHandler.RegisterAll(pipeline, _disease.Engine, _disease.Catalog);
-                Ashfall.Core.Medical.DiseaseProtocolHandler.RegisterAll(pipeline, _disease.Engine);
+                Ashfall.Core.Medical.DiseaseProtocolHandler.RegisterAll(pipeline, _disease.Engine, () => _simDay);
 
                 // Auto-suspect on live infection (never confirms — the player
                 // identifies the illness explicitly through the examination).
@@ -282,6 +306,14 @@ namespace AtomicWar.GodotApp
                 _medicalWardPanel.Visible = false;
                 AddChild(_medicalWardPanel);
             }
+
+            // Plan 60 / D2 + D6 — the bed is where the clinical note, the authorised
+            // treatment, and the vigil belong, so all three are offered from the one
+            // surface the player is already looking at.
+            SetupDisease();
+            SetupMedical();
+            _medicalWardPanel.BindDisease(_disease);
+            _medicalWardPanel.BindVigil(_medical);
         }
 
         private void SaveMedicalWard()
@@ -366,6 +398,9 @@ namespace AtomicWar.GodotApp
             // The exposure pool is the people actually in the shelter tonight
             // (duty-roster home occupants). Pure presentation wiring — the
             // engine owns all rules.
+            // Plan 60 / D4 — protocols are armed with the day they are applied, so
+            // the authored window counts from the moment the work is done.
+            _disease.BindDayProvider(() => _simDay);
             _disease.BindPopulationProvider(() =>
             {
                 var occupants = BuildHomeOccupantSnapshot();
@@ -381,7 +416,36 @@ namespace AtomicWar.GodotApp
             // Ward state rides the expansion-hub save (restored above); any
             // change marks the hub dirty so nothing is lost at day end.
             _disease.StateChanged += () => { _expansionHubDirty = true; };
-            GD.Print("[Ashfall Godot] Disease Expansion ward ready (contagion · quarantine · outbreak).");
+
+            // Plan 60 / D3 — treatment has to spend from the one item authority the
+            // rest of the game already uses, and a dose has to be recorded where the
+            // player can read it back. The ward UI could not otherwise tell a cured
+            // patient from one that merely got company.
+            _disease.BindSupply((itemId, count) =>
+            {
+                if (count <= 0 || string.IsNullOrEmpty(itemId)) return false;
+                SetupInventory();
+                if (_inventory?.Inventory == null) return false;
+                bool spent = _inventory.Inventory.TryConsume(itemId, count);
+                if (spent) SaveInventory();
+                return spent;
+            });
+            _disease.Engine.OnTreatmentApplied += (survivorId, diseaseId, itemId, role, day) =>
+            {
+                SetupJournal();
+                _journal?.TryAddRawEntry(
+                    $"treatment_{survivorId}_{day}_{diseaseId}",
+                    $"{survivorId}: {role} treatment with {itemId} for {diseaseId}.",
+                    null!, day);
+            };
+
+            GD.Print("[Ashfall Godot] Disease Expansion ward ready (contagion · quarantine · outbreak · treatment).");
+
+            // The bed inspector is where a player stands when someone in their ward
+            // is dying, so treatment is offered there rather than on a parallel
+            // disease screen. Idempotent: BindDisease just re-points and refreshes.
+            SetupMedicalWard();
+            _medicalWardPanel?.BindDisease(_disease);
         }
 
         private void CloseMedicalPanel()

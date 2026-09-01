@@ -624,6 +624,313 @@
       "choices": [
         { "choice_id": "choice_execute_killing_volley", "text": "Coordinate high-caliber rifle fire to bring down the titan beast.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 6, "guilt_delta": 0, "advances_chain_stage": 4, "unlocks_field_guide_id": "field_fauna_cave_bear" }
       ]
+    },
+
+    {
+      "id": "enc_patrol_garrison_checkpoint",
+      "title": "Iron Garrison Road Checkpoint",
+      "category": "Human",
+      "faction_id": "iron_garrison",
+      "territory_state": "controlled",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.0,
+      "base_weight": 1.8,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.4 },
+      "season_tags": ["all"],
+      "description": "Two Iron Garrison sentries block the road with a steel barricade painted in regimental stripes. The senior soldier checks a clipboard while the junior keeps a rifle trained on your approach.",
+      "choices": [
+        { "choice_id": "choice_pay_garrison_toll", "text": "Pay the road tax: two tins of canned food per traveller.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food"] },
+        { "choice_id": "choice_show_garrison_pass", "text": "Present a Garrison travel authorization document.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 2, "required_item_id": "sealed_government_document", "required_item_quantity": 1 },
+        { "choice_id": "choice_negotiate_garrison", "text": "Negotiate passage by offering information about road conditions ahead.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 0 },
+        { "choice_id": "choice_avoid_garrison", "text": "Detour through the frozen creek bed to bypass the checkpoint.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_militia_roadblock",
+      "title": "Ash Militia Neighbourhood Watch",
+      "category": "Human",
+      "faction_id": "ash_militia",
+      "territory_state": "controlled",
+      "region_tags": ["dead_suburbs", "industrial_belt"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.5,
+      "base_weight": 1.5,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.8, "Scavenging": 1.2, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "A volunteer militia patrol waves you down at a makeshift barrier of sandbags and shopping carts. They wear armbands cut from ash-stained bedsheets and carry improvised weapons with practised confidence.",
+      "choices": [
+        { "choice_id": "choice_militia_friendly", "text": "Greet them openly and share news from the road.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "ash_militia", "faction_standing_delta": 2 },
+        { "choice_id": "choice_militia_trade", "text": "Offer to trade surplus supplies for safe passage information.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "ash_militia", "faction_standing_delta": 1, "cost_items": ["bandage"] },
+        { "choice_id": "choice_militia_ignore", "text": "Decline to stop and push through the barrier.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -1, "guilt_delta": 0, "faction_id": "ash_militia", "faction_standing_delta": -3 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_railway_convoy",
+      "title": "Railway Guild Armoured Convoy",
+      "category": "Human",
+      "faction_id": "faction_railway_guild",
+      "territory_state": "controlled",
+      "region_tags": ["the_toll", "high_scarp"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.0,
+      "base_weight": 1.2,
+      "stance_weights": { "Cautious": 0.8, "Balanced": 1.0, "Aggressive": 0.5, "Scavenging": 0.6, "Rapid": 1.5 },
+      "season_tags": ["all"],
+      "description": "A flatbed rail trolley armoured with welded scrap plates grinds toward you on the old freight line. Guild engineers in oil-stained coveralls ride shotgun beside a crate of mechanical parts bound for the junction.",
+      "choices": [
+        { "choice_id": "choice_guild_join_escort", "text": "Offer to escort the convoy through the next sector in exchange for passage.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_railway_guild", "faction_standing_delta": 3 },
+        { "choice_id": "choice_guild_trade_parts", "text": "Trade fuel for some of their surplus mechanical parts.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_railway_guild", "faction_standing_delta": 1, "cost_items": ["fuel"] },
+        { "choice_id": "choice_guild_let_pass", "text": "Step aside and let the convoy pass without interaction.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_hydro_escort",
+      "title": "Hydro Baron Water Convoy",
+      "category": "Human",
+      "faction_id": "faction_hydro_barons",
+      "territory_state": "controlled",
+      "region_tags": ["dead_suburbs"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.0,
+      "base_weight": 1.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.4, "Scavenging": 0.8, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "A convoy of insulated water tankers rolls through the district, flanked by Baron enforcers carrying filtration gauntlets and dosimeters. The lead driver signals you to identify yourself.",
+      "choices": [
+        { "choice_id": "choice_baron_identify", "text": "Introduce yourself and your shelter. The Barons value known customers.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_hydro_barons", "faction_standing_delta": 2 },
+        { "choice_id": "choice_baron_buy_water", "text": "Purchase a ration of clean water from the convoy.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "faction_id": "faction_hydro_barons", "faction_standing_delta": 1, "cost_items": ["currency"] },
+        { "choice_id": "choice_baron_avoid", "text": "Keep your distance. The Barons remember faces, and you owe them.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -1, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_warlord_raid",
+      "title": "Warlord Raid Party",
+      "category": "Human",
+      "faction_id": "warlords_sector_4",
+      "territory_state": "contested",
+      "region_tags": ["the_toll", "industrial_belt"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 5.0,
+      "base_weight": 1.5,
+      "stance_weights": { "Cautious": 0.4, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.6, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "A warlord raiding party moves through the contested zone in loose formation — six fighters with scavenged military gear and a supply sled. Their leader spots you and raises a hand: stop or be stopped.",
+      "choices": [
+        { "choice_id": "choice_warlord_comply", "text": "Stop and submit to inspection. Resistance is not worth the risk.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 0 },
+        { "choice_id": "choice_warlord_bribe", "text": "Offer food to let your team pass uninspected.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food", "canned_food"] },
+        { "choice_id": "choice_warlord_flee", "text": "Break into a sprint toward cover. The warlords may not chase.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -3, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": -5 },
+        { "choice_id": "choice_warlord_fight", "text": "Draw weapons and engage the raiding party.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -4, "guilt_delta": 2, "faction_id": "warlords_sector_4", "faction_standing_delta": -15 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_warlord_press_gang",
+      "title": "Warlord Press Gang",
+      "category": "Human",
+      "faction_id": "warlords_sector_4",
+      "territory_state": "contested",
+      "region_tags": ["the_toll"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 0.6, "Balanced": 0.8, "Aggressive": 1.2, "Scavenging": 0.5, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "A warlord recruitment squad has cornered a family of refugees against a collapsed wall. The squad leader is explaining — politely, firmly — that the Sector 4 labour corps needs able bodies. The father is shaking his head.",
+      "choices": [
+        { "choice_id": "choice_press_intervene", "text": "Step between the press gang and the family. Demand they stand down.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": -10 },
+        { "choice_id": "choice_press_negotiate", "text": "Offer supplies in exchange for the family's release.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": -3, "cost_items": ["canned_food", "canned_food", "canned_food", "canned_food", "canned_food"] },
+        { "choice_id": "choice_press_ignore", "text": "Walk past. This is not your fight.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -4, "guilt_delta": 3 },
+        { "choice_id": "choice_press_side_with", "text": "Help the press gang identify able-bodied travellers in exchange for safe passage.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -6, "guilt_delta": 5, "faction_id": "warlords_sector_4", "faction_standing_delta": 8 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_refugee_eviction",
+      "title": "Garrison Refugee Eviction",
+      "category": "Human",
+      "faction_id": "iron_garrison",
+      "territory_state": "controlled",
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.5,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.5, "Scavenging": 0.8, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "Garrison soldiers are clearing a makeshift camp at the edge of a controlled zone. A dozen refugees huddle around a sputtering fire while a sergeant reads from a relocation order. The camp's water barrel is being rolled toward the truck.",
+      "choices": [
+        { "choice_id": "choice_eviction_mediate", "text": "Approach the sergeant and negotiate a delay — the refugees need time to pack.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": -2 },
+        { "choice_id": "choice_eviction_help_refugees", "text": "Help the refugees carry their belongings to the relocation point.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
+        { "choice_id": "choice_eviction_supplies", "text": "Share food and medicine with the refugees before they are moved.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 4, "guilt_delta": 0, "cost_items": ["canned_food", "bandage"] },
+        { "choice_id": "choice_eviction_support_garrison", "text": "Support the eviction — the camp is a security risk in controlled territory.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -3, "guilt_delta": 2, "faction_id": "iron_garrison", "faction_standing_delta": 5 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_foundry_supply",
+      "title": "Ordnance Foundry Supply Convoy",
+      "category": "Human",
+      "faction_id": "faction_ordnance_foundry",
+      "territory_state": "controlled",
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.0,
+      "base_weight": 1.2,
+      "stance_weights": { "Cautious": 0.8, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 1.0, "Rapid": 0.8 },
+      "season_tags": ["all"],
+      "description": "A Foundry logistics convoy grinds through the industrial belt — two armoured trucks carrying ammunition crates and tool sets under armed guard. The convoy commander radios your position before deciding whether to engage.",
+      "choices": [
+        { "choice_id": "choice_foundry_trade", "text": "Signal peaceful intent and offer to trade materials for ammunition.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_ordnance_foundry", "faction_standing_delta": 1, "cost_items": ["scrap_metal", "scrap_metal", "scrap_metal"] },
+        { "choice_id": "choice_foundry_info", "text": "Share intelligence about road conditions in exchange for a tool.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_ordnance_foundry", "faction_standing_delta": 2 },
+        { "choice_id": "choice_foundry_ignore", "text": "Stay clear of the convoy. Foundry guards are twitchy.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_supply_corps_convoy",
+      "title": "Supply Corps Relief Convoy",
+      "category": "Human",
+      "faction_id": "faction_supply_corps",
+      "territory_state": "controlled",
+      "region_tags": ["high_scarp", "dead_suburbs"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.0,
+      "base_weight": 1.0,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.4, "Scavenging": 0.8, "Rapid": 0.6 },
+      "season_tags": ["all"],
+      "description": "A Supply Corps relief column passes through — three handcarts loaded with medical kits and rations, escorted by clerks with clipboards and sidearms. The quartermaster nods at your team and checks her manifest.",
+      "choices": [
+        { "choice_id": "choice_corps_request_aid", "text": "Request medical supplies for your shelter. The Corps keeps records of who receives aid.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "faction_id": "faction_supply_corps", "faction_standing_delta": 2 },
+        { "choice_id": "choice_corps_trade", "text": "Trade surplus goods for Corps rations.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_supply_corps", "faction_standing_delta": 1, "cost_items": ["cloth", "cloth", "cloth"] },
+        { "choice_id": "choice_corps_let_pass", "text": "Wave them through. The Corps has its own schedule.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_ash_sign_scouts",
+      "title": "Ash Sign Reconnaissance Team",
+      "category": "Human",
+      "faction_id": "faction_ash_sign",
+      "territory_state": "contested",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 1.5,
+      "max_danger_level": 4.0,
+      "base_weight": 1.0,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.5 },
+      "season_tags": ["all"],
+      "description": "Three Ash Sign scouts emerge from the ash haze — grey-wrapped figures with dosimeters and field notebooks. They have been mapping radiation contours in the contested zone. Their leader studies your team with unsettling calm.",
+      "choices": [
+        { "choice_id": "choice_ashsign_observe", "text": "Ask what they have found. The Ash Sign values those who listen.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_ash_sign", "faction_standing_delta": 2 },
+        { "choice_id": "choice_ashsign_share_data", "text": "Share your own dosimeter readings in exchange for route intelligence.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0, "faction_id": "faction_ash_sign", "faction_standing_delta": 3 },
+        { "choice_id": "choice_ashsign_avoid", "text": "Keep moving. The Ash Sign's interest in radiation is not your concern.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_cult_recon",
+      "title": "Cult of the Ash Sign Patrol",
+      "category": "Human",
+      "faction_id": "cult_of_ash_sign",
+      "territory_state": "contested",
+      "region_tags": ["the_toll"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 4.5,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 0.8, "Aggressive": 0.5, "Scavenging": 0.6, "Rapid": 0.4 },
+      "season_tags": ["all"],
+      "description": "A Cult patrol moves through the contested zone in silence — five acolytes carrying ash-censers and hand-painted radiation warnings. They stop when they see you, and the eldest begins chanting softly.",
+      "choices": [
+        { "choice_id": "choice_cult_listen", "text": "Stand still and listen to the chant. The Cult respects patience.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "cult_of_ash_sign", "faction_standing_delta": 3 },
+        { "choice_id": "choice_cult_trade_relics", "text": "Offer a pre-war relic in exchange for safe passage through their territory.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "cult_of_ash_sign", "faction_standing_delta": 2, "cost_items": ["tarnished_medal"] },
+        { "choice_id": "choice_cult_flee", "text": "Back away slowly. The Cult's hospitality has limits.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 0, "faction_id": "cult_of_ash_sign", "faction_standing_delta": -2 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_central_garrison_border",
+      "title": "Central Garrison Border Inspection",
+      "category": "Human",
+      "faction_id": "faction_central_garrison",
+      "territory_state": "border",
+      "region_tags": ["high_scarp"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.5,
+      "base_weight": 1.5,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.5, "Scavenging": 0.7, "Rapid": 0.4 },
+      "season_tags": ["all"],
+      "description": "A Central Garrison border detail blocks the road at the edge of their jurisdiction — four soldiers in pressed uniforms with a field desk and a stamp kit. The officer asks for your movement authorization and shelter registration number.",
+      "choices": [
+        { "choice_id": "choice_central_comply", "text": "Present your documents and submit to inspection.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_central_garrison", "faction_standing_delta": 2, "required_item_id": "sealed_government_document", "required_item_quantity": 1 },
+        { "choice_id": "choice_central_negotiate", "text": "Explain your mission. The Central Garrison respects purpose.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "faction_central_garrison", "faction_standing_delta": 0 },
+        { "choice_id": "choice_central_bribe", "text": "Slip the officer a tin of rations to expedite the process.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "faction_central_garrison", "faction_standing_delta": 1, "cost_items": ["canned_food"] },
+        { "choice_id": "choice_central_turn_back", "text": "Turn back. The Central Garrison does not forget faces at the border.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_black_ops_ambush",
+      "title": "Black Ops Interception",
+      "category": "Human",
+      "faction_id": "faction_black_ops",
+      "territory_state": "contested",
+      "region_tags": ["industrial_belt", "the_toll"],
+      "min_danger_level": 2.5,
+      "max_danger_level": 5.0,
+      "base_weight": 0.6,
+      "stance_weights": { "Cautious": 0.5, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.4, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "A Black Ops interception team materialises from the ruins — three figures in mismatched military gear with suppressed weapons and signal jammers. Their leader holds up a hand: they want to know who you are and who sent you.",
+      "choices": [
+        { "choice_id": "choice_blackops_identify", "text": "Identify yourself honestly. Black Ops respects transparency — up to a point.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "faction_black_ops", "faction_standing_delta": 1 },
+        { "choice_id": "choice_blackops_intel", "text": "Offer intelligence about other faction movements in exchange for passage.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "faction_black_ops", "faction_standing_delta": 5 },
+        { "choice_id": "choice_blackops_flee", "text": "Run. Black Ops does not take prisoners, but they also do not chase.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -4, "guilt_delta": 0, "faction_id": "faction_black_ops", "faction_standing_delta": -8 },
+        { "choice_id": "choice_blackops_fight", "text": "Engage the interception team. This is what they expected.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -5, "guilt_delta": 3, "faction_id": "faction_black_ops", "faction_standing_delta": -20 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_scavenger_raid",
+      "title": "Scavenger Ambush Party",
+      "category": "Human",
+      "faction_id": "faction_scavengers",
+      "territory_state": "contested",
+      "region_tags": ["industrial_belt", "dead_suburbs"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 4.5,
+      "base_weight": 1.0,
+      "stance_weights": { "Cautious": 0.5, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.6, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "A Scavenger ambush party has set up a choke point in the ruins — four figures behind cover with salvaged weapons and a demand for tribute. Their leader calls out: everything you carry has salvage value, and they intend to collect.",
+      "choices": [
+        { "choice_id": "choice_scav_pay", "text": "Hand over a selection of supplies. The Scavengers are efficient, not cruel.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "faction_scavengers", "faction_standing_delta": 1, "cost_items": ["scrap_metal", "scrap_metal", "electronic_scrap"] },
+        { "choice_id": "choice_scav_trade", "text": "Propose a fair trade — your surplus for their salvage intel.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_scavengers", "faction_standing_delta": 3, "cost_items": ["mechanical_parts"] },
+        { "choice_id": "choice_scav_flee", "text": "Break through the choke point. The Scavengers are spread thin.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -3, "guilt_delta": 0, "faction_id": "faction_scavengers", "faction_standing_delta": -5 },
+        { "choice_id": "choice_scav_fight", "text": "Engage the ambush party. They started this.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -4, "guilt_delta": 1, "faction_id": "faction_scavengers", "faction_standing_delta": -12 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_penal_battalion",
+      "title": "Penal Battalion Labour Column",
+      "category": "Human",
+      "faction_id": "faction_penal_battalion",
+      "territory_state": "contested",
+      "region_tags": ["industrial_belt"],
+      "min_danger_level": 1.0,
+      "max_danger_level": 3.0,
+      "base_weight": 0.8,
+      "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.5 },
+      "season_tags": ["all"],
+      "description": "A Penal Battalion labour column trudges through the industrial belt — a dozen convicts in numbered jackets guarded by four wardens with truncheons and a supply cart. The convicts are clearing rubble from a collapsed overpass.",
+      "choices": [
+        { "choice_id": "choice_penal_observe", "text": "Watch from a distance. The Battalion does not welcome spectators.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -1, "guilt_delta": 1 },
+        { "choice_id": "choice_penal_trade_warden", "text": "Approach the wardens and offer to trade tools for information.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "faction_penal_battalion", "faction_standing_delta": 1, "cost_items": ["soldering_kit"] },
+        { "choice_id": "choice_penal_help_convicts", "text": "Slip water to the convicts when the wardens are not looking.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "faction_id": "faction_penal_battalion", "faction_standing_delta": -5, "cost_items": ["clean_water"] }
+      ]
     }
   ]
 }

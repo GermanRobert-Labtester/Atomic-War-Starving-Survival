@@ -35,7 +35,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "PHARMACEUTICAL LABORATORY // CHEMICAL COMPOUNDING"
 theme_override_font_sizes/font_size = 20
-theme_override_colors/font_color = Color(0.431, 0.639, 0.659, 1)
+theme_override_colors/font_color = Color(0.78, 0.86, 0.81, 1)
 
 [node name="HeaderSpacer" type="Control" parent="Root/MainVBox/Header"]
 layout_mode = 2

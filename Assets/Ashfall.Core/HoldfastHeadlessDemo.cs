@@ -33,7 +33,7 @@ namespace Ashfall.Core
             report.QuestCount = session.Catalog.Quests.Count;
 
             Check(session.Catalog.Locations.Count >= 26, "unlocked catalog includes District 8 cards");
-            Check(session.Catalog.Quests.Count == 10, "ten Holdfast quests");
+            Check(session.Catalog.Quests.Count >= 22, "at least 22 Holdfast quests");
             var plant = session.Catalog.GetLocation(IceRoadSystem.LocAbandonedDesalination);
             Check(plant != null, "desalination recast present");
             Check(plant == null || plant.displayName.IndexOf("(existing", System.StringComparison.Ordinal) < 0,

@@ -98,6 +98,20 @@ namespace Ashfall.Core.Combat
         public bool IsLastStand;
         public string WeaponInstanceId = string.Empty;
         public bool HasFled;
+
+        // ── AI trait fields populated from CombatCatalog (Plan 10 ─
+        // strata populated by <see cref="Ashfall.Core.Combat.CombatantFactory"/>
+        // when an encounter setup hands it a `combatant_*` id. Defaults are
+        // safe for combatant rows constructed by the legacy hand-coded path
+        // so old saves and legacy encounter setups continue to work without
+        // behaviour change.
+        public string AiStancePreference = "HoldPosition"; // TacticalStance name
+        public string AiSpecialMove = "None";            // None|Burrow|Flank|Spore|Charge|SuppressiveFire|TacticalRetreat
+        public float AiAccuracyMod = 1f;                 // multiplier on outgoing accuracy
+        public float AiDamageMod = 1f;                   // multiplier on outgoing damage
+        public float SurrenderThreshold = -1f;           // -1 = never; 0..1 = open path
+        public float FleeThreshold = -1f;                // -1 = never; 0..1 = open path
+        public string CatalogId = string.Empty;          // combatant_* id when spawned via factory; "" for legacy rows
     }
 
     /// <summary>Per-lane barrier (sandbags, barricade) blocking fire.</summary>

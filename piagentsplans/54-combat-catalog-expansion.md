@@ -10,8 +10,8 @@ headless demo) but has almost nothing to fight with or fight against.
   enemy definitions. `TacticalCombatSystem.cs` + 5 partial files are fully implemented with
   save persistence. The combat system is the most underfed live system in the project.
 - Without weapons and enemies, the combat loop (aim → fire → damage → jam → degrade →
-  loot) has no content. Plan 45 patrol encounters need enemies; existing 10A/10B planned
-  this expansion but it hasn't been executed.
+  loot) has no content. Plan 45 patrol encounters need enemies; this plan is the sole
+  combat-catalog expansion owner.
 - Pure DATA work — zero new Core code.
 
 ## Files to touch
@@ -94,6 +94,6 @@ the catalog, confirm how `TacticalCombatSystem` spawns combatants before authori
 
 ## Follow-on
 - Plan 45 (patrol encounters) — enemies populate patrol combat.
-- Existing 10A/10B (bestiary + armory) — this plan executes that expansion.
+- Plan 10 (combat resolution/readiness) consumes this catalog without expanding it.
 - Plan 37 (excavation) — automated turrets as site defenses.
 - Plan 35 (wildlife) — feral animals and mutant fauna link to migration data.

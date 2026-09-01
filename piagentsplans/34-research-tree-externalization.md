@@ -12,7 +12,7 @@ communications, and shelter technology.
 - `ResearchSystem` is fully implemented, save-supported, and tick-registered; the tech tree
   is the only missing layer.
 - Research unlocks are referenced by Plan 04 (relic blueprints), Plan 22 (foundry/greenhouse),
-  and the existing 26A plan — but there is nothing to unlock because the tree is empty.
+  and Plan 141's downstream bridge — but there is nothing to unlock because the tree is empty.
 
 ## Files to touch
 - `Assets/StreamingAssets/Data/research_catalog.json` (CREATE — new catalog, ~40 entries)
@@ -71,4 +71,4 @@ validation is the new hazard (cycles break the research queue). Mitigated by ste
 ## Follow-on
 - Plan 33 (skills) feeds research prerequisites (`skill_*` gates `knowledge_*`).
 - Plan 04 (relic blueprints) unlocks via advanced research nodes.
-- Library manuals (existing 26C, `library_manuals.json` = 3 broken) unlock research branches.
+- Library manuals (Plan 80, `library_manuals.json` = 3 broken) unlock research branches.

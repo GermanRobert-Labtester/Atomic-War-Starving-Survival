@@ -35,6 +35,8 @@ namespace AtomicWar.GodotApp
         private TravelingCaravanPanel _travelingCaravanPanel = null!;
         private TravelingCaravanHostSession _travelingCaravan = null!;
         private ShelterAssignmentHostSession _shelterAssignment = null!;
+        private ShelterDecorHostSession _shelterDecor = null!;
+        private ShelterDecorPanel _shelterDecorPanel = null!;
 
         private SumpFloodingPanel _sumpFloodingPanel = null!;
         private DecontaminationPanel _decontaminationPanel = null!;
@@ -256,6 +258,52 @@ namespace AtomicWar.GodotApp
             _phase0.BindShelterAssignment(_shelterAssignment.System);
         }
 
+        /// <summary>
+        /// Plan 12C final host triad. Placements restore from the campaign
+        /// envelope; item modifiers are rebuilt from the authoritative live
+        /// item catalog, never copied into a save. Existing memorial entries
+        /// are reconciled once so saves authored before this panel gain their
+        /// wall records deterministically.
+        /// </summary>
+        private void SetupShelterDecor()
+        {
+            if (_shelterDecor != null) return;
+
+            SetupSurvivors();
+            SetupInventory();
+            SetupShelterAssignment();
+            SetupMemorial();
+
+            var system = new ShelterDecorSystem();
+            var saved = ShelterDecorSaveStore.TryLoad();
+            if (saved != null)
+                system.RestoreState(saved.Capture());
+
+            _shelterDecor = new ShelterDecorHostSession(
+                system,
+                _shelterAssignment.System,
+                _survivors.Needs,
+                _inventory);
+            _shelterDecor.SetCurrentDay(_simDay);
+            _shelterDecor.LoadCatalogModifiers();
+
+            // This is intentionally idempotent: only legacy memorial entries
+            // without a plaque become new placements, and a duplicate survivor
+            // key is never mounted twice.
+            foreach (var entry in _memorial.Entries)
+            {
+                if (!_shelterDecor.TryMountMemorialPlaque(entry, out var reason))
+                    GD.PushWarning("[Ashfall Godot] Memorial plaque reconcile skipped: " + reason);
+            }
+
+            if (_shelterDecorPanel != null && _shelterDecorPanel.IsInsideTree())
+                RemoveChild(_shelterDecorPanel);
+            _shelterDecorPanel = new ShelterDecorPanel();
+            _shelterDecorPanel.Bind(_shelterDecor);
+            _shelterDecorPanel.Visible = false;
+            AddChild(_shelterDecorPanel);
+        }
+
         private void SaveSumpFlooding()
         {
             if (_sumpFlooding != null)
@@ -325,6 +373,13 @@ namespace AtomicWar.GodotApp
 
             if (CaptureSection("shelter_assignment", ShelterAssignmentSaveStore.TryCapturePersisted(save)))
                 _shelterAssignment.ClearDirty();
+        }
+
+        private void SaveShelterDecor()
+        {
+            if (_shelterDecor == null) return;
+            if (CaptureSection("shelter_decor", ShelterDecorSaveStore.TryCapturePersisted(_shelterDecor.System.State)))
+                _shelterDecor.ClearDirty();
         }
     }
 }

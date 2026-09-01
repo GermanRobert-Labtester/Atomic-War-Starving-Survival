@@ -77,7 +77,7 @@ room-view UI slots in `src/UI/`, Main triad + save section.
 2. Design `ShelterDecorSystem`: per-room decor slots, decor item category, per-decor localized morale modifier — all pure C# DTOs, `ISeededRng`-free (no randomness needed).
 3. Author 12 decor items (propaganda posters, locomotive nameplate, carved memorial plaque, child's drawing, pressed flower frame) in `items.json`.
 4. Wire localized room morale into `NeedsSystem` warmth/morale modifiers (occupants of a decorated room get the buff).
-5. Connect `MemorialSystem`: a fulfilled final wish (06A) or a vigil-managed death (09C) yields a memorial plaque item.
+5. Connect `MemorialSystem`: a fulfilled Plan 65 final wish or a vigil-managed death (09C) yields a memorial plaque item.
 6. Add decor slots to the room view UI (Godot side only renders; logic stays in Core).
 7. Add the Setup/Save/Flush triad + registry save section via `SaveStoreHub`.
 8. Data-integrity selftest; snapshot-diff on the room/interior panel (new golden image).

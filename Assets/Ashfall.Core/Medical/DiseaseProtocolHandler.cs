@@ -95,36 +95,43 @@ namespace Ashfall.Core.Medical
             return true;
         }
 
-        /// <summary>Register the four authored vector protocols. Returns the count registered.</summary>
-        public static int RegisterAll(MedicalPipelineCoordinator pipeline, DiseaseSystem disease)
+        /// <summary>
+        /// Register the four authored vector protocols. Returns the count registered.
+        /// Plan 60 / D4 — an optional day provider lets the coordinator arm expiry at
+        /// the day the protocol is actually applied; without it the protocol re-arms
+        /// from the next day tick, which is the legacy-correct fallback.
+        /// </summary>
+        public static int RegisterAll(MedicalPipelineCoordinator pipeline, DiseaseSystem disease,
+            Func<int>? dayProvider = null)
         {
             if (pipeline == null || disease == null) return 0;
+            int Day() => dayProvider?.Invoke() ?? 0;
             pipeline.RegisterProtocol(new DiseaseProtocolHandler(
                 disease,
                 MedicalTreatmentCatalog.ProtocolPurifyWater,
                 "Purify Water Stores",
-                disease.PurifyWater,
+                () => disease.PurifyWater(Day()),
                 () => disease.State.water_purified,
                 MedicalTreatmentCatalog.ItemCleanWater));
             pipeline.RegisterProtocol(new DiseaseProtocolHandler(
                 disease,
                 MedicalTreatmentCatalog.ProtocolSealVents,
                 "Seal Ventilators",
-                disease.SealVents,
+                () => disease.SealVents(Day()),
                 () => disease.State.vents_sealed,
                 MedicalTreatmentCatalog.ItemGasMask));
             pipeline.RegisterProtocol(new DiseaseProtocolHandler(
                 disease,
                 MedicalTreatmentCatalog.ProtocolSterilizeTools,
                 "Sterilise Surgical Tools",
-                disease.SterilizeTools,
+                () => disease.SterilizeTools(Day()),
                 () => disease.State.tools_sterilized,
                 MedicalTreatmentCatalog.ItemAntibiotics));
             pipeline.RegisterProtocol(new DiseaseProtocolHandler(
                 disease,
                 MedicalTreatmentCatalog.ProtocolAirFiltration,
                 "Engage Air Filtration",
-                () => disease.SetAirFiltration(true),
+                () => disease.SetAirFiltration(true, Day()),
                 () => disease.State.air_filtration,
                 MedicalTreatmentCatalog.ItemHazmatSuit));
             return 4;

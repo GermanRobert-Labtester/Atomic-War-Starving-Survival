@@ -142,6 +142,168 @@
       "hungerRestore": 14,
       "moraleEffect": -3,
       "contamination": 0.6
+    },
+    {
+      "id": "item_seed_hardy_tuber",
+      "displayName": "Frost Tuber Eyes",
+      "description": "Black rutabaga root cuttings with deep dormant eyes. Survives frost and damp soil that would rot ordinary roots.",
+      "type": "Material",
+      "stackMax": 15,
+      "weight": 0.25,
+      "tradeValue": 7
+    },
+    {
+      "id": "crop_hardy_tuber",
+      "displayName": "Frost Tuber",
+      "description": "Dense, fibrous winter root vegetable. Earthy and filling, it stores well through sub-zero seasons.",
+      "type": "Food",
+      "stackMax": 15,
+      "weight": 0.35,
+      "tradeValue": 6,
+      "hungerRestore": 14,
+      "thirstRestore": 1,
+      "moraleEffect": 1
+    },
+    {
+      "id": "item_seed_ash_grain",
+      "displayName": "Ash-Barley Seed",
+      "description": "Heavy soot-coated barley grains selected for resistance to acid fallout and low sunlight.",
+      "type": "Material",
+      "stackMax": 30,
+      "weight": 0.05,
+      "tradeValue": 6
+    },
+    {
+      "id": "crop_ash_grain",
+      "displayName": "Ash-Barley Grain",
+      "description": "Rough, dark grain with a smokey aroma. Makes heavy flatbread and durable survival porridge.",
+      "type": "Food",
+      "stackMax": 30,
+      "weight": 0.1,
+      "tradeValue": 7,
+      "hungerRestore": 20,
+      "moraleEffect": 2
+    },
+    {
+      "id": "item_seed_biolum_mushroom",
+      "displayName": "Phosphor Cap Culture",
+      "description": "Agar slant infused with faint greenish bioluminescent mycelium. Thrives in cold dark sumps.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 8
+    },
+    {
+      "id": "crop_biolum_mushroom",
+      "displayName": "Phosphor Cap Fungi",
+      "description": "Luminescent fungal caps with a mild sedative effect. Harvested for calm-inducing teas and pharma extraction.",
+      "type": "Food",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 9,
+      "hungerRestore": 5,
+      "moraleEffect": 3
+    },
+    {
+      "id": "item_seed_nutrient_algae",
+      "displayName": "Chlorella Starter Inoculant",
+      "description": "A dense vial of resilient green microalgae adapted to shallow nutrient trays and warm grow-troughs.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.2,
+      "tradeValue": 10
+    },
+    {
+      "id": "crop_nutrient_algae",
+      "displayName": "Nutrient Algae Slurry",
+      "description": "Thick protein-rich green paste skimmed from greenhouse cultivation basins. Bitter but life-sustaining.",
+      "type": "Food",
+      "stackMax": 25,
+      "weight": 0.2,
+      "tradeValue": 5,
+      "hungerRestore": 15,
+      "healthEffect": 1,
+      "moraleEffect": 0
+    },
+    {
+      "id": "item_seed_medicinal_herb",
+      "displayName": "Yarrow & Fever-Bark Cutting",
+      "description": "Rooted herbal cuttings wrapped in damp sphagnum moss. Supplies the shelter dispensary with natural antipyretics.",
+      "type": "Material",
+      "stackMax": 15,
+      "weight": 0.1,
+      "tradeValue": 12
+    },
+    {
+      "id": "crop_medicinal_herb",
+      "displayName": "Medicinal Herb Bundle",
+      "description": "Aromatic bundle of harvested fever-bark and dried yarrow leaves. Brewed to reduce fever and cleanse wounds.",
+      "type": "Medical",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 14,
+      "hungerRestore": 2,
+      "moraleEffect": 2,
+      "healthEffect": 3
+    },
+    {
+      "id": "item_seed_leafy_green",
+      "displayName": "Winter Cress Seed",
+      "description": "Tiny seeds of peppery, cold-hardy cruciferous greens that germinate within days.",
+      "type": "Material",
+      "stackMax": 30,
+      "weight": 0.05,
+      "tradeValue": 5
+    },
+    {
+      "id": "crop_leafy_green",
+      "displayName": "Fresh Winter Cress",
+      "description": "Crisp, peppery green leaves packed with essential vitamin C. The primary shelter defense against scurvy.",
+      "type": "Food",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 5,
+      "hungerRestore": 8,
+      "moraleEffect": 3,
+      "healthEffect": 1
+    },
+    {
+      "id": "item_seed_oilseed",
+      "displayName": "Sun-Flax Seed",
+      "description": "Golden oil-rich seed heads selected for high lipid yield under concentrated grow lamps.",
+      "type": "Material",
+      "stackMax": 30,
+      "weight": 0.05,
+      "tradeValue": 8
+    },
+    {
+      "id": "crop_oilseed",
+      "displayName": "Harvested Sun-Flax",
+      "description": "Ripe flax pods ready for mechanical pressing into lamp oil, culinary fat, and durable fiber.",
+      "type": "Material",
+      "stackMax": 25,
+      "weight": 0.15,
+      "tradeValue": 10
+    },
+    {
+      "id": "item_seed_cold_legume",
+      "displayName": "Iron Pea Pods",
+      "description": "Hard dried pea pods with nitrogen-fixing root nodules that replenish exhausted greenhouse soil.",
+      "type": "Material",
+      "stackMax": 25,
+      "weight": 0.1,
+      "tradeValue": 7
+    },
+    {
+      "id": "crop_cold_legume",
+      "displayName": "Harvested Iron Peas",
+      "description": "Dense, starchy legumes packed with vegetable protein. Essential for hearty survival potages and brines.",
+      "type": "Food",
+      "stackMax": 25,
+      "weight": 0.2,
+      "tradeValue": 8,
+      "hungerRestore": 16,
+      "moraleEffect": 1
     }
   ]
 }

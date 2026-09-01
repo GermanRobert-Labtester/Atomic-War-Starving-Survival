@@ -23,7 +23,7 @@ read-only `EpilogueMatrixRuntime.cs`, `EpilogueChronicleBuilder.cs`, `VerdictEnd
 2. Map which flags currently have rich chronicle text vs. generic stubs.
 3. Author chronicle text variants so each major flag axis (survival, mercy, justice, faction outcome, generational fate) has 2+ distinct phrasings.
 4. Author witness statements (`muster_witnesses.json`) that reference *specific* player deeds (a spared warlord, a defaulted debt, a fulfilled final wish).
-5. Wire fulfilled final wishes (06A) and vigil-managed deaths (09C) into the chronicle as named remembrances.
+5. Wire fulfilled Plan 65 final wishes and vigil-managed deaths (09C) into the chronicle as named remembrances.
 6. Ensure the faction-war outcome (06C) feeds a dedicated epilogue axis.
 7. Add a "chronicle codex" post-ending screen that replays the full generated history (uses JournalCodex).
 8. Validate ids/flags; data-integrity selftest; narrative-continuity check.

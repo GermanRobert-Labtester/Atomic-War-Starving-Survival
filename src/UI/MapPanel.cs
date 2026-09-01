@@ -93,6 +93,18 @@ namespace AtomicWar.GodotApp.UI
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Home Station", "District 8 Holdfast Bunker [Sector 07]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Atmospheric Hazard", weatherStr, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
 
+            // Plan 28 Phase 5 (28L) — coarse wildlife presence in the home sector,
+            // discovery-gated by the world session; no population counts, only band.
+            if (_world != null)
+            {
+                string sighting = _world.HomeSectorWildlifeStatus();
+                if (!string.IsNullOrEmpty(sighting))
+                {
+                    ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Wildlife", sighting,
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                }
+            }
+
             // Weather-intelligence route-safety advisory (station + orbital telemetry).
             var intel = _world?.WeatherIntelligence?.BuildReadModel();
             if (intel != null)

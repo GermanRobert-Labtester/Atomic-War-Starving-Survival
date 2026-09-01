@@ -214,7 +214,7 @@
     {
       "id": "warlord_doctrine_withdrawal",
       "display_name": "Gone to Ground",
-      "description": "The lamps are out and the door is locked. Not surrender — arithmetic. The weather has a column of its own and it does not pay tolls, so the Warlords stop answering the road until the freeze lifts. The quiet is the bill, and the bill will come due in the spring, if there is a spring.",
+      "description": "The lamps are out and the door is locked. Not surrender \u2014 arithmetic. The weather has a column of its own and it does not pay tolls, so the Warlords stop answering the road until the freeze lifts. The quiet is the bill, and the bill will come due in the spring, if there is a spring.",
       "risk_tolerance": 0.15,
       "preferred_goal": "preservation",
       "eligible_actions": [
@@ -243,6 +243,190 @@
           "signal": "supply_ratio",
           "condition": "gte",
           "threshold": 0.9
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_besiege",
+      "display_name": "The Cold Siege",
+      "description": "Patient arithmetic. Brenner does not storm the convoy; she lets the convoy stop for her. She puts two veterans on the choke point, a third on the cut, and a fourth behind the road so the first two cannot be flanked. The road is sealed but not taken. Trucks that pay the winter toll go through. Trucks that don't wait for spring.",
+      "risk_tolerance": 0.35,
+      "preferred_goal": "patience",
+      "eligible_actions": [
+        "demand_tribute",
+        "defend",
+        "contest",
+        "raid"
+      ],
+      "action_weights": {
+        "demand_tribute": 4,
+        "defend": 4,
+        "contest": 2,
+        "raid": 1
+      },
+      "resource_priority": [
+        "fuel",
+        "ammo_556"
+      ],
+      "target_rule": "nearest_chokepoint",
+      "journal_key": "jrnl_warlord_besiege_doctrine",
+      "radio_key": "radio_warlord_besiege",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.1
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.75
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_traffic",
+      "display_name": "The Slave Ledger",
+      "description": "Mireles does not fight for fuel; he fights for people who can be measured. Captured workers go on the ledger, and the ledger is the only thing in Mireles' camps that does not run out. He calls it redistribution. The Toll called it a list. He will not march his captives to the front \u2014 he will sell them forward, slowly, and he will hold what he keeps behind rebar.",
+      "risk_tolerance": 0.55,
+      "preferred_goal": "apprehension",
+      "eligible_actions": [
+        "raid",
+        "demand_tribute",
+        "contest",
+        "defend"
+      ],
+      "action_weights": {
+        "raid": 4,
+        "demand_tribute": 3,
+        "contest": 2,
+        "defend": 1
+      },
+      "resource_priority": [
+        "bandage",
+        "canned_food"
+      ],
+      "target_rule": "isolated_convoy",
+      "journal_key": "jrnl_warlord_traffic_doctrine",
+      "radio_key": "radio_warlord_traffic",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "success_streak",
+          "condition": "gte",
+          "threshold": 3
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "player_tribute_reliability",
+          "condition": "lt",
+          "threshold": 0.3
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_ashprophet",
+      "display_name": "The Ash Cant",
+      "description": "Asha preaches that the fallout is scripture, and the scripture is read in ration cycles. He does not take fuel depots \u2014 he takes the people who tend them, and the people who tend them work for him because the cant says they must. He loses engagements he should win because half his column fasts before a fight. He wins the next one because half his enemies do not.",
+      "risk_tolerance": 0.7,
+      "preferred_goal": "conversion",
+      "eligible_actions": [
+        "contest",
+        "raid",
+        "annex",
+        "defend"
+      ],
+      "action_weights": {
+        "contest": 4,
+        "raid": 3,
+        "annex": 2,
+        "defend": 1
+      },
+      "resource_priority": [
+        "iodine_pills",
+        "clean_water"
+      ],
+      "target_rule": "nearest_undefended",
+      "journal_key": "jrnl_warlord_ashprophet_doctrine",
+      "radio_key": "radio_warlord_ashprophet",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_annexation",
+          "signal": "success_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.3
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 3
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_procedure",
+      "display_name": "The Pincer Manual",
+      "description": "Okov does not improvise. He reads the engagement notes that arrived with the last intact OCTA briefcase and he runs the prescriptions verbatim: contested axis, march column, suppression on lane two, river crossing by twelve. He has not won anything he should have lost. He has not lost anything he should have won. He is patient in a way the Tollman is not.",
+      "risk_tolerance": 0.45,
+      "preferred_goal": "discipline",
+      "eligible_actions": [
+        "contest",
+        "annex",
+        "defend",
+        "demand_tribute"
+      ],
+      "action_weights": {
+        "contest": 3,
+        "annex": 3,
+        "defend": 2,
+        "demand_tribute": 2
+      },
+      "resource_priority": [
+        "brass_fittings",
+        "ammo_556"
+      ],
+      "target_rule": "highest_supply",
+      "journal_key": "jrnl_warlord_procedure_doctrine",
+      "radio_key": "radio_warlord_procedure",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "contested_count",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_annexation",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.2
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.7
         }
       ]
     }
@@ -289,6 +473,18 @@
       "id": "radio_warlord_withdrawal"
     },
     {
+      "id": "radio_warlord_besiege"
+    },
+    {
+      "id": "radio_warlord_traffic"
+    },
+    {
+      "id": "radio_warlord_ashprophet"
+    },
+    {
+      "id": "radio_warlord_procedure"
+    },
+    {
       "id": "journal_warlord_toll_doctrine"
     },
     {
@@ -299,6 +495,18 @@
     },
     {
       "id": "journal_warlord_withdrawal_doctrine"
+    },
+    {
+      "id": "journal_warlord_besiege_doctrine"
+    },
+    {
+      "id": "journal_warlord_traffic_doctrine"
+    },
+    {
+      "id": "journal_warlord_ashprophet_doctrine"
+    },
+    {
+      "id": "journal_warlord_procedure_doctrine"
     }
   ]
 }

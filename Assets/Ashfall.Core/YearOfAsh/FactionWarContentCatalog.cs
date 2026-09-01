@@ -36,12 +36,12 @@ namespace Ashfall.Core.YearOfAsh
         public int CommuniqueCount => _communiques.Count;
         public int LocationOverrideCount => _locationOverrides.Count;
 
-        internal void AddEventChain(FactionWarEventChain chain) => _eventChains.Add(chain);
-        internal void AddJournalEntry(FactionWarJournalEntry entry) => _journalEntries.Add(entry);
-        internal void AddBroadcast(FactionWarBroadcast broadcast) => _broadcasts.Add(broadcast);
-        internal void AddDialogueSnippet(FactionWarDialogueSnippet snippet) => _dialogueSnippets.Add(snippet);
-        internal void AddCommunique(FactionWarCommunique communique) => _communiques.Add(communique);
-        internal void AddLocationOverride(FactionWarLocationOverride entry) => _locationOverrides.Add(entry);
+        public void AddEventChain(FactionWarEventChain chain) => _eventChains.Add(chain);
+        public void AddJournalEntry(FactionWarJournalEntry entry) => _journalEntries.Add(entry);
+        public void AddBroadcast(FactionWarBroadcast broadcast) => _broadcasts.Add(broadcast);
+        public void AddDialogueSnippet(FactionWarDialogueSnippet snippet) => _dialogueSnippets.Add(snippet);
+        public void AddCommunique(FactionWarCommunique communique) => _communiques.Add(communique);
+        public void AddLocationOverride(FactionWarLocationOverride entry) => _locationOverrides.Add(entry);
 
         /// <summary>Returns event chains eligible on or before the given day.</summary>
         public List<FactionWarEventChain> GetEligibleChains(int day)

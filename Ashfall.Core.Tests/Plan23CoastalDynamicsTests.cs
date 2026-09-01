@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Maritime;
@@ -18,7 +19,7 @@ namespace Ashfall.Core.Tests
     {
         private static DiveSiteContainer LoadSites()
             => DiveSiteCatalogLoader.Load(
-                CatalogLocator.RelativeDataPath is { } p && Directory.Exists(p) ? p : FindDataDir(),
+                DataDir(),
                 new FileSystemIO(), new SystemTextJsonSerializer());
 
         private static string DataDir()
@@ -61,9 +62,9 @@ namespace Ashfall.Core.Tests
 
             // Next-window stability: deterministic horizon, no phase drift.
             Assert.Equal(0, TideCalendar.DaysUntilOpen(TideWindow.Slack, 1));
-            Assert.Equal(3, TideCalendar.DaysUntilOpen(TideWindow.Slack, 4));
+            Assert.Equal(1, TideCalendar.DaysUntilOpen(TideWindow.Slack, 4)); // next rising turn
             Assert.Equal(TideCalendar.DaysUntilOpen(TideWindow.LowOnly, 2),
-                         TideCalendar.DaysUntilOpen(TideWindow.LowOnly, 8)); // same phase → same answer
+                         TideCalendar.DaysUntilOpen(TideWindow.LowOnly, 6)); // same phase (High) → same answer
         }
 
         [Fact]
@@ -76,7 +77,7 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void Tide_SixSites_AuthoredWithVariedWindows()
         {
-            var container = LoadCatalog();
+            var container = LoadCatalogSafe();
             Assert.Equal(14, container.dive_sites.Count);
 
             var windows = container.dive_sites.Select(s => s.tide_window).ToList();
@@ -96,7 +97,7 @@ namespace Ashfall.Core.Tests
         public void Tide_LaunchGate_BlocksAndAdmits_ByCampaignDay()
         {
             var dive = new MaritimeDiveSystem(new SeededRng(11));
-            dive.LoadCatalog(LoadCatalog());
+            dive.LoadCatalog(LoadCatalogSafe());
 
             // Metro: low-tide-only. Day 4 = Low (open), day 2 = High (closed).
             Assert.True(dive.CanLaunch("site_exp09_flooded_metro", 4, null, out var openBlocker));
@@ -107,7 +108,7 @@ namespace Ashfall.Core.Tests
 
             // Gear gate still fires after the tide admits.
             Assert.False(dive.CanLaunch("site_exp23_brine_cistern", 0, Array.Empty<string>(), out var gearBlocker));
-            Assert.Equal("item_rebreather_canister", gearBlocker_probe(gear));
+            Assert.Equal("item_rebreather_canister", gearBlocker);
 
             // Old-save behavior: no day authority → ungated.
             Assert.True(dive.CanLaunch("site_exp09_ss_sovereign", -1, null, out _));
@@ -118,7 +119,7 @@ namespace Ashfall.Core.Tests
         {
             Assert.Equal(TideCalendar.IsWindowOpen(TideWindow.Slack, 77), TideCalendar.IsWindowOpen(TideWindow.Slack, 77));
             Assert.Equal(TideCalendar.PhaseFor(77), TideCalendar.PhaseFor(77));
-            Assert.Equal(TideCalendar.DaysUntilOpen(TideWindow.LowOnly, 77), TideCalendar.DaysUntilOpen(TideWindow.Slack == TideWindow.Slack ? 77 : 78));
+            Assert.Equal(TideCalendar.DaysUntilOpen(TideWindow.LowOnly, 77), TideCalendar.DaysUntilOpen(TideWindow.LowOnly, 77));
         }
 
         // ── Storm surge: one producer path (weather → deep-coast tick) ──

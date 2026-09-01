@@ -34,6 +34,32 @@ namespace Ashfall.Core.Crafting
     {
         public const string FileName = "recipes.json";
 
+        /// <summary>
+        /// Recipe ids in recipes.json that have <c>resultAmount = 0</c>
+        /// because their real effect is a non-inventory action (heater
+        /// refuel, thermal-pipe thaw, deep rebar injection, advanced water
+        /// purifier rebuild, desalination still rebuild, improvised heater
+        /// rebuild — each preserves its named output as a documentary
+        /// status token; the inventory is not consumed and not produced)
+        /// wired through gameplay systems external to this loader. They are
+        /// explicitly allowlisted so a strict-mode load does not break
+        /// them; new recipes with zero resultAmount MUST NOT be added to
+        /// this set without first giving them an authoritative non-inventory
+        /// command surface. Plan 10 remediation removed the sink
+        /// "lubricate_weapon" — it was NOT in the allowlist and is now
+        /// expected to fail closed under any loader run.
+        /// </summary>
+        public static readonly System.Collections.Generic.HashSet<string> LegacyZeroResultAllowlist =
+            new System.Collections.Generic.HashSet<string>(System.StringComparer.Ordinal)
+            {
+                "refuel_heater",
+                "thaw_frozen_pipe",
+                "inject_concrete_pillar",
+                "craft_advanced_water_purifier",
+                "craft_desalination_still",
+                "craft_improvised_heater"
+            };
+
         public static List<Recipe> Load(string dataDir, IFileIO fileIO, IJsonSerializer serializer, ItemCatalog catalog)
         {
             var loadResult = LoadWithResult(dataDir, fileIO, serializer, catalog);
@@ -77,6 +103,25 @@ namespace Ashfall.Core.Crafting
                     var dto = dtos[i];
                     if (dto == null || string.IsNullOrEmpty(dto.id)) continue;
 
+                    // Strict-mode validation (Plan 10 remediation): a recipe
+                    // that declares a result item but produces zero of it is
+                    // a sink — it consumes player inventory for no defined
+                    // outcome. The legacy allowlist below is the one
+                    // permitted exception for pre-existing non-inventory
+                    // effects. Any new entry must not be added to it without
+                    // an authoritative non-inventory command surface.
+                    if (dto.resultAmount <= 0
+                        && !string.IsNullOrEmpty(dto.resultItemId)
+                        && !LegacyZeroResultAllowlist.Contains(dto.id))
+                    {
+                        throw new System.IO.InvalidDataException(
+                            "recipes.json recipe '" + dto.id
+                            + "' declares resultItemId='" + dto.resultItemId
+                            + "' but resultAmount=" + dto.resultAmount
+                            + " — a normal inventory recipe cannot silently consume inputs with a zero result."
+                            + " Either set resultAmount > 0 or remove the result item; this loader forbids the sink pattern.");
+                    }
+
                     var recipe = new Recipe
                     {
                         id = dto.id,
@@ -107,6 +152,14 @@ namespace Ashfall.Core.Crafting
 
                     result.AddEntry(recipe);
                 }
+            }
+            catch (System.IO.InvalidDataException)
+            {
+                // Re-raise hard validation errors (sink-pattern rejection and
+                // future schema-version-mismatch errors). These MUST bubble out
+                // — a malformed recipes.json must never silently abort and
+                // continue with a partial catalog.
+                throw;
             }
             catch (Exception ex)
             {

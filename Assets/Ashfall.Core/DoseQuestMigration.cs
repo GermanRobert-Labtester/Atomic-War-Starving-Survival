@@ -23,7 +23,15 @@ namespace Ashfall.Core
             "quest_the_dose_the_first_reading",
             "quest_the_sick_of_room_seven",
             "quest_the_childs_number",
-            "quest_the_signed_hour"
+            "quest_the_signed_hour",
+            "quest_the_falsified_reading",
+            "quest_the_stolen_dosimeter",
+            "quest_child_over_the_limit",
+            "quest_the_register_audit",
+            "quest_black_market_clean_bill",
+            "quest_the_broken_calibration_chain",
+            "quest_exposure_for_the_essential_worker",
+            "quest_the_missing_page"
         };
 
         public static bool IsDoseQuestline(string questlineId)

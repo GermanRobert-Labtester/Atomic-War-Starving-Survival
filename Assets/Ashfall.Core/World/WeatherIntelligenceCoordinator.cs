@@ -11,21 +11,22 @@ namespace Ashfall.Core.World
 
     /// <summary>
     /// Single persisted state for the weather-intelligence cluster. Nests the
-    /// weather-station calibration/forecast state and the orbital-harrow
-    /// telemetry state so the world section persists them together.
+    /// weather-station calibration/forecast state, orbital-harrow telemetry
+    /// state, and seasonal events so the world section persists them together.
     /// </summary>
     [Serializable]
     public sealed class WeatherIntelligenceSaveState
     {
         public WeatherStationState station = new WeatherStationState();
         public OrbitalTelemetryState orbital = new OrbitalTelemetryState();
+        public SeasonalEventSaveState seasonal = new SeasonalEventSaveState();
     }
 
     // ── Read model (consumed by Weather and Map panels) ─────────────────────
 
     /// <summary>
     /// Read-only projection of weather intelligence for the UI: forecast
-    /// confidence, orbital warning lead time, and expedition route-safety
+    /// confidence, orbital warning lead time, seasonal phase, and expedition route-safety
     /// information. Improving weather infrastructure (installing/calibrating
     /// the station, activating orbital telemetry) demonstrably enriches this
     /// model — that is the player-facing signal that infrastructure matters.
@@ -33,11 +34,18 @@ namespace Ashfall.Core.World
     [Serializable]
     public sealed class WeatherIntelligenceReadModel
     {
+        // Season
+        public string seasonId = string.Empty;
+        public string seasonDisplayName = string.Empty;
+
         // Station
         public bool stationInstalled;
         public bool stationCalibrated;
         public bool stationOperational;
+        public WeatherStationTier stationTier;
+        public string stationTierName = string.Empty;
         public float stationAccuracy;
+        public float stationDurability;
         public int forecastHorizonDays;
         public int lastForecastDay;
         public List<ForecastEntry> forecast = new List<ForecastEntry>();
@@ -48,6 +56,11 @@ namespace Ashfall.Core.World
         public int impactDay;
         public int warningLeadDays;
         public int daysUntilImpact;
+        public int activeSalvageCount;
+        public List<OrbitalSalvageOpportunity> activeSalvage = new List<OrbitalSalvageOpportunity>();
+
+        // Seasonal events
+        public List<ActiveSeasonalEvent> activeSeasonalEvents = new List<ActiveSeasonalEvent>();
 
         // Derived expedition information
         public int routeSafeDays;
@@ -57,9 +70,9 @@ namespace Ashfall.Core.World
     }
 
     /// <summary>
-    /// Weather-intelligence coordinator — the single wiring point for the two
-    /// dormant weather-infrastructure systems (WeatherStation and
-    /// OrbitalHarrowTelemetry). Owns both systems, feeds the station from the
+    /// Weather-intelligence coordinator — the single wiring point for the
+    /// weather-infrastructure systems (WeatherStation, OrbitalHarrowTelemetry,
+    /// and SeasonalEventSystem). Owns all three systems, feeds the station from the
     /// authoritative <see cref="WeatherSystem"/> forecast rolls, ticks the
     /// orbital impact clock against <see cref="SkyLayerArmorSystem"/>, and
     /// persists as ONE nested state inside the world section of the campaign
@@ -72,14 +85,16 @@ namespace Ashfall.Core.World
     {
         public WeatherStationSystem Station { get; }
         public OrbitalHarrowTelemetrySystem Orbital { get; }
+        public SeasonalEventSystem Seasonal { get; }
 
         private readonly WeatherSystem _weather;
         private readonly SkyLayerArmorSystem _armor;
+        private readonly ISeededRng _rng;
         private readonly ILog _log;
         private int _currentDay;
 
         /// <summary>
-        /// Raised whenever the station forecast or orbital telemetry changes,
+        /// Raised whenever the station forecast, orbital telemetry, or seasonal event changes,
         /// so the host can mark the world section dirty and refresh panels.
         /// </summary>
         public event Action? OnIntelligenceChanged;
@@ -92,69 +107,78 @@ namespace Ashfall.Core.World
         {
             _weather = weather ?? throw new ArgumentNullException(nameof(weather));
             _armor = armor ?? throw new ArgumentNullException(nameof(armor));
+            _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
 
-            // Independent deterministic RNG streams so station calibration and
-            // orbital rolls never interfere with each other's sequence.
-            int seed = rng?.Seed ?? 0;
+            int seed = _rng.Seed;
             Station = new WeatherStationSystem(_weather, new SeededRng(seed), _log);
             Orbital = new OrbitalHarrowTelemetrySystem(_armor, new SeededRng(unchecked(seed ^ 0x5A5A5A5A)), _log);
+            Seasonal = new SeasonalEventSystem(_log);
 
             Station.OnForecastUpdated += RaiseChanged;
             Station.OnStationStateChanged += RaiseChanged;
             Orbital.OnTelemetryChanged += RaiseChanged;
             Orbital.OnImpactWarning += _ => RaiseChanged();
             Orbital.OnImpactResolved += (_, _) => RaiseChanged();
+            Seasonal.OnStateChanged += RaiseChanged;
         }
 
         // ── Daily tick ──────────────────────────────────────────────────────
 
         /// <summary>
         /// Advance the weather-intelligence cluster by one day. Regenerates
-        /// the station forecast (if operational) and resolves any pending
-        /// orbital impact that lands on this day.
+        /// the station forecast (if operational), resolves pending orbital impacts,
+        /// and evaluates seasonal events.
         /// </summary>
         public void TickDay(int day)
         {
             _currentDay = day;
             if (Station.IsOperational)
                 Station.GenerateForecast(day);
+
             Orbital.TickDay(day);
+
+            var season = _weather.GetSeasonForDay(day);
+            Seasonal.TickDay(day, season?.id ?? "window_ashfall", new SeededRng(unchecked(_rng.Seed * 31 + day)));
         }
 
         // ── Read model ─────────────────────────────────────────────────────
 
-        /// <summary>
-        /// Build a UI-facing read model. Without a calibrated station the
-        /// forecast list is empty and confidence is zero; with one, the
-        /// forecast carries confidence-weighted route-safety entries. Without
-        /// telemetry the orbital block is inert; with it, impact warnings
-        /// carry a lead time. This progression is the player-facing signal
-        /// that weather infrastructure investment pays off.
-        /// </summary>
         public WeatherIntelligenceReadModel BuildReadModel()
         {
             var s = Station.State;
             var o = Orbital.State;
+            var season = _weather.GetSeasonForDay(_currentDay);
 
             var rm = new WeatherIntelligenceReadModel
             {
+                seasonId = season?.id ?? "window_ashfall",
+                seasonDisplayName = season?.displayName ?? "Ash Fall",
                 stationInstalled = s.isInstalled,
                 stationCalibrated = s.isCalibrated,
                 stationOperational = Station.IsOperational,
+                stationTier = Station.CurrentTier,
+                stationTierName = Station.CurrentTier.ToString(),
                 stationAccuracy = s.accuracy,
-                forecastHorizonDays = s.forecastHorizonDays,
+                stationDurability = s.durability,
+                forecastHorizonDays = Station.EffectiveHorizonDays,
                 lastForecastDay = s.lastForecastDay,
                 telemetryActive = o.telemetryActive,
                 hasPendingImpact = Orbital.HasPendingImpact,
                 impactDay = o.nextImpactDay,
                 warningLeadDays = o.warningLeadDays,
-                daysUntilImpact = o.nextImpactDay > _currentDay ? o.nextImpactDay - _currentDay : 0
+                daysUntilImpact = o.nextImpactDay > _currentDay ? o.nextImpactDay - _currentDay : 0,
+                activeSalvageCount = o.activeSalvage.FindAll(x => !x.isClaimed).Count
             };
 
-            // Copy the cached forecast (if any).
             foreach (var f in s.cachedForecast)
                 rm.forecast.Add(f);
+
+            foreach (var sal in o.activeSalvage)
+                rm.activeSalvage.Add(sal);
+
+            foreach (var evt in Seasonal.ActiveEvents)
+                rm.activeSeasonalEvents.Add(evt);
 
             // Derive expedition route-safety information from the forecast.
             int safeDays = 0;
@@ -183,18 +207,21 @@ namespace Ashfall.Core.World
         private static string BuildAdvisory(WeatherIntelligenceReadModel rm)
         {
             var sb = new StringBuilder();
+            sb.Append($"Season: {rm.seasonDisplayName}. ");
+
             if (!rm.stationOperational)
             {
-                sb.Append("No calibrated weather station — forecast unavailable. ");
+                sb.Append("Weather station offline/damaged — forecast unavailable. ");
             }
             else
             {
-                sb.Append($"Station online (accuracy {rm.stationAccuracy:P0}). ");
+                sb.Append($"Station tier: {rm.stationTierName} (accuracy {rm.stationAccuracy:P0}, {rm.forecastHorizonDays}d horizon). ");
                 if (rm.routeSafeDays > 0)
                     sb.Append($"Best travel window: day {rm.bestTravelDay} ({rm.bestTravelConfidence:P0} confidence). ");
                 else
                     sb.Append("No safe travel windows in forecast. ");
             }
+
             if (rm.telemetryActive)
             {
                 if (rm.hasPendingImpact)
@@ -202,6 +229,12 @@ namespace Ashfall.Core.World
                 else
                     sb.Append("Orbital telemetry clear. ");
             }
+
+            if (rm.activeSeasonalEvents.Count > 0)
+            {
+                sb.Append($"Active seasonal hazards: {rm.activeSeasonalEvents.Count}. ");
+            }
+
             return sb.ToString().Trim();
         }
 
@@ -212,15 +245,17 @@ namespace Ashfall.Core.World
             return new WeatherIntelligenceSaveState
             {
                 station = Station.CaptureState(),
-                orbital = Orbital.CaptureState()
+                orbital = Orbital.CaptureState(),
+                seasonal = Seasonal.CaptureState()
             };
         }
 
         public void RestoreState(WeatherIntelligenceSaveState? saved)
         {
             if (saved == null) return;
-            Station.RestoreState(saved.station);
-            Orbital.RestoreState(saved.orbital);
+            if (saved.station != null) Station.RestoreState(saved.station);
+            if (saved.orbital != null) Orbital.RestoreState(saved.orbital);
+            if (saved.seasonal != null) Seasonal.RestoreState(saved.seasonal);
             RaiseChanged();
         }
 

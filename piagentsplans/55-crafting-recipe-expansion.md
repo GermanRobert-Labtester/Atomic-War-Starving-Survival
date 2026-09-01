@@ -92,4 +92,4 @@ schema doesn't support them, those gates are data-first and the wiring is a foll
 - Plan 34 (research) — research-gated recipes make the tech tree meaningful.
 - Plan 37 (excavation) — rare materials from deep digs feed advanced recipes.
 - Plan 46 (scavenging) — location-specific ingredients feed recipe categories.
-- Existing 13A (goods + recipes expansion) — this plan executes that expansion.
+- Plan 13 (trade flow) consumes recipe outputs without expanding this catalog.

@@ -25,7 +25,7 @@ before they're war actors (06C).
 1. Read the four Muster faction systems to learn each faction's model (resources, disposition, actions).
 2. Note the action-count gap: holdfast 3, standing_record 1 — these factions have almost no authored behavior.
 3. Author the Scavenger Guild's economy: salvage rights, territory claims, a finders'-fee system the player can join or fight.
-4. Author the Hydro Barons' leverage: water control (ties to 18A brine + 13A water goods), tolls, a water-blockade threat.
+4. Author the Hydro Barons' leverage: water control (ties to 18A brine + Plan 56 water goods), tolls, a water-blockade threat.
 5. Author the Iron Raiders' code: what they take, what they spare, a parley option (non-combat paths exist) — grounded, not glorified.
 6. Author 8 peacetime faction-action entries to close the action-count gap (trade offers, disputes, requests, threats).
 7. Author 6 faction-culture flavor entries (how each buries its dead, feeds itself, marks territory) for the codex (17C).

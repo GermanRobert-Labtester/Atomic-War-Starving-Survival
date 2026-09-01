@@ -160,6 +160,486 @@
       ],
       "mastery_narrative": "narrative_trade_mastery_teacher",
       "mastery_bonus_text": "{name} gathers the survivors in the common room. 'Class is in session,' they announce. For the first time in months, people take notes. Someone even laughs."
+    },
+    {
+      "profession_id": "miller",
+      "display_name": "Miller",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "grain",
+            "mortar",
+            "pestle"
+          ],
+          "title": "Grist Handler",
+          "narrative": "narrative_miller_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "millstone",
+            "sieve",
+            "chaff"
+          ],
+          "title": "Grain Refiner",
+          "narrative": "narrative_miller_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "flour",
+            "advanced"
+          ],
+          "title": "Master Miller",
+          "narrative": "narrative_miller_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_miller",
+      "mastery_bonus_text": "{name} turns coarse bunker barley into fine white flour with zero waste. Bread in the holdfast tastes like memory now."
+    },
+    {
+      "profession_id": "wireman",
+      "display_name": "Wireman",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "copper",
+            "splice",
+            "tape"
+          ],
+          "title": "Cable Splicer",
+          "narrative": "narrative_wireman_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "relay",
+            "fuse",
+            "conduit"
+          ],
+          "title": "Circuit Layer",
+          "narrative": "narrative_wireman_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "transformer",
+            "advanced"
+          ],
+          "title": "Master Linesman",
+          "narrative": "narrative_wireman_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_wireman",
+      "mastery_bonus_text": "{name} can trace a short-circuit through two hundred meters of subterranean concrete by ear alone."
+    },
+    {
+      "profession_id": "bone_setter",
+      "display_name": "Bone Setter",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "splint",
+            "sling",
+            "traction"
+          ],
+          "title": "Fracture Tender",
+          "narrative": "narrative_bone_setter_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "brace",
+            "pin",
+            "plaster"
+          ],
+          "title": "Orthopedic Aligner",
+          "narrative": "narrative_bone_setter_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "skeletal",
+            "advanced"
+          ],
+          "title": "Master Osteopath",
+          "narrative": "narrative_bone_setter_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_bone_setter",
+      "mastery_bonus_text": "Compound fractures that would have crippled an expedition member heal straight and strong under {name}'s firm hands."
+    },
+    {
+      "profession_id": "preservationist",
+      "display_name": "Preservationist",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "salt",
+            "brine",
+            "smoke"
+          ],
+          "title": "Curer",
+          "narrative": "narrative_preservationist_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "jar",
+            "seal",
+            "vinegar"
+          ],
+          "title": "Canner",
+          "narrative": "narrative_preservationist_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "vacuum",
+            "advanced"
+          ],
+          "title": "Master of Provisions",
+          "narrative": "narrative_preservationist_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_preservationist",
+      "mastery_bonus_text": "Not a single gram of harvested crop or scavenged meat goes rancid under {name}'s watchful curing protocols."
+    },
+    {
+      "profession_id": "radio_technician",
+      "display_name": "Radio Technician",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "diode",
+            "aerial",
+            "tuner"
+          ],
+          "title": "Static Listener",
+          "narrative": "narrative_radio_tech_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "crystal",
+            "oscillator",
+            "tube"
+          ],
+          "title": "Frequency Calibrator",
+          "narrative": "narrative_radio_tech_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "transceiver",
+            "advanced"
+          ],
+          "title": "Master of the Ether",
+          "narrative": "narrative_radio_tech_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_radio_technician",
+      "mastery_bonus_text": "{name} can pull clean voice signals from hundred-mile skips through total magnetic interference."
+    },
+    {
+      "profession_id": "greenhouse_grower",
+      "display_name": "Greenhouse Grower",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "seed",
+            "soil",
+            "sprout"
+          ],
+          "title": "Sprout Tender",
+          "narrative": "narrative_grower_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "nutrient",
+            "lamp",
+            "compost"
+          ],
+          "title": "Hydroponic Cultivator",
+          "narrative": "narrative_grower_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "canopy",
+            "advanced"
+          ],
+          "title": "Master Agronomist",
+          "narrative": "narrative_grower_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_greenhouse_grower",
+      "mastery_bonus_text": "Under {name}'s care, hydroponic trays produce crisp radishes and kale even in the coldest nuclear winter."
+    },
+    {
+      "profession_id": "surveyor",
+      "display_name": "Surveyor",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "compass",
+            "plumb",
+            "chain"
+          ],
+          "title": "Pace Counter",
+          "narrative": "narrative_surveyor_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "theodolite",
+            "elevation",
+            "grid"
+          ],
+          "title": "Triangulator",
+          "narrative": "narrative_surveyor_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "topography",
+            "advanced"
+          ],
+          "title": "Master Cartographer",
+          "narrative": "narrative_surveyor_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_surveyor",
+      "mastery_bonus_text": "{name}'s maps reveal hidden culverts, stable overpasses, and safe dead-ground across the whole crater."
+    },
+    {
+      "profession_id": "salvage_appraiser",
+      "display_name": "Salvage Appraiser",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "scrap",
+            "gauge",
+            "magnet"
+          ],
+          "title": "Scrap Sorter",
+          "narrative": "narrative_appraiser_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "alloy",
+            "stamp",
+            "density"
+          ],
+          "title": "Relic Evaluator",
+          "narrative": "narrative_appraiser_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "provenance",
+            "advanced"
+          ],
+          "title": "Master Appraiser",
+          "narrative": "narrative_appraiser_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_salvage_appraiser",
+      "mastery_bonus_text": "{name} knows the hidden value of every rusted pre-war component, ensuring the holdfast never trades at a loss."
+    },
+    {
+      "profession_id": "apiarist",
+      "display_name": "Apiarist",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "smoker",
+            "veil",
+            "comb"
+          ],
+          "title": "Hive Attendant",
+          "narrative": "narrative_apiarist_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "wax",
+            "pollen",
+            "queen"
+          ],
+          "title": "Colony Keeper",
+          "narrative": "narrative_apiarist_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "honey",
+            "advanced"
+          ],
+          "title": "Master Apiarist",
+          "narrative": "narrative_apiarist_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_apiarist",
+      "mastery_bonus_text": "The bees thrive in dark underground chambers under {name}'s gentle management, providing pure honey and wax."
+    },
+    {
+      "profession_id": "metallurgist",
+      "display_name": "Metallurgist",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "bellows",
+            "tongs",
+            "slag"
+          ],
+          "title": "Crucible Tender",
+          "narrative": "narrative_metallurgist_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "temper",
+            "flux",
+            "ingot"
+          ],
+          "title": "Smelter",
+          "narrative": "narrative_metallurgist_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "alloy",
+            "advanced"
+          ],
+          "title": "Master Founder",
+          "narrative": "narrative_metallurgist_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_metallurgist",
+      "mastery_bonus_text": "{name} smelts brittle scrap into spring-tempered tool steel that outlasts anything found in the ruins."
+    },
+    {
+      "profession_id": "water_technician",
+      "display_name": "Water Technician",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "charcoal",
+            "sand",
+            "gravel"
+          ],
+          "title": "Filter Hand",
+          "narrative": "narrative_water_tech_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "membrane",
+            "pump",
+            "chlorine"
+          ],
+          "title": "Still Operator",
+          "narrative": "narrative_water_tech_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "purifier",
+            "advanced"
+          ],
+          "title": "Master Hydrologist",
+          "narrative": "narrative_water_tech_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_water_technician",
+      "mastery_bonus_text": "{name}'s multi-stage filtration arrays deliver sparkling, zero-rad drinking water to every bunk."
+    },
+    {
+      "profession_id": "tailor",
+      "display_name": "Tailor",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "needle",
+            "thread",
+            "patch"
+          ],
+          "title": "Garment Mender",
+          "narrative": "narrative_tailor_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "seam",
+            "canvas",
+            "leather"
+          ],
+          "title": "Pattern Cutter",
+          "narrative": "narrative_tailor_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "insulation",
+            "advanced"
+          ],
+          "title": "Master Clothier",
+          "narrative": "narrative_tailor_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_tailor",
+      "mastery_bonus_text": "{name} crafts warm, lead-lined winter parkas from salvage wool and rubber, protecting survivors from the ash cold."
     }
   ]
 }

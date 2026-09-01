@@ -2,7 +2,7 @@
 
 ## Goal (2 lines)
 Expand `warlord_doctrines.json` from 12 verified entries to 24. Warlord doctrines define
-the behavior of warlord factions (existing 10A bestiary + 25C war escalation) — each
+the behavior of warlord factions (Plan 54 combat catalog + 25C war escalation) — each
 doctrine is a tactical/strategic profile that affects how a warlord faction patrols,
 raids, recruits, and escalates. The system is wired but 12 doctrines is too few for
 variety across 19 factions.

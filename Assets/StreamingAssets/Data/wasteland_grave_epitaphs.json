@@ -1,13 +1,37 @@
 {
-  "schema_version": 1,
-  "epitaphs": [
-    { "cause": "radiation", "epitaph": "She walked into the grey and never came back the same." },
-    { "cause": "combat", "epitaph": "He held the line so others could retreat." },
-    { "cause": "starvation", "epitaph": "The ration line ended before her turn came." },
-    { "cause": "exhaustion", "epitaph": "Sleep finally took her, and did not return her." },
-    { "cause": "disease", "epitaph": "The pathogen came from somewhere; the names are forgotten." },
-    { "cause": "expedition", "epitaph": "He walked out of the holdfast and did not walk back." },
-    { "cause": "trauma", "epitaph": "The blast finished what the war began." },
-    { "cause": "unspecified", "epitaph": "The catalogue of the dead keeps its own ledger." }
-  ]
+    "schema_version": 1,
+    "epitaphs": [
+        {
+            "cause": "radiation",
+            "epitaph": "Lethal cellular degradation. Biological remains require deep burial."
+        },
+        {
+            "cause": "combat",
+            "epitaph": "Terminated by hostiles. Equipment recovered and sanitized."
+        },
+        {
+            "cause": "starvation",
+            "epitaph": "Caloric deficit reached terminal state."
+        },
+        {
+            "cause": "exhaustion",
+            "epitaph": "Cardiovascular collapse due to sustained labor output."
+        },
+        {
+            "cause": "disease",
+            "epitaph": "Pathological contamination event. Sector quarantined."
+        },
+        {
+            "cause": "expedition",
+            "epitaph": "Asset failed to return from surface operations. Logged as loss."
+        },
+        {
+            "cause": "trauma",
+            "epitaph": "Severe structural damage to biological unit."
+        },
+        {
+            "cause": "unspecified",
+            "epitaph": "Termination logged. Rations redistributed."
+        }
+    ]
 }

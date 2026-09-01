@@ -75,7 +75,7 @@ namespace Ashfall.Core
         /// <summary>Id namespaces recognised as ids. Extend when a catalog introduces a new one.</summary>
         public static readonly string[] IdPrefixes =
         {
-            "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_",
+            "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "disease_", "event_", "recipe_", "relic_", "lore_", "room_", "stage_", "choice_",
             "mutation_", "flag_", "trait_", "anchor_", "season_", "kind_", "clinic_",
             "morph_", "drug_", "co_", "enc_", "narrative_", "dialogue_event_",
@@ -141,7 +141,11 @@ namespace Ashfall.Core
             // Plan 26 — Knowledge, Research & Skills: The Progression World
             "knowledge_", "skill_", "manual_", "procedure_", "finding_",
             // Plan 28 — Living Wasteland Ecology, Migration & Infestations
-            "species_", "migration_", "infestation_", "eco_chain_"
+            "species_", "migration_", "infestation_", "eco_chain_",
+            // Plan 36 — Wildlife Trapping Catalog
+            "trap_",
+            // Plan 40 — Ledger Debt Templates
+            "debt_", "conseq_"
         };
 
         /// <summary>
@@ -174,7 +178,9 @@ namespace Ashfall.Core
             // Plan 26
             "manual_id", "procedure_id", "possible_findings",
             // Plan 28
-            "migration_id", "infestation_id", "species_id"
+            "migration_id", "infestation_id", "species_id",
+            // Plan 36
+            "trap_id"
         };
 
         /// <summary>
@@ -199,7 +205,12 @@ namespace Ashfall.Core
             "countermeasure_item_id",
             "from", "to",
             // Plan 21
-            "base_item_id", "discovery_source_id"
+            "base_item_id", "discovery_source_id",
+            // Plan 40 — Ledger Debt Templates
+            "creditorId", "principalItemId", "consequenceId", "escalationId",
+            "targetFactionId", "collateralItemId",
+            // Plan 46 — Scavenging Tables
+            "scavenging_table_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -222,6 +233,8 @@ namespace Ashfall.Core
             "issuing_authority", "vault_id", "audit_type", "sub_level", "auditor_designation",
             "compliance_status", "carrier_id", "timestamp_relative", "telemetry_channel",
             "payload_status", "effective_day_range", "buoy_callsign", "signal_classification",
+            "depletion_model", "primary_hazard_type", "hazard_type", "codex_unlock_id", "location_type", "rarity_tier",
+            "effect_type", "effect_target", "rarity", "ignoreConsequence", "authenticity",
             "borehole_id", "geological_formation", "pod_id", "subject_designation",
             "system_alert", "mine_gallery", "rock_medium", "inscription_tool", "recorder_identity",
             "cult_faction", "liturgy_type", "ritual_sacrament", "synod_chapter", "canon_number",
@@ -420,6 +433,12 @@ namespace Ashfall.Core
             "room_bunks", "room_kitchen", "room_workshop", "room_filtration",
             "room_airlock",
             "room_main",  // "Main Vault" — ShelterScheduleHostSession's power room; the Plan 29B generator home (continuity §7.3)
+            // Plan 28/20A — field-guide unlock trigger keywords (runtime only,
+            // not data-authority ids; the field-guide unlock system reads these
+            // strings from unlock_trigger fields).
+            "trap_catch", "combat_encounter", "encounter_sighting",
+            "forage_discovery", "greenhouse_cultivation", "harvest_event",
+            "scout_observation"
         };
 
         private sealed class Ctx

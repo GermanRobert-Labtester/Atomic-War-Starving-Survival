@@ -120,12 +120,11 @@ namespace Ashfall.Core.Tests.World
         {
             var list = OrbitalHarrowCatalogLoader.Load(DataDir, new FileSystemIO(), new SystemTextJsonSerializer());
             Assert.True(list.Count >= 5);
-
-            Assert.Contains(list, e => e.id == "event_orbital_small_debris_shower");
-            Assert.Contains(list, e => e.id == "event_orbital_heavy_kinetic_impact");
-            Assert.Contains(list, e => e.id == "event_orbital_clustered_impact");
-            Assert.Contains(list, e => e.id == "event_orbital_near_miss_shockwave");
-            Assert.Contains(list, e => e.id == "event_orbital_low_warning_strike");
+            Assert.Contains(list, e => e.id == "event_orbital_kinetic_early_track");
+            Assert.Contains(list, e => e.id == "event_orbital_kinetic_thermal_descent");
+            Assert.Contains(list, e => e.id == "event_orbital_kinetic_seismic_precursor");
+            Assert.Contains(list, e => e.id == "event_orbital_kinetic_fragmented_track");
+            Assert.Contains(list, e => e.id == "event_orbital_cluster_multiple_returns");
         }
 
         [Fact]

@@ -75,7 +75,7 @@ namespace Ashfall.Core.Tests.World
         public void Settlements_Loads6Settlements_18Npcs_6Quests()
         {
             var catalog = SettlementCatalog.LoadFromDirectory(_dataDir, _fileIO);
-            Assert.Equal(6, catalog.SettlementCount);
+            Assert.Equal(12, catalog.SettlementCount);
             Assert.Equal(18, catalog.NpcCount);
             Assert.Equal(6, catalog.QuestCount);
 

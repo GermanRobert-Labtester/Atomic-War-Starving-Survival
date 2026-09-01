@@ -239,8 +239,9 @@ namespace Ashfall.Core.Tests
                 Stage("evt_d480_grain_tally_dispute_s1", 480,
                     choices: Choice("side_garrison", morale: -2))));
             RunnerWith(catalog, out var runner);
+            runner.RecordLocationVisited("loc_grain_silo");
 
-            // minDay gate only (table entry defaults to Always for unknown ids in tests)
+            // minDay gate only
             Assert.NotNull(runner.GetSurfacedStage("evt_d480_grain_tally_dispute", 480));
             Assert.Null(runner.GetSurfacedStage("evt_d480_grain_tally_dispute", 479));
         }

@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "gates": [
+    {
+      "id": "gate_mountain_pass_blizzard",
+      "gate_type": "route",
+      "target": "route_12_the_cloud_eyrie_meteorological_ascent",
+      "blocked_weather": ["Blizzard"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Severe cold exposure and disorientation. Whiteout conditions reduce visibility to zero.",
+      "description": "The Mount Karkov ascent becomes a death trap during blizzards. Crosswinds exceed 80 km/h on the exposed ridge, and the trail markers vanish under drifting snow within minutes."
+    },
+    {
+      "id": "gate_highland_supply_blizzard",
+      "gate_type": "route",
+      "target": "route_05_the_spoil_heap_coke_and_steel_route",
+      "blocked_weather": ["Blizzard"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Drifting snow buries the road surface. Vehicles stall; sleds overturn.",
+      "description": "The anthracite convoy route crosses an exposed slag plateau where blizzard winds pile snow into axle-deep drifts. The heavy trucks cannot maintain traction, and there is no shelter for twelve kilometres."
+    },
+    {
+      "id": "gate_exposed_ridge_blizzard",
+      "gate_type": "route",
+      "target": "route_09_the_nomad_ridge_drift",
+      "blocked_weather": ["Blizzard"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Whiteout exposure. Wind chill drops effective temperature below -40C.",
+      "description": "The Volga-1 steppe drift route follows an exposed ridgeline with no cover. During blizzards the wind chill becomes lethal within minutes, and the trail disappears into a wall of white."
+    },
+    {
+      "id": "gate_lake_edge_blizzard",
+      "gate_type": "route",
+      "target": "route_02_the_canal_barge_waterway_run",
+      "blocked_weather": ["Blizzard"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Canal ice becomes unstable under wind loading. Barge moorings fail.",
+      "description": "The canal waterway follows the frozen shoreline where blizzard winds pile ice against the embankment. Barge moorings snap under the loading, and the ice surface becomes a wind-scoured skating rink."
+    },
+    {
+      "id": "gate_lowland_marsh_fog",
+      "gate_type": "route",
+      "target": "route_07_the_aluminium_whale_salvage_run",
+      "blocked_weather": ["BioFog"],
+      "required_weather": [],
+      "override_item": "gas_mask",
+      "override_skill": "",
+      "consequence_on_force": "Respiratory contamination. Bioaerosol exposure through unprotected airways.",
+      "description": "The peat bog salvage route crosses a lowland marsh where biofog settles thick and low. The contaminated aerosol causes severe respiratory distress within minutes of unprotected exposure."
+    },
+    {
+      "id": "gate_industrial_valley_fog",
+      "gate_type": "route",
+      "target": "route_15_the_tar_cauldron_pitch_express",
+      "blocked_weather": ["BioFog"],
+      "required_weather": [],
+      "override_item": "gas_mask",
+      "override_skill": "",
+      "consequence_on_force": "Chemical and biological contamination. Skin exposure to aerosolized industrial residue.",
+      "description": "The bitumen highway passes through an industrial valley where biofog traps vaporized tar and chemical residue at ground level. Without respiratory protection, the air itself becomes corrosive."
+    },
+    {
+      "id": "gate_river_basin_fog",
+      "gate_type": "route",
+      "target": "route_03_the_black_loess_grain_haul",
+      "blocked_weather": ["BioFog"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Zero visibility in contaminated air. Navigation failure likely.",
+      "description": "The grain haul route follows a river basin where biofog pools so thick that landmarks vanish at arm's length. The contaminated air makes navigation impossible, and the riverbank drops away without warning."
+    },
+    {
+      "id": "gate_underpass_black_rain",
+      "gate_type": "route",
+      "target": "route_13_the_subway_tile_vault_underpass",
+      "blocked_weather": ["BlackRain"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Flash flooding. Radioactive sediment fills the underpass within minutes.",
+      "description": "The metro underpass drains badly even in ordinary rain. During black rain, oily radioactive runoff fills the tunnel to the ceiling within minutes, carrying sediment and debris that blocks all passage."
+    },
+    {
+      "id": "gate_riverside_black_rain",
+      "gate_type": "route",
+      "target": "route_04_the_holy_spring_mercy_trek",
+      "blocked_weather": ["BlackRain"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Riverbank collapse. Contaminated floodwater submerges the path.",
+      "description": "The pilgrimage route follows a riverbank that becomes unstable during black rain. The swollen river carries radioactive sediment over the path, and the undercut bank collapses without warning."
+    },
+    {
+      "id": "gate_culvert_black_rain",
+      "gate_type": "route",
+      "target": "route_17_the_telegraph_wire_runner_post",
+      "blocked_weather": ["BlackRain"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Flash flood in drainage channel. Radioactive debris flow.",
+      "description": "The telegraph line route crosses a drainage culvert that becomes a flash-flood channel during black rain. The water carries radioactive ash and debris at speed, making the crossing impassable."
+    },
+    {
+      "id": "gate_open_wasteland_fallout",
+      "gate_type": "route",
+      "target": "route_16_the_radioactive_graveyard_salvage_crawl",
+      "blocked_weather": ["FalloutStorm"],
+      "required_weather": [],
+      "override_item": "hazmat_suit",
+      "override_skill": "",
+      "consequence_on_force": "Extreme radiation exposure. No cover exists along the route.",
+      "description": "The crane graveyard route crosses open wasteland with no shelter for two kilometres. During fallout storms, radiation levels spike to lethal doses within minutes, and there is nowhere to take cover."
+    },
+    {
+      "id": "gate_exposed_highway_fallout",
+      "gate_type": "route",
+      "target": "route_01_the_iron_line_garrison_express",
+      "blocked_weather": ["FalloutStorm"],
+      "required_weather": [],
+      "override_item": "hazmat_suit",
+      "override_skill": "",
+      "consequence_on_force": "Severe radiation exposure along exposed rail line.",
+      "description": "The Iron Line Express follows an elevated rail embankment with no overhead cover. Fallout storms deposit radioactive material directly on the route, and the wind carries it into every gap in protection."
+    },
+    {
+      "id": "gate_frozen_lake_crossing",
+      "gate_type": "route",
+      "target": "route_06_the_thermal_brine_salt_pass",
+      "blocked_weather": [],
+      "required_weather": ["Blizzard"],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "",
+      "description": "The salt pass crosses a frozen lake that only becomes safe to traverse during sustained deep cold. The blizzard-season ice thickens enough to carry loaded sleds, opening a shortcut that saves a full day of travel around the shoreline."
+    },
+    {
+      "id": "gate_seasonal_ice_road",
+      "gate_type": "route",
+      "target": "route_08_the_high_voltage_grid_battery_relay",
+      "blocked_weather": [],
+      "required_weather": ["Blizzard"],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "",
+      "description": "The high-voltage relay route follows a seasonal ice road across a frozen marsh. The ice only becomes thick enough for loaded vehicles during the deep winter blizzard season, opening a direct route that is impassable in warmer conditions."
+    },
+    {
+      "id": "gate_electronics_route_emp",
+      "gate_type": "route",
+      "target": "route_11_the_quarry_pit_granite_cartage",
+      "blocked_weather": ["EMPStorm"],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Vehicle electronics fail. Navigation and communication systems go dark.",
+      "description": "The granite haul route depends on powered winches and electronic navigation through the quarry pit. During EMP storms, the vehicle electronics fail and the winch systems go dead, leaving the convoy stranded in the pit."
+    }
+  ]
+}

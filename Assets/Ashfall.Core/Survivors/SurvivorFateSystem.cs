@@ -322,7 +322,14 @@ namespace Ashfall.Core.Survivors
                     Day = fate.day,
                     BirthDay = joinedDay,
                     FinalWishResolved = wishResolved,
-                    Epitaph = string.Empty
+                    Epitaph = string.Empty,
+                    // Plan 60 / D7 — who mourns whom, and how the death was
+                    // managed. Without these the grief port had nothing to act on
+                    // even once a sink was bound: the survivor ledger holds the
+                    // relationships, and DeathQuality is the authored scale.
+                    MoraleDelta = GriefMoraleDelta,
+                    DeathQuality = DeriveDeathQuality(id, wishResolved),
+                    SurvivingRelationshipIds = _social?.Relations?.RelatedIds(id),
                 });
             }
 
@@ -400,6 +407,27 @@ namespace Ashfall.Core.Survivors
                     _byId[copy.survivorId] = copy;
                 }
             }
+        }
+
+        /// <summary>
+        /// Plan 60 / D7 — derive how this death was managed from the authorities that
+        /// already record care. Deliberately coarse and evidence-based: a vigil is not
+        /// observable from here, so <see cref="DeathQuality.Peaceful"/> requires both
+        /// attendance and a resolved final wish rather than asserting comfort the fate
+        /// system cannot see.
+        /// </summary>
+        private DeathQuality DeriveDeathQuality(string id, bool wishResolved)
+        {
+            bool attended =
+                (_caregiving != null && _caregiving.HasCaregiver(id))
+                || (_medicalWard != null && _medicalWard.GetActiveAdmission(id) != null);
+
+            // Plan 60 / D6 — a kept vigil is care, and it is the only kind of care a
+            // player can give when there is no cure left. Its real-time length is
+            // deliberately irrelevant here: only the recorded outcome reaches the
+            // simulation, so frame rate cannot change a death.
+            return VigilCare.ResolveQuality(
+                attended, wishResolved, VigilCare.IsKept(_flags, id));
         }
 
         private void RebuildIndex()

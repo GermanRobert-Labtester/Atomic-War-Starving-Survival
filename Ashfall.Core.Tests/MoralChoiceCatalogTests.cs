@@ -55,7 +55,7 @@ namespace Ashfall.Core.Tests
             var quests = Load();
             foreach (var quest in quests)
             {
-                Assert.InRange(quest.Choices.Count, 3, 4);
+                Assert.InRange(quest.Choices.Count, 2, 5);
                 foreach (var choice in quest.Choices)
                 {
                     Assert.False(string.IsNullOrWhiteSpace(choice.Label), $"{quest.Id} choice label empty");

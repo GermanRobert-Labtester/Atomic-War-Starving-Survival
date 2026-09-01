@@ -235,7 +235,7 @@
               "factionStandingDelta": 3,
               "grantItemId": "item_archive_tape_silo_key",
               "grantItemQuantity": 1,
-              "outcomeNarrative": "The reels matter, and now they matter to someone who will keep them. The machine's count drops by exactly the number routed — a ledger keeping its own subtraction."
+              "outcomeNarrative": "The reels matter, and now they matter to someone who will keep them. The machine's count drops by exactly the number routed \u2014 a ledger keeping its own subtraction."
             },
             {
               "choiceId": "choice_reels_militia",
@@ -319,7 +319,7 @@
               "grantItemQuantity": 1,
               "targetFactionId": "faction_the_tempest",
               "factionStandingDelta": 2,
-              "outcomeNarrative": "The valve outside the vent shaft reads 'per 36' — procedure was kept. The record is now complete, and the machine does not ask who the sixth hand was."
+              "outcomeNarrative": "The valve outside the vent shaft reads 'per 36' \u2014 procedure was kept. The record is now complete, and the machine does not ask who the sixth hand was."
             }
           ]
         }
@@ -349,7 +349,7 @@
               "guiltDelta": 1,
               "targetFactionId": "faction_central_garrison",
               "factionStandingDelta": 4,
-              "outcomeNarrative": "The garrison keeps it under lock. The other Powers learn of the transfer and add their own entries to the log — the machine's register grows in four places, permanently."
+              "outcomeNarrative": "The garrison keeps it under lock. The other Powers learn of the transfer and add their own entries to the log \u2014 the machine's register grows in four places, permanently."
             },
             {
               "choiceId": "choice_summons_militia",
@@ -379,6 +379,414 @@
               "targetFactionId": "faction_scavengers",
               "factionStandingDelta": 4,
               "outcomeNarrative": "The Tollman prices the count by mass. It is the first census ever sold for a toll, and the receipt is real."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_alibi_verification",
+      "title": "The Verified Chronometer",
+      "synopsis": "A reactor supervisor accused of opening coolant valves early claims the auxiliary pump room lock failed, trapping him during the incident.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_alibi_chronometer",
+      "minDay": 170,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_alibi_chronometer",
+          "title": "The Clock Card",
+          "narrativePrompt": "The mechanical time-clock on the wall of the auxiliary pump room registered a punch at 09:14. The reactor valve blew at 09:16.",
+          "unlockOnDay": 170,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_verify_punch_gear",
+              "text": "Inspect the clock escapement mechanism to verify it was not manually advanced.",
+              "nextStageId": "stage_alibi_conclude",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The gear teeth are pristine. The punch-card timestamp is authentic. He was trapped."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_alibi_conclude",
+          "title": "The Finding",
+          "narrativePrompt": "Present the clock card to the tribunal bench. The machine's record contradicts the shift log.",
+          "unlockOnDay": 170,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_exonerate_supervisor",
+              "text": "File the card into the docket. Let the machine's timing stand as evidence.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The tribunal records an acquittal in the permanent ledger. The supervisor returns to work. The valve failure remains an open inquiry."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_witness_subpoena",
+      "title": "The Reluctant Deponent",
+      "synopsis": "A retired signals operator who logged the early strike alerts is squatting in an abandoned rail depot.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_subpoena_locate",
+      "minDay": 175,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_subpoena_locate",
+          "title": "The Signal Shack",
+          "narrativePrompt": "The former radio sergeant sits in the dark with a pair of headphones connected to a dead aerial. He hasn't logged a signal in five years.",
+          "unlockOnDay": 175,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_compel_testimony",
+              "text": "Serve the formal tribunal summons. The state requires his log.",
+              "nextStageId": "stage_subpoena_deposit",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "He silently packs his signal log into a canvas haversack. An order is an order."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_subpoena_deposit",
+          "title": "Deposition on Tape",
+          "narrativePrompt": "He recites his eyewitness testimony into a microphone, recording it onto magnetic tape in the presence of the clerk.",
+          "unlockOnDay": 175,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_seal_deposition",
+              "text": "Seal the tape cassette with official lead wire and log it.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The tape is cataloged into the tribunal safe. The sergeant returns to the dead aerial."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_charter_authentication",
+      "title": "The Watermarked Seal",
+      "synopsis": "A disputed civil defense decree bearing an embossed municipal seal requires chemical verification against pre-war paper stock.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_watermark_test",
+      "minDay": 180,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_watermark_test",
+          "title": "UV Examination",
+          "narrativePrompt": "The yellowed parchment is held over an ultraviolet lamp to examine the rag-content watermark.",
+          "unlockOnDay": 180,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_verify_watermark",
+              "text": "Compare the watermark against a confirmed 1984 municipal linen sample.",
+              "nextStageId": "stage_watermark_verdict",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The chain-and-laid lines match exactly. The paper was manufactured by the state before the state ceased to exist."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_watermark_verdict",
+          "title": "Authenticity Decree",
+          "narrativePrompt": "The certificate of authenticity must be filed with the magistrate.",
+          "unlockOnDay": 180,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_certify_authentic",
+              "text": "Affix a secondary verification seal and enter the decree into the record.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The decree is admitted as authoritative evidence. Bureaucracy outlives the cities it once managed."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_prior_verdict_appeal",
+      "title": "The Reopened Docket",
+      "synopsis": "A petition for reconsideration is filed regarding an engineer executed for dereliction of duty on Day 45.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_appeal_review",
+      "minDay": 185,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_appeal_review",
+          "title": "New Telemetry",
+          "narrativePrompt": "Newly recovered seismograph tape records from the western borehole provide high-resolution timings of the shockwave.",
+          "unlockOnDay": 185,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_examine_telemetry",
+              "text": "Correlate the shockwave arrival times with the pump shutdown sequence log.",
+              "nextStageId": "stage_appeal_ruling",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The seismic surge destroyed the relay fifty seconds before the operator could physically reach the emergency switch. The charge of dereliction was mathematically impossible."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_appeal_ruling",
+          "title": "The Reversal",
+          "narrativePrompt": "The math is indisputable. The appellate opinion must be entered into the permanent record.",
+          "unlockOnDay": 185,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_grant_appeal",
+              "text": "Vacate the prior guilty finding. Posthumously restore his civic standing.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The machine archive updates a boolean value. The man remains dead, but his file is clean."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_chain_of_custody",
+      "title": "The Broken Lead Seal",
+      "synopsis": "An evidence lockbox containing encrypted flight-data recorders was opened in transit between the recovery site and the courthouse.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_custody_audit",
+      "minDay": 190,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_custody_audit",
+          "title": "Transit Manifest Audit",
+          "narrativePrompt": "The six couriers are separated. The severed lead tamper wire lies on the desk.",
+          "unlockOnDay": 190,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_track_custody_gap",
+              "text": "Cross-reference the manifest times to isolate a four-hour unlogged gap at the river waystation.",
+              "nextStageId": "stage_custody_verdict",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "Courier 4 admits to cutting the wire to verify the contents weren't leaking radiation. A procedural breach driven by survival instinct."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_custody_verdict",
+          "title": "Admissibility Ruling",
+          "narrativePrompt": "A ruling is required on whether the tampered recording is admissible in the tribunal.",
+          "unlockOnDay": 190,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_admit_with_caveat",
+              "text": "Admit the recording with an official notation of compromised chain of custody.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The tape is admitted. The state accepts flawed data when perfect data is extinct."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_machine_interpretation_contest",
+      "title": "The Logic Fault Defense",
+      "synopsis": "The automated calculation core recommends immediate evacuation of District 8, contradicting manual dosimeter readings.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_machine_logic_test",
+      "minDay": 195,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_machine_logic_test",
+          "title": "Core Diagnostics",
+          "narrativePrompt": "Diagnostic test probes are inserted into the relay computing banks to trace the logic fault.",
+          "unlockOnDay": 195,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_diagnose_stuck_relay",
+              "text": "Isolate an oxidized contact spring in Relay Bank 4.",
+              "nextStageId": "stage_machine_logic_ruling",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "A stuck silver contact caused the machine to multiply fallout decay constants by ten. A mechanical error masquerading as a death sentence."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_machine_logic_ruling",
+          "title": "Manual Override",
+          "narrativePrompt": "The emergency manual override protocol must be executed to countermand the machine's directive.",
+          "unlockOnDay": 195,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_override_machine",
+              "text": "Burnish the contact and recalibrate the algorithm with manual field readings.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The evacuation alarm is canceled. Ten thousand people will not be displaced because of a speck of rust."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_forged_evidence_inquest",
+      "title": "Ink on the Perforations",
+      "synopsis": "An altered computer punch card was submitted to frame the Rebuilder faction for a diesel fuel diversion.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_punchcard_inquest",
+      "minDay": 200,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_punchcard_inquest",
+          "title": "Microscopic Punch Inspection",
+          "narrativePrompt": "The rectangular punch holes are examined under a high-magnification loupe.",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_detect_knife_cut",
+              "text": "Identify manual razor cuts masquerading as machine-punched die holes.",
+              "nextStageId": "stage_punchcard_verdict",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The edges of the fraudulent punches show paper tearing. They were cut by hand with a blade. Machines don't tear paper."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_punchcard_verdict",
+          "title": "Contempt of Court",
+          "narrativePrompt": "The forgery is documented. The accuser must be confronted in open tribunal.",
+          "unlockOnDay": 200,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_charge_contempt",
+              "text": "Enter the forged card into evidence. Levy a fine of fifty ration units for perjury.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The Rebuilder faction is cleared. The fraudster is stripped of standing. The bureaucracy defends its data."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_reconciled_testimony",
+      "title": "Two Hands on the Valve",
+      "synopsis": "Two surviving operators give diametrically opposed accounts of who turned the main isolation valve during a cooling failure.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_valve_testimony",
+      "minDay": 205,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_valve_testimony",
+          "title": "Joint Deposition",
+          "narrativePrompt": "Both operators are seated in the interrogation room. The physical valve torque marks are placed on the table.",
+          "unlockOnDay": 205,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_reconcile_valve_torque",
+              "text": "Demonstrate that the valve wheel required two men pulling in unison to overcome the thermal jam.",
+              "nextStageId": "stage_valve_verdict",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The mechanics of the jammed valve make solo operation impossible. In the dark and the smoke, neither realized they were helping each other."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_valve_verdict",
+          "title": "Shared Commendation",
+          "narrativePrompt": "A joint commendation is drafted, recognizing mutual action rather than assigning singular blame.",
+          "unlockOnDay": 205,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_issue_joint_award",
+              "text": "File their joint action in the permanent station memorial book.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "A longstanding feud between the surviving crews is settled by mechanical proof. Survival is collaborative."
             }
           ]
         }

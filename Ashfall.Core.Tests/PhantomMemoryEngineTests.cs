@@ -273,6 +273,124 @@ namespace Ashfall.Core.Tests
             Assert.Equal("military", catalog.items[0].triggers[0].item_category);
         }
 
+        [Fact]
+        public void TaxonomyCategoryInference_RecognizesCategories()
+        {
+            Assert.Equal("childhood", PhantomMemoryEngine.GetCategoryFromId("childs_mitten"));
+            Assert.Equal("work_tool", PhantomMemoryEngine.GetCategoryFromId("machinist_caliper"));
+            Assert.Equal("ordinary_object", PhantomMemoryEngine.GetCategoryFromId("bus_ticket"));
+            Assert.Equal("medical", PhantomMemoryEngine.GetCategoryFromId("stethoscope"));
+            Assert.Equal("military", PhantomMemoryEngine.GetCategoryFromId("dog_tags"));
+        }
+
+        [Fact]
+        public void RegisterRuleDetailed_ResolvesSpecificItemIdOverCategory()
+        {
+            var engine = new PhantomMemoryEngine();
+            engine.TriggerChanceOverride = 1.0f;
+            engine.RegisterRuleDetailed(new PhantomTriggerRule
+            {
+                triggerId = "rule_generic_tool",
+                itemCategory = "work_tool",
+                itemId = "",
+                motivationChance = 0.5f,
+                descriptionKey = "generic tool description"
+            }, "generic");
+
+            engine.RegisterRuleDetailed(new PhantomTriggerRule
+            {
+                triggerId = "rule_specific_caliper",
+                itemCategory = "work_tool",
+                itemId = "machinist_caliper",
+                motivationChance = 1.0f,
+                descriptionKey = "specific caliper description"
+            }, "generic");
+
+            var rules = engine.GetRules("generic");
+            Assert.Equal(2, rules.Count);
+            Assert.Contains(rules, r => r.triggerId == "rule_specific_caliper" && r.itemId == "machinist_caliper");
+        }
+
+        [Fact]
+        public void LoreOnlyTrigger_DoesNotRollMotivationOrBreakdown()
+        {
+            var engine = new PhantomMemoryEngine();
+            engine.TriggerChanceOverride = 1.0f;
+            engine.RegisterRuleDetailed(new PhantomTriggerRule
+            {
+                triggerId = "rule_lore",
+                itemCategory = "photograph",
+                itemId = "family_photograph",
+                loreOnly = true,
+                descriptionKey = "A photograph from before."
+            }, "generic");
+
+            var sv = new PhantomSurvivorSnapshot { survivorId = "sv_1", backgroundId = "generic", isAlive = true };
+            var outcome = engine.OnItemScavenged(sv, "family_photograph", new SeededRng(10));
+            Assert.Equal(TriggerOutcome.None, outcome);
+            Assert.False(engine.HasMotivationBoost("sv_1"));
+            Assert.Equal(0f, engine.GetWorkRefusalHours("sv_1"));
+        }
+
+        [Fact]
+        public void OneShotTrigger_DoesNotRepeat()
+        {
+            var engine = new PhantomMemoryEngine();
+            engine.TriggerChanceOverride = 1.0f;
+            engine.RegisterRuleDetailed(new PhantomTriggerRule
+            {
+                triggerId = "rule_oneshot",
+                itemCategory = "personal_item",
+                itemId = "wedding_ring",
+                repeatable = false,
+                motivationChance = 1.0f,
+                descriptionKey = "A wedding ring."
+            }, "generic");
+
+            var sv = new PhantomSurvivorSnapshot { survivorId = "sv_1", backgroundId = "generic", isAlive = true };
+            var outcome1 = engine.OnItemScavenged(sv, "wedding_ring", new SeededRng(1));
+            Assert.Equal(TriggerOutcome.Motivation, outcome1);
+
+            // Second scavenge of same item must return None because seen
+            var outcome2 = engine.OnItemScavenged(sv, "wedding_ring", new SeededRng(2));
+            Assert.Equal(TriggerOutcome.None, outcome2);
+        }
+
+        [Fact]
+        public void OnPhantomMemoryEvent_RaisesMemoryEventWithPayloads()
+        {
+            var engine = new PhantomMemoryEngine();
+            engine.TriggerChanceOverride = 1.0f;
+            engine.RegisterRuleDetailed(new PhantomTriggerRule
+            {
+                triggerId = "rule_payload",
+                itemCategory = "military",
+                itemId = "dog_tags",
+                motivationChance = 1.0f,
+                affinityTrait = "former_soldier",
+                moralePayload = 20.0f,
+                guiltPayload = 10.0f,
+                descriptionKey = "Dog tags found."
+            }, "former_soldier");
+
+            string caughtSurvivor = null;
+            string caughtItem = null;
+            float caughtMorale = 0f;
+            engine.OnPhantomMemoryResolved += (survivorId, itemId, isMotivation, moraleDelta, guiltDelta) =>
+            {
+                caughtSurvivor = survivorId;
+                caughtItem = itemId;
+                caughtMorale = moraleDelta;
+            };
+
+            var sv = new PhantomSurvivorSnapshot { survivorId = "sv_1", backgroundId = "former_soldier", isAlive = true };
+            engine.OnItemScavenged(sv, "dog_tags", new SeededRng(1));
+
+            Assert.Equal("sv_1", caughtSurvivor);
+            Assert.Equal("dog_tags", caughtItem);
+            Assert.True(caughtMorale > 0);
+        }
+
         private sealed class SeededRng : ISeededRng
         {
             private readonly System.Random _rng;

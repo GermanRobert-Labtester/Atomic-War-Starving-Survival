@@ -33,7 +33,7 @@
       "choices": [
         {
           "id": "vouch_ostrowski_reluctant",
-          "text": "Ostrowski vouches — once, and he would like it to stay that way.",
+          "text": "Ostrowski vouches \u2014 once, and he would like it to stay that way.",
           "set_flag": "flag_crossing_vouched_clean"
         },
         {
@@ -49,7 +49,7 @@
       "id": "quest_crossing_first_weigh",
       "display_name": "What the Scale Says",
       "type": "expedition",
-      "briefing": "Osran weighs your goods on the depot scale. The number is real. What people infer from it is not his problem. Present your load, answer his questions about the shelter, and either accept the recorded weight or contest it — honestly, or not.",
+      "briefing": "Osran weighs your goods on the depot scale. The number is real. What people infer from it is not his problem. Present your load, answer his questions about the shelter, and either accept the recorded weight or contest it \u2014 honestly, or not.",
       "prereq_quest_id": "quest_crossing_the_vouch",
       "min_day": 20,
       "stages": [
@@ -59,7 +59,7 @@
         },
         {
           "id": "answer_questions",
-          "text": "Answer Osran's questions about the shelter — occupation-style, not a form. No paperwork changes hands."
+          "text": "Answer Osran's questions about the shelter \u2014 occupation-style, not a form. No paperwork changes hands."
         },
         {
           "id": "accept_or_contest",
@@ -94,7 +94,7 @@
       "id": "quest_crossing_scale_integrity",
       "display_name": "What the Weight Doesn't Move",
       "type": "side",
-      "briefing": "The scale is honest because it is checked. Help prove that on the record — calibrate against the weight, verify a disputed load, and leave Stallrow able to trust the number without trusting anyone to have set it.",
+      "briefing": "The scale is honest because it is checked. Help prove that on the record \u2014 calibrate against the weight, verify a disputed load, and leave Stallrow able to trust the number without trusting anyone to have set it.",
       "prereq_quest_id": "quest_crossing_first_weigh",
       "min_day": 24,
       "stages": [
@@ -130,7 +130,7 @@
       "id": "quest_crossing_the_terms",
       "display_name": "Read It Again",
       "type": "faction",
-      "briefing": "Dessa Vane offers seed, a covered loss, or a favour bank against a plainly named forfeit. The contract is read twice before it is signed. After the second reading there is only the ink. What you agree to, you will owe — and the forfeit is named up front, not hidden in a clause.",
+      "briefing": "Dessa Vane offers seed, a covered loss, or a favour bank against a plainly named forfeit. The contract is read twice before it is signed. After the second reading there is only the ink. What you agree to, you will owe \u2014 and the forfeit is named up front, not hidden in a clause.",
       "prereq_quest_id": "quest_crossing_first_weigh",
       "min_day": 70,
       "stages": [
@@ -144,7 +144,7 @@
         },
         {
           "id": "sign_or_decline",
-          "text": "Sign the contract, or decline. If you sign, the forfeit is named in front of you. If you decline, the hall stays open — Dessa does not punish caution."
+          "text": "Sign the contract, or decline. If you sign, the forfeit is named in front of you. If you decline, the hall stays open \u2014 Dessa does not punish caution."
         }
       ],
       "choices": [
@@ -160,7 +160,7 @@
         },
         {
           "id": "terms_sign_dump",
-          "text": "Sign and dump the goods. The Underwrite will collect — at the Lockup, not at your hatch.",
+          "text": "Sign and dump the goods. The Underwrite will collect \u2014 at the Lockup, not at your hatch.",
           "set_flag": "mutation_crossing_underwrite_burned"
         }
       ],
@@ -171,7 +171,7 @@
       "id": "quest_crossing_the_petition",
       "display_name": "Draft Four",
       "type": "faction",
-      "briefing": "Perrin Ashby asks for an early signature on the Compact's draft charter. If you read it, there is a scoring clause — who gets a vote, and how much it weighs. He has not noticed that it resembles a Reconstruction Utility Rating. He will, if you tell him.",
+      "briefing": "Perrin Ashby asks for an early signature on the Compact's draft charter. If you read it, there is a scoring clause \u2014 who gets a vote, and how much it weighs. He has not noticed that it resembles a Reconstruction Utility Rating. He will, if you tell him.",
       "prereq_quest_id": "quest_crossing_first_weigh",
       "min_day": 70,
       "stages": [
@@ -181,7 +181,7 @@
         },
         {
           "id": "read_clause",
-          "text": "Read the scoring clause. It is precise. It is also familiar — if you have seen a RUR score or a Duty Roster row."
+          "text": "Read the scoring clause. It is precise. It is also familiar \u2014 if you have seen a RUR score or a Duty Roster row."
         },
         {
           "id": "sign_or_revise",
@@ -218,7 +218,7 @@
       "stages": [
         {
           "id": "witness_dispute",
-          "text": "Witness a live dispute at Stallrow — a stall claim, a debt, or a petition argument."
+          "text": "Witness a live dispute at Stallrow \u2014 a stall claim, a debt, or a petition argument."
         },
         {
           "id": "call_standing",
@@ -473,6 +473,326 @@
       ],
       "knowledge_key": "lore_nc_the_vouch",
       "target_location_id": "loc_crossing_viaduct_gate"
+    },
+    {
+      "id": "quest_crossing_asylum_in_the_truss",
+      "display_name": "The Deserters Plea",
+      "type": "dialogue",
+      "briefing": "Corporal Kael of the Central Garrison has abandoned his post at Checkpoint Gamma and seeks asylum under the Viaduct Truss. Garrison enforcers demand his immediate extradition under threat of mortar bombardment.",
+      "prereq_quest_id": "quest_crossing_the_vouch",
+      "min_day": 75,
+      "knowledge_key": "lore_nc_asylum_kael",
+      "target_location_id": "loc_crossing_viaduct_gate",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Hear Kaels testimony regarding unlawful civilian executions in the suburbs."
+        },
+        {
+          "id": "stage_2",
+          "text": "Examine the Garrison tribunal warrant delivered by armed couriers."
+        },
+        {
+          "id": "stage_3",
+          "text": "Convene an emergency arbitration bench at the Viaduct Gate."
+        },
+        {
+          "id": "stage_4",
+          "text": "Issue a binding ruling on Kaels asylum petition."
+        }
+      ],
+      "choices": [
+        {
+          "id": "grant_asylum",
+          "text": "Grant political sanctuary under Section 9 of the Charter. Garrison standing drops -5.",
+          "set_flag": "flag_crossing_kael_asylum_granted"
+        },
+        {
+          "id": "extradite_kael",
+          "text": "Extradite Kael to the garrison enforcers in exchange for a crate of 7.62mm ammunition.",
+          "set_flag": "flag_crossing_kael_extradited"
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_contraband_medical_vial",
+      "display_name": "The Waxed Ampoules",
+      "type": "dialogue",
+      "briefing": "A merchant caravan attempting to enter Stallrow is carrying thirty uninspected ampoules of broad-spectrum antibiotics concealed inside sealed butter crocks.",
+      "prereq_quest_id": "quest_crossing_first_weigh",
+      "min_day": 80,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_stallrow",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Detect the hidden hollow space inside the butter tubs during weight verification."
+        },
+        {
+          "id": "stage_2",
+          "text": "Test the chemical purity of the wax-sealed antibiotic liquid."
+        },
+        {
+          "id": "stage_3",
+          "text": "Interrogate the trader regarding black market distribution."
+        },
+        {
+          "id": "stage_4",
+          "text": "Determine confiscation, municipal tax, or release."
+        }
+      ],
+      "choices": [
+        {
+          "id": "confiscate_to_clinic",
+          "text": "Confiscate the medicine and transfer it directly to the crossing clinic.",
+          "set_flag": "flag_crossing_medicine_confiscated"
+        },
+        {
+          "id": "levy_heavy_duty",
+          "text": "Charge a fifty-percent import tariff in salt rations and permit sale.",
+          "set_flag": "flag_crossing_medicine_taxed"
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_vehicle_lien_arbitration",
+      "display_name": "The Impounded Rig",
+      "type": "dialogue",
+      "briefing": "A heavy six-wheel flatbed hauler sits impounded in the Underwrite Lockup. The Scale claims a debt mortgage, while the Cutters claim salvage rights after towing it off the ice.",
+      "prereq_quest_id": "quest_crossing_the_marker",
+      "min_day": 85,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_underwrite_hall",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Inspect the debt contract held by the Scale broker."
+        },
+        {
+          "id": "stage_2",
+          "text": "Review the Cutter log of salvage coordinates and diesel expended."
+        },
+        {
+          "id": "stage_3",
+          "text": "Check the engine serial numbers against the regional registry."
+        },
+        {
+          "id": "stage_4",
+          "text": "Deliver the arbitration verdict allocating ownership and salvage fees."
+        }
+      ],
+      "choices": [
+        {
+          "id": "award_to_cutters",
+          "text": "Award the hauler to the Cutters as legitimate ice salvage.",
+          "set_flag": "flag_crossing_rig_to_cutters"
+        },
+        {
+          "id": "award_to_scale",
+          "text": "Enforce the Scales mortgage lien and return the hauler upon debt settlement.",
+          "set_flag": "flag_crossing_rig_to_scale"
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_displaced_kin_roll",
+      "display_name": "The Family on the Ramp",
+      "type": "dialogue",
+      "briefing": "A family of five displaced from the southern ruins arrives at the weighbridge. Their total possessions fall three kilograms short of the statutory crossing bond.",
+      "prereq_quest_id": "quest_crossing_first_weigh",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_weighbridge",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Weigh their bundles on the iron platform."
+        },
+        {
+          "id": "stage_2",
+          "text": "Hear the mothers plea regarding children suffering from radiation cough."
+        },
+        {
+          "id": "stage_3",
+          "text": "Consult the strict voucher regulations posted by the Tollmaster."
+        },
+        {
+          "id": "stage_4",
+          "text": "Decide whether to waive the fee, sponsor them personally, or turn them back."
+        }
+      ],
+      "choices": [
+        {
+          "id": "sponsor_family",
+          "text": "Pledge personal ration credit to cover their crossing bond.",
+          "set_flag": "flag_crossing_family_sponsored"
+        },
+        {
+          "id": "refuse_entry",
+          "text": "Enforce the strict regulation and deny passage across the viaduct.",
+          "set_flag": "flag_crossing_family_refused"
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_quarantine_breach_trial",
+      "display_name": "Fever at the Sump",
+      "type": "dialogue",
+      "briefing": "A batch of waterlogged barley from the coastal flats slipped past the health inspection point, causing acute dysentery among twelve stallholders.",
+      "prereq_quest_id": "quest_crossing_first_weigh",
+      "min_day": 95,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_underwrite_hall",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Trace the grain sacks to the stall of Merchant Vane."
+        },
+        {
+          "id": "stage_2",
+          "text": "Interview the infected market workers and medical orderlies."
+        },
+        {
+          "id": "stage_3",
+          "text": "Inspect the forged green health clearance stamp on the burlap."
+        },
+        {
+          "id": "stage_4",
+          "text": "Levy fines, quarantine orders, or banishment on the offending merchant."
+        }
+      ],
+      "choices": [
+        {
+          "id": "banish_merchant",
+          "text": "Burn the spoiled grain and permanently banish the merchant from the market.",
+          "set_flag": "flag_crossing_vane_banished"
+        },
+        {
+          "id": "fine_and_cure",
+          "text": "Impose a heavy medical restitution fine to pay for survivor treatment.",
+          "set_flag": "flag_crossing_vane_fined"
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_flotilla_docking_rights",
+      "display_name": "The Tied-Up Sloop",
+      "type": "dialogue",
+      "briefing": "A Flotilla sloop carrying dried fish and brine salt has moored at the viaduct pilings without paying mooring duties, claiming maritime emergency status.",
+      "prereq_quest_id": "quest_crossing_the_vouch",
+      "min_day": 100,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_viaduct_gate",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Board the sloop and verify their broken rudder claim."
+        },
+        {
+          "id": "stage_2",
+          "text": "Assess the dockmasters grievance regarding obstructed barge lanes."
+        },
+        {
+          "id": "stage_3",
+          "text": "Audit the fish cargo value and dry salt barrels."
+        },
+        {
+          "id": "stage_4",
+          "text": "Draft a binding docking and repair accord."
+        }
+      ],
+      "choices": [
+        {
+          "id": "allow_emergency_dock",
+          "text": "Grant forty-eight hours of free mooring while rudder repairs are made.",
+          "set_flag": "flag_crossing_sloop_moored_free"
+        },
+        {
+          "id": "charge_fish_tithe",
+          "text": "Demand ten kilograms of dried fish as mooring fee before opening the slip.",
+          "set_flag": "flag_crossing_sloop_tithed"
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_embargo_transit_escort",
+      "display_name": "The Blockade Runner",
+      "type": "dialogue",
+      "briefing": "The Foundry has placed an embargo on raw scrap shipments to the western camps. A convoy of three armored buggies asks for secret passage through the viaduct underpass.",
+      "prereq_quest_id": "quest_crossing_the_marker",
+      "min_day": 105,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_stallrow",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Inspect the foundry embargo notice posted on the gate."
+        },
+        {
+          "id": "stage_2",
+          "text": "Examine the high-grade machining lathe parts on the buggies."
+        },
+        {
+          "id": "stage_3",
+          "text": "Hear the western rebuilders plea for replacement tractor parts."
+        },
+        {
+          "id": "stage_4",
+          "text": "Decide whether to enforce the embargo or open the lower drainage sluice."
+        }
+      ],
+      "choices": [
+        {
+          "id": "enforce_foundry_embargo",
+          "text": "Turn the convoy back and uphold the treaty obligations.",
+          "set_flag": "flag_crossing_embargo_upheld"
+        },
+        {
+          "id": "smuggle_parts_through",
+          "text": "Open the night sluice and let the lathe parts reach the farmers.",
+          "set_flag": "flag_crossing_embargo_broken"
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_the_null_charter_vote",
+      "display_name": "The Quorum on the Span",
+      "type": "dialogue",
+      "briefing": "A catastrophic radioactive dust storm is blowing in from Ground Zero. Convene an emergency quorum of faction representatives to decide whether to seal the viaduct gates entirely.",
+      "prereq_quest_id": "quest_crossing_the_vote_that_isnt",
+      "min_day": 110,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_underwrite_hall",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Monitor Geiger counters on the upper span as dust levels spike."
+        },
+        {
+          "id": "stage_2",
+          "text": "Gather delegates from the Scale, Cutters, and Flotilla."
+        },
+        {
+          "id": "stage_3",
+          "text": "Hear arguments on economic death versus radiation casualties."
+        },
+        {
+          "id": "stage_4",
+          "text": "Cast the deciding vote on total border shutdown."
+        }
+      ],
+      "choices": [
+        {
+          "id": "vote_total_lockdown",
+          "text": "Drop the iron portcullises and seal the viaduct for ten days.",
+          "set_flag": "flag_crossing_total_lockdown"
+        },
+        {
+          "id": "vote_stay_open_filtered",
+          "text": "Keep the filtered lower tunnel open with mandatory decontaminations.",
+          "set_flag": "flag_crossing_filtered_passage"
+        }
+      ]
     }
   ]
 }

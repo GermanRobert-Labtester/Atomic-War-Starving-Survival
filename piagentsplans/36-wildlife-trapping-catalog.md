@@ -32,7 +32,7 @@ migration windows (Plan 35) and seasonal weather.
 - food_yield: item id produced (e.g. `item_raw_meat`, `item_dried_fish`).
 - migration_link: optional `migration_*` id from Plan 35 — prey only available during that
   migration window in that zone.
-- disease_risk: chance of contaminated catch (feeds existing 09A disease system).
+- disease_risk: chance of contaminated catch (feeds Plan 112 disease content and Plan 09A response).
 - seasonal: which seasons the prey is active (links to existing 19C seasonal cadence).
 
 ## Steps
@@ -71,5 +71,5 @@ exist in `items.json` (step 5 prevents this).
 
 ## Follow-on
 - Plan 35 (migration) feeds prey availability windows.
-- Existing 13B (hunting loop) and 28A (wildlife ecology) consume trapping data.
+- Existing 13B (hunting loop) and Plan 28's ecological-forecast layer consume trapping data.
 - Bycatch (human intruder) creates moral encounter hooks (feeds Plan 49 encounters).

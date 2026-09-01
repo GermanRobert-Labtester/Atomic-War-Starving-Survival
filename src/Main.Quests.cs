@@ -44,6 +44,23 @@ namespace AtomicWar.GodotApp
             _expansionQuests = ExpansionQuestHostSession.Create(_dataDir);
             _expansionQuests.StateChanged += () => _expansionQuestsDirty = true;
 
+            _expansionQuests.System.OnQuestCompleted += def =>
+            {
+                if (string.Equals(def.id, "quest_exp09_sunken_submarine", StringComparison.Ordinal))
+                {
+                    _memorial?.Memorialize(new Ashfall.Core.Memorial.MemorialInput
+                    {
+                        SurvivorId = "barrik_war_grave_crew",
+                        Cause = "war_grave",
+                        Day = _simDay,
+                        BirthDay = 0,
+                        Epitaph = "The Half-Submerged Barrik. Lost with all hands. Recorded by the living.",
+                        Outcome = Ashfall.Core.Memorial.MemorialOutcome.WallEntry,
+                        DeathQuality = Ashfall.Core.Memorial.DeathQuality.Unattended
+                    });
+                }
+            };
+
             var save = ExpansionQuestSaveStore.TryLoad();
             if (save != null)
             {

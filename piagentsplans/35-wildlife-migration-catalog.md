@@ -46,10 +46,10 @@ time-sensitive hunting, trapping, and hazard windows.
    highland grazing, autumn deer rut, winter valley descent. Include 2 irradiated-fauna
    migrations that spread contamination along their route.
 5. Link 4 migrations to predator-follow (wolf packs, feral dogs) — these generate combat
-   encounters on the route during the migration window (feeds Plan 36 trapping + existing
-   28A wildlife ecology).
-6. Link 2 migrations to disease vectors (tick-borne, water-contact) — feeds existing 09A
-   disease system.
+   encounters on the route during the migration window (feeds Plan 36 trapping + Plan 28
+   ecological forecasts).
+6. Link 2 migrations to disease vectors (tick-borne, water-contact) — feeds Plan 112 disease
+   content and Plan 09A medical response.
 7. Validate: `--data-integrity-selftest` (all ids resolve, minDay/maxDay ordered); confirm
    migrations activate on the correct day in a headless boot.
 8. xUnit: migration schedule fires on correct day, population moves between zones, save
@@ -73,5 +73,5 @@ mechanical deserialization, no gameplay logic).
 
 ## Follow-on
 - Plan 36 (trapping catalog) consumes migration data for trap-yield modifiers.
-- Existing 28A (wildlife ecology) and 13B (hunting loop) use migration windows.
+- Plan 28's ecology-observation layer and 13B's hunting loop consume migration windows.
 - Irradiated-fauna migrations create contamination events along trade routes (feeds 43).

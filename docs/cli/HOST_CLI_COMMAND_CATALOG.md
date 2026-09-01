@@ -108,6 +108,7 @@
 | `--player-panels-uitest` | `--player-panels-ui-test` | Bind and render Survivors, Medical, Weather, Radio, Shelter panels |
 | `--shelter-hazard-loop-selftest` | `--shelter-hazard-selftest`, `--duty-roster-loop-selftest` | Shelter hazard loop and duty roster assignment verification |
 | `--shelter-operations-selftest` | `--shelter-ops-selftest`, `--operations-selftest` | Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification |
+| `--shelter-decor-selftest` | `--shelter-interior-selftest`, `--memorial-wall-selftest` | Live decor catalog, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification |
 | `--silent-foundry-uitest` | — | Silent Foundry trade panel UI construction, binding, and trade loop |
 | `--survivors-uitest` | — | Survivors panel UI construction, roster cards, and affliction badges |
 | `--ui-layout-selftest` | `--layout-selftest` | Verify fixed 1920x1080 UI layout bounds, responsive containers, and panel alignments |

@@ -9,8 +9,7 @@ The system is live but 8 wishes is far too few for 129 survivors.
 ## Why (P2)
 - Verified: `final_wishes.json` has 8 entries (archetype_id, wish_type, wish_title,
   wish_description, steps). `FinalWishSystem.cs` is fully implemented and uses
-  `ISeededRng` (Invariant 4 resolved). Existing 06A planned 8 → 30 but it hasn't been
-  executed.
+  `ISeededRng` (Invariant 4 resolved). This plan is the sole final-wish catalog expansion.
 - Creates the death-meaning pillar: final wishes are the emotional core of ASHFALL —
   they make each survivor death feel like a loss, not a stat change. 30 wishes covers
   the full range of human motivation in a dying world.
@@ -93,6 +92,6 @@ LOW — pure data + narrative authoring.
 - Plan 52 (NPC arcs) — protect_someone and reconcile wishes create NPC relationships.
 - Plan 32 (expedition) — see_a_place wishes require expeditions.
 - Plan 55 (recipes) — last_meal wishes require specific crafted food.
-- Existing 06A (final wishes 8 → 30) — this plan executes that expansion.
+- Plan 06 consumes final-wish outcomes only through existing narrative/relationship surfaces.
 - Existing 30B (mourning rites) — die_with_dignity wishes feed mourning content.
 - Existing 21C (confessions) — confess wishes feed the confession system.

@@ -65,6 +65,59 @@ namespace Ashfall.Core.Tests
             Assert.Equal(dl.GetCumulative("sv_x"), dlB.GetCumulative("sv_x"));
         }
 
+        [Fact]
+        public void ForgedCleanBill_ProvidesGreenBandAdministratively_WithoutMutatingPhysicalDose()
+        {
+            var dl = new DoseLedgerSystem();
+            dl.AssignDosimeter("sv_scavenger", "tag_9");
+            // Book 350 mSv (Red band)
+            dl.BookReading("sv_scavenger", 10, 350f, "reactor_scavenge", false, false, false, new SeededRng(1));
+
+            Assert.Equal(DoseLedgerSystem.BandRed, DoseLedgerSystem.BandFor(dl.GetCumulative("sv_scavenger")));
+            Assert.Equal(DoseLedgerSystem.BandRed, dl.GetAdministrativeBand("sv_scavenger"));
+
+            // Issue forged clean-bill chit
+            dl.SetForgedCleanBill("sv_scavenger", true);
+
+            // True cumulative dose is unchanged (350 mSv)
+            Assert.Equal(350f, dl.GetCumulative("sv_scavenger"));
+            // But administrative clearance check reports Green band
+            Assert.Equal(DoseLedgerSystem.BandGreen, dl.GetAdministrativeBand("sv_scavenger"));
+        }
+
+        [Fact]
+        public void AdminOverrideBand_ChangesAdminBand_PreservesBookedDose()
+        {
+            var dl = new DoseLedgerSystem();
+            dl.AssignDosimeter("sv_worker", "tag_12");
+            dl.BookReading("sv_worker", 5, 150f, "ash_fallout", false, false, false, new SeededRng(2));
+
+            Assert.Equal(DoseLedgerSystem.BandAmber, dl.GetAdministrativeBand("sv_worker"));
+
+            dl.SetAdministrativeClassificationOverride("sv_worker", "band_black");
+            Assert.Equal(DoseLedgerSystem.BandBlack, dl.GetAdministrativeBand("sv_worker"));
+            Assert.Equal(150f, dl.GetCumulative("sv_worker"));
+        }
+
+        [Fact]
+        public void CaptureRestore_PreservesForgedAndOverrideState()
+        {
+            var dl = new DoseLedgerSystem();
+            dl.AssignDosimeter("sv_a", "tag_a", 10f);
+            dl.SetForgedCleanBill("sv_a", true);
+            dl.SetAdministrativeClassificationOverride("sv_a", "band_green");
+
+            var state = dl.CaptureState();
+            var dlB = new DoseLedgerSystem();
+            dlB.RestoreState(state);
+
+            var entryB = dlB.GetEntry("sv_a");
+            Assert.NotNull(entryB);
+            Assert.True(entryB.hasForgedCleanBill);
+            Assert.Equal("band_green", entryB.administrativeClassificationOverride);
+            Assert.Equal(DoseLedgerSystem.BandGreen, dlB.GetAdministrativeBand("sv_a"));
+        }
+
         /// <summary>
         /// Cross-host integrity (Invariant 3) gate: a save whose data is mutated
         /// after checksumming must be hard-rejected on decode as a checksum

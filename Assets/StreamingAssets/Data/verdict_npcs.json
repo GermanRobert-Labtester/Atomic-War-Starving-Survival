@@ -56,7 +56,7 @@
     {
       "id": "npc_maro_veen",
       "name": "Maro Veen",
-      "role": "The machine's own voice — the census-window tape loop",
+      "role": "The machine's own voice \u2014 the census-window tape loop",
       "kind": "tape_echo",
       "gating_flag": "flag_verdict_call_resolved",
       "location_id": "loc_archive_tape_silo",
@@ -69,7 +69,7 @@
     {
       "id": "npc_whisper_cipher",
       "name": "Whisper Cipher",
-      "role": "The relay network's aggregate readings — univocal, procedural",
+      "role": "The relay network's aggregate readings \u2014 univocal, procedural",
       "kind": "readings",
       "gating_flag": "flag_verdict_relay_read",
       "location_id": "loc_radio_relay_mast",
@@ -77,6 +77,45 @@
       "dialogue": [
         "Readings follow. No meaning is assigned by this facility.",
         "The meter is the meter. Access is granted by maintenance, withdrawn by nobody."
+      ]
+    },
+    {
+      "id": "npc_tomas_reid",
+      "name": "Tomas Reid",
+      "role": "Defense clerk, tribunal appeals and admissibility",
+      "kind": "living",
+      "gating_flag": "flag_verdict_reid_enrolled",
+      "location_id": "loc_network_fuse_bunker",
+      "phase_min": 1,
+      "dialogue": [
+        "Procedure is not an obstacle to justice; it is the only wall between justice and execution.",
+        "If the chain of custody is broken, the machine is not judging a person\u2014it is judging an echo."
+      ]
+    },
+    {
+      "id": "npc_elena_vane",
+      "name": "Elena Vane",
+      "role": "Machine-cult deaconess, Voice of the Standard",
+      "kind": "living",
+      "gating_flag": "flag_verdict_vane_enrolled",
+      "location_id": "loc_archive_tape_silo",
+      "phase_min": 2,
+      "dialogue": [
+        "The tape does not lie, for it has no blood to race and no belly to hunger.",
+        "When the Standard speaks, human repentance is merely noise in the carrier frequency."
+      ]
+    },
+    {
+      "id": "npc_kasper_holt",
+      "name": "Kasper Holt",
+      "role": "Chief Archival Custodian, chain of custody keeper",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_holt_enrolled",
+      "location_id": "loc_archive_tape_silo",
+      "phase_min": 1,
+      "dialogue": [
+        "Every document has an origin, a transit, and a rest. If any of the three are missing, the page is illegitimate.",
+        "I do not read what is written on the parchment; I inspect the rag fibres and the iron-gall ink."
       ]
     }
   ]

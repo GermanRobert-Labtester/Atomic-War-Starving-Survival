@@ -1,7 +1,7 @@
 # ASHFALL Audio QA Report — Plan 07B Radio / VO Batch
 
-**Date:** 2026-08-31  
-**Scope:** catalog-backed radio interaction cues, ten authored broadcast bindings, seven new/replacement voice clips, follow-on shelter/dosimeter wiring, and disease-crisis lifecycle feedback.
+**Date:** 2026-08-31
+**Scope:** catalog-backed radio interaction cues, ten authored broadcast bindings, seven new/replacement voice clips, follow-on shelter/dosimeter wiring, disease-crisis lifecycle feedback, and the five-asset optional SFX finish pass.
 
 ## Result
 
@@ -10,13 +10,13 @@ audio resources or Godot import-sidecar orphans.
 
 | Check | Result |
 |---|---|
-| Cue catalog | 70 cues; all 70 resource paths resolve; 0 missing/fallback-only cues |
+| Cue catalog | 74 cues; all 74 resource paths resolve; 0 missing/fallback-only cues |
 | Broadcast bindings | 10 `audio_cue` values across `year_of_ash_radio.json` and `verdict_radio.json`; tooling test verifies every value is a registered catalog ID |
 | New/replacement VO | 7 WAV files, PCM s16le, mono, 44.1 kHz, each with a Godot-generated `.import` sidecar |
 | Loudness | New/replacement source clips measure −16.9 to −17.7 LUFS. Catalog trims place the ten routed clips at about −22.9 to −23.7 LUFS effective playback. |
 | Asset pairing | `scripts/ci/asset-orphan-sweep.sh`: 0 missing or dangling sidecars |
-| Catalog drift | `generate-audio-catalog.py --check`: pass, 70 cues |
-| Godot audio gate | `--audio-selftest`: 242 pass, 0 fail; 70 resolved, 0 silent |
+| Catalog drift | `generate-audio-catalog.py --check`: pass, 74 cues |
+| Godot audio gate | `--audio-selftest`: 266 pass, 0 fail; 74 resolved, 0 silent |
 
 ## Routed broadcasts
 
@@ -85,7 +85,7 @@ QA measurement: 1.80 s, mono PCM s16le at 44.1 kHz, -20.8 LUFS integrated and
 -14.0 dBTP. It is neither silent nor clipped and is intentionally quieter than the
 radio-voice material above; no normalization was applied. Godot generated its `.import`
 sidecar, the asset orphan sweep reports zero source/sidecar mismatches, and the catalog
-drift gate reports 70 cues in sync.
+drift gate reports 74 cues in sync.
 
 ## Disease-crisis audio addendum
 
@@ -113,7 +113,7 @@ catalog trims (-7 dB seal, -8 dB clear); no normalization was applied.
 
 The self-test now creates an isolated `DiseaseSystem`, verifies the infection →
 quarantine → clearance sequence, and proves disposal removes every disease subscription.
-The current headless result is **245 pass, 0 fail**, with **70 resolved** cue resources
+The current headless result is **266 pass, 0 fail**, with **74 resolved** cue resources
 and no silent paths. `asset-orphan-sweep.sh` reports zero source/sidecar mismatches, and
 the audio-file Git attribute is unset as required for plain binary tracking.
 
@@ -133,3 +133,28 @@ Godot-generated `.import` sidecar. `tools/generate_weather_danger_cue_batch.py` 
 local SoX only and refuses to overwrite a named output. Its per-file invocation permits
 QA-led replacement of a failed newly generated candidate without touching other assets.
 No corpus-wide normalization was applied.
+
+## Optional SFX completion addendum
+
+The five remaining optional differentiation assets are complete. The four transition
+assets are live through `AudioEventBridge`; the surface loop is registered and guarded
+by an explicit surface-listening API. They are original, procedural WAVs generated
+locally by `tools/generate_optional_sfx_finish_batch.py`; the generator refuses to
+overwrite a named runtime output.
+
+| Surface | Cue / weather mapping | Asset | Measurement |
+|---|---|---|---|
+| Chronic radiation | `rad_alert_chronic` | `sfx_radiation_chronic_alarm.wav` | 1.90 s, −14.0 LUFS, −8.0 dBTP |
+| EMP conditions | `EMPStorm`, `AshLightning` → `weather_emp_storm` | `sfx_weather_emp_storm.wav` | 1.65 s, −18.4 LUFS, −11.1 dBTP |
+| Glass hazards | `GlassStorm`, `RadHail` → `weather_glass_storm` | `sfx_weather_glass_storm.wav` | 2.50 s, −16.9 LUFS, −7.7 dBTP |
+| Corrosive precipitation | `AcidSnow`, `BloodRain` → `weather_corrosive_precipitation` | `sfx_weather_corrosive_precipitation.wav` | 2.40 s, −18.0 LUFS, −3.9 dBTP |
+| Surface storms (prepared) | `amb_surface_storm` loop | `amb_surface_storm.wav` | 12.00 s, −23.3 LUFS, −7.3 dBTP |
+
+All five are mono PCM s16le at 44.1 kHz and have Godot-generated `.import` sidecars.
+The distinct chronic source replaces the former acute/chronic shared-alarm ambiguity.
+`SurfaceAmbienceController` switches normal/storm surface loops from `WeatherSystem`
+only after the host explicitly starts surface ambience; it never infers player location
+from an expedition. Its lifecycle self-test covers initial start, storm/clear switching,
+both loop stops, and unsubscribe-on-dispose. The current game flow is bunker-only and
+does not yet request surface mode, so this loop remains deliberately inactive until a
+real surface presentation owns that transition.

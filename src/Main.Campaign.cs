@@ -5,6 +5,7 @@ using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Memorial;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -160,7 +161,22 @@ namespace AtomicWar.GodotApp
             _memorial = new Ashfall.Core.Memorial.MemorialSystem(
                 new Ashfall.Core.Memorial.MemorialState());
             _memorial.OnMemorialized += _ => _memorialDirty = true;
+            _memorial.OnMemorialized += OnMemorializedForShelterDecor;
             LoadMemorial();
+        }
+
+        /// <summary>
+        /// The memorial system remains the death-record authority. This host
+        /// event only projects a newly committed record to the dedicated decor
+        /// wall, where the projection is independently persisted with the room
+        /// placements. If decor has not been initialized yet, its setup pass
+        /// reconciles the entry later.
+        /// </summary>
+        private void OnMemorializedForShelterDecor(MemorialEntry entry)
+        {
+            if (_shelterDecor == null || entry == null) return;
+            if (!_shelterDecor.TryMountMemorialPlaque(entry, out var reason))
+                GD.PushWarning("[Ashfall Godot] Memorial plaque mount skipped: " + reason);
         }
 
         private void LoadMemorial()

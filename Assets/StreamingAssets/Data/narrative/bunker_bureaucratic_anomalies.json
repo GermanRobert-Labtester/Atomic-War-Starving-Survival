@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "collection_id": "subterranean_integrity_commission_anomaly_log",
+  "anomalies": [
+    {
+      "anomaly_id": "anom_01_chronometer_desync",
+      "incident_date": "Day 144",
+      "designation": "Temporal-Material Discrepancy",
+      "reporting_officer": "Duty Officer Vane",
+      "bureaucratic_summary": "All 47 mechanical chronometers in the shelter simultaneously advanced by 83 minutes. During this unaccounted period, the primary boiler consumed 140kg of anthracite coal. The furnace door was found latched, and the ash pit had been professionally raked.",
+      "clinical_resolution": "Incident filed under 'Instrument Malfunction'. Coal deficit deducted from Sector 3 heating allowance.",
+      "tags": [
+        "time",
+        "furnace",
+        "coal",
+        "mystery"
+      ]
+    },
+    {
+      "anomaly_id": "anom_02_dead_frequency_broadcast",
+      "incident_date": "Day 219",
+      "designation": "Unsanctioned RF Transmission",
+      "reporting_officer": "Comms Technician Aris",
+      "bureaucratic_summary": "At 0300 hours, the main receiver picked up a voice transmission on 14.2 MHz (a frequency physically severed from the antenna array). The voice was an exact biometric match for the Overseer, reading a list of 12 names. Three of the individuals are currently alive in the shelter.",
+      "clinical_resolution": "Audio log destroyed. 14.2 MHz vacuum tubes confiscated. 10% ration dock for Tech Aris for unauthorized monitoring.",
+      "tags": [
+        "radio",
+        "prophecy",
+        "overseer",
+        "spooky"
+      ]
+    },
+    {
+      "anomaly_id": "anom_03_dental_modification",
+      "incident_date": "Day 301",
+      "designation": "Unauthorized Medical Procedure",
+      "reporting_officer": "Medical Officer Vel",
+      "bureaucratic_summary": "Scout Team Delta returned from deep shaft -80m after a 12-hour communications blackout. Miner Korso returned with six flawless, surgically implanted gold crowns on his molars. Korso claims he was alone the entire time and only slept for twenty minutes.",
+      "clinical_resolution": "Gold crowns forcibly extracted to meet quarterly precious metal quotas. Korso assigned to surface duty.",
+      "tags": [
+        "medical",
+        "gold",
+        "creepy",
+        "mining"
+      ]
+    },
+    {
+      "anomaly_id": "anom_04_gravitational_inversion",
+      "incident_date": "Day 411",
+      "designation": "Localized Physics Failure",
+      "reporting_officer": "Hydro-Engineer Silas",
+      "bureaucratic_summary": "Storage Closet 4B reported severe condensation. Inspection revealed that all water condensation on the walls was dripping upwards and collecting into a localized puddle on the ceiling. Structural integrity of the ceiling remains at 88%.",
+      "clinical_resolution": "Closet 4B sealed and welded shut. Classified as 'Moisture Damage'. Plumber dispatched to reroute adjacent pipes.",
+      "tags": [
+        "physics",
+        "water",
+        "ceiling",
+        "anomaly"
+      ]
+    },
+    {
+      "anomaly_id": "anom_05_the_eleventh_ration",
+      "incident_date": "Day 505",
+      "designation": "Inventory Surplus Discrepancy",
+      "reporting_officer": "Quartermaster Finch",
+      "bureaucratic_summary": "At end-of-shift count, the ration manifest showed 10 blocks of nutrient paste distributed to Squad A. However, 11 blocks were consumed, and 11 distinct bite-mark profiles were recovered from the wax paper wrappers. Squad A officially consists of 10 personnel.",
+      "clinical_resolution": "Quartermaster Finch reprimanded for mathematical incompetence. The 11th wrapper incinerated to balance the ledger.",
+      "tags": [
+        "rations",
+        "surplus",
+        "entity",
+        "accounting"
+      ]
+    },
+    {
+      "anomaly_id": "anom_06_subsonic_weeping",
+      "incident_date": "Day 630",
+      "designation": "Acoustic Disturbance",
+      "reporting_officer": "Acoustic Engineer Kael",
+      "bureaucratic_summary": "Microphones in ventilation shaft C2 recorded a sustained, rhythmic weeping sound originating from the solid bedrock beneath the shelter floor. The frequency (14Hz) induced nausea in 6 workers. Core drilling revealed 400 meters of solid granite and no hollow cavities.",
+      "clinical_resolution": "Workers issued earplugs. C2 ventilation fan speed increased to 120% to mask the acoustic anomaly. Fan motor maintenance scheduled.",
+      "tags": [
+        "audio",
+        "bedrock",
+        "weeping",
+        "ventilation"
+      ]
+    },
+    {
+      "anomaly_id": "anom_07_the_infinite_roster",
+      "incident_date": "Day 740",
+      "designation": "Population Census Discrepancy",
+      "reporting_officer": "HR Director Vance",
+      "bureaucratic_summary": "The automated pneumatic census tube delivered the morning population roster. The bunker physically accommodates a maximum of 199 dwellers, all of whom were accounted for. The printout listed 200 dwellers. The 200th name was 'The Pressure'.",
+      "clinical_resolution": "The 200th name was redacted with black marker to prevent ledger overflow. Census machine recalibrated.",
+      "tags": [
+        "population",
+        "census",
+        "entity",
+        "bureaucracy"
+      ]
+    },
+    {
+      "anomaly_id": "anom_08_the_phosphor_shadow",
+      "incident_date": "Day 812",
+      "designation": "Visual Contamination",
+      "reporting_officer": "Maintenance Chief Rusk",
+      "bureaucratic_summary": "A humanoid shadow is permanently burned into the concrete wall of the reactor antichamber. Over the last 12 months, measurements confirm the shadow has moved 14 inches to the left, toward the control room door.",
+      "clinical_resolution": "A 15-inch grid has been painted on the wall to accurately track the shadow's progress for the quarterly maintenance report.",
+      "tags": [
+        "shadow",
+        "radiation",
+        "movement",
+        "reactor"
+      ]
+    }
+  ]
+}

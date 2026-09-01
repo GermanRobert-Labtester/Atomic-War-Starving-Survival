@@ -20,39 +20,119 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 16
 
-[node name="DetailText" type="Label" parent="ContentStack"]
+[node name="MainLayout" type="HBoxContainer" parent="ContentStack"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="LeftPane" type="PanelContainer" parent="ContentStack/MainLayout"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="ContentStack/MainLayout/LeftPane"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ContentStack/MainLayout/LeftPane/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.86, 0.81, 1)
+theme_override_font_sizes/font_size = 28
+text = "TANK CAPACITIES"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ContentStack/MainLayout/LeftPane/VBox"]
+layout_mode = 2
+
+[node name="DetailText" type="Label" parent="ContentStack/MainLayout/LeftPane/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Select filtration process or replace sediment filter membranes."
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.78, 0.86, 0.81, 1)
+text = "Clean Water: 0 L | Raw: 0 L"
 autowrap_mode = 3
 
-[node name="ButtonRow" type="HBoxContainer" parent="ContentStack"]
-unique_name_in_owner = true
+[node name="CenterPane" type="PanelContainer" parent="ContentStack/MainLayout"]
 layout_mode = 2
-theme_override_constants/separation = 10
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
 
-[node name="CharcoalButton" type="Button" parent="ContentStack/ButtonRow"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 36)
+[node name="VBox" type="VBoxContainer" parent="ContentStack/MainLayout/CenterPane"]
 layout_mode = 2
-text = "Run Charcoal Filter (10L)"
 
-[node name="DistillButton" type="Button" parent="ContentStack/ButtonRow"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 36)
+[node name="Label" type="Label" parent="ContentStack/MainLayout/CenterPane/VBox"]
 layout_mode = 2
-text = "Run Distillation (10L)"
+theme_override_colors/font_color = Color(0.78, 0.86, 0.81, 1)
+theme_override_font_sizes/font_size = 28
+text = "FILTRATION SCHEMATIC"
+horizontal_alignment = 1
 
-[node name="OsmosisButton" type="Button" parent="ContentStack/ButtonRow"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 36)
+[node name="HSeparator" type="HSeparator" parent="ContentStack/MainLayout/CenterPane/VBox"]
 layout_mode = 2
-text = "Run Reverse Osmosis (10L)"
 
-[node name="ReplaceFilterButton" type="Button" parent="ContentStack/ButtonRow"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 36)
+[node name="SchematicVisual" type="Label" parent="ContentStack/MainLayout/CenterPane/VBox"]
 layout_mode = 2
-text = "Replace Filter"
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.78, 0.86, 0.81, 1)
+text = "[ INTAKE ] ----> [ IRRADIATED ] ----> [ PURIFIED ]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightPane" type="PanelContainer" parent="ContentStack/MainLayout"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="ContentStack/MainLayout/RightPane"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ContentStack/MainLayout/RightPane/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.42, 0.21, 1)
+theme_override_font_sizes/font_size = 28
+text = "DEGRADATION WARNINGS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ContentStack/MainLayout/RightPane/VBox"]
+layout_mode = 2
+
+[node name="WarnText" type="Label" parent="ContentStack/MainLayout/RightPane/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 0.42, 0.21, 1)
+text = "⚠ RADIATION SCRUB RATE SUB-OPTIMAL
+⚠ FILTER DEGRADATION DETECTED"
+autowrap_mode = 3
+
+[node name="ActionRow" type="PanelContainer" parent="ContentStack"]
+layout_mode = 2
+
+[node name="ButtonRow" type="HBoxContainer" parent="ContentStack/ActionRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="CharcoalButton" type="Button" parent="ContentStack/ActionRow/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+text = "[ RUN CHARCOAL FILTER ]"
+
+[node name="DistillButton" type="Button" parent="ContentStack/ActionRow/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+text = "[ RUN DISTILLATION ]"
+
+[node name="OsmosisButton" type="Button" parent="ContentStack/ActionRow/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+text = "[ RUN REVERSE OSMOSIS ]"
+
+[node name="ReplaceFilterButton" type="Button" parent="ContentStack/ActionRow/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.42, 0.21, 1)
+text = "[ REPLACE FILTER ]"

@@ -64,7 +64,7 @@ primary destination.
    - Drainage pipe (shelter for someone, a cache, a warning scratched in the wall).
    - Rail siding (a derailed car, coal, a maintenance log — journal unlock).
    - Dead livestock (irradiated cattle — disease risk if scavenged).
-   - Ruined greenhouse (wilted seedlings, a seed cache — feeds existing 22B greenhouse).
+   - Ruined greenhouse (wilted seedlings, a seed cache — feeds Plan 91 greenhouse).
    - Shell crater (unexploded ordnance — hazard; military salvage).
    - Field kitchen (abandoned, a pot of frozen soup, a fuel canister).
    - Abandoned generator (repairable — feeds existing 16B waystation power).
@@ -76,10 +76,10 @@ primary destination.
    - Radio tower (dismantled, a surviving antenna — feeds existing 24A radio).
    - Destroyed checkpoint (bodies, a logbook, contraband — faction info).
    - Abandoned tent (a family's camp, a letter, a child's drawing — grief hook).
-   - Makeshift clinic (abandoned, medical supplies, a triage list — existing 09A disease).
+   - Makeshift clinic (abandoned, medical supplies, a triage list — Plan 112 disease with Plan 09A response).
    - Crashed drone (military, salvageable electronics, a flight log — faction intel).
    - Fuel cache (buried, a map scratched on a can — location clue).
-   - Water source (a spring, a well — may be contaminated — feeds existing 13A water).
+   - Water source (a spring, a well — may be contaminated — feeds the existing water system).
    - Supply drop (parachute, a crate, government markings — rare one-time loot).
 5. Give each: type, loot, encounter, environmental story, optional ethical decision,
    optional rumor, depletion flag.

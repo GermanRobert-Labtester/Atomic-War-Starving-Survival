@@ -29,6 +29,32 @@ namespace AtomicWar.GodotApp.UI
         private MedicalWardHostSession? _host;
         private string? _selectedBedId;
 
+        /// <summary>
+        /// Plan 60 / D3 — the disease ward, so a bed's occupant can be treated from
+        /// the bed they are lying in. Null simply means the ward UI offers no
+        /// treatment actions; nothing here invents a drug list, because the options
+        /// are read from the disease catalog through <c>DiseaseHostSession</c>.
+        /// </summary>
+        private AtomicWar.GodotApp.DiseaseHostSession? _disease;
+
+        /// <summary>
+        /// Plan 60 / D6 — the bedside vigil, offered from the bed the person is dying
+        /// in rather than from a separate screen.
+        /// </summary>
+        private MedicalHostSession? _medical;
+
+        public void BindVigil(MedicalHostSession? medical)
+        {
+            _medical = medical;
+            RefreshView();
+        }
+
+        public void BindDisease(AtomicWar.GodotApp.DiseaseHostSession? disease)
+        {
+            _disease = disease;
+            RefreshView();
+        }
+
         public bool IsBound => _host != null;
 
         public void Bind(MedicalWardHostSession session)
@@ -245,6 +271,44 @@ namespace AtomicWar.GodotApp.UI
                 if (activeAdmission != null)
                 {
                     _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow("Admitted Day", $"Sim Day {activeAdmission.AdmittedDay}", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+
+                    // ---- Plan 60 / D2: the clinical note, assembled by Core ----
+                    var picture = _disease?.ClinicalPicture(activeAdmission.PatientId);
+                    if (picture != null && !string.IsNullOrEmpty(picture.DiseaseId))
+                    {
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("CLINICAL NOTE"));
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(
+                            "Illness",
+                            $"{picture.DisplayName} — day {picture.DaysSick} ({picture.StageToken})",
+                            AshfallUiHelpers.ToColor(picture.Terminal ? DesignTheme.Critical : DesignTheme.Warm)));
+                        if (!string.IsNullOrEmpty(picture.Tell))
+                            _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody("Sign: " + picture.Tell));
+                        if (!string.IsNullOrEmpty(picture.SecondaryTell))
+                            _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody("Also: " + picture.SecondaryTell));
+                        if (!string.IsNullOrEmpty(picture.TimingClue))
+                            _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(
+                                "Timing", picture.TimingClue, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+                        if (!string.IsNullOrEmpty(picture.Guidance))
+                            _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody(picture.Guidance));
+                        // Odds are stated as what is known, never as a hidden number
+                        // pretending to be certainty: this is the patient's own chance
+                        // after the doses they were given.
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(
+                            "Chance of Survival",
+                            $"{(1f - picture.EffectiveLethality) * 100f:F0}%"
+                            + (picture.DosesGiven > 0 ? $" · {picture.DosesGiven} dose(s) given" : " · untreated"),
+                            AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(
+                            "Prognosis",
+                            picture.Terminal
+                                ? "Terminal. Comfort, presence, and a name kept."
+                                : picture.HasCure
+                                    ? "Treatable, if it is caught early."
+                                    : "No cure. Care for it as long as it lasts.",
+                            AshfallUiHelpers.ToColor(picture.Terminal ? DesignTheme.Critical : DesignTheme.Pale)));
+                    }
+
                     _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
                     _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("AVAILABLE PROCEDURES"));
 
@@ -261,12 +325,84 @@ namespace AtomicWar.GodotApp.UI
                         _inspectorContainer.AddChild(btnProc);
                     }
 
+                    // ---- Plan 60 / D6: keep vigil at the bedside ----
+                    if (_medical != null)
+                    {
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
+                        bool keeping = _medical.VigilActive &&
+                            string.Equals(_medical.Vigil.DwellerId, activeAdmission.PatientId, StringComparison.Ordinal);
+                        var btnVigil = AshfallUiHelpers.MakeButton(
+                            keeping ? "VIGIL BEING KEPT" : "KEEP VIGIL",
+                            () =>
+                            {
+                                _eventLogLabel.Text = _medical.HoldVigil(activeAdmission.PatientId);
+                                RefreshView();
+                            },
+                            disabled: keeping);
+                        _inspectorContainer.AddChild(btnVigil);
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody(_medical.VigilStatusLine()));
+                    }
+
                     var btnDischarge = AshfallUiHelpers.MakeButton("DISCHARGE PATIENT", () =>
                     {
                         _host.System.Discharge(activeAdmission.PatientId, _host.SimDay);
                         RefreshView();
                     });
                     _inspectorContainer.AddChild(btnDischarge);
+
+                    // ---- Plan 60 / D3: authorised treatment for this patient ----
+                    if (_disease != null)
+                    {
+                        var contracts = _disease.Snapshot?.patients;
+                        if (contracts != null)
+                        {
+                            bool wroteHeader = false;
+                            for (int i = 0; i < contracts.Count; i++)
+                            {
+                                var patient = contracts[i];
+                                if (patient == null) continue;
+                                if (patient.survivor_id != activeAdmission.PatientId) continue;
+
+                                if (!wroteHeader)
+                                {
+                                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
+                                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("ADMINISTER TREATMENT"));
+                                    wroteHeader = true;
+                                }
+
+                                var options = _disease.AuthorizedTreatments(patient.disease_id);
+                                if (options.Count == 0)
+                                {
+                                    // Incurable is a clinical answer, not a missing
+                                    // button — say it, and do not offer a placebo.
+                                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody(
+                                        patient.disease_name + ": no authorised treatment. Comfort care and monitoring only."));
+                                    continue;
+                                }
+
+                                _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(
+                                    "Active Infection",
+                                    patient.disease_name + " — day " + patient.days_sick
+                                    + (patient.treatments_applied > 0 ? " (" + patient.treatments_applied + " doses given)" : ""),
+                                    AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+
+                                for (int t = 0; t < options.Count; t++)
+                                {
+                                    var option = options[t];
+                                    string diseaseId = patient.disease_id;
+                                    var btnTreat = AshfallUiHelpers.MakeButton(
+                                        $"GIVE {option.item_id.ToUpperInvariant()} [{option.role}]", () =>
+                                        {
+                                            var outcome = _disease.Treat(
+                                                activeAdmission.PatientId, diseaseId, option.item_id, _host.SimDay);
+                                            _eventLogLabel.Text = outcome.Reason + ": " + _disease.LastEvent;
+                                            RefreshView();
+                                        });
+                                    _inspectorContainer.AddChild(btnTreat);
+                                }
+                            }
+                        }
+                    }
                 }
                 else
                 {

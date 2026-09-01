@@ -17,7 +17,7 @@ namespace Ashfall.Core
             "disease_", "event_", "recipe_", "relic_", "lore_", "room_", "stage_", "choice_",
             "mutation_", "flag_", "trait_", "anchor_", "season_", "kind_", "clinic_",
             "morph_", "drug_", "co_", "enc_", "narrative_", "dialogue_event_",
-            "field_fauna_", "field_flora_", "field_guide_", "char_", "creature_", "settlement_",
+            "field_fauna_", "field_flora_", "field_guide_", "char_", "creature_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "frequency_", "schedule_event_", "hidden_cache_", "archetype_",
             "frequency_", "schedule_event_", "hidden_cache_", "archetype_",
             "belief_profile_", "profession_", "background_", "phantom_background_",
@@ -81,7 +81,9 @@ namespace Ashfall.Core
             // Plan 26 — Knowledge, Research & Skills: The Progression World
             "knowledge_", "skill_", "manual_", "procedure_", "finding_",
             // Plan 28 — Living Wasteland Ecology, Migration & Infestations
-            "species_", "migration_", "infestation_", "eco_chain_"
+            "species_", "migration_", "infestation_", "eco_chain_",
+            // Plan 36 — Wildlife Trapping Catalog
+            "trap_"
         };
 
         /// <summary>
@@ -110,7 +112,9 @@ namespace Ashfall.Core
             // Plan 26
             "manual_id", "procedure_id", "possible_findings",
             // Plan 28
-            "migration_id", "infestation_id", "species_id"
+            "migration_id", "infestation_id", "species_id",
+            // Plan 36
+            "trap_id"
         };
 
         /// <summary>
@@ -133,7 +137,9 @@ namespace Ashfall.Core
             "latentExpertTrait", "requiredTrait", "itemId",
             "downstream_quest_trigger", "gating_flag", "nextStageId",
             "countermeasure_item_id",
-            "from", "to"
+            "from", "to",
+            // Plan 46 — Scavenging Tables
+            "scavenging_table_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -149,6 +155,8 @@ namespace Ashfall.Core
             "stance", "short_name", "identity", "sink", "notes", "display_name", "legacy_aliases",
             "collection_id", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
+            "depletion_model", "primary_hazard_type", "hazard_type", "codex_unlock_id", "location_type", "rarity_tier",
+            "effect_type", "effect_target", "rarity", "ignoreConsequence", "authenticity",
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",
             "callsign", "entry_type", "record_type", "directive_code", "classification",
             "issuing_authority", "vault_id", "audit_type", "sub_level", "auditor_designation",

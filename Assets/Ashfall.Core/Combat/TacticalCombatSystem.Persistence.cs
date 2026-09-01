@@ -181,7 +181,14 @@ namespace Ashfall.Core.Combat
                 PinnedTurnsRemaining = c.PinnedTurnsRemaining,
                 IsLastStand = c.IsLastStand,
                 WeaponInstanceId = c.WeaponInstanceId ?? string.Empty,
-                HasFled = c.HasFled
+                HasFled = c.HasFled,
+                AiStancePreference = c.AiStancePreference ?? "HoldPosition",
+                AiSpecialMove = c.AiSpecialMove ?? "None",
+                AiAccuracyMod = c.AiAccuracyMod <= 0f ? 1f : c.AiAccuracyMod,
+                AiDamageMod = c.AiDamageMod <= 0f ? 1f : c.AiDamageMod,
+                SurrenderThreshold = c.SurrenderThreshold,
+                FleeThreshold = c.FleeThreshold,
+                CatalogId = c.CatalogId ?? string.Empty
             };
         }
 

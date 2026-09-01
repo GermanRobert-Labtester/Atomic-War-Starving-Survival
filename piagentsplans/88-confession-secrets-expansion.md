@@ -106,5 +106,5 @@ each archetype exists before authoring.
 - Plan 65 (final wishes) — a confessed secret can be a dying survivor's wish.
 - Plan 52 (recurring NPC arcs) — confessions deepen NPC relationships.
 - Plan 27C (psychological contamination) — grudges feed psychological decline.
-- Existing 27A (body and mind) — confessions are the interpersonal-morality
-  layer.
+- Plan 27C (psychological contamination) — confessions are the interpersonal-morality
+  input layer.

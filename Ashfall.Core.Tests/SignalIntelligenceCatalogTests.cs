@@ -26,11 +26,11 @@ namespace Ashfall.Core.Tests
 
             var catalog = SignalIntelligenceCatalog.LoadFromDirectory(_narrativeDir);
             Assert.NotNull(catalog);
-            Assert.Equal(8, catalog.CipherEntries.Count);
+            Assert.Equal(11, catalog.CipherEntries.Count);
             Assert.Equal(8, catalog.SeismicEntries.Count);
             Assert.Equal(7, catalog.EmpEntries.Count);
             Assert.Equal(7, catalog.WiretapEntries.Count);
-            Assert.Equal(30, catalog.TotalCount);
+            Assert.Equal(33, catalog.TotalCount);
         }
 
         [Fact]

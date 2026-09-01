@@ -83,4 +83,4 @@ read-only `CurrentsCatalog.cs`, `District8DeepCoastSystem.cs`, `WeatherSystem` (
 10. xUnit/save: tide/surge state captured & restored.
 
 **Next steps:** a tide-table item the player can acquire (removes guesswork); a storm-surge
-that strands an expedition (rescue mission); coastal foraging at low tide (13A goods).
+that strands an expedition (rescue mission); coastal foraging at low tide (Plan 56 goods).

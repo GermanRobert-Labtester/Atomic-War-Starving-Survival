@@ -95,5 +95,5 @@ must correspond to events the system actually fires.
 - Plan 66 (guilt sources) — guilt triggers moral_compromise journal entries.
 - Plan 65 (final wishes) — a survivor's death triggers death_of_survivor.
 - Plan 57 (incidents) — incidents trigger situation keys.
-- Existing 27A (body and mind) — journal voice is the psychological
+- Plan 27C (psychological contamination) — journal voice is the psychological
   expression layer.

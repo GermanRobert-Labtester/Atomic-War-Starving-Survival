@@ -32,6 +32,22 @@ namespace Ashfall.Core.Narrative
 
         [JsonPropertyName("advances_chain_stage")]
         public int AdvancesChainStage { get; set; } = 0;
+
+        // Plan 45 — Faction patrol extensions (backward-compatible defaults)
+        [JsonPropertyName("faction_id")]
+        public string FactionId { get; set; } = string.Empty;
+
+        [JsonPropertyName("faction_standing_delta")]
+        public int FactionStandingDelta { get; set; } = 0;
+
+        [JsonPropertyName("cost_items")]
+        public List<string> CostItems { get; set; } = new List<string>();
+
+        [JsonPropertyName("required_item_id")]
+        public string RequiredItemId { get; set; } = string.Empty;
+
+        [JsonPropertyName("required_item_quantity")]
+        public int RequiredItemQuantity { get; set; } = 0;
     }
 
     [Serializable]
@@ -78,6 +94,13 @@ namespace Ashfall.Core.Narrative
 
         [JsonPropertyName("choices")]
         public List<TravelEncounterChoice> Choices { get; set; } = new List<TravelEncounterChoice>();
+
+        // Plan 45 — Faction patrol extensions (backward-compatible defaults)
+        [JsonPropertyName("faction_id")]
+        public string FactionId { get; set; } = string.Empty;
+
+        [JsonPropertyName("territory_state")]
+        public string TerritoryState { get; set; } = string.Empty; // "controlled", "contested", "border"
     }
 
     [Serializable]

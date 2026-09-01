@@ -25,6 +25,8 @@ namespace Ashfall.Core
     {
         public string sector_id = string.Empty;
         public List<string> neighbors = new List<string>();
+        /// <summary>Plan 28: waterway sector — water-bound runners (fish runs) migrate only along these. Optional.</summary>
+        public bool water;
     }
 
     [Serializable]
@@ -51,6 +53,9 @@ namespace Ashfall.Core
         public string owner = "none";
         public float contamination;
         public List<string> threats = new List<string>();
+        /// <summary>Plan 28 Phase 3: optional sector binding — the representative
+        /// sector a dominant-faction owner closes to wildlife movement.</summary>
+        public string sector_id = string.Empty;
     }
 
     /// <summary>Loads the seed catalog. Engine-agnostic: IFileIO + IJsonSerializer ports.</summary>
@@ -98,6 +103,12 @@ namespace Ashfall.Core
                     .Where(s => s != null)
                     .Select(s => (s.sector_id, new List<string>(s.neighbors ?? new List<string>())))
                     ?? Enumerable.Empty<(string, List<string>)>());
+
+                // Plan 28: waterway sectors bound the fish run to real water.
+                wildlife.SetWaterSectors(catalog.sectors?
+                    .Where(s => s != null && s.water)
+                    .Select(s => s.sector_id)
+                    ?? Enumerable.Empty<string>());
 
                 if (wildlife.State.packs.Count == 0 && catalog.packs != null)
                 {

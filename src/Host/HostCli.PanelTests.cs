@@ -21,6 +21,7 @@ using Ashfall.Core.Endgame;
 using Ashfall.Core.Save;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Settings;
+using AtomicWar.GodotApp.Narrative;
 using Ashfall.Core.Settings;
 using AtomicWar.GodotApp.UI;
 using System;
@@ -607,6 +608,66 @@ namespace AtomicWar.GodotApp
             var report = NarrativeHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
             return EmitSummaryFromHeadlessReport("narrative_selftest", report);
+        }
+
+        /// <summary>
+        /// Oral Lore Codex self-test: load both catalog files via the host session,
+        /// verify entry count, and exercise query methods (by id, by tag, by genre).
+        /// </summary>
+        public static int RunOralLoreSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else
+                {
+                    GD.Print("[FAIL] " + name);
+                    failures++;
+                }
+            }
+
+            try
+            {
+                var session = new OralLoreHostSession();
+                session.LoadCatalogs(dataDirectory);
+
+                int count = session.AllSongs.Count;
+                GD.Print($"[OralLore] loaded {count} entries from narrative/oral_lore_codex.json + narrative/oral_lore_batch_2.json");
+                Check(count > 0, "oral lore catalog is not empty after load");
+                Check(count == 16, $"oral lore catalog has 16 entries (got {count})");
+
+                // Query by id: pick the first entry and look it up
+                if (count > 0)
+                {
+                    string firstId = session.AllSongs[0].lore_id;
+                    var found = session.GetSong(firstId);
+                    Check(found != null && found.lore_id == firstId, "GetSong returns entry by lore_id");
+                }
+
+                // Query by tag: exercise the tag filter
+                var byTag = session.GetSongsByTag("resistance");
+                GD.Print($"[OralLore] GetByTag(\"resistance\"): {byTag.Count} matches");
+                Check(byTag != null, "GetSongsByTag returns non-null list");
+
+                // Query by genre: exercise the genre filter
+                var byGenre = session.GetSongsByGenre("ballad");
+                GD.Print($"[OralLore] GetByGenre(\"ballad\"): {byGenre.Count} matches");
+                Check(byGenre != null, "GetSongsByGenre returns non-null list");
+
+                // Null/empty guard
+                var nullResult = session.GetSong(null);
+                Check(nullResult == null, "GetSong(null) returns null");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[OralLore] selftest exception: {ex.GetType().Name}: {ex.Message}");
+                failures++;
+            }
+
+            bool passed = failures == 0;
+            return EmitSummary("oral_lore_selftest", passed, passed ? 0 : 1,
+                passed ? 5 : 0, failures, $"{failures} failures");
         }
 
         public static int RunSurvivorsSelfTest()

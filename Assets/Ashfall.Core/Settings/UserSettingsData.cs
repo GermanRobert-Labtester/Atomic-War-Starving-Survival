@@ -52,6 +52,9 @@ namespace Ashfall.Core.Settings
         public bool MuteAll { get; set; } = false;
 
         // ── Accessibility & Readability ───────────────────────────────────
+        [JsonPropertyName("locale")]
+        public string Locale { get; set; } = "en"; // "en", "pseudo", etc.
+
         [JsonPropertyName("high_contrast")]
         public bool HighContrast { get; set; } = false;
 
@@ -65,6 +68,9 @@ namespace Ashfall.Core.Settings
         public bool LargeFonts { get; set; } = false;
 
         // ── Gameplay Preferences ──────────────────────────────────────────
+        [JsonPropertyName("tutorial_mode")]
+        public int TutorialMode { get; set; } = 0; // 0: All, 1: ContextualOnly, 2: Disabled
+
         [JsonPropertyName("confirm_end_day")]
         public bool ConfirmEndDay { get; set; } = true;
 
@@ -91,10 +97,12 @@ namespace Ashfall.Core.Settings
                 RadioVolume = RadioVolume,
                 AmbienceVolume = AmbienceVolume,
                 MuteAll = MuteAll,
+                Locale = Locale ?? "en",
                 HighContrast = HighContrast,
                 HazardTextLabels = HazardTextLabels,
                 ReducedMotion = ReducedMotion,
                 LargeFonts = LargeFonts,
+                TutorialMode = TutorialMode,
                 ConfirmEndDay = ConfirmEndDay,
                 VerboseRadioLog = VerboseRadioLog,
                 AutoSaveOnDay = AutoSaveOnDay

@@ -18,6 +18,10 @@ namespace Ashfall.Core
     public class DebtContract
     {
         public string debtorId;
+        /// <summary>Faction or entity that extended credit. Empty string for legacy/untyped debts.</summary>
+        public string creditorId = string.Empty;
+        /// <summary>Template ID from ledger_debt_templates.json. Empty for ad-hoc debts.</summary>
+        public string templateId = string.Empty;
         public float principal;
         public int termDays;
         public float rate;
@@ -85,7 +89,8 @@ namespace Ashfall.Core
         /// increments on the second. Returns false if the terms are invalid or
         /// the debtor already has ink (signed, unpaid) or an unresolved forfeit.
         /// </summary>
-        public bool PresentContract(string debtorId, float principal, int termDays, float rate, string forfeit)
+        public bool PresentContract(string debtorId, float principal, int termDays, float rate, string forfeit,
+            string creditorId = "", string templateId = "")
         {
             if (string.IsNullOrEmpty(debtorId)) return false;
             if (principal <= 0f || termDays <= 0) return false;
@@ -111,6 +116,8 @@ namespace Ashfall.Core
                 contract = new DebtContract { debtorId = debtorId };
                 _state.contracts.Add(contract);
             }
+            contract.creditorId = creditorId ?? string.Empty;
+            contract.templateId = templateId ?? string.Empty;
             contract.principal = principal;
             contract.termDays = termDays;
             contract.rate = rate;
@@ -262,6 +269,8 @@ namespace Ashfall.Core
         private static DebtContract CopyContract(DebtContract c) => new DebtContract
         {
             debtorId = c.debtorId,
+            creditorId = c.creditorId ?? string.Empty,
+            templateId = c.templateId ?? string.Empty,
             principal = c.principal,
             termDays = c.termDays,
             rate = c.rate,

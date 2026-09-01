@@ -63,6 +63,13 @@ namespace Ashfall.Core.Survivors
         public TraumaBondSystem TraumaBond { get; }
         public SkillAtrophySystem Atrophy { get; }
 
+        /// <summary>
+        /// Plan 60 / D7 — the relationship authority this coordinator already owns.
+        /// Exposed read-only so the memorial/grief path reaches the same ledger the
+        /// social systems mutate, instead of a second instance.
+        /// </summary>
+        public SurvivorRelationsSystem Relations => _relations;
+
         private readonly NeedsSystem _needs;
         private readonly SurvivorRelationsSystem _relations;
         private readonly DutyRosterSystem _roster;

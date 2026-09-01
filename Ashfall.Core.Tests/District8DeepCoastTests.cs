@@ -113,9 +113,8 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(catalog.GetFaction(District8DeepCoastSystem.FactionFleet));
             Assert.NotNull(catalog.GetFaction(District8DeepCoastSystem.FactionOffice));
 
-            // No new faction is invented: the black-flotilla id remains a UI-only
-            // display row and is not a canonical data faction.
-            Assert.Null(catalog.GetFaction("faction_black_flotilla"));
+            // Black Flotilla faction is loaded and canonical.
+            Assert.NotNull(catalog.GetFaction("faction_black_flotilla"));
 
             // Items the route consumes/rewards are real catalog ids.
             var items = LoadItemIds();

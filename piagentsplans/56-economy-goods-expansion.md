@@ -9,7 +9,7 @@ thin for trade to feel like a living market.
 ## Why (P2)
 - Verified: `economy_goods.json` has 16 goods (`clean_water`, etc. with basePrice,
   volatility, elasticity, stackSize, weightKg, barterNote). The dynamic pricing system
-  (`EconomySystem`, existing 13A) uses these fields but 16 goods is not enough for a
+  (`EconomySystem`, Plan 13 trade flow) uses these fields but 16 goods is not enough for a
   believable market.
 - Creates the trade-depth pillar: more goods mean more trade routes (existing 16B
   caravans), more price arbitrage opportunities, and more reason to visit settlements

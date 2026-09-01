@@ -90,22 +90,23 @@ namespace Ashfall.Core.Excavation
                 {
                     site_id = "excavation_command_vault",
                     location_id = "loc_excavation_command_vault",
-                    display_name = "Collapsed Command Vault",
-                    description = "A reinforced military command installation buried beneath tons of blasted granite.",
-                    max_depth_meters = 90f,
-                    required_progress = 120f,
-                    structural_risk = 0.35f,
+                    display_name = "Collapsed Civil Defense Command Vault",
+                    description = "A buried regional continuity command bunker constructed to survive strategic nuclear strikes. Blast damage collapsed the surface approach, leaving deeper operational rooms partially pressurized.",
+                    max_depth_meters = 120f,
+                    required_progress = 160f,
+                    structural_risk = 0.38f,
                     required_tools = new List<string> { "tools_precision", "shovel" },
                     shoring_materials = new List<string> { "scrap_metal", "mechanical_parts" },
-                    hazard_type = "hazard_toxic_air",
+                    hazard_type = "hazard_radiation_hotspot",
                     relic_reward_id = "item_comm_codebook_alpha",
                     loot_table = "salvage_rare",
                     journal_entry_id = "journal_excavation_command_vault",
                     depth_bands = new List<ExcavationDepthBandDef>
                     {
-                        new ExcavationDepthBandDef { depth_meters = 20f, label = "Rubble Throat", risk = 0.20f },
-                        new ExcavationDepthBandDef { depth_meters = 50f, label = "Collapsed Operations Level", risk = 0.35f },
-                        new ExcavationDepthBandDef { depth_meters = 90f, label = "Sealed Communications Vault", risk = 0.50f }
+                        new ExcavationDepthBandDef { depth_meters = 20f, label = "Cratered Rubble Approach", risk = 0.25f },
+                        new ExcavationDepthBandDef { depth_meters = 55f, label = "Collapsed Service Conduit", risk = 0.38f },
+                        new ExcavationDepthBandDef { depth_meters = 90f, label = "Reinforced Command Shell", risk = 0.28f },
+                        new ExcavationDepthBandDef { depth_meters = 120f, label = "Sealed Operations Center", risk = 0.52f }
                     }
                 },
                 new ExcavationSiteDef
@@ -113,21 +114,21 @@ namespace Ashfall.Core.Excavation
                     site_id = "excavation_utility_tunnels",
                     location_id = "loc_excavation_utility_tunnels",
                     display_name = "Utility Tunnel Network",
-                    description = "Subterranean municipal service corridors and conduit trunks choked with mud and mold.",
-                    max_depth_meters = 70f,
-                    required_progress = 100f,
-                    structural_risk = 0.25f,
+                    description = "Subterranean municipal service corridors and conduit trunks running beneath the old district grid. Flooded sections and silted pipes conceal pre-war electrical salvage and emergency maintenance tools.",
+                    max_depth_meters = 65f,
+                    required_progress = 95f,
+                    structural_risk = 0.22f,
                     required_tools = new List<string> { "tools_precision", "wrench" },
                     shoring_materials = new List<string> { "scrap_wood", "metal_sheet" },
-                    hazard_type = "hazard_spore_mold",
+                    hazard_type = "hazard_flood",
                     relic_reward_id = "tools_precision",
                     loot_table = "salvage_common",
                     journal_entry_id = "journal_excavation_utility_tunnels",
                     depth_bands = new List<ExcavationDepthBandDef>
                     {
                         new ExcavationDepthBandDef { depth_meters = 15f, label = "Service Access Hatch", risk = 0.15f },
-                        new ExcavationDepthBandDef { depth_meters = 40f, label = "Flooded Conduit Junction", risk = 0.25f },
-                        new ExcavationDepthBandDef { depth_meters = 70f, label = "Primary Infrastructure Trunk", risk = 0.40f }
+                        new ExcavationDepthBandDef { depth_meters = 38f, label = "Flooded Conduit Junction", risk = 0.26f },
+                        new ExcavationDepthBandDef { depth_meters = 65f, label = "Main Infrastructure Sump", risk = 0.35f }
                     }
                 },
                 new ExcavationSiteDef
@@ -135,10 +136,10 @@ namespace Ashfall.Core.Excavation
                     site_id = "excavation_metro_interchange",
                     location_id = "loc_excavation_metro_interchange",
                     display_name = "Buried Metro Interchange",
-                    description = "A multi-tier transit hub collapsed during the orbital strikes.",
-                    max_depth_meters = 110f,
-                    required_progress = 150f,
-                    structural_risk = 0.40f,
+                    description = "A multi-tier transit nexus crushed under collapsed concrete avenues. Damp platform recesses foster spore mold colonies among abandoned commuter baggage and maintenance gear.",
+                    max_depth_meters = 105f,
+                    required_progress = 145f,
+                    structural_risk = 0.42f,
                     required_tools = new List<string> { "shovel", "crowbar" },
                     shoring_materials = new List<string> { "steel_columns", "hydraulic_jack" },
                     hazard_type = "hazard_spore_mold",
@@ -147,9 +148,10 @@ namespace Ashfall.Core.Excavation
                     journal_entry_id = "journal_excavation_metro_interchange",
                     depth_bands = new List<ExcavationDepthBandDef>
                     {
-                        new ExcavationDepthBandDef { depth_meters = 25f, label = "Street Concourse Collapse", risk = 0.25f },
-                        new ExcavationDepthBandDef { depth_meters = 60f, label = "Sub-Platform Mezzanine", risk = 0.40f },
-                        new ExcavationDepthBandDef { depth_meters = 110f, label = "Deep Track Interchange & Service Vault", risk = 0.55f }
+                        new ExcavationDepthBandDef { depth_meters = 25f, label = "Collapsed Ticket Concourse", risk = 0.30f },
+                        new ExcavationDepthBandDef { depth_meters = 55f, label = "Sub-Platform Mezzanine", risk = 0.42f },
+                        new ExcavationDepthBandDef { depth_meters = 80f, label = "Mold-Choked Track Tunnel", risk = 0.50f },
+                        new ExcavationDepthBandDef { depth_meters = 105f, label = "Sealed Express Dispatch Platform", risk = 0.58f }
                     }
                 },
                 new ExcavationSiteDef
@@ -157,10 +159,10 @@ namespace Ashfall.Core.Excavation
                     site_id = "excavation_mine_shaft",
                     location_id = "loc_excavation_mine_shaft",
                     display_name = "Industrial Mine Shaft Adit 4",
-                    description = "A heavy extraction shaft dropping into mineral-rich bedrock.",
-                    max_depth_meters = 140f,
-                    required_progress = 180f,
-                    structural_risk = 0.50f,
+                    description = "A deep extraction adit bored into fractured granitic bedrock. Rotting timber supports and pockets of trapped methane create extreme cave-in hazards protecting rich industrial machinery.",
+                    max_depth_meters = 150f,
+                    required_progress = 190f,
+                    structural_risk = 0.55f,
                     required_tools = new List<string> { "pickaxe", "hydraulic_jack" },
                     shoring_materials = new List<string> { "timber_beams", "hydraulic_jack" },
                     hazard_type = "hazard_methane_pocket",
@@ -169,31 +171,98 @@ namespace Ashfall.Core.Excavation
                     journal_entry_id = "journal_excavation_mine_shaft",
                     depth_bands = new List<ExcavationDepthBandDef>
                     {
-                        new ExcavationDepthBandDef { depth_meters = 30f, label = "Collapsed Mine Adit", risk = 0.30f },
-                        new ExcavationDepthBandDef { depth_meters = 75f, label = "Primary Extraction Level", risk = 0.50f },
-                        new ExcavationDepthBandDef { depth_meters = 140f, label = "Deep Machinery & Ore Sump", risk = 0.70f }
+                        new ExcavationDepthBandDef { depth_meters = 30f, label = "Weathered Mine Collar", risk = 0.32f },
+                        new ExcavationDepthBandDef { depth_meters = 70f, label = "Fractured Gallery Level 1", risk = 0.55f },
+                        new ExcavationDepthBandDef { depth_meters = 115f, label = "Timbered Drift Level 2", risk = 0.65f },
+                        new ExcavationDepthBandDef { depth_meters = 150f, label = "Flooded Ore Sump & Machine Pocket", risk = 0.75f }
                     }
                 },
                 new ExcavationSiteDef
                 {
                     site_id = "excavation_archive_bunker",
                     location_id = "loc_excavation_archive_bunker",
-                    display_name = "Pre-War Archive Bunker",
-                    description = "An underground scientific and administrative depository sealed under blast arches.",
-                    max_depth_meters = 80f,
-                    required_progress = 130f,
-                    structural_risk = 0.30f,
+                    display_name = "Sealed Archive Bunker",
+                    description = "A climate-isolated subterranean depository housing pre-war technological patents and civil registries. Damp air locks hold aggressive spore mold around hardened vault vaults.",
+                    max_depth_meters = 85f,
+                    required_progress = 135f,
+                    structural_risk = 0.32f,
                     required_tools = new List<string> { "tools_precision", "crowbar" },
                     shoring_materials = new List<string> { "reinforced_arches", "scrap_metal" },
-                    hazard_type = "hazard_sealed_air",
+                    hazard_type = "hazard_spore_mold",
                     relic_reward_id = "item_archive_index_cylinder",
                     loot_table = "salvage_rare",
                     journal_entry_id = "journal_excavation_archive_bunker",
                     depth_bands = new List<ExcavationDepthBandDef>
                     {
-                        new ExcavationDepthBandDef { depth_meters = 10f, label = "Security Gate Rubble", risk = 0.15f },
-                        new ExcavationDepthBandDef { depth_meters = 35f, label = "Catalog & Microfilm Reading Room", risk = 0.30f },
-                        new ExcavationDepthBandDef { depth_meters = 80f, label = "Climate-Sealed Master Repository Vault", risk = 0.45f }
+                        new ExcavationDepthBandDef { depth_meters = 15f, label = "Debris Trench Access", risk = 0.18f },
+                        new ExcavationDepthBandDef { depth_meters = 45f, label = "Microfilm Catalog Ante-Chamber", risk = 0.32f },
+                        new ExcavationDepthBandDef { depth_meters = 85f, label = "Master Climate Vault", risk = 0.46f }
+                    }
+                },
+                new ExcavationSiteDef
+                {
+                    site_id = "excavation_drainage_network",
+                    location_id = "loc_excavation_drainage_network",
+                    display_name = "Drainage Network Sluice 09",
+                    description = "Stormwater culverts and overflow sluices converted into illicit smuggling routes before the bombardment. Silt and contaminated backwash hide sealed waterproof caches.",
+                    max_depth_meters = 45f,
+                    required_progress = 75f,
+                    structural_risk = 0.20f,
+                    required_tools = new List<string> { "shovel", "wrench" },
+                    shoring_materials = new List<string> { "scrap_wood", "scrap_metal" },
+                    hazard_type = "hazard_flood",
+                    relic_reward_id = "water_filter",
+                    loot_table = "salvage_common",
+                    journal_entry_id = "journal_excavation_drainage_network",
+                    depth_bands = new List<ExcavationDepthBandDef>
+                    {
+                        new ExcavationDepthBandDef { depth_meters = 12f, label = "Culvert Silt Layer", risk = 0.12f },
+                        new ExcavationDepthBandDef { depth_meters = 28f, label = "Cracked Service Channel", risk = 0.22f },
+                        new ExcavationDepthBandDef { depth_meters = 45f, label = "Submerged Siphon Chamber", risk = 0.32f }
+                    }
+                },
+                new ExcavationSiteDef
+                {
+                    site_id = "excavation_storage_chamber",
+                    location_id = "loc_excavation_storage_chamber",
+                    display_name = "Forgotten Storage Chamber 14",
+                    description = "An auxiliary military logistics cache sealed in haste during civil evacuation. Unstable masonry slabs overhang intact pallets of rations and industrial spares.",
+                    max_depth_meters = 75f,
+                    required_progress = 110f,
+                    structural_risk = 0.34f,
+                    required_tools = new List<string> { "crowbar", "shovel" },
+                    shoring_materials = new List<string> { "scrap_metal", "mechanical_parts" },
+                    hazard_type = "hazard_toxic_air",
+                    relic_reward_id = "spring_mechanism",
+                    loot_table = "salvage_rare",
+                    journal_entry_id = "journal_excavation_storage_chamber",
+                    depth_bands = new List<ExcavationDepthBandDef>
+                    {
+                        new ExcavationDepthBandDef { depth_meters = 20f, label = "Loading Bay Collapse", risk = 0.25f },
+                        new ExcavationDepthBandDef { depth_meters = 48f, label = "Intermediate Staging Void", risk = 0.35f },
+                        new ExcavationDepthBandDef { depth_meters = 75f, label = "Sealed Logistics Vault", risk = 0.48f }
+                    }
+                },
+                new ExcavationSiteDef
+                {
+                    site_id = "excavation_civilian_shelter",
+                    location_id = "loc_excavation_civilian_shelter",
+                    display_name = "Pre-War Civilian Shelter B-12",
+                    description = "A privately funded neighborhood shelter built beneath a residential complex. Shorter excavation depths yield domestic survival gear, medical supplies, and handwritten diaries.",
+                    max_depth_meters = 40f,
+                    required_progress = 65f,
+                    structural_risk = 0.18f,
+                    required_tools = new List<string> { "shovel", "crowbar" },
+                    shoring_materials = new List<string> { "scrap_wood", "scrap_metal" },
+                    hazard_type = "hazard_toxic_air",
+                    relic_reward_id = "music_box_comb",
+                    loot_table = "salvage_common",
+                    journal_entry_id = "journal_excavation_civilian_shelter",
+                    depth_bands = new List<ExcavationDepthBandDef>
+                    {
+                        new ExcavationDepthBandDef { depth_meters = 10f, label = "Basement Masonry Fill", risk = 0.10f },
+                        new ExcavationDepthBandDef { depth_meters = 24f, label = "Stairwell Air-Lock Rubble", risk = 0.20f },
+                        new ExcavationDepthBandDef { depth_meters = 40f, label = "Civilian Bunking Quarters", risk = 0.28f }
                     }
                 }
             };

@@ -40,13 +40,13 @@ unlocks. 4 sets is too few for a full campaign of discovery.
 3. Author 8 new cassette sets, each 3-6 parts:
    - "The Last Days of Checkpoint Kilo" (existing — do not duplicate).
    - "Field Hospital 7" (5 parts: a nurse's audio logs from a military field hospital
-     in the days before the exchange — feeds existing 09A medical).
+     in the days before the exchange — feeds Plan 112 disease content and Plan 09A medical response).
    - "The Evacuation Train" (4 parts: a conductor's recordings as the last train leaves
      the city — feeds Plan 49 frozen evacuation bus).
    - "Station 14" (6 parts: a radio operator's broadcasts as the world ends — feeds
      existing 24A radio).
    - "The Greenhouse Tapes" (3 parts: a botanist's recordings from an agricultural
-     research station — feeds existing 22B greenhouse).
+     research station — feeds Plan 91 greenhouse).
    - "Father's Tapes" (4 parts: a father recording messages for his child, found in
      an apartment — feeds Plan 51 environmental documents).
    - "The Dam Keeper's Log" (5 parts: a hydroelectric dam operator's recordings as the
@@ -54,7 +54,7 @@ unlocks. 4 sets is too few for a full campaign of discovery.
    - "The Teacher's Recordings" (3 parts: a schoolteacher reading lessons to an empty
      classroom — feeds Plan 47 collectibles).
    - "The Quarantine Tapes" (4 parts: a doctor's recordings during a disease outbreak
-     before the exchange — feeds existing 09A disease).
+     before the exchange — feeds Plan 112 disease content and Plan 09A response).
 4. Write each part's content in ASHFALL tone. Each part is 1-3 paragraphs — a fragment
    of a story that only makes sense when all parts are found and played.
 5. Add `item_cassette_*` entries to `items.json` for each part (so they're lootable).

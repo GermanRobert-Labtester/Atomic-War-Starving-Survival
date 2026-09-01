@@ -82,10 +82,14 @@ namespace AtomicWar.GodotApp.Audio
         public const string WeatherBlackRain = "weather_black_rain";
         public const string WeatherBlizzard = "weather_blizzard";
         public const string WeatherWindGust = "weather_wind_gust";
+        public const string WeatherEmpStorm = "weather_emp_storm";
+        public const string WeatherGlassStorm = "weather_glass_storm";
+        public const string WeatherCorrosivePrecipitation = "weather_corrosive_precipitation";
 
         // Ambience
         public const string AmbBunker = "amb_bunker";
         public const string AmbSurface = "amb_surface";
+        public const string AmbSurfaceStorm = "amb_surface_storm";
 
         // Music
         public const string MusicMenu = "music_menu";
@@ -172,7 +176,7 @@ namespace AtomicWar.GodotApp.Audio
 
             // Radiation
             Reg(RadAlertAcute, "res://assets/audio/sfx/sfx_radiation_alarm.mp3", AudioBusNames.Alerts, vol: -2f, cooldown: 5f);
-            Reg(RadAlertChronic, "res://assets/audio/sfx/sfx_radiation_alarm.mp3", AudioBusNames.Alerts, vol: -6f, cooldown: 10f);
+            Reg(RadAlertChronic, "res://assets/audio/sfx/sfx_radiation_chronic_alarm.wav", AudioBusNames.Alerts, vol: -6f, cooldown: 10f);
             Reg(RadGeigerBurst, "res://assets/audio/sfx/sfx_geiger_burst.mp3", AudioBusNames.Sfx, cooldown: 2f);
             Reg(RadGeigerLoop, "res://assets/audio/sfx/geiger.wav", AudioBusNames.Sfx, loop: true, vol: -10f);
             Reg(RadContamination, "res://assets/audio/sfx/sfx_contamination_warning.mp3", AudioBusNames.Alerts, cooldown: 5f);
@@ -183,10 +187,14 @@ namespace AtomicWar.GodotApp.Audio
             Reg(WeatherBlackRain, "res://assets/audio/sfx/sfx_weather_black_rain.wav", AudioBusNames.Alerts, cooldown: 10f);
             Reg(WeatherBlizzard, "res://assets/audio/sfx/sfx_weather_blizzard.wav", AudioBusNames.Sfx, cooldown: 10f);
             Reg(WeatherWindGust, "res://assets/audio/sfx/sfx_wind_gust_harsh.mp3", AudioBusNames.Sfx, vol: -8f, cooldown: 3f);
+            Reg(WeatherEmpStorm, "res://assets/audio/sfx/sfx_weather_emp_storm.wav", AudioBusNames.Alerts, vol: -4f, cooldown: 8f);
+            Reg(WeatherGlassStorm, "res://assets/audio/sfx/sfx_weather_glass_storm.wav", AudioBusNames.Sfx, vol: -3f, cooldown: 8f);
+            Reg(WeatherCorrosivePrecipitation, "res://assets/audio/sfx/sfx_weather_corrosive_precipitation.wav", AudioBusNames.Alerts, vol: -4f, cooldown: 8f);
 
             // Ambience
             Reg(AmbBunker, "res://assets/audio/ambience/bunker_ambience.ogg", AudioBusNames.Ambience, loop: true, vol: -3f);
-            Reg(AmbSurface, "res://assets/audio/ambience/surface_ambience.ogg", AudioBusNames.Ambience, loop: true, vol: -4f);
+            Reg(AmbSurface, "res://assets/audio/ambience/surface_ambience.ogg", AudioBusNames.Surface, loop: true, vol: -4f);
+            Reg(AmbSurfaceStorm, "res://assets/audio/ambience/amb_surface_storm.wav", AudioBusNames.Surface, loop: true, vol: -7f);
 
             // Music
             Reg(MusicMenu, "res://assets/audio/music/main_menu.ogg", AudioBusNames.Music, vol: -6f);

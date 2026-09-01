@@ -219,7 +219,7 @@ namespace Ashfall.Core.Tests
                 system.RegisterQuestline(q);
                 registered++;
             }
-            Assert.Equal(4, registered);
+            Assert.Equal(12, registered);
             Assert.NotNull(system.FindDefinition("quest_the_dose_the_first_reading"));
         }
     }

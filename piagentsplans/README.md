@@ -107,39 +107,39 @@ Holdfast 10 quests, Standing Record 10 quests, Crossing 12 quests, Verdict 8 que
 06C (Faction War host session) ──► 11C (map evolution reads war flags)
                                ──► 15A (war outcome feeds epilogue axis)
                                ──► 12A (war orphans feed adoption arcs)
-06A (final wishes) ──► 09C (vigil-managed deaths) ──► 12C (memorial plaques) ──► 15A (chronicle)
-11A (excavation) ──► 09A (deep mold disease) ──► 15B (verdict dossiers as dig loot)
+Plan 65 (final-wish catalog) ──► 09C (vigil-managed deaths) ──► 12C (memorial plaques) ──► 15A (chronicle)
+11A (excavation) ──► Plan 112 (deep-mold disease) ──► 15B (verdict dossiers as dig loot)
 04 (relics) ──► 11A (dig loot tables) ──► 11B (cipher dictionaries as relic loot)
-10A (enemies) ──► 10C/11C (chase + blockade counter-play)
+Plan 54 (enemy catalog) ──► Plan 10/11C (de-escalation + blockade counter-play)
 08A (location art) ──► 06C (strike-site overrides get art)
 
 16A (map nodes) ──► 16B (waystations on routes) ──► 11C (map evolution) ──► 20C (route encounters)
 16C (treaties) ──► 06C (diplomacy fails into war) ──► 18C (crossing arbitrates the refugees)
 17B (documents) ──► 15B (verdict evidence) + 11B (cipher dictionaries) + 17C (codex unlocks)
 19A (forecast) ──► 13C (weather crisis events) ──► 19B (orbital strikes) ──► white space #17 (cloud seeding)
-20A (field guide) ──► 13B (trapping) + 10A (bestiary) ──► 20C (creature encounters)
-19C (seasons) ──► 18A (ice road thaw) + 13A (seasonal resource swing)
+20A (field guide) ──► 13B (trapping) + Plan 54 (bestiary) ──► 20C (creature encounters)
+19C (seasons) ──► 18A (ice road thaw) + Plan 13 (seasonal trade-demand swing)
 
-21A (phantom triggers) ──► 06A (final wishes as objects) ──► 21B (heirlooms) ──► 15C (NG+ legacy)
+21A (phantom triggers) ──► Plan 65 (final wishes as objects) ──► 21B (heirlooms) ──► 15C (NG+ legacy)
 21C (secrets) ──► 15B (verdict testimony) + 16C (faction blackmail) + 12B (bunker events)
 22A (foundry ordnance) ──► #17 (cloud-seeding shells);  22C (labor) ──► 16C (treaty labor)
 23B (dives) ──► 04 (relic loot) + 15B (dossiers) + 11A (sunken sites);  23C (tides) ──► 11C (map state)
 24A (schedule) ──► 06C (war broadcasts);  24B (rescue) ──► 20B (recruits) + 25B (witnesses)
 25A (peacetime factions) ──► 25C (escalation) ──► 06C (war) ──► 25B (muster) ──► 15A (epilogue)
 
-26A (research tree) ──► 26C (manuals unlock branches) ──► 22A/#17 (advanced tech unlocks)
+Plan 34 (research tree) ──► Plan 80 (manuals unlock branches) ──► 22A/#17 (advanced tech unlocks)
 26B (latent traits) ──► 12A (child apprenticeship) + 27C (dive specialist) + 29B (machine whisperer)
-27B (autopsy) ──► 09A (disease intel) + 21C (crime secrets) + 15B (verdict evidence)
-28A (migration) ──► 13B (hunting windows) + 22B (blight) + 23C (fish run);  28C (web) ──► 20C
+Plan 79 (autopsy) ──► Plan 112/09A (disease intel) + 21C (crime secrets) + 15B (verdict evidence)
+Plan 35 (migration) ──► 13B (hunting windows) + 22B (blight) + 23C (fish run);  28C (food web) ──► 20C
 29A (room history) ──► 12C (decor) + 17C (codex) + 21A (room memory);  29B (machines) ──► 07B (audio)
-30A (folklore) ──► 12A (children) ; 30B (mourning) ──► 06A/09C/12C ; 30C (belief) ──► 25A/06C/15A
+30A (folklore) ──► 12A (children) ; 30B (mourning) ──► Plan 65/09C/12C ; 30C (belief) ──► 25A/06C/15A
 ```
 
 ### Recurring structural pattern across all 30 plans
 Almost every task is **content/wiring on a live system**, not a new system. The repo's real
 gaps are: (1) thin catalogs on rich systems, (2) authored-but-unwired data (06C), and
-(3) a few hardcoded-in-code catalogs that violate the JSON-authority invariant (26A research,
-26B skills). New *systems* are rare and always flagged (12C decor, 15C NG+, #17 cloud seeding).
+(3) a few hardcoded-in-code catalogs that violate the JSON-authority invariant (Plan 34 research,
+Plan 33 skills). New *systems* are rare and always flagged (12C decor, 15C NG+, #17 cloud seeding).
 
 ### The late-game narrative spine (25 completes it)
 `25A peace → 25C escalation → 06C war → 25B muster → 15A epilogue` — the connective content

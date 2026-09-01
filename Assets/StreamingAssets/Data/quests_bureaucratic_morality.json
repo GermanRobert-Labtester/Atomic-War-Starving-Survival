@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_the_culling_equation",
+      "title": "The Culling Equation",
+      "description": "Tech Officer Aris successfully rebooted a pre-war actuarial mainframe. After analyzing our caloric deficits and air scrubber degradation, it has generated a 'Viability Mandate.' It identifies three specific low-yield dwellers. If they are permanently 'reassigned', the resulting resource surplus extends the bunker's survival projection by exactly 14.2 years. The machine has already printed their execution orders on standard HR forms.",
+      "type": "internal",
+      "minDay": 120,
+      "maxDay": 900,
+      "choices": [
+        {
+          "id": "quest_the_culling_equation_execute",
+          "text": "Sign the Reassignment Forms",
+          "effects": []
+        },
+        {
+          "id": "quest_the_culling_equation_destroy",
+          "text": "Sledgehammer the Mainframe",
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_the_plagued_caravan",
+      "title": "The Contaminated Ledger",
+      "description": "A merchant caravan from the 'Rust Belt' settlement has arrived at our airlock. They offer 500 liters of purified water and high-grade antibiotics for a fraction of the cost. However, the Medical Officer notes their manifest is signed with a thumbprint showing advanced signs of 'Weeping Rot'. Admitting their goods might introduce a lethal pathogen into our ventilation.",
+      "type": "diplomacy",
+      "minDay": 210,
+      "maxDay": 900,
+      "choices": [
+        {
+          "id": "quest_the_plagued_caravan_accept",
+          "text": "Accept the Water. We're dying of thirst.",
+          "effects": []
+        },
+        {
+          "id": "quest_the_plagued_caravan_incinerate",
+          "text": "Activate Airlock Incinerators",
+          "effects": []
+        }
+      ]
+    }
+  ]
+}

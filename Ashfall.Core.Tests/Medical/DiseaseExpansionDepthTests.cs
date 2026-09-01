@@ -83,14 +83,14 @@ namespace Ashfall.Core.Tests.Medical
         // Apply the right protocol for the disease's vector. The protocol holds
         // for the entire countermeasure-blocked test window; the matching reset
         // is invoked explicitly in the reset test.
-        private static void EngageProtocol(DiseaseSystem sys, string vector)
+        private static void EngageProtocol(DiseaseSystem sys, string vector, int day = 0)
         {
             switch (vector)
             {
-                case DiseaseVectorNames.Water: sys.PurifyWater(); break;
-                case DiseaseVectorNames.Air:   sys.SealVents(); break;
-                case DiseaseVectorNames.Blood: sys.SterilizeTools(); break;
-                case DiseaseVectorNames.Spore: sys.SetAirFiltration(true); break;
+                case DiseaseVectorNames.Water: sys.PurifyWater(day); break;
+                case DiseaseVectorNames.Air:   sys.SealVents(day); break;
+                case DiseaseVectorNames.Blood: sys.SterilizeTools(day); break;
+                case DiseaseVectorNames.Spore: sys.SetAirFiltration(true, day); break;
                 default: throw new ArgumentException("unknown vector: " + vector);
             }
         }
@@ -296,7 +296,10 @@ namespace Ashfall.Core.Tests.Medical
             Assert.True(sys.IsVectorBlocked(vector));
 
             for (int day = 2; day <= 720; day++)
+            {
+                EngageProtocol(sys, vector, day);
                 sys.TickDaily(day, roster);
+            }
 
             var state = sys.GetDiseaseState(diseaseId);
             Assert.NotNull(state);
@@ -338,7 +341,11 @@ namespace Ashfall.Core.Tests.Medical
             EngageProtocol(sys, vector);
             Assert.True(sys.IsVectorBlocked(vector));
 
-            for (int day = 2; day <= 60; day++) sys.TickDaily(day, roster);
+            for (int day = 2; day <= 60; day++)
+            {
+                EngageProtocol(sys, vector, day);
+                sys.TickDaily(day, roster);
+            }
             Assert.Equal(1, sys.GetDiseaseState(diseaseId)!.infections_total);
 
             // Drop the protocol — IsVectorBlocked must flip false. We don't

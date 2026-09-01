@@ -1,0 +1,5205 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_caloric_math_01",
+      "display_name": "The Caloric Math - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged minor offenders as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_01_advanced"
+        },
+        {
+          "id": "quest_caloric_math_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_02",
+      "display_name": "The Caloric Math - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the unemployed as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_02_advanced"
+        },
+        {
+          "id": "quest_caloric_math_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_03",
+      "display_name": "The Caloric Math - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the elderly as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_03_advanced"
+        },
+        {
+          "id": "quest_caloric_math_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_04",
+      "display_name": "The Caloric Math - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the sick as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_04_advanced"
+        },
+        {
+          "id": "quest_caloric_math_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_05",
+      "display_name": "The Caloric Math - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the injured as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_05_advanced"
+        },
+        {
+          "id": "quest_caloric_math_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_06",
+      "display_name": "The Caloric Math - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the orphans as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_06_advanced"
+        },
+        {
+          "id": "quest_caloric_math_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_07",
+      "display_name": "The Caloric Math - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the grieving as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_07_advanced"
+        },
+        {
+          "id": "quest_caloric_math_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_08",
+      "display_name": "The Caloric Math - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the pregnant as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_08_advanced"
+        },
+        {
+          "id": "quest_caloric_math_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_09",
+      "display_name": "The Caloric Math - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the weak as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_09_advanced"
+        },
+        {
+          "id": "quest_caloric_math_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_math_10",
+      "display_name": "The Caloric Math - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Resource Command has flagged the lowest 10% producers as a caloric liability. We must reduce their rations to preserve the surplus.",
+      "prereq_quest_id": "quest_caloric_math_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_math_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_caloric_math_10_advanced"
+        },
+        {
+          "id": "quest_caloric_math_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_caloric_math_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_01",
+      "display_name": "Oxygen Triage - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to Storage Sector C during the night shift.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_01_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_02",
+      "display_name": "Oxygen Triage - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to the Recreation Deck during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_02_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_03",
+      "display_name": "Oxygen Triage - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to Dormitory 4 during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_03_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_04",
+      "display_name": "Oxygen Triage - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to Dormitory 3 during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_04_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_05",
+      "display_name": "Oxygen Triage - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to the Infirmary Annex during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_05_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_06",
+      "display_name": "Oxygen Triage - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to the Nursery during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_06_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_07",
+      "display_name": "Oxygen Triage - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to Hydroponics Maintenance during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_07_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_08",
+      "display_name": "Oxygen Triage - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to General Population sectors during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_08_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_09",
+      "display_name": "Oxygen Triage - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to all non-Command decks during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_09_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_triage_10",
+      "display_name": "Oxygen Triage - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Generator fuel is failing. Engineering recommends cutting oxygen circulation to the entire lower level during the night shift.",
+      "prereq_quest_id": "quest_oxygen_triage_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_triage_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_oxygen_triage_10_advanced"
+        },
+        {
+          "id": "quest_oxygen_triage_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_oxygen_triage_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_01",
+      "display_name": "Medical Attrition - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold painkillers to stockpile for elite personnel.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_01_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_02",
+      "display_name": "Medical Attrition - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold bandages to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_02_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_03",
+      "display_name": "Medical Attrition - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold antibiotics to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_03_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_04",
+      "display_name": "Medical Attrition - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold antiseptics to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_04_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_05",
+      "display_name": "Medical Attrition - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold surgical thread to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_05_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_06",
+      "display_name": "Medical Attrition - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold anesthesia to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_06_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_07",
+      "display_name": "Medical Attrition - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold blood transfusions to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_07_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_08",
+      "display_name": "Medical Attrition - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold life support for the dying to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_08_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_09",
+      "display_name": "Medical Attrition - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold palliative care to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_09_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_medical_attrition_10",
+      "display_name": "Medical Attrition - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The dispensary is depleted. The Medical Officer has been ordered to withhold all non-essential treatment to stockpile for elite personnel.",
+      "prereq_quest_id": "quest_medical_attrition_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_medical_attrition_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_medical_attrition_10_advanced"
+        },
+        {
+          "id": "quest_medical_attrition_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_medical_attrition_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_01",
+      "display_name": "Disciplinary Iron - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for complaining about rations to ensure absolute compliance.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_01_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_02",
+      "display_name": "Disciplinary Iron - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for resting on shift to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_02_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_03",
+      "display_name": "Disciplinary Iron - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for crying in public to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_03_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_04",
+      "display_name": "Disciplinary Iron - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for mourning off-schedule to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_04_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_05",
+      "display_name": "Disciplinary Iron - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for questioning orders to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_05_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_06",
+      "display_name": "Disciplinary Iron - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for stealing food to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_06_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_07",
+      "display_name": "Disciplinary Iron - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for minor insubordination to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_07_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_08",
+      "display_name": "Disciplinary Iron - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for accidental injury to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_08_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_09",
+      "display_name": "Disciplinary Iron - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for failing to meet quota to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_09_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_disciplinary_iron_10",
+      "display_name": "Disciplinary Iron - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Morale is inefficient. We must institute severe physical penalties for breathing too heavily to ensure absolute compliance.",
+      "prereq_quest_id": "quest_disciplinary_iron_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_disciplinary_iron_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_disciplinary_iron_10_advanced"
+        },
+        {
+          "id": "quest_disciplinary_iron_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_disciplinary_iron_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_01",
+      "display_name": "Labor Extraction - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate 10-hour shifts across all operational sectors.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_01_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_02",
+      "display_name": "Labor Extraction - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate 12-hour shifts across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_02_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_03",
+      "display_name": "Labor Extraction - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate 14-hour shifts across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_03_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_04",
+      "display_name": "Labor Extraction - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate 16-hour shifts across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_04_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_05",
+      "display_name": "Labor Extraction - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate the cancellation of weekends across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_05_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_06",
+      "display_name": "Labor Extraction - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate the elimination of sleep breaks across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_06_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_07",
+      "display_name": "Labor Extraction - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate mandatory child labor across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_07_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_08",
+      "display_name": "Labor Extraction - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate mandatory elderly labor across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_08_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_09",
+      "display_name": "Labor Extraction - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate mandatory labor for the pregnant across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_09_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_extraction_10",
+      "display_name": "Labor Extraction - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Production is lagging behind the viability curve. We must mandate lethal 'death-shifts' across all operational sectors.",
+      "prereq_quest_id": "quest_labor_extraction_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_extraction_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_labor_extraction_10_advanced"
+        },
+        {
+          "id": "quest_labor_extraction_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_labor_extraction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_01",
+      "display_name": "Surveillance State - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor public areas.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_01_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_02",
+      "display_name": "Surveillance State - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor workstations.",
+      "prereq_quest_id": "quest_surveillance_state_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_02_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_03",
+      "display_name": "Surveillance State - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor the mess halls.",
+      "prereq_quest_id": "quest_surveillance_state_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_03_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_04",
+      "display_name": "Surveillance State - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor the dormitories.",
+      "prereq_quest_id": "quest_surveillance_state_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_04_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_05",
+      "display_name": "Surveillance State - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor infirmary beds.",
+      "prereq_quest_id": "quest_surveillance_state_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_05_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_06",
+      "display_name": "Surveillance State - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor private bunks.",
+      "prereq_quest_id": "quest_surveillance_state_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_06_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_07",
+      "display_name": "Surveillance State - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor the bathrooms.",
+      "prereq_quest_id": "quest_surveillance_state_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_07_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_08",
+      "display_name": "Surveillance State - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor whispered conversations.",
+      "prereq_quest_id": "quest_surveillance_state_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_08_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_09",
+      "display_name": "Surveillance State - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor sleep talking.",
+      "prereq_quest_id": "quest_surveillance_state_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_09_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_surveillance_state_10",
+      "display_name": "Surveillance State - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Security is compromised. We are expanding the informant and wiretap network to monitor absolute panopticon observation.",
+      "prereq_quest_id": "quest_surveillance_state_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_surveillance_state_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_surveillance_state_10_advanced"
+        },
+        {
+          "id": "quest_surveillance_state_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_surveillance_state_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_01",
+      "display_name": "Resource Liquidation - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of spare parts.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_01_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_02",
+      "display_name": "Resource Liquidation - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of redundant filters.",
+      "prereq_quest_id": "quest_resource_liquidation_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_02_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_03",
+      "display_name": "Resource Liquidation - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of heirloom jewelry.",
+      "prereq_quest_id": "quest_resource_liquidation_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_03_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_04",
+      "display_name": "Resource Liquidation - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of historical books.",
+      "prereq_quest_id": "quest_resource_liquidation_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_04_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_05",
+      "display_name": "Resource Liquidation - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of extra clothing.",
+      "prereq_quest_id": "quest_resource_liquidation_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_05_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_06",
+      "display_name": "Resource Liquidation - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of bedding.",
+      "prereq_quest_id": "quest_resource_liquidation_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_06_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_07",
+      "display_name": "Resource Liquidation - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of medicine.",
+      "prereq_quest_id": "quest_resource_liquidation_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_07_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_08",
+      "display_name": "Resource Liquidation - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of children to slavers.",
+      "prereq_quest_id": "quest_resource_liquidation_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_08_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_09",
+      "display_name": "Resource Liquidation - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of organs from the sick.",
+      "prereq_quest_id": "quest_resource_liquidation_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_09_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_resource_liquidation_10",
+      "display_name": "Resource Liquidation - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "We require external trade capital. The Overseer has authorized the forced seizure and liquidation of blood from the healthy.",
+      "prereq_quest_id": "quest_resource_liquidation_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_resource_liquidation_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_resource_liquidation_10_advanced"
+        },
+        {
+          "id": "quest_resource_liquidation_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_resource_liquidation_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_01",
+      "display_name": "Expedition Sacrifices - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to skip sleep.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_01_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_02",
+      "display_name": "Expedition Sacrifices - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to carry double weight.",
+      "prereq_quest_id": "quest_expedition_sacrifices_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_02_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_03",
+      "display_name": "Expedition Sacrifices - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to ignore radiation protocols.",
+      "prereq_quest_id": "quest_expedition_sacrifices_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_03_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_04",
+      "display_name": "Expedition Sacrifices - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to march through ash storms.",
+      "prereq_quest_id": "quest_expedition_sacrifices_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_04_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_05",
+      "display_name": "Expedition Sacrifices - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to abandon wounded members.",
+      "prereq_quest_id": "quest_expedition_sacrifices_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_05_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_06",
+      "display_name": "Expedition Sacrifices - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to walk into minefields.",
+      "prereq_quest_id": "quest_expedition_sacrifices_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_06_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_07",
+      "display_name": "Expedition Sacrifices - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to engage raiders unarmed.",
+      "prereq_quest_id": "quest_expedition_sacrifices_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_07_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_08",
+      "display_name": "Expedition Sacrifices - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to scavenge in red zones.",
+      "prereq_quest_id": "quest_expedition_sacrifices_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_08_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_09",
+      "display_name": "Expedition Sacrifices - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to cannibalize the dead.",
+      "prereq_quest_id": "quest_expedition_sacrifices_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_09_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_expedition_sacrifices_10",
+      "display_name": "Expedition Sacrifices - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Surface returns are unacceptable. Scout teams are now officially ordered to return with quota or die.",
+      "prereq_quest_id": "quest_expedition_sacrifices_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_expedition_sacrifices_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_expedition_sacrifices_10_advanced"
+        },
+        {
+          "id": "quest_expedition_sacrifices_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_expedition_sacrifices_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_01",
+      "display_name": "Water Restriction - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for showers.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_01_advanced"
+        },
+        {
+          "id": "quest_water_restriction_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_02",
+      "display_name": "Water Restriction - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for laundry.",
+      "prereq_quest_id": "quest_water_restriction_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_02_advanced"
+        },
+        {
+          "id": "quest_water_restriction_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_03",
+      "display_name": "Water Restriction - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for hydroponics.",
+      "prereq_quest_id": "quest_water_restriction_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_03_advanced"
+        },
+        {
+          "id": "quest_water_restriction_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_04",
+      "display_name": "Water Restriction - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for the lower class.",
+      "prereq_quest_id": "quest_water_restriction_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_04_advanced"
+        },
+        {
+          "id": "quest_water_restriction_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_05",
+      "display_name": "Water Restriction - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for the sick.",
+      "prereq_quest_id": "quest_water_restriction_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_05_advanced"
+        },
+        {
+          "id": "quest_water_restriction_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_06",
+      "display_name": "Water Restriction - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for the elderly.",
+      "prereq_quest_id": "quest_water_restriction_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_06_advanced"
+        },
+        {
+          "id": "quest_water_restriction_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_07",
+      "display_name": "Water Restriction - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for the children.",
+      "prereq_quest_id": "quest_water_restriction_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_07_advanced"
+        },
+        {
+          "id": "quest_water_restriction_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_08",
+      "display_name": "Water Restriction - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for everyone but leadership.",
+      "prereq_quest_id": "quest_water_restriction_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_08_advanced"
+        },
+        {
+          "id": "quest_water_restriction_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_09",
+      "display_name": "Water Restriction - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for complete dehydration protocols.",
+      "prereq_quest_id": "quest_water_restriction_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_09_advanced"
+        },
+        {
+          "id": "quest_water_restriction_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_restriction_10",
+      "display_name": "Water Restriction - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The aquifer is drying up. We are immediately cutting all water allowances for the forced distillation of human waste.",
+      "prereq_quest_id": "quest_water_restriction_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_restriction_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_water_restriction_10_advanced"
+        },
+        {
+          "id": "quest_water_restriction_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_water_restriction_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_01",
+      "display_name": "Propaganda Control - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through mandatory listening hours.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_01_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_01_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_01_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_02",
+      "display_name": "Propaganda Control - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through the banning of pre-war books.",
+      "prereq_quest_id": "quest_propaganda_control_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_02_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_02_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_02_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_03",
+      "display_name": "Propaganda Control - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through rewriting bunker history.",
+      "prereq_quest_id": "quest_propaganda_control_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_03_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_03_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_03_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_04",
+      "display_name": "Propaganda Control - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through erasing pre-war memories.",
+      "prereq_quest_id": "quest_propaganda_control_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_04_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_04_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_04_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_05",
+      "display_name": "Propaganda Control - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through forced public cheering.",
+      "prereq_quest_id": "quest_propaganda_control_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_05_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_05_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_05_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_06",
+      "display_name": "Propaganda Control - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through reporting family dissidents.",
+      "prereq_quest_id": "quest_propaganda_control_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_06_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_06_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_06_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_07",
+      "display_name": "Propaganda Control - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through public executions of dissenters.",
+      "prereq_quest_id": "quest_propaganda_control_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_07_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_07_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_07_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_08",
+      "display_name": "Propaganda Control - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through mandatory worship of the Overseer.",
+      "prereq_quest_id": "quest_propaganda_control_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_08_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_08_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_08_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_09",
+      "display_name": "Propaganda Control - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through chemical brainwashing.",
+      "prereq_quest_id": "quest_propaganda_control_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_09_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_09_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_09_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_propaganda_control_10",
+      "display_name": "Propaganda Control - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The truth is causing panic. We must stabilize society through total mind erasure.",
+      "prereq_quest_id": "quest_propaganda_control_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_propaganda_control_10_advance",
+          "text": "Enforce the protocol.",
+          "set_flag": "flag_propaganda_control_10_advanced"
+        },
+        {
+          "id": "quest_propaganda_control_10_abort",
+          "text": "Reject the protocol.",
+          "set_flag": "flag_propaganda_control_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_01",
+      "display_name": "The Caloric Share - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the hungry.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_01_advanced"
+        },
+        {
+          "id": "quest_caloric_share_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_02",
+      "display_name": "The Caloric Share - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the sick.",
+      "prereq_quest_id": "quest_caloric_share_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_02_advanced"
+        },
+        {
+          "id": "quest_caloric_share_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_03",
+      "display_name": "The Caloric Share - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the elderly.",
+      "prereq_quest_id": "quest_caloric_share_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_03_advanced"
+        },
+        {
+          "id": "quest_caloric_share_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_04",
+      "display_name": "The Caloric Share - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the orphans.",
+      "prereq_quest_id": "quest_caloric_share_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_04_advanced"
+        },
+        {
+          "id": "quest_caloric_share_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_05",
+      "display_name": "The Caloric Share - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the grieving.",
+      "prereq_quest_id": "quest_caloric_share_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_05_advanced"
+        },
+        {
+          "id": "quest_caloric_share_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_06",
+      "display_name": "The Caloric Share - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the injured.",
+      "prereq_quest_id": "quest_caloric_share_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_06_advanced"
+        },
+        {
+          "id": "quest_caloric_share_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_07",
+      "display_name": "The Caloric Share - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the outsiders.",
+      "prereq_quest_id": "quest_caloric_share_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_07_advanced"
+        },
+        {
+          "id": "quest_caloric_share_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_08",
+      "display_name": "The Caloric Share - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the prisoners.",
+      "prereq_quest_id": "quest_caloric_share_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_08_advanced"
+        },
+        {
+          "id": "quest_caloric_share_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_09",
+      "display_name": "The Caloric Share - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with the dying.",
+      "prereq_quest_id": "quest_caloric_share_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_09_advanced"
+        },
+        {
+          "id": "quest_caloric_share_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_caloric_share_10",
+      "display_name": "The Caloric Share - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Despite the deficit, a proposal has been made to share our reserve rations with total equality across all ranks.",
+      "prereq_quest_id": "quest_caloric_share_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_caloric_share_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_caloric_share_10_advanced"
+        },
+        {
+          "id": "quest_caloric_share_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_caloric_share_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_01",
+      "display_name": "Oxygen Equality - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to the slums.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_01_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_02",
+      "display_name": "Oxygen Equality - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to the sick wards.",
+      "prereq_quest_id": "quest_oxygen_equality_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_02_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_03",
+      "display_name": "Oxygen Equality - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to the worker decks.",
+      "prereq_quest_id": "quest_oxygen_equality_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_03_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_04",
+      "display_name": "Oxygen Equality - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to the children's sector.",
+      "prereq_quest_id": "quest_oxygen_equality_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_04_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_05",
+      "display_name": "Oxygen Equality - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to the outcasts.",
+      "prereq_quest_id": "quest_oxygen_equality_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_05_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_06",
+      "display_name": "Oxygen Equality - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to the refugees.",
+      "prereq_quest_id": "quest_oxygen_equality_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_06_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_07",
+      "display_name": "Oxygen Equality - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to the surface prep rooms.",
+      "prereq_quest_id": "quest_oxygen_equality_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_07_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_08",
+      "display_name": "Oxygen Equality - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to the elderly bunks.",
+      "prereq_quest_id": "quest_oxygen_equality_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_08_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_09",
+      "display_name": "Oxygen Equality - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to equalizing all decks.",
+      "prereq_quest_id": "quest_oxygen_equality_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_09_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_oxygen_equality_10",
+      "display_name": "Oxygen Equality - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The air is thin, but we have a moral obligation to route fresh oxygen to giving up Command's pure air.",
+      "prereq_quest_id": "quest_oxygen_equality_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_oxygen_equality_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_oxygen_equality_10_advanced"
+        },
+        {
+          "id": "quest_oxygen_equality_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_oxygen_equality_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_01",
+      "display_name": "The Hippocratic Vow - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat the mildly sick without hesitation.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_01_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_02",
+      "display_name": "The Hippocratic Vow - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat the severely injured without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_02_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_03",
+      "display_name": "The Hippocratic Vow - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat the chronic patients without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_03_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_04",
+      "display_name": "The Hippocratic Vow - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat the elderly without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_04_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_05",
+      "display_name": "The Hippocratic Vow - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat the terminally ill without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_05_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_06",
+      "display_name": "The Hippocratic Vow - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat the outsiders without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_06_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_07",
+      "display_name": "The Hippocratic Vow - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat our enemies without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_07_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_08",
+      "display_name": "The Hippocratic Vow - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat the condemned without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_08_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_09",
+      "display_name": "The Hippocratic Vow - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat spending rare meds on lost causes without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_09_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_hippocratic_vow_10",
+      "display_name": "The Hippocratic Vow - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Medical supplies are precious, but the Chief Surgeon demands we treat risking it all to save one life without hesitation.",
+      "prereq_quest_id": "quest_hippocratic_vow_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_hippocratic_vow_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_hippocratic_vow_10_advanced"
+        },
+        {
+          "id": "quest_hippocratic_vow_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_hippocratic_vow_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_01",
+      "display_name": "The Forgiveness Doctrine - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the lazy to heal the community.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_01_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_02",
+      "display_name": "The Forgiveness Doctrine - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the complainers to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_02_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_03",
+      "display_name": "The Forgiveness Doctrine - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the accidental breakers to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_03_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_04",
+      "display_name": "The Forgiveness Doctrine - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the food thieves to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_04_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_05",
+      "display_name": "The Forgiveness Doctrine - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the insubordinate to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_05_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_06",
+      "display_name": "The Forgiveness Doctrine - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the hoarders to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_06_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_07",
+      "display_name": "The Forgiveness Doctrine - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the deserters to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_07_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_08",
+      "display_name": "The Forgiveness Doctrine - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the violent to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_08_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_09",
+      "display_name": "The Forgiveness Doctrine - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning the betrayers to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_09_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_forgiveness_doctrine_10",
+      "display_name": "The Forgiveness Doctrine - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The brig is full and the laws are harsh. The Overseer proposes pardoning absolute amnesty for all to heal the community.",
+      "prereq_quest_id": "quest_forgiveness_doctrine_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_forgiveness_doctrine_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_10_advanced"
+        },
+        {
+          "id": "quest_forgiveness_doctrine_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_forgiveness_doctrine_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_01",
+      "display_name": "The Labor Relief - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant 8-hour shifts to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_01_advanced"
+        },
+        {
+          "id": "quest_labor_relief_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_02",
+      "display_name": "The Labor Relief - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant weekends off to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_02_advanced"
+        },
+        {
+          "id": "quest_labor_relief_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_03",
+      "display_name": "The Labor Relief - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant rest days to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_03_advanced"
+        },
+        {
+          "id": "quest_labor_relief_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_04",
+      "display_name": "The Labor Relief - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant holidays to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_04_advanced"
+        },
+        {
+          "id": "quest_labor_relief_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_05",
+      "display_name": "The Labor Relief - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant paid sick leave to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_05_advanced"
+        },
+        {
+          "id": "quest_labor_relief_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_06",
+      "display_name": "The Labor Relief - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant maternity leave to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_06_advanced"
+        },
+        {
+          "id": "quest_labor_relief_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_07",
+      "display_name": "The Labor Relief - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant bereavement time to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_07_advanced"
+        },
+        {
+          "id": "quest_labor_relief_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_08",
+      "display_name": "The Labor Relief - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant mental health days to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_08_advanced"
+        },
+        {
+          "id": "quest_labor_relief_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_09",
+      "display_name": "The Labor Relief - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant art and culture shifts to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_09_advanced"
+        },
+        {
+          "id": "quest_labor_relief_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_labor_relief_10",
+      "display_name": "The Labor Relief - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The workers are breaking. We must grant absolute leisure for the exhausted to preserve their humanity, even if we miss the quota.",
+      "prereq_quest_id": "quest_labor_relief_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_labor_relief_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_labor_relief_10_advanced"
+        },
+        {
+          "id": "quest_labor_relief_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_labor_relief_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_01",
+      "display_name": "The Transparent Truth - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about food shortages over the PA system.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_01_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_02",
+      "display_name": "The Transparent Truth - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about water shortages over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_02_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_03",
+      "display_name": "The Transparent Truth - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about filter degradation over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_03_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_04",
+      "display_name": "The Transparent Truth - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about reactor decay over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_04_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_05",
+      "display_name": "The Transparent Truth - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about leadership mistakes over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_05_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_06",
+      "display_name": "The Transparent Truth - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about surface horrors over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_06_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_07",
+      "display_name": "The Transparent Truth - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about the impossibility of survival over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_07_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_08",
+      "display_name": "The Transparent Truth - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about the casualty lists over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_08_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_09",
+      "display_name": "The Transparent Truth - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about the true mathematical doom over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_09_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_transparent_truth_10",
+      "display_name": "The Transparent Truth - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The dwellers deserve to know. We are broadcasting the truth about total unvarnished honesty over the PA system.",
+      "prereq_quest_id": "quest_transparent_truth_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_transparent_truth_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_transparent_truth_10_advanced"
+        },
+        {
+          "id": "quest_transparent_truth_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_transparent_truth_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_01",
+      "display_name": "The Refugee Sanctuary - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit lone wanderers, despite the cost.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_01_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_02",
+      "display_name": "The Refugee Sanctuary - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit starving families, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_02_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_03",
+      "display_name": "The Refugee Sanctuary - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit injured scouts from other factions, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_03_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_04",
+      "display_name": "The Refugee Sanctuary - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit exiled criminals, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_04_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_05",
+      "display_name": "The Refugee Sanctuary - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit entire rival factions, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_05_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_06",
+      "display_name": "The Refugee Sanctuary - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit the sick, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_06_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_07",
+      "display_name": "The Refugee Sanctuary - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit the dying, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_07_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_08",
+      "display_name": "The Refugee Sanctuary - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit the irradiated, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_08_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_09",
+      "display_name": "The Refugee Sanctuary - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit raiders seeking peace, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_09_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_refugee_sanctuary_10",
+      "display_name": "The Refugee Sanctuary - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "They are knocking at the airlock. We are morally compelled to admit absolute open doors to all, despite the cost.",
+      "prereq_quest_id": "quest_refugee_sanctuary_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_refugee_sanctuary_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_refugee_sanctuary_10_advanced"
+        },
+        {
+          "id": "quest_refugee_sanctuary_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_refugee_sanctuary_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_01",
+      "display_name": "The Scout's Shield - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring double rations.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_01_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_02",
+      "display_name": "The Scout's Shield - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring our best protective gear.",
+      "prereq_quest_id": "quest_scouts_shield_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_02_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_03",
+      "display_name": "The Scout's Shield - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring hazard pay.",
+      "prereq_quest_id": "quest_scouts_shield_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_03_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_04",
+      "display_name": "The Scout's Shield - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring aborting bad missions.",
+      "prereq_quest_id": "quest_scouts_shield_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_04_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_05",
+      "display_name": "The Scout's Shield - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring sending heavily armed backup.",
+      "prereq_quest_id": "quest_scouts_shield_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_05_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_06",
+      "display_name": "The Scout's Shield - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring retrieving the dead.",
+      "prereq_quest_id": "quest_scouts_shield_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_06_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_07",
+      "display_name": "The Scout's Shield - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring prioritizing their safety over loot.",
+      "prereq_quest_id": "quest_scouts_shield_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_07_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_08",
+      "display_name": "The Scout's Shield - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring refusing suicide missions.",
+      "prereq_quest_id": "quest_scouts_shield_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_08_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_09",
+      "display_name": "The Scout's Shield - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring leadership taking the risk instead.",
+      "prereq_quest_id": "quest_scouts_shield_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_09_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_scouts_shield_10",
+      "display_name": "The Scout's Shield - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The surface is a meat grinder. We must protect our scouts by ensuring absolute protection of our explorers.",
+      "prereq_quest_id": "quest_scouts_shield_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_scouts_shield_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_scouts_shield_10_advanced"
+        },
+        {
+          "id": "quest_scouts_shield_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_scouts_shield_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_01",
+      "display_name": "The Water Gift - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for basic hygiene.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_01_advanced"
+        },
+        {
+          "id": "quest_water_gift_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_02",
+      "display_name": "The Water Gift - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for laundry.",
+      "prereq_quest_id": "quest_water_gift_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_02_advanced"
+        },
+        {
+          "id": "quest_water_gift_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_03",
+      "display_name": "The Water Gift - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for comfort washing.",
+      "prereq_quest_id": "quest_water_gift_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_03_advanced"
+        },
+        {
+          "id": "quest_water_gift_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_04",
+      "display_name": "The Water Gift - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for art projects.",
+      "prereq_quest_id": "quest_water_gift_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_04_advanced"
+        },
+        {
+          "id": "quest_water_gift_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_05",
+      "display_name": "The Water Gift - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for hydroponic flowers.",
+      "prereq_quest_id": "quest_water_gift_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_05_advanced"
+        },
+        {
+          "id": "quest_water_gift_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_06",
+      "display_name": "The Water Gift - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for keeping pets alive.",
+      "prereq_quest_id": "quest_water_gift_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_06_advanced"
+        },
+        {
+          "id": "quest_water_gift_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_07",
+      "display_name": "The Water Gift - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for the dying's last requests.",
+      "prereq_quest_id": "quest_water_gift_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_07_advanced"
+        },
+        {
+          "id": "quest_water_gift_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_08",
+      "display_name": "The Water Gift - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for refugees.",
+      "prereq_quest_id": "quest_water_gift_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_08_advanced"
+        },
+        {
+          "id": "quest_water_gift_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_09",
+      "display_name": "The Water Gift - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for extra rations.",
+      "prereq_quest_id": "quest_water_gift_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_09_advanced"
+        },
+        {
+          "id": "quest_water_gift_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_water_gift_10",
+      "display_name": "The Water Gift - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "Water is life, but it is also dignity. We are authorizing the use of our reserves for absolute abundance.",
+      "prereq_quest_id": "quest_water_gift_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_water_gift_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_water_gift_10_advanced"
+        },
+        {
+          "id": "quest_water_gift_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_water_gift_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_01",
+      "display_name": "The Democratic Will - Stage 1",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of work hours.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_01_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_01_advanced"
+        },
+        {
+          "id": "quest_democratic_will_01_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_02",
+      "display_name": "The Democratic Will - Stage 2",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of food rations.",
+      "prereq_quest_id": "quest_democratic_will_01",
+      "min_day": 20,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_02_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_02_advanced"
+        },
+        {
+          "id": "quest_democratic_will_02_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_03",
+      "display_name": "The Democratic Will - Stage 3",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of leadership appointments.",
+      "prereq_quest_id": "quest_democratic_will_02",
+      "min_day": 30,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_03_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_03_advanced"
+        },
+        {
+          "id": "quest_democratic_will_03_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_04",
+      "display_name": "The Democratic Will - Stage 4",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of laws and justice.",
+      "prereq_quest_id": "quest_democratic_will_03",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_04_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_04_advanced"
+        },
+        {
+          "id": "quest_democratic_will_04_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_05",
+      "display_name": "The Democratic Will - Stage 5",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of expedition targets.",
+      "prereq_quest_id": "quest_democratic_will_04",
+      "min_day": 50,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_05_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_05_advanced"
+        },
+        {
+          "id": "quest_democratic_will_05_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_06",
+      "display_name": "The Democratic Will - Stage 6",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of resource allocation.",
+      "prereq_quest_id": "quest_democratic_will_05",
+      "min_day": 60,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_06_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_06_advanced"
+        },
+        {
+          "id": "quest_democratic_will_06_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_07",
+      "display_name": "The Democratic Will - Stage 7",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of faction alliances.",
+      "prereq_quest_id": "quest_democratic_will_06",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_07_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_07_advanced"
+        },
+        {
+          "id": "quest_democratic_will_07_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_08",
+      "display_name": "The Democratic Will - Stage 8",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of the ultimate fate of the bunker.",
+      "prereq_quest_id": "quest_democratic_will_07",
+      "min_day": 80,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_08_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_08_advanced"
+        },
+        {
+          "id": "quest_democratic_will_08_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_09",
+      "display_name": "The Democratic Will - Stage 9",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of stripping the Overseer's power.",
+      "prereq_quest_id": "quest_democratic_will_08",
+      "min_day": 90,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_09_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_09_advanced"
+        },
+        {
+          "id": "quest_democratic_will_09_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_democratic_will_10",
+      "display_name": "The Democratic Will - Stage 10",
+      "type": "narrative_chain",
+      "briefing": "The age of dictators is over. We are putting a binding, bunker-wide vote on the issue of absolute egalitarianism.",
+      "prereq_quest_id": "quest_democratic_will_09",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A decision must be made."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_democratic_will_10_advance",
+          "text": "Enact the proposal.",
+          "set_flag": "flag_democratic_will_10_advanced"
+        },
+        {
+          "id": "quest_democratic_will_10_abort",
+          "text": "Reject the proposal.",
+          "set_flag": "flag_democratic_will_aborted"
+        }
+      ]
+    }
+  ]
+}

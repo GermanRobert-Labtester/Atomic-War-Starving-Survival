@@ -4,7 +4,7 @@
     {
       "id": "enc_overturned_postal",
       "title": "The Overturned Postal Van",
-      "description": "An overturned postal van on the ring road, the driver long dead at the wheel. The back is burst open: undelivered letters scattered by the wind, a few supply packs still strapped in, and one sealed envelope addressed to someone at the nearest settlement, the name written in a careful hand.",
+      "description": "An overturned postal van rusts on the ring road. The driver is mummified against the steering wheel. The rear doors are sheared open: scattered mail, three canvas supply packs, and one heavy, sealed manila envelope addressed to someone at the nearest settlement.",
       "category": "Discovery",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 0.5,
@@ -15,25 +15,25 @@
       "choices": [
         {
           "choiceId": "read_the_letters",
-          "text": "Read the undelivered letters where they lie",
+          "text": "Read the scattered letters.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "carry_the_envelope",
-          "text": "Carry the sealed envelope to its addressee",
+          "text": "Take the sealed envelope. Deliver it to the settlement.",
           "moraleDelta": 5,
           "guiltDelta": 0
         },
         {
           "choiceId": "take_the_packs",
-          "text": "Take the supply packs and leave the post",
+          "text": "Take the canvas supply packs. Leave the mail.",
           "moraleDelta": 2,
           "guiltDelta": 2
         },
         {
           "choiceId": "burn_the_van",
-          "text": "Burn the van to stop the wind scattering the letters",
+          "text": "Burn the van. Clear the road hazard.",
           "moraleDelta": 0,
           "guiltDelta": 4
         }
@@ -42,7 +42,7 @@
     {
       "id": "enc_weather_station",
       "title": "The Still Weather Station",
-      "description": "A automated weather station, solar panel still charging, instruments still logging to a dead network. The data is days old. A tarp has been stretched under the panel — someone sheltered here recently and left a tin cup, clean, upside down.",
+      "description": "A pre-war telemetry tower stands on a low hill, powered by a cracked solar array. The data logger is still running. A tarp is stretched under the panel—someone sheltered here recently. A clean tin cup sits upside down on a rock.",
       "category": "Discovery",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 0.5,
@@ -53,25 +53,25 @@
       "choices": [
         {
           "choiceId": "extract_the_data",
-          "text": "Extract the weather data from the logger",
+          "text": "Spool the telemetry data to tape.",
           "moraleDelta": 4,
           "guiltDelta": 0
         },
         {
           "choiceId": "take_the_solar_panel",
-          "text": "Take the solar panel for the shelter",
+          "text": "Strip the solar panel off the mast.",
           "moraleDelta": 2,
           "guiltDelta": 2
         },
         {
           "choiceId": "scavenge_the_instruments",
-          "text": "Scavenge the instruments and leave the station dead",
+          "text": "Strip the station for copper wire and circuit boards.",
           "moraleDelta": 1,
           "guiltDelta": 3
         },
         {
           "choiceId": "leave_it_running",
-          "text": "Leave it running and take only the tin cup",
+          "text": "Leave the station running. Take only the tin cup.",
           "moraleDelta": 2,
           "guiltDelta": 0
         }
@@ -80,7 +80,7 @@
     {
       "id": "enc_pianist",
       "title": "The Pianist",
-      "description": "In a ruined concert hall, a man plays an upright piano with three working keys. He does not stop when you enter. He plays the same three-note phrase, over and over, as if waiting for the fourth. The hall is cold. He is thin. He has been here a long time.",
+      "description": "An old man plays a warped upright piano in the ruins of a roofless concert hall. The piano has three working keys. He plays the same three-note phrase, over and over, waiting for the fourth. He doesn't look up when you enter.",
       "category": "Observation",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -91,25 +91,25 @@
       "choices": [
         {
           "choiceId": "listen",
-          "text": "Sit and listen until he finishes (he does not finish)",
+          "text": "Sit and listen. Wait for the fourth note.",
           "moraleDelta": 4,
           "guiltDelta": 0
         },
         {
           "choiceId": "share_food",
-          "text": "Share what food you have and wait for the fourth note",
+          "text": "Leave a portion of your rations on the piano bench.",
           "moraleDelta": 5,
           "guiltDelta": 0
         },
         {
           "choiceId": "tell_about_bunker",
-          "text": "Tell him about the shelter and offer to guide him back",
+          "text": "Tell him the coordinates to your shelter.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "destroy_piano",
-          "text": "Destroy the piano so he will come with you",
+          "text": "Destroy the piano with an axe. Force him to move.",
           "moraleDelta": -2,
           "guiltDelta": 5
         }
@@ -118,7 +118,7 @@
     {
       "id": "enc_roadside_trader",
       "title": "The Roadside Trader",
-      "description": "A woman with a cart on the highway, pulled to the shoulder. She has salt, two tins, and a working flashlight. She wants medical supplies, which you have. She does not want to know your name and does not offer hers. She counts by touch, not by sight.",
+      "description": "A woman has pulled a wooden cart onto the highway shoulder. She has salt, two rusted tins of beans, and a working flashlight. She asks for medical supplies. She does not offer her name, and counts the barter goods entirely by touch. She is totally blind.",
       "category": "Trade",
       "baseWeight": 3.0,
       "stealthWeightMultiplier": 1.0,
@@ -129,25 +129,25 @@
       "choices": [
         {
           "choiceId": "fair_trade",
-          "text": "Trade the medical supplies for the salt and tins",
+          "text": "Trade medical supplies for the salt and tins.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "flashlight_only",
-          "text": "Trade only for the flashlight, keep the medical",
+          "text": "Trade only for the flashlight. Keep your medical supplies.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "everything_trade",
-          "text": "Trade everything she asks for everything she has",
+          "text": "Trade everything she asks for everything she has.",
           "moraleDelta": 1,
           "guiltDelta": 3
         },
         {
           "choiceId": "refuse_and_leave",
-          "text": "Refuse and leave her to the road",
+          "text": "Refuse the trade. Leave her on the roadside.",
           "moraleDelta": 0,
           "guiltDelta": 2
         }
@@ -156,7 +156,7 @@
     {
       "id": "enc_water_seller",
       "title": "The Water Seller",
-      "description": "At a crossroads, a man selling filtered water by the cup. His filter is real — you can see the charcoal and sand. His price is information: he wants to know which settlements are still occupied. He will trade water for names.",
+      "description": "At a highway crossroads, a man is selling filtered water by the tin cup. The filter is real—charcoal and sand packed in PVC. His price is information: he wants the coordinates of any occupied settlements. He trades water for names.",
       "category": "Trade",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -167,25 +167,25 @@
       "choices": [
         {
           "choiceId": "pay_with_names",
-          "text": "Give him the names of the settlements you know",
+          "text": "Give him the coordinates of the settlements you know.",
           "moraleDelta": 2,
           "guiltDelta": 3
         },
         {
           "choiceId": "pay_with_nothing",
-          "text": "Drink one cup and give him nothing",
+          "text": "Take a cup of water. Give him nothing.",
           "moraleDelta": 1,
           "guiltDelta": 2
         },
         {
           "choiceId": "filter_not_water",
-          "text": "Offer to trade for his filter, not his water",
+          "text": "Demand the PVC filter, not the water.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "walk_away",
-          "text": "Walk away — water for names is a bad trade",
+          "text": "Walk away. Selling out settlements for water is a bad trade.",
           "moraleDelta": 0,
           "guiltDelta": 1
         }
@@ -194,7 +194,7 @@
     {
       "id": "enc_false_broadcast",
       "title": "The False Broadcast",
-      "description": "A working radio on a counter, tuned to a frequency that is broadcasting a settlement's location and an invitation: 'Come, we have food and medicine, we are at the old school, we are many.' The broadcast is clear. The broadcast is too clear. The frequency is one that was silent a week ago.",
+      "description": "A field radio sits on a cracked concrete counter, looping a broadcast: 'Come to the old school. We have food and medicine. We are many.' The transmission is crystal clear. Too clear. You monitored this exact frequency yesterday, and it was dead air.",
       "category": "Misinformation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -205,25 +205,25 @@
       "choices": [
         {
           "choiceId": "investigate",
-          "text": "Go to the school to verify the broadcast",
+          "text": "Go to the school to verify the broadcast.",
           "moraleDelta": -1,
           "guiltDelta": 2
         },
         {
           "choiceId": "rebroadcast",
-          "text": "Rebroadcast a warning that the signal may be a trap",
+          "text": "Rebroadcast a warning on the same frequency that it's a trap.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "destroy_radio",
-          "text": "Destroy the radio so no one else hears it",
+          "text": "Smash the radio so no one else hears the loop.",
           "moraleDelta": 0,
           "guiltDelta": 3
         },
         {
           "choiceId": "ignore",
-          "text": "Ignore it and continue — it is not your frequency",
+          "text": "Ignore it. It's not your frequency to police.",
           "moraleDelta": 0,
           "guiltDelta": 0
         }
@@ -232,7 +232,7 @@
     {
       "id": "enc_two_camps",
       "title": "The Two Camps",
-      "description": "Two camps, visible across a valley, both flying the same rag flag. One has smoke (cooking). One does not. A figure on the ridge tells you the smoking camp is raiders using the flag as bait; the smoking camp's own scout told you yesterday the ridge camp is the raider. Both cannot be telling the truth. Both could be.",
+      "description": "Two camps are pitched across a valley, both flying the same bleached white flag. One camp has cooking smoke. The other does not. A scout on the ridge says the smoking camp is a raider ambush; a scout from the smoking camp told you yesterday the ridge camp is a cannibal den. They can't both be telling the truth. But they could both be lying.",
       "category": "Misinformation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -243,25 +243,25 @@
       "choices": [
         {
           "choiceId": "ridge_figure",
-          "text": "Trust the ridge figure and approach the cold camp",
+          "text": "Trust the ridge scout. Approach the cold camp.",
           "moraleDelta": 0,
           "guiltDelta": 3
         },
         {
           "choiceId": "smoke_camp",
-          "text": "Trust the smoke and approach the cooking camp",
+          "text": "Trust the cooking smoke. Approach the valley camp.",
           "moraleDelta": 0,
           "guiltDelta": 3
         },
         {
           "choiceId": "avoid_both",
-          "text": "Avoid both camps and take the long way around",
+          "text": "Avoid both. Detour three miles around the valley.",
           "moraleDelta": 2,
           "guiltDelta": 0
         },
         {
           "choiceId": "watch_longer",
-          "text": "Watch both camps for a day before deciding",
+          "text": "Hold position. Watch them for a full day before deciding.",
           "moraleDelta": 3,
           "guiltDelta": 0
         }
@@ -270,7 +270,7 @@
     {
       "id": "enc_sick_child",
       "title": "The Sick Child",
-      "description": "A child, alone, in a doorway, coughing. No adult visible. A wet, rattling cough. The child is old enough to speak but does not — points to a house and says one word, a name. The house is dark. The child is fevered.",
+      "description": "A child sits in a blown-out doorway, alone. Their cough is a wet, rattling heave. There are no adults visible. The child is fever-delirious; they only point to the dark house behind them and repeat a single name.",
       "category": "Rescue",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -281,25 +281,25 @@
       "choices": [
         {
           "choiceId": "carry_to_shelter",
-          "text": "Carry the child back to the shelter and the clinic",
+          "text": "Wrap the child in a blanket. Carry them to your clinic.",
           "moraleDelta": 5,
           "guiltDelta": 0
         },
         {
           "choiceId": "search_house",
-          "text": "Search the dark house for the named adult first",
+          "text": "Draw your weapon. Search the dark house for the adult.",
           "moraleDelta": 2,
           "guiltDelta": 2
         },
         {
           "choiceId": "leave_medicine",
-          "text": "Leave medicine and water and continue",
+          "text": "Leave water and a fever reducer on the step. Keep moving.",
           "moraleDelta": 1,
           "guiltDelta": 4
         },
         {
           "choiceId": "leave",
-          "text": "Leave — you cannot take on a sick child",
+          "text": "Leave. You cannot afford the caloric drain of a sick dependent.",
           "moraleDelta": -3,
           "guiltDelta": 6
         }
@@ -307,8 +307,8 @@
     },
     {
       "id": "enc_injured_scavenger",
-      "title": "The Injured Scavenger",
-      "description": "A scavenger at the base of a collapsed building, leg pinned under a fallen beam. Conscious, in pain, asking for water. He has a full pack — he was on his way out when it fell. He says he will share the pack if you free him. He says he will not be angry if you take the pack and leave him the water.",
+      "title": "The Pinned Scavenger",
+      "description": "A man lies in the rubble of a collapsed hardware store, his leg crushed beneath a steel I-beam. He is conscious and bleeding slowly. He has a full canvas pack. He promises you half the pack if you lever the beam off him. He says you can take the whole pack and leave him the water if you don't.",
       "category": "Rescue",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -319,25 +319,25 @@
       "choices": [
         {
           "choiceId": "free_him",
-          "text": "Free him and take him at his word — share the pack",
+          "text": "Rig a fulcrum. Free him and split the pack.",
           "moraleDelta": 5,
           "guiltDelta": 0
         },
         {
           "choiceId": "free_take_pack",
-          "text": "Free him but take the full pack as payment",
+          "text": "Free him, but take the entire pack as payment.",
           "moraleDelta": 1,
           "guiltDelta": 3
         },
         {
           "choiceId": "take_pack_leave",
-          "text": "Take the pack and leave him the water, do not free",
+          "text": "Take the pack. Leave him the water. Walk away.",
           "moraleDelta": -2,
           "guiltDelta": 6
         },
         {
           "choiceId": "free_leave_pack",
-          "text": "Free him and leave the pack entirely his",
+          "text": "Free him. Leave him his pack. He needs it more.",
           "moraleDelta": 4,
           "guiltDelta": 0
         }
@@ -346,7 +346,7 @@
     {
       "id": "enc_roof_access",
       "title": "The Roof Access",
-      "description": "A stairwell to a roof, the door propped open with a brick. From above, the sound of wind and a faint signal — a radio beacon, automated, still pinging. The stairs are cracked; the fourth step is gone. The beacon might be salvageable. The stairwell might not hold.",
+      "description": "A fire stairwell leading to a roof. The door is propped with a brick. From above, you hear the faint, high-pitched ping of a surviving radio beacon. The concrete stairs are severely degraded; the rebar is exposed, and the fourth step is gone entirely.",
       "category": "Structural",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -357,25 +357,25 @@
       "choices": [
         {
           "choiceId": "climb_for_beacon",
-          "text": "Climb for the beacon, step over the gap",
+          "text": "Risk the climb. Vault the missing step.",
           "moraleDelta": 2,
           "guiltDelta": 2
         },
         {
           "choiceId": "call_up",
-          "text": "Call up to see if anyone answers (no one does)",
+          "text": "Call up the stairwell. Listen for an answer.",
           "moraleDelta": 1,
           "guiltDelta": 0
         },
         {
           "choiceId": "shore_stairs",
-          "text": "Shore the stairs with the brick and a plank, then climb",
+          "text": "Spend an hour shoring the gap with timber before climbing.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "leave_it",
-          "text": "Leave it — the beacon is not worth the stairwell",
+          "text": "Leave. The beacon isn't worth a broken leg.",
           "moraleDelta": 0,
           "guiltDelta": 0
         }
@@ -384,7 +384,7 @@
     {
       "id": "enc_cold_storage",
       "title": "The Cold Storage",
-      "description": "A warehouse marked COLD STORAGE, the door sealed with a chain that has been cut and re-chained. Inside, through the gap: frost still on the walls, the hum of a working compressor. Someone is keeping this cold. Someone is keeping something cold. The re-chain is fresh.",
+      "description": "An industrial freezer warehouse. The main sliding door is secured with a heavy chain. The links of the chain are bright, fresh steel, recently cut and re-padlocked. From inside, the low, vibrating hum of a working compressor can be heard. Whatever is inside is being kept frozen on purpose.",
       "category": "Structural",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.5,
@@ -395,25 +395,25 @@
       "choices": [
         {
           "choiceId": "cut_and_enter",
-          "text": "Cut the fresh chain and enter",
+          "text": "Cut the new chain with bolt cutters and enter.",
           "moraleDelta": 1,
           "guiltDelta": 3
         },
         {
           "choiceId": "knock",
-          "text": "Knock and wait — if someone is keeping it, they may answer",
+          "text": "Pound on the metal door. Wait for a response.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "leave_note",
-          "text": "Leave a note and a trade offer, do not enter",
+          "text": "Leave a barter list pinned to the door.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "leave_it",
-          "text": "Leave it — whatever is kept cold is kept cold for a reason",
+          "text": "Walk away. A running compressor means someone is defending this space.",
           "moraleDelta": 0,
           "guiltDelta": 0
         }
@@ -422,7 +422,7 @@
     {
       "id": "enc_hot_sign",
       "title": "The Hot Sign",
-      "description": "A roadside sign, RADIATION HAZARD, the trefoil faded to pink. Your dosimeter ticks faster here — a hot spot, localized, the size of the sign itself. Beneath the sign, a box, locked, the lock rusted. The box is in the hottest part of the hot spot.",
+      "description": "A metal hazard sign beside the highway, the radiation trefoil faded to pale pink. Your dosimeter begins ticking wildly as you pass—the sign itself is highly irradiated. Tucked beneath the sign in the center of the hotspot is a locked steel ammunition box.",
       "category": "Radiation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 0.5,
@@ -433,25 +433,25 @@
       "choices": [
         {
           "choiceId": "rush_the_box",
-          "text": "Rush the box, grab it, retreat — count your seconds",
+          "text": "Sprint into the hotspot, grab the box, and retreat.",
           "moraleDelta": 1,
           "guiltDelta": 3
         },
         {
           "choiceId": "mark_and_leave",
-          "text": "Mark the hot spot and leave the box",
+          "text": "Mark the anomaly on your map and leave.",
           "moraleDelta": 2,
           "guiltDelta": 0
         },
         {
           "choiceId": "wait_for_wind",
-          "text": "Wait for wind to disperse any particulate, then approach",
+          "text": "Wait for the wind to shift the radioactive dust before approaching.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "use_stick",
-          "text": "Use a long stick to drag the box out from the hot spot",
+          "text": "Hook the box with a long branch to drag it out of the zone.",
           "moraleDelta": 3,
           "guiltDelta": 1
         }
@@ -460,7 +460,7 @@
     {
       "id": "enc_clean_well",
       "title": "The Clean Well",
-      "description": "A well with a working pump, the water clear and cold. A logbook beside it records six months of tests, all POTABLE, in the same hand — until the last entry, three days ago, which reads ONLY FOR THE LIVING and is in a different hand. The water is still clear. The water is still cold.",
+      "description": "A hand-pump well in a deserted courtyard. The water runs clear. A logbook sits nearby, showing six months of daily radiation checks, all passing. The final entry, written three days ago in a frantic hand, reads: 'ONLY FOR THE LIVING.'",
       "category": "Radiation",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -471,25 +471,25 @@
       "choices": [
         {
           "choiceId": "drink_anyway",
-          "text": "Drink — the water tests clean and the hand may be mad",
+          "text": "Drink the water. You need the hydration.",
           "moraleDelta": 2,
           "guiltDelta": 2
         },
         {
           "choiceId": "test_yourself",
-          "text": "Test the water with your own kit before drinking",
+          "text": "Use a chemical reagent kit to test the water yourself.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "fill_and_go",
-          "text": "Fill your canteens and go without drinking",
+          "text": "Fill your canteens but do not drink until you return to base.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "leave_it",
-          "text": "Leave the well — 'only for the living' is a warning",
+          "text": "Empty the pump and leave. Do not risk it.",
           "moraleDelta": 0,
           "guiltDelta": 1
         }
@@ -498,7 +498,7 @@
     {
       "id": "enc_whiteout_traveler",
       "title": "The Whiteout Traveler",
-      "description": "In a whiteout, a figure appears, walking the same road, opposite direction. They are not dressed for the cold. They do not seem cold. They ask you the way to a town that you know is gone. They are calm. The snow is heavy. You have minutes before you lose each other.",
+      "description": "A figure emerges through a driving snow squall, walking in the opposite direction. They are wearing a light pre-war jacket, completely unsuited for the freeze. They ask for directions to a town that was vaporized two years ago. Their voice is perfectly calm.",
       "category": "Weather",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -509,25 +509,25 @@
       "choices": [
         {
           "choiceId": "correct_them",
-          "text": "Tell them the town is gone and offer to share the road",
+          "text": "Tell them the truth about the town. Offer them an emergency blanket.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "let_them_go",
-          "text": "Let them go — you cannot save everyone in a whiteout",
+          "text": "Say nothing. Step aside and let them walk into the squall.",
           "moraleDelta": 0,
           "guiltDelta": 3
         },
         {
           "choiceId": "give_directions",
-          "text": "Give them directions to a town that still stands",
+          "text": "Give them directions to the nearest surviving settlement.",
           "moraleDelta": 2,
           "guiltDelta": 2
         },
         {
           "choiceId": "take_shelter",
-          "text": "Insist on sharing shelter until the whiteout passes",
+          "text": "Grab their arm. Force them into the lee of a ruined truck.",
           "moraleDelta": 4,
           "guiltDelta": 0
         }
@@ -536,7 +536,7 @@
     {
       "id": "enc_flood_road",
       "title": "The Flooded Road",
-      "description": "The road ahead is under a foot of moving water, brown and fast. A car is stalled mid-road, water up to its windows. The driver is on the roof, waving. A child is in the car. The water is rising. You are on foot. You cannot swim in this.",
+      "description": "A burst water main has flooded the low ground ahead with freezing, fast-moving brown water. A scavenged sedan is stalled in the current, water rising past the door handles. A man is on the roof screaming. A child is trapped inside.",
       "category": "Weather",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -547,25 +547,25 @@
       "choices": [
         {
           "choiceId": "wade_to_car",
-          "text": "Wade to the car and pass the child to the roof",
+          "text": "Wade into the freezing current. Haul the child out the window.",
           "moraleDelta": 5,
           "guiltDelta": 1
         },
         {
           "choiceId": "throw_rope",
-          "text": "Throw a line from the bank if you have one",
+          "text": "Throw a line from the bank. Do not enter the water.",
           "moraleDelta": 4,
           "guiltDelta": 1
         },
         {
           "choiceId": "go_for_help",
-          "text": "Go for help at the nearest building — you cannot swim this",
+          "text": "Run for help. You don't have the body weight to survive the current.",
           "moraleDelta": 1,
           "guiltDelta": 4
         },
         {
           "choiceId": "watch",
-          "text": "Watch — you are on foot and the water is too fast for you",
+          "text": "Watch. You are on foot and the water is too fast.",
           "moraleDelta": -3,
           "guiltDelta": 7
         }
@@ -574,7 +574,7 @@
     {
       "id": "enc_dogs_silent",
       "title": "The Silent Dogs",
-      "description": "A farmstead, dogs in the yard, four of them, and they are silent. Not asleep — watching you, ears forward, tails still. A dog that barks is a warning. A dog that does not bark has been told not to. Someone is in the house. The dogs are waiting for the command.",
+      "description": "You approach a fenced farmstead. Four emaciated dogs stand in the yard. They do not bark. They are not asleep—they are watching you, ears forward, tails rigid. A dog that barks is a warning. A dog that doesn't bark has been commanded to stay silent. Someone is watching from the house.",
       "category": "Fear",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 2.0,
@@ -585,25 +585,25 @@
       "choices": [
         {
           "choiceId": "back_away",
-          "text": "Back away slowly, do not turn, do not run",
+          "text": "Back away slowly. Do not turn your back. Do not run.",
           "moraleDelta": 2,
           "guiltDelta": 0
         },
         {
           "choiceId": "call_out",
-          "text": "Call out to the house — announce yourself, hands open",
+          "text": "Announce yourself to the house with open, empty hands.",
           "moraleDelta": 1,
           "guiltDelta": 2
         },
         {
           "choiceId": "leave_food",
-          "text": "Leave food at the gate and withdraw",
+          "text": "Leave a tin of food at the gate. Withdraw.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "cut_through",
-          "text": "Cut through the yard — the dogs may not be commanded yet",
+          "text": "Cut through the yard anyway. The dogs might be wild.",
           "moraleDelta": -1,
           "guiltDelta": 4
         }
@@ -612,7 +612,7 @@
     {
       "id": "enc_following_footsteps",
       "title": "The Following Footsteps",
-      "description": "On a long straight road, you hear a second set of footsteps behind you, matching your pace. You stop; they stop. You walk; they walk. You do not look back. The footsteps are not loud enough to be a threat and not quiet enough to be imagination. They have been there for a mile.",
+      "description": "On a long stretch of highway, you hear a second set of footsteps matching your pace. You stop; they stop. You walk; they walk. They have shadowed you for a mile. The crunch of boots on asphalt is too loud to be an animal, and too rhythmic to be a stumbling infected.",
       "category": "Fear",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.5,
@@ -623,25 +623,25 @@
       "choices": [
         {
           "choiceId": "stop_and_wait",
-          "text": "Stop and wait for them to pass or reveal themselves",
+          "text": "Stop dead. Draw your weapon. Wait for them to appear.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "speak_aloud",
-          "text": "Speak aloud — offer to share the road",
+          "text": "Call out. Offer to share the road in the open.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "look_back",
-          "text": "Look back — whatever it is, you want to know",
+          "text": "Drop to a crouch and scan your back trail with optics.",
           "moraleDelta": 1,
           "guiltDelta": 2
         },
         {
           "choiceId": "speed_up",
-          "text": "Speed up — let them match or fall behind",
+          "text": "Increase your pace to a jog. See if they match it.",
           "moraleDelta": 0,
           "guiltDelta": 1
         }
@@ -650,7 +650,7 @@
     {
       "id": "enc_border_camp",
       "title": "The Border Camp",
-      "description": "A checkpoint at a territorial border, unmanned but recently manned — the fire is still warm, the barrier is down. A sign: AUTHORIZED PASSAGE ONLY. A logbook records the last three travelers, their business, their direction. The last entry is two hours ago. The guards left in a hurry.",
+      "description": "A territorial checkpoint blocks the road. It is unmanned, but a steel drum fire is still smoking. The boom gate is raised. A clipboard logbook sits on a stool, recording the last three travelers. The final entry is twenty minutes ago. The guards left in a profound hurry.",
       "category": "Faction",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -661,25 +661,25 @@
       "choices": [
         {
           "choiceId": "pass_quickly",
-          "text": "Pass quickly while the barrier is down",
+          "text": "Move through the open checkpoint at a sprint.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "sign_logbook",
-          "text": "Sign the logbook and pass — be on the record",
+          "text": "Sign the logbook, leave your designation, and pass.",
           "moraleDelta": 1,
           "guiltDelta": 2
         },
         {
           "choiceId": "wait",
-          "text": "Wait for the guards to return and present yourself",
+          "text": "Wait by the fire for the guards to return.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "take_logbook",
-          "text": "Take the logbook — the travelers' business is useful",
+          "text": "Steal the logbook. The intelligence is worth the risk.",
           "moraleDelta": 0,
           "guiltDelta": 3
         }
@@ -688,7 +688,7 @@
     {
       "id": "enc_two_factions_trade",
       "title": "The Two Factions",
-      "description": "A trade meet between two factions you know are hostile. Both have invited you as a neutral witness to the exchange. The goods are on a blanket between them. Neither will touch the blanket first. They are waiting for you to touch it, which will make you the guarantor.",
+      "description": "A tense parley between two hostile groups. They have summoned you as a neutral arbiter. The barter goods—ammunition and antibiotics—sit on a wool blanket between them. Neither side will touch the blanket first. They expect you to handle the goods, making you the physical guarantor of the exchange.",
       "category": "Faction",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -699,25 +699,25 @@
       "choices": [
         {
           "choiceId": "witness_only",
-          "text": "Witness only — do not touch the blanket",
+          "text": "Act only as a witness. Do not touch the blanket.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "touch_blanket",
-          "text": "Touch the blanket to begin the exchange as guarantor",
+          "text": "Touch the blanket. Assume the risk of guaranteeing the trade.",
           "moraleDelta": 2,
           "guiltDelta": 3
         },
         {
           "choiceId": "refuse",
-          "text": "Refuse the role and leave them to it",
+          "text": "Refuse the role. Walk away and let them sort it out.",
           "moraleDelta": 1,
           "guiltDelta": 1
         },
         {
           "choiceId": "propose_terms",
-          "text": "Propose terms they both can accept without the blanket",
+          "text": "Propose a blind drop exchange instead. No blanket required.",
           "moraleDelta": 4,
           "guiltDelta": 1
         }
@@ -726,7 +726,7 @@
     {
       "id": "enc_locked_room",
       "title": "The Locked Room",
-      "description": "A door, locked from the outside, the key still in the lock. From inside, the sound of water dripping and a clock ticking. The key turns easily — the lock is not stuck. Someone locked this room from the outside and left the key. Someone wanted it opened.",
+      "description": "An interior security door, locked from the outside. The brass key is still in the cylinder. From inside, you hear the slow drip of water and the loud, rhythmic ticking of a mechanical clock. The lock cylinder is heavily oiled. Someone locked this room and left the key for the next person.",
       "category": "Mystery",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -737,25 +737,25 @@
       "choices": [
         {
           "choiceId": "open_it",
-          "text": "Turn the key and open the door",
+          "text": "Turn the key and open the door.",
           "moraleDelta": 2,
           "guiltDelta": 2
         },
         {
           "choiceId": "knock_first",
-          "text": "Knock first — if someone is inside, let them speak",
+          "text": "Pound on the steel door. Listen for breathing.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "leave_key",
-          "text": "Leave the key and the door — it is not your room",
+          "text": "Leave the door and the key untouched.",
           "moraleDelta": 0,
           "guiltDelta": 0
         },
         {
           "choiceId": "take_key",
-          "text": "Take the key and go — open it later, with others",
+          "text": "Pull the key from the lock and take it with you.",
           "moraleDelta": 1,
           "guiltDelta": 2
         }
@@ -764,7 +764,7 @@
     {
       "id": "enc_two_graves",
       "title": "The Two Graves",
-      "description": "Two fresh graves, side by side, marked with the same name on both — the same first name, the same date, different last names. A single shovel, clean, leaning on a tree. The dirt is fresh. The digger is not here. The names are the names of two people, or one person twice, or a mistake.",
+      "description": "Two fresh graves dug side-by-side in the permafrost. The wooden markers bear the exact same first name, the exact same date of death, but different surnames. A clean shovel leans against a dead birch tree. The digger is gone.",
       "category": "Mystery",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -775,25 +775,25 @@
       "choices": [
         {
           "choiceId": "dig_one",
-          "text": "Dig one up to settle the question",
+          "text": "Exhume one of the graves to see what's inside.",
           "moraleDelta": -1,
           "guiltDelta": 5
         },
         {
           "choiceId": "leave_flowers",
-          "text": "Leave something on both and go",
+          "text": "Leave a handful of dried moss on each mound. Walk away.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "wait_for_digger",
-          "text": "Wait for the digger to return and ask",
+          "text": "Take cover in the treeline. Wait for the digger to return.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "mark_and_leave",
-          "text": "Mark the site on your map and leave it be",
+          "text": "Mark the coordinates and leave the dead in peace.",
           "moraleDelta": 2,
           "guiltDelta": 0
         }
@@ -802,7 +802,7 @@
     {
       "id": "enc_beggars",
       "title": "The Beggars at the Gate",
-      "description": "Three people at the shelter gate, asking for food. They are not sick, not injured, just hungry. You have food for your own, counted to the day. The gate guard looks to you. The three are calm. They will go if turned away. They will remember.",
+      "description": "Three people stand at the outer perimeter fence. They are not injured or irradiated, merely starving. You have enough calories in the stockpile to maintain your crew's basal metabolic rate, calculated to the gram. The perimeter guard has his rifle lowered, looking to you for the call.",
       "category": "Ethical",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -813,25 +813,25 @@
       "choices": [
         {
           "choiceId": "share_a_meal",
-          "text": "Share one meal from the counted stores",
+          "text": "Authorize the release of three day-rations from the stockpile.",
           "moraleDelta": 4,
           "guiltDelta": 1
         },
         {
           "choiceId": "turn_away",
-          "text": "Turn them away — the count is the count",
+          "text": "Order them away. The caloric math cannot be broken.",
           "moraleDelta": -1,
           "guiltDelta": 4
         },
         {
           "choiceId": "work_for_food",
-          "text": "Offer food for a day's work at the shelter",
+          "text": "Offer them the calories only in exchange for manual labor.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "direct_them",
-          "text": "Direct them to a settlement with more",
+          "text": "Give them coordinates to a larger settlement. Give them no food.",
           "moraleDelta": 2,
           "guiltDelta": 1
         }
@@ -840,7 +840,7 @@
     {
       "id": "enc_thief_child",
       "title": "The Thief Child",
-      "description": "A child, caught stealing from your packs — a handful of dried fruit, already eaten. The child is thin. The child is crying. The child is not yours and not of your shelter. The guard has hold of the child's arm. The child's parent, if there is one, is not here.",
+      "description": "A child is caught stealing from your transit packs. They have already eaten a handful of dried fruit. The child is rail-thin and crying. They belong to no known shelter. Your guard has a tight grip on the child's arm, waiting for orders.",
       "category": "Ethical",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -851,25 +851,25 @@
       "choices": [
         {
           "choiceId": "feed_and_release",
-          "text": "Feed the child and release them with a warning",
+          "text": "Give the child a full ration and release them.",
           "moraleDelta": 4,
           "guiltDelta": 0
         },
         {
           "choiceId": "return_to_parent",
-          "text": "Find the parent and return the child",
+          "text": "Interrogate the child to find their camp.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "punish",
-          "text": "Punish as a deterrent — the stores are the stores",
+          "text": "Punish the theft. The supplies are absolute.",
           "moraleDelta": -2,
           "guiltDelta": 5
         },
         {
           "choiceId": "take_in",
-          "text": "Take the child into the shelter",
+          "text": "Take the child into the shelter as a dependent.",
           "moraleDelta": 5,
           "guiltDelta": 1
         }
@@ -878,7 +878,7 @@
     {
       "id": "enc_library_cache",
       "title": "The Library Cache",
-      "description": "A public library, the shelves mostly bare, but one section — geology — is intact, and behind the geology books, a cache: water, a blanket, a notebook. The notebook is a log of who has sheltered here and for how long. The last entry is a week ago. The cache is for travelers. The cache is trusted.",
+      "description": "A public library, stripped to the studs. But behind a row of ruined encyclopedias, you find a survivor cache: iodine, a thermal blanket, and a ledger. The ledger is a log of travelers who have sheltered here, taking what they need and leaving what they can. The last entry is a week old.",
       "category": "Discovery",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -889,25 +889,25 @@
       "choices": [
         {
           "choiceId": "use_and_replenish",
-          "text": "Use the cache and replenish what you can",
+          "text": "Take the iodine, leave surplus ammunition, and sign the ledger.",
           "moraleDelta": 4,
           "guiltDelta": 0
         },
         {
           "choiceId": "take_water",
-          "text": "Take only the water and sign the notebook",
+          "text": "Take only the iodine. Sign the ledger.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "add_to_cache",
-          "text": "Add to the cache and take nothing",
+          "text": "Leave medical supplies in the cache. Take nothing.",
           "moraleDelta": 5,
           "guiltDelta": 0
         },
         {
           "choiceId": "take_all",
-          "text": "Take the cache — it is unguarded",
+          "text": "Strip the cache entirely. Leave the ledger blank.",
           "moraleDelta": 0,
           "guiltDelta": 5
         }
@@ -916,7 +916,7 @@
     {
       "id": "enc_greenhouse_keeper",
       "title": "The Greenhouse Keeper",
-      "description": "A greenhouse, mostly glass gone, but one corner still glazed and warm. Inside, a woman tending a single row of seedlings. She has a shotgun, leaned, not aimed. She says she will trade seedlings for salt. She says she will not trade the shotgun. She has been here alone for months.",
+      "description": "A shattered municipal greenhouse. In one corner, thick plastic sheeting creates a warm microclimate. A woman is tending a single row of pale green seedlings. She leans on a double-barreled shotgun. She offers seedlings for mineral salt.",
       "category": "Observation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -927,25 +927,25 @@
       "choices": [
         {
           "choiceId": "seedlings_for_salt",
-          "text": "Trade salt for seedlings",
+          "text": "Trade mineral salt for the seedlings.",
           "moraleDelta": 4,
           "guiltDelta": 0
         },
         {
           "choiceId": "labor_for_seedlings",
-          "text": "Offer a day's labor for the seedlings and her company",
+          "text": "Offer manual labor repairing the plastic in exchange for the seedlings.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "take_seedlings",
-          "text": "Take the seedlings by force",
+          "text": "Raise your weapon. Demand the seedlings.",
           "moraleDelta": -3,
           "guiltDelta": 7
         },
         {
           "choiceId": "leave_and_report",
-          "text": "Leave and report the greenhouse to the shelter",
+          "text": "Leave without trading. Note the location for the shelter log.",
           "moraleDelta": 2,
           "guiltDelta": 2
         }
@@ -954,7 +954,7 @@
     {
       "id": "enc_dead_radio_operator",
       "title": "The Dead Radio Operator",
-      "description": "A relay station, the operator dead at the desk, the headphones still on. The equipment is still running. The last log entry is from this morning — he was alive hours ago. The broadcast is still transmitting, automated now. He died with the headphones on and no one turned it off.",
+      "description": "A relay station. The operator is dead at the console, headphones still over their ears. The equipment is still drawing power. The logbook shows an entry from six hours ago. An automated distress loop is still broadcasting into the dead air.",
       "category": "Observation",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -965,25 +965,25 @@
       "choices": [
         {
           "choiceId": "turn_it_off",
-          "text": "Turn off the broadcast and bury the operator",
+          "text": "Cut the power to the broadcast. Bury the operator.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "keep_it_running",
-          "text": "Keep the broadcast running — it may guide others",
+          "text": "Leave the automated distress loop running. It might draw a rescue.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "take_headphones",
-          "text": "Take the headphones and the logbook",
+          "text": "Strip the operator of the headphones and take the logbook.",
           "moraleDelta": 1,
           "guiltDelta": 3
         },
         {
           "choiceId": "send_message",
-          "text": "Send a message on the working equipment, then decide",
+          "text": "Override the loop. Broadcast your shelter's coordinates before leaving.",
           "moraleDelta": 4,
           "guiltDelta": 0
         }
@@ -992,7 +992,7 @@
     {
       "id": "enc_ice_fishermen",
       "title": "The Ice Fishermen",
-      "description": "Two figures on a frozen lake, ice fishing, a hole cut, lines in the water. They have fish — three, on the ice, frozen. They wave. The ice is black where they are. The ice is white near the shore. They are on the black. They do not seem to know, or do not care.",
+      "description": "Two figures are ice fishing in the center of a frozen lake. Three frozen fish lie on the ice beside them. They wave enthusiastically. They are standing on black ice, over the deep channel, while the white, solid ice hugs the shore. They don't seem to realize the ice under them is cracking with every step.",
       "category": "Observation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -1003,25 +1003,25 @@
       "choices": [
         {
           "choiceId": "warn_them",
-          "text": "Walk out and warn them — the black is the deep",
+          "text": "Walk onto the black ice and drag them back to the white.",
           "moraleDelta": 4,
           "guiltDelta": 2
         },
         {
           "choiceId": "call_from_shore",
-          "text": "Call to them from the shore — do not go on the black",
+          "text": "Yell from the treeline. Warn them about the deep channel.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "wait_on_shore",
-          "text": "Wait for them to come to shore, then trade for the fish",
+          "text": "Wait for them to finish. Barter for the fish when they reach shore.",
           "moraleDelta": 2,
           "guiltDelta": 0
         },
         {
           "choiceId": "watch",
-          "text": "Watch — if they fall, you cannot help them anyway",
+          "text": "Watch. If they go through the black ice, you get their gear.",
           "moraleDelta": 0,
           "guiltDelta": 3
         }
@@ -1030,7 +1030,7 @@
     {
       "id": "enc_quarantine_sign",
       "title": "The Quarantine Sign",
-      "description": "A house with a QUARANTINE sign, painted on a sheet, hung in the window. The sign is old. From inside, a child's voice, singing, faintly. The singing is cheerful. The sign says QUARANTINE. The singing says otherwise. The door is unlocked.",
+      "description": "A suburban house with a red QUARANTINE cross painted on a bedsheet hanging in the window. The paint is flaking and old. From inside, you hear a child singing a pre-war television jingle. The door is standing slightly open, unlatched.",
       "category": "Mystery",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -1041,25 +1041,25 @@
       "choices": [
         {
           "choiceId": "enter",
-          "text": "Enter — the sign is old and the singing is alive",
+          "text": "Kick the door wide and clear the house.",
           "moraleDelta": 1,
           "guiltDelta": 3
         },
         {
           "choiceId": "call_through_door",
-          "text": "Call through the door — do not enter",
+          "text": "Stand back and call through the doorway. Do not cross the threshold.",
           "moraleDelta": 3,
           "guiltDelta": 0
         },
         {
           "choiceId": "leave_supplies",
-          "text": "Leave supplies at the door and go",
+          "text": "Leave a half-ration on the porch and walk away.",
           "moraleDelta": 3,
           "guiltDelta": 1
         },
         {
           "choiceId": "report",
-          "text": "Report the house to the nearest clinic and leave",
+          "text": "Note the location as a biohazard. Avoid the house entirely.",
           "moraleDelta": 2,
           "guiltDelta": 0
         }
@@ -1068,7 +1068,7 @@
     {
       "id": "enc_last_train",
       "title": "The Last Train",
-      "description": "A train, stopped on the track, doors open, no one aboard. The driver's cab is empty. The schedule board shows a destination that is a town you know is flooded. The train has power — the lights are on. The train is going nowhere. The track ahead is underwater.",
+      "description": "A commuter train is idling on an elevated track, its doors open to the wind. The cabin is empty. The digital destination board is still lit, displaying a town that has been a radioactive crater for three years. The engine hums, but the tracks ahead are sheared entirely off the bridge.",
       "category": "Discovery",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -1079,25 +1079,25 @@
       "choices": [
         {
           "choiceId": "search_train",
-          "text": "Search the train for supplies",
+          "text": "Sweep the passenger cars for abandoned luggage.",
           "moraleDelta": 2,
           "guiltDelta": 1
         },
         {
           "choiceId": "take_power",
-          "text": "Take the battery from the driver's cab",
+          "text": "Strip the heavy-duty battery array from the locomotive.",
           "moraleDelta": 1,
           "guiltDelta": 2
         },
         {
           "choiceId": "leave_note",
-          "text": "Leave a note in the cab and go",
+          "text": "Leave a warning in the cabin that the bridge is out.",
           "moraleDelta": 2,
           "guiltDelta": 0
         },
         {
           "choiceId": "watch_track",
-          "text": "Watch the track — a train with power may have an owner",
+          "text": "Take cover and observe. A running train draws scavengers.",
           "moraleDelta": 2,
           "guiltDelta": 0
         }

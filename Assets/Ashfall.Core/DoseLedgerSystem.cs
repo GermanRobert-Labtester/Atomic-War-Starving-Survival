@@ -29,6 +29,8 @@ namespace Ashfall.Core
         public int radiationPhaseCaught;   // the phase index when the ledger caught it
         public float shieldingFactor = 1f;
         public int lastAntiRadDay = -1;
+        public bool hasForgedCleanBill;
+        public string administrativeClassificationOverride = string.Empty;
     }
 
     [Serializable]
@@ -180,6 +182,42 @@ namespace Ashfall.Core
             return (DoseBandResult)BandFor(mSv);
         }
 
+        // ── Administrative Classification & Forgery ───────────────
+
+        public void SetForgedCleanBill(string survivorId, bool hasForged)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return;
+            var e = GetOrCreate(survivorId);
+            e.hasForgedCleanBill = hasForged;
+            RaiseChanged();
+        }
+
+        public void SetAdministrativeClassificationOverride(string survivorId, string overrideBand)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return;
+            var e = GetOrCreate(survivorId);
+            e.administrativeClassificationOverride = overrideBand ?? string.Empty;
+            RaiseChanged();
+        }
+
+        /// <summary>
+        /// Gets the institutional administrative classification band (for check-points and duty gates).
+        /// Forged clean-bill chits return Green band administratively without mutating true physical dose.
+        /// </summary>
+        public int GetAdministrativeBand(string survivorId)
+        {
+            if (!_entries.TryGetValue(survivorId, out var e) || e == null) return BandGreen;
+            if (e.hasForgedCleanBill) return BandGreen;
+            if (!string.IsNullOrEmpty(e.administrativeClassificationOverride))
+            {
+                if (e.administrativeClassificationOverride == "band_green") return BandGreen;
+                if (e.administrativeClassificationOverride == "band_amber") return BandAmber;
+                if (e.administrativeClassificationOverride == "band_red") return BandRed;
+                if (e.administrativeClassificationOverride == "band_black") return BandBlack;
+            }
+            return BandFor(e.cumulativeMsv);
+        }
+
         // ── Queries ────────────────────────────────────────────────
 
         public DoseEntry? GetEntry(string survivorId) =>
@@ -217,6 +255,8 @@ namespace Ashfall.Core
                     shieldingFactor = e.shieldingFactor,
                     lastAntiRadDay = e.lastAntiRadDay,
                     radiationPhaseCaught = e.radiationPhaseCaught,
+                    hasForgedCleanBill = e.hasForgedCleanBill,
+                    administrativeClassificationOverride = e.administrativeClassificationOverride,
                     readingsHistory = new List<DoseReading>(e.readingsHistory)
                 });
             }
@@ -246,6 +286,8 @@ namespace Ashfall.Core
                         shieldingFactor = e.shieldingFactor,
                         lastAntiRadDay = e.lastAntiRadDay,
                         radiationPhaseCaught = e.radiationPhaseCaught,
+                        hasForgedCleanBill = e.hasForgedCleanBill,
+                        administrativeClassificationOverride = e.administrativeClassificationOverride ?? string.Empty,
                         readingsHistory = e.readingsHistory != null
                             ? new List<DoseReading>(e.readingsHistory)
                             : new List<DoseReading>()

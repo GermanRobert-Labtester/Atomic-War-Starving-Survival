@@ -8,9 +8,9 @@
       "origin_region": "deep_coast",
       "route_node_ids": [
         "loc_black_flotilla_outpost",
-        "loc_the_shallows_market",
-        "loc_lock_gate_four",
-        "loc_water_station",
+        "loc_cut_radiation_zone_alpha",
+        "loc_cut_merchant_caravanserai",
+        "loc_cut_abandoned_depot",
         "loc_holdfast"
       ],
       "stay_duration_days": 2,
@@ -27,11 +27,11 @@
       "faction_id": "faction_rebuilders",
       "origin_region": "ash_flats",
       "route_node_ids": [
-        "loc_grain_silo",
-        "loc_forward_roster_camp",
         "loc_cut_merchant_caravanserai",
-        "loc_grange_hall",
-        "loc_the_allotments"
+        "loc_cut_abandoned_depot",
+        "loc_cut_arsenal_ruin",
+        "loc_holdfast",
+        "loc_cut_radiation_zone_alpha"
       ],
       "stay_duration_days": 2,
       "guard_count": 4,
@@ -47,10 +47,10 @@
       "faction_id": "faction_silent_foundry",
       "origin_region": "industrial_belt",
       "route_node_ids": [
-        "loc_recovery_yard",
-        "loc_railway_span_44_alpha",
-        "loc_weighbridge",
         "loc_cut_abandoned_depot",
+        "loc_cut_arsenal_ruin",
+        "loc_black_flotilla_outpost",
+        "loc_cut_radiation_zone_alpha",
         "loc_holdfast"
       ],
       "stay_duration_days": 2,
@@ -68,10 +68,10 @@
       "origin_region": "settlement",
       "route_node_ids": [
         "loc_cut_merchant_caravanserai",
-        "loc_motel_verity",
-        "loc_shrine_switchback_waystation",
-        "loc_low_background_lab",
-        "loc_water_station"
+        "loc_cut_abandoned_depot",
+        "loc_black_flotilla_outpost",
+        "loc_cut_radiation_zone_alpha",
+        "loc_holdfast"
       ],
       "stay_duration_days": 3,
       "guard_count": 4,

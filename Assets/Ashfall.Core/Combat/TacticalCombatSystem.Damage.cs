@@ -98,11 +98,22 @@ namespace Ashfall.Core.Combat
                 var target = players[rng.Next(0, players.Count)];
                 if (target.IsDowned) continue;
 
-                // Enemy accuracy: base 0.5, defence reduces it.
-                float acc = 0.50f * (1f - mods.Defense);
+                // Enemy accuracy: base 0.5, defence reduces it. The catalog-
+                // derived AiAccuracyMod multiplies the result so a Burrower
+                // Mite (0.95) is fractionally less accurate than a Conscript
+                // Levy (0.85) or a Warlord Veteran (1.05).
+                float baseAcc = 0.50f;
+                float accMod = enemy.AiAccuracyMod > 0f ? enemy.AiAccuracyMod : 1f;
+                float acc = baseAcc * accMod * (1f - mods.Defense);
                 if (rng.NextDouble() < acc)
                 {
-                    float dmg = 6f + (float)(enemy.Lane == target.Lane ? 4f : 0f);
+                    // Damage scales by lane match (existing rule) and the
+                    // catalog-derived AiDamageMod for consistent per-archetype
+                    // behaviour across save/load. Mutants get a small extra
+                    // kicker when their archetype is registered.
+                    float laneDmg = 6f + (float)(enemy.Lane == target.Lane ? 4f : 0f);
+                    float dmgMod = enemy.AiDamageMod > 0f ? enemy.AiDamageMod : 1f;
+                    float dmg = laneDmg * dmgMod;
                     ApplyDamage(target, dmg, enemy, false, rng);
                     AddEvent("enemy_fire", target.Id, enemy.Name + " hits " + target.Name + ".");
                 }

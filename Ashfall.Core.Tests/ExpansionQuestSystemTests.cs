@@ -573,7 +573,7 @@ namespace Ashfall.Core.Tests
 
             var quests = ExpansionQuestCatalogLoader.Load(dataDir);
             Assert.NotEmpty(quests);
-            Assert.Equal(41, quests.Count);
+            Assert.Equal(42, quests.Count);
 
             Assert.All(quests, q =>
             {

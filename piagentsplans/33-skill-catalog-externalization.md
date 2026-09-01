@@ -71,4 +71,4 @@ after JSON confirmed) and step 8 (determinism + save round-trip tests).
 ## Follow-on
 - Plan 34 (research tree) uses the same externalization pattern.
 - Skill-gated encounters (W12 in roadmap 31) consume the new catalog.
-- Trade specialties (Plan existing 26B) can reference skill ids as prerequisites.
+- Trade specialties (Plan 105) can reference skill ids as prerequisites.

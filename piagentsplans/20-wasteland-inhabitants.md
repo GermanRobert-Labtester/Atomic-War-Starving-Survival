@@ -4,7 +4,7 @@
 > factions, and NPCs, but no unified *inhabitant* layer — no field guide, thin random
 > encounters, and few named wasteland settlements. This plan populates the world.
 >
-> **Key evidence (verified):** `characters.json` = 36; `WildlifeTrappingSystem` + 10A bestiary;
+> **Key evidence (verified):** `characters.json` = 36; `WildlifeTrappingSystem` + Plan 54 bestiary;
 > `door_encounters.json` = 68; `GreenhouseSystem` crops; `FactionRadioEngine`; no dedicated
 > wasteland-settlement or field-guide catalog exists.
 
@@ -16,14 +16,14 @@
 *mechanical intel* (knowing a beast's behavior helps you trap/fight/avoid it).
 
 **Files:** new `field_guide.json` (codex-backed), ties to `WildlifeTrappingSystem` (13B),
-`combat_catalog.json` (10A), `GreenhouseSystem`, read-only `JournalCodex.cs`.
+`combat_catalog.json` (Plan 54), `GreenhouseSystem`, read-only `JournalCodex.cs`.
 
 **Substeps:**
-1. Inventory every fauna/flora entity across trapping (13B), combat bestiary (10A), and greenhouse to catalog what exists.
+1. Inventory every fauna/flora entity across trapping (13B), the Plan 54 combat bestiary, and greenhouse to catalog what exists.
 2. Read `JournalCodex` to reuse its entry/unlock structure for the field guide.
 3. Author 20 fauna entries (what it is, behavior, danger, how to trap/fight/avoid, rad-taint note) — grounded mutations only.
 4. Author 12 flora/fungus entries (edible vs toxic vs medicinal vs blight) tied to greenhouse/foraging.
-5. Make each entry's "intel" mechanically true: the trap affinity / combat behavior it describes matches the system values (verify against 10A/13B data).
+5. Make each entry's "intel" mechanically true: the trap affinity / combat behavior it describes matches the system values (verify against Plan 54/13B data).
 6. Gate entries behind first encounter/sighting (kill it, trap it, or survive it).
 7. Add a field-guide section to the codex UI (reuses codex rendering).
 8. Validate ids; data-integrity selftest; `DataRuleComplianceTests` (no real species misrepresented in a misleading way — it's fiction, keep it grounded).
@@ -81,4 +81,4 @@ read-only `ExpeditionEncounterBridge`, `ExpeditionSystem`, `WastelandMapSystem` 
 10. Balance sim: encounter frequency vs. expedition length must not make travel pure punishment.
 
 **Next steps:** encounter "reputation" (spare travelers → later allies); a rare wandering
-merchant with unique stock (13A goods); vehicle-specific encounters (10C chase) reuse these tables.
+merchant with unique stock (Plan 56 goods); vehicle-specific encounters (10C chase) reuse these tables.

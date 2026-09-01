@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 91,
-  "headless_test_count": 89,
+  "total_tests": 94,
+  "headless_test_count": 92,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -68,9 +68,20 @@
       "category": "Core & System Gates",
       "primary_flag": "--data-integrity-selftest",
       "aliases": [],
-      "description": "Cross-reference every id in the 129 StreamingAssets catalogs (recipe\u2192item, quest\u2192location, events, door encounters, survivors, factions, ranges, duplicates)",
+      "description": "Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)",
       "headless_compatible": true,
       "expected_summary_id": "data_integrity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "research_catalog_selftest",
+      "action": "ResearchCatalogSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--research-catalog-selftest",
+      "aliases": [],
+      "description": "Research knowledge catalog gate (Plan 34): load count, DAG validity, original 15 save-contract nodes, and cross-catalog unlock references (breakthrough items, relic research unlocks, manual/autopsy knowledge grants)",
+      "headless_compatible": true,
+      "expected_summary_id": "research_catalog_selftest",
       "timeout_seconds": 30
     },
     {
@@ -392,6 +403,17 @@
       "description": "MusterHeadlessDemo (Exp 06 the Muster)",
       "headless_compatible": true,
       "expected_summary_id": "muster_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "faction_ecology_selftest",
+      "action": "FactionEcologySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--faction-ecology-selftest",
+      "aliases": [],
+      "description": "Plan 25 faction ecology vertical slice: faction action board, E-P1 escalation chain, claimant witness, camp arrivals, muster path",
+      "headless_compatible": true,
+      "expected_summary_id": "faction_ecology_selftest",
       "timeout_seconds": 30
     },
     {
@@ -965,6 +987,20 @@
       "description": "Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification",
       "headless_compatible": true,
       "expected_summary_id": "shelter_operations_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_decor_selftest",
+      "action": "ShelterDecorSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--shelter-decor-selftest",
+      "aliases": [
+        "--shelter-interior-selftest",
+        "--memorial-wall-selftest"
+      ],
+      "description": "Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_decor_selftest",
       "timeout_seconds": 30
     },
     {

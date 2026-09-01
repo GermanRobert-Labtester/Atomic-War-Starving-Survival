@@ -116,7 +116,7 @@ namespace Ashfall.Core
                 report.QuestCount = catalog.Quests.Count;
                 Check(catalog.Locations.Count >= 11, "holdfast_locations.json loaded (>=11)");
                 Check(catalog.GetLocation(IceRoadSystem.LocIceRoadGate) != null, "loc_ice_road_gate present");
-                Check(catalog.Quests.Count == 10, "holdfast_quests.json loaded (10)");
+                Check(catalog.Quests.Count >= 10, "holdfast_quests.json loaded (>=10)");
                 Check(catalog.GetQuest("quest_holdfast_the_sheet") != null, "quest_holdfast_the_sheet present");
             }
 

@@ -39,7 +39,7 @@ survivors to feel like they make their own decisions.
    - Maintenance (2): repair_equipment (fixes degraded items), clean_shelter (morale +
      hygiene bonus).
    - Medical (2): treat_wounded (applies first aid to injured survivors), self_medicate
-     (takes medicine when sick — feeds existing 09A).
+     (takes medicine when sick — feeds Plan 112 disease content and Plan 09A response).
    - Food (2): cook_food (uses Plan 55 recipes), preserve_food (extends food shelf life).
    - Water (1): purify_water (uses Plan 55 water recipes).
    - Social (2): socialize (morale bonus for both survivors), resolve_conflict (reduces

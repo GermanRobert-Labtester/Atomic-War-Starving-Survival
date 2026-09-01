@@ -128,6 +128,54 @@
         "distress"
       ],
       "prose": "Hand-keyed Morse code sent at eight words per minute on the old 500 kHz maritime distress band. The message loops endlessly from an automated mechanical code wheel: 'ALL STATIONS CLOSE LOGS STOP PRIME POWER FAILING STOP GOD PRESERVE US STOP VAULT 07 OUT STOP SK'."
+    },
+    {
+      "id": "cipher_station_relay_count",
+      "station_nickname": "THE_RELAY_COUNT",
+      "transmission_frequency_khz": 14487.0,
+      "modulation_mode": "AM_CARRIER_VOICE",
+      "chime_interval_seconds": 90,
+      "timestamp_relative": "YEAR_03_MONTH_04_RECORDED",
+      "tags": [
+        "sigint",
+        "numbers_station",
+        "cipher",
+        "relay_bunker",
+        "radio"
+      ],
+      "prose": "A synthesized metallic cadence reciting five-digit coordinate pairs: '8-2-6... 9-0-1... DELTA-7... 4-4-1-9-2.' Transmitted from an automated cliffside repeater powered by an intact radioisotope thermoelectric generator."
+    },
+    {
+      "id": "cipher_station_winter_ledger",
+      "station_nickname": "WINTER_LEDGER",
+      "transmission_frequency_khz": 6890.0,
+      "modulation_mode": "USB_PHONETIC_TRIADS",
+      "chime_interval_seconds": 120,
+      "timestamp_relative": "YEAR_05_MONTH_01_RECORDED",
+      "tags": [
+        "sigint",
+        "numbers_station",
+        "logistics",
+        "sub_basement",
+        "shortwave"
+      ],
+      "prose": "A clipped bureaucratic recording reading quarterly cold-storage manifest batches: 'Sub-tier reserve check: sector nine, ledger volume four. Rations 400, filters 80, medical consignments sealed.' Requires quartermaster cipher sheet to derive coordinates."
+    },
+    {
+      "id": "cipher_station_last_rotation",
+      "station_nickname": "LAST_ROTATION",
+      "transmission_frequency_khz": 8930.0,
+      "modulation_mode": "MULTITONE_CADENCE",
+      "chime_interval_seconds": 180,
+      "timestamp_relative": "YEAR_08_MONTH_09_RECORDED",
+      "tags": [
+        "sigint",
+        "dead_hand",
+        "cadence",
+        "command_shelter",
+        "telemetry"
+      ],
+      "prose": "A low two-tone warble followed by an automated contingency prompt: 'Command cadre rotation terminal alert. All outposts acknowledge: Dead-drop shelter protocol active at waypoint November. Authenticate with microfilm index.'"
     }
   ]
 }

@@ -18,7 +18,7 @@
     {
       "id": "waystation_switchback",
       "name": "The Switchback Waystation",
-      "node_id": "loc_shrine_switchback_waystation",
+      "node_id": "loc_cut_radiation_zone_alpha",
       "region": "high_scarp",
       "keeper_name": "Deacon Vane",
       "specialty": "Cold-Weather Fuel & Thermal Liners",
@@ -32,7 +32,7 @@
     {
       "id": "waystation_span44",
       "name": "Span 44 Rail Waystation",
-      "node_id": "loc_railway_span_44_alpha",
+      "node_id": "loc_cut_arsenal_ruin",
       "region": "industrial_belt",
       "keeper_name": "Foreman Taggart",
       "specialty": "Railway Iron & Pneumatic Parts",
@@ -46,7 +46,7 @@
     {
       "id": "waystation_verity",
       "name": "Verity Motel Staging Post",
-      "node_id": "loc_motel_verity",
+      "node_id": "loc_cut_merchant_caravanserai",
       "region": "dead_suburbs",
       "keeper_name": "Mistress Corvo",
       "specialty": "Medical Supplies & Clean Water",
@@ -54,13 +54,13 @@
       "filter_health": 95.0,
       "defense_rating": 3,
       "services": ["trade", "staging", "rest", "intelligence"],
-      "stock_item_ids": ["medical_kit", "clean_water", "item_comm_codebook_alpha"],
+      "stock_item_ids": ["medical_kit", "clean_water", "scrap_metal"],
       "local_problem": "Deep well pump motor seized by fine sand."
     },
     {
       "id": "waystation_coast_lock",
       "name": "Lock Gate Four Maritime Staging",
-      "node_id": "loc_lock_gate_four",
+      "node_id": "loc_black_flotilla_outpost",
       "region": "deep_coast",
       "keeper_name": "Diver Renn",
       "specialty": "Saline Iodine & Marine Salvage",
@@ -74,7 +74,7 @@
     {
       "id": "waystation_grain_verge",
       "name": "Verge Silo Waystation",
-      "node_id": "loc_grain_silo",
+      "node_id": "loc_holdfast",
       "region": "ash_flats",
       "keeper_name": "Weigher Orlov",
       "specialty": "Preserved Grain & Honey Comb",

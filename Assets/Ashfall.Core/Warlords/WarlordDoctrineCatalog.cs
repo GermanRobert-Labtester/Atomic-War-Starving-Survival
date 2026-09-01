@@ -302,6 +302,67 @@ namespace Ashfall.Core.Warlords
                             report.Errors.Add("warlord doctrine '" + d.id + "' weights action '" + kv.Key + "' that is not eligible");
                     }
                 }
+                // Plan 10 remediation: every resource_priority token must
+                // resolve to a known item so the doctrine AI can actually
+                // score it. Reject orphans loudly (no silent skips).
+                if (d.resource_priority != null)
+                {
+                    for (int j = 0; j < d.resource_priority.Count; j++)
+                    {
+                        string rp = d.resource_priority[j];
+                        if (string.IsNullOrEmpty(rp)) continue;
+                        if (!itemIds.Contains(rp))
+                            report.Errors.Add("warlord doctrine '" + d.id + "' resource_priority '" + rp + "' not found in any item catalog");
+                    }
+                }
+            }
+
+            // Plan 10 remediation: validate faction-lore tribute_demands
+            // references too. Each non-empty tribute_demands list must
+            // resolve to a known item id when the canonical faction is the
+            // Warlord (the only player-facing traffic in the catalogue
+            // today). For other factions we report rather than reject to
+            // keep silent alias flavours; the report is informational.
+            if (factionIds.Count > 0)
+            {
+                string factionPath = files.Combine(dataDirectory, "faction_lore.json");
+                if (files.FileExists(factionPath))
+                {
+                    try
+                    {
+                        // Use LoadWrappedList — faction_lore.json is shaped as
+                        // { "items": [...] } and we want to drill into that
+                        // array. A naked Deserialize<List<...>> would fail
+                        // because the root is an object, not an array.
+                        var lore = CatalogLocator.LoadWrappedList<FactionTributeProbe>(files.ReadAllText(factionPath), SystemTextJsonSerializer.Options);
+                        if (lore != null)
+                        {
+                            for (int i = 0; i < lore.Count; i++)
+                            {
+                                var entry = lore[i];
+                                if (entry == null || entry.tribute_demands == null) continue;
+                                bool isCanonical = !string.IsNullOrEmpty(entry.faction_id)
+                                    && entry.faction_id == catalog.Warlord.faction_id;
+                                for (int j = 0; j < entry.tribute_demands.Count; j++)
+                                {
+                                    string td = entry.tribute_demands[j];
+                                    if (string.IsNullOrEmpty(td)) continue;
+                                    bool resolves = itemIds.Contains(td);
+                                    if (!resolves && isCanonical)
+                                        report.Errors.Add("faction '" + entry.faction_id + "' tribute_demands item '" + td + "' not found in any item catalog");
+                                    else if (!resolves)
+                                        report.AliasWarnings.Add("faction '" + entry.faction_id
+                                            + "' tribute_demands item '" + td
+                                            + "' is not present in any item catalog (non-blocking)");
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex_CATDIAG)
+                    {
+                        CatalogDiagnostics.Warn(factionPath, "FactionTributeProbe", ex_CATDIAG);
+                    }
+                }
             }
 
             // Alias conflicts are reported, never silently canonized.
@@ -400,6 +461,13 @@ namespace Ashfall.Core.Warlords
     public class WarlordFactionProbe
     {
         public string faction_id = string.Empty;
+    }
+
+    [Serializable]
+    public class FactionTributeProbe
+    {
+        public string faction_id = string.Empty;
+        public List<string> tribute_demands = new List<string>();
     }
 
     [Serializable]

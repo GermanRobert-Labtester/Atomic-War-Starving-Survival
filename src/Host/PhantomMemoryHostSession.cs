@@ -165,13 +165,22 @@ namespace AtomicWar.GodotApp
                     {
                         var t = entry.triggers[j];
                         if (t == null) continue;
-                        engine.RegisterRule(
-                            entry.background_id,
-                            t.item_category,
-                            t.motivation_chance,
-                            t.description,
-                            t.motivation_text,
-                            t.breakdown_text);
+                        engine.RegisterRuleDetailed(new PhantomTriggerRule
+                        {
+                            triggerId = !string.IsNullOrEmpty(t.trigger_id) ? t.trigger_id : $"rule_{entry.background_id}_{t.item_category}",
+                            itemCategory = t.item_category ?? string.Empty,
+                            itemId = t.item_id ?? string.Empty,
+                            motivationChance = t.motivation_chance,
+                            descriptionKey = t.description ?? string.Empty,
+                            motivationText = t.motivation_text ?? string.Empty,
+                            breakdownText = t.breakdown_text ?? string.Empty,
+                            affinityTrait = t.affinity_trait ?? string.Empty,
+                            loreOnly = t.lore_only,
+                            moralePayload = t.morale_payload,
+                            guiltPayload = t.guilt_payload,
+                            gatingFlag = t.gating_flag ?? string.Empty,
+                            repeatable = t.repeatable
+                        }, entry.background_id);
                     }
                 }
             }

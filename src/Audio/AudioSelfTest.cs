@@ -64,8 +64,10 @@ namespace AtomicWar.GodotApp.Audio
             // Key cues exist
             string[] requiredCues = {
                 AudioCueCatalog.UiClick, AudioCueCatalog.UiConfirm, AudioCueCatalog.UiWarning,
-                AudioCueCatalog.RadAlertAcute, AudioCueCatalog.WeatherAlert,
-                AudioCueCatalog.AmbBunker, AudioCueCatalog.MusicMenu,
+                AudioCueCatalog.RadAlertAcute, AudioCueCatalog.RadAlertChronic,
+                AudioCueCatalog.WeatherAlert, AudioCueCatalog.WeatherEmpStorm,
+                AudioCueCatalog.WeatherGlassStorm, AudioCueCatalog.WeatherCorrosivePrecipitation,
+                AudioCueCatalog.AmbBunker, AudioCueCatalog.AmbSurfaceStorm, AudioCueCatalog.MusicMenu,
                 AudioCueCatalog.RadioStatic, AudioCueCatalog.ShelterDoorOpen,
                 AudioCueCatalog.ActionItemPickup, AudioCueCatalog.DangerAlarmKlaxon,
                 AudioCueCatalog.SaveSuccess, AudioCueCatalog.DayTransition,
@@ -112,6 +114,7 @@ namespace AtomicWar.GodotApp.Audio
                 "res://assets/audio/ui/ui_confirm.wav",
                 "res://assets/audio/ui/ui_warning.wav",
                 "res://assets/audio/sfx/sfx_radiation_alarm.mp3",
+                "res://assets/audio/sfx/sfx_radiation_chronic_alarm.wav",
                 "res://assets/audio/sfx/sfx_alarm_klaxon.mp3",
                 "res://assets/audio/sfx/geiger.wav",
                 "res://assets/audio/ambience/bunker_ambience.ogg",
@@ -135,6 +138,9 @@ namespace AtomicWar.GodotApp.Audio
                 "res://assets/audio/sfx/sfx_fallout_storm_approach.mp3",
                 "res://assets/audio/sfx/sfx_weather_black_rain.wav",
                 "res://assets/audio/sfx/sfx_weather_blizzard.wav",
+                "res://assets/audio/sfx/sfx_weather_emp_storm.wav",
+                "res://assets/audio/sfx/sfx_weather_glass_storm.wav",
+                "res://assets/audio/sfx/sfx_weather_corrosive_precipitation.wav",
                 "res://assets/audio/sfx/sfx_geiger_burst.mp3",
                 "res://assets/audio/sfx/sfx_heartbeat_slow.mp3",
                 "res://assets/audio/sfx/sfx_survivor_death.wav",
@@ -142,6 +148,7 @@ namespace AtomicWar.GodotApp.Audio
                 "res://assets/audio/sfx/sfx_med_quarantine_clear.wav",
                 "res://assets/audio/sfx/sfx_alarm_klaxon.mp3",
                 "res://assets/audio/sfx/sfx_danger_alarm_klaxon.wav",
+                "res://assets/audio/ambience/amb_surface_storm.wav",
             };
             foreach (string resPath in keyAssets)
             {
@@ -275,7 +282,12 @@ namespace AtomicWar.GodotApp.Audio
             foreach (string cueId in medicalCues)
                 Check($"Medical cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
-            string[] weatherCues = { AudioCueCatalog.WeatherAlert, AudioCueCatalog.WeatherFalloutStorm, AudioCueCatalog.WeatherBlackRain, AudioCueCatalog.WeatherBlizzard };
+            string[] weatherCues = {
+                AudioCueCatalog.WeatherAlert, AudioCueCatalog.WeatherFalloutStorm,
+                AudioCueCatalog.WeatherBlackRain, AudioCueCatalog.WeatherBlizzard,
+                AudioCueCatalog.WeatherEmpStorm, AudioCueCatalog.WeatherGlassStorm,
+                AudioCueCatalog.WeatherCorrosivePrecipitation,
+            };
             foreach (string cueId in weatherCues)
                 Check($"Weather cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);
 
@@ -337,6 +349,21 @@ namespace AtomicWar.GodotApp.Audio
             Check("Replacement weather system remains live",
                 emittedCues.Count == 3 && emittedCues[2] == AudioCueCatalog.WeatherBlackRain,
                 ref pass, ref fail);
+
+            var specialistWeatherCues = new List<string>();
+            var specialistWeatherBridge = new AudioEventBridge(specialistWeatherCues.Add);
+            var specialistWeather = new WeatherSystem();
+            specialistWeatherBridge.BindWeather(specialistWeather);
+            specialistWeather.ForceWeather(WeatherKind.EMPStorm);
+            specialistWeather.ForceWeather(WeatherKind.GlassStorm);
+            specialistWeather.ForceWeather(WeatherKind.AcidSnow);
+            Check("Bridge maps EMP, glass, and corrosive weather to dedicated cues",
+                specialistWeatherCues.Count == 3
+                && specialistWeatherCues[0] == AudioCueCatalog.WeatherEmpStorm
+                && specialistWeatherCues[1] == AudioCueCatalog.WeatherGlassStorm
+                && specialistWeatherCues[2] == AudioCueCatalog.WeatherCorrosivePrecipitation,
+                ref pass, ref fail);
+            specialistWeatherBridge.Dispose();
 
             var radiation = new RadiationSystem();
             var survivor = new SurvivorRadState { Id = "audio_selftest_survivor" };
@@ -454,6 +481,31 @@ namespace AtomicWar.GodotApp.Audio
                 shelterStopped.Contains(AudioCueCatalog.ShelterGenerator)
                 && shelterStopped.Contains(AudioCueCatalog.ShelterVentilation),
                 ref pass, ref fail);
+
+            // Surface ambience is explicitly activated, then follows weather
+            // without treating an expedition as player-location evidence.
+            var surfaceEmitted = new List<string>();
+            var surfaceStopped = new List<string>();
+            var surfaceAudio = new SurfaceAmbienceController(surfaceEmitted.Add, surfaceStopped.Add);
+            var surfaceWeather = new WeatherSystem();
+            surfaceAudio.Subscribe(surfaceWeather);
+            surfaceStopped.Clear();
+            surfaceAudio.Start();
+            surfaceWeather.ForceWeather(WeatherKind.GlassStorm);
+            surfaceWeather.ForceWeather(WeatherKind.Clear);
+            Check("Surface ambience selects normal and storm loops from explicit mode plus weather",
+                surfaceEmitted.Count == 3
+                && surfaceEmitted[0] == AudioCueCatalog.AmbSurface
+                && surfaceEmitted[1] == AudioCueCatalog.AmbSurfaceStorm
+                && surfaceEmitted[2] == AudioCueCatalog.AmbSurface
+                && surfaceStopped.Contains(AudioCueCatalog.AmbSurface)
+                && surfaceStopped.Contains(AudioCueCatalog.AmbSurfaceStorm),
+                ref pass, ref fail);
+            surfaceAudio.Dispose();
+            int surfaceCountAfterDispose = surfaceEmitted.Count;
+            surfaceWeather.ForceWeather(WeatherKind.EMPStorm);
+            Check("Disposing surface ambience detaches the weather handler",
+                surfaceEmitted.Count == surfaceCountAfterDispose, ref pass, ref fail);
 
             // ── Summary ─────────────────────────────────────────
             GD.Print($"[AudioSelfTest] --- SUMMARY ---");

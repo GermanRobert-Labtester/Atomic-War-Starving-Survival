@@ -1,0 +1,785 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_iron_calculus_01",
+      "display_name": "Iron Calculus: The Triage Edict",
+      "type": "narrative_chain",
+      "briefing": "The infirmary smells of stale blood and iodine. Antibiotic stocks have plummeted by 80%. Chief Medical Officer Vance submits a cold proposal: cut off all medication to dwellers over sixty, reallocating every milligram to the youth. A death sentence wrapped in a survival metric.",
+      "prereq_quest_id": "",
+      "min_day": 10,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The sterile hum of the mainframe provides no comfort. A red light blinks on your terminal, demanding a verdict that will echo through the bunker's halls."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_01_ruthless",
+          "text": "Enact the Triage Edict. Secure a +15% boost to youth survival rates. The old have had their time.",
+          "set_flag": "flag_iron_calculus_01_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_01_empathy",
+          "text": "Reject the proposal. Dilute the medicine, risk the young, but hold the line on our humanity.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_02",
+      "display_name": "Iron Calculus: The Caloric Threshold",
+      "type": "narrative_chain",
+      "briefing": "Hydroponics yield has dropped into the red zone. A faction of engineers proposes the 'Maintenance Line'\u2014reducing daily rations for the elderly and injured to 400 calories. It is slow starvation, framed as a necessary efficiency to keep the workers fed and the generators humming.",
+      "prereq_quest_id": "quest_iron_calculus_01",
+      "min_day": 25,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Stomach acid burns in your throat as the supply graphs trend downward. The faces of the vulnerable seem to stare through the pixelated screen."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_02_ruthless",
+          "text": "Implement the Maintenance Line. Ensure worker stamina at the cost of the weak.",
+          "set_flag": "flag_iron_calculus_02_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_02_empathy",
+          "text": "Enforce universal rationing. Everyone goes hungry, risking a 20% drop in overall productivity.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_03",
+      "display_name": "Iron Calculus: The Child Labor Shift",
+      "type": "narrative_chain",
+      "briefing": "The primary ventilation shafts are choked with toxic soot buildup. The automated scrubbers are dead. The shafts are too narrow for adults. The Maintenance Chief slides a roster of children across your desk, arguing they are small enough to crawl through the vents and chip away the blockage.",
+      "prereq_quest_id": "quest_iron_calculus_02",
+      "min_day": 40,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "You can hear the distant, wheezing gasp of the failing air scrubbers. A thin layer of black dust is already settling on your terminal keyboard."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_03_ruthless",
+          "text": "Draft the children. We gain +30% air quality and prevent suffocation, despite the radiation risk.",
+          "set_flag": "flag_iron_calculus_03_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_03_empathy",
+          "text": "Ban child labor. Order adults to dismantle the bulkheads, sacrificing 500 hours of critical labor.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_04",
+      "display_name": "Iron Calculus: The Overtime Mandate",
+      "type": "narrative_chain",
+      "briefing": "The bunker's structural integrity is failing faster than we can patch it. To meet repair quotas, the administration suggests a grueling 16-hour mandatory shift. The fatigue metrics predict a spike in industrial accidents, lost limbs, and shattered minds.",
+      "prereq_quest_id": "quest_iron_calculus_03",
+      "min_day": 55,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The rhythmic thud of distant machinery feels like a heavy heartbeat. The workers are already pale and trembling; this order will break them."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_04_ruthless",
+          "text": "Mandate the 16-hour shifts. Double the repair output, regardless of the blood spilt in the factories.",
+          "set_flag": "flag_iron_calculus_04_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_04_empathy",
+          "text": "Cap shifts at 12 hours. Accept the structural decay and risk a partial sector collapse.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_05",
+      "display_name": "Iron Calculus: The Grief Tax",
+      "type": "narrative_chain",
+      "briefing": "Mourning has become a logistical nightmare. Entire sectors halt production to grieve the rising body count. A chilling new directive crosses your desk: dock a day's rations from anyone found weeping or pausing work to mourn. Time is calories, and we are bankrupt.",
+      "prereq_quest_id": "quest_iron_calculus_04",
+      "min_day": 70,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A muffled sob echoes from the corridor outside your office. It is a sound of pure despair, and it is costing you precious operational uptime."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_05_ruthless",
+          "text": "Institute the Grief Tax. Reclaim lost man-hours and stamp out emotional inefficiency.",
+          "set_flag": "flag_iron_calculus_05_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_05_empathy",
+          "text": "Permit mourning periods. Absorb the 15% production loss to let them bury their dead.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_06",
+      "display_name": "Iron Calculus: The Dissident Purge",
+      "type": "narrative_chain",
+      "briefing": "Whispers of rebellion are growing in Sector 4. They question the rationing, the mandates, the morality of your reign. Security suggests a silent solution: remotely seal the bulkheads to Sector 4 and cut their heating. In three days, the whispers will freeze.",
+      "prereq_quest_id": "quest_iron_calculus_05",
+      "min_day": 85,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Frost begins to creep at the edges of the Sector 4 structural schematic. Your finger hovers over the thermal control override."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_06_ruthless",
+          "text": "Seal the sector and cut the heat. Eliminate the rebellion and save critical thermal energy.",
+          "set_flag": "flag_iron_calculus_06_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_06_empathy",
+          "text": "Unseal the doors and face the mob. Spend precious security resources to negotiate with the angry and starving.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_07",
+      "display_name": "Iron Calculus: The Corpse Starch",
+      "type": "narrative_chain",
+      "briefing": "The hydroponics bay is a graveyard of withered crops. The soil is completely stripped of nitrogen. Science Division presents a grotesque breakthrough: the 'Recycling Protocol.' Processing the deceased into nutrient-dense fertilizer will revive the crops and guarantee a bountiful harvest.",
+      "prereq_quest_id": "quest_iron_calculus_06",
+      "min_day": 100,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The sterile scent of chemical cleaners fails to mask the faint, sickly-sweet odor of decay lingering in the ventilation."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_07_ruthless",
+          "text": "Authorize the Recycling Protocol. Turn our dead into a +40% yield in food production.",
+          "set_flag": "flag_iron_calculus_07_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_07_empathy",
+          "text": "Mandate proper burials. Watch the crops wither and face the looming famine head-on.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_08",
+      "display_name": "Iron Calculus: The Informant Network",
+      "type": "narrative_chain",
+      "briefing": "Hoarding is rampant, and trust is eroding. Internal Security proposes the 'Vigilance Program.' We will offer bonus rations to any dweller who reports a neighbor for subversion or theft. It will turn the bunker into a den of paranoid spies.",
+      "prereq_quest_id": "quest_iron_calculus_07",
+      "min_day": 115,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Shadows seem to lengthen in the CCTV feeds. Every whispered conversation looks like a conspiracy. You need eyes everywhere."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_08_ruthless",
+          "text": "Establish the Vigilance Program. Root out the hoarders and gain absolute surveillance control.",
+          "set_flag": "flag_iron_calculus_08_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_08_empathy",
+          "text": "Reject the network. Blind your security forces to preserve what little trust remains between neighbors.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_09",
+      "display_name": "Iron Calculus: The Empathy Quarantine",
+      "type": "narrative_chain",
+      "briefing": "Compassion is becoming a liability. Dwellers are sharing their meager rations with the sick, compromising their own work output. The Chief Sociologist recommends a 'Quarantine of Sentiment'\u2014isolating those who exhibit extreme empathy before they drag the productive class down.",
+      "prereq_quest_id": "quest_iron_calculus_08",
+      "min_day": 130,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The clinical white light of your monitor highlights the stark reality: kindness is statistically killing your workforce."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_09_ruthless",
+          "text": "Enact the Quarantine. Excise the empathetic elements to maintain ruthless efficiency.",
+          "set_flag": "flag_iron_calculus_09_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_09_empathy",
+          "text": "Condemn the Quarantine. Allow the dangerous, beautiful flaw of human compassion to spread.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_10",
+      "display_name": "Iron Calculus: The Forced Extraction",
+      "type": "narrative_chain",
+      "briefing": "A heavily armed surface caravan is willing to trade a cache of pristine water filters, but they only deal in precious metals. We have none\u2014except for the gold fillings in the mouths of our dwellers. Security is standing by with pliers and extraction orders.",
+      "prereq_quest_id": "quest_iron_calculus_09",
+      "min_day": 145,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The metallic tang of fear seems to seep through the concrete. The caravan awaits your signal on the encrypted radio channel."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_10_ruthless",
+          "text": "Order the forced extractions. Secure the filters and guarantee clean water for the entire bunker.",
+          "set_flag": "flag_iron_calculus_10_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_10_empathy",
+          "text": "Cancel the trade. Spare them the agony and condemn the bunker to drinking irradiated sludge.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_11",
+      "display_name": "Iron Calculus: The Oxygen Rationing",
+      "type": "narrative_chain",
+      "briefing": "Generator Three has blown a gasket. We are bleeding power. Engineering has a brutal fix: cut oxygen circulation to the sleeping quarters of the lower castes during the night cycle. They will wake up gasping and brain-fogged, but it will save the grid.",
+      "prereq_quest_id": "quest_iron_calculus_10",
+      "min_day": 160,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The rhythmic hum of the oxygen pumps is a lullaby you are about to silence. The red power gauges demand a sacrifice."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_11_ruthless",
+          "text": "Ration the oxygen. Prevent a total blackout, even if they suffer chronic hypoxia.",
+          "set_flag": "flag_iron_calculus_11_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_11_empathy",
+          "text": "Maintain life support. Push the failing generators past the redline and risk a catastrophic meltdown.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_12",
+      "display_name": "Iron Calculus: The Asset Liquidation",
+      "type": "narrative_chain",
+      "briefing": "A slaver cartel has arrived at the blast doors. They possess a military-grade localized atmospheric scrubber. Their price is exactly one healthy, prime-age adult dweller. The paperwork frames it as an 'Asset Liquidation.' It is human trafficking for survival.",
+      "prereq_quest_id": "quest_iron_calculus_11",
+      "min_day": 175,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The slavers' envoy taps his armored boot against the blast door. The air inside the bunker is growing toxic by the hour."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_12_ruthless",
+          "text": "Liquidate the asset. Trade one life to secure clean air for a thousand.",
+          "set_flag": "flag_iron_calculus_12_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_12_empathy",
+          "text": "Reject the slavers. Close the blast doors and let the toxins slowly poison us all.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_13",
+      "display_name": "Iron Calculus: The Breeder Protocol",
+      "type": "narrative_chain",
+      "briefing": "The population demographic is spiraling towards extinction. Love and choice have failed us. The Genetic Directorate proposes mandating reproduction based on optimal trait yields, dissolving existing marriages and forcing strangers to breed for the future.",
+      "prereq_quest_id": "quest_iron_calculus_12",
+      "min_day": 190,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Sterile genetic charts replace the faces of your people. You are reducing humanity to livestock pedigrees."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_13_ruthless",
+          "text": "Enforce the Breeder Protocol. Guarantee a robust next generation, destroying the concept of family.",
+          "set_flag": "flag_iron_calculus_13_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_13_empathy",
+          "text": "Protect free will and love. Face the statistical certainty of eventual population collapse.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_14",
+      "display_name": "Iron Calculus: The Loyalty Test",
+      "type": "narrative_chain",
+      "briefing": "Paranoia is your only shield. To ensure absolute compliance, you are presented with a psychological weapon: require parents in administrative roles to formally report their children for minor infractions. Those who refuse will be stripped of rank and rations.",
+      "prereq_quest_id": "quest_iron_calculus_13",
+      "min_day": 205,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The silence in your office is deafening. A stack of blank confession forms sits perfectly aligned on your desk."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_14_ruthless",
+          "text": "Administer the Loyalty Test. Break their familial bonds to forge unbreakable loyalty to the State.",
+          "set_flag": "flag_iron_calculus_14_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_14_empathy",
+          "text": "Shred the forms. Allow them their family secrets and accept the lingering threat of treason.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_iron_calculus_15",
+      "display_name": "Iron Calculus: The Absolute State",
+      "type": "narrative_chain",
+      "briefing": "The final equation. The Bunker Council is too slow, too weak, too sentimental. The military wing offers you the keys to a total coup. Dissolve the council, eliminate the concept of a vote, and become the undisputed absolute dictator. Humanity is obsolete; only the State remains.",
+      "prereq_quest_id": "quest_iron_calculus_14",
+      "min_day": 220,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hum of the mainframe sounds like a choir of steel. The power to rule without question is a single keystroke away."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_iron_calculus_15_ruthless",
+          "text": "Seize total control. Become the monster that ensures their survival. Erase democracy.",
+          "set_flag": "flag_iron_calculus_15_ruthless"
+        },
+        {
+          "id": "quest_iron_calculus_15_empathy",
+          "text": "Step down from the precipice. Share the power and accept the chaotic, flawed nature of freedom.",
+          "set_flag": "flag_iron_calculus_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_01",
+      "display_name": "Genesis Mandate: The Shared Burden",
+      "type": "narrative_chain",
+      "briefing": "The lower decks are rioting over starvation rations. Meanwhile, the administrative tier dines on preserved surplus. The only way to defuse the tension and bridge the divide is to voluntarily slash the leadership's caloric intake to match the workers.",
+      "prereq_quest_id": "",
+      "min_day": 12,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The smell of rich synthetic meat from the executive mess hall turns your stomach when you think of the gaunt faces below. Your conscience demands a sacrifice."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_01_empathy",
+          "text": "Slash administrative rations. We starve as one, bleeding authority to buy their trust.",
+          "set_flag": "flag_genesis_mandate_01_good"
+        },
+        {
+          "id": "quest_genesis_mandate_01_ruthless",
+          "text": "Maintain executive privileges. A starving leadership cannot make the hard choices.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_02",
+      "display_name": "Genesis Mandate: The Orphan's Toy",
+      "type": "narrative_chain",
+      "briefing": "Scavengers have returned with a rare cache of high-grade plasteel. The Armory demands it for kinetic plating to defend against raiders. But the nursery, filled with children who have never seen the sun, has requested the metal to build durable, educational toys.",
+      "prereq_quest_id": "quest_genesis_mandate_01",
+      "min_day": 27,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "You weigh a chunk of cold, raw plasteel in your hand. It could be a shield, or it could be a small child's first moment of joy."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_02_empathy",
+          "text": "Forge the toys. Dedicate precious resources to nurturing their broken spirits.",
+          "set_flag": "flag_genesis_mandate_02_good"
+        },
+        {
+          "id": "quest_genesis_mandate_02_ruthless",
+          "text": "Forge the armor. Joy is a luxury we cannot defend against bullets.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_03",
+      "display_name": "Genesis Mandate: The Memorial Wall",
+      "type": "narrative_chain",
+      "briefing": "A creeping depression is paralyzing the workforce. We have lost so many to the darkness. An artist requests a prime structural wall in the atrium and hundreds of man-hours to painstakingly carve the names of the dead. It is a massive waste of labor, but a vital act of remembrance.",
+      "prereq_quest_id": "quest_genesis_mandate_02",
+      "min_day": 42,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The cold, blank steel of the atrium wall seems to mock the forgotten dead. The chisel and hammer lie waiting."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_03_empathy",
+          "text": "Commission the Memorial. Sacrifice a week of labor quotas to honor those we lost.",
+          "set_flag": "flag_genesis_mandate_03_good"
+        },
+        {
+          "id": "quest_genesis_mandate_03_ruthless",
+          "text": "Deny the request. The dead don't need a wall, and the living need to work.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_04",
+      "display_name": "Genesis Mandate: The Day of Rest",
+      "type": "narrative_chain",
+      "briefing": "The dwellers are pushed beyond their physical and mental breaking points. The injury rate has tripled. A wild proposal suggests instituting a mandatory 'Day of Rest' once a week. It will guarantee a severe deficit in our survival quotas, but it might just save their sanity.",
+      "prereq_quest_id": "quest_genesis_mandate_03",
+      "min_day": 57,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "A worker collapses on the CCTV feed, dropping a heavy crate. The exhaustion is a plague you can cure with a single word."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_04_empathy",
+          "text": "Institute the Day of Rest. Accept the resource deficit to let them breathe and heal.",
+          "set_flag": "flag_genesis_mandate_04_good"
+        },
+        {
+          "id": "quest_genesis_mandate_04_ruthless",
+          "text": "Enforce the quotas. We cannot afford the luxury of sleep when survival is on the line.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_05",
+      "display_name": "Genesis Mandate: The Refugee Sanctuary",
+      "type": "narrative_chain",
+      "briefing": "Sensors detect a desperate band of irradiated refugees pounding on the outer blast doors. They are wounded, sick, and terrified. Opening the airlock will strain our water purifier to the breaking point and risk a disease outbreak.",
+      "prereq_quest_id": "quest_genesis_mandate_04",
+      "min_day": 72,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The muffled thuds of desperate fists against reinforced steel echo through the command center. They are begging for their lives."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_05_empathy",
+          "text": "Open the blast doors. Risk our delicate ecosystem to offer them sanctuary.",
+          "set_flag": "flag_genesis_mandate_05_good"
+        },
+        {
+          "id": "quest_genesis_mandate_05_ruthless",
+          "text": "Keep the doors sealed. Our people come first; the wasteland claims the rest.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_06",
+      "display_name": "Genesis Mandate: The Honest Broadcast",
+      "type": "narrative_chain",
+      "briefing": "The primary reactor is destabilizing. The engineers need three days to patch it, during which power will be erratic and dangerous. Security demands we lie and blame a minor software glitch to prevent mass panic. Truth might cause a riot; a lie will breed paranoia.",
+      "prereq_quest_id": "quest_genesis_mandate_05",
+      "min_day": 87,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The PA system microphone hums with static. You must choose between the comfort of deception and the raw terror of the truth."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_06_empathy",
+          "text": "Broadcast the unvarnished truth. Trust the dwellers to face the darkness with courage.",
+          "set_flag": "flag_genesis_mandate_06_good"
+        },
+        {
+          "id": "quest_genesis_mandate_06_ruthless",
+          "text": "Broadcast the lie. Suppress the truth to keep the herd calm and manageable.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_07",
+      "display_name": "Genesis Mandate: The Medicine Share",
+      "type": "narrative_chain",
+      "briefing": "A static-laced transmission from a rival, hostile shelter: their children are dying of a fungal infection. They are begging for a share of our broad-spectrum antibiotics. We barely have enough for our own winter season. Sharing could forge an unprecedented alliance, or leave us vulnerable.",
+      "prereq_quest_id": "quest_genesis_mandate_06",
+      "min_day": 102,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The radio receiver crackles with the desperate pleas of a supposed enemy. The medicine vials feel heavy in your hands."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_07_empathy",
+          "text": "Dispatch the antibiotics. Bleed our own medical reserves to sow the seeds of peace.",
+          "set_flag": "flag_genesis_mandate_07_good"
+        },
+        {
+          "id": "quest_genesis_mandate_07_ruthless",
+          "text": "Ignore the transmission. Hoard the medicine; their tragedy is our strategic advantage.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_08",
+      "display_name": "Genesis Mandate: The Elder Council",
+      "type": "narrative_chain",
+      "briefing": "The elderly are increasingly viewed as a drain on resources, marginalized and ignored. A faction of youth leaders wants them quarantined. Instead, you could elevate them, forming an 'Elder Council' with real governing power, betting that their pre-war wisdom outweighs their physical frailty.",
+      "prereq_quest_id": "quest_genesis_mandate_07",
+      "min_day": 117,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The lined, weary faces of the elders hold the only memories of a world before the ash. Their voices have been silenced for too long."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_08_empathy",
+          "text": "Establish the Elder Council. Cede executive power to embrace their invaluable wisdom.",
+          "set_flag": "flag_genesis_mandate_08_good"
+        },
+        {
+          "id": "quest_genesis_mandate_08_ruthless",
+          "text": "Dismiss the elders. Focus on the strong and the capable; history is dead.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_09",
+      "display_name": "Genesis Mandate: The Art Reclamation",
+      "type": "narrative_chain",
+      "briefing": "A scavenging team uncovered a sealed vault of pre-war books, paintings, and classical music drives. The Engineering guild demands the paper and canvas be burned for emergency boiler fuel. Saving them means diverting a massive amount of energy to climate-control a preservation archive.",
+      "prereq_quest_id": "quest_genesis_mandate_08",
+      "min_day": 132,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The scent of old paper and dust is intoxicating. You are holding a piece of Shakespeare, and they want you to throw it in the furnace."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_09_empathy",
+          "text": "Build the Archive. Burn precious generator fuel to preserve the soul of humanity.",
+          "set_flag": "flag_genesis_mandate_09_good"
+        },
+        {
+          "id": "quest_genesis_mandate_09_ruthless",
+          "text": "Burn the books. Warmth and power trump dead words and old paint.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_10",
+      "display_name": "Genesis Mandate: The Forgiveness Act",
+      "type": "narrative_chain",
+      "briefing": "A desperate father was caught stealing a high-yield ration block to feed his starving daughter. By the Book of Laws, the penalty is immediate exile\u2014a death sentence. You have the unprecedented power to pardon him, risking a collapse in discipline to show profound mercy.",
+      "prereq_quest_id": "quest_genesis_mandate_09",
+      "min_day": 147,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The thief kneels before your desk, trembling not for his own life, but for the child he will leave behind."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_10_empathy",
+          "text": "Issue the Pardon. Shatter the absolute rule of law to show that mercy still exists.",
+          "set_flag": "flag_genesis_mandate_10_good"
+        },
+        {
+          "id": "quest_genesis_mandate_10_ruthless",
+          "text": "Enforce the Exile. Make an example of him; law and order must remain supreme.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_11",
+      "display_name": "Genesis Mandate: The Surface Garden",
+      "type": "narrative_chain",
+      "briefing": "A crazy botanist wants to risk building a reinforced glass greenhouse on the irradiated surface. It requires sending our best builders into the deadly fallout zone. If it works, we grow actual, sun-fed vegetables. If it fails, we lose our brightest minds.",
+      "prereq_quest_id": "quest_genesis_mandate_10",
+      "min_day": 162,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The blueprints show a dome of fragile glass against a sky of poisoned ash. It is a beautiful, suicidal dream."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_11_empathy",
+          "text": "Construct the Surface Garden. Risk our best people for a genuine symbol of hope.",
+          "set_flag": "flag_genesis_mandate_11_good"
+        },
+        {
+          "id": "quest_genesis_mandate_11_ruthless",
+          "text": "Veto the Garden. It is a foolish gamble; keep our workers safe underground.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_12",
+      "display_name": "Genesis Mandate: The Volunteer Risk",
+      "type": "narrative_chain",
+      "briefing": "A critical cooling pipe has burst in a highly radioactive sub-level. Someone must go in and manually seal it. It is a guaranteed lethal dose. You could order a low-tier maintenance worker to their death, or you, the Overseer, could don the suit and lead by example.",
+      "prereq_quest_id": "quest_genesis_mandate_11",
+      "min_day": 177,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The hazard suit hangs in the locker, heavy with the promise of a slow, agonizing death. The bunker needs a leader, but it also needs a savior."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_12_empathy",
+          "text": "Suit up and seal the pipe. Sacrifice your own health, proving that leadership means putting yourself first in the fire.",
+          "set_flag": "flag_genesis_mandate_12_good"
+        },
+        {
+          "id": "quest_genesis_mandate_12_ruthless",
+          "text": "Order the maintenance worker. A leader's life is too valuable to throw away on plumbing.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_13",
+      "display_name": "Genesis Mandate: The Democratic Vote",
+      "type": "narrative_chain",
+      "briefing": "We have unearthed a massive, untapped geothermal vent. It could power a new hydroponics bay or a new automated defense grid. You hold the absolute authority to decide. Or, you could surrender that power, organizing the bunker's first-ever democratic vote.",
+      "prereq_quest_id": "quest_genesis_mandate_12",
+      "min_day": 192,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The ballot boxes are dusty, relics of a forgotten era. Handing over this decision means accepting you might lose control."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_13_empathy",
+          "text": "Hold the Democratic Vote. Cede your absolute authority and let the people forge their own destiny.",
+          "set_flag": "flag_genesis_mandate_13_good"
+        },
+        {
+          "id": "quest_genesis_mandate_13_ruthless",
+          "text": "Make the executive decision. The mob is too ignorant to make critical survival choices.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_14",
+      "display_name": "Genesis Mandate: The Mutual Defense",
+      "type": "narrative_chain",
+      "briefing": "The rival shelter that we previously aided is under a massive raider siege. They are begging for military support. Sending our elite guards will leave our own blast doors dangerously vulnerable, but staying behind condemns our new allies to slaughter.",
+      "prereq_quest_id": "quest_genesis_mandate_13",
+      "min_day": 207,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The distress signal is a frantic loop of gunfire and screams. You promised them a new dawn; now you must bleed for it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_14_empathy",
+          "text": "Deploy the elite guards. Risk our own home to honor the fragile alliance we built.",
+          "set_flag": "flag_genesis_mandate_14_good"
+        },
+        {
+          "id": "quest_genesis_mandate_14_ruthless",
+          "text": "Recall the guards. Our walls must hold; their war is not our problem.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    },
+    {
+      "id": "quest_genesis_mandate_15",
+      "display_name": "Genesis Mandate: The Century Seed",
+      "type": "narrative_chain",
+      "briefing": "A scavenger died bringing back a small, lead-lined box. Inside is a viable, pre-war oak seed. It is dense with uncontaminated calories, enough to save a starving family. Or, we can take the ultimate leap of faith: plant it on the surface, trusting that one day, a forest will grow from the ash.",
+      "prereq_quest_id": "quest_genesis_mandate_14",
+      "min_day": 222,
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "The tiny acorn rests in the palm of your hand. It is the weight of a hundred years, a promise to a generation you will never meet."
+        }
+      ],
+      "choices": [
+        {
+          "id": "quest_genesis_mandate_15_empathy",
+          "text": "Plant the Century Seed. Starve today so that our grandchildren might walk under the shade of a tree.",
+          "set_flag": "flag_genesis_mandate_15_good"
+        },
+        {
+          "id": "quest_genesis_mandate_15_ruthless",
+          "text": "Consume the seed. Survival today is the only metric that matters; the future is a ghost.",
+          "set_flag": "flag_genesis_mandate_aborted"
+        }
+      ]
+    }
+  ]
+}

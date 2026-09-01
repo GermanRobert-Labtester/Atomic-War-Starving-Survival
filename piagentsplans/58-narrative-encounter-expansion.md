@@ -52,7 +52,7 @@ The expansion file has 29, but the base catalog is nearly empty.
      faction demanding a "tax" on scavenged goods.
    - Environmental (2): a structurally unsound building, a contaminated water source.
    - Medical (2): a field clinic with dying patients, a stash of expired medicine
-     (feeds existing 09A).
+     (feeds Plan 112 disease content and Plan 09A response).
    - Scavenging (2): a locked supply room, a vehicle with fuel but no keys.
    - Rescue (2): a trapped survivor under rubble, a drowning person in a frozen river
      (feeds Plan 50/52).

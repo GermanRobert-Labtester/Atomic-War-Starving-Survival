@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "collection_id": "faction_territory_catalog",
+  "territories": [
+    {
+      "id": "territory_the_office",
+      "faction": "faction_the_office",
+      "display_name": "Industrial Rail Corridor & Weighbridge Network",
+      "classification": "territorial",
+      "territory_scale": "major",
+      "primary_resource_interest": "rail_freight_and_hardware",
+      "controlled_nodes": [
+        "loc_cut_arsenal_ruin"
+      ],
+      "control_points": [
+        "loc_settlement_nine_rails",
+        "loc_weighbridge"
+      ],
+      "contested_with": [
+        "faction_the_tally",
+        "faction_scavenger_guild"
+      ],
+      "control_strength": 85,
+      "trade_tax": 0.08,
+      "travel_safety": 0.85,
+      "shift_trigger": "flag_war_requisition_refused",
+      "description": "The administrative and logistics corridor spanning the industrial rail spurs, weighbridges, and freight marshalling yards."
+    },
+    {
+      "id": "territory_the_cutters",
+      "faction": "faction_the_cutters",
+      "display_name": "Tidal Estuary Salt Evaporation Basin",
+      "classification": "territorial",
+      "territory_scale": "medium",
+      "primary_resource_interest": "salt_and_brine_minerals",
+      "controlled_nodes": [
+        "loc_cut_radiation_zone_alpha"
+      ],
+      "control_points": [
+        "loc_settlement_brine_pans",
+        "loc_the_shallows_market"
+      ],
+      "contested_with": [
+        "faction_undertow",
+        "faction_black_flotilla"
+      ],
+      "control_strength": 70,
+      "trade_tax": 0.05,
+      "travel_safety": 0.75,
+      "shift_trigger": "flag_escalation_bitter_water",
+      "description": "The sprawling tidal brine pans and boiling flats that provide the region with essential salt and preserving minerals."
+    },
+    {
+      "id": "territory_black_flotilla",
+      "faction": "faction_black_flotilla",
+      "display_name": "Coastal Lighthouse Bluff & Salvage Docks",
+      "classification": "mixed",
+      "territory_scale": "medium",
+      "primary_resource_interest": "marine_salvage_and_optics",
+      "controlled_nodes": [
+        "loc_black_flotilla_outpost"
+      ],
+      "control_points": [
+        "loc_settlement_cape_beacon",
+        "loc_black_flotilla_outpost"
+      ],
+      "contested_with": [
+        "faction_the_fleet",
+        "faction_the_cutters"
+      ],
+      "control_strength": 80,
+      "trade_tax": 0.10,
+      "travel_safety": 0.70,
+      "shift_trigger": "flag_escalation_stopped_convoy",
+      "description": "Hardened coastal headland anchorages, dive slips, and lighthouse lookouts controlling the maritime salvage approaches."
+    },
+    {
+      "id": "territory_the_fleet",
+      "faction": "faction_the_fleet",
+      "display_name": "Deep Coast Roadstead & Offshore Patrol Grid",
+      "classification": "nomadic",
+      "territory_scale": "minor",
+      "primary_resource_interest": "maritime_naval_jurisdiction",
+      "controlled_nodes": [
+        "loc_black_flotilla_outpost"
+      ],
+      "control_points": [
+        "loc_black_flotilla_outpost",
+        "loc_lock_gate_four"
+      ],
+      "contested_with": [
+        "faction_black_flotilla",
+        "faction_undertow"
+      ],
+      "control_strength": 60,
+      "trade_tax": 0.05,
+      "travel_safety": 0.80,
+      "shift_trigger": "flag_peace_faction_forms",
+      "description": "The offshore patrol line and deep anchorage maintained by surviving pre-war naval vessels awaiting formal stand-up authentication."
+    },
+    {
+      "id": "territory_deserter_coalition",
+      "faction": "faction_deserter_coalition",
+      "display_name": "Armored Rail Siding Redoubt & Marshalling Yards",
+      "classification": "territorial",
+      "territory_scale": "major",
+      "primary_resource_interest": "armaments_and_fortified_shelter",
+      "controlled_nodes": [
+        "loc_cut_abandoned_depot"
+      ],
+      "control_points": [
+        "loc_settlement_iron_siding",
+        "loc_settlement_fort_karkov"
+      ],
+      "contested_with": [
+        "faction_iron_raiders",
+        "faction_the_provisioned"
+      ],
+      "control_strength": 90,
+      "trade_tax": 0.00,
+      "travel_safety": 0.90,
+      "shift_trigger": "flag_grievance_coalition_supply_refused",
+      "description": "A fortified rail corridor of converted boxcars and sandbag redoubts held by disciplined ex-military deserters."
+    },
+    {
+      "id": "territory_cold_count",
+      "faction": "faction_cold_count",
+      "display_name": "Subterranean Slate Quarry & Low-Background Lab",
+      "classification": "territorial",
+      "territory_scale": "minor",
+      "primary_resource_interest": "physics_instrumentation_and_shielding",
+      "controlled_nodes": [
+        "loc_cut_arsenal_ruin"
+      ],
+      "control_points": [
+        "loc_settlement_slate_hollow",
+        "loc_low_background_lab"
+      ],
+      "contested_with": [
+        "faction_the_tally",
+        "faction_long_walk"
+      ],
+      "control_strength": 65,
+      "trade_tax": 0.00,
+      "travel_safety": 0.95,
+      "shift_trigger": "flag_escalation_marked_ruin",
+      "description": "Deep underground slate drifts and shielded research chambers dedicated to maintaining uncorrupted baseline radiation readings."
+    },
+    {
+      "id": "territory_the_tally",
+      "faction": "faction_the_tally",
+      "display_name": "Lock Seven Sluice Gate Bastion & Toll Canal",
+      "classification": "territorial",
+      "territory_scale": "medium",
+      "primary_resource_interest": "waterway_levies_and_contracts",
+      "controlled_nodes": [
+        "loc_cut_radiation_zone_alpha"
+      ],
+      "control_points": [
+        "loc_settlement_lock_seven",
+        "loc_lock_gate_four"
+      ],
+      "contested_with": [
+        "faction_undertow",
+        "faction_the_office"
+      ],
+      "control_strength": 75,
+      "trade_tax": 0.12,
+      "travel_safety": 0.65,
+      "shift_trigger": "flag_grievance_hydro_toll_defaulted",
+      "description": "Heavy reinforced lock gates and canal causeways where contract factors collect debt forfeits and transit tolls."
+    },
+    {
+      "id": "territory_grain_exchange",
+      "faction": "faction_grain_exchange",
+      "display_name": "New Ceres Silo Collective & Grain Allotments",
+      "classification": "territorial",
+      "territory_scale": "medium",
+      "primary_resource_interest": "cereal_grain_and_seed_reserves",
+      "controlled_nodes": [
+        "loc_cut_merchant_caravanserai"
+      ],
+      "control_points": [
+        "loc_settlement_silo_burrow",
+        "loc_grain_silo"
+      ],
+      "contested_with": [
+        "faction_iron_raiders",
+        "faction_the_tally"
+      ],
+      "control_strength": 70,
+      "trade_tax": 0.02,
+      "travel_safety": 0.85,
+      "shift_trigger": "flag_peace_bread_before_bullets",
+      "description": "The fertile verge allotments and reinforced concrete grain silos providing the foundation of the wasteland food trade."
+    },
+    {
+      "id": "territory_quiet_house",
+      "faction": "faction_quiet_house",
+      "display_name": "St. Nicholas Artesian Spring Sanctuary",
+      "classification": "ideological",
+      "territory_scale": "minor",
+      "primary_resource_interest": "pure_spring_water_and_hospice",
+      "controlled_nodes": [
+        "loc_black_flotilla_outpost"
+      ],
+      "control_points": [
+        "loc_settlement_st_nicholas",
+        "loc_shrine_switchback_waystation"
+      ],
+      "contested_with": [
+        "faction_osteophages",
+        "faction_iron_raiders"
+      ],
+      "control_strength": 50,
+      "trade_tax": 0.00,
+      "travel_safety": 0.95,
+      "shift_trigger": "flag_peace_refusal_at_dawn",
+      "description": "An ancient stone priory and uncontaminated mountain spring where terminal survivors receive peaceful hospice without arms."
+    },
+    {
+      "id": "territory_scavenger_guild",
+      "faction": "faction_scavenger_guild",
+      "display_name": "Tinker's Notch Swap Meet & Salvage Perimeter",
+      "classification": "territorial",
+      "territory_scale": "major",
+      "primary_resource_interest": "machinery_tools_and_electronic_salvage",
+      "controlled_nodes": [
+        "loc_cut_merchant_caravanserai"
+      ],
+      "control_points": [
+        "loc_settlement_tinkers_notch",
+        "loc_cut_merchant_caravanserai"
+      ],
+      "contested_with": [
+        "faction_iron_raiders",
+        "faction_the_office"
+      ],
+      "control_strength": 75,
+      "trade_tax": 0.03,
+      "travel_safety": 0.80,
+      "shift_trigger": "flag_grievance_scavenger_claim_disputed",
+      "description": "A dense network of shipping-container workshops, machining benches, and scrap sorting yards governing salvage rights."
+    },
+    {
+      "id": "territory_long_walk",
+      "faction": "faction_long_walk",
+      "display_name": "High Scarp Pilgrim Priory & Sector Circuit",
+      "classification": "nomadic",
+      "territory_scale": "minor",
+      "primary_resource_interest": "trail_survival_and_circuit_tidings",
+      "controlled_nodes": [
+        "loc_cut_merchant_caravanserai"
+      ],
+      "control_points": [
+        "loc_settlement_pilgrim_hearth",
+        "loc_shrine_switchback_waystation"
+      ],
+      "contested_with": [
+        "faction_sun_seekers",
+        "faction_cold_count"
+      ],
+      "control_strength": 45,
+      "trade_tax": 0.00,
+      "travel_safety": 0.90,
+      "shift_trigger": "flag_peace_volunteers_dry",
+      "description": "The high pass staging camps and 11-month pilgrimage circuit winding across the remote spine of Sector 4."
+    },
+    {
+      "id": "territory_undertow",
+      "faction": "faction_undertow",
+      "display_name": "Ferry Point Silt Landing & River Dredge",
+      "classification": "territorial",
+      "territory_scale": "medium",
+      "primary_resource_interest": "river_transit_and_silt_salvage",
+      "controlled_nodes": [
+        "loc_cut_abandoned_depot"
+      ],
+      "control_points": [
+        "loc_settlement_ferry_crossing",
+        "loc_water_station"
+      ],
+      "contested_with": [
+        "faction_the_cutters",
+        "faction_the_tally"
+      ],
+      "control_strength": 65,
+      "trade_tax": 0.06,
+      "travel_safety": 0.70,
+      "shift_trigger": "flag_escalation_cistern_blockade",
+      "description": "Cable-drawn timber ferries, pontoon piers, and silt dredge platforms controlling the primary river crossing."
+    },
+    {
+      "id": "territory_hydro_barons",
+      "faction": "faction_hydro_barons",
+      "display_name": "Deep Aqueduct Manifold & Water Caverns",
+      "classification": "territorial",
+      "territory_scale": "major",
+      "primary_resource_interest": "pressurized_water_and_pumping_machinery",
+      "controlled_nodes": [
+        "loc_holdfast"
+      ],
+      "control_points": [
+        "loc_water_station",
+        "loc_terrace_pumphouse"
+      ],
+      "contested_with": [
+        "faction_undertow",
+        "faction_grain_exchange"
+      ],
+      "control_strength": 80,
+      "trade_tax": 0.15,
+      "travel_safety": 0.75,
+      "shift_trigger": "flag_grievance_hydro_appeal_refused",
+      "description": "The massive pre-war pumping stations, pressure manifolds, and terrace reservoirs regulating the wasteland's water supply."
+    },
+    {
+      "id": "territory_iron_raiders",
+      "faction": "faction_iron_raiders",
+      "display_name": "The Cut Ambush Slopes & Dead Highway Redoubts",
+      "classification": "nomadic",
+      "territory_scale": "medium",
+      "primary_resource_interest": "plunder_fuel_and_weapons",
+      "controlled_nodes": [
+        "loc_cut_abandoned_depot",
+        "loc_cut_arsenal_ruin"
+      ],
+      "control_points": [
+        "loc_cut_abandoned_depot",
+        "loc_cut_arsenal_ruin"
+      ],
+      "contested_with": [
+        "faction_scavenger_guild",
+        "faction_deserter_coalition"
+      ],
+      "control_strength": 60,
+      "trade_tax": 0.20,
+      "travel_safety": 0.30,
+      "shift_trigger": "flag_grievance_raider_parley_broken",
+      "description": "A predatory territory of dead-end highway barricades, sniper perches, and ambush staging trenches along the sunken Cut."
+    },
+    {
+      "id": "territory_the_provisioned",
+      "faction": "faction_the_provisioned",
+      "display_name": "Prepper Vault Redoubt & Sealed Substation",
+      "classification": "territorial",
+      "territory_scale": "minor",
+      "primary_resource_interest": "pre_war_canned_stores_and_batteries",
+      "controlled_nodes": [
+        "loc_hidden_relay_bunker"
+      ],
+      "control_points": [
+        "loc_excavation_command_vault",
+        "loc_logistics_reserve_cache"
+      ],
+      "contested_with": [
+        "faction_deserter_coalition",
+        "faction_scavenger_guild"
+      ],
+      "control_strength": 90,
+      "trade_tax": 0.00,
+      "travel_safety": 0.95,
+      "shift_trigger": "flag_favor_coalition_rules_first",
+      "description": "An intensely guarded private survival bunker complex fortified with automated blast seals and hydroponic bays."
+    },
+    {
+      "id": "territory_archivists",
+      "faction": "faction_archivists",
+      "display_name": "Before-Time Subterranean Chronicle Bunker",
+      "classification": "ideological",
+      "territory_scale": "none",
+      "primary_resource_interest": "historical_records_and_magnetic_media",
+      "controlled_nodes": [
+        "loc_logistics_reserve_cache"
+      ],
+      "control_points": [
+        "loc_excavation_archive_bunker",
+        "loc_hidden_relay_bunker"
+      ],
+      "contested_with": [
+        "faction_the_office",
+        "faction_the_tally"
+      ],
+      "control_strength": 40,
+      "trade_tax": 0.00,
+      "travel_safety": 0.90,
+      "shift_trigger": "flag_messenger_kept",
+      "description": "Subterranean filing vaults and climate-controlled tape rooms where chroniclers preserve corroborated memories of the pre-war world."
+    },
+    {
+      "id": "territory_lamplighters",
+      "faction": "faction_lamplighters",
+      "display_name": "Sector Waypoint Beacon & Route Marker Grid",
+      "classification": "nomadic",
+      "territory_scale": "minor",
+      "primary_resource_interest": "fuel_wicks_and_route_safety",
+      "controlled_nodes": [
+        "loc_cut_merchant_caravanserai"
+      ],
+      "control_points": [
+        "loc_cut_merchant_caravanserai",
+        "loc_cut_abandoned_depot"
+      ],
+      "contested_with": [
+        "faction_iron_raiders",
+        "faction_undertow"
+      ],
+      "control_strength": 50,
+      "trade_tax": 0.00,
+      "travel_safety": 0.90,
+      "shift_trigger": "flag_war_refugees_arrived",
+      "description": "An extensive network of elevated oil lamps, prism reflectors, and stone cairns maintained across all travel routes."
+    },
+    {
+      "id": "territory_sun_seekers",
+      "faction": "faction_sun_seekers",
+      "display_name": "Ash Flats Solar Migration Circuit",
+      "classification": "nomadic",
+      "territory_scale": "none",
+      "primary_resource_interest": "photovoltaic_arrays_and_welding_glass",
+      "controlled_nodes": [
+        "loc_cut_radiation_zone_alpha"
+      ],
+      "control_points": [
+        "loc_cut_radiation_zone_alpha",
+        "loc_broadcast_bunker_echo"
+      ],
+      "contested_with": [
+        "faction_long_walk",
+        "faction_osteophages"
+      ],
+      "control_strength": 40,
+      "trade_tax": 0.00,
+      "travel_safety": 0.85,
+      "shift_trigger": "flag_war_shelter_took_wounded",
+      "description": "A nomadic caravan tracking breaks in atmospheric fallout cloud cover to operate solar concentrators and UV glass stills."
+    },
+    {
+      "id": "territory_osteophages",
+      "faction": "faction_osteophages",
+      "display_name": "The Drown Sump Chutes & Submerged Processing Drifts",
+      "classification": "territorial",
+      "territory_scale": "minor",
+      "primary_resource_interest": "radioactive_heavy_metal_reclamation",
+      "controlled_nodes": [
+        "loc_cut_radiation_zone_alpha"
+      ],
+      "control_points": [
+        "loc_cut_radiation_zone_alpha",
+        "loc_excavation_mine_shaft"
+      ],
+      "contested_with": [
+        "faction_quiet_house",
+        "faction_the_cutters"
+      ],
+      "control_strength": 55,
+      "trade_tax": 0.00,
+      "travel_safety": 0.40,
+      "shift_trigger": "flag_escalation_empty_chair",
+      "description": "Flooded subterranean mine workings and chemical chutes where reclusive scavengers chemically strip irradiated copper and lead."
+    }
+  ],
+  "contested_zones": [
+    {
+      "id": "zone_contested_water_rights",
+      "name": "Estuary Water Manifold & Silt Reclaim",
+      "strategic_value": "Clean artesian water flow, desalination pumping manifolds, and tidal salt evaporation pans.",
+      "focal_node_id": "loc_holdfast",
+      "focal_location_id": "loc_water_station",
+      "claimant_factions": [
+        "faction_hydro_barons",
+        "faction_undertow",
+        "faction_the_cutters"
+      ],
+      "conflict_driver": "Hydro-Barons seek metered pipeline monopoly; Undertow controls river barge transit; Cutters require brine flow for salt pans.",
+      "hazard_rating": 3,
+      "dispute_intensity": 75
+    },
+    {
+      "id": "zone_contested_cut_salvage",
+      "name": "The Cut Heavy Machinery Salvage Corridor",
+      "strategic_value": "Pre-war machine tool stock, structural steel, and rolling stock in the sunken rail cut.",
+      "focal_node_id": "loc_cut_abandoned_depot",
+      "focal_location_id": "loc_cut_abandoned_depot",
+      "claimant_factions": [
+        "faction_scavenger_guild",
+        "faction_iron_raiders",
+        "faction_deserter_coalition"
+      ],
+      "conflict_driver": "Scavenger Guild claims unstripped machine tooling; Iron Raiders ambush salvage convoys; Deserters fortify rail sidings for defense.",
+      "hazard_rating": 4,
+      "dispute_intensity": 85
+    },
+    {
+      "id": "zone_contested_merchant_crossroads",
+      "name": "Caravanserai Free Barter Concourse",
+      "strategic_value": "Primary crossroads for regional caravans, seed exchange, and long-range intelligence trade.",
+      "focal_node_id": "loc_cut_merchant_caravanserai",
+      "focal_location_id": "loc_cut_merchant_caravanserai",
+      "claimant_factions": [
+        "faction_the_office",
+        "faction_the_tally",
+        "faction_scavenger_guild"
+      ],
+      "conflict_driver": "The Office attempts freight tariff enforcement; The Tally demands debt seizure rights; Scavenger Guild defends open non-chartered barter.",
+      "hazard_rating": 2,
+      "dispute_intensity": 60
+    },
+    {
+      "id": "zone_contested_scarp_pass",
+      "name": "High Scarp Geothermal Chokepoint",
+      "strategic_value": "Thermal steam vents, low-background physics bunker access, and the only mountain pass out of Sector 4.",
+      "focal_node_id": "loc_hidden_relay_bunker",
+      "focal_location_id": "loc_shrine_switchback_waystation",
+      "claimant_factions": [
+        "faction_long_walk",
+        "faction_cold_count",
+        "faction_quiet_house"
+      ],
+      "conflict_driver": "Long Walk pilgrims require unimpeded seasonal circuit; Cold Count seals radiation baseline lab; Quiet House maintains non-violent spring sanctuary.",
+      "hazard_rating": 2,
+      "dispute_intensity": 50
+    },
+    {
+      "id": "zone_contested_coastal_bluff",
+      "name": "Coastal Shelf Deep Saline Demarcation",
+      "strategic_value": "Deep-water salvage berths, lighthouse optics, and maritime weather telemetry.",
+      "focal_node_id": "loc_black_flotilla_outpost",
+      "focal_location_id": "loc_black_flotilla_outpost",
+      "claimant_factions": [
+        "faction_black_flotilla",
+        "faction_the_fleet",
+        "faction_the_cutters"
+      ],
+      "conflict_driver": "Black Flotilla claims raised shipwreck salvage; The Fleet asserts pre-war naval jurisdiction; Cutters contest coastal brine access.",
+      "hazard_rating": 3,
+      "dispute_intensity": 70
+    }
+  ]
+}

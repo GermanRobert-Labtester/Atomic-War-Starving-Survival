@@ -96,6 +96,27 @@ namespace Ashfall.Core.World
         [JsonPropertyName("faction_relation")]
         public SettlementFactionRelation FactionRelation { get; set; } = new SettlementFactionRelation();
 
+        [JsonPropertyName("location_link")]
+        public string LocationLink { get; set; } = string.Empty;
+
+        [JsonPropertyName("population")]
+        public int Population { get; set; } = 0;
+
+        [JsonPropertyName("allegiance")]
+        public string Allegiance { get; set; } = string.Empty;
+
+        [JsonPropertyName("threat_level")]
+        public int ThreatLevel { get; set; } = 2;
+
+        [JsonPropertyName("attitude")]
+        public string Attitude { get; set; } = "neutral";
+
+        [JsonPropertyName("trade_goods")]
+        public List<string> TradeGoods { get; set; } = new List<string>();
+
+        [JsonPropertyName("trade_needs")]
+        public List<string> TradeNeeds { get; set; } = new List<string>();
+
         [JsonPropertyName("keeper_npc_id")]
         public string KeeperNpcId { get; set; } = string.Empty;
 
@@ -107,6 +128,10 @@ namespace Ashfall.Core.World
 
         [JsonPropertyName("sidework_quest_id")]
         public string SideworkQuestId { get; set; } = string.Empty;
+
+        public string GetEffectiveLocationId() => !string.IsNullOrEmpty(LocationLink) ? LocationLink : LocationId;
+        public int GetEffectivePopulation() => Population > 0 ? Population : (Society?.Population ?? 50);
+        public string GetEffectiveAllegiance() => !string.IsNullOrEmpty(Allegiance) ? Allegiance : (FactionRelation?.PrimaryFaction ?? "none");
     }
 
     [Serializable]

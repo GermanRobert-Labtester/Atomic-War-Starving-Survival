@@ -48,9 +48,9 @@ real routes and scheduled caravans that turn the map into a living logistics web
 **Substeps:**
 1. Read `WaystationSystem` + `TravelingCaravanSystem` to learn waystation state (stock, defense, staffing) and caravan scheduling.
 2. Place 6 waystations on the 16A routes at natural chokepoints (pass, bridge, river ford, rail junction).
-3. Author each waystation's identity: specialty stock (ties to 13A regional goods), defense level, a named keeper, one problem.
+3. Author each waystation's identity: specialty stock (ties to Plan 56 regional goods), defense level, a named keeper, one problem.
 4. Author 4 caravan circuits, each visiting 3–4 waystations on a schedule the player can learn and intercept.
-5. Give each caravan a specialty (13A goods) and a vulnerability (a route leg through high danger).
+5. Give each caravan a specialty (Plan 56 goods) and a vulnerability (a route leg through high danger).
 6. Wire caravan arrival to a local price/stock effect via `MarketSystem` (buy low before it leaves).
 7. Author 6 waystation quests (defend, resupply, cure a sickness, find a lost drover).
 8. Cross-check `loc_*`, `item_`, `faction_` refs; data-integrity selftest.
