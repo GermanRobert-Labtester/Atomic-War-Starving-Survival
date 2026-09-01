@@ -51,6 +51,7 @@ namespace AtomicWar.GodotApp
             }
             catch (Exception ex)
             {
+                GD.PrintErr("[DATA] Failed to enumerate catalog files: " + ex.Message);
                 catalogCount = 0;
                 string message = "catalog enumeration failed for '" + dataDirectory + "' ("
                     + ex.GetType().Name + "): " + ex.Message;
