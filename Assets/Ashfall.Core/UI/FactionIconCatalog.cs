@@ -69,6 +69,8 @@ namespace Ashfall.Core.UI
                 { "faction_the_cutters",         "assets/ui/Icons/faction_icon_the_cutters.png" },
                 { "faction_the_fleet",           "assets/ui/Icons/faction_icon_the_fleet.png" },
                 { "faction_the_office",          "assets/ui/Icons/faction_icon_the_office.png" },
+                // Plan 23 (black_flotilla faction roster entry):
+                { "faction_black_flotilla",      "assets/ui/Icons/faction_icon_black_flotilla.png" },
                 // standing_record_factions.json:
                 { "faction_the_overlay",         "assets/ui/Icons/faction_icon_the_overlay.png" },
 

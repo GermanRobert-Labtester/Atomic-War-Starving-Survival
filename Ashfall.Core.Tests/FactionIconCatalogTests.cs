@@ -93,9 +93,8 @@ namespace Ashfall.Core.Tests
         public void CoveredFactionIds_IsReadOnlyAndSealed()
         {
             var ids = FactionIconCatalog.CoveredFactionIds;
-            // 28 original systems/lore mappings + 19 expansion & lore ids
-            // whose emblems were already on disk but unmapped (2026-08-18).
-            Assert.Equal(47, ids.Count);
+            // 28 original systems/lore mappings + 20 expansion & lore ids (including black flotilla).
+            Assert.Equal(48, ids.Count);
         }
 
         [Fact]

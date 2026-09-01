@@ -46,13 +46,13 @@ namespace Ashfall.Core.Tests
             var engine = CreateLoadedEngine();
             var factions = engine.GetAllFactions();
 
-            Assert.Equal(13, factions.Count);
+            Assert.Equal(14, factions.Count);
             var expectedFactions = new[]
             {
                 "military_remnants", "cult_of_the_glow", "scavenger_camp", "upland_militia",
                 "hydro_barons", "rot_farmers", "wire_heads", "sump_dredgers",
                 "custodians", "doomsday_preppers", "echo_bats", "safe_haven_community",
-                "faction_silent_foundry"
+                "faction_silent_foundry", "faction_black_flotilla"
             };
 
             foreach (var f in expectedFactions)
