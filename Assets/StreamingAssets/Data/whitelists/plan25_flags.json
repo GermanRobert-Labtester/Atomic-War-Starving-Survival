@@ -19,8 +19,10 @@
       "producer": [
         "evt_p25_bitter_water/evt_p25_bitter_water_s1"
       ],
-      "consumers": [],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_bitter_water/evt_p25_bitter_water_s1; consumed by (deferred consumer: epilogue/Verdict hook)"
+      "consumers": [
+        "camp_scene_confrontation"
+      ],
+      "canon_note": "Plan 25 political flag: produced by evt_p25_bitter_water/evt_p25_bitter_water_s1; consumed by camp_scene_confrontation"
     },
     {
       "flag_id": "flag_escalation_bitter_water_investigated",
@@ -29,9 +31,10 @@
         "evt_p25_bitter_water/evt_p25_bitter_water_s1_c1"
       ],
       "consumers": [
-        "witness_summit_envoy"
+        "witness_summit_envoy",
+        "camp_scene_confrontation"
       ],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_bitter_water/evt_p25_bitter_water_s1_c1; consumed by witness_summit_envoy"
+      "canon_note": "Plan 25 political flag: produced by evt_p25_bitter_water/evt_p25_bitter_water_s1_c1; consumed by witness_summit_envoy, camp_scene_confrontation"
     },
     {
       "flag_id": "flag_escalation_cistern_blockade",
@@ -39,8 +42,10 @@
       "producer": [
         "evt_p25_cistern_toll_blockade/evt_p25_cistern_toll_blockade_s1"
       ],
-      "consumers": [],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_cistern_toll_blockade/evt_p25_cistern_toll_blockade_s1; consumed by (deferred consumer: epilogue/Verdict hook)"
+      "consumers": [
+        "camp_scene_confrontation"
+      ],
+      "canon_note": "Plan 25 political flag: produced by evt_p25_cistern_toll_blockade/evt_p25_cistern_toll_blockade_s1; consumed by camp_scene_confrontation"
     },
     {
       "flag_id": "flag_escalation_cistern_published",
@@ -49,9 +54,10 @@
         "evt_p25_cistern_toll_blockade/evt_p25_cistern_toll_blockade_s1_c1"
       ],
       "consumers": [
-        "witness_summit_envoy"
+        "witness_summit_envoy",
+        "camp_scene_confrontation"
       ],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_cistern_toll_blockade/evt_p25_cistern_toll_blockade_s1_c1; consumed by witness_summit_envoy"
+      "canon_note": "Plan 25 political flag: produced by evt_p25_cistern_toll_blockade/evt_p25_cistern_toll_blockade_s1_c1; consumed by witness_summit_envoy, camp_scene_confrontation"
     },
     {
       "flag_id": "flag_escalation_empty_chair",
@@ -98,9 +104,10 @@
         "evt_p25_prisoner_at_the_gate/evt_p25_prisoner_at_the_gate_s1_c1"
       ],
       "consumers": [
-        "witness_summit_envoy"
+        "witness_summit_envoy",
+        "camp_scene_old_enemies"
       ],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_prisoner_at_the_gate/evt_p25_prisoner_at_the_gate_s1_c1; consumed by witness_summit_envoy"
+      "canon_note": "Plan 25 political flag: produced by evt_p25_prisoner_at_the_gate/evt_p25_prisoner_at_the_gate_s1_c1; consumed by witness_summit_envoy, camp_scene_old_enemies"
     },
     {
       "flag_id": "flag_escalation_stopped_convoy",
@@ -251,9 +258,10 @@
         "act_coalition_supply_appeal"
       ],
       "consumers": [
-        "witness_camp_medic"
+        "witness_camp_medic",
+        "camp_scene_shared_meal"
       ],
-      "canon_note": "Plan 25 political flag: produced by act_coalition_supply_appeal; consumed by witness_camp_medic"
+      "canon_note": "Plan 25 political flag: produced by act_coalition_supply_appeal; consumed by witness_camp_medic, camp_scene_shared_meal"
     },
     {
       "flag_id": "flag_grievance_hydro_appeal_refused",
@@ -263,9 +271,10 @@
       ],
       "consumers": [
         "witness_hydro_envoy",
+        "camp_scene_old_enemies",
         "evt_p25_bitter_water/evt_p25_bitter_water_s1"
       ],
-      "canon_note": "Plan 25 political flag: produced by act_hydro_emergency_appeal; consumed by witness_hydro_envoy, evt_p25_bitter_water/evt_p25_bitter_water_s1"
+      "canon_note": "Plan 25 political flag: produced by act_hydro_emergency_appeal; consumed by witness_hydro_envoy, camp_scene_old_enemies, evt_p25_bitter_water/evt_p25_bitter_water_s1"
     },
     {
       "flag_id": "flag_grievance_hydro_intake_disputed",
@@ -287,9 +296,10 @@
       ],
       "consumers": [
         "witness_hydro_envoy",
+        "camp_scene_old_enemies",
         "evt_p25_stopped_convoy/evt_p25_stopped_convoy_s1"
       ],
-      "canon_note": "Plan 25 political flag: produced by act_purification_toll; consumed by witness_hydro_envoy, evt_p25_stopped_convoy/evt_p25_stopped_convoy_s1"
+      "canon_note": "Plan 25 political flag: produced by act_purification_toll; consumed by witness_hydro_envoy, camp_scene_old_enemies, evt_p25_stopped_convoy/evt_p25_stopped_convoy_s1"
     },
     {
       "flag_id": "flag_grievance_raider_code_widened",
@@ -321,9 +331,10 @@
         "act_raider_passage_levy"
       ],
       "consumers": [
-        "witness_levy_party_chief"
+        "witness_levy_party_chief",
+        "camp_scene_old_enemies"
       ],
-      "canon_note": "Plan 25 political flag: produced by act_raider_passage_levy; consumed by witness_levy_party_chief"
+      "canon_note": "Plan 25 political flag: produced by act_raider_passage_levy; consumed by witness_levy_party_chief, camp_scene_old_enemies"
     },
     {
       "flag_id": "flag_grievance_raider_passage_fought",
@@ -333,9 +344,10 @@
       ],
       "consumers": [
         "witness_levy_party_chief",
+        "camp_scene_old_enemies",
         "evt_p25_prisoner_at_the_gate/evt_p25_prisoner_at_the_gate_s1"
       ],
-      "canon_note": "Plan 25 political flag: produced by act_raider_passage_levy; consumed by witness_levy_party_chief, evt_p25_prisoner_at_the_gate/evt_p25_prisoner_at_the_gate_s1"
+      "canon_note": "Plan 25 political flag: produced by act_raider_passage_levy; consumed by witness_levy_party_chief, camp_scene_old_enemies, evt_p25_prisoner_at_the_gate/evt_p25_prisoner_at_the_gate_s1"
     },
     {
       "flag_id": "flag_grievance_scavenger_arbitration_refused",
@@ -385,9 +397,10 @@
         "evt_p25_bread_before_bullets/evt_p25_bread_before_bullets_s1"
       ],
       "consumers": [
-        "witness_queue_singer"
+        "witness_queue_singer",
+        "camp_scene_shared_meal"
       ],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_bread_before_bullets/evt_p25_bread_before_bullets_s1; consumed by witness_queue_singer"
+      "canon_note": "Plan 25 political flag: produced by evt_p25_bread_before_bullets/evt_p25_bread_before_bullets_s1; consumed by witness_queue_singer, camp_scene_shared_meal"
     },
     {
       "flag_id": "flag_peace_faction_forms",
@@ -407,8 +420,10 @@
       "producer": [
         "evt_p25_refusal_at_dawn/evt_p25_refusal_at_dawn_s1"
       ],
-      "consumers": [],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_refusal_at_dawn/evt_p25_refusal_at_dawn_s1; consumed by (deferred consumer: epilogue/Verdict hook)"
+      "consumers": [
+        "camp_scene_shared_meal"
+      ],
+      "canon_note": "Plan 25 political flag: produced by evt_p25_refusal_at_dawn/evt_p25_refusal_at_dawn_s1; consumed by camp_scene_shared_meal"
     },
     {
       "flag_id": "flag_peace_volunteers_dry",
@@ -428,9 +443,10 @@
         "evt_p25_refugees_from_the_line/evt_p25_refugees_from_the_line_s1"
       ],
       "consumers": [
+        "camp_scene_shared_meal",
         "evt_p25_bread_before_bullets/evt_p25_bread_before_bullets_s1"
       ],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_refugees_from_the_line/evt_p25_refugees_from_the_line_s1; consumed by evt_p25_bread_before_bullets/evt_p25_bread_before_bullets_s1"
+      "canon_note": "Plan 25 political flag: produced by evt_p25_refugees_from_the_line/evt_p25_refugees_from_the_line_s1; consumed by camp_scene_shared_meal, evt_p25_bread_before_bullets/evt_p25_bread_before_bullets_s1"
     },
     {
       "flag_id": "flag_war_requisition_demand",
@@ -438,8 +454,10 @@
       "producer": [
         "evt_p25_requisition/evt_p25_requisition_s1"
       ],
-      "consumers": [],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_requisition/evt_p25_requisition_s1; consumed by (deferred consumer: epilogue/Verdict hook)"
+      "consumers": [
+        "camp_scene_confrontation"
+      ],
+      "canon_note": "Plan 25 political flag: produced by evt_p25_requisition/evt_p25_requisition_s1; consumed by camp_scene_confrontation"
     },
     {
       "flag_id": "flag_war_requisition_met",
@@ -449,9 +467,10 @@
         "evt_p25_requisition/evt_p25_requisition_s1_c2"
       ],
       "consumers": [
-        "witness_overflow_medic"
+        "witness_overflow_medic",
+        "camp_scene_confrontation"
       ],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_requisition/evt_p25_requisition_s1_c1, evt_p25_requisition/evt_p25_requisition_s1_c2; consumed by witness_overflow_medic"
+      "canon_note": "Plan 25 political flag: produced by evt_p25_requisition/evt_p25_requisition_s1_c1, evt_p25_requisition/evt_p25_requisition_s1_c2; consumed by witness_overflow_medic, camp_scene_confrontation"
     },
     {
       "flag_id": "flag_war_requisition_refused",
@@ -481,8 +500,10 @@
       "producer": [
         "evt_p25_retaliation/evt_p25_retaliation_s1_c1"
       ],
-      "consumers": [],
-      "canon_note": "Plan 25 political flag: produced by evt_p25_retaliation/evt_p25_retaliation_s1_c1; consumed by (deferred consumer: epilogue/Verdict hook)"
+      "consumers": [
+        "camp_scene_confrontation"
+      ],
+      "canon_note": "Plan 25 political flag: produced by evt_p25_retaliation/evt_p25_retaliation_s1_c1; consumed by camp_scene_confrontation"
     }
   ]
 }
