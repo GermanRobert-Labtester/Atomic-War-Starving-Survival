@@ -333,6 +333,35 @@ namespace Ashfall.Core.Maritime
             return false;
         }
 
+        /// <summary>
+        /// Plan 23 launch gate — combines the gear gate and the site's authored
+        /// tide window (derived from the authoritative campaign day). Returns a
+        /// stable blocker key for UI presentation: "unknown_site",
+        /// "tide:<phase>", or the missing item id. Pure; no state mutation.
+        /// </summary>
+        public bool CanLaunch(string siteId, int campaignDay, IEnumerable<string>? ownedItemIds, out string blocker)
+        {
+            blocker = string.Empty;
+            var def = Catalog != null && Catalog.dive_sites != null
+                ? Catalog.dive_sites.FirstOrDefault(s => s != null && s.site_id == siteId)
+                : null;
+            if (def == null) { blocker = "unknown_site"; return false; }
+
+            var window = DiveSiteTideWindows.Parse(def.tide_window);
+            if (!TideCalendar.IsWindowOpen(window, campaignDay))
+            {
+                blocker = "tide:" + TideCalendar.PhaseName(TideCalendar.PhaseFor(Math.Max(0, campaignDay)));
+                return false;
+            }
+
+            if (!CanStartDive(siteId, ownedItemIds, out var missing))
+            {
+                blocker = missing;
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>Data-driven safes for a site (registered with the SafeCrackingSystem by the host on entry).</summary>
         public IReadOnlyList<SafeDefinition> GetSafesForSite(string siteId)
         {

@@ -78,7 +78,8 @@
           "degradationChance": 0.2,
           "degradedItemId": "scrap_mechanical"
         }
-      ]
+      ],
+      "tide_window": "slack"
     },
     {
       "site_id": "site_exp09_ferry_terminal",
@@ -130,7 +131,8 @@
           "maxQty": 3,
           "spawnChance": 0.4
         }
-      ]
+      ],
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp09_barge_flotilla",
@@ -183,7 +185,8 @@
           "maxQty": 1,
           "spawnChance": 0.12
         }
-      ]
+      ],
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp09_naval_patrol",
@@ -256,7 +259,8 @@
           "spawnChance": 0.2,
           "degradationChance": 0.35
         }
-      ]
+      ],
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp09_sunken_submarine",
@@ -305,7 +309,8 @@
           "spawnChance": 0.4,
           "degradationChance": 0.25
         }
-      ]
+      ],
+      "tide_window": "unsafe_at_peak"
     },
     {
       "site_id": "site_exp09_flooded_metro",
@@ -359,7 +364,8 @@
           "maxQty": 2,
           "spawnChance": 0.2
         }
-      ]
+      ],
+      "tide_window": "low"
     },
     {
       "site_id": "site_exp09_submerged_convoy",
@@ -412,7 +418,8 @@
           "spawnChance": 0.5,
           "degradationChance": 0.25
         }
-      ]
+      ],
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp09_drowned_fuel_depot",
@@ -459,7 +466,8 @@
           "maxQty": 2,
           "spawnChance": 0.3
         }
-      ]
+      ],
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp09_offshore_relay",
@@ -505,7 +513,8 @@
           "maxQty": 1,
           "spawnChance": 0.2
         }
-      ]
+      ],
+      "tide_window": "falling"
     },
     {
       "site_id": "site_exp09_flooded_field_hospital",
@@ -558,7 +567,8 @@
           "maxQty": 2,
           "spawnChance": 0.3
         }
-      ]
+      ],
+      "tide_window": "falling"
     },
     {
       "site_id": "site_exp09_wrecked_patrol_craft",
@@ -604,7 +614,8 @@
           "maxQty": 4,
           "spawnChance": 0.55
         }
-      ]
+      ],
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp09_submerged_siphon",
@@ -651,7 +662,8 @@
           "degradationChance": 0.1,
           "degradedItemId": "irradiated_water"
         }
-      ]
+      ],
+      "tide_window": "high"
     },
     {
       "site_id": "site_exp23_payroll_strongroom",
@@ -753,7 +765,8 @@
           "spawnChance": 0.15
         }
       ],
-      "discovery": "Uma Tarran sells the strongroom bearing for two claim tags and no questions."
+      "discovery": "Uma Tarran sells the strongroom bearing for two claim tags and no questions.",
+      "tide_window": "any"
     },
     {
       "site_id": "site_exp23_brine_cistern",
@@ -818,7 +831,8 @@
           "degradedItemId": "scrap_mechanical"
         }
       ],
-      "discovery": "The commune's cistern charts stop one gallery short; Lotte Verrill will say why for a sealed lamp."
+      "discovery": "The commune's cistern charts stop one gallery short; Lotte Verrill will say why for a sealed lamp.",
+      "tide_window": "any"
     }
   ]
 }

@@ -57,6 +57,27 @@ namespace Ashfall.Core.Maritime
 
         /// <summary>How this site becomes known to the player (lore/discovery path note).</summary>
         public string discovery = string.Empty;
+
+        /// <summary>
+        /// Authored tide window: "any" (default), "slack", "low", "high",
+        /// "falling", "unsafe_at_peak". Derived from campaign day via
+        /// <see cref="TideCalendar"/> — no serialized tide state.
+        /// </summary>
+        public string tide_window = "any";
+    }
+
+    /// <summary>Canonical tide_window strings → TideWindow (unknown → Any).</summary>
+    public static class DiveSiteTideWindows
+    {
+        public static TideWindow Parse(string? raw) => raw switch
+        {
+            "slack" => TideWindow.Slack,
+            "low" => TideWindow.LowOnly,
+            "high" => TideWindow.HighOnly,
+            "falling" => TideWindow.FallingOnly,
+            "unsafe_at_peak" => TideWindow.UnsafeAtPeak,
+            _ => TideWindow.Any
+        };
     }
 
     [Serializable]
