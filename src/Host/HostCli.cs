@@ -248,6 +248,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.BrineSelfTest;
             if (Has(args, "--muster-selftest") || Has(args, "--expansion-06-selftest"))
                 return HostCliAction.MusterSelfTest;
+            if (Has(args, "--faction-ecology-selftest"))
+                return HostCliAction.FactionEcologySelfTest;
             if (Has(args, "--cluster-selftest") || Has(args, "--order-12c-selftest"))
                 return HostCliAction.ClusterSelfTest;
             if (Has(args, "--endings-selftest") || Has(args, "--shelf-selftest"))
@@ -436,6 +438,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --selftests              Alias for --list-selftests");
             GD.Print("  --list-selftest          Alias for --list-selftests");
             GD.Print("  --muster-selftest / --expansion-06-selftest        MusterHeadlessDemo (Exp 06 the Muster)");
+            GD.Print("  --faction-ecology-selftest                      Plan 25 faction ecology vertical slice (action board, E-P1 chain, witness, camp scene, muster path)");
             GD.Print("  --phase0-selftest        Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
             GD.Print("  --silent-foundry-selftest Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip");
             GD.Print("  --standing-record-selftest StandingRecordHeadlessDemo (Exp 03)");

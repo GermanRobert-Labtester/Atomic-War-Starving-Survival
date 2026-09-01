@@ -216,6 +216,31 @@ namespace Ashfall.Core.YearOfAsh
             // three-day narration tail.
             t["evt_p25_marked_ruin_s1"] = new FlagTrigger("flag_grievance_scavenger_claim_disputed");
             t["evt_p25_marked_ruin_s2"] = new DayOffsetTrigger(3, "evt_p25_marked_ruin_s1");
+            // ── Plan 25 escalation (E-P2..P6): grievance-gated openings ──
+            // E-P2 The Stopped Convoy: the shelter's defaulted Hydro toll.
+            t["evt_p25_stopped_convoy_s1"] = new FlagTrigger("flag_grievance_hydro_toll_defaulted");
+            // E-P3 Bitter Water: the shelter's refused emergency appeal.
+            t["evt_p25_bitter_water_s1"] = new FlagTrigger("flag_grievance_hydro_appeal_refused");
+            // E-P4 The Empty Chair: the broken raider parley in the den's memory.
+            t["evt_p25_empty_chair_s1"] = new FlagTrigger("flag_grievance_raider_parley_broken");
+            // E-P5 Cistern Toll: siding against the intake audit.
+            t["evt_p25_cistern_toll_blockade_s1"] = new FlagTrigger("flag_grievance_hydro_intake_disputed");
+            // E-P6 Prisoner at the Gate: the fought-over crossing, unsettled.
+            t["evt_p25_prisoner_at_the_gate_s1"] = new FlagTrigger("flag_grievance_raider_passage_fought");
+
+            // ── Plan 25 mid-war context (E-W1..W6): chained to real 06C battles ──
+            t["evt_p25_refugees_from_the_line_s1"] = new ChainResolvedTrigger("evt_d509_border_clash_span44");
+            t["evt_p25_requisition_s1"] = new ChainResolvedTrigger("evt_d503_conscription_lists");
+            t["evt_p25_broken_route_s1"] = new ChainResolvedTrigger("evt_d522_switchback_toll");
+            t["evt_p25_field_hospital_overflow_s1"] = new ChainResolvedTrigger("evt_d533_garrison_offensive_grain_silo");
+            t["evt_p25_deserter_column_s1"] = new ChainResolvedTrigger("evt_d545_ration_plaza_strike");
+            t["evt_p25_retaliation_s1"] = new ChainResolvedTrigger("evt_d552_rebuilders_fracture");
+
+            // ── Plan 25 war weariness (E-R1..R4): culmination pressure ───
+            t["evt_p25_no_more_volunteers_s1"] = new ChainResolvedTrigger("evt_d565_hydro_leverage_break");
+            t["evt_p25_bread_before_bullets_s1"] = new FlagTrigger("flag_war_refugees_arrived");
+            t["evt_p25_quiet_faction_s1"] = new ChainResolvedTrigger("evt_d578_shrine_strike_anomaly");
+            t["evt_p25_refusal_at_dawn_s1"] = new FlagTrigger("flag_peace_faction_forms");
 
             return t;
         }

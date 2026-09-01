@@ -54,17 +54,337 @@
       "testimonies": [
         {
           "variant_id": "helped",
-          "requires_all_flags": ["flag_favor_scavenger_arbitration_fair"],
+          "requires_all_flags": [
+            "flag_favor_scavenger_arbitration_fair"
+          ],
           "body": "She holds up her hand and shows the mark — the shelter's sign, inked beside her claim in the two-color ledger. 'First find is first kept. Your shelter said so, and then your shelter acted like it was true. You would be surprised how rare the second part is. That ruin fed my crew through the thaw.'"
         },
         {
           "variant_id": "failed",
-          "requires_all_flags": ["flag_grievance_scavenger_claim_disputed"],
+          "requires_all_flags": [
+            "flag_grievance_scavenger_claim_disputed"
+          ],
           "body": "She does not raise her voice. 'The claim was marked. Dates, witnesses, the whole custom. Your shelter read the doorframe and went in anyway.' A pause. 'I got the site back in the arbitration. What I did not get back was the winter's salvage, and the ledger knows the difference even if you don't.'"
         },
         {
           "variant_id": "absent",
           "body": "She talks about the ledger, not the shelter: two colors of ink, one for claims, one for the people who kept them. 'Every mark on a doorframe is somebody deciding to be findable. Most winters that is the only law left working. I keep it because it keeps me.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_messengers_keeper",
+      "witness_name": "The Messenger's Keeper",
+      "location_id": "loc_d9_cache_bunker_delta",
+      "knowledge_key": "history_witness_messengers_keeper",
+      "day_min": 250,
+      "priority": 35,
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "He shows the message tube like a relic: the collector's route, carried and kept instead of burned. 'The shelter held the door for a courier of the man who taxes them. You want to know what the shelter is? That. Somebody had to be last to stop believing in messages, and it wasn't them.'",
+          "requires_all_flags": [
+            "flag_messenger_kept"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "He will not say what was in the last tube. He says what happened to the man who carried it, in the winter after the shelter stopped pretending the collector was a burden it had chosen. 'Mercy you can take back was never mercy. It was inventory.'",
+          "requires_all_flags": [
+            "flag_become_warlord"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "He catalogues the undelivered: names, last directions, the words that arrived too late to matter. 'The war is not the shells. The war is all the letters nobody carried.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_claimant_auditor",
+      "witness_name": "The Claimant Auditor",
+      "location_id": "loc_terrace_pumphouse",
+      "knowledge_key": "history_witness_claimant_auditor",
+      "day_min": 210,
+      "priority": 30,
+      "faction_id": "faction_hydro_barons",
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "She unfolds the audit with both hands, careful of the crease. 'The intake numbers, published, with the shelter's mark beside them. My claim was in that audit. Eight seasons of water I was owed. You made it arithmetic instead of a grudge. Arithmetic can be paid.'",
+          "requires_all_flags": [
+            "flag_favor_hydro_intake_audited"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "She speaks like someone reading a file that never closes. 'The audit was buried. My claim went with it, and the shelter stood in the room where the burying happened and said nothing people could use.'",
+          "requires_all_flags": [
+            "flag_grievance_hydro_intake_disputed"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "She keeps other people's claims the way monks keep hours: water owed, water delivered, water taken. 'A claim is just a promise with a date on it. Most promises drown first.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_hydro_envoy",
+      "witness_name": "The Hydro Envoy",
+      "location_id": "loc_terrace_pumphouse",
+      "knowledge_key": "history_witness_hydro_envoy",
+      "day_min": 200,
+      "priority": 30,
+      "faction_id": "faction_hydro_barons",
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "She pours two measures and sets one in front of the empty chair, which is the Barons' way of saying it to someone who is not there. 'Accords are easy to sign and hard to keep. The shelter kept one. At the pumphouse that is the whole of the law and most of the religion.'",
+          "requires_any_flags": [
+            "flag_favor_hydro_water_accord_honored",
+            "flag_favor_hydro_toll_paid"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "She does not accuse. She recites. The defaulted toll, the refused appeal at Unit Four, the dates. 'I am not telling you what you are. I am telling you what the ledger says, and the ledger is never finished with anyone.'",
+          "requires_any_flags": [
+            "flag_grievance_hydro_toll_defaulted",
+            "flag_grievance_hydro_appeal_refused"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "She explains the rate card to no one in particular: intake, purification, delivery, counted twice. 'Water is only free where nobody has ever counted it. We count.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_raider_parley_survivor",
+      "witness_name": "The Parley Survivor",
+      "location_id": "loc_iron_raiders_den",
+      "knowledge_key": "history_witness_raider_parley_survivor",
+      "day_min": 200,
+      "priority": 30,
+      "faction_id": "faction_iron_raiders",
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "She turns her cup over to show it is empty, which in the den's sign means the talk is done and honest. 'I walked out of a parley the shelter kept. Their word held when it would have been cheaper not to. The code remembers. The code is the only thing about us that will outlive the war.'",
+          "requires_all_flags": [
+            "flag_favor_raider_parley_honored"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "She holds up three fingers, then folds one. 'Three of us went to terms with the shelter's people. Terms the shelter broke, or terms the shelter let get widened into none at all. The den does not forget a thing like that. It recalculates.'",
+          "requires_any_flags": [
+            "flag_grievance_raider_parley_broken",
+            "flag_grievance_raider_code_widened"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "She recites the code like a litany with teeth in it: what the Toll takes, what it refuses, what it does to the ones who break parley. 'You wanted to know what separates us from the winter. That is it. That is all of it.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_camp_medic",
+      "witness_name": "The Camp Medic",
+      "location_id": "loc_denial_cut_substation",
+      "knowledge_key": "history_witness_camp_medic",
+      "day_min": 262,
+      "priority": 30,
+      "faction_id": "faction_deserter_coalition",
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "Her hands are busy the whole time she talks, folding bandages that are already square. 'When the pot was down to water and memory, the shelter's share came over the wire with the roster kept open. Shared supply. Shared names on the sick list. Do you know how many camps ever got that far?'",
+          "requires_any_flags": [
+            "flag_favor_coalition_supply_shared",
+            "flag_favor_coalition_mediation_served"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "She finally stops moving her hands. 'We asked for the pot and the peace, both small, both spelled out. The shelter counted its margin and let the truce find out what it was worth. I buried the arithmetic.'",
+          "requires_any_flags": [
+            "flag_grievance_coalition_supply_refused",
+            "flag_grievance_coalition_mediation_refused"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "She describes triage under the camp's tarp: four banners, one table, the same rules for everyone or no rules at all. 'Neutrality is not a feeling. It is who gets the cot first.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_camp_dissenter",
+      "witness_name": "The Camp Dissenter",
+      "location_id": "loc_denial_cut_substation",
+      "knowledge_key": "history_witness_camp_dissenter",
+      "day_min": 265,
+      "priority": 25,
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "'I was the one who said the rules were rot - that the witness protections would get someone killed before the wire ever did. Half the camp wanted me gone. The shelter stood in the meeting and said dissent was a thing neutral ground existed for.' She shrugs. 'I am still here. So are the rules, fixed.'",
+          "requires_all_flags": [
+            "flag_favor_coalition_rules_first"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "'There was a meeting. I spoke against the wire going up first, and the shelter's people were in that meeting, and the shelter chose the wire. Now the camp has a fence and I have a chapter in somebody's security file.'",
+          "requires_all_flags": [
+            "flag_grievance_coalition_security_backed"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "She keeps a list of every rule the camp has changed and why. 'A truce is a machine for disagreeing without dying. Ours needs fixing every month. That is what winning looks like out here.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_deserter_elder",
+      "witness_name": "The Deserter Elder",
+      "location_id": "loc_denial_cut_substation",
+      "knowledge_key": "history_witness_deserter_elder",
+      "day_min": 268,
+      "priority": 30,
+      "faction_id": "faction_deserter_coalition",
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "He unfolds the pencil list, soft with handling. 'The quiet faction's gathering - the shelter carried it when carrying it was not safe. Old men, widows, quartermasters. We asked for a gathering, not a surrender. The shelter heard the difference.'",
+          "requires_all_flags": [
+            "flag_peace_faction_forms"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "'The requisition came and the shelter signed it. Fuel, filters, names for the labor lists. My boy walked to the front behind their signature.' He folds his hands. 'I do not say the shelter was wrong. I say I know what the signature bought, because I buried what it cost.'",
+          "requires_all_flags": [
+            "flag_war_requisition_refused"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "He says what the camp is, plainly: exhausted people who agreed to sit near their enemies because the alternative had stopped having a name. 'Nobody here is peaceful. We are done. There is a difference and the difference is the whole point.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_queue_singer",
+      "witness_name": "The Queue Singer",
+      "location_id": "loc_grain_silo",
+      "knowledge_key": "history_witness_queue_singer",
+      "day_min": 270,
+      "priority": 20,
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "'You were at the grain queue. You heard it - eleven minutes with no war in it, and then your kettle came down the line like a promise. A song does not end a war. It remembers what the war is interrupting. That is not nothing.'",
+          "requires_all_flags": [
+            "flag_peace_bread_before_bullets"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "'The willing ledger had one name in eleven days, and the queue knew it, and the shelter walked past the queue like it was weather. Eleven minutes was all the peace we got to hold.'",
+          "requires_any_flags": [
+            "flag_peace_volunteers_dry"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "She says queues are the truest map of a district: what it lacks, what it fears, who it lets jump ahead. 'The war queues are the same as the bread queues, except nobody sings in those.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_overflow_medic",
+      "witness_name": "The Overflow Medic",
+      "location_id": "loc_st_brigids_almshouse",
+      "knowledge_key": "history_witness_overflow_medic",
+      "day_min": 265,
+      "priority": 25,
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "'The almshouse filled, then the crypt, then my hallway. The shelter opened its doors to the overflow - both banners, no book, no questions at the cot. In eleven months of war I have seen two doors like that. I have seen fewer that stayed open.'",
+          "requires_all_flags": [
+            "flag_war_shelter_took_wounded"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "'The requisition took the shelter's filters and medicine to the front, receipted and polite. My overflow ward ran short that same week. I am sure the form said victory somewhere on it. The forms always do.'",
+          "requires_all_flags": [
+            "flag_war_requisition_met"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "She talks about bodies, which is how she talks about war: how many, how fast, how young. 'Doctors do not get to choose the argument. We get the arithmetic after.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_summit_envoy",
+      "witness_name": "The Summit Envoy",
+      "location_id": "loc_garrison_checkpoint_gamma",
+      "knowledge_key": "history_witness_summit_envoy",
+      "day_min": 245,
+      "priority": 30,
+      "testimonies": [
+        {
+          "variant_id": "helped",
+          "body": "'Every summit fails for the same reason: nobody in the room can be believed. Then the shelter published what it found - the water, the flow logs, the truth at the prisoner's gate - and for one season the word of a shelter was worth more than the word of a banner. That is a kind of diplomacy. It is the only kind left that works.'",
+          "requires_any_flags": [
+            "flag_escalation_bitter_water_investigated",
+            "flag_escalation_cistern_published",
+            "flag_escalation_prisoner_truth_told"
+          ]
+        },
+        {
+          "variant_id": "failed",
+          "body": "'I set the chairs myself. The empty one was the Toll's answer, and the convoy question went unanswered, and the shelter - which could have made the room expensive for liars - chose its own accounts instead. Summits do not fail from silence. They fail from everyone choosing their own accounts.'",
+          "requires_any_flags": [
+            "flag_escalation_empty_chair",
+            "flag_escalation_stopped_convoy"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "He describes what a ceasefire actually is: a shape the exhaustion makes. 'Peace is not signed. It is the last thing left standing when everyone is too tired to hold a weapon and too proud to say so. My job is the paperwork in between.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_levy_party_chief",
+      "witness_name": "The Levy Party Chief",
+      "location_id": "loc_iron_raiders_den",
+      "knowledge_key": "history_witness_levy_party_chief",
+      "day_min": 240,
+      "priority": 20,
+      "faction_id": "faction_iron_raiders",
+      "testimonies": [
+        {
+          "variant_id": "complicated",
+          "body": "He weighs a tenth-share of chalk in his palm like he is checking an old scar. 'The crossing. The shelter paid, or ran it in the dark, or stood and fought - we keep honest books on all three. Whichever it was, the Toll remembers the shelter as a crossing that answered back. Around here that is a kind of respect. It is also a reason to count your convoys.'",
+          "requires_any_flags": [
+            "flag_grievance_raider_passage_evaded",
+            "flag_grievance_raider_passage_fought"
+          ]
+        },
+        {
+          "variant_id": "absent",
+          "body": "He explains the levy without shame: a road, a price, a chalk receipt. 'Bandits take. The Toll prices. You can hate both, but only one of them gives you paper.'"
         }
       ]
     }

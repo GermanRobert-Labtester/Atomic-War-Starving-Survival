@@ -162,6 +162,9 @@ namespace Ashfall.Core.Muster
 
             report.Board = board.CaptureState();
             report.MusterPath = muster.MusterPath;
+            report.Passed = report.FailedCount == 0;
+            report.Summary = $"[FactionEcologyHeadlessDemo] {(report.Passed ? "PASS" : "FAIL")} " +
+                             $"{report.PassedCount}/{report.PassedCount + report.FailedCount}";
 
             log.Info("[FactionEcologyHeadlessDemo] done: " + report.PassedCount + " passed, " +
                      report.FailedCount + " failed");

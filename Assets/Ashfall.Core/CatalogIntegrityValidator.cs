@@ -355,6 +355,22 @@ namespace Ashfall.Core
             // future exp-12 code; registered in whitelists/orphan_knocks.json as a
             // deliberate, canonically-tracked orphan door event.
             "flag_exp07_vel_vigil_knock",
+            "flag_grievance_scavenger_claim_disputed", "flag_escalation_marked_ruin",
+            "flag_escalation_marked_ruin_mediated", "flag_favor_scavenger_claim_recognized",
+            "flag_favor_scavenger_arbitration_fair",
+            // Plan 25 (Faction Ecology & the Muster) — political flags produced at
+            // runtime by the FactionActionBoard / FactionWarChainRunner seams
+            // producer->consumer map in whitelists/plan25_flags.json.
+            "flag_become_warlord", "flag_escalation_bitter_water", "flag_escalation_bitter_water_investigated", "flag_escalation_cistern_blockade",
+            "flag_escalation_cistern_published", "flag_escalation_empty_chair", "flag_escalation_prisoner_gate", "flag_escalation_prisoner_truth_told",
+            "flag_escalation_stopped_convoy", "flag_favor_coalition_mediation_served", "flag_favor_coalition_rules_first", "flag_favor_coalition_supply_shared",
+            "flag_favor_hydro_intake_audited", "flag_favor_hydro_toll_paid", "flag_favor_hydro_water_accord_honored", "flag_favor_raider_parley_honored",
+            "flag_favor_scavenger_apprentice_backed", "flag_grievance_coalition_mediation_refused", "flag_grievance_coalition_security_backed", "flag_grievance_coalition_supply_refused",
+            "flag_grievance_hydro_appeal_refused", "flag_grievance_hydro_intake_disputed", "flag_grievance_hydro_toll_defaulted", "flag_grievance_raider_code_widened",
+            "flag_grievance_raider_parley_broken", "flag_grievance_raider_passage_evaded", "flag_grievance_raider_passage_fought", "flag_grievance_scavenger_arbitration_refused",
+            "flag_grievance_scavenger_registrar_defied", "flag_messenger_kept", "flag_peace_bread_before_bullets", "flag_peace_faction_forms",
+            "flag_peace_refusal_at_dawn", "flag_peace_volunteers_dry", "flag_war_refugees_arrived", "flag_war_requisition_demand",
+            "flag_war_requisition_met", "flag_war_requisition_refused", "flag_war_shelter_took_wounded", "flag_war_sheltered_retaliation_families",
             "paper_scrap", "item_teddy_bear", "crayon", "ammo_9x19", "blood_bag",
             "item_suitcase_locked", "fat_rendered", "industrial_bleach", "bone_saw",
             "ammonia_tank", "cardboard_box", "cigarette_pack_sealed",
