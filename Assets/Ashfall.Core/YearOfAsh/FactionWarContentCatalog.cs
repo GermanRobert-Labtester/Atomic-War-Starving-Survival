@@ -161,6 +161,15 @@ namespace Ashfall.Core.YearOfAsh
         public string title = string.Empty;
         public string bodyText = string.Empty;
         public List<FactionWarEventChoice> choices = new List<FactionWarEventChoice>();
+
+        // ── Plan 25 additive (empty on every pre-Plan-25 stage) ─────────
+        /// <summary>Stage stays unsurfaced until this campaign flag is set
+        /// (e.g. a Plan 25 grievance flag). Empty = no flag gate.</summary>
+        public string requiresFlag = string.Empty;
+
+        /// <summary>Produced into the runner's flag store when the stage resolves
+        /// (auto-advance or player choice). Empty = produces nothing.</summary>
+        public string producesFlag = string.Empty;
     }
 
     [Serializable]
@@ -170,6 +179,18 @@ namespace Ashfall.Core.YearOfAsh
         public string text = string.Empty;
         public int moraleDelta;
         public string leadsToStageId = string.Empty;
+
+        // ── Plan 25 additive (empty/0 on every pre-Plan-25 choice) ──────
+        /// <summary>Choice is only offered while this flag is set. Empty = always offered.</summary>
+        public string requiresFlag = string.Empty;
+
+        /// <summary>Produced into the runner's flag store when the choice is taken.</summary>
+        public string producesFlag = string.Empty;
+
+        /// <summary>Standing adjustment routed to the host's FactionWarSystem
+        /// (via FactionWarChainRunner.StandingDeltaApplier). Empty faction = no-op.</summary>
+        public string standingFactionId = string.Empty;
+        public int standingDelta;
     }
 
     [Serializable]
