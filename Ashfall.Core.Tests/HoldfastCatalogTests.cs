@@ -84,9 +84,12 @@ namespace Ashfall.Core.Tests
             var catalog = loader.Load(data);
             Assert.NotNull(catalog.Items);
             Assert.True(catalog.Items.IsValid, "Holdfast items must load");
-            Assert.Equal(40, catalog.Items.Count);
+            // 40 ice-road items + 15 debt principal items (creditor trade).
+            Assert.Equal(55, catalog.Items.Count);
             Assert.NotNull(catalog.GetItem("item_triplicate_carbon"));
             Assert.NotNull(catalog.GetItem("item_fume_rag"));
+            Assert.NotNull(catalog.GetItem("item_canned_food"));
+            Assert.NotNull(catalog.GetItem("item_diesel_fuel"));
 
             Assert.NotNull(catalog.Factions);
             Assert.True(catalog.Factions.Count > 0, "Holdfast factions must load");

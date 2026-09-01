@@ -121,7 +121,11 @@ namespace Ashfall.Core.Save
             new("weight_of_choices", "SaveFactionBranch", "SetupFactionBranch", "factions", "Weight of choices faction branch progression and PoNR commitments", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("onboarding", "SaveOnboarding", "SetupOnboarding", "onboarding", "First-hour onboarding journey progress, dismissed hints, assistance level, completion"),
             new("ecological_infestation", "SaveEcologicalInfestation", "SetupEcologicalInfestation", "world", "Plan 28 — location and shelter ecological infestations (trigger/clear/tolerate lifecycle)"),
-            new("field_guide", "SaveFieldGuide", "SetupFieldGuide", "world", "Plan 20A/28 — field-guide unlocked-entry ledger (reading-the-land knowledge)")
+            new("field_guide", "SaveFieldGuide", "SetupFieldGuide", "world", "Plan 20A/28 — field-guide unlocked-entry ledger (reading-the-land knowledge)"),
+            new("shelter_workshop", "SaveWorkshop", "SetupWorkshop", "shelter", "Precision workshop tooling, ammo press, and firearm refurbishment", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("radio_station", "SaveRadioStation", "SetupRadioStation", "radio", "Radio station frequency tuning, signal lock, and triangulation"),
+            new("shelter_social_dynamics", "SaveShelterSocial", "SetupShelterSocial", "social", "Living quarters privacy pressure, communal mess hall, and disputes", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("excavation_hazards", "SaveExcavationHazards", "SetupExcavationHazards", "shelter", "Subterranean methane, flood, spore hazards, and cave-in rescue operations", LifecycleGroup: ExpandedShelterLifecycleGroup)
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -214,6 +218,10 @@ namespace Ashfall.Core.Save
                 { "onboarding", "onboarding_save.json" },
                 { "ecological_infestation", "ecological_infestation_save.json" },
                 { "field_guide", "field_guide_save.json" },
+                { "shelter_workshop", "shelter_workshop_save.json" },
+                { "radio_station", "radio_station_save.json" },
+                { "shelter_social_dynamics", "shelter_social_dynamics_save.json" },
+                { "excavation_hazards", "excavation_hazards_save.json" },
             };
 
         /// <summary>

@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "mitigations": [
+    {
+      "id": "mitigation_ventilation_blower_install",
+      "display_name": "Forced-Air Ventilation Blower",
+      "hazard_tags": [
+        "methane"
+      ],
+      "required_items": [
+        {
+          "item_id": "iron_pipe",
+          "amount": 2
+        },
+        {
+          "item_id": "mechanical_parts",
+          "amount": 2
+        }
+      ],
+      "labor_ticks": 100,
+      "effect": {
+        "methane_vent_rate_permille": 300,
+        "passive_decay_bonus_permille": 150
+      },
+      "requires_respiratory_protection": false,
+      "tags": [
+        "ventilation",
+        "gas_control",
+        "installed"
+      ]
+    },
+    {
+      "id": "mitigation_methane_flare_burnoff",
+      "display_name": "Controlled Gas Flare Burn-Off",
+      "hazard_tags": [
+        "methane"
+      ],
+      "required_items": [
+        {
+          "item_id": "scrap_chemical",
+          "amount": 1
+        }
+      ],
+      "labor_ticks": 40,
+      "effect": {
+        "methane_vent_rate_permille": 600,
+        "passive_decay_bonus_permille": 0
+      },
+      "requires_respiratory_protection": false,
+      "tags": [
+        "flare",
+        "emergency_burn",
+        "consumable"
+      ]
+    },
+    {
+      "id": "mitigation_sump_drainage_pump",
+      "display_name": "Subterranean Sump Drainage Pump",
+      "hazard_tags": [
+        "flood"
+      ],
+      "required_items": [
+        {
+          "item_id": "iron_pipe",
+          "amount": 4
+        },
+        {
+          "item_id": "mechanical_parts",
+          "amount": 3
+        }
+      ],
+      "labor_ticks": 160,
+      "effect": {
+        "flood_drain_rate_permille": 350,
+        "passive_decay_bonus_permille": 200
+      },
+      "requires_respiratory_protection": false,
+      "tags": [
+        "drainage",
+        "flood_control",
+        "installed"
+      ]
+    },
+    {
+      "id": "mitigation_chemical_spore_scrub",
+      "display_name": "Biocide Spore Decontamination",
+      "hazard_tags": [
+        "spores"
+      ],
+      "required_items": [
+        {
+          "item_id": "chemicals",
+          "amount": 2
+        },
+        {
+          "item_id": "clean_water",
+          "amount": 1
+        }
+      ],
+      "labor_ticks": 90,
+      "effect": {
+        "spore_reduction_permille": 500,
+        "passive_decay_bonus_permille": 100
+      },
+      "requires_respiratory_protection": true,
+      "tags": [
+        "biocide",
+        "spore_control",
+        "scrubbing"
+      ]
+    },
+    {
+      "id": "mitigation_timber_shoring_reinforcement",
+      "display_name": "Heavy Timber Strut Shoring",
+      "hazard_tags": [
+        "shoring"
+      ],
+      "required_items": [
+        {
+          "item_id": "scrap_wood",
+          "amount": 6
+        },
+        {
+          "item_id": "scrap_metal",
+          "amount": 2
+        }
+      ],
+      "labor_ticks": 120,
+      "effect": {
+        "shoring_health_restore_permille": 400,
+        "collapse_risk_reduction_permille": 300
+      },
+      "requires_respiratory_protection": false,
+      "tags": [
+        "shoring",
+        "structural",
+        "reinforce"
+      ]
+    },
+    {
+      "id": "mitigation_emergency_bulkhead_seal",
+      "display_name": "Emergency Steel Bulkhead Seal",
+      "hazard_tags": [
+        "methane",
+        "flood",
+        "spores",
+        "cave_in"
+      ],
+      "required_items": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 4
+        }
+      ],
+      "labor_ticks": 30,
+      "effect": {
+        "sector_isolation_permille": 1000,
+        "propagation_block_permille": 1000
+      },
+      "requires_respiratory_protection": false,
+      "tags": [
+        "bulkhead",
+        "containment",
+        "emergency"
+      ]
+    },
+    {
+      "id": "mitigation_sky_armor_blast_matting",
+      "display_name": "Blast Matting & Sandbag Curtain",
+      "hazard_tags": [
+        "cave_in",
+        "shoring"
+      ],
+      "required_items": [
+        {
+          "item_id": "cloth",
+          "amount": 4
+        },
+        {
+          "item_id": "scrap_metal",
+          "amount": 3
+        }
+      ],
+      "labor_ticks": 110,
+      "effect": {
+        "collapse_risk_reduction_permille": 450,
+        "blast_damage_absorption_permille": 600
+      },
+      "requires_respiratory_protection": false,
+      "tags": [
+        "blast_matting",
+        "sandbags",
+        "fortification"
+      ]
+    },
+    {
+      "id": "mitigation_trapped_miner_clearance",
+      "display_name": "Emergency Debris Clearance & Rescue",
+      "hazard_tags": [
+        "cave_in"
+      ],
+      "required_items": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 2
+        }
+      ],
+      "labor_ticks": 80,
+      "effect": {
+        "rubble_clearance_progress_permille": 340
+      },
+      "requires_respiratory_protection": false,
+      "tags": [
+        "rescue",
+        "clearance",
+        "emergency"
+      ]
+    }
+  ]
+}

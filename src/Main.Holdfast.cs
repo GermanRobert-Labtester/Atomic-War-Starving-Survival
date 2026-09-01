@@ -81,6 +81,9 @@ namespace AtomicWar.GodotApp
                 AddChild(_holdfastTerminal);
             }
             _holdfastTerminal.BindSession(_holdfastRuntime);
+            // Plan IV: bind whatever credit coordinator exists (rebound by
+            // EnsureDebtConsequenceIntegration once the authority graph is up).
+            _holdfastTerminal.BindCredit(_tradeCredit);
 
             // ── Wire death event ──
             _holdfastRuntime.OnPlayerDied += OnPlayerDied;

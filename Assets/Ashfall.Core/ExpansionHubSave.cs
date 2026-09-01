@@ -21,10 +21,11 @@ namespace Ashfall.Core
         /// <summary>
         /// v2 added the Silent Foundry (Exp 10) state; v3 adds the durable
         /// treaty-consequence ledger (standing + market/logistics modifiers);
-        /// v4 adds the Disease Expansion state. Earlier saves migrate forward
-        /// with safe defaults.
+        /// v4 adds the Disease Expansion state; v5 adds the debt-consequence
+        /// integration (dispatcher fired-set, embargo ledger, labor
+        /// obligations). Earlier saves migrate forward with safe defaults.
         /// </summary>
-        public const int CurrentSaveVersion = 4;
+        public const int CurrentSaveVersion = 5;
 
         public int saveVersion = CurrentSaveVersion;
         public int simDay;
@@ -41,6 +42,13 @@ namespace Ashfall.Core
         public SilentFoundryState foundry = new SilentFoundryState();
         public SilentFoundryConsequenceState consequences = new SilentFoundryConsequenceState();
         public DiseaseSystemState disease = new DiseaseSystemState();
+        /// <summary>v5: dispatcher fired-consequence set — the idempotency
+        /// authority for debt defaults (no side effect repeats after restore).</summary>
+        public DebtDispatcherState debtDispatcher = new DebtDispatcherState();
+        /// <summary>v5: canonical faction embargo ledger (debt defaults, day-derived).</summary>
+        public FactionEmbargoLedgerState embargoes = new FactionEmbargoLedgerState();
+        /// <summary>v5: bounded bonded-labor obligations from debt defaults.</summary>
+        public DebtConsequenceBridgeState debtBridge = new DebtConsequenceBridgeState();
 
         /// <summary>Integrity hash computed over all payload fields.</summary>
         public string Checksum = string.Empty;
@@ -106,6 +114,29 @@ namespace Ashfall.Core
         public string Checksum = string.Empty;
     }
 
+    /// <summary>Frozen v4 shape (foundry + consequence ledger + disease present;
+    /// debt-consequence integration did not exist).</summary>
+    [Serializable]
+    public sealed class ExpansionHubSaveV4
+    {
+        public int saveVersion = 4;
+        public int simDay;
+        public WaystationSystemState waystation = new WaystationSystemState();
+        public LocationLayoutState layouts = new LocationLayoutState();
+        public LocationMemoryState memory = new LocationMemoryState();
+        public SiteEncounterState siteEncounters = new SiteEncounterState();
+        public VouchAccessSystemState vouch = new VouchAccessSystemState();
+        public GreenhouseState greenhouse = new GreenhouseState();
+        public CrossingArbitrationState arbitration = new CrossingArbitrationState();
+        public LedgerDebtSystemState ledger = new LedgerDebtSystemState();
+        public CrossingQuestSystemState crossingQuests = new CrossingQuestSystemState();
+        public GenerationalSuccessionSaveState generational = new GenerationalSuccessionSaveState();
+        public SilentFoundryState foundry = new SilentFoundryState();
+        public SilentFoundryConsequenceState consequences = new SilentFoundryConsequenceState();
+        public DiseaseSystemState disease = new DiseaseSystemState();
+        public string Checksum = string.Empty;
+    }
+
     /// <summary>
     /// Serialization codec for the expansion-hub state. Same rules as the other
     /// save codecs: checksum recomputed on encode, hard-reject on decode for an
@@ -126,7 +157,10 @@ LedgerDebtSystem? ledger = null,
 CrossingQuestSystem? crossingQuests = null,
 GenerationalSuccessionEngine? generational = null,
 SilentFoundrySystem? silentFoundry = null,
-DiseaseSystem? disease = null)
+DiseaseSystem? disease = null,
+DebtConsequenceDispatcher? debtDispatcher = null,
+FactionEmbargoLedger? embargoes = null,
+DebtConsequenceBridgeState? debtBridge = null)
         {
             var save = new ExpansionHubSave
             {
@@ -148,6 +182,9 @@ DiseaseSystem? disease = null)
                 save.consequences = silentFoundry.CaptureConsequenceState();
             }
             if (disease != null) save.disease = disease.CaptureState();
+            if (debtDispatcher != null) save.debtDispatcher = debtDispatcher.CaptureState();
+            if (embargoes != null) save.embargoes = embargoes.CaptureState();
+            if (debtBridge != null) save.debtBridge = debtBridge;
             save.Checksum = SaveChecksum.Compute(save);
             return save;
         }
@@ -252,6 +289,37 @@ DiseaseSystem? disease = null)
                     migrated.Checksum = SaveChecksum.Compute(migrated);
                     return migrated;
                 }
+
+                // v4 saves carry the disease ward but pre-date the debt-consequence
+                // integration (v5); fired-set, embargoes and labor start empty.
+                var v4 = json.Deserialize<ExpansionHubSaveV4>(jsonText);
+                if (v4 != null && v4.saveVersion == 4)
+                {
+                    ValidateChecksum(v4.Checksum, v4, "v4");
+                    var migrated = new ExpansionHubSave
+                    {
+                        saveVersion = ExpansionHubSave.CurrentSaveVersion,
+                        simDay = v4.simDay,
+                        waystation = v4.waystation ?? new WaystationSystemState(),
+                        layouts = v4.layouts ?? new LocationLayoutState(),
+                        memory = v4.memory ?? new LocationMemoryState(),
+                        siteEncounters = v4.siteEncounters ?? new SiteEncounterState(),
+                        vouch = v4.vouch ?? new VouchAccessSystemState(),
+                        greenhouse = v4.greenhouse ?? new GreenhouseState(),
+                        arbitration = v4.arbitration ?? new CrossingArbitrationState(),
+                        ledger = v4.ledger ?? new LedgerDebtSystemState(),
+                        crossingQuests = v4.crossingQuests ?? new CrossingQuestSystemState(),
+                        generational = v4.generational ?? new GenerationalSuccessionSaveState(),
+                        foundry = v4.foundry ?? new SilentFoundryState(),
+                        consequences = v4.consequences ?? new SilentFoundryConsequenceState(),
+                        disease = v4.disease ?? new DiseaseSystemState(),
+                        debtDispatcher = new DebtDispatcherState(),
+                        embargoes = new FactionEmbargoLedgerState(),
+                        debtBridge = new DebtConsequenceBridgeState()
+                    };
+                    migrated.Checksum = SaveChecksum.Compute(migrated);
+                    return migrated;
+                }
             }
             catch (InvalidOperationException)
             {
@@ -296,6 +364,9 @@ DiseaseSystem? disease = null)
             if (save.foundry == null) save.foundry = new SilentFoundryState();
             if (save.consequences == null) save.consequences = new SilentFoundryConsequenceState();
             if (save.disease == null) save.disease = new DiseaseSystemState();
+            if (save.debtDispatcher == null) save.debtDispatcher = new DebtDispatcherState();
+            if (save.embargoes == null) save.embargoes = new FactionEmbargoLedgerState();
+            if (save.debtBridge == null) save.debtBridge = new DebtConsequenceBridgeState();
             return save;
         }
 
@@ -324,7 +395,10 @@ LedgerDebtSystem? ledger = null,
 CrossingQuestSystem? crossingQuests = null,
 GenerationalSuccessionEngine? generational = null,
 SilentFoundrySystem? silentFoundry = null,
-DiseaseSystem? disease = null)
+DiseaseSystem? disease = null,
+DebtConsequenceDispatcher? debtDispatcher = null,
+FactionEmbargoLedger? embargoes = null,
+DebtConsequenceHostBridge? debtBridge = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));
@@ -351,6 +425,15 @@ DiseaseSystem? disease = null)
             // Missing state never resurrects infections from a save without them.
             if (disease != null && save.disease != null)
                 disease.RestoreState(save.disease);
+            // Debt-consequence integration (v5): the dispatcher fired-set is the
+            // idempotency authority — restoring it before the next forfeit can be
+            // evaluated is what prevents side effects repeating after reload.
+            if (debtDispatcher != null && save.debtDispatcher != null)
+                debtDispatcher.RestoreState(save.debtDispatcher);
+            if (embargoes != null && save.embargoes != null)
+                embargoes.RestoreState(save.embargoes);
+            if (debtBridge != null && save.debtBridge != null)
+                debtBridge.RestoreState(save.debtBridge);
         }
     }
 }

@@ -43,13 +43,18 @@ namespace AtomicWar.GodotApp
             _expansions.StateChanged += () => _expansionHubDirty = true;
             _expansions.OnCrossingStageNarrative += OnCrossingStageNarrative;
 
+            // Plan IV: wire the debt-consequence bridge + credit coordinator
+            // (host authorities) before restore so v5 sections land in them.
+            EnsureDebtConsequenceIntegration();
+
             // Cross-host roundtrip for waystation, standing record, crossing vouch,
-            // and greenhouse plots.
+            // greenhouse plots, and the debt-consequence integration.
             var save = ExpansionHubSaveStore.TryLoad();
             if (save != null)
             {
-                _expansions.RestoreSave(save);
+                _expansions.RestoreSave(save, _debtBridge);
                 _expansionHubDirty = false; // restore just raised state-change events
+                _debtBridgeDirty = false;
                 GD.Print($"[Ashfall Godot] Expansion hub state restored (day {save.simDay}).");
             }
 
@@ -277,10 +282,13 @@ namespace AtomicWar.GodotApp
         private void SaveExpansionHub()
         {
             if (_expansions == null) return;
+            EnsureDebtConsequenceIntegration();
             int day = _core != null ? _core.Clock.Day : _simDay;
-            if (CaptureSection("expansion_hub", ExpansionHubSaveStore.TryCapturePersisted(_expansions.CaptureSave(day))))
+            var bridgeState = _debtBridge != null ? _debtBridge.CaptureState() : null;
+            if (CaptureSection("expansion_hub", ExpansionHubSaveStore.TryCapturePersisted(_expansions.CaptureSave(day, bridgeState))))
             {
                 _expansionHubDirty = false;
+                _debtBridgeDirty = false;
                 GD.Print($"[Ashfall Godot] Expansion hub save written (day {day}).");
             }
         }

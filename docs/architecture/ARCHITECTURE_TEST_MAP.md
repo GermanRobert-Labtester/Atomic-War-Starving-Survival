@@ -125,6 +125,10 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 65 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
 | 66 | `medical_pipeline` | Survival & Biology | `MedicalPipelineCoordinator`, `DiagnosisKnowledgeStore`, `MedicalReservationLedger`, `MedicalProcedureSchedule` | — *(Projection DTOs; no JSON catalog)* | `MedicalHostSession` | `MedicalPipelineSaveStore` | `MedicalPanel` | `MedicalPipelineTests`, `MedicalPipelineArchitectureGateTests` | ✅ 6/6 |
 | 67 | `ecological_infestation` | World & Expeditions | `EcologicalInfestationSystem` | `ecological_infestations.json`, `disease_catalog.json`, `items.json`, `locations.json` | `Main.EcologicalInfestations` (world_evolution day owner) | `EcologicalInfestationSaveStore` | *(journal/briefing projections; no panel — Phase 6)* | `--evolving-world-selftest`, `EcologicalInfestationSystemTests` | ✅ 6/6 |
+| 68 | `shelter_workshop` | Shelter Operations | `ShelterWorkshopSystem` | `workshop_recipes.json` | `Main.ShelterWorkshop` | `ShelterWorkshopSaveStore` | `WorkshopPanel` | `ShelterWorkshopTests`, `Plans46_49_CrossSystemIntegrationTests` | ✅ 6/6 |
+| 69 | `radio_station` | Radio & Communications | `ShelterRadioStationSystem` | `radio_intercepts.json` | `Main.RadioStation` | `RadioStationSaveStore` | `RadioStationPanel` | `ShelterRadioStationTests`, `Plans46_49_CrossSystemIntegrationTests` | ✅ 6/6 |
+| 70 | `shelter_social_dynamics` | Shelter Operations | `ShelterSocialDynamicsSystem` | `shelter_social_events.json` | `Main.ShelterSocialDynamics` | `ShelterSocialSaveStore` | `SurvivorRelationsPanel` | `ShelterSocialDynamicsTests`, `Plans46_49_CrossSystemIntegrationTests` | ✅ 6/6 |
+| 71 | `excavation_hazards` | Shelter Operations | `ExcavationHazardSystem` | `excavation_hazard_mitigation.json` | `Main.ExcavationHazards` | `ExcavationHazardSaveStore` | `ExcavationPanel` | `ExcavationHazardSystemTests`, `Plans46_49_CrossSystemIntegrationTests` | ✅ 6/6 |
 
 ---
 

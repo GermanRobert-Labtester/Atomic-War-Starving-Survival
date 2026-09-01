@@ -256,10 +256,11 @@ namespace Ashfall.Core.Tests.Save
             // Enforces that every section in the contract matrix is accounted for
             // (Task #133 added the medical_pipeline section,
             // Plan 12C added shelter_decor,
-            // Plan 34 added research).
-            Assert.Equal(70, SaveSectionRegistry.All.Count);
+            // Plan 34 added research,
+            // Plans 46-49 added shelter_workshop, radio_station, shelter_social_dynamics, excavation_hazards).
+            Assert.Equal(74, SaveSectionRegistry.All.Count);
             var keys = new HashSet<string>(SaveSectionRegistry.All.Select(s => s.SectionKey));
-            Assert.Equal(70, keys.Count);
+            Assert.Equal(74, keys.Count);
         }
     }
 }

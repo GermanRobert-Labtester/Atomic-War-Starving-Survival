@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "events": [
+    {
+      "id": "social_event_bunk_noise_friction",
+      "display_name": "Midnight Bunk Disturbance",
+      "room_tags": [
+        "crowded_sleeping"
+      ],
+      "required_room_ids": [
+        "room_bunks_crowded"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 3,
+      "base_weight": 120,
+      "description": "Restless coughing and narrow bunks spark a sharp midnight quarrel between exhausted survivors.",
+      "outcomes": [
+        {
+          "id": "outcome_bunk_argument_unresolved",
+          "display_name": "Unchecked Argument",
+          "morale_delta": -4,
+          "relationship_delta": -12,
+          "memory_tag": "bunk_midnight_quarrel",
+          "can_mediate": true,
+          "mediation_skill_id": "skill_watchful"
+        },
+        {
+          "id": "outcome_bunk_argument_mediated",
+          "display_name": "Quiet Mediation",
+          "morale_delta": 2,
+          "relationship_delta": 6,
+          "memory_tag": "bunk_quarrel_settled",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_privacy_boundary_breach",
+      "display_name": "Personal Space Transgression",
+      "room_tags": [
+        "crowded_sleeping"
+      ],
+      "required_room_ids": [
+        "room_bunks_crowded"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 4,
+      "base_weight": 90,
+      "description": "A personal keepsake is displaced or examined without consent in cramped dormitory lockers.",
+      "outcomes": [
+        {
+          "id": "outcome_privacy_rift",
+          "display_name": "Deepening Resentment",
+          "morale_delta": -5,
+          "relationship_delta": -15,
+          "memory_tag": "privacy_breach_distrust",
+          "can_mediate": true,
+          "mediation_skill_id": "skill_watchful"
+        }
+      ]
+    },
+    {
+      "id": "social_event_private_quarters_solace",
+      "display_name": "Solitary Recovery",
+      "room_tags": [
+        "private_quarters"
+      ],
+      "required_room_ids": [
+        "room_quarters_private"
+      ],
+      "minimum_occupants": 1,
+      "cooldown_days": 2,
+      "base_weight": 100,
+      "description": "Unbroken quiet and a private door allow an overstressed survivor to decompress fully.",
+      "outcomes": [
+        {
+          "id": "outcome_private_rest_complete",
+          "display_name": "Privacy Restored",
+          "morale_delta": 6,
+          "relationship_delta": 0,
+          "memory_tag": "private_quarters_peace",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_communal_meal_cohesion",
+      "display_name": "Evening Mess Hall Gathering",
+      "room_tags": [
+        "communal_mess"
+      ],
+      "required_room_ids": [
+        "room_common_mess_hall"
+      ],
+      "minimum_occupants": 3,
+      "cooldown_days": 2,
+      "base_weight": 110,
+      "description": "Sharing hot soup at the long table fosters camaraderie and mutual resolve across work crews.",
+      "outcomes": [
+        {
+          "id": "outcome_communal_bonding",
+          "display_name": "Table Camaraderie",
+          "morale_delta": 5,
+          "relationship_delta": 10,
+          "memory_tag": "communal_mess_solidarity",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_ideology_ration_dispute",
+      "display_name": "Ration Distribution Debate",
+      "room_tags": [
+        "communal_mess",
+        "crowded_sleeping"
+      ],
+      "required_room_ids": [
+        "room_common_mess_hall"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 5,
+      "base_weight": 85,
+      "description": "Differing philosophies on work quotas versus equal allocation lead to heated table debate.",
+      "outcomes": [
+        {
+          "id": "outcome_ideology_escalation",
+          "display_name": "Factional Split",
+          "morale_delta": -6,
+          "relationship_delta": -18,
+          "memory_tag": "ration_policy_dispute",
+          "can_mediate": true,
+          "mediation_skill_id": "skill_cold_analysis"
+        },
+        {
+          "id": "outcome_ideology_compromise",
+          "display_name": "Equitable Accord",
+          "morale_delta": 3,
+          "relationship_delta": 8,
+          "memory_tag": "ration_policy_accord",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_memorial_plaque_vigil",
+      "display_name": "Memorial Plaque Remembrance",
+      "room_tags": [
+        "communal_mess",
+        "memorial"
+      ],
+      "required_room_ids": [
+        "room_common_mess_hall"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 6,
+      "base_weight": 70,
+      "description": "Survivors gather before the memorial wall to engrave fresh names and share memories of the fallen.",
+      "outcomes": [
+        {
+          "id": "outcome_memorial_closure",
+          "display_name": "Collective Closure",
+          "morale_delta": 4,
+          "relationship_delta": 12,
+          "memory_tag": "memorial_remembrance_vigil",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_workshop_crafting_synergy",
+      "display_name": "Workbench Mutual Assistance",
+      "room_tags": [
+        "workshop"
+      ],
+      "required_room_ids": [
+        "room_workshop_precision",
+        "room_workshop"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 3,
+      "base_weight": 95,
+      "description": "Two workers solve a stubborn mechanical tolerance problem together, building mutual trust.",
+      "outcomes": [
+        {
+          "id": "outcome_workshop_respect",
+          "display_name": "Craft Guild Bond",
+          "morale_delta": 3,
+          "relationship_delta": 14,
+          "memory_tag": "workbench_problem_solved",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_scout_expedition_reconciliation",
+      "display_name": "Returned Scout Decompression",
+      "room_tags": [
+        "communal_mess",
+        "private_quarters"
+      ],
+      "required_room_ids": [
+        "room_common_mess_hall"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 4,
+      "base_weight": 80,
+      "description": "An expedition survivor debriefs shelter mates, easing lingering isolation and survivor guilt.",
+      "outcomes": [
+        {
+          "id": "outcome_scout_reintegrated",
+          "display_name": "Shared Relief",
+          "morale_delta": 4,
+          "relationship_delta": 10,
+          "memory_tag": "scout_debrief_solidarity",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    }
+  ]
+}

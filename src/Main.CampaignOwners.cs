@@ -40,6 +40,9 @@ namespace AtomicWar.GodotApp
             // Task 122: ticks after expeditions (ordinal 'w' > 'e') so it reads
             // fresh sortie results, and after narrative for fresh faction dominance.
             _campaignDay.Register("world_evolution", new EvolvingWorldDayOwner(this), phase: 4);
+            // Plan IV: ledger debt ages with the campaign; forfeits dispatch
+            // consequences into faction war / raids / inventory / labor.
+            _campaignDay.Register("debt_ledger", new DebtLedgerDayOwner(this), phase: 4);
 
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
@@ -640,6 +643,9 @@ namespace AtomicWar.GodotApp
 
                 // ── Plan 28 Phase 4: ecological infestations ──
                 _m.TickEcologicalInfestations(day, events);
+
+                // ── Plans 46-49: Workshop, Radio, Social, Subterranean Hazards ──
+                _m.TickPlans46_49(day, events);
 
                 // ── Plan 28 Phase 3: collapse/scarcity notice (bounded) ──
 

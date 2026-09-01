@@ -179,7 +179,7 @@ IReadOnlyList<string>? diseaseCandidates = null)
                 ("Standing Record (Exp 03)", StandingRecordHeadlessDemo.Run(dataDirectory, log)),
                 ("Nobody's Charter (Exp 04)", CrossingHeadlessDemo.Run(dataDirectory, log)),
                 ("Crossing Arbitration", CrossingArbitrationHeadlessDemo.Run(log)),
-                ("Ledger Debt", LedgerDebtHeadlessDemo.Run(log)),
+                ("Ledger Debt", LedgerDebtHeadlessDemo.Run(dataDirectory, log)),
                 ("Glass Orchard (Exp 05)", GreenhouseHeadlessDemo.Run(log)),
                 ("Deep Coast (District 8)", DeepCoastHeadlessDemo.Run(dataDirectory, log)),
                 ("Warlord AI (Exp 05 sibling)", WarlordHeadlessDemo.Run(dataDirectory, log)),

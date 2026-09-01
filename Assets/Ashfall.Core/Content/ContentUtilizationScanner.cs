@@ -92,6 +92,8 @@ namespace Ashfall.Core.Content
             "locations_expansion3.json", "environmental_atmosphere_expansion.json",
             "thirdonary_quests.json", "foundry_faction.json",
             "foundry_items.json", "verdict_npcs.json", "verdict_questlines.json",
+            "workshop_recipes.json", "radio_intercepts.json",
+            "shelter_social_events.json", "excavation_hazard_mitigation.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -682,6 +684,10 @@ namespace Ashfall.Core.Content
                 ["damaged_map_zones.json"] = new[] { "WastelandMapSystem" },
                 ["cassette_sets.json"] = new[] { "VinylMoraleSystem" },
                 ["epilogue_chronicle.json"] = new[] { "MusterSystem" },
+                ["workshop_recipes.json"] = new[] { "ShelterWorkshopSystem" },
+                ["radio_intercepts.json"] = new[] { "ShelterRadioStationSystem" },
+                ["shelter_social_events.json"] = new[] { "ShelterSocialDynamicsSystem" },
+                ["excavation_hazard_mitigation.json"] = new[] { "ExcavationHazardSystem" },
             };
 
             foreach (var cat in _graph.Catalogs)
