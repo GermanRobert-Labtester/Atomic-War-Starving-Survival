@@ -35,6 +35,7 @@ namespace AtomicWar.GodotApp
         private ApproachSelectionModal _approachModal = null!;
         private DeserterCoalitionCampWidget _campWidget = null!;
         private JournalWitnessPanel _witnessPanel = null!;
+        private FactionActionPanel _factionActionPanel = null!;
 
         private void SetupMuster()
         {
@@ -42,6 +43,7 @@ namespace AtomicWar.GodotApp
             _muster = MusterHostSession.Create(_dataDir);
             _muster.StateChanged += () => SaveMuster();
             _muster.OnQuestlineResolved += OnMusterQuestlineResolved;
+            _muster.OnActionResolved += OnMusterActionResolved;
 
             if (_currentsRoster == null)
             {
@@ -66,6 +68,16 @@ namespace AtomicWar.GodotApp
             }
             _witnessPanel.Bind(_muster.Witnesses);
             _witnessPanel.RefreshView(_yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay, _muster.AuthorBias);
+
+            if (_factionActionPanel == null)
+            {
+                _factionActionPanel = new FactionActionPanel();
+                _factionActionPanel.OnChoicePressed += OnMusterFactionChoicePressed;
+                _rightColumn.AddChild(_factionActionPanel);
+            }
+            _factionActionPanel.Bind(_muster.Board);
+            _factionActionPanel.BindCulture(_muster.Culture);
+            _factionActionPanel.RefreshView(_yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
 
             if (_approachModal == null)
             {
@@ -211,10 +223,39 @@ namespace AtomicWar.GodotApp
         {
             SetupMuster();
             int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            var delivered = _muster.DeliverWitnesses(day);
             _witnessPanel.RefreshView(day, _muster.AuthorBias);
+            _factionActionPanel.RefreshView(day);
             _statusLabel.Text = _muster.Witnesses.Count == 0
                 ? "No witness accounts loaded."
-                : $"{_muster.Witnesses.Count} accounts loaded. Day {day} · {_muster.AuthorBias} author.";
+                : $"{delivered.Count} testimonies delivered at the gathering (day {day}).";
+        }
+
+        private void OnMusterFactionChoicePressed(string actionId, string choiceId)
+        {
+            if (_muster == null) return;
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            bool ok = _muster.ResolveFactionAction(actionId, choiceId, day);
+            _factionActionPanel.RefreshView(day);
+            _currentsRoster?.RefreshView();
+            _codexViewer.Text = _muster.LastEvent;
+        }
+
+        private void OnMusterActionResolved(FactionActionResolutionRecord record)
+        {
+            if (record == null) return;
+            if (_journal != null)
+            {
+                string line = $"[FACTION ACTION] {record.actionId} / {record.choiceId} resolved ({record.band} standing) on day {record.day}.";
+                _journal.TryAddRawEntry(
+                    $"faction_action_{record.actionId}_{record.choiceId}",
+                    line,
+                    null!,
+                    record.day);
+                _journalDirty = true;
+            }
+            _statusLabel?.SetDeferred(Label.PropertyName.Text,
+                $"[FACTION ACTION] {record.actionId} / {record.choiceId} resolved.");
         }
 
         private void OnMusterAuthorBiasClicked()
@@ -333,6 +374,7 @@ namespace AtomicWar.GodotApp
             _currentsRoster.RefreshView();
             _campWidget.RefreshView();
             _witnessPanel.RefreshView(_yearOfAsh.Timeline.CurrentDay, _muster.AuthorBias);
+            _factionActionPanel.RefreshView(_yearOfAsh.Timeline.CurrentDay);
         }
 
         private void SaveMuster()

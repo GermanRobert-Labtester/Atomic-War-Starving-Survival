@@ -139,6 +139,18 @@ namespace Ashfall.Core.Muster
             Check(musterRestored.MusterPath == MusterPaths.Negotiated,
                 "muster path survives save/restore");
 
+            // ── Delivered testimonies persist (epilogue/Verdict surface) ────
+            Check(muster.RecordWitnessResult("witness_scavenger_claimant", "failed", 261),
+                "witness delivery recorded into the muster state");
+            Check(!muster.RecordWitnessResult("witness_scavenger_claimant", "failed", 261),
+                "witness delivery is idempotent per witness");
+            var musterWithResults = new MusterSystem();
+            musterWithResults.RestoreState(muster.CaptureState());
+            Check(musterWithResults.WitnessResults.Count == 1
+                && musterWithResults.WitnessResults[0].witnessId == "witness_scavenger_claimant"
+                && musterWithResults.WitnessResults[0].variantId == "failed",
+                "witness results survive save/restore (epilogue-facing ledger)");
+
             var arrivalsNegotiated = CampSceneDirector.Select(
                 scenes, "camp_scene_arrivals", 260, muster.MusterPath, board.IsFlagSet);
             Check(arrivalsNegotiated != null && arrivalsNegotiated.VariantId == "negotiated",

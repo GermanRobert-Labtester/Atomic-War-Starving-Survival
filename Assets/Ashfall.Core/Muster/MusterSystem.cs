@@ -35,6 +35,21 @@ namespace Ashfall.Core.Muster
         /// (MusterPaths value; empty = never evaluated). Additive field —
         /// saves from before Plan 25 restore to empty.</summary>
         public string musterPath = string.Empty;
+
+        /// <summary>Plan 25: testimony results actually delivered at the
+        /// gathering — the stable epilogue/Verdict-facing surface (Plan 15
+        /// consumes this list; it never re-derives witness eligibility).
+        /// Additive field — old saves restore to empty.</summary>
+        public List<WitnessResult> witnessResults = new List<WitnessResult>();
+    }
+
+    /// <summary>One delivered testimony (Plan 25 · 25B.15). Idempotence: a
+    /// witness testifies at most once per campaign.</summary>
+    public class WitnessResult
+    {
+        public string witnessId = string.Empty;
+        public string variantId = string.Empty;
+        public int day;
     }
 
     /// <summary>One questline's selection record.</summary>
@@ -137,6 +152,34 @@ namespace Ashfall.Core.Muster
             return true;
         }
 
+        /// <summary>Plan 25: record a delivered testimony. Idempotent per
+        /// witness (a reload replay cannot record it twice).</summary>
+        public bool RecordWitnessResult(string witnessId, string variantId, int day)
+        {
+            if (string.IsNullOrEmpty(witnessId)) return false;
+            if (_state.witnessResults.Exists(r => r.witnessId == witnessId)) return false;
+            _state.witnessResults.Add(new WitnessResult
+            {
+                witnessId = witnessId,
+                variantId = variantId ?? string.Empty,
+                day = day
+            });
+            RaiseChanged();
+            return true;
+        }
+
+        /// <summary>Epilogue/Verdict-facing read: every delivered testimony,
+        /// ordinal by witness id (deterministic for the prose matrix).</summary>
+        public IReadOnlyList<WitnessResult> WitnessResults
+        {
+            get
+            {
+                var ordered = new List<WitnessResult>(_state.witnessResults);
+                ordered.Sort((a, b) => string.CompareOrdinal(a.witnessId, b.witnessId));
+                return ordered;
+            }
+        }
+
         // ── Approach selection (IApproachQuestline) ────────────────────
 
         public bool SelectApproach(QuestApproach approach) =>
@@ -201,6 +244,15 @@ namespace Ashfall.Core.Muster
                 musterTriggered = _state.musterTriggered,
                 musterPath = _state.musterPath ?? string.Empty
             };
+            var results = new List<WitnessResult>(_state.witnessResults);
+            results.Sort((a, b) => string.CompareOrdinal(a.witnessId, b.witnessId));
+            for (int i = 0; i < results.Count; i++)
+                copy.witnessResults.Add(new WitnessResult
+                {
+                    witnessId = results[i].witnessId,
+                    variantId = results[i].variantId,
+                    day = results[i].day
+                });
             var ordered = new List<MusterRecord>(_state.records);
             ordered.Sort((a, b) => string.CompareOrdinal(a.questlineId, b.questlineId));
             for (int i = 0; i < ordered.Count; i++)
@@ -226,6 +278,21 @@ namespace Ashfall.Core.Muster
             _state.escalationDay = saved.escalationDay;
             _state.musterTriggered = saved.musterTriggered;
             _state.musterPath = saved.musterPath ?? string.Empty;
+            _state.witnessResults.Clear();
+            if (saved.witnessResults != null)
+            {
+                for (int i = 0; i < saved.witnessResults.Count; i++)
+                {
+                    var r = saved.witnessResults[i];
+                    if (r == null || string.IsNullOrEmpty(r.witnessId)) continue;
+                    _state.witnessResults.Add(new WitnessResult
+                    {
+                        witnessId = r.witnessId,
+                        variantId = r.variantId ?? string.Empty,
+                        day = r.day
+                    });
+                }
+            }
             _state.records.Clear();
             if (saved.records != null)
             {
