@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-08-30<br>
-**Total Registered Actions:** 106 entries / 162 flag tokens (aliases included)
+**Last Verified:** 2026-09-02<br>
+**Total Registered Actions:** 116 entries / 182 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -59,6 +59,7 @@
 | `--selftests` | — | Alias for --list-selftests |
 | `--list-selftest` | — | Alias for --list-selftests |
 | `--muster-selftest` | `--expansion-06-selftest` | MusterHeadlessDemo (Exp 06 the Muster) |
+| `--faction-ecology-selftest` | — | Plan 25 faction ecology vertical slice (action board, E-P1 chain, witness, camp scene, muster path) |
 | `--phase0-selftest` | — | Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip |
 | `--silent-foundry-selftest` | — | Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip |
 | `--standing-record-selftest` | — | StandingRecordHeadlessDemo (Exp 03) |
@@ -66,6 +67,10 @@
 | `--warlord-host-selftest` | — | Warlord host playthrough: YearOfAsh wiring, standing, v3 save/tamper |
 | `--warlord-selftest` | `--warlord-ai-selftest` | Adaptive warlord AI: doctrines, territory, tribute, determinism, v3 save |
 | `--warlord-ui-selftest` | — | Warlord tribute payment loop + collector voice + FactionsPanel card |
+| `--world-exploration-selftest` | `--plan11-selftest` | World exploration: deep-strata excavation, cipher hunts, living geography evolution, and location memory |
+| `--cartography-selftest` | `--plan16-selftest` | Cartography and infrastructure: 60-node wasteland map, 6 waystations, 4 caravan circuits, 12 accords, and damaged map zones |
+| `--expansion-depth-selftest` | `--plan18-selftest` | Expansion deepening: Holdfast (24 quests), Standing Record (52 memories, 22 quests), Crossing (20 quests, 14 encounters), Verdict (16 questlines, 9 NPCs) |
+| `--wasteland-inhabitants-selftest` | `--plan20-selftest`, `--inhabitants-selftest` | Wasteland inhabitants: NPC catalog, faction presence, encounter density, and settlement population verification |
 | `--audio-selftest` | `--audio-test` | Audio cue catalog, AudioManager wiring, and sound event verification |
 | `--caravan-selftest` | `--traveling-caravan-selftest` | Traveling caravan economy, inventory generation, and barter ticks |
 | `--chemical-dependency-save-selftest` | — | Chemical dependency system save store round-trip, tolerance, and withdrawal states |
@@ -75,6 +80,7 @@
 | `--expansion-hub-save-selftest` | — | Expansion hub save write → reload → restore → checksum/tamper checks |
 | `--expedition-encounter-bridge-selftest` | — | ExpeditionEncounterBridge bare-notice + resolved surface smoke test |
 | `--expedition-selftest` | — | Expedition domain: sorties, encounter resolution, loot drops, and save round-trip |
+| `--research-catalog-selftest` | — | Research knowledge catalog: load count, DAG validity, and cross-catalog unlock references (Plan 34) |
 | `--holdfast-save-selftest` | — | S1 save write → reload → restore → checksum/tamper checks |
 | `--holdfast-trade-save-selftest` | — | Holdfast trade ledger and save store round-trip and tamper checks |
 | `--inventory-save-selftest` | — | Inventory system save store round-trip, item serialization, and checksum verification |
@@ -84,11 +90,14 @@
 | `--medical-selftest` | — | Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip |
 | `--medical-ward-save-selftest` | — | Medical ward save store round-trip, bed allocation, and affliction persistence |
 | `--narrative-selftest` | — | Narrative domain: dialog trees, echoes, flags, and story event resolution |
+| `--oral-lore-selftest` | — | Oral Lore Codex: load 16 songs/poems from narrative catalogs, verify query by id/tag/genre |
 | `--radio-selftest` | — | Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected |
 | `--settings-selftest` | `--settings-test` | SettingsManager state, resolution, audio buses, and keybindings save/load |
 | `--survivors-selftest` | — | Survivors domain: needs decay, skill progression, trauma, and morale |
 | `--utility-ai-selftest` | — | Utility AI decision scoring, survivor behaviors, and action selection |
 | `--weather-save-selftest` | — | Weather system save store round-trip, forecast queue, and atmospheric condition persistence |
+| `--dynamic-world-selftest` | `--plan19-selftest` | Dynamic world systems: weather forecasting lookahead, station tiers, 6 seasonal phases, 18+ seasonal events, Orbital Harrow kinetic impact templates, sky armor cascades, salvage, and save persistence |
+| `--wasteland-inhabitants-selftest` | `--plan20-selftest`, `--inhabitants-selftest` | Wasteland inhabitants: 32-entry field guide (20 fauna + 12 flora), 6 wasteland settlements, 18 named NPCs with standing-reactive greetings, 6 repeatable side-work quests, 24 route-aware travel encounters + 4 multi-stage chains with stance weighting and deterministic RNG |
 | `--world-selftest` | — | World domain: map nodes, sector navigation, hazard regions, and landmark states |
 | `--year-of-ash-save-selftest` | — | Year of Ash save write → reload → restore → checksum/tamper checks |
 | `--dashboard-uitest` | — | Game Dashboard panel UI construction, HUD binding, and metrics display |
@@ -107,8 +116,8 @@
 | `--playable-shell-selftest` | `--shell-selftest`, `--playable-loop-selftest` | Playable shell game loop, scene transitions, and day advancement |
 | `--player-panels-uitest` | `--player-panels-ui-test` | Bind and render Survivors, Medical, Weather, Radio, Shelter panels |
 | `--shelter-hazard-loop-selftest` | `--shelter-hazard-selftest`, `--duty-roster-loop-selftest` | Shelter hazard loop and duty roster assignment verification |
+| `--shelter-decor-selftest` | `--shelter-interior-selftest`, `--memorial-wall-selftest` | Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification |
 | `--shelter-operations-selftest` | `--shelter-ops-selftest`, `--operations-selftest` | Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification |
-| `--shelter-decor-selftest` | `--shelter-interior-selftest`, `--memorial-wall-selftest` | Live decor catalog, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification |
 | `--silent-foundry-uitest` | — | Silent Foundry trade panel UI construction, binding, and trade loop |
 | `--survivors-uitest` | — | Survivors panel UI construction, roster cards, and affliction badges |
 | `--ui-layout-selftest` | `--layout-selftest` | Verify fixed 1920x1080 UI layout bounds, responsive containers, and panel alignments |
