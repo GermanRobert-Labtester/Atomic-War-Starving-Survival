@@ -185,13 +185,15 @@ namespace AtomicWar.GodotApp
             _dashboard.OnServiceFilterRequested += () =>
             {
                 SetupStartingLevel();
-                _startingLevel?.ServiceAirFilter();
+                if (_startingLevel?.ServiceAirFilter() == true)
+                    HandleShelterRoomRepairPerformed("room_filtration");
                 UpdateHud();
             };
             _dashboard.OnReplaceFilterRequested += () =>
             {
                 SetupStartingLevel();
-                _startingLevel?.ReplaceAirFilter();
+                if (_startingLevel?.ReplaceAirFilter() == true)
+                    HandleShelterRoomRepairPerformed("room_filtration");
                 UpdateHud();
             };
             AddChild(_dashboard);
@@ -355,6 +357,7 @@ namespace AtomicWar.GodotApp
             // ── Shelter panel (overlay) ──
             _shelterPanel = new ShelterPanel();
             _shelterPanel.OnClose += CloseShelterPanel;
+            _shelterPanel.RoomSelected += HandleShelterRoomSelected; // Plan 29 29A: click = inspect
             AddChild(_shelterPanel);
 
             // ── Greenhouse panel (overlay) ──

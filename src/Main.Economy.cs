@@ -158,7 +158,10 @@ namespace AtomicWar.GodotApp
                 if (_state == GameState.Playing) UpdateHud();
             };
             if (_silentFoundryPanel != null)
+            {
                 _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+                _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog());
+            }
             // Live market strip: show the guild's real trade access at all times.
             if (_economyPanel != null)
                 _economyPanel.BindStance(_silentFoundry.GuildStanceEngine, Ashfall.Core.Foundry.SilentFoundryIds.FactionId);

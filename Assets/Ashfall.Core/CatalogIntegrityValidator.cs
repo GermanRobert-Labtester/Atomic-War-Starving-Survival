@@ -90,7 +90,8 @@ namespace Ashfall.Core
             "contraband_", "glitch_", "telemetry_", "blackbox_", "directive_", "audit_",
             "hydrophone_", "borehole_", "cryopod_", "salt_mine_",
             "liturgy_", "canon_", "hymnal_", "epitaph_",
-            "journal_psych_", "botany_", "folklore_children_", "fraud_ration_",
+            "journal_psych_", "botany_", "folklore_children_", "folklore_", "fraud_ration_",
+            "graffiti_", "ritual_", "superstition_", "memorial_rite_", "mourning_", "schism_",
             "cipher_station_", "alarm_seismic_", "emp_sniffer_", "wiretap_",
             "pathology_autopsy_", "pharma_", "surgery_log_", "sensory_loss_",
             "audit_gate_", "silt_report_", "lead_wall_", "filter_clog_",
@@ -130,7 +131,17 @@ namespace Ashfall.Core
             "tallow_rendering_", "beeswax_clarif_", "wick_braiding_", "candle_dip_",
             "bone_degreasing_", "antler_horn_", "bone_scraping_", "bone_tool_",
             // The Weight of Choices — faction branching system (Military slice).
-            "branch_", "ending_"
+            "branch_", "ending_",
+            // Plan 20 — Wasteland Inhabitants & Field Guide
+            "field_fauna_", "field_flora_", "field_guide_", "char_", "creature_",
+            // Plan 21 — Phantom Memory & Heirloom World Layer
+            "heirloom_", "secret_", "phantom_trigger_",
+            // Plan 22 — Foundry, Greenhouse & Production
+            "foundry_prod_", "crop_",
+            // Plan 26 — Knowledge, Research & Skills: The Progression World
+            "knowledge_", "skill_", "manual_", "procedure_", "finding_",
+            // Plan 28 — Living Wasteland Ecology, Migration & Infestations
+            "species_", "migration_", "infestation_", "eco_chain_"
         };
 
         /// <summary>
@@ -153,7 +164,17 @@ namespace Ashfall.Core
             "questlineId", "stageId", "firstStageId",
             // The Weight of Choices — faction branching system (Military slice).
             "ponr_flag", "ending_id",
-            "recipe_id", "key"
+            "recipe_id", "key",
+            // Plan 20
+            "choice_id", "chain_id",
+            // Plan 21
+            "heirloom_id", "secret_id", "trigger_id", "gating_flag",
+            // Plan 22
+            "product_id", "internal_divisions",
+            // Plan 26
+            "manual_id", "procedure_id", "possible_findings",
+            // Plan 28
+            "migration_id", "infestation_id", "species_id"
         };
 
         /// <summary>
@@ -173,10 +194,12 @@ namespace Ashfall.Core
             "traitId", "branchId", "scheduleEventId", "dialogue_event_id",
             "requiredFlag", "requiredFlagId", "RequiredFlagId", "RequiredEventFlags",
             "ambushFlag", "cleanWaterRewardFlag", "trait_granted",
-            "latentExpertTrait", "requiredTrait", "roomId", "itemId",
-            "downstream_quest_trigger", "gating_flag", "nextStageId",
+            "latentExpertTrait", "requiredTrait", "itemId",
+            "downstream_quest_trigger", "nextStageId",
             "countermeasure_item_id",
-            "from", "to"
+            "from", "to",
+            // Plan 21
+            "base_item_id", "discovery_source_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -192,7 +215,7 @@ namespace Ashfall.Core
         {
             "tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name",
-            "collection_id",
+            "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",
             "callsign", "entry_type", "record_type", "directive_code", "classification",
@@ -351,6 +374,7 @@ namespace Ashfall.Core
             "flag_verdict_shift_charter_restored", "flag_verdict_clerk_met",
             "flag_verdict_call_resolved", "flag_verdict_relay_read",
             "flag_verdict_fuse_advanced", "flag_verdict_wing_slept",
+            "flag_verdict_reid_enrolled", "flag_verdict_vane_enrolled", "flag_verdict_holt_enrolled",
             // Expansion 12 (Vel/Vigil) orphan-knock gating flag — set at runtime by
             // future exp-12 code; registered in whitelists/orphan_knocks.json as a
             // deliberate, canonically-tracked orphan door event.
@@ -359,7 +383,7 @@ namespace Ashfall.Core
             "flag_escalation_marked_ruin_mediated", "flag_favor_scavenger_claim_recognized",
             "flag_favor_scavenger_arbitration_fair",
             // Plan 25 (Faction Ecology & the Muster) — political flags produced at
-            // runtime by the FactionActionBoard / FactionWarChainRunner seams
+            // runtime by the FactionActionBoard / FactionWarChainRunner seams;
             // producer->consumer map in whitelists/plan25_flags.json.
             "flag_become_warlord", "flag_escalation_bitter_water", "flag_escalation_bitter_water_investigated", "flag_escalation_cistern_blockade",
             "flag_escalation_cistern_published", "flag_escalation_empty_chair", "flag_escalation_prisoner_gate", "flag_escalation_prisoner_truth_told",
@@ -382,7 +406,20 @@ namespace Ashfall.Core
             "radio_vo_ch11_stockpile", "radio_vo_kind_hatch",
             "radio_vo_kind_parley", "radio_vo_verdict_meter",
             "radio_vo_verdict_eden", "radio_vo_verdict_count",
-            "radio_vo_verdict_geophone", "radio_vo_verdict_reckoning"
+            "radio_vo_verdict_geophone", "radio_vo_verdict_reckoning",
+            // Plan 29 — shelter runtime room ids. These rooms are authored in CODE
+            // (StartingLevelSystem Day-1 roster, ShelterAssignmentHostSession,
+            // HoldfastInteriorView spatial map), not in a JSON catalog, so tier-1
+            // references to them (shelter_room_identities.json legacy_aliases,
+            // future identity/quirk data) resolve here instead. Keep in sync with
+            // those rosters. Rooms defined in power_grid.json (room_air_filtration,
+            // room_clinic, room_water_pump, room_greenhouse, room_foundry,
+            // room_lighting_main) are data-registered and deliberately NOT listed.
+            "room_bunker_corridor", "room_filtration_stack", "room_storage_bay",
+            "room_bunks_living", "room_radio_tuner",
+            "room_bunks", "room_kitchen", "room_workshop", "room_filtration",
+            "room_airlock",
+            "room_main",  // "Main Vault" — ShelterScheduleHostSession's power room; the Plan 29B generator home (continuity §7.3)
         };
 
         private sealed class Ctx

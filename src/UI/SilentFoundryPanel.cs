@@ -38,6 +38,8 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
 
     private SilentFoundryHostSession? _host;
     private int _currentDay = 4;
+    private Ashfall.Core.Shelter.ShelterMachineTellCatalog? _machineTellCatalog;
+    private Label? _tellLabel;
 
     public bool IsBound => _host != null;
 
@@ -47,6 +49,12 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         _currentDay = currentDay;
         if (_host != null)
             _host.StateChanged += RefreshView;
+        RefreshView();
+    }
+
+    public void SetMachineTellCatalog(Ashfall.Core.Shelter.ShelterMachineTellCatalog? catalog)
+    {
+        _machineTellCatalog = catalog;
         RefreshView();
     }
 
@@ -108,6 +116,18 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
+        // Plan 29 Phase 10: machine tell line for the foundry cupola.
+        _tellLabel = new Label
+        {
+            Text = "MACHINE // NOMINAL",
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Center,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill,
+            CustomMinimumSize = new Vector2(0, 24)
+        };
+        _tellLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+        _detailBox.AddChild(_tellLabel);
+
         // _detailContent is the transient child container. RefreshDetail calls
         // EmptyChildren(_detailContent) every pass; the persistent header above
         // stays alive across rebuilds so RefreshDetail can keep mutating
@@ -148,6 +168,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
     public void RefreshView()
     {
         RefreshStatusRail();
+        RefreshMachineTell();
         BuildProductRows();
         RefreshDetail();
     }
@@ -187,6 +208,37 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
                                                                     AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("treaty", TreatySummary(s),
             s.treatyCompliance != null && AnyTreatyViolated(s.treatyCompliance) ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
+    }
+
+    private void RefreshMachineTell()
+    {
+        if (_tellLabel == null || _machineTellCatalog == null || _host == null)
+            return;
+        var readings = new Ashfall.Core.Shelter.MachineConditionReadings
+        {
+            FoundryRefractoryLining = (float)Math.Clamp(_host.Engine.GetComponentCondition(Ashfall.Core.Foundry.FoundryFacilityComponent.RefractoryLining), 0, 100),
+            FoundryHearthTuyeres = (float)Math.Clamp(_host.Engine.GetComponentCondition(Ashfall.Core.Foundry.FoundryFacilityComponent.HearthTuyeres), 0, 100),
+            FoundrySandBeds = (float)Math.Clamp(_host.Engine.GetComponentCondition(Ashfall.Core.Foundry.FoundryFacilityComponent.SandBeds), 0, 100),
+            FoundryStructuralSupports = (float)Math.Clamp(_host.Engine.GetComponentCondition(Ashfall.Core.Foundry.FoundryFacilityComponent.StructuralSupports), 0, 100),
+            FoundrySafetyExhaust = (float)Math.Clamp(_host.Engine.GetComponentCondition(Ashfall.Core.Foundry.FoundryFacilityComponent.SafetyExhaust), 0, 100)
+        };
+        var quirks = _machineTellCatalog.EvaluateQuirks("machine_foundry_cupola", readings);
+        var fired = new System.Collections.Generic.List<string>();
+        for (int i = 0; i < quirks.Count; i++)
+        {
+            if (string.Equals(quirks[i].kind, "diagnostic", System.StringComparison.Ordinal))
+                fired.Add(quirks[i].text_cue);
+        }
+        if (fired.Count == 0)
+        {
+            _tellLabel.Text = "MACHINE // NOMINAL";
+            _tellLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+        }
+        else
+        {
+            _tellLabel.Text = "MACHINE // " + string.Join(" // ", fired);
+            _tellLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Entropy));
+        }
     }
 
     private static string LaborLabel(FoundryLaborDispute d) => d switch

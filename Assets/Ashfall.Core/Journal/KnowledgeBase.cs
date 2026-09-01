@@ -63,6 +63,12 @@ namespace Ashfall.Core.Journal
 
         /// <summary>"event_fired_" + eventId — a narrative event triggered this run.</summary>
         public static string EventFired(string eventId) => "event_fired_" + eventId;
+
+        /// <summary>"room_history_seen_" + vignetteId — a shelter room-history vignette was discovered (Plan 29 29A).</summary>
+        public static string RoomHistorySeen(string vignetteId) => "room_history_seen_" + vignetteId;
+
+        /// <summary>"glitch_noted_" + glitchId — a machine glitch event was observed/journalised (Plan 29 29B).</summary>
+        public static string GlitchNoted(string glitchId) => "glitch_noted_" + glitchId;
     }
 
     /// <summary>

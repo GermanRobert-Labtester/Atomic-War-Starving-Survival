@@ -44,6 +44,9 @@ namespace AtomicWar.GodotApp
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
             _campaignDay.Register("memorial", new MemorialDayOwner(this), phase: 5);
+            // Plan 29 29A: room-history day milestones. Reads only the identity
+            // catalog and writes journal knowledge keys; no system ticks here.
+            _campaignDay.Register("shelter_room_history", new ShelterRoomHistoryDayOwner(this), phase: 5);
         }
 
         // ── Phase 1 Owners ───────────────────────────────────────────────
@@ -251,6 +254,10 @@ namespace AtomicWar.GodotApp
             {
                 _m.SetupSurvivors();
                 _m._survivors.TickHour(24f);
+                _m.SetupShelterDecor();
+                int decorRecipients = _m._shelterDecor?.ApplyDailyMorale(day) ?? 0;
+                if (decorRecipients > 0)
+                    events.Add(new DayStateChangeEvent("shelter_decor_morale", "shelter_decor", null, null, decorRecipients));
                 // Drain any survivor_perished events from the death pipeline
                 // into the briefing feed. Needs/radiation OnDied fires inside
                 // TickHour — every death this day lands here exactly once.
@@ -313,6 +320,12 @@ namespace AtomicWar.GodotApp
 
                 _m.SetupDisease();
                 _m._disease.TickDaily(day);
+
+                // Plan 60 / D5 + D7 — bridge illness into the shared sick-list band
+                // ladder and keep the memorial grief sink bound. Runs after the
+                // disease tick so it reads this day's stage, and is idempotent.
+                _m.SyncDiseaseTriage(day, events);
+
                 if (_m._expansionHubDirty) _m.SaveExpansionHub();
 
                 events.Add(new DayStateChangeEvent("medical_disease_ticked", "medical_disease", null, null, day));
@@ -514,9 +527,21 @@ namespace AtomicWar.GodotApp
                         if (sectorsBefore.TryGetValue(pack.packId, out var before)
                             && before != pack.currentSectorId)
                         {
+                            // Plan 28: archetype-flavored coarse sighting; the
+                            // generic move line stays for unremarkable species.
+                            string notice = WildlifeSeasonalCalendar.MigrationNotice(
+                                WildlifeSeasonalCalendar.ArchetypeOf(pack.speciesId),
+                                pack.speciesId, before, pack.currentSectorId, day);
                             events.Add(new DayStateChangeEvent("radio_intercept", "world_evolution",
-                                "wildlife net", $"{pack.packId} sighted moving {before} into {pack.currentSectorId}", pack.population));
+                                "wildlife net",
+                                notice ?? $"{pack.packId} sighted moving {before} into {pack.currentSectorId}",
+                                pack.population));
                             reported++;
+                            // Plan 28 Phase 5: observation drives knowledge — a
+                            // sighted species unlocks its field-guide teach
+                            // entry (session knowledge; persistence = Plan 20A).
+                            var teach = WildlifeSeasonalCalendar.FieldGuideEntryFor(pack.speciesId);
+                            if (teach != null) _m.UnlockFieldGuideObservation(teach);
                         }
                         if (pack.isRabid && pack.lastThreatFiredDay == day)
                         {
@@ -594,7 +619,64 @@ namespace AtomicWar.GodotApp
                     }
                 }
 
+                // ── Plan 28 Phase 3: war-blocked corridors & collapse notice ──
+                // Faction dominance projects onto the sector graph: sectors
+                // holding dominant-faction ground close to wildlife movement
+                // (stateless projection — the migration runtime never
+                // persists blockage). Binding: seeds' location records carry
+                // an optional sector_id.
+                {
+                    world.Wildlife?.ClearSectorBlockages();
+                    if (!string.IsNullOrEmpty(dominant) && world.Seeds?.location_seeds != null)
+                    {
+                        foreach (var seed in world.Seeds.location_seeds)
+                        {
+                            if (seed == null || seed.owner != dominant) continue;
+                            var sector = SectorOfLocation(world, seed.location_id);
+                            if (!string.IsNullOrEmpty(sector)) world.Wildlife?.SetSectorBlocked(sector, true);
+                        }
+                    }
+                }
+
+                // ── Plan 28 Phase 4: ecological infestations ──
+                _m.TickEcologicalInfestations(day, events);
+
+                // ── Plan 28 Phase 3: collapse/scarcity notice (bounded) ──
+
+                // ── Plan 28 Phase 3: collapse/scarcity notice (bounded) ──
+                if (world.Wildlife != null && ratio <= 0.45f
+                    && day - _lastCollapseNoticeDay >= CollapseNoticeCooldownDays)
+                {
+                    _lastCollapseNoticeDay = day;
+                    events.Add(new DayStateChangeEvent("hazard_warning", "world_evolution",
+                        "wildlife collapse",
+                        "the land has gone quiet — snare lines and larders both", ratio));
+                    _m.SetupJournal();
+                    _m._journal.TryAddRawEntry($"world_wildlife_collapse_{day}",
+                        "Something changed in the counts. The dogs range wider; the snares come back empty.",
+                        null!, day);
+                }
+
                 events.Add(new DayStateChangeEvent("world_evolution_ticked", "world_evolution", null, null, day));
+            }
+
+            /// <summary>Collapse notices re-arm after this many days (anti-spam).</summary>
+            private const int CollapseNoticeCooldownDays = 12;
+            private int _lastCollapseNoticeDay = -30;
+
+            /// <summary>
+            /// Plan 28 Phase 3 — sector binding for war-blocked corridors: the
+            /// seeds' location records carry an optional sector binding so the
+            /// dominant faction's ground closes its representative sector to
+            /// wildlife movement (stateless projection, never persisted).
+            /// </summary>
+            private static string? SectorOfLocation(WorldHostSession world, string locationId)
+            {
+                if (world.Seeds?.location_seeds == null) return null;
+                foreach (var seed in world.Seeds.location_seeds)
+                    if (seed != null && string.Equals(seed.location_id, locationId, StringComparison.Ordinal))
+                        return string.IsNullOrEmpty(seed.sector_id) ? null : seed.sector_id;
+                return null;
             }
 
             private static HashSet<string> CollapsedSet(WorldHostSession world)
@@ -686,6 +768,18 @@ namespace AtomicWar.GodotApp
             {
                 _m.SetupMemorial();
                 events.Add(new DayStateChangeEvent("memorial_checked", "memorial", null, null, day));
+            }
+        }
+
+        /// <summary>Plan 29 Task 29A: once-daily room-history milestone pass.</summary>
+        private sealed class ShelterRoomHistoryDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public ShelterRoomHistoryDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickShelterRoomHistoryMilestones(day);
             }
         }
     }

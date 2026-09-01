@@ -53,7 +53,7 @@ namespace Ashfall.Core.StartingLevel
     public class StartingLevelSaveState
     {
         public int day = 1;
-        public string locationId = "loc_bunker_holdfast";
+        public string locationId = "loc_holdfast";
         public RationPolicy rationPolicy = RationPolicy.Standard;
         public MaintenanceDirective maintenanceDirective = MaintenanceDirective.ServiceFilterStack;
         public RadioProtocol radioProtocol = RadioProtocol.AcknowledgeHydroBarons;

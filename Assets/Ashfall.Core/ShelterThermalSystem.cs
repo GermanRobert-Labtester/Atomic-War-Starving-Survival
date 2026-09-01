@@ -69,6 +69,8 @@ namespace Ashfall.Core
     public sealed class ShelterThermalSystem
     {
         public const string SystemId = "shelter_thermal";
+        public float BoilerFuelLevel => _state.boilerFuelLevel;
+        public bool BoilerActive => _state.boilerActive;
 
         // BUG-04 physics constants. First-pass placeholders (HeatGainBaseRate,
         // HeatLossBaseRate, InsulationDivisionEpsilon, the magic-literal *0.1f

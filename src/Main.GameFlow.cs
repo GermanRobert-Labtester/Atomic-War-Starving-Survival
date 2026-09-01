@@ -345,7 +345,8 @@ namespace AtomicWar.GodotApp
                     SetupSurvivors();
                     SetupWorld();
                     SetupInventory();
-                    _shelterPanel.Bind(_survivors, _world, _inventory);
+                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog());
+                    _shelterPanel.SetMachineTellCatalog(GetMachineTellCatalog());
                     _shelterPanel.Open();
                     break;
                 case "factions":
@@ -385,6 +386,7 @@ namespace AtomicWar.GodotApp
                     SetupExpansions();
                     SetupSilentFoundry();
                     _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+                    _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog());
                     _silentFoundryPanel.Open();
                     break;
                 case "trade":
@@ -483,6 +485,7 @@ namespace AtomicWar.GodotApp
                 case "apprenticeship":
                 case "shelter_thermal":
                 case "shelter_schedule":
+                case "shelter_decor":
                 case "autopsy_report":
                 case "waystation_network":
                 case "chemical_dependency":
@@ -608,7 +611,8 @@ namespace AtomicWar.GodotApp
                 AirWarning = _startingLevel?.System.State.airHazardWarning ?? false,
                 FilterDutyAssignee = intakeAssignee,
                 Forecast = _world.Weather.PeekForecast(3),
-                LastEvent = lastEvent
+                LastEvent = lastEvent,
+                MachineTellText = BuildMachineTellText()
             });
         }
 

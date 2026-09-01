@@ -155,7 +155,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseMapDetailPanel());
 
             PanelRegistry.ConfigureActions("shelter",
-                bindAction: () => { SetupSurvivors(); SetupWorld(); SetupInventory(); _shelterPanel.Bind(_survivors, _world, _inventory); },
+                bindAction: () => { SetupSurvivors(); SetupWorld(); SetupInventory(); _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog()); _shelterPanel.SetMachineTellCatalog(GetMachineTellCatalog()); },
                 openAction: () => _shelterPanel.Open(),
                 closeAction: () => CloseShelterPanel());
 
@@ -198,7 +198,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseGreenhousePanel());
 
             PanelRegistry.ConfigureActions("silent_foundry",
-                bindAction: () => { SetupExpansions(); SetupSilentFoundry(); _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay); },
+                bindAction: () => { SetupExpansions(); SetupSilentFoundry(); _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay); _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog()); },
                 openAction: () => _silentFoundryPanel.Open(),
                 closeAction: () => CloseSilentFoundryPanel());
 
@@ -524,7 +524,7 @@ namespace AtomicWar.GodotApp
             {
                 "water_treatment", "airlock_security", "survivor_relations", "regional_treaty",
                 "vinyl_morale", "wildlife_trapping", "excavation", "apprenticeship",
-                "caregiving", "shelter_thermal", "shelter_schedule", "autopsy_report",
+                "caregiving", "shelter_thermal", "shelter_schedule", "shelter_decor", "autopsy_report",
                 "waystation_network", "chemical_dependency", "sump_flooding", "decontamination",
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
                 "contractor_roster", "mental_health_crisis", "phantom_memory",

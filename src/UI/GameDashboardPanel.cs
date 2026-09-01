@@ -54,6 +54,7 @@ namespace AtomicWar.GodotApp.UI
             public string LastEvent = string.Empty;
             public System.Collections.Generic.List<Ashfall.Core.World.WeatherForecastEntry> Forecast = new();
             public System.Collections.Generic.Dictionary<string, string> DutyAssignments = new();
+            public string MachineTellText = string.Empty;
         }
 
         private Label _dayLabel = null!;
@@ -72,6 +73,7 @@ namespace AtomicWar.GodotApp.UI
         private Label _foodValue = null!;
         private Label _medicalValue = null!;
         private Label _filterValue = null!;
+        private Label _machineTellLabel = null!;
         private Label _scrapValue = null!;
         private Label _nextShiftValue = null!;
         private Label _hatchValue = null!;
@@ -201,6 +203,19 @@ namespace AtomicWar.GodotApp.UI
             _foodValue.Text = $"{Math.Max(0, state.Food):00} units";
             _medicalValue.Text = $"{Math.Max(0, state.MedicalStock):00} doses";
             _filterValue.Text = $"{Math.Max(0, state.FilterSpares):00} spares";
+            if (_machineTellLabel != null)
+            {
+                _machineTellLabel.Text = string.IsNullOrWhiteSpace(state.MachineTellText)
+                    ? "MACHINES // NOMINAL"
+                    : $"MACHINES // {state.MachineTellText}";
+                _machineTellLabel.AddThemeColorOverride(
+                    "font_color",
+                    AshfallUiHelpers.ToColor(state.MachineTellText.Contains("CRITICAL") || state.MachineTellText.Contains("FAULT")
+                        ? DesignTheme.Critical
+                        : state.MachineTellText.Contains("WORN") || state.MachineTellText.Contains("RATTLE") || state.MachineTellText.Contains("CHOKE") || state.MachineTellText.Contains("COUGH")
+                            ? DesignTheme.Entropy
+                            : DesignTheme.Pale));
+            }
             if (_scrapValue != null) _scrapValue.Text = $"{Math.Max(0, state.MechanicalScrap):00} scrap";
 
             // ── Air Filtration & Atmosphere ──
@@ -517,6 +532,7 @@ namespace AtomicWar.GodotApp.UI
             stores.AddChild(MakeLiveDataRow("CLEAN WATER", "--", out _waterValue, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
             stores.AddChild(MakeLiveDataRow("PRESERVED FOOD", "--", out _foodValue, AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             stores.AddChild(MakeLiveDataRow("FILTER SPARES", "--", out _filterValue, AshfallUiHelpers.ToColor(DesignTheme.Entropy)));
+            stores.AddChild(MakeLiveDataRow("MACHINE TELLS", "--", out _machineTellLabel, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
             stores.AddChild(MakeLiveDataRow("MECHANICAL SCRAP", "--", out _scrapValue, AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             stores.AddChild(MakeLiveDataRow("MEDICAL STOCK", "--", out _medicalValue, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
             var inventoryButton = MakeActionButton("OPEN INVENTORY", () => OnOpenPanelRequested?.Invoke("inventory"));

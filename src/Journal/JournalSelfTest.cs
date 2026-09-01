@@ -153,7 +153,10 @@ namespace AtomicWar.Journal
                 bool placeLocked = false;
                 for (int i = 0; i < placeRows.Count; i++)
                     if (placeRows[i].IsLocked) placeLocked = true;
-                Check(placeRows.Count == catalogs.Locations.Count && placeLocked, "places tab locked silhouettes");
+                // Plan 29 29A: the Places tab also carries shelter room-history
+                // vignette rows (locked until room_history_seen_* unlocks).
+                int expectedPlaceRows = catalogs.Locations.Count + catalogs.RoomHistories.Count;
+                Check(placeRows.Count == expectedPlaceRows && placeLocked, "places tab locked silhouettes");
             }
             else
             {

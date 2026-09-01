@@ -105,12 +105,16 @@ namespace Ashfall.Core.Journal
         public bool UnlockLocationVisited(string locationId) => UnlockCodex(KnowledgeKeys.LocationVisited(locationId));
         public bool UnlockSurvivorMet(string survivorId) => UnlockCodex(KnowledgeKeys.SurvivorMet(survivorId));
         public bool UnlockEventFired(string eventId) => UnlockCodex(KnowledgeKeys.EventFired(eventId));
+        public bool UnlockRoomHistorySeen(string vignetteId) => UnlockCodex(KnowledgeKeys.RoomHistorySeen(vignetteId));
+        public bool UnlockGlitchNoted(string glitchId) => UnlockCodex(KnowledgeKeys.GlitchNoted(glitchId));
         public bool AddKnowledgeEvidence(string survivorId, string knowledgeKey) => UnlockCodex(knowledgeKey);
 
         public bool IsItemSeen(string itemId) => _knowledge.Has(KnowledgeKeys.ItemSeen(itemId));
         public bool IsLocationVisited(string locationId) => _knowledge.Has(KnowledgeKeys.LocationVisited(locationId));
         public bool IsSurvivorMet(string survivorId) => _knowledge.Has(KnowledgeKeys.SurvivorMet(survivorId));
         public bool IsEventFired(string eventId) => _knowledge.Has(KnowledgeKeys.EventFired(eventId));
+        public bool IsRoomHistorySeen(string vignetteId) => _knowledge.Has(KnowledgeKeys.RoomHistorySeen(vignetteId));
+        public bool IsGlitchNoted(string glitchId) => _knowledge.Has(KnowledgeKeys.GlitchNoted(glitchId));
 
         private bool UnlockCodex(string key)
         {

@@ -12,7 +12,7 @@ namespace Ashfall.Core.Tests
         {
             var system = new StartingLevelSystem();
             Assert.Equal(1, system.State.day);
-            Assert.Equal("loc_bunker_holdfast", system.State.locationId);
+            Assert.Equal("loc_holdfast", system.State.locationId);
             Assert.Equal(5, system.State.rooms.Count);
 
             var corridor = system.State.rooms.FirstOrDefault(r => r.roomId == "room_bunker_corridor");

@@ -58,6 +58,8 @@ namespace AtomicWar.GodotApp.World
         private DutyRosterHostSession? _dutyRoster;
         private ShelterAssignmentHostSession? _shelterAssignments;
         private Func<string, string>? _customAssignmentResolver;
+        private Ashfall.Core.Shelter.ShelterRoomIdentityCatalog? _roomIdentities;
+        private Ashfall.Core.Shelter.ShelterMachineTellCatalog? _machineTellCatalog;
 
         private readonly Dictionary<string, InteriorRoomDefinition> _roomDefinitions = new(StringComparer.Ordinal);
         private readonly List<SurvivorActorView> _survivorActors = new();
@@ -133,6 +135,27 @@ namespace AtomicWar.GodotApp.World
         {
             _customAssignmentResolver = resolver;
             UpdateSurvivorPositions();
+        }
+
+        /// <summary>
+        /// Plan 29 Task 29A: bind the room identity overlay (data-driven,
+        /// HoldfastFlavorCatalog pattern — missing catalog or unknown room falls
+        /// back to the neutral status line, never blocks the view). Tooltip-only
+        /// surfacing: lore never buries the live status line (§29A.6).
+        /// </summary>
+        public void SetRoomIdentityCatalog(Ashfall.Core.Shelter.ShelterRoomIdentityCatalog? catalog)
+        {
+            _roomIdentities = catalog;
+            UpdateSurvivorPositions();
+        }
+
+        /// <summary>
+        /// Plan 29 Task 29B: bind the machine identity catalog so room tooltips
+        /// can surface machine names for rooms that host machines.
+        /// </summary>
+        public void SetMachineTellCatalog(Ashfall.Core.Shelter.ShelterMachineTellCatalog? catalog)
+        {
+            _machineTellCatalog = catalog;
         }
 
         public void ConfigureRooms(IEnumerable<InteriorRoomDefinition> rooms)
@@ -323,11 +346,57 @@ namespace AtomicWar.GodotApp.World
 
         public string GetRoomStatusSummary(string roomId)
         {
+            string status;
             if (!string.IsNullOrEmpty(roomId) && _roomDefinitions.TryGetValue(roomId, out var def) && !string.IsNullOrEmpty(def.StatusSummary))
             {
-                return def.StatusSummary;
+                status = def.StatusSummary;
             }
-            return "Shelter Area";
+            else
+            {
+                status = "Shelter Area";
+            }
+            return AppendRoomIdentity(status, roomId);
+        }
+
+        /// <summary>Append the identity overlay (former use, one-line history, ambient fixtures) to a room's tooltip status.</summary>
+        private string AppendRoomIdentity(string status, string roomId)
+        {
+            var identity = _roomIdentities?.GetRoomIdentity(roomId);
+            if (identity == null) return status;
+            var sb = new System.Text.StringBuilder(status);
+            if (!string.IsNullOrEmpty(identity.former_use))
+                sb.Append("\nFormerly: ").Append(identity.former_use);
+            if (!string.IsNullOrEmpty(identity.one_line_history))
+                sb.Append('\n').Append(identity.one_line_history);
+
+            // Fixture details are ambient inspection texture (Plan 29 §29A.10-29A.12):
+            // a short visible pool, capped so lore never buries the status line, and
+            // never presented as clickable actions because there is no fixture action.
+            var fixtures = _roomIdentities!.GetFixturesForRoom(roomId);
+            int shown = 0;
+            for (int i = 0; i < fixtures.Count && shown < 3; i++)
+            {
+                if (!fixtures[i].art_visible || string.IsNullOrWhiteSpace(fixtures[i].detail)) continue;
+                sb.Append(shown == 0 ? "\nNotable: " : "; ").Append(fixtures[i].detail);
+                shown++;
+            }
+
+            // Plan 29 Task 29B: machine identities for rooms that host machines.
+            if (_machineTellCatalog != null && _machineTellCatalog.MachineCount > 0)
+            {
+                var machines = new System.Collections.Generic.List<string>();
+                for (int i = 0; i < _machineTellCatalog.MachineCount; i++)
+                {
+                    var m = _machineTellCatalog.Machines[i];
+                    if (string.Equals(m.room_id, roomId, StringComparison.Ordinal))
+                        machines.Add(m.display_name);
+                }
+                if (machines.Count > 0)
+                {
+                    sb.Append("\nMachines: ").Append(string.Join(", ", machines));
+                }
+            }
+            return sb.ToString();
         }
 
         private static string FormatRoomDisplayName(string roomId)
@@ -391,7 +460,7 @@ namespace AtomicWar.GodotApp.World
                 var hotspot = new RoomHotspotView();
                 hotspot.RoomId = def.RoomId;
                 hotspot.Position = def.HotspotPosition;
-                hotspot.SetRoomInfo(def.DisplayName, def.StatusSummary, 0);
+                hotspot.SetRoomInfo(def.DisplayName, GetRoomStatusSummary(def.RoomId), 0);
                 hotspot.Connect(RoomHotspotView.SignalName.Clicked, Callable.From<string>(OnRoomClicked));
                 roomHotspotsNode.AddChild(hotspot);
                 _roomHotspots[def.RoomId] = hotspot;
