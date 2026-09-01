@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "rituals": [
+    {
+      "id": "ritual_exterior_door_tap",
+      "title": "Two Taps on the Outer Iron",
+      "category": "ritual",
+      "description": "Before an expedition steps into the airlock, the leader or scout taps the steel casing twice with bare knuckles. A quiet habit that signals transition between the sealed shelter and the contaminated exterior.",
+      "context_trigger": "expedition_departure",
+      "morale_delta": 1.5,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 1,
+      "tags": [
+        "ritual",
+        "departure",
+        "expedition",
+        "iron",
+        "bunker_culture"
+      ]
+    },
+    {
+      "id": "ritual_crust_for_the_waste",
+      "title": "The Outside Crumb",
+      "category": "ritual",
+      "description": "A survivor leaves a single charred crust or dry pea on the outer sill during airlock cycling. Symbolizes acknowledgment that living things outside are starving too.",
+      "context_trigger": "mealtime",
+      "morale_delta": 1.0,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 2,
+      "tags": [
+        "ritual",
+        "rations",
+        "charity",
+        "waste",
+        "symbolic"
+      ]
+    },
+    {
+      "id": "ritual_birthday_match_flame",
+      "title": "The Birthday Match",
+      "category": "ritual",
+      "description": "On a recorded birthday, the dweller is permitted a single wooden match struck in the dark dormitory, watched in silence until the sulphur burns down to the fingers.",
+      "context_trigger": "birthday",
+      "morale_delta": 3.0,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 5,
+      "tags": [
+        "ritual",
+        "birthday",
+        "flame",
+        "dormitory",
+        "memory"
+      ]
+    },
+    {
+      "id": "ritual_departure_plate_touch",
+      "title": "The Roster Plate Touch",
+      "category": "ritual",
+      "description": "Scouts place a flat palm against the brass station plate listing former crew numbers before stepping across the threshold.",
+      "context_trigger": "expedition_departure",
+      "morale_delta": 2.0,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 1,
+      "tags": [
+        "ritual",
+        "roster",
+        "scout",
+        "touchstone"
+      ]
+    },
+    {
+      "id": "ritual_return_roll_call",
+      "title": "The Return Count",
+      "category": "ritual",
+      "description": "Immediately upon the inner hatch latching, returning expedition members speak their surnames in sequence to confirm all boots crossed the threshold.",
+      "context_trigger": "return_muster",
+      "morale_delta": 2.5,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 1,
+      "tags": [
+        "ritual",
+        "return",
+        "roll_call",
+        "safety"
+      ]
+    },
+    {
+      "id": "ritual_first_clean_sip_pause",
+      "title": "The Wellhead Pause",
+      "category": "ritual",
+      "description": "When a new batch of filtered water passes chemical assay, the filter operator and bystanders hold a three-second silence before drinking.",
+      "context_trigger": "water_purified",
+      "morale_delta": 2.0,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 3,
+      "tags": [
+        "ritual",
+        "water",
+        "purification",
+        "gratitude"
+      ]
+    },
+    {
+      "id": "ritual_empty_seat_meal_silence",
+      "title": "The Bereaved Spoon",
+      "category": "ritual",
+      "description": "Following the loss of a dweller, the mess hall observes ten seconds of silence with spoons held upside-down before eating.",
+      "context_trigger": "mealtime_after_loss",
+      "morale_delta": 1.5,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 4,
+      "tags": [
+        "ritual",
+        "grief",
+        "mealtime",
+        "memorial"
+      ]
+    },
+    {
+      "id": "ritual_generator_casing_knock",
+      "title": "The Generator Wrench Knock",
+      "category": "ritual",
+      "description": "Habitual three taps with a brass spanner on the generator's flywheel shroud before flipping the starter solenoid.",
+      "context_trigger": "machine_maintenance",
+      "morale_delta": 1.0,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 2,
+      "tags": [
+        "ritual",
+        "maintenance",
+        "generator",
+        "mechanic"
+      ]
+    },
+    {
+      "id": "superstition_intake_vent_nightmare",
+      "title": "Intake Vent Dread",
+      "category": "superstition",
+      "description": "Belief that sleeping within three paces of the main intake duct pulls black dreams and sickness from the surface filters into the sleeper's mind.",
+      "context_trigger": "bunk_assignment",
+      "morale_delta": -1.0,
+      "friction_flag": "friction_vent_sleeping_dispute",
+      "is_optional": false,
+      "cooldown_days": 3,
+      "tags": [
+        "superstition",
+        "bunk",
+        "intake",
+        "nightmare",
+        "friction"
+      ]
+    },
+    {
+      "id": "superstition_lucky_lower_bunk",
+      "title": "The Unbroken Bunk",
+      "category": "superstition",
+      "description": "Conviction that Bunk Four Lower has never lost an occupant to outside expedition failure, causing dispute when new arrivals are assigned to it.",
+      "context_trigger": "bunk_reassignment",
+      "morale_delta": 0.0,
+      "friction_flag": "friction_lucky_bunk_dispute",
+      "is_optional": false,
+      "cooldown_days": 4,
+      "tags": [
+        "superstition",
+        "bunk",
+        "luck",
+        "friction"
+      ]
+    },
+    {
+      "id": "superstition_hatch_name_taboo",
+      "title": "Unspoken on Departure",
+      "category": "superstition",
+      "description": "Taboo forbidding anyone from speaking an expedition scout's name out loud between the outer hatch opening and closing.",
+      "context_trigger": "expedition_departure",
+      "morale_delta": -0.5,
+      "friction_flag": "friction_spoken_name_blame",
+      "is_optional": false,
+      "cooldown_days": 2,
+      "tags": [
+        "superstition",
+        "departure",
+        "taboo",
+        "name"
+      ]
+    },
+    {
+      "id": "superstition_night_shift_machine_rest",
+      "title": "The Turbine's Sleep",
+      "category": "superstition",
+      "description": "Belief that the water circulation impeller should never be serviced between three and five in the morning, creating friction with emergency repair shifts.",
+      "context_trigger": "machine_maintenance",
+      "morale_delta": 0.0,
+      "friction_flag": "friction_night_shift_repair_refusal",
+      "is_optional": false,
+      "cooldown_days": 3,
+      "tags": [
+        "superstition",
+        "maintenance",
+        "night_shift",
+        "friction"
+      ]
+    },
+    {
+      "id": "superstition_dead_frequency_omen",
+      "title": "The 94.2 Bad Frequency",
+      "category": "superstition",
+      "description": "Conviction that stopping the dial on 94.2 MHz causes filter degradation or severe storms within forty-eight hours.",
+      "context_trigger": "dial_scan",
+      "morale_delta": -1.0,
+      "friction_flag": "friction_radio_frequency_fear",
+      "is_optional": false,
+      "cooldown_days": 3,
+      "tags": [
+        "superstition",
+        "radio",
+        "omen",
+        "friction"
+      ]
+    },
+    {
+      "id": "superstition_hot_lead_token_talisman",
+      "title": "The Hot Lead Charm",
+      "category": "superstition",
+      "description": "Carrying a spent solder blob or casing from an expedition despite mild rad-click detection, believing it deflects greater fallout.",
+      "context_trigger": "inventory_check",
+      "morale_delta": -0.5,
+      "friction_flag": "friction_hot_token_confiscation",
+      "is_optional": false,
+      "cooldown_days": 4,
+      "tags": [
+        "superstition",
+        "radiation",
+        "talisman",
+        "friction"
+      ]
+    },
+    {
+      "id": "folklore_comfort_blackout_freeze",
+      "title": "Red-Light Freeze Rhyme Comfort",
+      "category": "folklore_comfort",
+      "description": "During sudden blackout, an older sibling recites the red-light rhyme, preventing panic and keeping young dwellers stationary until emergency power clicks on.",
+      "context_trigger": "power_failure",
+      "morale_delta": 3.5,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 5,
+      "tags": [
+        "folklore_comfort",
+        "blackout",
+        "children",
+        "rhyme"
+      ]
+    },
+    {
+      "id": "folklore_comfort_intake_tremor",
+      "title": "Deep-Cold Lullaby Comfort",
+      "category": "folklore_comfort",
+      "description": "When sub-zero weather chills the shelter walls, collective singing of the deep-cold song settles dormitory shivering and raises spirits.",
+      "context_trigger": "cold_snap",
+      "morale_delta": 3.0,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 4,
+      "tags": [
+        "folklore_comfort",
+        "cold",
+        "lullaby",
+        "solidarity"
+      ]
+    },
+    {
+      "id": "folklore_comfort_bereaved_child_bunk_mark",
+      "title": "Under-Bunk Mark for Lost Parent",
+      "category": "folklore_comfort",
+      "description": "A bereaved child is guided to scratch a small circle and letter beneath the mattress board, easing solitary grief through quiet ritual.",
+      "context_trigger": "child_bereavement",
+      "morale_delta": 4.0,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 7,
+      "tags": [
+        "folklore_comfort",
+        "grief",
+        "child",
+        "memorial"
+      ]
+    },
+    {
+      "id": "folklore_comfort_scout_return_count",
+      "title": "Return Count for Shaken Scout",
+      "category": "folklore_comfort",
+      "description": "A traumatized scout returning from an encounter is grounded as the children at the hatch recite their name in the return tally.",
+      "context_trigger": "scout_trauma_return",
+      "morale_delta": 3.5,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 5,
+      "tags": [
+        "folklore_comfort",
+        "scout",
+        "trauma",
+        "return_count"
+      ]
+    },
+    {
+      "id": "ritual_participation_in_hot_zones",
+      "title": "Hot Zone Rite of Committal",
+      "category": "ritual",
+      "description": "A solemn expedition ritual observed by scavenging cults and wasteland dwellers before venturing into high-rad sectors.",
+      "context_trigger": "hot_zone_entry",
+      "morale_delta": 2.0,
+      "friction_flag": "",
+      "is_optional": true,
+      "cooldown_days": 3,
+      "tags": [
+        "ritual",
+        "hot_zone",
+        "committal",
+        "expedition"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "collection_id": "deep_lore_texts",
+  "entries": [
+    {
+      "id": "deep_lore_municipal_library",
+      "location_id": "location_municipal_library",
+      "title": "The Sealed Stacks",
+      "body": "Below the children's reading room, behind a fire door that was welded shut from the outside, four rows of shelving survive intact. The books are not the point. The point is the metal cabinet at the end of the third row, municipal seal still pressed into the wax, contents undisturbed. Someone had the key and chose not to use it. The weld beads are pre-Exchange. Whatever was being sealed was being sealed before the world ended, and the world ended before anyone could unseal it.",
+      "provenance": "material",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["grid", "records", "sealed", "pre_exchange"]
+    },
+    {
+      "id": "deep_lore_sunshine_daycare",
+      "location_id": "location_sunshine_daycare",
+      "title": "The Attendance Board",
+      "body": "A pegboard by the front door, name tags in laminated card. Thirty-two children registered for the week the Exchange happened. Twenty-eight tags are still in their slots. Four have been removed, carefully, and placed face-down on the reception desk. The removal was deliberate and unhurried. Whoever took them down knew which four and handled the cards as though they were still attached to something.",
+      "provenance": "eyewitness",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["grid", "civilian", "evacuation", "casualty"]
+    },
+    {
+      "id": "deep_lore_regional_blood_bank",
+      "location_id": "location_regional_blood_bank",
+      "title": "The Cold Chain Log",
+      "body": "A clipboard hanging by the main centrifuge, still attached to a pen on a retractable cord. The log records storage-unit temperatures at four-hour intervals for eleven days after the Exchange. The entries are meticulous. On the twelfth day, the handwriting changes. The new hand writes a single line: supply exhausted, no further collection possible, may God forgive what we could not do. The pen was placed back in its cord. The clipboard has not been touched since.",
+      "provenance": "material",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["grid", "medical", "records", "terminal"]
+    },
+    {
+      "id": "deep_lore_grand_cinema",
+      "location_id": "location_grand_cinema",
+      "title": "The Projection Booth",
+      "body": "Two projectors, one threaded with a reel that has run to its end and stopped. The booth has been lived in: a mattress, a chemical toilet, fourteen empty cans of food opened with a can opener that is still sitting on the shelf. The person who lived here watched the same film on repeat until the bulb failed, then sat in the dark. The mattress is against the back wall, positioned so that the viewer could see the blank screen from where they lay. The film's title card is still in the magazine. It is not a film anyone has heard of.",
+      "provenance": "material",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["grid", "shelter", "civilian", "habitation"]
+    },
+    {
+      "id": "deep_lore_upland_logging_camp",
+      "location_id": "location_upland_logging_camp",
+      "title": "The Cut Count",
+      "body": "The foreman's office has a production board nailed to the wall, magnetic tiles showing daily cut tonnage. The last entry reads 41.2, dated three weeks before the Exchange. Below it, in a different hand, someone has written 0.0 and left it there. The board has been wiped clean of the days after that, but the magnet for the tens digit is still stuck to the rail, slid down to zero and not moved. The camp was not abandoned. It was stopped.",
+      "provenance": "material",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["highland", "industry", "records", "abandoned"]
+    },
+    {
+      "id": "deep_lore_stadium_evacuation_center",
+      "location_id": "location_stadium_evacuation_center",
+      "title": "The Registration Tent",
+      "body": "Under the east concourse, a marquee tent still rigged with guy ropes and aluminium poles. Inside: a folding table, a box of blank forms, and a hand-painted sign reading FAMILY GROUPS REPORT HERE. The forms are unused. The box is sealed. The sign was painted in haste but in correct orthography, by someone who knew what the forms were for. The evacuation was planned, the infrastructure was in place, and the forms were never filled out. The people who were supposed to sit at this table left before anyone arrived to be registered.",
+      "provenance": "eyewitness",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["grid", "evacuation", "civil_defence", "unfulfilled"]
+    },
+    {
+      "id": "deep_lore_automated_abattoir",
+      "location_id": "location_automated_abattoir",
+      "title": "The Cycle Counter",
+      "body": "The main processing line has a mechanical cycle counter bolted to the drive shaft, six digits, driven by a gear train. The counter reads 000000. The belt is clean. The stunners are charged. The scalding tanks are dry and empty. The system was never run. It was installed, commissioned, tested on an empty line, and then the Exchange happened before the first animal was processed. Every mechanism in the building is functional. Nothing in the building has ever been used for its intended purpose.",
+      "provenance": "material",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["industrial", "automation", "unused", "pre_exchange"]
+    },
+    {
+      "id": "deep_lore_central_postal_hub",
+      "location_id": "location_central_postal_hub",
+      "title": "The Last Dispatch",
+      "body": "The sorting floor has a pneumatic tube station with a single canister still in the launch cradle, addressed in block capitals to a street that no longer exists. The canister is sealed, stamped, and dated. The date is the day after the Exchange. The stamp is valid. The canister was prepared by someone who was still at their desk, still sorting, still operating the system on the day the system stopped meaning anything. It has never been launched. The tube pressure gauge reads zero.",
+      "provenance": "material",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["grid", "postal", "records", "terminal"]
+    },
+    {
+      "id": "deep_lore_municipal_water_reservoir",
+      "location_id": "location_municipal_water_reservoir",
+      "title": "The Chlorination Log",
+      "body": "The pump house has a logbook chained to the desk, waterproof cover, ring-bound. The final entries record chlorine residual levels at six-hour intervals. The last readable entry notes a value of 0.3 milligrams per litre, within specification. Below it, in the same hand, a single line: contamination source unknown, increased dose ineffective, do not draw from the lower intake. The lower intake valve is open. The chain on the logbook is long enough to reach the valve. The person who wrote the warning could have closed the valve and chose to leave it open and write the warning instead.",
+      "provenance": "restricted",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["infrastructure", "water", "contamination", "warning"]
+    },
+    {
+      "id": "deep_lore_television_studio",
+      "location_id": "location_television_studio",
+      "title": "Studio A",
+      "body": "The main studio is dark, cameras still on their pedestals, tally lights off. The teleprompter has a script loaded and scrolled to the bottom of the second page. The anchor desk has two place cards, both face-down. The control room upstairs has a monitor wall that still receives signal from one camera, which shows the empty studio in grey-green night vision. Someone was broadcasting from here after the Exchange. The broadcast went out on a frequency that nobody was listening to, and the record of what was said is on a tape that is still in the machine, still wound, still waiting to be played.",
+      "provenance": "eyewitness",
+      "spoiler_tier": 3,
+      "unlock_condition": "reach_deep_lore_site",
+      "tags": ["grid", "media", "broadcast", "terminal"]
+    }
+  ]
+}

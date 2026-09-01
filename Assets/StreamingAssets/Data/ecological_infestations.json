@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "collection_id": "ecological_infestations",
+  "description": "Plan 28 Phase 4: six location infestations and four shelter infestations. Effects route through owning systems via host callbacks (inventory food loss, Plan 09 disease port, ventilation wear); every infestation names grounded clear options and, where sensible, a bounded tolerated-harvest alternative. Rebuilt from the retired-content contract in docs/ecology/RETIRED_ECOLOGY_ISLAND.md.",
+  "infestations": [
+    {
+      "id": "infestation_subway_molerat_nest",
+      "name": "Subway Ballast Molerat Burrow Complex",
+      "scope": "location",
+      "target_id": "loc_flooded_subway_depot",
+      "eligible_seasons": [],
+      "trigger_chance_per_day": 0.0,
+      "requires_state": "",
+      "trigger_summary": "Ballast spoil heaps under the depot have gone honeycombed with molerat runs.",
+      "hazard_summary": "Collapsed footing over burrow mouths; females defend the nest gallery.",
+      "food_loss_per_day": 0,
+      "tolerated_hazard_risk": 0.0,
+      "linked_disease_id": "",
+      "leave_resource_item_id": "canned_food",
+      "leave_resource_amount": 2,
+      "leave_benefit_summary": "A molerat larder: hoarded tubers and cached rations can be lifted while the colony is left in place.",
+      "max_harvests": 2,
+      "clear_options": [
+        {
+          "option_id": "opt_molerat_smoke_out",
+          "display_name": "Smoke the burrow complex",
+          "required_item_id": "charcoal",
+          "required_item_count": 2,
+          "success_chance": 0.7,
+          "outcome_summary": "Smoked out from three vents; the tunnels stand empty.",
+          "failure_backlash_chance": 0.2
+        },
+        {
+          "option_id": "opt_molerat_trap_line",
+          "display_name": "Run a trap line along the spoil heaps",
+          "required_item_id": "rope",
+          "required_item_count": 1,
+          "success_chance": 0.6,
+          "outcome_summary": "The trap line thinned the burrow over two visits; the ground is quiet.",
+          "failure_backlash_chance": 0.2
+        }
+      ]
+    },
+    {
+      "id": "infestation_quarry_hornet_hive",
+      "name": "Limestone Quarry Slag Hornet Swarm",
+      "scope": "location",
+      "target_id": "location_quarry_overlook",
+      "eligible_seasons": ["window_thaw", "window_black_bloom"],
+      "trigger_chance_per_day": 0.05,
+      "requires_state": "",
+      "trigger_summary": "A papery hive the size of a barrel hangs under the quarry lip.",
+      "hazard_summary": "Slag hornets defend a wide arc; stings seep and fester.",
+      "food_loss_per_day": 0,
+      "tolerated_hazard_risk": 0.0,
+      "linked_disease_id": "",
+      "leave_resource_item_id": "medkit",
+      "leave_resource_amount": 1,
+      "clear_options": [
+        {
+          "option_id": "opt_hornet_chemical_spray",
+          "display_name": "Fog the hive at dusk",
+          "required_item_id": "item_fungicide_fogger",
+          "required_item_count": 1,
+          "success_chance": 0.8,
+          "outcome_summary": "The hive drops silent; the comb comes away in slabs.",
+          "failure_backlash_chance": 0.25
+        },
+        {
+          "option_id": "opt_hornet_controlled_burn",
+          "display_name": "Burn the hive face at dusk",
+          "required_item_id": "fuel",
+          "required_item_count": 1,
+          "success_chance": 0.7,
+          "outcome_summary": "The hive burns down to the anchor; the comb is ruined for harvest.",
+          "failure_backlash_chance": 0.35
+        }
+      ],
+      "leave_resource_item_id": "medkit",
+      "leave_resource_amount": 1,
+      "leave_benefit_summary": "Hive resin dressed on scrap cloth seals wounds; a working medkit's worth, if you can stand the edge of the swarm.",
+      "max_harvests": 1
+    },
+    {
+      "id": "infestation_cellar_mold_bloom",
+      "name": "Presshouse Cellar Black Rot Bloom",
+      "scope": "location",
+      "target_id": "loc_cider_press",
+      "eligible_seasons": ["window_thaw", "window_black_bloom"],
+      "trigger_chance_per_day": 0.03,
+      "requires_state": "",
+      "trigger_summary": "The thaw found the cellar: black rot sheets across the press beams and breathes spores into the dark.",
+      "hazard_summary": "Spore load in the cellar air; unprotected lungs settle it deep.",
+      "food_loss_per_day": 0,
+      "tolerated_hazard_risk": 0.04,
+      "linked_disease_id": "disease_fungal_respiratory",
+      "leave_resource_item_id": "item_mycelium_bricks",
+      "leave_resource_amount": 1,
+      "leave_benefit_summary": "Cut and dried, the rot fruits into insulation bricks — if you work the damp dark with a mask on.",
+      "max_harvests": 1,
+      "clear_options": [
+        {
+          "option_id": "opt_cellar_fungicide_scrub",
+          "display_name": "Fog the cellar and scrub the timbers",
+          "required_item_id": "item_fungicide_fogger",
+          "required_item_count": 1,
+          "success_chance": 0.85,
+          "outcome_summary": "The cellar burns white with fog, then the rot lifts off in sheets.",
+          "failure_backlash_chance": 0.2
+        }
+      ]
+    },
+    {
+      "id": "infestation_bunker_roach_colony",
+      "name": "Ordnance Depot Armored Roach Cluster",
+      "scope": "location",
+      "target_id": "loc_ordnance_shoulder",
+      "eligible_seasons": [],
+      "trigger_chance_per_day": 0.02,
+      "requires_state": "",
+      "trigger_summary": "The depot's warm dark corners have gone to roaches; crate linings rustle.",
+      "hazard_summary": "Contaminated casings underfoot; the colony chews gasket and cordite wrap.",
+      "food_loss_per_day": 0,
+      "tolerated_hazard_risk": 0.0,
+      "linked_disease_id": "",
+      "leave_resource_item_id": "canned_food",
+      "leave_resource_amount": 1,
+      "leave_benefit_summary": "Desperate protein, roasted hard. Nobody puts it on the ledger twice.",
+      "max_harvests": 1,
+      "clear_options": [
+        {
+          "option_id": "opt_roach_mesh_isolation",
+          "display_name": "Mesh-isolate the crate stack and starve the colony",
+          "required_item_id": "copper_wire_10m_of_10m",
+          "required_item_count": 1,
+          "success_chance": 0.75,
+          "outcome_summary": "Mesh and tin close the run; the cluster thins out over the week.",
+          "failure_backlash_chance": 0.15
+        }
+      ]
+    },
+    {
+      "id": "infestation_canal_fungal_carpet",
+      "name": "Seven Span Bridge Slime Rot",
+      "scope": "location",
+      "target_id": "loc_bridge_seven",
+      "eligible_seasons": ["window_thaw"],
+      "trigger_chance_per_day": 0.02,
+      "requires_state": "",
+      "trigger_summary": "Damp season found the bridge pilings: a slime-rot carpet spreading over the tow-path boards.",
+      "hazard_summary": "Slip-risk on every span; spore haze in still air.",
+      "food_loss_per_day": 0,
+      "tolerated_hazard_risk": 0.03,
+      "linked_disease_id": "disease_fungal_respiratory",
+      "leave_resource_item_id": "item_bio_plastic",
+      "leave_resource_amount": 1,
+      "leave_benefit_summary": "Pressed and dried, the carpet's mats render into bio-plastic stock.",
+      "max_harvests": 1,
+      "clear_options": [
+        {
+          "option_id": "opt_canal_lime_wash",
+          "display_name": "Wash the spans with lime slurry",
+          "required_item_id": "chemical_solvent",
+          "required_item_count": 1,
+          "success_chance": 0.7,
+          "outcome_summary": "The carpet blisters and lifts off the stone.",
+          "failure_backlash_chance": 0.15
+        }
+      ]
+    },
+    {
+      "id": "infestation_mill_rat_king",
+      "name": "Printworks Paper-Nest Rat King",
+      "scope": "location",
+      "target_id": "loc_printworks",
+      "eligible_seasons": ["window_deep_freeze", "window_high_cold"],
+      "trigger_chance_per_day": 0.03,
+      "requires_state": "",
+      "trigger_summary": "Cold drove the paper-nest rats together under the press floor; the colony runs a heap of shredded archive.",
+      "hazard_summary": "Gnawed cables, fouled stock, and a boldness that comes of numbers.",
+      "food_loss_per_day": 0,
+      "tolerated_hazard_risk": 0.0,
+      "linked_disease_id": "",
+      "leave_resource_item_id": "fuel_canister",
+      "leave_resource_amount": 1,
+      "clear_options": [
+        {
+          "option_id": "opt_rat_bait_sweep",
+          "display_name": "Bait-and-sweep the press floor",
+          "required_item_id": "chemical_solvent",
+          "required_item_count": 1,
+          "success_chance": 0.7,
+          "outcome_summary": "The nest is pulled apart and burned; the hoard comes up with it.",
+          "failure_backlash_chance": 0.25
+        },
+        {
+          "option_id": "opt_rat_trap_line",
+          "display_name": "Set a trap line along the press floor",
+          "required_item_id": "scrap_wood",
+          "required_item_count": 2,
+          "success_chance": 0.6,
+          "outcome_summary": "Trap line thins the nest over the week; the floor goes quiet.",
+          "failure_backlash_chance": 0.15
+        }
+      ],
+      "leave_resource_item_id": "fuel_canister",
+      "leave_resource_amount": 1,
+      "leave_benefit_summary": "The rats hoarded what the mill dropped: a sealed canister of stove fuel, unspoiled.",
+      "max_harvests": 1
+    },
+    {
+      "id": "infestation_shelter_vent_mold",
+      "name": "Filtration Stack Intake Spore Incursion",
+      "scope": "shelter",
+      "target_id": "room_filtration",
+      "eligible_seasons": ["window_thaw", "window_black_bloom"],
+      "trigger_chance_per_day": 0.02,
+      "requires_state": "low_filtration_margin",
+      "trigger_summary": "Damp days have taken the intake stack: a gray mold felt is creeping over the filter housing.",
+      "hazard_summary": "Filtration efficiency sags; spores ride the intake while the bloom runs.",
+      "food_loss_per_day": 0,
+      "tolerated_hazard_risk": 0.05,
+      "linked_disease_id": "disease_spore_blight",
+      "leave_resource_item_id": "",
+      "leave_resource_amount": 0,
+      "clear_options": [
+        {
+          "option_id": "opt_vent_replace_hepa",
+          "display_name": "Swap the intake filter for a sealed HEPA",
+          "required_item_id": "item_air_filter_hepa",
+          "required_item_count": 1,
+          "success_chance": 0.9,
+          "outcome_summary": "Fresh filter seated, intake wiped with solvent; the bloom has nowhere to feed.",
+          "failure_backlash_chance": 0.0
+        },
+        {
+          "option_id": "opt_vent_solvent_wash",
+          "display_name": "Solvent-wash the stack and dry it hard",
+          "required_item_id": "chemical_solvent",
+          "required_item_count": 1,
+          "success_chance": 0.6,
+          "outcome_summary": "Solvent, scrub, and a day of hard drying — the bloom lifts.",
+          "failure_backlash_chance": 0.25
+        }
+      ],
+      "leave_resource_item_id": "",
+      "leave_resource_amount": 0,
+      "leave_benefit_summary": "",
+      "max_harvests": 0
+    },
+    {
+      "id": "infestation_shelter_pantry_weevils",
+      "name": "Shelter Commissary Granary Weevil Bloom",
+      "scope": "shelter",
+      "target_id": "room_storage_bay",
+      "eligible_seasons": ["window_thaw", "window_black_bloom"],
+      "trigger_chance_per_day": 0.02,
+      "requires_state": "grain_stores",
+      "trigger_summary": "Grain sacks in the commissary have gone soft and moving: weevils rode in on the last trade.",
+      "hazard_summary": "Bounded stock loss per day until the sacks are repacked or spent.",
+      "food_loss_per_day": 2,
+      "tolerated_hazard_risk": 0.0,
+      "linked_disease_id": "",
+      "leave_resource_item_id": "canned_food",
+      "leave_resource_amount": 1,
+      "leave_benefit_summary": "Sifted and toasted, the weevil-heavy grain stretches one more week. Nobody thanks the cook.",
+      "max_harvests": 1,
+      "clear_options": [
+        {
+          "option_id": "opt_weevil_salt_repack",
+          "display_name": "Repack dry stores with preservation salt",
+          "required_item_id": "item_preservation_salt",
+          "required_item_count": 1,
+          "success_chance": 0.8,
+          "outcome_summary": "Salt-repacked and re-binned; the bloom starves.",
+          "failure_backlash_chance": 0.15
+        },
+        {
+          "option_id": "opt_weevil_cold_shelf",
+          "display_name": "Break the commissary down and air the stock",
+          "required_item_id": "scrap_wood",
+          "required_item_count": 1,
+          "success_chance": 0.6,
+          "outcome_summary": "A day of hauling and stacking; the bloom loses its warm dark.",
+          "failure_backlash_chance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "infestation_shelter_wall_nest",
+      "name": "Bunk Timber Rodent Nest",
+      "scope": "shelter",
+      "target_id": "room_bunks",
+      "eligible_seasons": ["window_deep_freeze", "window_high_cold"],
+      "trigger_chance_per_day": 0.02,
+      "requires_state": "damaged_walls",
+      "trigger_summary": "Warm walls and a loose panel: rats have drawn cloth and paper into the bunk framing.",
+      "hazard_summary": "Chewed wiring, fouled bedding, noise at every hour.",
+      "food_loss_per_day": 1,
+      "tolerated_hazard_risk": 0.0,
+      "linked_disease_id": "",
+      "leave_resource_item_id": "",
+      "leave_resource_amount": 0,
+      "leave_benefit_summary": "",
+      "max_harvests": 0,
+      "clear_options": [
+        {
+          "option_id": "opt_wall_smoke_out",
+          "display_name": "Drive them out with a charcoal smolder and board the gap",
+          "required_item_id": "charcoal",
+          "required_item_count": 1,
+          "success_chance": 0.7,
+          "outcome_summary": "The nest bolts for the corridor; the panel screws down tight after.",
+          "failure_backlash_chance": 0.2
+        },
+        {
+          "option_id": "opt_wall_reseat_panel",
+          "display_name": "Strip the panel, clear the nest, board it square",
+          "required_item_id": "wooden_plank",
+          "required_item_count": 1,
+          "success_chance": 0.85,
+          "outcome_summary": "Stripped, cleared, and boarded; the wall is a wall again.",
+          "failure_backlash_chance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "infestation_shelter_tray_cutworm",
+      "name": "Hydroponic Tray Cutworm Outbreak",
+      "scope": "shelter",
+      "target_id": "room_greenhouse",
+      "eligible_seasons": ["window_thaw", "window_black_bloom"],
+      "trigger_chance_per_day": 0.02,
+      "requires_state": "greenhouse_planted",
+      "trigger_summary": "Cutworms rode in on traded seed stock; the trays show clipped stems at the soil line by morning.",
+      "hazard_summary": "Standing crop loss until the worms are picked or the trays are treated.",
+      "food_loss_per_day": 1,
+      "tolerated_hazard_risk": 0.0,
+      "linked_disease_id": "",
+      "leave_resource_item_id": "",
+      "leave_resource_amount": 0,
+      "leave_benefit_summary": "",
+      "max_harvests": 0,
+      "clear_options": [
+        {
+          "option_id": "opt_cutworm_manual_pick",
+          "display_name": "Night pick by lamplight",
+          "required_item_id": "",
+          "required_item_count": 0,
+          "success_chance": 0.65,
+          "outcome_summary": "A long night with a lamp and a jar; the trays are clean.",
+          "failure_backlash_chance": 0.0
+        },
+        {
+          "option_id": "opt_tray_solvent_soap_wash",
+          "display_name": "Wash trays down with dilute solvent",
+          "required_item_id": "chemical_solvent",
+          "required_item_count": 1,
+          "success_chance": 0.85,
+          "outcome_summary": "Solvent wash and a rinse; the trays hold, the worm doesn't.",
+          "failure_backlash_chance": 0.2
+        }
+      ]
+    }
+  ],
+  "notes": "Six location infestations (subway molerat burrow, quarry hornet swarm, cider-press cellar rot, ordnance roach cluster, bridge fungal carpet, printworks rat king) and four shelter crises (vent mold, pantry weevils, wall nest, tray cutworm). Clear costs use live item ids; leave-options give three infestations a bounded non-combat path; shelter food loss is capped by EcologicalInfestationSystem.MaxFoodLossPerDay; mold blooms seed spore disease only through the Plan 09 disease port."
+}

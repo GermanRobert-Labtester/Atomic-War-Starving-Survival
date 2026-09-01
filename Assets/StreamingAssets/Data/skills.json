@@ -1,0 +1,1338 @@
+{
+  "schema_version": 1,
+  "collection_id": "skills",
+  "skills": [
+    {
+      "id": "skill_field_dressing",
+      "display_name": "Field Dressing",
+      "description": "Basic triage and sterile bandage application under rough conditions.",
+      "discipline_id": "medical",
+      "xp_threshold": 50.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_steady_hands",
+      "display_name": "Steady Hands",
+      "description": "Surgical precision even when under bombardment or extreme fatigue.",
+      "discipline_id": "medical",
+      "xp_threshold": 120.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_rough_repairs",
+      "display_name": "Rough Repairs",
+      "description": "Rapid patching and duct-tape maintenance on shelter structures.",
+      "discipline_id": "crafting",
+      "xp_threshold": 50.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_workshop_sense",
+      "display_name": "Workshop Sense",
+      "description": "Deep understanding of tool wear and scrap tolerance in crafting.",
+      "discipline_id": "crafting",
+      "xp_threshold": 120.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_signal_ear",
+      "display_name": "Signal Ear",
+      "description": "Extracting intelligibility from ionospheric radio static and Morse loops.",
+      "discipline_id": "science",
+      "xp_threshold": 50.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_cold_analysis",
+      "display_name": "Cold Analysis",
+      "description": "Rigorous scientific deduction untainted by panic or bias.",
+      "discipline_id": "science",
+      "xp_threshold": 120.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_watchful",
+      "display_name": "Watchful",
+      "description": "Perimeter awareness that detects incoming hostiles before ambush.",
+      "discipline_id": "combat",
+      "xp_threshold": 50.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_trail_memory",
+      "display_name": "Trail Memory",
+      "description": "Intuitive navigation through shattered streets and dead landmarks.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 50.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_hard_living",
+      "display_name": "Hard Living",
+      "description": "Physiological resilience to caloric deficits and bad bunker air.",
+      "discipline_id": "survival",
+      "xp_threshold": 50.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_tap_rack_bang",
+      "display_name": "Tap-Rack-Bang",
+      "description": "Immediate clearance drill for jammed firearms under fire.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_cold_bore",
+      "display_name": "Cold Bore",
+      "description": "First-shot accuracy bonus from concealed cover.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_suppressing_fire",
+      "display_name": "Suppressing Fire",
+      "description": "Pinning hostiles behind cover during squad maneuvers.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_close_quarters",
+      "display_name": "Close Quarters",
+      "description": "Lethal hand-to-hand and point-blank weapon handling in corridors.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_trap_setter",
+      "display_name": "Trap Setter",
+      "description": "Rigging lethal deadfalls and tripwires along shelter approaches.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_looters_reflex",
+      "display_name": "Looter's Reflex",
+      "description": "Spotting high-value cache points in collapsing structures.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_desensitized",
+      "display_name": "Desensitized",
+      "description": "Morale immunity against violent deaths and battlefield carnage.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.0,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_ration_stretcher",
+      "display_name": "Ration Stretcher",
+      "description": "Extracting maximum nutrition from spoiled meal tins and root starch.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_iron_stomach",
+      "display_name": "Iron Stomach",
+      "description": "Resistance to foodborne illness and irradiated water nausea.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_wasteland_brewer",
+      "display_name": "Wasteland Brewer",
+      "description": "Fermenting mash and distilling potable alcohol from sugar beet scrap.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_butcher",
+      "display_name": "The Butcher",
+      "description": "Clean field dressing of irradiated fauna yield bonus protein.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_pharmacologist",
+      "display_name": "Pharmacologist",
+      "description": "Formulating clean medicinal compounds from chemical precursors.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_mycology",
+      "display_name": "Mycology",
+      "description": "Identifying edible, medicinal, and bio-luminescent bunker fungi.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_jury_rigger",
+      "display_name": "Jury-Rigger",
+      "description": "Improvising replacement mechanical gears from copper pipe and solder.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_structural_engineer",
+      "display_name": "Structural Engineer",
+      "description": "Reinforcing tunnel ceilings and vault bulkheads against seismic load.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_hvac_tech",
+      "display_name": "HVAC Technician",
+      "description": "Balancing air duct pressure and cleaning blower impellers.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_scrapper",
+      "display_name": "Scrapper",
+      "description": "Harvesting pristine copper wiring and steel rebar from ruins.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_sandhog",
+      "display_name": "The Sandhog",
+      "description": "Excavating subterranean bunker expansion tunnels safely.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_thermodynamics",
+      "display_name": "Thermodynamics",
+      "description": "Optimizing heat exchangers and steam recycling efficiency.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_steady_hands_field",
+      "display_name": "Steady Hands (Field)",
+      "description": "Treating severe puncture wounds in dark, shaking shelters.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_triage_under_fire",
+      "display_name": "Triage Under Fire",
+      "description": "Decisive emergency prioritization during hostile incursions.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_radiologist",
+      "display_name": "Radiologist",
+      "description": "Precision tracking of tissue rem accumulation and chelation timing.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_anatomist",
+      "display_name": "Anatomist",
+      "description": "Deep pathological knowledge revealing organ vulnerability and autopsy findings.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_paramedic",
+      "display_name": "Paramedic",
+      "description": "Rapid trauma stabilization preventing exsanguination in minutes.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_pack_mule",
+      "display_name": "Pack Mule",
+      "description": "Optimal rucksack strapping increasing expedition carry capacity.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_light_step",
+      "display_name": "Light Step",
+      "description": "Silent movement over glass, rubble, and creaking floorboards.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_urban_pathfinder",
+      "display_name": "Urban Pathfinder",
+      "description": "Recognizing structural collapse patterns and shortcut alleys.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_night_terror",
+      "display_name": "Night Terror",
+      "description": "Combat superiority in absolute darkness and ash blizzards.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_forager",
+      "display_name": "Forager",
+      "description": "Finding edible lichen and unpoisoned roots in dead scrubland.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_de_escalator",
+      "display_name": "De-Escalator",
+      "description": "Diffusing shelter panic and resolving violent disputes verbally.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_quartermaster",
+      "display_name": "Quartermaster",
+      "description": "Impeccable inventory audits preventing shelter waste and theft.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.05,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_taskmaster",
+      "display_name": "Taskmaster",
+      "description": "Driving work shifts with rigorous efficiency and stamina.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_miracle_worker",
+      "display_name": "Miracle Worker",
+      "description": "Performing life-saving surgical interventions against impossible odds.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_alchemist",
+      "display_name": "Alchemist",
+      "description": "Refining chemical reagents and anti-rad chelation cocktails from raw minerals.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_zoonotic_expert",
+      "display_name": "Zoonotic Expert",
+      "description": "Isolating animal-borne pathogens before cross-species outbreak.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_anchor",
+      "display_name": "Anchor",
+      "description": "Unwavering emotional stability providing shelter morale baseline.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_death_blind",
+      "display_name": "Death Blind",
+      "description": "Complete psychological numbing to catastrophic casualty events.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_warlord",
+      "display_name": "Warlord",
+      "description": "Tactical coordination boosting squad firepower in combat.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_peacekeeper",
+      "display_name": "Peacekeeper",
+      "description": "Commanding respect that prevents internal mutiny and faction infighting.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_juggernaut",
+      "display_name": "Juggernaut",
+      "description": "Exceptional physical constitution shrugging off blunt trauma.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_apex_predator",
+      "display_name": "Apex Predator",
+      "description": "Mastery of wilderness ambush and silent stalker tactics.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_survivalist",
+      "display_name": "Survivalist",
+      "description": "Deep self-reliance that reduces daily food and water consumption.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_hydraulic_master",
+      "display_name": "Hydraulic Master",
+      "description": "Engineering high-pressure plumbing, valves, and water desalination rigs.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_grid_walker",
+      "display_name": "Grid Walker",
+      "description": "Instinctive understanding of high-voltage conduits, sub-stations, and wiring.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_vault_builder",
+      "display_name": "Vault Builder",
+      "description": "Reinforced blast construction and seismic shock isolation.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_grease_monkey",
+      "display_name": "Grease Monkey",
+      "description": "Maintaining expedition combustion engines, chassis, and generators.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_synthesizer",
+      "display_name": "Synthesizer",
+      "description": "Compounding polymer plastics and synthetic insulation.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_gaia",
+      "display_name": "Gaia",
+      "description": "Botanical intuition maximizing bunker greenhouse harvest yield.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_wasteland_runner",
+      "display_name": "Wasteland Runner",
+      "description": "Incredible sprint stamina cutting travel time across open ash plains.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_ghost",
+      "display_name": "Ghost",
+      "description": "Complete concealment from optics, infrared, and auditory patrols.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_stormcaller",
+      "display_name": "Stormcaller",
+      "description": "Predicting ash blizzards and atmospheric harrow fronts hours before arrival.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_rad_walker",
+      "display_name": "Rad Walker",
+      "description": "Remarkable biological resistance to chronic background gamma radiation.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_polymath",
+      "display_name": "Polymath",
+      "description": "Accelerated multi-disciplinary learning across all technical fields.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_demagogue",
+      "display_name": "Demagogue",
+      "description": "Charismatic rhetoric capable of swaying hostile crowds.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_shepherd",
+      "display_name": "Shepherd",
+      "description": "Mentoring novices and accelerating apprentice progression.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_muckraker",
+      "display_name": "Muckraker",
+      "description": "Investigating conspiracy records and uncovering buried bunker archives.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_voice_of_the_wastes",
+      "display_name": "Voice of the Wastes",
+      "description": "Radio broadcasting resonance that calms listeners across the dial.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_iron_chef",
+      "display_name": "Iron Chef",
+      "description": "Culinary mastery transforming wasteland rations into morale-boosting feasts.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_tireless",
+      "display_name": "Tireless",
+      "description": "Enduring prolonged double shifts without fatigue collapse.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_asbestos",
+      "display_name": "Asbestos",
+      "description": "Immunity to toxic particulate and chemical fume inhalation.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_armorer",
+      "display_name": "Armorer",
+      "description": "Forging reinforced ballistic plates and servicing military weaponry.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_tinkerer",
+      "display_name": "Tinkerer",
+      "description": "Modifying electronics and optical sensors for maximum output.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_lorekeeper",
+      "display_name": "Lorekeeper",
+      "description": "Preserving pre-war literature, historical logs, and cultural records.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_zealots_bane",
+      "display_name": "Zealot's Bane",
+      "description": "Combat bonus against fanatical cultists and violent raiders.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_chem_resistant",
+      "display_name": "Chem Resistant",
+      "description": "Metabolic tolerance preventing dependency on heavy combat stimulants.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_protector",
+      "display_name": "Protector",
+      "description": "Shielding companions from direct attack during tactical withdrawals.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_matriarch",
+      "display_name": "Matriarch",
+      "description": "Guiding shelter decisions with matriarchal wisdom and authority.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_pillar_of_atlas",
+      "display_name": "Pillar of Atlas",
+      "description": "Absolute resolve upholding bunker cohesion during crisis events.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_wasteland_scout",
+      "display_name": "Wasteland Scout",
+      "description": "Advanced cartography and threat detection across uncharted sectors.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_child_of_the_ash",
+      "display_name": "Child of the Ash",
+      "description": "Born into the fallout; instinctive adaptation to surface hazards.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_cold_calculus",
+      "display_name": "Cold Calculus",
+      "description": "Optimizing strategic resource allocation with emotionless efficiency.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_butcher_of_day_30",
+      "display_name": "Butcher of Day 30",
+      "description": "Grim surgical efficiency honed during the worst starvation crisis.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_master_manipulator",
+      "display_name": "Master Manipulator",
+      "description": "Leveraging trade and diplomatic secrets to extract favorable terms.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_dragons_hoard",
+      "display_name": "Dragon's Hoard",
+      "description": "Safekeeping rare materials and preventing resource decay.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_art_of_war",
+      "display_name": "Art of War",
+      "description": "Deep doctrine mastery reducing friendly combat losses.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_demolitions_expert",
+      "display_name": "Demolitions Expert",
+      "description": "Precision breaching and explosive ordnance disposal.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_ghost_shooter",
+      "display_name": "Ghost Shooter",
+      "description": "Concealed long-range sniping without revealing position.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_supply_chain_master",
+      "display_name": "Supply Chain Master",
+      "description": "Optimizing trade convoy routes and warehouse turnover.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_reclaimed_youth",
+      "display_name": "Reclaimed Youth",
+      "description": "Unnatural vitality and swift injury recovery.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_soul_weaver",
+      "display_name": "Soul Weaver",
+      "description": "Psychological counseling that restores fractured minds.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_lone_wolf",
+      "display_name": "Lone Wolf",
+      "description": "Enhanced performance when operating solo on expeditions.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_grounded_optimist",
+      "display_name": "Grounded Optimist",
+      "description": "Spreading pragmatic hope that shields allies from depression.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_living_saint",
+      "display_name": "Living Saint",
+      "description": "Inspiring devotion that unites disparate survivor factions.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_humbled_healer",
+      "display_name": "Humbled Healer",
+      "description": "Dedication to patient care with zero ego or reluctance.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_clean_and_sober",
+      "display_name": "Clean and Sober",
+      "description": "Total immunity to chemical cravings and withdrawal penalties.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_the_watcher",
+      "display_name": "The Watcher",
+      "description": "Unblinking vigilance that prevents nocturnal breaches.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_hyper_aware",
+      "display_name": "Hyper Aware",
+      "description": "Sensory acuity detecting hidden traps and micro-contaminants.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_fire_breather",
+      "display_name": "Fire Breather",
+      "description": "Mastery of incendiary weaponry and flame traps.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_sonar",
+      "display_name": "Sonar",
+      "description": "Acoustic echo location in dark tunnels and flooded shafts.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_improvised_engineering",
+      "display_name": "Improvised Engineering",
+      "description": "Assembling complex machines from mismatched salvage.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_radiotrophic",
+      "display_name": "Radiotrophic",
+      "description": "Bizarre biological symbiosis with low-level background radiation.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_apex_scavenger",
+      "display_name": "Apex Scavenger",
+      "description": "Locating intact pre-war technological relics in extreme hotspots.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_zen_state",
+      "display_name": "Zen State",
+      "description": "Absolute calm during traumatic surgery and high-stakes crafting.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_master_geneticist",
+      "display_name": "Master Geneticist",
+      "description": "Selective breeding of radiation-hardened crop strains.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_the_enforcer",
+      "display_name": "The Enforcer",
+      "description": "Iron-fisted guard duty preventing internal unrest.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_legend_of_the_wastes",
+      "display_name": "Legend of the Wastes",
+      "description": "Renown that unlocks instant respect and trade concessions.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_the_statesman",
+      "display_name": "The Statesman",
+      "description": "Drafting faction treaties and neutral accords.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_cybernetics",
+      "display_name": "Cybernetics",
+      "description": "Interfacing neural cyber-implants and prosthetic limbs.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_beacon_of_truth",
+      "display_name": "Beacon of Truth",
+      "description": "Uncovering propaganda and restoring verified historical truth.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_master_pathologist",
+      "display_name": "Master Pathologist",
+      "description": "Forensic autopsy insight identifying microscopic viral vectors.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_monopolist",
+      "display_name": "Monopolist",
+      "description": "Controlling critical commodity markets for maximum economic leverage.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_deep_delver",
+      "display_name": "Deep Delver",
+      "description": "Navigating subterranean ruins and flooded mine complexes.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_logistics_master",
+      "display_name": "Logistics Master",
+      "description": "Eliminating freight waste and streamlining supply chains.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_forge_master",
+      "display_name": "Forge Master",
+      "description": "Smelting Damascus alloys and precision casting machine parts.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_sanitization_expert",
+      "display_name": "Sanitization Expert",
+      "description": "Decontaminating biological and chemical hotspots completely.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_deforester",
+      "display_name": "Deforester",
+      "description": "Clearing radioactive timber and harvesting dry lumber.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_epidemiologist",
+      "display_name": "Epidemiologist",
+      "description": "Mapping epidemic transmission vectors across wasteland trade nodes.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_celestial_navigator",
+      "display_name": "Celestial Navigator",
+      "description": "Navigating by starlight and sextant when GPS and compasses fail.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_archivist",
+      "display_name": "Archivist",
+      "description": "Cataloging and preserving fragile parchment and magnetic tapes.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_auditor",
+      "display_name": "Auditor",
+      "description": "Detecting counterfeit currency and fraudulent barter ledgers.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_maestro",
+      "display_name": "Maestro",
+      "description": "Playing acoustic instruments that lift bunker spirits during blackouts.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_blockade_runner",
+      "display_name": "Blockade Runner",
+      "description": "Smuggling critical medicine through enemy siege cordons.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_executioner",
+      "display_name": "Executioner",
+      "description": "Ruthless close-range finishing strikes against armored foes.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_shadow",
+      "display_name": "Shadow",
+      "description": "Blending into darkness to evade searchlights and thermal sensors.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_master_of_disguise",
+      "display_name": "Master of Disguise",
+      "description": "Infiltrating rival settlements using forged insignia and uniforms.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_mechanic_prodigy",
+      "display_name": "Mechanic Prodigy",
+      "description": "Restoring ruined engine blocks in half the normal time.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_diplomat",
+      "display_name": "Diplomat",
+      "description": "Securing non-aggression pacts with suspicious wasteland tribes.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_wasteland_gladiator",
+      "display_name": "Wasteland Gladiator",
+      "description": "Mastery of improvised melee weapons in brutal pit fights.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_chief_of_medicine",
+      "display_name": "Chief of Medicine",
+      "description": "Organizing entire hospital wards and triage protocols.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_drone_operator",
+      "display_name": "Drone Operator",
+      "description": "Piloting aerial micro-drones for over-the-horizon reconnaissance.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_choir_of_one",
+      "display_name": "Choir of One",
+      "description": "Radio broadcasting singing that calms bunker distress panics.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_hive_tactics",
+      "display_name": "Hive Tactics",
+      "description": "Interlocking defensive maneuvers among tight-knit squad mates.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_hive_healing",
+      "display_name": "Hive Healing",
+      "description": "Communal first-aid and wound dressing across shared dormitories.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_truth_seeker",
+      "display_name": "Truth Seeker",
+      "description": "Decoding classified wartime telegrams and bunker transcripts.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_wildman",
+      "display_name": "Wildman",
+      "description": "Thriving in untamed irradiated wilderness without manufactured tools.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_second_life",
+      "display_name": "Second Life",
+      "description": "Surviving catastrophic lethal injury once per campaign run.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_iron_will",
+      "display_name": "Iron Will",
+      "description": "Immunity to psychic shock, trauma panic, and despair flags.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_unseen_listener",
+      "display_name": "Unseen Listener",
+      "description": "Eavesdropping on raider radio comms and unencrypted walkie frequencies.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_ruthless_capitalist",
+      "display_name": "Ruthless Capitalist",
+      "description": "Driving brutal barter bargains that maximize shelter profit.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_prodigy",
+      "display_name": "Prodigy",
+      "description": "Unmatched raw intellect mastering new disciplines at triple speed.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_commander",
+      "display_name": "Commander",
+      "description": "Inspiring battle cries that boost squad accuracy and courage.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_cyber_arm",
+      "display_name": "Cyber Arm",
+      "description": "Hydraulic bionic limb providing crushing grip and recoil compensation.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_redemption",
+      "display_name": "Redemption",
+      "description": "Atone for past sins through heroic self-sacrifice and labor.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_overclocked",
+      "display_name": "Overclocked",
+      "description": "Pushing machinery beyond safety margins for emergency output bursts.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_wasteland_guardian",
+      "display_name": "Wasteland Guardian",
+      "description": "Defending defenseless refugees with relentless protective fury.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_omniscience",
+      "display_name": "Omniscience",
+      "description": "Total mastery of wasteland knowledge, maps, and survivor behavior.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.20,
+      "is_expert_skill": true
+    },
+    {
+      "id": "skill_field_surgery",
+      "display_name": "Field Surgery",
+      "description": "Advanced invasive trauma procedures and sterile resection under austerity.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.15,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_water_filtration",
+      "display_name": "Water Filtration",
+      "description": "Operating ceramic, sand, and charcoal filter stages for maximal potable yield.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_radio_repair",
+      "display_name": "Radio Repair",
+      "description": "Vacuum tube alignment, antenna tuning, and circuit patching on transmitter units.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.10,
+      "is_expert_skill": false
+    }
+  ]
+}

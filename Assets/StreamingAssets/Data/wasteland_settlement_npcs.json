@@ -1,0 +1,450 @@
+{
+    "schema_version": 1,
+    "collection_id": "wasteland_settlement_npcs_catalog",
+    "npcs": [
+        {
+            "id": "npc_salt_marshal_varn",
+            "display_name": "Marshal Varn",
+            "settlement_id": "settlement_brine_pans",
+            "role": "Keeper",
+            "profession": "Salt Marshal",
+            "faction": "none",
+            "trade_specialty": "preserved_food",
+            "physical_anchor": "Heavy oilskin coat crusted with white salt crystals, scarred forearms from boiler steam burns.",
+            "value": "Community survival through strict salt rationing and boiler discipline.",
+            "fear": "A sudden ashfall surge choking the condenser coils and halting salt exports.",
+            "contradiction": "Enforces strict salt rationing, but occasionally trades unlogged brine reserves to maintain personal leverage over the quartermaster.",
+            "personal_thread": "Requires raw caloric inputs from external scavengers to maintain boiler labor quotas.",
+            "greetings": {
+                "low_standing": "State your business quickly. Every minute our gates stay open lets the ash fog in.",
+                "neutral": "Welcome to Brine-Pan Hollow. Respect the boiler shifts, don't waste fresh water, and we'll trade fair.",
+                "high_standing": "Good to see you on the perimeter, friend. The pans are running clean today\u2014come in and sit by the fire."
+            },
+            "trade_tells": [
+                "Salt is life out here. We don't discount the white gold for anyone.",
+                "Brine barrels are moving fast to the northern outposts this season."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_salt_marshal_varn"
+        },
+        {
+            "id": "npc_salt_trader_elena",
+            "display_name": "Elena Kosh",
+            "settlement_id": "settlement_brine_pans",
+            "role": "Trader",
+            "profession": "Brine Factor",
+            "faction": "none",
+            "trade_specialty": "preserved_food",
+            "physical_anchor": "Carries a brass balance scale hung from her belt; fingers stained yellow from iodine wash.",
+            "value": "Exact arithmetic and honesty in weight.",
+            "fear": "Contaminated river sludge fouling the crystalline salt drying beds.",
+            "contradiction": "Maintains precise measurement standards for outsiders, but regularly skims fractional weights from outgoing settlement shipments.",
+            "personal_thread": "Seeking chemical coagulants to accelerate the iodine wash process and increase daily yield.",
+            "greetings": {
+                "low_standing": "Weights on the table first. No credit, no barter on promise.",
+                "neutral": "Looking for cured fish or salt sacks? Everything here is dried, weighed, and clean.",
+                "high_standing": "Ah, traveler! I've set aside a drum of first-run coarse salt if your expedition needs preservation stock."
+            },
+            "trade_tells": [
+                "Clean grain and filter cloth fetch the best exchange rate today.",
+                "Don't bring me soggy scrap; I only trade in dry goods that survive winter storage."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_salt_trader_elena"
+        },
+        {
+            "id": "npc_salt_boiler_petyr",
+            "display_name": "Petyr the Boiler",
+            "settlement_id": "settlement_brine_pans",
+            "role": "Fixture",
+            "profession": "Boilerman",
+            "faction": "none",
+            "trade_specialty": "machinist",
+            "physical_anchor": "Perpetual soot smudge across his brow, squinting eyes behind thick welder's goggles.",
+            "value": "Continuous boiler pressure and smooth condenser operation.",
+            "fear": "A catastrophic boiler flue explosion in the subterranean furnace.",
+            "contradiction": "Deaf in his left ear from steam blasts, he refuses to train replacements, securing his position through specialized, unshared knowledge.",
+            "personal_thread": "Needs scrap mechanical fittings to seal the main condenser before structural failure forces an evacuation.",
+            "greetings": {
+                "low_standing": "Watch your step around the steam lines unless you want your boots melted to your shins.",
+                "neutral": "Keep clear of the main flue. If you've got spare boiler gaskets or scrap pipe, I'm listening.",
+                "high_standing": "Hey there! The old boiler's singing today thanks to those replacement valves. What do you need tuned?"
+            },
+            "trade_tells": [
+                "Copper tubing is getting scarce; the scavengers are stripping empty depots down to the studs."
+            ],
+            "sidework_quest_id": "quest_repeat_salt_boiler_scum",
+            "portrait_id": "art_portrait_salt_boiler_petyr"
+        },
+        {
+            "id": "npc_switch_master_korov",
+            "display_name": "Master Korov",
+            "settlement_id": "settlement_iron_siding",
+            "role": "Keeper",
+            "profession": "Siding Superintendent",
+            "faction": "faction_railway_guild",
+            "trade_specialty": "machinist",
+            "physical_anchor": "Carries a heavy iron switchman's wrench like a cane, stiff right knee.",
+            "value": "Schedule adherence, structural integrity, and defense of the siding perimeter.",
+            "fear": "A coordinated rail assault by raider motorized rail-buggies.",
+            "contradiction": "Meticulously logs every scrap of incoming wire, yet fails to report structural degradation on the primary turntable.",
+            "personal_thread": "Requisitioning heavy lubricants to keep the rusted turntable operational through the deep freeze.",
+            "greetings": {
+                "low_standing": "Halt at the switch point. Drop your sidearms or take the overland trail around our yard.",
+                "neutral": "Welcome to Iron Siding. Stay within the gravel ballast paths; live power lines run through the ditch.",
+                "high_standing": "At ease! Siding gates are open to you. The forge crew has fresh coffee brewed in Car 4."
+            },
+            "trade_tells": [
+                "Heavy track bolts and leaf springs are premium trade right now.",
+                "Militia convoys are buying up all our high-tensile fasteners."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_switch_master_korov"
+        },
+        {
+            "id": "npc_rail_chandler_bess",
+            "display_name": "Bess the Chandler",
+            "settlement_id": "settlement_iron_siding",
+            "role": "Trader",
+            "profession": "Rail Chandler",
+            "faction": "faction_railway_guild",
+            "trade_specialty": "machinist",
+            "physical_anchor": "Heavy leather work apron filled with assorted brass grease fittings and drive chain links.",
+            "value": "High-tensile steel, reliable bearings, and long-lasting machine grease.",
+            "fear": "Running out of cutting torch fuel before the winter fortification work is completed.",
+            "contradiction": "Enforces a zero-credit policy on all salvage sales, yet frequently accepts heavily degraded barter items if they contain trace copper.",
+            "personal_thread": "Searching for a precision micrometer to re-calibrate bearing sleeves that are wearing down too fast.",
+            "greetings": {
+                "low_standing": "Don't touch the tool racks unless you have trade goods in hand.",
+                "neutral": "Looking for hardware? Everything on the siding is forged from real rail steel\u2014no brittle cast junk here.",
+                "high_standing": "Welcome back, traveler! I pulled some pristine hardened drill bits from the machine shop just for you."
+            },
+            "trade_tells": [
+                "Grease drums are worth their weight in silver with the freeze coming on.",
+                "If you find intact ball bearings in the dead factories, name your price."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_rail_chandler_bess"
+        },
+        {
+            "id": "npc_rivet_smith_milos",
+            "display_name": "Milos the Riveter",
+            "settlement_id": "settlement_iron_siding",
+            "role": "Fixture",
+            "profession": "Track Smith",
+            "faction": "none",
+            "trade_specialty": "machinist",
+            "physical_anchor": "Broad-shouldered smith with protective rawhide gauntlets and a constant ringing tinnitus whistle in his throat.",
+            "value": "Clean forge welds and solid hot-rivet joins that never pop under explosive shockwaves.",
+            "fear": "Losing his remaining eyesight to forge flare.",
+            "contradiction": "Requires massive caloric intake to maintain forge labor, forcing a significant drain on the settlement's overall winter reserves.",
+            "personal_thread": "Needs scrap structural rail anchors recovered from the collapsed span to reinforce the perimeter against vehicular impact.",
+            "greetings": {
+                "low_standing": "Stand back from the anvil sparks unless you want holes burned in your jacket.",
+                "neutral": "Hammer's hot. If you've got iron scrap or broken tools that need reforging, lay them on the block.",
+                "high_standing": "Good to see you! Bring your blades over; I'll touch up the temper while we talk."
+            },
+            "trade_tells": [
+                "Heavy rail iron is the only thing that holds when the winter winds hit the trestle."
+            ],
+            "sidework_quest_id": "quest_repeat_rail_anchor_salvage",
+            "portrait_id": "art_portrait_rivet_smith_milos"
+        },
+        {
+            "id": "npc_beacon_keeper_maren",
+            "display_name": "Lightkeeper Maren",
+            "settlement_id": "settlement_cape_beacon",
+            "role": "Keeper",
+            "profession": "Lightkeeper",
+            "faction": "none",
+            "trade_specialty": "electronics",
+            "physical_anchor": "Wears a salt-bleached pea coat, brass spyglass tucked under her arm, gray braided hair tied with twine.",
+            "value": "Keeping the Fresnel beacon lit to guide surviving coastal coastal craft through offshore minefields.",
+            "fear": "A sudden night assault by Black Flotilla raiders seizing the lens optics for their warships.",
+            "contradiction": "Maintains the beacon meticulously, not for navigational aid, but to ensure the settlement remains visible to specific black-market supply drops.",
+            "personal_thread": "Tracking coded light flashes from an offshore platform to verify the next inbound fuel transfer.",
+            "greetings": {
+                "low_standing": "State your business on the cape. The tower stairs are closed to armed strangers.",
+                "neutral": "Welcome to Cape Beacon. Keep your fires hooded at night; lights draw flotilla scouts from the offshore banks.",
+                "high_standing": "Welcome up, traveler. The sea fog is lifting\u2014take a look through the long glass if you want a clear view of the coast."
+            },
+            "trade_tells": [
+                "Clean lamp fuel and battery cells are always accepted in trade here.",
+                "The flotilla's gunboats are rationing their diesel; coastal trade routes are quieter this week."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_beacon_keeper_maren"
+        },
+        {
+            "id": "npc_coastal_chandler_orlov",
+            "display_name": "Orlov the Diver",
+            "settlement_id": "settlement_cape_beacon",
+            "role": "Trader",
+            "profession": "Coastal Chandler",
+            "faction": "none",
+            "trade_specialty": "electronics",
+            "physical_anchor": "Thick rubber wading overalls, permanently waterlogged boots, patches of skin peeled from salt water exposure.",
+            "value": "High-grade brass valves, marine optics, and waterproof electrical connectors.",
+            "fear": "Getting trapped in a submerged hull compartment during an unexpected tidal surge.",
+            "contradiction": "Complains continuously about the freezing surf, yet refuses assignment to warmer indoor duties due to the unmonitored salvage opportunities in the water.",
+            "personal_thread": "Looking for vulcanized rubber patches to repair his immersion suit before hypothermia risk exceeds operational thresholds.",
+            "greetings": {
+                "low_standing": "Drying racks are private. Move along before you knock over the glass salvage.",
+                "neutral": "Looking for maritime gear or prism glass? What you see on the boards came up from sixty feet down.",
+                "high_standing": "Look what the morning tide brought in! I've got sealed navigation compasses and intact radio crystals if you're buying."
+            },
+            "trade_tells": [
+                "Electronics salvaged from sealed coastal bridge vaults command top barter value.",
+                "Everyone wants dry matches and sealed flares when the autumn squalls start blowing."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_coastal_chandler_orlov"
+        },
+        {
+            "id": "npc_net_mender_kira",
+            "display_name": "Kira the Weaver",
+            "settlement_id": "settlement_cape_beacon",
+            "role": "Fixture",
+            "profession": "Net Weaver",
+            "faction": "none",
+            "trade_specialty": "nurse",
+            "physical_anchor": "Calloused, nimble fingers wrapped in linen tape, wooden netting shuttle constantly clicking in her hands.",
+            "value": "Mending kelp nets, harvesting medicinal bladderwrack, and treating salt boils.",
+            "fear": "A severe toxic red-tide algal bloom wiping out the nearshore kelp beds.",
+            "contradiction": "Demonstrates high efficiency in repairing nets, but frequently repurposes the strongest nylon strands for personal structural reinforcement.",
+            "personal_thread": "Requires kerosene deliveries to the upper tower solely to keep the emergency generator operational.",
+            "greetings": {
+                "low_standing": "Don't step on the drying kelp lines. Go speak to the keeper at the gate.",
+                "neutral": "Mind the fishhooks on the railing. If you need clean bandage linen or kelp balm, let me know.",
+                "high_standing": "Hello, friend! I've finished that waterproof canvas bedroll wrap you asked about. Come feel the weave."
+            },
+            "trade_tells": [
+                "Dried kelp flour keeps for three seasons without rotting if packed in sealed tins."
+            ],
+            "sidework_quest_id": "quest_repeat_beacon_fuel_cask",
+            "portrait_id": "art_portrait_net_mender_kira"
+        },
+        {
+            "id": "npc_quarry_steward_darek",
+            "display_name": "Steward Darek",
+            "settlement_id": "settlement_slate_hollow",
+            "role": "Keeper",
+            "profession": "Pit Foreman",
+            "faction": "none",
+            "trade_specialty": "machinist",
+            "physical_anchor": "Pitted mining helmet with a cracked carbide lamp bracket, heavy leather kidney belt.",
+            "value": "Adit safety, structural shoring, and equitable division of mining rations.",
+            "fear": "A massive seismic tremor collapsing the main access gallery and trapping seventy people underground.",
+            "contradiction": "Advocates for safer extraction limits in public, while privately authorizing hazardous deep-seam blasting to meet monthly quotas.",
+            "personal_thread": "Seeking seasoned timber beams to temporarily shore up Adit 4 before the ceiling collapses completely.",
+            "greetings": {
+                "low_standing": "Helmets on inside the portal. If you drop a stone down a shaft, you pay with your rations.",
+                "neutral": "Welcome to Slate Hollow. Watch your footing on the wet ramps; don't wander past the timbered markers.",
+                "high_standing": "Good to have you down here! The air in Gallery 2 is sweet today\u2014come share a pot of chicory tea."
+            },
+            "trade_tells": [
+                "Cut slate slabs and grindstones are heavy to haul, but they never rot and never catch fire.",
+                "We trade heavy stone for food and medicine\u2014miners can't eat gravel."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_quarry_steward_darek"
+        },
+        {
+            "id": "npc_stone_cutter_valya",
+            "display_name": "Valya the Factor",
+            "settlement_id": "settlement_slate_hollow",
+            "role": "Trader",
+            "profession": "Stone Factor",
+            "faction": "none",
+            "trade_specialty": "machinist",
+            "physical_anchor": "Wears steel-toed mining boots, stone dust whitening her eyebrows and eyelashes, heavy ledger tucked in canvas pouch.",
+            "value": "Accurate grading of structural slate, millstones, and abrasive sharpening hones.",
+            "fear": "Water seepage freezing inside the quarry face and splitting prime stone blocks into useless rubble.",
+            "contradiction": "Complains about the wear on the channel saws, yet continues to under-report the actual volume of stone cut to avoid central taxation.",
+            "personal_thread": "Looking for tungsten carbide teeth for the quarry saw to increase localized extraction speeds.",
+            "greetings": {
+                "low_standing": "Prices are posted on the slate tablet. No haggling with the factor.",
+                "neutral": "Need sharpening hones, slate roof shingles, or masonry chisels? Grade A quarry stone right here.",
+                "high_standing": "Welcome back! I kept a pair of fine oil-quenched scythe stones for you from the lower vein."
+            },
+            "trade_tells": [
+                "Good sharpening stone is worth more than gold when your axes get dull in the winter freeze.",
+                "Scavengers bringing in working drill steel get the best prices in the pit."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_stone_cutter_valya"
+        },
+        {
+            "id": "npc_driller_jarek",
+            "display_name": "Jarek the Blaster",
+            "settlement_id": "settlement_slate_hollow",
+            "role": "Fixture",
+            "profession": "Powder Hand",
+            "faction": "none",
+            "trade_specialty": "machinist",
+            "physical_anchor": "Missing two fingers on his left hand, yellow sulfur stains on his jacket collar, carries an iron tamping rod.",
+            "value": "Precise blasting geometry that drops rock without cracking supporting gallery pillars.",
+            "fear": "A damp fuse misfire in a tight drift with no secondary escape route.",
+            "contradiction": "Handles high explosives daily, but consistently fails to log misfires, resulting in unexploded ordnance scattered throughout the extraction zones.",
+            "personal_thread": "Needs scrap iron braces to prevent the south extraction adit from burying the primary drill equipment.",
+            "greetings": {
+                "low_standing": "No smoking, no sparks, no striking steel near the powder chest. Step back ten paces.",
+                "neutral": "Watch where you step; blasting wire is strung along the south rib. What brings you down the hole?",
+                "high_standing": "Hey, friend! The blast in Adit 3 went off clean as a whistle. Let me show you what we uncovered."
+            },
+            "trade_tells": [
+                "Good blasting powder is getting hard to compound with the sulfur shortages."
+            ],
+            "sidework_quest_id": "quest_repeat_slate_mine_shoring",
+            "portrait_id": "art_portrait_driller_jarek"
+        },
+        {
+            "id": "npc_prior_silas",
+            "display_name": "Prior Silas",
+            "settlement_id": "settlement_pilgrim_hearth",
+            "role": "Keeper",
+            "profession": "Hearth Prior",
+            "faction": "none",
+            "trade_specialty": "teacher",
+            "physical_anchor": "Wears a coarse wool monk's habit dyed with oak gall, gentle voice, deep burn scars across his collarbone from rescuing children from a burning church.",
+            "value": "Hospitality to the weary, preservation of pre-war historical texts, and sanctuary for the unarmed.",
+            "fear": "Violent faction skirmishes desecrating the sanctuary and extinguishing the geothermal hearth.",
+            "contradiction": "Preaches non-violence and asceticism, while functionally controlling the settlement's largest reserve of sanitized medical supplies.",
+            "personal_thread": "Cataloging the death locations of pilgrims to map safe routes around high-radiation zones for his own personnel.",
+            "greetings": {
+                "low_standing": "Peace be with you, traveler. Bind your weapons with the cord at the gate, or remain outside in the courtyard.",
+                "neutral": "Welcome to the Hearth. The geothermal benches are warm and the broth kettle is hot. Rest your limbs.",
+                "high_standing": "Blessings upon your journey, friend. It gladdens our hearts to see you return safely from the high passes."
+            },
+            "trade_tells": [
+                "We trade only for what sustains the sanctuary and heals the sick; worldly wealth has no value here.",
+                "Clean candle tallow and herbal roots are always welcome gifts for our almoner."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_prior_silas"
+        },
+        {
+            "id": "npc_almoner_hanna",
+            "display_name": "Almoner Hanna",
+            "settlement_id": "settlement_pilgrim_hearth",
+            "role": "Trader",
+            "profession": "Priory Almoner",
+            "faction": "none",
+            "trade_specialty": "nurse",
+            "physical_anchor": "Carries a wooden herbalist's chest slung from her shoulder; smells of dried peppermint and beeswax.",
+            "value": "Healing remedies, clean dressings, and nutritious broths for injured wanderers.",
+            "fear": "An outbreak of infectious lung rot overwhelming the priory's modest infirmary beds.",
+            "contradiction": "Strict about not wasting medicinal tinctures, she prioritizes treatment for units capable of heavy labor over dependents.",
+            "personal_thread": "Searching for chemical precursors to synthesize burn salves for frostbite, strictly to return laborers to active duty.",
+            "greetings": {
+                "low_standing": "If you are bleeding or feverish, sit on the bench. If you are here to trade, wait your turn.",
+                "neutral": "Need medical tinctures, herbal teas, or beeswax candles? Our priory apothecary provides clean, tested remedies.",
+                "high_standing": "Welcome, traveler! I have prepared a fresh flask of stabilization tea and clean linen rolls for your expedition."
+            },
+            "trade_tells": [
+                "Medicinal herbs gathered in high scarp crags possess double the potency of valley weeds.",
+                "Beeswax candles burn clean and sparkless\u2014essential for low-oxygen shelter bunkrooms."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_almoner_hanna"
+        },
+        {
+            "id": "npc_wayfarer_tobias",
+            "display_name": "Tobias the Pilgrim",
+            "settlement_id": "settlement_pilgrim_hearth",
+            "role": "Fixture",
+            "profession": "Pass Guide",
+            "faction": "none",
+            "trade_specialty": "nurse",
+            "physical_anchor": "Heavy ash-walking cloak with hood, carved ashwood staff adorned with small brass prayer bells.",
+            "value": "Guiding vulnerable pilgrim groups safely through the dangerous scree trails of Switchback Pass.",
+            "fear": "Getting caught on the open pass during a sudden sub-zero blizzard whiteout.",
+            "contradiction": "Takes solemn vows of poverty, but maintains exclusive access to a cache of pre-war combat knives, claiming them as 'relics'.",
+            "personal_thread": "Organizing an armed escort for a pilgrim caravan solely to use them as bait for raider ambushes in the high trail.",
+            "greetings": {
+                "low_standing": "The high pass is treacherous. Turn back unless your boots are caulked and your resolve is steel.",
+                "neutral": "Walk with care, traveler. The wind on the Switchback is carrying sharp ice flakes this morning.",
+                "high_standing": "Greetings, brother! Your tracks on the pass were true. The pilgrims you guided last week arrived without a scratch."
+            },
+            "trade_tells": [
+                "The snow on the pass is packing hard; spiked crampons are mandatory for crossing."
+            ],
+            "sidework_quest_id": "quest_repeat_pilgrim_escort_run",
+            "portrait_id": "art_portrait_wayfarer_tobias"
+        },
+        {
+            "id": "npc_market_warden_grimm",
+            "display_name": "Warden Grimm",
+            "settlement_id": "settlement_tinkers_notch",
+            "role": "Keeper",
+            "profession": "Barrier Warden",
+            "faction": "none",
+            "trade_specialty": "electrician",
+            "physical_anchor": "Wears an armored vest made from overlapping stop-sign plates, carries an electrified cattle prod and a heavy revolver.",
+            "value": "Maintaining order, collecting the electrical tithe, and enforcing fair market arbitration.",
+            "fear": "An internal gang war erupting inside the crowded container market stalls.",
+            "contradiction": "A stern enforcer of market regulations who actively ignores contraband sales if they generate sufficient gate tax.",
+            "personal_thread": "Hunting a counterfeit battery smuggler who sold shorted cells, specifically because the ensuing fire damaged his own secure storage.",
+            "greetings": {
+                "low_standing": "Tithe at the gate: two volts or five brass cases. Cause trouble inside and you leave through the fence.",
+                "neutral": "Welcome to Tinker's Notch. No drawing weapons inside the perimeter wire, and no counterfeit chips at the stalls.",
+                "high_standing": "Grimm nods respectfully. 'Warden gate is clear for you. If anyone gives you crooked deals in the stalls, let me know.'"
+            },
+            "trade_tells": [
+                "Clean copper wire and working relays move within minutes at the morning swap meet.",
+                "Watch out for sellers offering pre-war lithium cells\u2014half of them are puffed and dangerous."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_market_warden_grimm"
+        },
+        {
+            "id": "npc_junk_broker_solomon",
+            "display_name": "Solomon the Broker",
+            "settlement_id": "settlement_tinkers_notch",
+            "role": "Trader",
+            "profession": "Component Factor",
+            "faction": "none",
+            "trade_specialty": "electrician",
+            "physical_anchor": "Wears a loupe over his left eye, fingers constantly flicking an analog multimeter probe.",
+            "value": "Uncorrupted silicon chips, clean copper windings, and calibrated voltage regulators.",
+            "fear": "An electromagnetic pulse storm frying his inventory of tested integrated circuits.",
+            "contradiction": "Haggles aggressively for pre-war electronics, not to sell them, but to strip them for rare earth metals to trade with the Garrison.",
+            "personal_thread": "Seeking an intact logic board from the switching center to finalize a high-yield trade.",
+            "greetings": {
+                "low_standing": "If you didn't bring copper or silicon, don't block the counter light.",
+                "neutral": "Got salvage? Test your boards on my bench meter before quoting a price. I pay fair for clean traces.",
+                "high_standing": "Ah, my favorite scavenger! Look at this: an intact military RF transistor tray. What did you bring me today?"
+            },
+            "trade_tells": [
+                "Unopened filter canisters and dry copper wire are the true currency of the wasteland.",
+                "If you find circuit boards with gold-plated pin headers, don't scrub them\u2014bring them straight to me."
+            ],
+            "sidework_quest_id": "",
+            "portrait_id": "art_portrait_junk_broker_solomon"
+        },
+        {
+            "id": "npc_grease_monkey_tess",
+            "display_name": "Tess the Grease-Monkey",
+            "settlement_id": "settlement_tinkers_notch",
+            "role": "Fixture",
+            "profession": "Engine Tech",
+            "faction": "none",
+            "trade_specialty": "electrician",
+            "physical_anchor": "Bright green bandanna holding back greasy curls, smudge of battery acid on her cheek, carries an impact driver.",
+            "value": "Keeping the settlement's wind-turbine generators spinning and filter blowers humming.",
+            "fear": "A sudden mechanical seizure of the main water pump motor during a heat wave.",
+            "contradiction": "Patiently rewinds burnt electric motors by hand, but intentionally installs minor flaws to guarantee future maintenance contracts.",
+            "personal_thread": "Needs scavenged copper alternator windings from the suburb ring road to complete a generator repair.",
+            "greetings": {
+                "low_standing": "Mind the battery charging racks; they'll spark if you bump the terminals.",
+                "neutral": "Got tools or motors that won't turn? Drop them on the grease bench. If it was built by humans, I can make it run.",
+                "high_standing": "Hey, partner! I rigged that auxiliary power cord you wanted. Runs smooth at twenty-four volts."
+            },
+            "trade_tells": [
+                "Good starter motors from pre-war delivery trucks are pure gold for wind-turbine conversions."
+            ],
+            "sidework_quest_id": "quest_repeat_tinker_scrap_retrieval",
+            "portrait_id": "art_portrait_grease_monkey_tess"
+        }
+    ]
+}

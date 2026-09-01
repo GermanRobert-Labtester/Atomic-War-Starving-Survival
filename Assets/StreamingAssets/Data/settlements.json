@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "collection_id": "wasteland_settlements_catalog",
+  "settlements": [
+    {
+      "id": "settlement_brine_pans",
+      "display_name": "Brine-Pan Hollow",
+      "archetype": "Salt Camp",
+      "region": "the_toll",
+      "location_id": "loc_settlement_brine_pans",
+      "route_node": "location_collapsed_salt_mine",
+      "description": "A fortified evaporation basin in the tidal estuary. Salt freeholders boil brine in salvaged boiler pans to produce the region's essential food preservative.",
+      "survival_adaptation": "Engineered tidal gates and coal-fired evaporator pans extracting sodium chloride, lithium salts, and iodine.",
+      "economy": {
+        "primary_export": "item_crossing_traded_salt",
+        "primary_import": "scrap_mechanical",
+        "trade_specialty": "preserved_food",
+        "price_modifier_exports": 0.75,
+        "price_modifier_imports": 1.35,
+        "stock_item_ids": [
+          "item_crossing_traded_salt",
+          "dried_rations",
+          "cooking_oil"
+        ]
+      },
+      "society": {
+        "governance": "Salter Council",
+        "population": 65,
+        "core_value": "Fair rationing and boiler vigilance",
+        "internal_tension": "Fuel shortages for the steam pumps causing disputes with coal merchants"
+      },
+      "faction_relation": {
+        "primary_faction": "none",
+        "standing_gate_faction": "faction_salt_freeholders",
+        "min_standing_to_enter": 0,
+        "hostile_standing_threshold": -40
+      },
+      "keeper_npc_id": "npc_salt_marshal_varn",
+      "trader_npc_id": "npc_salt_trader_elena",
+      "fixture_npc_id": "npc_salt_boiler_petyr",
+      "sidework_quest_id": "quest_repeat_salt_boiler_scum"
+    },
+    {
+      "id": "settlement_iron_siding",
+      "display_name": "Iron Siding",
+      "archetype": "Rail Siding Town",
+      "region": "industrial_belt",
+      "location_id": "loc_settlement_iron_siding",
+      "route_node": "loc_railway_span_44_alpha",
+      "description": "A modular rail-car community nestled inside an armored siding beneath earthworks. Rail artisans forge hardware and armor plates from decommissioned freight cars.",
+      "survival_adaptation": "Heavily insulated boxcar living modules interconnected by covered ballast trenches and protected by a rail-switch gate.",
+      "economy": {
+        "primary_export": "scrap_mechanical",
+        "primary_import": "fuel",
+        "trade_specialty": "machinist",
+        "price_modifier_exports": 0.80,
+        "price_modifier_imports": 1.25,
+        "stock_item_ids": [
+          "scrap_mechanical",
+          "scrap_metal",
+          "copper_wire_10m_of_10m"
+        ]
+      },
+      "society": {
+        "governance": "Siding Superintendent & Track Union",
+        "population": 110,
+        "core_value": "Hard structural steel and defensive preparedness",
+        "internal_tension": "Disagreements over whether to repair the yard switch for outbound trains or keep it sabotaged for defense"
+      },
+      "faction_relation": {
+        "primary_faction": "none",
+        "standing_gate_faction": "faction_railway_guild",
+        "min_standing_to_enter": 0,
+        "hostile_standing_threshold": -30
+      },
+      "keeper_npc_id": "npc_switch_master_korov",
+      "trader_npc_id": "npc_rail_chandler_bess",
+      "fixture_npc_id": "npc_rivet_smith_milos",
+      "sidework_quest_id": "quest_repeat_rail_anchor_salvage"
+    },
+    {
+      "id": "settlement_cape_beacon",
+      "display_name": "Cape Beacon Commune",
+      "archetype": "Coastal Lighthouse Commune",
+      "region": "coastal_shelf",
+      "location_id": "loc_settlement_cape_beacon",
+      "route_node": "loc_black_flotilla_outpost",
+      "description": "A maritime survival outpost clustered around an intact coastal lighthouse bluff, operating water condensers, kelp beds, and coastal watch optics.",
+      "survival_adaptation": "Rainwater cisterns carved into the sea cliffs, wind generator arrays, and tidal kelp cultivation.",
+      "economy": {
+        "primary_export": "clean_water",
+        "primary_import": "electronic_scrap",
+        "trade_specialty": "electronics",
+        "price_modifier_exports": 0.85,
+        "price_modifier_imports": 1.20,
+        "stock_item_ids": [
+          "clean_water",
+          "medical_kit",
+          "item_fungicide_fogger"
+        ]
+      },
+      "society": {
+        "governance": "Lighthouse Keepers Collective",
+        "population": 45,
+        "core_value": "Maritime guidance, shared freshwater, and mutual warning",
+        "internal_tension": "Fears of offshore flotilla raids seeking the lighthouse lens glass"
+      },
+      "faction_relation": {
+        "primary_faction": "none",
+        "standing_gate_faction": "faction_unaligned",
+        "min_standing_to_enter": -10,
+        "hostile_standing_threshold": -50
+      },
+      "keeper_npc_id": "npc_beacon_keeper_maren",
+      "trader_npc_id": "npc_coastal_chandler_orlov",
+      "fixture_npc_id": "npc_net_mender_kira",
+      "sidework_quest_id": "quest_repeat_beacon_fuel_cask"
+    },
+    {
+      "id": "settlement_slate_hollow",
+      "display_name": "Slate Hollow Enclave",
+      "archetype": "Quarry Enclave",
+      "region": "high_scarp",
+      "location_id": "loc_settlement_slate_hollow",
+      "route_node": "location_quarry_overlook",
+      "description": "A subterranean quarry redoubt excavated into impermeable slate strata in the High Scarp. Pit crews extract roofing slate, millstones, and abrasive hones.",
+      "survival_adaptation": "Complete underground shelter immune to surface fallout, heated by subterranean coal fires.",
+      "economy": {
+        "primary_export": "scrap_metal",
+        "primary_import": "clean_water",
+        "trade_specialty": "machinist",
+        "price_modifier_exports": 0.70,
+        "price_modifier_imports": 1.40,
+        "stock_item_ids": [
+          "scrap_metal",
+          "charcoal",
+          "item_scopolamine_root"
+        ]
+      },
+      "society": {
+        "governance": "Quarry Pit Guild",
+        "population": 85,
+        "core_value": "Adit safety, honest stonework, and shared ventilation",
+        "internal_tension": "Water table seepage flooding lower mining drifts"
+      },
+      "faction_relation": {
+        "primary_faction": "none",
+        "standing_gate_faction": "faction_unaligned",
+        "min_standing_to_enter": 0,
+        "hostile_standing_threshold": -40
+      },
+      "keeper_npc_id": "npc_quarry_steward_darek",
+      "trader_npc_id": "npc_stone_cutter_valya",
+      "fixture_npc_id": "npc_driller_jarek",
+      "sidework_quest_id": "quest_repeat_slate_mine_shoring"
+    },
+    {
+      "id": "settlement_pilgrim_hearth",
+      "display_name": "The Pilgrim's Hearth",
+      "archetype": "Religious / Monastic Sanctuary",
+      "region": "high_scarp",
+      "location_id": "loc_settlement_pilgrim_hearth",
+      "route_node": "loc_shrine_switchback_waystation",
+      "description": "A mountain priory built over natural geothermal steam vents at Switchback Pass, offering warm lodging, herbal medicine, and spiritual sanctuary to travelers.",
+      "survival_adaptation": "Geothermal radiator piping providing perpetual heating without combustible fuel.",
+      "economy": {
+        "primary_export": "medical_kit",
+        "primary_import": "charcoal",
+        "trade_specialty": "nurse",
+        "price_modifier_exports": 0.85,
+        "price_modifier_imports": 1.15,
+        "stock_item_ids": [
+          "medical_kit",
+          "herbal_tea",
+          "item_stabilization_tea"
+        ]
+      },
+      "society": {
+        "governance": "Hearth Priory Monks",
+        "population": 50,
+        "core_value": "Hospitality to the weary, peace-binding at the door, and text preservation",
+        "internal_tension": "Struggling to feed the rising wave of freezing refugees crossing the pass"
+      },
+      "faction_relation": {
+        "primary_faction": "none",
+        "standing_gate_faction": "faction_unaligned",
+        "min_standing_to_enter": -20,
+        "hostile_standing_threshold": -60
+      },
+      "keeper_npc_id": "npc_prior_silas",
+      "trader_npc_id": "npc_almoner_hanna",
+      "fixture_npc_id": "npc_wayfarer_tobias",
+      "sidework_quest_id": "quest_repeat_pilgrim_escort_run"
+    },
+    {
+      "id": "settlement_tinkers_notch",
+      "display_name": "Tinker's Notch",
+      "archetype": "Free Trader Scrap Market",
+      "region": "dead_suburbs",
+      "location_id": "loc_settlement_tinkers_notch",
+      "route_node": "loc_motel_verity",
+      "description": "A sprawling swap meet constructed from steel shipping containers and bus chassis behind an electrified fence. The regional crossroads for mechanical and electronic barter.",
+      "survival_adaptation": "Decentralized generator network powered by wind turbines and automotive alternator banks.",
+      "economy": {
+        "primary_export": "electronic_scrap",
+        "primary_import": "clean_water",
+        "trade_specialty": "electrician",
+        "price_modifier_exports": 0.70,
+        "price_modifier_imports": 1.30,
+        "stock_item_ids": [
+          "electronic_scrap",
+          "copper_wire_10m_of_10m",
+          "water_filter"
+        ]
+      },
+      "society": {
+        "governance": "Market Wardens Board",
+        "population": 140,
+        "core_value": "Open commerce, neutral arbitration, and technical innovation",
+        "internal_tension": "Black market counterfeit components sparking disputes between merchant factors"
+      },
+      "faction_relation": {
+        "primary_faction": "none",
+        "standing_gate_faction": "faction_scavengers",
+        "min_standing_to_enter": 0,
+        "hostile_standing_threshold": -30
+      },
+      "keeper_npc_id": "npc_market_warden_grimm",
+      "trader_npc_id": "npc_junk_broker_solomon",
+      "fixture_npc_id": "npc_grease_monkey_tess",
+      "sidework_quest_id": "quest_repeat_tinker_scrap_retrieval"
+    }
+  ]
+}

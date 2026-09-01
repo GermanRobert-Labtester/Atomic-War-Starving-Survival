@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "collection_id": "repeatable_settlement_quests_catalog",
+  "quests": [
+    {
+      "id": "quest_repeat_salt_boiler_scum",
+      "display_name": "Boiler Descaling Haul",
+      "provider_npc_id": "npc_salt_boiler_petyr",
+      "settlement_id": "settlement_brine_pans",
+      "type": "repeatable_haul",
+      "briefing": "Petyr the Boiler needs chemical neutralizing agents and copper scrap to descale the salt pans' main condenser coils before mineral crust causes a boiler explosion.",
+      "prereq_quest_id": "",
+      "target_location_id": "location_collapsed_salt_mine",
+      "cooldown_days": 7,
+      "reward_item_id": "item_crossing_traded_salt",
+      "reward_count": 3,
+      "standing_delta": 5,
+      "stages": [
+        {
+          "id": "stage_accept",
+          "text": "Speak with Petyr at the Brine-Pan boiler shed to inspect the scaled copper coils."
+        },
+        {
+          "id": "stage_retrieve",
+          "text": "Scavenge copper pipe fittings or chemical neutralizers from the collapsed salt mine galleries."
+        },
+        {
+          "id": "stage_deliver",
+          "text": "Deliver the descaling supplies to Petyr to restore boiler pressure."
+        }
+      ]
+    },
+    {
+      "id": "quest_repeat_rail_anchor_salvage",
+      "display_name": "Span 44 Anchor Salvage",
+      "provider_npc_id": "npc_rivet_smith_milos",
+      "settlement_id": "settlement_iron_siding",
+      "type": "repeatable_salvage",
+      "briefing": "Milos the Riveter needs heavy forged rail anchors and high-tensile track bolts from the collapsed trestle at Span 44 to reinforce the settlement's perimeter barrier.",
+      "prereq_quest_id": "",
+      "target_location_id": "loc_railway_span_44_alpha",
+      "cooldown_days": 8,
+      "reward_item_id": "scrap_mechanical",
+      "reward_count": 4,
+      "standing_delta": 5,
+      "stages": [
+        {
+          "id": "stage_accept",
+          "text": "Receive the tool specs from Milos at the Iron Siding rail forge."
+        },
+        {
+          "id": "stage_retrieve",
+          "text": "Cut three structural rail anchors from the twisted steel trestle at Span 44."
+        },
+        {
+          "id": "stage_deliver",
+          "text": "Return the forged anchors to Milos at the anvil."
+        }
+      ]
+    },
+    {
+      "id": "quest_repeat_beacon_fuel_cask",
+      "display_name": "Cape Beacon Lantern Fuel Run",
+      "provider_npc_id": "npc_net_mender_kira",
+      "settlement_id": "settlement_cape_beacon",
+      "type": "repeatable_supply",
+      "briefing": "Kira the Weaver needs a cask of distilled lantern oil or diesel fuel hauled to the lighthouse tower to keep the Fresnel beacon turning during heavy coastal fog.",
+      "prereq_quest_id": "",
+      "target_location_id": "loc_black_flotilla_outpost",
+      "cooldown_days": 6,
+      "reward_item_id": "electronic_scrap",
+      "reward_count": 3,
+      "standing_delta": 5,
+      "stages": [
+        {
+          "id": "stage_accept",
+          "text": "Talk to Kira in the kelp drying shed beneath Cape Beacon."
+        },
+        {
+          "id": "stage_retrieve",
+          "text": "Secure a fuel cask from coastal caches or barter at trading posts."
+        },
+        {
+          "id": "stage_deliver",
+          "text": "Carry the fuel cask up the spiral stairs to the lighthouse watch room."
+        }
+      ]
+    },
+    {
+      "id": "quest_repeat_slate_mine_shoring",
+      "display_name": "Slate Hollow Timber Haul",
+      "provider_npc_id": "npc_driller_jarek",
+      "settlement_id": "settlement_slate_hollow",
+      "type": "repeatable_haul",
+      "briefing": "Jarek the Blaster needs structural timber ties and steel shoring jacks hauled to Adit 3 to prevent a ceiling cave-in after a heavy blast cycle.",
+      "prereq_quest_id": "",
+      "target_location_id": "location_quarry_overlook",
+      "cooldown_days": 8,
+      "reward_item_id": "scrap_metal",
+      "reward_count": 5,
+      "standing_delta": 5,
+      "stages": [
+        {
+          "id": "stage_accept",
+          "text": "Check in with Jarek near the powder magazine at Slate Hollow."
+        },
+        {
+          "id": "stage_retrieve",
+          "text": "Gather sound timber props and steel jacks from abandoned warehouse ruins."
+        },
+        {
+          "id": "stage_deliver",
+          "text": "Wedge the timber props beneath the fractured slate roof in Gallery C."
+        }
+      ]
+    },
+    {
+      "id": "quest_repeat_pilgrim_escort_run",
+      "display_name": "Switchback Pilgrim Escort",
+      "provider_npc_id": "npc_wayfarer_tobias",
+      "settlement_id": "settlement_pilgrim_hearth",
+      "type": "repeatable_escort",
+      "briefing": "Tobias the Pilgrim seeks armed scouts to escort a group of vulnerable travelers past raider gully hides on the high Switchback Pass trail.",
+      "prereq_quest_id": "",
+      "target_location_id": "loc_shrine_switchback_waystation",
+      "cooldown_days": 10,
+      "reward_item_id": "medical_kit",
+      "reward_count": 2,
+      "standing_delta": 8,
+      "stages": [
+        {
+          "id": "stage_accept",
+          "text": "Rendezvous with Tobias at the Pilgrim's Hearth courtyard."
+        },
+        {
+          "id": "stage_escort",
+          "text": "Guide the pilgrim party across the icy scree slope, watching for ambushes."
+        },
+        {
+          "id": "stage_deliver",
+          "text": "Deliver the pilgrims safely to the Switchback Waystation shrine."
+        }
+      ]
+    },
+    {
+      "id": "quest_repeat_tinker_scrap_retrieval",
+      "display_name": "Suburban Alternator Salvage",
+      "provider_npc_id": "npc_grease_monkey_tess",
+      "settlement_id": "settlement_tinkers_notch",
+      "type": "repeatable_salvage",
+      "briefing": "Tess the Grease-Monkey needs copper alternators and automotive starter motors pulled from vehicle wrecks on the suburb bypass to repair the settlement's wind turbines.",
+      "prereq_quest_id": "",
+      "target_location_id": "loc_motel_verity",
+      "cooldown_days": 7,
+      "reward_item_id": "copper_wire_10m_of_10m",
+      "reward_count": 4,
+      "standing_delta": 5,
+      "stages": [
+        {
+          "id": "stage_accept",
+          "text": "Get the tool wrench and salvage checklist from Tess at the grease bench."
+        },
+        {
+          "id": "stage_retrieve",
+          "text": "Unbolt copper-wound alternators from vehicle chassis along the bypass road."
+        },
+        {
+          "id": "stage_deliver",
+          "text": "Bring the copper windings back to Tess for bench testing and rewinding."
+        }
+      ]
+    }
+  ]
+}

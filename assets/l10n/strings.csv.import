@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dtiagil5tvdfq"
+
+[deps]
+
+files=["res://assets/l10n/strings.en.translation", "res://assets/l10n/strings.source.translation"]
+
+source_file="res://assets/l10n/strings.csv"
+dest_files=["res://assets/l10n/strings.en.translation", "res://assets/l10n/strings.source.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

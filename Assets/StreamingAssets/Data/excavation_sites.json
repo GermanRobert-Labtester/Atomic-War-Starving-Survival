@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "sites": [
+    {
+      "site_id": "excavation_command_vault",
+      "location_id": "loc_excavation_command_vault",
+      "display_name": "Collapsed Command Vault",
+      "description": "A reinforced military command installation buried beneath tons of blasted granite. Three distinct strata lead to the hardened communications vault.",
+      "max_depth_meters": 90.0,
+      "required_progress": 120.0,
+      "structural_risk": 0.35,
+      "required_tools": [
+        "tools_precision",
+        "shovel"
+      ],
+      "shoring_materials": [
+        "scrap_metal",
+        "mechanical_parts"
+      ],
+      "hazard_type": "hazard_toxic_air",
+      "relic_reward_id": "item_comm_codebook_alpha",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 20.0,
+          "label": "Rubble Throat",
+          "risk": 0.20
+        },
+        {
+          "depth_meters": 50.0,
+          "label": "Collapsed Operations Level",
+          "risk": 0.35
+        },
+        {
+          "depth_meters": 90.0,
+          "label": "Sealed Communications Vault",
+          "risk": 0.50
+        }
+      ],
+      "journal_entry_id": "journal_excavation_command_vault"
+    },
+    {
+      "site_id": "excavation_utility_tunnels",
+      "location_id": "loc_excavation_utility_tunnels",
+      "display_name": "Utility Tunnel Network",
+      "description": "Subterranean municipal service corridors and conduit trunks choked with mud, standing water, and bio-luminescent mold.",
+      "max_depth_meters": 70.0,
+      "required_progress": 100.0,
+      "structural_risk": 0.25,
+      "required_tools": [
+        "tools_precision",
+        "wrench"
+      ],
+      "shoring_materials": [
+        "scrap_wood",
+        "metal_sheet"
+      ],
+      "hazard_type": "hazard_spore_mold",
+      "relic_reward_id": "tools_precision",
+      "loot_table": "salvage_common",
+      "depth_bands": [
+        {
+          "depth_meters": 15.0,
+          "label": "Service Access Hatch",
+          "risk": 0.15
+        },
+        {
+          "depth_meters": 40.0,
+          "label": "Flooded Conduit Junction",
+          "risk": 0.25
+        },
+        {
+          "depth_meters": 70.0,
+          "label": "Primary Infrastructure Trunk",
+          "risk": 0.40
+        }
+      ],
+      "journal_entry_id": "journal_excavation_utility_tunnels"
+    },
+    {
+      "site_id": "excavation_metro_interchange",
+      "location_id": "loc_excavation_metro_interchange",
+      "display_name": "Buried Metro Interchange",
+      "description": "A multi-tier transit hub collapsed during the orbital strikes. Deep platform levels remain pressurized pockets holding pre-war civilian relics.",
+      "max_depth_meters": 110.0,
+      "required_progress": 150.0,
+      "structural_risk": 0.40,
+      "required_tools": [
+        "shovel",
+        "crowbar"
+      ],
+      "shoring_materials": [
+        "steel_columns",
+        "hydraulic_jack"
+      ],
+      "hazard_type": "hazard_spore_mold",
+      "relic_reward_id": "item_logistics_cipher_sheet",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 25.0,
+          "label": "Street Concourse Collapse",
+          "risk": 0.25
+        },
+        {
+          "depth_meters": 60.0,
+          "label": "Sub-Platform Mezzanine",
+          "risk": 0.40
+        },
+        {
+          "depth_meters": 110.0,
+          "label": "Deep Track Interchange & Service Vault",
+          "risk": 0.55
+        }
+      ],
+      "journal_entry_id": "journal_excavation_metro_interchange"
+    },
+    {
+      "site_id": "excavation_mine_shaft",
+      "location_id": "loc_excavation_mine_shaft",
+      "display_name": "Industrial Mine Shaft Adit 4",
+      "description": "A heavy extraction shaft dropping into mineral-rich bedrock. High mechanical salvage and lead-ore veins, tempered by severe structural instability.",
+      "max_depth_meters": 140.0,
+      "required_progress": 180.0,
+      "structural_risk": 0.50,
+      "required_tools": [
+        "pickaxe",
+        "hydraulic_jack"
+      ],
+      "shoring_materials": [
+        "timber_beams",
+        "hydraulic_jack"
+      ],
+      "hazard_type": "hazard_methane_pocket",
+      "relic_reward_id": "heavy_industrial_motor",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 30.0,
+          "label": "Collapsed Mine Adit",
+          "risk": 0.30
+        },
+        {
+          "depth_meters": 75.0,
+          "label": "Primary Extraction Level",
+          "risk": 0.50
+        },
+        {
+          "depth_meters": 140.0,
+          "label": "Deep Machinery & Ore Sump",
+          "risk": 0.70
+        }
+      ],
+      "journal_entry_id": "journal_excavation_mine_shaft"
+    },
+    {
+      "site_id": "excavation_archive_bunker",
+      "location_id": "loc_excavation_archive_bunker",
+      "display_name": "Pre-War Archive Bunker",
+      "description": "An underground scientific and administrative depository sealed under blast-hardened vault arches. Holds intact microforms, technical blueprints, and emergency dead-drop records.",
+      "max_depth_meters": 80.0,
+      "required_progress": 130.0,
+      "structural_risk": 0.30,
+      "required_tools": [
+        "tools_precision",
+        "crowbar"
+      ],
+      "shoring_materials": [
+        "reinforced_arches",
+        "scrap_metal"
+      ],
+      "hazard_type": "hazard_sealed_air",
+      "relic_reward_id": "item_archive_index_cylinder",
+      "loot_table": "salvage_rare",
+      "depth_bands": [
+        {
+          "depth_meters": 10.0,
+          "label": "Security Gate Rubble",
+          "risk": 0.15
+        },
+        {
+          "depth_meters": 35.0,
+          "label": "Catalog & Microfilm Reading Room",
+          "risk": 0.30
+        },
+        {
+          "depth_meters": 80.0,
+          "label": "Climate-Sealed Master Repository Vault",
+          "risk": 0.45
+        }
+      ],
+      "journal_entry_id": "journal_excavation_archive_bunker"
+    }
+  ]
+}

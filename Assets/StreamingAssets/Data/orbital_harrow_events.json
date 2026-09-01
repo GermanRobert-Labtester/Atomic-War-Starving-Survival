@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "events": [
+    {
+      "id": "event_orbital_small_debris_shower",
+      "name": "Decaying Shrapnel Scatter",
+      "description": "A fragmented solar array bracket de-orbits over District 8, shedding small hypervelocity titanium slivers across the upper sector.",
+      "severity": "Minor",
+      "impact_energy_mj": 8.0,
+      "lead_time_days": 3,
+      "affected_cell_spread": 3,
+      "penetration_power_mj": 6.0,
+      "salvage_yield_item_id": "scrap_mechanical",
+      "salvage_yield_quantity": 4,
+      "revealed_site_id": ""
+    },
+    {
+      "id": "event_orbital_heavy_kinetic_impact",
+      "name": "Tungsten Penetrator Plunge",
+      "description": "An intact 50-kilogram military defense ballast rod plunges into the permafrost, punching deep into overhead bedrock.",
+      "severity": "Severe",
+      "impact_energy_mj": 35.0,
+      "lead_time_days": 2,
+      "affected_cell_spread": 1,
+      "penetration_power_mj": 30.0,
+      "salvage_yield_item_id": "scrap_electronic",
+      "salvage_yield_quantity": 6,
+      "revealed_site_id": "loc_excavation_command_vault"
+    },
+    {
+      "id": "event_orbital_clustered_impact",
+      "name": "Telemetry Station Cluster Strike",
+      "description": "A bus of decayed communications satellites breaks into four burning masses, raking across contiguous shelter roof quadrants.",
+      "severity": "Moderate",
+      "impact_energy_mj": 22.0,
+      "lead_time_days": 4,
+      "affected_cell_spread": 4,
+      "penetration_power_mj": 18.0,
+      "salvage_yield_item_id": "copper_wire",
+      "salvage_yield_quantity": 5,
+      "revealed_site_id": ""
+    },
+    {
+      "id": "event_orbital_near_miss_shockwave",
+      "name": "Sub-Orbital Airburst Shockwave",
+      "description": "A hydrazine fuel tank detonates at 15 kilometres altitude. Atmospheric overpressure shakes the bunker foundation and rattles electrical busbars.",
+      "severity": "Minor",
+      "impact_energy_mj": 12.0,
+      "lead_time_days": 3,
+      "affected_cell_spread": 2,
+      "penetration_power_mj": 5.0,
+      "salvage_yield_item_id": "fuel",
+      "salvage_yield_quantity": 3,
+      "revealed_site_id": ""
+    },
+    {
+      "id": "event_orbital_low_warning_strike",
+      "name": "Rapid-Decay High-Density Core",
+      "description": "A dense orbital turbine hub on an unpredictable decaying orbit enters the atmosphere with less than 24 hours of radar warning.",
+      "severity": "Severe",
+      "impact_energy_mj": 40.0,
+      "lead_time_days": 1,
+      "affected_cell_spread": 2,
+      "penetration_power_mj": 35.0,
+      "salvage_yield_item_id": "heavy_industrial_motor",
+      "salvage_yield_quantity": 1,
+      "revealed_site_id": "loc_excavation_mine_shaft"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+# ASHFALL POT Translation Template
+# Generated: Plan 14 Localization Baseline
+msgid ""
+msgstr ""
+"Project-Id-Version: Ashfall 1.0\n"
+"POT-Creation-Date: 2026-08-31 23:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "ui.common.ok"
+msgstr "OK"
+
+msgid "ui.common.cancel"
+msgstr "Cancel"
+
+msgid "ui.common.close"
+msgstr "Close"
+
+msgid "ui.common.back"
+msgstr "Back"
+
+msgid "ui.common.confirm"
+msgstr "Confirm"
+
+msgid "settings.title"
+msgstr "SYSTEM CONFIGURATION // SETTINGS"
+
+msgid "tutorial.title"
+msgstr "DAY 1 OBJECTIVE"
+
+msgid "codex.manual.title"
+msgstr "FIELD SURVIVAL MANUAL"

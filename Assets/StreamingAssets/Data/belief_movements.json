@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "movements": [
+    {
+      "id": "belief_ash_witnesses",
+      "display_name": "The Ash Witnesses",
+      "latin_name": "Testes Cineris",
+      "creed": "The Exchange was human consequence, not blind fate. Ash is physical proof of what arrogance burned; to forget or sanitize the ruins is to invite the fire again. Every flake swept from the hatch is a named debt.",
+      "comfort_themes": [
+        "Language for deep guilt and moral injury",
+        "Obligation to remember victims without false comfort",
+        "Sober solidarity during catastrophic loss"
+      ],
+      "blind_spot_themes": [
+        "Fatalistic acceptance of preventable suffering",
+        "Viewing illness or injury as deserved penance",
+        "Susceptibility to apocalyptic, self-punishing leaders"
+      ],
+      "key_practices": [
+        "Reciting names while sweeping the airlock threshold",
+        "Carrying inert glass-slag fragments as memory tokens",
+        "Pre-decision silence acknowledging past failures"
+      ],
+      "conflict_profiles": [
+        "belief_rebuilders",
+        "pragmatic_individualism",
+        "atheist_rationalist"
+      ],
+      "tags": [
+        "belief",
+        "ash_witnesses",
+        "memory",
+        "grief",
+        "penance"
+      ]
+    },
+    {
+      "id": "belief_rebuilders",
+      "display_name": "The Rebuilders",
+      "latin_name": "Fabri Fiderum",
+      "creed": "Survival without creation is mere waiting. Meaning is forged with the wrench, the seed tray, the lathe, and the apprentice's slate. What we repair today holds the ceiling up tomorrow.",
+      "comfort_themes": [
+        "Immediate practical agency and future orientation",
+        "Grief channeled into physical craft and community maintenance",
+        "Intergenerational respect between craftsmen and children"
+      ],
+      "blind_spot_themes": [
+        "Using relentless work to avoid emotional processing",
+        "Implicit contempt for injured or incapacitated dwellers",
+        "Risking lives on dangerous salvage for symbolic rebuilding"
+      ],
+      "key_practices": [
+        "Dedicating repaired machines to lost companions",
+        "Mandatory apprentice hour before evening rations",
+        "Refusal to scrap salvageable tools without a three-day review"
+      ],
+      "conflict_profiles": [
+        "belief_ash_witnesses",
+        "pragmatic_individualism",
+        "atheist_rationalist"
+      ],
+      "tags": [
+        "belief",
+        "rebuilders",
+        "labor",
+        "craft",
+        "agency"
+      ]
+    },
+    {
+      "id": "belief_listeners",
+      "display_name": "The Listeners",
+      "latin_name": "Auditores Aetheris",
+      "creed": "The silence above is an illusion of broken antennas. In the static, the numbers, the Morse rhythms, and the atmospheric hiss, the world is still speaking. Attention is our duty; we are not the only ones left.",
+      "comfort_themes": [
+        "Relief from suffocating cosmic isolation",
+        "Cultivation of patience, quietude, and sharp hearing",
+        "Hope for reunion and surviving sister shelters"
+      ],
+      "blind_spot_themes": [
+        "Dangerous pareidolia in random electrical static",
+        "Advocating suicidal expeditions to follow ghost coordinates",
+        "Vulnerability to charismatic radio charlatans or enemy lures"
+      ],
+      "key_practices": [
+        "Scheduled dial vigils at dawn and twilight",
+        "Logging repeating number sequences in chalk registers",
+        "Consulting frequency charts before long surface journeys"
+      ],
+      "conflict_profiles": [
+        "atheist_rationalist",
+        "military_discipline",
+        "pragmatic_individualism"
+      ],
+      "tags": [
+        "belief",
+        "listeners",
+        "radio",
+        "signals",
+        "hope"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "memorial_rites": [
+    {
+      "id": "memorial_rite_roll_call_naming",
+      "title": "Roll-Call Naming",
+      "rite_type": "roll_call",
+      "description": "At the first morning muster following a demise, the deceased's name is called once in normal shift order, followed by three seconds of silence before the next name.",
+      "grief_reduction_multiplier": 0.85,
+      "guilt_relief_amount": 0.15,
+      "requires_recovered_body": false,
+      "tags": [
+        "memorial_rite",
+        "roll_call",
+        "order",
+        "spoken"
+      ]
+    },
+    {
+      "id": "memorial_rite_empty_bunk_night",
+      "title": "The Unmade Bunk Night",
+      "rite_type": "empty_bunk",
+      "description": "The deceased survivor's bunk is left untouched and unoccupied for twenty-four hours, with the wool blanket folded once at the footboard.",
+      "grief_reduction_multiplier": 0.80,
+      "guilt_relief_amount": 0.20,
+      "requires_recovered_body": false,
+      "tags": [
+        "memorial_rite",
+        "bunk",
+        "dormitory",
+        "quiet"
+      ]
+    },
+    {
+      "id": "memorial_rite_division_of_effects",
+      "title": "The Small Tin Division",
+      "rite_type": "division_of_effects",
+      "description": "The deceased's personal items—a pencil stub, a comb, a patched glove, an heirloom—are reviewed by close peers. One item is archived, others returned to storage with consent.",
+      "grief_reduction_multiplier": 0.75,
+      "guilt_relief_amount": 0.25,
+      "requires_recovered_body": false,
+      "tags": [
+        "memorial_rite",
+        "belongings",
+        "effects",
+        "peers"
+      ]
+    },
+    {
+      "id": "memorial_rite_work_gang_farewell",
+      "title": "The Final Shift Detail",
+      "rite_type": "work_gang_farewell",
+      "description": "Close shift companions carry out the physical committal—burial in the rock crevice or sealing into the ash vault—working without conversation until the last bolt is tight.",
+      "grief_reduction_multiplier": 0.70,
+      "guilt_relief_amount": 0.30,
+      "requires_recovered_body": true,
+      "tags": [
+        "memorial_rite",
+        "labor",
+        "burial",
+        "committal"
+      ]
+    },
+    {
+      "id": "memorial_rite_wall_tally_engraving",
+      "title": "Memorial Wall Inscription",
+      "rite_type": "wall_engraving",
+      "description": "The survivor's surname, trade specialty, and total days survived are chiseled into the limestone face of the shelter's lower gallery with a hardened center punch.",
+      "grief_reduction_multiplier": 0.75,
+      "guilt_relief_amount": 0.20,
+      "requires_recovered_body": false,
+      "tags": [
+        "memorial_rite",
+        "wall",
+        "engraving",
+        "chronicle"
+      ]
+    },
+    {
+      "id": "memorial_rite_last_wish_committal",
+      "title": "The Spoken Wish Fulfillment",
+      "rite_type": "last_wish_committal",
+      "description": "If a Final Wish was recorded, its outcome is formally declared aloud before the shelter assembly, affirming that the community bore witness to their final request.",
+      "grief_reduction_multiplier": 0.70,
+      "guilt_relief_amount": 0.35,
+      "requires_recovered_body": false,
+      "tags": [
+        "memorial_rite",
+        "final_wish",
+        "assembly",
+        "truth"
+      ]
+    }
+  ]
+}
