@@ -34,8 +34,9 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterWorkshop != null) return _shelterWorkshop;
 
-            var inv = _inventoryHost?.Inventory ?? new Ashfall.Core.Inventory.Inventory { Capacity = 100, MaxWeight = 500f };
-            var rng = _campaignDay?.Rng ?? new SeededRng(46);
+            SetupInventory();
+            var inv = _inventory.Inventory;
+            var rng = _campaignDay != null ? _campaignDay.Rng.Fork("shelter_workshop") : new SeededRng(46);
             var equip = _equipmentCondition?.System;
             var veh = _expeditions?.Vehicles;
 
@@ -83,7 +84,7 @@ namespace AtomicWar.GodotApp
         {
             if (_radioStationSystem != null) return _radioStationSystem;
 
-            var rng = _campaignDay?.Rng ?? new SeededRng(47);
+            var rng = _campaignDay != null ? _campaignDay.Rng.Fork("radio_station") : new SeededRng(47);
             _radioStationSystem = new ShelterRadioStationSystem(rng, null, new GodotLog());
 
             string catalogPath = "res://Assets/StreamingAssets/Data/radio_intercepts.json";
@@ -132,9 +133,9 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterSocialDynamics != null) return _shelterSocialDynamics;
 
-            var rng = _campaignDay?.Rng ?? new SeededRng(48);
+            var rng = _campaignDay != null ? _campaignDay.Rng.Fork("shelter_social") : new SeededRng(48);
             var relations = _survivorRelations?.System;
-            var needs = _survivors?.HostSession?.Needs;
+            var needs = _survivors?.Needs;
             var memorial = _memorial;
 
             _shelterSocialDynamics = new ShelterSocialDynamicsSystem(rng, relations, needs, memorial, new GodotLog());
@@ -185,8 +186,9 @@ namespace AtomicWar.GodotApp
         {
             if (_excavationHazards != null) return _excavationHazards;
 
-            var inv = _inventoryHost?.Inventory ?? new Ashfall.Core.Inventory.Inventory { Capacity = 100, MaxWeight = 500f };
-            var rng = _campaignDay?.Rng ?? new SeededRng(49);
+            SetupInventory();
+            var inv = _inventory.Inventory;
+            var rng = _campaignDay != null ? _campaignDay.Rng.Fork("excavation_hazards") : new SeededRng(49);
             var excavation = _excavation?.System;
 
             _excavationHazards = new ExcavationHazardSystem(inv, rng, excavation, null, new GodotLog());
