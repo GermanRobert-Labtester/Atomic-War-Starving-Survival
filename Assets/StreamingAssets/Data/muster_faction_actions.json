@@ -577,6 +577,326 @@
           ]
         }
       ]
+    },
+    {
+      "id": "act_raider_parley",
+      "faction_id": "faction_iron_raiders",
+      "title": "Parley Under Their Code",
+      "text": "A raider emissary sits down out of reach of the window and puts a weapon on the table, muzzle toward herself: the Toll's sign for talk. The code is simple and it is real - a parley opened honestly holds while the parties keep it, and the man who breaks one answers to his own crew. What she wants is a standing exchange: the shelter's scrap metal offered first to the den, in return for the shelter's name moving off the seasonal list.",
+      "min_day": 90,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The emissary's crew watches from the tree line and she talks fast, like the parley is a thing that can be lost. The Toll's den is hungry this season; the list the shelter is on has a date next to it. Terms will be sharp and the guarantee is only her own skin.",
+          "choices": [
+            {
+              "choice_id": "honor_terms",
+              "text": "Take the sharp terms and stand by them.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.15,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter honored a raider parley on sharp terms."
+              }
+            },
+            {
+              "choice_id": "refuse",
+              "text": "Send her back with nothing.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.1,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_raider_parley_broken"
+                ],
+                "journal": "The shelter refused a raider parley."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "Talk goes on for an hour, mostly about what the code does not allow: no burning stores, no touched wells, surrendered people walked to a road and released. The emissary does not dress up what the Toll is. She wants the shelter as a customer, not a friend, and the code she keeps is the only guarantee on the table.",
+          "choices": [
+            {
+              "choice_id": "honor_terms",
+              "text": "Agree to the exchange and keep it.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.2,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter kept a raider parley: scrap first-offer for the seasonal list."
+              }
+            },
+            {
+              "choice_id": "counter_terms",
+              "text": "Counter with a fixed term - one season, then renew.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.1,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter countered a raider parley with a one-season term."
+              }
+            },
+            {
+              "choice_id": "refuse",
+              "text": "Refuse. The shelter does not deal.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.05,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter refused a raider parley without insult."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The emissary leaves the weapon on the table, which among the Toll means something like trust. The den remembers the shelter kept the last bargain: routes that cross Toll ground pass with a nod, and the seasonal list is a formality the list-keepers skip. What she asks now is small - a debt settled between crews, not strangers.",
+          "choices": [
+            {
+              "choice_id": "honor_terms",
+              "text": "Renew the standing exchange, witnessed by both crews.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.2,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter renewed its standing parley with the Toll's den."
+              }
+            },
+            {
+              "choice_id": "broker_internal",
+              "text": "Broker between the den's hardliners and pragmatists.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.25,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter brokered between the Toll's hardliners and pragmatists."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_raider_passage_levy",
+      "faction_id": "faction_iron_raiders",
+      "title": "The Passage Levy",
+      "text": "The route the shelter's expeditions use crosses ground the Toll treats as theirs, and a levy party is waiting at the crossing with a hand-painted rate: one share in ten of what crosses, or the crossing stops being safe for anyone who doesn't fly their mark. They are not hiding that this is a toll, and they are not pretending it is a tax. It is a price for a road.",
+      "min_day": 200,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 20,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "hostile",
+          "text": "The levy party has a captured truck behind it and men on it who look like the truck was captured recently. Rates double for shelters the den doesn't like, and the shelter is not liked. They will take the share or they will take the next convoy, and everyone at the crossing knows which is cheaper.",
+          "choices": [
+            {
+              "choice_id": "pay_levy",
+              "text": "Pay the doubled levy in goods.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.1,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter paid the Toll's doubled passage levy."
+              }
+            },
+            {
+              "choice_id": "run_convoy",
+              "text": "Run the crossing at night and take the risk.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.15,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_raider_passage_evaded"
+                ],
+                "journal": "The shelter ran the Toll crossing at night instead of paying."
+              }
+            },
+            {
+              "choice_id": "fight",
+              "text": "Refuse with force in the open.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.25,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_raider_passage_fought"
+                ],
+                "journal": "The shelter fought the Toll's levy party at the crossing."
+              }
+            }
+          ]
+        },
+        {
+          "band": "neutral",
+          "text": "The levy is a share in ten, weighed honestly, receipted in chalk on the convoy's own manifest. The party chief is bored and professional about it. Parley partners get the same rate as anyone; the difference is the den actually keeps its hands off partners' next crossing.",
+          "choices": [
+            {
+              "choice_id": "pay_levy",
+              "text": "Pay the honest tenth and keep the manifest chalk.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.1,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter paid the Toll's passage levy, receipted in chalk."
+              }
+            },
+            {
+              "choice_id": "negotiate_mark",
+              "text": "Buy the Toll's mark instead - a season of crossings.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.2,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter bought a season's passage under the Toll's mark."
+              }
+            },
+            {
+              "choice_id": "divert",
+              "text": "Divert the route and lose the days instead.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter diverted its route around the Toll crossing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_raider_code_dispute",
+      "faction_id": "faction_iron_raiders",
+      "title": "The Toll's Own Argument",
+      "text": "The den is not one voice either. An old crew chief named for the bridge he burned wants the code widened - stores, wells, medicine, nothing spared, because the war taught him what mercy costs. The emissaries and the young hands want the code held exactly because the war taught them the same. The dispute has come to the shelter's door because both sides trade there, and both sides asked.",
+      "min_day": 120,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The old chief makes his case plainly: dead men keep no code, and the den ate from garbage two winters ago because mercy was on the wrong ledger. The emissary answers with the list of wells the Toll never touched and the crews that surrendered and walked away. The shelter's word will not settle the den. It will tip it.",
+          "choices": [
+            {
+              "choice_id": "back_code_holders",
+              "text": "Stand with the emissaries: the code holds.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": -0.15,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_raider_parley_honored"
+                ],
+                "journal": "The shelter stood with the Toll's emissaries to hold the raider code."
+              }
+            },
+            {
+              "choice_id": "back_hardliners",
+              "text": "Agree with the old chief: winters like this spare nobody.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.2,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_raider_code_widened"
+                ],
+                "journal": "The shelter sided with the Toll's hardliners to widen the raider code."
+              }
+            },
+            {
+              "choice_id": "say_nothing",
+              "text": "Trade, and say nothing about another crew's law.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0.0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter stayed out of the Toll's code dispute."
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }
