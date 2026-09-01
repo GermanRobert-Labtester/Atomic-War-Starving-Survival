@@ -897,6 +897,316 @@
           ]
         }
       ]
+    },
+    {
+      "id": "act_coalition_mediation_request",
+      "faction_id": "faction_deserter_coalition",
+      "title": "The Mediation Request",
+      "text": "The Coalition Camp exists because exhausted people needed somewhere to sit near their enemies, and it stays alive because somebody settles the arguments small enough to kill a truce. Today's argument is a depot, two caravans, and a deadline.",
+      "min_day": 210,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 25,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "Two caravans have claimed the same collapsed depot, and both threatened to arm before the week is out. The camp's mediators cannot be the arbiter - they house both. A caller comes up the slope with the camp's ask: lend the shelter's name and its record for fair dealing, and sit one afternoon of listening. The camp cannot pay. The camp can only remember.",
+          "choices": [
+            {
+              "choice_id": "sit_mediator",
+              "text": "Lend the shelter's name and sit the mediation.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_mediation_served"
+                ],
+                "journal": "The shelter served as neutral sign in a Coalition Camp mediation."
+              }
+            },
+            {
+              "choice_id": "send_goods_peace",
+              "text": "Send goods as an offset instead of a person.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -3,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter offset a camp dispute with goods instead of a mediator."
+              }
+            },
+            {
+              "choice_id": "decline",
+              "text": "Decline. The shelter is not neutral enough to pretend.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 3,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_mediation_refused"
+                ],
+                "journal": "The shelter declined the Coalition Camp's mediation request."
+              }
+            }
+          ]
+        },
+        {
+          "band": "good",
+          "text": "The ask comes with the camp's own flag folded into the messenger's coat - the standing mark that the shelter's word holds on camp ground. Sitting the mediation under that mark costs the shelter an afternoon and buys it something rarer: a debt the camp keeps in its founding custom, written where the rules are burned into the plank.",
+          "choices": [
+            {
+              "choice_id": "sit_mediator",
+              "text": "Sit the mediation under the camp's mark.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -8,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_mediation_served"
+                ],
+                "journal": "The shelter mediated under the Coalition's standing mark."
+              }
+            },
+            {
+              "choice_id": "decline",
+              "text": "Decline even the honored ask.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_mediation_refused"
+                ],
+                "journal": "The shelter declined a honored Coalition mediation request."
+              }
+            }
+          ]
+        },
+        {
+          "band": "hostile",
+          "text": "The messenger will not come inside the wire. The camp's security detail has been counting the shelter's faces since the informant story made the rounds, and the ask for a mediator is thinner this time - more test than trust. Sitting it would mean working a crowd that has already decided what the shelter is.",
+          "choices": [
+            {
+              "choice_id": "sit_mediator_anyway",
+              "text": "Sit the mediation and take the crowd's suspicion.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -3,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter mediated at the camp despite hostile suspicion."
+              }
+            },
+            {
+              "choice_id": "decline",
+              "text": "Decline, and say why: the mark has to mean something.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 8,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_mediation_refused"
+                ],
+                "journal": "The shelter declined mediation while the camp counted its faces."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_coalition_supply_appeal",
+      "faction_id": "faction_deserter_coalition",
+      "title": "One Pot, Four Banners",
+      "text": "The shared meal is the camp's oldest custom and its most fragile: no banner eats while another banner watches, and the pot holds only what people put in it. The camp's quartermaster keeps the rosters honest. She has run out of honest things to put in the pot.",
+      "min_day": 220,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 25,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The camp's ledger of what it owes is short and what it holds is shorter. The mess tent is down to stretching one pot across four banners, and winter does not care how temporary a political invention is. The ask is plain: whatever the shelter can spare, logged openly, owed publicly.",
+          "choices": [
+            {
+              "choice_id": "give_supply",
+              "text": "Send what the shelter can spare, logged openly.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_supply_shared"
+                ],
+                "journal": "The shelter answered the camp's shared-supply appeal."
+              }
+            },
+            {
+              "choice_id": "promise_later",
+              "text": "Promise a share after the next resupply.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter promised the camp a supply share after resupply."
+              }
+            },
+            {
+              "choice_id": "refuse",
+              "text": "Refuse. The shelter's margin is its own.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_supply_refused"
+                ],
+                "journal": "The shelter refused the camp's shared-supply appeal."
+              }
+            }
+          ]
+        },
+        {
+          "band": "allied",
+          "text": "The appeal is barely an appeal anymore - it is a supply schedule between allies, with the shelter's name on the camp's mess roster and the camp's wounded carried toward the shelter's door. What is asked for is the next month's share, and what is offered back is written into the neutral-ground rules themselves.",
+          "choices": [
+            {
+              "choice_id": "give_supply",
+              "text": "Commit the month's share to the mess roster.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 2,
+                "lockout_delta": -8,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_supply_shared"
+                ],
+                "journal": "The shelter committed a month's share to the camp mess; two wounded came in with it."
+              }
+            },
+            {
+              "choice_id": "give_and_join",
+              "text": "Commit the share and take a seat at the camp's own fire.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 3,
+                "lockout_delta": -8,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_supply_shared"
+                ],
+                "journal": "The shelter shared the month's supply and was given a place at the camp fire."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "act_camp_rules_dispute",
+      "faction_id": "faction_deserter_coalition",
+      "title": "Rules Before Wire",
+      "text": "The camp is not one voice either. Its mediators and its security crew agree the camp must survive; they disagree on what surviving costs, and the disagreement has stopped being polite. The shelter, as the outside party both still deal with, has been asked to weigh in.",
+      "min_day": 230,
+      "max_day": 0,
+      "once": false,
+      "cooldown_days": 0,
+      "requires_flags": [],
+      "forbids_flags": [],
+      "variants": [
+        {
+          "band": "neutral",
+          "text": "The camp's founding custom says every banner gets a voice, and the camp has discovered what that costs: the mediators want the witness rules tightened before someone's testimony gets someone killed, and the security crew wants the wire moved first, because dead neutrals need no rules. Both sides have asked the shelter - the only outside party both still talk to - which comes first.",
+          "choices": [
+            {
+              "choice_id": "back_mediators",
+              "text": "Back the mediators: rules before wire.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -5,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_favor_coalition_rules_first"
+                ],
+                "journal": "The shelter backed the camp mediators: rules before wire."
+              }
+            },
+            {
+              "choice_id": "back_security",
+              "text": "Back the security crew: wire before rules.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": -10,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [
+                  "flag_grievance_coalition_security_backed"
+                ],
+                "journal": "The shelter backed the camp security crew: wire before rules."
+              }
+            },
+            {
+              "choice_id": "refuse_choice",
+              "text": "Tell them the order is theirs to choose.",
+              "effects": {
+                "trust_delta": 0,
+                "aggression_delta": 0,
+                "members_delta": 0,
+                "lockout_delta": 0,
+                "item_id": "",
+                "item_amount": 0,
+                "flags": [],
+                "journal": "The shelter left the camp's rules-versus-wire choice to the camp."
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }
