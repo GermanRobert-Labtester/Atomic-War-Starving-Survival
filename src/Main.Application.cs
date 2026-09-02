@@ -272,6 +272,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.NarrativeSelfTest:
                     GetTree().Quit(HostCli.RunNarrativeSelfTest());
                     return;
+                case HostCliAction.NpcArcSelfTest:
+                    GetTree().Quit(HostCli.RunNpcArcSelfTest());
+                    return;
                 case HostCliAction.SurvivorsSelfTest:
                     GetTree().Quit(HostCli.RunSurvivorsSelfTest());
                     return;

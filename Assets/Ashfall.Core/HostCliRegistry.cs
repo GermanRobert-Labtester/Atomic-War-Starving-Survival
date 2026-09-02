@@ -87,6 +87,7 @@ namespace Ashfall.Core
         MedicalSelfTest,
         MedicalWardSaveSelfTest,
         NarrativeSelfTest,
+        NpcArcSelfTest,
         RadioSelfTest,
         SettingsSelfTest,
         SurvivorsSelfTest,
@@ -581,6 +582,12 @@ namespace Ashfall.Core
                     "--narrative-selftest",
                     null,
                     "Narrative domain: dialog trees, echoes, flags, and story event resolution"),
+                new HostCliActionDescriptor(
+                    HostCliAction.NpcArcSelfTest,
+                    "Host Domains & Save Stores",
+                    "--npc-arc-selftest",
+                    null,
+                    "Plan 52 recurring NPC arcs: resolution precedence, encounter-to-quest memory, save round-trip, distress suppression"),
                 new HostCliActionDescriptor(
                     HostCliAction.RadioSelfTest,
                     "Host Domains & Save Stores",

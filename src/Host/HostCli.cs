@@ -79,6 +79,7 @@ namespace AtomicWar.GodotApp
         ExpeditionEncounterBridgeSelfTest,
         MedicalSelfTest,
         NarrativeSelfTest,
+        NpcArcSelfTest,
         SurvivorsSelfTest,
         WorldSelfTest,
         EconomySelfTest,
@@ -305,6 +306,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.MedicalSelfTest;
             if (Has(args, "--narrative-selftest"))
                 return HostCliAction.NarrativeSelfTest;
+            if (Has(args, "--npc-arc-selftest"))
+                return HostCliAction.NpcArcSelfTest;
             if (Has(args, "--survivors-selftest"))
                 return HostCliAction.SurvivorsSelfTest;
             if (Has(args, "--world-selftest"))
@@ -496,6 +499,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --medical-selftest       Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip");
             GD.Print("  --medical-ward-save-selftest Medical ward save store round-trip, bed allocation, and affliction persistence");
             GD.Print("  --narrative-selftest     Narrative domain: dialog trees, echoes, flags, and story event resolution");
+            GD.Print("  --npc-arc-selftest       Plan 52 recurring NPC arcs: resolution precedence, encounter→quest memory, save round-trip, distress suppression");
             GD.Print("  --oral-lore-selftest     Oral Lore Codex: load 16 songs/poems from narrative catalogs, verify query by id/tag/genre");
             GD.Print("  --radio-selftest         Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected");
             GD.Print("  --settings-selftest / --settings-test SettingsManager state, resolution, audio buses, and keybindings save/load");
