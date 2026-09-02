@@ -33,6 +33,15 @@ namespace Ashfall.Core.Narrative
         public Func<string, bool>? WeatherGateFilter { get; set; }
 
         /// <summary>
+        /// Plan 52 — optional expansion-quest link. When set, a resolved
+        /// choice carrying <c>completesQuestId</c> records the decision as
+        /// expansion-quest progress (including the recorded choice id), which
+        /// is the persisted memory recurring-NPC arcs resolve from. Null
+        /// leaves encounter resolution exactly as before.
+        /// </summary>
+        public ExpansionQuestSystem? QuestLink { get; set; }
+
+        /// <summary>
         /// Optional content-utilization instrumentation (Ticket #127). Null
         /// during normal gameplay (side-effect free, zero overhead); set by
         /// diagnostic/self-test harnesses that want SELECTED/EFFECT_PRODUCED
@@ -136,6 +145,7 @@ namespace Ashfall.Core.Narrative
             _state.totalResolved++;
             _state.cumulativeMorale += choice.moraleDelta;
             _state.cumulativeGuilt += choice.guiltDelta;
+            ApplyQuestLink(choice, day);
             OnEncounterResolved?.Invoke(record);
             Instrumentation?.RecordDefinitionConsumed(
                 NarrativeEncounterCatalogLoader.FileName, encounterId, nameof(NarrativeEncounterSystem),
@@ -143,6 +153,28 @@ namespace Ashfall.Core.Narrative
                 day);
             RaiseChanged();
             return true;
+        }
+
+        /// <summary>
+        /// Plan 52 — land an arc decision into the expansion-quest ledger.
+        /// Idempotent and order-safe: starts the quest if its day window has
+        /// not auto-started it yet, records the authored choice, then completes
+        /// it unless a choice effect already did. Quest progress is the
+        /// persisted arc-memory authority — this bridge writes nothing else.
+        /// </summary>
+        private void ApplyQuestLink(EncounterChoiceDefinition choice, int day)
+        {
+            if (QuestLink == null || string.IsNullOrEmpty(choice.completesQuestId)) return;
+
+            string questId = choice.completesQuestId;
+            if (!QuestLink.IsStarted(questId))
+                QuestLink.StartQuest(questId, day);
+
+            if (!string.IsNullOrEmpty(choice.completesQuestChoiceId))
+                QuestLink.MakeChoice(questId, choice.completesQuestChoiceId, day);
+
+            if (!QuestLink.IsCompleted(questId))
+                QuestLink.CompleteQuest(questId, day);
         }
 
         // ── Pending surfaced queue ─────────────────────────────────────
@@ -277,13 +309,27 @@ namespace Ashfall.Core.Narrative
     {
         public const string FileName = "narrative_encounters.json";
 
+        /// <summary>Plan 52 — recurring-NPC arc encounters load after the
+        /// base catalog (duplicate ids are dropped by RegisterEncounter).</summary>
+        public const string ArcFileName = "narrative_encounters_npc_arcs.json";
+
         public static List<EncounterDefinition> Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
             var result = new List<EncounterDefinition>();
             if (fileIO == null || json == null || string.IsNullOrEmpty(dataDir))
                 return result;
 
-            string path = fileIO.Combine(dataDir, FileName);
+            result.AddRange(LoadFile(dataDir, FileName, fileIO, json));
+            result.AddRange(LoadFile(dataDir, ArcFileName, fileIO, json));
+            return result;
+        }
+
+        private static List<EncounterDefinition> LoadFile(
+            string dataDir, string fileName, IFileIO fileIO, IJsonSerializer json)
+        {
+            var result = new List<EncounterDefinition>();
+
+            string path = fileIO.Combine(dataDir, fileName);
             if (!fileIO.FileExists(path))
                 return result;
 

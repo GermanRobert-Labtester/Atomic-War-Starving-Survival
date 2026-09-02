@@ -32,6 +32,15 @@ namespace Ashfall.Core.Narrative
         public string discoverLocationId = string.Empty;
         /// <summary>Whether this choice depletes the micro-location (one-time loot).</summary>
         public bool depletesOnResolve = false;
+
+        // Plan 52 — Recurring NPC arc extensions (backward-compatible defaults)
+        /// <summary>Expansion quest this choice completes on resolution. The
+        /// quest progress (including the recorded choice id) is the persisted
+        /// arc-memory authority. Empty = no arc decision.</summary>
+        public string completesQuestId = string.Empty;
+        /// <summary>Choice id recorded into the expansion-quest progress when
+        /// this encounter choice resolves. Empty = complete without a choice.</summary>
+        public string completesQuestChoiceId = string.Empty;
     }
 
     /// <summary>
@@ -51,6 +60,13 @@ namespace Ashfall.Core.Narrative
         public float minDangerLevel = 0f;
         public string requiredLocationId = string.Empty;
         public bool forceOnArrival = false;
+
+        // Plan 52 — Recurring NPC arc extension (backward-compatible default)
+        /// <summary>npc_* id of the recurring character featured in this
+        /// encounter. Empty = anonymous encounter. Data-linkage only; the arc
+        /// resolver never reads it.</summary>
+        public string npcId = string.Empty;
+
         public List<EncounterChoiceDefinition> choices = new List<EncounterChoiceDefinition>();
 
         /// <summary>Unity parity: effective selection weight for a stance + danger + location.</summary>

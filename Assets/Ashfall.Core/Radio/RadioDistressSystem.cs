@@ -93,6 +93,18 @@ namespace Ashfall.Core.Radio
 
         [JsonPropertyName("reputation_delta")]
         public int ReputationDelta { get; set; } = 15;
+
+        // Plan 52 — recurring-NPC arc integration (backward-compatible defaults)
+        /// <summary>npc_* id of the recurring character this signal is about.
+        /// Empty = anonymous signal. Drives stale-signal suppression once the
+        /// NPC's arc is terminal.</summary>
+        [JsonPropertyName("npc_id")]
+        public string NpcId { get; set; } = string.Empty;
+
+        /// <summary>Expansion quest completed when this signal resolves, which
+        /// advances the NPC's authored arc. Empty = no arc link.</summary>
+        [JsonPropertyName("resolve_quest_id")]
+        public string ResolveQuestId { get; set; } = string.Empty;
     }
 
     /// <summary>
@@ -130,6 +142,15 @@ namespace Ashfall.Core.Radio
         public event Action<DistressSignalDefinition, ActiveDistressSignal>? OnSignalTriangulated;
         public event Action<DistressSignalDefinition, ActiveDistressSignal>? OnSignalExpired;
         public event Action<DistressSignalDefinition, ActiveDistressSignal, string>? OnSignalResolved;
+
+        /// <summary>
+        /// Plan 52 — optional NPC-arc suppression filter. When set, a signal
+        /// whose npc_id is reported suppressed (dead / recruited / terminal
+        /// arc) can no longer be intercepted — the world does not re-beggar
+        /// people it has already resolved. Mirrors the encounter
+        /// WeatherGateFilter pattern: null means no filtering.
+        /// </summary>
+        public Func<string, bool>? NpcSignalSuppressionFilter { get; set; }
 
         public RadioDistressSystem()
         {
@@ -190,6 +211,10 @@ namespace Ashfall.Core.Radio
         public bool Intercept(string signalId, int day)
         {
             if (!_definitions.TryGetValue(signalId, out var def)) return false;
+            if (!string.IsNullOrEmpty(def.NpcId)
+                && NpcSignalSuppressionFilter != null
+                && NpcSignalSuppressionFilter(def.NpcId))
+                return false;
             var state = _activeSignals[signalId];
             if (state.Status == DistressSignalStatus.Inactive)
             {

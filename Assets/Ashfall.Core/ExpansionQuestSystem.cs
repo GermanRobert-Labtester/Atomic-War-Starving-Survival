@@ -351,7 +351,8 @@ namespace Ashfall.Core
             // Load all expansion quest files
             string[] files = {
                 "quests_expansion_05.json",
-                "quests_expansion_06.json"
+                "quests_expansion_06.json",
+                "quests_npc_arcs.json"
             };
 
             foreach (var file in files)
