@@ -1367,13 +1367,25 @@ def scan_codebase_symbols():
     # build output, and tooling caches do not exist on fresh checkouts.
     excluded_dir_markers = ("/obj/", "/bin/", "/.claude/", "/.git/", "/builds/", "/artifacts/")
     cs_types = {}
+    multi = {}
     for p in REPO_ROOT.rglob("*.cs"):
         s = str(p)
         if any(marker in s for marker in excluded_dir_markers): continue
         rel_p = p.relative_to(REPO_ROOT).as_posix()
         content = p.read_text(encoding="utf-8", errors="ignore")
         for m in re.finditer(r"(?:public|internal|sealed|static|partial|abstract)\s+(?:class|struct|interface|enum|record)\s+([A-Za-z0-9_]+)", content):
-            cs_types[m.group(1)] = rel_p
+            multi.setdefault(m.group(1), set()).add(rel_p)
+
+    # Deterministic type -> file resolution: rglob order is filesystem
+    # dependent, so partial-class files (e.g. Foo.Actions.cs) would win on
+    # one machine and lose on another. Prefer the file named exactly after
+    # the type, then the lexicographically smallest path.
+    for type_name, paths in multi.items():
+        exact = f"{type_name}.cs"
+        cs_types[type_name] = min(
+            paths,
+            key=lambda pth: (not pth.endswith(exact), pth)
+        )
 
     data_files = set()
     data_dir = REPO_ROOT / "Assets" / "StreamingAssets" / "Data"

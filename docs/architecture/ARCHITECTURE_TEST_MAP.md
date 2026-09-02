@@ -496,7 +496,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/World/FieldGuideCatalog.cs`](../../Assets/Ashfall.Core/World/FieldGuideCatalog.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/FieldGuideSaveStore.cs`](../../src/Host/FieldGuideSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/FieldGuidePersistenceTests.cs`](../../Ashfall.Core.Tests/FieldGuidePersistenceTests.cs)
@@ -507,7 +507,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `research`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Research/ResearchSystem.cs`](../../Assets/Ashfall.Core/Research/ResearchSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/ResearchSaveStore.cs`](../../src/Host/ResearchSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/ResearchPanel.cs`](../../src/UI/ResearchPanel.cs)
@@ -519,7 +519,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `medical`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs`](../../Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/MedicalPipelineSaveStore.cs`](../../src/Host/MedicalPipelineSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/MedicalPanel.cs`](../../src/UI/MedicalPanel.cs)
@@ -543,7 +543,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `medical`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Medical/AmputationSystem.cs`](../../Assets/Ashfall.Core/Medical/AmputationSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/AmputationSaveStore.cs`](../../src/Host/AmputationSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/MedicalPanel.cs`](../../src/UI/MedicalPanel.cs)
@@ -555,7 +555,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Archaeology/ArchaeologySystem.cs`](../../Assets/Ashfall.Core/Archaeology/ArchaeologySystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/ArchaeologySaveStore.cs`](../../src/Host/ArchaeologySaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Archaeology/ArchaeologySystemTests.cs`](../../Ashfall.Core.Tests/Archaeology/ArchaeologySystemTests.cs)
@@ -566,7 +566,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `aviation`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Expeditions/AviationSystem.cs`](../../Assets/Ashfall.Core/Expeditions/AviationSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/AviationSaveStore.cs`](../../src/Host/AviationSaveStore.cs)
   - UI Panel: [`src/UI/AviationUI.cs`](../../src/UI/AviationUI.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
@@ -578,7 +578,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Narrative/CeremonySystem.cs`](../../Assets/Ashfall.Core/Narrative/CeremonySystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/CeremonySaveStore.cs`](../../src/Host/CeremonySaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/CeremonySystemTests.cs`](../../Ashfall.Core.Tests/Narrative/CeremonySystemTests.cs)
@@ -589,7 +589,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Combat/ChemWarfareSystem.cs`](../../Assets/Ashfall.Core/Combat/ChemWarfareSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/ChemWarfareSaveStore.cs`](../../src/Host/ChemWarfareSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Combat/ChemWarfareSystemTests.cs`](../../Ashfall.Core.Tests/Combat/ChemWarfareSystemTests.cs)
@@ -600,7 +600,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `nursery`, `century_seed`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Survivors/GenerationalSystem.cs`](../../Assets/Ashfall.Core/Survivors/GenerationalSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/GenerationalSaveStore.cs`](../../src/Host/GenerationalSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/NurseryPanel.cs`](../../src/UI/NurseryPanel.cs)
@@ -613,7 +613,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/World/CommsArraySystem.cs`](../../Assets/Ashfall.Core/World/CommsArraySystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/CommsArraySaveStore.cs`](../../src/Host/CommsArraySaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/CommsArraySystemTests.cs`](../../Ashfall.Core.Tests/World/CommsArraySystemTests.cs)
@@ -624,7 +624,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Survivors/DesperationSystem.cs`](../../Assets/Ashfall.Core/Survivors/DesperationSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/DesperationSaveStore.cs`](../../src/Host/DesperationSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/DesperationSystemTests.cs`](../../Ashfall.Core.Tests/Survivors/DesperationSystemTests.cs)
@@ -635,7 +635,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `stealth`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Combat/StealthSystem.cs`](../../Assets/Ashfall.Core/Combat/StealthSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/StealthSaveStore.cs`](../../src/Host/StealthSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/StealthReadoutPanel.cs`](../../src/UI/StealthReadoutPanel.cs)
@@ -647,7 +647,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/World/FalloutSystem.cs`](../../Assets/Ashfall.Core/World/FalloutSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/FalloutSaveStore.cs`](../../src/Host/FalloutSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/FalloutSystemTests.cs`](../../Ashfall.Core.Tests/World/FalloutSystemTests.cs)
@@ -658,7 +658,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `forced_labor`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Factions/ForcedLaborSystem.cs`](../../Assets/Ashfall.Core/Factions/ForcedLaborSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/ForcedLaborSaveStore.cs`](../../src/Host/ForcedLaborSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/LaborUI.cs`](../../src/UI/LaborUI.cs)
@@ -670,7 +670,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Farming/FungiCultivationSystem.cs`](../../Assets/Ashfall.Core/Farming/FungiCultivationSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/FungiSaveStore.cs`](../../src/Host/FungiSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Farming/FungiCultivationSystemTests.cs`](../../Ashfall.Core.Tests/Farming/FungiCultivationSystemTests.cs)
@@ -681,7 +681,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Economy/MercenarySystem.cs`](../../Assets/Ashfall.Core/Economy/MercenarySystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/MercenarySaveStore.cs`](../../src/Host/MercenarySaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Economy/MercenarySystemTests.cs`](../../Ashfall.Core.Tests/Economy/MercenarySystemTests.cs)
@@ -692,7 +692,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `mutation_tree`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Medical/MutationSystem.cs`](../../Assets/Ashfall.Core/Medical/MutationSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/MutationSaveStore.cs`](../../src/Host/MutationSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/MutationTreePanel.cs`](../../src/UI/MutationTreePanel.cs)
@@ -704,7 +704,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `narcotics`, `pharma_lab`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Medical/NarcoticsSystem.cs`](../../Assets/Ashfall.Core/Medical/NarcoticsSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/NarcoticsSaveStore.cs`](../../src/Host/NarcoticsSaveStore.cs)
   - UI Panel: [`src/UI/ChemUI.cs`](../../src/UI/ChemUI.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
@@ -717,7 +717,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `prisoners`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Factions/PrisonerSystem.cs`](../../Assets/Ashfall.Core/Factions/PrisonerSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/PrisonerSaveStore.cs`](../../src/Host/PrisonerSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/PrisonerPanel.cs`](../../src/UI/PrisonerPanel.cs)
@@ -729,7 +729,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Expeditions/RailwaySystem.cs`](../../Assets/Ashfall.Core/Expeditions/RailwaySystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/RailwaySaveStore.cs`](../../src/Host/RailwaySaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/RailwaySystemTests.cs`](../../Ashfall.Core.Tests/Expeditions/RailwaySystemTests.cs)
@@ -740,7 +740,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Recreation/SurvivorDowntimeSystem.cs`](../../Assets/Ashfall.Core/Recreation/SurvivorDowntimeSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/RecreationSaveStore.cs`](../../src/Host/RecreationSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Recreation/SurvivorDowntimeSystemTests.cs`](../../Ashfall.Core.Tests/Recreation/SurvivorDowntimeSystemTests.cs)
@@ -751,7 +751,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Crafting/RoboticsSystem.cs`](../../Assets/Ashfall.Core/Crafting/RoboticsSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/RoboticsSaveStore.cs`](../../src/Host/RoboticsSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Crafting/RoboticsSystemTests.cs`](../../Ashfall.Core.Tests/Crafting/RoboticsSystemTests.cs)
@@ -762,7 +762,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `politics`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Narrative/PoliticsSystem.cs`](../../Assets/Ashfall.Core/Narrative/PoliticsSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/PoliticsSaveStore.cs`](../../src/Host/PoliticsSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/PoliticsUI.cs`](../../src/UI/PoliticsUI.cs)
@@ -774,7 +774,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Narrative/JusticeSystem.cs`](../../Assets/Ashfall.Core/Narrative/JusticeSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/JusticeSaveStore.cs`](../../src/Host/JusticeSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/JusticeSystemTests.cs`](../../Ashfall.Core.Tests/Narrative/JusticeSystemTests.cs)
@@ -785,7 +785,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Excavation/ExcavationHazardSystem.cs`](../../Assets/Ashfall.Core/Excavation/ExcavationHazardSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/ExcavationHazardSaveStore.cs`](../../src/Host/ExcavationHazardSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExcavationSystemTests.cs`](../../Ashfall.Core.Tests/ExcavationSystemTests.cs)
@@ -796,7 +796,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `radio`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Radio/ShelterRadioStationSystem.cs`](../../Assets/Ashfall.Core/Radio/ShelterRadioStationSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/RadioStationSaveStore.cs`](../../src/Host/RadioStationSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/RadioPanel.cs`](../../src/UI/RadioPanel.cs)
@@ -819,7 +819,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Shelter/ShelterSocialDynamicsSystem.cs`](../../Assets/Ashfall.Core/Shelter/ShelterSocialDynamicsSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/ShelterSocialSaveStore.cs`](../../src/Host/ShelterSocialSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/ShelterSocialDynamicsTests.cs`](../../Ashfall.Core.Tests/Shelter/ShelterSocialDynamicsTests.cs)
@@ -830,7 +830,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:** `workshop`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Shelter/ShelterWorkshopSystem.cs`](../../Assets/Ashfall.Core/Shelter/ShelterWorkshopSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/ShelterWorkshopSaveStore.cs`](../../src/Host/ShelterWorkshopSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/WorkshopPanel.cs`](../../src/UI/WorkshopPanel.cs)
@@ -1188,7 +1188,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Ecology/EcologicalInfestationSystem.cs`](../../Assets/Ashfall.Core/Ecology/EcologicalInfestationSystem.cs)
-  - Host Session: [`Assets/Ashfall.Core/Quests/HoldfastQuests.cs`](../../Assets/Ashfall.Core/Quests/HoldfastQuests.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/EcologicalInfestationSaveStore.cs`](../../src/Host/EcologicalInfestationSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs`](../../Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs)
