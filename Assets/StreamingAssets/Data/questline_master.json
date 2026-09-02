@@ -1941,6 +1941,27 @@
       "deadlineDays": 3,
       "rewardItems": ["ammo_556", "field_dressing_kit"],
       "rewardReputation": 10
+    },
+    {
+      "id": "quest_arc_mara_01_waystation",
+      "title": "The Water Station Route",
+      "synopsis": "A caravan factor working the water stations is short after a bad crossing. What you do about it is the first entry in her ledger.",
+      "factionTag": "faction_grain_exchange",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_mara_02_route",
+      "title": "Wreckage on the Cut Road",
+      "synopsis": "The caravan factor's second wagon is through the road crust, and she is camped on the wreck guarding the cargo.",
+      "factionTag": "faction_grain_exchange",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_mara_03_office",
+      "title": "The Coordinator's Stamp",
+      "synopsis": "The grain exchange has given Mara Veln the southern routes. The rate sheet has a line for friends of the coordinator.",
+      "factionTag": "faction_grain_exchange",
+      "status": "active"
     }
   ]
 }

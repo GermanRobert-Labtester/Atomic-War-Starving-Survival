@@ -5,10 +5,10 @@ namespace AtomicWar.GodotApp.Audio
 {
     public interface IExpansionAudioProvider
     {
-        // Expansion cue producers pending: Plans 178-201 system events are not
-        // yet mapped to AudioCueCatalog entries (tracked as expansion-audio
-        // backlog). This interface intentionally declares no members so the
-        // bridge compiles without faking a subscription path.
+        Ashfall.Core.Survivors.DesperationSystem? AudioDesperation { get; }
+        Ashfall.Core.Medical.MutationSystem? AudioMutation { get; }
+        Ashfall.Core.Combat.ChemWarfareSystem? AudioChemWarfare { get; }
+        Ashfall.Core.Expeditions.RailwaySystem? AudioRailway { get; }
     }
 
     public sealed class ExpansionAudioBridge : IDisposable
@@ -17,7 +17,7 @@ namespace AtomicWar.GodotApp.Audio
         private bool _disposed;
 
         public ExpansionAudioBridge(AudioManager audio)
-            : this(RequireAudio(audio))
+            : this(audio != null ? audio.PlayCue : throw new ArgumentNullException(nameof(audio)))
         {
         }
 
@@ -26,15 +26,16 @@ namespace AtomicWar.GodotApp.Audio
             _playCue = playCue;
         }
 
-        private static Action<string> RequireAudio(AudioManager audio)
-        {
-            if (audio == null) throw new ArgumentNullException(nameof(audio));
-            return audio.PlayCue;
-        }
-
         public void SubscribeAll(IExpansionAudioProvider provider)
         {
-            // No providers yet — see IExpansionAudioProvider.
+            if (provider.AudioDesperation != null)
+                provider.AudioDesperation.OnTabooBroken += (r) => _playCue(AudioCueCatalog.InterrogationSlam);
+            if (provider.AudioMutation != null)
+                provider.AudioMutation.OnMutationAcquired += (a,b,c) => _playCue(AudioCueCatalog.BioMutationPulse);
+            if (provider.AudioChemWarfare != null)
+                provider.AudioChemWarfare.OnHazardDeployed += (h) => _playCue(AudioCueCatalog.HazardToxicSizzle);
+            if (provider.AudioRailway != null)
+                provider.AudioRailway.OnDerailment += (a,b) => _playCue(AudioCueCatalog.TrainScreechCrash);
         }
 
         public void Dispose()

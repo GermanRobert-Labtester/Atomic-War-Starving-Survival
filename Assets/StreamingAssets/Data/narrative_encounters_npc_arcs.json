@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "encounters": [
+    {
+      "id": "enc_arc_mara_waystation",
+      "title": "The Factor at the Water Station",
+      "description": "Two wagons stand in the lee of the water station, tarped against the ash. The factor works through her ledger by memory: medicine, axle parts, the crossing she lost. Her prices are fast and exact, and she mentions once, without emphasis, that she pays favors back with interest.",
+      "category": "Trade",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_mara_veln",
+      "choices": [
+        {
+          "choiceId": "mara_share_medicine",
+          "text": "Trade fair — medicine and axle parts at her asking price.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_mara_01_waystation",
+          "completesQuestChoiceId": "mara_help"
+        },
+        {
+          "choiceId": "mara_squeeze_the_route",
+          "text": "Buy her shortage at a premium she is in no position to refuse.",
+          "moraleDelta": 1,
+          "guiltDelta": 3,
+          "completesQuestId": "quest_arc_mara_01_waystation",
+          "completesQuestChoiceId": "mara_exploit"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_mara_route",
+      "title": "Wreckage on the Cut Road",
+      "description": "A wagon sits hip-deep in a collapsed cut road crust, harness still on. The factor who owns it is camped on the wreck with a rifle across her knees, guarding cargo she cannot move. She looks up at your column and starts naming prices before you are close enough to see her face clearly.",
+      "category": "Discovery",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 0.75,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_mara_veln",
+      "choices": [
+        {
+          "choiceId": "mara_pull_her_out",
+          "text": "Spend the water and the day — pull the wagon out and walk her people in.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_mara_02_route",
+          "completesQuestChoiceId": "mara_rescue"
+        },
+        {
+          "choiceId": "mara_drive_past",
+          "text": "Take what is loose on the wreck and leave the road its due.",
+          "moraleDelta": 1,
+          "guiltDelta": 4,
+          "completesQuestId": "quest_arc_mara_02_route",
+          "completesQuestChoiceId": "mara_pass"
+        }
+      ]
+    }
+  ]
+}

@@ -89,6 +89,20 @@ namespace AtomicWar.GodotApp
         private MutationTreePanel _mutationTreePanel = null!;
         private NurseryPanel _nurseryPanel = null!;
         private FalloutPlumePanel _falloutPlumePanel = null!;
+        private MercenaryBountyBoardPanel _mercenaryBountyBoardPanel = null!;
+        private ArchaeologyExcavationPanel _archaeologyExcavationPanel = null!;
+        private ChemWarfareDefensePanel _chemWarfareDefensePanel = null!;
+        private AmputationTriagePanel _amputationTriagePanel = null!;
+        private RailwayTerminalPanel _railwayTerminalPanel = null!;
+        private FungiCultivationBedPanel _fungiCultivationBedPanel = null!;
+        private JusticeTribunalPanel _justiceTribunalPanel = null!;
+        private CommsArrayTransceiverPanel _commsArrayTransceiverPanel = null!;
+        private CeremonyFestivalPanel _ceremonyFestivalPanel = null!;
+        private RoboticsWorkshopPanel _roboticsWorkshopPanel = null!;
+        private SurvivorDowntimePanel _survivorDowntimePanel = null!;
+        private WinterFreezePanel _winterFreezePanel = null!;
+        private DesperationCrisisPanel _desperationCrisisPanel = null!;
+
         private SurvivorDetailPanel _survivorDetailPanel = null!;
         private InventoryDetailPanel _inventoryDetailPanel = null!;
         private QuestDetailPanel _questDetailPanel = null!;
@@ -166,6 +180,9 @@ namespace AtomicWar.GodotApp
         private HeavyMarineDieselGeneratorPanel _heavyMarineDieselGenPanel = null!;
         private SlurryDewateringSumpPanel _slurryDewateringSumpPanel = null!;
         private MagneticDrumArchivePanel _magneticDrumArchivePanel = null!;
+        private AtomicWar.GodotApp.UI.EmergencyResponseHud _crisisHud = null!;
+        private Ashfall.Core.UI.CrisisPresentationSnapshot _crisisPresentationSnapshot = new Ashfall.Core.UI.CrisisPresentationSnapshot();
+        private Ashfall.Core.UI.CrisisPresentationCoordinator _crisisCoordinator = null!;
 
         private void BuildUserInterface()
         {
@@ -875,6 +892,27 @@ namespace AtomicWar.GodotApp
             _magneticDrumArchivePanel = new MagneticDrumArchivePanel { Visible = false };
             _magneticDrumArchivePanel.OnClose += () => _magneticDrumArchivePanel.Visible = false;
             AddChild(_magneticDrumArchivePanel);
+
+            _crisisHud = PanelSceneLoader.Load<EmergencyResponseHud>("res://assets/ui/panels/EmergencyResponseHud.tscn");
+            _crisisHud.Visible = false;
+            _crisisHud.OnPanelClosed += () => _crisisHud.Visible = false;
+            _crisisHud.OnAcknowledge += () => _crisisCoordinator?.AcknowledgeCurrentCrisis();
+            _crisisHud.OnRequestNavigateToPanel += route => Ashfall.Core.UI.PanelRegistry.TryOpen(route);
+            AddChild(_crisisHud);
+
+            _crisisCoordinator = new Ashfall.Core.UI.CrisisPresentationCoordinator();
+            _crisisCoordinator.OnCrisisChanged += snap =>
+            {
+                _crisisPresentationSnapshot = snap;
+                if (snap.IsActive)
+                {
+                    _crisisHud.Bind(snap);
+                    if (snap.Severity >= Ashfall.Core.UI.CrisisSeverity.Severe && !_crisisHud.Visible)
+                    {
+                        _crisisHud.Open();
+                    }
+                }
+            };
 
             // ── Game content area ──
             var margin = new MarginContainer();

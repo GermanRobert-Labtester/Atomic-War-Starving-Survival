@@ -96,6 +96,13 @@ namespace AtomicWar.GodotApp
         /// <summary>Drop the pending queue without resolving. No invented outcomes.</summary>
         public void ClearAllPending() => _narrative?.ClearAllPending();
 
+        /// <summary>
+        /// The travel encounter engine this session resolves through. Main
+        /// uses it to attach the Plan 52 arc QuestLink (encounter decisions
+        /// land in the persisted expansion-quest ledger). Read-only.
+        /// </summary>
+        public NarrativeEncounterSystem? NarrativeEngine => _narrative;
+
         public ExpeditionHostSession(ExpeditionSystem engine = null!, NarrativeEncounterSystem narrative = null!)
         {
             Engine = engine ?? new ExpeditionSystem();

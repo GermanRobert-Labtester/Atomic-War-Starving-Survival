@@ -758,6 +758,7 @@ namespace AtomicWar.GodotApp
 
                 _m.SetupExpansionQuests();
                 _m._expansionQuests.TickDay(day);
+                _m.SetupNpcArcs();
 
                 events.Add(new DayStateChangeEvent("narrative_ticked", "narrative_quests_verdict", null, null, day));
             }

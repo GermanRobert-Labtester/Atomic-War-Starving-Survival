@@ -28,6 +28,7 @@ namespace AtomicWar.GodotApp.Audio
         SurvivorFateSystem? AudioSurvivorFate { get; }
         PowerGridSystem? AudioPowerGrid { get; }
         StartingLevelSystem? AudioStartingLevel { get; }
+        Ashfall.Core.AudioConditionSystem? AudioConditions { get; }
     }
 
     /// <summary>
@@ -140,12 +141,12 @@ namespace AtomicWar.GodotApp.Audio
             string? cueId = evt.Kind switch
             {
                 "encounter_start" => AudioCueCatalog.CombatStart,
-                "fire" => AudioCueCatalog.CombatFire,
-                "suppress" => AudioCueCatalog.CombatFire,
+                "fire" => ResolveWeaponFireCue(evt.Detail),
+                "suppress" => AudioCueCatalog.WeaponLmgBurst,
                 "weapon_jam" => AudioCueCatalog.CombatJam,
-                "reload" => AudioCueCatalog.CombatReload,
+                "reload" => evt.Detail.Contains("shotgun") ? AudioCueCatalog.WeaponShotgunRack : AudioCueCatalog.CombatReload,
                 "clear_jam" => AudioCueCatalog.CombatReload,
-                "downed" => AudioCueCatalog.CombatDowned,
+                "downed" => AudioCueCatalog.HeavyImpactFall,
                 "death" => AudioCueCatalog.CombatDowned,
                 "mutual_kill" => AudioCueCatalog.CombatDowned,
                 "victory" => AudioCueCatalog.CombatVictory,
@@ -161,6 +162,30 @@ namespace AtomicWar.GodotApp.Audio
 
             if (cueId != null)
                 _playCue(cueId);
+
+            if (evt.Detail.Contains("Ricochet") || evt.Detail.Contains("ricochet"))
+                _playCue(AudioCueCatalog.BulletWhizRicochet);
+        }
+
+        private static string ResolveWeaponFireCue(string detail)
+        {
+            if (string.IsNullOrEmpty(detail)) return AudioCueCatalog.CombatFire;
+            string lower = detail.ToLowerInvariant();
+            if (lower.Contains("cz75") || lower.Contains("pistol") || lower.Contains("9x19"))
+                return AudioCueCatalog.WeaponCz75Report;
+            if (lower.Contains("pipe") || lower.Contains("pipe_rifle"))
+                return AudioCueCatalog.WeaponPipeRifleReport;
+            if (lower.Contains("shotgun") || lower.Contains("scrap_shotgun"))
+                return AudioCueCatalog.WeaponScrapShotgunReport;
+            if (lower.Contains("bolt") || lower.Contains("bolt_rifle") || lower.Contains(".308"))
+                return AudioCueCatalog.WeaponBoltRifleReport;
+            if (lower.Contains("assault") || lower.Contains("assault_rifle") || lower.Contains("5.56"))
+                return AudioCueCatalog.WeaponAssaultRifleBurst;
+            if (lower.Contains("lmg") || lower.Contains("machine_gun") || lower.Contains("7.62"))
+                return AudioCueCatalog.WeaponLmgBurst;
+            if (lower.Contains("sniper") || lower.Contains(".50") || lower.Contains("anti_material"))
+                return AudioCueCatalog.WeaponSniperHeavyReport;
+            return AudioCueCatalog.CombatFire;
         }
 
         public void BindCrafting(CraftingSystem? crafting)

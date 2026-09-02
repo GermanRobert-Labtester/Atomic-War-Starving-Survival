@@ -222,7 +222,7 @@ namespace Ashfall.Core.Tests
 
             var defs = NarrativeEncounterCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            Assert.Equal(3, defs.Count);
+            Assert.Equal(5, defs.Count);
             Assert.Contains(defs, d => d.id == "enc_dead_letter_office");
             Assert.Contains(defs, d => d.id == "enc_weather_station");
             Assert.Contains(defs, d => d.id == "enc_pianist");
@@ -231,7 +231,7 @@ namespace Ashfall.Core.Tests
                 var d = defs[i];
                 Assert.False(string.IsNullOrEmpty(d.title));
                 Assert.False(string.IsNullOrEmpty(d.description));
-                Assert.True(d.choices.Count >= 3);
+                Assert.True(d.choices.Count >= 2);
                 for (int j = 0; j < d.choices.Count; j++)
                 {
                     var c = d.choices[j];

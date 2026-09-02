@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 813 | **Last Verified:** 2026-09-02
+**Total Indexed Documents:** 814 | **Last Verified:** 2026-09-02
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 806 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 807 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 5 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -244,7 +244,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (646 documents)
+## 9. General Project Guides & Archive Reference (647 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -438,7 +438,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/MORAL_CHOICE_SYSTEM.md`](MORAL_CHOICE_SYSTEM.md) | **ASHFALL: ATOMIC WAR - MORAL CHOICE SYSTEM** — *60 Quests, 8 Branching Paths, World Impact Without UI Clutter* |
 | 🟢 `CURRENT` | [`docs/agents/AGENTS_SYNC_REPORT.md`](agents/AGENTS_SYNC_REPORT.md) | **ASHFALL Agent-Rulebook Synchronization Report** — **Canonical source:** `AGENTS.md`<br> |
 | 🟢 `CURRENT` | [`docs/agents/AGENT_SKILLS_INDEX.md`](agents/AGENT_SKILLS_INDEX.md) | **ASHFALL Multi-Agent Skills Registry & Taxonomy Index** — **Total Registered Skills:** `79`<br> |
-| 🟢 `CURRENT` | [`docs/audio/AUDIO_CUE_CATALOG.md`](audio/AUDIO_CUE_CATALOG.md) | **ASHFALL Audio Cue Architecture Catalog** — **Total Registered Cues:** `74`<br> |
+| 🟢 `CURRENT` | [`docs/audio/AUDIO_CUE_CATALOG.md`](audio/AUDIO_CUE_CATALOG.md) | **ASHFALL Audio Cue Architecture Catalog** — **Total Registered Cues:** `97`<br> |
+| 🟢 `CURRENT` | [`docs/audio/AUDIO_EVENT_COVERAGE.md`](audio/AUDIO_EVENT_COVERAGE.md) | **ASHFALL — Audio Event Coverage Contract & Matrix** — **Status:** Authoritative (Reconciled with Flagship Sensory Architecture) |
 | 🟢 `CURRENT` | [`docs/audio/AUDIO_QA_REPORT.md`](audio/AUDIO_QA_REPORT.md) | **ASHFALL Audio QA Report — Plan 07B Radio / VO Batch** — **Date:** 2026-08-31 |
 | 🟢 `CURRENT` | [`docs/audio/SFX_BATCH_0_IMPLEMENTATION_LOG.md`](audio/SFX_BATCH_0_IMPLEMENTATION_LOG.md) | **SFX Batch 0 — Safety and Runtime Foundation** — Date: 2026-08-30 |
 | 🟢 `CURRENT` | [`docs/audio/SFX_COMBAT_BATCH_01_IMPLEMENTATION_LOG.md`](audio/SFX_COMBAT_BATCH_01_IMPLEMENTATION_LOG.md) | **SFX Combat Batch 01 Implementation Log** — Date: 2026-08-30 |

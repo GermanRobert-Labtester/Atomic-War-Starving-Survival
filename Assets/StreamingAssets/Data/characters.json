@@ -1244,6 +1244,32 @@
         "dive_with_a_partnership_she_hasn't_named"
       ],
       "signature_quote": "The ledger says I was the only one who came up. The ledger wasn't down there."
+    },
+    {
+      "id": "npc_mara_veln",
+      "display_name": "Mara Veln",
+      "profession": "Caravan Factor",
+      "bio": "Runs a two-wagon route between the water stations out of the grain exchange's leftover goodwill. Counts in tonnes and days, never in feelings, and can price a man's whole cart by the sound of its axle. After the wreck on the cut road she learned that the difference between a favor and a debt is who keeps the ledger.",
+      "faction": "faction_grain_exchange",
+      "region": "the_verge",
+      "first_day": 12,
+      "location_id": "loc_water_station",
+      "wants": [
+        "medical_kit",
+        "axle_parts",
+        "escorts_who_walk_the_whole_route"
+      ],
+      "offers": [
+        "caravan_space",
+        "route_credit",
+        "prices_that_remember"
+      ],
+      "will_not": [
+        "carry_contraband",
+        "name_her_buyers",
+        "forget_a_price"
+      ],
+      "signature_quote": "Everything moves or everything starves. I just decide what moves, and what it costs you later."
     }
   ]
 }

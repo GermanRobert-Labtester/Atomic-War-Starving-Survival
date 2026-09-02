@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace AtomicWar.GodotApp.Audio
 {
@@ -63,6 +64,9 @@ namespace AtomicWar.GodotApp.Audio
 
         private bool _headless;
         private AudioEventBridge? _eventBridge;
+        private ExpansionAudioBridge? _expansionEventBridge;
+        private AudioConditionHostBridge? _conditionBridge;
+        private AudioStateCoordinator? _stateCoordinator;
         private ShelterAudioController? _shelterAudio;
         private SurfaceAmbienceController? _surfaceAmbience;
         private IAudioDomainProvider? _domainProvider;
@@ -82,6 +86,10 @@ namespace AtomicWar.GodotApp.Audio
             AudioSettings.Instance.OnSettingsChanged += _settingsChangedHandler;
 
             _eventBridge = new AudioEventBridge(this);
+            _expansionEventBridge = new ExpansionAudioBridge(this);
+            _conditionBridge = new AudioConditionHostBridge(this);
+            _stateCoordinator = new AudioStateCoordinator();
+            AddChild(_stateCoordinator);
             _shelterAudio = new ShelterAudioController(this);
             _surfaceAmbience = new SurfaceAmbienceController(this);
             _domainProvider = GetParent() as IAudioDomainProvider;
@@ -179,7 +187,13 @@ namespace AtomicWar.GodotApp.Audio
         public override void _ExitTree()
         {
             _eventBridge?.Dispose();
+            _expansionEventBridge?.Dispose();
             _eventBridge = null;
+            _expansionEventBridge = null;
+            _conditionBridge?.Dispose();
+            _conditionBridge = null;
+            _stateCoordinator?.QueueFree();
+            _stateCoordinator = null;
             _shelterAudio?.Dispose();
             _shelterAudio = null;
             _surfaceAmbience?.Dispose();
@@ -215,6 +229,14 @@ namespace AtomicWar.GodotApp.Audio
                 _domainProvider.AudioExpeditions,
                 _domainProvider.AudioDisease,
                 _domainProvider.AudioSurvivorFate);
+
+            if (_domainProvider is IExpansionAudioProvider expansionProvider && _expansionEventBridge != null)
+            {
+                _expansionEventBridge.SubscribeAll(expansionProvider);
+            }
+
+            _conditionBridge?.Bind(_domainProvider.AudioConditions);
+
             _shelterAudio?.Subscribe(
                 _domainProvider.AudioPowerGrid,
                 _domainProvider.AudioStartingLevel);
@@ -424,7 +446,7 @@ namespace AtomicWar.GodotApp.Audio
             if (_cache.TryGetValue(path, out var cached))
                 return cached;
 
-            var stream = ResourceLoader.Load<AudioStream>(path);
+            var stream = ResourceLoader.Load<AudioStream>(path) ?? LoadDirectStream(path);
             if (stream != null)
             {
                 _cache[path] = stream;
@@ -436,7 +458,38 @@ namespace AtomicWar.GodotApp.Audio
             return stream;
         }
 
-        private void PlayOneShotStream(AudioStream stream, string bus, float volumeDb)
+        public static AudioStream? LoadDirectStream(string resPath)
+        {
+            try
+            {
+                string osPath = ProjectSettings.GlobalizePath(resPath);
+                if (!File.Exists(osPath)) return null;
+
+                if (resPath.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase))
+                {
+                    var mp3 = new AudioStreamMP3();
+                    mp3.Data = File.ReadAllBytes(osPath);
+                    return mp3;
+                }
+                if (resPath.EndsWith(".ogg", StringComparison.OrdinalIgnoreCase))
+                {
+                    return AudioStreamOggVorbis.LoadFromFile(osPath);
+                }
+                if (resPath.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
+                {
+                    var wav = new AudioStreamWav();
+                    wav.Data = File.ReadAllBytes(osPath);
+                    return wav;
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[AudioManager] Direct stream load failed for {resPath}: {ex.Message}");
+            }
+            return null;
+        }
+
+        private void PlayOneShotStream(AudioStream stream, string bus, float volumeDb, float pitchScale = 1f)
         {
             AudioStreamPlayer player;
             if (_pool.Count > 0)
@@ -457,11 +510,13 @@ namespace AtomicWar.GodotApp.Audio
             player.Stream = stream;
             player.Bus = bus;
             player.VolumeDb = volumeDb;
+            player.PitchScale = pitchScale;
+            player.PitchScale = pitchScale;
             player.Play();
             _activeOneShots.Add(player);
         }
 
-        private void PlayLoopStream(string loopKey, AudioStream stream, string bus, float volumeDb)
+        private void PlayLoopStream(string loopKey, AudioStream stream, string bus, float volumeDb, float pitchScale = 1f, float fadeIn = 0f)
         {
             if (stream is AudioStreamWav wav)
                 wav.LoopMode = AudioStreamWav.LoopModeEnum.Forward;
@@ -481,18 +536,46 @@ namespace AtomicWar.GodotApp.Audio
             player.Stream = stream;
             player.Bus = bus;
             player.VolumeDb = volumeDb;
-            if (streamChanged || !player.Playing)
-                player.Play();
+            player.PitchScale = pitchScale;
+            player.PitchScale = pitchScale;
+                        if (streamChanged || !player.Playing)
+            {
+                if (fadeIn > 0f)
+                {
+                    player.VolumeDb = -80f;
+                    player.Play();
+                    var tween = CreateTween();
+                    tween.TweenProperty(player, "volume_db", volumeDb, fadeIn);
+                }
+                else
+                {
+                    player.Play();
+                }
+            }
         }
 
-        private void StopLoop(string loopKey)
+        private void StopLoop(string loopKey, float fadeOut = 0f)
         {
             if (!_loopPlayers.Remove(loopKey, out AudioStreamPlayer? player))
                 return;
 
-            player.Stop();
-            player.Stream = null;
-            player.QueueFree();
+
+            if (fadeOut > 0f)
+            {
+                var tween = CreateTween();
+                tween.TweenProperty(player, "volume_db", -80f, fadeOut);
+                tween.TweenCallback(Callable.From(() => {
+                    player.Stop();
+                    player.Stream = null;
+                    player.QueueFree();
+                }));
+            }
+            else
+            {
+                player.Stop();
+                player.Stream = null;
+                player.QueueFree();
+            }
         }
 
         private void StopLoopsOnBus(string bus)
@@ -559,10 +642,26 @@ namespace AtomicWar.GodotApp.Audio
             if (stream == null) return;
 
             float volumeDb = cue.DefaultVolumeDb + GetBusVolumeOffset(cue.Bus);
+            if (cue.VolumeJitterDb > 0) volumeDb += (float)Godot.GD.RandRange(-cue.VolumeJitterDb, cue.VolumeJitterDb);
+            float pitch = 1f;
+            if (cue.PitchMin < cue.PitchMax) pitch = (float)Godot.GD.RandRange(cue.PitchMin, cue.PitchMax);
+
             if (loop)
-                PlayLoopStream(audioKey, stream, cue.Bus, volumeDb);
+                PlayLoopStream(audioKey, stream, cue.Bus, volumeDb, pitch, cue.FadeInSeconds);
             else
-                PlayOneShotStream(stream, cue.Bus, volumeDb);
+                PlayOneShotStream(stream, cue.Bus, volumeDb, pitch);
+        }
+
+        public void SetLoopIntensity(string loopKey, float intensity01)
+        {
+            if (!_loopPlayers.TryGetValue(loopKey, out var player)) return;
+            var cue = AudioCueCatalog.Resolve(loopKey);
+            if (cue == null) return;
+
+            // Map intensity to volume attenuation (e.g. 0 intensity = -40dB, 1 intensity = base volume)
+            float baseVol = cue.DefaultVolumeDb + GetBusVolumeOffset(cue.Bus);
+            float attenuation = Mathf.Lerp(-40f, 0f, intensity01);
+            player.VolumeDb = baseVol + attenuation;
         }
 
         public void StopCondition(string audioKey)
@@ -570,7 +669,10 @@ namespace AtomicWar.GodotApp.Audio
             if (string.IsNullOrEmpty(audioKey)) return;
             var cue = AudioCueCatalog.Resolve(audioKey);
             if (cue == null) return;
-            StopLoop(cue.Id);
+            StopLoop(cue.Id, cue.FadeOutSeconds);
         }
+
+        public void SetSnapshot(AudioSnapshot snapshot) => _stateCoordinator?.SetSnapshot(snapshot);
+
     }
 }

@@ -28,23 +28,50 @@ namespace AtomicWar.GodotApp.Audio
     public sealed class AudioCueDef
     {
         public string Id { get; }
-        public string ResourcePath { get; }
+        public System.Collections.Generic.IReadOnlyList<string> ResourcePaths { get; }
+        public string ResourcePath => ResourcePaths.Count > 0 ? ResourcePaths[0] : "";
         public string Bus { get; }
         public bool Loop { get; }
         public float DefaultVolumeDb { get; }
+        public float VolumeJitterDb { get; }
+        public float PitchMin { get; }
+        public float PitchMax { get; }
+        public int MaxInstances { get; }
+        public int Priority { get; }
         public float CooldownSeconds { get; }
+        public float FadeInSeconds { get; }
+        public float FadeOutSeconds { get; }
         public string? FallbackCueId { get; }
 
         public AudioCueDef(string id, string resourcePath, string bus,
             bool loop = false, float defaultVolumeDb = 0f,
-            float cooldownSeconds = 0f, string? fallbackCueId = null)
+            float cooldownSeconds = 0f, string? fallbackCueId = null,
+            System.Collections.Generic.IEnumerable<string>? resourcePaths = null,
+            float volumeJitterDb = 0f, float pitchMin = 1f, float pitchMax = 1f,
+            int maxInstances = 4, int priority = 50, float fadeInSeconds = 0f, float fadeOutSeconds = 0f)
         {
             Id = id;
-            ResourcePath = resourcePath;
+            if (resourcePaths != null)
+            {
+                var list = new System.Collections.Generic.List<string>(resourcePaths);
+                if (list.Count == 0 && !string.IsNullOrEmpty(resourcePath)) list.Add(resourcePath);
+                ResourcePaths = list;
+            }
+            else
+            {
+                ResourcePaths = string.IsNullOrEmpty(resourcePath) ? System.Array.Empty<string>() : new[] { resourcePath };
+            }
             Bus = bus;
             Loop = loop;
             DefaultVolumeDb = defaultVolumeDb;
+            VolumeJitterDb = volumeJitterDb;
+            PitchMin = pitchMin;
+            PitchMax = pitchMax;
+            MaxInstances = maxInstances;
+            Priority = priority;
             CooldownSeconds = cooldownSeconds;
+            FadeInSeconds = fadeInSeconds;
+            FadeOutSeconds = fadeOutSeconds;
             FallbackCueId = fallbackCueId;
         }
     }
@@ -53,6 +80,64 @@ namespace AtomicWar.GodotApp.Audio
     /// Data-driven catalog of all audio cues.
     /// Stable snake_case IDs. Missing resources fail safely.
     /// </summary>
+
+    public sealed class AudioCueCatalogDto
+    {
+        [System.Text.Json.Serialization.JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("cues")]
+        public System.Collections.Generic.List<AudioCueDto> Cues { get; set; } = new();
+    }
+
+    public sealed class AudioCueDto
+    {
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; } = "";
+
+        [System.Text.Json.Serialization.JsonPropertyName("resource_paths")]
+        public System.Collections.Generic.List<string>? ResourcePaths { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("resource_path")]
+        public string ResourcePath { get; set; } = "";
+
+        [System.Text.Json.Serialization.JsonPropertyName("bus")]
+        public string Bus { get; set; } = AudioBusNames.Sfx;
+
+        [System.Text.Json.Serialization.JsonPropertyName("loop")]
+        public bool Loop { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("default_volume_db")]
+        public float DefaultVolumeDb { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("volume_jitter_db")]
+        public float VolumeJitterDb { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("pitch_min")]
+        public float PitchMin { get; set; } = 1f;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pitch_max")]
+        public float PitchMax { get; set; } = 1f;
+
+        [System.Text.Json.Serialization.JsonPropertyName("max_instances")]
+        public int MaxInstances { get; set; } = 4;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public int Priority { get; set; } = 50;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cooldown_seconds")]
+        public float CooldownSeconds { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("fade_in_seconds")]
+        public float FadeInSeconds { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("fade_out_seconds")]
+        public float FadeOutSeconds { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("fallback_cue_id")]
+        public string? FallbackCueId { get; set; }
+    }
+
     public static class AudioCueCatalog
     {
         private static readonly Dictionary<string, AudioCueDef> s_cues = new();
@@ -90,6 +175,35 @@ namespace AtomicWar.GodotApp.Audio
         public const string AmbBunker = "amb_bunker";
         public const string AmbSurface = "amb_surface";
         public const string AmbSurfaceStorm = "amb_surface_storm";
+        public const string AmbLocAbandonedHospital = "amb_loc_abandoned_hospital";
+        public const string AmbLocRuralGasStation = "amb_loc_rural_gas_station";
+        public const string AmbLocSuburbanRuins = "amb_loc_suburban_ruins";
+        public const string AmbLocMilitaryBunker = "amb_loc_military_bunker";
+        public const string AmbLocGeothermalRuins = "amb_loc_geothermal_ruins";
+        public const string AmbLocArcologySector = "amb_loc_arcology_sector";
+        public const string AmbWarzoneDistantShelling = "amb_warzone_distant_shelling";
+
+        // Distant Combat & Shelling
+        public const string DistantArtilleryBarrage = "sfx_distant_artillery_barrage";
+        public const string DistantGunfireSkirmish = "sfx_distant_gunfire_skirmish";
+        public const string ArtilleryIncomingWhistle = "sfx_artillery_incoming_whistle";
+        public const string DistantMortarLaunch = "sfx_distant_mortar_launch";
+
+        // Variable Firearms
+        public const string WeaponCz75Report = "sfx_weapon_cz75_report";
+        public const string WeaponPipeRifleReport = "sfx_weapon_pipe_rifle_report";
+        public const string WeaponScrapShotgunReport = "sfx_weapon_scrap_shotgun_report";
+        public const string WeaponBoltRifleReport = "sfx_weapon_bolt_rifle_report";
+        public const string WeaponAssaultRifleBurst = "sfx_weapon_assault_rifle_burst";
+        public const string WeaponLmgBurst = "sfx_weapon_lmg_burst";
+        public const string WeaponSniperHeavyReport = "sfx_weapon_sniper_heavy_report";
+        public const string WeaponShotgunRack = "sfx_weapon_shotgun_rack";
+
+        // Tactical Foley & Environmental Effects
+        public const string BulletWhizRicochet = "sfx_bullet_whiz_ricochet";
+        public const string StructuralCollapse = "sfx_structural_collapse";
+        public const string AirlockPurgeCycle = "sfx_airlock_purge_cycle";
+        public const string HeavyImpactFall = "sfx_heavy_impact_fall";
 
         // Music
         public const string MusicMenu = "music_menu";
@@ -136,6 +250,13 @@ namespace AtomicWar.GodotApp.Audio
         public const string MedQuarantineSeal = "med_quarantine_seal";
         public const string MedQuarantineClear = "med_quarantine_clear";
 
+
+        // Expansion (Plans 186-201)
+        public const string BioMutationPulse = "bio_mutation_pulse";
+        public const string InterrogationSlam = "action_interrogation_slam";
+        public const string HazardToxicSizzle = "hazard_toxic_sizzle";
+        public const string TrainScreechCrash = "train_screech_crash";
+
         // Danger
         public const string DangerExplosion = "danger_explosion";
         public const string DangerAlarmKlaxon = "danger_alarm_klaxon";
@@ -164,6 +285,8 @@ namespace AtomicWar.GodotApp.Audio
 
         private static void RegisterAll()
         {
+            LoadFromJson("Assets/StreamingAssets/Data/audio_cues.json");
+
             // UI
             Reg(UiClick, "res://assets/audio/ui/ui_click.wav", AudioBusNames.Ui, cooldown: 0.05f);
             Reg(UiConfirm, "res://assets/audio/ui/ui_confirm.wav", AudioBusNames.Ui, cooldown: 0.1f);
@@ -195,6 +318,13 @@ namespace AtomicWar.GodotApp.Audio
             Reg(AmbBunker, "res://assets/audio/ambience/bunker_ambience.ogg", AudioBusNames.Ambience, loop: true, vol: -3f);
             Reg(AmbSurface, "res://assets/audio/ambience/surface_ambience.ogg", AudioBusNames.Surface, loop: true, vol: -4f);
             Reg(AmbSurfaceStorm, "res://assets/audio/ambience/amb_surface_storm.wav", AudioBusNames.Surface, loop: true, vol: -7f);
+            Reg(AmbLocAbandonedHospital, "res://assets/audio/ambience/amb_loc_abandoned_hospital.mp3", AudioBusNames.Ambience, loop: true, vol: -5f);
+            Reg(AmbLocRuralGasStation, "res://assets/audio/ambience/amb_loc_rural_gas_station.mp3", AudioBusNames.Surface, loop: true, vol: -5f);
+            Reg(AmbLocSuburbanRuins, "res://assets/audio/ambience/amb_loc_suburban_ruins.mp3", AudioBusNames.Surface, loop: true, vol: -6f);
+            Reg(AmbLocMilitaryBunker, "res://assets/audio/ambience/amb_loc_military_bunker.mp3", AudioBusNames.Ambience, loop: true, vol: -4f);
+            Reg(AmbLocGeothermalRuins, "res://assets/audio/ambience/amb_loc_geothermal_ruins.mp3", AudioBusNames.Surface, loop: true, vol: -5f);
+            Reg(AmbLocArcologySector, "res://assets/audio/ambience/amb_loc_arcology_sector.mp3", AudioBusNames.Ambience, loop: true, vol: -5f);
+            Reg(AmbWarzoneDistantShelling, "res://assets/audio/ambience/amb_warzone_distant_shelling.mp3", AudioBusNames.Surface, loop: true, vol: -6f);
 
             // Music
             Reg(MusicMenu, "res://assets/audio/music/main_menu.ogg", AudioBusNames.Music, vol: -6f);
@@ -246,10 +376,26 @@ namespace AtomicWar.GodotApp.Audio
             Reg(DangerAlarmKlaxon, "res://assets/audio/sfx/sfx_danger_alarm_klaxon.wav", AudioBusNames.Alerts, cooldown: 10f);
             Reg(DangerGlassBreak, "res://assets/audio/sfx/sfx_glass_break_small.mp3", AudioBusNames.Sfx, cooldown: 1f);
             Reg(DangerDebris, "res://assets/audio/sfx/sfx_debris_impact.mp3", AudioBusNames.Sfx, cooldown: 3f);
+            Reg(DistantArtilleryBarrage, "res://assets/audio/sfx/sfx_distant_artillery_barrage.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 5f);
+            Reg(DistantGunfireSkirmish, "res://assets/audio/sfx/sfx_distant_gunfire_skirmish.mp3", AudioBusNames.Sfx, vol: -5f, cooldown: 4f);
+            Reg(ArtilleryIncomingWhistle, "res://assets/audio/sfx/sfx_artillery_incoming_whistle.mp3", AudioBusNames.Alerts, vol: -3f, cooldown: 8f);
+            Reg(DistantMortarLaunch, "res://assets/audio/sfx/sfx_distant_mortar_launch.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 6f);
+            Reg(BulletWhizRicochet, "res://assets/audio/sfx/sfx_bullet_whiz_ricochet.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 0.2f);
+            Reg(StructuralCollapse, "res://assets/audio/sfx/sfx_structural_collapse.mp3", AudioBusNames.Sfx, vol: -3f, cooldown: 5f);
+            Reg(AirlockPurgeCycle, "res://assets/audio/sfx/sfx_airlock_purge_cycle.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 2f);
+            Reg(HeavyImpactFall, "res://assets/audio/sfx/sfx_heavy_impact_fall.mp3", AudioBusNames.Sfx, vol: -3f, cooldown: 0.5f);
 
             // Combat
             Reg(CombatStart, "res://assets/audio/sfx/sfx_combat_start.mp3", AudioBusNames.Alerts, vol: -2f, cooldown: 5f);
             Reg(CombatFire, "res://assets/audio/sfx/sfx_combat_gunshot.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 0.3f);
+            Reg(WeaponCz75Report, "res://assets/audio/sfx/sfx_weapon_cz75_report.mp3", AudioBusNames.Sfx, vol: -3f, cooldown: 0.15f);
+            Reg(WeaponPipeRifleReport, "res://assets/audio/sfx/sfx_weapon_pipe_rifle_report.mp3", AudioBusNames.Sfx, vol: -2f, cooldown: 0.3f);
+            Reg(WeaponScrapShotgunReport, "res://assets/audio/sfx/sfx_weapon_scrap_shotgun_report.mp3", AudioBusNames.Sfx, vol: -1f, cooldown: 0.3f);
+            Reg(WeaponBoltRifleReport, "res://assets/audio/sfx/sfx_weapon_bolt_rifle_report.mp3", AudioBusNames.Sfx, vol: -2f, cooldown: 0.4f);
+            Reg(WeaponAssaultRifleBurst, "res://assets/audio/sfx/sfx_weapon_assault_rifle_burst.mp3", AudioBusNames.Sfx, vol: -3f, cooldown: 0.25f);
+            Reg(WeaponLmgBurst, "res://assets/audio/sfx/sfx_weapon_lmg_burst.mp3", AudioBusNames.Sfx, vol: -2f, cooldown: 0.3f);
+            Reg(WeaponSniperHeavyReport, "res://assets/audio/sfx/sfx_weapon_sniper_heavy_report.mp3", AudioBusNames.Sfx, vol: -1f, cooldown: 0.5f);
+            Reg(WeaponShotgunRack, "res://assets/audio/sfx/sfx_weapon_shotgun_rack.mp3", AudioBusNames.Sfx, vol: -4f, cooldown: 0.3f);
             Reg(CombatJam, "res://assets/audio/sfx/sfx_combat_jam.mp3", AudioBusNames.Sfx, vol: -6f, cooldown: 1f);
             Reg(CombatReload, "res://assets/audio/sfx/sfx_combat_reload.mp3", AudioBusNames.Sfx, vol: -6f, cooldown: 0.5f);
             Reg(CombatHit, "res://assets/audio/sfx/sfx_combat_hit.mp3", AudioBusNames.Sfx, vol: -5f, cooldown: 0.3f);
@@ -283,5 +429,29 @@ namespace AtomicWar.GodotApp.Audio
         public static IReadOnlyDictionary<string, AudioCueDef> All => s_cues;
 
         public static int Count => s_cues.Count;
+
+        public static void LoadFromJson(string jsonPath)
+        {
+            try
+            {
+                if (!System.IO.File.Exists(jsonPath)) return;
+                var json = System.IO.File.ReadAllText(jsonPath);
+                var dto = System.Text.Json.JsonSerializer.Deserialize<AudioCueCatalogDto>(json);
+                if (dto == null || dto.Cues == null) return;
+
+                foreach (var cue in dto.Cues)
+                {
+                    s_cues[cue.Id] = new AudioCueDef(
+                        cue.Id, cue.ResourcePath, cue.Bus, cue.Loop, cue.DefaultVolumeDb, cue.CooldownSeconds, cue.FallbackCueId,
+                        cue.ResourcePaths, cue.VolumeJitterDb, cue.PitchMin, cue.PitchMax, cue.MaxInstances, cue.Priority, cue.FadeInSeconds, cue.FadeOutSeconds
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr($"Failed to load audio cues from {jsonPath}: {ex.Message}");
+            }
+        }
+
     }
 }

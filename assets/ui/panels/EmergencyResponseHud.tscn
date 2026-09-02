@@ -1,0 +1,174 @@
+[gd_scene load_steps=2 format=3 uid="uid://emergencyhud000000001"]
+
+[ext_resource type="Script" path="res://src/UI/EmergencyResponseHud.cs" id="1_emerhud"]
+
+[node name="EmergencyResponseHud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_emerhud")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06, 0.02, 0.02, 0.94)
+
+[node name="MainPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 40.0
+offset_right = -60.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MainPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="MainPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TopBar" type="HBoxContainer" parent="MainPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="SeverityHeader" type="Label" parent="MainPanel/Margin/VBox/TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
+text = "[CRITICAL CRISIS COMMAND]"
+
+[node name="Countdown" type="Label" parent="MainPanel/Margin/VBox/TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "TIME: 00:00"
+
+[node name="CloseButton" type="Button" parent="MainPanel/Margin/VBox/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+text = "✕"
+
+[node name="TitleBox" type="VBoxContainer" parent="MainPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CrisisTitle" type="Label" parent="MainPanel/Margin/VBox/TitleBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "VENTILATION FAILURE"
+
+[node name="CrisisSummary" type="Label" parent="MainPanel/Margin/VBox/TitleBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Filter saturation has exceeded safe operating tolerance."
+autowrap_mode = 2
+
+[node name="CauseChain" type="Label" parent="MainPanel/Margin/VBox/TitleBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.3, 1)
+text = "CAUSE: Intake Overload → EFFECT: Air Quality Drop"
+autowrap_mode = 2
+
+[node name="HSeparator1" type="HSeparator" parent="MainPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="BodyColumns" type="HBoxContainer" parent="MainPanel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="LeftCol" type="VBoxContainer" parent="MainPanel/Margin/VBox/BodyColumns"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="MetricsHeader" type="Label" parent="MainPanel/Margin/VBox/BodyColumns/LeftCol"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "LIVE SYSTEM TELEMETRY"
+
+[node name="MetricGrid" type="GridContainer" parent="MainPanel/Margin/VBox/BodyColumns/LeftCol"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 3
+
+[node name="AffectedHeader" type="Label" parent="MainPanel/Margin/VBox/BodyColumns/LeftCol"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "AFFECTED ASSETS & ROSTER"
+
+[node name="AffectedList" type="VBoxContainer" parent="MainPanel/Margin/VBox/BodyColumns/LeftCol"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VSeparator" type="VSeparator" parent="MainPanel/Margin/VBox/BodyColumns"]
+layout_mode = 2
+
+[node name="RightCol" type="VBoxContainer" parent="MainPanel/Margin/VBox/BodyColumns"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="ActionsHeader" type="Label" parent="MainPanel/Margin/VBox/BodyColumns/RightCol"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "IMMEDIATE RESPONSE DIRECTIVES"
+
+[node name="ActionList" type="VBoxContainer" parent="MainPanel/Margin/VBox/BodyColumns/RightCol"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LogHeader" type="Label" parent="MainPanel/Margin/VBox/BodyColumns/RightCol"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "CRISIS EVENT LOG"
+
+[node name="EventLog" type="VBoxContainer" parent="MainPanel/Margin/VBox/BodyColumns/RightCol"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MainPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="BottomBar" type="HBoxContainer" parent="MainPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="OpenSourcePanelButton" type="Button" parent="MainPanel/Margin/VBox/BottomBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+text = "GO TO SOURCE PANEL"
+
+[node name="Spacer" type="Control" parent="MainPanel/Margin/VBox/BottomBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AcknowledgeButton" type="Button" parent="MainPanel/Margin/VBox/BottomBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+text = "ACKNOWLEDGE COMMAND"

@@ -166,7 +166,8 @@ namespace AtomicWar.GodotApp.Audio
                 if (!kvp.Value.Loop)
                     continue;
 
-                var stream = ResourceLoader.Load<AudioStream>(kvp.Value.ResourcePath);
+                var stream = ResourceLoader.Load<AudioStream>(kvp.Value.ResourcePath)
+                    ?? AudioManager.LoadDirectStream(kvp.Value.ResourcePath);
                 bool loopCapable = stream is AudioStreamWav
                     || stream is AudioStreamOggVorbis
                     || stream is AudioStreamMP3;

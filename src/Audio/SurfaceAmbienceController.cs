@@ -44,6 +44,15 @@ namespace AtomicWar.GodotApp.Audio
             Sync();
         }
 
+        private string? _currentLocationId;
+
+        public void SetLocation(string? locationId)
+        {
+            if (_currentLocationId == locationId) return;
+            _currentLocationId = locationId;
+            Sync();
+        }
+
         public void Start()
         {
             ThrowIfDisposed();
@@ -55,8 +64,7 @@ namespace AtomicWar.GodotApp.Audio
         {
             if (_disposed) return;
             _active = false;
-            _stopCue(AudioCueCatalog.AmbSurface);
-            _stopCue(AudioCueCatalog.AmbSurfaceStorm);
+            StopAllAmbiences();
         }
 
         private void OnWeatherChanged(WeatherKind kind) => Sync();
@@ -65,16 +73,63 @@ namespace AtomicWar.GodotApp.Audio
         {
             if (!_active)
             {
-                _stopCue(AudioCueCatalog.AmbSurface);
-                _stopCue(AudioCueCatalog.AmbSurfaceStorm);
+                StopAllAmbiences();
                 return;
             }
 
             bool storm = IsStorm(_weather?.Current ?? WeatherKind.Clear);
-            string desired = storm ? AudioCueCatalog.AmbSurfaceStorm : AudioCueCatalog.AmbSurface;
-            string other = storm ? AudioCueCatalog.AmbSurface : AudioCueCatalog.AmbSurfaceStorm;
-            _stopCue(other);
+            string desired = storm ? AudioCueCatalog.AmbSurfaceStorm : ResolveLocationAmbience(_currentLocationId);
+            StopOtherAmbiences(desired);
             _playCue(desired);
+        }
+
+        public static string ResolveLocationAmbience(string? locationId)
+        {
+            if (string.IsNullOrEmpty(locationId)) return AudioCueCatalog.AmbSurface;
+            string lower = locationId.ToLowerInvariant();
+            if (lower.Contains("hospital") || lower.Contains("clinic") || lower.Contains("pharmacy"))
+                return AudioCueCatalog.AmbLocAbandonedHospital;
+            if (lower.Contains("gas") || lower.Contains("station") || lower.Contains("roadside"))
+                return AudioCueCatalog.AmbLocRuralGasStation;
+            if (lower.Contains("suburban") || lower.Contains("house") || lower.Contains("residential") || lower.Contains("neighborhood"))
+                return AudioCueCatalog.AmbLocSuburbanRuins;
+            if (lower.Contains("bunker") || lower.Contains("military") || lower.Contains("depot") || lower.Contains("silo") || lower.Contains("outpost"))
+                return AudioCueCatalog.AmbLocMilitaryBunker;
+            if (lower.Contains("geo") || lower.Contains("thermal") || lower.Contains("volcan") || lower.Contains("plant"))
+                return AudioCueCatalog.AmbLocGeothermalRuins;
+            if (lower.Contains("arcology") || lower.Contains("sector") || lower.Contains("tower") || lower.Contains("facility"))
+                return AudioCueCatalog.AmbLocArcologySector;
+            if (lower.Contains("warzone") || lower.Contains("front") || lower.Contains("battle") || lower.Contains("trench") || lower.Contains("crossing"))
+                return AudioCueCatalog.AmbWarzoneDistantShelling;
+            return AudioCueCatalog.AmbSurface;
+        }
+
+        private static readonly string[] s_surfaceAmbiences = new[]
+        {
+            AudioCueCatalog.AmbSurface,
+            AudioCueCatalog.AmbSurfaceStorm,
+            AudioCueCatalog.AmbLocAbandonedHospital,
+            AudioCueCatalog.AmbLocRuralGasStation,
+            AudioCueCatalog.AmbLocSuburbanRuins,
+            AudioCueCatalog.AmbLocMilitaryBunker,
+            AudioCueCatalog.AmbLocGeothermalRuins,
+            AudioCueCatalog.AmbLocArcologySector,
+            AudioCueCatalog.AmbWarzoneDistantShelling
+        };
+
+        private void StopAllAmbiences()
+        {
+            foreach (var cue in s_surfaceAmbiences)
+                _stopCue(cue);
+        }
+
+        private void StopOtherAmbiences(string except)
+        {
+            foreach (var cue in s_surfaceAmbiences)
+            {
+                if (cue != except)
+                    _stopCue(cue);
+            }
         }
 
         private static bool IsStorm(WeatherKind kind) => kind switch

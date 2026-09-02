@@ -67,6 +67,11 @@ namespace AtomicWar.GodotApp
             SetupSurvivors();
             _expeditions = ExpeditionHostSession.Create(_dataDir);
             _expeditions.Flags = _consequenceLedger;
+            // Plan 52: travel-encounter decisions land in the persisted
+            // expansion-quest ledger — the recurring-NPC arc memory authority.
+            SetupExpansionQuests();
+            if (_expeditions.NarrativeEngine != null)
+                _expeditions.NarrativeEngine.QuestLink = _expansionQuests.System;
             _expeditions.StateChanged += () => _expeditionDirty = true;
             _expeditions.OnEncounterSurfaced += OnExpeditionEncounterSurfaced;
             SyncWaterRoutes();

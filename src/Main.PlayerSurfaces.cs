@@ -21,6 +21,92 @@ namespace AtomicWar.GodotApp
                 openAction: () => _tutorialPanel.Open(),
                 closeAction: () => CloseTutorialPanel());
 
+            PanelRegistry.ConfigureActions("emergency_response",
+                bindAction: () =>
+                {
+                    _crisisCoordinator.Bind(_powerGrid?.System, _disease?.Engine, _world?.Weather, _startingLevel?.System);
+                    _crisisCoordinator.EvaluateCrisisState();
+                    _crisisHud.Bind(_crisisPresentationSnapshot);
+                },
+                openAction: () =>
+                {
+                    _crisisCoordinator.Bind(_powerGrid?.System, _disease?.Engine, _world?.Weather, _startingLevel?.System);
+                    _crisisCoordinator.EvaluateCrisisState();
+                    _crisisHud.Bind(_crisisPresentationSnapshot);
+                    _crisisHud.Open();
+                },
+                closeAction: () => _crisisHud.Close());
+
+            PanelRegistry.ConfigureActions("expansion_fallout_plume",
+                bindAction: () => _falloutPlumePanel.Bind(EnsureFallout()),
+                openAction: () => _falloutPlumePanel.Visible = true,
+                closeAction: () => _falloutPlumePanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("desperation_crisis",
+                bindAction: () => _desperationCrisisPanel.Bind(EnsureDesperation()),
+                openAction: () => _desperationCrisisPanel.Visible = true,
+                closeAction: () => _desperationCrisisPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("mercenary_bounty_board",
+                bindAction: () => _mercenaryBountyBoardPanel.Bind(EnsureMercenary()),
+                openAction: () => _mercenaryBountyBoardPanel.Visible = true,
+                closeAction: () => _mercenaryBountyBoardPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("archaeology_excavation",
+                bindAction: () => _archaeologyExcavationPanel.Bind(EnsureArchaeology()),
+                openAction: () => _archaeologyExcavationPanel.Visible = true,
+                closeAction: () => _archaeologyExcavationPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("amputation_surgery",
+                bindAction: () => _amputationTriagePanel.Bind(EnsureAmputation()),
+                openAction: () => _amputationTriagePanel.Visible = true,
+                closeAction: () => _amputationTriagePanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("railway_logistics",
+                bindAction: () => _railwayTerminalPanel.Bind(EnsureRailway()),
+                openAction: () => _railwayTerminalPanel.Visible = true,
+                closeAction: () => _railwayTerminalPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("fungi_cultivation",
+                bindAction: () => _fungiCultivationBedPanel.Bind(EnsureFungi()),
+                openAction: () => _fungiCultivationBedPanel.Visible = true,
+                closeAction: () => _fungiCultivationBedPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("justice_tribunal",
+                bindAction: () => _justiceTribunalPanel.Bind(EnsureJustice()),
+                openAction: () => _justiceTribunalPanel.Visible = true,
+                closeAction: () => _justiceTribunalPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("chem_warfare_defense",
+                bindAction: () => _chemWarfareDefensePanel.Bind(EnsureChemWarfare()),
+                openAction: () => _chemWarfareDefensePanel.Visible = true,
+                closeAction: () => _chemWarfareDefensePanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("comms_array_transceiver",
+                bindAction: () => _commsArrayTransceiverPanel.Bind(EnsureCommsArray()),
+                openAction: () => _commsArrayTransceiverPanel.Visible = true,
+                closeAction: () => _commsArrayTransceiverPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("ceremony_ritual",
+                bindAction: () => _ceremonyFestivalPanel.Bind(EnsureCeremonySystem()),
+                openAction: () => _ceremonyFestivalPanel.Visible = true,
+                closeAction: () => _ceremonyFestivalPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("robotics_assembly",
+                bindAction: () => _roboticsWorkshopPanel.Bind(EnsureRobotics()),
+                openAction: () => _roboticsWorkshopPanel.Visible = true,
+                closeAction: () => _roboticsWorkshopPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("survivor_downtime",
+                bindAction: () => _survivorDowntimePanel.Bind(EnsureRecreation()),
+                openAction: () => _survivorDowntimePanel.Visible = true,
+                closeAction: () => _survivorDowntimePanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("winter_freeze",
+                bindAction: () => _winterFreezePanel.Bind(_yearOfAsh != null ? _yearOfAsh.DeepFreeze : null!),
+                openAction: () => _winterFreezePanel.Visible = true,
+                closeAction: () => _winterFreezePanel.Visible = false);
+
             PanelRegistry.ConfigureActions("afflictions",
                 bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory); },
                 openAction: () => _afflictionsPanel.Open(),

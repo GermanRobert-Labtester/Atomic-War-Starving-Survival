@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_arc_mara_01_waystation",
+      "title": "The Water Station Route",
+      "description": "A caravan factor working the water stations is short after a bad crossing.",
+      "type": "recurring_npc",
+      "minDay": 12,
+      "maxDay": 34,
+      "factionTag": "faction_grain_exchange",
+      "synopsis": "Mara Veln trades straight and pays favors back with interest. Her wagons are short on medicine and axle parts; what you do about that is the first entry in her ledger.",
+      "prerequisites": [],
+      "choices": [
+        {
+          "id": "mara_help",
+          "text": "Hand over medicine and axle parts at a fair price.",
+          "effects": [],
+          "consequences": "She writes the favor into her ledger and tells you the route she will run in spring. The entry does not say what it will be worth by then."
+        },
+        {
+          "id": "mara_exploit",
+          "text": "Buy her shortage at a premium.",
+          "effects": [],
+          "consequences": "The cargo is cheap and the wagon leaves light. She prices your next transaction correctly, which is to say: completely."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_mara_02_route",
+      "title": "Wreckage on the Cut Road",
+      "description": "The caravan factor's second wagon is through the road crust, and she is camped on the wreck.",
+      "type": "recurring_npc",
+      "minDay": 35,
+      "maxDay": 74,
+      "factionTag": "faction_grain_exchange",
+      "synopsis": "The route took its toll. Whether she remembers you as a creditor, a stranger, or the one who handed over the antibiotics decides how this meeting goes.",
+      "prerequisites": ["quest_arc_mara_01_waystation"],
+      "choices": [
+        {
+          "id": "mara_rescue",
+          "text": "Pull the wagon out and walk her people to the caravanserai.",
+          "effects": [],
+          "consequences": "It costs a day and a half of water. She does not thank you. She recalculates your standing in her ledger, and the new number is better."
+        },
+        {
+          "id": "mara_pass",
+          "text": "Trade for what is loose and leave the wreck to the road.",
+          "effects": [],
+          "consequences": "You get cargo. She gets the kind of story about you that travels faster than caravans."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_mara_03_office",
+      "title": "The Coordinator's Stamp",
+      "description": "The grain exchange has given Mara Veln the southern routes.",
+      "type": "recurring_npc",
+      "minDay": 75,
+      "maxDay": 365,
+      "factionTag": "faction_grain_exchange",
+      "synopsis": "She runs the routes now, from a desk with a stamp. The rate sheet has a line for friends of the coordinator. Your name is either on it or in a different column.",
+      "prerequisites": ["quest_arc_mara_02_route"],
+      "choices": [
+        {
+          "id": "mara_take_the_rates",
+          "text": "Book caravan space at the coordinator's rate.",
+          "effects": [],
+          "consequences": "The wagons run on time and the price holds. Somewhere in the exchange a ledger line has your name in it, entered in a hand you recognize."
+        }
+      ]
+    }
+  ]
+}

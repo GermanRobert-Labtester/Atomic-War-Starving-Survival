@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "arcs": [
+    {
+      "npc_id": "npc_mara_veln",
+      "display_name": "Mara Veln",
+      "flagship": true,
+      "recruitable": false,
+      "states": [
+        {
+          "id": "dead",
+          "kind": "terminal",
+          "precedence": 100,
+          "terminal": true,
+          "when_dead": true,
+          "role": "Deceased",
+          "summary": "The route outlived her. The grain exchange keeps her ledgers in a drawer nobody opens."
+        },
+        {
+          "id": "recruited",
+          "kind": "terminal",
+          "precedence": 60,
+          "terminal": true,
+          "when_recruited": true,
+          "role": "Shelter Quartermaster",
+          "summary": "She keeps the shelter's stores now, and prices everything twice — once in goods, once in what it cost to get here."
+        },
+        {
+          "id": "late_official",
+          "kind": "late",
+          "min_day": 75,
+          "precedence": 40,
+          "requires_choice": [
+            { "quest_id": "quest_arc_mara_01_waystation", "choice_id": "mara_help" },
+            { "quest_id": "quest_arc_mara_02_route", "choice_id": "mara_rescue" }
+          ],
+          "quest_id": "quest_arc_mara_03_office",
+          "role": "Route Coordinator",
+          "location_id": "loc_grain_exchange",
+          "summary": "The exchange gave her the southern routes and a stamp. Caravan space is easier to get now, and the rates carry a note: 'friend of the coordinator.' She never mentions the water station. She also never charges you the note."
+        },
+        {
+          "id": "late_friend",
+          "kind": "late",
+          "min_day": 75,
+          "precedence": 30,
+          "requires_choice": [
+            { "quest_id": "quest_arc_mara_01_waystation", "choice_id": "mara_help" }
+          ],
+          "role": "Independent Caravan Factor",
+          "location_id": "loc_cut_merchant_caravanserai",
+          "summary": "She rebuilt the route on her own wheels. Trading with her stays fair in a way that is not written down anywhere — she remembers who handed over the antibiotics when nothing was owed."
+        },
+        {
+          "id": "late_embargo",
+          "kind": "late",
+          "min_day": 75,
+          "precedence": 30,
+          "requires_choice": [
+            { "quest_id": "quest_arc_mara_01_waystation", "choice_id": "mara_exploit" }
+          ],
+          "role": "Embargo Organizer",
+          "location_id": "loc_cut_merchant_caravanserai",
+          "summary": "She organized the factors who now agree, quietly, that your shelter pays surcharge. Nothing is posted. Nothing needs to be. The ledgers all say the same thing because she wrote most of them."
+        },
+        {
+          "id": "evolved_helped",
+          "kind": "evolved",
+          "min_day": 35,
+          "max_day": 74,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_mara_01_waystation", "choice_id": "mara_help" }
+          ],
+          "quest_id": "quest_arc_mara_02_route",
+          "role": "Wrecked on the Cut Road",
+          "location_id": "loc_cut_merchant_caravanserai",
+          "summary": "Her second wagon went through the cut road crust. She is camped on the wreck, guarding the cargo with a rifle she does not quite have the strength to use. She names a fair price for help and does not pretend it is charity."
+        },
+        {
+          "id": "evolved_bitter",
+          "kind": "evolved",
+          "min_day": 35,
+          "max_day": 74,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_mara_01_waystation", "choice_id": "mara_exploit" }
+          ],
+          "quest_id": "quest_arc_mara_02_route",
+          "role": "Wrecked and Watchful",
+          "location_id": "loc_cut_merchant_caravanserai",
+          "summary": "The wreck took her wagon and the drought took her margin. She remembers who bought her shortage at a premium. She will still trade. She will not call it anything but what it is."
+        },
+        {
+          "id": "evolved_stranger",
+          "kind": "evolved",
+          "min_day": 35,
+          "max_day": 74,
+          "precedence": 15,
+          "role": "Caravan Factor",
+          "location_id": "loc_cut_merchant_caravanserai",
+          "summary": "Her route goes on the way it always has, one wagon lighter than the ledgers say it should be. She trades on schedule and owes nobody, including you."
+        },
+        {
+          "id": "initial",
+          "kind": "initial",
+          "min_day": 12,
+          "max_day": 34,
+          "precedence": 10,
+          "quest_id": "quest_arc_mara_01_waystation",
+          "role": "Waystation Trader",
+          "location_id": "loc_water_station",
+          "summary": "A two-wagon caravan factor short on medicine and axle parts after a bad crossing. She trades straight, prices fast, and mentions exactly once that she pays favors back with interest."
+        }
+      ]
+    }
+  ]
+}

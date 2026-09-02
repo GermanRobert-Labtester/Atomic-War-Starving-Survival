@@ -195,7 +195,7 @@ namespace Ashfall.Core.Tests
             var ids = System.Text.Json.JsonDocument.Parse(json).RootElement.GetProperty("items")
                 .EnumerateArray().Select(c => c.GetProperty("id").GetString()!).ToList();
 
-            Assert.Equal(60, ids.Count);
+            Assert.Equal(61, ids.Count);
             Assert.Equal(ids.Count, ids.Distinct(StringComparer.Ordinal).Count());
             Assert.Contains("\"faction\": \"faction_black_flotilla\"", json);
 
