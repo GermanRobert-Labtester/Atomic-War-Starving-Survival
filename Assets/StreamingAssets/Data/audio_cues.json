@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "cues": [
+    {
+      "id": "bio_mutation_pulse",
+      "resource_path": "res://assets/audio/sfx/sfx_mutation_pulse.mp3",
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "cooldown_seconds": 2.0,
+      "fallback_cue_id": "med_heartbeat"
+    }
+  ]
+}

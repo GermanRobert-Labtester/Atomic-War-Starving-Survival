@@ -88,6 +88,7 @@ namespace AtomicWar.GodotApp
         private StealthReadoutPanel _stealthReadoutPanel = null!;
         private MutationTreePanel _mutationTreePanel = null!;
         private NurseryPanel _nurseryPanel = null!;
+        private FalloutPlumePanel _falloutPlumePanel = null!;
         private SurvivorDetailPanel _survivorDetailPanel = null!;
         private InventoryDetailPanel _inventoryDetailPanel = null!;
         private QuestDetailPanel _questDetailPanel = null!;
@@ -489,6 +490,10 @@ namespace AtomicWar.GodotApp
             _nurseryPanel = new NurseryPanel();
             _nurseryPanel.OnClose += () => _nurseryPanel.Visible = false;
             AddChild(_nurseryPanel);
+
+            _falloutPlumePanel = new FalloutPlumePanel();
+            _falloutPlumePanel.OnClose += () => _falloutPlumePanel.Visible = false;
+            AddChild(_falloutPlumePanel);
 
             // ── Save/Load panel (overlay) ──
             _saveLoadPanel = new SaveLoadPanel();

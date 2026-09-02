@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
-**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-08-30
-**Total Catalogs:** 411 | **Total Definitions:** 5019 | **Domain Families:** 31
+**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-02
+**Total Catalogs:** 487 | **Total Definitions:** 8266 | **Domain Families:** 31
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -52,54 +52,99 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 
 ## Functional Catalog Encyclopedia by Domain Family
 
-### Audio & Music (2 Catalogs, 30 Definitions)
+### Audio & Music (3 Catalogs, 31 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
+| `audio_cues.json` | 1 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `audio_logs_expansion_05.json` | 30 | `1.0.0` | `OPTIONAL` | `AudioConditionSystem` |
 | `cassette_sets.json` | 0 | `1.0.0` | `OPTIONAL` | `VinylMoraleSystem` |
 
-### Combat & Warlords (2 Catalogs, 29 Definitions)
+### Combat & Warlords (3 Catalogs, 75 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `combat_catalog.json` | 17 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
-| `warlord_doctrines.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
+| `chemical_weapons.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `combat_catalog.json` | 46 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
+| `warlord_doctrines.json` | 24 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (16 Catalogs, 276 Definitions)
+### Core / Miscellaneous (58 Catalogs, 781 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
+| `aircraft_parts.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `archive_inks.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ArchiveInkCatalogLoader` |
+| `belief_movements.json` | 3 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `bounty_board.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `bunker_graffiti_postings.json` | 18 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `camouflage_gear.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `caravans.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `ceremonies.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `collectibles.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `comms_targets.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `development_traits.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `echoes.json` | 23 | `1.0.0` | `OPTIONAL` | `Core default` |
-| `environmental_atmosphere_expansion.json` | 152 | `1.0.0` | `OPTIONAL` | `WeatherSystem` |
-| `environmental_texts_expansion_05.json` | 36 | `1.0.0` | `OPTIONAL` | `NarrativeEncounterSystem` |
+| `ecological_infestations.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `environmental_atmosphere_expansion.json` | 189 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WeatherSystem` |
+| `environmental_texts_expansion_05.json` | 42 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterSystem` |
+| `excavation_hazard_mitigation.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `excavation_sites.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `fallout_patterns.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `feedback_messages.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FeedbackMessageCatalogLoader` |
+| `field_guide.json` | 38 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `interrogation_tactics.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `labor_camps.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `ledger_debt_templates.json` | 25 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `lore_archives.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `memorial_rites.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `memorials_expansion_05.json` | 27 | `1.0.0` | `OPTIONAL` | `MemorialSystem` |
+| `mutations.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `narcotics.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `narrative_encounters.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterCatalogLoader` |
 | `narrative_encounters_expansion.json` | 29 | `1.0.0` | `OPTIONAL` | `NarrativeEncounterSystem` |
 | `narrative_progression.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterSystem` |
-| `phantom_triggers.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PhantomMemoryHostSession` |
+| `naval_vessels.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `phantom_heirlooms.json` | 0 | `1.0.0` | `OPTIONAL` | `HeirloomCatalog, HeirloomSystem` |
+| `phantom_triggers.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PhantomMemoryHostSession, PhantomMemoryEngine` |
+| `political_policies.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `rail_network.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `recreation.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `research_knowledge.json` | 56 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ResearchKnowledgeCatalogLoader` |
+| `robotics.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `scavenging_tables.json` | 20 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `settlements.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `skills.json` | 148 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SkillCatalogLoader` |
+| `sky_layer_armor_catalog.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `spiritual_rituals.json` | 19 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `starting_supplies.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StartingLevelSystem` |
+| `surgical_procedures.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `thermal_gear.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `travel_encounters.json` | 51 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `underground_flora.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `utility_actions.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `UtilityAiSystem` |
 | `wall_carving_templates.json` | 0 | `1.0.0` | `OPTIONAL` | `MemorialSystem` |
 | `wasteland_grave_epitaphs.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MemorialSystem` |
+| `wasteland_laws.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `wasteland_settlement_npcs.json` | 18 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `waystations.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `wildlife_trapping_catalog.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `world_evolution_seeds.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EvolvingWorldCatalog` |
 | `world_history.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EvolvingWorldCatalog` |
 
-### Crafting & Relics (3 Catalogs, 39 Definitions)
+### Crafting & Relics (4 Catalogs, 85 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `library_manuals.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `LibraryManualCatalogLoader` |
-| `recipes.json` | 39 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RecipeCatalogLoader` |
+| `recipes.json` | 73 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RecipeCatalogLoader` |
 | `relic_recipes.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RelicCatalogLoader` |
+| `workshop_recipes.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 
-### Crossing (Exp 04) (1 Catalogs, 15 Definitions)
+### Crossing (Exp 04) (1 Catalogs, 19 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `crossing_encounters.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CrossingCatalog` |
+| `crossing_encounters.json` | 19 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CrossingCatalog` |
 
 ### Documents & History (1 Catalogs, 0 Definitions)
 
@@ -114,50 +159,59 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `duty_roster_marks.json` | 43 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DutyRosterCatalog` |
 | `duty_roster_seasons.json` | 1 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DutyRosterCatalog` |
 
-### Economy & Trade (6 Catalogs, 26 Definitions)
+### Economy & Trade (6 Catalogs, 44 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `economy_goods.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GoodsCatalog` |
+| `economy_goods.json` | 33 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GoodsCatalog` |
 | `hardcore_economy_tuning.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HardcoreEconomyTuningLoader` |
 | `trade_screen_scenarios.json` | 3 | `1.0.0` | `OPTIONAL` | `TradeScreenScenarios` |
-| `trade_specialties.json` | 0 | `1.0.0` | `OPTIONAL` | `TradeSpecialtySystem` |
+| `trade_specialties.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `TradeSpecialtySystem` |
 | `trade_tell_lines.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `TradeTellEngine` |
 | `trade_texts.json` | 4 | `1.0.0` | `OPTIONAL` | `TradeScreenPresenter` |
 
-### Events (4 Catalogs, 149 Definitions)
+### Events (9 Catalogs, 353 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `events.json` | 77 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EventsHostSession` |
+| `desperation_events.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `events.json` | 220 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EventsHostSession` |
 | `incidents.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ShelterEncounterSystem` |
 | `narrative_arc_events.json` | 15 | `1.0.0` | `OPTIONAL` | `NarrativeEncounterSystem` |
+| `orbital_harrow_events.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `seasonal_events.json` | 18 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `shelter_social_events.json` | 18 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `world_evolution_events.json` | 13 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `year_of_ash_events.json` | 52 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Expeditions & Vehicles (2 Catalogs, 2 Definitions)
+### Expeditions & Vehicles (3 Catalogs, 53 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `expeditions.json` | 2 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionCatalogLoader` |
+| `anomalous_expedition_encounters.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `expeditions.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionCatalogLoader` |
 | `vehicles.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionVehicleSystem` |
 
-### Factions (15 Catalogs, 126 Definitions)
+### Factions (18 Catalogs, 174 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `crossing_factions.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CrossingCatalog` |
 | `faction_lore.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionIconCatalog, FactionIconLoader` |
 | `faction_radio_corpus.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
+| `faction_territory.json` | 24 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `faction_war_communiques.json` | 18 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `faction_war_dialogue.json` | 18 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `faction_war_events.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `faction_war_journal.json` | 26 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `faction_war_radio.json` | 33 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `foundry_faction.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SilentFoundryCatalogLoader` |
-| `holdfast_factions.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastFactionsCatalog` |
+| `holdfast_factions.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastFactionsCatalog` |
 | `independent_faction_branch.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `IndependentBranchCatalog` |
 | `military_faction_branch.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MilitaryBranchCatalog` |
 | `moral_choice_faction_reactions.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceFactionReactionsCatalogLoader` |
+| `muster_faction_actions.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `muster_faction_culture.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `rebel_faction_branch.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RebelBranchCatalog` |
 | `standing_record_factions.json` | 1 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StandingRecordCatalog` |
 
@@ -175,59 +229,62 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 |---|---|---|---|---|
 | `holdfast_flavor.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastFlavorCatalog` |
 
-### Items (12 Catalogs, 351 Definitions)
+### Items (13 Catalogs, 727 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `black_flotilla_items.json` | 24 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ProceduralScavengeSystem` |
+| `black_flotilla_items.json` | 36 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ProceduralScavengeSystem` |
 | `chemical_dependency_items.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ChemicalDependencySystem` |
 | `crossing_items.json` | 11 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CrossingCatalog` |
-| `dose_items.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DoseContentCatalog` |
+| `dose_items.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DoseContentCatalog` |
 | `expansion_item_tags.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader` |
-| `foundry_items.json` | 16 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SilentFoundryCatalog` |
-| `greenhouse_items.json` | 14 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GreenhouseExpansionCatalog` |
-| `holdfast_items.json` | 40 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastItemsCatalog` |
+| `foundry_items.json` | 30 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SilentFoundryCatalog` |
+| `greenhouse_items.json` | 30 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GreenhouseExpansionCatalog` |
+| `holdfast_items.json` | 55 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastItemsCatalog` |
+| `item_degradation.json` | 0 | `1.0.0` | `OPTIONAL` | `Core default` |
 | `item_description_texts.json` | 0 | `1.0.0` | `OPTIONAL` | `ItemCatalogLoader` |
-| `items.json` | 164 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
+| `items.json` | 479 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
 | `verdict_items.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `year_of_ash_items.json` | 62 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Journal & Logs (2 Catalogs, 28 Definitions)
+### Journal & Logs (3 Catalogs, 91 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
+| `codex_entries.json` | 63 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `journal_entries_expansion_05.json` | 28 | `1.0.0` | `OPTIONAL` | `JournalSystem` |
 | `journal_voice_prose.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `JournalVoiceProseCatalog` |
 
-### Locations & Map (12 Catalogs, 299 Definitions)
+### Locations & Map (13 Catalogs, 365 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `crossing_locations.json` | 13 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CrossingCatalog` |
-| `damaged_map_zones.json` | 0 | `1.0.0` | `OPTIONAL` | `WastelandMapSystem` |
+| `damaged_map_zones.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WastelandMapSystem` |
 | `deep_lore_locations.json` | 10 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DeepLoreLocationCatalogLoader` |
-| `dose_locations.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DoseContentCatalog` |
+| `dose_locations.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DoseContentCatalog` |
 | `duty_roster_locations.json` | 14 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DutyRosterCatalog` |
 | `faction_war_location_overrides.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `holdfast_locations.json` | 38 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastCatalog` |
-| `locations.json` | 115 | `1.0.0` | `GAMEPLAY_CONSUMED` | `LocationLayoutSystem, WastelandMapCatalogLoader` |
+| `locations.json` | 151 | `1.0.0` | `GAMEPLAY_CONSUMED` | `LocationLayoutSystem, WastelandMapCatalogLoader` |
 | `locations_expansion3.json` | 21 | `1.0.0` | `GAMEPLAY_CONSUMED` | `LocationLayoutSystem` |
+| `micro_locations.json` | 25 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `verdict_locations.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
-| `wasteland_map_v1.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WastelandMapCatalogLoader` |
+| `wasteland_map_v1.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WastelandMapCatalogLoader` |
 | `year_of_ash_locations.json` | 66 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Maritime & Deep Lore (1 Catalogs, 0 Definitions)
+### Maritime & Deep Lore (1 Catalogs, 4 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `dive_sites.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DiveSiteCatalog` |
+| `dive_sites.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DiveSiteCatalog` |
 
-### Medical & Health (5 Catalogs, 108 Definitions)
+### Medical & Health (5 Catalogs, 117 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `autopsy_procedures.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `AutopsyProcedureCatalogLoader` |
-| `disease_catalog.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DiseaseCatalog, DiseaseSystem` |
+| `disease_catalog.json` | 16 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DiseaseCatalog, DiseaseSystem` |
 | `dose_registers.json` | 18 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DoseRegistersCatalog` |
 | `medical_texts.json` | 83 | `1.0.0` | `OPTIONAL` | `MedicalWardSystem` |
 | `pharma_recipes.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PharmaRecipeCatalogLoader` |
@@ -240,16 +297,17 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `moral_choice_flags.json` | 10 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceFlagCatalogLoader` |
 | `moral_choice_gossip.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceGossipCatalogLoader` |
 
-### Muster & Epilogue (4 Catalogs, 20 Definitions)
+### Muster & Epilogue (5 Catalogs, 36 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `currents.json` | 17 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CurrentsCatalog` |
 | `epilogue_chronicle.json` | 0 | `1.0.0` | `OPTIONAL` | `EpilogueMatrix` |
+| `muster_camp_scenes.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `muster_epilogues.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EpilogueMatrix` |
-| `muster_witnesses.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WitnessCatalog` |
+| `muster_witnesses.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WitnessCatalog` |
 
-### Narrative (Codex) (272 Catalogs, 1622 Definitions)
+### Narrative (Codex) (279 Catalogs, 1665 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -281,7 +339,8 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/brine_pickling_barrel_spoilage.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bullet_alloy_assay_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_blueprints_codex.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/bunker_children_folklore.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/bunker_bureaucratic_anomalies.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/bunker_children_folklore.json` | 19 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_children_folklore_batch_2.json` | 10 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_contraband_barter.json` | 20 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_court_verdicts_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -291,6 +350,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/bunker_maintenance_glitches.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_maintenance_logs_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_maintenance_logs_batch_3.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/bunker_rituals_and_cults.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_shift_schedules_and_notices.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_trade_ledger_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_wiretap_transcripts.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -336,11 +396,14 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/dead_hand_directives.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/deadbeat_escapement_wear_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/deckle_mould_watermark_audits.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/deep_lore_texts.json` | 10 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/diplomatic_contact_records_batch_1.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/documents_batch_1.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/documents_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/documents_batch_3.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/drone_carrier_blackboxes.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/drop_spindle_fibre_drafting_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/dweller_dependency_backstories.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/dweller_heirlooms_master.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/dweller_medical_casebook.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/dweller_psychological_journals.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -419,7 +482,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/new_arrival_intake_interviews.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/night_watch_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/night_watch_logbook.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/numbers_station_ciphers.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/numbers_station_ciphers.json` | 11 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/oak_bark_tanning_pit_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/operating_theater_surgical_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/optical_coating_rad_browning_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -433,6 +496,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/permafrost_methane_eruption_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/personal_effects_inventory_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/pipeline_sabotage_records.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/plan17_discoverable_documents.json` | 18 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/pneumatic_carrier_capsule_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/pneumatic_cylinder_leather_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/pneumatic_tube_diverter_audits.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -443,6 +507,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/rad_pathology_autopsy_records.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/radiation_survey_readings_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/radio_broadcast_rundowns.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/radio_mysteries_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/radio_scriptbook.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/radio_scripts_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/radio_transcripts_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -526,44 +591,53 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/wood_ash_lye_hydrometer_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/world_history_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 
-### Quests (18 Catalogs, 1431 Definitions)
+### Quests (23 Catalogs, 2943 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `crossing_quests.json` | 81 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CrossingQuestSystem` |
+| `crossing_quests.json` | 109 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CrossingQuestSystem` |
 | `dose_quests.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DoseContentCatalog` |
 | `duty_roster_quests.json` | 160 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DutyRosterQuestRuntime` |
 | `dynamic_questlines.json` | 4 | `1.0.0` | `OPTIONAL` | `QuestlineSystem` |
-| `holdfast_quests.json` | 49 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastQuestSystem` |
+| `holdfast_quests.json` | 91 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastQuestSystem` |
 | `moral_choice_quest_stubs.json` | 10 | `1.0.0` | `OPTIONAL` | `Core default` |
 | `moral_choice_quests.json` | 65 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceCatalogLoader` |
 | `moral_choice_quests_branching.json` | 100 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceBranchQuestCatalogLoader` |
 | `moral_choice_quests_expansion.json` | 50 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceExpansionQuestCatalogLoader` |
 | `narrative_questlines.json` | 8 | `1.0.0` | `OPTIONAL` | `NarrativeEncounterSystem` |
-| `questline_master.json` | 362 | `1.0.0` | `GAMEPLAY_CONSUMED` | `QuestlineMasterCatalog` |
-| `quests_expansion_05.json` | 112 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpansionQuestSystem` |
+| `questline_master.json` | 451 | `1.0.0` | `GAMEPLAY_CONSUMED` | `QuestlineMasterCatalog` |
+| `quests_bureaucratic_morality.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `quests_expansion_05.json` | 116 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpansionQuestSystem` |
 | `quests_expansion_06.json` | 52 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpansionQuestSystem` |
-| `standing_record_quests.json` | 97 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StandingRecordCatalog` |
+| `quests_faction_branching.json` | 601 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `quests_massive_expansion_200.json` | 601 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `quests_moral_branching_expansion.json` | 91 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `repeatable_quests.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `standing_record_quests.json` | 137 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StandingRecordCatalog` |
 | `thirdonary_quests.json` | 249 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ThirdonaryCatalogLoader` |
 | `verdict_questlines.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VerdictQuestCatalogLoader` |
 | `year_of_ash_questlines.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 | `year_of_ash_quests.json` | 32 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Radio & Signals (5 Catalogs, 113 Definitions)
+### Radio & Signals (6 Catalogs, 144 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `radio.json` | 50 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RadioHostSession, RadioScriptbookCatalog` |
-| `radio_distress_signals.json` | 0 | `1.0.0` | `OPTIONAL` | `SignalTriangulationSystem` |
-| `radio_distress_signals_expansion.json` | 0 | `1.0.0` | `OPTIONAL` | `SignalTriangulationSystem` |
+| `radio.json` | 65 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RadioHostSession, RadioScriptbookCatalog` |
+| `radio_distress_signals.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SignalTriangulationSystem` |
+| `radio_distress_signals_expansion.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SignalTriangulationSystem` |
+| `radio_intercepts.json` | 16 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `verdict_radio.json` | 13 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `year_of_ash_radio.json` | 50 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Shelter & Power (2 Catalogs, 6 Definitions)
+### Shelter & Power (5 Catalogs, 165 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `power_grid.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PowerGridSystem` |
+| `shelter_machine_identities.json` | 38 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `shelter_room_identities.json` | 87 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `shelter_rooms.json` | 34 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `shelter_schedules.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ShelterScheduleCatalogLoader` |
 
 ### Social & Psychology (3 Catalogs, 0 Definitions)
@@ -581,36 +655,38 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `standing_record_layouts.json` | 66 | `1.0.0` | `GAMEPLAY_CONSUMED` | `LocationLayoutSystem` |
 | `standing_record_memory.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `LocationMemorySystem` |
 
-### Survivors (7 Catalogs, 204 Definitions)
+### Survivors (7 Catalogs, 228 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `antigravity_survivor_fields.json` | 0 | `1.0.0` | `OPTIONAL` | `SurvivorCatalog` |
-| `characters.json` | 36 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalog` |
+| `characters.json` | 60 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalog` |
 | `deep_lore_survivor_fields.json` | 0 | `1.0.0` | `OPTIONAL` | `SurvivorCatalog` |
 | `expansion_survivor_fields.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalog` |
 | `starting_survivors.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorStartingStateLoader` |
 | `survivors.json` | 129 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalogLoader, SurvivorCatalog` |
 | `year_of_ash_survivors.json` | 36 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Verdict (Exp 03) (2 Catalogs, 17 Definitions)
+### Verdict (Exp 03) (2 Catalogs, 20 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `verdict_data.json` | 11 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VerdictCatalogLoader` |
-| `verdict_npcs.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VerdictNpcSystem` |
+| `verdict_npcs.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VerdictNpcSystem` |
 
-### Weather & Environment (1 Catalogs, 4 Definitions)
+### Weather & Environment (2 Catalogs, 22 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `weather_seasons.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WeatherSystem` |
+| `weather_route_gates.json` | 15 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `weather_seasons.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WeatherSystem` |
 
-### Whitelists & Infrastructure (1 Catalogs, 0 Definitions)
+### Whitelists & Infrastructure (2 Catalogs, 0 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `whitelists/orphan_knocks.json` | 0 | `1.0.0` | `OPTIONAL` | `Core default` |
+| `whitelists/plan25_flags.json` | 0 | `1.0.0` | `OPTIONAL` | `Core default` |
 
 ### Year of Ash (Exp 05) (1 Catalogs, 0 Definitions)
 

@@ -1,6 +1,6 @@
 # ASHFALL PROJECT — ANTIGRAVITY Instructions
 # AUTO-GENERATED from AGENTS.md (canonical source). Run sync-agent-rulebooks.py to regenerate.
-# Last generated: 2026-08-29
+# Last generated: 2026-09-02
 
 ---
 
@@ -151,10 +151,10 @@ Known offenders (do not grow these; migrate logic into Core instead):
 `Assets/StreamingAssets/Data/` is the authority. ScriptableObjects are a Unity-editor convenience generated from JSON, never the source. Never fork data per engine.
 
 Known data issues:
-- 121 ScriptableObject definitions — risk of dual authority
+- ~~121 ScriptableObject definitions — risk of dual authority~~ — RESOLVED (0 ScriptableObjects remain; see H12)
 - 56 narrative JSON files are **untracked in git** — missing on fresh clone (`Assets/StreamingAssets/Data/narrative/`)
-- Property naming mixes `camelCase` and `snake_case` — migrate to `snake_case`
-- Only 35 of ~280 JSON files have `schema_version` — add to all core data files
+- Property naming mixes `camelCase` and `snake_case` — migrate to `snake_case` (migration notes filed per file; rename deferred to a follow-up task — see A11 parity audit)
+- ~~Only 35 of ~280 JSON files have `schema_version`~~ — RESOLVED: all 411 data JSON files (137 root catalogs + 272 narrative + whitelists/documents) carry a top-level `schema_version`; presence is now enforced by `CatalogIntegrityValidator` (a root-object catalog missing it fails `--data-integrity-selftest`), gated by `CatalogIntegrityValidatorTests` (missing→error, present→pass, bare-array root exempt).
 - ~~`world_history.json:15` references "China"~~ — RESOLVED: replaced with a fictional nation ("the Meridian Compact"); all real-country/alliance terms swept from the data authority and gated by `Ashfall.Core.Tests/DataRuleComplianceTests.cs` (no real countries/wars/people).
 
 ---
@@ -263,13 +263,13 @@ Known issues:
 | H1 | ~~`HoldfastRuntimeSession` duplicates core survival mechanics~~ — **RESOLVED** (thin projection onto `NeedsSystem`/`RadiationSystem` via `SurvivorsHostSession`; fallback `_fallback*` only for headless tests) | `src/Host/HoldfastRuntimeSession.cs:44` (`Health`/`Hunger`/`Thirst`/`Radiation` project via `Survivors?.Find()`; `TickDay:164` fallback decay only when `Survivors==null`) |
 | H2 | Duplicate `WornGear` class                                         | both in Core (`Inventory/Inventory.cs:22` + `Radiation/RadiationSystem.cs:64`); consolidate to one location. **Bridge exists:** `Radiation.WornGear.FromInventory(Inventory.WornGear)` is the single sanctioned conversion point, wired by the Godot host `SurvivorsHostSession` (equipped gas mask/hazmat now cuts dose; verified by `--survivors-selftest` gear probes + `InventoryGearBridgeTests`). |
 | H3 | ~~`SimClock` duplicate~~ — **CLARIFIED** (not a duplicate: `Ashfall.Core/HostDefaults.cs:90` `SimClock:IClock` day-based vs `Ashfall.Core/Clock/ISimClock.cs:16` `SimClock:ISimClock,IClock` tick-based; both intentional, `ISimClock` tick granularity for Verdict/Warlord clocks) | `Ashfall.Core/Clock/ISimClock.cs:6` + `HostDefaults.cs:90` — keep both; consolidation is tick→day alias only if needed |
-| H4 | 13 bare `catch { }` blocks swallow exceptions                      | `YearOfAshCatalogLoader.cs` (7), `VerdictCatalogLoader.cs` (3) — unchanged |
+| H4 | ~~13 bare `catch { }` blocks swallow exceptions~~ — **RESOLVED** | `YearOfAshCatalogLoader.cs` (7) + `VerdictCatalogLoader.cs` (3) — zero bare `catch { }`; every parse failure routes through `CatalogDiagnostics.Warn(path, shape, ex)` → an injectable `ILog` sink (default `ConsoleLog`, overridable via `RegisterLog`), carrying file path + attempted JSON shape. Missing optional files stay silent-empty by design (not a failure). Regression coverage in `Ashfall.Core.Tests/CatalogLoaderHardeningTests.cs` (6 tests: malformed→logged for both loaders, valid→baseline, missing→silent-empty). |
 | H5 | Utility AI forked — **Core vs Godot host** (not Unity)             | `Assets/Ashfall.Core/UtilityAI/` vs `src/UtilityAI/` (Godot host) |
 | H6 | ~~Unity has no `IFileIO`, `IJsonSerializer`, `IClock` adapters~~ — **RESOLVED** (Unity host removed) | Unity host deleted with `_Game/` |
 | H7 | `Main.cs` (Godot) — one `partial class Main` in a single ~6.5k-line file, but internally regular: per-subsystem triads of `SetupXxx` (construct + wire system), `SaveXxx` (capture into save; `SaveAll` orchestrates all 24), `FlushXxxIfDirty` (deferred flush) — 31 Setup / 24 Save + `SaveAll` / 17 Flush methods across domains (Expeditions, Combat, Economy, Medical, Narrative, Holdfast, YearOfAsh, Maritime, Muster, …). Risks: triad drift (a Setup without a Save silently drops state) and single-file navigation; end state is one true partial file per domain | `src/Main.cs` |
 | H8 | ~~`SettingsManager` uses `PlayerPrefs` (Unity-only)~~ — **RESOLVED** | Unity `SettingsManager.cs` deleted with `_Game/` |
 | H9 | ~~124 compiler warnings in tests~~ — RESOLVED                       | test suite builds with 0 errors, 3 minor analyzer warnings (xUnit2013/xUnit2020) — not nullable refs |
-| H10 | NeedsSystem & RadiationSystem save/load round-trip tests           | `NeedsRadiationSystemTests.cs` covers tick behaviour (58 tests); save/load round-trip coverage still missing |
+| H10 | ~~NeedsSystem & RadiationSystem save/load round-trip tests~~ — **RESOLVED** | `NeedsRadiationSystemTests.cs` covers tick behaviour (58 tests); `NeedsRadiationSaveRoundTripTests.cs` now adds save/load round-trip coverage (17 tests): all-fields round-trip + restored-state-drives-tick, capture→tick→differs no-op guard, default/empty restore with documented defaults, checksum stability, paired capture/restore determinism for both systems, and the Core no-projection half of the `HoldfastRuntimeSession` `Survivors==null` fallback (`HoldfastRuntimeSession.cs:177`). Fallback-decay math itself lives in the Godot host (Godot.NET.Sdk/net8.0), not referenceable from the net9.0 test project, and is covered by host integration tests. |
 | H11 | JournalSystem coverage                                            | 6 Core files; `JournalSaveStore` has integrity tests; `JournalSystem` core behaviour still untested |
 | H12 | ~~ScriptableObject definitions~~ — **RESOLVED** (migrated to JSON) | 0 ScriptableObjects remain; all data authority now in `Assets/StreamingAssets/Data/` JSON files |
 

@@ -443,6 +443,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "NURSERY", "nursery");
             AddNavButton(content, "AVIATION", "aviation");
             AddNavButton(content, "STEALTH OPS", "stealth");
+            AddNavButton(content, "FALLOUT RADAR", "fallout_detail");
 
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());

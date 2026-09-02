@@ -439,6 +439,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _nurseryPanel.Open(),
                 closeAction: () => _nurseryPanel.Close());
 
+            PanelRegistry.ConfigureActions("fallout_detail",
+                bindAction: () => { SetupFallout(); _falloutPlumePanel.Bind(EnsureFallout()); },
+                openAction: () => _falloutPlumePanel.Open(),
+                closeAction: () => _falloutPlumePanel.Close());
+
             // ── Flagship Consoles (Stitch Suite) ─────────────────────────────
             PanelRegistry.ConfigureActions("biogas_digester",
                 openAction: () => _biogasDigesterPanel.Open(),
