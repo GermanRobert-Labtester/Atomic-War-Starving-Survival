@@ -200,9 +200,45 @@ namespace Ashfall.Core.Expeditions
             }
 
             float combatRating = def?.combat_rating ?? 10f;
-            estimate.piracyRisk = Math.Clamp((route.WeatherHazard * 0.4f) + ((100f - combatRating) * 0.002f), 0.02f, 0.70f);
+            estimate.piracyRisk = PiracyRisk(route.WeatherHazard, combatRating);
 
             return estimate;
+        }
+
+        /// <summary>
+        /// Pure piracy-risk curve shared by route estimates and dispatch-time
+        /// encounter weighting. River hazard contributes up to 40% of the
+        /// band; a weak combat rating widens it further.
+        /// </summary>
+        public static float PiracyRisk(float routeWeatherHazard, float combatRating)
+        {
+            return Math.Clamp((routeWeatherHazard * 0.4f) + ((100f - combatRating) * 0.002f), 0.02f, 0.70f);
+        }
+
+        /// <summary>
+        /// Dispatch-time encounter weighting for water crossings: piracy risk
+        /// is folded into the expedition's per-tick encounter chance so the
+        /// existing encounter pipeline (RollEncounter → surface bridge)
+        /// adjudicates river ambushes without a second rule system.
+        /// Returns a cloned definition — the registry original is never mutated.
+        /// </summary>
+        public ExpeditionDefinition ApplyPiracyToDefinition(ExpeditionDefinition def, float routeWeatherHazard, string vesselId)
+        {
+            if (def == null) return def!;
+            var vesselDef = GetDefinition(vesselId);
+            float piracy = PiracyRisk(routeWeatherHazard, vesselDef?.combat_rating ?? 10f);
+            var adjusted = new ExpeditionDefinition
+            {
+                id = def.id,
+                displayName = def.displayName,
+                distanceTicks = def.distanceTicks,
+                dangerLevel = def.dangerLevel,
+                encounterChancePerTick = Math.Clamp(def.encounterChancePerTick + piracy, 0f, 0.9f),
+                baseStaminaDrainPerHour = def.baseStaminaDrainPerHour,
+                lootCategories = new List<string>(def.lootCategories),
+                scavenging_table_id = def.scavenging_table_id
+            };
+            return adjusted;
         }
 
         public void ApplyWaterCorrosion(NavalVesselInstance vessel, float toxicContamination, EquipmentConditionSystem? conditionSys = null)

@@ -114,6 +114,8 @@
     { "from": "loc_cut_abandoned_depot", "to": "loc_cut_merchant_caravanserai", "distanceKm": 7, "weatherHazard": 0.15 },
     { "from": "loc_cut_merchant_caravanserai", "to": "loc_black_flotilla_outpost", "distanceKm": 22, "weatherHazard": 0.4 },
     { "from": "loc_black_flotilla_outpost", "to": "loc_cut_merchant_caravanserai", "distanceKm": 22, "weatherHazard": 0.4 },
+    { "from": "loc_holdfast", "to": "loc_black_flotilla_outpost", "distanceKm": 9, "weatherHazard": 0.35, "travelDomain": "water", "currentStrength": 0.3, "toxicContamination": 0.1 },
+    { "from": "loc_black_flotilla_outpost", "to": "loc_holdfast", "distanceKm": 9, "weatherHazard": 0.35, "travelDomain": "water", "currentStrength": -0.3, "toxicContamination": 0.1 },
     { "from": "loc_cut_radiation_zone_alpha", "to": "loc_black_flotilla_outpost", "distanceKm": 14, "weatherHazard": 0.45 },
     { "from": "loc_black_flotilla_outpost", "to": "loc_cut_radiation_zone_alpha", "distanceKm": 14, "weatherHazard": 0.45 },
     { "from": "loc_holdfast", "to": "loc_hidden_relay_bunker", "distanceKm": 6, "weatherHazard": 0.1 },

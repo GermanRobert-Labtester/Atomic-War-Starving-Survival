@@ -65,6 +65,32 @@ namespace AtomicWar.GodotApp
                 // Wiring that needs all services up
                 SetupExpeditionCombatHandoff(_combat);
 
+                // Plans 178-201: expansion systems must also exist in a NEW game
+                // (RestoreAllSubsystemsFromDisk covers only the load/continue
+                // path). Without this, the null-guarded tick blocks never come
+                // alive and the sections never persist for fresh campaigns.
+                SetupGenerational();
+                SetupPrisoners();
+                SetupMutations();
+                SetupStealth();
+                SetupAviation();
+                SetupForcedLabor();
+                SetupNarcotics();
+                SetupPolitics();
+                SetupFallout();
+                SetupDesperation();
+                SetupMercenary();
+                SetupArchaeology();
+                SetupAmputation();
+                SetupRailway();
+                SetupFungi();
+                SetupJustice();
+                SetupRecreation();
+                SetupChemWarfare();
+                SetupCommsArray();
+                SetupCeremony();
+                SetupRobotics();
+
                 // Expanded shelter systems (last — depends on World/PowerGrid/Inventory/Survivors/MedicalWard/Phase0/Crafting/Journal/Expeditions)
                 SetupExpandedShelterSystems();
             }

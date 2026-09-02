@@ -42,6 +42,24 @@ namespace AtomicWar.GodotApp
             if (_expeditionDirty) SaveExpeditions();
         }
 
+        /// <summary>
+        /// Projects the wasteland map authority's water routes (travel_domain
+        /// "water" from the home holdfast) into the expedition session so
+        /// river-crossing dispatches use the naval craft profile + piracy
+        /// weighting. Re-run after world/map restore.
+        /// </summary>
+        private void SyncWaterRoutes()
+        {
+            if (_expeditions == null || _world?.WastelandMap == null) return;
+            _expeditions.WaterRouteHazards.Clear();
+            foreach (var route in _world.WastelandMap.Routes)
+            {
+                if (route == null || route.From != "loc_holdfast") continue;
+                if (!string.Equals(route.TravelDomain, "water", StringComparison.OrdinalIgnoreCase)) continue;
+                _expeditions.WaterRouteHazards[route.To] = route.WeatherHazard;
+            }
+        }
+
         private void SetupExpeditions()
         {
             if (_expeditions != null) return;
@@ -51,6 +69,7 @@ namespace AtomicWar.GodotApp
             _expeditions.Flags = _consequenceLedger;
             _expeditions.StateChanged += () => _expeditionDirty = true;
             _expeditions.OnEncounterSurfaced += OnExpeditionEncounterSurfaced;
+            SyncWaterRoutes();
             _expeditions.Engine.OnExpeditionCompleted += state =>
             {
                 if (state == null) return;
