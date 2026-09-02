@@ -57,7 +57,11 @@ namespace AtomicWar.GodotApp
                 }
             }
             Check(maraInCharacters, "arc npc id exists in characters.json identity catalog");
-            Check(characterTotal == 61, $"characters.json holds 61 named NPCs (got {characterTotal})");
+            Check(characterTotal == 68, $"characters.json holds 68 named NPCs (got {characterTotal})");
+            int flagshipArcs = 0;
+            foreach (var arc in catalog.Arcs)
+                if (arc.flagship && arc.states.Count >= 3) flagshipArcs++;
+            Check(flagshipArcs >= 8, $"at least 8 authored flagship arcs with 3+ states (got {flagshipArcs})");
 
             foreach (var arc in catalog.Arcs)
                 Check(maraInCharacters, $"arc npc '{arc.npc_id}' resolves against characters.json");

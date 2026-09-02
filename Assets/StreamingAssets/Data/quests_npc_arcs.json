@@ -69,6 +69,502 @@
           "consequences": "The wagons run on time and the price holds. Somewhere in the exchange a ledger line has your name in it, entered in a hand you recognize."
         }
       ]
+    },
+    {
+      "id": "quest_arc_ilze_01_clinic",
+      "title": "Eight Beds",
+      "description": "An almshouse clinic is down to its last shelves, and its physician shows you the inventory before she asks for anything.",
+      "type": "recurring_npc",
+      "minDay": 15,
+      "maxDay": 44,
+      "factionTag": "none",
+      "synopsis": "Dr. Ilze Kaar keeps eight beds and a standard she will not lower. The shelves are the problem. What you do about them is the first entry in her only ledger: alive, or not.",
+      "prerequisites": [],
+      "choices": [
+        {
+          "id": "ilze_supply",
+          "text": "Restock the clinic at cost, no favors asked or recorded.",
+          "effects": [],
+          "consequences": "She enters the goods in her inventory and your name in nothing at all. The treatment you or yours receive later will be billed at the same stated odds as everyone else's, which is the point."
+        },
+        {
+          "id": "ilze_pass",
+          "text": "Decline. The shelves are not your ledger.",
+          "effects": [],
+          "consequences": "She does not argue. She treats who she can with what she has, and the queue outside the almshouse gets a little longer by the week."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_ilze_02_outbreak",
+      "title": "The Fever Finds the Almshouse",
+      "description": "The clinic is full of a fever she can name but not stop, and the camp around it is one bad rumor from a cordon.",
+      "type": "recurring_npc",
+      "minDay": 45,
+      "maxDay": 69,
+      "factionTag": "none",
+      "synopsis": "Eight beds became sixteen bedrolls. She will not ask you to come, and she has written to you anyway: come for the people, or come for her, or do not come — but the door stays open either way.",
+      "prerequisites": ["quest_arc_ilze_01_clinic"],
+      "choices": [
+        {
+          "id": "ilze_extract",
+          "text": "Bring her out before the cordon closes. The patients keep the building.",
+          "effects": [],
+          "consequences": "She argues for one hour, treats through the night, and is on your cart by dawn because the work needs hands more than it needs her signature. The almshouse keeps her name off the roster of the lost."
+        },
+        {
+          "id": "ilze_fortify",
+          "text": "Send supplies and trained hands enough to hold, and leave her her clinic.",
+          "effects": [],
+          "consequences": "The fever breaks in nineteen days. The clinic holds because it was held, and she logs what you spent against what it bought, at stated odds, forever."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_ilze_03_clinic",
+      "title": "The Door That Stays Open",
+      "description": "The almshouse clinic trains more hands than it loses now, and the verge sends its sick to a door that has never once been shut at the appointed hour.",
+      "type": "recurring_npc",
+      "minDay": 70,
+      "maxDay": 365,
+      "factionTag": "none",
+      "synopsis": "Whatever the camp owes her, it cannot carry. What it can do is keep the door open, the water boiled, and the roster of trained hands growing. Your shelter is on the list of places she answers.",
+      "prerequisites": ["quest_arc_ilze_02_outbreak"],
+      "choices": [
+        {
+          "id": "ilze_book_treatment",
+          "text": "Book treatment and training for your people at the stated odds.",
+          "effects": [],
+          "consequences": "The odds are the odds. The work gets done anyway. Both of those are the medicine."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_marek_01_patrol",
+      "title": "Checkpoint Gamma",
+      "description": "A garrison checkpoint runs by the book, and the corporal keeps the book where petitioners can read it.",
+      "type": "recurring_npc",
+      "minDay": 20,
+      "maxDay": 49,
+      "factionTag": "faction_central_garrison",
+      "synopsis": "Corporal Marek Voln's checkpoint is the honest kind of toll: posted terms, logged exceptions, no favors. How you conduct yourself at his post goes into the log like everything else.",
+      "prerequisites": [],
+      "choices": [
+        {
+          "id": "marek_cooperative",
+          "text": "Honor the posted terms and walk your column through clean.",
+          "effects": [],
+          "consequences": "The log entry is boring, which is the highest praise the garrison writes. He notes your column keeps its own discipline, and checks it twice at the next crossing anyway."
+        },
+        {
+          "id": "marek_defiant",
+          "text": "Dispute the posted order at the post, loudly and in writing.",
+          "effects": [],
+          "consequences": "He copies your objection into the log, answers it in the margin, and honors your passage to the letter and nothing further. The margin answer is better argued than it needs to be."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_marek_02_deserter",
+      "title": "The Margin Notes",
+      "description": "The corporal who wrote dated objections to his own orders is now the subject of them. The garrison calls it desertion.",
+      "type": "recurring_npc",
+      "minDay": 50,
+      "maxDay": 74,
+      "factionTag": "faction_central_garrison",
+      "synopsis": "He is sheltering where the sweeps do not look first, and he sent you his field kit for safekeeping — which is deserter for please, and thank you, and I am sorry. What the shelter does with him, it does in the open.",
+      "prerequisites": ["quest_arc_marek_01_patrol"],
+      "choices": [
+        {
+          "id": "marek_provisions",
+          "text": "Provision him quiet and point him at a route out of the region.",
+          "effects": [],
+          "consequences": "He leaves the kit. He keeps the objections. Word comes back, region by region, timed exactly to when you need it: routes, sweeps, the mood of the command."
+        },
+        {
+          "id": "marek_turn_in",
+          "text": "Report him to the garrison and take what procedure pays.",
+          "effects": [],
+          "consequences": "The garrison pays what it promised and posts the case where procedure requires. Your passes are honored a season early and a shade too quickly. The queue has noticed which door you came through."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_marek_03_watch",
+      "title": "Word Before the Sweeps",
+      "description": "An outside ally with garrison discipline sends warning before every sweep: routes, timing, the mood of the command.",
+      "type": "recurring_npc",
+      "minDay": 75,
+      "maxDay": 365,
+      "factionTag": "faction_central_garrison",
+      "synopsis": "The messages arrive by whatever hand will carry them, margins full of dated objections about the men who hunt him. Your shelter plans its seasons around his warnings, and returns what it can.",
+      "prerequisites": ["quest_arc_marek_02_deserter"],
+      "choices": [
+        {
+          "id": "marek_take_warning",
+          "text": "Take the warnings and stand the watch he taught you.",
+          "effects": [],
+          "consequences": "Posted orders, logged refusals, no exceptions and no favors. The nights hold."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_lina_01_found",
+      "title": "The Girl Who Counts",
+      "description": "A child keeps order in a queue at the baths, and her count is better than yours.",
+      "type": "recurring_npc",
+      "minDay": 8,
+      "maxDay": 39,
+      "factionTag": "none",
+      "synopsis": "She is not lost, exactly. She is useful, and the queue feeds useful. The shelter column is the first place anyone has asked what she wanted, which is to be useful and not charitable, and to have answers given twice.",
+      "prerequisites": [],
+      "choices": [
+        {
+          "id": "lina_take_in",
+          "text": "Offer her a place in the shelter — her work included, her terms honored.",
+          "effects": [],
+          "consequences": "She considers the offer the way she counts everything: once, out loud, and to your face. What she packs fits in a tin. She does not say thank you on command. She counts the column out the gate and the count is right."
+        },
+        {
+          "id": "lina_leave_supplies",
+          "text": "Leave supplies with the queue's keeper and no conditions attached.",
+          "effects": [],
+          "consequences": "She writes your column into her book — supplies received, date, condition. The entry is exact. Nobody has made her count of the situation wrong yet."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_lina_02_lessons",
+      "title": "Lessons Twice Given",
+      "description": "The shelter's foundling sits the lessons it gives and invents the ones it will not.",
+      "type": "recurring_npc",
+      "minDay": 40,
+      "maxDay": 99,
+      "factionTag": "none",
+      "synopsis": "She learns anything once and teaches it back wrong on purpose, to check you were paying attention. Someone has to be the adult who passes that test. It is a better job than it sounds.",
+      "prerequisites": ["quest_arc_lina_01_found"],
+      "choices": [
+        {
+          "id": "lina_teach_her",
+          "text": "Give her the lessons yourself — arithmetic, doses, the counting of small mercies.",
+          "effects": [],
+          "consequences": "She corrects your sums in front of the smaller children, who find this hilarious. The dose tables are copied into her book in a hand too neat for the times."
+        },
+        {
+          "id": "lina_find_teacher",
+          "text": "Find her a proper teacher among the shelter's survivors.",
+          "effects": [],
+          "consequences": "She audits the teacher for a week before accepting the arrangement. Both parties report being the stricter one. The book grows."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_lina_03_apprentice",
+      "title": "Small Hands, Steady Ones",
+      "description": "The foundling can dress a wound, read a dose aloud, and catch an error before it lands.",
+      "type": "recurring_npc",
+      "minDay": 100,
+      "maxDay": 365,
+      "factionTag": "none",
+      "synopsis": "The third one is the rarest. The shelter's medic-training takes her, and the counting becomes a trade instead of a defense. She teaches the younger ones the way it was taught to her: once, properly, and checked.",
+      "prerequisites": ["quest_arc_lina_02_lessons"],
+      "choices": [
+        {
+          "id": "lina_confirm_apprenticeship",
+          "text": "Confirm her apprenticeship and put her name on the infirmary roster.",
+          "effects": [],
+          "consequences": "The roster entry is in her own hand. She checks the ward counts twice a day now, professionally, and hums almost never."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_anete_01_substation",
+      "title": "Live Grounds, No Copper",
+      "description": "A grid engineer holds a live substation with working grounds and no copper to speak of.",
+      "type": "recurring_npc",
+      "minDay": 25,
+      "maxDay": 54,
+      "factionTag": "faction_rebuilders",
+      "synopsis": "Anete Sarn offers switching orders and a load calculation before she asks for a single part. The substation is sound. The region around it is dark. She has a list, and the list is reasonable, which is the strange part.",
+      "prerequisites": [],
+      "choices": [
+        {
+          "id": "anete_supply_parts",
+          "text": "Fill her parts list — copper, breaker parts, the boring unglamorous half of light.",
+          "effects": [],
+          "consequences": "She signs for every item and grounds every run. The first feeder proves itself daily. The rebuilders send paperwork, which she considers the price of copper."
+        },
+        {
+          "id": "anete_rescue",
+          "text": "Offer her a place in the shelter — the grid can wait for a better season.",
+          "effects": [],
+          "consequences": "She looks at the bus, the grounds, the dark, and then at you, and does the arithmetic out loud. The substation gets buttoned up properly either way. Her badges are expired and her hands are not."
+        },
+        {
+          "id": "anete_pass",
+          "text": "Pass. The list is reasonable and so is the road away from it.",
+          "effects": [],
+          "consequences": "The compound stays secure and the grounds stay checked, for a while. Out here the lights come and go on a schedule nobody publishes."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_anete_02_project",
+      "title": "One Feeder at a Time",
+      "description": "The rebuilders have noticed a working substation and a surveyor who will not cut a corner.",
+      "type": "recurring_npc",
+      "minDay": 55,
+      "maxDay": 99,
+      "factionTag": "faction_rebuilders",
+      "synopsis": "A regional recovery project wants her name on it and her switching orders behind it. She will take the work only as fast as it can be done safely, which makes her the slowest and only reliable thing in the region.",
+      "prerequisites": ["quest_arc_anete_01_substation"],
+      "choices": [
+        {
+          "id": "anete_back_the_project",
+          "text": "Back the rebuild with the shelter's surplus and its reputation.",
+          "effects": [],
+          "consequences": "Two waystation feeders run again. Caravans start planning around her schedule, which is the only kind of monument she would accept."
+        },
+        {
+          "id": "anete_string_conductor",
+          "text": "Lend her your hands for a season — shelter people, taught to her standard.",
+          "effects": [],
+          "consequences": "She certifies two of yours on switching basics and fails a third, kindly, with a study plan. The line goes up. The lights hold."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_anete_03_grid",
+      "title": "The Region On Schedule",
+      "description": "The grid is small, documented, and true: two feeders, a schedule, and switching orders done safely.",
+      "type": "recurring_npc",
+      "minDay": 100,
+      "maxDay": 365,
+      "factionTag": "faction_rebuilders",
+      "synopsis": "The rebuilders gave her the region and she gave it lines that stay up. Your shelter draws from a feeder she signed, at rates set in a hand that does not round.",
+      "prerequisites": ["quest_arc_anete_02_project"],
+      "choices": [
+        {
+          "id": "anete_book_switching",
+          "text": "Book your shelter onto the regional schedule.",
+          "effects": [],
+          "consequences": "The grid does not care that anyone is tired. It cares that the grounds are on. The grounds are on."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_sava_01_camp",
+      "title": "The Hours of the Camp",
+      "description": "A refugee camp keeps its hours — the meal, the naming of the dead, the silence after — and raiders have begun keeping watch on it.",
+      "type": "recurring_npc",
+      "minDay": 30,
+      "maxDay": 64,
+      "factionTag": "cult_of_the_glow",
+      "synopsis": "Elder Sava rations the panic first and the grain second. The fence is thin, the pot is on, and she asks you plainly: stand with the camp, move it, or keep walking. All three are answers she has heard before.",
+      "prerequisites": [],
+      "choices": [
+        {
+          "id": "sava_defend",
+          "text": "Stand the fence with the camp through the bad nights.",
+          "effects": [],
+          "consequences": "The camp holds because it was held. She logs nothing and forgets nothing, and the rota gains a watch your people helped stand."
+        },
+        {
+          "id": "sava_evacuate",
+          "text": "Help the camp move before the raiders pick their night.",
+          "effects": [],
+          "consequences": "She walks the column out singing the naming of the dead so the children cannot hear the fear in it. The camp becomes a teaching, and the teaching travels."
+        },
+        {
+          "id": "sava_decline",
+          "text": "Decline. Your column cannot be spent on another camp's fence.",
+          "effects": [],
+          "consequences": "She nods once, pours you a bowl anyway, and does not preach patience to the starving, including you. The road out is quiet in the way roads are when someone stayed behind."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_sava_02_schism",
+      "title": "The Rota and the Schism",
+      "description": "The camps are quarreling over the right way to keep the hours, and both sides quote her.",
+      "type": "recurring_npc",
+      "minDay": 65,
+      "maxDay": 109,
+      "factionTag": "cult_of_the_glow",
+      "synopsis": "The sign on her door says the ash remembers, and two camps now insist it means different chores. She wants no throne and no doctrine. She wants the pot on and the dead named, and she will mediate once, properly, if asked.",
+      "prerequisites": ["quest_arc_sava_01_camp"],
+      "choices": [
+        {
+          "id": "sava_vouch_mediator",
+          "text": "Vouch for her as mediator when the camps send for a neutral voice.",
+          "effects": [],
+          "consequences": "She mediates once, properly: the meal, the argument, the silence after. The rota holds in both camps. Neither side admits to losing, which is how she counts a win."
+        },
+        {
+          "id": "sava_fund_shrines",
+          "text": "Fund the shrine-rotas spreading in her name, quietly.",
+          "effects": [],
+          "consequences": "Four regions keep her hours now. She finds the word movement embarrassing and the word chore accurate. Your name appears in neither ledger, which is how you asked for it."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_sava_03_hours",
+      "title": "The Verdict-Free Hour",
+      "description": "When the camps quarrel, they send for her before they send for anyone with a rifle.",
+      "type": "recurring_npc",
+      "minDay": 110,
+      "maxDay": 365,
+      "factionTag": "cult_of_the_glow",
+      "synopsis": "Her evening is open to whoever works the rota: a bowl, the naming, and no verdicts. Your shelter is invited as a camp, not as customers, which took years and was worth it.",
+      "prerequisites": ["quest_arc_sava_02_schism"],
+      "choices": [
+        {
+          "id": "sava_attend_hours",
+          "text": "Send your people to the hour — to work it, not to watch it.",
+          "effects": [],
+          "consequences": "They come back tired in the good way, with the names read properly and a rota of your own to keep. Hope is a chore like any other, and nobody gets excused from it."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_rika_01_cache",
+      "title": "The Real Floors",
+      "description": "A scavenger knows which cellar floors in the drowned streets are real, and offers to split a find rather than race you for it.",
+      "type": "recurring_npc",
+      "minDay": 15,
+      "maxDay": 39,
+      "factionTag": "faction_scavenger_guild",
+      "synopsis": "Rika Dorn works alone and faster than is sensible, and once — exactly once — she offers to split a cache instead of racing. The offer is worth more than the cache. How you treat it decides what she sells you next: finds, or silence.",
+      "prerequisites": [],
+      "choices": [
+        {
+          "id": "rika_split",
+          "text": "Take the split. Work the floor together and divide it clean.",
+          "effects": [],
+          "consequences": "The division is clean because she does it, aloud, on site. She notes that you did not even try to learn the address, and puts a mark next to your name that is not in the ledger."
+        },
+        {
+          "id": "rika_take",
+          "text": "Take the whole cache. She was slower and she knows it.",
+          "effects": [],
+          "consequences": "The haul is good and the streets are quiet. She sells your name to the guild registry within the week — not as an enemy, as a fact. Facts compound."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_rika_02_trap",
+      "title": "A Rumor With a Drop Shaft",
+      "description": "A cellar floor that was a rumor took her ankle, and she is camp-bound with a registry full of addresses.",
+      "type": "recurring_npc",
+      "minDay": 40,
+      "maxDay": 74,
+      "factionTag": "faction_scavenger_guild",
+      "synopsis": "She is loud about the ankle and quiet about the registry. The camp is full of people who have noticed both. What the shelter does in the next few days is the second entry in her book, and the book has a long memory.",
+      "prerequisites": ["quest_arc_rika_01_cache"],
+      "choices": [
+        {
+          "id": "rika_rescue",
+          "text": "Carry her out and stand the camp watch until the ankle can carry her.",
+          "effects": [],
+          "consequences": "She is dictating the registry to you by the third day, because you stayed, and it needs to be somewhere that is not her ankle. The debt is entered, managed, and never once mentioned."
+        },
+        {
+          "id": "rika_her_registry",
+          "text": "Trade the medic's visit for the registry pages. Business is business.",
+          "effects": [],
+          "consequences": "The pages are real and the floors are real and the ankle heals crooked. The guild works the sites ahead of you now, politely, completely, always by the book — her book."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_rika_03_guild",
+      "title": "First Refusal",
+      "description": "The guild gave her the cellar registry, and the registry has your name in the margin.",
+      "type": "recurring_npc",
+      "minDay": 75,
+      "maxDay": 365,
+      "factionTag": "faction_scavenger_guild",
+      "synopsis": "She brokers routes for the guild now, and brokers is the correct word: floors that are real, first refusal on finds, and the price posted where everyone can read it. Your standing is written down. It is a good number.",
+      "prerequisites": ["quest_arc_rika_02_trap"],
+      "choices": [
+        {
+          "id": "rika_book_routes",
+          "text": "Book expedition routes and first refusal through her desk.",
+          "effects": [],
+          "consequences": "The floors are real. The rope budget triples. The debt stays entered, managed, and never once mentioned."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_liva_01_tower",
+      "title": "The Station That Answers",
+      "description": "A relay mast lives on scavenged cells and inherited discipline, and its operator answers on schedule.",
+      "type": "recurring_npc",
+      "minDay": 18,
+      "maxDay": 49,
+      "factionTag": "none",
+      "synopsis": "Liva Kern keeps the mast and the log, and believes somebody is still counting the stations that answer. She trades relay slots and copies of her logs for cells that hold charge. The only price is honesty on the key.",
+      "prerequisites": [],
+      "choices": [
+        {
+          "id": "liva_cells",
+          "text": "Trade power cells for a standing relay slot and the signal copies.",
+          "effects": [],
+          "consequences": "Your shelter is on the schedule now, logged, with a slot that has never once been missed. The weather copies arrive before the weather does."
+        },
+        {
+          "id": "liva_slot",
+          "text": "Book a one-time slot and send a message properly, identified.",
+          "effects": [],
+          "consequences": "The message goes out logged and timed, and the log has your call in a neat hand. Somebody out there, if there is somebody, knows the shelter answers."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_liva_02_seizure",
+      "title": "Somebody Maps the Towers",
+      "description": "The faction that maps towers has mapped hers, and their survey team is two valleys out.",
+      "type": "recurring_npc",
+      "minDay": 50,
+      "maxDay": 94,
+      "factionTag": "none",
+      "synopsis": "She keeps transmitting — on schedule, logged — and has started copying the log in two hands, one to send, one to lose. The shelter knows first. What it does with the knowing is the entry that matters.",
+      "prerequisites": ["quest_arc_liva_01_tower"],
+      "choices": [
+        {
+          "id": "liva_warn",
+          "text": "Warn her and move her gear before the survey team arrives.",
+          "effects": [],
+          "consequences": "The mast goes dark on schedule for the first time in its second life. She keys again from a site under a flag that leaves her alone, and your shelter gets weather copies and patrol schedules that were never in any log."
+        },
+        {
+          "id": "liva_bargain",
+          "text": "Sell her location to the garrison and take the finder's fee.",
+          "effects": [],
+          "consequences": "The garrison pays what it promised and the station answers on time again — neater now, with a second reader on the log. The fee spends fine. The frequency you sold has a name attached, and the name is yours."
+        }
+      ]
+    },
+    {
+      "id": "quest_arc_liva_03_signal",
+      "title": "Fixed Hours",
+      "description": "A station that answers on schedule, under a flag that leaves it alone, with a band of its own.",
+      "type": "recurring_npc",
+      "minDay": 95,
+      "maxDay": 365,
+      "factionTag": "none",
+      "synopsis": "The naming of the moved-on camps, read properly at a fixed hour, on a band people plan around. Your shelter's slot is standing. The log has everything, including you.",
+      "prerequisites": ["quest_arc_liva_02_seizure"],
+      "choices": [
+        {
+          "id": "liva_book_signal",
+          "text": "Keep the standing slot and send the shelter's names on her band.",
+          "effects": [],
+          "consequences": "The names go out properly, at a fixed hour, to whoever is counting. The log shows the shelter answered, on time, every time."
+        }
+      ]
     }
+
   ]
 }

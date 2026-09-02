@@ -62,6 +62,426 @@
           "completesQuestChoiceId": "mara_pass"
         }
       ]
+    },
+    {
+      "id": "enc_arc_ilze_clinic",
+      "title": "The Almshouse Inventory",
+      "description": "Eight beds, two occupied by sleep and six by endurance. The physician walks you past the shelves without stopping so you can see for yourself how little is on them, then names a list of what she needs and what it costs, at prices you could check.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_ilze_kaar",
+      "choices": [
+        {
+          "choiceId": "ilze_restock_the_shelves",
+          "text": "Restock the clinic at cost — medicine, clean water, the boring half of mercy.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_ilze_01_clinic",
+          "completesQuestChoiceId": "ilze_supply"
+        },
+        {
+          "choiceId": "ilze_walk_past",
+          "text": "Walk past. Your ledger has no column for other people's shelves.",
+          "moraleDelta": 0,
+          "guiltDelta": 2,
+          "completesQuestId": "quest_arc_ilze_01_clinic",
+          "completesQuestChoiceId": "ilze_pass"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_ilze_outbreak",
+      "title": "Sixteen Bedrolls",
+      "description": "The almshouse aisles are bedrolls now, and the fever has a rhythm she tracks on a slate. She does not ask you to come, and she has written to you anyway. The cordon rumor is two days old and gaining.",
+      "category": "Hazard",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 0.75,
+      "minDangerLevel": 1.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_ilze_kaar",
+      "choices": [
+        {
+          "choiceId": "ilze_take_her_out",
+          "text": "Come for her: bring her out before the cordon closes.",
+          "moraleDelta": 2,
+          "guiltDelta": 2,
+          "completesQuestId": "quest_arc_ilze_02_outbreak",
+          "completesQuestChoiceId": "ilze_extract"
+        },
+        {
+          "choiceId": "ilze_hold_the_clinic",
+          "text": "Come for the people: supplies and hands enough to hold, and leave her her clinic.",
+          "moraleDelta": 4,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_ilze_02_outbreak",
+          "completesQuestChoiceId": "ilze_fortify"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_marek_patrol",
+      "title": "The Posted Terms",
+      "description": "The checkpoint's orders are posted where petitioners can read them, and the corporal answers questions by pointing at the relevant line. The queue moves. The log grows. Somewhere in it, a space is waiting for however you conduct yourself.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_marek_voln",
+      "choices": [
+        {
+          "choiceId": "marek_honor_the_post",
+          "text": "Honor the posted terms and walk the column through clean.",
+          "moraleDelta": 1,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_marek_01_patrol",
+          "completesQuestChoiceId": "marek_cooperative"
+        },
+        {
+          "choiceId": "marek_dispute_the_order",
+          "text": "Dispute the order at the post, loudly and in writing.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_marek_01_patrol",
+          "completesQuestChoiceId": "marek_defiant"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_marek_deserter",
+      "title": "A Kit Kept in Trust",
+      "description": "He waits where the sweeps do not look first, and the message that brought you here is six lines long, dated, and signed. The garrison's notices about him are posted one valley over. He does not run. He waits to learn what you decide.",
+      "category": "Social",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 1.25,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 1.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_marek_voln",
+      "choices": [
+        {
+          "choiceId": "marek_provision_him",
+          "text": "Provision him quiet and point him at a route out of the region.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_marek_02_deserter",
+          "completesQuestChoiceId": "marek_provisions"
+        },
+        {
+          "choiceId": "marek_report_him",
+          "text": "Report to the garrison and take what procedure pays.",
+          "moraleDelta": 0,
+          "guiltDelta": 4,
+          "completesQuestId": "quest_arc_marek_02_deserter",
+          "completesQuestChoiceId": "marek_turn_in"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_lina_baths",
+      "title": "Forty-One, Corrected",
+      "description": "The queue at the baths has a keeper: a child with a counting book and a voice pitched to carry. She tallies your column in, corrects your own number to your face, and waits to see whether the adults laugh or argue or fix the count.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_lina",
+      "choices": [
+        {
+          "choiceId": "lina_offer_a_place",
+          "text": "Offer her a place in the shelter — her work included, her terms honored.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_lina_01_found",
+          "completesQuestChoiceId": "lina_take_in"
+        },
+        {
+          "choiceId": "lina_leave_supplies",
+          "text": "Leave supplies with the queue and let her keep her count of it.",
+          "moraleDelta": 1,
+          "guiltDelta": 1,
+          "completesQuestId": "quest_arc_lina_01_found",
+          "completesQuestChoiceId": "lina_leave_supplies"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_anete_substation",
+      "title": "Grounds On, Lights Off",
+      "description": "The substation compound is swept, grounded, and labeled in a hand that believes in the future. The engineer walks you the perimeter, points out what works and what is missing, and hands you a parts list that is reasonable, which is the strange part.",
+      "category": "Discovery",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_anete_sarn",
+      "choices": [
+        {
+          "choiceId": "anete_fill_the_list",
+          "text": "Fill the parts list — copper, breakers, the boring unglamorous half of light.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_anete_01_substation",
+          "completesQuestChoiceId": "anete_supply_parts"
+        },
+        {
+          "choiceId": "anete_offer_shelter",
+          "text": "Offer her a place in the shelter; the grid can wait for a better season.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_anete_01_substation",
+          "completesQuestChoiceId": "anete_rescue"
+        },
+        {
+          "choiceId": "anete_drive_on",
+          "text": "Drive on. The list is reasonable and so is the road away from it.",
+          "moraleDelta": 0,
+          "guiltDelta": 2,
+          "completesQuestId": "quest_arc_anete_01_substation",
+          "completesQuestChoiceId": "anete_pass"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_anete_feeder",
+      "title": "One Feeder, Proving Itself",
+      "description": "The main bus is dressed and a single feeder runs daily, watched like a newborn. The rebuilders' paperwork has found her, and she treats it like weather. The project needs backing — goods, hands, or a reputation — and she will take it only as fast as it can be done safely.",
+      "category": "Discovery",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_anete_sarn",
+      "choices": [
+        {
+          "choiceId": "anete_back_the_rebuild",
+          "text": "Back the rebuild with the shelter's surplus and its reputation.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_anete_02_project",
+          "completesQuestChoiceId": "anete_back_the_project"
+        },
+        {
+          "choiceId": "anete_lend_hands",
+          "text": "Lend her your people for a season, taught to her standard.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_anete_02_project",
+          "completesQuestChoiceId": "anete_string_conductor"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_sava_camp",
+      "title": "The Meal, The Naming, The Silence",
+      "description": "The camp keeps its hours in the open: the pot, the names of the dead read aloud, and a silence you could set a watch by. On the ridge, small fires that are not the camp's. The elder meets you with a bowl and a plain question: stand, move, or walk on.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 0.9,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_elder_sava",
+      "choices": [
+        {
+          "choiceId": "sava_stand_the_fence",
+          "text": "Stand the fence with the camp through the bad nights.",
+          "moraleDelta": 4,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_sava_01_camp",
+          "completesQuestChoiceId": "sava_defend"
+        },
+        {
+          "choiceId": "sava_move_the_camp",
+          "text": "Help the camp move before the raiders pick their night.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_sava_01_camp",
+          "completesQuestChoiceId": "sava_evacuate"
+        },
+        {
+          "choiceId": "sava_walk_on",
+          "text": "Walk on. Your column cannot be spent on another camp's fence.",
+          "moraleDelta": 0,
+          "guiltDelta": 3,
+          "completesQuestId": "quest_arc_sava_01_camp",
+          "completesQuestChoiceId": "sava_decline"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_sava_schism",
+      "title": "Two Camps, One Rota",
+      "description": "The quarrel is about chores, which means it is about everything. Both camps quote the same elder, and the elder wants no throne and no doctrine. She will mediate once, properly, if somebody vouches. Shrines keeping her hours would rather have funding than opinions.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_elder_sava",
+      "choices": [
+        {
+          "choiceId": "sava_vouch_for_her",
+          "text": "Vouch for her as mediator when the camps send for a neutral voice.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_sava_02_schism",
+          "completesQuestChoiceId": "sava_vouch_mediator"
+        },
+        {
+          "choiceId": "sava_fund_the_hours",
+          "text": "Fund the shrine-rotas spreading in her name, quietly.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_sava_02_schism",
+          "completesQuestChoiceId": "sava_fund_shrines"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_rika_cache",
+      "title": "Once, Exactly Once",
+      "description": "She is at the rope line before you mark the cellar, which is how you know whose streets these are. The offer comes fast: split the floor clean, her count, her division — or she is gone down it alone and you can race her if you like, once.",
+      "category": "Trade",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.25,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 1.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_rika_dorn",
+      "choices": [
+        {
+          "choiceId": "rika_take_the_split",
+          "text": "Take the split. Work the floor together and divide it clean.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_rika_01_cache",
+          "completesQuestChoiceId": "rika_split"
+        },
+        {
+          "choiceId": "rika_take_it_all",
+          "text": "Take the whole cache. She was slower and she knows it.",
+          "moraleDelta": 2,
+          "guiltDelta": 3,
+          "completesQuestId": "quest_arc_rika_01_cache",
+          "completesQuestChoiceId": "rika_take"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_rika_trap",
+      "title": "Camp-Bound, Loud About It",
+      "description": "The ankle is propped on a crate and the voice carrying over the camp is hers, directing traffic she cannot join. The registry pages are in her coat, and half the camp has noticed the coat. The medic's visit is beyond her trading stock this week.",
+      "category": "Social",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_rika_dorn",
+      "choices": [
+        {
+          "choiceId": "rika_carry_her_out",
+          "text": "Carry her out and stand the camp watch until the ankle can carry her.",
+          "moraleDelta": 4,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_rika_02_trap",
+          "completesQuestChoiceId": "rika_rescue"
+        },
+        {
+          "choiceId": "rika_trade_for_pages",
+          "text": "Trade the medic's visit for the registry pages. Business is business.",
+          "moraleDelta": 1,
+          "guiltDelta": 4,
+          "completesQuestId": "quest_arc_rika_02_trap",
+          "completesQuestChoiceId": "rika_her_registry"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_liva_tower",
+      "title": "The Neat Hand, The Live Wire",
+      "description": "The mast hums on scavenged cells and the log book is kept like a ledger in a bank that still believes in deposits. The operator offers slots and copies, and asks only that whoever keys back identify honestly. The cells she needs are the kind that hold charge.",
+      "category": "Trade",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_liva_kern",
+      "choices": [
+        {
+          "choiceId": "liva_trade_cells",
+          "text": "Trade power cells for a standing relay slot and the signal copies.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_liva_01_tower",
+          "completesQuestChoiceId": "liva_cells"
+        },
+        {
+          "choiceId": "liva_send_it_properly",
+          "text": "Book a one-time slot and send a message properly, identified.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_liva_01_tower",
+          "completesQuestChoiceId": "liva_slot"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_liva_survey",
+      "title": "Two Valleys Out",
+      "description": "The survey team's fires are two valleys out and their map is good — hers is better. She keeps transmitting, on schedule, and has started copying the log in two hands, one to send, one to lose. The shelter knows first. The knowing is heavy.",
+      "category": "Social",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 1.25,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 1.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_liva_kern",
+      "choices": [
+        {
+          "choiceId": "liva_move_her_first",
+          "text": "Warn her and move her gear before the survey team arrives.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_liva_02_seizure",
+          "completesQuestChoiceId": "liva_warn"
+        },
+        {
+          "choiceId": "liva_sell_the_location",
+          "text": "Sell her location to the garrison and take the finder's fee.",
+          "moraleDelta": 0,
+          "guiltDelta": 4,
+          "completesQuestId": "quest_arc_liva_02_seizure",
+          "completesQuestChoiceId": "liva_bargain"
+        }
+      ]
     }
+
   ]
 }

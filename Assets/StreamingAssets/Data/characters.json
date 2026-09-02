@@ -1270,6 +1270,179 @@
         "forget_a_price"
       ],
       "signature_quote": "Everything moves or everything starves. I just decide what moves, and what it costs you later."
+    },
+    {
+      "id": "npc_ilze_kaar",
+      "display_name": "Dr. Ilze Kaar",
+      "profession": "Clinic Physician",
+      "bio": "Keeps an eight-bed clinic in the almshouse on supplies she inventories twice a day and never rounds in her own favor. She trains whoever the camp sends, whether or not they can read, because the alternative is untrained hands. Her ledger of who owes what for treatment is one column: alive, or not.",
+      "faction": "none",
+      "region": "the_verge",
+      "first_day": 15,
+      "location_id": "loc_st_brigids_almshouse",
+      "wants": [
+        "medical_kit",
+        "clean_water",
+        "hands_who_stay_a_week"
+      ],
+      "offers": [
+        "treatment_at_stated_odds",
+        "training_for_your_people",
+        "the_truth_about_a_prognosis"
+      ],
+      "will_not": [
+        "round_in_her_own_favor",
+        "abandon_admitted_patients",
+        "trade_on_the_sick"
+      ],
+      "signature_quote": "I will tell you the odds and then I will do the work anyway. Both of those are the medicine."
+    },
+    {
+      "id": "npc_marek_voln",
+      "display_name": "Marek Voln",
+      "profession": "Garrison Corporal",
+      "bio": "Holds a checkpoint at the edge of the grid and holds it well. Reads proclamations aloud to his squad before posting them, including the parts about him. He has begun writing objections in the margin of his own orders, dated, signed, and filed — a habit that will either end his career or his life.",
+      "faction": "faction_central_garrison",
+      "region": "the_grid",
+      "first_day": 20,
+      "location_id": "loc_garrison_checkpoint_gamma",
+      "wants": [
+        "ammunition_ledgers_reconciled",
+        "orders_worth_following"
+      ],
+      "offers": [
+        "checkpoint_passage",
+        "honest_escort",
+        "warning_before_sweeps"
+      ],
+      "will_not": [
+        "fire_on_the_queue",
+        "tear_up_his_own_written_objections"
+      ],
+      "signature_quote": "I wrote my objection in the margin. That is the lawful place for it. The lawful place is not the same as the safe one."
+    },
+    {
+      "id": "npc_lina",
+      "display_name": "Lina",
+      "profession": "Foundling",
+      "bio": "Seven, maybe eight. Was found keeping count of the queue at the baths because somebody had to and the adults had stopped. Hums when she is frightened and stops the moment she notices. Learns anything she is shown exactly once and then teaches it back wrong on purpose, to check you were paying attention.",
+      "faction": "none",
+      "region": "the_approach",
+      "first_day": 8,
+      "location_id": "loc_public_swimming_baths",
+      "wants": [
+        "to_be_useful_not_charitable",
+        "someone_who_answers_twice"
+      ],
+      "offers": [
+        "queue_order",
+        "small_hands_small_spaces",
+        "the_honest_version_of_events"
+      ],
+      "will_not": [
+        "say_thank_you_on_command",
+        "pretend_not_to_be_afraid"
+      ],
+      "signature_quote": "I counted. It is forty-one and you said forty. One of us is wrong and I showed my work."
+    },
+    {
+      "id": "npc_anete_sarn",
+      "display_name": "Anete Sarn",
+      "profession": "Grid Engineer",
+      "bio": "Came out to survey the substation and stayed because leaving it meant admitting nobody else would come. Talks about feeders and breakers the way other people talk about family. Her badges are six years expired and she has stopped mentioning it because everyone who would care is gone.",
+      "faction": "faction_rebuilders",
+      "region": "the_spine",
+      "first_day": 25,
+      "location_id": "location_substation_omega",
+      "wants": [
+        "copper_wire_10m_of_10m",
+        "breaker_parts",
+        "a_second_pair_of_certified_hands"
+      ],
+      "offers": [
+        "switching_orders_done_safely",
+        "load_calculations",
+        "the_difference_between_broken_and_not_yet"
+      ],
+      "will_not": [
+        "energize_an_ungrounded_line",
+        "sign_off_work_she_has_not_checked"
+      ],
+      "signature_quote": "The grid does not care that we are tired. It cares that the grounds are on. We put the grounds on, and then we are tired."
+    },
+    {
+      "id": "npc_elder_sava",
+      "display_name": "Elder Sava",
+      "profession": "Hearth Elder",
+      "bio": "Keeps a refuge camp's hours: the meal, the naming of the dead, the silence after. Preaches nothing that cannot be done before dark. The sign on her door says the ash remembers, which she will tell you is not doctrine, it is a maintenance instruction — sweep, or be swept.",
+      "faction": "cult_of_the_glow",
+      "region": "the_toll",
+      "first_day": 30,
+      "location_id": "loc_forward_roster_camp",
+      "wants": [
+        "grain_for_the_pot",
+        "names_of_the_dead_read_aloud"
+      ],
+      "offers": [
+        "a_bowl_and_a_verdict_free_evening",
+        "mediation_between_camps",
+        "funerals_done_properly"
+      ],
+      "will_not": [
+        "sell_the_naming_of_the_dead",
+        "preach_patience_to_the_starving"
+      ],
+      "signature_quote": "Hope is a chore like any other. We do it daily, and nobody gets excused from the rota."
+    },
+    {
+      "id": "npc_rika_dorn",
+      "display_name": "Rika Dorn",
+      "profession": "Cache Scavenger",
+      "bio": "Works the drowned streets alone and faster than is sensible. Knows which cellar floors are real and which are rumors with a drop shaft in them. Sells her silence as dear as her finds, and has been slow to learn the difference between a partner and a witness.",
+      "faction": "faction_scavenger_guild",
+      "region": "the_grid",
+      "first_day": 15,
+      "location_id": "loc_scavenger_camp",
+      "wants": [
+        "rope_in_good_condition",
+        "lights_that_do_not_spark"
+      ],
+      "offers": [
+        "cellar_floors_that_are_real",
+        "first_refusal_on_finds",
+        "silence_sold_separately"
+      ],
+      "will_not": [
+        "dive_a_flooded_rumor",
+        "name_her_cellars_to_a_stranger"
+      ],
+      "signature_quote": "Everything down there is already paid for. The only question left is who collects."
+    },
+    {
+      "id": "npc_liva_kern",
+      "display_name": "Liva Kern",
+      "profession": "Relay Operator",
+      "bio": "Keeps the relay mast alive on scavenged cells and inherited discipline, logging every contact in a hand too neat for the times. Believes somebody is still keeping count on the other end, and operates as if being counted matters. The log is the sermon.",
+      "faction": "none",
+      "region": "the_spine",
+      "first_day": 18,
+      "location_id": "loc_radio_relay_mast",
+      "wants": [
+        "cells_that_hold_charge",
+        "wire",
+        "someone_who_keys_back"
+      ],
+      "offers": [
+        "scheduled_relay_slots",
+        "signal_and_weather_copies",
+        "a_message_sent_properly"
+      ],
+      "will_not": [
+        "broadcast_unlogged",
+        "give_up_the_mast_without_a_log_entry"
+      ],
+      "signature_quote": "Someone may still be counting the stations that answer. I intend to be one of them, and on time."
     }
+
   ]
 }

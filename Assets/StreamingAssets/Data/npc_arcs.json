@@ -113,6 +113,649 @@
           "summary": "A two-wagon caravan factor short on medicine and axle parts after a bad crossing. She trades straight, prices fast, and mentions exactly once that she pays favors back with interest."
         }
       ]
+    },
+    {
+      "npc_id": "npc_ilze_kaar",
+      "display_name": "Dr. Ilze Kaar",
+      "flagship": true,
+      "recruitable": true,
+      "states": [
+        {
+          "id": "dead",
+          "kind": "terminal",
+          "precedence": 100,
+          "terminal": true,
+          "when_dead": true,
+          "role": "Deceased",
+          "summary": "The almshouse flies a sheet where her clinic sign was. The camp reads the names she left anyway, in her hand, because nobody can improve on it."
+        },
+        {
+          "id": "recruited",
+          "kind": "terminal",
+          "precedence": 60,
+          "terminal": true,
+          "when_recruited": true,
+          "role": "Shelter Physician",
+          "summary": "She re-built her clinic inside the shelter with the same two rules: stated odds, and the work gets done anyway. Your infirmary keeps patients she would have had to turn away."
+        },
+        {
+          "id": "late_clinic_kept",
+          "kind": "late",
+          "min_day": 70,
+          "precedence": 35,
+          "requires_choice": [
+            { "quest_id": "quest_arc_ilze_01_clinic", "choice_id": "ilze_supply" },
+            { "quest_id": "quest_arc_ilze_02_outbreak", "choice_id": "ilze_fortify" }
+          ],
+          "quest_id": "quest_arc_ilze_03_clinic",
+          "role": "Almshouse Clinic Keeper",
+          "location_id": "loc_st_brigids_almshouse",
+          "summary": "The clinic held. It trains more hands than it loses now, and the verge sends its sick to a door that has never once been shut at the appointed hour. Your people are treated at stated odds and the odds have improved."
+        },
+        {
+          "id": "late_ally",
+          "kind": "late",
+          "min_day": 70,
+          "precedence": 35,
+          "requires_choice": [
+            { "quest_id": "quest_arc_ilze_01_clinic", "choice_id": "ilze_supply" },
+            { "quest_id": "quest_arc_ilze_02_outbreak", "choice_id": "ilze_extract" }
+          ],
+          "role": "Coalition Waystation Medic",
+          "location_id": "loc_st_brigids_almshouse",
+          "summary": "Extracted before the outbreak took the building, she now runs a rotating waystation clinic with the coalition. Your expeditions are met by trained hands at two stops, and she bills the ledger, not the shelter."
+        },
+        {
+          "id": "late_clinic_lost",
+          "kind": "late",
+          "min_day": 70,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_ilze_01_clinic", "choice_id": "ilze_pass" }
+          ],
+          "role": "Withdrawn Physician",
+          "location_id": "loc_st_brigids_almshouse",
+          "summary": "The clinic outlived her supplies and then her patience. She still answers the door, but the training stopped, and the camp's sick list is a season longer than it was. The almshouse keeps her name off the roster of the lost, at her own instruction."
+        },
+        {
+          "id": "evolved_supplied",
+          "kind": "evolved",
+          "min_day": 45,
+          "max_day": 69,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_ilze_01_clinic", "choice_id": "ilze_supply" }
+          ],
+          "quest_id": "quest_arc_ilze_02_outbreak",
+          "role": "Clinic Under Pressure",
+          "location_id": "loc_st_brigids_almshouse",
+          "summary": "Your supplies bought the clinic a season. The beds are full of a fever she can name but not stop, and she has started training the recovering to carry what she cannot. She will not ask you to come. She has written to you anyway."
+        },
+        {
+          "id": "evolved_stranger",
+          "kind": "evolved",
+          "min_day": 45,
+          "max_day": 69,
+          "precedence": 15,
+          "quest_id": "quest_arc_ilze_02_outbreak",
+          "role": "Clinic Physician",
+          "location_id": "loc_st_brigids_almshouse",
+          "summary": "The fever found the almshouse. She works sixteen-hour shifts at stated odds and does not say the word triage where the waiting can hear it."
+        },
+        {
+          "id": "initial",
+          "kind": "initial",
+          "min_day": 15,
+          "max_day": 44,
+          "precedence": 10,
+          "quest_id": "quest_arc_ilze_01_clinic",
+          "role": "Almshouse Physician",
+          "location_id": "loc_st_brigids_almshouse",
+          "summary": "Eight beds, dwindling shelves, and a standard she refuses to lower. She shows you the inventory before she asks for anything, which is how you know what she is not asking for."
+        }
+      ]
+    },
+    {
+      "npc_id": "npc_marek_voln",
+      "display_name": "Marek Voln",
+      "flagship": true,
+      "recruitable": true,
+      "states": [
+        {
+          "id": "dead",
+          "kind": "terminal",
+          "precedence": 100,
+          "terminal": true,
+          "when_dead": true,
+          "role": "Deceased",
+          "summary": "His filed objections outlived him. Somebody keeps them. Nobody has told you who."
+        },
+        {
+          "id": "recruited",
+          "kind": "terminal",
+          "precedence": 60,
+          "terminal": true,
+          "when_recruited": true,
+          "role": "Shelter Watch Sergeant",
+          "summary": "He drills your watch the garrison way: posted orders, logged refusals, no exceptions and no favors. The garrison considers him their problem. Your nights disagree."
+        },
+        {
+          "id": "late_ally_informant",
+          "kind": "late",
+          "min_day": 75,
+          "precedence": 40,
+          "requires_choice": [
+            { "quest_id": "quest_arc_marek_01_patrol", "choice_id": "marek_cooperative" },
+            { "quest_id": "quest_arc_marek_02_deserter", "choice_id": "marek_provisions" }
+          ],
+          "quest_id": "quest_arc_marek_03_watch",
+          "role": "Outside Ally",
+          "location_id": "loc_grange_hall",
+          "summary": "Escaped with your help, he sends the shelter word before every sweep: routes, timing, the mood of the command. The margins of his messages still carry dated objections, now about the men who hunted him."
+        },
+        {
+          "id": "late_turned_in",
+          "kind": "late",
+          "min_day": 75,
+          "precedence": 40,
+          "requires_choice": [
+            { "quest_id": "quest_arc_marek_02_deserter", "choice_id": "marek_turn_in" }
+          ],
+          "role": "Garrison Example",
+          "location_id": "loc_garrison_checkpoint_gamma",
+          "summary": "The garrison paid what it promised and posted the case where procedure requires. Your shelter's passes are honored a season early and a shade too quickly. The queue has noticed which door you came through."
+        },
+        {
+          "id": "late_hardened",
+          "kind": "late",
+          "min_day": 75,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_marek_01_patrol", "choice_id": "marek_defiant" }
+          ],
+          "role": "Hardened Picket",
+          "location_id": "loc_garrison_checkpoint_gamma",
+          "summary": "He kept his post and his objections, and the objections have stopped being dated. The checkpoint honors your papers and nothing else about you."
+        },
+        {
+          "id": "evolved_hunted",
+          "kind": "evolved",
+          "min_day": 50,
+          "max_day": 74,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_marek_01_patrol", "choice_id": "marek_cooperative" }
+          ],
+          "quest_id": "quest_arc_marek_02_deserter",
+          "role": "Deserter on the Run",
+          "location_id": "loc_grange_hall",
+          "summary": "The margin notes finally exceeded the order. He is sheltering where the sweeps do not look first, and he sent you his field kit for safekeeping — which is deserter for please, and thank you, and I am sorry."
+        },
+        {
+          "id": "evolved_stranger",
+          "kind": "evolved",
+          "min_day": 50,
+          "max_day": 74,
+          "precedence": 15,
+          "quest_id": "quest_arc_marek_02_deserter",
+          "role": "Checkpoint Corporal",
+          "location_id": "loc_garrison_checkpoint_gamma",
+          "summary": "The checkpoint changed hands twice in a season and he is still there, which in the garrison is a kind of survival. Passage is honored to the letter."
+        },
+        {
+          "id": "initial",
+          "kind": "initial",
+          "min_day": 20,
+          "max_day": 49,
+          "precedence": 10,
+          "quest_id": "quest_arc_marek_01_patrol",
+          "role": "Checkpoint Corporal",
+          "location_id": "loc_garrison_checkpoint_gamma",
+          "summary": "A garrison corporal who runs his checkpoint by the book and keeps the book where petitioners can see it. Passage is a transaction. The book is a promise."
+        }
+      ]
+    },
+    {
+      "npc_id": "npc_lina",
+      "display_name": "Lina",
+      "flagship": true,
+      "recruitable": true,
+      "states": [
+        {
+          "id": "dead",
+          "kind": "terminal",
+          "precedence": 100,
+          "terminal": true,
+          "when_dead": true,
+          "role": "Deceased",
+          "summary": "Her counting book is kept with the shelter records, in her hand, finished to the last page. Nobody has been able to make themselves close the cover."
+        },
+        {
+          "id": "late_apprentice",
+          "kind": "late",
+          "min_day": 100,
+          "precedence": 50,
+          "when_recruited": true,
+          "requires_choice": [
+            { "quest_id": "quest_arc_lina_01_found", "choice_id": "lina_take_in" }
+          ],
+          "quest_id": "quest_arc_lina_03_apprentice",
+          "role": "Medic's Apprentice",
+          "summary": "She can dress a wound, read a dose aloud, and catch an error before it lands — the last one better than the first two. She teaches the younger ones the counting the way it was taught to her: once, properly, and checked."
+        },
+        {
+          "id": "recruited",
+          "kind": "terminal",
+          "precedence": 60,
+          "terminal": true,
+          "when_recruited": true,
+          "role": "Shelter Foundling",
+          "summary": "She keeps count of the shelter stores, the queue, and the days since anybody was lost. She hums less often than she did at the baths, and checks her work twice before showing anyone."
+        },
+        {
+          "id": "evolved_lessons",
+          "kind": "evolved",
+          "min_day": 40,
+          "max_day": 99,
+          "precedence": 20,
+          "when_recruited": true,
+          "quest_id": "quest_arc_lina_02_lessons",
+          "role": "Shelter Pupil",
+          "summary": "She sits the lessons the shelter will give and invents the ones it will not. She has begun correcting the arithmetic of people twice her age, who for some reason keep asking her to."
+        },
+        {
+          "id": "evolved_left_supplies",
+          "kind": "evolved",
+          "min_day": 40,
+          "max_day": 99,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_lina_01_found", "choice_id": "lina_leave_supplies" }
+          ],
+          "role": "Baths Regular",
+          "location_id": "loc_public_swimming_baths",
+          "summary": "Still at the baths, still counting, kept alive in the way of the queue: everyone's supplies and no one's child. She has stopped asking shelter columns whether they are full."
+        },
+        {
+          "id": "initial",
+          "kind": "initial",
+          "min_day": 8,
+          "max_day": 39,
+          "precedence": 10,
+          "quest_id": "quest_arc_lina_01_found",
+          "role": "Foundling at the Baths",
+          "location_id": "loc_public_swimming_baths",
+          "summary": "A child keeping order in a queue that has forgotten why. She is not lost, exactly. Nobody has made her count of the situation wrong yet."
+        }
+      ]
+    },
+    {
+      "npc_id": "npc_anete_sarn",
+      "display_name": "Anete Sarn",
+      "flagship": true,
+      "recruitable": true,
+      "states": [
+        {
+          "id": "dead",
+          "kind": "terminal",
+          "precedence": 100,
+          "terminal": true,
+          "when_dead": true,
+          "role": "Deceased",
+          "summary": "The substation grounds are on, tagged with her badge number and the date. The rebuilders check them on a schedule she wrote and did not sign."
+        },
+        {
+          "id": "recruited",
+          "kind": "terminal",
+          "precedence": 60,
+          "terminal": true,
+          "when_recruited": true,
+          "role": "Shelter Engineer",
+          "summary": "Your generator has never run so boringly. She has opinions about your load schedule and a certification that expired in a world that ended, and both are correct."
+        },
+        {
+          "id": "late_project_leader",
+          "kind": "late",
+          "min_day": 100,
+          "precedence": 40,
+          "requires_choice": [
+            { "quest_id": "quest_arc_anete_01_substation", "choice_id": "anete_supply_parts" }
+          ],
+          "requires_completed": ["quest_arc_anete_02_project"],
+          "quest_id": "quest_arc_anete_03_grid",
+          "role": "Regional Grid Lead",
+          "location_id": "location_substation_omega",
+          "summary": "The rebuilders gave her the region and she gave it lines that stay up. Two waystation feeders run again on switching orders done safely. Caravans plan around her schedule now, which is the only kind of monument she would accept."
+        },
+        {
+          "id": "late_deteriorated",
+          "kind": "late",
+          "min_day": 100,
+          "precedence": 20,
+          "requires_choice": [
+            { "quest_id": "quest_arc_anete_01_substation", "choice_id": "anete_pass" }
+          ],
+          "role": "Vacated Post",
+          "location_id": "location_substation_omega",
+          "summary": "Another faction's colors are on the substation fence and the switching orders are being done unsafely. The lights out here come and go on a schedule nobody publishes."
+        },
+        {
+          "id": "evolved_supplied",
+          "kind": "evolved",
+          "min_day": 55,
+          "max_day": 99,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_anete_01_substation", "choice_id": "anete_supply_parts" }
+          ],
+          "quest_id": "quest_arc_anete_02_project",
+          "role": "Substation Rebuilder",
+          "location_id": "location_substation_omega",
+          "summary": "With your parts she has the main bus dressed and one feeder proving itself daily. The rebuilders have noticed, which means paperwork, which she considers the price of copper."
+        },
+        {
+          "id": "evolved_stranger",
+          "kind": "evolved",
+          "min_day": 55,
+          "max_day": 99,
+          "precedence": 15,
+          "quest_id": "quest_arc_anete_02_project",
+          "role": "Substation Surveyor",
+          "location_id": "location_substation_omega",
+          "summary": "She is still out there, keeping the compound secure and the grounds checked, running a grid that has no customers yet."
+        },
+        {
+          "id": "initial",
+          "kind": "initial",
+          "min_day": 25,
+          "max_day": 54,
+          "precedence": 10,
+          "quest_id": "quest_arc_anete_01_substation",
+          "role": "Stranded Grid Engineer",
+          "location_id": "location_substation_omega",
+          "summary": "A grid engineer stranded at a live substation with working grounds and no copper. She offers you switching orders and a load calculation before she asks for a single part."
+        }
+      ]
+    },
+    {
+      "npc_id": "npc_elder_sava",
+      "display_name": "Elder Sava",
+      "flagship": true,
+      "recruitable": false,
+      "states": [
+        {
+          "id": "dead",
+          "kind": "terminal",
+          "precedence": 100,
+          "terminal": true,
+          "when_dead": true,
+          "role": "Deceased",
+          "summary": "The camps buried her by her own book: the meal, the naming, the silence after. Three camps kept the hour at once, which had not happened before and has not since."
+        },
+        {
+          "id": "late_mediator",
+          "kind": "late",
+          "min_day": 110,
+          "precedence": 40,
+          "requires_choice": [
+            { "quest_id": "quest_arc_sava_01_camp", "choice_id": "sava_defend" }
+          ],
+          "requires_completed": ["quest_arc_sava_02_schism"],
+          "quest_id": "quest_arc_sava_03_hours",
+          "role": "Mediator of the Camps",
+          "location_id": "loc_forward_roster_camp",
+          "summary": "When the camps quarrel now, they send for her before they send for anyone with a rifle. She has turned defending a camp into the argued position that camps are worth defending, and both sides quote her without knowing it."
+        },
+        {
+          "id": "late_movement_leader",
+          "kind": "late",
+          "min_day": 110,
+          "precedence": 40,
+          "requires_choice": [
+            { "quest_id": "quest_arc_sava_01_camp", "choice_id": "sava_evacuate" }
+          ],
+          "requires_completed": ["quest_arc_sava_02_schism"],
+          "role": "Ash Rota Keeper",
+          "location_id": "loc_ash_sign_shrine",
+          "summary": "The evacuation became a teaching and the teaching became a rota: sweep, share, name the dead. Shrines keep her hours in four regions. She finds the word movement embarrassing and the word chore accurate."
+        },
+        {
+          "id": "late_withdrawn",
+          "kind": "late",
+          "min_day": 110,
+          "precedence": 20,
+          "requires_choice": [
+            { "quest_id": "quest_arc_sava_01_camp", "choice_id": "sava_decline" }
+          ],
+          "role": "Withdrawn Elder",
+          "location_id": "loc_forward_roster_camp",
+          "summary": "She keeps her own hours now, one bowl, one name a day. The camp she would not spend you on still stands, and she has stopped saying so out loud."
+        },
+        {
+          "id": "evolved_pressured",
+          "kind": "evolved",
+          "min_day": 65,
+          "max_day": 109,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_sava_01_camp", "choice_id": "sava_defend" }
+          ],
+          "quest_id": "quest_arc_sava_02_schism",
+          "role": "Camp Under Threat",
+          "location_id": "loc_forward_roster_camp",
+          "summary": "The camp she organized holds because she rationed the panic first and the grain second. Raiders test the fence; the pot stays on. She has begun teaching others the rota in case the fence fails on a day she is busy."
+        },
+        {
+          "id": "evolved_stranger",
+          "kind": "evolved",
+          "min_day": 65,
+          "max_day": 109,
+          "precedence": 15,
+          "quest_id": "quest_arc_sava_02_schism",
+          "role": "Camp Elder",
+          "location_id": "loc_forward_roster_camp",
+          "summary": "The camp keeps its hours: meal, naming, silence. There is soup if you work and a verdict-free evening if you do not."
+        },
+        {
+          "id": "initial",
+          "kind": "initial",
+          "min_day": 30,
+          "max_day": 64,
+          "precedence": 10,
+          "quest_id": "quest_arc_sava_01_camp",
+          "role": "Refuge Camp Elder",
+          "location_id": "loc_forward_roster_camp",
+          "summary": "An elder who runs a refugee camp like a work rota with prayers attached. The rota is the sermon. The sermon is mostly sweeping."
+        }
+      ]
+    },
+    {
+      "npc_id": "npc_rika_dorn",
+      "display_name": "Rika Dorn",
+      "flagship": true,
+      "recruitable": true,
+      "states": [
+        {
+          "id": "dead",
+          "kind": "terminal",
+          "precedence": 100,
+          "terminal": true,
+          "when_dead": true,
+          "role": "Deceased",
+          "summary": "The guild posted her cellars as sealed, which among scavengers is a headstone. The floors she called real have taken two more people who did not believe the posting."
+        },
+        {
+          "id": "recruited",
+          "kind": "terminal",
+          "precedence": 60,
+          "terminal": true,
+          "when_recruited": true,
+          "role": "Shelter Scavenging Lead",
+          "summary": "Your salvage returns doubled and your rope budget tripled. She has mapped your shelter's crawlspaces against a fire, a flood, and a siege, and Sleeps badly until all three are answered."
+        },
+        {
+          "id": "late_guild_ally",
+          "kind": "late",
+          "min_day": 75,
+          "precedence": 35,
+          "requires_choice": [
+            { "quest_id": "quest_arc_rika_02_trap", "choice_id": "rika_rescue" }
+          ],
+          "quest_id": "quest_arc_rika_03_guild",
+          "role": "Guild Route Broker",
+          "location_id": "loc_scavenger_camp",
+          "summary": "The guild gave her the cellar registry and she gave the guild schedules. Your expeditions get first refusal on finds and floors that are real. The debt is entered, managed, and never once mentioned."
+        },
+        {
+          "id": "late_rival",
+          "kind": "late",
+          "min_day": 75,
+          "precedence": 35,
+          "requires_choice": [
+            { "quest_id": "quest_arc_rika_01_cache", "choice_id": "rika_take" }
+          ],
+          "role": "Guild Rival",
+          "location_id": "loc_scavenger_camp",
+          "summary": "She bought her silence back with your name on it. The guild works the sites ahead of you now, politely, completely, and always by the book — her book."
+        },
+        {
+          "id": "evolved_injured",
+          "kind": "evolved",
+          "min_day": 40,
+          "max_day": 74,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_rika_01_cache", "choice_id": "rika_split" }
+          ],
+          "quest_id": "quest_arc_rika_02_trap",
+          "role": "Laid Up at the Camp",
+          "location_id": "loc_scavenger_camp",
+          "summary": "A cellar floor that was a rumor took her ankle. She is camp-bound, loud about it, and has started dictating her registry to whoever sits still long enough, in case the ankle is the cheap thing she lost."
+        },
+        {
+          "id": "evolved_stranger",
+          "kind": "evolved",
+          "min_day": 40,
+          "max_day": 74,
+          "precedence": 15,
+          "quest_id": "quest_arc_rika_02_trap",
+          "role": "Solo Scavenger",
+          "location_id": "loc_scavenger_camp",
+          "summary": "She works the drowned streets alone, which is the whole plan and most of the risk. Rope for finds, silence extra."
+        },
+        {
+          "id": "initial",
+          "kind": "initial",
+          "min_day": 15,
+          "max_day": 39,
+          "precedence": 10,
+          "quest_id": "quest_arc_rika_01_cache",
+          "role": "Cache Scavenger",
+          "location_id": "loc_scavenger_camp",
+          "summary": "A scavenger who knows which cellar floors are real and is willing to say so for a price. She is faster than you and knows it, and offers to split a find rather than race you for it, once."
+        }
+      ]
+    },
+    {
+      "npc_id": "npc_liva_kern",
+      "display_name": "Liva Kern",
+      "flagship": true,
+      "recruitable": true,
+      "states": [
+        {
+          "id": "dead",
+          "kind": "terminal",
+          "precedence": 100,
+          "terminal": true,
+          "when_dead": true,
+          "role": "Deceased",
+          "summary": "The mast still stands. The log ends mid-entry, on schedule, in her neat hand, and somebody out there keeps trying to raise the station that answered on time."
+        },
+        {
+          "id": "recruited",
+          "kind": "terminal",
+          "precedence": 60,
+          "terminal": true,
+          "when_recruited": true,
+          "role": "Shelter Signals Keeper",
+          "summary": "The shelter has a scheduled listening watch now, a logged band calendar, and messages that go out properly. She is teaching two of yours the discipline, which she says is the whole machine; the mast is just wire."
+        },
+        {
+          "id": "late_intel_asset",
+          "kind": "late",
+          "min_day": 95,
+          "precedence": 40,
+          "requires_choice": [
+            { "quest_id": "quest_arc_liva_02_seizure", "choice_id": "liva_warn" }
+          ],
+          "quest_id": "quest_arc_liva_03_signal",
+          "role": "Coalition Signals Contact",
+          "location_id": "loc_summit_relay",
+          "summary": "Moved before the seizure reached her, she keys from a new site under a flag that leaves her alone. Your shelter gets the weather copies and, unasked and unlogged, the patrol schedules of people who are not your friends."
+        },
+        {
+          "id": "late_broadcaster",
+          "kind": "late",
+          "min_day": 95,
+          "precedence": 35,
+          "requires_choice": [
+            { "quest_id": "quest_arc_liva_01_tower", "choice_id": "liva_cells" }
+          ],
+          "requires_completed": ["quest_arc_liva_02_seizure"],
+          "role": "Independent Broadcaster",
+          "location_id": "loc_radio_relay_mast",
+          "summary": "She kept the mast and the discipline and added a band of her own: the naming of the moved-on camps, read properly, at a fixed hour. People plan around her schedule now. She logs every one of them."
+        },
+        {
+          "id": "late_sold",
+          "kind": "late",
+          "min_day": 95,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_liva_02_seizure", "choice_id": "liva_bargain" }
+          ],
+          "role": "Seized Station",
+          "location_id": "loc_radio_relay_mast",
+          "summary": "The garrison got the mast and its operator, and your shelter got the bounty. The station answers on time again. The hand on the key is neater than it used to be, and the log has a second reader."
+        },
+        {
+          "id": "evolved_threatened",
+          "kind": "evolved",
+          "min_day": 50,
+          "max_day": 94,
+          "precedence": 25,
+          "requires_choice": [
+            { "quest_id": "quest_arc_liva_01_tower", "choice_id": "liva_cells" }
+          ],
+          "quest_id": "quest_arc_liva_02_seizure",
+          "role": "Watched Operator",
+          "location_id": "loc_radio_relay_mast",
+          "summary": "The faction that maps towers has mapped hers. She keeps transmitting — on schedule, logged — and has started ending each shift by copying the log in two hands, one to send, one to lose."
+        },
+        {
+          "id": "evolved_stranger",
+          "kind": "evolved",
+          "min_day": 50,
+          "max_day": 94,
+          "precedence": 15,
+          "quest_id": "quest_arc_liva_02_seizure",
+          "role": "Relay Operator",
+          "location_id": "loc_radio_relay_mast",
+          "summary": "The mast lives on scavenged cells and inherited discipline. The station answers on schedule and logs everything, including you."
+        },
+        {
+          "id": "initial",
+          "kind": "initial",
+          "min_day": 18,
+          "max_day": 49,
+          "precedence": 10,
+          "quest_id": "quest_arc_liva_01_tower",
+          "role": "Lone Relay Operator",
+          "location_id": "loc_radio_relay_mast",
+          "summary": "A relay operator keeping a dead network's discipline on live cells. She offers scheduled slots and copies of her signal logs, and asks only that whoever keys back identify honestly."
+        }
+      ]
     }
+
   ]
 }
