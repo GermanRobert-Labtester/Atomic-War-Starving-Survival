@@ -755,7 +755,1176 @@
           "summary": "A relay operator keeping a dead network's discipline on live cells. She offers scheduled slots and copies of her signal logs, and asks only that whoever keys back identify honestly."
         }
       ]
+    },
+  {
+        "npc_id": "npc_oskar_ruut",
+        "display_name": "Oskar Ruut",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 22,
+                "max_day": 52,
+                "precedence": 10,
+                "role": "Caravan Debtor",
+                "summary": "Half a wagon and a whole debt, both priced daily. He will show you the contract and the buyout figure in the same breath, and the difference between them is his life's work.",
+                "quest_id": "quest_arc_oskar_01_debt"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 30,
+                "max_day": 90,
+                "precedence": 20,
+                "role": "Working the Buyout",
+                "summary": "Your advance moved the figure within reach. He works the caravan lanes like a man counting steps out of a hole, and quotes your rate first when he quotes anyone.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_oskar_01_debt",
+                        "choice_id": "oskar_settle"
+                    }
+                ],
+                "quest_id": "quest_arc_oskar_01_debt"
+            },
+            {
+                "id": "late_independent",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Independent Caravan Organizer",
+                "summary": "The Underwrite stamped the buyout and he framed the stamp. His wagons run the crossing roads on schedules he owns outright, and your cargo moves at the founding-member rate forever.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_oskar_01_debt",
+                        "choice_id": "oskar_settle"
+                    }
+                ]
+            },
+            {
+                "id": "late_coerced",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Coerced Intermediary",
+                "summary": "You pressed the debt and bought his routes cheap. He carries what the credit office needs carried now, and his copies of every contract are kept somewhere you will never be shown.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_oskar_01_debt",
+                        "choice_id": "oskar_press"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Crossing Factor",
+                "summary": "The debt walks with him at its own pace. He negotiates first and everything else second, and neither habit has killed him yet."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_tomas_geret",
+        "display_name": "Tomas Geret",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 26,
+                "max_day": 54,
+                "precedence": 10,
+                "role": "Overflow Clinic Medic",
+                "summary": "The dentist's row chairs are pulled out for cots, and the garrison audit asks different questions than the patients do. He treats first and reconciles later, in the wrong order and the only order that works.",
+                "quest_id": "quest_arc_tomas_01_rounding"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 34,
+                "max_day": 92,
+                "precedence": 20,
+                "role": "Ledger Season",
+                "summary": "The audit is coming and the third ledger is still unexplained. Your word has started to matter in rooms he cannot enter, and he has started writing down what he owes you, which for him is a form of hope.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_tomas_01_rounding",
+                        "choice_id": "tomas_vouch"
+                    }
+                ],
+                "quest_id": "quest_arc_tomas_01_rounding"
+            },
+            {
+                "id": "late_cleared",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "District Clinic Keeper",
+                "summary": "Vouched, audited, and still rounding for the living. The overflow clinic trains medics for three neighborhoods now, and the garrison has learned which of its forms he answers fast.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_tomas_01_rounding",
+                        "choice_id": "tomas_vouch"
+                    }
+                ]
+            },
+            {
+                "id": "late_accused",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Accused Thief",
+                "summary": "Your testimony made the discrepancy official. The charges fit the entries and miss the mornings, and the overflow queue now waits outside a clinic with nobody willing to sign for the stock.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_tomas_01_rounding",
+                        "choice_id": "tomas_testify"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Field Medic",
+                "summary": "He treats first and reconciles later, and the reconciling is beginning to keep him up at night."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_joren_malk",
+        "display_name": "Joren Malk",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 32,
+                "max_day": 60,
+                "precedence": 10,
+                "role": "Batching Plant Engineer",
+                "summary": "The plant restart is real and so is the checklist, and the checklist does not care what happened to the night shift. He offers schedules instead of apologies, and the schedules are good.",
+                "quest_id": "quest_arc_joren_01_plant"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 40,
+                "max_day": 98,
+                "precedence": 20,
+                "role": "Staffing Season",
+                "summary": "Your crews passed his checklists, which is more than the last three batches of volunteers managed. He has begun saying the word audit without flinching, which from him is a season changing.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_joren_01_plant",
+                        "choice_id": "joren_crews"
+                    }
+                ],
+                "quest_id": "quest_arc_joren_01_plant"
+            },
+            {
+                "id": "late_useful",
+                "kind": "late",
+                "min_day": 65,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Works Manager",
+                "summary": "The batching plant runs to a schedule that holds because the crews were trained and the concrete was tested. Your shelter draws from his supply lines at works-manager rates. The gantt chart has your name inked, not penciled.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_joren_01_plant",
+                        "choice_id": "joren_crews"
+                    }
+                ]
+            },
+            {
+                "id": "late_isolated",
+                "kind": "late",
+                "min_day": 65,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Isolated Technocrat",
+                "summary": "He restarted the line with skeleton crews and stamped assessments that were technically true. The plant makes the strongest concrete in the region, for a workforce that eats alone.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_joren_01_plant",
+                        "choice_id": "joren_refuse"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 65,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Industrial Engineer",
+                "summary": "The schedule is honest. Ask him about the staffing another time."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_pavel_eren",
+        "display_name": "Pavel Eren",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 18,
+                "max_day": 46,
+                "precedence": 10,
+                "role": "Route Scavenger",
+                "summary": "He sells route copies with the ink still drying and corrects his own map in front of you, which is either honesty or theater and is probably both.",
+                "quest_id": "quest_arc_pavel_01_map"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 26,
+                "max_day": 84,
+                "precedence": 20,
+                "role": "Map Season",
+                "summary": "The roll he sold you is already better than the one he sells strangers. He has started walking the toll roads with your corrections folded into his copy, and asking, at intervals, whether your people walked anything he should know about.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_pavel_01_map",
+                        "choice_id": "pavel_buy_map"
+                    }
+                ],
+                "quest_id": "quest_arc_pavel_01_map"
+            },
+            {
+                "id": "late_trusted",
+                "kind": "late",
+                "min_day": 55,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Route Broker",
+                "summary": "His map of the toll country is the map, and your shelter holds one of eleven annotated copies. The eastern road entry has never once needed a correction, and he has never once said why.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_pavel_01_map",
+                        "choice_id": "pavel_buy_map"
+                    }
+                ]
+            },
+            {
+                "id": "late_missing",
+                "kind": "late",
+                "min_day": 55,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Missing on the Eastern Road",
+                "summary": "He went out to re-walk the one route he never explained and has not come back by any of his own schedules. The map copies keep circulating. His copy has not surfaced.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_pavel_01_map",
+                        "choice_id": "pavel_refuse_map"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 55,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Route Scavenger",
+                "summary": "He sells what he has walked and corrects the roll in public. The eastern road entry is the best thing in it and the only thing he will not discuss."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_sena_aris",
+        "display_name": "Sena Aris",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 28,
+                "max_day": 56,
+                "precedence": 10,
+                "role": "Corridor Patrol",
+                "summary": "The crossing log is kept in full view and countersigned by nobody, which is the problem she will describe to you in complete sentences while the queue watches its turn accumulate.",
+                "quest_id": "quest_arc_sena_01_log"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 36,
+                "max_day": 94,
+                "precedence": 20,
+                "role": "Countersigned",
+                "summary": "Your mark is in the log now, on the page where the incident reports and the acknowledged reports diverge. She has stopped walking the corridor alone, which is not the same as safe.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_sena_01_log",
+                        "choice_id": "sena_countersign"
+                    }
+                ],
+                "quest_id": "quest_arc_sena_01_log"
+            },
+            {
+                "id": "late_reformist",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Reformist Watch Officer",
+                "summary": "The log became the standard: two signatures, full view, no acknowledged-only incidents. Command tolerates her because the bridge works. Your column crosses at the hour her watch owns, and the log says so.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_sena_01_log",
+                        "choice_id": "sena_countersign"
+                    }
+                ]
+            },
+            {
+                "id": "late_steadfast",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Steadfast Patrol",
+                "summary": "You kept clear of the argument and she kept the log anyway, alone. The corridor is orderly and the crossings are honest and the reports still come back in two versions. She initials both.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_sena_01_log",
+                        "choice_id": "sena_stay_clear"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Corridor Patrol",
+                "summary": "The crossing log is kept in full view, countersigned by nobody. Yet."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_dalia_marun",
+        "display_name": "Dalia Marun",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 33,
+                "max_day": 62,
+                "precedence": 10,
+                "role": "Seed Keeper",
+                "summary": "The annex roof is sound for another season, the lots are tested, and the private tin is not for discussion. She will show you germination rates before she shows you the door.",
+                "quest_id": "quest_arc_dalia_01_annex"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 42,
+                "max_day": 100,
+                "precedence": 20,
+                "role": "Roof Season",
+                "summary": "Your timber is over the annex and the lots are re-sacked. She has started cutting from the private tin for your column's planters, at the same unchanging rate, which is how she says things.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_dalia_01_annex",
+                        "choice_id": "dalia_haul_roof"
+                    }
+                ],
+                "quest_id": "quest_arc_dalia_01_annex"
+            },
+            {
+                "id": "late_kept",
+                "kind": "late",
+                "min_day": 65,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Regional Seed Keeper",
+                "summary": "The freehold failed; the annex did not. Half the region's viable planting now traces to lots she held through the bad season, and your shelter's fields are sown from her tested stock under her unamended schedule.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_dalia_01_annex",
+                        "choice_id": "dalia_haul_roof"
+                    }
+                ]
+            },
+            {
+                "id": "late_lost",
+                "kind": "late",
+                "min_day": 65,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Failed Annex",
+                "summary": "She waited for a better season to move the lots and the roof disagreed with the timetable. The seed library is a wet inventory and a woman who will show you the germination tests anyway, as a lesson.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_dalia_01_annex",
+                        "choice_id": "dalia_wait"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 65,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Seed Keeper",
+                "summary": "Tested lots, sound schedule, roof good for another season. The private tin is not for discussion."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_anton_renn",
+        "display_name": "Anton Renn",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 30,
+                "max_day": 58,
+                "precedence": 10,
+                "role": "Allotment Stockman",
+                "summary": "The herd ledger and the herd disagree by exactly the animals a hard winter eats, and the well has been dosed since before anyone asked. He is not a liar. Ask him anything except the word that starts with c.",
+                "quest_id": "quest_arc_anton_01_herd"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 38,
+                "max_day": 96,
+                "precedence": 20,
+                "role": "Quiet Arithmetic",
+                "summary": "You did the cull arithmetic with him at dawn, out loud, both counting. The milk is thinner and the herd is honest now, and he has started saying the word himself, quietly, to the animals, like an apology.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_anton_01_herd",
+                        "choice_id": "anton_cull_quietly"
+                    }
+                ],
+                "quest_id": "quest_arc_anton_01_herd"
+            },
+            {
+                "id": "late_honest",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Trusted Stock Specialist",
+                "summary": "The allotment's herd is small and true, and its stock is the only breeding line three settlements will take unwitnessed. He doses the well on schedule and teaches cull arithmetic at dawn to anyone who asks.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_anton_01_herd",
+                        "choice_id": "anton_cull_quietly"
+                    }
+                ]
+            },
+            {
+                "id": "late_blamed",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Blamed Stockman",
+                "summary": "The sickness found the herd and the ledger found the gap, in that order, in public. He still works the silo. He no longer drinks last, which among allotment people is a verdict.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_anton_01_herd",
+                        "choice_id": "anton_say_nothing"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 60,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Allotment Stockman",
+                "summary": "The herd is fine. The well is dosed. Ask him what you actually need and let us see what the fine herd can afford."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_emil_soren",
+        "display_name": "Emil Soren",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 45,
+                "max_day": 74,
+                "precedence": 10,
+                "role": "Signals Technician",
+                "summary": "Four notebooks of repeats and a standing offer: he will refute every published solution in writing, including his own, before he lets you fund a fifth notebook.",
+                "quest_id": "quest_arc_emil_01_numbers"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 52,
+                "max_day": 104,
+                "precedence": 20,
+                "role": "Honest Patronage",
+                "summary": "You fund the notebooks with the warning attached, which no patron before you ever accepted. The repeats have a structure he will not name yet, in case naming it un-named it.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_emil_01_numbers",
+                        "choice_id": "emil_fund_notebooks"
+                    }
+                ],
+                "quest_id": "quest_arc_emil_01_numbers"
+            },
+            {
+                "id": "late_breakthrough",
+                "kind": "late",
+                "min_day": 66,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Signals Analyst",
+                "summary": "The structure held. The repeat interval resolves to a station keeping time for someone, and the analysis in your shelter's name is the first publication he has signed without a disclaimer in the margins.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_emil_01_numbers",
+                        "choice_id": "emil_fund_notebooks"
+                    }
+                ]
+            },
+            {
+                "id": "late_silent",
+                "kind": "late",
+                "min_day": 66,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Off the Air",
+                "summary": "You asked for the patron money back and he returned it to the hour, with interest he could not afford. The notebooks are boxed. The understory transmitter answers nobody now.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_emil_01_numbers",
+                        "choice_id": "emil_refund_patron"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 66,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Signals Technician",
+                "summary": "Four notebooks and a refutation of everything, in writing, available to anyone who brings pencil-paper and does not ask about the early solution."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_nadia_lem",
+        "display_name": "Nadia Lem",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 24,
+                "max_day": 52,
+                "precedence": 10,
+                "role": "Field Kitchen Cook",
+                "summary": "The pot is honest and the manifest is not, and she is the difference. The queue eats in order of need and the portion ledger disagrees with the pot by exactly the amount the children eat.",
+                "quest_id": "quest_arc_nadia_01_pot"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 32,
+                "max_day": 90,
+                "precedence": 20,
+                "role": "Fronted Season",
+                "summary": "Your oil is in her kitchen and your name is in no ledger. The queue has noticed that the bowls got heavier without anyone announcing it, which is how she prefers all improvements to arrive.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_nadia_01_pot",
+                        "choice_id": "nadia_front_the_oil"
+                    }
+                ],
+                "quest_id": "quest_arc_nadia_01_pot"
+            },
+            {
+                "id": "late_anchor",
+                "kind": "late",
+                "min_day": 58,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Queue Kitchen Anchor",
+                "summary": "The field kitchen feeds the overflow on schedule and in order of need, and the settlement's sick lists got shorter two winters running. Your people eat at her fire when the roads are bad, and nobody audits the portions.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_nadia_01_pot",
+                        "choice_id": "nadia_front_the_oil"
+                    }
+                ]
+            },
+            {
+                "id": "late_dismissed",
+                "kind": "late",
+                "min_day": 58,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Dismissed Cook",
+                "summary": "The audit found the arithmetic and never asked what it bought. The queue still arranges itself by need, out of habit, in front of a kitchen that serves the manifest exactly, and thinner.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_nadia_01_pot",
+                        "choice_id": "nadia_audit_her"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 58,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Field Kitchen Cook",
+                "summary": "The pot is honest and the manifest is not. She is the difference, and she will stand in front of that sentence for as long as it takes."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_arvo_tamm",
+        "display_name": "Arvo Tamm",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 42,
+                "max_day": 70,
+                "precedence": 10,
+                "role": "Mess Cook",
+                "summary": "The store mess runs institutional-exact and the food is fair, and there is a crate somewhere in this building that is the only dishonesty in his life and he weighs it daily.",
+                "quest_id": "quest_arc_arvo_01_crate"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 50,
+                "max_day": 108,
+                "precedence": 20,
+                "role": "The Weighed Crate",
+                "summary": "Your amnesty made the crate speakable. He poured the good oil into the mess kettle with the whole rota watching, and cooked differently ever since, in a way nobody can audit because there is nothing left to hide.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_arvo_01_crate",
+                        "choice_id": "arvo_amnesty"
+                    }
+                ],
+                "quest_id": "quest_arc_arvo_01_crate"
+            },
+            {
+                "id": "late_quartermaster",
+                "kind": "late",
+                "min_day": 64,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Mess Quartermaster",
+                "summary": "He runs provisions for three settlement kitchens now, on institution rules with the lies removed. Your shelter's stores get his count, which is exact, and his advice, which is worth the count.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_arvo_01_crate",
+                        "choice_id": "arvo_amnesty"
+                    }
+                ]
+            },
+            {
+                "id": "late_expelled",
+                "kind": "late",
+                "min_day": 64,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Expelled Cook",
+                "summary": "The crate was real and the exposure was cheaper than the conversation. The mess runs to his old standard under a cook who does not know why the deliveries were always exactly late. He trades oil on the road now, by the flask.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_arvo_01_crate",
+                        "choice_id": "arvo_expose"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 64,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Mess Cook",
+                "summary": "Institutional portions, fair hands, one crate. Ask him which kind of cook he is being today and he will answer honestly and not shortly."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_kaspar_drej",
+        "display_name": "Kaspar Drej",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 35,
+                "max_day": 64,
+                "precedence": 10,
+                "role": "Wagon Mechanic",
+                "summary": "The odds on any road are posted where the driver can read them, and the corner-bearing in his toolbox has a story with two endings. He tells the honest one if you bring grease and patience.",
+                "quest_id": "quest_arc_kaspar_01_bearing"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 44,
+                "max_day": 102,
+                "precedence": 20,
+                "role": "Provisioned Season",
+                "summary": "Parts upfront and a witness for the next borrowing: your advance bought the wagon a season and bought him something harder, which is doing it clean. The posted odds on your routes have improved twice.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_kaspar_01_bearing",
+                        "choice_id": "kaspar_parts_upfront"
+                    }
+                ],
+                "quest_id": "quest_arc_kaspar_01_bearing"
+            },
+            {
+                "id": "late_chief",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Caravan Fleet Chief",
+                "summary": "The Long Walk gave him the fleet and he gave the fleet posted odds and boring axles. Your shelter's wagons are maintained to his standard at caravan rates, and the story with two endings now has the ending where he paid it back in public.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_kaspar_01_bearing",
+                        "choice_id": "kaspar_parts_upfront"
+                    }
+                ]
+            },
+            {
+                "id": "late_called_in",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Called-In Debtor",
+                "summary": "The favor he was owed arrived shaped like a errand he could not refuse, and the wagon runs for other people's freight this season. He still posts the odds. The odds on your routes have quietly widened.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_kaspar_01_bearing",
+                        "choice_id": "kaspar_witness_deal"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Wagon Mechanic",
+                "summary": "One good wagon kept alive past decency, odds posted where the driver can read them."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_mira_vos",
+        "display_name": "Mira Vos",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 38,
+                "max_day": 66,
+                "precedence": 10,
+                "role": "Generator Mechanic",
+                "summary": "The generator runs to stated hours and the private log runs to stated truth, and the intake shed door stays shut when she works alone, which is always.",
+                "quest_id": "quest_arc_mira_01_intervals"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 46,
+                "max_day": 104,
+                "precedence": 20,
+                "role": "Wound and Running",
+                "summary": "The brush set you brought is in the generator and the intervals are kept like vows. She has started leaving the private log out on the desk, which for her is a door being left open.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_mira_01_intervals",
+                        "choice_id": "mira_winder_parts"
+                    }
+                ],
+                "quest_id": "quest_arc_mira_01_intervals"
+            },
+            {
+                "id": "late_regular",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Waystation Power Keeper",
+                "summary": "The cut's pump stations hold power on a schedule she publishes and keeps. Your shelter buys off-peak load at rates set in her unrounded hand, and the private log now has a second reader she chose.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_mira_01_intervals",
+                        "choice_id": "mira_winder_parts"
+                    }
+                ]
+            },
+            {
+                "id": "late_withdrawn",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Withdrawn Keeper",
+                "summary": "You asked about the shed. She answered once, completely, and then drew a line under the whole subject and under most of the visits. The generator runs. The door stays shut.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_mira_01_intervals",
+                        "choice_id": "mira_ask_about_shed"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 62,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Generator Mechanic",
+                "summary": "Stated hours, stated truth, one shut door. The machine is the easy part of the job and she knows it."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_janek_orel",
+        "display_name": "Janek Orel",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 26,
+                "max_day": 54,
+                "precedence": 10,
+                "role": "Hunter",
+                "summary": "The old lines are mostly true and he is mostly willing to say which parts have stopped. Walk at dawn if you want the honest version; the rest of the day is for the settlement's confidence.",
+                "quest_id": "quest_arc_janek_01_dawn"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 34,
+                "max_day": 92,
+                "precedence": 20,
+                "role": "Dawn Walks",
+                "summary": "You walked the new lines with him and neither of you said the word admit. The dawn map is three routes longer than the old one and the meat came back heavier this season, which is its own kind of speech.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_janek_01_dawn",
+                        "choice_id": "janek_walk_dawn"
+                    }
+                ],
+                "quest_id": "quest_arc_janek_01_dawn"
+            },
+            {
+                "id": "late_scout",
+                "kind": "late",
+                "min_day": 58,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Adaptive Scout",
+                "summary": "He teaches the migration routes that are true and retires the ones that are not, out loud, in front of the young hunters. The recovery yard eats regularly through a winter the old map would not have fed.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_janek_01_dawn",
+                        "choice_id": "janek_walk_dawn"
+                    }
+                ]
+            },
+            {
+                "id": "late_discredited",
+                "kind": "late",
+                "min_day": 58,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Discredited Elder Hunter",
+                "summary": "You asked him for the old lines as truth and he delivered them as truth. The yard went hungry twice in the hungry weeks and the settlement found out which map he was still quoting. He walks at dawn alone now, correcting it in silence.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_janek_01_dawn",
+                        "choice_id": "janek_quote_old_lines"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 58,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Hunter",
+                "summary": "The old lines are mostly true. Walk at dawn if you want the rest of the sentence."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_veda_ro",
+        "display_name": "Veda Ro",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 47,
+                "max_day": 76,
+                "precedence": 10,
+                "role": "Trapper",
+                "summary": "The circuit is marked, posted, and paid for — by her, once, in the way that taught her. She sells meat by the schedule and terrain by the truth, and the fog month is a closed subject she closed herself.",
+                "quest_id": "quest_arc_veda_01_circuit"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 54,
+                "max_day": 112,
+                "precedence": 20,
+                "role": "Posted Lines",
+                "summary": "Your tag paint is on her lines and your people walk the marked paths now. She has started paying the standing fee for the maimed into a fund instead of a pocket, which is the circuit learning from her and her from it.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_veda_01_circuit",
+                        "choice_id": "veda_mark_the_lines"
+                    }
+                ],
+                "quest_id": "quest_arc_veda_01_circuit"
+            },
+            {
+                "id": "late_guide",
+                "kind": "late",
+                "min_day": 66,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Fringe Guide",
+                "summary": "The drowned fringe has a guide with posted lines and a schedule, and expeditions that use her paths come back whole. Your shelter's routes through the fringe are walked first by her, and the fee is standing and paid.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_veda_01_circuit",
+                        "choice_id": "veda_mark_the_lines"
+                    }
+                ]
+            },
+            {
+                "id": "late_cold",
+                "kind": "late",
+                "min_day": 66,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Cold Circuit",
+                "summary": "You pressed the fog question and got the whole truth, unprompted, in one piece, at a price. The circuit is marked and the meat still comes, but the paths your people walk are the ones she marked for strangers.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_veda_01_circuit",
+                        "choice_id": "veda_press_the_fog_question"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 66,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Trapper",
+                "summary": "Marked paths, posted lines, a standing fee for the maimed, and one closed month."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_mirael_tesk",
+        "display_name": "Mirael Tesk",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 50,
+                "max_day": 80,
+                "precedence": 10,
+                "role": "Record Teacher",
+                "summary": "The copy lessons are exact and the forged page sits face-up on the desk through all of them. She dares somebody to ask, politely, every session, and teaches the doubt whether or not anybody does.",
+                "quest_id": "quest_arc_mirael_01_page"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 58,
+                "max_day": 116,
+                "precedence": 20,
+                "role": "Sit the Lessons",
+                "summary": "Your people sit the lessons and learn to doubt copies properly, which is the discipline and the point. She has started leaving the desk open after class, which is as close as the archive comes to confession.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_mirael_01_page",
+                        "choice_id": "mirael_sit_the_lessons"
+                    }
+                ],
+                "quest_id": "quest_arc_mirael_01_page"
+            },
+            {
+                "id": "late_keeper",
+                "kind": "late",
+                "min_day": 68,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Record Discipline Keeper",
+                "summary": "The archive's copy discipline spread to two settlements with her doubt taught in it, and the disputed page finally got its note in the margin, in her hand, dated, signed — the Marek Voln school of honesty, as the archivists now call it. Your shelter's record keeping follows her standard.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_mirael_01_page",
+                        "choice_id": "mirael_sit_the_lessons"
+                    }
+                ]
+            },
+            {
+                "id": "late_disputed",
+                "kind": "late",
+                "min_day": 68,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Record Disputed",
+                "summary": "You named the page in session and the archive had to rule. The ruling acknowledged the alteration and forgave the forger and distrusted the teacher, which she predicted in writing before the vote.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_mirael_01_page",
+                        "choice_id": "mirael_name_the_page"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 68,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Record Teacher",
+                "summary": "Exact copy lessons and a forged page left face-up on the desk. Ask her or do not ask her. The lesson is the same."
+            }
+        ]
+    },
+    {
+        "npc_id": "npc_niko",
+        "display_name": "Niko",
+        "flagship": false,
+        "recruitable": false,
+        "states": [
+            {
+                "id": "initial",
+                "kind": "initial",
+                "min_day": 22,
+                "max_day": 50,
+                "precedence": 10,
+                "role": "Runner",
+                "summary": "He maps what grown-ups can stand up in, and has decided your column watches. The corridor routes he offers have never once been written down and never once been wrong.",
+                "quest_id": "quest_arc_niko_01_corridors"
+            },
+            {
+                "id": "evolved",
+                "kind": "evolved",
+                "min_day": 30,
+                "max_day": 88,
+                "precedence": 20,
+                "role": "Employed Runner",
+                "summary": "You vouched him wages and the watching became regular. The flooded leg stays off-limits and he has started teaching two of your people the dry corridors, at exactly the speed of trust.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_niko_01_corridors",
+                        "choice_id": "niko_vouch_employment"
+                    }
+                ],
+                "quest_id": "quest_arc_niko_01_corridors"
+            },
+            {
+                "id": "late_scout",
+                "kind": "late",
+                "min_day": 56,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Apprentice Scout",
+                "summary": "Your column's maps have a second layer now, drawn from memory and checked on foot: the corridors grown-ups cannot stand up in. He is apprenticed to your scout roster, on his terms, boots that fit twice included.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_niko_01_corridors",
+                        "choice_id": "niko_vouch_employment"
+                    }
+                ]
+            },
+            {
+                "id": "late_mended",
+                "kind": "late",
+                "min_day": 56,
+                "max_day": 0,
+                "precedence": 35,
+                "role": "Mended and Restless",
+                "summary": "You told him to stop and he mostly did, for a season, until the corridor under the grid decided the matter for both of you. The leg healed crooked. The map is still in his head and slower to cross now, like him.",
+                "requires_choice": [
+                    {
+                        "quest_id": "quest_arc_niko_01_corridors",
+                        "choice_id": "niko_tell_him_to_stop"
+                    }
+                ]
+            },
+            {
+                "id": "late_unmet",
+                "kind": "late",
+                "min_day": 56,
+                "max_day": 0,
+                "precedence": 15,
+                "role": "Runner",
+                "summary": "Corridor routes, messages run untouched, the grid as it actually is. The map stays in his head because paper can be taken off a person."
+            }
+        ]
     }
+
 
   ]
 }

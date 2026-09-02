@@ -1272,6 +1272,396 @@
       "signature_quote": "Everything moves or everything starves. I just decide what moves, and what it costs you later."
     },
     {
+      "id": "npc_oskar_ruut",
+      "display_name": "Oskar Ruut",
+      "profession": "Caravan Debtor",
+      "bio": "Owns one good wagon and half of another, and the other half belongs to the Underwrite. Negotiates first, everything else second, and keeps a copy of every contract he has ever signed in a waxed roll against the day somebody's copy disagrees with his.",
+      "faction": "faction_the_underwrite",
+      "region": "region_crossing",
+      "first_day": 22,
+      "location_id": "loc_cut_merchant_caravanserai",
+      "wants": [
+        "fuel",
+        "the_buyout_figure_in_writing"
+      ],
+      "offers": [
+        "caravan_access",
+        "interest_rates_that_hold",
+        "honest_arithmetic"
+      ],
+      "will_not": [
+        "sign_a_term_he_has_not_read_twice",
+        "run_from_a_debt_he_can_price"
+      ],
+      "signature_quote": "A debt is a route you already agreed to walk. I just want to see the map before I walk it."
+    },
+    {
+      "id": "npc_tomas_geret",
+      "display_name": "Tomas Geret",
+      "profession": "Field Medic",
+      "bio": "Runs the garrison's overflow clinic in a former dentist's row because the real one filled in the first winter. Keeps two ledgers the garrison knows about and one it does not: the difference between what arrived and what was logged. He calls it rounding for the living.",
+      "faction": "faction_central_garrison",
+      "region": "the_grid",
+      "first_day": 26,
+      "location_id": "loc_dentists_row",
+      "wants": [
+        "medical_kit",
+        "a_word_when_the_audit_comes"
+      ],
+      "offers": [
+        "treatment_without_questions_yet",
+        "first_aid_training",
+        "quiet_prioritization"
+      ],
+      "will_not": [
+        "let_a_queue_die_of_protocol",
+        "falsify_a_death_record"
+      ],
+      "signature_quote": "The form wants a number. The patient wants a morning. I write the number and I give the morning, and only one of those is my job."
+    },
+    {
+      "id": "npc_joren_malk",
+      "display_name": "Joren Malk",
+      "profession": "Industrial Engineer",
+      "bio": "Came to restart the batching plant and treats the people problem as a staffing bug. Brilliant on shear loads and evasive on the year the foundry line restarted without its night shift present. Keeps a gantt chart of the recovery on his wall, and everyone else's names are on it in pencil.",
+      "faction": "faction_silent_foundry",
+      "region": "district_8",
+      "first_day": 32,
+      "location_id": "location_concrete_batching_plant",
+      "wants": [
+        "scrap_mechanical",
+        "crews_who_pass_the_checklists"
+      ],
+      "offers": [
+        "load_bearing_assessments",
+        "real_schedules",
+        "work_that_stays_built"
+      ],
+      "will_not": [
+        "stamp_an_assessment_he_has_not_run",
+        "say_the_night_shift_out_loud"
+      ],
+      "signature_quote": "The schedule is honest. The schedule has always been honest. Ask me about the staffing another time."
+    },
+    {
+      "id": "npc_pavel_eren",
+      "display_name": "Pavel Eren",
+      "profession": "Route Scavenger",
+      "bio": "Is walking every road in the toll country twice, once to learn it and once to trust it, and selling copies of the map as he goes. Won't say how he learned that the safe ford on the eastern road was safe — the group he was following when he found out never came back to correct him.",
+      "faction": "none",
+      "region": "the_toll",
+      "first_day": 18,
+      "location_id": "loc_eastern_road",
+      "wants": [
+        "boots_in_good_repair",
+        "corrections_to_his_map"
+      ],
+      "offers": [
+        "route_copies",
+        "ford_and_collapse_notes",
+        "distances_that_hold_up"
+      ],
+      "will_not": [
+        "sell_a_route_he_has_not_walked",
+        "say_how_he_learned_the_eastern_road"
+      ],
+      "signature_quote": "I only sell what I have walked. There is exactly one route in this roll I did not learn the polite way, and it is also the best one."
+    },
+    {
+      "id": "npc_sena_aris",
+      "display_name": "Sena Aris",
+      "profession": "Patrol Soldier",
+      "bio": "Walks the bridge corridor for the militia because somebody has to and she was the somebody who stayed. Keeps the civilian crossing log she invented herself, maintains it in full view, and has begun noticing that the incident reports she files and the ones command acknowledges are becoming two different documents.",
+      "faction": "faction_ash_militia",
+      "region": "the_verge",
+      "first_day": 28,
+      "location_id": "loc_bridge_seven",
+      "wants": [
+        "the_crossing_log_countersigned",
+        "witnesses_who_write_things_down"
+      ],
+      "offers": [
+        "escorted_crossings",
+        "the_log_as_written",
+        "warning_before_warrant_sweeps"
+      ],
+      "will_not": [
+        "lose_an_incident_report",
+        "fire_on_a_crossing_queue"
+      ],
+      "signature_quote": "The log is the crossing. Lose the log and the crossing becomes whatever the loudest report says it was."
+    },
+    {
+      "id": "npc_dalia_marun",
+      "display_name": "Dalia Marun",
+      "profession": "Seed Keeper",
+      "bio": "Keeps the seed annex the way a miser keeps coin and a mother keeps names: together, sorted, and slightly too much. Refuses to leave the failing freehold because the annex roof is the only thing she trusts, and she does not fully trust the annex roof. There is a private tin in the collection no settlement audit has ever weighed.",
+      "faction": "faction_salt_freeholders",
+      "region": "the_toll",
+      "first_day": 33,
+      "location_id": "loc_seed_library_annex",
+      "wants": [
+        "item_seed_grain",
+        "sack_cloth",
+        "a_dry_season"
+      ],
+      "offers": [
+        "viable_seed_stock",
+        "planting_schedules_that_admit_defeat",
+        "cuts_from_the_private_tin"
+      ],
+      "will_not": [
+        "issue_untested_lots",
+        "leave_the_annex_while_the_roof_holds"
+      ],
+      "signature_quote": "Everything in here is a year that has not happened yet. You do not get a year that has not happened yet by hurrying."
+    },
+    {
+      "id": "npc_anton_renn",
+      "display_name": "Anton Renn",
+      "profession": "Stockman",
+      "bio": "Keeps the allotment's goats and the story that they are fine. The herd is smaller than the ledger and the milk is thinner than the story, and he has begun dosing the well before anyone asks him to. He is not a liar. He is a man who knows exactly what the word cull costs him.",
+      "faction": "none",
+      "region": "the_allotments",
+      "first_day": 30,
+      "location_id": "loc_grain_silo",
+      "wants": [
+        "fodder_that_is_not_contaminated",
+        "a_vet_who_will_lie_kindly"
+      ],
+      "offers": [
+        "milk_scraped_off_the_top",
+        "breeding_stock_checked_twice",
+        "work_at_the_silo"
+      ],
+      "will_not": [
+        "sell_stock_he_knows_is_sick",
+        "say_the_word_cull_first"
+      ],
+      "signature_quote": "The herd is fine. The herd is fine. Now — what do you actually need, and let us see whether the fine herd can afford it."
+    },
+    {
+      "id": "npc_emil_soren",
+      "display_name": "Emil Soren",
+      "profession": "Signals Technician",
+      "bio": "Has filled four notebooks with the numbers station's repeats and can recite the flaws in every published solution, including his own. The early solution he published was wrong and he knew it within a week; the patrons it kept were the only thing funding the notebooks. The notebooks have since become honest, which pays worse.",
+      "faction": "none",
+      "region": "the_spine",
+      "first_day": 45,
+      "location_id": "loc_understory_transmitter",
+      "wants": [
+        "paper_that_takes_pencil",
+        "batteries_for_the_reel_to_reel"
+      ],
+      "offers": [
+        "the_honest_notebooks",
+        "repeat_intervals",
+        "every_solution_refuted_in_writing"
+      ],
+      "will_not": [
+        "publish_a_solution_he_has_not_falsified_first",
+        "take_a_patron_he_has_not_warned"
+      ],
+      "signature_quote": "I was wrong once in print. I have been right twice since, quietly. Ask me which one paid and then ask me which one mattered."
+    },
+    {
+      "id": "npc_nadia_lem",
+      "display_name": "Nadia Lem",
+      "profession": "Field Kitchen Cook",
+      "bio": "Cooks for the ration queue and has never once served the queue what the manifest says. The thin go to the front of her line and the proud wait like everyone else. The portion ledger disagrees with the pot by exactly the amount the children eat, and she will stand in front of that arithmetic for as long as it takes.",
+      "faction": "none",
+      "region": "the_overflow",
+      "first_day": 24,
+      "location_id": "loc_ration_queue_plaza",
+      "wants": [
+        "cooking_oil",
+        "salt",
+        "the_queue_left_unaudited"
+      ],
+      "offers": [
+        "a_bowl_that_admits_no_argument",
+        "kitchen_shifts_for_your_people",
+        "the_queue's_true_mood"
+      ],
+      "will_not": [
+        "serve_sick_meat_because_the_form_arrived",
+        "name_who_gets_the_extra_portions"
+      ],
+      "signature_quote": "The manifest says one thing and the children say another. I have worked out which of them I answer to, and it was not a hard calculation."
+    },
+    {
+      "id": "npc_arvo_tamm",
+      "display_name": "Arvo Tamm",
+      "profession": "Mess Cook",
+      "bio": "Fed an institution for twenty years and never stopped cooking like the delivery might be late. Runs the department store mess honestly and has one private crate of good oil that he has moved twice since autumn. The crate is not for sale. The crate is the argument he is having with himself.",
+      "faction": "faction_the_provisioned",
+      "region": "the_stack",
+      "first_day": 42,
+      "location_id": "loc_department_store",
+      "wants": [
+        "herbal_tea",
+        "dry_textiles",
+        "not_to_be_counted_while_counting"
+      ],
+      "offers": [
+        "institutional_portions_exact",
+        "a_seat_at_the_mess",
+        "kitchen_stewardship"
+      ],
+      "will_not": [
+        "short_the_mess_rota",
+        "admit_to_the_crate_unless_it_matters"
+      ],
+      "signature_quote": "Institutions do not fall because the food runs out. They fall when the cook starts eating differently from the served. I keep the crate so that I know which kind of cook I am being today."
+    },
+    {
+      "id": "npc_kaspar_drej",
+      "display_name": "Kaspar Drej",
+      "profession": "Wagon Mechanic",
+      "bio": "Keeps one caravan vehicle alive past all decency with borrowed parts and refusing mathematics. The corner-bearing in his toolbox was purchased from a convoy that stalled, once, and he has stopped telling the story with the ending where the convoy was fine. He is very good and he knows what that is worth, and the debt for it is shaped like a favor.",
+      "faction": "faction_long_walk",
+      "region": "the_spine",
+      "first_day": 35,
+      "location_id": "loc_motel_verity",
+      "wants": [
+        "axle_parts",
+        "grease",
+        "a_witness_for_the_next_borrowing"
+      ],
+      "offers": [
+        "wheels_that_stay_round",
+        "breakdown_forewarning",
+        "honest_odds_on_any_road"
+      ],
+      "will_not": [
+        "marry_a_load_to_a_bad_axle",
+        "borrow_without_leaving_a_name"
+      ],
+      "signature_quote": "Every part on this wagon is working above its station and below its rating, same as the crew. I keep the odds posted where the driver can read them."
+    },
+    {
+      "id": "npc_mira_vos",
+      "display_name": "Mira Vos",
+      "profession": "Generator Mechanic",
+      "bio": "Keeps the pump station's generator and the story that the last failure was nobody's fault. Keeps a second, private log with the maintenance interval that was missed, in her own handwriting, because somebody has to remember what the machine was trying to say. Will not work in the intake shed since the accident and will not say why twice.",
+      "faction": "faction_the_cutters",
+      "region": "the_cut",
+      "first_day": 38,
+      "location_id": "loc_pump_station_nine",
+      "wants": [
+        "copper_wire_10m_of_10m",
+        "brush_set_for_a_12_kv",
+        "nobody_standing_behind_her_at_the_shed"
+      ],
+      "offers": [
+        "power_at_stated_hours",
+        "generator_maintenance_done_boringly",
+        "the_private_log_if_it_matters"
+      ],
+      "will_not": [
+        "skip_an_interval_twice",
+        "work_the_intake_shed_alone"
+      ],
+      "signature_quote": "The machine warned us a week out. The warning is in my log and not in theirs, and that difference is the whole job."
+    },
+    {
+      "id": "npc_janek_orel",
+      "display_name": "Janek Orel",
+      "profession": "Hunter",
+      "bio": "Fed the recovery yard through two winters on routes his father taught him, and the routes have stopped working. Blames the weather, the raiders, the queue, and the column of ash on the horizon, in that order, and has begun quietly walking new lines at dawn when nobody who matters is awake to see him doubt the map.",
+      "faction": "none",
+      "region": "high_scarp",
+      "first_day": 26,
+      "location_id": "loc_ordnance_shoulder",
+      "wants": [
+        "salt_for_the_hides",
+        "a_second_opinion_at_dawn"
+      ],
+      "offers": [
+        "meat_when_there_is_meat",
+        "old_route_knowledge_that_is_still_mostly_true",
+        "tracks_read_honestly"
+      ],
+      "will_not": [
+        "sell_a_doubtful_route_as_true",
+        "admit_the_patterns_changed_before_dawn_does"
+      ],
+      "signature_quote": "The old lines fed this place for two winters and I will hear no word against them. Walk with me at dawn and we will discuss the matter further."
+    },
+    {
+      "id": "npc_veda_ro",
+      "display_name": "Veda Ro",
+      "profession": "Trapper",
+      "bio": "Runs a trap circuit through the drowned fringe with more rules than traps: marked paths, posted lines, a standing fee for the maimed. One of her lines took a traveler in the fog month and she paid the blood price unprompted, which the fringe neither forgot nor forgave. She has not fogged the line since.",
+      "faction": "none",
+      "region": "the_drown",
+      "first_day": 47,
+      "location_id": "loc_bathymetric_boat",
+      "wants": [
+        "snare_wire",
+        "tag_paint_that_survives_wet"
+      ],
+      "offers": [
+        "marked_paths_and_posted_lines",
+        "meat_by_the_circuit_schedule",
+        "the_fringe's_terrain_honestly"
+      ],
+      "will_not": [
+        "run_an_unmarked_line",
+        "trap_the_fringe_in_fog_again"
+      ],
+      "signature_quote": "A trap is a promise the ground makes on your behalf. I write my promises where they can be read by lamplight, and I pay for the ones that break."
+    },
+    {
+      "id": "npc_mirael_tesk",
+      "display_name": "Mirael Tesk",
+      "profession": "Record Teacher",
+      "bio": "Teaches the archive's copy discipline to whoever the archivists send, and one page of the community record is in a different hand than the rest. The alteration protects somebody now two winters gone, and she has begun teaching forgery detection with that page face-up on the desk, naming nothing, daring somebody to ask.",
+      "faction": "faction_archivists",
+      "region": "ministry",
+      "first_day": 50,
+      "location_id": "loc_municipal_archive",
+      "wants": [
+        "paper_scrap",
+        "ink_that_will_outlast_her"
+      ],
+      "offers": [
+        "copy_discipline_lessons",
+        "provenance_read_aloud",
+        "the_record_as_it_stands"
+      ],
+      "will_not": [
+        "teach_copying_without_teaching_doubt",
+        "alter_a_second_page"
+      ],
+      "signature_quote": "I will teach you to catch a forged line, and I will leave the page on the desk while I do it. Ask me or do not ask me. The lesson is the same."
+    },
+    {
+      "id": "npc_niko",
+      "display_name": "Niko",
+      "profession": "Runner",
+      "bio": "Thirteen, and knows the maintenance corridors under the grid better than the people paid to, because he fits where the paid ones stopped fitting years ago. Takes risks in direct proportion to how little anyone watches, and has decided you watch. The route map in his head has never been written down, because paper can be taken off a person.",
+      "faction": "none",
+      "region": "the_grid",
+      "first_day": 22,
+      "location_id": "loc_bus_reversal_loop",
+      "wants": [
+        "to_be_useful_out_loud",
+        "boots_that_fit_twice"
+      ],
+      "offers": [
+        "corridor_routes",
+        "messages_run_untouched",
+        "the_grid_as_it_actually_is"
+      ],
+      "will_not": [
+        "write_the_map_down",
+        "run_a_message_through_the_flooded_leg"
+      ],
+      "signature_quote": "Grown-ups map the corridors they can stand up in. I map the rest. Want the rest or not?"
+    }
+,
+    {
       "id": "npc_ilze_kaar",
       "display_name": "Dr. Ilze Kaar",
       "profession": "Clinic Physician",

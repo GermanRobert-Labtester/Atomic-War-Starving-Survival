@@ -2109,7 +2109,120 @@
       "synopsis": "A station that answers on schedule, under a flag that leaves it alone, with a band of its own.",
       "factionTag": "none",
       "status": "active"
+    },
+    {
+      "id": "quest_arc_oskar_01_debt",
+      "title": "The Settled Figure",
+      "synopsis": "Half a wagon and a whole debt, both priced daily. The buyout figure exists and is written down. The only question is whose hand moves first: yours to help him r",
+      "factionTag": "faction_the_underwrite",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_tomas_01_rounding",
+      "title": "Rounding for the Living",
+      "synopsis": "The overflow clinic's stock does not reconcile with the garrison's ledgers, and the difference keeps matching a list of people who are alive anyway. The audit i",
+      "factionTag": "faction_central_garrison",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_joren_01_plant",
+      "title": "Staffing the Schedule",
+      "synopsis": "The batching plant restart is real, the schedule is honest, and the schedule does not care what happened to the night shift. He needs crews who pass the checkli",
+      "factionTag": "faction_silent_foundry",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_pavel_01_map",
+      "title": "What I Have Walked",
+      "synopsis": "The route scavenger sells only what he has walked, and the best route in the roll is the one he learned the impolite way. The copy costs less than the question ",
+      "factionTag": "none",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_sena_01_log",
+      "title": "Two Versions",
+      "synopsis": "The bridge corridor's crossing log is kept in full view, and the incident reports come back in two versions: what she filed and what command acknowledges. She w",
+      "factionTag": "faction_ash_militia",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_dalia_01_annex",
+      "title": "A Year That Has Not Happened",
+      "synopsis": "The seed annex holds tested lots and one roof of uncertain honesty. She will not leave it and she will not hurry it, and the private tin is not for discussion. ",
+      "factionTag": "faction_salt_freeholders",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_anton_01_herd",
+      "title": "The Fine Herd",
+      "synopsis": "The herd ledger and the herd disagree by exactly the animals a hard winter eats, and the well has been dosed since before anyone asked. What the herd needs is a",
+      "factionTag": "none",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_emil_01_numbers",
+      "title": "The Honest Notebooks",
+      "synopsis": "Four notebooks of repeats, every published solution refuted in writing including his own, and a standing rule that patrons get warned before they get taken. Fun",
+      "factionTag": "none",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_nadia_01_pot",
+      "title": "What the Manifest Says",
+      "synopsis": "The field kitchen's pot is honest and the manifest is not, and she is the difference. The portion ledger disagrees with the pot by exactly the amount the childr",
+      "factionTag": "none",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_arvo_01_crate",
+      "title": "Which Kind of Cook",
+      "synopsis": "The store mess runs institutional-exact under a cook with one private crate of good oil and an argument with himself that has been going since autumn. The crate",
+      "factionTag": "faction_the_provisioned",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_kaspar_01_bearing",
+      "title": "Posted Odds",
+      "synopsis": "The wagon mechanic keeps one vehicle alive past decency and tells you the odds on every road like a man reading weather. The bearing in his toolbox has a story ",
+      "factionTag": "faction_long_walk",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_mira_01_intervals",
+      "title": "The Private Log",
+      "synopsis": "The generator runs to stated hours and the private log runs to stated truth: a missed maintenance interval in her own handwriting, kept so somebody remembers wh",
+      "factionTag": "faction_the_cutters",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_janek_01_dawn",
+      "title": "Walk With Me at Dawn",
+      "synopsis": "The old hunting lines fed the settlement for two winters and have stopped feeding it, and the hunter will hear no word against them before dawn. At dawn, the ro",
+      "factionTag": "none",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_veda_01_circuit",
+      "title": "Marked Paths",
+      "synopsis": "The trap circuit is marked, posted, and paid for, once, in the way that taught her. The standing fee for the maimed still stands. The fog month is a closed subj",
+      "factionTag": "none",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_mirael_01_page",
+      "title": "The Page on the Desk",
+      "synopsis": "The archive's copy lessons are exact and one page of the community record is in a different hand than the rest. It sits face-up on the desk through every lesson",
+      "factionTag": "faction_archivists",
+      "status": "active"
+    },
+    {
+      "id": "quest_arc_niko_01_corridors",
+      "title": "The Rest of the Map",
+      "synopsis": "The runner knows the corridors grown-ups cannot stand up in, and has decided your column watches. The routes have never been written down, because paper can be ",
+      "factionTag": "none",
+      "status": "active"
     }
+
 
   ]
 }

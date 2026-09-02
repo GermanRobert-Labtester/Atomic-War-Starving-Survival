@@ -564,7 +564,408 @@
           "consequences": "The names go out properly, at a fixed hour, to whoever is counting. The log shows the shelter answered, on time, every time."
         }
       ]
+    },
+    {
+      "id": "quest_arc_oskar_01_debt",
+      "title": "The Settled Figure",
+      "description": "Half a wagon and a whole debt, both priced daily",
+      "type": "recurring_npc",
+      "minDay": 22,
+      "maxDay": 52,
+      "factionTag": "faction_the_underwrite",
+      "synopsis": "Half a wagon and a whole debt, both priced daily. The buyout figure exists and is written down. The only question is whose hand moves first: yours to help him reach it, or yours to press it.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "oskar_settle",
+                  "text": "Front the buyout at fair interest, in writing, twice read.",
+                  "effects": [],
+                  "consequences": "The Underwrite stamped it and he framed the stamp. Your rate with his wagons is the founding rate, forever, which is his way of saying the rest."
+            },
+            {
+                  "id": "oskar_press",
+                  "text": "Press the debt while it is cheap and buy his routes.",
+                  "effects": [],
+                  "consequences": "The price was fair and the routes were cheap and the way he hands over the keys is the last thing he will ever say about it out loud."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_tomas_01_rounding",
+      "title": "Rounding for the Living",
+      "description": "The overflow clinic's stock does not reconcile with the garrison's ledgers, and the difference keeps matching a list of ",
+      "type": "recurring_npc",
+      "minDay": 26,
+      "maxDay": 54,
+      "factionTag": "faction_central_garrison",
+      "synopsis": "The overflow clinic's stock does not reconcile with the garrison's ledgers, and the difference keeps matching a list of people who are alive anyway. The audit is coming. He knows. He treated through the last one.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "tomas_vouch",
+                  "text": "Vouch for the rounding when the audit comes — the mornings it bought were real.",
+                  "effects": [],
+                  "consequences": "Your word held in a room he cannot enter. The clinic keeps its stock, the garrison keeps its form, and the discrepancy got a line item instead of a charge."
+            },
+            {
+                  "id": "tomas_testify",
+                  "text": "Testify to the discrepancy and let procedure run.",
+                  "effects": [],
+                  "consequences": "The charges fit the entries. They do not fit the mornings, but the mornings are not what procedure counts."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_joren_01_plant",
+      "title": "Staffing the Schedule",
+      "description": "The batching plant restart is real, the schedule is honest, and the schedule does not care what happened to the night sh",
+      "type": "recurring_npc",
+      "minDay": 32,
+      "maxDay": 60,
+      "factionTag": "faction_silent_foundry",
+      "synopsis": "The batching plant restart is real, the schedule is honest, and the schedule does not care what happened to the night shift. He needs crews who pass the checklists. He needs them more than he will say.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "joren_crews",
+                  "text": "Commit trained crews to his checklists and hold them to his standard.",
+                  "effects": [],
+                  "consequences": "The crews passed and the concrete tested true. The line runs. The empty block on the chart got a crew name in ink, and the name is one of yours."
+            },
+            {
+                  "id": "joren_refuse",
+                  "text": "Refuse. The night shift question goes with him, not with you.",
+                  "effects": [],
+                  "consequences": "He restarted with skeleton crews and technically true assessments. The line runs. Ask him about the staffing another time, and he will ask you to ask him another time."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_pavel_01_map",
+      "title": "What I Have Walked",
+      "description": "The route scavenger sells only what he has walked, and the best route in the roll is the one he learned the impolite way",
+      "type": "recurring_npc",
+      "minDay": 18,
+      "maxDay": 46,
+      "factionTag": "none",
+      "synopsis": "The route scavenger sells only what he has walked, and the best route in the roll is the one he learned the impolite way. The copy costs less than the question about it. The question costs everything.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "pavel_buy_map",
+                  "text": "Buy the copy at his price and ask nothing about the eastern road.",
+                  "effects": [],
+                  "consequences": "The copy is good. Every distance holds up. He notes that you bought the map and not the story, and keeps walking, lighter by nothing you can see."
+            },
+            {
+                  "id": "pavel_refuse_map",
+                  "text": "Buy nothing and ask how he learned the eastern road.",
+                  "effects": [],
+                  "consequences": "He folds the map away and tells you exactly once: he was following. Then he is gone down the road he does not sell, walking it again, the polite way, for the people who did not come back."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_sena_01_log",
+      "title": "Two Versions",
+      "description": "The bridge corridor's crossing log is kept in full view, and the incident reports come back in two versions: what she fi",
+      "type": "recurring_npc",
+      "minDay": 28,
+      "maxDay": 56,
+      "factionTag": "faction_ash_militia",
+      "synopsis": "The bridge corridor's crossing log is kept in full view, and the incident reports come back in two versions: what she filed and what command acknowledges. She wants the log countersigned. She wants it on the record that she wants it.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "sena_countersign",
+                  "text": "Countersign the log page where the versions diverge.",
+                  "effects": [],
+                  "consequences": "Your mark is in the log now. She walks the corridor like a document that has been witnessed, and command reads both versions with a third signature under them."
+            },
+            {
+                  "id": "sena_stay_clear",
+                  "text": "Stay clear of the dispute and cross on her terms.",
+                  "effects": [],
+                  "consequences": "The crossing is honest and the queue moves and the log keeps its one signature. She initials both versions of the next incident, and says nothing, which is its own report."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_dalia_01_annex",
+      "title": "A Year That Has Not Happened",
+      "description": "The seed annex holds tested lots and one roof of uncertain honesty",
+      "type": "recurring_npc",
+      "minDay": 33,
+      "maxDay": 62,
+      "factionTag": "faction_salt_freeholders",
+      "synopsis": "The seed annex holds tested lots and one roof of uncertain honesty. She will not leave it and she will not hurry it, and the private tin is not for discussion. The freehold around it is failing on a schedule.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "dalia_haul_roof",
+                  "text": "Haul timber and re-sack the lots with her before the season turns.",
+                  "effects": [],
+                  "consequences": "The roof got its timber and the lots got their sacks. She cut from the private tin for your planters at the unchanging rate, which is how she says things that matter."
+            },
+            {
+                  "id": "dalia_wait",
+                  "text": "Wait for a better season. Everyone is waiting for a better season.",
+                  "effects": [],
+                  "consequences": "The season turned where seasons turn first: through the roof. The lots are wet inventory now and the lesson is included in every tour she gives, free, forever."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_anton_01_herd",
+      "title": "The Fine Herd",
+      "description": "The herd ledger and the herd disagree by exactly the animals a hard winter eats, and the well has been dosed since befor",
+      "type": "recurring_npc",
+      "minDay": 30,
+      "maxDay": 58,
+      "factionTag": "none",
+      "synopsis": "The herd ledger and the herd disagree by exactly the animals a hard winter eats, and the well has been dosed since before anyone asked. What the herd needs is arithmetic he cannot do alone because of what the word costs.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "anton_cull_quietly",
+                  "text": "Do the cull arithmetic with him at dawn, out loud, both counting.",
+                  "effects": [],
+                  "consequences": "It was done at dawn, out loud, both counting. The herd is smaller and honest and the milk tells the truth now, and he says the word himself some mornings, quietly, like an apology that worked."
+            },
+            {
+                  "id": "anton_say_nothing",
+                  "text": "Say nothing. Take the milk off the top and leave him his story.",
+                  "effects": [],
+                  "consequences": "The milk was clean off the top and the story stayed whole. The well kept getting dosed. Somewhere in the pen the arithmetic kept getting slower, and heavier, and his."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_emil_01_numbers",
+      "title": "The Honest Notebooks",
+      "description": "Four notebooks of repeats, every published solution refuted in writing including his own, and a standing rule that patro",
+      "type": "recurring_npc",
+      "minDay": 45,
+      "maxDay": 74,
+      "factionTag": "none",
+      "synopsis": "Four notebooks of repeats, every published solution refuted in writing including his own, and a standing rule that patrons get warned before they get taken. Funding is open. Honesty is the cover charge.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "emil_fund_notebooks",
+                  "text": "Fund the fifth notebook, warning read and accepted.",
+                  "effects": [],
+                  "consequences": "The fifth notebook exists and the warning is on page one in your presence. The repeats have a structure he will not name yet, in case naming it un-named it."
+            },
+            {
+                  "id": "emil_refund_patron",
+                  "text": "Ask for your money back and your name out of it.",
+                  "effects": [],
+                  "consequences": "He returned the funding to the hour, with interest he could not afford, and boxed the notebooks with the early solution on top, face up. The understory answers nobody now."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_nadia_01_pot",
+      "title": "What the Manifest Says",
+      "description": "The field kitchen's pot is honest and the manifest is not, and she is the difference",
+      "type": "recurring_npc",
+      "minDay": 24,
+      "maxDay": 52,
+      "factionTag": "none",
+      "synopsis": "The field kitchen's pot is honest and the manifest is not, and she is the difference. The portion ledger disagrees with the pot by exactly the amount the children eat, and the audit option exists, and she will stand in front of whichever you choose.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "nadia_front_the_oil",
+                  "text": "Front the kitchen oil and salt with no audit and no ledger.",
+                  "effects": [],
+                  "consequences": "The bowls got heavier and nobody announced it. Your name is in no ledger, which is the entire thank-you, and the queue's mood is the truest report your shelter will receive all year."
+            },
+            {
+                  "id": "nadia_audit_her",
+                  "text": "Audit the portions and let the manifest win.",
+                  "effects": [],
+                  "consequences": "The audit found the arithmetic and never asked what it bought. The manifest is served exactly now, and thinner, and the queue still arranges itself by need, out of habit, in front of a pot that no longer can."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_arvo_01_crate",
+      "title": "Which Kind of Cook",
+      "description": "The store mess runs institutional-exact under a cook with one private crate of good oil and an argument with himself tha",
+      "type": "recurring_npc",
+      "minDay": 42,
+      "maxDay": 70,
+      "factionTag": "faction_the_provisioned",
+      "synopsis": "The store mess runs institutional-exact under a cook with one private crate of good oil and an argument with himself that has been going since autumn. The crate moved twice since the cold. The crate is the whole man.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "arvo_amnesty",
+                  "text": "Offer amnesty: the crate goes to the mess kettle, the secret stays at the door.",
+                  "effects": [],
+                  "consequences": "He poured the good oil into the kettle with the whole rota watching and cooked differently ever since. There is nothing left to hide, which is the first honest weight the mess has ever run on."
+            },
+            {
+                  "id": "arvo_expose",
+                  "text": "Expose the crate and let the rota decide.",
+                  "effects": [],
+                  "consequences": "The crate was real and the rota voted and the vote was the cheap kind. The mess runs to his old standard under a cook who does not know why the deliveries were always exactly late."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_kaspar_01_bearing",
+      "title": "Posted Odds",
+      "description": "The wagon mechanic keeps one vehicle alive past decency and tells you the odds on every road like a man reading weather",
+      "type": "recurring_npc",
+      "minDay": 35,
+      "maxDay": 64,
+      "factionTag": "faction_long_walk",
+      "synopsis": "The wagon mechanic keeps one vehicle alive past decency and tells you the odds on every road like a man reading weather. The bearing in his toolbox has a story with two endings, and the honest one is available for grease and patience.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "kaspar_parts_upfront",
+                  "text": "Buy the parts upfront and stand witness for the next borrowing.",
+                  "effects": [],
+                  "consequences": "The wagon got its season and the borrowing got its witness. The posted odds on your routes improved twice, and the story with two endings is being told lately with the ending where he pays it back."
+            },
+            {
+                  "id": "kaspar_witness_deal",
+                  "text": "Offer to settle his debts — and own the roads he walks.",
+                  "effects": [],
+                  "consequences": "The debts settled clean and the ownership was the price. He maintains your rivals' freight this season at your expense, posting honest odds the whole way, because that part was never for sale."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_mira_01_intervals",
+      "title": "The Private Log",
+      "description": "The generator runs to stated hours and the private log runs to stated truth: a missed maintenance interval in her own ha",
+      "type": "recurring_npc",
+      "minDay": 38,
+      "maxDay": 66,
+      "factionTag": "faction_the_cutters",
+      "synopsis": "The generator runs to stated hours and the private log runs to stated truth: a missed maintenance interval in her own handwriting, kept so somebody remembers what the machine was trying to say. Parts are easier to ask for than witnesses.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "mira_winder_parts",
+                  "text": "Bring the brush set and copper, and never mention the shed.",
+                  "effects": [],
+                  "consequences": "The parts went in and the intervals are kept like vows. The private log sits out on the desk now, which for her is a door being left open, and the station's power is boringly, perfectly reliable."
+            },
+            {
+                  "id": "mira_ask_about_shed",
+                  "text": "Ask about the shed door. Once.",
+                  "effects": [],
+                  "consequences": "She answered once, completely, without stopping work. Then she drew a line under the subject and under most of the visits, and the generator runs, and the door stays shut."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_janek_01_dawn",
+      "title": "Walk With Me at Dawn",
+      "description": "The old hunting lines fed the settlement for two winters and have stopped feeding it, and the hunter will hear no word a",
+      "type": "recurring_npc",
+      "minDay": 26,
+      "maxDay": 54,
+      "factionTag": "none",
+      "synopsis": "The old hunting lines fed the settlement for two winters and have stopped feeding it, and the hunter will hear no word against them before dawn. At dawn, the routes are walked again, and the map is quietly wrong, and he knows it.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "janek_walk_dawn",
+                  "text": "Walk the dawn routes with him and let the new map happen out loud.",
+                  "effects": [],
+                  "consequences": "Three new routes went onto the dawn map and neither of you said the word admit. The meat came back heavier this season, which is its own kind of speech, and the settlement eats through the hungry weeks."
+            },
+            {
+                  "id": "janek_quote_old_lines",
+                  "text": "Ask him for the old lines as truth and let the settlement believe.",
+                  "effects": [],
+                  "consequences": "He quoted the old lines as truth because you asked him to, and the yard went hungry twice in the hungry weeks, and the settlement found out which map he was quoting. He walks at dawn alone now, correcting it in silence."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_veda_01_circuit",
+      "title": "Marked Paths",
+      "description": "The trap circuit is marked, posted, and paid for, once, in the way that taught her",
+      "type": "recurring_npc",
+      "minDay": 47,
+      "maxDay": 76,
+      "factionTag": "none",
+      "synopsis": "The trap circuit is marked, posted, and paid for, once, in the way that taught her. The standing fee for the maimed still stands. The fog month is a closed subject that she closed herself, and the question about it costs what it costs.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "veda_mark_the_lines",
+                  "text": "Buy tag paint and wire, and put your people on her marked paths.",
+                  "effects": [],
+                  "consequences": "Your paint is on her lines and your people walk them whole. The standing fee went into a fund instead of a pocket, which is the circuit learning from her, and her from it, in the only currency the fringe keeps."
+            },
+            {
+                  "id": "veda_press_the_fog_question",
+                  "text": "Press the fog question and take the whole truth at its price.",
+                  "effects": [],
+                  "consequences": "She gave the whole truth unprompted, in one piece, at a price. The circuit stays marked and the meat still comes, and the paths your people walk are the ones she marked for strangers."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_mirael_01_page",
+      "title": "The Page on the Desk",
+      "description": "The archive's copy lessons are exact and one page of the community record is in a different hand than the rest",
+      "type": "recurring_npc",
+      "minDay": 50,
+      "maxDay": 80,
+      "factionTag": "faction_archivists",
+      "synopsis": "The archive's copy lessons are exact and one page of the community record is in a different hand than the rest. It sits face-up on the desk through every lesson. Asking is free. Not asking is also free. The lesson is the same either way.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "mirael_sit_the_lessons",
+                  "text": "Sit the lessons and learn to doubt copies properly.",
+                  "effects": [],
+                  "consequences": "Your people learned the discipline and the doubt, which are the same lesson. The desk stayed open after class now, which is as close as the archive comes to confession, and your records keep a standard with a name."
+            },
+            {
+                  "id": "mirael_name_the_page",
+                  "text": "Name the page in session and make the archive rule on it.",
+                  "effects": [],
+                  "consequences": "The ruling acknowledged the alteration, forgave the forger, and distrusted the teacher — she had predicted it in writing before the vote. The lesson continued. The desk is clear now, and smaller."
+            }
+      ]
+    },
+    {
+      "id": "quest_arc_niko_01_corridors",
+      "title": "The Rest of the Map",
+      "description": "The runner knows the corridors grown-ups cannot stand up in, and has decided your column watches",
+      "type": "recurring_npc",
+      "minDay": 22,
+      "maxDay": 50,
+      "factionTag": "none",
+      "synopsis": "The runner knows the corridors grown-ups cannot stand up in, and has decided your column watches. The routes have never been written down, because paper can be taken off a person. Employment is the offer. The flooded leg is not negotiable.",
+      "prerequisites": [],
+      "choices": [
+            {
+                  "id": "niko_vouch_employment",
+                  "text": "Vouch him runner's wages and take the corridor routes on his terms.",
+                  "effects": [],
+                  "consequences": "Wages and watching, both regular. Two of your people are learning the dry corridors at exactly the speed of trust, and the flooded leg stays off the board because he says so and he is right."
+            },
+            {
+                  "id": "niko_tell_him_to_stop",
+                  "text": "Tell him to stop running the corridors. He is thirteen.",
+                  "effects": [],
+                  "consequences": "He mostly stopped, for a season, with the specific obedience of somebody counting the cost of not running. Then the corridor under the grid decided the matter, and the leg healed crooked, and the map got slower to cross, like him."
+            }
+      ]
     }
+
 
   ]
 }
