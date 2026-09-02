@@ -37,6 +37,15 @@ namespace AtomicWar.GodotApp
         public Ashfall.Core.Disease.DiseaseSystem Disease { get; private set; }
         public Ashfall.Core.Disease.DiseaseCatalog DiseaseData { get; private set; }
 
+        /// <summary>Debt template catalog (ledger_debt_templates.json) — the
+        /// single loaded instance shared by ledger, dispatcher and credit.</summary>
+        public DebtTemplateCatalog? DebtCatalog { get; private set; }
+        /// <summary>Exactly one live dispatcher per live ledger (host-owned;
+        /// constructed once here, detached only at session shutdown).</summary>
+        public DebtConsequenceDispatcher? DebtDispatcher { get; private set; }
+        /// <summary>Canonical faction embargo authority for debt defaults.</summary>
+        public FactionEmbargoLedger Embargoes { get; } = new FactionEmbargoLedger();
+
         public ExpansionHostSession(
             WaystationSystem waystation,
             LocationLayoutSystem layouts,
@@ -75,6 +84,10 @@ namespace AtomicWar.GodotApp
             Greenhouse.OnCropFailed += _ => RaiseStateChanged();
             Arbitration.OnStateChanged += _ => RaiseStateChanged();
             CrossingQuests.OnStateChanged += _ => RaiseStateChanged();
+            // Debt: any ledger/embargo mutation marks the hub save dirty so the
+            // dispatcher fired-set, embargo ledger and contract ink all flush.
+            Ledger.OnStateChanged += _ => RaiseStateChanged();
+            Embargoes.OnStateChanged += () => RaiseStateChanged();
             // When the opening vouch quest completes, soften the gate automatically
             CrossingQuests.OnOpeningQuestCompleted += () => Vouch.SoftenAccess();
             CrossingQuests.OnStageNarrativeEmitted += evt => OnCrossingStageNarrative?.Invoke(evt);
@@ -144,19 +157,49 @@ namespace AtomicWar.GodotApp
             session.Disease = disease;
             session.DiseaseData = diseaseData;
             disease.OnStateChanged += _ => session.RaiseStateChanged();
+
+            // Ledger debt consequences (Plan IV): the same single catalog instance
+            // feeds the dispatcher; the dispatcher is attached exactly once here —
+            // the session ctor path (tests) deliberately skips it because a
+            // dispatcher without authorities subscribed is inert by design.
+            session.DebtCatalog = DebtTemplateCatalogLoader.Load(dataDirectory, files, json);
+            if (session.DebtCatalog.Errors.Count > 0)
+            {
+                for (int i = 0; i < session.DebtCatalog.Errors.Count; i++)
+                    log.Error("[ExpansionHostSession] debt catalog: " + session.DebtCatalog.Errors[i]);
+            }
+            else
+            {
+                // One active ledger → exactly one active consequence dispatcher.
+                if (session.DebtDispatcher == null)
+                    session.DebtDispatcher = new DebtConsequenceDispatcher(session.Ledger, session.DebtCatalog);
+            }
             return session;
+        }
+
+        /// <summary>Detach the debt consequence integration at session shutdown
+        /// so recomposition cannot leave dangling subscriptions.</summary>
+        public void ShutdownDebtIntegration()
+        {
+            DebtDispatcher?.Detach();
+            DebtDispatcher = null;
         }
 
         // ---- Cross-host save ----
 
-        /// <summary>Cross-host save envelope. Shape and checksum owned by ExpansionHubSaveCodec.</summary>
-        public ExpansionHubSave CaptureSave(int simDay) =>
+        /// <summary>Cross-host save envelope. Shape and checksum owned by ExpansionHubSaveCodec.
+        /// The debt-consequence bridge (host-authority wiring owned by Main) contributes
+        /// its labor-obligation state; dispatcher fired-set and embargoes are captured
+        /// from the session-owned systems directly.</summary>
+        public ExpansionHubSave CaptureSave(int simDay, DebtConsequenceBridgeState? debtBridge = null) =>
             ExpansionHubSaveCodec.Capture(simDay, Waystation, Layouts, Memory, SiteEncounters, Vouch, Greenhouse,
-                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry, Disease);
+                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry, Disease,
+                debtDispatcher: DebtDispatcher, embargoes: Embargoes, debtBridge: debtBridge);
 
-        public void RestoreSave(ExpansionHubSave save) =>
+        public void RestoreSave(ExpansionHubSave save, DebtConsequenceHostBridge? debtBridge = null) =>
             ExpansionHubSaveCodec.Restore(save, Waystation, Layouts, Memory, SiteEncounters, Vouch, Greenhouse,
-                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry, Disease);
+                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry, Disease,
+                debtDispatcher: DebtDispatcher, embargoes: Embargoes, debtBridge: debtBridge);
 
         // ---- Nobody's Charter: Crossing Arbitration (Exp 04) ----
 

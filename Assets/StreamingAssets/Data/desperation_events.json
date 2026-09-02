@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "events": [
+    {
+      "desperation_id": "desperation_consume_corpse",
+      "display_name": "Harvest Fallen Dweller",
+      "required_starvation": 90.0,
+      "required_conditions": [ "has_unburied_corpse", "starvation_crisis" ],
+      "forbidden_conditions": [],
+      "resource_yield_item_id": "raw_meat",
+      "resource_yield_count": 8,
+      "taboo_level": "Broken",
+      "morale_shock": 35.0,
+      "prion_risk": 0.15,
+      "mutiny_pressure": 25.0,
+      "trait_granted": "trait_cannibal"
+    },
+    {
+      "desperation_id": "desperation_drink_blood",
+      "display_name": "Emergency Fluid Extraction",
+      "required_starvation": 85.0,
+      "required_conditions": [ "has_unburied_corpse", "dehydration_crisis" ],
+      "forbidden_conditions": [],
+      "resource_yield_item_id": "clean_water",
+      "resource_yield_count": 3,
+      "taboo_level": "Broken",
+      "morale_shock": 25.0,
+      "prion_risk": 0.08,
+      "mutiny_pressure": 15.0,
+      "trait_granted": "trait_cannibal"
+    },
+    {
+      "desperation_id": "desperation_desecrate_stores",
+      "display_name": "Raid Emergency Seed Stock",
+      "required_starvation": 90.0,
+      "required_conditions": [ "starvation_crisis" ],
+      "forbidden_conditions": [],
+      "resource_yield_item_id": "raw_meat",
+      "resource_yield_count": 4,
+      "taboo_level": "Severe",
+      "morale_shock": 18.0,
+      "prion_risk": 0.0,
+      "mutiny_pressure": 30.0,
+      "trait_granted": "trait_desperate"
+    }
+  ]
+}

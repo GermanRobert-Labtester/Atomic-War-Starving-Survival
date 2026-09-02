@@ -69,6 +69,9 @@ namespace Ashfall.Core.Journal
 
         /// <summary>"glitch_noted_" + glitchId — a machine glitch event was observed/journalised (Plan 29 29B).</summary>
         public static string GlitchNoted(string glitchId) => "glitch_noted_" + glitchId;
+
+        /// <summary>"wildlife_species_caught_" + speciesId — first successful catch of a prey species (WT-INT-01).</summary>
+        public static string WildlifeSpeciesCaught(string speciesId) => "wildlife_species_caught_" + speciesId;
     }
 
     /// <summary>

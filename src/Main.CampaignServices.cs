@@ -65,6 +65,32 @@ namespace AtomicWar.GodotApp
                 // Wiring that needs all services up
                 SetupExpeditionCombatHandoff(_combat);
 
+                // Plans 178-201: expansion systems must also exist in a NEW game
+                // (RestoreAllSubsystemsFromDisk covers only the load/continue
+                // path). Without this, the null-guarded tick blocks never come
+                // alive and the sections never persist for fresh campaigns.
+                SetupGenerational();
+                SetupPrisoners();
+                SetupMutations();
+                SetupStealth();
+                SetupAviation();
+                SetupForcedLabor();
+                SetupNarcotics();
+                SetupPolitics();
+                SetupFallout();
+                SetupDesperation();
+                SetupMercenary();
+                SetupArchaeology();
+                SetupAmputation();
+                SetupRailway();
+                SetupFungi();
+                SetupJustice();
+                SetupRecreation();
+                SetupChemWarfare();
+                SetupCommsArray();
+                SetupCeremony();
+                SetupRobotics();
+
                 // Expanded shelter systems (last — depends on World/PowerGrid/Inventory/Survivors/MedicalWard/Phase0/Crafting/Journal/Expeditions)
                 SetupExpandedShelterSystems();
             }
@@ -72,6 +98,27 @@ namespace AtomicWar.GodotApp
             {
                 _isComposing = false;
             }
+        }
+
+        private Ashfall.Core.Survivors.SkillProgressionSystem? _sharedSkillProgression;
+
+        public Ashfall.Core.Survivors.SkillProgressionSystem EnsureSharedSkillProgression()
+        {
+            if (_sharedSkillProgression != null) return _sharedSkillProgression;
+
+            var fileIO = new Ashfall.Core.FileSystemIO();
+            var serializer = new Ashfall.Core.SystemTextJsonSerializer();
+            var catalog = Ashfall.Core.Survivors.SkillCatalogLoader.Load(_dataDir, fileIO, serializer);
+
+            _sharedSkillProgression = new Ashfall.Core.Survivors.SkillProgressionSystem();
+            if (catalog != null)
+            {
+                for (int i = 0; i < catalog.Count; i++)
+                {
+                    _sharedSkillProgression.RegisterSkill(catalog[i]);
+                }
+            }
+            return _sharedSkillProgression;
         }
     }
 }

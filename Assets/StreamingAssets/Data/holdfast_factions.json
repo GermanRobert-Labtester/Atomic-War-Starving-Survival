@@ -89,6 +89,106 @@
       "signature_quote": "The sea keeps what it takes. We keep what we raise. Everything else is argument.",
       "access_rule": "Flag traffic is hailed, boarded, and priced. Marked salvage claims outrange weapons; a claim tag counts as a signature on the water. Unmarked deep work is theirs, not yours.",
       "badge_asset_id": "faction_icon_black_flotilla"
+    },
+    {
+      "id": "faction_supply_corps",
+      "display_name": "The Supply Corps",
+      "alignment": "conditional",
+      "home_region": "district_8",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "item_census_return_blank",
+        "settled_ledgers"
+      ],
+      "offers": [
+        "ration_credit",
+        "fuel_advance",
+        "medical_tab"
+      ],
+      "signature_quote": "The pencil first. Ink comes at signing.",
+      "access_rule": "Allocation-office discipline: credit against the shelter's next issue, terms read aloud twice, forfeit named before the goods move. Default is remembered in files, not grudges.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_railway_guild",
+      "display_name": "The Railway Guild",
+      "alignment": "conditional",
+      "home_region": "the_rail_south",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "item_mechanical_parts",
+        "track_labour"
+      ],
+      "offers": [
+        "diesel_credit",
+        "parts_advance",
+        "engine_credit"
+      ],
+      "signature_quote": "The trains run on diesel and on people who pay.",
+      "access_rule": "Keeps the southern rail open for counterparties in good standing. Lends fuel, parts, and capital equipment at fair rates; default closes the track, and the track stays closed.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_hydro_barons",
+      "display_name": "The Hydro Barons",
+      "alignment": "conditional",
+      "home_region": "the_aquifer",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "item_water_filter",
+        "resin_and_salt"
+      ],
+      "offers": [
+        "water_credit",
+        "filter_advance",
+        "purification_tab"
+      ],
+      "signature_quote": "Water is leverage. We simply hold the tap.",
+      "access_rule": "Control the deep aquifer and everything that filters it. No negotiation on rates, no second contract while the first is open, and no exceptions to the embargo that follows a default.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_ordnance_foundry",
+      "display_name": "The Ordnance Foundry",
+      "alignment": "conditional",
+      "home_region": "the_foundry_yard",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "item_mechanical_parts",
+        "working_barrels"
+      ],
+      "offers": [
+        "ammo_credit",
+        "tool_advance",
+        "protective_credit"
+      ],
+      "signature_quote": "We produce. You borrow. We do not forget.",
+      "access_rule": "Production-line counterparty for ammunition, tools, and protective equipment. Rates are honest because capable shelters are repeat customers; defaults are collected by enforcers, not letters.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_scavengers",
+      "display_name": "The Scavengers",
+      "alignment": "conditional",
+      "home_region": "the_wreck_belt",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "item_dosimeter",
+        "intact_screens"
+      ],
+      "offers": [
+        "ration_advance",
+        "medicine_credit",
+        "equipment_credit"
+      ],
+      "signature_quote": "We don't ask questions. We already know the answers.",
+      "access_rule": "Move goods nobody else will touch, against collateral they inventory themselves. Payment in full, on the day, or they take what they are owed from what you have.",
+      "badge_asset_id": ""
     }
   ]
 }

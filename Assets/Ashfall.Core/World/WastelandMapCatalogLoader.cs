@@ -64,6 +64,15 @@ namespace Ashfall.Core.World
 
         /// <summary>Weather hazard risk multiplier along this travel corridor.</summary>
         public float weatherHazard { get; set; }
+
+        /// <summary>Travel domain: "land" or "water".</summary>
+        public string travelDomain { get; set; } = "land";
+
+        /// <summary>Water current strength (-1.0 to 1.0).</summary>
+        public float currentStrength { get; set; } = 0f;
+
+        /// <summary>Toxic water contamination level (0.0 to 1.0).</summary>
+        public float toxicContamination { get; set; } = 0f;
     }
 
     /// <summary>Categories of route validation failures in the map catalog.</summary>
@@ -260,7 +269,10 @@ namespace Ashfall.Core.World
                         From = r.from,
                         To = r.to,
                         DistanceKm = r.distanceKm,
-                        WeatherHazard = r.weatherHazard
+                        WeatherHazard = r.weatherHazard,
+                        TravelDomain = r.travelDomain ?? "land",
+                        CurrentStrength = r.currentStrength,
+                        ToxicContamination = r.toxicContamination
                     });
                 }
             }

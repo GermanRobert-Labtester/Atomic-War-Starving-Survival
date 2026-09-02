@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "agents": [
+    {
+      "id": "chem_agent_irritant_prewar",
+      "display_name": "Pre-War Tear Particulate",
+      "hazard_class": "irritant",
+      "base_density_permille": 500,
+      "persistence_ticks": 8,
+      "filter_wear_permille": 40,
+      "exposure_severity": 1,
+      "visual_profile_id": "toxic_fog_irritant",
+      "description": "A pale, weeping fog left over from the final days of the Meridian Compact. It tastes like copper and grief, designed to break riots by searing the lungs just short of permanent tissue death."
+    },
+    {
+      "id": "chem_agent_choke_vapor",
+      "display_name": "Halogen Choke Vapor",
+      "hazard_class": "choke_vapor",
+      "base_density_permille": 700,
+      "persistence_ticks": 10,
+      "filter_wear_permille": 75,
+      "exposure_severity": 2,
+      "visual_profile_id": "toxic_fog_choke",
+      "description": "A sickly, creeping yellow-green cloud that clings to the bunker floors. One breath dissolves the delicate lung membranes, drowning the victim in their own fluids while leaving them fully conscious."
+    },
+    {
+      "id": "chem_agent_corrosive_mist",
+      "display_name": "Leached Pyrosulfur Mist",
+      "hazard_class": "corrosive_mist",
+      "base_density_permille": 850,
+      "persistence_ticks": 12,
+      "filter_wear_permille": 110,
+      "exposure_severity": 3,
+      "visual_profile_id": "toxic_fog_corrosive",
+      "description": "A seething, hyper-acidic haze weeping from shattered subterranean munitions tanks. It eats through rubberized seals and flesh alike, turning the air itself into a ravenous, flesh-sloughing entity."
+    },
+    {
+      "id": "chem_agent_vesicant_distillate",
+      "display_name": "Vesicant Soil Distillate",
+      "hazard_class": "vesicant",
+      "base_density_permille": 900,
+      "persistence_ticks": 15,
+      "filter_wear_permille": 140,
+      "exposure_severity": 4,
+      "visual_profile_id": "toxic_fog_vesicant",
+      "description": "Thick, oily droplets welling up from forgotten military stockpiles. It lies dormant in the dust until disturbed, painting the skin with horrific, agonizing blisters that refuse to heal."
+    },
+    {
+      "id": "chem_agent_industrial_effluent",
+      "display_name": "Refinery Effluent Smog",
+      "hazard_class": "industrial_effluent",
+      "base_density_permille": 600,
+      "persistence_ticks": 6,
+      "filter_wear_permille": 50,
+      "exposure_severity": 2,
+      "visual_profile_id": "toxic_fog_industrial",
+      "description": "A choking, pitch-black smog exhaled by the shattered remains of pre-war refineries. It coats the throat in rancid petrochemical ash, suffocating the light and slowly burying the living."
+    }
+  ]
+}

@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "intercepts": [
+    {
+      "id": "radio_intercept_meridian_supply_column_01",
+      "callsign": "MERIDIAN-ACT-7",
+      "frequency_khz": 7115,
+      "band": "hf",
+      "signal_class": "logistics_chatter",
+      "source_faction_id": "faction_the_compact",
+      "base_signal_strength": 0.65,
+      "encryption": {
+        "scheme": "field_cipher",
+        "difficulty": 40,
+        "required_skill_ids": [
+          "skill_signal_ear",
+          "skill_cold_analysis"
+        ]
+      },
+      "triangulation": {
+        "required_bearings": 3,
+        "revealed_location_id": "loc_diesel_tank_farm"
+      },
+      "expiry_days": 4,
+      "message": "Bravo route is choked with white-hot ash. We just lost two rigs to melt-throughs. Rerouting the surviving tankers to the deep bulk storage. If we don't make it, burn the manifest.",
+      "tags": [
+        "military",
+        "logistics",
+        "fuel"
+      ]
+    },
+    {
+      "id": "radio_intercept_sos_quarry_shelter_02",
+      "callsign": "SHELTER-44-SOS",
+      "frequency_khz": 3850,
+      "band": "hf",
+      "signal_class": "sos_distress",
+      "source_faction_id": "faction_the_office",
+      "base_signal_strength": 0.5,
+      "encryption": {
+        "scheme": "none",
+        "difficulty": 0,
+        "required_skill_ids": []
+      },
+      "triangulation": {
+        "required_bearings": 2,
+        "revealed_location_id": "loc_recovery_yard"
+      },
+      "expiry_days": 3,
+      "message": "MAYDAY. The intake fan just screamed and died\u2014we're buried under thirty feet of frozen sludge. Seven of us coughing in the sub-level. Oxygen's thinning. (coughing) We can't clear the hatch...",
+      "tags": [
+        "distress",
+        "emergency",
+        "rescue"
+      ]
+    },
+    {
+      "id": "radio_intercept_dead_hand_silo_beacon_03",
+      "callsign": "DEAD-HAND-CARRIER-9",
+      "frequency_khz": 14220,
+      "band": "hf",
+      "signal_class": "dead_hand_beacon",
+      "source_faction_id": "faction_the_compact",
+      "base_signal_strength": 0.8,
+      "encryption": {
+        "scheme": "otp_military",
+        "difficulty": 80,
+        "required_skill_ids": [
+          "skill_cold_analysis"
+        ]
+      },
+      "triangulation": {
+        "required_bearings": 3,
+        "revealed_location_id": "loc_ordnance_shoulder"
+      },
+      "expiry_days": 0,
+      "message": "AUTOMATED TELEMETRY: Silo doors forced. Micro-fractures in primary concrete casing. Sub-level three ordnance bays unsealed. Radiation spikes detected in retrieval corridors.",
+      "tags": [
+        "military",
+        "automated",
+        "high_value"
+      ]
+    },
+    {
+      "id": "radio_intercept_weather_ionosphere_bulletin_04",
+      "callsign": "OBS-IONO-NORTH",
+      "frequency_khz": 5150,
+      "band": "hf",
+      "signal_class": "weather_telemetry",
+      "source_faction_id": "faction_the_office",
+      "base_signal_strength": 0.7,
+      "encryption": {
+        "scheme": "none",
+        "difficulty": 0,
+        "required_skill_ids": []
+      },
+      "triangulation": {
+        "required_bearings": 1,
+        "revealed_location_id": "loc_low_background_lab"
+      },
+      "expiry_days": 2,
+      "message": "ATMOSPHERIC ALERT: Sky is boiling green. Severe geomagnetic cascade expected in two hours. Expect massive static across all bands. The northern passes are entirely blacked out.",
+      "tags": [
+        "weather",
+        "science",
+        "propagation"
+      ]
+    },
+    {
+      "id": "radio_intercept_orbital_harrow_early_warning_05",
+      "callsign": "ORBIT-TELEM-HARROW",
+      "frequency_khz": 10125,
+      "band": "hf",
+      "signal_class": "harrow_warning",
+      "source_faction_id": "faction_the_compact",
+      "base_signal_strength": 0.9,
+      "encryption": {
+        "scheme": "military_telemetry",
+        "difficulty": 55,
+        "required_skill_ids": [
+          "skill_signal_ear",
+          "skill_cold_analysis"
+        ]
+      },
+      "triangulation": {
+        "required_bearings": 2,
+        "revealed_location_id": "loc_summit_relay"
+      },
+      "expiry_days": 1,
+      "message": "DEORBIT WARNING: Six kinetic rods separated from orbit-tether. Thermal bloom detected. Thirty seconds to upper-crust impact. All remaining personnel, brace for seismic shear.",
+      "tags": [
+        "orbital",
+        "harrow",
+        "strike_warning"
+      ]
+    },
+    {
+      "id": "radio_intercept_raider_ambush_chatter_06",
+      "callsign": "IRON-FANG-04",
+      "frequency_khz": 27150,
+      "band": "vhf",
+      "signal_class": "tactical_chatter",
+      "source_faction_id": "faction_iron_raiders",
+      "base_signal_strength": 0.45,
+      "encryption": {
+        "scheme": "slang_code",
+        "difficulty": 25,
+        "required_skill_ids": [
+          "skill_signal_ear"
+        ]
+      },
+      "triangulation": {
+        "required_bearings": 2,
+        "revealed_location_id": "loc_weighbridge"
+      },
+      "expiry_days": 2,
+      "message": "(Static) ...caltrops are laid in the blind spot. Let the lead hauler hit the bottleneck, wait till they pop the hatches to check the tires, then we take them. Leave the grain, grab the water.",
+      "tags": [
+        "raider",
+        "ambush",
+        "intel"
+      ]
+    },
+    {
+      "id": "radio_intercept_flotilla_coastal_relay_07",
+      "callsign": "FLOTILLA-TIDE-2",
+      "frequency_khz": 156800,
+      "band": "vhf",
+      "signal_class": "maritime_chatter",
+      "source_faction_id": "faction_black_flotilla",
+      "base_signal_strength": 0.6,
+      "encryption": {
+        "scheme": "nautical_code",
+        "difficulty": 35,
+        "required_skill_ids": [
+          "skill_signal_ear"
+        ]
+      },
+      "triangulation": {
+        "required_bearings": 3,
+        "revealed_location_id": "loc_cold_store_atlantic"
+      },
+      "expiry_days": 5,
+      "message": "Barge Three is tied off in the shadows. The water's glowing again tonight, but the salt-fish and stripped copper are dry. Signal with two red flares if the exchange is still on.",
+      "tags": [
+        "maritime",
+        "trade",
+        "supplies"
+      ]
+    },
+    {
+      "id": "radio_intercept_spoofed_distress_trap_08",
+      "callsign": "SHELTER-UNKNOWN-SOS",
+      "frequency_khz": 3620,
+      "band": "hf",
+      "signal_class": "spoofed_signal",
+      "source_faction_id": "faction_the_cutters",
+      "base_signal_strength": 0.4,
+      "encryption": {
+        "scheme": "none",
+        "difficulty": 0,
+        "required_skill_ids": []
+      },
+      "triangulation": {
+        "required_bearings": 3,
+        "revealed_location_id": "loc_motel_verity"
+      },
+      "expiry_days": 3,
+      "message": "(Sobbing) Please, is anyone on this frequency? We're at the old motel... we have kids here, we have generator parts to trade, we just need iodine... please, they're starting to bleed...",
+      "tags": [
+        "trap",
+        "danger",
+        "ambush"
+      ]
+    },
+    {
+      "id": "radio_intercept_scientific_ice_core_relay_09",
+      "callsign": "EXPEDITION-GLACIER-9",
+      "frequency_khz": 14180,
+      "band": "hf",
+      "signal_class": "science_log",
+      "source_faction_id": "faction_the_office",
+      "base_signal_strength": 0.55,
+      "encryption": {
+        "scheme": "scientific_encoding",
+        "difficulty": 45,
+        "required_skill_ids": [
+          "skill_cold_analysis"
+        ]
+      },
+      "triangulation": {
+        "required_bearings": 3,
+        "revealed_location_id": "loc_ice_core_store"
+      },
+      "expiry_days": 6,
+      "message": "Core extraction successful. The ice strata shows the soot layer from the third exchange. It's... it's thicker than we modeled. The data vault is intact, but the surface... there's nothing left up there.",
+      "tags": [
+        "lore",
+        "science",
+        "research"
+      ]
+    },
+    {
+      "id": "radio_intercept_cutters_bunker_assault_10",
+      "callsign": "CUTTER-PRIME",
+      "frequency_khz": 146520,
+      "band": "vhf",
+      "signal_class": "raider_chatter",
+      "source_faction_id": "faction_the_cutters",
+      "base_signal_strength": 0.5,
+      "encryption": {
+        "scheme": "field_cipher",
+        "difficulty": 50,
+        "required_skill_ids": [
+          "skill_signal_ear",
+          "skill_cold_analysis"
+        ]
+      },
+      "triangulation": {
+        "required_bearings": 2,
+        "revealed_location_id": "loc_forward_roster_camp"
+      },
+      "expiry_days": 3,
+      "message": "Thermite is burning through the hinges now. The bunker rats are screaming through the comms. We breach at dusk. Collar the engineers, put a bullet in the rest.",
+      "tags": [
+        "raider",
+        "assault",
+        "intel"
+      ]
+    },
+    {
+      "id": "radio_intercept_pumphouse_distress_11",
+      "callsign": "AQUIFER-STATION-9",
+      "frequency_khz": 1850,
+      "band": "hf",
+      "signal_class": "sos_distress",
+      "source_faction_id": "faction_the_office",
+      "base_signal_strength": 0.6,
+      "encryption": {
+        "scheme": "none",
+        "difficulty": 0,
+        "required_skill_ids": []
+      },
+      "triangulation": {
+        "required_bearings": 2,
+        "revealed_location_id": "loc_pump_station_nine"
+      },
+      "expiry_days": 2,
+      "message": "The water's black and it smells like sulfur. It just swallowed the secondary pumps. We're running on fumes. Sealing the bulkhead and praying the blast door holds the pressure...",
+      "tags": [
+        "distress",
+        "flood",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "radio_intercept_grain_silo_cache_12",
+      "callsign": "VALLEY-AGRIC-4",
+      "frequency_khz": 7080,
+      "band": "hf",
+      "signal_class": "civilian_broadcast",
+      "source_faction_id": "faction_the_scale",
+      "base_signal_strength": 0.7,
+      "encryption": {
+        "scheme": "none",
+        "difficulty": 0,
+        "required_skill_ids": []
+      },
+      "triangulation": {
+        "required_bearings": 2,
+        "revealed_location_id": "loc_grain_silo"
+      },
+      "expiry_days": 4,
+      "message": "We cracked the secondary elevator. Half a ton of viable winter rye, sealed in vacuum glass. We're choking on the dust though. Will trade fifty kilos for pristine carbon filters. No raiders.",
+      "tags": [
+        "trade",
+        "food",
+        "cache"
+      ]
+    },
+    {
+      "id": "radio_intercept_high_mountain_relay_13",
+      "callsign": "PEAK-BEACON-ONE",
+      "frequency_khz": 446000,
+      "band": "uhf",
+      "signal_class": "navigation_beacon",
+      "source_faction_id": "faction_the_office",
+      "base_signal_strength": 0.85,
+      "encryption": {
+        "scheme": "none",
+        "difficulty": 0,
+        "required_skill_ids": []
+      },
+      "triangulation": {
+        "required_bearings": 2,
+        "revealed_location_id": "loc_radio_relay_mast"
+      },
+      "expiry_days": 0,
+      "message": "AUTOMATED PING: Solar degraded by ash accumulation. Gyros stabilizing. If you receive this signal, the Compact endures. Maintain your stations.",
+      "tags": [
+        "navigation",
+        "repeater",
+        "permanent"
+      ]
+    },
+    {
+      "id": "radio_intercept_lock_gate_sabotage_14",
+      "callsign": "CANAL-WATCH-7",
+      "frequency_khz": 7240,
+      "band": "hf",
+      "signal_class": "regional_chatter",
+      "source_faction_id": "faction_the_scale",
+      "base_signal_strength": 0.55,
+      "encryption": {
+        "scheme": "field_cipher",
+        "difficulty": 30,
+        "required_skill_ids": [
+          "skill_signal_ear"
+        ]
+      },
+      "triangulation": {
+        "required_bearings": 3,
+        "revealed_location_id": "loc_lock_gate_four"
+      },
+      "expiry_days": 4,
+      "message": "The whole mechanism is screaming. Somebody packed the gears with rebar and concrete. The water is backing up fast, and the pressure seals are starting to whine. We need a welding team NOW!",
+      "tags": [
+        "water",
+        "sabotage",
+        "warning"
+      ]
+    },
+    {
+      "id": "radio_intercept_snowline_researcher_sos_15",
+      "callsign": "SNOWLINE-CAMP-2",
+      "frequency_khz": 14290,
+      "band": "hf",
+      "signal_class": "sos_distress",
+      "source_faction_id": "faction_the_office",
+      "base_signal_strength": 0.4,
+      "encryption": {
+        "scheme": "none",
+        "difficulty": 0,
+        "required_skill_ids": []
+      },
+      "triangulation": {
+        "required_bearings": 2,
+        "revealed_location_id": "loc_snowline_station"
+      },
+      "expiry_days": 3,
+      "message": "The line snapped. We're in the dark. The heaters died ten minutes ago and the frost is already creeping up the walls. (shivering) We can't feel our hands. Please...",
+      "tags": [
+        "distress",
+        "cold",
+        "rescue"
+      ]
+    },
+    {
+      "id": "radio_intercept_grange_community_hymn_16",
+      "callsign": "COMMUNITY-GRANGE",
+      "frequency_khz": 1920,
+      "band": "hf",
+      "signal_class": "community_broadcast",
+      "source_faction_id": "faction_the_scale",
+      "base_signal_strength": 0.75,
+      "encryption": {
+        "scheme": "none",
+        "difficulty": 0,
+        "required_skill_ids": []
+      },
+      "triangulation": {
+        "required_bearings": 1,
+        "revealed_location_id": "loc_grange_hall"
+      },
+      "expiry_days": 7,
+      "message": "(Static crackles, giving way to a choir of raspy, exhausted voices singing an old hymn)... reading the roll. Station Four, silent. Station Seven, silent. Station Nine... (a long pause) Station Nine, we pray for your souls.",
+      "tags": [
+        "lore",
+        "community",
+        "morale"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "nodes": [
+    {
+      "node_id": "rail_node_holdfast_terminal",
+      "display_name": "Holdfast Central Yard",
+      "zone_id": "loc_holdfast",
+      "node_type": "Terminal"
+    },
+    {
+      "node_id": "rail_node_delta_junction",
+      "display_name": "River Delta Junction",
+      "zone_id": "loc_river_delta",
+      "node_type": "Junction"
+    },
+    {
+      "node_id": "rail_node_silo_depot",
+      "display_name": "Missile Silo Rail Spur",
+      "zone_id": "loc_ruined_silo",
+      "node_type": "Depot"
+    },
+    {
+      "node_id": "rail_node_dam_terminus",
+      "display_name": "Hydro Dam Terminus",
+      "zone_id": "loc_hydro_dam",
+      "node_type": "Terminus"
+    }
+  ],
+  "segments": [
+    {
+      "segment_id": "rail_segment_holdfast_to_delta",
+      "display_name": "Holdfast-Delta Mainline",
+      "start_node_id": "rail_node_holdfast_terminal",
+      "end_node_id": "rail_node_delta_junction",
+      "distance_km": 18.0,
+      "base_integrity": 0.85,
+      "bridge_required": false,
+      "max_train_mass": 250.0,
+      "hazard_tags": [ "raider_patrol" ]
+    },
+    {
+      "segment_id": "rail_segment_delta_to_silo",
+      "display_name": "Delta-Silo Industrial Spur",
+      "start_node_id": "rail_node_delta_junction",
+      "end_node_id": "rail_node_silo_depot",
+      "distance_km": 24.0,
+      "base_integrity": 0.40,
+      "bridge_required": false,
+      "max_train_mass": 200.0,
+      "hazard_tags": [ "derailment_risk", "rockslide" ]
+    },
+    {
+      "segment_id": "rail_segment_delta_to_dam",
+      "display_name": "River Gorge Trestle Line",
+      "start_node_id": "rail_node_delta_junction",
+      "end_node_id": "rail_node_dam_terminus",
+      "distance_km": 32.0,
+      "base_integrity": 0.30,
+      "bridge_required": true,
+      "max_train_mass": 180.0,
+      "hazard_tags": [ "trestle_bridge", "ambush_point" ]
+    }
+  ],
+  "cars": [
+    {
+      "car_type_id": "car_locomotive_diesel",
+      "display_name": "Armored Diesel Switcher",
+      "empty_mass": 70.0,
+      "cargo_capacity": 20.0,
+      "armor_rating": 80.0,
+      "max_fuel_capacity": 500.0,
+      "fuel_burn_per_km": 2.5
+    },
+    {
+      "car_type_id": "car_freight_hopper",
+      "display_name": "Heavy Freight Hopper",
+      "empty_mass": 25.0,
+      "cargo_capacity": 150.0,
+      "armor_rating": 40.0,
+      "max_fuel_capacity": 0.0,
+      "fuel_burn_per_km": 0.0
+    },
+    {
+      "car_type_id": "car_armored_turret",
+      "display_name": "Armored Flak Gun Car",
+      "empty_mass": 35.0,
+      "cargo_capacity": 30.0,
+      "armor_rating": 120.0,
+      "max_fuel_capacity": 0.0,
+      "fuel_burn_per_km": 0.0
+    },
+    {
+      "car_type_id": "car_medical_hospital",
+      "display_name": "Field Hospital Surgery Car",
+      "empty_mass": 30.0,
+      "cargo_capacity": 40.0,
+      "armor_rating": 60.0,
+      "max_fuel_capacity": 0.0,
+      "fuel_burn_per_km": 0.0
+    }
+  ]
+}

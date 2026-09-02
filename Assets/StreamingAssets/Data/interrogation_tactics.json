@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "tactics": [
+    {
+      "tactic_id": "interrogation_conversation",
+      "display_name": "Rapport & Conversation",
+      "description": "Share a meager ration of hardtack and a rare moment of warmth. A momentary illusion of safety that coaxes secrets from lips unaccustomed to kindness.",
+      "required_facility_tags": ["detention_room"],
+      "required_item_costs": [
+        { "item_id": "ration_hardtack", "amount": 1 },
+        { "item_id": "clean_water", "amount": 1 }
+      ],
+      "duration_hours": 2,
+      "base_compliance_delta": 8.0,
+      "trust_delta": 15.0,
+      "fear_delta": -5.0,
+      "resentment_delta": -10.0,
+      "health_damage": 0.0,
+      "morale_penalty": 0.0,
+      "intel_chance": 0.45,
+      "false_intel_chance": 0.05,
+      "cooldown_days": 1,
+      "severity": "Humane"
+    },
+    {
+      "tactic_id": "interrogation_bargain",
+      "display_name": "Formal Bargain",
+      "description": "Slide a dented can of clean water across the table and outline a fragile pact. Survival in exchange for actionable coordinates, binding them to our grim cause.",
+      "required_facility_tags": ["detention_room"],
+      "required_item_costs": [
+        { "item_id": "scrap_metal", "amount": 2 }
+      ],
+      "duration_hours": 1,
+      "base_compliance_delta": 15.0,
+      "trust_delta": 8.0,
+      "fear_delta": 0.0,
+      "resentment_delta": -2.0,
+      "health_damage": 0.0,
+      "morale_penalty": 0.0,
+      "intel_chance": 0.65,
+      "false_intel_chance": 0.10,
+      "cooldown_days": 1,
+      "severity": "Humane"
+    },
+    {
+      "tactic_id": "interrogation_good_cop",
+      "display_name": "Calculated Sympathy",
+      "description": "Play the reluctant savior. Spin a web of empathy, warning them of the bloodthirsty hardliners just outside the steel door waiting for a reason to enter.",
+      "required_facility_tags": ["detention_room"],
+      "required_item_costs": [],
+      "duration_hours": 2,
+      "base_compliance_delta": 12.0,
+      "trust_delta": 12.0,
+      "fear_delta": 4.0,
+      "resentment_delta": 2.0,
+      "health_damage": 0.0,
+      "morale_penalty": 0.0,
+      "intel_chance": 0.55,
+      "false_intel_chance": 0.12,
+      "cooldown_days": 1,
+      "severity": "Standard"
+    },
+    {
+      "tactic_id": "interrogation_intimidation",
+      "display_name": "Armed Intimidation",
+      "description": "Slam a rusted barrel against the table and describe the horrors of the irradiated storms outside. Fear is a universal language, and exile is a death sentence.",
+      "required_facility_tags": ["detention_room"],
+      "required_item_costs": [],
+      "duration_hours": 1,
+      "base_compliance_delta": 20.0,
+      "trust_delta": -15.0,
+      "fear_delta": 25.0,
+      "resentment_delta": 18.0,
+      "health_damage": 0.0,
+      "morale_penalty": -3.0,
+      "intel_chance": 0.70,
+      "false_intel_chance": 0.20,
+      "cooldown_days": 1,
+      "severity": "Harsh"
+    },
+    {
+      "tactic_id": "interrogation_deprivation",
+      "display_name": "Sleep & Sensory Deprivation",
+      "description": "Bathe them in the blinding glare of halogen bulbs while static hisses from broken speakers. The biting cold and endless noise erode their mind until the truth spills out like blood.",
+      "required_facility_tags": ["detention_room", "powered_light"],
+      "required_item_costs": [],
+      "duration_hours": 6,
+      "base_compliance_delta": 30.0,
+      "trust_delta": -30.0,
+      "fear_delta": 35.0,
+      "resentment_delta": 35.0,
+      "health_damage": 10.0,
+      "morale_penalty": -8.0,
+      "intel_chance": 0.75,
+      "false_intel_chance": 0.35,
+      "cooldown_days": 2,
+      "severity": "Severe"
+    },
+    {
+      "tactic_id": "interrogation_torture",
+      "display_name": "Physical Torture",
+      "description": "Cross the final moral boundary with rusted pliers and calculated agony. The screams echo through the bunker vents, yielding rapid, desperate confessions—and terrifying our own people.",
+      "required_facility_tags": ["detention_room"],
+      "required_item_costs": [
+        { "item_id": "iron_shackles", "amount": 1 }
+      ],
+      "duration_hours": 3,
+      "base_compliance_delta": 45.0,
+      "trust_delta": -60.0,
+      "fear_delta": 60.0,
+      "resentment_delta": 60.0,
+      "health_damage": 30.0,
+      "morale_penalty": -20.0,
+      "intel_chance": 0.85,
+      "false_intel_chance": 0.50,
+      "cooldown_days": 3,
+      "severity": "Brutal"
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "events": [
+    {
+      "id": "social_event_bunk_noise_friction",
+      "display_name": "Midnight Bunk Disturbance",
+      "room_tags": [
+        "crowded_sleeping"
+      ],
+      "required_room_ids": [
+        "room_bunks_crowded"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 3,
+      "base_weight": 120,
+      "description": "A hacking cough from a top bunk triggers a shoved shoulder, a hissed threat, and suddenly two exhausted survivors are at each other's throats in the dark.",
+      "outcomes": [
+        {
+          "id": "outcome_bunk_argument_unresolved",
+          "display_name": "Unchecked Argument",
+          "morale_delta": -4,
+          "relationship_delta": -12,
+          "memory_tag": "bunk_midnight_quarrel",
+          "can_mediate": true,
+          "mediation_skill_id": "skill_watchful"
+        },
+        {
+          "id": "outcome_bunk_argument_mediated",
+          "display_name": "Quiet Mediation",
+          "morale_delta": 2,
+          "relationship_delta": 6,
+          "memory_tag": "bunk_quarrel_settled",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_privacy_boundary_breach",
+      "display_name": "Personal Space Transgression",
+      "room_tags": [
+        "crowded_sleeping"
+      ],
+      "required_room_ids": [
+        "room_bunks_crowded"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 4,
+      "base_weight": 90,
+      "description": "Someone rummages too close to a neighbor's locker. A worn photograph is dropped, sparking a quiet but vicious confrontation over boundaries that no longer exist.",
+      "outcomes": [
+        {
+          "id": "outcome_privacy_rift",
+          "display_name": "Deepening Resentment",
+          "morale_delta": -5,
+          "relationship_delta": -15,
+          "memory_tag": "privacy_breach_distrust",
+          "can_mediate": true,
+          "mediation_skill_id": "skill_watchful"
+        }
+      ]
+    },
+    {
+      "id": "social_event_private_quarters_solace",
+      "display_name": "Solitary Recovery",
+      "room_tags": [
+        "private_quarters"
+      ],
+      "required_room_ids": [
+        "room_quarters_private"
+      ],
+      "minimum_occupants": 1,
+      "cooldown_days": 2,
+      "base_weight": 100,
+      "description": "For a few rare hours, the heavy steel door is shut. No humming generators, no weeping, no demands—just the luxury of absolute, impenetrable silence.",
+      "outcomes": [
+        {
+          "id": "outcome_private_rest_complete",
+          "display_name": "Privacy Restored",
+          "morale_delta": 6,
+          "relationship_delta": 0,
+          "memory_tag": "private_quarters_peace",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_communal_meal_cohesion",
+      "display_name": "Evening Mess Hall Gathering",
+      "room_tags": [
+        "communal_mess"
+      ],
+      "required_room_ids": [
+        "room_common_mess_hall"
+      ],
+      "minimum_occupants": 3,
+      "cooldown_days": 2,
+      "base_weight": 110,
+      "description": "Steam rises from dented mess tins as someone tells a joke nobody laughs at — then everyone does, all at once, because the alternative is sitting in silence again.",
+      "outcomes": [
+        {
+          "id": "outcome_communal_bonding",
+          "display_name": "Table Camaraderie",
+          "morale_delta": 5,
+          "relationship_delta": 10,
+          "memory_tag": "communal_mess_solidarity",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_ideology_ration_dispute",
+      "display_name": "Ration Distribution Debate",
+      "room_tags": [
+        "communal_mess",
+        "crowded_sleeping"
+      ],
+      "required_room_ids": [
+        "room_common_mess_hall"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 5,
+      "base_weight": 85,
+      "description": "A bruised engineer slams his tin cup down, shouting that those who dig the tunnels should eat the most. The hungry gazes staring back promise a reckoning.",
+      "outcomes": [
+        {
+          "id": "outcome_ideology_escalation",
+          "display_name": "Factional Split",
+          "morale_delta": -6,
+          "relationship_delta": -18,
+          "memory_tag": "ration_policy_dispute",
+          "can_mediate": true,
+          "mediation_skill_id": "skill_cold_analysis"
+        },
+        {
+          "id": "outcome_ideology_compromise",
+          "display_name": "Equitable Accord",
+          "morale_delta": 3,
+          "relationship_delta": 8,
+          "memory_tag": "ration_policy_accord",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_memorial_plaque_vigil",
+      "display_name": "Memorial Plaque Remembrance",
+      "room_tags": [
+        "communal_mess",
+        "memorial"
+      ],
+      "required_room_ids": [
+        "room_common_mess_hall"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 6,
+      "base_weight": 70,
+      "description": "Chalk dust coats trembling fingers as another name is scratched into the concrete. The silence that follows is heavy, unbroken even by the ventilation fans.",
+      "outcomes": [
+        {
+          "id": "outcome_memorial_closure",
+          "display_name": "Collective Closure",
+          "morale_delta": 4,
+          "relationship_delta": 12,
+          "memory_tag": "memorial_remembrance_vigil",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_workshop_crafting_synergy",
+      "display_name": "Workbench Mutual Assistance",
+      "room_tags": [
+        "workshop"
+      ],
+      "required_room_ids": [
+        "room_workshop_precision",
+        "room_workshop"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 3,
+      "base_weight": 95,
+      "description": "A stripped screw thread finally bites. Two grease-stained workers share a wordless nod over the workbench, a fragile bond forged in rust and sweat.",
+      "outcomes": [
+        {
+          "id": "outcome_workshop_respect",
+          "display_name": "Craft Guild Bond",
+          "morale_delta": 3,
+          "relationship_delta": 14,
+          "memory_tag": "workbench_problem_solved",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    },
+    {
+      "id": "social_event_scout_expedition_reconciliation",
+      "display_name": "Returned Scout Decompression",
+      "room_tags": [
+        "communal_mess",
+        "private_quarters"
+      ],
+      "required_room_ids": [
+        "room_common_mess_hall"
+      ],
+      "minimum_occupants": 2,
+      "cooldown_days": 4,
+      "base_weight": 80,
+      "description": "The returning scout's hands finally stop shaking around their tea mug as they recount the surface winds, realizing they actually made it back.",
+      "outcomes": [
+        {
+          "id": "outcome_scout_reintegrated",
+          "display_name": "Shared Relief",
+          "morale_delta": 4,
+          "relationship_delta": 10,
+          "memory_tag": "scout_debrief_solidarity",
+          "can_mediate": false,
+          "mediation_skill_id": ""
+        }
+      ]
+    }
+  ]
+}

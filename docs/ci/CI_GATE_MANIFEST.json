@@ -59,10 +59,11 @@
       "name": "Godot Resource Cache Import",
       "category": "Host Selftests & Lifecycle",
       "command": "godot --headless --path . --import",
-      "timeout_seconds": 180,
+      "timeout_seconds": 900,
       "expected_summary": "",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "notes": "Cold first-scan import of ~2.1k assets exceeds 180s on 2-core CI runners."
     },
     {
       "gate_id": "data_integrity",

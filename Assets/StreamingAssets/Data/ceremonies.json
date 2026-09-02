@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "ceremonies": [
+    {
+      "id": "ceremony_founding_day",
+      "display_name": "Shelter Founding Day Anniversary",
+      "preparation_days": 3,
+      "required_room_id": "room_common_mess_hall",
+      "min_population": 4,
+      "required_items": [
+        { "item_id": "canned_food", "quantity": 10 },
+        { "item_id": "clean_water", "quantity": 10 }
+      ],
+      "morale_boost": 25.0,
+      "stress_relief": 20.0,
+      "truce_duration_days": 0,
+      "truce_eligible": false,
+      "disaster_pool": [
+        "disaster_food_spoilage",
+        "disaster_drunken_brawl"
+      ],
+      "description": "A strained commemoration of the day the blast doors sealed shut. Survivors share hoarded tins of peaches under flickering fluorescents, trying not to think of those who were left hammering on the outside of the bulkhead when the sirens stopped."
+    },
+    {
+      "id": "ceremony_remembrance_vigil",
+      "display_name": "Remembrance Vigil of the Lost",
+      "preparation_days": 2,
+      "required_room_id": "room_common_mess_hall",
+      "min_population": 3,
+      "required_items": [
+        { "item_id": "fuel", "quantity": 4 },
+        { "item_id": "clean_water", "quantity": 6 }
+      ],
+      "morale_boost": 15.0,
+      "stress_relief": 35.0,
+      "truce_duration_days": 0,
+      "truce_eligible": false,
+      "disaster_pool": [
+        "disaster_melancholic_withdrawal",
+        "disaster_accidental_fire"
+      ],
+      "description": "A solemn vigil where crude tallow candles cast long shadows against rusted walls. Each flickering flame represents a soul lost to the ash or left behind in the burning world above, their names whispered into the stale, recirculated air."
+    },
+    {
+      "id": "ceremony_long_night_bonfire",
+      "display_name": "Long Night Solstice Bonfire",
+      "preparation_days": 4,
+      "required_room_id": "room_common_mess_hall",
+      "min_population": 5,
+      "required_items": [
+        { "item_id": "scrap_wood", "quantity": 15 },
+        { "item_id": "fuel", "quantity": 8 },
+        { "item_id": "canned_food", "quantity": 12 }
+      ],
+      "morale_boost": 30.0,
+      "stress_relief": 25.0,
+      "truce_duration_days": 2,
+      "truce_eligible": true,
+      "disaster_pool": [
+        "disaster_chimney_flare",
+        "disaster_raider_infiltrator"
+      ],
+      "description": "A desperate hearth festival marking the deep winter freeze. They burn scavenged pallet wood in a rusted oil drum, the acrid smoke mingling with the smell of shared rations as weary faces lean into the fragile warmth, daring to hope for a temporary truce."
+    },
+    {
+      "id": "ceremony_treaty_market",
+      "display_name": "Grand Treaty Barter Fair",
+      "preparation_days": 5,
+      "required_room_id": "room_common_mess_hall",
+      "min_population": 4,
+      "required_items": [
+        { "item_id": "canned_food", "quantity": 8 },
+        { "item_id": "clean_water", "quantity": 12 },
+        { "item_id": "scrap_metal", "quantity": 10 }
+      ],
+      "morale_boost": 20.0,
+      "stress_relief": 15.0,
+      "truce_duration_days": 4,
+      "truce_eligible": true,
+      "disaster_pool": [
+        "disaster_faction_snub",
+        "disaster_contraband_theft"
+      ],
+      "description": "An uneasy bazaar where weapons are checked at the airlock and paranoid delegations exchange precious scrap and water. The tension is thicker than the radiation dust, but the promise of a formal truce keeps fingers off triggers—for now."
+    },
+    {
+      "id": "ceremony_ashfall_harvest",
+      "display_name": "Ashfall Hydroponic Harvest Feast",
+      "preparation_days": 3,
+      "required_room_id": "room_common_mess_hall",
+      "min_population": 4,
+      "required_items": [
+        { "item_id": "canned_food", "quantity": 15 },
+        { "item_id": "clean_water", "quantity": 15 }
+      ],
+      "morale_boost": 28.0,
+      "stress_relief": 22.0,
+      "truce_duration_days": 0,
+      "truce_eligible": false,
+      "disaster_pool": [
+        "disaster_mold_contamination",
+        "disaster_portion_dispute"
+      ],
+      "description": "A rare feast of pale, hydroponic greens that taste of copper and sterile water. The community gathers to celebrate their fragile agricultural victory, finding temporary solace in full bellies despite the ever-present hum of failing purifiers."
+    }
+  ]
+}

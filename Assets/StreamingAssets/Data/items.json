@@ -6104,6 +6104,507 @@
       "weight": 0.02,
       "tradeValue": 4,
       "empShielded": false
+    },
+    {
+      "id": "item_heavy_wool_coat",
+      "displayName": "Heavy Boiled-Wool Greatcoat",
+      "description": "A thick, dense wool overcoat tailored to withstand biting subzero blizzards.",
+      "type": "Clothing",
+      "stackMax": 1,
+      "weight": 3.5,
+      "tradeValue": 45,
+      "empShielded": false
+    },
+    {
+      "id": "item_thermal_parka",
+      "display_name": "Down-Lined Arctic Parka",
+      "displayName": "Down-Lined Arctic Parka",
+      "description": "Pre-war arctic exploration parka filled with thermal synthetic down.",
+      "type": "Clothing",
+      "stackMax": 1,
+      "weight": 2.8,
+      "tradeValue": 65,
+      "empShielded": false
+    },
+    {
+      "id": "item_fur_mittens",
+      "displayName": "Trapped-Pelts Gauntlet Mittens",
+      "description": "Heavy fur gauntlets that protect fingers from cold-numbness and frostbite.",
+      "type": "Clothing",
+      "stackMax": 1,
+      "weight": 0.6,
+      "tradeValue": 18,
+      "empShielded": false
+    },
+    {
+      "id": "item_insulated_boots",
+      "displayName": "Felt-Lined Mukluk Snow Boots",
+      "description": "Double-felt insulated snow boots with deep rubber treads.",
+      "type": "Clothing",
+      "stackMax": 1,
+      "weight": 2.2,
+      "tradeValue": 35,
+      "empShielded": false
+    },
+    {
+      "id": "item_improvised_burn_barrel",
+      "displayName": "Slotted Steel Scrap Burn Barrel",
+      "description": "A perforated 55-gallon steel drum rigged for emergency scrap wood burning.",
+      "type": "Device",
+      "stackMax": 1,
+      "weight": 14.0,
+      "tradeValue": 25,
+      "empShielded": true
+    },
+    {
+      "id": "item_portable_kerosene_heater",
+      "displayName": "Pressurized Wick Kerosene Heater",
+      "description": "A portable convection kerosene space heater capable of warming bunker rooms.",
+      "type": "Device",
+      "stackMax": 1,
+      "weight": 8.5,
+      "tradeValue": 80,
+      "empShielded": true
+    },
+    {
+      "id": "item_acoustic_guitar",
+      "displayName": "Restrung Acoustic Guitar",
+      "description": "A weathered acoustic guitar strung with scavenged wire strings.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 2.0,
+      "tradeValue": 40,
+      "empShielded": false
+    },
+    {
+      "id": "item_harmonica",
+      "displayName": "Brass Reed Harmonica",
+      "description": "A pocket brass diatonic harmonica in the key of C.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 0.2,
+      "tradeValue": 15,
+      "empShielded": false
+    },
+    {
+      "id": "item_playing_cards",
+      "displayName": "Plastic-Coated Playing Cards",
+      "description": "A complete deck of 52 cards used for poker, blackjack, and solitary patience.",
+      "type": "Trade",
+      "stackMax": 5,
+      "weight": 0.1,
+      "tradeValue": 12,
+      "empShielded": false
+    },
+    {
+      "id": "item_carved_figurine",
+      "displayName": "Whittled Pine Figurine",
+      "description": "A small animal or figure hand-carved from scrap wood during downtime hours.",
+      "type": "Trade",
+      "stackMax": 10,
+      "weight": 0.1,
+      "tradeValue": 8,
+      "empShielded": false
+    },
+    {
+      "id": "item_wasteland_sketch",
+      "displayName": "Charcoal Wasteland Sketch",
+      "description": "A sketch of the surface or shelter life drawn on reclaimed cardstock.",
+      "type": "Trade",
+      "stackMax": 10,
+      "weight": 0.05,
+      "tradeValue": 6,
+      "empShielded": false
+    },
+    {
+      "id": "item_dog_tags_scavenged",
+      "displayName": "Scavenged Dog Tags",
+      "description": "Notched military identification tags worn by high-value targets or officers.",
+      "type": "Trade",
+      "stackMax": 20,
+      "weight": 0.05,
+      "tradeValue": 25,
+      "empShielded": false
+    },
+    {
+      "id": "item_warlord_trophy",
+      "displayName": "Raider Warlord Sigil",
+      "description": "A notched branding iron or insignia carried by wasteland gang leaders as proof of authority.",
+      "type": "Trade",
+      "stackMax": 5,
+      "weight": 0.5,
+      "tradeValue": 50,
+      "empShielded": false
+    },
+    {
+      "id": "item_decryption_keycard_prewar",
+      "displayName": "Cryptographic Master Keycard",
+      "description": "A magnetic keycard containing pre-war military decryption tokens and algorithmic hashes.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 0.1,
+      "tradeValue": 65,
+      "empShielded": true
+    },
+    {
+      "id": "surgical_saw",
+      "displayName": "Amputation Bone Saw",
+      "description": "Tempered surgical steel saw with fine serrations used for rapid traumatic amputations.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 1.2,
+      "tradeValue": 45,
+      "empShielded": false
+    },
+    {
+      "id": "painkillers",
+      "displayName": "Synthetic Painkillers",
+      "description": "Concentrated analgesic tablets that mitigate traumatic surgical shock and severe nerve pain.",
+      "type": "Medical",
+      "stackMax": 20,
+      "weight": 0.05,
+      "tradeValue": 15,
+      "empShielded": false
+    },
+    {
+      "id": "prosthetic_wooden_arm",
+      "displayName": "Articulated Wooden Arm",
+      "description": "A carved pine prosthetic arm with articulated copper joints and leather straps.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 2.5,
+      "tradeValue": 35,
+      "empShielded": false
+    },
+    {
+      "id": "prosthetic_wooden_leg",
+      "displayName": "Carved Peg Leg",
+      "description": "A reinforced oak peg leg with rubber foot tread, restoring mobility after lower limb loss.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 3.0,
+      "tradeValue": 30,
+      "empShielded": false
+    },
+    {
+      "id": "bionic_arm_prototype",
+      "displayName": "Myoelectric Bionic Arm",
+      "description": "Advanced pre-war prosthetic arm with direct nerve-interface sensors and titanium servo motors.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 3.5,
+      "tradeValue": 180,
+      "empShielded": true
+    },
+    {
+      "id": "bionic_leg_prototype",
+      "displayName": "Hydraulic Bionic Leg",
+      "description": "Pre-war military bionic limb featuring pneumatic suspension and hydraulic load balancers.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 4.0,
+      "tradeValue": 200,
+      "empShielded": true
+    },
+    {
+      "id": "train_coal",
+      "displayName": "Locomotive Boiler Coal",
+      "description": "High-density anthracite coal mined from subterranean seams, essential for locomotive steam boilers.",
+      "type": "Fuel",
+      "stackMax": 50,
+      "weight": 2.0,
+      "tradeValue": 12,
+      "empShielded": false
+    },
+    {
+      "id": "steel_rail_segment",
+      "displayName": "Steel Railing Section",
+      "description": "Heavy rolled steel standard gauge track section used for permanent way repairs.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 15.0,
+      "tradeValue": 40,
+      "empShielded": false
+    },
+    {
+      "id": "railroad_ties",
+      "displayName": "Creosote Railway Ties",
+      "description": "Pressure-treated timber sleepers for anchoring heavy iron tracks across gravel roadbeds.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 8.0,
+      "tradeValue": 20,
+      "empShielded": false
+    },
+    {
+      "id": "fungus_spores_common",
+      "displayName": "Cultivated Grey Spores",
+      "description": "Spore inoculum for growing high-yield edible grey mycelium beds in darkness.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 8,
+      "empShielded": false
+    },
+    {
+      "id": "fungus_spores_bioluminescent",
+      "displayName": "Phosphor Bracket Spores",
+      "description": "Rare bioluminescent fungal spores providing ambient cold illumination without electricity.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.1,
+      "tradeValue": 25,
+      "empShielded": false
+    },
+    {
+      "id": "fungus_spores_medicinal",
+      "displayName": "Cordyceps Spores",
+      "description": "Rare mycelial strain containing antimicrobial peptides for medical drug synthesis.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.1,
+      "tradeValue": 50,
+      "empShielded": false
+    },
+    {
+      "id": "harvested_mushrooms_subterranean",
+      "displayName": "Subterranean Cap Mushrooms",
+      "description": "Nutrient-dense cultivated caps harvested from dark underground beds. Safe to cook and consume.",
+      "type": "Food",
+      "stackMax": 30,
+      "weight": 0.2,
+      "tradeValue": 6,
+      "empShielded": false
+    },
+    {
+      "id": "stolen_ration_cache",
+      "displayName": "Concealed Ration Cache",
+      "description": "Hoarded shelter emergency foodstuffs recovered as physical evidence in theft investigations.",
+      "type": "Trade",
+      "stackMax": 5,
+      "weight": 1.0,
+      "tradeValue": 15,
+      "empShielded": false
+    },
+    {
+      "id": "forensic_clue_bloodstained",
+      "displayName": "Bloodstained Fabric Scrap",
+      "description": "Physical forensic evidence linking a suspect to a violent assault or sabotage site.",
+      "type": "Trade",
+      "stackMax": 10,
+      "weight": 0.05,
+      "tradeValue": 10,
+      "empShielded": false
+    },
+    {
+      "id": "slate_and_chalk",
+      "displayName": "Writing Slate & Chalk",
+      "description": "Reusable classroom slate used by children and apprentices for spelling and numeracy drills.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 0.5,
+      "tradeValue": 8,
+      "empShielded": false
+    },
+    {
+      "id": "school_primer",
+      "displayName": "Wasteland Survival Primer",
+      "description": "Hand-copied instructional book covering basic first aid, botany, and foraging for young dwellers.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 0.8,
+      "tradeValue": 25,
+      "empShielded": false
+    },
+    {
+      "id": "iron_shackles",
+      "displayName": "Forged Iron Restraints",
+      "description": "Heavy riveted iron cuffs used to secure dangerous captives and unruly raiders in detention.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 2.5,
+      "tradeValue": 20,
+      "empShielded": false
+    },
+    {
+      "id": "sedative_draught",
+      "displayName": "Herbal Calming Tincture",
+      "description": "Distilled poppy and valerian extract used to pacify frantic prisoners or calm traumatized children.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 0.2,
+      "tradeValue": 18,
+      "empShielded": false
+    },
+    {
+      "id": "gene_therapy_retroviral_vial",
+      "displayName": "Retroviral Gene Splicer",
+      "description": "Pre-war cryo-preserved viral vector used in clinical gene therapy to excise unstable DNA mutations.",
+      "type": "Medical",
+      "stackMax": 5,
+      "weight": 0.3,
+      "tradeValue": 120,
+      "empShielded": true
+    },
+    {
+      "id": "camo_ash_cloak",
+      "displayName": "Ash-Washed Cowl",
+      "description": "Loose hooded cowl treated with fine volcanic ash to blend seamlessly into scorched wastelands.",
+      "type": "Armor",
+      "stackMax": 1,
+      "weight": 1.2,
+      "tradeValue": 45,
+      "empShielded": false
+    },
+    {
+      "id": "camo_ghillie_shroud",
+      "displayName": "Swamp Foliage Ghillie",
+      "description": "Heavy burlap netting woven with dried reeds and marsh moss for deep concealment in wet biomes.",
+      "type": "Armor",
+      "stackMax": 1,
+      "weight": 2.5,
+      "tradeValue": 65,
+      "empShielded": false
+    },
+    {
+      "id": "camo_night_stalker_suit",
+      "displayName": "Rubberized Night Suit",
+      "description": "Matte-black rubberized jumpsuit that muffles footsteps and eliminates glare during night sorties.",
+      "type": "Armor",
+      "stackMax": 1,
+      "weight": 2.0,
+      "tradeValue": 80,
+      "empShielded": false
+    },
+    {
+      "id": "weapon_suppressor_improvised",
+      "displayName": "Improvised Weapon Baffle",
+      "description": "Machined aluminum canister packed with steel wool baffles to suppress rifle muzzle reports.",
+      "type": "WeaponMod",
+      "stackMax": 5,
+      "weight": 0.6,
+      "tradeValue": 50,
+      "empShielded": false
+    },
+    {
+      "id": "night_optics_goggles",
+      "displayName": "Low-Light Night Optics",
+      "description": "Light-amplifying electro-optical goggles providing acute situational awareness in subterranean darkness.",
+      "type": "Tool",
+      "stackMax": 2,
+      "weight": 0.9,
+      "tradeValue": 110,
+      "empShielded": true
+    },
+    {
+      "id": "item_aviation_fuel_canister",
+      "displayName": "Aviation Fuel Canister",
+      "description": "Refined pressurized fuel canister suitable for ultralight combustion engines and blowtorches.",
+      "type": "Resource",
+      "stackMax": 10,
+      "weight": 2.5,
+      "tradeValue": 45,
+      "empShielded": true
+    },
+    {
+      "id": "item_aircraft_airframe_spares",
+      "displayName": "Aircraft Airframe Spares",
+      "description": "Duralumin ribs, tension cables, and treated fabric for maintaining improvised airframes.",
+      "type": "Resource",
+      "stackMax": 5,
+      "weight": 3.0,
+      "tradeValue": 60,
+      "empShielded": true
+    },
+    {
+      "id": "item_chain_gang_shackles",
+      "displayName": "Chain Gang Shackles",
+      "description": "Heavy wrought iron leg fetters and link chain used to secure captives on arduous labor details.",
+      "type": "Tool",
+      "stackMax": 4,
+      "weight": 4.5,
+      "tradeValue": 25,
+      "empShielded": true
+    },
+    {
+      "id": "item_slave_collar",
+      "displayName": "Locking Slaver Collar",
+      "description": "Heavy riveted steel collar with padlock lug, scavenged from wasteland slavers to coerce compliance.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 1.2,
+      "tradeValue": 35,
+      "empShielded": true
+    },
+    {
+      "id": "item_medical_precursor_base",
+      "displayName": "Chemical Precursor Base",
+      "description": "Distilled pharmaceutical reagent base used in laboratory synthesis of advanced medicines.",
+      "type": "Medical",
+      "stackMax": 20,
+      "weight": 0.2,
+      "tradeValue": 20,
+      "empShielded": true
+    },
+    {
+      "id": "item_sterile_solvent_pack",
+      "displayName": "Sterile Solvent Pack",
+      "description": "Pure anhydrous solvent solution used for chemical compounding and crystalline precipitation.",
+      "type": "Medical",
+      "stackMax": 15,
+      "weight": 0.3,
+      "tradeValue": 25,
+      "empShielded": true
+    },
+    {
+      "id": "item_chem_hyper_stim",
+      "displayName": "Hyper-Stim Combat Ampoule",
+      "description": "Concentrated neural stimulant ampoule that accelerates reflex response at severe cardiac risk.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 0.1,
+      "tradeValue": 55,
+      "empShielded": true
+    },
+    {
+      "id": "item_chem_dulcimer_tincture",
+      "displayName": "Dulcimer Pain Tincture",
+      "description": "Potent botanical analgesic tincture that suppresses acute physical pain but induces sedation.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 0.2,
+      "tradeValue": 50,
+      "empShielded": true
+    },
+    {
+      "id": "item_chem_clarity_salts",
+      "displayName": "Clarity Focus Salts",
+      "description": "Refined crystalline stimulant salts that temporarily eliminate mental exhaustion.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 0.1,
+      "tradeValue": 45,
+      "empShielded": true
+    },
+    {
+      "id": "item_chem_haze_resin",
+      "displayName": "Haze Calming Resin",
+      "description": "Pungent sedative resin block vaporized to calm psychological panic and acute trauma.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 0.2,
+      "tradeValue": 40,
+      "empShielded": true
+    },
+    {
+      "id": "item_official_ballot_box",
+      "displayName": "Padlocked Ballot Box",
+      "description": "Heavy welded steel ballot repository with tamper-evident seal for settlement democratic votes.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 5.0,
+      "tradeValue": 30,
+      "empShielded": true
     }
   ]
 }

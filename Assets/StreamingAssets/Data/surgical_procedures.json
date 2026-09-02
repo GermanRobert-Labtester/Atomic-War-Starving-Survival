@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "procedures": [
+    {
+      "procedure_id": "procedure_amputation_arm_field",
+      "display_name": "Field Arm Amputation",
+      "limb_group": "arm",
+      "required_tool_id": "surgical_saw",
+      "required_items": [
+        { "item_id": "painkillers", "amount": 1 },
+        { "item_id": "clean_water", "amount": 1 },
+        { "item_id": "cloth", "amount": 2 }
+      ],
+      "base_shock_risk": 0.35,
+      "base_bleeding": 50.0,
+      "infection_reduction": 1.0,
+      "recovery_days_min": 10,
+      "recovery_days_max": 20,
+      "phantom_pain_chance": 0.40
+    },
+    {
+      "procedure_id": "procedure_amputation_leg_field",
+      "display_name": "Field Leg Amputation",
+      "limb_group": "leg",
+      "required_tool_id": "surgical_saw",
+      "required_items": [
+        { "item_id": "painkillers", "amount": 2 },
+        { "item_id": "clean_water", "amount": 1 },
+        { "item_id": "cloth", "amount": 3 }
+      ],
+      "base_shock_risk": 0.45,
+      "base_bleeding": 65.0,
+      "infection_reduction": 1.0,
+      "recovery_days_min": 14,
+      "recovery_days_max": 28,
+      "phantom_pain_chance": 0.50
+    },
+    {
+      "procedure_id": "procedure_prosthetic_fitting_wood",
+      "display_name": "Fit Wooden Prosthetic",
+      "limb_group": "any",
+      "required_tool_id": "tool_multitool",
+      "required_items": [
+        { "item_id": "leather_strap", "amount": 2 }
+      ],
+      "base_shock_risk": 0.05,
+      "base_bleeding": 0.0,
+      "infection_reduction": 0.0,
+      "recovery_days_min": 2,
+      "recovery_days_max": 5,
+      "phantom_pain_chance": 0.0
+    },
+    {
+      "procedure_id": "procedure_bionic_socket_integration",
+      "display_name": "Neural Bionic Socket Graft",
+      "limb_group": "any",
+      "required_tool_id": "surgical_saw",
+      "required_items": [
+        { "item_id": "medical_kit", "amount": 1 },
+        { "item_id": "painkillers", "amount": 2 }
+      ],
+      "base_shock_risk": 0.20,
+      "base_bleeding": 25.0,
+      "infection_reduction": 0.5,
+      "recovery_days_min": 7,
+      "recovery_days_max": 14,
+      "phantom_pain_chance": 0.15
+    }
+  ]
+}

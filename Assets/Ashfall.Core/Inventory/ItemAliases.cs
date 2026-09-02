@@ -32,7 +32,20 @@ namespace Ashfall.Core.Inventory
             { "item_anti_rad_tea", "rad_tea" },
             { "item_salted_meat", "canned_food" },
             { "item_ammo_9mm", "ammo_9mm" },
-            { "item_medkit", "first_aid" }
+            { "item_medkit", "first_aid" },
+            // Debt-template principal items (terminal trade ids -> catalog canonical).
+            { "item_fuel", "fuel" },
+            { "item_medical_kit", "medical_kit" },
+            { "item_diesel_fuel", "diesel_fuel" },
+            { "item_dried_rations", "dried_rations" },
+            { "item_antibiotics", "antibiotics" },
+            { "item_water_filter", "water_filter" },
+            { "item_water_purification_tablets_40_of_40", "water_purification_tablets_40_of_40" },
+            { "item_mechanical_parts", "mechanical_parts" },
+            { "item_engine", "engine" },
+            { "item_ammo_762", "ammo_762" },
+            { "item_soldering_kit", "soldering_kit" },
+            { "item_dosimeter", "dosimeter" }
         };
 
         /// <summary>

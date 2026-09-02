@@ -39,7 +39,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_electrician",
-      "mastery_bonus_text": "{name} has mastered the pre-war trade of electrician. Their hands find the right wire by instinct. The bunker's lights flicker less often now."
+      "mastery_bonus_text": "{name} has mastered the pre-war trade of electrician. Their hands find the right wire by instinct, and the bunker's lights flicker less often now, and the hum of the generators sounds almost confident."
     },
     {
       "profession_id": "nurse",
@@ -79,7 +79,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_nurse",
-      "mastery_bonus_text": "{name}'s hands remember every patient. Every bandage, every stitch, every life. The bunker calls them 'Doc' now, and they answer to it."
+      "mastery_bonus_text": "{name}'s hands remember every patient, every bandage, every stitch, every life. The bunker calls them Doc now, and they answer to it, and the answering is its own kind of medicine."
     },
     {
       "profession_id": "machinist",
@@ -119,7 +119,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_machinist",
-      "mastery_bonus_text": "The lathe hums under {name}'s touch like it remembers the old world too. Every part they make fits perfectly — no blueprints needed."
+      "mastery_bonus_text": "The lathe hums under {name}'s touch like it remembers the old world too. Every part they make fits perfectly, no blueprints needed, and the fitting is the proof."
     },
     {
       "profession_id": "teacher",
@@ -159,7 +159,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_teacher",
-      "mastery_bonus_text": "{name} gathers the survivors in the common room. 'Class is in session,' they announce. For the first time in months, people take notes. Someone even laughs."
+      "mastery_bonus_text": "{name} gathers the survivors in the common room. Class is in session, they announce, and for the first time in months people take notes, and someone even laughs, and the laughing is the lesson."
     },
     {
       "profession_id": "miller",
@@ -199,7 +199,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_miller",
-      "mastery_bonus_text": "{name} turns coarse bunker barley into fine white flour with zero waste. Bread in the holdfast tastes like memory now."
+      "mastery_bonus_text": "{name} turns coarse bunker barley into fine white flour with zero waste, and the bread in the holdfast tastes like memory now, and memory is what keeps people eating."
     },
     {
       "profession_id": "wireman",
@@ -239,7 +239,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_wireman",
-      "mastery_bonus_text": "{name} can trace a short-circuit through two hundred meters of subterranean concrete by ear alone."
+      "mastery_bonus_text": "{name} can trace a short-circuit through two hundred meters of subterranean concrete by ear alone, and the ear is never wrong, and the concrete has started to fear it."
     },
     {
       "profession_id": "bone_setter",
@@ -279,7 +279,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_bone_setter",
-      "mastery_bonus_text": "Compound fractures that would have crippled an expedition member heal straight and strong under {name}'s firm hands."
+      "mastery_bonus_text": "Compound fractures that would have crippled an expedition member heal straight and strong under {name}'s firm hands, and the straightness is the whole argument."
     },
     {
       "profession_id": "preservationist",
@@ -319,7 +319,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_preservationist",
-      "mastery_bonus_text": "Not a single gram of harvested crop or scavenged meat goes rancid under {name}'s watchful curing protocols."
+      "mastery_bonus_text": "Not a single gram of harvested crop or scavenged meat goes rancid under {name}'s watchful curing protocols, and the not-going-rancid is what winter is for."
     },
     {
       "profession_id": "radio_technician",
@@ -359,7 +359,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_radio_technician",
-      "mastery_bonus_text": "{name} can pull clean voice signals from hundred-mile skips through total magnetic interference."
+      "mastery_bonus_text": "{name} can pull clean voice signals from hundred-mile skips through total magnetic interference, and the pulling is what keeps the bunker from being alone."
     },
     {
       "profession_id": "greenhouse_grower",
@@ -399,7 +399,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_greenhouse_grower",
-      "mastery_bonus_text": "Under {name}'s care, hydroponic trays produce crisp radishes and kale even in the coldest nuclear winter."
+      "mastery_bonus_text": "Under {name}'s care, hydroponic trays produce crisp radishes and kale even in the coldest nuclear winter, and the crispness is the argument against the cold."
     },
     {
       "profession_id": "surveyor",
@@ -439,7 +439,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_surveyor",
-      "mastery_bonus_text": "{name}'s maps reveal hidden culverts, stable overpasses, and safe dead-ground across the whole crater."
+      "mastery_bonus_text": "{name}'s maps reveal hidden culverts, stable overpasses, and safe dead-ground across the whole crater, and the revealing is what keeps the scouts alive."
     },
     {
       "profession_id": "salvage_appraiser",
@@ -479,7 +479,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_salvage_appraiser",
-      "mastery_bonus_text": "{name} knows the hidden value of every rusted pre-war component, ensuring the holdfast never trades at a loss."
+      "mastery_bonus_text": "{name} knows the hidden value of every rusted pre-war component, and the knowing ensures the holdfast never trades at a loss, and never trades at a loss is the whole point."
     },
     {
       "profession_id": "apiarist",
@@ -519,7 +519,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_apiarist",
-      "mastery_bonus_text": "The bees thrive in dark underground chambers under {name}'s gentle management, providing pure honey and wax."
+      "mastery_bonus_text": "The bees thrive in dark underground chambers under {name}'s gentle management, and the thriving is what the honey and wax are for, and the honey and wax are what winter needs."
     },
     {
       "profession_id": "metallurgist",
@@ -559,7 +559,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_metallurgist",
-      "mastery_bonus_text": "{name} smelts brittle scrap into spring-tempered tool steel that outlasts anything found in the ruins."
+      "mastery_bonus_text": "{name} smelts brittle scrap into spring-tempered tool steel that outlasts anything found in the ruins, and the outlasting is the proof of the smelting."
     },
     {
       "profession_id": "water_technician",
@@ -599,7 +599,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_water_technician",
-      "mastery_bonus_text": "{name}'s multi-stage filtration arrays deliver sparkling, zero-rad drinking water to every bunk."
+      "mastery_bonus_text": "{name}'s multi-stage filtration arrays deliver sparkling, zero-rad drinking water to every bunk, and the sparkling is what hope looks like when it's wet."
     },
     {
       "profession_id": "tailor",
@@ -639,7 +639,7 @@
         }
       ],
       "mastery_narrative": "narrative_trade_mastery_tailor",
-      "mastery_bonus_text": "{name} crafts warm, lead-lined winter parkas from salvage wool and rubber, protecting survivors from the ash cold."
+      "mastery_bonus_text": "{name} crafts warm, lead-lined winter parkas from salvage wool and rubber, and the parkas protect the survivors from the ash cold, and the protecting is what the wool is for."
     }
   ]
 }

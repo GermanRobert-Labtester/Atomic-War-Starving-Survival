@@ -187,6 +187,32 @@ namespace AtomicWar.GodotApp
             SetupOnboarding();
             SetupEcologicalInfestation();
             SetupFieldGuide();
+            SetupWorkshop();
+            SetupRadioStation();
+            SetupShelterSocial();
+            SetupExcavationHazards();
+            // ── Plans 178-201: expansion systems (Ensure* restores persisted state) ──
+            SetupGenerational();
+            SetupPrisoners();
+            SetupMutations();
+            SetupStealth();
+            SetupAviation();
+            SetupForcedLabor();
+            SetupNarcotics();
+            SetupPolitics();
+            SetupFallout();
+            SetupDesperation();
+            SetupMercenary();
+            SetupArchaeology();
+            SetupAmputation();
+            SetupRailway();
+            SetupFungi();
+            SetupJustice();
+            SetupRecreation();
+            SetupChemWarfare();
+            SetupCommsArray();
+            SetupCeremony();
+            SetupRobotics();
 
             UpdateHud();
         }
@@ -272,10 +298,13 @@ namespace AtomicWar.GodotApp
                 SavePowerGrid();
                 SaveMedicalWard();
                 SaveMemorial();
-                SaveMemorial();
                 SaveOnboarding();
                 SaveEcologicalInfestation();
                 SaveFieldGuide();
+                SaveWorkshop();
+                SaveRadioStation();
+                SaveShelterSocial();
+                SaveExcavationHazards();
                 // ── Audit-PR triad repairs ───────────────────────────────
                 SaveSilentFoundry();
                 SaveDisease();
@@ -286,6 +315,28 @@ namespace AtomicWar.GodotApp
                 SaveSurvivorSocial();
                 SaveSurvivorFate();
                 SaveCampaignDay();
+                // ── Plans 178-201: expansion systems (null-guarded; uncreated systems omit their section) ──
+                SaveGenerational();
+                SavePrisoners();
+                SaveMutations();
+                SaveStealth();
+                SaveAviation();
+                SaveForcedLabor();
+                SaveNarcotics();
+                SavePolitics();
+                SaveFallout();
+                SaveDesperation();
+                SaveMercenary();
+                SaveArchaeology();
+                SaveAmputation();
+                SaveRailway();
+                SaveFungi();
+                SaveJustice();
+                SaveRecreation();
+                SaveChemWarfare();
+                SaveCommsArray();
+                SaveCeremony();
+                SaveRobotics();
 
                 if (_sectionCaptureFailed)
                 {

@@ -413,6 +413,16 @@ namespace Ashfall.Core.Tests
             Assert.True(report.Passed, report.Summary);
             Assert.Equal(0, report.FailedCount);
             Assert.True(report.Checks.Count >= 20);
+            // Plan IV (F3) oracle pins: catalog completeness, clean foreign
+            // keys, acyclic escalations, and a fired-state roundtrip that
+            // suppresses redispatch.
+            Assert.Equal(0, report.CatalogErrorCount);
+            Assert.Equal(15, report.TemplateCount);
+            Assert.Equal(10, report.ConsequenceCount);
+            Assert.Equal(0, report.MissingReferenceCount);
+            Assert.Equal(0, report.EscalationCycleCount);
+            Assert.True(report.ConsequenceDispatchCount >= 1);
+            Assert.Equal(0, report.DispatcherRoundtripRedispatches);
         }
     }
 }

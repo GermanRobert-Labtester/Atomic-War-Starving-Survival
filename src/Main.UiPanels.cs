@@ -78,6 +78,17 @@ namespace AtomicWar.GodotApp
         private UtilityAiPanel _utilityAiPanel = null!;
         private JournalCodex _journalCodex = null!;
         private JournalBookUI _journalBook = null!;
+
+        // ── Plans 178-201 expansion panels (Plans178_201 UI surfaces) ──
+        private AviationUI _aviationPanel = null!;
+        private ChemUI _chemPanel = null!;
+        private LaborUI _laborPanel = null!;
+        private PoliticsUI _politicsPanel = null!;
+        private PrisonerPanel _prisonerPanel = null!;
+        private StealthReadoutPanel _stealthReadoutPanel = null!;
+        private MutationTreePanel _mutationTreePanel = null!;
+        private NurseryPanel _nurseryPanel = null!;
+        private FalloutPlumePanel _falloutPlumePanel = null!;
         private SurvivorDetailPanel _survivorDetailPanel = null!;
         private InventoryDetailPanel _inventoryDetailPanel = null!;
         private QuestDetailPanel _questDetailPanel = null!;
@@ -447,6 +458,43 @@ namespace AtomicWar.GodotApp
             _crossingQuestPanel.OnClose += CloseCrossingQuestPanel;
             AddChild(_crossingQuestPanel);
 
+            // ── Plans 178-201 expansion panels (overlay) ──
+            _aviationPanel = new AviationUI();
+            _aviationPanel.OnClose += () => _aviationPanel.Visible = false;
+            AddChild(_aviationPanel);
+
+            _chemPanel = new ChemUI();
+            _chemPanel.OnClose += () => _chemPanel.Visible = false;
+            AddChild(_chemPanel);
+
+            _laborPanel = new LaborUI();
+            _laborPanel.OnClose += () => _laborPanel.Visible = false;
+            AddChild(_laborPanel);
+
+            _politicsPanel = new PoliticsUI();
+            _politicsPanel.OnClose += () => _politicsPanel.Visible = false;
+            AddChild(_politicsPanel);
+
+            _prisonerPanel = new PrisonerPanel();
+            _prisonerPanel.OnClose += () => _prisonerPanel.Visible = false;
+            AddChild(_prisonerPanel);
+
+            _stealthReadoutPanel = new StealthReadoutPanel();
+            _stealthReadoutPanel.OnClose += () => _stealthReadoutPanel.Visible = false;
+            AddChild(_stealthReadoutPanel);
+
+            _mutationTreePanel = new MutationTreePanel();
+            _mutationTreePanel.OnClose += () => _mutationTreePanel.Visible = false;
+            AddChild(_mutationTreePanel);
+
+            _nurseryPanel = new NurseryPanel();
+            _nurseryPanel.OnClose += () => _nurseryPanel.Visible = false;
+            AddChild(_nurseryPanel);
+
+            _falloutPlumePanel = new FalloutPlumePanel();
+            _falloutPlumePanel.OnClose += () => _falloutPlumePanel.Visible = false;
+            AddChild(_falloutPlumePanel);
+
             // ── Save/Load panel (overlay) ──
             _saveLoadPanel = new SaveLoadPanel();
             _saveLoadPanel.OnClose += CloseSaveLoadPanel;
@@ -528,6 +576,11 @@ namespace AtomicWar.GodotApp
             _weatherForecastPanel = new WeatherForecastPanel();
             _weatherForecastPanel.OnClose += CloseWeatherForecastPanel;
             AddChild(_weatherForecastPanel);
+
+            // ── Weather History panel (overlay, F5 surface) ──
+            _weatherHistoryPanel = new WeatherHistoryPanel();
+            _weatherHistoryPanel.OnClose += () => _weatherHistoryPanel.Visible = false;
+            AddChild(_weatherHistoryPanel);
 
             // ── Radiation History panel (overlay) ──
             _radiationHistoryPanel = new RadiationHistoryPanel();

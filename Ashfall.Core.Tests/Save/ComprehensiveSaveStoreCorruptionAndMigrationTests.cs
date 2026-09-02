@@ -256,10 +256,16 @@ namespace Ashfall.Core.Tests.Save
             // Enforces that every section in the contract matrix is accounted for
             // (Task #133 added the medical_pipeline section,
             // Plan 12C added shelter_decor,
-            // Plan 34 added research).
-            Assert.Equal(70, SaveSectionRegistry.All.Count);
-            var keys = new HashSet<string>(SaveSectionRegistry.All.Select(s => s.SectionKey));
-            Assert.Equal(70, keys.Count);
+            // Plan 34 added research,
+            // Plans 46-49 added shelter_workshop, radio_station, shelter_social_dynamics, excavation_hazards,
+            // Plans 198-201 added chem_warfare, comms_array, ceremony, robotics,
+            // Plans 194-197 added recreation,
+            // Plans 186-189 added fallout, desperation, mercenary_bounties, archaeology,
+            // Plans 190-193 added amputation, railway, fungi_cultivation, wasteland_justice;
+            // Plans 178-181 added child_development, prisoner_management, mutation_tree, expedition_stealth).
+            Assert.Equal(95, SaveSectionRegistry.All.Count);
+            var keys = SaveSectionRegistry.SectionKeys;
+            Assert.Equal(95, keys.Count);
         }
     }
 }

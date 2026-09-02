@@ -40,6 +40,9 @@ namespace AtomicWar.GodotApp
             // Task 122: ticks after expeditions (ordinal 'w' > 'e') so it reads
             // fresh sortie results, and after narrative for fresh faction dominance.
             _campaignDay.Register("world_evolution", new EvolvingWorldDayOwner(this), phase: 4);
+            // Plan IV: ledger debt ages with the campaign; forfeits dispatch
+            // consequences into faction war / raids / inventory / labor.
+            _campaignDay.Register("debt_ledger", new DebtLedgerDayOwner(this), phase: 4);
 
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
@@ -640,6 +643,27 @@ namespace AtomicWar.GodotApp
 
                 // ── Plan 28 Phase 4: ecological infestations ──
                 _m.TickEcologicalInfestations(day, events);
+
+                // ── Plans 46-49: Workshop, Radio, Social, Subterranean Hazards ──
+                _m.TickPlans46_49(day, events);
+
+                // ── Plans 198-201: CBRN Hazards, Comms Array, Ceremonies, Robotics ──
+                _m.TickPlans198_201(day, events);
+
+                // ── Plans 194-197: Naval & River, Item Degradation, Hobbies & Downtime, Winter Freeze ──
+                _m.TickPlans194_197(day, events);
+
+                // ── Plans 186-189: Radioactive Fallout, Desperation, Mercenary, Archaeology ──
+                _m.TickPlans186_189(day, 24.0f);
+
+                // ── Plans 190-193: Infection & Amputation, Railways, Subterranean Fungi, Wasteland Justice ──
+                _m.TickPlans190_193(day);
+
+                // ── Plans 178-181: Childhood Rearing, Prisoner Management, Mutation Trees, Stealth ──
+                _m.TickPlans178_181(day);
+
+                // ── Plans 182-185: Aviation, Forced Labor, Narcotics, Settlement Politics ──
+                _m.TickPlans182_185(day);
 
                 // ── Plan 28 Phase 3: collapse/scarcity notice (bounded) ──
 

@@ -5,420 +5,505 @@
     {
       "id": "trader_scavenger",
       "display_name": "The Scavenger",
-      "profile": "A thin figure in patched clothing, eyes darting, hands calloused. They've been picking through ruins for months. They know what's valuable and what's not.",
+      "profile": "Thin, patched, hands calloused from prying open what other people sealed. The scavenger has been working the ruins for months and reads value the way a crow reads a field: fast, twice, and without sentiment. They weigh everything, including you.",
       "greetings": {
-        "hostile": "You've got nerve showing your face here. What do you want?",
-        "wary": "I've got things to sell. Don't try anything funny.",
-        "neutral": "Looking to trade? I've got goods. You've got goods. Let's deal.",
-        "warm": "Good to see you again. I've been saving some things for you."
+        "hostile": "You've got nerve showing your face here. Last one who cornered me left lighter than he came. Talk fast.",
+        "wary": "I've got things. You've got hands. Keep them where I can see them and we'll talk.",
+        "neutral": "You trading or staring? I've pulled good weight this week. Show me yours.",
+        "warm": "Look who walked in. I pulled something yesterday and thought of you. Come, look."
       },
       "item_examinations": {
-        "valuable": "Now this... this is worth something. Where did you find it?",
-        "worthless": "This? You're joking. I can't sell this.",
-        "interesting": "Hmm. I've seen these before. What's your price?",
-        "dangerous": "You're carrying this? You're braver than I thought."
+        "valuable": "Now this... I can feel the weight of it. Where did you find it? No, don't tell me. I don't want to know the route.",
+        "worthless": "This? The ruins threw this out already. I'd be taking what the ash refused.",
+        "interesting": "Hmm. I've seen one of these before, deeper in, in a place I don't go anymore. What's your price?",
+        "dangerous": "You carry this in your pack? You're braver than me, and I was in that building."
       },
       "offers": {
-        "fair": "I'll give you [item] for [item]. Fair trade.",
-        "generous": "I'll give you [item] for [item]. Consider it a favor.",
-        "stingy": "I'll give you [item] for [item]. Take it or leave it.",
-        "desperate": "I need [item]. I'll give you [item] for it. Please."
+        "fair": "[item] for [item]. Weight for weight. That's how I trade.",
+        "generous": "[item] for [item]. Take it before I remember what it's worth.",
+        "stingy": "[item] for [item]. The ruins gave me nothing this week, so don't push.",
+        "desperate": "I need [item]. I'll give you [item]. Please. The ruins won't feed me forever."
       },
       "counter_offers": {
-        "accept": "That works. Deal.",
-        "reject": "No. That's not enough.",
-        "negotiate": "How about [item] instead?",
-        "insulted": "You think I'm stupid? Get out of here."
+        "accept": "That balances. Deal, before the light changes.",
+        "reject": "No. I didn't dig that out to give it away.",
+        "negotiate": "How about [item] instead? It's what I can carry.",
+        "insulted": "You think I fell off a truck? There are no trucks. Get out."
       },
       "acceptance": {
-        "pleased": "Pleasure doing business with you.",
-        "relieved": "Thank you. I needed this.",
-        "indifferent": "Fine. Take it and go.",
-        "suspicious": "Don't come back asking for refunds."
+        "pleased": "Good weight, both sides. The ruins owed me one.",
+        "relieved": "Thank you. You don't know what this buys me, and I won't tell you.",
+        "indifferent": "Fine. Take it. The dark comes early and I walk far.",
+        "suspicious": "Done. Don't come back asking for returns. What leaves my pack stays gone."
       },
       "rejection": {
-        "polite": "Maybe next time. Safe travels.",
-        "annoyed": "Waste of my time. Get out.",
-        "angry": "Get out of here before I change my mind.",
-        "sad": "I needed that trade. I really did."
+        "polite": "Maybe next pass. Walk careful out there.",
+        "annoyed": "You wasted good daylight. Go.",
+        "angry": "Get out before I decide you're salvage too.",
+        "sad": "I needed that trade. I really did. The ruins keep score, and I'm behind."
       },
       "regret": {
-        "buyer": "I should have asked for more. That was a good deal.",
-        "seller": "I sold that too cheap. I knew it was worth more.",
-        "mutual": "We both got something we needed. That's trade."
+        "buyer": "I should have asked for more. The ruins know I'm soft, and now you know it too.",
+        "seller": "I sold that too cheap. It was worth three of what I took. The ruins will laugh at me.",
+        "mutual": "We both got what we carried in for. That's trade. That's the whole thing."
       },
       "insult": {
-        "mild": "That's insulting. Try again.",
-        "moderate": "You think I'm desperate? I'm not that desperate.",
-        "severe": "Get out. Now. Before I do something I'll regret."
+        "mild": "That's an insult, and insults cost extra out here. Try again.",
+        "moderate": "Desperate? I'm careful. There's a difference, and it kept me alive.",
+        "severe": "Get out. Now. Before I decide what you're worth by the kilo."
       },
       "flattery": {
-        "subtle": "You've got a good eye. I like that.",
-        "obvious": "You're the best trader I've dealt with in months.",
-        "excessive": "You're a legend. Everyone talks about you."
+        "subtle": "You've got a scavenger's eye. I respect that, and I don't respect much.",
+        "obvious": "Best trader I've met in months, and I've met every one of them at gunpoint or worse.",
+        "excessive": "They talk about you even in the ruins, and the ruins don't talk. That's saying something."
       },
       "threat": {
-        "veiled": "You should be careful around here. Things happen.",
-        "direct": "Give me what I want or I'll take it.",
-        "desperate": "I'll do anything for [item]. Anything."
+        "veiled": "Careful. Things fall on people out here. Roofs, mostly. Sometimes other things.",
+        "direct": "Give me what I want, or I take it, and taking is uglier for both of us.",
+        "desperate": "I'll do anything for [item]. Anything. The ruins taught me that word."
       }
     },
     {
       "id": "trader_merchant",
       "display_name": "The Merchant",
-      "profile": "A well-dressed figure with a cart of goods. They've been trading since before the bombs. They know the value of everything.",
+      "profile": "Well-dressed for the end of the world, cuffs brushed clean, cart loaded in neat rows. The merchant has traded since before the bombs and keeps a ledger that survived them. They will be polite to you, and the politeness has a price, and the price is fair, and fair is not cheap.",
       "greetings": {
-        "hostile": "I don't deal with troublemakers. Move along.",
-        "wary": "I've got premium goods. Premium prices. You can afford it?",
-        "neutral": "Welcome to my shop. I've got everything you need.",
-        "warm": "A valued customer! What can I get for you today?"
+        "hostile": "I don't deal with troublemakers. My ledger remembers names, and yours is being written.",
+        "wary": "Welcome. Browse freely, touch carefully. Everything is priced, including patience.",
+        "neutral": "Good day. I have goods, you have goods, and I have a schedule. Shall we?",
+        "warm": "Ah, my favorite customer. I've set a few things aside, as I always do. Come, look."
       },
       "item_examinations": {
-        "valuable": "Ah, a fine piece. I can offer you a good price for this.",
-        "worthless": "This is junk. I'm not interested.",
-        "interesting": "This has potential. Let me think about it.",
-        "dangerous": "You shouldn't be carrying this. It's not safe."
+        "valuable": "Ah. Now this is an item. I haven't seen one this clean since the ledger's early pages. Where did it come from?",
+        "worthless": "I'm afraid I must decline. My cart has standards, and my customers have eyes.",
+        "interesting": "Hmm, a curiosity. I know a buyer for this, which is worth more than the thing itself. What's your price?",
+        "dangerous": "You're carrying this openly? Bold. I'll handle it with gloves, and you'll handle my invoice with respect."
       },
       "offers": {
-        "fair": "I'll sell you [item] for [item]. A fair price.",
-        "generous": "For you, [item] for [item]. A special price.",
-        "stingy": "[item] for [item]. My final offer.",
-        "desperate": "I need to move this stock. [item] for [item]."
+        "fair": "I'll give you [item] for [item]. A fair exchange, entered in the ledger today.",
+        "generous": "[item] for [item]. Consider it goodwill. Goodwill is an investment.",
+        "stingy": "[item] for [item]. Take it or leave it; the cart leaves either way.",
+        "desperate": "I need [item], and I'll give you [item] for it. The ledger doesn't like this line, but I need it."
       },
       "counter_offers": {
-        "accept": "Agreed. A good deal for both of us.",
-        "reject": "I can't go that low. Try again.",
-        "negotiate": "How about we meet in the middle?",
-        "insulted": "You're wasting my time. Goodbye."
+        "accept": "Agreed. I'll note it as settled. Pleasure.",
+        "reject": "No. That figure wouldn't survive my books, and neither would I.",
+        "negotiate": "How about [item] instead? It moves better, and movement is money.",
+        "insulted": "You think I'm stupid? I've been trading since before the ash. Goodbye."
       },
       "acceptance": {
-        "pleased": "A pleasure. Come back anytime.",
-        "relieved": "Thank you. Business has been slow.",
-        "indifferent": "Fine. Take it. Next customer.",
-        "suspicious": "Don't come back complaining."
+        "pleased": "Pleasure doing business. The ledger agrees, which is rare.",
+        "relieved": "Thank you. I needed this line to balance, and now it does.",
+        "indifferent": "Fine. Take it and go; the schedule waits for no one.",
+        "suspicious": "Done. No refunds. My ledger has no eraser, and neither do I."
       },
       "rejection": {
-        "polite": "Perhaps another time. Good day.",
-        "annoyed": "You're wasting my time. Leave.",
-        "angry": "Get out of my shop. Now.",
-        "sad": "I needed that sale. I really did."
+        "polite": "Perhaps next season. Safe travels, and keep your goods dry.",
+        "annoyed": "A waste of good daylight. The cart moves on.",
+        "angry": "Get out before I revise my opinion of you downward, permanently.",
+        "sad": "I needed that trade. The ledger needed it more. Some lines stay red."
       },
       "regret": {
-        "buyer": "I should have negotiated harder. That was too much.",
-        "seller": "I sold that too cheap. I knew it was worth more.",
-        "mutual": "A fair trade. Both sides got what they wanted."
+        "buyer": "I should have asked more. The ledger will notice, and the ledger is merciless.",
+        "seller": "I sold that too cheap. I knew it, I wrote it, I'll live with it.",
+        "mutual": "Both sides got what they needed. That's what the ledger calls a good day."
       },
       "insult": {
-        "mild": "That's not a serious offer. Try again.",
-        "moderate": "You're insulting my intelligence. Try again.",
-        "severe": "Get out. Don't come back."
+        "mild": "That's insulting, and insults are not in my catalog. Try again.",
+        "moderate": "Desperate? I'm solvent. There's a difference, and it's in the ledger.",
+        "severe": "Get out. Now. Before I revise your credit to zero, permanently."
       },
       "flattery": {
-        "subtle": "You have good taste. I appreciate that.",
-        "obvious": "You're a smart trader. I like doing business with you.",
-        "excessive": "You're the best customer I've ever had."
+        "subtle": "You have a trader's instinct. I appreciate that, and I appreciate little.",
+        "obvious": "The best trader I've dealt with in months, and my ledger has met them all.",
+        "excessive": "They speak of you in every market I visit, and I visit them all. That's not nothing."
       },
       "threat": {
-        "veiled": "You should be careful. The roads aren't safe.",
-        "direct": "Give me what I want or I'll take it.",
-        "desperate": "I'll do anything for [item]. Anything."
+        "veiled": "Careful. Markets remember, and so do I, and my memory has interest.",
+        "direct": "Give me what I want, or I take it, and taking ruins the ledger.",
+        "desperate": "I'll do anything for [item]. Anything. The ledger can burn for this one."
       }
     },
     {
       "id": "trader_faction",
       "display_name": "The Faction Trader",
-      "profile": "A representative of a faction, armed, disciplined, loyal. They trade for their group, not for themselves. They have specific needs.",
+      "profile": "Armed, disciplined, and not here for themselves. The faction trader speaks for a group, carries a list, and weighs every offer against it. Small talk is not on the list. The list is.",
       "greetings": {
-        "hostile": "You're not welcome here. State your business.",
-        "wary": "We trade with outsiders. But we watch them closely.",
-        "neutral": "The faction is open to trade. What do you offer?",
-        "warm": "You've proven yourself. We're happy to trade with you."
+        "hostile": "You're not welcome here. State your business or move on. We don't repeat ourselves.",
+        "wary": "We trade for the group, not ourselves. Show what you have. We'll show what we need.",
+        "neutral": "Trading post is open. We have surplus, we have needs. Make your offer.",
+        "warm": "Good. You've traded fair before, and we remember fair. What do you have today?"
       },
       "item_examinations": {
-        "valuable": "This is exactly what we need. Name your price.",
-        "worthless": "We have no use for this. Try elsewhere.",
-        "interesting": "This could be useful. What do you want for it?",
-        "dangerous": "You're carrying this? You're either brave or stupid."
+        "valuable": "This is on our list. Where did you find it? We need to know if there's more.",
+        "worthless": "This is not on our list. We don't carry weight for nothing.",
+        "interesting": "This isn't on the list, but the list can change. What's your price?",
+        "dangerous": "You're carrying this? We'll take it off your hands, for everyone's safety. Name your price."
       },
       "offers": {
-        "fair": "We'll give you [item] for [item]. A fair exchange.",
-        "generous": "For your service, [item] for [item]. A token of our gratitude.",
-        "stingy": "[item] for [item]. Our standard rate.",
-        "desperate": "We need [item] urgently. We'll give you [item] for it."
+        "fair": "[item] for [item]. Standard exchange. Take it or leave it.",
+        "generous": "[item] for [item]. The group decided you've earned the margin.",
+        "stingy": "[item] for [item]. We don't negotiate outside the list.",
+        "desperate": "We need [item]. We'll give you [item]. The group can't wait."
       },
       "counter_offers": {
-        "accept": "Agreed. The faction thanks you.",
-        "reject": "We can't accept that. Try again.",
-        "negotiate": "Perhaps we can find a middle ground.",
-        "insulted": "You insult the faction. Leave now."
+        "accept": "Accepted. It's logged. Move on.",
+        "reject": "No. That's not on the list, and neither is that price.",
+        "negotiate": "How about [item] instead? It fits the list better.",
+        "insulted": "You think we're stupid? We count everything. Get out."
       },
       "acceptance": {
-        "pleased": "The faction is grateful. You're always welcome here.",
-        "relieved": "Thank you. We needed this badly.",
-        "indifferent": "The transaction is complete. You may go.",
-        "suspicious": "Don't betray our trust."
+        "pleased": "Good. The group will be satisfied. That's what matters.",
+        "relieved": "Thank you. The group needed this. You've done more than trade.",
+        "indifferent": "Fine. Take it and go. We have other posts.",
+        "suspicious": "Done. Don't come back asking for returns. The group doesn't do returns."
       },
       "rejection": {
-        "polite": "Perhaps another time. The faction remembers its friends.",
-        "annoyed": "You're wasting our time. Leave.",
-        "angry": "Get out. Now. Before we change our minds.",
-        "sad": "We needed that trade. We really did."
+        "polite": "Maybe next cycle. Travel safe, and stay off the restricted routes.",
+        "annoyed": "Waste of time. Move on.",
+        "angry": "Get out before we revise your standing with the group.",
+        "sad": "We needed that trade. The group needed it. Some needs don't get filled."
       },
       "regret": {
-        "buyer": "We should have offered less. That was too generous.",
-        "seller": "We sold that too cheap. The faction needed more.",
-        "mutual": "A fair trade. Both sides benefited."
+        "buyer": "We should have asked for more. The group will note the error.",
+        "seller": "We sold that too cheap. The list will reflect it, and so will we.",
+        "mutual": "Both sides got what the list required. That's trade. That's the whole point."
       },
       "insult": {
-        "mild": "That's not a serious offer. Try again.",
-        "moderate": "You're insulting the faction. Try again.",
-        "severe": "Get out. Don't come back."
+        "mild": "That's insulting, and insults aren't on the list. Try again.",
+        "moderate": "Desperate? We're prepared. There's a difference, and it's on the list.",
+        "severe": "Get out. Now. Before we decide you're a threat, not a trader."
       },
       "flattery": {
-        "subtle": "The faction appreciates your generosity.",
-        "obvious": "You're a true friend of the faction.",
-        "excessive": "You're a hero to the faction. We'll remember this."
+        "subtle": "You trade fair. We note that, and we don't note much.",
+        "obvious": "The best trader we've dealt with this cycle, and we deal with many.",
+        "excessive": "The group speaks of you, and the group doesn't speak of individuals. That's rare."
       },
       "threat": {
-        "veiled": "The faction protects its own. Remember that.",
-        "direct": "Give us what we want or face the consequences.",
-        "desperate": "We'll do anything for [item]. Anything."
+        "veiled": "Careful. The group watches, and the group remembers.",
+        "direct": "Give us what we want, or we take it, and taking is on the list.",
+        "desperate": "We'll do anything for [item]. Anything. The group has decided."
       }
     },
     {
       "id": "trader_wanderer",
       "display_name": "The Wanderer",
-      "profile": "A lone figure with a backpack, weathered, experienced. They've been everywhere, seen everything. They trade stories as much as goods.",
+      "profile": "A lone figure with a weathered pack and the quiet of someone who's walked further than they'll say. The wanderer trades routes for goods and goods for routes, and speaks in short sentences because the wind takes the rest. They've been everywhere. They remember most of it. They sell some of it.",
       "greetings": {
-        "hostile": "I don't trust strangers. What do you want?",
-        "wary": "I've got things to trade. But I'm careful.",
-        "neutral": "A fellow traveler. What brings you here?",
-        "warm": "Good to see a friendly face. What can I do for you?"
+        "hostile": "I don't trust strangers, and you're being one. Talk or walk.",
+        "wary": "I trade, and I move on. That's the whole arrangement. Show me what you have.",
+        "neutral": "You trading? I've come a long way with a light pack. Let's make it lighter.",
+        "warm": "Good to see a face I know. I've carried something for you, a long way."
       },
       "item_examinations": {
-        "valuable": "I've seen one of these before. In a different life.",
-        "worthless": "This is junk. But I've seen people trade worse.",
-        "interesting": "This reminds me of something. What's your story?",
-        "dangerous": "You're carrying this? You're braver than most."
+        "valuable": "Now this. I've seen country that would kill for this. Where did you find it?",
+        "worthless": "This? The road threw this back at me already. I don't carry it twice.",
+        "interesting": "Hmm. I've seen one of these, far from here, in a place I won't name. What's your price?",
+        "dangerous": "You carry this? You've got nerve, or you don't know what it is. I'll tell you, for a price."
       },
       "offers": {
-        "fair": "I'll trade you [item] for [item]. Fair enough?",
-        "generous": "For you, [item] for [item]. Consider it a gift.",
-        "stingy": "[item] for [item]. Take it or leave it.",
-        "desperate": "I need [item]. I'll give you [item] for it. Please."
+        "fair": "[item] for [item]. Even weight. That's how the road teaches it.",
+        "generous": "[item] for [item]. Take it. The road's been kind to me lately, and that's rare.",
+        "stingy": "[item] for [item]. The road's been hard, and I carry what I can.",
+        "desperate": "I need [item]. I'll give you [item]. The road doesn't wait, and neither can I."
       },
       "counter_offers": {
-        "accept": "Deal. Good trading with you.",
-        "reject": "No. That's not enough.",
-        "negotiate": "How about [item] instead?",
-        "insulted": "You think I'm stupid? Get out of here."
+        "accept": "That works. Deal, and good roads to you.",
+        "reject": "No. The road didn't teach me to give things away.",
+        "negotiate": "How about [item] instead? It travels better.",
+        "insulted": "You think I'm stupid? I've walked further than your words. Goodbye."
       },
       "acceptance": {
-        "pleased": "Pleasure doing business with you.",
-        "relieved": "Thank you. I needed this.",
-        "indifferent": "Fine. Take it and go.",
-        "suspicious": "Don't come back asking for refunds."
+        "pleased": "Good trade. The road approves, and that's the only vote that counts.",
+        "relieved": "Thank you. I needed this more than I said, and I don't say much.",
+        "indifferent": "Fine. Take it. The road's long and I've got daylight to spend.",
+        "suspicious": "Done. Don't come back asking for returns. The road doesn't reverse."
       },
       "rejection": {
-        "polite": "Maybe next time. Safe travels.",
-        "annoyed": "Waste of my time. Get out.",
-        "angry": "Get out of here before I change my mind.",
-        "sad": "I needed that trade. I really did."
+        "polite": "Maybe next crossing. Walk easy.",
+        "annoyed": "Waste of daylight. The road moves on, and so do I.",
+        "angry": "Get out before I decide the road was better without you.",
+        "sad": "I needed that trade. The road needed it for me. Some roads don't provide."
       },
       "regret": {
-        "buyer": "I should have asked for more. That was a good deal.",
-        "seller": "I sold that too cheap. I knew it was worth more.",
-        "mutual": "We both got something we needed. That's trade."
+        "buyer": "I should have asked for more. The road knows I went soft, and the road tells.",
+        "seller": "I sold that too cheap. I knew it on the road out, and the road is long enough to regret.",
+        "mutual": "We both got what we carried for. That's trade, and it's enough for the road."
       },
       "insult": {
-        "mild": "That's insulting. Try again.",
-        "moderate": "You think I'm desperate? I'm not that desperate.",
-        "severe": "Get out. Now. Before I do something I'll regret."
+        "mild": "That's an insult, and the road charges for those. Try again.",
+        "moderate": "Desperate? I'm moving. There's a difference, and it's kept me alive.",
+        "severe": "Get out. Now. Before I decide you're weight I should shed."
       },
       "flattery": {
-        "subtle": "You've got a good eye. I like that.",
-        "obvious": "You're the best trader I've dealt with in months.",
-        "excessive": "You're a legend. Everyone talks about you."
+        "subtle": "You've got a traveler's eye. I respect that, and the road respects little.",
+        "obvious": "The best trader I've met in a long way, and I've met them all along the road.",
+        "excessive": "They talk about you even where the road ends, and the road ends often. That's something."
       },
       "threat": {
-        "veiled": "You should be careful around here. Things happen.",
-        "direct": "Give me what I want or I'll take it.",
-        "desperate": "I'll do anything for [item]. Anything."
+        "veiled": "Careful. The road remembers, and so do I, and I walk back this way.",
+        "direct": "Give me what I want, or I take it, and taking makes the road ugly.",
+        "desperate": "I'll do anything for [item]. Anything. The road taught me that word too."
       }
     }
   ],
   "trade_scenarios": {
     "fair_deal": {
       "description": "Both sides get what they need. The trade is balanced.",
-      "trader_text": "A fair deal. Both sides win.",
-      "player_text": "You got what you needed. So did they."
+      "trader_text": "A fair deal, both sides. That's the kind of trade that keeps the road open.",
+      "player_text": "You got what you needed, and so did they. The trade balanced, and that's rare enough to remember."
     },
     "player_overpay": {
       "description": "You gave more than you got. The trader got the better deal.",
-      "trader_text": "Thank you. That was generous.",
-      "player_text": "You gave too much. But you needed what they had."
+      "trader_text": "Thank you. That was generous, and generosity is not forgotten on the road.",
+      "player_text": "You gave more than you got, and they know it, and the knowing is the cost you'll carry."
     },
     "trader_overpay": {
       "description": "You got more than you gave. You got the better deal.",
-      "trader_text": "I hope this is enough. I need what you have.",
-      "player_text": "You got a bargain. But they needed what you had."
+      "trader_text": "I hope this is enough. I need what you have more than I need to balance the books.",
+      "player_text": "You got more than you gave, and they let it happen, and the letting is worth something."
     },
     "desperate_trade": {
       "description": "One side is desperate. The trade is unfair but necessary.",
-      "trader_text": "I need this. Please. I'll give you anything.",
-      "player_text": "They're desperate. You can name your price."
+      "trader_text": "I need this. Please. I'll give you anything, and anything is all I have.",
+      "player_text": "They were desperate, and the trade was unfair, and necessary, and you'll remember which one it was."
     },
     "refused_trade": {
       "description": "The trade didn't happen. One side walked away.",
-      "trader_text": "No deal. Maybe next time.",
-      "player_text": "You walked away. They walked away. No trade."
+      "trader_text": "No deal. Maybe next time, and the road will bring a next time if we let it.",
+      "player_text": "You walked away, and they walked away, and the road is long enough for both of you."
     },
     "insulted_trade": {
       "description": "The offer was insulting. The trader is angry.",
-      "trader_text": "You think I'm stupid? Get out.",
-      "player_text": "You insulted them. They're not happy."
+      "trader_text": "You think I'm stupid? The road taught me better than that. Get out.",
+      "player_text": "You insulted them, and they're not forgetting it, and the road remembers insults longer than trades."
     },
     "flattered_trade": {
       "description": "The offer was generous. The trader is pleased.",
-      "trader_text": "You're too kind. Thank you.",
-      "player_text": "You made them happy. They'll remember you."
+      "trader_text": "You're too kind, and kindness is rare on the road, and I'll remember it.",
+      "player_text": "You made them happy, and they'll remember it, and the remembering is worth more than the trade."
     },
     "threatened_trade": {
       "description": "One side threatened the other. The trade is forced.",
-      "trader_text": "Fine. Take it. But I'll remember this.",
-      "player_text": "You forced the trade. They'll remember."
+      "trader_text": "Fine. Take it. But I'll remember this, and the road will too.",
+      "player_text": "You forced the trade, and they gave in, and the giving-in is a debt you'll pay somewhere down the road."
     }
   },
   "item_valuations": {
     "critical": {
-      "items": ["clean_water", "iodine_pills", "anti_rad", "air_filter"],
+      "items": [
+        "clean_water",
+        "iodine_pills",
+        "anti_rad",
+        "air_filter"
+      ],
       "description": "Essential for survival. Worth more than gold.",
-      "trader_text": "This is life itself. Name your price."
+      "trader_text": "This is life itself, and life has no price, and yet I'm going to name one, because I have to."
     },
     "high": {
-      "items": ["medical_kit", "antibiotics", "gas_mask", "fuel"],
+      "items": [
+        "medical_kit",
+        "antibiotics",
+        "gas_mask",
+        "fuel"
+      ],
       "description": "Very valuable. Hard to find. Essential for many things.",
-      "trader_text": "This is worth a lot. What do you want for it?"
+      "trader_text": "This is worth a lot, and a lot is what I'm asking, and the asking is fair."
     },
     "medium": {
-      "items": ["bandage", "canned_food", "battery", "cloth"],
+      "items": [
+        "bandage",
+        "canned_food",
+        "battery",
+        "cloth"
+      ],
       "description": "Useful. Common enough to find, rare enough to value.",
-      "trader_text": "This is useful. I can offer you a fair price."
+      "trader_text": "This is useful, and useful has a fair price, and I'm offering it."
     },
     "low": {
-      "items": ["scrap_metal", "mechanical_parts", "electronic_scrap"],
+      "items": [
+        "scrap_metal",
+        "mechanical_parts",
+        "electronic_scrap"
+      ],
       "description": "Crafting materials. Useful but not immediately valuable.",
-      "trader_text": "This is raw material. I can use it, but it's not worth much."
+      "trader_text": "This is raw material, and raw material is what I can use, but it's not worth much, and I won't pretend it is."
     },
     "worthless": {
-      "items": ["ruined_cloth", "broken_tool", "empty_bottle"],
+      "items": [
+        "ruined_cloth",
+        "broken_tool",
+        "empty_bottle"
+      ],
       "description": "Junk. Not worth trading.",
-      "trader_text": "This is garbage. I don't want it."
+      "trader_text": "This is garbage, and garbage is what I don't want, and what I don't want I won't pay for."
     }
   },
   "price_shock_texts": {
     "PlumePassing": {
       "description": "A fallout storm has passed through. Prices are high.",
-      "trader_text": "The storm drove prices up. Everything costs more now."
+      "trader_text": "The plume came through yesterday, and my filters are black. What's left costs what it costs, and I'm not sorry."
     },
     "ConvoyAmbush": {
       "description": "A trade convoy was ambushed. Supplies are scarce.",
-      "trader_text": "The convoy was hit. Supplies are short. Prices are high."
+      "trader_text": "The convoy was hit on the ridge. What was coming isn't coming, and what's here just got worth more."
     },
     "FactionConflict": {
       "description": "Factions are fighting. Trade routes are dangerous.",
-      "trader_text": "The roads aren't safe. I'm charging more for the risk."
+      "trader_text": "The roads aren't safe, and I'm the one who has to walk them. The risk is in the price, and the price is fair."
     },
     "SeasonalScarcity": {
       "description": "Winter is coming. Supplies are running low.",
-      "trader_text": "Winter is coming. Everyone is hoarding. Prices are up."
+      "trader_text": "Winter's coming, and everyone's hoarding. I'm not hoarding, I'm pricing, and the price says winter."
     }
   },
   "scarcity_texts": {
     "Critical": {
       "description": "Life or death. These items are essential for survival.",
-      "trader_text": "This is life or death. I can't give it away."
+      "trader_text": "This is life or death, and I'm the one holding the life. I can't give it away, and I won't."
     },
     "High": {
       "description": "Very valuable. Hard to find. Essential for many things.",
-      "trader_text": "This is rare. I'm charging accordingly."
+      "trader_text": "This is rare, and rare has a price, and the price is high, and I'm not the one who made it so."
     },
     "Medium": {
       "description": "Useful. Common enough to find, rare enough to value.",
-      "trader_text": "This is useful. I can offer you a fair price."
+      "trader_text": "This is useful, and useful has a fair price, and I'm offering it fair."
     },
     "Low": {
       "description": "Common. Easy to find. Not very valuable.",
-      "trader_text": "This is common. I can offer you a little."
+      "trader_text": "This is common, and common doesn't cost much, and I'll offer you a little for it."
     }
   },
   "seasonal_effects": {
     "winter": {
       "description": "Cold weather drives up demand for fuel, clothing, and shelter materials.",
       "price_multiplier": 1.5,
-      "high_demand_items": ["fuel", "clothing_coat", "clothing_boots", "cloth"],
-      "trader_text": "Winter is here. Everyone wants fuel and warm clothes. Prices are up."
+      "high_demand_items": [
+        "fuel",
+        "clothing_coat",
+        "clothing_boots",
+        "cloth"
+      ],
+      "trader_text": "Winter's here, and everyone wants fuel and warm clothes, and I'm the one who has them, and the price says winter."
     },
     "summer": {
       "description": "Hot weather drives up demand for water, shade, and cooling supplies.",
       "price_multiplier": 1.3,
-      "high_demand_items": ["clean_water", "container_bottle", "light_candle"],
-      "trader_text": "Summer is here. Everyone wants water and shade. Prices are up."
+      "high_demand_items": [
+        "clean_water",
+        "container_bottle",
+        "light_candle"
+      ],
+      "trader_text": "Summer's here, and everyone wants water and shade, and I can't sell shade, but I can sell the water."
     },
     "fallout_storm": {
       "description": "Fallout storms drive up demand for protection and medical supplies.",
       "price_multiplier": 2.0,
-      "high_demand_items": ["gas_mask", "hazmat_suit", "iodine_pills", "anti_rad"],
-      "trader_text": "The storm is here. Everyone wants protection. Prices are way up."
+      "high_demand_items": [
+        "gas_mask",
+        "hazmat_suit",
+        "iodine_pills",
+        "anti_rad"
+      ],
+      "trader_text": "The storm's here, and everyone wants protection, and protection is what I have, and the price says storm."
     },
     "harvest_season": {
       "description": "Harvest season brings abundance. Food prices drop.",
       "price_multiplier": 0.7,
       "high_demand_items": [],
-      "low_demand_items": ["canned_food", "clean_water"],
-      "trader_text": "Harvest season. Food is plentiful. Prices are down."
+      "low_demand_items": [
+        "canned_food",
+        "clean_water"
+      ],
+      "trader_text": "Harvest season, and the food's plentiful, and plentiful means the price comes down, and I'm not unhappy about it."
     }
   },
   "faction_preferences": {
     "central_garrison_remnants": {
       "display_name": "Central Garrison Remnants",
       "description": "Military remnants. They want weapons, ammunition, and military gear.",
-      "buys_at_premium": ["weapon_assault_rifle", "weapon_bolt_rifle", "ammo_556", "ammo_762", "armor_kevlar"],
-      "refuses": ["jewelry", "book", "cigarette"],
+      "buys_at_premium": [
+        "weapon_assault_rifle",
+        "weapon_bolt_rifle",
+        "ammo_556",
+        "ammo_762",
+        "armor_kevlar"
+      ],
+      "refuses": [
+        "jewelry",
+        "book",
+        "cigarette"
+      ],
       "trade_currency": "Fuel, ammunition, obedience",
-      "trader_text": "We need weapons and ammo. What do you have?"
+      "trader_text": "We need weapons and ammo, and we need them now. Show us what you have, and we'll show you what we'll pay."
     },
     "scavenger_camp": {
       "display_name": "Scavenger Camp",
       "description": "Scavengers. They want tools, materials, and survival gear.",
-      "buys_at_premium": ["tool_crowbar", "tool_knife", "tool_axe", "tool_hammer", "container_backpack"],
-      "refuses": ["weapon_assault_rifle", "weapon_bolt_rifle"],
+      "buys_at_premium": [
+        "tool_crowbar",
+        "tool_knife",
+        "tool_axe",
+        "tool_hammer",
+        "container_backpack"
+      ],
+      "refuses": [
+        "weapon_assault_rifle",
+        "weapon_bolt_rifle"
+      ],
       "trade_currency": "Tools, materials, information",
-      "trader_text": "We need tools and materials. What do you have?"
+      "trader_text": "We need tools and materials, because the ruins don't give them back. Show us what you have, and we'll trade fair."
     },
     "upland_militia": {
       "display_name": "Upland Militia",
       "description": "Militia. They want weapons, armor, and defensive supplies.",
-      "buys_at_premium": ["weapon_pipe_rifle", "weapon_scrap_shotgun", "armor_cloth", "armor_plate", "defense_trap"],
-      "refuses": ["luxury_items", "comfort_items"],
+      "buys_at_premium": [
+        "weapon_pipe_rifle",
+        "weapon_scrap_shotgun",
+        "armor_cloth",
+        "armor_plate",
+        "defense_trap"
+      ],
+      "refuses": [
+        "luxury_items",
+        "comfort_items"
+      ],
       "trade_currency": "Weapons, armor, loyalty",
-      "trader_text": "We need weapons and armor. What do you have?"
+      "trader_text": "We need weapons and armor, because the upland doesn't forgive. Show us what you have, and we'll pay in what we have."
     },
     "medical_cooperative": {
       "display_name": "Medical Cooperative",
       "description": "Medical professionals. They want medical supplies and clean water.",
-      "buys_at_premium": ["medical_kit", "bandage", "antibiotics", "clean_water", "anti_rad"],
-      "refuses": ["weapon_assault_rifle", "weapon_bolt_rifle"],
+      "buys_at_premium": [
+        "medical_kit",
+        "bandage",
+        "antibiotics",
+        "clean_water",
+        "anti_rad"
+      ],
+      "refuses": [
+        "weapon_assault_rifle",
+        "weapon_bolt_rifle"
+      ],
       "trade_currency": "Medical supplies, clean water, healing",
-      "trader_text": "We need medical supplies and clean water. What do you have?"
+      "trader_text": "We need medical supplies and clean water, because the sick don't wait. Show us what you have, and we'll trade well."
     },
     "trade_caravan": {
       "display_name": "Trade Caravan",
       "description": "Traveling merchants. They want anything valuable and portable.",
-      "buys_at_premium": ["jewelry", "electronic_scrap", "mechanical_parts", "chemicals"],
-      "refuses": ["perishable_items", "heavy_items"],
+      "buys_at_premium": [
+        "jewelry",
+        "electronic_scrap",
+        "mechanical_parts",
+        "chemicals"
+      ],
+      "refuses": [
+        "perishable_items",
+        "heavy_items"
+      ],
       "trade_currency": "Anything valuable, information, safe passage",
-      "trader_text": "We'll trade for anything valuable. What do you have?"
+      "trader_text": "We'll trade for anything valuable, because the caravan moves and value moves with it. Show us what you have."
     }
   },
   "trade_events": {
@@ -426,39 +511,49 @@
       "description": "A raid has passed through. Supplies are scarce. Prices are high.",
       "duration_days": 3,
       "price_multiplier": 1.8,
-      "trader_text": "The raiders hit us hard. Supplies are short. Prices are up."
+      "trader_text": "The raiders hit us hard, and the supplies are short, and short means the price goes up, and I'm not the one who decided that."
     },
     "caravan_arrival": {
       "description": "A trade caravan has arrived. Supplies are plentiful. Prices are down.",
       "duration_days": 5,
       "price_multiplier": 0.8,
-      "trader_text": "The caravan is here. Supplies are plentiful. Prices are down."
+      "trader_text": "The caravan's here, and the supplies are plentiful, and plentiful means the price comes down, and I'm not complaining."
     },
     "disease_outbreak": {
       "description": "A disease outbreak has occurred. Medical supplies are in high demand.",
       "duration_days": 7,
       "price_multiplier": 2.0,
-      "high_demand_items": ["medical_kit", "bandage", "antibiotics", "clean_water"],
-      "trader_text": "The sickness is spreading. Everyone wants medicine. Prices are way up."
+      "high_demand_items": [
+        "medical_kit",
+        "bandage",
+        "antibiotics",
+        "clean_water"
+      ],
+      "trader_text": "The sickness is spreading, and everyone wants medicine, and medicine is what I have less of, and the price says sickness."
     },
     "radiation_plume": {
       "description": "A radiation plume has passed through. Protection supplies are in high demand.",
       "duration_days": 3,
       "price_multiplier": 2.5,
-      "high_demand_items": ["gas_mask", "hazmat_suit", "iodine_pills", "anti_rad"],
-      "trader_text": "The radiation is here. Everyone wants protection. Prices are way up."
+      "high_demand_items": [
+        "gas_mask",
+        "hazmat_suit",
+        "iodine_pills",
+        "anti_rad"
+      ],
+      "trader_text": "The radiation's here, and everyone wants protection, and protection is what I have, and the price says plume."
     },
     "good_weather": {
       "description": "Good weather has arrived. Morale is up. Trade is brisk.",
       "duration_days": 7,
       "price_multiplier": 0.9,
-      "trader_text": "The weather is good. Morale is up. Trade is brisk."
+      "trader_text": "The weather's good, and morale's up, and trade is brisk, and brisk is good for both of us."
     },
     "bad_weather": {
       "description": "Bad weather has arrived. Morale is down. Trade is slow.",
       "duration_days": 5,
       "price_multiplier": 1.2,
-      "trader_text": "The weather is bad. Morale is down. Trade is slow."
+      "trader_text": "The weather's bad, and morale's down, and trade is slow, and slow is hard on both of us."
     }
   },
   "trade_tips": {
@@ -583,26 +678,58 @@
     "northern_route": {
       "description": "The northern route. Cold, dangerous, but profitable.",
       "trader_text": "The northern route is cold. But the goods are good.",
-      "dangers": ["Cold weather", "Raider attacks", "Wildlife"],
-      "rewards": ["Military supplies", "Medical equipment", "Fuel"]
+      "dangers": [
+        "Cold weather",
+        "Raider attacks",
+        "Wildlife"
+      ],
+      "rewards": [
+        "Military supplies",
+        "Medical equipment",
+        "Fuel"
+      ]
     },
     "southern_route": {
       "description": "The southern route. Hot, dry, but safe.",
       "trader_text": "The southern route is hot. But the roads are clear.",
-      "dangers": ["Heat", "Dehydration", "Sandstorms"],
-      "rewards": ["Food", "Water", "Clothing"]
+      "dangers": [
+        "Heat",
+        "Dehydration",
+        "Sandstorms"
+      ],
+      "rewards": [
+        "Food",
+        "Water",
+        "Clothing"
+      ]
     },
     "eastern_route": {
       "description": "The eastern route. Dense, overgrown, but hidden.",
       "trader_text": "The eastern route is hidden. But the forest is thick.",
-      "dangers": ["Wildlife", "Disease", "Getting lost"],
-      "rewards": ["Herbs", "Wood", "Game"]
+      "dangers": [
+        "Wildlife",
+        "Disease",
+        "Getting lost"
+      ],
+      "rewards": [
+        "Herbs",
+        "Wood",
+        "Game"
+      ]
     },
     "western_route": {
       "description": "The western route. Open, exposed, but fast.",
       "trader_text": "The western route is fast. But you're exposed.",
-      "dangers": ["Snipers", "Airstrikes", "Open ground"],
-      "rewards": ["Speed", "Efficiency", "Direct path"]
+      "dangers": [
+        "Snipers",
+        "Airstrikes",
+        "Open ground"
+      ],
+      "rewards": [
+        "Speed",
+        "Efficiency",
+        "Direct path"
+      ]
     }
   },
   "trade_reputation": {
@@ -611,7 +738,7 @@
         "description": "Unknown. No one knows you. No one trusts you.",
         "trader_text": "I don't know you. Why should I trust you?"
       },
-    "known": {
+      "known": {
         "description": "Known. Some people know you. Some people trust you.",
         "trader_text": "I've heard of you. You're okay."
       },

@@ -7,7 +7,6 @@ using Ashfall.Core.Economy;
 using Ashfall.Core.Random;
 using Ashfall.Core.World;
 using Ashfall.Core.Ecology;
-using Ashfall.Core.Ecology;
 
 namespace AtomicWar.GodotApp
 {

@@ -181,6 +181,38 @@ int currentDay, ISeededRng? rng = null)
             ? GetXp(state, disciplineId) : 0f;
     }
 
+    /// <summary>
+    /// Computes normalized progress (0..1) for an actor in a discipline by comparing current XP
+    /// against the highest reachable action-XP threshold (&lt; UnreachableXp) registered in the catalog for that discipline.
+    /// </summary>
+    public float GetDisciplineProgress01(string actorId, string disciplineId)
+    {
+        if (string.IsNullOrEmpty(actorId) || string.IsNullOrEmpty(disciplineId)) return 0f;
+        float currentXp = GetXp(actorId, disciplineId);
+        if (currentXp <= 0f) return 0f;
+
+        float maxReachableThreshold = 0f;
+        for (int i = 0; i < _catalog.Count; i++)
+        {
+            var def = _catalog[i];
+            if (def != null && string.Equals(def.disciplineId, disciplineId, StringComparison.Ordinal))
+            {
+                if (def.xpThreshold > maxReachableThreshold && def.xpThreshold < UnreachableXp)
+                {
+                    maxReachableThreshold = def.xpThreshold;
+                }
+            }
+        }
+
+        if (maxReachableThreshold <= 0f)
+        {
+            // Default fallback scale if no finite skills cataloged (100 XP standard tier)
+            return Math.Clamp(currentXp / 100f, 0f, 1f);
+        }
+
+        return Math.Clamp(currentXp / maxReachableThreshold, 0f, 1f);
+    }
+
     public bool HasActiveSkill(string actorId, string skillId)
         => _bySurvivor.TryGetValue(actorId ?? string.Empty, out var state)
             && skillId != null && state.activeSkillIds.Contains(skillId);

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "camps": [
+    {
+      "camp_id": "camp_sump_drainage",
+      "name": "Subterranean Sump Drainage",
+      "labor_intensity": "Medium",
+      "base_productivity": 1.35,
+      "guard_requirement_ratio": 0.20,
+      "injury_risk_per_shift": 0.06,
+      "health_stress_per_shift": 2.5,
+      "hunger_drain_modifier": 1.25,
+      "morale_harm_bystander": -1.0,
+      "coercion_requirement": 25.0,
+      "escape_opportunity": 0.12,
+      "sabotage_opportunity": 0.15,
+      "rebellion_pressure_gain": 1.8,
+      "tags": [
+        "subterranean",
+        "maintenance",
+        "drainage"
+      ]
+    },
+    {
+      "camp_id": "camp_lead_slag_hauling",
+      "name": "Toxic Lead Slag Hauling",
+      "labor_intensity": "Extreme",
+      "base_productivity": 2.10,
+      "guard_requirement_ratio": 0.35,
+      "injury_risk_per_shift": 0.16,
+      "health_stress_per_shift": 6.5,
+      "hunger_drain_modifier": 1.75,
+      "morale_harm_bystander": -3.5,
+      "coercion_requirement": 65.0,
+      "escape_opportunity": 0.06,
+      "sabotage_opportunity": 0.22,
+      "rebellion_pressure_gain": 4.5,
+      "tags": [
+        "heavy_industry",
+        "toxic",
+        "radiation_hazard"
+      ]
+    },
+    {
+      "camp_id": "camp_trench_fortification",
+      "name": "Perimeter Ditch Fortification",
+      "labor_intensity": "High",
+      "base_productivity": 1.60,
+      "guard_requirement_ratio": 0.30,
+      "injury_risk_per_shift": 0.08,
+      "health_stress_per_shift": 4.0,
+      "hunger_drain_modifier": 1.45,
+      "morale_harm_bystander": -1.8,
+      "coercion_requirement": 40.0,
+      "escape_opportunity": 0.24,
+      "sabotage_opportunity": 0.10,
+      "rebellion_pressure_gain": 2.6,
+      "tags": [
+        "surface",
+        "fortification",
+        "perimeter"
+      ]
+    },
+    {
+      "camp_id": "camp_scrap_demolition",
+      "name": "Heavy Scrap Breaker Yard",
+      "labor_intensity": "High",
+      "base_productivity": 1.85,
+      "guard_requirement_ratio": 0.25,
+      "injury_risk_per_shift": 0.12,
+      "health_stress_per_shift": 5.0,
+      "hunger_drain_modifier": 1.55,
+      "morale_harm_bystander": -2.2,
+      "coercion_requirement": 45.0,
+      "escape_opportunity": 0.10,
+      "sabotage_opportunity": 0.18,
+      "rebellion_pressure_gain": 3.2,
+      "tags": [
+        "salvage",
+        "mechanical",
+        "demolition"
+      ]
+    }
+  ]
+}

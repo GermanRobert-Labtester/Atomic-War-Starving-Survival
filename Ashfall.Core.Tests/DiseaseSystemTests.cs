@@ -352,7 +352,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void V3Save_MigratesToV4_WithFreshWard()
+        public void V3Save_MigratesForward_WithFreshWard()
         {
             var json = new SystemTextJsonSerializer();
             var v3 = new ExpansionHubSaveV3
@@ -375,7 +375,9 @@ namespace Ashfall.Core.Tests
             v3.Checksum = SaveChecksum.Compute(v3);
 
             var migrated = ExpansionHubSaveCodec.Decode(json.Serialize(v3), json);
-            Assert.Equal(4, migrated.saveVersion);
+            // Migrations always land on the current envelope version (v5 adds
+            // the debt-consequence sections; earlier payload semantics unchanged).
+            Assert.Equal(ExpansionHubSave.CurrentSaveVersion, migrated.saveVersion);
             Assert.Equal(290, migrated.simDay);
             Assert.True(migrated.foundry.unlocked, "v3 foundry state must survive migration");
             Assert.NotNull(migrated.disease);

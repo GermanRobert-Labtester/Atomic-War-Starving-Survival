@@ -68,6 +68,17 @@ namespace AtomicWar.GodotApp
         private readonly ExpeditionEncounterBridge _bridge;
         private readonly ISeededRng _rng;
         private readonly NarrativeEncounterSystem _narrative;
+        private readonly ExpeditionNavalSystem _naval = new();
+
+        /// <summary>
+        /// Destinations reachable by water from the home holdfast, mapped to
+        /// the water route's weather hazard. Populated by the host from the
+        /// wasteland map authority (routes with travel_domain "water"). When
+        /// a dispatch targets one of these, the sortie travels by river craft
+        /// (ExpeditionNavalSystem profile projection) and piracy risk is
+        /// folded into the encounter chance.
+        /// </summary>
+        public Dictionary<string, float> WaterRouteHazards { get; } = new(StringComparer.Ordinal);
 
         private static readonly IReadOnlyList<PendingSurfacedEncounter> NoPending =
             new List<PendingSurfacedEncounter>(0);
@@ -224,8 +235,19 @@ namespace AtomicWar.GodotApp
             if (def == null)
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "unknown_target", "expedition.unknown_target", version);
 
+            // Water crossings travel by river craft, not garage vehicles: the
+            // naval profile projection replaces the land profile and piracy
+            // risk is folded into the encounter chance for this sortie.
+            var navalDispatch = ResolveNavalDispatch(def, locationId);
+            if (navalDispatch != null)
+                def = navalDispatch.Value.def;
+
             ExpeditionVehicleProfile? profile = null;
-            if (!string.IsNullOrEmpty(vehicleId))
+            if (navalDispatch != null)
+            {
+                profile = navalDispatch.Value.profile;
+            }
+            else if (!string.IsNullOrEmpty(vehicleId))
             {
                 string? prepared = PrepareVehicleForDispatch(def, vehicleId);
                 if (prepared != null)
@@ -241,7 +263,9 @@ namespace AtomicWar.GodotApp
             if (result.IsSuccess)
             {
                 RaiseStateChanged();
-                LastEvent = $"Sent {survivorId} to {def.displayName}{(profile != null ? $" by {profile.vehicleId}" : "")}.";
+                LastEvent = navalDispatch != null
+                    ? $"Sent {survivorId} to {def.displayName} by river raft (piracy waters)."
+                    : $"Sent {survivorId} to {def.displayName}{(profile != null ? $" by {profile.vehicleId}" : "")}.";
             }
             else
             {
@@ -266,9 +290,19 @@ namespace AtomicWar.GodotApp
                       ?? Definitions.Find(d => d.id == locationId);
             if (def == null) return null;
 
+            // Preview parity with dispatch: water crossings project the naval
+            // profile and piracy-weighted encounter chance.
+            var navalDispatch = ResolveNavalDispatch(def, locationId);
+            if (navalDispatch != null)
+                def = navalDispatch.Value.def;
+
             ExpeditionVehicleProfile? profile = null;
             bool fuelOk = true;
-            if (!string.IsNullOrEmpty(vehicleId))
+            if (navalDispatch != null)
+            {
+                profile = navalDispatch.Value.profile;
+            }
+            else if (!string.IsNullOrEmpty(vehicleId))
             {
                 var inst = Vehicles.GetVehicle(vehicleId);
                 if (inst != null && !inst.isBrokenDown)
@@ -329,6 +363,23 @@ namespace AtomicWar.GodotApp
             return null;
         }
 
+        /// <summary>
+        /// Naval dispatch resolution for water-route destinations. Returns
+        /// (adjustedDefinition, profile) when the location is a water crossing:
+        /// the sortie travels by river craft (raft — always available) and
+        /// piracy risk is folded into the encounter chance. Returns null when
+        /// the destination is a land route.
+        /// </summary>
+        private (ExpeditionDefinition def, ExpeditionVehicleProfile profile)? ResolveNavalDispatch(
+            ExpeditionDefinition def, string locationId)
+        {
+            if (!WaterRouteHazards.TryGetValue(locationId, out float hazard)) return null;
+            var vessel = _naval.CreateInstance("vessel_improvised_raft");
+            var profile = _naval.ProjectToVehicleProfile(vessel);
+            var adjusted = _naval.ApplyPiracyToDefinition(def, hazard, vessel.vesselId);
+            return (adjusted, profile);
+        }
+
         private ExpeditionVehicleProfile? BuildProfile(string vehicleId)
         {
             var inst = Vehicles.GetVehicle(vehicleId);
@@ -379,8 +430,16 @@ namespace AtomicWar.GodotApp
             if (ExtraBlocked != null && ExtraBlocked(locationId))
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
 
+            var navalDispatch = ResolveNavalDispatch(def, locationId);
+            if (navalDispatch != null)
+                def = navalDispatch.Value.def;
+
             ExpeditionVehicleProfile? profile = null;
-            if (!string.IsNullOrEmpty(vehicleId))
+            if (navalDispatch != null)
+            {
+                profile = navalDispatch.Value.profile;
+            }
+            else if (!string.IsNullOrEmpty(vehicleId))
             {
                 string? prepared = PrepareVehicleForDispatch(def, vehicleId);
                 if (prepared != null)
@@ -393,9 +452,11 @@ namespace AtomicWar.GodotApp
             if (result.IsSuccess)
             {
                 RaiseStateChanged();
-                LastEvent = profile != null
-                    ? $"{survivorId} rolls out for {def.displayName} in the {Vehicles.GetVehicle(vehicleId)?.displayName ?? vehicleId}."
-                    : $"{survivorId} sets out on foot for {def.displayName}.";
+                LastEvent = navalDispatch != null
+                    ? $"{survivorId} takes the river route to {def.displayName} by raft (piracy waters)."
+                    : profile != null
+                        ? $"{survivorId} rolls out for {def.displayName} in the {Vehicles.GetVehicle(vehicleId)?.displayName ?? vehicleId}."
+                        : $"{survivorId} sets out on foot for {def.displayName}.";
             }
             else
             {

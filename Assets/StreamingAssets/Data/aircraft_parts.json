@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "aircraft": [
+    {
+      "aircraft_id": "aircraft_observation_balloon",
+      "name": "Improvised Observation Balloon",
+      "category": "Balloon",
+      "crew_requirement": 1,
+      "payload_mass": 80.0,
+      "fuel_type": "none",
+      "base_fuel_burn": 0.0,
+      "cruise_range": 30.0,
+      "speed_class": "Low",
+      "wind_tolerance": 18.0,
+      "visibility_tolerance": 0.35,
+      "cold_tolerance": -10.0,
+      "structural_reliability": 0.85,
+      "discovery_radius": 4,
+      "cargo_slots": 2,
+      "anti_air_exposure": 0.45,
+      "tags": [
+        "aerial",
+        "tetherable",
+        "observation",
+        "silent"
+      ]
+    },
+    {
+      "aircraft_id": "aircraft_scavenged_glider",
+      "name": "Scavenged Ridge Glider",
+      "category": "Glider",
+      "crew_requirement": 1,
+      "payload_mass": 50.0,
+      "fuel_type": "none",
+      "base_fuel_burn": 0.0,
+      "cruise_range": 45.0,
+      "speed_class": "Medium",
+      "wind_tolerance": 26.0,
+      "visibility_tolerance": 0.25,
+      "cold_tolerance": -15.0,
+      "structural_reliability": 0.78,
+      "discovery_radius": 2,
+      "cargo_slots": 1,
+      "anti_air_exposure": 0.15,
+      "tags": [
+        "aerial",
+        "silent",
+        "unpowered",
+        "covert"
+      ]
+    },
+    {
+      "aircraft_id": "aircraft_jury_rigged_ultralight",
+      "name": "Jury-Rigged Ultralight",
+      "category": "Ultralight",
+      "crew_requirement": 2,
+      "payload_mass": 140.0,
+      "fuel_type": "item_aviation_fuel_canister",
+      "base_fuel_burn": 2.2,
+      "cruise_range": 110.0,
+      "speed_class": "High",
+      "wind_tolerance": 35.0,
+      "visibility_tolerance": 0.20,
+      "cold_tolerance": -25.0,
+      "structural_reliability": 0.72,
+      "discovery_radius": 5,
+      "cargo_slots": 4,
+      "anti_air_exposure": 0.65,
+      "tags": [
+        "aerial",
+        "motorized",
+        "long_range",
+        "transport"
+      ]
+    }
+  ]
+}

@@ -743,6 +743,261 @@
         "hazard",
         "deep_lore"
       ]
+    },
+    {
+      "id": "codex_wildlife_rabbit",
+      "category": "wildlife",
+      "display_name": "Ash Rabbit",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "rabbit",
+      "body": "A small grey-brown lagomorph that has adapted with unsettling speed to contaminated soil. Its coat is perpetually powdered with fallout ash, providing surprising camouflage across bombed topsoil. Survivors quickly learn that while their meat is lean and safe when dressed properly, their thyroid and bone marrow concentrate radionuclides from shallow root foraging. Wire snares placed along perimeter runs remain the primary lifeline for early bunker survival.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "small_game",
+        "snare",
+        "food"
+      ]
+    },
+    {
+      "id": "codex_wildlife_cotton_hare",
+      "category": "wildlife",
+      "display_name": "Cotton Hare",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "cotton_hare",
+      "body": "Significantly larger than the ubiquitous ash rabbit, the cotton hare retains a seasonal pelage molt that turns stark chalk-white during nuclear winter and dusty dun during the thaw. Their powerful hind legs allow them to outrun scrub predators across open flats, making wire snares and funnel choke points essential. Their pelts yield supple binding straps, though their seasonal migration patterns make them an opportunistic harvest rather than a year-round staple.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "small_game",
+        "fur",
+        "seasonal"
+      ]
+    },
+    {
+      "id": "codex_wildlife_deer",
+      "category": "wildlife",
+      "display_name": "Wasteland Mule Deer",
+      "spoiler_tier": 1,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "deer",
+      "body": "Gaunt, long-legged ruminants that range across perimeter sectors in sparse family bands. Constant exposure to irradiated scrub has stunted their velvet antlers into jagged, calcified ridges. Capturing a wasteland deer in a camouflaged pit trap represents a massive windfall for any shelter, supplying weeks of venison and heavy hide for protective garments. However, their acute sense of smell means snares must be weathered thoroughly and baited with scarce salt or preserved mash.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "big_game",
+        "pit_trap",
+        "windfall"
+      ]
+    },
+    {
+      "id": "codex_wildlife_boar",
+      "category": "wildlife",
+      "display_name": "Razorback Boar",
+      "spoiler_tier": 1,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "boar",
+      "body": "A dense, aggressive omnivore whose dorsal bristles have thickened into sharp quills from heavy trace metal ingestion. Razorbacks root vigorously through contaminated humus and buried refuse, causing them to accumulate moderate liver and gland toxicity. Standard deadfalls and wire snares are effortlessly smashed to splinters by their bulk; only reinforced pit traps or heavy deadfalls can bring one down. Field butchery demands meticulous care to discard infected lymph clusters.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "heavy_game",
+        "pit_trap",
+        "hazard"
+      ]
+    },
+    {
+      "id": "codex_wildlife_fox",
+      "category": "wildlife",
+      "display_name": "Barren Fox",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "fox",
+      "body": "A nocturnal opportunist with mangy, rust-grey fur and alert eyes. The barren fox stalks survivor garbage pits and snare lines, often stealing trapped rodents before morning rounds. While tough, musky, and prone to parasite loads, their pelt provides valuable insulation for cold weather gear. A balanced deadfall baited with scrap meat or fat cake remains the most reliable method to outwit their cautious approach.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "predator",
+        "deadfall",
+        "fur"
+      ]
+    },
+    {
+      "id": "codex_wildlife_rat",
+      "category": "wildlife",
+      "display_name": "Irradiated Rat",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "rat",
+      "body": "Thriving in ruined masonry, drainage culverts, and forgotten bunker crawlspaces, the irradiated rat is a bloated, aggressive scavenger. While desperate famine drives starving survivors to consume them, doing so carries extreme risks of waterborne typhoid and internal radiation dose. Their presence in snares is usually regarded as an unwelcome hazard or bait stock rather than sustenance, but in a hard winter, calories are calories.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "vermin",
+        "pest",
+        "disease_risk"
+      ]
+    },
+    {
+      "id": "codex_wildlife_pheasant",
+      "category": "wildlife",
+      "display_name": "Ash Pheasant",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "pheasant",
+      "body": "A ground-dwelling gallinaceous bird whose once-iridescent plumage has faded to dull soot and mottled tan. Ash pheasants scratch at scorched grass seeds and beetle larvae across fallout margins during the thaw and bloom windows. They spook easily at vibrations, fluttering clumsily into low scrub. Wire basket cages and drop-net enclosures baited with precious grain lures are the most effective means of capturing them undamaged.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "fowl",
+        "cage_trap",
+        "seasonal"
+      ]
+    },
+    {
+      "id": "codex_wildlife_ash_crow",
+      "category": "wildlife",
+      "display_name": "Three-Eyed Sentry Crow",
+      "spoiler_tier": 1,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "ash_crow",
+      "body": "An ominous corvid known to shadow overland patrol columns and scavenger teams. The distinct third ocular vestige centered on its upper forehead is a genuine physiological mutation granting enhanced peripheral movement detection in low-contrast ash fogs. They feed almost exclusively on carrion and contaminated refuse, carrying significant blood fever pathogens and elevated rad counts. Trapping one requires high-hanging cages or pheromone lures.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "corvid",
+        "cage_trap",
+        "mutation"
+      ]
+    },
+    {
+      "id": "codex_wildlife_mirror_carp",
+      "category": "wildlife",
+      "display_name": "Mirror Carp",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "mirror_carp",
+      "body": "A heavy freshwater cyprinid that survived the initial nuclear exchange by burrowing deep into riverbed silts and lake bottoms. Its large, reflective scales are often discolored with mineral deposits and chemical sludge, but the deep muscle tissue remains remarkably low in radionuclides if the gut and gills are discarded. Submerged wicker and wire fish traps set near inlet currents provide reliable seasonal yields whenever the waterways thaw.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "aquatic",
+        "fish_trap",
+        "clean_food"
+      ]
+    },
+    {
+      "id": "codex_wildlife_ash_pike",
+      "category": "wildlife",
+      "display_name": "Ash Pike",
+      "spoiler_tier": 1,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "ash_pike",
+      "body": "An apex freshwater predator lurks beneath murky scum and silted river banks. The ash pike's elongated jaw is lined with needle-sharp teeth capable of shredding standard wicker nets. They strike aggressively at scrap meat or fat baits lowered into deep pools during the spring thaw. Their flesh is firm, nutrient-dense, and highly prized in the shelter, though handling an active catch requires heavy gloves to avoid severe lacerations.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "aquatic",
+        "fish_trap",
+        "predator"
+      ]
+    },
+    {
+      "id": "codex_wildlife_irradiated_squirrel",
+      "category": "wildlife",
+      "display_name": "Irradiated Squirrel",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "irradiated_squirrel",
+      "body": "A frantic arboreal rodent whose coat is marred by weeping sores and swollen lymph glands. Because they cache and gnaw upon radioactive fungi, lichen, and contaminated pine nuts, their organs register dangerously hot on any geiger counter. Triggering deadfalls set against rotting stumps, they represent a high contamination hazard and carry fungal spore blight. Only desperate starvation justifies processing their minuscule carcass.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "small_game",
+        "deadfall",
+        "high_rad"
+      ]
+    },
+    {
+      "id": "codex_wildlife_contaminated_fowl",
+      "category": "wildlife",
+      "display_name": "Contaminated Fowl",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "contaminated_fowl",
+      "body": "Wandering waterfowl and feral poultry that have nested in irradiated drainage basins and slag ponds. Visibly sickly with peeling beaks and wheezing respiration, these birds are walking vectors for zoonotic influenza and severe internal radionuclide ingestion. Elevated bird snares along marshy edges occasionally ensnare them; careful medical dressing is mandatory before anyone dares bring the meat near a cookstove.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "fowl",
+        "bird_snare",
+        "disease_vector"
+      ]
+    },
+    {
+      "id": "codex_wildlife_rad_dog",
+      "category": "wildlife",
+      "display_name": "Rad-Dog Scavenger",
+      "spoiler_tier": 1,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "rad_dog",
+      "body": "Descendants of domestic breeds turned wild and vicious by famine and fallout. Traveling in cautious packs through perimeter ruins, rad-dogs display scarred hides, heightened aggression, and persistent viral loads. Trapping one alive in a reinforced cage trap presents a profound medical and moral dilemma: while their hide yields tough leather and their meat provides survival calories, their butchery is grim, and the risk of zoonotic flu transmission is acute.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "canine",
+        "cage_trap",
+        "grim_reality"
+      ]
+    },
+    {
+      "id": "codex_wildlife_muskrat",
+      "category": "wildlife",
+      "display_name": "Marsh Muskrat",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "muskrat",
+      "body": "A dense, waterproof rodent adapted to the brackish, chemical-laden runoff of industrial drainage canals. The slag muskrat builds lodges from irradiated reeds and synthetic debris. While its meat has a pungent, greasy flavor that requires prolonged boiling, its pelt is exceptionally dense, water-repellent, and durable. Conibear-style body grip traps set at culvert entrances yield prime furs for bunker tailoring.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "semi_aquatic",
+        "body_grip",
+        "fur"
+      ]
+    },
+    {
+      "id": "codex_wildlife_hedgehog",
+      "category": "wildlife",
+      "display_name": "Ash Hedgehog",
+      "spoiler_tier": 0,
+      "unlock_condition": "first_catch",
+      "unlock_ref": "hedgehog",
+      "body": "A diminutive nocturnal insectivore covered in brittle, fallout-dusted quills. When alarmed, it curls into a tight defensive ball, rendering it impervious to barren foxes but trivial to harvest from low deadfall or box traps. Though its edible meat yield is minimal, its low contamination profile and modest parasite risk make it a harmless, albeit humble, addition to the bunker stewpot during mild seasons.",
+      "provenance": "canonical",
+      "tags": [
+        "wildlife",
+        "trapping",
+        "small_game",
+        "deadfall",
+        "modest_yield"
+      ]
     }
   ]
 }

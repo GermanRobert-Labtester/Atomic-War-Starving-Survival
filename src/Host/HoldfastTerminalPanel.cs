@@ -28,6 +28,9 @@ namespace AtomicWar.GodotApp
         private Label _inventorySummary;
         private Label _tradeDetails;
         private Label _feedback;
+        private Button _creditButton;
+        private Ashfall.Core.Economy.TradeCreditCoordinator? _credit;
+        private Ashfall.Core.Economy.CreditOffer? _pendingCreditOffer;
         private Label _dispatchLog;
         private Button _buyButton;
         private Button _sellButton;
@@ -118,6 +121,40 @@ namespace AtomicWar.GodotApp
             _selectedFactionId = factionId;
         }
 
+        /// <summary>Bind the trade-credit coordinator (Plan IV). The panel never
+        /// signs anything implicitly: an insufficient-funds refusal may SHOW an
+        /// offer, and only PressAcceptCredit signs it.</summary>
+        public void BindCredit(Ashfall.Core.Economy.TradeCreditCoordinator? coordinator)
+        {
+            _credit = coordinator;
+            _pendingCreditOffer = null;
+            UpdateCreditButton();
+        }
+
+        /// <summary>The credit offer currently on screen, if any.</summary>
+        public Ashfall.Core.Economy.CreditOffer? PendingCreditOffer => _pendingCreditOffer;
+
+        /// <summary>Explicit acceptance of the shown credit offer. Any other
+        /// action (buy, sell, close) drops the offer — decline is the default.</summary>
+        public Ashfall.Core.Economy.CreditAcceptResult? PressAcceptCredit()
+        {
+            var offer = _pendingCreditOffer;
+            if (offer == null || _credit == null) return null;
+            var result = _credit.TryAcceptCredit(offer.TemplateId, offer.CreditorId);
+            _pendingCreditOffer = null;
+            UpdateCreditButton();
+            if (_feedback != null)
+            {
+                _feedback.Text = result.Success
+                    ? "CREDIT SIGNED · " + offer.PrincipalQuantity + " x " + DisplayNameOf(offer.PrincipalItemId)
+                      + " received. Repay within " + offer.TermDays + " days (rate "
+                      + offer.Rate.ToString("P0", System.Globalization.CultureInfo.InvariantCulture)
+                      + "). If unpaid: " + offer.ForfeitDescription + "."
+                    : "CREDIT REFUSED · " + result.Reason + ". No goods moved, no ink.";
+            }
+            return result;
+        }
+
         public void SetTradeQuantity(int quantity)
         {
             if (_tradeQuantity != null)
@@ -146,6 +183,21 @@ namespace AtomicWar.GodotApp
             {
                 AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiInvalidAction);
                 _dispatch?.OnRejected(result, _selectedFactionId);
+                // Plan IV: an insufficient-funds refusal may OFFER credit —
+                // never sign it. The offer is a projection of the debt template.
+                if (result.Failure == HoldfastTradeFailure.InsufficientFunds && _credit != null)
+                {
+                    var credit = _credit.TryBuildCreditOffer(_selectedFactionId, _selectedItemId);
+                    if (credit.Eligible && credit.Offer != null)
+                    {
+                        _pendingCreditOffer = credit.Offer;
+                        UpdateCreditButton();
+                        _feedback.Text = BuildCreditOfferText(credit.Offer);
+                        return result;
+                    }
+                    _pendingCreditOffer = null;
+                    UpdateCreditButton();
+                }
             }
             ShowTradeResult(result);
             return result;
@@ -551,6 +603,9 @@ namespace AtomicWar.GodotApp
             actions.AddChild(_buyButton);
             _sellButton = AshfallUiHelpers.MakeButton("SELL SELECTED", () => PressSell());
             actions.AddChild(_sellButton);
+            _creditButton = AshfallUiHelpers.MakeButton("ACCEPT CREDIT", () => PressAcceptCredit());
+            _creditButton.Disabled = true;
+            actions.AddChild(_creditButton);
             page.AddChild(actions);
             return page;
         }
@@ -681,6 +736,36 @@ namespace AtomicWar.GodotApp
                 _tradeItemSelector.AddItem(definition.DisplayName + " [" + definition.Id + "]");
             int index = _session.Catalog.Items.Items.IndexOfId(_selectedItemId);
             if (index >= 0) _tradeItemSelector.Select(index);
+        }
+
+        private void UpdateCreditButton()
+        {
+            if (_creditButton != null)
+                _creditButton.Disabled = _pendingCreditOffer == null;
+        }
+
+        /// <summary>Every material term on screen, in plain text — nothing is
+        /// hidden behind hover, colour is never the only cue, and the acceptance
+        /// step is a separate explicit action.</summary>
+        private static string BuildCreditOfferText(Ashfall.Core.Economy.CreditOffer offer)
+        {
+            string rate = offer.Rate.ToString("P0", System.Globalization.CultureInfo.InvariantCulture);
+            float totalOwed = offer.PrincipalQuantity * (1f + offer.Rate);
+            return
+                "INSUFFICIENT FUNDS — THE COUNTERPARTY OFFERS CREDIT\n" +
+                "Creditor: " + offer.CreditorDisplayName + " (" + offer.CreditorId + ")\n" +
+                "Receive now: " + offer.PrincipalQuantity + " x " + offer.PrincipalItemId + "\n" +
+                "Repay within: " + offer.TermDays + " days\n" +
+                "Rate: " + rate + " (total owed if unpaid to term: " + totalOwed.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) + ")\n" +
+                "Forfeit if unpaid: " + offer.ForfeitDescription + "\n" +
+                (offer.ConsequenceSummary.Length > 0 ? "Default: " + offer.ConsequenceSummary + "\n" : "") +
+                "This is debt. Press ACCEPT CREDIT to sign (the terms are read twice, then ink). Any other action declines.";
+        }
+
+        private string DisplayNameOf(string itemId)
+        {
+            var def = _session?.Catalog.GetItem(Ashfall.Core.Inventory.ItemAliases.ToCanonical(itemId));
+            return def != null ? def.DisplayName : itemId;
         }
 
         private void RefreshTradeDetails()

@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "traits": [
+    {
+      "trait_id": "development_trait_resilient",
+      "display_name": "Hardened Resilience",
+      "description": "Grew up enduring hardship with a steady spirit, developing high physical grit.",
+      "polarity": "Positive",
+      "stat_modifiers": {
+        "max_stamina": 10.0,
+        "cold_resistance": 0.15
+      },
+      "skill_modifiers": {
+        "survival": 15.0
+      },
+      "morale_modifiers": {
+        "despair_resistance": 0.25
+      },
+      "work_modifiers": {
+        "labor_speed": 0.1
+      },
+      "weight": 1.0,
+      "min_trauma": 0.0,
+      "max_trauma": 50.0,
+      "min_education": 20.0,
+      "exclusive_group": "resilience"
+    },
+    {
+      "trait_id": "development_trait_field_medic_instinct",
+      "display_name": "Field Medic Instinct",
+      "description": "Early education in anatomy and treatment fostered sharp triage habits.",
+      "polarity": "Positive",
+      "stat_modifiers": {},
+      "skill_modifiers": {
+        "medicine": 25.0
+      },
+      "morale_modifiers": {
+        "panic_recovery": 0.3
+      },
+      "work_modifiers": {
+        "treatment_speed": 0.2
+      },
+      "weight": 1.0,
+      "min_trauma": 0.0,
+      "max_trauma": 40.0,
+      "min_education": 40.0,
+      "exclusive_group": "vocation"
+    },
+    {
+      "trait_id": "development_trait_careful_scavenger",
+      "display_name": "Careful Scavenger",
+      "description": "Learned to navigate debris quietly without disturbing rubble or booby-traps.",
+      "polarity": "Positive",
+      "stat_modifiers": {
+        "carry_capacity": 5.0
+      },
+      "skill_modifiers": {
+        "scavenging": 20.0,
+        "stealth": 15.0
+      },
+      "morale_modifiers": {},
+      "work_modifiers": {},
+      "weight": 1.0,
+      "min_trauma": 0.0,
+      "max_trauma": 60.0,
+      "min_education": 15.0,
+      "exclusive_group": "scavenging"
+    },
+    {
+      "trait_id": "development_trait_mechanically_minded",
+      "display_name": "Mechanically Minded",
+      "description": "Fascinated by gears and piping in early childhood; intuitively understands machines.",
+      "polarity": "Positive",
+      "stat_modifiers": {},
+      "skill_modifiers": {
+        "engineering": 25.0
+      },
+      "morale_modifiers": {},
+      "work_modifiers": {
+        "crafting_speed": 0.15
+      },
+      "weight": 1.0,
+      "min_trauma": 0.0,
+      "max_trauma": 45.0,
+      "min_education": 30.0,
+      "exclusive_group": "mechanics"
+    },
+    {
+      "trait_id": "development_trait_hypervigilant",
+      "display_name": "Hypervigilant",
+      "description": "Witnessed sudden violence during early formative years; perpetually on edge.",
+      "polarity": "Negative",
+      "stat_modifiers": {
+        "sleep_efficiency": -0.2
+      },
+      "skill_modifiers": {
+        "observation": 15.0
+      },
+      "morale_modifiers": {
+        "stress_rate": 0.25
+      },
+      "work_modifiers": {},
+      "weight": 1.2,
+      "min_trauma": 45.0,
+      "max_trauma": 100.0,
+      "min_education": 0.0,
+      "exclusive_group": "psychological_response"
+    },
+    {
+      "trait_id": "development_trait_malnourished_growth",
+      "display_name": "Stunted Physique",
+      "description": "Prolonged nutritional deficits during growth spurts permanently limited skeletal mass.",
+      "polarity": "Negative",
+      "stat_modifiers": {
+        "max_health": -15.0,
+        "carry_capacity": -8.0
+      },
+      "skill_modifiers": {},
+      "morale_modifiers": {},
+      "work_modifiers": {
+        "labor_speed": -0.15
+      },
+      "weight": 1.5,
+      "min_trauma": 0.0,
+      "max_trauma": 100.0,
+      "min_education": 0.0,
+      "exclusive_group": "physique"
+    },
+    {
+      "trait_id": "development_trait_authority_averse",
+      "display_name": "Authority Averse",
+      "description": "Grew up under harsh command and rigid punishment, resisting strict orders.",
+      "polarity": "Negative",
+      "stat_modifiers": {},
+      "skill_modifiers": {},
+      "morale_modifiers": {
+        "command_friction": 0.3
+      },
+      "work_modifiers": {
+        "supervised_work_speed": -0.2
+      },
+      "weight": 1.0,
+      "min_trauma": 50.0,
+      "max_trauma": 100.0,
+      "min_education": 0.0,
+      "exclusive_group": "social"
+    }
+  ]
+}

@@ -631,7 +631,7 @@ namespace AtomicWar.GodotApp
 
         public static int RunLedgerDebtSelfTest()
         {
-            var report = LedgerDebtHeadlessDemo.Run(new GodotLog());
+            var report = LedgerDebtHeadlessDemo.Run(null, new GodotLog());
             GD.Print(report.Summary);
             return EmitSummaryFromHeadlessReport("ledger_debt_selftest", report);
         }

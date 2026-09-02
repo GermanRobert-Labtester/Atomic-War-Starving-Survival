@@ -1,0 +1,501 @@
+{
+  "schema_version": 1,
+  "recipes": [
+    {
+      "id": "recipe_workshop_reload_9x19",
+      "display_name": "Reload 9x19mm FMJ",
+      "category": "ammunition_reload",
+      "required_room_ids": [
+        "room_armory_munitions"
+      ],
+      "required_rule_ids": [
+        "rule_armory_service"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "item_id": "scrap_chemical",
+          "amount": 1
+        },
+        {
+          "item_id": "spent_casing",
+          "amount": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item_id": "ammo_9x19",
+          "amount": 20
+        }
+      ],
+      "base_labor_ticks": 60,
+      "base_scrap_waste_permille": 50,
+      "tool_wear_permille": 5,
+      "calibration_requirement": 0.50,
+      "skill_weights": {
+        "skill_workshop_sense": 0.8,
+        "skill_watchful": 1.0
+      },
+      "tags": [
+        "munitions",
+        "small_arms",
+        "reload"
+      ]
+    },
+    {
+      "id": "recipe_workshop_reload_357",
+      "display_name": "Reload .357 Magnum JHP",
+      "category": "ammunition_reload",
+      "required_room_ids": [
+        "room_armory_munitions"
+      ],
+      "required_rule_ids": [
+        "rule_armory_service"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 3
+        },
+        {
+          "item_id": "scrap_chemical",
+          "amount": 2
+        },
+        {
+          "item_id": "spent_casing",
+          "amount": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item_id": "ammo_357",
+          "amount": 12
+        }
+      ],
+      "base_labor_ticks": 80,
+      "base_scrap_waste_permille": 60,
+      "tool_wear_permille": 8,
+      "calibration_requirement": 0.60,
+      "skill_weights": {
+        "skill_workshop_sense": 0.7,
+        "skill_watchful": 1.0
+      },
+      "tags": [
+        "munitions",
+        "sidearm",
+        "reload"
+      ]
+    },
+    {
+      "id": "recipe_workshop_reload_12g",
+      "display_name": "Reload 12-Gauge Buckshot",
+      "category": "ammunition_reload",
+      "required_room_ids": [
+        "room_armory_munitions"
+      ],
+      "required_rule_ids": [
+        "rule_armory_service"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 3
+        },
+        {
+          "item_id": "scrap_chemical",
+          "amount": 1
+        },
+        {
+          "item_id": "spent_casing",
+          "amount": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item_id": "ammo_12g",
+          "amount": 10
+        }
+      ],
+      "base_labor_ticks": 70,
+      "base_scrap_waste_permille": 40,
+      "tool_wear_permille": 6,
+      "calibration_requirement": 0.40,
+      "skill_weights": {
+        "skill_workshop_sense": 0.6,
+        "skill_watchful": 1.0
+      },
+      "tags": [
+        "munitions",
+        "shotgun",
+        "reload"
+      ]
+    },
+    {
+      "id": "recipe_workshop_reload_556",
+      "display_name": "Reload 5.56mm Military Ball",
+      "category": "ammunition_reload",
+      "required_room_ids": [
+        "room_armory_munitions"
+      ],
+      "required_rule_ids": [
+        "rule_armory_service"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "item_id": "scrap_chemical",
+          "amount": 2
+        },
+        {
+          "item_id": "spent_casing",
+          "amount": 2
+        }
+      ],
+      "outputs": [
+        {
+          "item_id": "ammo_556",
+          "amount": 30
+        }
+      ],
+      "base_labor_ticks": 100,
+      "base_scrap_waste_permille": 70,
+      "tool_wear_permille": 10,
+      "calibration_requirement": 0.70,
+      "skill_weights": {
+        "skill_workshop_sense": 0.9,
+        "skill_watchful": 1.0
+      },
+      "tags": [
+        "munitions",
+        "rifle",
+        "military"
+      ]
+    },
+    {
+      "id": "recipe_workshop_reload_308",
+      "display_name": "Reload .308 Match Cartridges",
+      "category": "ammunition_reload",
+      "required_room_ids": [
+        "room_armory_munitions"
+      ],
+      "required_rule_ids": [
+        "rule_armory_service"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 5
+        },
+        {
+          "item_id": "scrap_chemical",
+          "amount": 3
+        },
+        {
+          "item_id": "spent_casing",
+          "amount": 2
+        }
+      ],
+      "outputs": [
+        {
+          "item_id": "ammo_308",
+          "amount": 20
+        }
+      ],
+      "base_labor_ticks": 120,
+      "base_scrap_waste_permille": 80,
+      "tool_wear_permille": 12,
+      "calibration_requirement": 0.80,
+      "skill_weights": {
+        "skill_workshop_sense": 1.0,
+        "skill_watchful": 1.0
+      },
+      "tags": [
+        "munitions",
+        "precision_rifle",
+        "reload"
+      ]
+    },
+    {
+      "id": "recipe_workshop_weapon_service_clean",
+      "display_name": "Firearm Decoking & Deep Clean",
+      "category": "weapon_service",
+      "required_room_ids": [
+        "room_armory_munitions",
+        "room_workshop"
+      ],
+      "required_rule_ids": [
+        "rule_armory_service"
+      ],
+      "inputs": [
+        {
+          "item_id": "machine_oil",
+          "amount": 1
+        },
+        {
+          "item_id": "cloth",
+          "amount": 1
+        }
+      ],
+      "outputs": [],
+      "base_labor_ticks": 45,
+      "base_scrap_waste_permille": 10,
+      "tool_wear_permille": 2,
+      "calibration_requirement": 0.30,
+      "skill_weights": {
+        "skill_rough_repairs": 0.8,
+        "skill_watchful": 1.0
+      },
+      "tags": [
+        "weapon_service",
+        "cleaning",
+        "maintenance"
+      ]
+    },
+    {
+      "id": "recipe_workshop_weapon_service_refurbish",
+      "display_name": "Firearm Precision Refurbishing",
+      "category": "weapon_service",
+      "required_room_ids": [
+        "room_workshop_precision",
+        "room_armory_munitions"
+      ],
+      "required_rule_ids": [
+        "rule_workshop_precision"
+      ],
+      "inputs": [
+        {
+          "item_id": "mechanical_parts",
+          "amount": 1
+        },
+        {
+          "item_id": "machine_oil",
+          "amount": 1
+        },
+        {
+          "item_id": "scrap_metal",
+          "amount": 2
+        }
+      ],
+      "outputs": [],
+      "base_labor_ticks": 90,
+      "base_scrap_waste_permille": 30,
+      "tool_wear_permille": 8,
+      "calibration_requirement": 0.65,
+      "skill_weights": {
+        "skill_workshop_sense": 1.0,
+        "skill_rough_repairs": 0.6
+      },
+      "tags": [
+        "weapon_service",
+        "refurbish",
+        "parts"
+      ]
+    },
+    {
+      "id": "recipe_workshop_precision_part_machining",
+      "display_name": "Machined Precision Mechanical Assembly",
+      "category": "precision_part",
+      "required_room_ids": [
+        "room_workshop_precision"
+      ],
+      "required_rule_ids": [
+        "rule_workshop_precision"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "item_id": "machine_oil",
+          "amount": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item_id": "mechanical_parts",
+          "amount": 2
+        }
+      ],
+      "base_labor_ticks": 110,
+      "base_scrap_waste_permille": 50,
+      "tool_wear_permille": 15,
+      "calibration_requirement": 0.70,
+      "skill_weights": {
+        "skill_workshop_sense": 1.2,
+        "skill_rough_repairs": 0.5
+      },
+      "tags": [
+        "fabrication",
+        "precision",
+        "mechanical"
+      ]
+    },
+    {
+      "id": "recipe_workshop_electronics_soldering",
+      "display_name": "Circuit Micro-Soldering & Refit",
+      "category": "electronics_refit",
+      "required_room_ids": [
+        "room_workshop_precision"
+      ],
+      "required_rule_ids": [
+        "rule_workshop_precision"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_electronic",
+          "amount": 3
+        },
+        {
+          "item_id": "soldering_kit",
+          "amount": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item_id": "calibration_kit",
+          "amount": 1
+        }
+      ],
+      "base_labor_ticks": 130,
+      "base_scrap_waste_permille": 40,
+      "tool_wear_permille": 10,
+      "calibration_requirement": 0.75,
+      "skill_weights": {
+        "skill_workshop_sense": 1.0,
+        "skill_cold_analysis": 0.8
+      },
+      "tags": [
+        "electronics",
+        "soldering",
+        "calibration"
+      ]
+    },
+    {
+      "id": "recipe_workshop_radio_component_refit",
+      "display_name": "Tuner Antenna Coil Fabrication",
+      "category": "electronics_refit",
+      "required_room_ids": [
+        "room_workshop_precision"
+      ],
+      "required_rule_ids": [
+        "rule_workshop_precision"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_electronic",
+          "amount": 2
+        },
+        {
+          "item_id": "scrap_metal",
+          "amount": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item_id": "antenna_coil",
+          "amount": 1
+        }
+      ],
+      "base_labor_ticks": 85,
+      "base_scrap_waste_permille": 35,
+      "tool_wear_permille": 7,
+      "calibration_requirement": 0.60,
+      "skill_weights": {
+        "skill_workshop_sense": 1.0,
+        "skill_signal_ear": 0.5
+      },
+      "tags": [
+        "electronics",
+        "radio",
+        "antenna"
+      ]
+    },
+    {
+      "id": "recipe_workshop_tool_overhaul",
+      "display_name": "Lathe & Press Tooling Overhaul",
+      "category": "tool_overhaul",
+      "required_room_ids": [
+        "room_workshop_precision",
+        "room_workshop_heavy",
+        "room_workshop"
+      ],
+      "required_rule_ids": [
+        "rule_workshop_precision"
+      ],
+      "inputs": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 6
+        },
+        {
+          "item_id": "mechanical_parts",
+          "amount": 2
+        },
+        {
+          "item_id": "machine_oil",
+          "amount": 1
+        }
+      ],
+      "outputs": [],
+      "base_labor_ticks": 150,
+      "base_scrap_waste_permille": 0,
+      "tool_wear_permille": 0,
+      "calibration_requirement": 0.0,
+      "skill_weights": {
+        "skill_workshop_sense": 1.2,
+        "skill_rough_repairs": 1.0
+      },
+      "tags": [
+        "overhaul",
+        "calibration",
+        "maintenance"
+      ]
+    },
+    {
+      "id": "recipe_workshop_heavy_vehicle_service",
+      "display_name": "Heavy Vehicle Powertrain Rebuild",
+      "category": "heavy_workshop_service",
+      "required_room_ids": [
+        "room_workshop_heavy"
+      ],
+      "required_rule_ids": [
+        "rule_workshop_machinist"
+      ],
+      "inputs": [
+        {
+          "item_id": "mechanical_parts",
+          "amount": 4
+        },
+        {
+          "item_id": "scrap_metal",
+          "amount": 8
+        },
+        {
+          "item_id": "machine_oil",
+          "amount": 2
+        }
+      ],
+      "outputs": [],
+      "base_labor_ticks": 200,
+      "base_scrap_waste_permille": 20,
+      "tool_wear_permille": 25,
+      "calibration_requirement": 0.50,
+      "skill_weights": {
+        "skill_rough_repairs": 1.2,
+        "skill_workshop_sense": 0.8
+      },
+      "tags": [
+        "heavy_machinery",
+        "vehicle",
+        "engine"
+      ]
+    }
+  ]
+}

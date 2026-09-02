@@ -30,7 +30,7 @@
         }
       ],
       "location_id": "loc_settlement_cape_beacon",
-      "discovery": "Charted from the Cape Beacon commune's logbook; the mail-steamer's stern still breaks at low water.",
+      "discovery": "Scrawled in the margins of the Cape Beacon logbook. At low tide, the steamer's rusted stern breaks the oily surface like a drowning man's hand.",
       "safes": [
         {
           "id": "safe_exp09_sovereign_purser",
@@ -110,7 +110,7 @@
         }
       ],
       "location_id": "loc_frozen_river_ferry_crossing",
-      "discovery": "Visible from the ice-road ferry crossing on any clear day; the ramp still points at the water.",
+      "discovery": "Visible from the ice-road on clear days, the rusted ferry ramp points down into the black, freezing depths\u2014an invitation to the drowned.",
       "loot_table": [
         {
           "itemId": "cloth",
@@ -163,7 +163,7 @@
         }
       ],
       "location_id": "loc_black_flotilla_outpost",
-      "discovery": "The Flotilla's own mooring hulks; the quartermaster trades the approach for honest cargo.",
+      "discovery": "A graveyard of tethered hulks groaning against their chains in the deep current. The quartermaster trades the safe approach coordinates for untainted cargo.",
       "loot_table": [
         {
           "itemId": "item_sea_ration",
@@ -218,7 +218,7 @@
       ],
       "location_id": "loc_maritime_icebreaker_dock",
       "contamination_key": "site_exp09_wrecked_patrol_craft",
-      "discovery": "The deep-coast survey marks it hull-down off the icebreaker dock, port side to the shelf.",
+      "discovery": "The deep-coast survey marks her hull-down in the freezing silt, her port side leaning heavily into the abyssal drop-off of the continental shelf.",
       "safes": [
         {
           "id": "safe_exp09_naval_patrol_armory",
@@ -294,7 +294,7 @@
       "required_item_id": "item_sealed_dive_lamp",
       "required_item_count": 1,
       "contamination_key": "site_exp09_sunken_submarine",
-      "discovery": "Lotte Verrill's wreck notes name the Barrik's berth — for a sealed lamp and no questions.",
+      "discovery": "Lotte Verrill's bloodstained notes mark the sub's final resting place in the crush-depths. She traded the coordinates for a sealed lamp and absolute silence.",
       "loot_table": [
         {
           "itemId": "item_fleet_log_cylinder",
@@ -341,7 +341,7 @@
       ],
       "keeper_thread_id": null,
       "location_id": "loc_overflow_alloc_11",
-      "discovery": "The Overflow grid maps mark the concourse as standing water; the Flotilla marked it 'quiet water, watch the gravel'.",
+      "discovery": "The old grid maps list this concourse as standing water. The Flotilla's scrawled addendum warns of 'quiet water' and crushed bone mistaken for gravel.",
       "loot_table": [
         {
           "itemId": "canned_food",
@@ -396,7 +396,7 @@
       ],
       "keeper_thread_id": null,
       "location_id": "location_crashed_icebreaker_convoy",
-      "discovery": "The convoy never made the turn at Aurora Borealis Anchorage Shoal; three trucks stand on the shelf edge.",
+      "discovery": "Three military transports that failed to make the crossing. Now they idle in the silt at the edge of a deepwater trench, their cargo sealed behind pressure-warped doors.",
       "loot_table": [
         {
           "itemId": "fuel",
@@ -451,7 +451,7 @@
       "keeper_thread_id": null,
       "location_id": "loc_hydro_baron_desal_plant_4",
       "required_item_id": "item_salvage_cutting_tool",
-      "discovery": "The Hydro-Barons' intake charts show a lower dock the schedules never mention.",
+      "discovery": "Smuggled intake charts reveal a subterranean loading dock the Hydro-Barons intentionally flooded. Whatever they drowned down there, they didn't want it found.",
       "loot_table": [
         {
           "itemId": "fuel",
@@ -498,7 +498,7 @@
       ],
       "keeper_thread_id": null,
       "location_id": "loc_coastal_fog_signal_station",
-      "discovery": "The High Bluff foghorn's compressed-air log lists the relay run that stopped answering.",
+      "discovery": "The foghorn station's logbooks record the exact hour this relay stopped transmitting. Now, only the rhythmic ping of straining metal echoes in the crushing dark.",
       "loot_table": [
         {
           "itemId": "scrap_electronic",
@@ -546,7 +546,7 @@
       "keeper_thread_id": null,
       "location_id": "loc_settlement_cape_beacon",
       "contamination_key": "site_exp09_flooded_field_hospital",
-      "discovery": "The quarantine barge shows on the commune's oldest charts, still moored where the surge left it.",
+      "discovery": "Moored where the radioactive surge left it decades ago. The sealed quarantine bulkheads still hold, keeping the dark water out, and something else trapped within.",
       "loot_table": [
         {
           "itemId": "medical_kit",
@@ -600,7 +600,7 @@
       "keeper_thread_id": null,
       "location_id": "loc_shelf_roadstead_crane",
       "contamination_key": "site_exp09_wrecked_patrol_craft",
-      "discovery": "The picket's mast still shows at slack water off the roadstead crane; the Flotilla dives it only for the crew's effects.",
+      "discovery": "The patrol boat's jagged mast breaks the surface during slack tide. Flotilla scavengers refuse to open the lower decks, muttering about scratch-marks on the inside of the bulkheads.",
       "loot_table": [
         {
           "itemId": "item_ships_bell_picket",
@@ -646,7 +646,7 @@
       ],
       "keeper_thread_id": null,
       "location_id": "loc_hydro_baron_desal_plant_4",
-      "discovery": "The siphon station's intake grille shows at low water; the barons never paid to have it looked at.",
+      "discovery": "The massive intake grille breaches the surface at low tide, choked with strange, pale kelp. The Hydro-Barons sealed it off after the pumps began drawing up unidentifiable blood.",
       "loot_table": [
         {
           "itemId": "scrap_mechanical",
@@ -765,7 +765,7 @@
           "spawnChance": 0.15
         }
       ],
-      "discovery": "Uma Tarran sells the strongroom bearing for two claim tags and no questions.",
+      "discovery": "Uma Tarran traded the strongroom's coordinates for two claim tags and a promise. She warned that the pressure doors were locked from the inside.",
       "tide_window": "any"
     },
     {
@@ -831,7 +831,7 @@
           "degradedItemId": "scrap_mechanical"
         }
       ],
-      "discovery": "The commune's cistern charts stop one gallery short; Lotte Verrill will say why for a sealed lamp.",
+      "discovery": "The commune's cistern charts abruptly end one gallery short. Lotte Verrill will explain why, but only if you bring her a sealed lamp and lock the door.",
       "tide_window": "any"
     }
   ]

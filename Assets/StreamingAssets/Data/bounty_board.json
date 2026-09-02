@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "template_id": "bounty_template_raider_warlord",
+      "display_name": "Eliminate Raider Warlord",
+      "contract_type": "Assassination",
+      "issuer_faction_id": "faction_the_office",
+      "target_tags": [ "raider", "warlord", "hostile" ],
+      "min_payout": 120.0,
+      "max_payout": 250.0,
+      "posting_cost": 40.0,
+      "duration_days": 10,
+      "standing_penalty": 20.0,
+      "required_proof_item_id": "item_warlord_trophy",
+      "rival_chance": 0.35,
+      "betrayal_base_chance": 0.15
+    },
+    {
+      "template_id": "bounty_template_runaway_technician",
+      "display_name": "Recover Fugitive Technician",
+      "contract_type": "Capture",
+      "issuer_faction_id": "faction_the_cutters",
+      "target_tags": [ "defector", "specialist", "neutral" ],
+      "min_payout": 80.0,
+      "max_payout": 160.0,
+      "posting_cost": 25.0,
+      "duration_days": 7,
+      "standing_penalty": 15.0,
+      "required_proof_item_id": "item_dog_tags_scavenged",
+      "rival_chance": 0.25,
+      "betrayal_base_chance": 0.10
+    },
+    {
+      "template_id": "bounty_template_caravan_raider",
+      "display_name": "Ambush Highway Marauder",
+      "contract_type": "BountyHunt",
+      "issuer_faction_id": "faction_the_fleet",
+      "target_tags": [ "raider", "highwayman", "ambusher" ],
+      "min_payout": 60.0,
+      "max_payout": 120.0,
+      "posting_cost": 20.0,
+      "duration_days": 6,
+      "standing_penalty": 10.0,
+      "required_proof_item_id": "item_dog_tags_scavenged",
+      "rival_chance": 0.40,
+      "betrayal_base_chance": 0.20
+    },
+    {
+      "template_id": "bounty_template_feral_mutant_alpha",
+      "display_name": "Cull Alpha Rad-Stalker",
+      "contract_type": "BeastCull",
+      "issuer_faction_id": "faction_the_office",
+      "target_tags": [ "mutant", "beast", "alpha" ],
+      "min_payout": 100.0,
+      "max_payout": 200.0,
+      "posting_cost": 30.0,
+      "duration_days": 8,
+      "standing_penalty": 0.0,
+      "required_proof_item_id": "item_warlord_trophy",
+      "rival_chance": 0.20,
+      "betrayal_base_chance": 0.05
+    }
+  ]
+}

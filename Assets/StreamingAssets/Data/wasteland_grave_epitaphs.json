@@ -1,37 +1,37 @@
 {
-    "schema_version": 1,
-    "epitaphs": [
-        {
-            "cause": "radiation",
-            "epitaph": "Lethal cellular degradation. Biological remains require deep burial."
-        },
-        {
-            "cause": "combat",
-            "epitaph": "Terminated by hostiles. Equipment recovered and sanitized."
-        },
-        {
-            "cause": "starvation",
-            "epitaph": "Caloric deficit reached terminal state."
-        },
-        {
-            "cause": "exhaustion",
-            "epitaph": "Cardiovascular collapse due to sustained labor output."
-        },
-        {
-            "cause": "disease",
-            "epitaph": "Pathological contamination event. Sector quarantined."
-        },
-        {
-            "cause": "expedition",
-            "epitaph": "Asset failed to return from surface operations. Logged as loss."
-        },
-        {
-            "cause": "trauma",
-            "epitaph": "Severe structural damage to biological unit."
-        },
-        {
-            "cause": "unspecified",
-            "epitaph": "Termination logged. Rations redistributed."
-        }
-    ]
+  "schema_version": 1,
+  "epitaphs": [
+    {
+      "cause": "radiation",
+      "epitaph": "Lethal cellular degradation. Biological remains require deep burial. Below the official line, smaller, cut with a nail: they were not contagious at the end. We held their hand anyway."
+    },
+    {
+      "cause": "combat",
+      "epitaph": "Terminated by hostiles. Equipment recovered and sanitized. Scratched sideways underneath: they did not run. Nobody ran. That is the whole story."
+    },
+    {
+      "cause": "starvation",
+      "epitaph": "Caloric deficit reached terminal state. Carved underneath in a different hand: gave their share away three times. The third time is logged here."
+    },
+    {
+      "cause": "exhaustion",
+      "epitaph": "Cardiovascular collapse due to sustained labor output. Carved deep underneath: rested on the seventh day, finally. We finished their shift for them."
+    },
+    {
+      "cause": "disease",
+      "epitaph": "Pathological contamination event. Sector quarantined. Underneath, in smaller letters: we talked through the door every night. The door logged nothing. We did."
+    },
+    {
+      "cause": "expedition",
+      "epitaph": "Asset failed to return from surface operations. Logged as loss. Carved under it with a knife point: not an asset. A friend. The log is wrong, and we are leaving it that way."
+    },
+    {
+      "cause": "trauma",
+      "epitaph": "Severe structural damage to biological unit. Underneath, almost too rough to read: carried in. Not left alone. That much is ours to say."
+    },
+    {
+      "cause": "unspecified",
+      "epitaph": "Termination logged. Rations redistributed. Underneath, the newest carving on the stone: still owe them a name. Working on it."
+    }
+  ]
 }

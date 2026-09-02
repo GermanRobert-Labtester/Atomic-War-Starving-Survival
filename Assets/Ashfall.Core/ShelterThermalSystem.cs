@@ -23,6 +23,30 @@ namespace Ashfall.Core
         public float totalHeatOutputKw;
         public int lastIncidentDay = -1;
         public List<ThermalIncident> incidentLog = new List<ThermalIncident>();
+        public List<string> huddleAssignments = new List<string>();
+        public float waterwayFreezeScore = 0f;
+        public string waterwayFreezeState = "Open";
+    }
+
+    [Serializable]
+    public sealed class ThermalGearDef
+    {
+        public string item_id = string.Empty;
+        public string display_name = string.Empty;
+        public float insulation_value = 10f;
+        public float wind_protection = 0.5f;
+        public float wet_penalty = 0.2f;
+        public bool condition_scaling = true;
+        public string body_slot = "chest";
+        public float minimum_condition_for_effect = 10f;
+        public List<string> tags = new List<string>();
+    }
+
+    [Serializable]
+    public sealed class ThermalGearCatalog
+    {
+        public int schema_version = 1;
+        public List<ThermalGearDef> thermal_gear = new List<ThermalGearDef>();
     }
 
     [Serializable]
@@ -104,9 +128,13 @@ namespace Ashfall.Core
         private int _currentDay;
 
         public ShelterThermalState State => _state;
+        public string WaterwayFreezeState => _state.waterwayFreezeState;
         public event Action<ThermalIncident> OnIncident;
         public event Action OnThermalChanged;
         public event Action<string, string> OnFrostbiteRisk; // roomId, survivorId — cold <5°C with occupant
+
+        private readonly Dictionary<string, ThermalGearDef> _thermalGear = new Dictionary<string, ThermalGearDef>(StringComparer.Ordinal);
+        private readonly Dictionary<string, List<string>> _survivorEquippedGear = new Dictionary<string, List<string>>(StringComparer.Ordinal);
 
         public void SetAssignments(ShelterAssignmentSystem? assignments)
         {
@@ -118,8 +146,8 @@ namespace Ashfall.Core
             NeedsSystem needs,
             StartingLevelSystem startingLevel,
             YearOfAshDeepFreezeSystem deepFreeze,
-ILog? log = null,
-ShelterAssignmentSystem? assignment = null)
+            ILog? log = null,
+            ShelterAssignmentSystem? assignment = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _needs = needs ?? throw new ArgumentNullException(nameof(needs));
@@ -127,6 +155,112 @@ ShelterAssignmentSystem? assignment = null)
             _deepFreeze = deepFreeze ?? throw new ArgumentNullException(nameof(deepFreeze));
             _assignments = assignment;
             _log = log ?? NullLog.Instance;
+            RegisterDefaultThermalGear();
+        }
+
+        private void RegisterDefaultThermalGear()
+        {
+            RegisterThermalGear(new ThermalGearDef { item_id = "item_heavy_wool_coat", display_name = "Heavy Boiled-Wool Greatcoat", insulation_value = 18f, body_slot = "chest" });
+            RegisterThermalGear(new ThermalGearDef { item_id = "item_thermal_parka", display_name = "Down-Lined Arctic Parka", insulation_value = 26f, body_slot = "chest" });
+            RegisterThermalGear(new ThermalGearDef { item_id = "item_fur_mittens", display_name = "Trapped-Pelts Gauntlet Mittens", insulation_value = 8f, body_slot = "hands" });
+            RegisterThermalGear(new ThermalGearDef { item_id = "item_insulated_boots", display_name = "Felt-Lined Mukluk Snow Boots", insulation_value = 12f, body_slot = "feet" });
+        }
+
+        public void RegisterThermalGear(ThermalGearDef gear)
+        {
+            if (gear != null && !string.IsNullOrEmpty(gear.item_id))
+                _thermalGear[gear.item_id] = gear;
+        }
+
+        public void LoadThermalGear(string jsonContent)
+        {
+            if (string.IsNullOrWhiteSpace(jsonContent)) return;
+            try
+            {
+                var serializer = new SystemTextJsonSerializer();
+                var catalog = serializer.Deserialize<ThermalGearCatalog>(jsonContent);
+                if (catalog?.thermal_gear != null)
+                {
+                    foreach (var g in catalog.thermal_gear)
+                        RegisterThermalGear(g);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"[ShelterThermal] Failed to load thermal gear: {ex.Message}");
+            }
+        }
+
+        public void EquipThermalGear(string survivorId, string itemId)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(itemId)) return;
+            if (!_survivorEquippedGear.TryGetValue(survivorId, out var list))
+            {
+                list = new List<string>();
+                _survivorEquippedGear[survivorId] = list;
+            }
+            if (!list.Contains(itemId))
+                list.Add(itemId);
+        }
+
+        public float GetEffectiveSurvivorInsulation(string survivorId, EquipmentConditionSystem? conditionSys = null)
+        {
+            float baseInsulation = 10f;
+            if (_survivorEquippedGear.TryGetValue(survivorId, out var list))
+            {
+                foreach (var itemId in list)
+                {
+                    if (_thermalGear.TryGetValue(itemId, out var def))
+                    {
+                        float condFactor = 1f;
+                        if (conditionSys != null && def.condition_scaling)
+                        {
+                            float pct = conditionSys.GetConditionPercent(itemId);
+                            condFactor = Math.Clamp(0.2f + 0.8f * (pct / 100f), 0.2f, 1f);
+                        }
+                        baseInsulation += def.insulation_value * condFactor;
+                    }
+                }
+            }
+
+            if (IsSurvivorHuddling(survivorId))
+                baseInsulation *= 1.30f;
+
+            return baseInsulation;
+        }
+
+        public ActionResult AssignHuddle(string roomId, string survivorId)
+        {
+            var room = _state.rooms.Find(r => r.roomId == roomId);
+            if (room == null) return ActionResult.Failed("unknown_room", "thermal.unknown_room");
+
+            RemoveHuddle(survivorId);
+            _state.huddleAssignments.Add($"{survivorId}:{roomId}");
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.huddle_assigned");
+        }
+
+        public ActionResult RemoveHuddle(string survivorId)
+        {
+            _state.huddleAssignments.RemoveAll(h => h.StartsWith($"{survivorId}:", StringComparison.Ordinal));
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.huddle_removed");
+        }
+
+        public bool IsSurvivorHuddling(string survivorId)
+        {
+            return _state.huddleAssignments.Exists(h => h.StartsWith($"{survivorId}:", StringComparison.Ordinal));
+        }
+
+        public float GetCropTemperatureModifier(string roomId)
+        {
+            var room = _state.rooms.Find(r => r.roomId == roomId);
+            if (room == null) return 1.0f;
+            if (room.currentTempC < -2f) return -0.5f;
+            if (room.currentTempC < 5f) return 0.2f;
+            if (room.currentTempC < 12f) return 0.6f;
+            if (room.currentTempC <= 25f) return 1.0f;
+            return 0.8f;
         }
 
         private readonly Dictionary<string, float> _auxiliaryHeatKw = new Dictionary<string, float>(StringComparer.Ordinal);
@@ -217,7 +351,9 @@ ShelterAssignmentSystem? assignment = null)
             if (_state.boilerActive)
             {
                 _state.boilerCurrentTempC = Math.Max(_state.boilerCurrentTempC, _state.boilerTargetTempC);
-                _state.boilerFuelLevel = Math.Max(0, _state.boilerFuelLevel - 0.5f);
+                float deltaT = Math.Max(0f, _state.boilerTargetTempC - _deepFreeze.IndoorTempCelsius);
+                float fuelBurn = (float)Math.Min(2.5f, 0.25f + 0.012f * deltaT);
+                _state.boilerFuelLevel = Math.Max(0, _state.boilerFuelLevel - fuelBurn);
                 if (_state.boilerFuelLevel <= 0)
                 {
                     _state.boilerActive = false;
@@ -241,6 +377,12 @@ ShelterAssignmentSystem? assignment = null)
                 float outdoorTemp = _deepFreeze.IndoorTempCelsius;
 
                 float heatGainKw = GetAuxiliaryHeat(room.roomId);
+                foreach (var huddle in _state.huddleAssignments)
+                {
+                    var parts = huddle.Split(':');
+                    if (parts.Length == 2 && parts[1] == room.roomId)
+                        heatGainKw += 0.15f; // +150W human body heat
+                }
                 if (_state.boilerActive && room.hasRadiator && room.radiatorValveOpen > 0 && !room.isFrozen)
                 {
                     // Per-room allocation: valve × priority-share — independent of roomCount.
@@ -348,6 +490,25 @@ ShelterAssignmentSystem? assignment = null)
                     }
                 }
             }
+
+            // Waterway freeze update based on outdoor temperature
+            float outTemp = _deepFreeze.IndoorTempCelsius;
+            if (outTemp < 0f)
+            {
+                float coldMag = Math.Abs(outTemp);
+                _state.waterwayFreezeScore = Math.Min(100f, _state.waterwayFreezeScore + (coldMag * 0.75f));
+            }
+            else
+            {
+                _state.waterwayFreezeScore = Math.Max(0f, _state.waterwayFreezeScore - (outTemp * 1.5f));
+            }
+
+            if (_state.waterwayFreezeScore >= 50f)
+                _state.waterwayFreezeState = "Frozen";
+            else if (_state.waterwayFreezeScore >= 20f)
+                _state.waterwayFreezeState = "Restricted";
+            else
+                _state.waterwayFreezeState = "Open";
 
             OnThermalChanged?.Invoke();
         }
