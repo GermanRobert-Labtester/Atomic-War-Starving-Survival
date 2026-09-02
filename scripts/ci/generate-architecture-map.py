@@ -1363,10 +1363,13 @@ ARCHITECTURE_GRAPH = {
 
 def scan_codebase_symbols():
     """Dynamically scan all C# source files, data JSON files, and CLI registries."""
+    # Directories that must never contribute symbol evidence: editor worktrees,
+    # build output, and tooling caches do not exist on fresh checkouts.
+    excluded_dir_markers = ("/obj/", "/bin/", "/.claude/", "/.git/", "/builds/", "/artifacts/")
     cs_types = {}
     for p in REPO_ROOT.rglob("*.cs"):
         s = str(p)
-        if "/obj/" in s or "/bin/" in s: continue
+        if any(marker in s for marker in excluded_dir_markers): continue
         rel_p = p.relative_to(REPO_ROOT).as_posix()
         content = p.read_text(encoding="utf-8", errors="ignore")
         for m in re.finditer(r"(?:public|internal|sealed|static|partial|abstract)\s+(?:class|struct|interface|enum|record)\s+([A-Za-z0-9_]+)", content):
