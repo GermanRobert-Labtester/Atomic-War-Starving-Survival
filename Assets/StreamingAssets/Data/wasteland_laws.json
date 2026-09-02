@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "laws": [
+    {
+      "law_id": "law_theft_restitution",
+      "display_name": "Lex Reparatia: Restitution for Theft",
+      "description": "Every stolen calorie brings the bunker closer to the brink. Offenders are bled of their own rations to repay the debt, learning the true cost of hunger.",
+      "crime_type": "Theft",
+      "min_evidence_confidence": 0.50,
+      "allowed_punishments": [ "Warning", "Restitution", "Labor" ],
+      "legitimacy_impact": 5.0,
+      "fear_impact": 0.0,
+      "deterrence_rating": 0.35,
+      "doctrine_tag": "Merciful"
+    },
+    {
+      "law_id": "law_assault_confinement",
+      "display_name": "Isolation Code: Violence Confinement",
+      "description": "Petty violence is a luxury we cannot afford. Aggressors are confined to the unheated sub-levels in complete darkness until their blood cools.",
+      "crime_type": "Assault",
+      "min_evidence_confidence": 0.65,
+      "allowed_punishments": [ "Labor", "Confinement" ],
+      "legitimacy_impact": 8.0,
+      "fear_impact": 5.0,
+      "deterrence_rating": 0.60,
+      "doctrine_tag": "Procedural"
+    },
+    {
+      "law_id": "law_sabotage_banishment",
+      "display_name": "Exile Decree: Sabotage of Shelter Infrastructure",
+      "description": "To damage the life-support systems is to murder us all. Saboteurs are stripped of their gear and cast into the howling, irradiated storms of the surface.",
+      "crime_type": "Sabotage",
+      "min_evidence_confidence": 0.75,
+      "allowed_punishments": [ "Confinement", "Banishment" ],
+      "legitimacy_impact": 12.0,
+      "fear_impact": 15.0,
+      "deterrence_rating": 0.80,
+      "doctrine_tag": "Draconian"
+    },
+    {
+      "law_id": "law_treason_execution",
+      "display_name": "Iron Covenant: Capital Retribution",
+      "description": "The ultimate betrayal demands the ultimate price. A single bullet is an expensive waste, but a necessary sacrifice to excise the rot from our fragile society.",
+      "crime_type": "Murder",
+      "min_evidence_confidence": 0.85,
+      "allowed_punishments": [ "Banishment", "Execution" ],
+      "legitimacy_impact": 15.0,
+      "fear_impact": 35.0,
+      "deterrence_rating": 0.95,
+      "doctrine_tag": "Draconian"
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "narcotics": [
+    {
+      "chem_id": "chem_hyper_stim",
+      "name": "Blood-Boil Combat Ampoule",
+      "category": "Stimulant",
+      "effect_tags": [
+        "reflex_boost",
+        "movement_speed",
+        "adrenaline"
+      ],
+      "duration_hours": 6.0,
+      "onset_class": "Immediate",
+      "tolerance_gain": 0.09,
+      "dependency_pressure": 18.0,
+      "withdrawal_profile_id": "withdrawal_stim_crash",
+      "toxicity_contribution": 15.0,
+      "contraindication_tags": [
+        "cardiac_arrhythmia",
+        "exhaustion"
+      ],
+      "trade_value": 55,
+      "research_tier": 2,
+      "recipe_inputs": [
+        {
+          "item_id": "item_medical_precursor_base",
+          "amount": 1
+        },
+        {
+          "item_id": "item_sterile_solvent_pack",
+          "amount": 1
+        }
+      ],
+      "tags": [
+        "pharmaceutical",
+        "stimulant",
+        "combat",
+        "controlled"
+      ]
+    },
+    {
+      "chem_id": "chem_dulcimer_tincture",
+      "name": "Grave-Sleep Pain Tincture",
+      "category": "Analgesic",
+      "effect_tags": [
+        "pain_suppression",
+        "rest_bonus",
+        "sedation"
+      ],
+      "duration_hours": 8.0,
+      "onset_class": "Gradual",
+      "tolerance_gain": 0.12,
+      "dependency_pressure": 24.0,
+      "withdrawal_profile_id": "withdrawal_opioid_ache",
+      "toxicity_contribution": 20.0,
+      "contraindication_tags": [
+        "respiratory_depression",
+        "hypothermia"
+      ],
+      "trade_value": 50,
+      "research_tier": 1,
+      "recipe_inputs": [
+        {
+          "item_id": "item_medical_precursor_base",
+          "amount": 1
+        },
+        {
+          "item_id": "item_clean_water",
+          "amount": 1
+        }
+      ],
+      "tags": [
+        "pharmaceutical",
+        "analgesic",
+        "sedative",
+        "controlled"
+      ]
+    },
+    {
+      "chem_id": "chem_clarity_salts",
+      "name": "Wire-Head Focus Salts",
+      "category": "Nootropic",
+      "effect_tags": [
+        "fatigue_suppression",
+        "focus_boost",
+        "clarity"
+      ],
+      "duration_hours": 10.0,
+      "onset_class": "Immediate",
+      "tolerance_gain": 0.06,
+      "dependency_pressure": 12.0,
+      "withdrawal_profile_id": "withdrawal_neural_tremor",
+      "toxicity_contribution": 25.0,
+      "contraindication_tags": [
+        "psychosis",
+        "insomnia"
+      ],
+      "trade_value": 45,
+      "research_tier": 2,
+      "recipe_inputs": [
+        {
+          "item_id": "item_medical_precursor_base",
+          "amount": 1
+        },
+        {
+          "item_id": "item_sterile_solvent_pack",
+          "amount": 1
+        }
+      ],
+      "tags": [
+        "pharmaceutical",
+        "nootropic",
+        "intellectual",
+        "controlled"
+      ]
+    },
+    {
+      "chem_id": "chem_haze_resin",
+      "name": "Fugue-State Calming Resin",
+      "category": "Sedative",
+      "effect_tags": [
+        "panic_immunity",
+        "stress_relief",
+        "calming"
+      ],
+      "duration_hours": 12.0,
+      "onset_class": "Gradual",
+      "tolerance_gain": 0.08,
+      "dependency_pressure": 16.0,
+      "withdrawal_profile_id": "withdrawal_dysphoria",
+      "toxicity_contribution": 12.0,
+      "contraindication_tags": [
+        "lethargy",
+        "depression"
+      ],
+      "trade_value": 40,
+      "research_tier": 1,
+      "recipe_inputs": [
+        {
+          "item_id": "item_medical_precursor_base",
+          "amount": 1
+        }
+      ],
+      "tags": [
+        "pharmaceutical",
+        "sedative",
+        "psychological",
+        "controlled"
+      ]
+    }
+  ]
+}

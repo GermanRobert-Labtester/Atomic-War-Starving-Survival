@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "thermal_gear": [
+    {
+      "item_id": "item_heavy_wool_coat",
+      "display_name": "Heavy Boiled-Wool Greatcoat",
+      "insulation_value": 18.0,
+      "wind_protection": 0.65,
+      "wet_penalty": 0.40,
+      "condition_scaling": true,
+      "body_slot": "chest",
+      "minimum_condition_for_effect": 10.0,
+      "tags": [ "clothing", "wool", "winter", "insulation" ]
+    },
+    {
+      "item_id": "item_thermal_parka",
+      "display_name": "Down-Lined Arctic Parka",
+      "insulation_value": 26.0,
+      "wind_protection": 0.90,
+      "wet_penalty": 0.60,
+      "condition_scaling": true,
+      "body_slot": "chest",
+      "minimum_condition_for_effect": 15.0,
+      "tags": [ "clothing", "arctic", "winter", "subzero" ]
+    },
+    {
+      "item_id": "item_fur_mittens",
+      "display_name": "Trapped-Pelts Gauntlet Mittens",
+      "insulation_value": 8.0,
+      "wind_protection": 0.70,
+      "wet_penalty": 0.35,
+      "condition_scaling": true,
+      "body_slot": "hands",
+      "minimum_condition_for_effect": 10.0,
+      "tags": [ "clothing", "hands", "fur", "winter" ]
+    },
+    {
+      "item_id": "item_insulated_boots",
+      "display_name": "Felt-Lined Mukluk Snow Boots",
+      "insulation_value": 12.0,
+      "wind_protection": 0.80,
+      "wet_penalty": 0.30,
+      "condition_scaling": true,
+      "body_slot": "feet",
+      "minimum_condition_for_effect": 10.0,
+      "tags": [ "clothing", "boots", "winter", "tread" ]
+    },
+    {
+      "item_id": "item_snow_goggles_improvised",
+      "display_name": "Slotted Bone Snow Goggles",
+      "insulation_value": 4.0,
+      "wind_protection": 0.95,
+      "wet_penalty": 0.05,
+      "condition_scaling": false,
+      "body_slot": "head",
+      "minimum_condition_for_effect": 5.0,
+      "tags": [ "protective", "eyewear", "blizzard" ]
+    },
+    {
+      "item_id": "item_improvised_burn_barrel",
+      "display_name": "Slotted Steel Scrap Burn Barrel",
+      "insulation_value": 35.0,
+      "wind_protection": 0.0,
+      "wet_penalty": 0.0,
+      "condition_scaling": true,
+      "body_slot": "deployable",
+      "minimum_condition_for_effect": 20.0,
+      "tags": [ "heater", "combustion", "wood", "emergency" ]
+    },
+    {
+      "item_id": "item_portable_kerosene_heater",
+      "display_name": "Pressurized Wick Kerosene Heater",
+      "insulation_value": 50.0,
+      "wind_protection": 0.0,
+      "wet_penalty": 0.0,
+      "condition_scaling": true,
+      "body_slot": "deployable",
+      "minimum_condition_for_effect": 25.0,
+      "tags": [ "heater", "liquid_fuel", "precision", "high_output" ]
+    }
+  ]
+}

@@ -11,6 +11,7 @@ namespace Ashfall.Core
         public List<TrapSite> trapSites = new List<TrapSite>();
         public int totalCatch;
         public int totalToxicRemoved;
+        public List<string> firstCatchLoggedSpeciesIds = new List<string>();
     }
 
     [Serializable]
@@ -72,6 +73,7 @@ namespace Ashfall.Core
     /// <summary>
     /// Plan 36: Immutable environment context for prey selection.
     /// Passed by the host to filter by season, migration presence, and abundance.
+    /// WT-INT-01: Carries live WeatherSystem snapshot and per-hunter skill levels.
     /// </summary>
     public sealed class WildlifeSelectionContext
     {
@@ -80,11 +82,17 @@ namespace Ashfall.Core
         /// <summary>Current season window ID (e.g., "window_thaw"). Empty = unknown/all.</summary>
         public string SeasonWindowId { get; set; } = string.Empty;
 
+        /// <summary>Current authoritative weather snapshot from WeatherSystem.</summary>
+        public WeatherKind CurrentWeather { get; set; } = WeatherKind.Clear;
+
         /// <summary>Species IDs present in the current sector via migration.</summary>
         public HashSet<string> PresentMigrationSpecies { get; set; } = new HashSet<string>(StringComparer.Ordinal);
 
         /// <summary>Per-species abundance multiplier from seasonal calendar. Key = speciesId.</summary>
         public Dictionary<string, float> AbundanceFactors { get; set; } = new Dictionary<string, float>(StringComparer.Ordinal);
+
+        /// <summary>Per-hunter normalized skill levels (0..100) from SkillProgressionSystem. Key = hunterId.</summary>
+        public Dictionary<string, float> HunterSkillLevels { get; set; } = new Dictionary<string, float>(StringComparer.Ordinal);
     }
 
     public sealed class WildlifeTrappingSystem
@@ -107,6 +115,8 @@ namespace Ashfall.Core
         public event Action OnTrappingChanged;
         public event Action<string, string, string, bool> OnButcheryCompleted; // siteId, butcherId, species, isToxic
         public event Action<string, string> OnHidePreserved; // siteId, hideItemId
+        /// <summary>WT-INT-01: Fired when a prey species is caught for the first time. Args: (speciesId, siteId, hunterId).</summary>
+        public event Action<string, string, string>? OnNewSpeciesDiscovered;
 
         public WildlifeTrappingSystem(ISeededRng rng, ILog? log = null)
         {
@@ -145,7 +155,7 @@ namespace Ashfall.Core
                 _trapDefinitionCatalog[trap.trap_id] = trap;
         }
 
-        /// <summary>Set the current hunter's skill level (0-100) for trap success calculations.</summary>
+        /// <summary>Set the global fallback hunter's skill level (0-100) for legacy/unassigned trap calculations.</summary>
         public void SetHunterSkill(float skillLevel)
         {
             _hunterSkillLevel = Math.Clamp(skillLevel, 0f, 100f);
@@ -157,8 +167,104 @@ namespace Ashfall.Core
             _selectionContext = context ?? WildlifeSelectionContext.Default;
         }
 
-        /// <summary>Get the effective catch chance multiplier from hunter skill (0 at skill 0, 1.5x at skill 100).</summary>
-        private float SkillMultiplier => 0.5f + (_hunterSkillLevel / 100f) * 1.0f;
+        /// <summary>
+        /// Pure static calculation of skill multiplier: 0 -> 0.5x, 50 -> 1.0x, 100 -> 1.5x.
+        /// </summary>
+        public static float SkillMultiplierFor(float skillLevel)
+        {
+            float clamped = Math.Clamp(skillLevel, 0f, 100f);
+            return 0.5f + (clamped / 100f);
+        }
+
+        /// <summary>Get the effective catch chance multiplier from global fallback hunter skill.</summary>
+        private float SkillMultiplier => SkillMultiplierFor(_hunterSkillLevel);
+
+        /// <summary>
+        /// Pure weather penalty mapping for all 22 WeatherKind values.
+        /// Clear = 0.0, Rain = 0.3, FalloutStorm = 0.5, Blizzard = 0.8.
+        /// </summary>
+        public static float WeatherPenaltyFor(WeatherKind kind)
+        {
+            return kind switch
+            {
+                WeatherKind.Clear => 0.0f,
+                WeatherKind.Overcast => 0.0f,
+                WeatherKind.Silence => 0.0f,
+                WeatherKind.FalseSpring => 0.0f,
+                WeatherKind.SilentSpring => 0.0f,
+
+                WeatherKind.Rain => 0.3f,
+                WeatherKind.AlgaeBloom => 0.3f,
+
+                WeatherKind.Ashfall => 0.4f,
+                WeatherKind.BioFog => 0.4f,
+                WeatherKind.ParticulateFog => 0.4f,
+                WeatherKind.ThermalInversion => 0.4f,
+
+                WeatherKind.FalloutStorm => 0.5f,
+                WeatherKind.BlackRain => 0.5f,
+                WeatherKind.BloodRain => 0.5f,
+                WeatherKind.EMPStorm => 0.5f,
+                WeatherKind.AshLightning => 0.5f,
+
+                WeatherKind.Blizzard => 0.8f,
+                WeatherKind.AcidSnow => 0.8f,
+                WeatherKind.BlackSnow => 0.8f,
+                WeatherKind.GlassStorm => 0.8f,
+                WeatherKind.RadHail => 0.8f,
+                WeatherKind.IceStorm => 0.8f,
+
+                _ => 0.0f
+            };
+        }
+
+        /// <summary>
+        /// Pure weather multiplier calculation:
+        /// 1 - clamp(weatherSensitivity, 0, 1) * clamp(weatherPenalty, 0, 1).
+        /// </summary>
+        public static float CalculateWeatherMultiplier(float weatherSensitivity, WeatherKind weather)
+        {
+            float sens = Math.Clamp(weatherSensitivity, 0f, 1f);
+            float pen = Math.Clamp(WeatherPenaltyFor(weather), 0f, 1f);
+            return 1.0f - (sens * pen);
+        }
+
+        /// <summary>
+        /// Pure primary catch chance calculation.
+        /// </summary>
+        public static float CalculatePrimaryCatchChance(
+            float densityMultiplier,
+            float hunterSkillLevel,
+            float baitMultiplier,
+            float weatherSensitivity,
+            WeatherKind weather)
+        {
+            float baseChance = BaseCatchChance * densityMultiplier;
+            float skillMult = SkillMultiplierFor(hunterSkillLevel);
+            float weatherMult = CalculateWeatherMultiplier(weatherSensitivity, weather);
+            float rawChance = baseChance * skillMult * baitMultiplier * weatherMult;
+            return Math.Clamp(rawChance, 0.05f, 0.95f);
+        }
+
+        /// <summary>
+        /// Records a primary catch species if not previously caught. Returns true only on first catch.
+        /// </summary>
+        private bool TryRecordFirstCatch(string speciesId, string siteId, string hunterId)
+        {
+            if (string.IsNullOrEmpty(speciesId)) return false;
+            if (_state.firstCatchLoggedSpeciesIds == null)
+                _state.firstCatchLoggedSpeciesIds = new List<string>();
+
+            for (int i = 0; i < _state.firstCatchLoggedSpeciesIds.Count; i++)
+            {
+                if (string.Equals(_state.firstCatchLoggedSpeciesIds[i], speciesId, StringComparison.Ordinal))
+                    return false;
+            }
+
+            _state.firstCatchLoggedSpeciesIds.Add(speciesId);
+            OnNewSpeciesDiscovered?.Invoke(speciesId, siteId ?? string.Empty, hunterId ?? string.Empty);
+            return true;
+        }
 
         private void InitializeDefaultProfiles()
         {
@@ -329,11 +435,11 @@ namespace Ashfall.Core
         public const float BaseCatchChance = 0.5f;
 
         /// <summary>
-        /// Select a quarry species based on bait affinity, trap type, skill level,
+        /// Select a quarry species based on bait affinity, trap type, per-site hunter skill level,
         /// season, migration presence, and abundance. Returns the species ID or
         /// string.Empty if no eligible quarry.
         /// </summary>
-        private string SelectQuarrySpecies(string baitType, string trapType)
+        private string SelectQuarrySpecies(string baitType, string trapType, float hunterSkillLevel)
         {
             var candidates = new List<(string id, float weight)>();
             string seasonId = _selectionContext.SeasonWindowId;
@@ -343,7 +449,7 @@ namespace Ashfall.Core
             foreach (var kvp in _quarryCatalog)
             {
                 var q = kvp.Value;
-                if (_hunterSkillLevel < q.minSkillLevel) continue;
+                if (hunterSkillLevel < q.minSkillLevel) continue;
 
                 // Plan 36: season filter — prey with activeSeasons must include current season
                 if (hasSeason && _preyDefinitionCatalog.TryGetValue(q.speciesId, out var preyDef)
@@ -404,16 +510,32 @@ namespace Ashfall.Core
         /// with live wildlife pressure — the sector pack population the migration
         /// system reports. 1.0 keeps the authored 50% rate; the result clamps to
         /// a believable band so empty ground still occasionally feeds a snare.
+        /// WT-INT-01: Each site evaluates its assigned hunter skill and trap weather sensitivity.
         /// </summary>
         public ActionResult CheckTraps(float densityMultiplier = 1f)
         {
-            float catchChance = Math.Clamp(BaseCatchChance * densityMultiplier * SkillMultiplier, 0.05f, 0.95f);
             int caught = 0;
             foreach (var site in _state.trapSites)
             {
                 if (site.hasCatch || site.setDay < 0) continue;
                 if (site.isBroken) continue; // Plan 36: broken traps produce no catches
                 if (_currentDay < site.checkDay) continue;
+
+                // Resolve per-site hunter skill
+                float siteHunterSkill = _hunterSkillLevel; // legacy fallback
+                if (!string.IsNullOrEmpty(site.assignedHunterId)
+                    && _selectionContext.HunterSkillLevels != null
+                    && _selectionContext.HunterSkillLevels.TryGetValue(site.assignedHunterId, out float projectedSkill))
+                {
+                    siteHunterSkill = projectedSkill;
+                }
+
+                // Resolve trap definition once per site
+                TrapDefinition? trapDef = null;
+                if (!string.IsNullOrEmpty(site.trapId))
+                    _trapDefinitionCatalog.TryGetValue(site.trapId, out trapDef);
+
+                float weatherSens = trapDef?.weatherSensitivity ?? 0f;
 
                 // Apply bait bonus
                 float baitMultiplier = 1.0f;
@@ -424,11 +546,17 @@ namespace Ashfall.Core
                     baitToxicReduction = bait.toxicReduction;
                 }
 
-                float finalChance = catchChance * baitMultiplier;
+                float finalChance = CalculatePrimaryCatchChance(
+                    densityMultiplier,
+                    siteHunterSkill,
+                    baitMultiplier,
+                    weatherSens,
+                    _selectionContext.CurrentWeather);
+
                 if (_rng.NextDouble() < finalChance)
                 {
-                    // Select species based on bait and trap type
-                    string speciesId = SelectQuarrySpecies(site.baitType, site.trapType);
+                    // Select species based on bait, trap type, and per-site hunter skill
+                    string speciesId = SelectQuarrySpecies(site.baitType, site.trapType, siteHunterSkill);
                     site.catchSpecies = speciesId;
 
                     // Get species data
@@ -450,9 +578,8 @@ namespace Ashfall.Core
                     site.hidePreserved = false;
                     site.bycatchSpecies = string.Empty;
 
-                    // Plan 36 III: bycatch roll — deterministic, fixed RNG budget
-                    if (!string.IsNullOrEmpty(site.trapId)
-                        && _trapDefinitionCatalog.TryGetValue(site.trapId, out var trapDef)
+                    // Plan 36 III: bycatch roll — deterministic, fixed RNG budget (unaffected by weather/skill)
+                    if (trapDef != null
                         && trapDef.bycatchChance > 0f
                         && trapDef.bycatchSpecies != null && trapDef.bycatchSpecies.Count > 0
                         && _rng.NextDouble() < trapDef.bycatchChance)
@@ -485,6 +612,9 @@ namespace Ashfall.Core
                             }
                         }
                     }
+
+                    // WT-INT-01: First-catch discovery tracking (primary catch only)
+                    TryRecordFirstCatch(speciesId, site.siteId, site.assignedHunterId);
 
                     caught++;
                     _state.totalCatch++;
@@ -631,6 +761,8 @@ namespace Ashfall.Core
         {
             if (saved == null) return;
             _state = CloneState(saved);
+            if (_state.firstCatchLoggedSpeciesIds == null)
+                _state.firstCatchLoggedSpeciesIds = new List<string>();
         }
 
         private static WildlifeTrappingState CloneState(WildlifeTrappingState src)

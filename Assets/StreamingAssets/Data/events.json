@@ -1331,21 +1331,21 @@
     {
       "id": "narrative_miller_milestone_1",
       "title": "Grist Handler",
-      "bodyText": "The miller sorts coarse grain from chaff using improvised sieves. The first batch of flour is rough and grey, but it holds together in the dough.",
+      "bodyText": "The miller sorts coarse grain from chaff with sieves improvised from salvage mesh and bent frames, and the first batch of flour comes out rough and grey, and it holds together in the dough, and the dough is the part that matters. The miller keeps a pinch of it in a folded paper, which nobody has asked about.",
       "weight": 1,
       "minDay": 10
     },
     {
       "id": "narrative_miller_milestone_2",
       "title": "Grain Refiner",
-      "bodyText": "With a newly dressed millstone and balanced spindle, the flour comes out fine and white. The morning mash turns into proper loaves.",
+      "bodyText": "The millstone is dressed, the spindle balanced, and the flour comes out fine enough to pass through cloth. The morning mash has become proper loaves, and the shelter ate the first one quietly, the way you eat something you were afraid was gone. The miller watched the eating, not the praise.",
       "weight": 1,
       "minDay": 20
     },
     {
       "id": "narrative_miller_mastery",
       "title": "Master of the Millstone",
-      "bodyText": "The miller calibrates stone gap and moisture content by touch alone. Not a single grain of harvest is wasted in milling.",
+      "bodyText": "The miller reads the stone gap by touch and the grain's moisture by sound, and nothing from the harvest is lost at the mill now, not the germ, not the dust, which goes to the compost ledger with a weight. The shelter's bread has stopped being a negotiation. The first grey pinch of flour is still in its paper, kept.",
       "weight": 1,
       "minDay": 30
     },
@@ -1359,7 +1359,7 @@
     {
       "id": "narrative_wireman_milestone_1",
       "title": "Cable Splicer",
-      "bodyText": "The wireman splices burned copper conduits with heat-shrink tape. Flickering hallway lights stabilize under steady current.",
+      "bodyText": "The wireman splices the burned copper conduits with heat-shrink and patience, and the hallway lights have stopped flickering, which is not brighter, only steady, and steady is the part people notice last and feel first. The bad lengths of cable are coiled by the door, in case steady turns out to be temporary.",
       "weight": 1,
       "minDay": 10
     },
@@ -3477,7 +3477,7 @@
     {
       "id": "friction_stolen_keepsake",
       "title": "The Missing Keepsake",
-      "bodyText": "A small wooden bird has gone from the third-bunk's pillow during the last three shifts. It was carved by a child, who has not noticed. The adult whose pillow it lived against has noticed. The pillow has noticed. The wood-cheap corners say nothing about who might have picked it up.",
+      "bodyText": "The carved wooden bird that lived on the third bunk's pillow has been gone for three shifts. The child who carved it has not noticed yet. The adult whose pillow it stood against has noticed, and has started making the bunk with the blanket folded over the spot where it used to stand. Nobody has asked about it aloud, which is how everyone knows the whole corridor is thinking about it.",
       "weight": 1.1,
       "minDay": 25,
       "choices": [
@@ -3512,7 +3512,7 @@
     {
       "id": "friction_forbidden_radio_listening",
       "title": "The Forbidden Dial",
-      "bodyText": "The radio dial was set to 88.5 at 02:00 by someone who did not log the listening. The bunker's radio schedule does not allow 88.5 between 23:00 and 05:00. The bunker's chalk budget has words about this, and the words will be heard.",
+      "bodyText": "At two in the morning someone set the radio dial to 88.5 and did not log it. The shelter's frequency schedule closes that band between eleven at night and five, and the schedule is the kind of rule that exists because something happened once. The log sits blank for that hour, and the operator has left it blank on purpose, to see who comes to fill it.",
       "weight": 1.2,
       "minDay": 30,
       "conditions": {
@@ -3546,7 +3546,7 @@
     {
       "id": "friction_work_shirker_accusation",
       "title": "The Pencil That Was Wrong",
-      "bodyText": "An accusation: three names on the morning forge shift are recorded as the substitute rotation, and only one of those three names showed. The pencil did the work that the missing names refused to do. The pencil will not write down the names of the people who did not show.",
+      "bodyText": "The morning forge roster carried three names, and one of the three showed. The one who showed did the work of three, and has not said anything, but the not-saying has a shape to it, and the shift can read the shape. The roster sheet is still posted. Nobody has crossed the two names out, which is the accusation.",
       "weight": 1.3,
       "minDay": 35,
       "choices": [
@@ -3581,7 +3581,7 @@
     {
       "id": "friction_stealing_sleep_rotation",
       "title": "Whose Bunk In The Second Hour",
-      "bodyText": "Twice in the last week, somebody has been sleeping in the second-bunk on the south corridor during the second hour of the second watch. They do not belong to the second-bunk's rotation. The bunk did not say anything. The bunk's blanket did.",
+      "bodyText": "Twice this week someone has been sleeping in the second bunk of the south corridor during the second hour of second watch, and the bunk does not belong to their rotation. The person it belongs to has found it warm both times, and the warmth is the evidence, and the evidence is being discussed in low voices at the water point.",
       "weight": 0.9,
       "minDay": 12,
       "choices": [
@@ -3612,7 +3612,7 @@
     {
       "id": "friction_ash_sermon_quiet_hours",
       "title": "The Sermon After Quiet Hours",
-      "bodyText": "An adult has been speaking the ash cant with the children for the last three nights, after quiet hours, in the cold room. The cant is not in the curriculum. The curriculum is one hour a day. The children are listening for longer than one hour. The chalk budget is collecting evidence.",
+      "bodyText": "For three nights someone has been speaking the ash cant to the children after quiet hours, in the cold room. The cant is not in the curriculum, and the curriculum is one hour a day, and the children are listening longer than an hour. The teacher has noticed the children repeating the words during lessons. The teacher has not reported it yet, and the not-yet is starting to look like a choice.",
       "weight": 1.0,
       "minDay": 28,
       "choices": [
@@ -3643,7 +3643,7 @@
     {
       "id": "friction_inherited_walkout_threat",
       "title": "The Walkout That Was Inherited",
-      "bodyText": "A survivor threatens to walk out for the first time since the convoy. The threat is to nobody in particular and to everybody in general. The walkout's threat is in the corridor. The walkout's chronicler will write it on tomorrow's pencil.",
+      "bodyText": "A survivor has started saying the words walk out, to nobody in particular and to everybody at once, at meals, at the water point. The words came in with the convoy, where somebody else said them and meant them. The room goes quiet every time. The quiet is the threat's audience, and the threat is learning the room.",
       "weight": 1.1,
       "minDay": 50,
       "conditions": {
@@ -3681,7 +3681,7 @@
     {
       "id": "friction_two_sides_of_chalk",
       "title": "Chalk Vs Chalk",
-      "bodyText": "The walls are getting legibility. The two sides of the corridor cannot agree on which census number belongs to which stall. One side writes in pencil. One side writes in chalk. The two sides have not spoken for a week. The pencil and the chalk have not spoken for a week either.",
+      "bodyText": "Two sides of the corridor are arguing about a census number, which stall it belongs to, and the argument has taken to the walls: one side writes in pencil, one side writes in chalk. The writing is polite. The two sides have stopped speaking aloud for a week, and the wall does the talking now, and the wall gets more legible every day.",
       "weight": 1.0,
       "minDay": 22,
       "choices": [
@@ -3712,7 +3712,7 @@
     {
       "id": "friction_ration_observation_overheard",
       "title": "An Overheard Scoop",
-      "bodyText": "The morning ration scoop happened in the corridor at the same hour. Three adults watched. Two said nothing. One said too much. The one that said too much will not un-say the thing during the next shift.",
+      "bodyText": "The morning scoop happened in the corridor at the usual hour, and three adults watched it, and two said nothing, and one said too much: a number, a name, a comparison. The words are still in the corridor at shift change. The one who said them has not taken them back, and there is no way to take them back.",
       "weight": 0.9,
       "minDay": 24,
       "conditions": {
@@ -3746,7 +3746,7 @@
     {
       "id": "friction_ration_stolen_dry_rations",
       "title": "The Dry-Ration Loss",
-      "bodyText": "Three tins of dry rations are missing from the back shelf. The tally says three. The shelf's mood says three. The bunkers do not need a count to know the count. The dry rations are not for anyone's bunk.",
+      "bodyText": "Three tins of dry rations are gone from the back shelf, and the tally says three, and the shelf says three, and the count has not been reported yet because reporting it means counting everyone, and counting everyone means trusting no one. The shelter walks past the shelf without looking, which is the shelter's way of looking.",
       "weight": 1.2,
       "minDay": 30,
       "conditions": {
@@ -3780,7 +3780,7 @@
     {
       "id": "ration_uneven_scoop_third_day",
       "title": "The Scoop That Went Uneven",
-      "bodyText": "The third day in a row the morning scoop has been uneven. The bowl on the left stack has been fuller than the bowl on the right stack. The bowl's thicker. The bowl is also the one the lead medic cuts from. The discrepancy is small. The discrepancy is not kind.",
+      "bodyText": "Three days running the morning scoop has come out uneven: the bowl on the left stack fuller than the bowl on the right, and the right bowl is the one the lead medic cuts from, and the difference is small, and the difference has been noticed, and the noticing is the kind that does not go back. Someone has started arriving early to watch the scoop, and the watching has been noticed too.",
       "weight": 1.1,
       "minDay": 28,
       "conditions": {
@@ -3818,7 +3818,7 @@
     {
       "id": "ration_hoarded_tins_first_sign",
       "title": "The First Tin Disappears",
-      "bodyText": "The first tin of sardines has gone from the back shelf under what may be a deliberate act of triage. The tally knows. The bunk knows. The person who took the tin knows. The first tin established a precedent.",
+      "bodyText": "The first tin of sardines has gone from the back shelf, and the taking was deliberate: the tally knows, the shelf knows, and whoever took it knows that both can tell. It is the first tin that matters. The first tin decides whether there is a second one, and the shelter is going about its day, and the day is keeping count.",
       "weight": 1.2,
       "minDay": 35,
       "conditions": {
@@ -3852,7 +3852,7 @@
     {
       "id": "ration_feast_day_demand",
       "title": "Feast Day Is Not A Holiday",
-      "bodyText": "Two adults have requested a feast scoop for the second anniversary of the bunker opening. The feast scoop is not in the schedule. The schedule is why the feast scoop can be discussed without ceremony. The feast scoop has been scheduled now.",
+      "bodyText": "Two adults have requested a feast scoop for the second anniversary of the bunker opening. The feast scoop is not in the schedule, and the schedule is why the request could be made at all, calmly, on paper. The request sits on the council sheet now, and the council sheet is the shelter's way of holding a feast without holding one.",
       "weight": 1.0,
       "minDay": 80,
       "choices": [
@@ -3883,7 +3883,7 @@
     {
       "id": "ration_sick_gets_more_dispute",
       "title": "The Sick Get More",
-      "bodyText": "The sick in the infirmary get extra. The medic's pencil wrote the extra. The dwellers' pencil did not get to disagree. The extra is medic-grade and not negotiable at the scoop. The extra is, however, the next council sheet's first item.",
+      "bodyText": "The sick in the infirmary get extra, and the extra is written in the medic's pencil, and the dwellers' pencil did not get to agree. The extra is medic-grade and not negotiable at the scoop, and nobody has said it is negotiable, out loud. It is the first item on the next council sheet, which is where the saying goes.",
       "weight": 1.1,
       "minDay": 40,
       "choices": [
@@ -3914,7 +3914,7 @@
     {
       "id": "ration_theft_with_evidence",
       "title": "A Tin With Bearings",
-      "bodyText": "A tin was taken. A tin was seen by someone who did not need it. The sawdust block fell out of someone's pocket. The sawdust block has a fingerprint. The fingerprint is from the second-bunk. The second-bunk has the lead medic's spoon in the morning.",
+      "bodyText": "A tin was taken, and someone who did not need it saw the taking, and the sawdust block fell out of a pocket, and the block has a print on it, and the print belongs to the second bunk, and the second bunk takes the lead medic's spoon in the morning. The evidence sits in a cup on the council table, and the cup has not been discussed, and the cup is going to be discussed.",
       "weight": 1.3,
       "minDay": 50,
       "conditions": {
@@ -3986,7 +3986,7 @@
     {
       "id": "escalation_walkout",
       "title": "The Walkout",
-      "bodyText": "Three adults have made the corridor door move. They walked out at dawn. They said they would. The corridor door is still warm. The pencil does not write warm. The dawn is cooler than warm.",
+      "bodyText": "Three adults walked out at dawn. They said they would, and then they did, and the corridor door is still warm from their hands, and the shelter stands around the door without touching it. The pencil in the log does not know how to write warm. The dawn is colder than the door.",
       "weight": 1.2,
       "minDay": 55,
       "choices": [
@@ -4010,7 +4010,7 @@
     {
       "id": "escalation_sabotage",
       "title": "The Lead Pipe Went Out",
-      "bodyText": "The lead pipe for the second-bunk's circulation was pulled before dawn. The lead pipe was left on the concrete with no hands. The hands were not cold. The hands were not shaken. The hands were someone's.",
+      "bodyText": "The lead pipe for the second bunk's circulation was pulled before dawn and left lying on the concrete, and the pulling took hands, and the hands were steady, and the shelter is doing the arithmetic of whose hands could have done it, and the arithmetic is coming out too long, which is the sabotage's second purpose.",
       "weight": 1.3,
       "minDay": 90,
       "choices": [
@@ -4034,7 +4034,7 @@
     {
       "id": "escalation_challenge_to_leadership",
       "title": "The Chalk Under The Doorway",
-      "bodyText": "There is chalk under the leadership doorway. The chalk says nothing in particular. The chalk says nothing in particular, on a Friday, with forty-eight hours to a council sheet meeting.",
+      "bodyText": "There is chalk under the leadership doorway. The chalk says nothing in particular: just the date of the next council meeting, underlined twice, which is not a threat, which is the shape of a threat. Forty-eight hours to the meeting. The chalk has not been picked up, and nobody is going to pick it up before the meeting.",
       "weight": 1.4,
       "minDay": 80,
       "choices": [
@@ -4065,7 +4065,7 @@
     {
       "id": "escalation_walkout_reconsidered",
       "title": "The Walkout Comes Back",
-      "bodyText": "The corridor door is cool now. The same three adults came back at noon. They did not announce their return. They walked back in past the chair that the chalk had been sitting on for the four hours they were walking. The chair was occupied. The chair was not surprised.",
+      "bodyText": "The same three came back at noon. They did not announce it. They walked in past the chair that sat empty by the door for the four hours they were out, and the chair was occupied again by evening, and nobody said welcome back, and nobody refused to say it, and the door has been left unlocked since, which is the shelter's speech.",
       "weight": 1.0,
       "minDay": 60,
       "choices": [
@@ -4089,7 +4089,7 @@
     {
       "id": "friction_stolen_keepsake_after",
       "title": "After The Keepsake",
-      "bodyText": "The carved bird is back on the third-bunk's pillow. The third-bunk is the only one that knows how to be folded that way. The third-bunk is the only one that will remember the second-place pillow tomorrow. The third-bunk has decided to be still tonight.",
+      "bodyText": "The carved bird is back on the third bunk's pillow, set the same way it stood before, and whoever returned it knew how it stood, which is the whole confession and the whole apology. The child still has not noticed. The one whose pillow it leans against has noticed, and has said nothing, and the nothing has been said kindly.",
       "weight": 0.8,
       "minDay": 27,
       "conditions": {
@@ -4107,7 +4107,7 @@
     {
       "id": "escalation_walkout_conditions",
       "title": "Before The Walkout",
-      "bodyText": "The pencil has written the conditions for the corridor doorway to open. The pencil's conditions are: write when you leave, write why you leave, write when you come back. The doorway writes nothing. The doorway watches the pencil.",
+      "bodyText": "The pencil has written the conditions on the wall by the corridor door: write when you leave, write why you leave, write when you come back. The conditions are not a law. The conditions are what the shelter could agree on with its hands shaking, and the doorway watches the pencil, and the pencil watches the doorway.",
       "weight": 1.0,
       "minDay": 37,
       "conditions": {
@@ -4130,7 +4130,7 @@
     {
       "id": "post_walkout_reconsider",
       "title": "Reconsidering The Walkout",
-      "bodyText": "The walkout's threat does not need another walkout. The walkout's threat needs a pencil. The walkout reconsidered with a pencil. The pencil was shorter than yesterday's pencil.",
+      "bodyText": "The walkout's threat does not need another walkout; it needs a pencil, and it got one. The threat was written down at the council table, and the writing is shorter than yesterday's threat, and shorter is the direction the shelter is trying to walk.",
       "weight": 1.0,
       "minDay": 53,
       "choices": [
@@ -4181,7 +4181,7 @@
     {
       "id": "event_belief_quiet_comfort",
       "title": "The Still Hour",
-      "bodyText": "A quiet observance takes place in the dormitory corner after shift change. Adherents sit in shared silence, reciting the names of former dwellers and breathing in time with the intake pulse. The atmosphere settles tense nerves that sedatives failed to soothe.",
+      "bodyText": "A quiet observance in the dormitory corner after shift change: the adherents sit together and breathe in time with the intake pulse and recite the names of former dwellers, and the names are the part the corridor stops walking past. Nerves the sedatives did not reach have started settling there, and the infirmary has noticed, and the infirmary has not objected.",
       "weight": 1.2,
       "minDay": 12,
       "choices": [
@@ -4212,7 +4212,7 @@
     {
       "id": "event_belief_practice_dispute",
       "title": "The Candle in the Duct",
-      "bodyText": "A machinist angrily confronts members of a belief movement who left a tallow stub burning in an air intake niche during their dawn vigil. The mechanic argues it wastes precious fat and risks soot fouling; the believers argue the light was a memorial beacon for a lost shift.",
+      "bodyText": "A tallow stub burned in an air intake niche during the dawn vigil, and the machinist found it this morning and carried it, smoking, to the dormitory: the fat wasted, the soot in the duct, the risk written on the filter. The believers say the light was a memorial beacon for a lost shift. The machinist says the duct does not care what the light meant. Both are right, and the stub sits burned out on the table between them.",
       "weight": 1.0,
       "minDay": 18,
       "choices": [
@@ -4243,7 +4243,7 @@
     {
       "id": "event_belief_schism_interpretation",
       "title": "The Split Reading",
-      "bodyText": "Two factions within the shelter's movement clash over an interpreted sign. One group argues that mounting surface storms mean the shelter must permanently seal itself against the wicked outside; the other insists it is a mandate to dispatch scouts and find surviving enclaves.",
+      "bodyText": "The movement has split over a sign: the storms. One side reads the mounting storms as an order to seal the shelter against the outside forever, and has started drafting the sealing. The other reads the same storms as a mandate to send scouts out and find the enclaves still alive, and has started volunteering. Both sides cite the same text. Both sides have numbers. The shelter watches its movement divide over the sky.",
       "weight": 0.8,
       "minDay": 25,
       "choices": [
@@ -4274,7 +4274,7 @@
     {
       "id": "event_belief_crisis_of_conviction",
       "title": "The Silent Dial",
-      "bodyText": "After two weeks of devotionally monitoring a repeating radio pattern, the frequency abruptly flattens into endless automated test carrier tone. A devout Listener dweller sits before the radio with trembling hands, questioning months of faith.",
+      "bodyText": "For two weeks the Listener kept the vigil at the radio, and the pattern repeated, and the faith had a frequency. Then the frequency flattened into an automated test tone, endless and indifferent. The Listener sits before the dial with trembling hands, and the hands are not tuning anything anymore, and the room has stopped asking whether the pattern will come back, because the asking is the wound.",
       "weight": 0.9,
       "minDay": 22,
       "choices": [
@@ -4305,7 +4305,7 @@
     {
       "id": "event_belief_charismatic_voice",
       "title": "The Preacher at the Pump",
-      "bodyText": "A survivor with intense presence begins speaking daily near the water treatment filtration bay. Their words draw an attentive crowd across shifts, blending mechanical duty with moral obligation to preserve humanity's soul.",
+      "bodyText": "A survivor has started speaking by the water filtration bay every day, not preaching, talking, at first. The talk is about the pumps and the soul in the same sentence, and the crowd grows every shift change, and the crowd is the part leadership has started counting. The voice has not asked for anything yet. The yet is the part leadership hears.",
       "weight": 1.0,
       "minDay": 28,
       "choices": [
@@ -4336,7 +4336,7 @@
     {
       "id": "event_belief_leadership_collision",
       "title": "The Refusal of the Order",
-      "bodyText": "An emergency order to scrap an old memorial lathe or work through a sacred remembrance day meets coordinated non-violent refusal from movement members. They stand with linked arms before the workshop bulkhead.",
+      "bodyText": "The emergency order has met a wall: movement members refuse to scrap the memorial lathe, or to work through the remembrance day, whichever it is this morning, because the order and the day have collided. They stand with linked arms before the workshop bulkhead, and the arms are not violent, and the order is not either, and the two face each other while the corridor holds its breath on whose side it is.",
       "weight": 0.7,
       "minDay": 35,
       "choices": [
@@ -4367,7 +4367,7 @@
     {
       "id": "event_belief_high_stakes_blindspot",
       "title": "The Signal in the Storm",
-      "bodyText": "During a severe fallout storm, movement adherents claim they received an authentic distress signal from a holy valley site. They demand a dispatch sortie immediately, despite lethal surface rad counts.",
+      "bodyText": "In the middle of the fallout storm, with the rad counts in the red and the shelter sealed, the adherents say they heard a distress signal from the valley, the holy valley, the one the routes avoid, and they demand a sortie now, while the signal holds. The signal log shows the storm and nothing else. The log is being shown to them, and they are hearing the signal anyway.",
       "weight": 0.8,
       "minDay": 40,
       "choices": [
@@ -4398,7 +4398,7 @@
     {
       "id": "event_grief_conflict_exhaustion_overwork",
       "title": "Work as Flight",
-      "bodyText": "Following the death of a close partner, a survivor has worked three consecutive double shifts in the hydroponic trench, refusing sleep and trembling from exhaustion. Shift peers worry they will collapse into the brine tanks.",
+      "bodyText": "Since the partner died, the survivor has worked three double shifts in the hydroponic trench and refuses the bunk, and the hands are trembling now, and the brine tanks are open, and the walking past them is not getting steadier. The shift peers have started timing the passes, quietly, and the timing is the shelter's way of not waiting for the fall.",
       "weight": 1.2,
       "minDay": 8,
       "choices": [
@@ -4429,7 +4429,7 @@
     {
       "id": "event_grief_conflict_bunk_reassignment",
       "title": "The Contested Mattress",
-      "bodyText": "With a newly arrived survivor sleeping on cold hallway concrete, leadership seeks to assign them to a recently deceased dweller's bunk. The deceased's bunk neighbor fiercely blocks the ladder, demanding the twenty-four hour empty-bunk custom be honored.",
+      "bodyText": "The new arrival sleeps on the hallway concrete, and leadership has assigned them the bunk of the dweller who died last week, and the dead one's bunk neighbor stands at the ladder and will not move: there is a custom, twenty-four hours, and the custom is not about the bunk, and everyone in the corridor knows what it is about. The new arrival stands in the hallway with the bag, and the bag is not the problem.",
       "weight": 1.1,
       "minDay": 14,
       "choices": [
@@ -4460,7 +4460,7 @@
     {
       "id": "event_grief_conflict_belongings_dispute",
       "title": "The Dead Man's Boots",
-      "bodyText": "A deceased scout left behind insulated rubber boots in pristine condition. The expedition team demands them for the surface locker; the deceased's closest companion insists they remain in the personal footlocker as a keepsake.",
+      "bodyText": "The fallen scout left boots, insulated rubber, nearly new, and the expedition team wants them for the surface locker, because the boots are what boots are for, and the closest companion wants them kept in the footlocker, because the boots are also the last shape of the person who wore them. Both arguments are true. The boots sit between them, and the boots are not deciding.",
       "weight": 1.0,
       "minDay": 16,
       "choices": [
@@ -4491,7 +4491,7 @@
     {
       "id": "event_grief_conflict_reckless_wish",
       "title": "The Unfinished Promise",
-      "bodyText": "A survivor demands authorization to venture to a hazardous radio tower to complete a fallen comrade's unfulfilled Final Wish. The route is notoriously treacherous.",
+      "bodyText": "A survivor asks for authorization to go to the radio tower on the ridge, the one the routes go around, because a fallen comrade promised to climb it and the promise is still out there, unkept. The route is the kind other routes go around. The one asking knows this. The asking is not about the route.",
       "weight": 0.8,
       "minDay": 20,
       "choices": [

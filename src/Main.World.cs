@@ -190,8 +190,62 @@ namespace AtomicWar.GodotApp
                 _crafting.RestoreSave(save);
             }
 
+            SyncCraftingStationsFromShelter();
+
             _crafting.StateChanged += () => _craftingDirty = true;
             GD.Print("[Ashfall Godot] Crafting host ready.");
+        }
+
+        private void SyncCraftingStationsFromShelter()
+        {
+            if (_crafting == null) return;
+
+            // WT-INT-01: Bridge shelter workshop infrastructure to CraftingSystem "workbench" station.
+            // Authority: shelter room "room_workshop" in _shelterAssignment or machine health in _shelterWorkshop.
+            bool workshopOperational = false;
+            float workbenchCondition = 100f;
+
+            if (_shelterWorkshop != null)
+            {
+                if (_shelterWorkshop.State.machines.TryGetValue("room_workshop", out var machine))
+                {
+                    workbenchCondition = Math.Clamp(machine.ToolingHealth * 100f, 0f, 100f);
+                    workshopOperational = workbenchCondition > 0f;
+                }
+                else
+                {
+                    workshopOperational = true;
+                }
+            }
+            else if (_shelterAssignment?.System?.Rooms != null)
+            {
+                for (int i = 0; i < _shelterAssignment.System.Rooms.Count; i++)
+                {
+                    var r = _shelterAssignment.System.Rooms[i];
+                    if (r != null && string.Equals(r.RoomId, "room_workshop", StringComparison.Ordinal))
+                    {
+                        workshopOperational = true;
+                        break;
+                    }
+                }
+            }
+
+            if (workshopOperational)
+            {
+                _crafting.SyncStations(new[]
+                {
+                    new Ashfall.Core.Crafting.CraftingStation
+                    {
+                        id = "workbench",
+                        displayName = "Civilian Workbench",
+                        condition = workbenchCondition
+                    }
+                });
+            }
+            else
+            {
+                _crafting.RemoveStation("workbench");
+            }
         }
 
         private void SaveCrafting()

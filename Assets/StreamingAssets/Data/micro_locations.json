@@ -5,7 +5,7 @@
     {
       "id": "micro_roadside_memorial",
       "title": "Roadside Memorial",
-      "description": "Melted candle stubs sit inside cut tin cans around a bent road marker. A photograph has been removed, but one corner remains beneath a stone. The wax has pooled and frozen in grey discs.",
+      "description": "Melted tallow stubs sit inside rusted rationing tins around a bent highway marker. A photograph was torn away, leaving only a bloodstained corner pinned beneath a stone. The wax has frozen into pale, grey discs.",
       "category": "Discovery",
       "baseWeight": 0.8,
       "stealthWeightMultiplier": 1.0,
@@ -13,14 +13,27 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "leave_memorial", "text": "Leave it untouched.", "moraleDelta": 1, "guiltDelta": 0 },
-        { "choiceId": "take_offering", "text": "Take the candle stubs and any small offering left behind.", "moraleDelta": -1, "guiltDelta": 2, "grantItemId": "cloth", "grantItemQuantity": 1, "depletesOnResolve": true }
+        {
+          "choiceId": "leave_memorial",
+          "text": "Leave it untouched.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "take_offering",
+          "text": "Take the candle stubs and any small offering left behind.",
+          "moraleDelta": -1,
+          "guiltDelta": 2,
+          "grantItemId": "cloth",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        }
       ]
     },
     {
       "id": "micro_crashed_truck",
       "title": "Crashed Supply Truck",
-      "description": "A logistics vehicle has crushed its cab into the ditch. Torn inventory tags cling to the rear doors. Several crates were removed long before you arrived, but one has split open on the road.",
+      "description": "A military logistics rig lies crushed in the frozen ditch, its windshield shattered outward. Torn radiation warning tags cling to the twisted rear doors. The cargo area was scavenged long ago, but one crate lies split open in the frost.",
       "category": "Discovery",
       "baseWeight": 0.6,
       "stealthWeightMultiplier": 1.0,
@@ -28,15 +41,36 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_truck_cargo", "text": "Search the split crate and cab for salvage.", "moraleDelta": 1, "guiltDelta": 0, "grantItemId": "canned_food", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "search_truck_cab", "text": "Investigate the cab for documents or personal effects.", "moraleDelta": 0, "guiltDelta": 1, "grantItemId": "sealed_government_document", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "ignore_truck", "text": "Move on. Someone already took what was worth taking.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "search_truck_cargo",
+          "text": "Search the split crate and cab for salvage.",
+          "moraleDelta": 1,
+          "guiltDelta": 0,
+          "grantItemId": "canned_food",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "search_truck_cab",
+          "text": "Investigate the cab for documents or personal effects.",
+          "moraleDelta": 0,
+          "guiltDelta": 1,
+          "grantItemId": "sealed_government_document",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "ignore_truck",
+          "text": "Move on. Someone already took what was worth taking.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_frozen_bus",
       "title": "Frozen Evacuation Bus",
-      "description": "The doors are frozen open. Frost films the inside of the windows. A child's shoe lies upright on one seat beneath a luggage rack. The heating vents are clogged with ash.",
+      "description": "The transit doors are frozen wide open, letting the ash-laden wind howl through the cabin. A child's single shoe sits upright beneath a luggage rack. The windows are obscured by thick, greasy frost on the inside.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -44,15 +78,34 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_bus_luggage", "text": "Search the luggage rack for supplies.", "moraleDelta": -2, "guiltDelta": 3, "grantItemId": "bandage", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "leave_bus", "text": "Leave the bus undisturbed.", "moraleDelta": 2, "guiltDelta": 0 },
-        { "choiceId": "read_bus_tag", "text": "Check the transit tag on the dashboard for a destination.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_frozen_bus_transit_tag" }
+        {
+          "choiceId": "search_bus_luggage",
+          "text": "Search the luggage rack for supplies.",
+          "moraleDelta": -2,
+          "guiltDelta": 3,
+          "grantItemId": "bandage",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "leave_bus",
+          "text": "Leave the bus undisturbed.",
+          "moraleDelta": 2,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "read_bus_tag",
+          "text": "Check the transit tag on the dashboard for a destination.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_frozen_bus_transit_tag"
+        }
       ]
     },
     {
       "id": "micro_improvised_grave",
       "title": "Improvised Grave",
-      "description": "A shallow mound has been reinforced with stones. A name is scratched into a broken plank with a date and nothing else. The earth is frozen hard.",
+      "description": "A shallow mound of frozen earth, hastily reinforced with chunks of shattered concrete. A name is violently gouged into a piece of broken siding, along with a date from the first winter of the ashfall.",
       "category": "Discovery",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -60,15 +113,34 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "respect_grave", "text": "Pay respects and move on.", "moraleDelta": 2, "guiltDelta": 0 },
-        { "choiceId": "inspect_grave_marker", "text": "Read the name and date scratched into the plank.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_improvised_grave_marker" },
-        { "choiceId": "disturb_grave", "text": "Check beneath the stones for any buried belongings.", "moraleDelta": -3, "guiltDelta": 4, "grantItemId": "wedding_ring", "grantItemQuantity": 1, "depletesOnResolve": true }
+        {
+          "choiceId": "respect_grave",
+          "text": "Pay respects and move on.",
+          "moraleDelta": 2,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "inspect_grave_marker",
+          "text": "Read the name and date scratched into the plank.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_improvised_grave_marker"
+        },
+        {
+          "choiceId": "disturb_grave",
+          "text": "Check beneath the stones for any buried belongings.",
+          "moraleDelta": -3,
+          "guiltDelta": 4,
+          "grantItemId": "wedding_ring",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        }
       ]
     },
     {
       "id": "micro_collapsed_bridge",
       "title": "Collapsed Bridge",
-      "description": "One span lies in the river at an angle. A vehicle is wedged against the concrete below, only its rear half above the waterline. The current has carved a channel through the debris.",
+      "description": "A colossal span of reinforced concrete leans broken into the black, freezing river. A transport vehicle is wedged violently against the submerged rebar, its rear doors hanging open just above the roaring current.",
       "category": "Hazard",
       "baseWeight": 0.4,
       "stealthWeightMultiplier": 0.8,
@@ -76,15 +148,36 @@
       "minDangerLevel": 2,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_bridge_vehicle", "text": "Climb down to the wedged vehicle and search the cargo area.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "fuel", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "inspect_bridge_structure", "text": "Examine the collapsed span for salvageable steel or cable.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "scrap_metal", "grantItemQuantity": 3, "depletesOnResolve": true },
-        { "choiceId": "avoid_bridge", "text": "Find a way around. The structure looks unstable.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "search_bridge_vehicle",
+          "text": "Climb down to the wedged vehicle and search the cargo area.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "fuel",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "inspect_bridge_structure",
+          "text": "Examine the collapsed span for salvageable steel or cable.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "scrap_metal",
+          "grantItemQuantity": 3,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "avoid_bridge",
+          "text": "Find a way around. The structure looks unstable.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_drainage_pipe",
       "title": "Drainage Pipe",
-      "description": "Blankets have been pushed deep into a concrete culvert. A warning is scratched into the wall where rainwater cannot wash it away. Something has been living here recently.",
+      "description": "Rags and irradiated blankets have been pushed deep into this dark concrete culvert. A desperate warning is gouged into the wall just beyond the reach of the freezing rain. The smell of copper and unwashed bodies lingers.",
       "category": "Discovery",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -92,15 +185,34 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "crawl_pipe", "text": "Crawl inside and check the blankets for supplies.", "moraleDelta": 0, "guiltDelta": 1, "grantItemId": "cloth", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "read_pipe_warning", "text": "Read the warning scratched into the concrete.", "moraleDelta": -1, "guiltDelta": 0, "journalUnlockId": "micro_drainage_pipe_warning" },
-        { "choiceId": "ignore_pipe", "text": "Leave it alone. Someone may come back.", "moraleDelta": 1, "guiltDelta": 0 }
+        {
+          "choiceId": "crawl_pipe",
+          "text": "Crawl inside and check the blankets for supplies.",
+          "moraleDelta": 0,
+          "guiltDelta": 1,
+          "grantItemId": "cloth",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_pipe_warning",
+          "text": "Read the warning scratched into the concrete.",
+          "moraleDelta": -1,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_drainage_pipe_warning"
+        },
+        {
+          "choiceId": "ignore_pipe",
+          "text": "Leave it alone. Someone may come back.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_rail_siding",
       "title": "Rail Siding",
-      "description": "A wheelset has sunk into the ballast. The maintenance ledger is still clipped beside the door of a derailed freight car. The last pages were written in different handwriting.",
+      "description": "Rusted wheelsets have sunk deep into the irradiated ballast. A maintenance ledger hangs from the side of a derailed freight car, the final pages written in frantic, shaky handwriting before ending abruptly.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -108,15 +220,34 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_rail_car", "text": "Search the freight car for industrial salvage.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "mechanical_parts", "grantItemQuantity": 3, "depletesOnResolve": true },
-        { "choiceId": "read_rail_ledger", "text": "Read the maintenance ledger.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_rail_siding_ledger" },
-        { "choiceId": "ignore_rail", "text": "The car has been picked over. Move on.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "search_rail_car",
+          "text": "Search the freight car for industrial salvage.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "mechanical_parts",
+          "grantItemQuantity": 3,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_rail_ledger",
+          "text": "Read the maintenance ledger.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_rail_siding_ledger"
+        },
+        {
+          "choiceId": "ignore_rail",
+          "text": "The car has been picked over. Move on.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_dead_livestock",
       "title": "Dead Livestock Area",
-      "description": "Ear tags glitter among the weeds. The bodies were moved into a rough line before whoever did the work stopped. The smell is long gone, but the contamination lingers.",
+      "description": "Plastic ear tags flutter in the ash-wind among the dead weeds. Massive, bloated bodies of livestock were dragged into a rough trench, but the grave diggers abandoned the work. The Geiger counter stutters nervously here.",
       "category": "Hazard",
       "baseWeight": 0.6,
       "stealthWeightMultiplier": 1.0,
@@ -124,15 +255,35 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "scavenge_livestock", "text": "Scavenge usable material from the remains.", "moraleDelta": -2, "guiltDelta": 1, "grantItemId": "cloth", "grantItemQuantity": 2, "setWorldFlag": "micro_contamination_exposure", "depletesOnResolve": true },
-        { "choiceId": "inspect_livestock_tags", "text": "Inspect the ear tags for farm identification.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_dead_livestock_tags" },
-        { "choiceId": "avoid_livestock", "text": "Keep your distance. The contamination risk is not worth it.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "scavenge_livestock",
+          "text": "Scavenge usable material from the remains.",
+          "moraleDelta": -2,
+          "guiltDelta": 1,
+          "grantItemId": "cloth",
+          "grantItemQuantity": 2,
+          "setWorldFlag": "micro_contamination_exposure",
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "inspect_livestock_tags",
+          "text": "Inspect the ear tags for farm identification.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_dead_livestock_tags"
+        },
+        {
+          "choiceId": "avoid_livestock",
+          "text": "Keep your distance. The contamination risk is not worth it.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_ruined_greenhouse",
       "title": "Ruined Greenhouse",
-      "description": "Most of the panes are gone. Dry seed trays remain labeled beneath the benches. One cabinet is still sealed against moisture. The door has been forced once but not fully opened.",
+      "description": "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed\u2014someone tried to pry it open with a crowbar, but gave up or died trying.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -140,15 +291,36 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "take_greenhouse_seeds", "text": "Take the labeled seed trays.", "moraleDelta": 1, "guiltDelta": 0, "grantItemId": "seed_packets", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "open_greenhouse_cabinet", "text": "Force the sealed cabinet open.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "crop_medicinal_herb", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "leave_greenhouse", "text": "Leave the greenhouse for whoever finds it next.", "moraleDelta": 1, "guiltDelta": 0 }
+        {
+          "choiceId": "take_greenhouse_seeds",
+          "text": "Take the labeled seed trays.",
+          "moraleDelta": 1,
+          "guiltDelta": 0,
+          "grantItemId": "seed_packets",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "open_greenhouse_cabinet",
+          "text": "Force the sealed cabinet open.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "crop_medicinal_herb",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "leave_greenhouse",
+          "text": "Leave the greenhouse for whoever finds it next.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_shell_crater",
       "title": "Shell Crater",
-      "description": "The earth is glassy along one side of the crater. A torn harness and fragments of stamped metal are half-buried in the frozen soil. The ground sounds hollow when you step near the edge.",
+      "description": "The blast fused the earth into dark, jagged glass along one side of the massive crater. A torn military harness and scorched metal fragments are fused into the soil. Stepping near the rim, the ground sounds terrifyingly hollow.",
       "category": "Hazard",
       "baseWeight": 0.4,
       "stealthWeightMultiplier": 0.8,
@@ -156,15 +328,36 @@
       "minDangerLevel": 2,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "inspect_crater", "text": "Carefully inspect the crater edge for salvage.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "scrap_metal", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "salvage_crater_harness", "text": "Dig out the harness and stamped metal fragments.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "mechanical_parts", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "avoid_crater", "text": "The ground is unstable. Walk around.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "inspect_crater",
+          "text": "Carefully inspect the crater edge for salvage.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "scrap_metal",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "salvage_crater_harness",
+          "text": "Dig out the harness and stamped metal fragments.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "mechanical_parts",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "avoid_crater",
+          "text": "The ground is unstable. Walk around.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_field_kitchen",
       "title": "Abandoned Field Kitchen",
-      "description": "A large cooking pot is frozen to the stand. Ladles hang from wire hooks. Ration marks have been scratched into the serving table. The fire pit is cold and clean-swept.",
+      "description": "A massive cast-iron cooking pot is frozen solid to its metal stand. Bent ladles hang from rusted wire hooks. Hundreds of desperate tally marks are gouged into the serving table, tracking rations that eventually ran out.",
       "category": "Discovery",
       "baseWeight": 0.6,
       "stealthWeightMultiplier": 1.0,
@@ -172,15 +365,37 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_kitchen", "text": "Search the kitchen area for preserved food or fuel.", "moraleDelta": 1, "guiltDelta": 0, "grantItemId": "canned_food", "grantItemQuantity": 1, "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "take_kitchen_tools", "text": "Take the ladles and cooking implements.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "soldering_kit", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "read_ration_marks", "text": "Read the ration marks scratched into the table.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_field_kitchen_marks" }
+        {
+          "choiceId": "search_kitchen",
+          "text": "Search the kitchen area for preserved food or fuel.",
+          "moraleDelta": 1,
+          "guiltDelta": 0,
+          "grantItemId": "canned_food",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "take_kitchen_tools",
+          "text": "Take the ladles and cooking implements.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "soldering_kit",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_ration_marks",
+          "text": "Read the ration marks scratched into the table.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_field_kitchen_marks"
+        }
       ]
     },
     {
       "id": "micro_abandoned_generator",
       "title": "Abandoned Generator",
-      "description": "The casing is open and two cables have been cut cleanly. Someone marked the fuel mixture on the frame in grease pencil. The engine block is cold but intact.",
+      "description": "The heavy generator casing is wrenched open, its primary power cables severed with surgical precision. A frantic fuel mixture ratio is scrawled in grease pencil on the frame. The heavy block is dead, but it could be salvaged.",
       "category": "Discovery",
       "baseWeight": 0.4,
       "stealthWeightMultiplier": 1.0,
@@ -188,15 +403,35 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "strip_generator", "text": "Strip the generator for electrical components.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "electronic_scrap", "grantItemQuantity": 3, "depletesOnResolve": true },
-        { "choiceId": "read_generator_notes", "text": "Copy the fuel mixture notes from the frame.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_generator_fuel_notes" },
-        { "choiceId": "mark_generator", "text": "Mark the location for a future salvage team.", "moraleDelta": 1, "guiltDelta": 0, "setWorldFlag": "micro_generator_marked" }
+        {
+          "choiceId": "strip_generator",
+          "text": "Strip the generator for electrical components.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "electronic_scrap",
+          "grantItemQuantity": 3,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_generator_notes",
+          "text": "Copy the fuel mixture notes from the frame.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_generator_fuel_notes"
+        },
+        {
+          "choiceId": "mark_generator",
+          "text": "Mark the location for a future salvage team.",
+          "moraleDelta": 1,
+          "guiltDelta": 0,
+          "setWorldFlag": "micro_generator_marked"
+        }
       ]
     },
     {
       "id": "micro_shrine",
       "title": "Roadside Shrine",
-      "description": "Candles have burned down inside a rusted food tin. Small offerings sit beneath a strip of cloth tied to the guardrail. The cloth is faded but carefully knotted.",
+      "description": "Tallow candles have burned down to stubs inside a rusted ration tin. Desperate little offerings\u2014screws, shiny pebbles, a bullet\u2014sit beneath a faded cloth carefully knotted around the twisted guardrail.",
       "category": "Social",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -204,15 +439,35 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "leave_shrine", "text": "Leave the shrine undisturbed.", "moraleDelta": 2, "guiltDelta": 0 },
-        { "choiceId": "take_shrine_offerings", "text": "Take the small offerings left beneath the cloth.", "moraleDelta": -2, "guiltDelta": 3, "grantItemId": "jewelry", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "add_shrine_offering", "text": "Leave a small offering of your own.", "moraleDelta": 3, "guiltDelta": 0, "grantItemId": "canned_food", "grantItemQuantity": -1 }
+        {
+          "choiceId": "leave_shrine",
+          "text": "Leave the shrine undisturbed.",
+          "moraleDelta": 2,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "take_shrine_offerings",
+          "text": "Take the small offerings left beneath the cloth.",
+          "moraleDelta": -2,
+          "guiltDelta": 3,
+          "grantItemId": "jewelry",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "add_shrine_offering",
+          "text": "Leave a small offering of your own.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "grantItemId": "canned_food",
+          "grantItemQuantity": -1
+        }
       ]
     },
     {
       "id": "micro_emergency_cache",
       "title": "Emergency Cache",
-      "description": "The weather seal has cracked but the stencil is still readable. Someone tried the lock with a pry bar and gave up. The stencil reads CIVIL DEFENSE — EMERGENCY RATION CACHE.",
+      "description": "The rubber weather seal has cracked in the bitter cold, but the faded stencil is undeniable. Deep gouges show where someone tried to pry the heavy lock before abandoning it. It reads: CIVIL DEFENSE \u2014 EMERGENCY RATION CACHE.",
       "category": "Discovery",
       "baseWeight": 0.2,
       "stealthWeightMultiplier": 1.0,
@@ -220,14 +475,27 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "open_cache", "text": "Force the cracked seal and open the cache.", "moraleDelta": 2, "guiltDelta": 0, "grantItemId": "medical_kit", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "leave_cache", "text": "Leave the cache sealed. Someone may need it more.", "moraleDelta": 1, "guiltDelta": 0 }
+        {
+          "choiceId": "open_cache",
+          "text": "Force the cracked seal and open the cache.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "grantItemId": "medical_kit",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "leave_cache",
+          "text": "Leave the cache sealed. Someone may need it more.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_observation_post",
       "title": "Military Observation Post",
-      "description": "The optics mount still points toward the crossing. Grid references are written on the inside wall beside dates that stop abruptly. A spent cartridge sits on the windowsill.",
+      "description": "A heavy optics mount still points silently toward the desolate crossing below. Frantic grid references and kill-counts are scrawled on the concrete wall, stopping abruptly mid-sentence. A single spent sniper cartridge sits on the frozen windowsill.",
       "category": "Discovery",
       "baseWeight": 0.3,
       "stealthWeightMultiplier": 1.0,
@@ -235,15 +503,35 @@
       "minDangerLevel": 2,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_observation_post", "text": "Search the post for optics or intelligence documents.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "dosimeter", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "read_grid_references", "text": "Copy the grid references and dates from the wall.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_observation_post_grid", "discoverLocationId": "rural_gas_station" },
-        { "choiceId": "ignore_observation_post", "text": "The post has been stripped. Move on.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "search_observation_post",
+          "text": "Search the post for optics or intelligence documents.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "dosimeter",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_grid_references",
+          "text": "Copy the grid references and dates from the wall.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_observation_post_grid",
+          "discoverLocationId": "rural_gas_station"
+        },
+        {
+          "choiceId": "ignore_observation_post",
+          "text": "The post has been stripped. Move on.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_abandoned_barricade",
       "title": "Abandoned Barricade",
-      "description": "Traffic arrows were repainted twice in different colors. A body lies behind the barrier beside a box that was opened from the road-facing side. The sandbags have frozen solid.",
+      "description": "Traffic arrows were repainted twice in different faction colors, marking shifting territories. A mummified corpse lies slumped behind the barrier, clutching a rusted lockbox. The sandbags have frozen into a solid, bullet-pocked wall.",
       "category": "Discovery",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -251,15 +539,34 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_barricade", "text": "Search the barricade for supplies left behind.", "moraleDelta": 0, "guiltDelta": 1, "grantItemId": "bandage", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "read_barricade_markings", "text": "Examine the faction markings on the barricade.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_barricade_markings" },
-        { "choiceId": "avoid_barricade", "text": "Circle around. The body suggests this was not a safe place.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "search_barricade",
+          "text": "Search the barricade for supplies left behind.",
+          "moraleDelta": 0,
+          "guiltDelta": 1,
+          "grantItemId": "bandage",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_barricade_markings",
+          "text": "Examine the faction markings on the barricade.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_barricade_markings"
+        },
+        {
+          "choiceId": "avoid_barricade",
+          "text": "Circle around. The body suggests this was not a safe place.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_hunting_blind",
       "title": "Hunting Blind",
-      "description": "The blind has collapsed on one side. A thermos, empty cartridge box, and a journal wrapped in cloth remain under the bench. The journal is damp but legible.",
+      "description": "Half of the camouflage blind has collapsed under the weight of radioactive ash. An empty thermos, scattered brass casings, and a cloth-wrapped journal lie abandoned under the bench. The damp pages chronicle a hunt that went terribly wrong.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -267,15 +574,34 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_blind", "text": "Search the blind for hunting supplies.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "dried_rations", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "read_blind_journal", "text": "Read the damp journal.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_hunting_blind_journal" },
-        { "choiceId": "leave_blind", "text": "Leave the blind as you found it.", "moraleDelta": 1, "guiltDelta": 0 }
+        {
+          "choiceId": "search_blind",
+          "text": "Search the blind for hunting supplies.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "dried_rations",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_blind_journal",
+          "text": "Read the damp journal.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_hunting_blind_journal"
+        },
+        {
+          "choiceId": "leave_blind",
+          "text": "Leave the blind as you found it.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_radio_tower",
       "title": "Damaged Radio Tower",
-      "description": "The mast has folded halfway down the hill. One feed line is intact and disappears into a locked cabinet at the base. The cabinet has been pried but not opened.",
+      "description": "The towering mast has buckled, its twisted steel groaning in the wind. A single intact feed line snakes into a heavy, locked utility cabinet at the base. The metal door is scarred with deep claw marks.",
       "category": "Discovery",
       "baseWeight": 0.3,
       "stealthWeightMultiplier": 1.0,
@@ -283,15 +609,34 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "open_radio_cabinet", "text": "Force the cabinet open and salvage the components.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "antenna_coil", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "read_radio_log", "text": "Check the cabinet for a frequency log or maintenance record.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_radio_tower_log" },
-        { "choiceId": "ignore_radio", "text": "The tower is beyond repair. Move on.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "open_radio_cabinet",
+          "text": "Force the cabinet open and salvage the components.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "antenna_coil",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_radio_log",
+          "text": "Check the cabinet for a frequency log or maintenance record.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_radio_tower_log"
+        },
+        {
+          "choiceId": "ignore_radio",
+          "text": "The tower is beyond repair. Move on.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_destroyed_checkpoint",
       "title": "Destroyed Checkpoint",
-      "description": "Concrete barriers are blackened on the shelter-facing side. A logbook is pinned beneath a fallen chair where rain has not reached it. The checkpoint identity plate is missing.",
+      "description": "Heavy concrete barriers are scorched black on the side facing the bunker, suggesting whatever attacked came from within. A blood-spattered logbook is pinned beneath a collapsed steel chair. The faction identity plate has been violently torn away.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -299,15 +644,34 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_checkpoint", "text": "Search the checkpoint for confiscated goods or supplies.", "moraleDelta": 0, "guiltDelta": 1, "grantItemId": "canned_food", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "read_checkpoint_log", "text": "Read the logbook beneath the chair.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_checkpoint_log" },
-        { "choiceId": "avoid_checkpoint", "text": "The destruction suggests heavy fighting. Keep moving.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "search_checkpoint",
+          "text": "Search the checkpoint for confiscated goods or supplies.",
+          "moraleDelta": 0,
+          "guiltDelta": 1,
+          "grantItemId": "canned_food",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_checkpoint_log",
+          "text": "Read the logbook beneath the chair.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_checkpoint_log"
+        },
+        {
+          "choiceId": "avoid_checkpoint",
+          "text": "The destruction suggests heavy fighting. Keep moving.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_abandoned_tent",
       "title": "Abandoned Tent",
-      "description": "The tent fabric has collapsed under snow. Inside, cups are nested together beside a folded child's drawing kept dry inside a plastic sleeve. The zipper is frozen shut.",
+      "description": "The military-grade fabric has collapsed under the weight of grey snow. Inside, nested tin cups sit beside a child's crayon drawing, meticulously preserved in a plastic sleeve. The tent's zipper is frozen shut from the inside.",
       "category": "Social",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -315,15 +679,36 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_tent", "text": "Cut open the tent and search for supplies.", "moraleDelta": -1, "guiltDelta": 2, "grantItemId": "cloth", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "take_drawing", "text": "Take the child's drawing from the plastic sleeve.", "moraleDelta": -1, "guiltDelta": 1, "grantItemId": "childs_drawing", "grantItemQuantity": 1, "depletesOnResolve": true },
-        { "choiceId": "leave_tent", "text": "Leave the tent undisturbed.", "moraleDelta": 2, "guiltDelta": 0 }
+        {
+          "choiceId": "search_tent",
+          "text": "Cut open the tent and search for supplies.",
+          "moraleDelta": -1,
+          "guiltDelta": 2,
+          "grantItemId": "cloth",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "take_drawing",
+          "text": "Take the child's drawing from the plastic sleeve.",
+          "moraleDelta": -1,
+          "guiltDelta": 1,
+          "grantItemId": "childs_drawing",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "leave_tent",
+          "text": "Leave the tent undisturbed.",
+          "moraleDelta": 2,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_makeshift_clinic",
       "title": "Makeshift Clinic",
-      "description": "Triage numbers are written on strips of cardboard. Empty saline bags hang from a cable. The medicine cabinet has been searched unevenly — some shelves are bare, others untouched.",
+      "description": "Desperate triage categories are scrawled in blood on torn cardboard strips. Empty, frozen saline bags hang from a rusted IV cable. The medicine cabinet was ransacked in a panic\u2014leaving some shelves completely bare while ignoring others entirely.",
       "category": "Discovery",
       "baseWeight": 0.4,
       "stealthWeightMultiplier": 1.0,
@@ -331,15 +716,34 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "search_clinic", "text": "Search the untouched shelves for medical supplies.", "moraleDelta": 1, "guiltDelta": 0, "grantItemId": "bandage", "grantItemQuantity": 3, "depletesOnResolve": true },
-        { "choiceId": "read_triage_list", "text": "Read the triage numbers on the cardboard strips.", "moraleDelta": -1, "guiltDelta": 0, "journalUnlockId": "micro_clinic_triage" },
-        { "choiceId": "leave_clinic", "text": "Leave the clinic intact. Others may need it.", "moraleDelta": 1, "guiltDelta": 0 }
+        {
+          "choiceId": "search_clinic",
+          "text": "Search the untouched shelves for medical supplies.",
+          "moraleDelta": 1,
+          "guiltDelta": 0,
+          "grantItemId": "bandage",
+          "grantItemQuantity": 3,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_triage_list",
+          "text": "Read the triage numbers on the cardboard strips.",
+          "moraleDelta": -1,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_clinic_triage"
+        },
+        {
+          "choiceId": "leave_clinic",
+          "text": "Leave the clinic intact. Others may need it.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_crashed_drone",
       "title": "Crashed Drone",
-      "description": "One wing is embedded in hard soil. The casing has been opened once, but the flight-control compartment is still sealed. Battery acid has stained the ground beneath it.",
+      "description": "One shattered wing is driven deep into the frozen earth. The outer casing was ripped open by scavengers, but the armored flight-control compartment remains sealed. Corrosive battery acid has burned a dark, hissing stain into the soil.",
       "category": "Discovery",
       "baseWeight": 0.2,
       "stealthWeightMultiplier": 1.0,
@@ -347,15 +751,34 @@
       "minDangerLevel": 2,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "open_drone_compartment", "text": "Force open the flight-control compartment.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "electronic_scrap", "grantItemQuantity": 4, "depletesOnResolve": true },
-        { "choiceId": "read_drone_log", "text": "Attempt to extract the flight log from the sealed compartment.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_drone_flight_log" },
-        { "choiceId": "avoid_drone", "text": "The battery acid suggests chemical risk. Leave it.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "open_drone_compartment",
+          "text": "Force open the flight-control compartment.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "electronic_scrap",
+          "grantItemQuantity": 4,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_drone_log",
+          "text": "Attempt to extract the flight log from the sealed compartment.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_drone_flight_log"
+        },
+        {
+          "choiceId": "avoid_drone",
+          "text": "The battery acid suggests chemical risk. Leave it.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_fuel_cache",
       "title": "Fuel Cache",
-      "description": "Two containers are buried beneath a sheet of corrugated metal. A route sketch has been scratched into one lid with a nail. The containers are heavy and sealed.",
+      "description": "Two military drums are half-buried beneath a rusted sheet of corrugated metal. A desperate route map to a safe zone has been scratched into one lid with a nail. The drums are heavy, their tamper-seals unbroken.",
       "category": "Discovery",
       "baseWeight": 0.2,
       "stealthWeightMultiplier": 1.0,
@@ -363,15 +786,34 @@
       "minDangerLevel": 1,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "take_fuel_cache", "text": "Dig up the containers and take the fuel.", "moraleDelta": 2, "guiltDelta": 0, "grantItemId": "fuel", "grantItemQuantity": 4, "depletesOnResolve": true },
-        { "choiceId": "read_route_sketch", "text": "Copy the route sketch from the lid.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_fuel_cache_route" },
-        { "choiceId": "leave_fuel_cache", "text": "Leave the cache hidden. You may need it later.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "take_fuel_cache",
+          "text": "Dig up the containers and take the fuel.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "grantItemId": "fuel",
+          "grantItemQuantity": 4,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_route_sketch",
+          "text": "Copy the route sketch from the lid.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_fuel_cache_route"
+        },
+        {
+          "choiceId": "leave_fuel_cache",
+          "text": "Leave the cache hidden. You may need it later.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_water_source",
       "title": "Water Source",
-      "description": "A metal cup is tied to a hand pump with wire. Mineral staining marks the basin. Someone has written a date beside the word for 'safe' in charcoal. The pump handle moves freely.",
+      "description": "A dented tin cup is bound to the rusted hand pump with frayed wire. Heavy, unnatural mineral staining marks the concrete basin. Someone wrote 'SAFE' in charcoal, alongside a date from five years ago. The pump handle still groans when moved.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -379,15 +821,36 @@
       "minDangerLevel": 0,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "collect_water", "text": "Pump and collect water from the source.", "moraleDelta": 2, "guiltDelta": 0, "grantItemId": "clean_water", "grantItemQuantity": 3, "depletesOnResolve": true },
-        { "choiceId": "test_water", "text": "Test the water quality before collecting.", "moraleDelta": 0, "guiltDelta": 0, "grantItemId": "clean_water", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "avoid_water", "text": "The mineral staining is suspicious. Move on.", "moraleDelta": 0, "guiltDelta": 0 }
+        {
+          "choiceId": "collect_water",
+          "text": "Pump and collect water from the source.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "grantItemId": "clean_water",
+          "grantItemQuantity": 3,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "test_water",
+          "text": "Test the water quality before collecting.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "grantItemId": "clean_water",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "avoid_water",
+          "text": "The mineral staining is suspicious. Move on.",
+          "moraleDelta": 0,
+          "guiltDelta": 0
+        }
       ]
     },
     {
       "id": "micro_supply_drop",
       "title": "Supply Drop",
-      "description": "The parachute is tangled in dead trees. The crate markings identify a destination several kilometres from where it actually landed. The crate is intact but the seal is broken.",
+      "description": "The faded military parachute is hopelessly tangled in the black, petrified branches of dead trees. The stenciled coordinates indicate it drifted miles off course. The reinforced crate is intact, but the heavy locking seal has been severed.",
       "category": "Discovery",
       "baseWeight": 0.1,
       "stealthWeightMultiplier": 1.0,
@@ -395,9 +858,29 @@
       "minDangerLevel": 2,
       "requiredLocationId": "",
       "choices": [
-        { "choiceId": "open_supply_drop", "text": "Open the crate and take what is inside.", "moraleDelta": 3, "guiltDelta": 0, "grantItemId": "medical_kit", "grantItemQuantity": 2, "depletesOnResolve": true },
-        { "choiceId": "read_supply_label", "text": "Read the shipping label for destination and origin information.", "moraleDelta": 0, "guiltDelta": 0, "journalUnlockId": "micro_supply_drop_label", "discoverLocationId": "government_bunker" },
-        { "choiceId": "leave_supply_drop", "text": "Leave the crate. It was meant for someone else.", "moraleDelta": 2, "guiltDelta": 0 }
+        {
+          "choiceId": "open_supply_drop",
+          "text": "Open the crate and take what is inside.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "grantItemId": "medical_kit",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        },
+        {
+          "choiceId": "read_supply_label",
+          "text": "Read the shipping label for destination and origin information.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "journalUnlockId": "micro_supply_drop_label",
+          "discoverLocationId": "government_bunker"
+        },
+        {
+          "choiceId": "leave_supply_drop",
+          "text": "Leave the crate. It was meant for someone else.",
+          "moraleDelta": 2,
+          "guiltDelta": 0
+        }
       ]
     }
   ]

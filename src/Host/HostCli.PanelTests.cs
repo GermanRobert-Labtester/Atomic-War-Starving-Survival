@@ -3071,7 +3071,7 @@ namespace AtomicWar.GodotApp
                 // ── 5. Crafting System Verification (14 assertions) ──
                 GD.Print("[ShelterOperationsSelfTest] §5 Crafting system...");
                 var craftInv = new Ashfall.Core.Inventory.Inventory();
-                var craftSession = new CraftingHostSession(craftInv);
+                var craftSession = new CraftingHostSession(craftInv, seedDefaultWorkbench: true);
 
 
                 // 5.1 Recipe catalog loads
@@ -3137,7 +3137,7 @@ namespace AtomicWar.GodotApp
 
                 // 5.12 Restore preserves HoursRemaining
                 var craftInv2 = new Ashfall.Core.Inventory.Inventory();
-                var craftSession2 = new CraftingHostSession(craftInv2);
+                var craftSession2 = new CraftingHostSession(craftInv2, seedDefaultWorkbench: true);
                 craftSession2.RestoreSave(craftSave);
                 Check(craftSession2.Engine.ActiveCraftCount == 1, "restored crafting queue has 1 entry");
                 Check(craftSession2.Engine.ActiveCrafts[0].HoursRemaining > 0f,
@@ -3233,7 +3233,7 @@ namespace AtomicWar.GodotApp
                 // ── 7. Integration: craft → advance → affliction → treat → persist (3 assertions) ──
                 GD.Print("[ShelterOperationsSelfTest] §7 Integration loop...");
                 var intInv = new Ashfall.Core.Inventory.Inventory();
-                var intCrafting = new CraftingHostSession(intInv);
+                var intCrafting = new CraftingHostSession(intInv, seedDefaultWorkbench: true);
                 var intMechDef = CraftingHostSession.Catalog.Get("scrap_mechanical");
                 if (intMechDef != null)
                 {
@@ -3266,7 +3266,7 @@ namespace AtomicWar.GodotApp
 
                 // Crafting queue survives save/restore under ContinueGame pattern
                 var intInv2 = new Ashfall.Core.Inventory.Inventory();
-                var intCraft2 = new CraftingHostSession(intInv2);
+                var intCraft2 = new CraftingHostSession(intInv2, seedDefaultWorkbench: true);
                 var intMechDef2 = CraftingHostSession.Catalog.Get("scrap_mechanical");
                 if (intMechDef2 != null)
                 {
@@ -3274,7 +3274,7 @@ namespace AtomicWar.GodotApp
                     intCraft2.Start("recipe_bandage");
                     var craftSave2 = intCraft2.CaptureSave();
                     var intInv3 = new Ashfall.Core.Inventory.Inventory();
-                    var intCraft3 = new CraftingHostSession(intInv3);
+                    var intCraft3 = new CraftingHostSession(intInv3, seedDefaultWorkbench: true);
                     intCraft3.RestoreSave(craftSave2);
                     Check(intCraft3.Engine.ActiveCraftCount == 1,
                         "integration: crafting queue preserved through ContinueGame restore path");

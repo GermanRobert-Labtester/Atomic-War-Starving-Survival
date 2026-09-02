@@ -433,6 +433,17 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "ACHIEVEMENTS", "achievements");
             AddNavButton(content, "HELP", "help");
 
+            content.AddChild(AshfallUiHelpers.MakeSeparator());
+            content.AddChild(AshfallUiHelpers.MakeSectionHeader("EXPANSION SURFACES"));
+            AddNavButton(content, "POLITICS", "politics");
+            AddNavButton(content, "PRISONERS", "prisoners");
+            AddNavButton(content, "FORCED LABOR", "forced_labor");
+            AddNavButton(content, "NARCOTICS LAB", "narcotics");
+            AddNavButton(content, "MUTATIONS", "mutation_tree");
+            AddNavButton(content, "NURSERY", "nursery");
+            AddNavButton(content, "AVIATION", "aviation");
+            AddNavButton(content, "STEALTH OPS", "stealth");
+
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());
 

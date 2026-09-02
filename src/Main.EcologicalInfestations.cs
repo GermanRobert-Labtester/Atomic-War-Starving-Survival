@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
-using Ashfall.Core.Campaign;
 using Ashfall.Core.Disease;
 using Ashfall.Core.Ecology;
 using Ashfall.Core.Random;
@@ -131,9 +130,6 @@ namespace AtomicWar.GodotApp
                 default:
                     return true;
             }
-
-            SeasonWindowDef? seasonWindow(int day) =>
-                WildlifeSeasonalCalendar.SeasonWindowForDay(_world.Profile, day);
         }
 
         private SeasonWindowDef? seasonWindow(int day) =>

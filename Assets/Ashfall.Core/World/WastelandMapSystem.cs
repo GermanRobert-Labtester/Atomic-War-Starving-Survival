@@ -341,6 +341,15 @@ namespace Ashfall.Core.World
         /// <summary>Weather hazard factor along the route.</summary>
         public float WeatherHazard;
 
+        /// <summary>Travel domain: "land" or "water" (river, canal, lake).</summary>
+        public string TravelDomain = "land";
+
+        /// <summary>Water current strength (-1.0 upstream penalty to +1.0 downstream bonus).</summary>
+        public float CurrentStrength = 0f;
+
+        /// <summary>Toxic chemical/fallout contamination in water (0.0 clean to 1.0 deadly).</summary>
+        public float ToxicContamination = 0f;
+
         /// <summary>Initializes a new empty instance of <see cref="MapRoute"/>.</summary>
         public MapRoute() { }
     }

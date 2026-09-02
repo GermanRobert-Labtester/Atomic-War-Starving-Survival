@@ -76,6 +76,11 @@ namespace Ashfall.Core
         public static readonly string[] IdPrefixes =
         {
             "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_", "settlement_", "territory_", "table_loot_", "scavenge_",
+            "chem_agent_", "comms_target_", "ceremony_", "robot_",
+            "vessel_", "hobby_", "degrade_profile_", "thermal_gear_",
+            "fallout_pattern_", "desperation_", "bounty_template_", "lore_archive_",
+            "procedure_", "rail_node_", "rail_segment_", "car_", "strain_", "substrate_", "law_",
+            "development_trait_", "interrogation_", "camo_",
             "disease_", "event_", "recipe_", "relic_", "lore_", "room_", "stage_", "choice_",
             "mutation_", "flag_", "trait_", "anchor_", "season_", "kind_", "clinic_",
             "morph_", "drug_", "co_", "enc_", "narrative_", "dialogue_event_",
@@ -145,7 +150,9 @@ namespace Ashfall.Core
             // Plan 36 — Wildlife Trapping Catalog
             "trap_",
             // Plan 40 — Ledger Debt Templates
-            "debt_", "conseq_"
+            "debt_", "conseq_",
+            // Plans 182-185 — Aviation, Forced Labor, Narcotics, Settlement Politics
+            "aircraft_", "camp_", "chem_", "policy_"
         };
 
         /// <summary>
@@ -180,7 +187,17 @@ namespace Ashfall.Core
             // Plan 28
             "migration_id", "infestation_id", "species_id",
             // Plan 36
-            "trap_id"
+            "trap_id",
+            // Plans 194-197
+            "profile_id", "vessel_id", "hobby_id",
+            // Plans 186-189
+            "pattern_id", "template_id", "archive_id", "desperation_id",
+            // Plans 190-193
+            "segment_id", "node_id", "car_type_id", "strain_id", "substrate_id", "law_id",
+            // Plans 178-181
+            "trait_id", "tactic_id", "mutation_id", "camo_id",
+            // Plans 182-185
+            "aircraft_id", "camp_id", "chem_id", "policy_id"
         };
 
         /// <summary>
@@ -210,7 +227,9 @@ namespace Ashfall.Core
             "creditorId", "principalItemId", "consequenceId", "escalationId",
             "targetFactionId", "collateralItemId",
             // Plan 46 — Scavenging Tables
-            "scavenging_table_id"
+            "scavenging_table_id",
+            // Plans 178-181
+            "parent_mutation_ids", "exclusive_mutation_ids"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -225,7 +244,7 @@ namespace Ashfall.Core
         public static readonly string[] VocabularyKeys =
         {
             "tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
-            "stance", "short_name", "identity", "sink", "notes", "display_name",
+            "stance", "short_name", "identity", "sink", "notes", "display_name", "exclusive_group",
             "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",

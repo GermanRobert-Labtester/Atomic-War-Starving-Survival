@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "robots": [
+    {
+      "id": "robot_security_sentry_v1",
+      "display_name": "Aegis-IV Autonomous Sentry",
+      "role": "security",
+      "armor_rating": 0.45,
+      "max_chassis_integrity": 1000,
+      "max_core_charge_wh": 6000,
+      "labor_drain_w": 350,
+      "charging_rate_w": 750,
+      "emp_disable_hours": 24,
+      "reactivation_materials": [
+        { "item_id": "scrap_electronic", "quantity": 8 },
+        { "item_id": "scrap_metal", "quantity": 12 },
+        { "item_id": "fuel_cell", "quantity": 2 }
+      ],
+      "compatible_tasks": [
+        "guard",
+        "patrol",
+        "expedition_defense"
+      ],
+      "description": "A shuddering bipedal enforcer, its rusted ballistic deflectors pockmarked by shrapnel. The cranial optical array glows a sickly, dim red, scanning the dark with a whir of stripped gears and pre-war killing logic."
+    },
+    {
+      "id": "robot_heavy_loader_mark4",
+      "display_name": "Titan-VII Hydraulic Cargo Loader",
+      "role": "hauling",
+      "armor_rating": 0.30,
+      "max_chassis_integrity": 1000,
+      "max_core_charge_wh": 8000,
+      "labor_drain_w": 500,
+      "charging_rate_w": 1000,
+      "emp_disable_hours": 18,
+      "reactivation_materials": [
+        { "item_id": "scrap_metal", "quantity": 16 },
+        { "item_id": "scrap_mechanical", "quantity": 10 },
+        { "item_id": "fuel_cell", "quantity": 2 }
+      ],
+      "compatible_tasks": [
+        "haul",
+        "excavation_support",
+        "heavy_fabrication"
+      ],
+      "description": "Its treads grind against the concrete like crushed bone. Originally built to haul subterranean freight, this towering hydraulic rig now leaks corrosive black fluid, shivering with suppressed kinetic violence."
+    },
+    {
+      "id": "robot_utility_maintenance_drone",
+      "display_name": "Fixer-M Maintenance & Scrub Drone",
+      "role": "maintenance",
+      "armor_rating": 0.15,
+      "max_chassis_integrity": 1000,
+      "max_core_charge_wh": 4000,
+      "labor_drain_w": 200,
+      "charging_rate_w": 400,
+      "emp_disable_hours": 12,
+      "reactivation_materials": [
+        { "item_id": "scrap_electronic", "quantity": 6 },
+        { "item_id": "scrap_mechanical", "quantity": 6 },
+        { "item_id": "fuel_cell", "quantity": 1 }
+      ],
+      "compatible_tasks": [
+        "repair",
+        "chemical_cleanup",
+        "ventilation_scrub"
+      ],
+      "description": "A twitchy, insectoid utility drone. Its hazard sniffers hiss continuously, sampling the irradiated air, while the arc welder at the end of its dented manipulator arm sparks erratically, searching for damage to cauterize."
+    },
+    {
+      "id": "robot_field_scout_unit",
+      "display_name": "Pathfinder Vanguard Rover",
+      "role": "scouting",
+      "armor_rating": 0.20,
+      "max_chassis_integrity": 1000,
+      "max_core_charge_wh": 5000,
+      "labor_drain_w": 250,
+      "charging_rate_w": 500,
+      "emp_disable_hours": 30,
+      "reactivation_materials": [
+        { "item_id": "scrap_electronic", "quantity": 10 },
+        { "item_id": "electronic_scrap", "quantity": 4 },
+        { "item_id": "fuel_cell", "quantity": 1 }
+      ],
+      "compatible_tasks": [
+        "scout",
+        "wasteland_survey",
+        "signal_triangulation"
+      ],
+      "description": "Its quad-tracks whine in the silence of the wastes. Coated in gray ash and cesium dust, its dosimeters tick frantically, broadcasting telemetry back to a command center that burned to glass decades ago."
+    },
+    {
+      "id": "robot_medical_assistant_bot",
+      "display_name": "MediTend Clinical Orderly",
+      "role": "medical",
+      "armor_rating": 0.10,
+      "max_chassis_integrity": 1000,
+      "max_core_charge_wh": 4500,
+      "labor_drain_w": 220,
+      "charging_rate_w": 450,
+      "emp_disable_hours": 16,
+      "reactivation_materials": [
+        { "item_id": "scrap_electronic", "quantity": 8 },
+        { "item_id": "medical_kit", "quantity": 2 },
+        { "item_id": "fuel_cell", "quantity": 1 }
+      ],
+      "compatible_tasks": [
+        "triage",
+        "sanitation_decon",
+        "medical_nursing"
+      ],
+      "description": "Once sterile white, the chassis is now stained with dried brown fluids. Its synthesized voice cheerfully assures you the trauma is 'manageable' while cold, precision servos calculate the exact dosage of narcotics needed to subdue."
+    }
+  ]
+}

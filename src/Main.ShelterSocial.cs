@@ -204,6 +204,24 @@ namespace AtomicWar.GodotApp
                 if (!string.IsNullOrEmpty(sector))
                     _world.Wildlife.ApplyHarvestPressure(sector, caught);
             };
+
+            // WT-INT-01: wire first-catch species discovery to Journal and Codex
+            wtrapSys.OnNewSpeciesDiscovered += (speciesId, siteId, hunterId) =>
+            {
+                if (_journal == null) SetupJournal();
+                if (_journal == null) return;
+
+                string knowledgeKey = Ashfall.Core.Journal.KnowledgeKeys.WildlifeSpeciesCaught(speciesId);
+
+                _journal.Knowledge.Discover(knowledgeKey);
+                _journal.UnlockWildlifeCaught(speciesId);
+                _journal.TryAddRawEntry(
+                    knowledgeKey,
+                    $"Captured first specimen of species '{speciesId}' at trap site {siteId} (hunter: {hunterId}).",
+                    null!,
+                    _simDay);
+            };
+
             if (_wildlifeTrappingPanel != null && _wildlifeTrappingPanel.IsInsideTree())
                 RemoveChild(_wildlifeTrappingPanel);
             _wildlifeTrappingPanel = new WildlifeTrappingPanel();

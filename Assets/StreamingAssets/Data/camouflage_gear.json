@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "gear": [
+    {
+      "camo_id": "camo_ash_cloak",
+      "display_name": "Ash-Washed Cowl",
+      "item_id": "camo_ash_cloak",
+      "camo_rating": 0.40,
+      "terrain_tags": ["wasteland", "ruins", "ash_dunes"],
+      "weather_tags": ["ash_storm", "fog", "overcast"],
+      "night_modifier": 0.15,
+      "movement_penalty": 0.05,
+      "durability_cost": 1.0,
+      "noise_modifier": -0.10,
+      "slot": "Chest"
+    },
+    {
+      "camo_id": "camo_ghillie_shroud",
+      "display_name": "Swamp Foliage Ghillie",
+      "item_id": "camo_ghillie_shroud",
+      "camo_rating": 0.75,
+      "terrain_tags": ["swamp", "marsh", "overgrown_forest"],
+      "weather_tags": ["rain", "fog"],
+      "night_modifier": 0.10,
+      "movement_penalty": 0.15,
+      "durability_cost": 2.0,
+      "noise_modifier": 0.05,
+      "slot": "Chest"
+    },
+    {
+      "camo_id": "camo_night_stalker_suit",
+      "display_name": "Rubberized Night Suit",
+      "item_id": "camo_night_stalker_suit",
+      "camo_rating": 0.60,
+      "terrain_tags": ["ruins", "underground", "industrial"],
+      "weather_tags": ["night", "overcast"],
+      "night_modifier": 0.35,
+      "movement_penalty": 0.08,
+      "durability_cost": 1.5,
+      "noise_modifier": -0.25,
+      "slot": "Body"
+    },
+    {
+      "camo_id": "camo_suppressor_kit",
+      "display_name": "Improvised Weapon Baffle",
+      "item_id": "weapon_suppressor_improvised",
+      "camo_rating": 0.10,
+      "terrain_tags": [],
+      "weather_tags": [],
+      "night_modifier": 0.0,
+      "movement_penalty": 0.0,
+      "durability_cost": 3.0,
+      "noise_modifier": -0.65,
+      "slot": "WeaponAttachment"
+    }
+  ]
+}

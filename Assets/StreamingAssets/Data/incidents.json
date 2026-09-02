@@ -4,35 +4,35 @@
         {
             "id": "incident_radiation_spike",
             "title": "Radiation Spike",
-            "bodyText": "Radiation spike — Sector 4 elevated (1.2 mSv/hr)",
+            "bodyText": "The dosimeters scream to life in Sector 4. A toxic cloud of irradiated ash has drifted over the ventilation intakes, spiking levels to a dangerous 1.2 mSv/hr. The air tastes faintly of metal.",
             "weight": 1.0,
             "minDay": 20
         },
         {
             "id": "incident_bunker_breach",
             "title": "Bunker Breach Attempt",
-            "bodyText": "Bunker breach attempt — repelled by perimeter guard",
+            "bodyText": "Sparks shower from the primary airlock as unknown assailants attempt to torch through the outer seal. Perimeter guards drive them off with concentrated rifle fire, leaving behind only melted slag and a smear of blood.",
             "weight": 1.0,
             "minDay": 18
         },
         {
             "id": "incident_water_contamination",
             "title": "Water Contamination",
-            "bodyText": "Water contamination — filtration system damaged",
+            "bodyText": "The reservoir alarms blare a sickening two-tone klaxon. Corrosive silt has breached the primary purifiers, turning our drinking water a rusty, oily brown.",
             "weight": 1.0,
             "minDay": 15
         },
         {
             "id": "incident_ambush_sector_4",
             "title": "Ambush in Sector 4",
-            "bodyText": "Ambush in Sector 4 — 1 casualty, supplies lost",
+            "bodyText": "A routine salvage run in Sector 4 collapses into chaos. Ghost-faced raiders dropped from the ruined overpass, claiming one life and stripping our cargo before the dust even settled.",
             "weight": 1.0,
             "minDay": 12
         },
         {
             "id": "incident_radio_interference",
             "title": "Radio Interference",
-            "bodyText": "Radio interference — unknown signal detected",
+            "bodyText": "The comms array bursts with ear-splitting static. Just beneath the white noise, a cold, synthesized voice recites an unbroken sequence of numbers on a ghostly loop.",
             "weight": 1.0,
             "minDay": 8
         }

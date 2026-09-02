@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "strains": [
+    {
+      "strain_id": "strain_phosphor_bracket",
+      "display_name": "Corpse-Glow Bracket Fungus",
+      "category": "Bioluminescent",
+      "growth_days": 4,
+      "moisture_min": 0.40,
+      "moisture_max": 0.85,
+      "darkness_required": true,
+      "toxicity": 0.05,
+      "spore_hazard": 0.10,
+      "light_output": 18.0,
+      "yield_item_id": "fungus_spores_bioluminescent",
+      "yield_count": 4
+    },
+    {
+      "strain_id": "strain_grey_mycelium",
+      "display_name": "Ash-Weep Mycelium",
+      "category": "Edible",
+      "growth_days": 3,
+      "moisture_min": 0.50,
+      "moisture_max": 0.90,
+      "darkness_required": true,
+      "toxicity": 0.0,
+      "spore_hazard": 0.15,
+      "light_output": 0.0,
+      "yield_item_id": "harvested_mushrooms_subterranean",
+      "yield_count": 6
+    },
+    {
+      "strain_id": "strain_cordyceps_mutant",
+      "display_name": "Glass-Root Cordyceps",
+      "category": "Medicinal",
+      "growth_days": 6,
+      "moisture_min": 0.60,
+      "moisture_max": 0.95,
+      "darkness_required": true,
+      "toxicity": 0.20,
+      "spore_hazard": 0.35,
+      "light_output": 4.0,
+      "yield_item_id": "fungus_spores_medicinal",
+      "yield_count": 2
+    },
+    {
+      "strain_id": "strain_black_rot_mold",
+      "display_name": "Choke-Spores Black Mold",
+      "category": "Toxic",
+      "growth_days": 2,
+      "moisture_min": 0.70,
+      "moisture_max": 1.0,
+      "darkness_required": false,
+      "toxicity": 0.85,
+      "spore_hazard": 0.75,
+      "light_output": 0.0,
+      "yield_item_id": "fungus_spores_common",
+      "yield_count": 8
+    }
+  ],
+  "substrates": [
+    {
+      "substrate_id": "substrate_organic_compost",
+      "display_name": "Blood-Meal Enriched Compost",
+      "nutrition_multiplier": 1.25,
+      "moisture_retention": 0.80,
+      "contamination_risk": 0.15
+    },
+    {
+      "substrate_id": "substrate_wood_pulp",
+      "display_name": "Rot-Wood & Ash Slurry",
+      "nutrition_multiplier": 1.0,
+      "moisture_retention": 0.65,
+      "contamination_risk": 0.05
+    },
+    {
+      "substrate_id": "substrate_sterile_agar",
+      "display_name": "Synthesized Pre-War Agar Matrix",
+      "nutrition_multiplier": 1.60,
+      "moisture_retention": 0.90,
+      "contamination_risk": 0.01
+    }
+  ]
+}

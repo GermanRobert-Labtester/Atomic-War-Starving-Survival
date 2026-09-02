@@ -129,6 +129,27 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 69 | `radio_station` | Radio & Communications | `ShelterRadioStationSystem` | `radio_intercepts.json` | `Main.RadioStation` | `RadioStationSaveStore` | `RadioStationPanel` | `ShelterRadioStationTests`, `Plans46_49_CrossSystemIntegrationTests` | ✅ 6/6 |
 | 70 | `shelter_social_dynamics` | Shelter Operations | `ShelterSocialDynamicsSystem` | `shelter_social_events.json` | `Main.ShelterSocialDynamics` | `ShelterSocialSaveStore` | `SurvivorRelationsPanel` | `ShelterSocialDynamicsTests`, `Plans46_49_CrossSystemIntegrationTests` | ✅ 6/6 |
 | 71 | `excavation_hazards` | Shelter Operations | `ExcavationHazardSystem` | `excavation_hazard_mitigation.json` | `Main.ExcavationHazards` | `ExcavationHazardSaveStore` | `ExcavationPanel` | `ExcavationHazardSystemTests`, `Plans46_49_CrossSystemIntegrationTests` | ✅ 6/6 |
+| 72 | `chem_warfare` | Combat & Warfare | `ChemWarfareSystem` | `chemical_weapons.json` | `Main.Plans198_201` | `ChemWarfareSaveStore` | `CombatPanel` | `ChemWarfareSystemTests`, `Plans198_201_LateGameSystemsIntegrationTests` | ✅ 6/6 |
+| 73 | `comms_array` | World & Telemetry | `CommsArraySystem` | `comms_targets.json` | `Main.Plans198_201` | `CommsArraySaveStore` | `RadioStationPanel` | `CommsArraySystemTests`, `Plans198_201_LateGameSystemsIntegrationTests` | ✅ 6/6 |
+| 74 | `ceremony` | Campaign & Lore | `CeremonySystem` | `ceremonies.json` | `Main.Plans198_201` | `CeremonySaveStore` | `EventsLogPanel` | `CeremonySystemTests`, `Plans198_201_LateGameSystemsIntegrationTests` | ✅ 6/6 |
+| 75 | `robotics` | Shelter Operations | `RoboticsSystem` | `robotics.json` | `Main.Plans198_201` | `RoboticsSaveStore` | `WorkshopPanel` | `RoboticsSystemTests`, `Plans198_201_LateGameSystemsIntegrationTests` | ✅ 6/6 |
+| 76 | `recreation` | Shelter Operations | `SurvivorDowntimeSystem` | `recreation.json` | `Main.Plans194_197` | `RecreationSaveStore` | `ShelterPanel` | `SurvivorDowntimeSystemTests` | ✅ 6/6 |
+| 77 | `fallout` | World & Environment | `FalloutSystem` | `fallout_patterns.json` | `Main.Plans186_189` | `FalloutSaveStore` | `FalloutRadarUI` | `FalloutSystemTests`, `Plans186_189_CrossSystemIntegrationTests` | ✅ 6/6 |
+| 78 | `desperation` | Survival & Needs | `DesperationSystem` | `desperation_events.json` | `Main.Plans186_189` | `DesperationSaveStore` | `DesperationChoiceModal` | `DesperationSystemTests`, `Plans186_189_CrossSystemIntegrationTests` | ✅ 6/6 |
+| 79 | `mercenary_bounties` | Economy & Factions | `MercenarySystem` | `bounty_board.json` | `Main.Plans186_189` | `MercenarySaveStore` | `BountyBoardPanel` | `MercenarySystemTests`, `Plans186_189_CrossSystemIntegrationTests` | ✅ 6/6 |
+| 80 | `archaeology` | Knowledge & Research | `ArchaeologySystem` | `lore_archives.json` | `Main.Plans186_189` | `ArchaeologySaveStore` | `LoreArchivePanel` | `ArchaeologySystemTests`, `Plans186_189_CrossSystemIntegrationTests` | ✅ 6/6 |
+| 81 | `amputation` | Medical & Health | `AmputationSystem` | `surgical_procedures.json` | `Main.Plans190_193` | `AmputationSaveStore` | `InfirmaryPanel` | `AmputationSystemTests`, `Plans190_193_CampaignContinuityTests` | ✅ 6/6 |
+| 82 | `railway` | Expeditions & Logistics | `RailwaySystem` | `rail_network.json` | `Main.Plans190_193` | `RailwaySaveStore` | `ExpeditionPanel` | `RailwaySystemTests`, `Plans190_193_CampaignContinuityTests` | ✅ 6/6 |
+| 83 | `fungi_cultivation` | Shelter Operations | `FungiCultivationSystem` | `underground_flora.json` | `Main.Plans190_193` | `FungiSaveStore` | `GreenhousePanel` | `FungiCultivationSystemTests`, `Plans190_193_CampaignContinuityTests` | ✅ 6/6 |
+| 84 | `wasteland_justice` | Narrative & Law | `JusticeSystem` | `wasteland_laws.json` | `Main.Plans190_193` | `JusticeSaveStore` | `TribunalModal` | `JusticeSystemTests`, `Plans190_193_CampaignContinuityTests` | ✅ 6/6 |
+| 85 | `child_development` | Survivors & Growth | `GenerationalSystem` | `development_traits.json` | `Main.Plans178_181` | `GenerationalSaveStore` | `NurseryPanel` | `GenerationalSystemTests`, `Plans178_181_CampaignContinuityTests` | ✅ 6/6 |
+| 86 | `prisoner_management` | Factions & Security | `PrisonerSystem` | `interrogation_tactics.json` | `Main.Plans178_181` | `PrisonerSaveStore` | `PrisonerPanel` | `PrisonerSystemTests`, `Plans178_181_CampaignContinuityTests` | ✅ 6/6 |
+| 87 | `mutation_tree` | Medical & Genetics | `MutationSystem` | `mutations.json` | `Main.Plans178_181` | `MutationSaveStore` | `MutationTreePanel` | `MutationSystemTests`, `Plans178_181_CampaignContinuityTests` | ✅ 6/6 |
+| 88 | `expedition_stealth` | Combat & Expeditions | `StealthSystem` | `camouflage_gear.json` | `Main.Plans178_181` | `StealthSaveStore` | `StealthReadoutPanel` | `StealthSystemTests`, `Plans178_181_CampaignContinuityTests` | ✅ 6/6 |
+| 89 | `aviation` | Expeditions & Recon | `AviationSystem` | `aircraft_parts.json` | `Main.Plans182_185` | `AviationSaveStore` | `AviationUI` | `AviationSystemTests`, `Plans182_185_CampaignContinuityTests` | ✅ 6/6 |
+| 90 | `forced_labor` | Factions & Security | `ForcedLaborSystem` | `labor_camps.json` | `Main.Plans182_185` | `ForcedLaborSaveStore` | `LaborUI` | `ForcedLaborSystemTests`, `Plans182_185_CampaignContinuityTests` | ✅ 6/6 |
+| 91 | `narcotics` | Medical & Health | `NarcoticsSystem` | `narcotics.json` | `Main.Plans182_185` | `NarcoticsSaveStore` | `ChemUI` | `NarcoticsSystemTests`, `Plans182_185_CampaignContinuityTests` | ✅ 6/6 |
+| 92 | `settlement_politics` | Narrative & Politics | `PoliticsSystem` | `political_policies.json` | `Main.Plans182_185` | `PoliticsSaveStore` | `PoliticsUI` | `PoliticsSystemTests`, `Plans182_185_CampaignContinuityTests` | ✅ 6/6 |
 
 ---
 
@@ -933,23 +954,218 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/EcologicalInfestationSaveStore.cs`](../../src/Host/EcologicalInfestationSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs`](../../Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs)
 
+### 76. `recreation` — Survivor downtime, hobbies, skill progression & recreation sessions (Shelter Operations)
+- **Owner Domain:** `shelter`
+- **Setup Method:** `Main.SetupRecreation()` | **Cadence:** `Daily Recreation & Hobby Tick`
+- **UI Routes:** `shelter`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Recreation/SurvivorDowntimeSystem.cs`](../../Assets/Ashfall.Core/Recreation/SurvivorDowntimeSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/recreation.json`](../../Assets/StreamingAssets/Data/recreation.json)
+  - Host Session: [`src/Main.Plans194_197.cs`](../../src/Main.Plans194_197.cs)
+  - Save Store: [`src/Host/RecreationSaveStore.cs`](../../src/Host/RecreationSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Recreation/SurvivorDowntimeSystemTests.cs`](../../Ashfall.Core.Tests/Recreation/SurvivorDowntimeSystemTests.cs)
+
+### 77. `fallout` — Radioactive fallout clouds, dispersal, and shelter sealing (World & Environment)
+- **Owner Domain:** `world`
+- **Setup Method:** `Main.SetupFallout()` | **Cadence:** `Hourly Wind & Plume Drift`
+- **UI Routes:** `world`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/World/FalloutSystem.cs`](../../Assets/Ashfall.Core/World/FalloutSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/fallout_patterns.json`](../../Assets/StreamingAssets/Data/fallout_patterns.json)
+  - Host Session: [`src/Main.Plans186_189.cs`](../../src/Main.Plans186_189.cs)
+  - Save Store: [`src/Host/FalloutSaveStore.cs`](../../src/Host/FalloutSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/World/FalloutSystemTests.cs`](../../Ashfall.Core.Tests/World/FalloutSystemTests.cs)
+
+### 78. `desperation` — Starvation crisis desperation acts and cannibalism history (Survival & Needs)
+- **Owner Domain:** `survival`
+- **Setup Method:** `Main.SetupDesperation()` | **Cadence:** `On-Demand (Starvation Crisis)`
+- **UI Routes:** `survival`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Survivors/DesperationSystem.cs`](../../Assets/Ashfall.Core/Survivors/DesperationSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/desperation_events.json`](../../Assets/StreamingAssets/Data/desperation_events.json)
+  - Host Session: [`src/Main.Plans186_189.cs`](../../src/Main.Plans186_189.cs)
+  - Save Store: [`src/Host/DesperationSaveStore.cs`](../../src/Host/DesperationSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Survivors/DesperationSystemTests.cs`](../../Ashfall.Core.Tests/Survivors/DesperationSystemTests.cs)
+
+### 79. `mercenary_bounties` — Mercenary bounty contracts, target intel, and rival tracking (Economy & Factions)
+- **Owner Domain:** `economy`
+- **Setup Method:** `Main.SetupMercenary()` | **Cadence:** `Daily Bounty Board & Rival Progress`
+- **UI Routes:** `economy`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Economy/MercenarySystem.cs`](../../Assets/Ashfall.Core/Economy/MercenarySystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/bounty_board.json`](../../Assets/StreamingAssets/Data/bounty_board.json)
+  - Host Session: [`src/Main.Plans186_189.cs`](../../src/Main.Plans186_189.cs)
+  - Save Store: [`src/Host/MercenarySaveStore.cs`](../../src/Host/MercenarySaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Economy/MercenarySystemTests.cs`](../../Ashfall.Core.Tests/Economy/MercenarySystemTests.cs)
+
+### 80. `archaeology` — Archaeology excavation ruins, archive decryption, and lore unlocks (Knowledge & Research)
+- **Owner Domain:** `knowledge`
+- **Setup Method:** `Main.SetupArchaeology()` | **Cadence:** `Daily Decryption Work Shift`
+- **UI Routes:** `knowledge`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Archaeology/ArchaeologySystem.cs`](../../Assets/Ashfall.Core/Archaeology/ArchaeologySystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/lore_archives.json`](../../Assets/StreamingAssets/Data/lore_archives.json)
+  - Host Session: [`src/Main.Plans186_189.cs`](../../src/Main.Plans186_189.cs)
+  - Save Store: [`src/Host/ArchaeologySaveStore.cs`](../../src/Host/ArchaeologySaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Archaeology/ArchaeologySystemTests.cs`](../../Ashfall.Core.Tests/Archaeology/ArchaeologySystemTests.cs)
+
+### 81. `amputation` — Infection progression, amputations, prosthetics and bionics (Medical & Health)
+- **Owner Domain:** `medical`
+- **Setup Method:** `Main.SetupAmputation()` | **Cadence:** `Daily Infection & Healing`
+- **UI Routes:** `medical`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Medical/AmputationSystem.cs`](../../Assets/Ashfall.Core/Medical/AmputationSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/surgical_procedures.json`](../../Assets/StreamingAssets/Data/surgical_procedures.json)
+  - Host Session: [`src/Main.Plans190_193.cs`](../../src/Main.Plans190_193.cs)
+  - Save Store: [`src/Host/AmputationSaveStore.cs`](../../src/Host/AmputationSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Medical/AmputationSystemTests.cs`](../../Ashfall.Core.Tests/Medical/AmputationSystemTests.cs)
+
+### 82. `railway` — Rail network, track repair, and armored train operations (Expeditions & Logistics)
+- **Owner Domain:** `expedition`
+- **Setup Method:** `Main.SetupRailway()` | **Cadence:** `Daily Track Wear & Sortie`
+- **UI Routes:** `expedition`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Expeditions/RailwaySystem.cs`](../../Assets/Ashfall.Core/Expeditions/RailwaySystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/rail_network.json`](../../Assets/StreamingAssets/Data/rail_network.json)
+  - Host Session: [`src/Main.Plans190_193.cs`](../../src/Main.Plans190_193.cs)
+  - Save Store: [`src/Host/RailwaySaveStore.cs`](../../src/Host/RailwaySaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Expeditions/RailwaySystemTests.cs`](../../Ashfall.Core.Tests/Expeditions/RailwaySystemTests.cs)
+
+### 83. `fungi_cultivation` — Subterranean fungi beds, substrate, spores, and blooms (Shelter Operations)
+- **Owner Domain:** `farming`
+- **Setup Method:** `Main.SetupFungi()` | **Cadence:** `Daily Spore & Mycelium Growth`
+- **UI Routes:** `farming`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Farming/FungiCultivationSystem.cs`](../../Assets/Ashfall.Core/Farming/FungiCultivationSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/underground_flora.json`](../../Assets/StreamingAssets/Data/underground_flora.json)
+  - Host Session: [`src/Main.Plans190_193.cs`](../../src/Main.Plans190_193.cs)
+  - Save Store: [`src/Host/FungiSaveStore.cs`](../../src/Host/FungiSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Farming/FungiCultivationSystemTests.cs`](../../Ashfall.Core.Tests/Farming/FungiCultivationSystemTests.cs)
+
+### 84. `wasteland_justice` — Crime incidents, trials, punishments, banishments, and grudges (Narrative & Law)
+- **Owner Domain:** `narrative`
+- **Setup Method:** `Main.SetupJustice()` | **Cadence:** `Daily Crime & Vigilante Pressure`
+- **UI Routes:** `narrative`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Narrative/JusticeSystem.cs`](../../Assets/Ashfall.Core/Narrative/JusticeSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/wasteland_laws.json`](../../Assets/StreamingAssets/Data/wasteland_laws.json)
+  - Host Session: [`src/Main.Plans190_193.cs`](../../src/Main.Plans190_193.cs)
+  - Save Store: [`src/Host/JusticeSaveStore.cs`](../../src/Host/JusticeSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Narrative/JusticeSystemTests.cs`](../../Ashfall.Core.Tests/Narrative/JusticeSystemTests.cs)
+
+### 85. `child_development` — Child development phases, education, trauma, and adulthood (Survivors & Growth)
+- **Owner Domain:** `survivors`
+- **Setup Method:** `Main.SetupGenerational()` | **Cadence:** `Daily Child Growth & Schoolhouse Tick`
+- **UI Routes:** `nursery`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Survivors/GenerationalSystem.cs`](../../Assets/Ashfall.Core/Survivors/GenerationalSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/development_traits.json`](../../Assets/StreamingAssets/Data/development_traits.json)
+  - Host Session: [`src/Main.Plans178_181.cs`](../../src/Main.Plans178_181.cs)
+  - Save Store: [`src/Host/GenerationalSaveStore.cs`](../../src/Host/GenerationalSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Survivors/GenerationalSystemTests.cs`](../../Ashfall.Core.Tests/Survivors/GenerationalSystemTests.cs)
+
+### 86. `prisoner_management` — Captive detention, upkeep, interrogation, escape, and recruitment (Factions & Security)
+- **Owner Domain:** `factions`
+- **Setup Method:** `Main.SetupPrisoners()` | **Cadence:** `Daily Detention Upkeep & Escape Pressure`
+- **UI Routes:** `prisoners`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Factions/PrisonerSystem.cs`](../../Assets/Ashfall.Core/Factions/PrisonerSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/interrogation_tactics.json`](../../Assets/StreamingAssets/Data/interrogation_tactics.json)
+  - Host Session: [`src/Main.Plans178_181.cs`](../../src/Main.Plans178_181.cs)
+  - Save Store: [`src/Host/PrisonerSaveStore.cs`](../../src/Host/PrisonerSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Factions/PrisonerSystemTests.cs`](../../Ashfall.Core.Tests/Factions/PrisonerSystemTests.cs)
+
+### 87. `mutation_tree` — Radiation exposure, genetic instability, and mutation trees (Medical & Genetics)
+- **Owner Domain:** `medical`
+- **Setup Method:** `Main.SetupMutations()` | **Cadence:** `On-Demand / Daily Radiation Assessment`
+- **UI Routes:** `mutations`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Medical/MutationSystem.cs`](../../Assets/Ashfall.Core/Medical/MutationSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/mutations.json`](../../Assets/StreamingAssets/Data/mutations.json)
+  - Host Session: [`src/Main.Plans178_181.cs`](../../src/Main.Plans178_181.cs)
+  - Save Store: [`src/Host/MutationSaveStore.cs`](../../src/Host/MutationSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Medical/MutationSystemTests.cs`](../../Ashfall.Core.Tests/Medical/MutationSystemTests.cs)
+
+### 88. `expedition_stealth` — Expedition stealth, detection risk, camouflage, and night ops (Combat & Expeditions)
+- **Owner Domain:** `combat`
+- **Setup Method:** `Main.SetupStealth()` | **Cadence:** `On-Demand Encounter Bypass & Sortie Stealth`
+- **UI Routes:** `expeditions`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Combat/StealthSystem.cs`](../../Assets/Ashfall.Core/Combat/StealthSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/camouflage_gear.json`](../../Assets/StreamingAssets/Data/camouflage_gear.json)
+  - Host Session: [`src/Main.Plans178_181.cs`](../../src/Main.Plans178_181.cs)
+  - Save Store: [`src/Host/StealthSaveStore.cs`](../../src/Host/StealthSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Combat/StealthSystemTests.cs`](../../Ashfall.Core.Tests/Combat/StealthSystemTests.cs)
+
+### 89. `aviation` — Aviation airframes, flight plans, aerial mapping, and crash rescue (Expeditions & Recon)
+- **Owner Domain:** `expedition`
+- **Setup Method:** `Main.SetupAviation()` | **Cadence:** `Daily Flight Progress & Weather Hazard Assessment`
+- **UI Routes:** `expeditions`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Expeditions/AviationSystem.cs`](../../Assets/Ashfall.Core/Expeditions/AviationSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/aircraft_parts.json`](../../Assets/StreamingAssets/Data/aircraft_parts.json)
+  - Host Session: [`src/Main.Plans182_185.cs`](../../src/Main.Plans182_185.cs)
+  - Save Store: [`src/Host/AviationSaveStore.cs`](../../src/Host/AviationSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Expeditions/AviationSystemTests.cs`](../../Ashfall.Core.Tests/Expeditions/AviationSystemTests.cs)
+
+### 90. `forced_labor` — Captive forced labor assignments, cruelty index, and rebellion risks (Factions & Security)
+- **Owner Domain:** `factions`
+- **Setup Method:** `Main.SetupForcedLabor()` | **Cadence:** `Daily Labor Shift, Fatigue & Revolt Assessment`
+- **UI Routes:** `factions`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Factions/ForcedLaborSystem.cs`](../../Assets/Ashfall.Core/Factions/ForcedLaborSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/labor_camps.json`](../../Assets/StreamingAssets/Data/labor_camps.json)
+  - Host Session: [`src/Main.Plans182_185.cs`](../../src/Main.Plans182_185.cs)
+  - Save Store: [`src/Host/ForcedLaborSaveStore.cs`](../../src/Host/ForcedLaborSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Factions/ForcedLaborSystemTests.cs`](../../Ashfall.Core.Tests/Factions/ForcedLaborSystemTests.cs)
+
+### 91. `narcotics` — Chemical medicines, toxicity, tolerance, addiction, and rehab beds (Medical & Health)
+- **Owner Domain:** `medical`
+- **Setup Method:** `Main.SetupNarcotics()` | **Cadence:** `Daily Metabolic Clearance & Withdrawal Tick`
+- **UI Routes:** `medical`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Medical/NarcoticsSystem.cs`](../../Assets/Ashfall.Core/Medical/NarcoticsSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/narcotics.json`](../../Assets/StreamingAssets/Data/narcotics.json)
+  - Host Session: [`src/Main.Plans182_185.cs`](../../src/Main.Plans182_185.cs)
+  - Save Store: [`src/Host/NarcoticsSaveStore.cs`](../../src/Host/NarcoticsSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Medical/NarcoticsSystemTests.cs`](../../Ashfall.Core.Tests/Medical/NarcoticsSystemTests.cs)
+
+### 92. `settlement_politics` — Settlement elections, political policies, approval rating, and coups (Narrative & Politics)
+- **Owner Domain:** `narrative`
+- **Setup Method:** `Main.SetupPolitics()` | **Cadence:** `Daily Approval Drift & Election Countdown`
+- **UI Routes:** `narrative`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Narrative/PoliticsSystem.cs`](../../Assets/Ashfall.Core/Narrative/PoliticsSystem.cs)
+  - Data Authority: [`Assets/StreamingAssets/Data/political_policies.json`](../../Assets/StreamingAssets/Data/political_policies.json)
+  - Host Session: [`src/Main.Plans182_185.cs`](../../src/Main.Plans182_185.cs)
+  - Save Store: [`src/Host/PoliticsSaveStore.cs`](../../src/Host/PoliticsSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Narrative/PoliticsSystemTests.cs`](../../Ashfall.Core.Tests/Narrative/PoliticsSystemTests.cs)
+
 ## 4. Lifecycle Status & Reachability Proof Matrix
 
 | Section Key | Implemented | Constructed | Ticked / Cadence | Persisted | Player-Routed | Tested | E2E Status |
 |---|:---:|:---:|---|:---:|:---:|:---:|:---:|
 | `airlock_security` | ✅ | ✅ | ✅ `Daily Decon Interlock` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `amputation` | ✅ | ✅ | ✅ `Daily Infection & Healing` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `apprenticeship` | ✅ | ✅ | ✅ `Daily Mentorship XP Transfer` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `archaeology` | ✅ | ✅ | ✅ `Daily Decryption Work Shift` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `archive_desk` | ✅ | ✅ | ✅ `Daily Scribing & Folio Archival` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `autopsy` | ✅ | ✅ | ✅ `Daily Forensic Case Progress` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `aviation` | ✅ | ✅ | ✅ `Daily Flight Progress & Weather Hazard Assessment` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `campaign_day` | ✅ | ✅ | ✅ `Master Sim Clock / Dawn Advance` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `caravan` | ✅ | ✅ | ✅ `Daily Route Travel` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `caregiving` | ✅ | ✅ | ✅ `Daily Nursery/Eldercare Comfort` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `ceremony` | ✅ | ✅ | ✅ `Daily Preparation & Festival Logistics` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `chem_warfare` | ✅ | ✅ | ✅ `Daily Combat Hazard Decay & Weather Scrubbing` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `comms_array` | ✅ | ✅ | ✅ `Daily Frequency Scan & Satellite Window Passes` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `chemical_dependency` | ✅ | ✅ | ✅ `Daily Tolerance & Withdrawal` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `child_development` | ✅ | ✅ | ✅ `Daily Child Growth & Schoolhouse Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `combat` | ✅ | ✅ | ⚡ `On-Demand (Turn-Based)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `contractor_roster` | ✅ | ✅ | ✅ `Daily Mercenary Wage Payroll` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `crafting` | ✅ | ✅ | ✅ `Daily Workbench Queue` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `daily_briefing` | ✅ | ✅ | ✅ `Daily Dawn Briefing Aggregation` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `decontamination` | ✅ | ✅ | ✅ `Daily Rad Scrub Shower Cycle` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `desperation` | ✅ | ✅ | ⚡ `On-Demand (Starvation Crisis)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `disease` | ✅ | ✅ | ✅ `Daily Pathogen Transmission` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `dose_ledger` | ✅ | ✅ | ⚡ `On-Demand (Dose Log)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `duty_roster` | ✅ | ✅ | ✅ `Daily Shift Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -960,6 +1176,10 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `expansion_hub` | ✅ | ✅ | ✅ `Daily Hub Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `expansion_quest` | ✅ | ✅ | ⚡ `On-Demand (Stage Milestone)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `expedition` | ✅ | ✅ | ✅ `Daily Sortie Travel` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `expedition_stealth` | ✅ | ✅ | ⚡ `On-Demand Encounter Bypass & Sortie Stealth` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `fallout` | ✅ | ✅ | ✅ `Hourly Wind & Plume Drift` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `forced_labor` | ✅ | ✅ | ✅ `Daily Labor Shift, Fatigue & Revolt Assessment` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `fungi_cultivation` | ✅ | ✅ | ✅ `Daily Spore & Mycelium Growth` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `greenhouse` | ✅ | ✅ | ✅ `Daily Hydroponic Growth` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `holdfast` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `holdfast_trade` | ✅ | ✅ | ⚡ `On-Demand (Barter)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -972,20 +1192,28 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `medical` | ✅ | ✅ | ✅ `Daily Recovery / Affliction` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `medical_pipeline` | ✅ | ✅ | ✅ `Daily Scheduled Procedure Resolution` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `medical_ward` | ✅ | ✅ | ✅ `Daily Bed Inpatient Triage` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `mercenary_bounties` | ✅ | ✅ | ✅ `Daily Bounty Board & Rival Progress` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `memorial` | ✅ | ✅ | ⚡ `On-Demand (Survivor Fallen Eulogy)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `mental_health_crisis` | ✅ | ✅ | ✅ `Daily Psych Ward Calming Ticks` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `moral_choice` | ✅ | ✅ | ⚡ `On-Demand (Branch Choice)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `muster` | ✅ | ✅ | ⚡ `On-Demand (Rally Stance)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `mutation_tree` | ✅ | ✅ | ⚡ `On-Demand / Daily Radiation Assessment` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `narcotics` | ✅ | ✅ | ✅ `Daily Metabolic Clearance & Withdrawal Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `narrative` | ✅ | ✅ | ⚡ `On-Demand (Dialog Choice)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `onboarding` | ✅ | ❌ | ⚡ `On-Demand (Player Sigil Recording)` | ✅ | ✅ | ✅ | **FAIL (GAP)** |
 | `phantom_memory` | ✅ | ✅ | ⚡ `On-Demand (Scavenge Echo)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `phase0` | ✅ | ✅ | ⚡ `On-Demand (Pre-War Flashback)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `power_grid` | ✅ | ✅ | ✅ `Daily Fuel Consumption & Wattage` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `prisoner_management` | ✅ | ✅ | ✅ `Daily Detention Upkeep & Escape Pressure` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `radio` | ✅ | ✅ | ⚡ `On-Demand (Frequency Scan)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `railway` | ✅ | ✅ | ✅ `Daily Track Wear & Sortie` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `recreation` | ✅ | ✅ | ✅ `Daily Recreation & Hobby Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `robotics` | ✅ | ✅ | ✅ `Daily Automaton Labor Shift & Recharging` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `regional_treaty` | ✅ | ✅ | ✅ `Daily Non-Aggression Decay` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_assignment` | ✅ | ✅ | ⚡ `On-Demand (Bunk Reassignment)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_schedule` | ✅ | ✅ | ✅ `Daily Curfew Rotation` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_thermal` | ✅ | ✅ | ✅ `Daily HVAC Frost Dissipation` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `settlement_politics` | ✅ | ✅ | ✅ `Daily Approval Drift & Election Countdown` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `silent_foundry` | ✅ | ✅ | ✅ `Daily Smelter Cycle` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `starting_level` | ✅ | ✅ | ⚡ `On-Demand (Opening Protocol)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `sump_flooding` | ✅ | ✅ | ✅ `Daily Drainage Pump Work` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -997,6 +1225,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `verdict` | ✅ | ✅ | ✅ `Daily Machine Log Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `vinyl_morale` | ✅ | ✅ | ✅ `Daily Turntable Morale Broadcast` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `wasteland_map` | ✅ | ✅ | ⚡ `On-Demand (Fog-of-War Discovery)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `wasteland_justice` | ✅ | ✅ | ✅ `Daily Crime & Vigilante Pressure` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `water_treatment` | ✅ | ✅ | ✅ `Daily Filtration Cycle` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `waystation` | ✅ | ✅ | ✅ `Daily Outpost Relay Barter` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `weight_of_choices` | ✅ | ✅ | ⚡ `On-Demand (Branch Decisions)` | ✅ | ✅ | ✅ | **PASS (6/6)** |

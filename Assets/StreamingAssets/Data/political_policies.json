@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "policies": [
+    {
+      "policy_id": "policy_emergency_rationing",
+      "name": "Mandatory Caloric Rationing",
+      "description": "Reduces daily intake to a gruel of algae paste and irradiated condensation. It ensures the shelter outlasts a siege, though the agonizing hunger breeds quiet resentment in the lower decks.",
+      "category": "Economic",
+      "is_emergency": false,
+      "enactment_cost_influence": 15,
+      "legitimacy_impact": -4.0,
+      "repeal_cooldown_days": 7,
+      "supporter_tags": [
+        "pragmatist",
+        "quartermaster"
+      ],
+      "opponent_tags": [
+        "hedonist",
+        "laborer"
+      ],
+      "tags": [
+        "rationing",
+        "survival",
+        "austere"
+      ]
+    },
+    {
+      "policy_id": "policy_open_gate_refugees",
+      "name": "Sanctuary Open-Gate Protocol",
+      "description": "Unseals the blast doors to the desperate throngs outside. It floods our corridors with cheap, willing hands, but brings the terrifying threat of surface contagions and strained life-support filters.",
+      "category": "Civil",
+      "is_emergency": false,
+      "enactment_cost_influence": 20,
+      "legitimacy_impact": 8.0,
+      "repeal_cooldown_days": 14,
+      "supporter_tags": [
+        "humanitarian",
+        "idealist"
+      ],
+      "opponent_tags": [
+        "nativist",
+        "sentinel"
+      ],
+      "tags": [
+        "immigration",
+        "humanitarian",
+        "population"
+      ]
+    },
+    {
+      "policy_id": "policy_forced_labor_mandate",
+      "name": "Penal Labor & Coercion Mandate",
+      "description": "Condemns prisoners and captured hostiles to the deep geothermal vents and irradiated slag heaps. A brutal, necessary evil that spares our citizens from the lethal radiation down below.",
+      "category": "Labor",
+      "is_emergency": false,
+      "enactment_cost_influence": 25,
+      "legitimacy_impact": -12.0,
+      "repeal_cooldown_days": 21,
+      "supporter_tags": [
+        "authoritarian",
+        "militarist"
+      ],
+      "opponent_tags": [
+        "humanitarian",
+        "moralist"
+      ],
+      "tags": [
+        "coercive",
+        "production",
+        "cruelty"
+      ]
+    },
+    {
+      "policy_id": "policy_chem_prohibition",
+      "name": "Narcotics Control & Prohibition",
+      "description": "Criminalizes the possession of neuro-stims and synthetic opiate analogues. It aims to sober a terrified populace, driving the lucrative black market deeper into the bunker's shadows and filling the brig with addicts.",
+      "category": "Health",
+      "is_emergency": false,
+      "enactment_cost_influence": 20,
+      "legitimacy_impact": 2.0,
+      "repeal_cooldown_days": 14,
+      "supporter_tags": [
+        "purist",
+        "physician"
+      ],
+      "opponent_tags": [
+        "addict",
+        "smuggler"
+      ],
+      "tags": [
+        "medical",
+        "order",
+        "prohibition"
+      ]
+    },
+    {
+      "policy_id": "policy_militia_conscription",
+      "name": "Universal Colonist Conscription",
+      "description": "Thrusts rusted Meridian Compact rifles into the hands of mechanics, botanists, and terrified teenagers. Survival demands everyone bleeds for the barricades, regardless of their fear or lack of training.",
+      "category": "Security",
+      "is_emergency": false,
+      "enactment_cost_influence": 25,
+      "legitimacy_impact": -5.0,
+      "repeal_cooldown_days": 14,
+      "supporter_tags": [
+        "sentinel",
+        "tactician"
+      ],
+      "opponent_tags": [
+        "pacifist",
+        "artisan"
+      ],
+      "tags": [
+        "military",
+        "defense",
+        "conscription"
+      ]
+    },
+    {
+      "policy_id": "policy_martial_law",
+      "name": "Emergency Martial Law Decree",
+      "description": "Silences the civilian councils under the deafening crack of military boot steps. Absolute authority is transferred to the Security Directors, trading the illusion of freedom for cold, unyielding survival.",
+      "category": "Emergency",
+      "is_emergency": true,
+      "enactment_cost_influence": 40,
+      "legitimacy_impact": -25.0,
+      "repeal_cooldown_days": 30,
+      "supporter_tags": [
+        "authoritarian",
+        "warlord"
+      ],
+      "opponent_tags": [
+        "democrat",
+        "civilian",
+        "moralist"
+      ],
+      "tags": [
+        "emergency",
+        "dictatorship",
+        "suspension"
+      ]
+    }
+  ]
+}

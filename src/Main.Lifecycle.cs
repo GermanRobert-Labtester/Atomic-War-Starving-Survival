@@ -281,6 +281,15 @@ namespace AtomicWar.GodotApp
                 lifecycleGroup: SaveSectionRegistry.ExpandedShelterLifecycleGroup,
                 onReset: ResetExpandedShelterSessions));
 
+            // Plans 178-201 expansion systems (generational, prisoners, mutations,
+            // stealth, aviation, forced labor, narcotics, politics, fallout,
+            // desperation, mercenary, archaeology, amputation, railway, fungi,
+            // justice, recreation, chem warfare, comms array, ceremony, robotics)
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "plans_178_201",
+                dependsOn: new[] { "survivors", "inventory", "world_weather" },
+                onReset: ResetPlansExpansionSessions));
+
             // First-Hour Onboarding Journey (Task 120)
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "onboarding",
@@ -294,6 +303,48 @@ namespace AtomicWar.GodotApp
                         RemoveChild(_onboardingHintPanel);
                     _onboardingHintPanel = null!;
                 }));
+        }
+
+        /// <summary>
+        /// Drops every Plans 178-201 expansion session instance so the next
+        /// Ensure* reconstructs from disk (restored state), never from a stale
+        /// pre-load instance. These systems hold no Godot resources, so no
+        /// Dispose is required.
+        /// </summary>
+        private void ResetPlansExpansionSessions()
+        {
+            // Plans 178-181
+            _generational = null;
+            _prisoners = null;
+            _mutations = null;
+            _stealth = null;
+            // Plans 182-185
+            _aviation = null;
+            _forcedLabor = null;
+            _narcotics = null;
+            _politics = null;
+            // Plans 186-189
+            _fallout = null;
+            _desperation = null;
+            _mercenary = null;
+            _archaeology = null;
+            // Plans 190-193
+            _amputation = null;
+            _railway = null;
+            _fungi = null;
+            _justice = null;
+            // Plans 194-197
+            _recreation = null;
+            _recreationDirty = false;
+            // Plans 198-201
+            _chemWarfare = null;
+            _commsArray = null;
+            _ceremonySystem = null;
+            _robotics = null;
+            _chemWarfareDirty = false;
+            _commsArrayDirty = false;
+            _ceremonyDirty = false;
+            _roboticsDirty = false;
         }
 
         /// <summary>

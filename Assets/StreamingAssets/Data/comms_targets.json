@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "targets": [
+    {
+      "id": "comms_target_weather_beacon_alpha",
+      "display_name": "Automated Weather Beacon Alpha",
+      "target_type": "automated_beacon",
+      "min_array_tier": 1,
+      "frequency_khz": 14220,
+      "band": "HF",
+      "required_power_watts": 150,
+      "description": "Unattended meteorological reporting transmitter broadcasting continuous barometric and wind telemetries.",
+      "has_satellite_window": false,
+      "is_strategic": false,
+      "revealed_faction_id": ""
+    },
+    {
+      "id": "comms_target_distress_bunker_42",
+      "display_name": "Derelict Bunker 42 SOS Loop",
+      "target_type": "distress_sos",
+      "min_array_tier": 1,
+      "frequency_khz": 7185,
+      "band": "HF",
+      "required_power_watts": 200,
+      "description": "Automated tape loop repeating emergency coordinates from an overrun subterranean civil defense shelter.",
+      "has_satellite_window": false,
+      "is_strategic": false,
+      "revealed_faction_id": ""
+    },
+    {
+      "id": "comms_target_archivist_listening_post",
+      "display_name": "Archivist Listening Outpost",
+      "target_type": "regional_relay",
+      "min_array_tier": 1,
+      "frequency_khz": 10115,
+      "band": "HF",
+      "required_power_watts": 250,
+      "description": "Encrypted shortwave frequency maintained by the Archivist network monitoring regional signals.",
+      "has_satellite_window": false,
+      "is_strategic": false,
+      "revealed_faction_id": "faction_archivists"
+    },
+    {
+      "id": "comms_target_consortium_caravan",
+      "display_name": "Trans-Wasteland Trade Consortium",
+      "target_type": "merchant_consortium",
+      "min_array_tier": 2,
+      "frequency_khz": 144300,
+      "band": "VHF",
+      "required_power_watts": 450,
+      "description": "Distant merchant convoy coordinator scheduling long-range bulk supply transfers.",
+      "has_satellite_window": false,
+      "is_strategic": false,
+      "revealed_faction_id": "faction_supply_corps"
+    },
+    {
+      "id": "comms_target_orbital_relay_echo",
+      "display_name": "Orbital Telemetry Relay Echo-7",
+      "target_type": "satellite_relay",
+      "min_array_tier": 2,
+      "frequency_khz": 435500,
+      "band": "UHF",
+      "required_power_watts": 600,
+      "description": "Decaying low-earth-orbit telemetry transponder passing overhead during predictable temporal windows.",
+      "has_satellite_window": true,
+      "is_strategic": false,
+      "revealed_faction_id": ""
+    },
+    {
+      "id": "comms_target_foundry_logistics_net",
+      "display_name": "Ordnance Foundry Secure Channel",
+      "target_type": "regional_relay",
+      "min_array_tier": 2,
+      "frequency_khz": 146820,
+      "band": "VHF",
+      "required_power_watts": 500,
+      "description": "Heavily cyphered military frequency exchanging heavy industrial production quotas.",
+      "has_satellite_window": false,
+      "is_strategic": false,
+      "revealed_faction_id": "faction_ordnance_foundry"
+    },
+    {
+      "id": "comms_target_strategic_uplink_cerberus",
+      "display_name": "Strategic Defense Platform Cerberus",
+      "target_type": "strategic_uplink",
+      "min_array_tier": 3,
+      "frequency_khz": 448900,
+      "band": "UHF",
+      "required_power_watts": 1200,
+      "description": "Hardened pre-war orbital defense downlink accepting cryptographic authorization tokens for kinetic orbital strikes.",
+      "has_satellite_window": true,
+      "is_strategic": true,
+      "revealed_faction_id": ""
+    },
+    {
+      "id": "comms_target_deep_vault_beacon",
+      "display_name": "Sub-Silt Deep Vault Transmitter",
+      "target_type": "distress_sos",
+      "min_array_tier": 3,
+      "frequency_khz": 3850,
+      "band": "HF",
+      "required_power_watts": 800,
+      "description": "Low-frequency ground-penetrating transmission from an isolated pre-war high-tech laboratory.",
+      "has_satellite_window": false,
+      "is_strategic": false,
+      "revealed_faction_id": ""
+    }
+  ]
+}

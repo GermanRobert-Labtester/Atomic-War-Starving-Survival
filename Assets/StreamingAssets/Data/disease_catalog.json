@@ -174,8 +174,8 @@
       "spread_interval_days": 3,
       "spread_radius": 3,
       "countermeasure_item_id": "gas_mask",
-      "guidance": "The spores are in the air you breathe. The cough starts dry, then produces thick yellow mucus that clogs the lungs. The fever never breaks.",
-      "source_note": "Thrives in damp, dark places where the air doesn't circulate. The bunker's ventilation system is both its enemy and its highway.",
+      "guidance": "Filter the air before the mycelium claims the lungs. The cough starts like dust, but soon brings up thick, fibrous yellow strings that choke the bronchi. The fever burns until the mind boils.",
+      "source_note": "A bastard strain that thrives where water pools and the dark goes absolute. Once it gets into the central ventilation shafts, the bunker breathes it into every sleeping throat.",
       "treatments": [
         {
           "item_id": "inhaler",
@@ -205,8 +205,8 @@
       "spread_interval_days": 2,
       "spread_radius": 4,
       "countermeasure_item_id": "clean_water",
-      "guidance": "Boil all water for at least five minutes. The diarrhea starts watery, then becomes bloody. The fever rises steadily, day by day, until the mind begins to wander.",
-      "source_note": "The classic killer of crowded spaces. The bunker's water purification system is the only thing standing between you and the grave. The taste of the water changes before the symptoms do.",
+      "guidance": "Boil every ration for five minutes or invite the sickness in. It begins with bloody stool and a fever that climbs relentlessly, day by day, until the brain cooks and the patient mutters to ghosts.",
+      "source_note": "The oldest killer in the dark. It breeds in the fouled condensation traps and stagnant secondary pipes. The water tastes faintly of rotten algae and pennies before the dying begins.",
       "treatments": [
         {
           "item_id": "antibiotics",
@@ -466,6 +466,31 @@
       "tell": "cough that worsens some hours after dust, not during",
       "tell_secondary": "tightness and fever after clean-out work",
       "timing_clue": "half a day to two days after silo or grain dust"
+    },
+    {
+      "id": "disease_prion_tremor",
+      "display_name": "Prion Tremor Syndrome",
+      "vector": "blood",
+      "lethality": 0.85,
+      "incubation_days": 14,
+      "illness_days": 21,
+      "infectivity": 0.0,
+      "spread_interval_days": 14,
+      "spread_radius": 1,
+      "countermeasure_item_id": "medical_kit",
+      "guidance": "There is no cure for what happens when the protein folds back on itself. The mind rots while the body still walks. It begins with trembling hands and ends in locked, screaming joints.",
+      "source_note": "The price of the long hunger. Misfolded prions laugh at boiling water and lye. By the time the patient starts laughing at nothing in the dark, the brain is already turning to pitted sponge.",
+      "treatments": [
+        {
+          "item_id": "herbal_tea",
+          "role": "supportive",
+          "max_days": 0,
+          "lethality_reduction": 0.05
+        }
+      ],
+      "tell": "uncontrollable hand tremors and involuntary laughing fits",
+      "tell_secondary": "ataxic gait and sudden loss of motor coordination",
+      "timing_clue": "two to three weeks following consumption of taboo rations"
     }
   ],
   "vector_protocols": [

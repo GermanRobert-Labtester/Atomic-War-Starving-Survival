@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "archives": [
+    {
+      "archive_id": "lore_archive_silo_manifest",
+      "title_key": "Strategic Missile Silo Armament Ledger",
+      "summary_key": "Pre-war manifest detailing payload yields, targeting grids, and launch confirmation codes of subterranean missile silos.",
+      "era": "PreExchange",
+      "topic_tags": [ "military", "nuclear", "war_history" ],
+      "encryption_tier": 2,
+      "required_engineering": 3.0,
+      "base_work_hours": 16.0,
+      "power_kw": 2.5,
+      "corruption_risk": 0.12,
+      "required_key_item_id": "item_decryption_keycard_prewar",
+      "research_reward": 25,
+      "broker_value": 150.0,
+      "unique": true
+    },
+    {
+      "archive_id": "lore_archive_geothermal_schematic",
+      "title_key": "Subterranean Geothermal Tap Engineering Blueprints",
+      "summary_key": "Technical drawings for deep high-pressure hydrothermal steam collectors and binary fluid turbines.",
+      "era": "LateIndustrial",
+      "topic_tags": [ "energy", "geothermal", "infrastructure" ],
+      "encryption_tier": 1,
+      "required_engineering": 2.0,
+      "base_work_hours": 10.0,
+      "power_kw": 1.5,
+      "corruption_risk": 0.05,
+      "required_key_item_id": "item_decryption_keycard_prewar",
+      "research_reward": 20,
+      "broker_value": 110.0,
+      "unique": true
+    },
+    {
+      "archive_id": "lore_archive_radiation_treatment_formula",
+      "title_key": "Advanced Radiotrophic Chelation Protocols",
+      "summary_key": "Pharmaceutical synthesis papers on Prussian blue complexes and fast-acting heavy metal radionuclide scavengers.",
+      "era": "ExchangeOnset",
+      "topic_tags": [ "medical", "radiation", "chelation" ],
+      "encryption_tier": 2,
+      "required_engineering": 3.5,
+      "base_work_hours": 20.0,
+      "power_kw": 3.0,
+      "corruption_risk": 0.15,
+      "required_key_item_id": "item_decryption_keycard_prewar",
+      "research_reward": 35,
+      "broker_value": 180.0,
+      "unique": true
+    },
+    {
+      "archive_id": "lore_archive_compact_treaty_history",
+      "title_key": "Meridian Compact Accords and Demarcation Records",
+      "summary_key": "Diplomatic transcripts and regional resource division maps prior to the collapse of centralized governance.",
+      "era": "PreExchange",
+      "topic_tags": [ "diplomacy", "factions", "history" ],
+      "encryption_tier": 1,
+      "required_engineering": 1.0,
+      "base_work_hours": 8.0,
+      "power_kw": 1.0,
+      "corruption_risk": 0.04,
+      "required_key_item_id": "item_decryption_keycard_prewar",
+      "research_reward": 15,
+      "broker_value": 85.0,
+      "unique": true
+    }
+  ]
+}

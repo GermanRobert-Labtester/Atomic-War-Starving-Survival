@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "mutations": [
+    {
+      "mutation_id": "mutation_low_light_adaptation",
+      "display_name": "Tapetal Luminescence",
+      "description": "Your eyes burn as the retinas blister and reform. In the dark, you see everything in sharp, silvery outlines. But in the light, your eyes catch the glare like a feral cat's, glowing with a sickly, pale luminescence that unnerves the others.",
+      "branch_id": "sensory",
+      "tier": 1,
+      "parent_mutation_ids": [],
+      "exclusive_mutation_ids": ["mutation_photophobia"],
+      "stat_modifiers": {},
+      "capability_tags": ["capability_low_light_vision"],
+      "visual_tags": ["eye_amber_glow"],
+      "instability_cost": 15.0,
+      "required_exposure": 80.0
+    },
+    {
+      "mutation_id": "mutation_photophobia",
+      "display_name": "Acute Photophobia",
+      "description": "The irises are melted, permanently dilated from radiation scouring. Even a flickering fluorescent tube feels like a spike driven through your skull, forcing you to weep milky tears whenever you leave the shadows.",
+      "branch_id": "sensory",
+      "tier": 1,
+      "parent_mutation_ids": [],
+      "exclusive_mutation_ids": ["mutation_low_light_adaptation"],
+      "stat_modifiers": {
+        "daytime_accuracy": -0.2
+      },
+      "capability_tags": [],
+      "visual_tags": ["dilated_pupils"],
+      "instability_cost": 20.0,
+      "required_exposure": 100.0
+    },
+    {
+      "mutation_id": "mutation_heightened_hearing",
+      "display_name": "Tympanic Hyper-Resonance",
+      "description": "Your ear canals stretch and ossify, tuning in to frequencies you were never meant to hear. The constant scraping of rats in the vents and the heartbeat of the person sleeping in the next bunk become an inescapable, deafening symphony.",
+      "branch_id": "sensory",
+      "tier": 2,
+      "parent_mutation_ids": ["mutation_low_light_adaptation"],
+      "exclusive_mutation_ids": [],
+      "stat_modifiers": {},
+      "capability_tags": ["capability_enhanced_hearing"],
+      "visual_tags": ["expanded_ear_lobes"],
+      "instability_cost": 25.0,
+      "required_exposure": 180.0
+    },
+    {
+      "mutation_id": "mutation_keratinized_skin",
+      "display_name": "Keratinized Callus Plating",
+      "description": "Your skin thickens, peeling away to reveal hard, gray scales underneath. The chitinous plates grind together when you move, deflecting shrapnel and blades but stripping away the sensation of a human touch.",
+      "branch_id": "dermal",
+      "tier": 1,
+      "parent_mutation_ids": [],
+      "exclusive_mutation_ids": ["mutation_brittle_skin"],
+      "stat_modifiers": {
+        "armor_rating": 8.0
+      },
+      "capability_tags": ["capability_chitin_armor"],
+      "visual_tags": ["scaled_arms"],
+      "instability_cost": 20.0,
+      "required_exposure": 120.0
+    },
+    {
+      "mutation_id": "mutation_brittle_skin",
+      "display_name": "Dermal Desquamation",
+      "description": "Your skin turns to ash-white parchment, weeping clear fluid from spontaneous fissures. Every movement risks tearing the paper-thin flesh, and the cold bunker air feels like broken glass against your raw, exposed nerves.",
+      "branch_id": "dermal",
+      "tier": 1,
+      "parent_mutation_ids": [],
+      "exclusive_mutation_ids": ["mutation_keratinized_skin"],
+      "stat_modifiers": {
+        "wound_vulnerability": 0.25
+      },
+      "capability_tags": [],
+      "visual_tags": ["flaking_skin"],
+      "instability_cost": 25.0,
+      "required_exposure": 110.0
+    },
+    {
+      "mutation_id": "mutation_dense_bone",
+      "display_name": "Osteo-Condensation",
+      "description": "A deep, agonizing ache settles in your marrow as your bones calcify into dense, blackened steel-like structures. You feel impossibly heavy, your gait reduced to a slow, lumbering thud that shakes the rust off the bunker floor.",
+      "branch_id": "skeletal",
+      "tier": 1,
+      "parent_mutation_ids": [],
+      "exclusive_mutation_ids": ["mutation_brittle_bones"],
+      "stat_modifiers": {
+        "blunt_resistance": 0.20,
+        "movement_speed": -0.05
+      },
+      "capability_tags": ["capability_dense_skeleton"],
+      "visual_tags": ["heavy_brow"],
+      "instability_cost": 25.0,
+      "required_exposure": 150.0
+    },
+    {
+      "mutation_id": "mutation_brittle_bones",
+      "display_name": "Osteomalacia Instability",
+      "description": "Your bones hollow out, turning as porous and fragile as pumice. Even a firm handshake sends a terrifying creak echoing in your inner ear, leaving you living in constant dread of the next inevitable snap.",
+      "branch_id": "skeletal",
+      "tier": 1,
+      "parent_mutation_ids": [],
+      "exclusive_mutation_ids": ["mutation_dense_bone"],
+      "stat_modifiers": {
+        "fracture_risk": 0.40
+      },
+      "capability_tags": [],
+      "visual_tags": ["hunched_posture"],
+      "instability_cost": 30.0,
+      "required_exposure": 140.0
+    },
+    {
+      "mutation_id": "mutation_toxin_tolerance",
+      "display_name": "Hepatic Hypertrophy",
+      "description": "Your liver swells, bulging visibly beneath your ribcage. It filters the irradiated slop and poisoned water with brutal efficiency, though your veins now bulge black with the toxic sludge it pumps through your body.",
+      "branch_id": "metabolic",
+      "tier": 1,
+      "parent_mutation_ids": [],
+      "exclusive_mutation_ids": [],
+      "stat_modifiers": {
+        "poison_resistance": 0.35
+      },
+      "capability_tags": ["capability_toxin_resistance"],
+      "visual_tags": ["jaundice_veins"],
+      "instability_cost": 20.0,
+      "required_exposure": 130.0
+    },
+    {
+      "mutation_id": "mutation_heightened_reflex",
+      "display_name": "Myelinated Tremor Reflex",
+      "description": "Your nervous system is trapped in a permanent state of electrocution. Your fingers twitch and spasm involuntarily, reacting to threats a fraction of a second before your conscious mind even processes the danger.",
+      "branch_id": "neurological",
+      "tier": 1,
+      "parent_mutation_ids": [],
+      "exclusive_mutation_ids": [],
+      "stat_modifiers": {
+        "combat_initiative": 15.0
+      },
+      "capability_tags": ["capability_fast_reflexes"],
+      "visual_tags": ["twitching_fingers"],
+      "instability_cost": 25.0,
+      "required_exposure": 160.0
+    }
+  ]
+}

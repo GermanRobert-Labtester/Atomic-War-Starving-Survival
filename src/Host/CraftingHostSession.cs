@@ -33,7 +33,8 @@ namespace AtomicWar.GodotApp
             System.Collections.Generic.List<Recipe> recipes = null!,
             ResearchSystem? research = null,
             ISeededRng? rng = null,
-            ILog? log = null)
+            ILog? log = null,
+            bool seedDefaultWorkbench = false)
         {
             var logger = log ?? new GodotLog();
             Inventory = inventory ?? new InventoryContainer();
@@ -64,7 +65,10 @@ namespace AtomicWar.GodotApp
             Workshop.OnWorkshopStateChanged += () => RaiseStateChanged();
             PharmaLab.OnPharmaStateChanged += () => RaiseStateChanged();
 
-            SeedStation();
+            if (seedDefaultWorkbench)
+            {
+                SeedStation();
+            }
             if (recipes != null && recipes.Count > 0)
             {
                 Recipes.AddRange(recipes);
@@ -88,7 +92,7 @@ namespace AtomicWar.GodotApp
             var itemCatalog = ItemCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
             var recipes = RecipeCatalogLoader.Load(dataDir, fileIO, serializer, itemCatalog);
 
-            var session = new CraftingHostSession(inventory, recipes, research, rng, log);
+            var session = new CraftingHostSession(inventory, recipes, research, rng, log, seedDefaultWorkbench: false);
 
             // When the session owns its research instance, load the authoritative
             // research_knowledge.json catalog (Plan 34: JSON is the sole authored
@@ -111,9 +115,50 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        private void SeedStation()
+        public void SeedStation()
         {
-            Engine.AddStation(new CraftingStation { id = "workbench", displayName = "Civilian Workbench" });
+            if (Engine.GetStation("workbench") == null)
+            {
+                Engine.AddStation(new CraftingStation { id = "workbench", displayName = "Civilian Workbench" });
+            }
+        }
+
+        /// <summary>
+        /// Synchronizes the crafting engine's operational stations from an external authority (e.g. shelter infrastructure).
+        /// Replaces matching stations or adds newly operational ones.
+        /// </summary>
+        public void SyncStations(IEnumerable<CraftingStation> stations)
+        {
+            if (stations == null) return;
+            foreach (var station in stations)
+            {
+                if (station == null || string.IsNullOrEmpty(station.id)) continue;
+                var existing = Engine.GetStation(station.id);
+                if (existing != null)
+                {
+                    existing.displayName = station.displayName;
+                    existing.condition = station.condition;
+                }
+                else
+                {
+                    Engine.AddStation(station);
+                }
+            }
+            RaiseStateChanged();
+        }
+
+        /// <summary>
+        /// Explicitly removes a station if a shelter room or facility is dismantled or destroyed.
+        /// </summary>
+        public void RemoveStation(string stationId)
+        {
+            if (string.IsNullOrEmpty(stationId)) return;
+            var existing = Engine.GetStation(stationId);
+            if (existing != null)
+            {
+                Engine.RemoveStation(existing);
+                RaiseStateChanged();
+            }
         }
 
         private void SeedRecipes()

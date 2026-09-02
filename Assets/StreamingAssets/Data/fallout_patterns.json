@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "patterns": [
+    {
+      "pattern_id": "fallout_pattern_strontium_plume",
+      "display_name": "Strontium-90 Plume",
+      "origin_tags": [ "ground_burst", "high_yield", "long_decay" ],
+      "initial_radius": 15.0,
+      "initial_toxicity": 180.0,
+      "base_dispersal_rate": 0.05,
+      "base_dissipation_hours": 72.0,
+      "wind_response": 1.0,
+      "ground_deposition_rate": 1.2,
+      "groundwater_taint_threshold_hours": 12.0,
+      "warning_radius": 35.0,
+      "black_rain_chance": 0.15
+    },
+    {
+      "pattern_id": "fallout_pattern_black_rain_cell",
+      "display_name": "Condensed Black Rain Cell",
+      "origin_tags": [ "atmospheric", "soot_condensation", "severe_toxic" ],
+      "initial_radius": 22.0,
+      "initial_toxicity": 260.0,
+      "base_dispersal_rate": 0.08,
+      "base_dissipation_hours": 36.0,
+      "wind_response": 1.15,
+      "ground_deposition_rate": 3.5,
+      "groundwater_taint_threshold_hours": 6.0,
+      "warning_radius": 45.0,
+      "black_rain_chance": 0.85
+    },
+    {
+      "pattern_id": "fallout_pattern_cesium_dust",
+      "display_name": "Cesium-137 Ambient Dust Front",
+      "origin_tags": [ "air_burst", "fine_particulate", "wide_drift" ],
+      "initial_radius": 30.0,
+      "initial_toxicity": 95.0,
+      "base_dispersal_rate": 0.03,
+      "base_dissipation_hours": 120.0,
+      "wind_response": 0.9,
+      "ground_deposition_rate": 0.4,
+      "groundwater_taint_threshold_hours": 24.0,
+      "warning_radius": 55.0,
+      "black_rain_chance": 0.05
+    },
+    {
+      "pattern_id": "fallout_pattern_dirty_ember",
+      "display_name": "Volatile Dirty Ember Storm",
+      "origin_tags": [ "reactor_melt", "pyroclastic", "acute_burn" ],
+      "initial_radius": 12.0,
+      "initial_toxicity": 320.0,
+      "base_dispersal_rate": 0.10,
+      "base_dissipation_hours": 24.0,
+      "wind_response": 1.25,
+      "ground_deposition_rate": 4.0,
+      "groundwater_taint_threshold_hours": 4.0,
+      "warning_radius": 28.0,
+      "black_rain_chance": 0.30
+    }
+  ]
+}

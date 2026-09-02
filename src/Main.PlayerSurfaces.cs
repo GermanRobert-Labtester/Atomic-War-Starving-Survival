@@ -349,7 +349,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _factionsNarrativePanel.Visible = false);
 
             PanelRegistry.ConfigureActions("skill_matrix",
-                bindAction: () => { SetupSurvivors(); _skillMatrixPanel.Bind(new Ashfall.Core.Survivors.SkillProgressionSystem(), _survivors); },
+                bindAction: () => { SetupSurvivors(); _skillMatrixPanel.Bind(EnsureSharedSkillProgression(), _survivors); },
                 openAction: () => _skillMatrixPanel.Open(),
                 closeAction: () => _skillMatrixPanel.Visible = false);
 
@@ -397,6 +397,47 @@ namespace AtomicWar.GodotApp
                 bindAction: () => { if (_combat != null) _combatHudOverlay.Bind(_combat); },
                 openAction: () => _combatHudOverlay.Open(),
                 closeAction: () => _combatHudOverlay.Visible = false);
+
+            // ── Plans 178-201 Expansion Surfaces ─────────────────────────
+            PanelRegistry.ConfigureActions("aviation",
+                bindAction: () => { SetupAviation(); _aviationPanel.Bind(EnsureAviation()); },
+                openAction: () => _aviationPanel.Open(),
+                closeAction: () => _aviationPanel.Close());
+
+            PanelRegistry.ConfigureActions("narcotics",
+                bindAction: () => { SetupNarcotics(); _chemPanel.Bind(EnsureNarcotics()); },
+                openAction: () => _chemPanel.Open(),
+                closeAction: () => _chemPanel.Close());
+
+            PanelRegistry.ConfigureActions("forced_labor",
+                bindAction: () => { SetupForcedLabor(); _laborPanel.Bind(EnsureForcedLabor()); },
+                openAction: () => _laborPanel.Open(),
+                closeAction: () => _laborPanel.Close());
+
+            PanelRegistry.ConfigureActions("politics",
+                bindAction: () => { SetupPolitics(); _politicsPanel.Bind(EnsurePolitics()); },
+                openAction: () => _politicsPanel.Open(),
+                closeAction: () => _politicsPanel.Close());
+
+            PanelRegistry.ConfigureActions("prisoners",
+                bindAction: () => { SetupPrisoners(); _prisonerPanel.Bind(EnsurePrisoners()); },
+                openAction: () => _prisonerPanel.Open(),
+                closeAction: () => _prisonerPanel.Close());
+
+            PanelRegistry.ConfigureActions("stealth",
+                bindAction: () => { SetupStealth(); _stealthReadoutPanel.Bind(EnsureStealth()); },
+                openAction: () => _stealthReadoutPanel.Open(),
+                closeAction: () => _stealthReadoutPanel.Close());
+
+            PanelRegistry.ConfigureActions("mutation_tree",
+                bindAction: () => { SetupMutations(); _mutationTreePanel.Bind(EnsureMutations()); },
+                openAction: () => _mutationTreePanel.Open(),
+                closeAction: () => _mutationTreePanel.Close());
+
+            PanelRegistry.ConfigureActions("nursery",
+                bindAction: () => { SetupGenerational(); _nurseryPanel.Bind(EnsureGenerational()); },
+                openAction: () => _nurseryPanel.Open(),
+                closeAction: () => _nurseryPanel.Close());
 
             // ── Flagship Consoles (Stitch Suite) ─────────────────────────────
             PanelRegistry.ConfigureActions("biogas_digester",

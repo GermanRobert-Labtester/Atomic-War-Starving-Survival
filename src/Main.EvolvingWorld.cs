@@ -97,6 +97,27 @@ namespace AtomicWar.GodotApp
                     }
                 }
 
+                // WT-INT-01: snapshot live weather from World
+                if (_world?.Weather != null)
+                {
+                    ctx.CurrentWeather = _world.Weather.Current;
+                }
+
+                // WT-INT-01: snapshot per-hunter survival discipline skill from shared progression
+                var skillProgression = EnsureSharedSkillProgression();
+                if (_wildlifeTrapping.System.State.trapSites != null)
+                {
+                    for (int i = 0; i < _wildlifeTrapping.System.State.trapSites.Count; i++)
+                    {
+                        var site = _wildlifeTrapping.System.State.trapSites[i];
+                        if (site == null || string.IsNullOrEmpty(site.assignedHunterId)) continue;
+                        if (ctx.HunterSkillLevels.ContainsKey(site.assignedHunterId)) continue;
+
+                        float progress01 = skillProgression.GetDisciplineProgress01(site.assignedHunterId, "survival");
+                        ctx.HunterSkillLevels[site.assignedHunterId] = progress01 * 100f;
+                    }
+                }
+
                 _wildlifeTrapping.System.SetSelectionContext(ctx);
             }
         }
