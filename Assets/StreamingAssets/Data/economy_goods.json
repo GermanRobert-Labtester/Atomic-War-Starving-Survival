@@ -120,7 +120,8 @@
       "elasticity": 1.5,
       "stackSize": 6,
       "weightKg": 0.8,
-      "barterNote": "Food spikes hardest in the shortage windows. The label claims 'balanced nutrition.' The contents suggest it's been balanced with something else entirely."
+      "barterNote": "Food spikes hardest in the shortage windows. The label claims 'balanced nutrition.' The contents suggest it's been balanced with something else entirely.",
+      "regionalSupply": "greenhouse"
     },
     {
       "id": "diamond",

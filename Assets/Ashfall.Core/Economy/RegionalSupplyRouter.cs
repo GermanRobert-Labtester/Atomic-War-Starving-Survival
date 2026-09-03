@@ -129,6 +129,32 @@ namespace Ashfall.Core.Economy
         }
 
         /// <summary>
+        /// Plan 56 phase 5 — world-level provenance scale for a scarcity
+        /// demand delta: the best relief across every active caravan-serviced
+        /// region. A good any serviced region produces is buffered (0.5× —
+        /// the supply line resupplies it); general supply tracks the market
+        /// (1.0×); a good with NO supply line in the active world escalates
+        /// (1.5× — structural scarcity). Unknown/unannotated goods are
+        /// neutral (1.0×).
+        /// </summary>
+        public static float WorldShortageDemandScale(
+            GoodsCatalog catalog, string goodId, IEnumerable<string> activeOriginRegions)
+        {
+            if (catalog == null || string.IsNullOrEmpty(goodId)) return 1f;
+            var good = catalog.Find(goodId);
+            if (good == null || string.IsNullOrEmpty(good.regionalSupply)) return 1f;
+            if (good.regionalSupply == "general") return 1f;
+
+            if (activeOriginRegions != null)
+            {
+                foreach (var region in activeOriginRegions)
+                    if (ProducesGood(catalog, region, goodId))
+                        return 0.5f;
+            }
+            return 1.5f;
+        }
+
+        /// <summary>
         /// Settlement-shortage demand scale for a good relative to a region's
         /// production: locally produced goods are buffered (0.5), general
         /// supply tracks the market (1.0), pure imports escalate (1.5). Apply

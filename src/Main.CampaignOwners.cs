@@ -617,8 +617,22 @@ namespace AtomicWar.GodotApp
                     if (Math.Abs(delta) > 0f)
                     {
                         _m.SetupEconomy();
+                        // Plan 56 phase 5 — provenance-aware scarcity: goods with
+                        // an active caravan supply line are buffered (0.5×);
+                        // general goods track the market (1.0×); goods with no
+                        // supply line escalate (1.5×). Active origin regions come
+                        // from the caravan data authority.
+                        var origins = new List<string>();
+                        foreach (var cd in CaravanCatalogLoader.Load(_dataDir))
+                            if (!string.IsNullOrEmpty(cd.origin_region) && !origins.Contains(cd.origin_region))
+                                origins.Add(cd.origin_region);
                         foreach (var g in goods)
-                            _m._economy.Market.AdjustDemand(g, delta);
+                        {
+                            float scaled = delta * RegionalSupplyRouter.WorldShortageDemandScale(
+                                _m._economy.Catalog, g, origins);
+                            if (Math.Abs(scaled) > 0f)
+                                _m._economy.Market.AdjustDemand(g, scaled);
+                        }
                     }
                 }
 
