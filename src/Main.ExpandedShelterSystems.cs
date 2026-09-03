@@ -117,12 +117,32 @@ namespace AtomicWar.GodotApp
             SetupShelterDecor();        // uses the final assignment map + inventory catalog
         }
 
+        /// <summary>Binds the Plan 72 electrostatic scrubber console to the ventilation session.</summary>
+        private void BindElectrostaticScrubberPanel()
+        {
+            if (_ventilationHost == null) return;
+            if (_electrostaticScrubberPanel != null && _electrostaticScrubberPanel.IsInsideTree())
+                RemoveChild(_electrostaticScrubberPanel);
+            _electrostaticScrubberPanel = new ElectrostaticScrubberPanel();
+            _electrostaticScrubberPanel.Bind(_ventilationHost);
+            _electrostaticScrubberPanel.Visible = false;
+            AddChild(_electrostaticScrubberPanel);
+        }
+
         private void WireWaterTreatmentSumpBridge()
         {
             if (_sumpFlooding == null || _waterTreatment == null) return;
             // Plan 70: bind the sludge-plant consumable inventory (flocculant /
             // filter cloth) and the canonical greywater routing target.
-            _sumpFlooding.System.BindServices(_inventory?.Inventory, _waterTreatment.System);
+            _sumpFlooding.System.BindServices(_inventory?.Inventory, _waterTreatment.System, _ventilation);
+            // Plan 72: bind stage services (seeded arc RNG, real power draw,
+            // installation components, radioactive-drum inventory, arc-fire handoff).
+            _ventilation?.BindStageServices(
+                _campaignDay?.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 14),
+                _powerGrid?.System,
+                _inventory?.Inventory,
+                _stageFireHazard);
+            BindElectrostaticScrubberPanel();
             _sumpFlooding.System.OnIncident += incident =>
             {
                 if (incident.kind == FloodIncidentKind.FloodStart || incident.kind == FloodIncidentKind.Contamination)
@@ -277,6 +297,17 @@ namespace AtomicWar.GodotApp
             _shelterThermal?.TickDay(day);
             _shelterSchedule?.TickDay(day);
             _autopsy?.TickDay(day);
+            // Plan 72 §3 ordering: advance ventilation/air filtration — hosts
+            // pass weather truth; Core owns the intake conversion and stage math.
+            if (_ventilation != null)
+            {
+                var ventWeather = _world.Weather.Current;
+                _ventilation.TickDay(
+                    day,
+                    Ashfall.Core.ElectrostaticFiltrationCatalogLoader.WeatherIntakeParticulateKg(
+                        ventWeather, _ventilation.State.mainDuctOpen),
+                    Ashfall.Core.ElectrostaticFiltrationCatalogLoader.IsHotAshLoad(ventWeather));
+            }
             _waystation?.TickDaily(iceRoadOpen: true);
             _sumpFlooding?.TickDay(day);
             _decontamination?.TickDay(day);

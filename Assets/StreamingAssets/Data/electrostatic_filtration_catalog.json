@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "stages": [
+    {
+      "stage_id": "stage_electrostatic_single",
+      "display_name": "Single-Stage Precipitator Bank",
+      "operating_profiles": [
+        {
+          "profile_id": "profile_standard",
+          "display_name": "Standard Field",
+          "nominal_power_w": 350,
+          "capture_efficiency_pm25": 0.80,
+          "capture_efficiency_pm10": 0.90,
+          "hot_ash_capture_efficiency": 0.70,
+          "ozone_output_rate_ppm_per_day": 8.0,
+          "arc_risk_base_bp": 40
+        },
+        {
+          "profile_id": "profile_boost",
+          "display_name": "Boost Field",
+          "nominal_power_w": 600,
+          "capture_efficiency_pm25": 0.92,
+          "capture_efficiency_pm10": 0.96,
+          "hot_ash_capture_efficiency": 0.85,
+          "ozone_output_rate_ppm_per_day": 18.0,
+          "arc_risk_base_bp": 120
+        }
+      ],
+      "dust_capacity_kg": 12.0,
+      "maintenance_interval_days": 14,
+      "required_component_ids": [
+        { "item_id": "item_air_filter_hepa", "amount": 1 },
+        { "item_id": "mechanical_parts", "amount": 4 },
+        { "item_id": "scrap_chemical", "amount": 2 }
+      ],
+      "tags": ["ventilation", "air_filtration", "electrostatic", "high_power"]
+    }
+  ]
+}

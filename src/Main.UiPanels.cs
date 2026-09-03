@@ -179,6 +179,7 @@ namespace AtomicWar.GodotApp
         private InductionCupolaFurnacePanel _inductionCupolaFurnacePanel = null!;
         private HeavyMarineDieselGeneratorPanel _heavyMarineDieselGenPanel = null!;
         private SlurryDewateringSumpPanel _slurryDewateringSumpPanel = null!;
+        private ElectrostaticScrubberPanel _electrostaticScrubberPanel = null!;
         private MagneticDrumArchivePanel _magneticDrumArchivePanel = null!;
         private AtomicWar.GodotApp.UI.EmergencyResponseHud _crisisHud = null!;
         private Ashfall.Core.UI.CrisisPresentationSnapshot _crisisPresentationSnapshot = new Ashfall.Core.UI.CrisisPresentationSnapshot();
@@ -888,6 +889,10 @@ namespace AtomicWar.GodotApp
             _slurryDewateringSumpPanel = new SlurryDewateringSumpPanel { Visible = false };
             _slurryDewateringSumpPanel.OnClose += () => _slurryDewateringSumpPanel.Visible = false;
             AddChild(_slurryDewateringSumpPanel);
+
+            _electrostaticScrubberPanel = new ElectrostaticScrubberPanel { Visible = false };
+            _electrostaticScrubberPanel.OnClose += () => _electrostaticScrubberPanel.Visible = false;
+            AddChild(_electrostaticScrubberPanel);
 
             _magneticDrumArchivePanel = new MagneticDrumArchivePanel { Visible = false };
             _magneticDrumArchivePanel.OnClose += () => _magneticDrumArchivePanel.Visible = false;

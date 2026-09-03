@@ -2,6 +2,15 @@
   "schema_version": 1,
   "items": [
     {
+      "id": "item_hot_dust_drum",
+      "displayName": "Sealed Hot-Dust Drum",
+      "description": "A drum of concentrate from the electrostatic air scrubber: the fallout the plates caught so the rest of us would not. Lid welded, sides taped, paint marked with the trefoil. It does not decay on any schedule that matters to us. Bury it deep and mark the map.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 12.0,
+      "tradeValue": 0
+    },
+    {
       "id": "item_sludge_cake",
       "displayName": "Dewatered Sludge Cake",
       "description": "A grey-green pressed block of silt and settled muck from the deep sump centrifuge. Heavy, reeking, and faintly warm to the palm. The assay says there is metal in it - a little. The foundry pays in scrap what the ground gives back slowly.",

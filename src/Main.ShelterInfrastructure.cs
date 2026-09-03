@@ -29,6 +29,8 @@ namespace AtomicWar.GodotApp
         private ShelterThermalPanel _shelterThermalPanel = null!;
         private bool _shelterThermalDirty;
         private Ashfall.Core.VentilationSystem _ventilation = null!; // Plan 29 29B: machine tell readings
+        private VentilationHostSession? _ventilationHost;                    // Plan 72 stage console session
+        private Ashfall.Core.Shelter.ShelterFireHazardSystem? _stageFireHazard; // Plan 72 arc-fault fire handoff
         private ShelterScheduleHostSession _shelterSchedule = null!;
         private ShelterSchedulePanel _shelterSchedulePanel = null!;
         private bool _shelterScheduleDirty;
@@ -342,6 +344,11 @@ namespace AtomicWar.GodotApp
             var auStarting = _startingLevel.System;
             var auVent = new VentilationSystem(auStarting);
             _ventilation = auVent; // Plan 29 29B: expose for machine tell readings
+            // Plan 72: electrostatic stage catalog + persistent arc-fire hazard.
+            auVent.ApplyElectrostaticCatalog(Ashfall.Core.ElectrostaticFiltrationCatalogLoader.Load(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer()));
+            _stageFireHazard = new Ashfall.Core.Shelter.ShelterFireHazardSystem();
+            _ventilationHost = new VentilationHostSession(auVent);
             var auRes = sharedResearch;
             var auMedical = _medicalWard;
             var auSys = new AutopsySystem(new SeededRng(1986), auInv, auRad, auVent, auRes, auMedical, new GodotLog());
