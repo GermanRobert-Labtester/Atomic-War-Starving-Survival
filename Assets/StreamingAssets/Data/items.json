@@ -3720,6 +3720,56 @@
       "empShielded": false
     },
     {
+      "id": "weapon_revolver",
+      "displayName": "Six-Shot Revolver",
+      "description": "A .357 revolver with the cylinder worn smooth and the gate still tight, the kind of gun that lives in a farmhouse drawer for forty years and works the first time it is pulled out. No magazine to lose, no feed ramp to foul, six counted shots. One point two kilos, worth thirty. It asks only that you count.",
+      "type": "Weapon",
+      "stackMax": 1,
+      "weight": 1.2,
+      "tradeValue": 30,
+      "empShielded": false
+    },
+    {
+      "id": "weapon_coach_shotgun",
+      "displayName": "Coach-Gun Buckloader",
+      "description": "A break-open double gun cut down to knuckle length for doorway work, chambered for the buckshot handloads the reloading benches turn out one shell at a time. Two barrels, two chances, and nothing after that worth standing around for. Three kilos, worth twenty-five. Inside a stairwell there is no argument it loses.",
+      "type": "Weapon",
+      "stackMax": 1,
+      "weight": 3.0,
+      "tradeValue": 25,
+      "empShielded": false
+    },
+    {
+      "id": "weapon_trail_carbine",
+      "displayName": "Cosaque Trail Carbine",
+      "description": "A full-stock carbine in the old rimmed military round, carried the length of the trade roads by people who shoot for a living and reload by lamplight when the tins run low. The recoil talks to the shoulder the whole day it is carried. Four kilos, worth forty. The deep wood is full of the caliber and empty of the people who used to own it.",
+      "type": "Weapon",
+      "stackMax": 1,
+      "weight": 4.0,
+      "tradeValue": 40,
+      "empShielded": false
+    },
+    {
+      "id": "weapon_battle_rifle",
+      "displayName": "Slate-Groove Battle Rifle",
+      "description": "A heavy service rifle in seven-point-six-two off some garrison rack nobody is coming back to claim, the working parts polished slate-grey by drills nobody counted anymore. Two-round pairs, deliberate, the shot that arrives before the argument starts. Four kilos, worth sixty. It drinks the military cartridge and does not apologize.",
+      "type": "Weapon",
+      "stackMax": 1,
+      "weight": 4.0,
+      "tradeValue": 60,
+      "empShielded": false
+    },
+    {
+      "id": "weapon_quiet_carbine",
+      "displayName": "Whisper-Well Carbine",
+      "description": "A carbine built around the subsonic handload \u2014 the round does its work below the crack of supersonic brass, and the carbine was re-barrelled and tuned until it agreed with it. What it saves the ears it spends in energy: light kick, light report, light punch. Three kilos, worth fifty-five. The patrol that takes fire from one of these hears the second shot from somewhere else.",
+      "type": "Weapon",
+      "stackMax": 1,
+      "weight": 3.0,
+      "tradeValue": 55,
+      "empShielded": false
+    },
+    {
       "id": "iron_pipe",
       "displayName": "Iron Pipe (1 m)",
       "description": "A one-metre length of two-inch iron pipe, the kind pulled out of every disassembled railing and rerouted sink the rebuilds tore down. Three quarters of a kilo, worth three. The pipe is the pipe. The pipe does not know what you will do with it.",
@@ -6604,6 +6654,69 @@
       "stackMax": 1,
       "weight": 5.0,
       "tradeValue": 30,
+      "empShielded": true
+    },
+    {
+      "id": "item_flatbread",
+      "displayName": "Ash-Grain Flatbread",
+      "description": "Dense unleavened bread baked from greenhouse ash-grain. Keeps for days wrapped in cloth and tastes faintly of the filter-bed soil it grew in.",
+      "type": "Food",
+      "stackMax": 15,
+      "weight": 0.2,
+      "tradeValue": 8,
+      "hungerRestore": 22,
+      "thirstRestore": 0,
+      "moraleEffect": 1,
+      "empShielded": true
+    },
+    {
+      "id": "item_boiled_roots",
+      "displayName": "Boiled Foraged Roots",
+      "description": "Surface-foraged roots boiled clean in shelter water. Soft, bland, and safe \u2014 most days that is enough.",
+      "type": "Food",
+      "stackMax": 15,
+      "weight": 0.25,
+      "tradeValue": 4,
+      "hungerRestore": 14,
+      "thirstRestore": 2,
+      "moraleEffect": 1,
+      "empShielded": true
+    },
+    {
+      "id": "item_vegetable_soup",
+      "displayName": "Greenhouse Vegetable Soup",
+      "description": "A hot pot of greenhouse greens and tubers simmered in clean water. Steam on the window, a bowl in every hand. The shelter feels almost whole when it is on the stove.",
+      "type": "Food",
+      "stackMax": 10,
+      "weight": 0.5,
+      "tradeValue": 12,
+      "hungerRestore": 26,
+      "thirstRestore": 6,
+      "moraleEffect": 4,
+      "empShielded": true
+    },
+    {
+      "id": "item_pemmican",
+      "displayName": "Pemmican Travel Block",
+      "description": "Smoked meat and rendered grain pressed into wax-paper blocks. A day's ration that fits in a coat pocket and outlasts the expedition that carries it.",
+      "type": "Food",
+      "stackMax": 20,
+      "weight": 0.15,
+      "tradeValue": 14,
+      "hungerRestore": 30,
+      "moraleEffect": 2,
+      "empShielded": true
+    },
+    {
+      "id": "item_travel_ration",
+      "displayName": "Bundled Travel Ration",
+      "description": "Smoked meat, pickled tubers, and flatbread wrapped together in waxed cloth. Everything a walker needs for a long day outside the wire, packed to carry light.",
+      "type": "Food",
+      "stackMax": 10,
+      "weight": 0.4,
+      "tradeValue": 22,
+      "hungerRestore": 45,
+      "moraleEffect": 3,
       "empShielded": true
     }
   ]

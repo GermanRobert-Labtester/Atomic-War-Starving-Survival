@@ -6,7 +6,12 @@
 
 ---
 
-## 1. Authored Armory (15 Weapons)
+## 1. Authored Armory (20 Weapons — Plan 54 expanded from 15)
+
+> Plan 54 delta: 5 additions below the Plan 10 armory. Baseline 15 rows
+> unchanged (parity-pinned by `Plan54CombatCatalogTests`). Full Plan 54
+> role/economy analysis: `PLAN54_CLOSEOUT.md`, `COMBAT_BALANCE_AUDIT.md`,
+> `AMMO_CALIBER_MATRIX.md`.
 
 | Weapon ID | Display Name | Caliber / Ammo | Dmg / Acc / Range | Burst | Jury-Rigged | Jam Base / Wear | Role & Tactical Niche |
 |---|---|---|---|---|---|---|---|
@@ -25,3 +30,8 @@
 | `weapon_sidearm` | Police Sidearm | `ammo_9x19` | 12.0 / 0.74 / 0.95 | 1 | No | 0.022 / 0.011 | Lightweight dependable sidearm; low inventory weight and rapid readiness. |
 | `weapon_rust_mosin` | Rust-Pitted Mosin | `ammo_762` | 16.0 / 0.58 / 1.10 | 1 | No | 0.075 / 0.029 | Degraded military relic; high base jam rate (7.5%) and barrel pitting, but hard-hitting. |
 | `weapon_farm_carbine` | Farm-Clearing Carbine | `ammo_22lr` | 12.0 / 0.54 / 1.00 | 1 | Yes | 0.058 / 0.023 | Lightweight vermin gun using plentiful .22LR ammo; low penetration against armored beasts. |
+| `weapon_revolver` | Six-Shot Revolver | `ammo_357` | 15.0 / 0.72 / 0.90 | 1 | No | 0.015 / 0.008 | Rugged civilian backup sidearm; best jam base and lowest repair cost of any non-improvised firearm. |
+| `weapon_coach_shotgun` | Coach-Gun Buckloader | `ammo_12g_buck` | 26.0 / 0.46 / 0.70 | 1 | No | 0.038 / 0.020 | Confined-ruins ambush double gun; highest damage per trigger pull in the catalog, fed by craft-gated buckshot handloads. |
+| `weapon_trail_carbine` | Cosaque Trail Carbine | `ammo_762x54r` | 19.0 / 0.64 / 1.30 | 1 | No | 0.030 / 0.013 | Long-range civilian marksman in the old rimmed military round; owns the 1.30 range band between service and sniper rifles. |
+| `weapon_battle_rifle` | Slate-Groove Battle Rifle | `ammo_762` | 17.0 / 0.70 / 1.25 | 2 | No | 0.026 / 0.014 | Hard-hitting military pairs; suppression-capable middle ground between the assault rifle's spray and the LMG's volume. |
+| `weapon_quiet_carbine` | Whisper-Well Carbine | `ammo_556_subsonic` | 10.0 / 0.68 / 1.00 | 2 | No | 0.030 / 0.012 | Low-signature subsonic precision carbine; trades raw damage for the quiet/precision niche, suppression capable. |

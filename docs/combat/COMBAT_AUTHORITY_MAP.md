@@ -13,7 +13,7 @@
 | Lane / Stance / Action State | [`TacticalCombatSystem.cs`](../../Assets/Ashfall.Core/Combat/TacticalCombatSystem.cs) | Combat turn logic, lane positioning, move resolution |
 | Penetration / Ricochet | [`BallisticsSystem.cs`](../../Assets/Ashfall.Core/Combat/BallisticsSystem.cs) | Material armor interaction, energy retention, ricochet math |
 | Weapon Wear / Fouling / Jams | [`EquipmentConditionSystem.cs`](../../Assets/Ashfall.Core/EquipmentConditionSystem.cs) | Condition degradation per shot, fouling, jam rolls |
-| Enemy Authored Parameters | `combat_catalog.json` | 10 authored archetypes (6 fauna/mutant, 4 human) |
+| Enemy Authored Parameters | `combat_catalog.json` | 12 authored archetypes (6 fauna/mutant, 6 human) — Plan 54 |
 | Doctrine / Warlord Response | [`WarlordDoctrineSystem.cs`](../../Assets/Ashfall.Core/Warlords/WarlordDoctrineSystem.cs) | 8 strategic doctrines, response actions, transitions |
 | Faction Standing / Non-Combat Exits | [`FactionSystem.cs`](../../Assets/Ashfall.Core/FactionSystem.cs) | Surrender thresholds, bribery, morale, retreat checks |
 | Inventory & Ammo Consumption | [`InventorySystem.cs`](../../Assets/Ashfall.Core/Inventory/InventorySystem.cs) | Ammo cartridge tracking, loadout validation |
