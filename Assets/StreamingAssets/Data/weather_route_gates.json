@@ -223,7 +223,8 @@
       "override_skill": "",
       "consequence_on_force": "Black rain percolates straight into the flooded bay. Waders do not stop what dissolves.",
       "description": "The depot floods from below and above. Black rain raises the waterline and feeds the radiation already dissolved in it.",
-      "force_stamina_cost": 25
+      "force_stamina_cost": 25,
+      "force_rad_dose": 15
     },
     {
       "id": "gate_dest_shallows_market_falloutstorm",
@@ -237,7 +238,8 @@
       "override_skill": "",
       "consequence_on_force": "An open-air market under a fallout storm is a ledger of the dead. The stalls would stand empty anyway.",
       "description": "The Shallows trades in the open air on the drowned waterfront. When fallout comes off the water, there is nowhere to shelter and no trade worth the dose.",
-      "force_stamina_cost": 25
+      "force_stamina_cost": 25,
+      "force_rad_dose": 20
     }
   ]
 }

@@ -104,3 +104,22 @@ lookup requires block + positive cost; override lift; authored gates carry
 costs + consequence prose.
 **Verification:** build 0/0; full suite 6848/6848; all selftests + CI gate.
 **Result:** PASS
+
+## Phase 9 — GAP-48B completion: radiological force consequences
+
+**Broken link before:** forced entry through radiological gates (black rain,
+fallout storm) applied only the stamina cost — the thematic radiation dose had
+no path.
+**Change:** `WeatherGateDef.force_rad_dose` (data); `WeatherGateBlock.ForceRadDose`;
+`ExpeditionHostSession.OnWeatherGateForced(survivorId, locationId, block)`
+raised on successful forced dispatch; Main routes the dose to the radiation
+owner (`_survivors.Radiation.AdjustDose(rad, dose)` — the authoritative
+path used by Phase 0 and the real-campaign journey). Blizzard gate stays
+stamina-only; depot (15) and shallows (20) dose on force.
+**Data:** `force_rad_dose` on the two radiological destination gates.
+**Tests:** `ForcePassageTests` extended — radiological gates dose, cold gate
+does not; override lift applies before any dose.
+**Verification:** build 0/0; scoped tests 11/11; full suite 6866/6868→6866/6866
+green after the concurrent Plan 85 pin updates (they added 12 destinations,
+all table-bound, reusing Plan 76.1 tables).
+**Result:** PASS

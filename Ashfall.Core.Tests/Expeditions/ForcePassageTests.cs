@@ -132,6 +132,19 @@ namespace Ashfall.Core.Tests.Expeditions
                 Assert.True(gate.force_stamina_cost > 0f, $"{gate.id} must be forceable");
                 Assert.False(string.IsNullOrEmpty(gate.consequence_on_force));
             }
+
+            // radiological gates carry a rad dose on force; the cold gate does not
+            var blizzard = gates.EvaluateBlock("location_silent_observatory", "Blizzard", null);
+            Assert.NotNull(blizzard);
+            Assert.Equal(0f, blizzard!.ForceRadDose);
+
+            var blackRain = gates.EvaluateBlock("location_flooded_subway_depot", "BlackRain", null);
+            Assert.NotNull(blackRain);
+            Assert.True(blackRain!.ForceRadDose > 0f, "black-rain gate must dose on force");
+
+            var fallout = gates.EvaluateBlock("loc_the_shallows_market", "FalloutStorm", null);
+            Assert.NotNull(fallout);
+            Assert.True(fallout!.ForceRadDose > 0f, "fallout gate must dose on force");
         }
     }
 }

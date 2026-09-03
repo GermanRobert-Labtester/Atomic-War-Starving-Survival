@@ -26,6 +26,9 @@ namespace Ashfall.Core.World
         /// <summary>GAP-48B — stamina the sortie starts short when the player
         /// forces through this gate. 0/absent = the gate cannot be forced.</summary>
         public float force_stamina_cost { get; set; } = 0f;
+        /// <summary>GAP-48B — acute radiation dose (0–100 scale) applied to the
+        /// dispatched survivor when forcing through. 0/absent = no dose.</summary>
+        public float force_rad_dose { get; set; } = 0f;
         public string description { get; set; } = string.Empty;
     }
 
@@ -41,6 +44,9 @@ namespace Ashfall.Core.World
         /// <summary>GAP-48B — stamina the sortie starts short when forcing
         /// through. 0 = this gate cannot be forced.</summary>
         public float ForceStaminaCost { get; set; }
+        /// <summary>GAP-48B — acute dose applied to the dispatched survivor on
+        /// a forced entry (routed to the radiation system by the owner).</summary>
+        public float ForceRadDose { get; set; }
         /// <summary>Player-facing consequence prose for the force action
         /// (consumes the gate's `consequence_on_force`).</summary>
         public string ForceConsequence { get; set; } = string.Empty;
@@ -147,6 +153,7 @@ namespace Ashfall.Core.World
                     Reason = !string.IsNullOrEmpty(gate.description) ? gate.description : $"Weather gate active ({gate.id}).",
                     ShortReason = $"Weather gate — {currentWeather.ToLowerInvariant()}",
                     ForceStaminaCost = gate.force_stamina_cost,
+                    ForceRadDose = gate.force_rad_dose,
                     ForceConsequence = gate.consequence_on_force
                 };
             }
