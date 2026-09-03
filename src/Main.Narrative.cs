@@ -153,17 +153,39 @@ namespace AtomicWar.GodotApp
 
         private void SetupNarrative(bool reloadEventAdapter = false)
         {
-            if (_narrative == null)
-            {
-                _narrative = NarrativeHostSession.Create(_dataDir);
-                _narrative.StateChanged += () => _narrativeDirty = true;
-                GD.Print("[Ashfall Godot] Narrative host ready.");
-            }
+            EnsureNarrativeSession();
 
             // Narrative setup is part of both composition and restore. Initialize
             // the event adapter here so campaign state is loaded before its first
             // day-owner evaluation, without coupling it to the catalog read-model.
             SetupEventAdapter(reloadEventAdapter);
+
+            // F3 — the expedition host's journal seam binds once the journal
+            // authority exists (SetupEventAdapter → SetupJournal created it).
+            BindExpeditionJournalIfReady();
+        }
+
+        /// <summary>F3 — share the one journal authority with the expedition
+        /// host's consequence applier. No-op until both sessions exist.</summary>
+        private void BindExpeditionJournalIfReady()
+        {
+            if (_expeditions == null || _journal == null) return;
+            if (_expeditions.Journal == _journal) return;
+            _expeditions.Journal = _journal;
+        }
+
+        /// <summary>
+        /// F1–F4 — ensure the ONE narrative-encounter engine exists (catalog
+        /// loaded, save restored) without touching the event adapter. The
+        /// expedition host shares this engine so depletion, resolution history,
+        /// and the pending queue have a single save-backed authority.
+        /// </summary>
+        private void EnsureNarrativeSession()
+        {
+            if (_narrative != null) return;
+            _narrative = NarrativeHostSession.Create(_dataDir);
+            _narrative.StateChanged += () => _narrativeDirty = true;
+            GD.Print("[Ashfall Godot] Narrative host ready.");
         }
 
         private void SaveNarrative()

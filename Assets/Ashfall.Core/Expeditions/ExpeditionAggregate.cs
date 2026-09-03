@@ -18,6 +18,11 @@ namespace Ashfall.Core.Expeditions
         public string systemId = "expedition_aggregate";
         public List<ExpeditionState> expeditions = new List<ExpeditionState>();
         public ExpeditionVehicleState vehicles = new ExpeditionVehicleState();
+
+        /// <summary>F4 — discovered expedition-destination IDs. Null on legacy
+        /// aggregates (restore then reconstructs from the narrative resolution
+        /// history); a present list (even empty) is authoritative.</summary>
+        public List<string>? knownLocationIds = new List<string>();
     }
 
     /// <summary>

@@ -107,6 +107,11 @@ namespace Ashfall.Core.Narrative
         public int cumulativeGuilt = 0;
         public List<EncounterResolutionRecord> history = new List<EncounterResolutionRecord>();
         public List<PendingSurfacedEncounter> pending = new List<PendingSurfacedEncounter>();
+
+        /// <summary>F1 — encounter IDs whose depleting choice has been resolved.
+        /// Null on legacy saves that predate depletion (restore then reconstructs
+        /// the set from history); a present list (even empty) means "known".</summary>
+        public List<string>? depletedEncounterIds = new List<string>();
     }
 
     [System.Serializable]

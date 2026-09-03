@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.IO;
+using Ashfall.Core.Inventory;
+using Ashfall.Core.Journal;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.World;
 
 #pragma warning disable CS8618
 
@@ -34,6 +37,20 @@ namespace AtomicWar.GodotApp
         public DiveInstanceRunner DiveRunner { get; private set; }
         public Ashfall.Core.Flags.IFlagLedger Flags { get; set; } = new Ashfall.Core.Flags.CampaignConsequenceLedger();
 
+        /// <summary>F3 — journal authority for encounter knowledge unlocks.
+        /// Null (headless) degrades honestly: unlocks are skipped, resolution
+        /// still succeeds.</summary>
+        public JournalSystem? Journal { get; set; }
+
+        /// <summary>F2 — shelter inventory authority for negative item deltas
+        /// (offerings). Consumed only through the canonical TryConsume
+        /// transaction; never underflows.</summary>
+        public Ashfall.Core.Inventory.Inventory? ShelterInventory { get; set; }
+
+        /// <summary>F2 — item catalog for loot weights and display names.
+        /// Falls back to the scavenging convention (1 kg/item) when unset.</summary>
+        public ItemCatalog? Items { get; set; }
+
         /// <summary>Vehicle garage (fuel, condition, repair) — persisted inside the expedition aggregate.</summary>
         public ExpeditionVehicleSystem Vehicles { get; }
 
@@ -45,6 +62,40 @@ namespace AtomicWar.GodotApp
         /// stage). When set, any location it blocks cannot be dispatched.
         /// </summary>
         public Func<string, bool> ExtraBlocked { get; set; }
+
+        /// <summary>
+        /// Optional reason-carrying dispatch gate (GAP-48A): returns a
+        /// player-facing block for a location, or null when passable.
+        /// Evaluated after <see cref="ExtraBlocked"/>; either gate blocks.
+        /// The block carries the weather gate's force cost (GAP-48B).
+        /// </summary>
+        public Func<string, WeatherGateBlock?> ExtraGateBlock { get; set; }
+
+        /// <summary>Player-facing block reason for a location, or null when
+        /// dispatchable. Composes the crossing gate, the boolean extra gate,
+        /// and the reason-carrying extra gate.</summary>
+        public string? GetBlockReason(string locationId)
+        {
+            if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
+                return "Crossing gate closed — no vouch";
+            if (ExtraBlocked != null && ExtraBlocked(locationId))
+                return "Route blocked";
+            // Plan 85 — hidden installations stay undispatchable until the
+            // treasure map is completed and the site is revealed.
+            if (Engine.DamagedMap != null && Engine.DamagedMap.IsDestinationLocked(locationId))
+                return "Map incomplete — location unidentified";
+            // F4 — clue-gated destinations stay undispatchable until an
+            // expedition encounter (e.g. observation post) reveals them.
+            var def = Definitions.Find(d => d != null && d.id == locationId);
+            if (def != null && def.requiresDiscovery && !Engine.IsLocationKnown(locationId))
+                return "Location unidentified — no clues found yet";
+            return ExtraGateBlock?.Invoke(locationId)?.ShortReason;
+        }
+
+        /// <summary>The weather gate blocking a location, or null when the
+        /// location is passable or blocked by a non-weather gate.</summary>
+        public WeatherGateBlock? GetWeatherGateBlock(string locationId)
+            => ExtraGateBlock?.Invoke(locationId);
 
         /// <summary>Passthrough to the Core per-location encounter-chance multiplier (faction/territory danger).</summary>
         public void SetEncounterChanceMultiplier(Func<string, float> multiplier) => Engine.SetEncounterChanceMultiplier(multiplier);
@@ -71,6 +122,11 @@ namespace AtomicWar.GodotApp
             public IReadOnlyList<string> CombatantIds = Array.Empty<string>();
         }
         public event Action<TravelCombatTrigger>? OnTravelEncounterCombatTriggered;
+
+        /// <summary>GAP-48B — raised after a successful forced entry through a
+        /// weather gate. The radiation owner applies `block.ForceRadDose` to
+        /// the survivor; the stamina cost is already applied by the engine.</summary>
+        public event Action<string, string, WeatherGateBlock>? OnWeatherGateForced;
 
         /// <summary>The Plan 20 wasteland-inhabitants encounter engine. Null outside Create(dataDir) hosts — combat binding degrades honestly.</summary>
         public TravelEncounterSystem? TravelEngine { get; private set; }
@@ -144,7 +200,13 @@ namespace AtomicWar.GodotApp
             {
                 LastEvent = $"Encounter triggered: {dto.trigger.survivorId} at {dto.trigger.displayName} (#{dto.trigger.encounterCount}) -> {dto.encounter_id ?? "bare-notice"}.";
                 if (!string.IsNullOrEmpty(dto.encounter_id))
+                {
                     _narrative.EnqueuePending(dto.encounter_id, dto.trigger.locationId, dto.trigger.encounterCount, CurrentDay);
+                    // F2 — remember which sortie surfaced the encounter so a
+                    // prompt choice routes its loot grant to the right pack.
+                    _lastSurfacedEncounterId = dto.encounter_id;
+                    _lastSurfacedTriggerSurvivor = dto.trigger?.survivorId ?? string.Empty;
+                }
                 RaiseStateChanged();
                 OnEncounterSurfaced?.Invoke(dto);
             };
@@ -162,7 +224,7 @@ namespace AtomicWar.GodotApp
                 dangerLevel = 2,
                 encounterChancePerTick = 0.12f,
                 baseStaminaDrainPerHour = 2.0f,
-                lootCategories = new List<string> { "scrap_metal", "clean_water", "bandages", "food_rations" }
+                lootCategories = new List<string> { "scrap_metal", "clean_water", "bandage", "dried_rations" }
             };
             var cut = new ExpeditionDefinition
             {
@@ -172,7 +234,7 @@ namespace AtomicWar.GodotApp
                 dangerLevel = 4,
                 encounterChancePerTick = 0.18f,
                 baseStaminaDrainPerHour = 3.0f,
-                lootCategories = new List<string> { "dosimeter", "copper_wire", "fuel", "item_hydro_baron_queue_chit" }
+                lootCategories = new List<string> { "dosimeter", "copper_wire_10m_of_10m", "fuel", "item_hydro_baron_queue_chit" }
             };
             ExpeditionDefinitionRegistry.Register(allotments);
             ExpeditionDefinitionRegistry.Register(cut);
@@ -187,6 +249,16 @@ namespace AtomicWar.GodotApp
             {
                 var fileIO = new FileSystemIO();
                 var serializer = new SystemTextJsonSerializer();
+
+                // F1–F4 — when no shared narrative engine was passed, the
+                // session's own engine must still load the encounter catalog;
+                // otherwise micro-locations can never surface or resolve.
+                if (session._narrative.Catalog.Count == 0)
+                {
+                    session._narrative.RegisterRange(
+                        NarrativeEncounterCatalogLoader.Load(dataDir, fileIO, serializer));
+                }
+
                 var loaded = ExpeditionCatalogLoader.Load(dataDir, fileIO, serializer);
                 if (loaded != null && loaded.Count > 0)
                 {
@@ -199,6 +271,13 @@ namespace AtomicWar.GodotApp
                     }
                 }
                 session.Vehicles.LoadCatalog(VehicleCatalogLoader.Load(dataDir, fileIO, serializer));
+
+                // Plan 46 — the location-typed scavenging tables are the loot
+                // authority for destinations that declare a table id; rolls
+                // may also surface damaged-map fragment tokens (Plan 85).
+                var scavengeCatalog = ScavengingTableCatalog.LoadFromDirectory(dataDir, fileIO, serializer);
+                if (scavengeCatalog.TableCount > 0)
+                    session.Engine.ScavengingCatalog = scavengeCatalog;
                 // Plan 45 phase 2 — the wasteland-inhabitants layer: creature
                 // / human travel encounters resolve through the combat binder.
                 var travelCatalog = TravelEncounterCatalog.LoadFromDirectory(dataDir, fileIO);
@@ -227,14 +306,7 @@ namespace AtomicWar.GodotApp
         // ── Production Expedition Actions ─────────────────────────────
 
         /// <summary>True when the player cannot dispatch to this location right now.</summary>
-        public bool IsLocationBlocked(string locationId)
-        {
-            if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
-                return true;
-            if (ExtraBlocked != null && ExtraBlocked(locationId))
-                return true;
-            return false;
-        }
+        public bool IsLocationBlocked(string locationId) => GetBlockReason(locationId) != null;
 
         /// <summary>Production API to start an expedition to a specified location.
         /// When a vehicleId is given, dispatch preparation runs the garage's
@@ -245,7 +317,8 @@ namespace AtomicWar.GodotApp
             ExpeditionStance stance = ExpeditionStance.Stealth,
             int staminaBudget = 40,
             string vehicleId = "",
-            long? stateVersion = null)
+            long? stateVersion = null,
+            bool forceWeatherGate = false)
         {
             long version = stateVersion ?? StateVersion;
 
@@ -261,6 +334,16 @@ namespace AtomicWar.GodotApp
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
             if (ExtraBlocked != null && ExtraBlocked(locationId))
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
+            float forcedGateStaminaCost = 0f;
+            var gateBlock = ExtraGateBlock?.Invoke(locationId);
+            if (gateBlock != null)
+            {
+                // GAP-48B — a weather gate can be forced only when its data
+                // carries a force cost; the sortie then starts stamina-short.
+                if (!forceWeatherGate || gateBlock.ForceStaminaCost <= 0f)
+                    return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
+                forcedGateStaminaCost = gateBlock.ForceStaminaCost;
+            }
             var def = ExpeditionDefinitionRegistry.Get(locationId)
                       ?? Definitions.Find(d => d.id == locationId);
             if (def == null)
@@ -290,9 +373,12 @@ namespace AtomicWar.GodotApp
             // version against itself here — preparation's own mutation must not
             // invalidate the dispatch it is preparing for.
             long preparedVersion = StateVersion;
-            var result = Engine.ExecuteStart(def, survivorId, staminaBudget, stance, vehicle: profile, expectedStateVersion: preparedVersion, currentStateVersion: preparedVersion);
+            var result = Engine.ExecuteStart(def, survivorId, staminaBudget, stance, vehicle: profile, expectedStateVersion: preparedVersion, currentStateVersion: preparedVersion,
+                startingStamina: ExpeditionSystem.MaxStamina - forcedGateStaminaCost);
             if (result.IsSuccess)
             {
+                if (forcedGateStaminaCost > 0f)
+                    OnWeatherGateForced?.Invoke(survivorId, locationId, gateBlock!);
                 RaiseStateChanged();
                 LastEvent = navalDispatch != null
                     ? $"Sent {survivorId} to {def.displayName} by river raft (piracy waters)."
@@ -371,6 +457,62 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// Plan 60 — vehicle kit → vehicle assembly bridge. Consumes one kit
+        /// item from the shelter inventory atomically and acquires the mapped
+        /// vehicle through the garage. Inventory consumption is the kit's
+        /// cost; vehicle ownership/state remains owned by
+        /// <see cref="ExpeditionVehicleSystem"/>.
+        /// </summary>
+        public CommandResult AssembleVehicleFromKit(string kitItemId, Inventory shelterInventory)
+        {
+            if (string.IsNullOrEmpty(kitItemId) || shelterInventory == null)
+                return new CommandResult(PlayerCommandCode.AssembleVehicle,
+                    ActionResult.Failed("invalid_kit", "vehicle.kit_invalid"), StateVersion, StateVersion);
+
+            if (!_kitVehicleMap.TryGetValue(kitItemId, out var vehicleId))
+                return new CommandResult(PlayerCommandCode.AssembleVehicle,
+                    ActionResult.Failed("invalid_kit", "vehicle.kit_invalid"), StateVersion, StateVersion);
+
+            if (Vehicles.GetVehicle(vehicleId) != null)
+                return new CommandResult(PlayerCommandCode.AssembleVehicle,
+                    ActionResult.Blocked("already_owned", "vehicle.already_owned"), StateVersion, StateVersion);
+
+            // Atomic kit consumption BEFORE acquisition; on acquisition
+            // failure the kit is refunded via a grant bill. The player is
+            // never left owning a vehicle without paying its kit, nor holding
+            // a consumed kit without a vehicle.
+            if (!shelterInventory.TryConsumeBill(new Dictionary<string, int> { { kitItemId, 1 } }))
+                return new CommandResult(PlayerCommandCode.AssembleVehicle,
+                    ActionResult.Blocked("missing_kit", "vehicle.kit_missing"), StateVersion, StateVersion);
+
+            var acquireResult = Vehicles.AcquireVehicle(vehicleId);
+            if (acquireResult.Status != ActionResult.StatusKind.Success)
+            {
+                // Refund the kit — acquisition did not go through.
+                var refund = new InventoryBill();
+                refund.AddGrant(kitItemId, 1);
+                shelterInventory.TryExecuteTransaction(refund);
+                return new CommandResult(PlayerCommandCode.AssembleVehicle,
+                    ActionResult.Blocked(acquireResult.FailureCode ?? "vehicle.acquire_failed", "vehicle.acquire_failed"), StateVersion, StateVersion);
+            }
+
+            RaiseStateChanged();
+            LastEvent = $"Assembled {vehicleId} from {kitItemId}.";
+            return CommandResult.FromSuccess(PlayerCommandCode.AssembleVehicle,
+                ActionResult.Success("vehicle.assembled", new Dictionary<string, double>()),
+                StateVersion, StateVersion + 1);
+        }
+
+        /// <summary>Plan 60 — kit item id → vehicle id mapping.</summary>
+        private static readonly Dictionary<string, string> _kitVehicleMap =
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["item_vehicle_kit_bicycle"] = "vehicle_bicycle",
+                ["item_vehicle_kit_cargo_cart"] = "vehicle_cargo_cart",
+                ["item_vehicle_kit_scout_motorcycle"] = "vehicle_scout_motorcycle",
+            };
+
+        /// <summary>
         /// Dispatch preparation through the garage: exact fuel need check, the
         /// consuming PrepareForExpedition (fuel burn, wear, prep-breakdown
         /// roll). Returns null when ready to roll, otherwise a refusal message.
@@ -443,7 +585,8 @@ namespace AtomicWar.GodotApp
             ExpeditionStance stance,
             int day,
             string vehicleId = "",
-            long? stateVersion = null)
+            long? stateVersion = null,
+            bool forceWeatherGate = false)
         {
             long version = stateVersion ?? StateVersion;
 
@@ -460,6 +603,14 @@ namespace AtomicWar.GodotApp
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
             if (ExtraBlocked != null && ExtraBlocked(locationId))
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
+            float forcedGateStaminaCost = 0f;
+            var gateBlock2 = ExtraGateBlock?.Invoke(locationId);
+            if (gateBlock2 != null)
+            {
+                if (!forceWeatherGate || gateBlock2.ForceStaminaCost <= 0f)
+                    return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
+                forcedGateStaminaCost = gateBlock2.ForceStaminaCost;
+            }
 
             var navalDispatch = ResolveNavalDispatch(def, locationId);
             if (navalDispatch != null)
@@ -479,9 +630,12 @@ namespace AtomicWar.GodotApp
             }
 
             long dispatchVersion = StateVersion;
-            var result = Engine.ExecuteStart(def, survivorId, day, stance, vehicle: profile, expectedStateVersion: dispatchVersion, currentStateVersion: dispatchVersion);
+            var result = Engine.ExecuteStart(def, survivorId, day, stance, vehicle: profile, expectedStateVersion: dispatchVersion, currentStateVersion: dispatchVersion,
+                startingStamina: ExpeditionSystem.MaxStamina - forcedGateStaminaCost);
             if (result.IsSuccess)
             {
+                if (forcedGateStaminaCost > 0f)
+                    OnWeatherGateForced?.Invoke(survivorId, locationId, gateBlock2!);
                 RaiseStateChanged();
                 LastEvent = navalDispatch != null
                     ? $"{survivorId} takes the river route to {def.displayName} by raft (piracy waters)."
@@ -504,10 +658,45 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// F2/F3/F4 — typed outcome of applying one resolution's cross-system
+        /// consequences. Each subsystem reports independently so a partial
+        /// application is observable, never silently folded into a boolean.
+        /// </summary>
+        public sealed class EncounterApplicationResult
+        {
+            public string ResolutionId = string.Empty;
+
+            public enum Status { NotApplicable, Applied, AlreadyKnown, RejectedCapacity, RejectedInsufficientItems, NoActiveExpedition, SkippedNoAuthority, RejectedUnknownId }
+
+            public Status Item = Status.NotApplicable;
+            public string ItemId = string.Empty;
+            public int ItemQuantity;
+
+            public Status Journal = Status.NotApplicable;
+            public string JournalId = string.Empty;
+
+            public Status Location = Status.NotApplicable;
+            public string LocationId = string.Empty;
+
+            public Status Flag = Status.NotApplicable;
+            public string FlagId = string.Empty;
+        }
+
+        /// <summary>F2/F3/F4 — outcome of the most recent consequence
+        /// application (observability for UI, tests, and diagnostics).</summary>
+        public EncounterApplicationResult? LastApplication { get; private set; }
+
+        /// <summary>Fired after a resolution's consequences were applied.</summary>
+        public event Action<EncounterApplicationResult>? OnEncounterConsequencesApplied;
+
+        /// <summary>
         /// Apply a player choice for a surfaced encounter through Core. The
         /// location is taken from that encounter's own pending entry when one
         /// exists, so resolving a backlog row records where that row actually
-        /// happened rather than wherever the newest encounter surfaced.
+        /// happened rather than wherever the newest encounter surfaced. After
+        /// the Core resolve commits, the returned consequence payload is
+        /// applied through the owning subsystems exactly once (F2 items, F3
+        /// journal, F4 location, world flag).
         /// </summary>
         public bool EncounterApplyChoice(string encounterId, string choiceId, int day)
             => EncounterApplyChoice(encounterId, choiceId, day, null!);
@@ -525,6 +714,15 @@ namespace AtomicWar.GodotApp
 
             // The player has acknowledged this one — shrink the pending list.
             if (ok) _narrative.ClearPending(encounterId);
+
+            // F2/F3/F4 — apply the resolved consequence payload exactly once,
+            // through the subsystems that own each effect.
+            if (ok && _bridge.LastResolution != null)
+            {
+                var application = ApplyEncounterConsequences(_bridge.LastResolution);
+                LastApplication = application;
+                OnEncounterConsequencesApplied?.Invoke(application);
+            }
             return ok;
         }
 
@@ -592,6 +790,198 @@ namespace AtomicWar.GodotApp
             return null;
         }
 
+        // ── F2/F3/F4 consequence application ───────────────────
+
+        /// <summary>F2 — the sortie that surfaced the most recent resolvable
+        /// encounter (loot-routing hint), or empty for backlog rows.</summary>
+        private string _lastSurfacedTriggerSurvivor = string.Empty;
+        private string _lastSurfacedEncounterId = string.Empty;
+
+        /// <summary>
+        /// F2/F3/F4 consequence application. Order (per the integration plan):
+        /// item delta → journal → location → world flag. Narrative state
+        /// (history/depletion) already committed in Core; every external
+        /// effect is idempotent or capacity-checked, and failures surface as
+        /// typed statuses instead of exceptions.
+        /// </summary>
+        private EncounterApplicationResult ApplyEncounterConsequences(NarrativeEncounterResolutionResult r)
+        {
+            var app = new EncounterApplicationResult { ResolutionId = r.ResolutionId };
+            var feedback = new List<string>();
+
+            // ── F2: signed item delta ──
+            app.ItemId = r.GrantItemId;
+            app.ItemQuantity = r.GrantItemQuantity;
+            if (!string.IsNullOrEmpty(r.GrantItemId) && r.GrantItemQuantity != 0)
+            {
+                if (r.GrantItemQuantity > 0)
+                {
+                    // Positive grant → the active sortie's loot list (never the
+                    // shelter inventory: the expedition return flow unloads it).
+                    string? survivorId = ResolveGrantSurvivorId(r.EncounterId, r.LocationId);
+                    float unitWeight = ItemWeight(r.GrantItemId);
+                    var grant = string.IsNullOrEmpty(survivorId)
+                        ? ExpeditionSystem.LootGrantStatus.NoActiveExpedition
+                        : Engine.TryGrantLoot(survivorId, r.GrantItemId, unitWeight, r.GrantItemQuantity);
+                    app.Item = grant switch
+                    {
+                        ExpeditionSystem.LootGrantStatus.Granted => EncounterApplicationResult.Status.Applied,
+                        ExpeditionSystem.LootGrantStatus.RejectedCapacity => EncounterApplicationResult.Status.RejectedCapacity,
+                        _ => EncounterApplicationResult.Status.NoActiveExpedition
+                    };
+                    feedback.Add(app.Item switch
+                    {
+                        EncounterApplicationResult.Status.Applied =>
+                            $"Recovered: {ItemDisplayName(r.GrantItemId)} ×{r.GrantItemQuantity}.",
+                        EncounterApplicationResult.Status.RejectedCapacity =>
+                            $"Cargo found, but your expedition cannot carry the {ItemDisplayName(r.GrantItemId).ToLowerInvariant()}.",
+                        _ => $"The {ItemDisplayName(r.GrantItemId)} had to be left behind — no pack was out to carry it."
+                    });
+                }
+                else
+                {
+                    // Negative grant (offering) → shelter inventory authority.
+                    int needed = -r.GrantItemQuantity;
+                    if (ShelterInventory == null)
+                    {
+                        app.Item = EncounterApplicationResult.Status.SkippedNoAuthority;
+                    }
+                    else if (ShelterInventory.HasSufficient(r.GrantItemId, needed) && ShelterInventory.TryConsume(r.GrantItemId, needed))
+                    {
+                        app.Item = EncounterApplicationResult.Status.Applied;
+                        feedback.Add($"Offering left: {ItemDisplayName(r.GrantItemId)} ×{needed}.");
+                    }
+                    else
+                    {
+                        app.Item = EncounterApplicationResult.Status.RejectedInsufficientItems;
+                        feedback.Add($"An offering wanted {ItemDisplayName(r.GrantItemId)} — none could be spared.");
+                    }
+                }
+            }
+
+            // ── F3: journal unlock ──
+            app.JournalId = r.JournalUnlockId;
+            if (!string.IsNullOrEmpty(r.JournalUnlockId))
+            {
+                if (Journal == null)
+                {
+                    app.Journal = EncounterApplicationResult.Status.SkippedNoAuthority;
+                }
+                else
+                {
+                    // One atomic Core path: entry written AND codex event fired
+                    // exactly once per key (single KnowledgeBase dedup gate).
+                    var entry = Journal.TryDiscoverKnowledge(r.JournalUnlockId, ExpeditionJournalAuthor.Instance, r.Day);
+                    app.Journal = entry != null
+                        ? EncounterApplicationResult.Status.Applied
+                        : EncounterApplicationResult.Status.AlreadyKnown;
+                    if (entry != null)
+                        feedback.Add($"Journal updated: {HumanizeId(r.JournalUnlockId)}.");
+                }
+            }
+
+            // ── F4: location discovery ──
+            app.LocationId = r.DiscoverLocationId;
+            if (!string.IsNullOrEmpty(r.DiscoverLocationId))
+            {
+                bool already = Engine.IsLocationKnown(r.DiscoverLocationId);
+                bool discovered = Engine.DiscoverLocation(r.DiscoverLocationId);
+                if (discovered)
+                {
+                    app.Location = already
+                        ? EncounterApplicationResult.Status.AlreadyKnown
+                        : EncounterApplicationResult.Status.Applied;
+                    if (!already)
+                        feedback.Add($"New location discovered: {DestinationDisplayName(r.DiscoverLocationId)}.");
+                }
+                else
+                {
+                    app.Location = EncounterApplicationResult.Status.RejectedUnknownId;
+                }
+            }
+
+            // ── World flag (authored micro-location consequence) ──
+            app.FlagId = r.SetWorldFlagId;
+            if (!string.IsNullOrEmpty(r.SetWorldFlagId))
+            {
+                bool already = Flags != null && Flags.IsSet(r.SetWorldFlagId);
+                Flags?.Set(r.SetWorldFlagId, NarrativeEncounterSystem.SystemId, r.ResolutionId, r.Day);
+                app.Flag = already
+                    ? EncounterApplicationResult.Status.AlreadyKnown
+                    : EncounterApplicationResult.Status.Applied;
+            }
+
+            if (feedback.Count > 0)
+            {
+                LastEvent = string.Join(" ", feedback);
+                RaiseStateChanged();
+            }
+            return app;
+        }
+
+        /// <summary>
+        /// F2 — decide which active sortie receives a positive grant. The
+        /// surfaced trigger's survivor wins when it still matches an active
+        /// expedition; otherwise the ordinal-first active expedition at the
+        /// resolution's location. Deterministic. Null when no sortie qualifies.
+        /// </summary>
+        private string? ResolveGrantSurvivorId(string encounterId, string locationId)
+        {
+            if (!string.IsNullOrEmpty(_lastSurfacedTriggerSurvivor)
+                && _lastSurfacedEncounterId == encounterId
+                && Engine.Active.ContainsKey(_lastSurfacedTriggerSurvivor))
+                return _lastSurfacedTriggerSurvivor;
+
+            string? best = null;
+            foreach (var kv in Engine.Active)
+            {
+                var state = kv.Value;
+                if (state == null || !string.Equals(state.locationId, locationId, StringComparison.Ordinal)) continue;
+                if (best == null || string.CompareOrdinal(kv.Key, best) < 0)
+                    best = kv.Key;
+            }
+            return best;
+        }
+
+        /// <summary>F2 — catalog weight, falling back to the scavenging
+        /// convention (1 kg per item) for unknown items.</summary>
+        private float ItemWeight(string itemId)
+        {
+            var def = Items?.Get(itemId);
+            return def != null && def.weight > 0f ? def.weight : 1f;
+        }
+
+        private string ItemDisplayName(string itemId)
+        {
+            var def = Items?.Get(itemId);
+            return def != null && !string.IsNullOrEmpty(def.displayName) ? def.displayName : HumanizeId(itemId);
+        }
+
+        private string DestinationDisplayName(string locationId)
+        {
+            var def = Definitions.Find(d => d != null && d.id == locationId);
+            return def != null && !string.IsNullOrEmpty(def.displayName) ? def.displayName : HumanizeId(locationId);
+        }
+
+        private static string HumanizeId(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return string.Empty;
+            var parts = id.Split('_');
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length == 0) continue;
+                parts[i] = char.ToUpperInvariant(parts[i][0]) + (parts[i].Length > 1 ? parts[i][1..] : string.Empty);
+            }
+            return string.Join(" ", parts);
+        }
+
+        private sealed class ExpeditionJournalAuthor : ISurvivorAuthor
+        {
+            public static readonly ExpeditionJournalAuthor Instance = new ExpeditionJournalAuthor();
+            public string Id => "expedition";
+            public string DisplayName => "Expedition";
+            public RiskBiasTrait RiskBias => RiskBiasTrait.Realist;
+        }
         public string PushLuck(string survivorId)
         {
             return Engine.PushLuck(survivorId) ? $"{survivorId} is pushing luck." : "Cannot push luck (not looting).";
@@ -705,12 +1095,19 @@ namespace AtomicWar.GodotApp
         public List<ExpeditionState> CaptureSave() => Engine.CaptureState();
         public void RestoreSave(List<ExpeditionState> state) => Engine.RestoreState(state);
 
-        /// <summary>Aggregate save payload: active expeditions + the vehicle garage.</summary>
-        public ExpeditionAggregateState CaptureSaveAggregate() => new ExpeditionAggregateState
+        /// <summary>Aggregate save payload: active expeditions + the vehicle garage + the F4 destination-discovery ledger.</summary>
+        public ExpeditionAggregateState CaptureSaveAggregate()
         {
-            expeditions = Engine.CaptureState(),
-            vehicles = Vehicles.CaptureState(),
-        };
+            var aggregate = new ExpeditionAggregateState
+            {
+                expeditions = Engine.CaptureState(),
+                vehicles = Vehicles.CaptureState(),
+                knownLocationIds = Engine.CaptureKnownLocations()
+            };
+            if (aggregate.knownLocationIds.Count == 0)
+                aggregate.knownLocationIds = new List<string>(); // explicit empty — authoritative, not legacy
+            return aggregate;
+        }
 
         public void RestoreSaveAggregate(ExpeditionAggregateState aggregate)
         {
@@ -719,6 +1116,42 @@ namespace AtomicWar.GodotApp
                 Engine.RestoreState(aggregate.expeditions);
             if (aggregate.vehicles != null)
                 Vehicles.RestoreState(aggregate.vehicles);
+
+            // F4 restore: a present list (even empty) is authoritative. A null
+            // list marks a legacy aggregate that predates the ledger —
+            // reconstruct discoveries from the narrative resolution history so
+            // pre-feature clue choices keep their revealed destinations.
+            if (aggregate.knownLocationIds != null)
+                Engine.RestoreKnownLocations(aggregate.knownLocationIds);
+            else
+                Engine.RestoreKnownLocations(ReconstructDiscoveriesFromHistory());
+        }
+
+        /// <summary>
+        /// F4 legacy migration: walk the narrative resolution history, resolve
+        /// each recorded choice against the catalog, and collect the location
+        /// IDs its choices discovered. Deterministic; unknown historical
+        /// encounters/choices are skipped — never guessed.
+        /// </summary>
+        private List<string> ReconstructDiscoveriesFromHistory()
+        {
+            var discovered = new List<string>();
+            var history = _narrative?.State?.history;
+            var narrativeEngine = _narrative;
+            if (history == null || narrativeEngine == null) return discovered;
+            for (int i = 0; i < history.Count; i++)
+            {
+                var record = history[i];
+                if (record == null || string.IsNullOrEmpty(record.encounterId)) continue;
+                var def = narrativeEngine.Find(record.encounterId);
+                if (def == null) continue;
+                var choice = def.choices?.Find(c => c != null && c.choiceId == record.choiceId);
+                if (choice == null || string.IsNullOrEmpty(choice.discoverLocationId)) continue;
+                if (!discovered.Contains(choice.discoverLocationId))
+                    discovered.Add(choice.discoverLocationId);
+            }
+            discovered.Sort(string.CompareOrdinal);
+            return discovered;
         }
 
         // ── Dive Instance (Exp 09) ──────────────────────────────────

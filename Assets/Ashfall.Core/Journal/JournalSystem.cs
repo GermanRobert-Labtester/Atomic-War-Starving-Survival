@@ -169,6 +169,32 @@ namespace Ashfall.Core.Journal
         }
 
         /// <summary>
+        /// F3 — record an expedition/knowledge discovery that is BOTH a journal
+        /// entry and a codex unlock, through one dedup gate. Exactly once per
+        /// key: on the unknown → known transition the entry is written AND
+        /// <see cref="OnCodexUnlocked"/> fires; a repeat call returns null and
+        /// does nothing. (Calling <see cref="TryDiscover"/> plus
+        /// <see cref="AddKnowledgeEvidence"/> separately cannot provide this:
+        /// whichever runs second finds the key already known.)
+        /// </summary>
+        public JournalEntry? TryDiscoverKnowledge(
+            string knowledgeKey,
+            ISurvivorAuthor? author,
+            int day,
+            float hour = -1f)
+        {
+            if (string.IsNullOrEmpty(knowledgeKey)) return null;
+            if (!_knowledge.Discover(knowledgeKey)) return null; // single dedup gate
+
+            CodexUnlockCount++;
+            OnCodexUnlocked?.Invoke(knowledgeKey);
+
+            var bias = author != null ? author.RiskBias : RiskBiasTrait.Realist;
+            string text = JournalVoice.ComposeFullText(knowledgeKey, bias, day);
+            return InsertEntry(knowledgeKey, text, author!, day, hour);
+        }
+
+        /// <summary>
         /// Record a freeform narrative entry once per knowledge key (Prompt #19
         /// ghost-station diary fragments). Deduped via <see cref="KnowledgeBase"/>.
         /// </summary>

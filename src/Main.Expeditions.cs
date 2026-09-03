@@ -61,13 +61,37 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        /// <summary>
+        /// Plan 85 — binds the damaged-map authority to the expedition engine
+        /// once both hosting sessions exist. Called from both SetupWorld and
+        /// SetupExpeditions; composition order then doesn't matter.
+        /// </summary>
+        private void AttachDamagedMapIfReady()
+        {
+            if (_expeditions?.Engine == null || _world?.DamagedMap == null) return;
+            if (_expeditions.Engine.DamagedMap == _world.DamagedMap) return;
+            _expeditions.Engine.DamagedMap = _world.DamagedMap;
+        }
+
         private void SetupExpeditions()
         {
             if (_expeditions != null) return;
             SetupInventory();
             SetupSurvivors();
-            _expeditions = ExpeditionHostSession.Create(_dataDir);
+            // F1–F4 — the expedition encounter flow resolves through the SAME
+            // narrative engine the "narrative" save section persists. Without
+            // this the session ran an empty catalog and never saved history,
+            // depletion, or pending rows.
+            EnsureNarrativeSession();
+            _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine);
             _expeditions.Flags = _consequenceLedger;
+            BindExpeditionJournalIfReady();
+            if (_inventory != null)
+            {
+                _expeditions.ShelterInventory = _inventory.Inventory;
+                _expeditions.Items = _inventory.Catalog;
+            }
+            AttachDamagedMapIfReady();
             // Plan 52: travel-encounter decisions land in the persisted
             // expansion-quest ledger — the recurring-NPC arc memory authority.
             SetupExpansionQuests();

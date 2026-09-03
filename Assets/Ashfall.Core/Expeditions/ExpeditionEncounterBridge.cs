@@ -57,6 +57,13 @@ namespace Ashfall.Core.Expeditions
         private readonly ISeededRng _rng;
         private EncounterSurfaced _lastSurfaced;
 
+        /// <summary>F2/F3/F4 — the consequence payload of the most recent
+        /// successful <see cref="ResolveChoice"/>, or null. The Host reads it
+        /// immediately after a successful resolve to apply item/journal/
+        /// location effects through their owning subsystems. Core never
+        /// mutates those systems itself.</summary>
+        public NarrativeEncounterResolutionResult? LastResolution { get; private set; }
+
         /// <summary>
         /// Construct with the host's NarrativeEncounterSystem and the shared
         /// ISeededRng stream (same instance used for ExpeditionSystem.TickHours).
@@ -135,7 +142,9 @@ namespace Ashfall.Core.Expeditions
             string effectiveLocation = locationId ?? _lastSurfaced?.trigger?.locationId!;
             if (effectiveLocation == null) return false;
 
-            bool ok = _narrative.Resolve(encounterId, choiceId, effectiveLocation, day);
+            NarrativeEncounterResolutionResult? result = _narrative.TryResolve(encounterId, choiceId, effectiveLocation, day);
+            LastResolution = result;
+            bool ok = result != null;
 
             // Only stamp the cached DTO when it is actually the encounter that was
             // resolved. Resolving an older backlog row must not mark the newest

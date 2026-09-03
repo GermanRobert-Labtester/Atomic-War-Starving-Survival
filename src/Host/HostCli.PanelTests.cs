@@ -364,19 +364,242 @@ namespace AtomicWar.GodotApp
             int demoFailCount = report != null ? report.FailedCount : 1;
 
             var vehicle = RunExpeditionVehicleLogisticsGates();
+            var micro = RunMicroLocationConsequenceGates();
 
-            bool passed = demoPassed && vehicle.failures == 0;
+            bool passed = demoPassed && vehicle.failures == 0 && micro.failures == 0;
             string details = passed
-                ? $"headless demo + {vehicle.passed} vehicle gate(s)"
-                : $"demo {(demoPassed ? "PASS" : "FAIL")} ({demoFailCount} failed), vehicle gates {vehicle.failures} failed of {vehicle.passed + vehicle.failures}";
+                ? $"headless demo + {vehicle.passed} vehicle gate(s) + {micro.passed} micro-location gate(s)"
+                : $"demo {(demoPassed ? "PASS" : "FAIL")} ({demoFailCount} failed), vehicle gates {vehicle.failures} failed of {vehicle.passed + vehicle.failures}, micro-location gates {micro.failures} failed of {micro.passed + micro.failures}";
 
             return EmitSummary(
                 "expedition_selftest",
                 passed,
                 passed ? 0 : 1,
-                demoPassCount + vehicle.passed,
-                demoFailCount + vehicle.failures,
+                demoPassCount + vehicle.passed + micro.passed,
+                demoFailCount + vehicle.failures + micro.failures,
                 details);
+        }
+
+        /// <summary>
+        /// F1–F4 flagship gates: depletion blocks re-selection, the truck's
+        /// +2 canned food reaches the active sortie's loot, capacity rejects
+        /// whole grants without un-depleting, offerings consume shelter stock
+        /// without underflow, journal keys unlock exactly once, clue discovery
+        /// opens dispatch, and every ledger survives the aggregate round-trip
+        /// without replaying consequences.
+        /// </summary>
+        private static (int passed, int failures) RunMicroLocationConsequenceGates()
+        {
+            int passed = 0;
+            int failures = 0;
+            string stage = "M0: micro-location gate setup";
+
+            void Check(bool ok, string label)
+            {
+                if (ok) { GD.Print($"[PASS] {label}"); passed++; }
+                else { GD.PrintErr($"[FAIL] {label}"); failures++; }
+            }
+
+            try
+            {
+                if (!CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string dataDir) &&
+                    !CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out dataDir))
+                {
+                    GD.PrintErr("[FAIL] could not locate Assets/StreamingAssets/Data");
+                    return (0, 1);
+                }
+
+                var fileIO = new FileSystemIO();
+                var serializer = new SystemTextJsonSerializer();
+                var journal = new Ashfall.Core.Journal.JournalSystem();
+                int codexEvents = 0;
+                journal.OnCodexUnlocked += _ => codexEvents++;
+                var inventory = new Ashfall.Core.Inventory.Inventory();
+
+                var narrative = new NarrativeEncounterSystem();
+                narrative.RegisterRange(NarrativeEncounterCatalogLoader.Load(dataDir, fileIO, serializer));
+                stage = "M1 catalog loads micro-locations";
+                Check(narrative.Find("micro_crashed_truck") != null && narrative.Find("micro_observation_post") != null,
+                    "M1: micro-location catalog loads with the flagship fixtures.");
+
+                var session = ExpeditionHostSession.Create(dataDir, narrative);
+                session.Journal = journal;
+                session.ShelterInventory = inventory;
+
+                // A live sortie to receive loot: truck grant targets the pack.
+                stage = "M2 dispatch active sortie";
+                Check(session.GetBlockReason("rural_gas_station") != null,
+                    "M2a: rural_gas_station starts clue-gated (requiresDiscovery).");
+                bool clueFound = session.Engine.DiscoverLocation("rural_gas_station");
+                var dispatch = clueFound
+                    ? session.StartExpedition("survivor_a", "rural_gas_station", ExpeditionStance.Stealth)
+                    : default;
+                Check(dispatch.IsSuccess && session.Engine.Active.ContainsKey("survivor_a"),
+                    "M2b: after the clue, rural_gas_station dispatches for the micro-location gates.");
+
+                stage = "M3 truck grant + depletion";
+                bool truckOk = session.EncounterApplyChoice("micro_crashed_truck", "search_truck_cargo", day: 2, locationId: "rural_gas_station");
+                var truckApp = session.LastApplication;
+                var active = session.Engine.Active["survivor_a"];
+                int cannedAfterGrant = 0;
+                foreach (var loot in active.loot) if (loot.itemId == "canned_food") cannedAfterGrant += loot.quantity;
+                Check(truckOk && truckApp != null && truckApp.Item == ExpeditionHostSession.EncounterApplicationResult.Status.Applied
+                      && cannedAfterGrant == 2,
+                    "M3: search_truck_cargo grants exactly 2 canned food into the active sortie.");
+                Check(session.NarrativeEngine!.IsDepleted("micro_crashed_truck"),
+                    "M3: the truck encounter is depleted after its depleting choice.");
+
+                stage = "M4 no duplicate grant on save/load";
+                var aggregate = session.CaptureSaveAggregate();
+                var narrativeState = narrative.CaptureState();
+                var session2 = ExpeditionHostSession.Create(dataDir, new NarrativeEncounterSystem());
+                session2.RestoreSaveAggregate(aggregate);
+                session2.NarrativeEngine!.RestoreState(narrativeState);
+                var restoredSortie = session2.Engine.Active["survivor_a"];
+                int cannedAfterRestore = 0;
+                foreach (var loot in restoredSortie.loot) if (loot.itemId == "canned_food") cannedAfterRestore += loot.quantity;
+                Check(cannedAfterRestore == 2 && session2.NarrativeEngine.IsDepleted("micro_crashed_truck"),
+                    "M4: restore neither replays the grant nor forgets depletion.");
+
+                stage = "M5 depleted truck never re-selected";
+                bool truckResurfaced = false;
+                for (int seed = 0; seed < 128; seed++)
+                {
+                    var picked = session2.NarrativeEngine.SelectEncounter("Stealth", 1f, "rural_gas_station", new SeededRng(seed));
+                    if (picked != null && picked.id == "micro_crashed_truck") { truckResurfaced = true; break; }
+                }
+                Check(!truckResurfaced, "M5: the depleted truck never re-enters the eligible pool (128 seeds).");
+
+                stage = "M6 capacity rejects whole grant";
+                // Fill the pack to the brim, then try a heavy grant.
+                active.currentWeightKg = active.maxLootCapacityKg;
+                bool truck2 = session.EncounterApplyChoice("micro_collapsed_bridge", "search_bridge_vehicle", day: 3, locationId: "rural_gas_station");
+                var capApp = session.LastApplication;
+                Check(truck2 && capApp != null && capApp.Item == ExpeditionHostSession.EncounterApplicationResult.Status.RejectedCapacity,
+                    "M6: an overweight grant is rejected by capacity.");
+                Check(session.NarrativeEngine!.IsDepleted("micro_collapsed_bridge"),
+                    "M6: the bridge still depletes even though the cargo stayed behind.");
+
+                stage = "M7 offering consumes exactly once";
+                inventory.TryProduce("canned_food", 3);
+                int before = CountItem(inventory, "canned_food");
+                bool shrine = session.EncounterApplyChoice("micro_shrine", "add_shrine_offering", day: 4, locationId: "rural_gas_station");
+                var offeringApp = session.LastApplication;
+                int after = CountItem(inventory, "canned_food");
+                Check(shrine && offeringApp != null && offeringApp.Item == ExpeditionHostSession.EncounterApplicationResult.Status.Applied
+                      && before - after == 1 && after >= 0,
+                    "M7: add_shrine_offering removes exactly 1 canned food without underflow.");
+
+                stage = "M8 offering without stock never underflows";
+                while (CountItem(inventory, "canned_food") > 0) inventory.TryConsume("canned_food", 1);
+                int emptyStock = CountItem(inventory, "canned_food");
+                bool shrine2 = session.EncounterApplyChoice("micro_shrine", "add_shrine_offering", day: 5, locationId: "rural_gas_station");
+                var blockedApp = session.LastApplication;
+                Check(shrine2 && blockedApp != null && blockedApp.Item == ExpeditionHostSession.EncounterApplicationResult.Status.RejectedInsufficientItems
+                      && CountItem(inventory, "canned_food") == emptyStock,
+                    "M8: an unaffordable offering is rejected and inventory never goes negative.");
+
+                stage = "M9 journal unlock fires exactly once";
+                bool bus = session.EncounterApplyChoice("micro_frozen_bus", "read_bus_tag", day: 6, locationId: "rural_gas_station");
+                var busApp = session.LastApplication;
+                int eventsAfterFirst = codexEvents;
+                bool hasEntry = false;
+                foreach (var e in journal.Entries) if (e.KnowledgeKey == "micro_frozen_bus_transit_tag") hasEntry = true;
+                Check(bus && busApp != null && busApp.Journal == ExpeditionHostSession.EncounterApplicationResult.Status.Applied
+                      && eventsAfterFirst == 1 && hasEntry,
+                    $"M9: read_bus_tag writes one journal entry and fires OnCodexUnlocked once (bus={bus}, status={busApp?.Journal.ToString() ?? "null"}, events={eventsAfterFirst}, entry={hasEntry}).");
+
+                stage = "M10 duplicate discovery is idempotent";
+                journal.AddKnowledgeEvidence("expedition", "micro_frozen_bus_transit_tag");
+                journal.TryDiscoverKnowledge("micro_frozen_bus_transit_tag", null!, 6);
+                Check(codexEvents == 1,
+                    "M10: re-discovering the same key fires no second codex event.");
+
+                stage = "M11 clue discovery gates dispatch";
+                var fresh = ExpeditionHostSession.Create(dataDir, new NarrativeEncounterSystem());
+                fresh.Definitions.Clear();
+                foreach (var d in session.Definitions) fresh.Definitions.Add(d);
+                foreach (var d in fresh.Definitions)
+                    Ashfall.Core.Expeditions.ExpeditionDefinitionRegistry.Register(d);
+                Check(fresh.GetBlockReason("rural_gas_station") != null,
+                    "M11a: rural_gas_station is blocked before its clue is found.");
+                bool discovered = fresh.Engine.DiscoverLocation("rural_gas_station");
+                Check(discovered && fresh.GetBlockReason("rural_gas_station") == null,
+                    "M11b: discovering the location opens dispatch.");
+                var postDispatch = fresh.StartExpedition("survivor_b", "rural_gas_station", ExpeditionStance.Stealth);
+                Check(postDispatch.IsSuccess,
+                    "M11c: the revealed destination dispatches under normal rules.");
+
+                stage = "M12 observation post combines journal + location";
+                var fresh2 = ExpeditionHostSession.Create(dataDir, new NarrativeEncounterSystem());
+                fresh2.Journal = journal;
+                int codexBefore = codexEvents;
+                bool bunkerNotYetKnown = !fresh2.Engine.IsLocationKnown("government_bunker");
+                bool obs = bunkerNotYetKnown
+                           && fresh2.EncounterApplyChoice("micro_observation_post", "read_grid_references", day: 7, locationId: "loc_the_allotments");
+                var obsApp = fresh2.LastApplication;
+                Check(obs && obsApp != null
+                      && obsApp.Journal == ExpeditionHostSession.EncounterApplicationResult.Status.Applied
+                      && obsApp.Location == ExpeditionHostSession.EncounterApplicationResult.Status.Applied
+                      && fresh2.Engine.IsLocationKnown("rural_gas_station")
+                      && codexEvents == codexBefore + 1,
+                    "M12: read_grid_references unlocks knowledge AND reveals rural_gas_station in one resolution.");
+
+                stage = "M13 supply drop reveals the bunker";
+                bool drop = fresh2.EncounterApplyChoice("micro_supply_drop", "read_supply_label", day: 8, locationId: "loc_the_allotments");
+                Check(drop && fresh2.Engine.IsLocationKnown("government_bunker"),
+                    "M13: read_supply_label discovers government_bunker.");
+
+                stage = "M14 legacy saves migrate without replay";
+                // Migration fixture with BOTH shapes of pre-feature truth: a
+                // depleting choice (truck) and clue discoveries (observation
+                // post + supply drop) recorded only in resolution history. In
+                // production both restores share the one narrative engine
+                // (narrative restore happens first, then the aggregate reads
+                // its history), so the migrated session mirrors that wiring.
+                var migrantDispatch = fresh2.StartExpedition("survivor_b", "rural_gas_station", ExpeditionStance.Stealth);
+                bool truckMigrated = migrantDispatch.IsSuccess
+                    && fresh2.EncounterApplyChoice("micro_crashed_truck", "search_truck_cargo", day: 9, locationId: "rural_gas_station");
+                var legacyNarrative = fresh2.NarrativeEngine!.CaptureState();
+                legacyNarrative.depletedEncounterIds = null;
+                var legacyAggregate = fresh2.CaptureSaveAggregate();
+                legacyAggregate.knownLocationIds = null;
+                var migratedNarrative = new NarrativeEncounterSystem();
+                migratedNarrative.RegisterRange(NarrativeEncounterCatalogLoader.Load(dataDir, fileIO, serializer));
+                migratedNarrative.RestoreState(legacyNarrative);
+                var migratedSession = new ExpeditionHostSession(null!, migratedNarrative);
+                migratedSession.RestoreSaveAggregate(legacyAggregate);
+                Check(migratedNarrative.IsDepleted("micro_crashed_truck"),
+                    "M14a: legacy narrative save reconstructs truck depletion from history.");
+                int migratedCanned = 0;
+                foreach (var kv in migratedSession.Engine.Active)
+                    foreach (var loot in kv.Value.loot)
+                        if (loot.itemId == "canned_food") migratedCanned += loot.quantity;
+                Check(migratedSession.Engine.IsLocationKnown("rural_gas_station")
+                      && migratedSession.Engine.IsLocationKnown("government_bunker"),
+                    "M14b: legacy aggregate reconstructs discoveries from history.");
+                Check(migratedCanned == 2,
+                    "M14c: legacy loot is preserved without a retroactive replay of the grant.");
+            }
+            catch (System.Exception ex)
+            {
+                GD.PrintErr($"[FAIL] micro-location gates threw during \"{stage}\": {ex.GetType().Name}: {ex.Message}");
+                GD.PrintErr(ex.ToString());
+                failures++;
+            }
+
+            return (passed, failures);
+        }
+
+        private static int CountItem(Ashfall.Core.Inventory.Inventory inventory, string itemId)
+        {
+            int total = 0;
+            foreach (var slot in inventory.GetSlots())
+            {
+                if (slot != null && slot.Item != null && slot.Item.id == itemId)
+                    total += slot.Amount;
+            }
+            return total;
         }
 
         /// <summary>
@@ -1195,8 +1418,14 @@ namespace AtomicWar.GodotApp
             {
                 var session = DoseLedgerHostSession.Create(dataDirectory);
                 Check(session.Registers.npcs.Count == 4, "dose_registers catalog loads the four antagonists");
-                Check(session.Registers.bands.Count == 4 && session.Registers.plans.Count == 3,
-                    "band and plan vocabulary loaded");
+                Check(session.Registers.bands.Count == DoseLedgerSystem.BandCount
+                    && session.Registers.plans.Count == 8,
+                    "12-band ladder and 8-plan vocabulary loaded");
+                // Plan 90B — the ledger's runtime ladder is configured from the
+                // catalog (data authority) and matches the shipped anchor ranks.
+                Check(session.Ledger.BandOf(100f) == DoseLedgerSystem.BandAmber
+                    && session.Ledger.BandOf(600f) == DoseLedgerSystem.BandBlack,
+                    "catalog-configured ladder preserves the Amber/Black anchors");
                 session.SealDemoSurvivors();
                 session.ScribeReading(180f, highEnergy: true);
                 session.DiagnoseDemo(DoseLedgerSystem.BandRed);
@@ -1250,6 +1479,51 @@ namespace AtomicWar.GodotApp
                     File.WriteAllText(tmpPath, tampered);
                     Check(DoseLedgerSaveStore.TryLoad(tmpPath) == null, "tampered save rejected (checksum)");
                 }
+
+                // ── Plan 90B — seeded ladder traversal ────────────────────
+                // Day-by-day exposure duty walks a tagged survivor up every
+                // rung of the 12-band register. Seeded → identical on every
+                // run; the ladder is the one configured from dose_registers.json.
+                var rng = new SeededRng(DoseLedgerHostSession.DemoSeed);
+                Check(session.Ledger.AssignDosimeter("sv_traversal", "tag_traverse", 0f),
+                    "traversal survivor tagged");
+
+                float lifetimeNow = 0f;
+                int lastRank = -1;
+                int rungsSeen = 0;
+                bool monotonic = true;
+                var rungLog = new System.Text.StringBuilder();
+                for (int day = 1; day <= 80 && rungsSeen < DoseLedgerSystem.BandCount; day++)
+                {
+                    // 15 mSv of exposure duty per day: small lifetime steps can
+                    // never skip a rung, even on ambiguous high-energy days.
+                    lifetimeNow += 15f;
+                    var result = session.Ledger.BookReadingFromLifetime(
+                        "sv_traversal", day, lifetimeNow, "exposure_duty",
+                        highEnergyEvent: day % 5 == 0, rng);
+                    int rank = session.Ledger.BandOf(session.Ledger.GetCumulative("sv_traversal"));
+                    if (rank < lastRank) monotonic = false;
+                    if (rank > lastRank)
+                    {
+                        rungsSeen++;
+                        lastRank = rank;
+                        rungLog.Append($"day {day}: {session.Ledger.GetCumulative("sv_traversal"):F1} mSv → ")
+                            .Append(DoseRegistersCatalogLoader.BandLabel(session.Registers, rank))
+                            .Append("; ");
+                    }
+                }
+                GD.Print("[dose-ledger-selftest] traversal: " + rungLog);
+                Check(monotonic, "traversal band rank never regresses as lifetime exposure accumulates");
+                Check(rungsSeen == DoseLedgerSystem.BandCount,
+                    "seeded lifetime exposure traverses all 12 register bands in order");
+                Check(session.Ledger.BandOf(session.Ledger.GetCumulative("sv_traversal")) == DoseLedgerSystem.BandSlate,
+                    "traversal survivor tops out on the Slate rung");
+                var traversalEntry = session.Ledger.GetEntry("sv_traversal");
+                Check(traversalEntry != null && traversalEntry.lifetimeBookkeeping,
+                    "traversal entry reconciled to lifetime bookkeeping on its first reading");
+                Check(traversalEntry != null && traversalEntry.readingsHistory.Count > 0
+                    && traversalEntry.readingsHistory.Exists(r => r.fluxAmbiguous),
+                    "traversal bookings include the seeded ambiguous-reading path");
             }
             catch (Exception e)
             {

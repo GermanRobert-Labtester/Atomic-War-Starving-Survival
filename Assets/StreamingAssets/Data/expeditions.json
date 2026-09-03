@@ -59,7 +59,8 @@
         "scrap_metal",
         "mechanical_parts",
         "canned_food"
-      ]
+      ],
+      "requiresDiscovery": true
     },
     {
       "id": "concert_hall_ruins",
@@ -674,7 +675,8 @@
         "military_radio",
         "rad_away",
         "anti_rad"
-      ]
+      ],
+      "requiresDiscovery": true
     },
     {
       "id": "location_geo_thermal_plant_ruins",

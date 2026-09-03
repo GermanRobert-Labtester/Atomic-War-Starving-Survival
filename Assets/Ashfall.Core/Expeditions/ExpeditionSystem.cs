@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.World;
 
 namespace Ashfall.Core.Expeditions
 {
@@ -163,6 +164,12 @@ namespace Ashfall.Core.Expeditions
         public float baseStaminaDrainPerHour = 2.0f;
         public List<string> lootCategories = new List<string>();
         public string scavenging_table_id = string.Empty;
+
+        /// <summary>F4 — when true, the destination stays undispatchable until
+        /// the location is discovered (e.g. an expedition encounter clue such
+        /// as an observation post's grid references). Opt-in: destinations
+        /// default to dispatchable, matching the pre-F4 rules.</summary>
+        public bool requiresDiscovery = false;
     }
 
     /// <summary>
@@ -194,6 +201,14 @@ namespace Ashfall.Core.Expeditions
 
         private readonly Dictionary<string, ExpeditionState> _active = new Dictionary<string, ExpeditionState>();
 
+        /// <summary>F4 — expedition-destination discovery ledger. Idempotent,
+        /// ordinal comparer, bounded by the authored destination catalog.
+        /// Canonical authority for "the player knows this destination exists";
+        /// the radio triangulation layer keeps its own triangulated-candidate
+        /// set and the wasteland map graph its own node discovery — neither is
+        /// duplicated here.</summary>
+        private readonly HashSet<string> _knownLocations = new HashSet<string>(StringComparer.Ordinal);
+
         /// <summary>
         /// Optional per-survivor stamina-drain multiplier hook (0..N). Set by the
         /// host so Phase-0 effects (respiratory severe cough, phantom work refusal,
@@ -205,7 +220,19 @@ namespace Ashfall.Core.Expeditions
 
         public ScavengingTableCatalog? ScavengingCatalog { get; set; }
 
+        /// <summary>
+        /// Optional damaged-map authority (Plan 85). When bound, scavenging
+        /// rolls carrying a map fragment token register discovery, and
+        /// dispatch to unrevealed hidden installations is refused.
+        /// </summary>
+        public DamagedMapSystem? DamagedMap { get; set; }
+
         public event Action<ExpeditionState> OnExpeditionStarted;
+
+        /// <summary>F4 — fired when a destination becomes known for the first
+        /// time (encounter clue, migration, or direct command). Carries the
+        /// location ID; idempotent re-discovery does not re-fire.</summary>
+        public event Action<string>? OnLocationDiscovered;
         public event Action<ExpeditionState> OnExpeditionTick;
         public event Action<ExpeditionState> OnPhaseChanged;
         public event Action<ExpeditionState> OnLootAdded;                 // state, itemId, qty
@@ -274,6 +301,10 @@ namespace Ashfall.Core.Expeditions
             if (def == null || string.IsNullOrEmpty(def.id) || string.IsNullOrEmpty(survivorId))
                 return false;
             if (_active.ContainsKey(survivorId)) return false; // one expedition per survivor
+            if (DamagedMap != null && DamagedMap.IsDestinationLocked(def.id))
+                return false; // hidden installation — map not completed/revealed (Plan 85)
+            if (def.requiresDiscovery && !IsLocationKnown(def.id))
+                return false; // F4 — destination identified only through discovered clues
 
             var exp = new ExpeditionState
             {
@@ -937,6 +968,18 @@ namespace Ashfall.Core.Expeditions
             if (ScavengingCatalog != null && !string.IsNullOrEmpty(tableId))
             {
                 var rollResult = ScavengingCatalog.RollLoot(tableId, rng);
+                if (rollResult != null)
+                {
+                    // Plan 85 — scavenging can surface damaged-map fragments.
+                    // Registration is idempotent; duplicates resolve to nothing
+                    // tangible (a scrap of paper has no further use). A
+                    // fragment-only entry carries no physical item.
+                    if (!string.IsNullOrEmpty(rollResult.MapFragmentId))
+                    {
+                        DamagedMap?.RegisterFragment(rollResult.MapFragmentId);
+                        if (string.IsNullOrEmpty(rollResult.ItemId)) return;
+                    }
+                }
                 if (rollResult != null && !string.IsNullOrEmpty(rollResult.ItemId))
                 {
                     const float itemWeight = 1.0f;
@@ -997,6 +1040,37 @@ namespace Ashfall.Core.Expeditions
             exp.loot.Add(new ExpeditionLootEntry { itemId = itemId, quantity = quantity, weightKg = weightKg * quantity });
             exp.currentWeightKg += weightKg * quantity;
             OnLootAdded?.Invoke(exp);
+        }
+
+        // ── F2 — encounter item grants ─────────────────────────────
+
+        /// <summary>Status of an F2 encounter item grant against the active
+        /// sortie. Deterministic: same state + same request ⇒ same status.</summary>
+        public enum LootGrantStatus
+        {
+            Granted,
+            NoActiveExpedition,
+            RejectedCapacity
+        }
+
+        /// <summary>
+        /// F2 — grant loot into the named survivor's active sortie through the
+        /// canonical stack-merging AddLoot path. Capacity is enforced first:
+        /// an overweight grant is rejected whole (no partial stacks). The
+        /// narrative resolution and depletion stand independently of this
+        /// outcome — the site was still searched.
+        /// </summary>
+        public LootGrantStatus TryGrantLoot(string survivorId, string itemId, float weightKgPerUnit, int quantity)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(itemId) || quantity <= 0)
+                return LootGrantStatus.NoActiveExpedition;
+            if (!_active.TryGetValue(survivorId, out var exp))
+                return LootGrantStatus.NoActiveExpedition;
+            float totalWeight = weightKgPerUnit * quantity;
+            if (exp.currentWeightKg + totalWeight > exp.maxLootCapacityKg)
+                return LootGrantStatus.RejectedCapacity;
+            AddLoot(exp, itemId, weightKgPerUnit, quantity);
+            return LootGrantStatus.Granted;
         }
 
         private void RollEncounter(ExpeditionState exp, ISeededRng rng)
@@ -1112,6 +1186,57 @@ namespace Ashfall.Core.Expeditions
                 _active[exp.survivorId] = exp;
             }
             OnStateChanged?.Invoke(null!);
+        }
+
+        // ── Destination discovery ledger (F4) ──────────────────────
+
+        /// <summary>True when the player has learned the destination exists
+        /// (encounter clue, save restore, or explicit command). Destinations
+        /// without <c>requiresDiscovery</c> are dispatchable regardless.</summary>
+        public bool IsLocationKnown(string locationId)
+        {
+            if (string.IsNullOrEmpty(locationId)) return false;
+            return _knownLocations.Contains(locationId);
+        }
+
+        /// <summary>
+        /// F4 — mark a destination as known. Idempotent (already-known returns
+        /// true without re-firing the event). Unknown-to-the-catalog IDs are
+        /// rejected: discovery can only ever name a real expedition
+        /// destination, never invent one. Returns true when the location is
+        /// known after the call.
+        /// </summary>
+        public bool DiscoverLocation(string locationId)
+        {
+            if (string.IsNullOrEmpty(locationId)) return false;
+            if (ExpeditionDefinitionRegistry.Get(locationId) == null) return false;
+            if (_knownLocations.Add(locationId))
+                OnLocationDiscovered?.Invoke(locationId);
+            return true;
+        }
+
+        /// <summary>Seed the ledger from a save. Deterministic (ordinal sort
+        /// before insert); IDs absent from the destination catalog stay in the
+        /// set inertly — round-trip preservation, never re-derived.</summary>
+        public void RestoreKnownLocations(IEnumerable<string>? knownLocationIds)
+        {
+            _knownLocations.Clear();
+            if (knownLocationIds == null) return;
+            var ids = new List<string>(knownLocationIds);
+            ids.Sort(string.CompareOrdinal);
+            for (int i = 0; i < ids.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(ids[i])) _knownLocations.Add(ids[i]);
+            }
+        }
+
+        /// <summary>Ordinal-sorted snapshot for the save payload.</summary>
+        public List<string> CaptureKnownLocations()
+        {
+            var ids = new List<string>(_knownLocations.Count);
+            ids.AddRange(_knownLocations);
+            ids.Sort(string.CompareOrdinal);
+            return ids;
         }
 
         private static ExpeditionState CloneExpedition(ExpeditionState src)
