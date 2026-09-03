@@ -23,6 +23,9 @@ namespace Ashfall.Core.World
         public string override_item { get; set; } = string.Empty;
         public string override_skill { get; set; } = string.Empty;
         public string consequence_on_force { get; set; } = string.Empty;
+        /// <summary>GAP-48B — stamina the sortie starts short when the player
+        /// forces through this gate. 0/absent = the gate cannot be forced.</summary>
+        public float force_stamina_cost { get; set; } = 0f;
         public string description { get; set; } = string.Empty;
     }
 
@@ -35,6 +38,12 @@ namespace Ashfall.Core.World
         /// <summary>Compact dispatch-bar label (the full Reason is the gate's
         /// description, too long for the row).</summary>
         public string ShortReason { get; set; } = string.Empty;
+        /// <summary>GAP-48B — stamina the sortie starts short when forcing
+        /// through. 0 = this gate cannot be forced.</summary>
+        public float ForceStaminaCost { get; set; }
+        /// <summary>Player-facing consequence prose for the force action
+        /// (consumes the gate's `consequence_on_force`).</summary>
+        public string ForceConsequence { get; set; } = string.Empty;
     }
 
     /// <summary>
@@ -136,7 +145,9 @@ namespace Ashfall.Core.World
                     GateId = gate.id,
                     Weather = currentWeather,
                     Reason = !string.IsNullOrEmpty(gate.description) ? gate.description : $"Weather gate active ({gate.id}).",
-                    ShortReason = $"Weather gate — {currentWeather.ToLowerInvariant()}"
+                    ShortReason = $"Weather gate — {currentWeather.ToLowerInvariant()}",
+                    ForceStaminaCost = gate.force_stamina_cost,
+                    ForceConsequence = gate.consequence_on_force
                 };
             }
 

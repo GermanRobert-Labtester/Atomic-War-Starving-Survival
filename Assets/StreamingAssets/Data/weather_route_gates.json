@@ -208,7 +208,8 @@
       "override_item": "",
       "override_skill": "",
       "consequence_on_force": "Whiteout above the treeline. The switchbacks vanish, and the wind does the rest.",
-      "description": "The mountain road to the observatory closes in any blizzard or ice storm. At sixty below, the wind strips heat faster than a climber can replace it."
+      "description": "The mountain road to the observatory closes in any blizzard or ice storm. At sixty below, the wind strips heat faster than a climber can replace it.",
+      "force_stamina_cost": 30
     },
     {
       "id": "gate_dest_flooded_subway_depot_blackrain",
@@ -221,7 +222,8 @@
       "override_item": "",
       "override_skill": "",
       "consequence_on_force": "Black rain percolates straight into the flooded bay. Waders do not stop what dissolves.",
-      "description": "The depot floods from below and above. Black rain raises the waterline and feeds the radiation already dissolved in it."
+      "description": "The depot floods from below and above. Black rain raises the waterline and feeds the radiation already dissolved in it.",
+      "force_stamina_cost": 25
     },
     {
       "id": "gate_dest_shallows_market_falloutstorm",
@@ -234,7 +236,8 @@
       "override_item": "",
       "override_skill": "",
       "consequence_on_force": "An open-air market under a fallout storm is a ledger of the dead. The stalls would stand empty anyway.",
-      "description": "The Shallows trades in the open air on the drowned waterfront. When fallout comes off the water, there is nowhere to shelter and no trade worth the dose."
+      "description": "The Shallows trades in the open air on the drowned waterfront. When fallout comes off the water, there is nowhere to shelter and no trade worth the dose.",
+      "force_stamina_cost": 25
     }
   ]
 }

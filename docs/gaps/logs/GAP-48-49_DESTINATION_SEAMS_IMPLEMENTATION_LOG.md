@@ -86,3 +86,21 @@ stand-alone: the catalog and loader are additive and self-contained.
 
 SEALED in the working tree (all verification gates green).
 Committed subset: Core + data + tests + docs.
+
+## Phase 8 — GAP-48B: force passage (follow-up)
+
+**Broken link before:** `consequence_on_force` was dead data — no force
+action existed; blocked weather gates were absolute.
+**Change:** `WeatherGateDef.force_stamina_cost` (data-driven); the block
+carries `ForceStaminaCost`/`ForceConsequence`;
+`ExpeditionSystem.Start/ExecuteStart` gain an optional clamped
+`startingStamina` (Core, Invariant 5); `StartExpedition`/`DispatchSortie`
+gain `forceWeatherGate` — a forced sortie starts `MaxStamina − cost`;
+the dispatch bar renders a FORCE PASSAGE action with the consequence as
+tooltip when a forceable gate blocks. Gates without a cost stay absolute;
+the boolean extra gate (ice road / deep coast) can never be forced.
+**Tests:** `ForcePassageTests` (3): startingStamina apply+clamp; force
+lookup requires block + positive cost; override lift; authored gates carry
+costs + consequence prose.
+**Verification:** build 0/0; full suite 6848/6848; all selftests + CI gate.
+**Result:** PASS

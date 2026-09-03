@@ -268,7 +268,8 @@ namespace Ashfall.Core.Expeditions
             bool isNightScavenge = false,
             bool hasBicycle = false,
             bool hasFlashlight = false,
-            ExpeditionVehicleProfile? vehicle = null)
+            ExpeditionVehicleProfile? vehicle = null,
+            float startingStamina = MaxStamina)
         {
             if (def == null || string.IsNullOrEmpty(def.id) || string.IsNullOrEmpty(survivorId))
                 return false;
@@ -286,7 +287,7 @@ namespace Ashfall.Core.Expeditions
                 distanceTicks = Math.Max(1, def.distanceTicks),
                 dangerLevel = def.dangerLevel,
                 encounterChancePerTick = def.encounterChancePerTick,
-                stamina = MaxStamina,
+                stamina = Math.Clamp(startingStamina, 0f, MaxStamina),
                 isNightScavenge = isNightScavenge,
                 hasBicycle = hasBicycle,
                 hasFlashlight = hasFlashlight
@@ -356,7 +357,8 @@ namespace Ashfall.Core.Expeditions
             bool hasFlashlight = false,
             ExpeditionVehicleProfile? vehicle = null,
             long expectedStateVersion = 0,
-            long currentStateVersion = 0)
+            long currentStateVersion = 0,
+            float startingStamina = MaxStamina)
         {
             var preview = PreviewStart(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, expectedStateVersion);
             if (!preview.IsAvailable)
@@ -365,7 +367,7 @@ namespace Ashfall.Core.Expeditions
             if (preview.StateVersion != currentStateVersion)
                 return CommandResult.StalePreview(PlayerCommandCode.ExpeditionDispatch, preview.StateVersion, currentStateVersion);
 
-            bool ok = Start(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle);
+            bool ok = Start(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, startingStamina);
             if (!ok)
                 return new CommandResult(
                     PlayerCommandCode.ExpeditionDispatch,
