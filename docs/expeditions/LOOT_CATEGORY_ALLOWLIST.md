@@ -59,6 +59,7 @@ The following items from `items.json` form the canonical allowlist across all 50
 - `solar_cell`
 - `handheld_radio`
 - `military_radio`
+- `copper_wire_10m_of_10m` (Plan 76: replaces the invalid `copper_wire` ref)
 
 ### Radiation & Detection
 - `dosimeter`

@@ -12,8 +12,8 @@
       "lootCategories": [
         "scrap_metal",
         "clean_water",
-        "bandages",
-        "food_rations"
+        "bandage",
+        "dried_rations"
       ]
     },
     {
@@ -26,7 +26,7 @@
       "scavenging_table_id": "table_loot_power_substation",
       "lootCategories": [
         "dosimeter",
-        "copper_wire",
+        "copper_wire_10m_of_10m",
         "fuel",
         "item_hydro_baron_queue_chit"
       ]
@@ -68,6 +68,7 @@
       "dangerLevel": 2,
       "encounterChancePerTick": 0.14,
       "baseStaminaDrainPerHour": 2.0,
+      "scavenging_table_id": "table_loot_concert_hall",
       "lootCategories": [
         "cloth",
         "scrap_wood",
@@ -82,6 +83,7 @@
       "dangerLevel": 2,
       "encounterChancePerTick": 0.14,
       "baseStaminaDrainPerHour": 2.0,
+      "scavenging_table_id": "table_loot_apartment_block",
       "lootCategories": [
         "canned_soup",
         "box_of_nails_10",
@@ -126,6 +128,7 @@
       "dangerLevel": 3,
       "encounterChancePerTick": 0.16,
       "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_collapsed_structure",
       "lootCategories": [
         "scrap_metal",
         "wooden_plank",
@@ -155,6 +158,7 @@
       "dangerLevel": 3,
       "encounterChancePerTick": 0.16,
       "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_apiary_rows",
       "lootCategories": [
         "item_honey_pot",
         "roots",
@@ -229,6 +233,7 @@
       "dangerLevel": 4,
       "encounterChancePerTick": 0.18,
       "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_checkpoint",
       "lootCategories": [
         "ammo_9x19",
         "military_mre",
@@ -243,6 +248,7 @@
       "dangerLevel": 4,
       "encounterChancePerTick": 0.18,
       "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_convoy_cache",
       "lootCategories": [
         "fuel_canister",
         "mechanical_parts",
@@ -257,6 +263,7 @@
       "dangerLevel": 4,
       "encounterChancePerTick": 0.18,
       "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_farm",
       "lootCategories": [
         "seed_packets",
         "growing_manual",
@@ -271,6 +278,7 @@
       "dangerLevel": 4,
       "encounterChancePerTick": 0.18,
       "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_veterinary_surgery",
       "lootCategories": [
         "bandage",
         "antibiotics",
@@ -285,6 +293,7 @@
       "dangerLevel": 4,
       "encounterChancePerTick": 0.18,
       "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_farm",
       "lootCategories": [
         "canned_food",
         "sugar",
@@ -299,6 +308,7 @@
       "dangerLevel": 4,
       "encounterChancePerTick": 0.18,
       "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_ration_plaza",
       "lootCategories": [
         "canned_food",
         "dried_rations",
@@ -313,6 +323,7 @@
       "dangerLevel": 5,
       "encounterChancePerTick": 0.2,
       "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_conscription_office",
       "lootCategories": [
         "book",
         "ammo_9x19",
@@ -327,6 +338,7 @@
       "dangerLevel": 5,
       "encounterChancePerTick": 0.2,
       "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_municipal_archive",
       "lootCategories": [
         "book",
         "blueprint_roll",
@@ -341,6 +353,7 @@
       "dangerLevel": 5,
       "encounterChancePerTick": 0.2,
       "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_dentists_row",
       "lootCategories": [
         "antibiotics",
         "alcohol",
@@ -355,6 +368,7 @@
       "dangerLevel": 5,
       "encounterChancePerTick": 0.2,
       "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_printworks",
       "lootCategories": [
         "chemicals",
         "chemical_solvent",
@@ -369,6 +383,7 @@
       "dangerLevel": 5,
       "encounterChancePerTick": 0.2,
       "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_weighbridge",
       "lootCategories": [
         "mechanical_parts",
         "scrap_metal",
@@ -383,6 +398,7 @@
       "dangerLevel": 5,
       "encounterChancePerTick": 0.2,
       "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_apartment_block",
       "lootCategories": [
         "canned_food",
         "cloth",
@@ -397,6 +413,7 @@
       "dangerLevel": 5,
       "encounterChancePerTick": 0.2,
       "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_hospital",
       "lootCategories": [
         "antibiotics",
         "medical_kit",
@@ -411,6 +428,7 @@
       "dangerLevel": 5,
       "encounterChancePerTick": 0.2,
       "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_waterworks",
       "lootCategories": [
         "water_filter",
         "metal_pipe",
@@ -425,6 +443,7 @@
       "dangerLevel": 4,
       "encounterChancePerTick": 0.18,
       "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_checkpoint",
       "lootCategories": [
         "ammo_9x19",
         "military_mre",
@@ -439,6 +458,7 @@
       "dangerLevel": 3,
       "encounterChancePerTick": 0.16,
       "baseStaminaDrainPerHour": 2.2,
+      "scavenging_table_id": "table_loot_farm",
       "lootCategories": [
         "canned_food",
         "seed_packets",
@@ -453,6 +473,7 @@
       "dangerLevel": 6,
       "encounterChancePerTick": 0.22,
       "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_hospital",
       "lootCategories": [
         "medical_kit",
         "antibiotics",
@@ -467,6 +488,7 @@
       "dangerLevel": 6,
       "encounterChancePerTick": 0.22,
       "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_transit_depot",
       "lootCategories": [
         "mechanical_parts",
         "electronic_scrap",
@@ -481,6 +503,7 @@
       "dangerLevel": 6,
       "encounterChancePerTick": 0.22,
       "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_shopping_center",
       "lootCategories": [
         "cloth",
         "canned_food",
@@ -495,6 +518,7 @@
       "dangerLevel": 6,
       "encounterChancePerTick": 0.22,
       "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_swimming_baths",
       "lootCategories": [
         "clean_water",
         "chemicals",
@@ -509,6 +533,7 @@
       "dangerLevel": 6,
       "encounterChancePerTick": 0.22,
       "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_recovery_yard",
       "lootCategories": [
         "scrap_metal",
         "steel_rebar",
@@ -523,6 +548,7 @@
       "dangerLevel": 6,
       "encounterChancePerTick": 0.22,
       "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_tank_farm",
       "lootCategories": [
         "fuel",
         "diesel_fuel",
@@ -537,6 +563,7 @@
       "dangerLevel": 6,
       "encounterChancePerTick": 0.22,
       "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_relay_mast",
       "lootCategories": [
         "electronic_scrap",
         "vacuum_tube",
@@ -551,6 +578,7 @@
       "dangerLevel": 7,
       "encounterChancePerTick": 0.24,
       "baseStaminaDrainPerHour": 3.2,
+      "scavenging_table_id": "table_loot_hospice_ward",
       "lootCategories": [
         "bandage",
         "medical_kit",
@@ -565,6 +593,7 @@
       "dangerLevel": 7,
       "encounterChancePerTick": 0.24,
       "baseStaminaDrainPerHour": 3.2,
+      "scavenging_table_id": "table_loot_ordnance_shoulder",
       "lootCategories": [
         "ammo_762",
         "ammo_12g",
@@ -579,6 +608,7 @@
       "dangerLevel": 7,
       "encounterChancePerTick": 0.24,
       "baseStaminaDrainPerHour": 3.2,
+      "scavenging_table_id": "table_loot_waterworks",
       "lootCategories": [
         "mechanical_parts",
         "clean_water",
@@ -593,6 +623,7 @@
       "dangerLevel": 7,
       "encounterChancePerTick": 0.24,
       "baseStaminaDrainPerHour": 3.2,
+      "scavenging_table_id": "table_loot_waterworks",
       "lootCategories": [
         "water_filter",
         "mechanical_parts",
@@ -607,6 +638,7 @@
       "dangerLevel": 7,
       "encounterChancePerTick": 0.24,
       "baseStaminaDrainPerHour": 3.2,
+      "scavenging_table_id": "table_loot_shallows_market",
       "lootCategories": [
         "currency",
         "dried_rations",
@@ -621,6 +653,7 @@
       "dangerLevel": 7,
       "encounterChancePerTick": 0.24,
       "baseStaminaDrainPerHour": 3.2,
+      "scavenging_table_id": "table_loot_metro_station",
       "lootCategories": [
         "mechanical_parts",
         "electronic_scrap",
@@ -635,6 +668,7 @@
       "dangerLevel": 8,
       "encounterChancePerTick": 0.26,
       "baseStaminaDrainPerHour": 3.5,
+      "scavenging_table_id": "table_loot_government_bunker",
       "lootCategories": [
         "military_mre",
         "military_radio",
@@ -649,6 +683,7 @@
       "dangerLevel": 8,
       "encounterChancePerTick": 0.26,
       "baseStaminaDrainPerHour": 3.5,
+      "scavenging_table_id": "table_loot_geo_thermal_plant",
       "lootCategories": [
         "mechanical_parts",
         "electronic_scrap",
@@ -663,6 +698,7 @@
       "dangerLevel": 8,
       "encounterChancePerTick": 0.26,
       "baseStaminaDrainPerHour": 3.5,
+      "scavenging_table_id": "table_loot_observatory",
       "lootCategories": [
         "vacuum_tube",
         "electronic_scrap",
@@ -677,6 +713,7 @@
       "dangerLevel": 9,
       "encounterChancePerTick": 0.28,
       "baseStaminaDrainPerHour": 3.8,
+      "scavenging_table_id": "table_loot_arcology_sector_4",
       "lootCategories": [
         "electronic_scrap",
         "solar_cell",
@@ -691,6 +728,7 @@
       "dangerLevel": 9,
       "encounterChancePerTick": 0.28,
       "baseStaminaDrainPerHour": 3.8,
+      "scavenging_table_id": "table_loot_ministry_bunker",
       "lootCategories": [
         "book",
         "blueprint_roll",
@@ -705,6 +743,7 @@
       "dangerLevel": 10,
       "encounterChancePerTick": 0.3,
       "baseStaminaDrainPerHour": 4.0,
+      "scavenging_table_id": "table_loot_dead_hand_core",
       "lootCategories": [
         "rad_away",
         "anti_rad",
@@ -719,9 +758,10 @@
       "dangerLevel": 2,
       "encounterChancePerTick": 0.1,
       "baseStaminaDrainPerHour": 1.5,
+      "scavenging_table_id": "table_loot_tinkers_notch",
       "lootCategories": [
         "electronic_scrap",
-        "copper_wire",
+        "copper_wire_10m_of_10m",
         "battery",
         "clean_water"
       ]
@@ -733,9 +773,10 @@
       "dangerLevel": 2,
       "encounterChancePerTick": 0.08,
       "baseStaminaDrainPerHour": 1.2,
+      "scavenging_table_id": "table_loot_pilgrim_hearth",
       "lootCategories": [
         "medical_kit",
-        "bandages",
+        "bandage",
         "clean_water",
         "scrap_wood"
       ]
@@ -747,10 +788,11 @@
       "dangerLevel": 3,
       "encounterChancePerTick": 0.12,
       "baseStaminaDrainPerHour": 1.8,
+      "scavenging_table_id": "table_loot_brine_pans",
       "lootCategories": [
         "item_crossing_traded_salt",
         "clean_water",
-        "food_rations",
+        "dried_rations",
         "scrap_metal"
       ]
     }
