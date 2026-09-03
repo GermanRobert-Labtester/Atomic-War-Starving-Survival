@@ -146,6 +146,22 @@ namespace Ashfall.Core.Economy
         }
 
         /// <summary>
+        /// Plan 56 phase 4 — accessibility-safe provenance label for market UI
+        /// rows: "locally made" when the origin region produces the good,
+        /// "imported" when it does not, "general supply" for universal goods.
+        /// Empty when the good is unknown or unannotated (no tag — never a
+        /// color-only signal).
+        /// </summary>
+        public static string ProvenanceLabel(GoodsCatalog catalog, string originRegion, string goodId)
+        {
+            if (catalog == null || string.IsNullOrEmpty(goodId)) return string.Empty;
+            var good = catalog.Find(goodId);
+            if (good == null || string.IsNullOrEmpty(good.regionalSupply)) return string.Empty;
+            if (good.regionalSupply == "general") return "general supply";
+            return ProducesGood(catalog, originRegion, goodId) ? "locally made" : "imported";
+        }
+
+        /// <summary>
         /// Waystation resupply filter during a market shortage: locally
         /// produced and general goods keep their stock (they can be
         /// resupplied from the region), pure imports lapse until the market

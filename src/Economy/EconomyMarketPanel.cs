@@ -25,6 +25,14 @@ namespace AtomicWar.GodotApp.Economy
         private Ashfall.Core.Economy.IFactionStanceProvider? _stanceProvider;
         private string _stanceFactionId = string.Empty;
 
+        /// <summary>
+        /// Plan 56 phase 4 — the region this market view is evaluated from.
+        /// Drives the per-row provenance tag ("locally made" / "imported" /
+        /// "general supply") via RegionalSupplyRouter. Defaults to the
+        /// shelter market ("settlement").
+        /// </summary>
+        public string CurrentRegion { get; set; } = "settlement";
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.TopRight);
@@ -64,6 +72,9 @@ namespace AtomicWar.GodotApp.Economy
             _session = session;
             if (_session != null)
                 _session.StateChanged += RefreshView;
+            // First paint: deferred so snapshot fixtures (which bind before
+            // _Ready) still get a populated list on the captured frame.
+            CallDeferred(nameof(RefreshView));
         }
 
         /// <summary>
@@ -93,7 +104,9 @@ namespace AtomicWar.GodotApp.Economy
 
         public void RefreshView()
         {
-            if (_session == null || _session.Catalog == null) return;
+            // Snapshot fixtures bind before _Ready — the row list does not
+            // exist yet; the deferred first refresh (BindSession) covers it.
+            if (_goodsList == null || _session == null || _session.Catalog == null) return;
 
             AshfallUiHelpers.EmptyChildren(_goodsList);_lblSummary.Text =
                 $"Day {_session.Market.Day} · ledger {_session.Market.State.ledger.Count} lines · " +
@@ -144,6 +157,21 @@ namespace AtomicWar.GodotApp.Economy
                 };
                 label.AddThemeFontSizeOverride("font_size", 11);
                 row.AddChild(label);
+
+                // Plan 56 phase 4 — provenance tag: text label, never color-only
+                // (Plan 14 accessibility). Empty for unannotated goods.
+                var provenance = RegionalSupplyRouter.ProvenanceLabel(
+                    _session.Catalog, CurrentRegion, good.id);
+                if (!string.IsNullOrEmpty(provenance))
+                {
+                    var tag = new Label
+                    {
+                        Text = "[" + provenance + "]",
+                        CustomMinimumSize = new Vector2(120, 0)
+                    };
+                    tag.AddThemeFontSizeOverride("font_size", 10);
+                    row.AddChild(tag);
+                }
 
                 _goodsList.AddChild(row);
             }
