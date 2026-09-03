@@ -110,7 +110,143 @@ namespace Ashfall.Core.Radio
             // 5. Authored gap broadcasts (Task 24E)
             RegisterAuthoredGapBroadcasts();
 
+            // 6. Faction radio corpus — typed faction broadcasts (Plan 73).
+            //    Mechanical R1 bridge: the corpus already feeds FactionRadioEngine
+            //    (HUD chatter); this exposes its authored `broadcasts` collection
+            //    through the unified schedule catalog.
+            string factionCorpusPath = fileIO.Combine(dataDir, "faction_radio_corpus.json");
+            if (fileIO.FileExists(factionCorpusPath))
+            {
+                LoadFactionRadioCorpusJson(fileIO.ReadAllText(factionCorpusPath));
+            }
+
             return _allBroadcasts.Count - countBefore;
+        }
+
+        /// <summary>
+        /// Plan 73 — mechanical loader for the typed <c>broadcasts</c> collection in
+        /// <c>faction_radio_corpus.json</c>. Maps each authored faction broadcast onto the
+        /// unified <see cref="UnifiedRadioBroadcast"/> record: genre, reliability and priority
+        /// derive from the broadcast <c>type</c>; cross-system references (intel locations,
+        /// distress IDs, telemetry events, quest hooks) are carried as prefixed Tags
+        /// (<c>intel:</c>, <c>distress:</c>, <c>telemetry:</c>, <c>quest:</c>) so no new
+        /// persistence or scheduling machinery is introduced. Station ownership is resolved
+        /// against the default station catalog by frequency (0.5 MHz tolerance), matching
+        /// <see cref="RadioScheduleCoordinator"/> resolution.
+        /// </summary>
+        public int LoadFactionRadioCorpusJson(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return 0;
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+                if (!root.TryGetProperty("broadcasts", out var listProp) || listProp.ValueKind != JsonValueKind.Array)
+                    return 0;
+
+                int countBefore = _allBroadcasts.Count;
+                var stations = new RadioStationCatalog();
+
+                foreach (var elem in listProp.EnumerateArray())
+                {
+                    string id = elem.TryGetProperty("id", out var idProp) ? idProp.GetString() ?? "" : "";
+                    if (string.IsNullOrEmpty(id)) continue;
+
+                    float freq = elem.TryGetProperty("frequency_mhz", out var fProp) ? (float)fProp.GetDouble() : 88.5f;
+                    int dayMin = elem.TryGetProperty("day_min", out var dMinProp) ? dMinProp.GetInt32() : 1;
+                    int dayMax = elem.TryGetProperty("day_max", out var dMaxProp) ? dMaxProp.GetInt32() : 9999;
+                    string title = elem.TryGetProperty("title", out var tProp) ? tProp.GetString() ?? "" : "";
+                    string message = elem.TryGetProperty("message", out var mProp) ? mProp.GetString() ?? "" : "";
+                    string type = elem.TryGetProperty("type", out var tyProp) ? tyProp.GetString() ?? "" : "";
+                    string faction = elem.TryGetProperty("faction_id", out var faProp) ? faProp.GetString() ?? "" : "";
+                    string callsign = elem.TryGetProperty("callsign", out var csProp) ? csProp.GetString() ?? "" : "";
+                    int signal = elem.TryGetProperty("signal_strength", out var sigProp) ? sigProp.GetInt32() : 5;
+                    signal = Math.Clamp(signal, 1, 9);
+
+                    var (genre, reliability, priority) = MapFactionBroadcastClass(type);
+
+                    var tags = new List<string>();
+                    if (!string.IsNullOrEmpty(type)) tags.Add(type);
+                    if (elem.TryGetProperty("intel_tags", out var itags) && itags.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var t in itags.EnumerateArray())
+                        {
+                            string v = t.GetString() ?? "";
+                            if (!string.IsNullOrEmpty(v)) tags.Add(v);
+                        }
+                    }
+                    if (elem.TryGetProperty("intel_refs", out var irefs) && irefs.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var r in irefs.EnumerateArray())
+                        {
+                            string v = r.GetString() ?? "";
+                            if (!string.IsNullOrEmpty(v)) tags.Add("intel:" + v);
+                        }
+                    }
+                    if (elem.TryGetProperty("distress_id", out var dRef) && dRef.ValueKind == JsonValueKind.String)
+                    {
+                        string v = dRef.GetString() ?? "";
+                        if (!string.IsNullOrEmpty(v)) tags.Add("distress:" + v);
+                    }
+                    if (elem.TryGetProperty("telemetry_event_id", out var tRef) && tRef.ValueKind == JsonValueKind.String)
+                    {
+                        string v = tRef.GetString() ?? "";
+                        if (!string.IsNullOrEmpty(v)) tags.Add("telemetry:" + v);
+                    }
+                    if (elem.TryGetProperty("quest_hook", out var qRef) && qRef.ValueKind == JsonValueKind.String)
+                    {
+                        string v = qRef.GetString() ?? "";
+                        if (!string.IsNullOrEmpty(v)) tags.Add("quest:" + v);
+                    }
+
+                    var station = stations.FindStationAtFrequency(freq, 0.5f);
+
+                    Register(new UnifiedRadioBroadcast
+                    {
+                        BroadcastId = id,
+                        FrequencyMhz = freq,
+                        DayMin = Math.Max(1, dayMin),
+                        DayMax = dayMax,
+                        DayTrigger = Math.Max(1, dayMin),
+                        StationId = station?.StationId ?? string.Empty,
+                        SourceName = string.IsNullOrEmpty(callsign)
+                            ? (string.IsNullOrEmpty(faction) ? "Automated Relay" : faction)
+                            : callsign,
+                        Title = title,
+                        Message = message,
+                        Genre = genre,
+                        Reliability = reliability,
+                        Priority = priority,
+                        SignalStrength = signal,
+                        Tags = tags
+                    });
+                }
+
+                return _allBroadcasts.Count - countBefore;
+            }
+            catch (Exception ex_CATDIAG)
+            {
+                CatalogDiagnostics.Warn("faction_radio_corpus.json", "FactionRadioCorpusLoader", ex_CATDIAG);
+                return 0;
+            }
+        }
+
+        private static (BroadcastGenre genre, SourceReliability reliability, BroadcastPriority priority) MapFactionBroadcastClass(string type)
+        {
+            switch (type)
+            {
+                case "patrol_report": return (BroadcastGenre.FactionWar, SourceReliability.Partisan, BroadcastPriority.Important);
+                case "supply_request": return (BroadcastGenre.TradeMarket, SourceReliability.Partisan, BroadcastPriority.Routine);
+                case "propaganda": return (BroadcastGenre.MilitaryEdict, SourceReliability.Partisan, BroadcastPriority.Routine);
+                case "distress_call": return (BroadcastGenre.DistressSignal, SourceReliability.Partisan, BroadcastPriority.Urgent);
+                case "encrypted_traffic": return (BroadcastGenre.NumbersStation, SourceReliability.Anonymous, BroadcastPriority.Routine);
+                case "military_traffic": return (BroadcastGenre.MilitaryEdict, SourceReliability.Partisan, BroadcastPriority.Important);
+                case "civilian_intercept": return (BroadcastGenre.SurvivorTestimony, SourceReliability.Anonymous, BroadcastPriority.Routine);
+                case "dead_hand_ping": return (BroadcastGenre.AutomatedLoop, SourceReliability.Automated, BroadcastPriority.Important);
+                case "weather_report": return (BroadcastGenre.CivilianNews, SourceReliability.Anonymous, BroadcastPriority.Routine);
+                case "supply_inventory": return (BroadcastGenre.InfrastructureLogistics, SourceReliability.Partisan, BroadcastPriority.Routine);
+                default: return (BroadcastGenre.AtmosphericMystery, SourceReliability.Unknown, BroadcastPriority.Routine);
+            }
         }
 
         public void LoadBaseRadioJson(string json)
