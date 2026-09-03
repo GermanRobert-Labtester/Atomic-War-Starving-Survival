@@ -10,7 +10,7 @@
       "elasticity": 1.2,
       "stackSize": 5,
       "weightKg": 1.0,
-      "barterNote": "The universal measure. Every faction prices its offers against the litre. A single bottle can buy a night's silence—or a bullet."
+      "barterNote": "The universal measure. Every faction prices its offers against the litre. A single bottle can buy a night's silence\u2014or a bullet."
     },
     {
       "id": "scrap_metal",
@@ -21,7 +21,7 @@
       "elasticity": 0.8,
       "stackSize": 20,
       "weightKg": 2.0,
-      "barterNote": "Tier-zero scrap; the fallback value everything else is compared against. A handful can patch a hole in the bunker wall—or a hole in a man."
+      "barterNote": "Tier-zero scrap; the fallback value everything else is compared against. A handful can patch a hole in the bunker wall\u2014or a hole in a man."
     },
     {
       "id": "bandages",
@@ -131,7 +131,7 @@
       "elasticity": 0.3,
       "stackSize": 1,
       "weightKg": 0.01,
-      "barterNote": "Luxury softens when supplies run short — nobody trades shine for thirst. The cut diamond in a velvet box is worth more than the bunker's generator."
+      "barterNote": "Luxury softens when supplies run short \u2014 nobody trades shine for thirst. The cut diamond in a velvet box is worth more than the bunker's generator."
     },
     {
       "id": "coal",
@@ -164,7 +164,7 @@
       "elasticity": 0.8,
       "stackSize": 50,
       "weightKg": 0.5,
-      "barterNote": "Counted by the bundle; the road charter's quota good. A handful can save a life—or end one. The ice doesn't care which."
+      "barterNote": "Counted by the bundle; the road charter's quota good. A handful can save a life\u2014or end one. The ice doesn't care which."
     },
     {
       "id": "item_foundry_winch_drum",
@@ -182,7 +182,7 @@
       "displayName": "Cooked Meat",
       "category": "food",
       "basePrice": 18.0,
-      "volatility": 0.20,
+      "volatility": 0.2,
       "elasticity": 1.6,
       "stackSize": 5,
       "weightKg": 0.5,
@@ -230,7 +230,7 @@
       "displayName": "Greenhouse Seeds",
       "category": "food",
       "basePrice": 45.0,
-      "volatility": 0.10,
+      "volatility": 0.1,
       "elasticity": 0.7,
       "stackSize": 10,
       "weightKg": 0.1,
@@ -246,7 +246,7 @@
       "elasticity": 0.9,
       "stackSize": 30,
       "weightKg": 0.25,
-      "barterNote": "Acids, solvents, powders in unlabeled jars. The foundry district runs on them. Handle with care — the jars have no labels, and the smell tells you what the label would have said.",
+      "barterNote": "Acids, solvents, powders in unlabeled jars. The foundry district runs on them. Handle with care \u2014 the jars have no labels, and the smell tells you what the label would have said.",
       "regionalSupply": "foundry"
     },
     {
@@ -266,7 +266,7 @@
       "displayName": "Mechanical Parts",
       "category": "materials",
       "basePrice": 5.0,
-      "volatility": 0.10,
+      "volatility": 0.1,
       "elasticity": 0.8,
       "stackSize": 50,
       "weightKg": 0.15,
@@ -282,7 +282,7 @@
       "elasticity": 0.5,
       "stackSize": 10,
       "weightKg": 1.2,
-      "barterNote": "The sun still does its part. A charged cell feeds a battery; a broken one is still the best glass around. First pick, first price, no haggling — the only utility left that hasn't failed.",
+      "barterNote": "The sun still does its part. A charged cell feeds a battery; a broken one is still the best glass around. First pick, first price, no haggling \u2014 the only utility left that hasn't failed.",
       "regionalSupply": "settlement"
     },
     {
@@ -290,7 +290,7 @@
       "displayName": "Medical Kit",
       "category": "medical",
       "basePrice": 50.0,
-      "volatility": 0.20,
+      "volatility": 0.2,
       "elasticity": 1.5,
       "stackSize": 5,
       "weightKg": 0.5,
@@ -306,7 +306,7 @@
       "elasticity": 1.6,
       "stackSize": 5,
       "weightKg": 0.1,
-      "barterNote": "Decorporation medication in foil. It pulls accumulated dose out of the body — not a cure, a deduction. Pharmacies that still stand trade it only for things they cannot scavenge. People argue over the last pack like it is a promise.",
+      "barterNote": "Decorporation medication in foil. It pulls accumulated dose out of the body \u2014 not a cure, a deduction. Pharmacies that still stand trade it only for things they cannot scavenge. People argue over the last pack like it is a promise.",
       "regionalSupply": "settlement"
     },
     {
@@ -318,7 +318,7 @@
       "elasticity": 0.7,
       "stackSize": 3,
       "weightKg": 0.8,
-      "barterNote": "A polymer membrane sheet from the water treatment plant. It turns brine into drinking water under pressure. The flotilla settlements trade these at a premium — they are the difference between a working barge and a stranded one.",
+      "barterNote": "A polymer membrane sheet from the water treatment plant. It turns brine into drinking water under pressure. The flotilla settlements trade these at a premium \u2014 they are the difference between a working barge and a stranded one.",
       "regionalSupply": "flotilla"
     },
     {
@@ -330,7 +330,7 @@
       "elasticity": 1.2,
       "stackSize": 5,
       "weightKg": 0.08,
-      "barterNote": "Deep-blue decorporation pellets in a sealed medical vial. They bind cesium and thallium in the gut. Pre-war pharmaceutical stock — the last production run was the year the exchange stopped everything. Each vial is a non-renewable resource.",
+      "barterNote": "Deep-blue decorporation pellets in a sealed medical vial. They bind cesium and thallium in the gut. Pre-war pharmaceutical stock \u2014 the last production run was the year the exchange stopped everything. Each vial is a non-renewable resource.",
       "regionalSupply": "settlement"
     },
     {
@@ -350,11 +350,11 @@
       "displayName": "Reverse-Osmosis Membrane",
       "category": "materials",
       "basePrice": 75.0,
-      "volatility": 0.10,
+      "volatility": 0.1,
       "elasticity": 0.8,
       "stackSize": 3,
       "weightKg": 0.6,
-      "barterNote": "A spiral-wound RO element. The heart of the advanced water purifier. Foundry district workshops rebuild these from salvaged housing and new membrane sheets. The flotilla pays double — their stills run on these.",
+      "barterNote": "A spiral-wound RO element. The heart of the advanced water purifier. Foundry district workshops rebuild these from salvaged housing and new membrane sheets. The flotilla pays double \u2014 their stills run on these.",
       "regionalSupply": "foundry"
     },
     {
@@ -392,6 +392,72 @@
       "weightKg": 2.5,
       "barterNote": "A woven funnel of wood and cord set in moving water. Fish enter but cannot find the exit. Strong where geography supports it, worthless where it does not. The freeze kills it. The thaw brings it back.",
       "regionalSupply": "coastal"
+    },
+    {
+      "id": "ammo_556",
+      "displayName": "5.56mm Rounds",
+      "category": "ammo",
+      "basePrice": 18.0,
+      "volatility": 0.22,
+      "elasticity": 1.2,
+      "stackSize": 20,
+      "weightKg": 0.2,
+      "barterNote": "Rifle rounds ride behind the frontline convoys; the price climbs with every skirmish report."
+    },
+    {
+      "id": "ammo_12g",
+      "displayName": "12-Gauge Shells",
+      "category": "ammo",
+      "basePrice": 10.0,
+      "volatility": 0.2,
+      "elasticity": 1.2,
+      "stackSize": 20,
+      "weightKg": 0.25,
+      "barterNote": "Shell bags trade steady at the strongholds and slow everywhere else."
+    },
+    {
+      "id": "diesel_fuel",
+      "displayName": "Diesel Fuel",
+      "category": "fuel",
+      "basePrice": 16.0,
+      "volatility": 0.16,
+      "elasticity": 1.3,
+      "stackSize": 4,
+      "weightKg": 2.5,
+      "barterNote": "Rail sidings and river barges burn it by the drum; the price follows the timetable."
+    },
+    {
+      "id": "item_smoked_meat",
+      "displayName": "Hardwood Smoked Rations",
+      "category": "food",
+      "basePrice": 20.0,
+      "volatility": 0.16,
+      "elasticity": 1.4,
+      "stackSize": 8,
+      "weightKg": 0.3,
+      "barterNote": "Keeps for weeks without ice, so it sells wherever the next meal is uncertain."
+    },
+    {
+      "id": "item_pickled_tubers",
+      "displayName": "Pickled Greenhouse Tubers",
+      "category": "food",
+      "basePrice": 11.0,
+      "volatility": 0.12,
+      "elasticity": 1.3,
+      "stackSize": 10,
+      "weightKg": 0.4,
+      "barterNote": "Sealed jars of brine-cured greenhouse produce; the salt camps never run short of buyers."
+    },
+    {
+      "id": "tobacco_pouch",
+      "displayName": "Tobacco Pouch",
+      "category": "luxury",
+      "basePrice": 30.0,
+      "volatility": 0.35,
+      "elasticity": 1.8,
+      "stackSize": 10,
+      "weightKg": 0.2,
+      "barterNote": "Trades far above its weight wherever a garrison has been paid recently."
     }
   ]
 }

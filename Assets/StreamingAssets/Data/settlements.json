@@ -19,7 +19,8 @@
       "trade_goods": [
         "item_trade_salt_sack",
         "chemicals",
-        "clean_water"
+        "clean_water",
+        "item_pickled_tubers"
       ],
       "trade_needs": [
         "scrap_metal",
@@ -72,18 +73,20 @@
       "trade_goods": [
         "scrap_metal",
         "mechanical_parts",
-        "engine"
+        "engine",
+        "diesel_fuel"
       ],
       "trade_needs": [
         "fuel",
         "antibiotics",
-        "clean_water"
+        "clean_water",
+        "tobacco_pouch"
       ],
       "economy": {
         "primary_export": "scrap_metal",
         "primary_import": "fuel",
         "trade_specialty": "machinist",
-        "price_modifier_exports": 0.80,
+        "price_modifier_exports": 0.8,
         "price_modifier_imports": 1.25,
         "stock_item_ids": [
           "scrap_metal",
@@ -137,7 +140,7 @@
         "primary_import": "electronic_scrap",
         "trade_specialty": "electronics",
         "price_modifier_exports": 0.85,
-        "price_modifier_imports": 1.20,
+        "price_modifier_imports": 1.2,
         "stock_item_ids": [
           "clean_water",
           "medical_kit",
@@ -189,8 +192,8 @@
         "primary_export": "scrap_metal",
         "primary_import": "clean_water",
         "trade_specialty": "stonework",
-        "price_modifier_exports": 0.70,
-        "price_modifier_imports": 1.40,
+        "price_modifier_exports": 0.7,
+        "price_modifier_imports": 1.4,
         "stock_item_ids": [
           "scrap_metal",
           "chemicals",
@@ -284,7 +287,8 @@
       "trade_goods": [
         "electronic_scrap",
         "copper_wire_10m_of_10m",
-        "battery"
+        "battery",
+        "tobacco_pouch"
       ],
       "trade_needs": [
         "clean_water",
@@ -295,8 +299,8 @@
         "primary_export": "electronic_scrap",
         "primary_import": "clean_water",
         "trade_specialty": "electronics",
-        "price_modifier_exports": 0.70,
-        "price_modifier_imports": 1.30,
+        "price_modifier_exports": 0.7,
+        "price_modifier_imports": 1.3,
         "stock_item_ids": [
           "electronic_scrap",
           "copper_wire_10m_of_10m",
@@ -337,18 +341,20 @@
       "trade_goods": [
         "clean_water",
         "cooked_meat",
-        "fuel"
+        "fuel",
+        "item_smoked_meat"
       ],
       "trade_needs": [
         "scrap_metal",
         "mechanical_parts",
-        "cloth"
+        "cloth",
+        "diesel_fuel"
       ],
       "economy": {
         "primary_export": "clean_water",
         "primary_import": "scrap_metal",
         "trade_specialty": "river_transit",
-        "price_modifier_exports": 0.80,
+        "price_modifier_exports": 0.8,
         "price_modifier_imports": 1.25,
         "stock_item_ids": [
           "clean_water",
@@ -398,7 +404,7 @@
         "primary_import": "canned_food",
         "trade_specialty": "rail_freight",
         "price_modifier_exports": 0.75,
-        "price_modifier_imports": 1.20,
+        "price_modifier_imports": 1.2,
         "stock_item_ids": [
           "mechanical_parts",
           "scrap_metal",
@@ -435,19 +441,21 @@
       "trade_goods": [
         "engine",
         "scrap_metal",
-        "mechanical_parts"
+        "mechanical_parts",
+        "ammo_556"
       ],
       "trade_needs": [
         "canned_food",
         "clean_water",
-        "medical_kit"
+        "medical_kit",
+        "item_smoked_meat"
       ],
       "economy": {
         "primary_export": "engine",
         "primary_import": "canned_food",
         "trade_specialty": "munitions",
         "price_modifier_exports": 0.85,
-        "price_modifier_imports": 1.30,
+        "price_modifier_imports": 1.3,
         "stock_item_ids": [
           "engine",
           "scrap_metal",
@@ -484,12 +492,14 @@
       "trade_goods": [
         "fuel",
         "mechanical_parts",
-        "chemicals"
+        "chemicals",
+        "ammo_12g"
       ],
       "trade_needs": [
         "cloth",
         "water_filter",
-        "canned_food"
+        "canned_food",
+        "item_pickled_tubers"
       ],
       "economy": {
         "primary_export": "fuel",
@@ -544,8 +554,8 @@
         "primary_export": "canned_food",
         "primary_import": "scrap_metal",
         "trade_specialty": "agriculture",
-        "price_modifier_exports": 0.70,
-        "price_modifier_imports": 1.30,
+        "price_modifier_exports": 0.7,
+        "price_modifier_imports": 1.3,
         "stock_item_ids": [
           "canned_food",
           "cloth",
@@ -593,8 +603,8 @@
         "primary_export": "clean_water",
         "primary_import": "cloth",
         "trade_specialty": "sanctuary_care",
-        "price_modifier_exports": 0.80,
-        "price_modifier_imports": 1.20,
+        "price_modifier_exports": 0.8,
+        "price_modifier_imports": 1.2,
         "stock_item_ids": [
           "clean_water",
           "bandage",

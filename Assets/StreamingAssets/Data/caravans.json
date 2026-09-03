@@ -16,9 +16,21 @@
       "stay_duration_days": 2,
       "guard_count": 5,
       "specialty_goods": [
-        { "item_id": "clean_water", "quantity": 15, "price_rations": 1 },
-        { "item_id": "water_filter", "quantity": 4, "price_rations": 6 },
-        { "item_id": "diesel_fuel", "quantity": 5, "price_rations": 4 }
+        {
+          "item_id": "clean_water",
+          "quantity": 15,
+          "price_rations": 1
+        },
+        {
+          "item_id": "water_filter",
+          "quantity": 4,
+          "price_rations": 6
+        },
+        {
+          "item_id": "diesel_fuel",
+          "quantity": 5,
+          "price_rations": 4
+        }
       ]
     },
     {
@@ -36,9 +48,26 @@
       "stay_duration_days": 2,
       "guard_count": 4,
       "specialty_goods": [
-        { "item_id": "dried_rations", "quantity": 20, "price_rations": 1 },
-        { "item_id": "clean_water", "quantity": 10, "price_rations": 1 },
-        { "item_id": "scrap_wood", "quantity": 12, "price_rations": 2 }
+        {
+          "item_id": "dried_rations",
+          "quantity": 20,
+          "price_rations": 1
+        },
+        {
+          "item_id": "clean_water",
+          "quantity": 10,
+          "price_rations": 1
+        },
+        {
+          "item_id": "scrap_wood",
+          "quantity": 12,
+          "price_rations": 2
+        },
+        {
+          "item_id": "item_pickled_tubers",
+          "quantity": 8,
+          "price_rations": 5
+        }
       ]
     },
     {
@@ -56,9 +85,26 @@
       "stay_duration_days": 2,
       "guard_count": 6,
       "specialty_goods": [
-        { "item_id": "scrap_metal", "quantity": 18, "price_rations": 2 },
-        { "item_id": "scrap_mechanical", "quantity": 8, "price_rations": 3 },
-        { "item_id": "ammo_308", "quantity": 12, "price_rations": 4 }
+        {
+          "item_id": "scrap_metal",
+          "quantity": 18,
+          "price_rations": 2
+        },
+        {
+          "item_id": "scrap_mechanical",
+          "quantity": 8,
+          "price_rations": 3
+        },
+        {
+          "item_id": "ammo_308",
+          "quantity": 12,
+          "price_rations": 4
+        },
+        {
+          "item_id": "ammo_556",
+          "quantity": 8,
+          "price_rations": 5
+        }
       ]
     },
     {
@@ -76,9 +122,31 @@
       "stay_duration_days": 3,
       "guard_count": 4,
       "specialty_goods": [
-        { "item_id": "medical_kit", "quantity": 6, "price_rations": 5 },
-        { "item_id": "military_radio", "quantity": 2, "price_rations": 10 },
-        { "item_id": "electronic_scrap", "quantity": 10, "price_rations": 3 }
+        {
+          "item_id": "medical_kit",
+          "quantity": 6,
+          "price_rations": 5
+        },
+        {
+          "item_id": "military_radio",
+          "quantity": 2,
+          "price_rations": 10
+        },
+        {
+          "item_id": "electronic_scrap",
+          "quantity": 10,
+          "price_rations": 3
+        },
+        {
+          "item_id": "tobacco_pouch",
+          "quantity": 8,
+          "price_rations": 5
+        },
+        {
+          "item_id": "item_smoked_meat",
+          "quantity": 8,
+          "price_rations": 5
+        }
       ]
     }
   ]

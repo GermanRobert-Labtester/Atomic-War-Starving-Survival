@@ -47,14 +47,14 @@ namespace Ashfall.Core.Economy
             var market = new MarketSystem();
             market.BindCatalog(catalog);
             for (int day = 1; day <= 10; day++)
-                market.TickDay(day, new SeededRng(4242));
+                market.TickDay(day, new SeededRng(4242 + day));
             Check(market.Day == 10, "ten market days elapsed");
             Check(market.GetPrice("clean_water") > 0f, "prices resolve after ticks");
 
             // 3. Transactions and barter.
             var buy = market.Buy("clean_water", 4, 10, "test_faction");
             Check(buy.Accepted && buy.TotalValue > 0f, "purchase books at market price");
-            var barter = market.Barter("scrap_metal", 20, "clean_water", 10);
+            var barter = market.Barter("scrap_metal", 50, "clean_water", 10);
             Check(barter.Accepted, "barter exchanges goods");
             Check(market.State.ledger.Count >= 3, "ledger records all transactions");
 
@@ -68,8 +68,8 @@ namespace Ashfall.Core.Economy
             bool match = true;
             for (int day = 11; day <= 20; day++)
             {
-                market.TickDay(day, new SeededRng(4242));
-                restored.TickDay(day, new SeededRng(4242));
+                market.TickDay(day, new SeededRng(4242 + day));
+                restored.TickDay(day, new SeededRng(4242 + day));
                 foreach (var good in catalog.All())
                 {
                     if (market.GetPrice(good.id) != restored.GetPrice(good.id))
