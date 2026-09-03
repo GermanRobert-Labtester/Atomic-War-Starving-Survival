@@ -120,6 +120,9 @@ namespace AtomicWar.GodotApp
         private void WireWaterTreatmentSumpBridge()
         {
             if (_sumpFlooding == null || _waterTreatment == null) return;
+            // Plan 70: bind the sludge-plant consumable inventory (flocculant /
+            // filter cloth) and the canonical greywater routing target.
+            _sumpFlooding.System.BindServices(_inventory?.Inventory, _waterTreatment.System);
             _sumpFlooding.System.OnIncident += incident =>
             {
                 if (incident.kind == FloodIncidentKind.FloodStart || incident.kind == FloodIncidentKind.Contamination)

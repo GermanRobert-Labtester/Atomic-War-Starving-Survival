@@ -75,6 +75,37 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        /// <summary>Flocculation treatment batch on a node (consumes flocculant).</summary>
+        public ActionResult StartFlocculation(string nodeId, int doseTier)
+        {
+            var res = System.StartFlocculation(nodeId, doseTier);
+            LastEvent = res.IsSuccess
+                ? $"Flocculation tier {doseTier} applied to {nodeId}"
+                : $"Flocculation blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
+        /// <summary>Centrifuge dewatering batch on a node (consumes filter cloth, needs power).</summary>
+        public ActionResult RunCentrifugeBatch(string nodeId)
+        {
+            var res = System.RunCentrifugeBatch(nodeId);
+            LastEvent = res.IsSuccess
+                ? $"Centrifuge batch completed for {nodeId}"
+                : $"Centrifuge blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
+        /// <summary>Replaces worn centrifuge filter media (consumes one cloth).</summary>
+        public ActionResult ReplaceCentrifugeMedia()
+        {
+            var res = System.ReplaceCentrifugeMedia();
+            LastEvent = res.IsSuccess ? "Centrifuge filter media replaced" : $"Media replace blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
         public ActionResult SetNodePower(string nodeId, bool powered)
         {
             var res = System.SetNodePower(nodeId, powered);

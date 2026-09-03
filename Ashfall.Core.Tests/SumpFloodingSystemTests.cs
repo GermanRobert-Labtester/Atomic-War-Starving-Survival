@@ -291,6 +291,231 @@ namespace Ashfall.Core.Tests
             Assert.Equal(99.9f, node.pumpCondition, 3);    // exact legacy wear
         }
 
+        // ── Plan 70 slice 2: flocculation + centrifuge dewatering ──────
+
+        private static SumpFloodingSystem CreateWithServices(
+            out WeatherSystem weather, out PowerGridSystem power, out YearOfAshDeepFreezeSystem df,
+            out Inventory.Inventory inventory, out WaterTreatmentSystem water
+            )
+        {
+            weather = new WeatherSystem();
+            weather.BindProfile(new SeasonProfileDef { id = "default" }, 42);
+            var state = new PowerGridState
+            {
+                GenerationWatts = 800,
+                FuelUnits = 100,
+                BatteryCapacityWh = 4000,
+                BatteryReserveWh = 2000
+            };
+            var rooms = new System.Collections.Generic.List<PowerGridRoom>
+            {
+                new PowerGridRoom("sump_a", "Lower Level", 100f)
+            };
+            power = new PowerGridSystem(state, rooms, new SeededRng(42));
+            df = new YearOfAshDeepFreezeSystem();
+            inventory = new Inventory.Inventory();
+            water = new WaterTreatmentSystem();
+            var sys = new SumpFloodingSystem(new SeededRng(42), weather, power, df);
+            sys.BindServices(inventory, water);
+            return sys;
+        }
+
+        [Fact] public void StartFlocculation_InvalidTierOrUnknownNode_Fails()
+        {
+            var s = CreateWithServices(out _, out _, out _, out _, out _);
+            s.AddNode("sump_a", "Lower Level");
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.StartFlocculation("sump_a", 0).Status);
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.StartFlocculation("sump_a", 3).Status);
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.StartFlocculation("no_node", 1).Status);
+        }
+
+        [Fact] public void StartFlocculation_MissingChemical_Fails()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            s.AddNode("sump_a", "Lower Level");
+            s.State.nodes[0].suspendedSolidsKg = 10f;
+            // no chemicals stocked
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.StartFlocculation("sump_a", 1).Status);
+            Assert.Equal(10f, s.State.nodes[0].suspendedSolidsKg, 3); // untouched
+        }
+
+        [Fact] public void StartFlocculation_ConsumesExactlyTierDose_FromInventory()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            inv.AddById(SumpFloodingSystem.FlocculantItemId, 4); // exactly two tier-1 doses
+            s.AddNode("sump_a", "Lower Level");
+            s.State.nodes[0].suspendedSolidsKg = 10f;
+
+            Assert.Equal(ActionResult.StatusKind.Success, s.StartFlocculation("sump_a", 1).Status);
+            Assert.Equal(ActionResult.StatusKind.Success, s.StartFlocculation("sump_a", 1).Status);
+            // third dose must find the pantry empty
+            s.State.nodes[0].suspendedSolidsKg = 10f;
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.StartFlocculation("sump_a", 1).Status);
+        }
+
+        [Fact] public void StartFlocculation_Tier1_CapturesSolids_WithMassConserved()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            inv.AddById(SumpFloodingSystem.FlocculantItemId, 10);
+            s.AddNode("sump_a", "Lower Level");
+            var node = s.State.nodes[0];
+            node.suspendedSolidsKg = 10f;
+            node.settledSludgeKg = 0f;
+
+            var res = s.StartFlocculation("sump_a", 1);
+            Assert.Equal(ActionResult.StatusKind.Success, res.Status);
+
+            // tier 1 at reference load: capture 0.6 × 10 = 6 kg; dose 2 units × 0.5 kg joins sludge
+            Assert.Equal(4f, node.suspendedSolidsKg, 3);
+            Assert.Equal(7f, node.settledSludgeKg, 3);
+            // mass balance: final solids = initial solids + dosed chemical mass
+            Assert.Equal(10f + 1f, node.suspendedSolidsKg + node.settledSludgeKg, 3);
+        }
+
+        [Fact] public void StartFlocculation_ReducesContamination_BoundedByTier()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            inv.AddById(SumpFloodingSystem.FlocculantItemId, 10);
+            s.AddNode("sump_a", "Lower Level");
+            s.State.nodes[0].suspendedSolidsKg = 10f;
+            s.State.nodes[0].contaminationLevel = 0.5f;
+
+            s.StartFlocculation("sump_a", 2);
+            // tier 2 removal 0.05 × 2 = 0.1
+            Assert.Equal(0.4f, s.State.nodes[0].contaminationLevel, 3);
+        }
+
+        [Fact] public void StartFlocculation_OverdoseOnThinSolids_FoulsWater()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            inv.AddById(SumpFloodingSystem.FlocculantItemId, 10);
+            s.AddNode("sump_a", "Lower Level");
+            s.State.nodes[0].suspendedSolidsKg = 0.5f; // thin solids
+            s.State.nodes[0].contaminationLevel = 0.2f;
+
+            var res = s.StartFlocculation("sump_a", 1);
+            Assert.Equal(ActionResult.StatusKind.Success, res.Status);
+            // over-dosing penalty: residual chemical raises contamination
+            Assert.Equal(0.22f, s.State.nodes[0].contaminationLevel, 3);
+        }
+
+        [Fact] public void RunCentrifugeBatch_NoPower_Fails()
+        {
+            var s = CreateWithServices(out _, out var grid, out _, out var inv, out _);
+            inv.AddById(SumpFloodingSystem.CentrifugeFilterItemId, 5);
+            s.AddNode("sump_a", "Lower Level");
+            s.State.nodes[0].settledSludgeKg = 30f;
+            grid.SetBreaker("sump_a", closed: false); // breaker open → room unpowered
+
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.RunCentrifugeBatch("sump_a").Status);
+            Assert.Equal(30f, s.State.nodes[0].settledSludgeKg, 3); // untouched
+        }
+
+        [Fact] public void RunCentrifugeBatch_NoSludge_OrMissingCloth_Fails()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            s.AddNode("sump_a", "Lower Level");
+
+            // no sludge
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.RunCentrifugeBatch("sump_a").Status);
+
+            // sludge but no cloth
+            s.State.nodes[0].settledSludgeKg = 30f;
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.RunCentrifugeBatch("sump_a").Status);
+            Assert.Equal(30f, s.State.nodes[0].settledSludgeKg, 3);
+        }
+
+        [Fact] public void RunCentrifugeBatch_MassBalance_AndGreywaterRoutedToWaterTreatment()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out var water);
+            inv.AddById(SumpFloodingSystem.CentrifugeFilterItemId, 5);
+            s.AddNode("sump_a", "Lower Level");
+            s.State.nodes[0].settledSludgeKg = 30f;
+
+            var res = s.RunCentrifugeBatch("sump_a");
+            Assert.Equal(ActionResult.StatusKind.Success, res.Status);
+
+            // full-separation split of a 30 kg batch:
+            // greywater 12 L, tailings 4.5 kg, cake = remainder 13.5 kg
+            var node = s.State.nodes[0];
+            Assert.Equal(0f, node.settledSludgeKg, 3);
+            Assert.Equal(12f, water.State.rawWater, 3);              // routed as Raw (non-potable)
+            Assert.Equal(4.5f, s.State.hazardousTailingsKg, 3);
+            Assert.Equal(13.5f, s.State.dewateredCakeKg, 3);
+            // mass balance: cake + tailings + greywater ≡ batch input
+            Assert.Equal(30f, s.State.dewateredCakeKg + s.State.hazardousTailingsKg + water.State.rawWater, 3);
+            Assert.Equal(0f, s.State.unroutedGreywaterLiters, 3);
+            // consumables/wear: media 100 − 5, condition 100 − 1
+            Assert.Equal(95f, s.State.centrifugeFilterMedia, 3);
+            Assert.Equal(99f, s.State.centrifugeCondition, 3);
+            Assert.Equal(1, s.State.centrifugeBatchesCompleted);
+        }
+
+        [Fact] public void RunCentrifugeBatch_LowMedia_YieldsWetterCake_StillConservesMass()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out var water);
+            inv.AddById(SumpFloodingSystem.CentrifugeFilterItemId, 5);
+            s.AddNode("sump_a", "Lower Level");
+            s.State.nodes[0].settledSludgeKg = 30f;
+            s.State.centrifugeFilterMedia = 15f; // below low-media threshold
+
+            s.RunCentrifugeBatch("sump_a");
+
+            // half efficiency: 6 L recovered, tailings unchanged, cake absorbs the rest
+            Assert.Equal(6f, water.State.rawWater, 3);
+            Assert.Equal(4.5f, s.State.hazardousTailingsKg, 3);
+            Assert.Equal(19.5f, s.State.dewateredCakeKg, 3);
+            Assert.Equal(30f, s.State.dewateredCakeKg + s.State.hazardousTailingsKg + water.State.rawWater, 3);
+        }
+
+        [Fact] public void RunCentrifugeBatch_WithoutWaterTreatment_ConservesGreywaterUnrouted()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            s.BindServices(inv, null); // no water-treatment authority bound
+            inv.AddById(SumpFloodingSystem.CentrifugeFilterItemId, 5);
+            s.AddNode("sump_a", "Lower Level");
+            s.State.nodes[0].settledSludgeKg = 30f;
+
+            s.RunCentrifugeBatch("sump_a");
+
+            // greywater must not vanish — it waits in the unrouted buffer
+            Assert.Equal(12f, s.State.unroutedGreywaterLiters, 3);
+            Assert.Equal(30f, s.State.dewateredCakeKg + s.State.hazardousTailingsKg + s.State.unroutedGreywaterLiters, 3);
+        }
+
+        [Fact] public void ReplaceCentrifugeMedia_ConsumesCloth_ResetsMedia()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            inv.AddById(SumpFloodingSystem.CentrifugeFilterItemId, 1);
+            s.State.centrifugeFilterMedia = 15f;
+
+            Assert.Equal(ActionResult.StatusKind.Success, s.ReplaceCentrifugeMedia().Status);
+            Assert.Equal(100f, s.State.centrifugeFilterMedia, 3);
+
+            // second replace without cloth fails
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.ReplaceCentrifugeMedia().Status);
+            Assert.Equal(100f, s.State.centrifugeFilterMedia, 3);
+        }
+
+        [Fact] public void FullPipeline_FlocculateThenCentrifuge_SludgeMassConserved()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out var water);
+            inv.AddById(SumpFloodingSystem.FlocculantItemId, 10);
+            inv.AddById(SumpFloodingSystem.CentrifugeFilterItemId, 5);
+            s.AddNode("sump_a", "Lower Level");
+            var node = s.State.nodes[0];
+            node.suspendedSolidsKg = 10f;
+            node.settledSludgeKg = 0f;
+
+            s.StartFlocculation("sump_a", 1);          // 10 kg suspended → 4 kg + 7 kg settled
+            s.RunCentrifugeBatch("sump_a");            // 7 kg settled → 3.15 cake + 1.05 tailings + 2.8 L
+
+            float totalOut = s.State.dewateredCakeKg + s.State.hazardousTailingsKg
+                + water.State.rawWater + node.suspendedSolidsKg + node.settledSludgeKg;
+            // inputs: 10 kg silt + 1 kg flocculant mass — everything accounted for
+            Assert.Equal(11f, totalOut, 3);
+        }
+
         private static SumpFloodingSystem Create(out WeatherSystem weather, out PowerGridSystem power, out YearOfAshDeepFreezeSystem df)
         {
             weather = new WeatherSystem();

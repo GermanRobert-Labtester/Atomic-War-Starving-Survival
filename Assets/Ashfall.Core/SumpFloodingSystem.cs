@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 
+
 using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 using Ashfall.Core.YearOfAsh;
@@ -16,6 +17,14 @@ namespace Ashfall.Core
         public float globalGroundwaterLevel;
         public int lastFloodDay = -1;
         public List<FloodIncident> incidentLog = new List<FloodIncident>();
+
+        // ── Sludge processing plant (Plan 70; shelter-level, single machine) ──
+        public float dewateredCakeKg;             // recovered sludge cake (metallurgy seam later)
+        public float hazardousTailingsKg;         // concentrated hazardous tailings (disposal seam later)
+        public float unroutedGreywaterLiters;     // greywater awaiting a bound water-treatment authority
+        public float centrifugeCondition = 100f;  // 0-100
+        public float centrifugeFilterMedia = 100f;// 0-100 cloth media
+        public int centrifugeBatchesCompleted;
     }
 
     [Serializable]
@@ -68,6 +77,37 @@ namespace Ashfall.Core
         /// <summary>Settled sludge above this mass clogs the strainer and halves throughput.</summary>
         public const float StrainerBlockageThresholdKg = 25f;
 
+        // ── Flocculation (Plan 70 §4.8) ─────────────────────────────
+        /// <summary>Canonical consumable used as flocculant.</summary>
+        public const string FlocculantItemId = "chemicals";
+        /// <summary>Chemical units consumed per dose tier.</summary>
+        public const int FlocculantUnitsPerDoseTier = 2;
+        /// <summary>Abstract mass of one chemical unit joining the sludge phase.</summary>
+        public const float FlocculantKgPerUnit = 0.5f;
+        public const float FlocculationCaptureEfficiencyTier1 = 0.60f;
+        public const float FlocculationCaptureEfficiencyTier2 = 0.85f;
+        /// <summary>Suspended-solids load a single dose tier can fully treat; beyond it
+        /// capture efficiency drops proportionally (under-dosing penalty).</summary>
+        public const float FlocculationSolidsReferenceKg = 10f;
+        /// <summary>Bounded water-quality gain per successful dose tier.</summary>
+        public const float FlocculationContaminationRemovalPerTier = 0.05f;
+        /// <summary>Over-dosing penalty: residual chemical fouls the water.</summary>
+        public const float FlocculationOverdoseResidualContamination = 0.02f;
+
+        // ── Centrifuge dewatering (Plan 70 §4.9) ────────────────────
+        /// <summary>Canonical consumable used as centrifuge filter media.</summary>
+        public const string CentrifugeFilterItemId = "cloth";
+        public const float CentrifugeMaxBatchSludgeKg = 40f;
+        public const float CentrifugeCakeFraction = 0.45f;
+        public const float CentrifugeTailingsFraction = 0.15f;
+        /// <summary>Water recovered per kg of sludge at full separation efficiency.
+        /// Cake absorbs the remainder — cake + tailings + water ≡ batch mass.</summary>
+        public const float CentrifugeWaterRecoveryFraction = 0.40f;
+        /// <summary>Below this media condition separation efficiency halves (wetted cake).</summary>
+        public const float CentrifugeLowMediaThreshold = 20f;
+        public const float CentrifugeConditionWearPerBatch = 1.0f;
+        public const float CentrifugeMediaWearPerBatch = 5f;
+
         private SumpFloodingState _state = new SumpFloodingState();
         private readonly Dictionary<string, SumpStratumDef> _strata = new Dictionary<string, SumpStratumDef>(StringComparer.Ordinal);
         private readonly ISeededRng _rng;
@@ -75,6 +115,8 @@ namespace Ashfall.Core
         private readonly WeatherSystem _weather;
         private readonly PowerGridSystem _powerGrid;
         private readonly YearOfAshDeepFreezeSystem _deepFreeze;
+        private Inventory.Inventory? _inventory;
+        private WaterTreatmentSystem? _waterTreatment;
         private int _currentDay;
 
         public SumpFloodingState State => _state;
@@ -93,6 +135,147 @@ ILog? log = null)
             _powerGrid = powerGrid ?? throw new ArgumentNullException(nameof(powerGrid));
             _deepFreeze = deepFreeze ?? throw new ArgumentNullException(nameof(deepFreeze));
             _log = log ?? NullLog.Instance;
+        }
+
+        /// <summary>
+        /// Late-binds the consumable inventory and the canonical water-treatment
+        /// authority. Greywater from centrifuge dewatering routes into
+        /// WaterTreatmentSystem as Raw water (never potable); without a bound
+        /// authority it is conserved in <see cref="SumpFloodingState.unroutedGreywaterLiters"/>.
+        /// </summary>
+        public void BindServices(Inventory.Inventory? inventory, WaterTreatmentSystem? waterTreatment)
+        {
+            _inventory = inventory;
+            _waterTreatment = waterTreatment;
+        }
+
+        /// <summary>
+        /// Flocculation treatment batch (Plan 70 §4.8): consumes flocculant from
+        /// inventory, captures a dose-tier-dependent fraction of suspended solids
+        /// into the settled sludge layer (mass-conserving), and improves water
+        /// quality. Under-dosing (solids load above the tier reference) lowers
+        /// capture; over-dosing on thin solids fouls the water with residual
+        /// chemical. Game-abstract chemistry only.
+        /// </summary>
+        public ActionResult StartFlocculation(string nodeId, int doseTier)
+        {
+            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
+            if (doseTier < 1 || doseTier > 2)
+                return ActionResult.Failed("invalid_dose", "sump.invalid_dose");
+            if (node.suspendedSolidsKg <= 0f)
+                return ActionResult.Blocked("no_solids", "sump.flocculation_no_solids");
+
+            int units = doseTier * FlocculantUnitsPerDoseTier;
+            if (_inventory == null || !_inventory.TryConsume(FlocculantItemId, units))
+                return ActionResult.Failed("treatment_resource_missing", "sump.flocculant_missing");
+
+            float reference = FlocculationSolidsReferenceKg * doseTier;
+            float efficiency = (doseTier == 1
+                ? FlocculationCaptureEfficiencyTier1
+                : FlocculationCaptureEfficiencyTier2)
+                * Math.Min(1f, node.suspendedSolidsKg / reference);
+            float captured = node.suspendedSolidsKg * efficiency;
+            float doseMassKg = units * FlocculantKgPerUnit;
+
+            node.suspendedSolidsKg = Math.Max(0f, node.suspendedSolidsKg - captured);
+            node.settledSludgeKg += captured + doseMassKg;
+
+            if (node.suspendedSolidsKg < 1f)
+            {
+                // Over-dosing: little solids left to capture — residual chemical
+                // stays in the water column as contamination.
+                node.contaminationLevel = Math.Min(1f,
+                    node.contaminationLevel + FlocculationOverdoseResidualContamination);
+            }
+            else
+            {
+                node.contaminationLevel = Math.Max(0f,
+                    node.contaminationLevel - FlocculationContaminationRemovalPerTier * doseTier);
+            }
+
+            _log.Info($"[Sump] Flocculation tier {doseTier} in {node.displayName}: " +
+                      $"captured {captured:F2}kg, dosed {units} units");
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.flocculation_applied",
+                new Dictionary<string, double>
+                {
+                    { "captured_kg", captured },
+                    { "dose_units", units },
+                });
+        }
+
+        /// <summary>
+        /// Centrifuge dewatering batch (Plan 70 §4.9): processes settled sludge
+        /// from a node into dewatered cake, concentrated hazardous tailings, and
+        /// reclaimed greywater (routed to the water-treatment authority as Raw
+        /// water). Mass balance: cake + tailings + greywater ≡ batch input.
+        /// Requires room power and one cloth filter media per batch.
+        /// </summary>
+        public ActionResult RunCentrifugeBatch(string nodeId)
+        {
+            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
+            if (node.settledSludgeKg <= 0f)
+                return ActionResult.Blocked("no_sludge", "sump.centrifuge_no_sludge");
+            if (_state.centrifugeCondition <= 0f)
+                return ActionResult.Failed("centrifuge_unavailable", "sump.centrifuge_broken");
+            if (!_powerGrid.IsRoomPowered(nodeId))
+                return ActionResult.Failed("power_unavailable", "sump.centrifuge_no_power");
+            if (_state.centrifugeFilterMedia <= 0f)
+                return ActionResult.Blocked("media_worn", "sump.centrifuge_media_worn");
+            if (_inventory == null || !_inventory.TryConsume(CentrifugeFilterItemId, 1))
+                return ActionResult.Failed("treatment_resource_missing", "sump.centrifuge_media_missing");
+
+            float batchKg = Math.Min(node.settledSludgeKg, CentrifugeMaxBatchSludgeKg);
+            float efficiency = _state.centrifugeFilterMedia >= CentrifugeLowMediaThreshold
+                ? 1f
+                : 0.5f; // worn media: wetter cake, less recovered water
+            float greywaterL = batchKg * CentrifugeWaterRecoveryFraction * efficiency;
+            float tailingsKg = batchKg * CentrifugeTailingsFraction;
+            float cakeKg = batchKg - greywaterL - tailingsKg; // remainder conserves mass
+
+            node.settledSludgeKg = Math.Max(0f, node.settledSludgeKg - batchKg);
+            _state.dewateredCakeKg += cakeKg;
+            _state.hazardousTailingsKg += tailingsKg;
+
+            if (_waterTreatment != null)
+            {
+                var add = _waterTreatment.AddWater(WaterType.Raw, greywaterL);
+                if (add.Status != ActionResult.StatusKind.Success)
+                    _state.unroutedGreywaterLiters += greywaterL;
+            }
+            else
+            {
+                _state.unroutedGreywaterLiters += greywaterL;
+            }
+
+            _state.centrifugeCondition = Math.Max(0f, _state.centrifugeCondition - CentrifugeConditionWearPerBatch);
+            _state.centrifugeFilterMedia = Math.Max(0f, _state.centrifugeFilterMedia - CentrifugeMediaWearPerBatch);
+            _state.centrifugeBatchesCompleted++;
+
+            _log.Info($"[Sump] Centrifuge batch in {node.displayName}: {batchKg:F2}kg → " +
+                      $"cake {cakeKg:F2}kg, tailings {tailingsKg:F2}kg, greywater {greywaterL:F2}L");
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.centrifuge_batch_complete",
+                new Dictionary<string, double>
+                {
+                    { "sludge_processed_kg", batchKg },
+                    { "cake_kg", cakeKg },
+                    { "tailings_kg", tailingsKg },
+                    { "greywater_l", greywaterL },
+                });
+        }
+
+        /// <summary>Replaces worn centrifuge filter media. Consumes one cloth item.</summary>
+        public ActionResult ReplaceCentrifugeMedia()
+        {
+            if (_inventory == null || !_inventory.TryConsume(CentrifugeFilterItemId, 1))
+                return ActionResult.Failed("treatment_resource_missing", "sump.centrifuge_media_missing");
+
+            _state.centrifugeFilterMedia = 100f;
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.centrifuge_media_replaced");
         }
 
         public ActionResult AddNode(string nodeId, string displayName, float maxWaterLevelCm = 200f)

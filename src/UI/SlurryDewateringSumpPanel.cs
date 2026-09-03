@@ -1,28 +1,42 @@
 using System;
+using System.Linq;
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
+    /// <summary>
+    /// Sludge-plant console for the sump drainage authority (Plan 70).
+    /// Presentation only: renders SumpFloodingSystem state and issues commands
+    /// through SumpFloodingHostSession. Core owns all sludge math.
+    /// </summary>
     public partial class SlurryDewateringSumpPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
-        private Label? _headerTitleLabel;
+        private SumpFloodingHostSession? _host;
         private Label? _statusBadgeLabel;
-        private Button? _closeButton;
-        private VBoxContainer? _telemetryContainer;
-        private VBoxContainer? _buttonContainer;
-        private VBoxContainer? _dataContainer;
         private Label? _logOutputLabel;
+        private Label? _basinLevelValue = null!;
+        private Label? _sludgeValue = null!;
+        private Label? _cakeValue = null!;
+        private Label? _tailingsValue = null!;
+        private Label? _greywaterValue = null!;
+        private Label? _mediaValue = null!;
+        private Label? _conditionValue = null!;
+        private Button? _flocculateButton;
+        private Button? _centrifugeButton;
+        private Button? _replaceMediaButton;
 
-        public bool IsBound { get; private set; } = true;
+        public bool IsBound { get; private set; }
 
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
             BuildInterface();
+            RefreshView();
         }
 
         public void Open()
@@ -33,21 +47,81 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(object? session)
         {
-            IsBound = true;
+            if (_host is SumpFloodingHostSession previous)
+                previous.StateChanged -= RefreshView;
+            _host = session as SumpFloodingHostSession;
+            if (_host != null)
+                _host.StateChanged += RefreshView;
+            IsBound = _host != null;
             RefreshView();
         }
 
         public void Unbind()
         {
+            if (_host is SumpFloodingHostSession previous)
+                previous.StateChanged -= RefreshView;
+            _host = null;
             IsBound = false;
         }
 
+        private SumpNode? BusiestSludgeNode =>
+            _host?.System.State.nodes
+                .OrderByDescending(n => n.settledSludgeKg)
+                .ThenByDescending(n => n.suspendedSolidsKg)
+                .FirstOrDefault();
+
         public void RefreshView()
         {
+            if (_host == null || !IsInsideTree())
+                return;
+
+            var state = _host.System.State;
+            var node = BusiestSludgeNode;
+
+            if (_basinLevelValue != null && node != null)
+                _basinLevelValue.Text = $"{node.waterLevelCm:F0} / {node.maxWaterLevelCm:F0} cm";
+            if (_sludgeValue != null && node != null)
+                _sludgeValue.Text = $"{node.settledSludgeKg:F1} kg settled / {node.suspendedSolidsKg:F1} kg suspended";
+            if (_cakeValue != null)
+                _cakeValue.Text = $"{state.dewateredCakeKg:F1} kg in cake bay";
+            if (_tailingsValue != null)
+                _tailingsValue.Text = $"{state.hazardousTailingsKg:F1} kg (sealed drums)";
+            if (_greywaterValue != null)
+                _greywaterValue.Text = state.unroutedGreywaterLiters > 0.01f
+                    ? $"{state.unroutedGreywaterLiters:F1} L awaiting treatment routing"
+                    : "routed to water treatment";
+            if (_mediaValue != null)
+                _mediaValue.Text = state.centrifugeFilterMedia <= SumpFloodingSystem.CentrifugeLowMediaThreshold
+                    ? $"{state.centrifugeFilterMedia:F0}% WORN — replace"
+                    : $"{state.centrifugeFilterMedia:F0}%";
+            if (_conditionValue != null)
+                _conditionValue.Text = $"{state.centrifugeCondition:F0}% | batches: {state.centrifugeBatchesCompleted}";
+
             if (_statusBadgeLabel != null)
             {
-                _statusBadgeLabel.Text = "STATUS: SUMP PUMPS ACTIVE - EXTRACTION: 1,850 L/MIN / SUMP LEVEL: 34%";
+                _statusBadgeLabel.Text = node is { settledSludgeKg: > 0 } or { suspendedSolidsKg: > 0 }
+                    ? "STATUS: SLURRY PROCESSING REQUIRED"
+                    : "STATUS: SUMP PUMPS ACTIVE - NO SLUDGE BACKLOG";
             }
+
+            // Commands state → blocker → cost → consequence.
+            bool canTreat = node != null && node.suspendedSolidsKg > 0f;
+            if (_flocculateButton != null)
+                _flocculateButton.TooltipText = canTreat
+                    ? $"Doses flocculant (chemicals ×{2 * SumpFloodingSystem.FlocculantUnitsPerDoseTier}) — settles suspended silt into sludge"
+                    : "No suspended silt to treat";
+            if (_flocculateButton != null) _flocculateButton.Disabled = !canTreat;
+
+            bool canSpin = node is { settledSludgeKg: > 0 } && state.centrifugeCondition > 0f
+                && state.centrifugeFilterMedia > 0f;
+            if (_centrifugeButton != null)
+                _centrifugeButton.TooltipText = canSpin
+                    ? "Processes settled sludge into cake, tailings and greywater (needs power + 1 cloth)"
+                    : "Requires settled sludge, a working centrifuge, power and filter cloth";
+            if (_centrifugeButton != null) _centrifugeButton.Disabled = !canSpin;
+
+            if (_replaceMediaButton != null)
+                _replaceMediaButton.TooltipText = "Swaps in a fresh cloth filter (1 cloth)";
         }
 
         private void BuildInterface()
@@ -70,28 +144,28 @@ namespace AtomicWar.GodotApp.UI
 
             // Top Header Bar
             var headerHBox = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
-            _headerTitleLabel = new Label
+            var headerTitleLabel = new Label
             {
                 Text = "SUBTERRANEAN HYDRAULICS // SLURRY DEWATERING SUMP [HYDRO-03]",
                 SizeFlagsHorizontal = SizeFlags.ExpandFill
             };
-            _headerTitleLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
-            headerHBox.AddChild(_headerTitleLabel);
+            headerTitleLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
+            headerHBox.AddChild(headerTitleLabel);
 
             _statusBadgeLabel = new Label
             {
-                Text = "STATUS: SUMP PUMPS ACTIVE - EXTRACTION: 1,850 L/MIN / SUMP LEVEL: 34%"
+                Text = "STATUS: SUMP PUMPS ACTIVE"
             };
             _statusBadgeLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             headerHBox.AddChild(_statusBadgeLabel);
 
-            _closeButton = new Button { Text = "[X] CLOSE CONSOLE" };
-            _closeButton.Pressed += () =>
+            var closeButton = new Button { Text = "[X] CLOSE CONSOLE" };
+            closeButton.Pressed += () =>
             {
                 Visible = false;
                 OnClose?.Invoke();
             };
-            headerHBox.AddChild(_closeButton);
+            headerHBox.AddChild(closeButton);
             mainVBox.AddChild(headerHBox);
 
             // Three-Column High-Density Grid
@@ -104,38 +178,58 @@ namespace AtomicWar.GodotApp.UI
             mainVBox.AddChild(bodyHBox);
 
             // Left Column (Telemetry)
-            var leftPanel = CreatePanelFrame("SUMP INFLOW & BASAL HYDROSTATICS");
+            var leftPanel = CreatePanelFrame("SUMP BASIN & SLUDGE STATE");
             bodyHBox.AddChild(leftPanel);
-            _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
-            _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
-            _telemetryContainer.AddChild(CreateTelemetryRow("SUMP FLOOD LEVEL", "34.2% [CONTROLLED RETENTION]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _telemetryContainer.AddChild(CreateTelemetryRow("NATURAL SEEPAGE INFLOW", "1,420 L/MIN FROM CRACK 04", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
-            _telemetryContainer.AddChild(CreateTelemetryRow("SLURRY SEDIMENT DENSITY", "1.18 KG/L [GRIT-HEAVY]", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-            _telemetryContainer.AddChild(CreateTelemetryRow("PUMP 01 & 02 COMBINED FLOW", "1,850 L/MIN DISCHARGE", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _telemetryContainer.AddChild(CreateTelemetryRow("IMPELLER CAVITATION RISK", "6.2% [NOMINAL BACKPRESSURE]", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+            var telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
+            telemetryContainer.AddThemeConstantOverride("separation", 8);
+            leftPanel.GetNode<MarginContainer>("Margin").AddChild(telemetryContainer);
+            var basinRow = SplitRow(telemetryContainer, "BASIN LEVEL (WORST NODE)");
+            _basinLevelValue = basinRow.value;
+            var sludgeRow = SplitRow(telemetryContainer, "SLUDGE (SETTLED / SUSPENDED)");
+            _sludgeValue = sludgeRow.value;
+            var mediaRow = SplitRow(telemetryContainer, "CENTRIFUGE MEDIA");
+            _mediaValue = mediaRow.value;
+            var conditionRow = SplitRow(telemetryContainer, "CENTRIFUGE CONDITION");
+            _conditionValue = conditionRow.value;
 
             // Center Column (Interactive Controls)
-            var centerPanel = CreatePanelFrame("CENTRIFUGAL PUMPS & SETTLING WEIRS");
+            var centerPanel = CreatePanelFrame("SLUDGE PROCESSING COMMANDS");
             bodyHBox.AddChild(centerPanel);
-            _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
-            _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
-            _buttonContainer.AddChild(new Button { Text = "[RAMP UP CENTRIFUGAL PUMP SPEED]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[BACKWASH COARSE GRIT BASKET]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[OPEN WEIR DIVERSION GATE 03]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[DIVERT SUPERNATANT WATER TO TREATMENT]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            var buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
+            buttonContainer.AddThemeConstantOverride("separation", 12);
+            centerPanel.GetNode<MarginContainer>("Margin").AddChild(buttonContainer);
+
+            _flocculateButton = new Button { Text = "[DOSE FLOCCULANT — SETTLE SILT]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _flocculateButton.Pressed += OnFlocculatePressed;
+            buttonContainer.AddChild(_flocculateButton);
+
+            _centrifugeButton = new Button { Text = "[RUN CENTRIFUGE BATCH]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _centrifugeButton.Pressed += OnCentrifugePressed;
+            buttonContainer.AddChild(_centrifugeButton);
+
+            _replaceMediaButton = new Button { Text = "[REPLACE FILTER CLOTH]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _replaceMediaButton.Pressed += OnReplaceMediaPressed;
+            buttonContainer.AddChild(_replaceMediaButton);
 
             // Right Column (Data & Logistics)
-            var rightPanel = CreatePanelFrame("WEIR SETTLING & SLUDGE CAKE");
+            var rightPanel = CreatePanelFrame("DEWATERED OUTPUT & WASTE");
             bodyHBox.AddChild(rightPanel);
-            _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
-            _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
-            _dataContainer.AddChild(CreateTelemetryRow("SETTLED MINERAL SILT", "1.4 TONS IN SUMP HOPPER", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-            _dataContainer.AddChild(CreateTelemetryRow("PURIFIED EFFLUENT DISCHARGE", "SURFACE RIVER CANAL", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _dataContainer.AddChild(CreateTelemetryRow("SUMP HIGH-WATER ALARM", "SET AT 80% THRESHOLD", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-            _dataContainer.AddChild(CreateTelemetryRow("RECOVERED INDUSTRIAL WATER", "840 L/MIN SENT TO DIGESTER", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            var dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
+            dataContainer.AddThemeConstantOverride("separation", 8);
+            rightPanel.GetNode<MarginContainer>("Margin").AddChild(dataContainer);
+            var cakeRow = SplitRow(dataContainer, "SLUDGE CAKE STOCK");
+            _cakeValue = cakeRow.value;
+            var tailingsRow = SplitRow(dataContainer, "HAZARDOUS TAILINGS");
+            _tailingsValue = tailingsRow.value;
+            var greywaterRow = SplitRow(dataContainer, "RECLAIMED GREYWATER");
+            _greywaterValue = greywaterRow.value;
+            var disposalNote = new Label
+            {
+                Text = "Tailings are sealed for disposal. Cake awaits assay.",
+                AutowrapMode = TextServer.AutowrapMode.WordSmart
+            };
+            disposalNote.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
+            dataContainer.AddChild(disposalNote);
 
             // Bottom Diagnostics Log
             var logPanel = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 100) };
@@ -148,7 +242,7 @@ namespace AtomicWar.GodotApp.UI
 
             _logOutputLabel = new Label
             {
-                Text = "[HYDRO-03] Twin centrifugal slurry pumps engaged at 1,850 L/min.\n[HYDRO-03] Sump retention level decreased to 34.2%.",
+                Text = "[HYDRO-03] Slurry plant standing by.",
                 AutowrapMode = TextServer.AutowrapMode.WordSmart,
                 SizeFlagsHorizontal = SizeFlags.ExpandFill,
                 SizeFlagsVertical = SizeFlags.ExpandFill
@@ -156,6 +250,45 @@ namespace AtomicWar.GodotApp.UI
             _logOutputLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
             logMargin.AddChild(_logOutputLabel);
             mainVBox.AddChild(logPanel);
+        }
+
+        private void OnFlocculatePressed()
+        {
+            var node = BusiestSludgeNode;
+            if (_host == null || node == null) return;
+            var res = _host.StartFlocculation(node.nodeId, 1);
+            if (_logOutputLabel != null)
+                _logOutputLabel.Text = res.IsSuccess
+                    ? $"[HYDRO-03] Flocculant dosed into {node.displayName}. Suspended silt settling."
+                    : $"[HYDRO-03] Flocculation refused ({res.MessageKey}). Check chemical stock.";
+        }
+
+        private void OnCentrifugePressed()
+        {
+            var node = BusiestSludgeNode;
+            if (_host == null || node == null) return;
+            var res = _host.RunCentrifugeBatch(node.nodeId);
+            if (_logOutputLabel != null)
+                _logOutputLabel.Text = res.IsSuccess
+                    ? $"[HYDRO-03] Centrifuge batch complete for {node.displayName}. Greywater to treatment."
+                    : $"[HYDRO-03] Centrifuge refused ({res.MessageKey}). Check power, cloth and sludge.";
+        }
+
+        private void OnReplaceMediaPressed()
+        {
+            if (_host == null) return;
+            var res = _host.ReplaceCentrifugeMedia();
+            if (_logOutputLabel != null)
+                _logOutputLabel.Text = res.IsSuccess
+                    ? "[HYDRO-03] Fresh filter cloth installed."
+                    : $"[HYDRO-03] No cloth available ({res.MessageKey}).";
+        }
+
+        private static (HBoxContainer row, Label value) SplitRow(VBoxContainer container, string label)
+        {
+            var row = CreateTelemetryRow(label, "—", AshfallUiHelpers.ToColor(DesignTheme.Warm));
+            container.AddChild(row);
+            return (row, (Label)row.GetChild(1));
         }
 
         private static PanelContainer CreatePanelFrame(string headerText)
