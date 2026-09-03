@@ -129,7 +129,7 @@
         "clean_water",
         "item_fungicide_fogger",
         "medical_kit"
-      ],
+      , "rope"],
       "trade_needs": [
         "electronic_scrap",
         "copper_wire_10m_of_10m",
@@ -187,7 +187,7 @@
         "clean_water",
         "canned_food",
         "antibiotics"
-      ],
+      , "rope"],
       "economy": {
         "primary_export": "scrap_metal",
         "primary_import": "clean_water",
@@ -235,7 +235,7 @@
         "medical_kit",
         "item_stabilization_tea",
         "bandage"
-      ],
+      , "sealed_government_document"],
       "trade_needs": [
         "cloth",
         "scrap_metal",
@@ -289,7 +289,7 @@
         "copper_wire_10m_of_10m",
         "battery",
         "tobacco_pouch"
-      ],
+      , "weapon_pipe_shotgun", "duct_tape"],
       "trade_needs": [
         "clean_water",
         "medical_kit",
@@ -343,13 +343,13 @@
         "cooked_meat",
         "fuel",
         "item_smoked_meat"
-      ],
+      , "item_cassette_tape"],
       "trade_needs": [
         "scrap_metal",
         "mechanical_parts",
         "cloth",
         "diesel_fuel"
-      ],
+      , "duct_tape"],
       "economy": {
         "primary_export": "clean_water",
         "primary_import": "scrap_metal",
@@ -443,13 +443,13 @@
         "scrap_metal",
         "mechanical_parts",
         "ammo_556"
-      ],
+      , "weapon_sidearm"],
       "trade_needs": [
         "canned_food",
         "clean_water",
         "medical_kit",
         "item_smoked_meat"
-      ],
+      , "item_logistics_cipher_sheet", "item_cassette_tape"],
       "economy": {
         "primary_export": "engine",
         "primary_import": "canned_food",
@@ -500,7 +500,7 @@
         "water_filter",
         "canned_food",
         "item_pickled_tubers"
-      ],
+      , "weapon_sidearm", "sealed_government_document"],
       "economy": {
         "primary_export": "fuel",
         "primary_import": "cloth",
@@ -549,7 +549,7 @@
         "scrap_metal",
         "battery",
         "medical_kit"
-      ],
+      , "weapon_pipe_shotgun"],
       "economy": {
         "primary_export": "canned_food",
         "primary_import": "scrap_metal",

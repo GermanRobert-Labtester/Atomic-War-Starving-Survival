@@ -31,7 +31,7 @@
           "quantity": 5,
           "price_rations": 4
         }
-      ]
+      , { "item_id": "item_logistics_cipher_sheet", "quantity": 2, "price_rations": 12 }, { "item_id": "item_taper_kit_opioid", "quantity": 3, "price_rations": 9 }]
     },
     {
       "caravan_id": "caravan_verge_grain_convoy",
@@ -68,7 +68,7 @@
           "quantity": 8,
           "price_rations": 5
         }
-      ]
+      , { "item_id": "item_cassette_tape", "quantity": 6, "price_rations": 4 }]
     },
     {
       "caravan_id": "caravan_foundry_coal_iron",
@@ -147,7 +147,7 @@
           "quantity": 8,
           "price_rations": 5
         }
-      ]
+      , { "item_id": "weapon_sidearm", "quantity": 2, "price_rations": 14 }, { "item_id": "duct_tape", "quantity": 10, "price_rations": 3 }]
     }
   ]
 }

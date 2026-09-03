@@ -81,6 +81,7 @@ namespace Ashfall.Core.Economy
         public int stackSize = 10;
         public float weightKg = 1f;
         public string barterNote = string.Empty; // optional barter-relevant metadata
+        public string regionalSupply = string.Empty; // optional production-source provenance (Plan 56 follow-up)
 
         public string Description =>
             category switch
@@ -289,7 +290,10 @@ namespace Ashfall.Core.Economy
                     elasticity = elasticity,
                     stackSize = stackSize,
                     weightKg = weightKg,
-                    barterNote = rawDef.barterNote ?? string.Empty
+                    barterNote = rawDef.barterNote ?? string.Empty,
+                    regionalSupply = string.IsNullOrWhiteSpace(rawDef.regionalSupply)
+                        ? string.Empty
+                        : rawDef.regionalSupply.Trim()
                 });
             }
             return result;
@@ -314,6 +318,7 @@ namespace Ashfall.Core.Economy
             public int? stackSize;
             public float? weightKg;
             public string barterNote;
+            public string regionalSupply;
         }
 
         public static GoodsCatalog ToCatalog(GoodsCatalogLoadResult load)

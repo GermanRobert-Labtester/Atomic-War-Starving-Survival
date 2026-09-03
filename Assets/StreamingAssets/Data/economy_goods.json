@@ -457,7 +457,104 @@
       "elasticity": 1.8,
       "stackSize": 10,
       "weightKg": 0.2,
+      "regionalSupply": "settlement",
       "barterNote": "Trades far above its weight wherever a garrison has been paid recently."
+    },
+    {
+      "id": "item_logistics_cipher_sheet",
+      "displayName": "Logistics Cipher Sheet",
+      "category": "documents",
+      "basePrice": 60.0,
+      "volatility": 0.35,
+      "elasticity": 1.8,
+      "stackSize": 2,
+      "weightKg": 0.05,
+      "regionalSupply": "flotilla",
+      "barterNote": "Encrypted warehousing codes sell to whoever has trucks and no scruples. The sheet outlives the handshake."
+    },
+    {
+      "id": "sealed_government_document",
+      "displayName": "Sealed Government Document",
+      "category": "documents",
+      "basePrice": 11.0,
+      "volatility": 0.10,
+      "elasticity": 1.1,
+      "stackSize": 5,
+      "weightKg": 0.3,
+      "regionalSupply": "general",
+      "barterNote": "Nobody reads them and everybody wants them sealed. Bureaucracy is the one crop that never froze."
+    },
+    {
+      "id": "weapon_sidearm",
+      "displayName": "Duty Sidearm",
+      "category": "weapons",
+      "basePrice": 35.0,
+      "volatility": 0.15,
+      "elasticity": 0.9,
+      "stackSize": 1,
+      "weightKg": 1.0,
+      "regionalSupply": "settlement",
+      "barterNote": "Garrisons pay the rack price without haggling. Sidearms hold value because nobody admits wanting one."
+    },
+    {
+      "id": "weapon_pipe_shotgun",
+      "displayName": "Pipe Shotgun",
+      "category": "weapons",
+      "basePrice": 20.0,
+      "volatility": 0.18,
+      "elasticity": 1.1,
+      "stackSize": 1,
+      "weightKg": 2.5,
+      "regionalSupply": "settlement",
+      "barterNote": "Two pipes and a belief in tomorrow. Sells at dusk in camps that heard something outside the wire."
+    },
+    {
+      "id": "item_taper_kit_opioid",
+      "displayName": "Opioid Taper Kit",
+      "category": "contraband",
+      "basePrice": 25.0,
+      "volatility": 0.30,
+      "elasticity": 1.4,
+      "stackSize": 2,
+      "weightKg": 0.2,
+      "regionalSupply": "flotilla",
+      "barterNote": "Traded in whispers and wrapped in the same cloth as the bandages. The price doubles wherever the mines are working."
+    },
+    {
+      "id": "duct_tape",
+      "displayName": "Duct Tape",
+      "category": "misc",
+      "basePrice": 6.0,
+      "volatility": 0.08,
+      "elasticity": 0.7,
+      "stackSize": 15,
+      "weightKg": 0.3,
+      "regionalSupply": "general",
+      "barterNote": "Still unsticks from itself, which puts it ahead of most promises. Every repair job starts and ends with it."
+    },
+    {
+      "id": "rope",
+      "displayName": "Hemp Rope (10 m)",
+      "category": "misc",
+      "basePrice": 8.0,
+      "volatility": 0.10,
+      "elasticity": 0.8,
+      "stackSize": 6,
+      "weightKg": 2.0,
+      "regionalSupply": "general",
+      "barterNote": "Ten metres of three-strand hemp. Quarries and lighthouses measure rope in lives, so they never haggle hard."
+    },
+    {
+      "id": "item_cassette_tape",
+      "displayName": "Cassette Tape",
+      "category": "misc",
+      "basePrice": 9.0,
+      "volatility": 0.25,
+      "elasticity": 1.6,
+      "stackSize": 8,
+      "weightKg": 0.15,
+      "regionalSupply": "settlement",
+      "barterNote": "Nobody admits what's on it. Music, a sermon, somebody's last recorded voice — morale is whatever plays."
     }
   ]
 }
