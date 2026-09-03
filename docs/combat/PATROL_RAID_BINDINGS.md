@@ -1,6 +1,35 @@
 # Patrol / Raid / Wildlife / Excavation Bindings (Plan 54 §45–48)
 
-## Status update (Plan 45 — patrol bindings are LIVE)
+## Status update (Plan 45 phase 2 — raid + wildlife + site-defense LIVE)
+
+`EnemyCompositionSelector` now exposes the full binding matrix as executable
+API: `SelectRaidComposition` (§46 human raid strata — warlord anchor at
+danger ≥ 5, scavenger attackers below), `SelectWildlifeComposition`
+(§47 species-tag → single-species packs: pack_canine / swarm / lurker /
+spore_predator / charger / apex; unknown tags bind NOTHING — no humans in
+hides), `SelectForHostileEncounter` (router: Creature → wildlife, Human →
+raid at danger ≥ 5 / ambush below, other categories → non-combat), and
+`SelectSiteDefense` (§48 excavation prepared-API).
+
+Data binding: the 8 Creature encounters in `travel_encounters.json` carry
+`combatant_tag` (wolf/hyena → pack_canine, beetle/tick → swarm, adder →
+lurker, owl → spore_predator, bristleback → charger, bear → apex);
+`TravelEncounterDefinition.CombatantTag` round-trips it.
+
+Wiring: `TravelEncounterCombatBinder` (Core) escalates a hostile travel
+choice (`!is_nonviolent && !is_avoidance`) to combat composition;
+`ExpeditionHostSession.ResolveTravelChoiceWithCombat` resolves data
+outcomes + raises `OnTravelEncounterCombatTriggered`; the Main handoff
+starts the catalog fight. The Iron Raiders raid event
+(`IronRaidersSystem.OnRaidExecuted` — "a combat/loss event with no
+dialogue") now spawns the raid crew as the shelter-defense fight.
+Pinned by `Plan45Phase2BindingTests` (22 tests).
+
+Remaining honest seam: the travel-encounter UI surface (the wasteland-
+inhabitants layer is exercised by selftests; the panel binding is the last
+step to player-visible creature fights).
+
+## Status update (Plan 45 phase 1 — patrol bindings are LIVE)
 
 The expedition ambush hand-off (`src/Main.Expeditions.cs` →
 `CombatHostSession.StartCombat`) now passes `enemyCombatantIds` resolved by

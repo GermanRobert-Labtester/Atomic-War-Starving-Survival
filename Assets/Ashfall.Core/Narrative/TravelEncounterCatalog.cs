@@ -71,6 +71,17 @@ namespace Ashfall.Core.Narrative
         [JsonPropertyName("category")]
         public string Category { get; set; } = string.Empty; // "Creature", "Human", "Environmental", "Chained"
 
+        /// <summary>
+        /// Plan 45 phase 2 — wildlife combat binding for Creature encounters.
+        /// Maps to a fauna/mutant combatant id via
+        /// <see cref="Ashfall.Core.Combat.EnemyCompositionSelector.SelectWildlifeComposition"/>
+        /// (pack_canine / swarm / lurker / spore_predator / charger / apex).
+        /// Empty on every non-Creature row: hostile choices on Human
+        /// encounters route through the raid/ambush composition instead.
+        /// </summary>
+        [JsonPropertyName("combatant_tag")]
+        public string CombatantTag { get; set; } = string.Empty;
+
         [JsonPropertyName("chain_id")]
         public string ChainId { get; set; } = string.Empty;
 

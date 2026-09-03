@@ -212,6 +212,23 @@ namespace AtomicWar.GodotApp
                 _combatDirty = true;
                 GD.Print($"[Ashfall Godot] Expedition encounter at {state.locationId} spawned combat (danger {state.dangerLevel}: {string.Join(", ", enemyIds)}).");
             };
+
+            // Plan 45 phase 2 — hostile travel-encounter choices escalate to
+            // tactical combat: Creature encounters field the wildlife pack for
+            // their combatant_tag, Human encounters a raid crew at high danger.
+            _expeditions.OnTravelEncounterCombatTriggered += trigger =>
+            {
+                if (_combat == null || trigger == null) return;
+                var cs = _combat.Engine.State;
+                bool idle = string.IsNullOrEmpty(cs.EncounterId) || cs.Resolved;
+                if (!idle) return;
+                _combat.StartCombat(
+                    string.IsNullOrEmpty(trigger.LocationId) ? "loc_wilds" : trigger.LocationId,
+                    string.IsNullOrEmpty(trigger.Title) ? "Hostile Encounter" : trigger.Title,
+                    enemyCombatantIds: trigger.CombatantIds);
+                _combatDirty = true;
+                GD.Print($"[Ashfall Godot] Travel encounter '{trigger.EncounterId}' escalated to combat: {string.Join(", ", trigger.CombatantIds)}.");
+            };
         }
 
         private void OnExpeditionStartClicked(string locationId)

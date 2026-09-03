@@ -56,6 +56,25 @@ namespace AtomicWar.GodotApp
         /// <summary>Fired when Core rolls an encounter and the bridge surfaces a DTO. Host UI subscribes here.</summary>
         public event Action<ExpeditionEncounterBridge.EncounterSurfaced>? OnEncounterSurfaced;
 
+        /// <summary>
+        /// Plan 45 phase 2 — fired when a resolved travel-encounter choice
+        /// escalates to tactical combat. Carries the EnemyCompositionSelector
+        /// composition (wildlife pack / raid crew) so the host starts the
+        /// fight with catalog enemies instead of the legacy template.
+        /// </summary>
+        public sealed class TravelCombatTrigger
+        {
+            public string EncounterId = string.Empty;
+            public string Title = string.Empty;
+            public string LocationId = string.Empty;
+            public int DangerLevel;
+            public IReadOnlyList<string> CombatantIds = Array.Empty<string>();
+        }
+        public event Action<TravelCombatTrigger>? OnTravelEncounterCombatTriggered;
+
+        /// <summary>The Plan 20 wasteland-inhabitants encounter engine. Null outside Create(dataDir) hosts — combat binding degrades honestly.</summary>
+        public TravelEncounterSystem? TravelEngine { get; private set; }
+
         /// <summary>When true (default), the UI shows a modal encounter notice. When false, a transient autoplay banner.</summary>
         public static bool UseEncounterModal { get; set; } = true;
 
@@ -180,6 +199,11 @@ namespace AtomicWar.GodotApp
                     }
                 }
                 session.Vehicles.LoadCatalog(VehicleCatalogLoader.Load(dataDir, fileIO, serializer));
+                // Plan 45 phase 2 — the wasteland-inhabitants layer: creature
+                // / human travel encounters resolve through the combat binder.
+                var travelCatalog = TravelEncounterCatalog.LoadFromDirectory(dataDir, fileIO);
+                if (travelCatalog != null && travelCatalog.Count > 0)
+                    session.TravelEngine = new TravelEncounterSystem(travelCatalog);
             }
 
             var save = ExpeditionSaveStore.TryLoad();
@@ -502,6 +526,57 @@ namespace AtomicWar.GodotApp
             // The player has acknowledged this one — shrink the pending list.
             if (ok) _narrative.ClearPending(encounterId);
             return ok;
+        }
+
+        /// <summary>
+        /// Plan 45 phase 2 — resolve a travel-encounter choice through the
+        /// wasteland-inhabitants layer and, when the choice is hostile,
+        /// raise <see cref="OnTravelEncounterCombatTriggered"/> carrying the
+        /// EnemyCompositionSelector composition (wildlife pack for Creature
+        /// encounters, raid crew for high-danger Human ones). The data
+        /// outcomes (morale / guilt / field-guide unlock) resolve exactly as
+        /// they would without combat — combat rides on top, once per
+        /// resolution. Returns false when the travel engine is unavailable,
+        /// the encounter/choice is unknown, or the choice is non-hostile.
+        /// </summary>
+        public bool ResolveTravelChoiceWithCombat(
+            string encounterId, string choiceId, int day, string locationId, int dangerLevel, int enemyCount)
+        {
+            if (TravelEngine == null || string.IsNullOrEmpty(encounterId) || string.IsNullOrEmpty(choiceId))
+                return false;
+
+            var catalog = TravelEngine.Catalog;
+            if (catalog == null || !catalog.TryGetEncounter(encounterId, out var definition) || definition == null)
+                return false;
+            TravelEncounterChoice? choice = null;
+            for (int i = 0; i < definition.Choices.Count; i++)
+            {
+                if (definition.Choices[i] != null && definition.Choices[i].ChoiceId == choiceId)
+                {
+                    choice = definition.Choices[i];
+                    break;
+                }
+            }
+            if (choice == null) return false;
+
+            // Data outcomes first (exactly the no-combat path).
+            bool resolved = TravelEngine.ResolveChoice(encounterId, choiceId, day, out _, out _, out _);
+            if (!resolved) return false;
+
+            // Combat escalation — the single binding authority.
+            if (TravelEncounterCombatBinder.TryBind(definition, choice, dangerLevel, enemyCount, out var ids, _rng))
+            {
+                OnTravelEncounterCombatTriggered?.Invoke(new TravelCombatTrigger
+                {
+                    EncounterId = encounterId,
+                    Title = definition.Title,
+                    LocationId = locationId ?? string.Empty,
+                    DangerLevel = dangerLevel,
+                    CombatantIds = ids,
+                });
+                return true;
+            }
+            return resolved;
         }
 
         /// <summary>The pending entry's recorded location for this encounter, or null when it is not pending.</summary>

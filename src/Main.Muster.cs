@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using Ashfall.Core.Combat;
 using AtomicWar.Journal;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
@@ -44,6 +45,12 @@ namespace AtomicWar.GodotApp
             _muster.StateChanged += () => SaveMuster();
             _muster.OnQuestlineResolved += OnMusterQuestlineResolved;
             _muster.OnActionResolved += OnMusterActionResolved;
+
+            // Plan 45 phase 2 — an Iron Raiders raid is "a combat/loss event
+            // with no dialogue" (IronRaidersSystem): defend the shelter with
+            // the raid composition from the combat catalog (warlord enforcers
+            // and their crews), not the legacy template.
+            _muster.IronRaiders.OnRaidExecuted += OnIronRaidersRaidExecuted;
 
             if (_currentsRoster == null)
             {
@@ -128,6 +135,34 @@ namespace AtomicWar.GodotApp
                 $"Approach: {(string.IsNullOrEmpty(hb.State.approach) ? "Unresolved" : hb.State.approach)}\n\n" +
                 "The Rate Card War at Desalination Unit 4. The iron chit queue governs fresh water allocation.";
             _statusLabel.Text = $"Hydro-Barons: Queue Pos {hb.QueuePosition}, Approach {hb.State.approach}.";
+        }
+
+        /// <summary>
+        /// Plan 45 phase 2 — the Iron Raiders raid executes: spawn the raid
+        /// crew as a tactical defense fight using the combat catalog (the
+        /// raiders bring warlord enforcers at high aggression, scavenger
+        /// attackers below). Skipped when a fight is already active — the
+        /// shelter defense joins the queue like any other encounter.
+        /// </summary>
+        private void OnIronRaidersRaidExecuted()
+        {
+            if (_combat == null) return;
+            var cs = _combat.Engine.State;
+            bool idle = string.IsNullOrEmpty(cs.EncounterId) || cs.Resolved;
+            if (!idle)
+            {
+                GD.Print("[Ashfall Godot] Iron Raiders raid resolved as losses — combat already active.");
+                return;
+            }
+            var ir = _muster.IronRaiders;
+            int crewDanger = ir.AggressionLevel >= 0.6f ? 6 : 3;
+            var enemyIds = EnemyCompositionSelector.SelectRaidComposition(
+                crewDanger, CombatHostSession.DefaultAmbushEnemyCount + 1);
+            _combat.StartCombat(
+                "loc_iron_raiders_den", "The Toll — Den Raid",
+                enemyCombatantIds: enemyIds);
+            _combatDirty = true;
+            GD.Print($"[Ashfall Godot] Iron Raiders raid escalated to combat: {string.Join(", ", enemyIds)}.");
         }
 
         public void OnIronRaidersClicked()
