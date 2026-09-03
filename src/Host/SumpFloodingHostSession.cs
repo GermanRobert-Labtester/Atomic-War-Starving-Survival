@@ -106,6 +106,24 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        /// <summary>Packs dewatered cake into canonical foundry feedstock items.</summary>
+        public ActionResult PackCakeForSmelting(int maxBlocks)
+        {
+            var res = System.PackCakeForSmelting(maxBlocks);
+            LastEvent = res.IsSuccess ? $"Cake packed: {maxBlocks} blocks max" : $"Cake packing blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
+        /// <summary>Packs hazardous tailings into canonical sealed drums for hauling.</summary>
+        public ActionResult PackTailingsDrums(int maxDrums)
+        {
+            var res = System.PackTailingsDrums(maxDrums);
+            LastEvent = res.IsSuccess ? $"Tailings sealed: {maxDrums} drums max" : $"Drum packing blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
         public ActionResult SetNodePower(string nodeId, bool powered)
         {
             var res = System.SetNodePower(nodeId, powered);

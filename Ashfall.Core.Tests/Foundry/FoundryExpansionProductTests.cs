@@ -30,11 +30,18 @@ namespace Ashfall.Core.Tests.Foundry
         }
 
         [Fact]
-        public void ProductionCatalog_LoadsAll25Products()
+        public void ProductionCatalog_LoadsCompleteCatalog_IncludesSumpRecoveryMelt()
         {
             var catalog = LoadCatalog();
-            Assert.Equal(25, catalog.ProductCount);
-            Assert.Equal(25, catalog.AllProducts.Count);
+            // Plan 70: the catalog grows concurrently (recovery melts etc.) —
+            // pin a floor rather than an exact count, and pin the sump-cake
+            // recovery melt explicitly (item_sludge_cake → scrap_metal).
+            Assert.True(catalog.ProductCount >= 26, $"production catalog regressed: {catalog.ProductCount}");
+            Assert.Equal(catalog.ProductCount, catalog.AllProducts.Count);
+            var melt = catalog.GetProduct("foundry_prod_sludge_cake_recovery_melt");
+            Assert.NotNull(melt);
+            Assert.Equal("scrap_metal", melt!.result_item_id);
+            Assert.Contains(melt.ingredients, i => i.item_id == "item_sludge_cake");
         }
 
         [Theory]

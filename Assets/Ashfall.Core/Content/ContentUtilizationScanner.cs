@@ -725,7 +725,7 @@ namespace Ashfall.Core.Content
                 ["labor_camps.json"] = new[] { "ForcedLaborSystem" },
                 ["narcotics.json"] = new[] { "NarcoticsSystem" },
                 ["political_policies.json"] = new[] { "PoliticsSystem" },
-                ["sump_drainage_catalog.json"] = new[] { "SumpFloodingSystem" },
+                ["sump_drainage_catalog.json"] = new[] { "SumpFloodingSystem", "VentilationSystem" },
             };
 
             foreach (var cat in _graph.Catalogs)

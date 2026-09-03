@@ -211,6 +211,14 @@ namespace AtomicWar.GodotApp.UI
             _replaceMediaButton.Pressed += OnReplaceMediaPressed;
             buttonContainer.AddChild(_replaceMediaButton);
 
+            var packCakeButton = new Button { Text = "[PACK CAKE FOR SMELTING]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            packCakeButton.Pressed += OnPackCakePressed;
+            buttonContainer.AddChild(packCakeButton);
+
+            var packDrumsButton = new Button { Text = "[SEAL TAILINGS DRUMS]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            packDrumsButton.Pressed += OnPackDrumsPressed;
+            buttonContainer.AddChild(packDrumsButton);
+
             // Right Column (Data & Logistics)
             var rightPanel = CreatePanelFrame("DEWATERED OUTPUT & WASTE");
             bodyHBox.AddChild(rightPanel);
@@ -282,6 +290,26 @@ namespace AtomicWar.GodotApp.UI
                 _logOutputLabel.Text = res.IsSuccess
                     ? "[HYDRO-03] Fresh filter cloth installed."
                     : $"[HYDRO-03] No cloth available ({res.MessageKey}).";
+        }
+
+        private void OnPackCakePressed()
+        {
+            if (_host == null) return;
+            var res = _host.PackCakeForSmelting(4);
+            if (_logOutputLabel != null)
+                _logOutputLabel.Text = res.IsSuccess
+                    ? "[HYDRO-03] Cake blocks stacked for the foundry recovery melt."
+                    : $"[HYDRO-03] Cake packing refused ({res.MessageKey}).";
+        }
+
+        private void OnPackDrumsPressed()
+        {
+            if (_host == null) return;
+            var res = _host.PackTailingsDrums(4);
+            if (_logOutputLabel != null)
+                _logOutputLabel.Text = res.IsSuccess
+                    ? "[HYDRO-03] Tailings drums sealed and ready for hauling."
+                    : $"[HYDRO-03] Drum sealing refused ({res.MessageKey}).";
         }
 
         private static (HBoxContainer row, Label value) SplitRow(VBoxContainer container, string label)

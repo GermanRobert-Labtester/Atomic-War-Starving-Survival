@@ -2,6 +2,24 @@
   "schema_version": 1,
   "items": [
     {
+      "id": "item_sludge_cake",
+      "displayName": "Dewatered Sludge Cake",
+      "description": "A grey-green pressed block of silt and settled muck from the deep sump centrifuge. Heavy, reeking, and faintly warm to the palm. The assay says there is metal in it - a little. The foundry pays in scrap what the ground gives back slowly.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 5.0,
+      "tradeValue": 2
+    },
+    {
+      "id": "item_tailings_drum",
+      "displayName": "Sealed Tailings Drum",
+      "description": "A rust-painted drum of centrifuge tailings, lid clamped and the seam sealed with tar. The concentrate even the sump would not keep. Handle with gloves, bury it deep, and do not camp downstream of the hole.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 10.0,
+      "tradeValue": 0
+    },
+    {
       "id": "dosimeter",
       "displayName": "Dosimeter",
       "description": "A pen-sized instrument on a worn lanyard, its window scratched but the needle still free. It measures accumulated dose in rads, no batteries needed, just a charge you cannot renew. One per person is the rule in every bunker that still keeps rules. Worth thirty at any settlement counter, because the ones that survived are the ones that were already carried. It tells you how long you can stay outside, which is the only question that matters.",

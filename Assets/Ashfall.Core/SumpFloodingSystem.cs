@@ -20,6 +20,7 @@ namespace Ashfall.Core
 
         // ── Sludge processing plant (Plan 70; shelter-level, single machine) ──
         public float dewateredCakeKg;             // recovered sludge cake (metallurgy seam later)
+        public string dewateredCakeProfileId = string.Empty; // tagged assay composition (sump_drainage_catalog)
         public float hazardousTailingsKg;         // concentrated hazardous tailings (disposal seam later)
         public float unroutedGreywaterLiters;     // greywater awaiting a bound water-treatment authority
         public float centrifugeCondition = 100f;  // 0-100
@@ -108,6 +109,18 @@ namespace Ashfall.Core
         public const float CentrifugeConditionWearPerBatch = 1.0f;
         public const float CentrifugeMediaWearPerBatch = 5f;
 
+        // ── Cake/tailings logistics & sludge gas (Plan 70 §4.13/§4.15) ───
+        /// <summary>Canonical feedstock item handed to the foundry recovery melt.</summary>
+        public const string SludgeCakeItemId = "item_sludge_cake";
+        /// <summary>Canonical sealed-waste item for tailings disposal hauling.</summary>
+        public const string TailingsDrumItemId = "item_tailings_drum";
+        public const float CakeKgPerBlock = 5f;
+        public const float TailingsKgPerDrum = 10f;
+        /// <summary>Settled sludge above this mass emits hazardous digester gas.</summary>
+        public const float SludgeGasThresholdKg = 15f;
+        public const float SludgeGasCoPpmPerDayBase = 2f;
+        public const float SludgeGasCoPpmPerKg = 0.2f;
+
         private SumpFloodingState _state = new SumpFloodingState();
         private readonly Dictionary<string, SumpStratumDef> _strata = new Dictionary<string, SumpStratumDef>(StringComparer.Ordinal);
         private readonly ISeededRng _rng;
@@ -117,6 +130,8 @@ namespace Ashfall.Core
         private readonly YearOfAshDeepFreezeSystem _deepFreeze;
         private Inventory.Inventory? _inventory;
         private WaterTreatmentSystem? _waterTreatment;
+        private VentilationSystem? _ventilation;
+        private readonly HashSet<string> _activeGasSources = new HashSet<string>(StringComparer.Ordinal);
         private int _currentDay;
 
         public SumpFloodingState State => _state;
@@ -143,10 +158,12 @@ ILog? log = null)
         /// WaterTreatmentSystem as Raw water (never potable); without a bound
         /// authority it is conserved in <see cref="SumpFloodingState.unroutedGreywaterLiters"/>.
         /// </summary>
-        public void BindServices(Inventory.Inventory? inventory, WaterTreatmentSystem? waterTreatment)
+        public void BindServices(Inventory.Inventory? inventory, WaterTreatmentSystem? waterTreatment,
+            VentilationSystem? ventilation = null)
         {
             _inventory = inventory;
             _waterTreatment = waterTreatment;
+            _ventilation = ventilation;
         }
 
         /// <summary>
@@ -239,6 +256,15 @@ ILog? log = null)
             _state.dewateredCakeKg += cakeKg;
             _state.hazardousTailingsKg += tailingsKg;
 
+            // Tag the cake stock with the producing stratum's assay profile;
+            // mixed stocks are flagged rather than silently averaged.
+            _strata.TryGetValue(node.stratumId, out var cakeStratum);
+            string profile = cakeStratum != null ? cakeStratum.metal_content_profile : string.Empty;
+            if (string.IsNullOrEmpty(_state.dewateredCakeProfileId))
+                _state.dewateredCakeProfileId = profile;
+            else if (_state.dewateredCakeProfileId != profile)
+                _state.dewateredCakeProfileId = "mixed";
+
             if (_waterTreatment != null)
             {
                 var add = _waterTreatment.AddWater(WaterType.Raw, greywaterL);
@@ -276,6 +302,73 @@ ILog? log = null)
             _state.centrifugeFilterMedia = 100f;
             OnFloodingChanged?.Invoke();
             return ActionResult.Success("sump.centrifuge_media_replaced");
+        }
+
+        /// <summary>
+        /// Tagged assay of the current cake stock (Plan 70 §4.15). The sump never
+        /// grants metal items — the foundry authority owns recovery melts.
+        /// </summary>
+        public (string profileId, float cakeKg, float tailingsKg) AssayCake()
+        {
+            string display = _state.dewateredCakeKg <= 0f
+                ? string.Empty
+                : _state.dewateredCakeProfileId;
+            return (display, _state.dewateredCakeKg, _state.hazardousTailingsKg);
+        }
+
+        /// <summary>
+        /// Packs dewatered cake into canonical feedstock items for the foundry
+        /// recovery melt. Converts stock mass into <see cref="SludgeCakeItemId"/>
+        /// blocks; the sump adds feedstock only, never recovered metal.
+        /// </summary>
+        public ActionResult PackCakeForSmelting(int maxBlocks)
+        {
+            if (maxBlocks <= 0)
+                return ActionResult.Failed("invalid_amount", "sump.invalid_amount");
+            if (_inventory == null)
+                return ActionResult.Failed("inventory_unavailable", "sump.inventory_unavailable");
+            if (_state.dewateredCakeKg < CakeKgPerBlock)
+                return ActionResult.Blocked("no_cake", "sump.no_cake_stock");
+
+            int blocks = Math.Min(maxBlocks, (int)Math.Floor(_state.dewateredCakeKg / CakeKgPerBlock));
+            if (!_inventory.TryProduce(SludgeCakeItemId, blocks))
+                return ActionResult.Failed("pack_failed", "sump.cake_pack_failed");
+
+            _state.dewateredCakeKg -= blocks * CakeKgPerBlock;
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.cake_packed",
+                new Dictionary<string, double>
+                {
+                    { "blocks", blocks },
+                    { "cake_kg_remaining", _state.dewateredCakeKg },
+                });
+        }
+
+        /// <summary>
+        /// Packs hazardous tailings into canonical sealed drums for hauling on
+        /// expeditions (canonical cargo). Mass is conserved into the drum items.
+        /// </summary>
+        public ActionResult PackTailingsDrums(int maxDrums)
+        {
+            if (maxDrums <= 0)
+                return ActionResult.Failed("invalid_amount", "sump.invalid_amount");
+            if (_inventory == null)
+                return ActionResult.Failed("inventory_unavailable", "sump.inventory_unavailable");
+            if (_state.hazardousTailingsKg < TailingsKgPerDrum)
+                return ActionResult.Blocked("no_tailings", "sump.no_tailings_stock");
+
+            int drums = Math.Min(maxDrums, (int)Math.Floor(_state.hazardousTailingsKg / TailingsKgPerDrum));
+            if (!_inventory.TryProduce(TailingsDrumItemId, drums))
+                return ActionResult.Failed("pack_failed", "sump.drums_pack_failed");
+
+            _state.hazardousTailingsKg -= drums * TailingsKgPerDrum;
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.tailings_packed",
+                new Dictionary<string, double>
+                {
+                    { "drums", drums },
+                    { "tailings_kg_remaining", _state.hazardousTailingsKg },
+                });
         }
 
         public ActionResult AddNode(string nodeId, string displayName, float maxWaterLevelCm = 200f)
@@ -522,6 +615,53 @@ ILog? log = null)
             }
 
             OnFloodingChanged?.Invoke();
+
+            UpdateSludgeGasSources();
+        }
+
+        /// <summary>
+        /// Plan 70 §4.13: stagnant sludge emits hazardous digester gas through the
+        /// canonical ventilation authority. The sump only registers/updates typed
+        /// emission sources; VentilationSystem owns concentration, mitigation and
+        /// survivor consequences. Emission rates are parameterized by the
+        /// stratum gas risk profile (sump_drainage_catalog).
+        /// </summary>
+        private void UpdateSludgeGasSources()
+        {
+            if (_ventilation == null) return;
+
+            var desired = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var node in _state.nodes)
+            {
+                _strata.TryGetValue(node.stratumId, out var stratum);
+                string gasProfile = stratum?.gas_risk_profile ?? string.Empty;
+                bool hazardous = gasProfile is "reduced_sulfur" or "combustible";
+                if (!hazardous || node.settledSludgeKg < SludgeGasThresholdKg)
+                    continue;
+
+                string sourceId = $"sump_gas_{node.nodeId}";
+                desired.Add(sourceId);
+                _ventilation.RegisterSource(new VentilationSource
+                {
+                    sourceId = sourceId,
+                    roomId = node.nodeId,
+                    smokeOutputPerDay = 0f,
+                    coOutputPerDay = SludgeGasCoPpmPerDayBase
+                        + node.settledSludgeKg * SludgeGasCoPpmPerKg,
+                    requiresExhaust = true,
+                    isActive = true
+                });
+            }
+
+            // Decommission sources whose sludge was dredged or strata changed.
+            foreach (string sourceId in _activeGasSources)
+            {
+                if (!desired.Contains(sourceId))
+                    _ventilation.SetSourceActive(sourceId, false);
+            }
+            _activeGasSources.Clear();
+            foreach (string sourceId in desired)
+                _activeGasSources.Add(sourceId);
         }
 
         public ActionResult DrainNode(string nodeId)

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Shelter;
+using Ashfall.Core.StartingLevel;
 using Ashfall.Core.YearOfAsh;
 using Ashfall.Core.World;
 using Xunit;
@@ -514,6 +515,132 @@ namespace Ashfall.Core.Tests
                 + water.State.rawWater + node.suspendedSolidsKg + node.settledSludgeKg;
             // inputs: 10 kg silt + 1 kg flocculant mass — everything accounted for
             Assert.Equal(11f, totalOut, 3);
+        }
+
+        // ── Plan 70 slice 3: assay, cake/tailings packing, sludge gas ────
+
+        [Fact] public void CentrifugeBatch_TagsCakeProfile_FromProducingStratum()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            inv.AddById(SumpFloodingSystem.CentrifugeFilterItemId, 5);
+            s.AddNode("sump_a", "Lower Level");
+            s.ApplyStratumCatalog(new List<SumpStratumDef>
+            {
+                new SumpStratumDef { stratum_id = "stratum_a", base_ingress_cm_per_day = 4f, water_table_pressure = 1f, silt_fraction = 0.05f, metal_content_profile = "iron_oxide" }
+            });
+            s.AssignStratum("sump_a", "stratum_a");
+            s.State.nodes[0].settledSludgeKg = 30f;
+
+            s.RunCentrifugeBatch("sump_a");
+
+            var (profileId, cakeKg, _) = s.AssayCake();
+            Assert.Equal("iron_oxide", profileId);
+            Assert.True(cakeKg > 0f);
+        }
+
+        [Fact] public void CentrifugeBatch_MixedProfiles_FlagsAssayAsMixed()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            inv.AddById(SumpFloodingSystem.CentrifugeFilterItemId, 5);
+            s.AddNode("sump_a", "Lower Level");
+            s.ApplyStratumCatalog(new List<SumpStratumDef>
+            {
+                new SumpStratumDef { stratum_id = "stratum_a", metal_content_profile = "iron_oxide" },
+                new SumpStratumDef { stratum_id = "stratum_b", metal_content_profile = "galvanic_slime" }
+            });
+            s.State.nodes[0].stratumId = "stratum_a";
+            s.State.nodes[0].settledSludgeKg = 10f;
+            s.RunCentrifugeBatch("sump_a");
+
+            s.State.nodes[0].stratumId = "stratum_b";
+            s.State.nodes[0].settledSludgeKg = 10f;
+            s.RunCentrifugeBatch("sump_a");
+
+            Assert.Equal("mixed", s.AssayCake().profileId);
+        }
+
+        [Fact] public void PackCakeForSmelting_GatesOnInventoryAndMinimumMass()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            s.AddNode("sump_a", "Lower Level");
+
+            // no inventory bound → fails
+            var bare = Create(out _, out _, out _);
+            bare.AddNode("sump_a", "Lower Level");
+            bare.State.dewateredCakeKg = 10f;
+            Assert.NotEqual(ActionResult.StatusKind.Success, bare.PackCakeForSmelting(2).Status);
+
+            // inventory but below one block (5 kg)
+            s.State.dewateredCakeKg = 4f;
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.PackCakeForSmelting(2).Status);
+            Assert.Equal(4f, s.State.dewateredCakeKg, 3); // untouched
+
+            // exactly one block → succeeds, stock empties
+            s.State.dewateredCakeKg = 5f;
+            Assert.Equal(ActionResult.StatusKind.Success, s.PackCakeForSmelting(2).Status);
+            Assert.Equal(0f, s.State.dewateredCakeKg, 3);
+        }
+
+        [Fact] public void PackCakeForSmelting_ProducesFeedstockItems_ConservingMass()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            s.State.dewateredCakeKg = 12f; // 2 blocks (10 kg) + 2 kg remainder
+
+            var res = s.PackCakeForSmelting(4);
+            Assert.Equal(ActionResult.StatusKind.Success, res.Status);
+            Assert.Equal(2f, s.State.dewateredCakeKg, 3);
+            Assert.Equal(2, inv.CountById(SumpFloodingSystem.SludgeCakeItemId));
+        }
+
+        [Fact] public void PackTailingsDrums_ConservesMassIntoSealedDrums()
+        {
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            s.State.hazardousTailingsKg = 25f; // 2 drums (20 kg) + 5 kg remainder
+
+            var res = s.PackTailingsDrums(4);
+            Assert.Equal(ActionResult.StatusKind.Success, res.Status);
+            Assert.Equal(5f, s.State.hazardousTailingsKg, 3);
+            Assert.Equal(2, inv.CountById(SumpFloodingSystem.TailingsDrumItemId));
+
+            // below one drum → blocked, nothing deleted
+            Assert.NotEqual(ActionResult.StatusKind.Success, s.PackTailingsDrums(4).Status);
+            Assert.Equal(5f, s.State.hazardousTailingsKg, 3);
+        }
+
+        [Fact] public void TickDay_SludgeGas_RegistersActiveVentilationSource()
+        {
+            var vent = new VentilationSystem(new StartingLevelSystem());
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            s.BindServices(inv, null, vent);
+            s.AddNode("sump_a", "Lower Level");
+            s.ApplyStratumCatalog(new List<SumpStratumDef>
+            {
+                new SumpStratumDef { stratum_id = "stratum_a", base_ingress_cm_per_day = 4f, water_table_pressure = 1f, silt_fraction = 0.05f, gas_risk_profile = "reduced_sulfur" }
+            });
+            s.AssignStratum("sump_a", "stratum_a");
+            s.State.nodes[0].settledSludgeKg = 20f; // above the 15 kg gas threshold
+
+            s.TickDay(1);
+
+            var source = vent.State.activeSources.Find(x => x.sourceId == "sump_gas_sump_a");
+            Assert.NotNull(source);
+            Assert.True(source!.isActive);
+            Assert.True(source.requiresExhaust);
+            // emission scales with sludge mass: ≈ 2 + 20 × 0.2 = 6 ppm/day
+            // (sludge grows slightly during the tick itself — settling)
+            Assert.Equal(6.03f, source.coOutputPerDay, 2);
+        }
+
+        [Fact] public void TickDay_CleanNode_DoesNotRegisterGasSource()
+        {
+            var vent = new VentilationSystem(new StartingLevelSystem());
+            var s = CreateWithServices(out _, out _, out _, out var inv, out _);
+            s.BindServices(inv, null, vent);
+            s.AddNode("sump_a", "Lower Level");
+
+            s.TickDay(1);
+
+            Assert.DoesNotContain(vent.State.activeSources, x => x.sourceId == "sump_gas_sump_a");
         }
 
         private static SumpFloodingSystem Create(out WeatherSystem weather, out PowerGridSystem power, out YearOfAshDeepFreezeSystem df)
