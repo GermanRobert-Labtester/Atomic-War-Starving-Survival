@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ashfall.Core.Economy;
 
 namespace Ashfall.Core.Waystation
 {
@@ -37,6 +38,19 @@ namespace Ashfall.Core.Waystation
         private WaystationNetworkState _state;
 
         public event Action<WaystationInstanceState>? OnWaystationStateChanged;
+
+        // Plan 56 phase 3 — optional shortage policy. When bound, the 7-day
+        // resupply filters stock through RegionalSupplyRouter: locally
+        // produced and general goods keep their stock, pure imports lapse
+        // until the market recovers. Unbound → exact legacy resupply.
+        private GoodsCatalog? _shortageCatalog;
+        private Func<bool>? _isSuppliesShort;
+
+        public void BindShortagePolicy(GoodsCatalog catalog, Func<bool> isSuppliesShort)
+        {
+            _shortageCatalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
+            _isSuppliesShort = isSuppliesShort ?? throw new ArgumentNullException(nameof(isSuppliesShort));
+        }
 
         public WaystationNetworkState State => _state;
         public IReadOnlyList<WaystationDef> Catalog => _catalog;
@@ -102,7 +116,18 @@ namespace Ashfall.Core.Waystation
                     var def = GetDefinition(station.stationId);
                     if (def != null)
                     {
-                        station.availableStockItemIds = new List<string>(def.stock_item_ids);
+                        // Plan 56 phase 3 — provenance-aware resupply: during a
+                        // market shortage the station keeps locally produced and
+                        // general stock; import-only stock lapses. Unbound hosts
+                        // resupply exactly as before.
+                        var stock = new List<string>(def.stock_item_ids);
+                        if (_shortageCatalog != null && _isSuppliesShort != null && _isSuppliesShort())
+                        {
+                            var defRegion = !string.IsNullOrEmpty(def.region) ? def.region : "settlement";
+                            stock = RegionalSupplyRouter.FilterStockForShortage(
+                                stock, _shortageCatalog, defRegion);
+                        }
+                        station.availableStockItemIds = stock;
                         station.daysSinceResupply = 0;
                     }
                 }

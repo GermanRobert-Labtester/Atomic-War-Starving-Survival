@@ -27,6 +27,13 @@ namespace AtomicWar.GodotApp
         public static TravelingCaravanHostSession Create(string dataDir)
         {
             var session = new TravelingCaravanHostSession();
+            // Plan 56 phase 3 — bind the goods catalog so caravan specialty
+            // stock is generated from regionalSupply provenance (falls back
+            // to the legacy regional tables when the catalog is missing).
+            var catalogLoad = Ashfall.Core.Economy.GoodsCatalogLoader.Load(
+                dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            if (!catalogLoad.HasErrors)
+                session.Engine.Catalog = Ashfall.Core.Economy.GoodsCatalogLoader.ToCatalog(catalogLoad);
             var save = CaravanSaveStore.TryLoad();
             if (save != null)
             {

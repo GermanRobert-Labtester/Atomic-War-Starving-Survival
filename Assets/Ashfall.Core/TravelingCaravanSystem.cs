@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Economy;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -47,6 +48,14 @@ namespace Ashfall.Core
 
         private TravelingCaravanState _state;
 
+        /// <summary>
+        /// Plan 56 phase 3 — when a goods catalog is bound, regional specialty
+        /// stock is generated from <c>regionalSupply</c> provenance via
+        /// RegionalSupplyRouter. Unbound systems (headless demo) keep the
+        /// legacy hand-coded regional tables.
+        /// </summary>
+        public GoodsCatalog? Catalog { get; set; }
+
         public event Action<CaravanEntry, string> OnCaravanArrivedAtNode;
         public event Action<CaravanEntry, string, int> OnTradeCompleted;
 
@@ -86,7 +95,7 @@ namespace Ashfall.Core
             };
 
             // Add regional specialty stock based on origin
-            AddRegionalSpecialtyStock(caravan, originRegion);
+            AddRegionalSpecialtyStock(this, caravan, originRegion);
 
             _state.activeCaravans.Add(caravan);
             OnCaravanArrivedAtNode?.Invoke(caravan, caravan.currentNodeId);
@@ -94,10 +103,31 @@ namespace Ashfall.Core
 
         /// <summary>
         /// Add regional specialty goods to a caravan based on its origin region.
-        /// Each region carries 2-3 goods not available elsewhere, creating route-planning pressure.
+        /// With a bound goods catalog, the stock is generated from
+        /// <c>regionalSupply</c> provenance (RegionalSupplyRouter) — the data
+        /// authority decides what each region produces. Without a catalog the
+        /// legacy hand-coded tables apply (headless demo compatibility).
+        /// Each region carries goods not available elsewhere, creating
+        /// route-planning pressure.
         /// </summary>
-        private static void AddRegionalSpecialtyStock(CaravanEntry caravan, string region)
+        private static void AddRegionalSpecialtyStock(TravelingCaravanSystem system, CaravanEntry caravan, string region)
         {
+            if (system.Catalog != null)
+            {
+                var lots = RegionalSupplyRouter.SpecialtyCargoForOrigin(
+                    system.Catalog, region, maxLots: 4);
+                for (int i = 0; i < lots.Count; i++)
+                {
+                    caravan.inventory.Add(new CaravanInventoryItem
+                    {
+                        itemId = lots[i].GoodId,
+                        quantity = lots[i].Quantity,
+                        priceRations = lots[i].PriceRations
+                    });
+                }
+                return;
+            }
+
             switch (region)
             {
                 case "flotilla":
