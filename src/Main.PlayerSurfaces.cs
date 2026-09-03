@@ -13,7 +13,7 @@ namespace AtomicWar.GodotApp
             // Core Dashboard Panels
             PanelRegistry.ConfigureActions("status",
                 bindAction: () => { SetupSurvivors(); SetupWorld(); SetupInventory(); _statusPanel.Bind(_survivors, _world?.Weather, _powerGrid, _inventory, _simDay); },
-                openAction: () => _statusPanel.Open(),
+                openAction: () => _statusPanel.Open(GetViewport()?.GuiGetFocusOwner()),
                 closeAction: () => CloseStatusPanel());
 
             PanelRegistry.ConfigureActions("help",
@@ -119,7 +119,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("research",
                 bindAction: () => { _sharedResearch = EnsureSharedResearch(); _researchPanel.Bind(_sharedResearch); },
-                openAction: () => _researchPanel.Open(),
+                openAction: () => _researchPanel.Open(GetViewport()?.GuiGetFocusOwner()),
                 closeAction: () => CloseResearchPanel());
 
             PanelRegistry.ConfigureActions("weather_detail",
@@ -184,12 +184,12 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("inventory",
                 bindAction: () => { SetupInventory(); _inventoryOverlay.Bind(_inventory); _inventoryOverlay.RefreshView(); },
-                openAction: () => _inventoryOverlay.Open(),
+                openAction: () => _inventoryOverlay.Open(GetViewport()?.GuiGetFocusOwner()),
                 closeAction: () => CloseInventoryOverlay());
 
             PanelRegistry.ConfigureActions("crafting",
                 bindAction: () => { SetupCrafting(); SetupInventory(); _craftingPanel.Bind(_crafting, _inventory); },
-                openAction: () => _craftingPanel.Open(),
+                openAction: () => _craftingPanel.Open(GetViewport()?.GuiGetFocusOwner()),
                 closeAction: () => CloseCraftingPanel());
 
             PanelRegistry.ConfigureActions("workshop",
@@ -209,7 +209,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("medical",
                 bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); EnsureMedicalPipeline(); _medicalPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory); },
-                openAction: () => _medicalPanel.Open(),
+                openAction: () => _medicalPanel.Open(GetViewport()?.GuiGetFocusOwner()),
                 closeAction: () => CloseMedicalPanel());
 
             PanelRegistry.ConfigureActions("phase0",
@@ -401,7 +401,16 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _triangulationPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("weather_sonde",
-                bindAction: () => { SetupWorld(); _weatherSondePanel.Bind(new WeatherHostSession(_world?.Weather)); },
+                bindAction: () =>
+                {
+                    SetupWorld(); SetupInventory();
+                    var catalog = Ashfall.Core.World.AtmosphericSoundingCatalogLoader.Load(
+                        _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+                    var sondeHost = new WeatherHostSession(_world?.Weather);
+                    sondeHost.SetupSoundingCatalog(catalog?.altitude_bands, catalog?.payloads);
+                    sondeHost.BindRecoveryInventory(_inventory?.Inventory);
+                    _weatherSondePanel.Bind(sondeHost);
+                },
                 openAction: () => _weatherSondePanel.Open(),
                 closeAction: () => _weatherSondePanel.Visible = false);
 
@@ -465,7 +474,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _musterAtlasPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("quests_atlas",
-                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); _questsAtlasPanel.Bind(_core.Quests, _expansions?.CrossingQuests); },
+                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupPersonalQuests(); _questsAtlasPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _personalQuests?.System); },
                 openAction: () => _questsAtlasPanel.Open(),
                 closeAction: () => _questsAtlasPanel.Visible = false);
 

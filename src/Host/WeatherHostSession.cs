@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.World;
@@ -25,6 +26,25 @@ namespace AtomicWar.GodotApp
             Sonde.OnStateChanged += _ => RaiseStateChanged();
             Sonde.OnSondeRecovered += id => { LastEvent = $"Sonde {id} recovered. Forecast updated."; RaiseStateChanged(); };
             Sonde.OnSondeFailed += reason => { LastEvent = $"Sonde failed: {reason}"; RaiseStateChanged(); };
+            Sonde.OnPayloadLanded += () =>
+            {
+                LastEvent = "Sonde payload landed. Recovery target active.";
+                RaiseStateChanged();
+            };
+        }
+
+        /// <summary>Apply atmospheric sounding catalog (Plan 71 §6.2).</summary>
+        public void SetupSoundingCatalog(
+            IReadOnlyList<SoundingAltitudeBandDef>? bands,
+            IReadOnlyList<SoundingPayloadDef>? payloads)
+        {
+            Sonde.ApplySoundingCatalog(bands, payloads);
+        }
+
+        /// <summary>Bind the inventory that receives recovered payload rewards.</summary>
+        public void BindRecoveryInventory(Ashfall.Core.Inventory.Inventory? inventory)
+        {
+            Sonde.BindRecoveryInventory(inventory);
         }
 
         public override void Save()
@@ -81,8 +101,17 @@ namespace AtomicWar.GodotApp
             var state = Sonde.State;
             if (!state.isLaunched) return "Sonde: idle";
             if (state.isFailed) return $"Sonde: FAILED ({state.failureReason})";
-            if (state.isRecovered) return $"Sonde: recovered ({state.forecast.Count} day forecast, quality {state.observationQuality:F2})";
-            return $"Sonde: in flight (tick {state.ticksElapsed}/{state.flightDurationTicks}, alt {Sonde.GetCurrentAltitude():F1} km, battery {state.batteryLevel:P0})";
+            if (state.isRecovered)
+            {
+                string landing = state.landingDay >= 0
+                    ? $"Landed day {state.landingDay} at {state.landingEastingM}mE/{state.landingNorthingM}mN"
+                    : $"Recovered at {state.samples[state.samples.Count - 1].altitudeKm:F1} km";
+                return $"Sonde: recovered ({state.forecast.Count} day forecast, quality {state.observationQuality:F2}). {landing}.";
+            }
+            string target = state.recoveryTargetSpawned
+                ? $" Recovery target active (expires day {state.recoveryExpiryDay})."
+                : string.Empty;
+            return $"Sonde: in flight (tick {state.ticksElapsed}/{state.flightDurationTicks}, alt {Sonde.GetCurrentAltitude():F1} km, battery {state.batteryLevel:P0}).{target}";
         }
     }
 }

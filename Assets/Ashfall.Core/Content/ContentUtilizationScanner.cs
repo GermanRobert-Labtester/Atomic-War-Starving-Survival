@@ -107,6 +107,7 @@ namespace Ashfall.Core.Content
             "aircraft_parts.json", "labor_camps.json",
             "narcotics.json", "political_policies.json",
             "sump_drainage_catalog.json", "electrostatic_filtration_catalog.json",
+            "atmospheric_sounding_catalog.json",
             "caravan_trade_routes.json", "power_subgrid_nodes.json", "perimeter_defenses.json",
         };
 
@@ -728,6 +729,7 @@ namespace Ashfall.Core.Content
                 ["political_policies.json"] = new[] { "PoliticsSystem" },
                 ["sump_drainage_catalog.json"] = new[] { "SumpFloodingSystem", "VentilationSystem" },
                 ["electrostatic_filtration_catalog.json"] = new[] { "VentilationSystem" },
+                ["atmospheric_sounding_catalog.json"] = new[] { "WeatherSondeSystem" },
                 ["caravan_trade_routes.json"] = new[] { "CaravanTradeNetworkSystem" },
                 ["power_subgrid_nodes.json"] = new[] { "PowerDistributionSubgridSystem" },
                 ["perimeter_defenses.json"] = new[] { "PerimeterDefenseSystem" },
