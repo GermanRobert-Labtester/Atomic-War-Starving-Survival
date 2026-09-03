@@ -614,6 +614,20 @@
       "disassembleYieldFraction": 0
     },
     {
+      "id": "item_radiosonde",
+      "display_name": "Recovered Radiosonde Package",
+      "description": "A salvaged radiosonde payload, recovered after atmospheric flight. Contains intact sensors and telemetry logs.",
+      "category": "equipment",
+      "weight_kg": 1.2,
+      "durability": 0.85,
+      "value": 14,
+      "tags": [
+        "electronics",
+        "scientific",
+        "recovered"
+      ]
+    },
+    {
       "id": "solar_cell",
       "displayName": "Solar Cell",
       "description": "A single solar cell, glass intact or cracked, frame bent but the wafer still blue. One point two kilos, twenty-two trade units, ten to a stack. Charged, it feeds a battery; broken, it is still the best glass around. The sun still does its part, every day, on schedule. It is the only utility left in the world that has not failed, and people treat it accordingly: first pick, first price, no haggling.",
