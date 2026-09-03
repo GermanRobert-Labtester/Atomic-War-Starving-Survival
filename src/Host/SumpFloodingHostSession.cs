@@ -63,6 +63,18 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        /// <summary>Binds a sump node to a drainage stratum from sump_drainage_catalog.json.</summary>
+        public ActionResult AssignStratum(string nodeId, string stratumId)
+        {
+            var res = System.AssignStratum(nodeId, stratumId);
+            if (res.IsSuccess)
+            {
+                LastEvent = $"Drainage stratum {stratumId} bound to node {nodeId}";
+                RaiseStateChanged();
+            }
+            return res;
+        }
+
         public ActionResult SetNodePower(string nodeId, bool powered)
         {
             var res = System.SetNodePower(nodeId, powered);

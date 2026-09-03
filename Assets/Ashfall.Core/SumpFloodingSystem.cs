@@ -33,6 +33,9 @@ namespace Ashfall.Core
         public bool isFlooded;
         public bool equipmentDisabled;
         public float contaminationLevel;     // 0-1
+        public string stratumId = string.Empty;   // bound drainage stratum (sump_drainage_catalog)
+        public float suspendedSolidsKg;           // silt in suspension; settles daily into settledSludgeKg
+        public float settledSludgeKg;             // settled sludge mass awaiting treatment/dredging
         public List<string> adjacentNodeIds = new List<string>();
     }
 
@@ -50,7 +53,23 @@ namespace Ashfall.Core
     public sealed class SumpFloodingSystem
     {
         public const string SystemId = "sump_flooding";
+
+        // ── Stratum/sludge model constants (sump_drainage_catalog) ──────
+        /// <summary>Basin cross-section convention: 1 cm of node level = 10 L of water.</summary>
+        public const float BasinLitersPerCmLevel = 10f;
+        /// <summary>Fraction of suspended solids that settles into sludge each day.</summary>
+        public const float SettledFractionPerDay = 0.15f;
+        /// <summary>Solids mass (suspended + settled) at which the wear multiplier reaches 2×.</summary>
+        public const float SolidsWearReferenceKg = 10f;
+        /// <summary>Cap on the solids contribution to the pump wear multiplier.</summary>
+        public const float MaxSolidsWearFactor = 4f;
+        /// <summary>Throughput loss factor per kg of suspended solids (viscosity/throttling).</summary>
+        public const float ViscosityThroughputPenaltyPerKg = 0.02f;
+        /// <summary>Settled sludge above this mass clogs the strainer and halves throughput.</summary>
+        public const float StrainerBlockageThresholdKg = 25f;
+
         private SumpFloodingState _state = new SumpFloodingState();
+        private readonly Dictionary<string, SumpStratumDef> _strata = new Dictionary<string, SumpStratumDef>(StringComparer.Ordinal);
         private readonly ISeededRng _rng;
         private readonly ILog _log;
         private readonly WeatherSystem _weather;
@@ -132,6 +151,33 @@ ILog? log = null)
             return ActionResult.Success($"sump.{mitigationType}_added");
         }
 
+        /// <summary>Registers drainage strata from sump_drainage_catalog.json. Returns count applied.</summary>
+        public int ApplyStratumCatalog(IEnumerable<SumpStratumDef> defs)
+        {
+            if (defs == null) return 0;
+            int applied = 0;
+            foreach (var def in defs)
+            {
+                if (def == null || string.IsNullOrEmpty(def.stratum_id)) continue;
+                _strata[def.stratum_id] = def;
+                applied++;
+            }
+            return applied;
+        }
+
+        /// <summary>Binds a node to a catalog stratum. Nodes without a stratum keep the legacy inflow model.</summary>
+        public ActionResult AssignStratum(string nodeId, string stratumId)
+        {
+            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
+            if (string.IsNullOrEmpty(stratumId) || !_strata.ContainsKey(stratumId))
+                return ActionResult.Failed("unknown_stratum", "sump.unknown_stratum");
+
+            node.stratumId = stratumId;
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.stratum_assigned");
+        }
+
         public void TickDay(int day)
         {
             _currentDay = day;
@@ -155,14 +201,35 @@ ILog? log = null)
             {
                 if (node.isFlooded && node.equipmentDisabled) continue;
 
-                // Inflow from groundwater
-                float inflow = _state.globalGroundwaterLevel * 0.5f;
+                // Inflow from groundwater. Nodes bound to a drainage stratum use
+                // catalog-driven ingress scaled by live groundwater pressure;
+                // unbound nodes keep the legacy flat model.
+                _strata.TryGetValue(node.stratumId, out var stratum);
+                float inflow;
+                float siltFraction = 0f;
+                float pumpLoadModifier = 1f;
+                int toxicityTier = 0;
+                if (stratum != null)
+                {
+                    float pressure = 0.5f + _state.globalGroundwaterLevel / 10f;
+                    inflow = stratum.base_ingress_cm_per_day * pressure * stratum.water_table_pressure;
+                    siltFraction = stratum.silt_fraction;
+                    pumpLoadModifier = stratum.pump_load_modifier;
+                    toxicityTier = stratum.toxicity_tier;
+                }
+                else
+                {
+                    inflow = _state.globalGroundwaterLevel * 0.5f;
+                }
                 if (_deepFreeze.IsIntakeBlocked)
                     inflow *= 0.2f; // frozen ground
 
                 // Mitigation reduces inflow
                 if (node.hasFloatValve) inflow *= 0.5f;
                 if (node.hasSandbagMitigation) inflow *= 0.3f;
+
+                // Silt carried by the ingress (mass-conserving; settles below).
+                node.suspendedSolidsKg += inflow * BasinLitersPerCmLevel * siltFraction;
 
                 // Pump drainage
                 float drainage = 0f;
@@ -171,8 +238,17 @@ ILog? log = null)
                     bool hasPower = _powerGrid.IsRoomPowered(node.nodeId);
                     if (hasPower)
                     {
-                        drainage = 20f * (node.pumpCondition / 100f);
-                        node.pumpCondition = Math.Max(0, node.pumpCondition - 0.1f);
+                        // Solids load: suspended silt throttles throughput (viscosity)
+                        // and settled sludge above the strainer threshold blocks the
+                        // inlet. Wear scales with total solids and stratum load.
+                        float solidsFactor = Math.Min(
+                            MaxSolidsWearFactor,
+                            (node.suspendedSolidsKg + node.settledSludgeKg) / SolidsWearReferenceKg);
+                        float viscosity = 1f / (1f + node.suspendedSolidsKg * ViscosityThroughputPenaltyPerKg);
+                        float blockage = node.settledSludgeKg > StrainerBlockageThresholdKg ? 0.5f : 1f;
+                        drainage = 20f * (node.pumpCondition / 100f) * viscosity * blockage;
+                        node.pumpCondition = Math.Max(0, node.pumpCondition
+                            - 0.1f * (1f + pumpLoadModifier * solidsFactor));
                     }
                     else
                     {
@@ -197,11 +273,20 @@ ILog? log = null)
 
                 node.waterLevelCm = Math.Max(0, node.waterLevelCm + inflow - drainage);
 
+                // Daily settling: a fixed fraction of suspended solids settles into
+                // the sludge layer. Mass is conserved (moved, never deleted).
+                float settledMass = node.suspendedSolidsKg * SettledFractionPerDay;
+                node.suspendedSolidsKg = Math.Max(0f, node.suspendedSolidsKg - settledMass);
+                node.settledSludgeKg += settledMass;
+
                 // Flood threshold
                 if (node.waterLevelCm > node.maxWaterLevelCm * 0.8f && !node.isFlooded)
                 {
                     node.isFlooded = true;
-                    node.contaminationLevel = Math.Min(1f, node.contaminationLevel + 0.2f);
+                    float contaminationGain = stratum != null
+                        ? 0.05f * (toxicityTier + 1)
+                        : 0.2f;
+                    node.contaminationLevel = Math.Min(1f, node.contaminationLevel + contaminationGain);
                     _state.lastFloodDay = day;
 
                     var incident = new FloodIncident

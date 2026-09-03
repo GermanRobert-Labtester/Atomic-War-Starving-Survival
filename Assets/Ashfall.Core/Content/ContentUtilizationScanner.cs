@@ -106,6 +106,7 @@ namespace Ashfall.Core.Content
             "mutations.json", "camouflage_gear.json",
             "aircraft_parts.json", "labor_camps.json",
             "narcotics.json", "political_policies.json",
+            "sump_drainage_catalog.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -724,6 +725,7 @@ namespace Ashfall.Core.Content
                 ["labor_camps.json"] = new[] { "ForcedLaborSystem" },
                 ["narcotics.json"] = new[] { "NarcoticsSystem" },
                 ["political_policies.json"] = new[] { "PoliticsSystem" },
+                ["sump_drainage_catalog.json"] = new[] { "SumpFloodingSystem" },
             };
 
             foreach (var cat in _graph.Catalogs)
