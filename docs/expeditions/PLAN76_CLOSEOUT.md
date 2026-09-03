@@ -65,16 +65,23 @@ Details: `PLAN76_LOOT_AUTHORITY_AUDIT.md`. Gate:
 
 ## Micro-Locations (Plan 49)
 
-**Deferred — seam not present.** No destination-level micro-location binding
-field exists in the current schema. Stable destination ids remain available
-for the future approach-discovery seam. No dangling refs authored (§36 rule
-honoured).
+**RESOLVED post-closeout (GAP-49B, see `docs/gaps/logs/
+GAP-48-49_DESTINATION_SEAMS_IMPLEMENTATION_LOG.md`).** The seam existed after
+all: `EncounterDefinition.requiredLocationId` + `GetEffectiveWeight` were live;
+`micro_locations.json` simply had no loader. `NarrativeEncounterCatalogLoader`
+now merges it, and the three §35 targets carry destination-bound
+micro-locations (`micro_hospital_chapel_ledger`,
+`micro_depot_undertow_raft_line`, `micro_gamma_levy_board`).
 
 ## Weather Gates (Plan 48)
 
-**Deferred — seam not present at destination level.** Weather blocking belongs
-to the host `ExtraBlocked` / route-blocking seam; the destination loader owns
-no weather semantics. No bindings authored.
+**RESOLVED post-closeout (GAP-48A, same log).**
+`WeatherRouteGateCatalog` (Core, `World/`) loads `weather_route_gates.json`,
+evaluates blocked/required/override semantics purely, and composes into the
+expedition dispatch path via a reason-carrying `ExtraBlockReason` host seam;
+three destination-targeted gates author the §37 intent (Silent Observatory
+blizzard, Flooded Subway Depot black rain, Shallows Market fallout storm).
+Gate state is derived — no save changes.
 
 ## Save
 

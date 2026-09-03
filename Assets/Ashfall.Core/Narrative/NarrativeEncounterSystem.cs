@@ -313,6 +313,11 @@ namespace Ashfall.Core.Narrative
         /// base catalog (duplicate ids are dropped by RegisterEncounter).</summary>
         public const string ArcFileName = "narrative_encounters_npc_arcs.json";
 
+        /// <summary>GAP-49B — destination-bound approach micro-locations
+        /// (Plan 76 §35) load last through the same schema; their
+        /// `requiredLocationId` makes them weight-zero off-destination.</summary>
+        public const string MicroLocationsFileName = "micro_locations.json";
+
         public static List<EncounterDefinition> Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
             var result = new List<EncounterDefinition>();
@@ -321,6 +326,7 @@ namespace Ashfall.Core.Narrative
 
             result.AddRange(LoadFile(dataDir, FileName, fileIO, json));
             result.AddRange(LoadFile(dataDir, ArcFileName, fileIO, json));
+            result.AddRange(LoadFile(dataDir, MicroLocationsFileName, fileIO, json));
             return result;
         }
 

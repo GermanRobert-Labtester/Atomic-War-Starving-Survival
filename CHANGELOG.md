@@ -32,6 +32,17 @@ All notable changes to ASHFALL. Format: Keep a Changelog.
   bulk-band yield bump (+45% E[value], identity preserved); Denial Cut
   decision recorded; this changelog.
 
+### Plan 76.3 — destination-level seams sealed (GAP-48A / GAP-49B)
+
+- Weather gates: `WeatherRouteGateCatalog` (Core) + 3 destination-targeted
+gates + dispatch wiring via reason-carrying `ExtraBlockReason`; dispatch bar
+now renders the true block source instead of hardcoded crossing text.
+- Micro-locations: `micro_locations.json` merged into the narrative encounter
+loader; 3 destination-bound encounters for the Plan 76 §35 targets.
+- Host/UI wiring files (`ExpeditionHostSession.cs`, `Main.Maritime.cs`,
+`ExpeditionPanel.cs`) intentionally uncommitted with their interleaved
+Plan 60 / concurrent changes; full suite 6800/6800 green.
+
 ### Notes
 
 - Verification basis for the series: `dotnet build Ashfall.csproj` (0/0),

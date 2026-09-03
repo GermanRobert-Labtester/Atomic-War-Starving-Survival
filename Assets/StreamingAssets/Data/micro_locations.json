@@ -283,7 +283,7 @@
     {
       "id": "micro_ruined_greenhouse",
       "title": "Ruined Greenhouse",
-      "description": "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed\u2014someone tried to pry it open with a crowbar, but gave up or died trying.",
+      "description": "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—someone tried to pry it open with a crowbar, but gave up or died trying.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -431,7 +431,7 @@
     {
       "id": "micro_shrine",
       "title": "Roadside Shrine",
-      "description": "Tallow candles have burned down to stubs inside a rusted ration tin. Desperate little offerings\u2014screws, shiny pebbles, a bullet\u2014sit beneath a faded cloth carefully knotted around the twisted guardrail.",
+      "description": "Tallow candles have burned down to stubs inside a rusted ration tin. Desperate little offerings—screws, shiny pebbles, a bullet—sit beneath a faded cloth carefully knotted around the twisted guardrail.",
       "category": "Social",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -467,7 +467,7 @@
     {
       "id": "micro_emergency_cache",
       "title": "Emergency Cache",
-      "description": "The rubber weather seal has cracked in the bitter cold, but the faded stencil is undeniable. Deep gouges show where someone tried to pry the heavy lock before abandoning it. It reads: CIVIL DEFENSE \u2014 EMERGENCY RATION CACHE.",
+      "description": "The rubber weather seal has cracked in the bitter cold, but the faded stencil is undeniable. Deep gouges show where someone tried to pry the heavy lock before abandoning it. It reads: CIVIL DEFENSE — EMERGENCY RATION CACHE.",
       "category": "Discovery",
       "baseWeight": 0.2,
       "stealthWeightMultiplier": 1.0,
@@ -708,7 +708,7 @@
     {
       "id": "micro_makeshift_clinic",
       "title": "Makeshift Clinic",
-      "description": "Desperate triage categories are scrawled in blood on torn cardboard strips. Empty, frozen saline bags hang from a rusted IV cable. The medicine cabinet was ransacked in a panic\u2014leaving some shelves completely bare while ignoring others entirely.",
+      "description": "Desperate triage categories are scrawled in blood on torn cardboard strips. Empty, frozen saline bags hang from a rusted IV cable. The medicine cabinet was ransacked in a panic—leaving some shelves completely bare while ignoring others entirely.",
       "category": "Discovery",
       "baseWeight": 0.4,
       "stealthWeightMultiplier": 1.0,
@@ -880,6 +880,90 @@
           "text": "Leave the crate. It was meant for someone else.",
           "moraleDelta": 2,
           "guiltDelta": 0
+        }
+      ]
+    },
+    {
+      "id": "micro_hospital_chapel_ledger",
+      "title": "Hospital Chapel Ledger",
+      "description": "The chapel beside the east wing kept a visitors' ledger through the worst of it. The last entries are names, then bed numbers, then nothing at all — just a date repeated down the page in a steady hand until the hand stopped coming. A candle box under the stand still has three stubs and a packet of matches.",
+      "category": "Discovery",
+      "baseWeight": 0.9,
+      "stealthWeightMultiplier": 1.1,
+      "speedWeightMultiplier": 0.5,
+      "minDangerLevel": 0,
+      "requiredLocationId": "abandoned_hospital",
+      "choices": [
+        {
+          "choiceId": "read_the_names",
+          "text": "Read the last page properly, then close the ledger.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "take_matches",
+          "text": "Take the lighter from the candle box. The dead do not need light.",
+          "moraleDelta": -1,
+          "guiltDelta": 1,
+          "grantItemId": "cigarette_lighter",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
+        }
+      ]
+    },
+    {
+      "id": "micro_depot_undertow_raft_line",
+      "title": "Undertow Raft Line",
+      "description": "A raft of sealed crates lashed to a handrail runs down the flooded concourse, marked with the Undertow's tar-symbol. The line is rigged to a pulley someone greased recently. Whatever moves along it moves quietly, and often.",
+      "category": "Discovery",
+      "baseWeight": 0.7,
+      "stealthWeightMultiplier": 1.3,
+      "speedWeightMultiplier": 0.5,
+      "minDangerLevel": 0,
+      "requiredLocationId": "location_flooded_subway_depot",
+      "choices": [
+        {
+          "choiceId": "note_the_route",
+          "text": "Mark the pulley anchors on your map and leave the line alone.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "cut_one_crate",
+          "text": "Cut one crate free before the owners notice.",
+          "moraleDelta": -1,
+          "guiltDelta": 2,
+          "grantItemId": "cloth",
+          "grantItemQuantity": 2,
+          "depletesOnResolve": true
+        }
+      ]
+    },
+    {
+      "id": "micro_gamma_levy_board",
+      "title": "Checkpoint Gamma Levy Board",
+      "description": "The garrison's levy board still stands by the guard shack: grain quotas, diesel quotas, and the names of households marked square for paid and circle for owed. Fresh chalk over old chalk. Somebody drives here to write, which means somebody still collects.",
+      "category": "Discovery",
+      "baseWeight": 0.8,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 0.6,
+      "minDangerLevel": 0,
+      "requiredLocationId": "loc_garrison_checkpoint_gamma",
+      "choices": [
+        {
+          "choiceId": "memorize_the_board",
+          "text": "Memorize which farms have paid and which are marked owed.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "take_the_chalk",
+          "text": "Take the chalk and the board's rating stamp. Forged square marks might pass at a distance.",
+          "moraleDelta": 0,
+          "guiltDelta": 2,
+          "grantItemId": "cloth",
+          "grantItemQuantity": 1,
+          "depletesOnResolve": true
         }
       ]
     }
