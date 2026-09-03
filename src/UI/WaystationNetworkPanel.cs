@@ -2,6 +2,7 @@ using System;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;
+using Ashfall.Core.Waystation;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
@@ -15,6 +16,8 @@ namespace AtomicWar.GodotApp.UI
         private AshfallStatusRail? _statusRail;
         private VBoxContainer _contentStack = null!;
         private Label _detailText = null!;
+        private Label _stockHeader = null!;
+        private VBoxContainer _stockList = null!;
         private Button _unlockBtn = null!;
         private Button _stoveBtn = null!;
 
@@ -29,7 +32,9 @@ namespace AtomicWar.GodotApp.UI
             {
                 _host.StateChanged += RefreshView;
             }
-            RefreshView();
+            // Deferred: snapshot fixtures bind before _Ready — the refresh
+            // runs once the shell exists (same pattern as the market panel).
+            CallDeferred(nameof(RefreshView));
         }
 
         public void Unbind()
@@ -63,6 +68,21 @@ namespace AtomicWar.GodotApp.UI
             _detailText = new Label();
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
+
+            // Plan 56 phase 6 — regional trade stock with provenance lapse
+            // tags (text-first: "[import lapsed]" is a words, not a color).
+            _stockHeader = new Label
+            {
+                Text = "REGION TRADE STOCK",
+            };
+            _stockHeader.AddThemeFontSizeOverride("font_size", 12);
+            _contentStack.AddChild(_stockHeader);
+
+            _stockList = new VBoxContainer
+            {
+                SizeFlagsVertical = SizeFlags.ExpandFill
+            };
+            _contentStack.AddChild(_stockList);
 
             var buttonRow = new HBoxContainer();
             buttonRow.AddThemeConstantOverride("separation", 10);
@@ -101,6 +121,57 @@ namespace AtomicWar.GodotApp.UI
                 _detailText.Text = $"Forward Outpost: {WaystationSystem.LocationId} | Bunks Occupied: {s.bunksOccupied}/{WaystationSystem.MaxBunks}\n" +
                                    $"Days Since Resupply: {s.daysSinceResupply} | Watch Sentries: {s.watchSurvivorIds.Length}\n" +
                                    $"Last Event: {_host.LastEvent}";
+            }
+
+            RefreshStockSection();
+        }
+
+        /// <summary>
+        /// Plan 56 phase 6 — render the network's trade stock with provenance
+        /// lapse tags. A stock id present in the station definition but
+        /// missing from availability was lapsed by the shortage resupply —
+        /// surfaced as a text tag, never a color-only signal (Plan 14).
+        /// Hidden entirely when no network is attached.
+        /// </summary>
+        private void RefreshStockSection()
+        {
+            if (_stockHeader == null || _stockList == null) return;
+            var network = _host?.Network;
+            if (network == null)
+            {
+                _stockHeader.Visible = false;
+                _stockList.Visible = false;
+                return;
+            }
+            _stockHeader.Visible = true;
+            _stockList.Visible = true;
+
+            AshfallUiHelpers.EmptyChildren(_stockList);
+            foreach (var def in network.Catalog)
+            {
+                var station = network.GetStation(def.id);
+                if (station == null) continue;
+                var lapsed = WaystationNetworkSystem.LapsedImports(def, station);
+                var row = new HBoxContainer();
+                row.AddThemeConstantOverride("separation", 8);
+                row.AddChild(new Label
+                {
+                    Text = $"{def.name} ({def.region})",
+                    CustomMinimumSize = new Vector2(260, 0)
+                });
+                if (lapsed.Count > 0)
+                {
+                    row.AddChild(new Label
+                    {
+                        Text = "[import lapsed — market short] " + string.Join(", ", lapsed),
+                        CustomMinimumSize = new Vector2(300, 0)
+                    });
+                }
+                else
+                {
+                    row.AddChild(new Label { Text = "[stocked]", CustomMinimumSize = new Vector2(120, 0) });
+                }
+                _stockList.AddChild(row);
             }
         }
 

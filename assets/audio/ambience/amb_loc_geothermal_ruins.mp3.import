@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/amb_loc_geothermal_ruins.mp3-0303d129b7348c9b4910cf5217f70896.mp3str"
+uid="uid://bx1obyco5edvl"
+path="res://.godot/imported/amb_loc_geothermal_ruins.mp3-cc753343ecf7dd6a96174bed4f30cbbd.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/ambience/amb_loc_geothermal_ruins.mp3"
-dest_files=["res://.godot/imported/amb_loc_geothermal_ruins.mp3-0303d129b7348c9b4910cf5217f70896.mp3str"]
+dest_files=["res://.godot/imported/amb_loc_geothermal_ruins.mp3-cc753343ecf7dd6a96174bed4f30cbbd.mp3str"]
 
 [params]
 

@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_artillery_incoming_whistle.mp3-3ad8a410a25a1d048a202e04023a8929.mp3str"
+uid="uid://gjmvoxt3hvw8"
+path="res://.godot/imported/sfx_artillery_incoming_whistle.mp3-8bcfaaa5818bfca88671e079f78212ff.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_artillery_incoming_whistle.mp3"
-dest_files=["res://.godot/imported/sfx_artillery_incoming_whistle.mp3-3ad8a410a25a1d048a202e04023a8929.mp3str"]
+dest_files=["res://.godot/imported/sfx_artillery_incoming_whistle.mp3-8bcfaaa5818bfca88671e079f78212ff.mp3str"]
 
 [params]
 

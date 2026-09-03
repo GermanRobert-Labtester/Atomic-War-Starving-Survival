@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_structural_collapse.mp3-4bba6f9a568cf744584bca5556b37811.mp3str"
+uid="uid://b1sveir1mkr2y"
+path="res://.godot/imported/sfx_structural_collapse.mp3-e425cb48a4d5e72a023dc31a661fc64b.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_structural_collapse.mp3"
-dest_files=["res://.godot/imported/sfx_structural_collapse.mp3-4bba6f9a568cf744584bca5556b37811.mp3str"]
+dest_files=["res://.godot/imported/sfx_structural_collapse.mp3-e425cb48a4d5e72a023dc31a661fc64b.mp3str"]
 
 [params]
 

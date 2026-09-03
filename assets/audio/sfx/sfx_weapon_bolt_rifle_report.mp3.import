@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_weapon_bolt_rifle_report.mp3-174d7ee6e4ff4f13ad568f036f6648c3.mp3str"
+uid="uid://p27h5awdqox1"
+path="res://.godot/imported/sfx_weapon_bolt_rifle_report.mp3-812e221ed1adba925fd0ea86471ee787.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_weapon_bolt_rifle_report.mp3"
-dest_files=["res://.godot/imported/sfx_weapon_bolt_rifle_report.mp3-174d7ee6e4ff4f13ad568f036f6648c3.mp3str"]
+dest_files=["res://.godot/imported/sfx_weapon_bolt_rifle_report.mp3-812e221ed1adba925fd0ea86471ee787.mp3str"]
 
 [params]
 

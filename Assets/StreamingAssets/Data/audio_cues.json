@@ -2,13 +2,3014 @@
   "schema_version": 1,
   "cues": [
     {
-      "id": "bio_mutation_pulse",
-      "resource_path": "res://assets/audio/sfx/sfx_mutation_pulse.mp3",
+      "id": "action_crafting",
+      "resource_path": "res://assets/audio/sfx/sfx_crafting_assemble.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_crafting_assemble.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "action_injection",
+      "resource_path": "res://assets/audio/sfx/sfx_injection.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_injection.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "action_interrogation_slam",
+      "resource_path": "res://assets/audio/sfx/sfx_interrogation_slam.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_interrogation_slam.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.95,
+      "pitch_max": 1.05,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "action_item_pickup",
+      "resource_path": "res://assets/audio/sfx/sfx_action_item_pickup_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_action_item_pickup_01.wav",
+        "res://assets/audio/sfx/sfx_action_item_pickup_02.wav",
+        "res://assets/audio/sfx/sfx_action_item_pickup_03.wav",
+        "res://assets/audio/sfx/sfx_action_item_pickup_04.wav",
+        "res://assets/audio/sfx/sfx_action_item_pickup_05.wav"
+      ],
       "bus": "SFX",
       "loop": false,
       "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.2,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "action_pill_bottle",
+      "resource_path": "res://assets/audio/sfx/sfx_pill_bottle.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_pill_bottle.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "action_repair",
+      "resource_path": "res://assets/audio/sfx/sfx_repair_wrench.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_repair_wrench.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "action_trade",
+      "resource_path": "res://assets/audio/sfx/sfx_trade_exchange.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_trade_exchange.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "action_water_pour",
+      "resource_path": "res://assets/audio/sfx/sfx_water_pour.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_water_pour.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_bunker",
+      "resource_path": "res://assets/audio/ambience/bunker_ambience.ogg",
+      "resource_paths": [
+        "res://assets/audio/ambience/bunker_ambience.ogg"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_loc_abandoned_hospital",
+      "resource_path": "res://assets/audio/ambience/amb_loc_abandoned_hospital.mp3",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_loc_abandoned_hospital.mp3"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -5.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_loc_arcology_sector",
+      "resource_path": "res://assets/audio/ambience/amb_loc_arcology_sector.mp3",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_loc_arcology_sector.mp3"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -5.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_loc_geothermal_ruins",
+      "resource_path": "res://assets/audio/ambience/amb_loc_geothermal_ruins.mp3",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_loc_geothermal_ruins.mp3"
+      ],
+      "bus": "Surface",
+      "loop": true,
+      "default_volume_db": -5.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_loc_military_bunker",
+      "resource_path": "res://assets/audio/ambience/amb_loc_military_bunker.mp3",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_loc_military_bunker.mp3"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_loc_rural_gas_station",
+      "resource_path": "res://assets/audio/ambience/amb_loc_rural_gas_station.mp3",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_loc_rural_gas_station.mp3"
+      ],
+      "bus": "Surface",
+      "loop": true,
+      "default_volume_db": -5.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_loc_suburban_ruins",
+      "resource_path": "res://assets/audio/ambience/amb_loc_suburban_ruins.mp3",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_loc_suburban_ruins.mp3"
+      ],
+      "bus": "Surface",
+      "loop": true,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_surface",
+      "resource_path": "res://assets/audio/ambience/surface_ambience.ogg",
+      "resource_paths": [
+        "res://assets/audio/ambience/surface_ambience.ogg"
+      ],
+      "bus": "Surface",
+      "loop": true,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_surface_storm",
+      "resource_path": "res://assets/audio/ambience/amb_surface_storm.wav",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_surface_storm.wav"
+      ],
+      "bus": "Surface",
+      "loop": true,
+      "default_volume_db": -7.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_warzone_distant_shelling",
+      "resource_path": "res://assets/audio/ambience/amb_warzone_distant_shelling.mp3",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_warzone_distant_shelling.mp3"
+      ],
+      "bus": "Surface",
+      "loop": true,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "bio_mutation_pulse",
+      "resource_path": "res://assets/audio/sfx/sfx_mutation_pulse.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_mutation_pulse.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.95,
+      "pitch_max": 1.05,
+      "max_instances": 4,
+      "priority": 50,
       "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
       "fallback_cue_id": "med_heartbeat"
+    },
+    {
+      "id": "combat_casing_drop",
+      "resource_path": "res://assets/audio/sfx/sfx_shell_casing_drop_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_shell_casing_drop_01.wav",
+        "res://assets/audio/sfx/sfx_shell_casing_drop_02.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.94,
+      "pitch_max": 1.06,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.08,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_decon_flush",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_decon_spray.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_decon_spray.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_defeat",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_defeat.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_defeat.mp3"
+      ],
+      "bus": "Music",
+      "loop": false,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_downed",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_downed.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_downed.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_dry_fire",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_dry_fire_click.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_dry_fire_click.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.15,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_fire",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_gunshot.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_gunshot.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.95,
+      "pitch_max": 1.05,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_hit",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_hit.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_hit.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -5.0,
+      "volume_jitter_db": 1.0,
+      "pitch_min": 0.94,
+      "pitch_max": 1.06,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_impact_concrete",
+      "resource_path": "res://assets/audio/sfx/sfx_impact_concrete_crack.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_impact_concrete_crack.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.95,
+      "pitch_max": 1.05,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_impact_metal",
+      "resource_path": "res://assets/audio/sfx/sfx_impact_metal_ricochet.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_impact_metal_ricochet.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_impact_wood",
+      "resource_path": "res://assets/audio/sfx/sfx_impact_wood_splinter.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_impact_wood_splinter.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.95,
+      "pitch_max": 1.05,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_improvised_fire",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_molotov_burst.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_molotov_burst.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_improvised_spear",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_rebar_spear_thud.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_rebar_spear_thud.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_jam",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_jam.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_jam.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.98,
+      "pitch_max": 1.02,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_last_stand",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_last_stand.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_last_stand.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_reload",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_reload.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_reload.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_start",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_start.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_start.mp3"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_victory",
+      "resource_path": "res://assets/audio/sfx/sfx_combat_victory.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_combat_victory.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "combat_weapon_burst",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_burst_rupture.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_burst_rupture.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -1.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "danger_alarm_klaxon",
+      "resource_path": "res://assets/audio/sfx/sfx_danger_alarm_klaxon.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_danger_alarm_klaxon.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 10.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "danger_debris",
+      "resource_path": "res://assets/audio/sfx/sfx_debris_impact.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_debris_impact.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 3.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "danger_explosion",
+      "resource_path": "res://assets/audio/sfx/sfx_danger_explosion_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_danger_explosion_01.wav",
+        "res://assets/audio/sfx/sfx_danger_explosion_02.wav",
+        "res://assets/audio/sfx/sfx_danger_explosion_03.wav",
+        "res://assets/audio/sfx/sfx_danger_explosion_04.wav",
+        "res://assets/audio/sfx/sfx_danger_explosion_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 15.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "danger_glass_break",
+      "resource_path": "res://assets/audio/sfx/sfx_glass_break_small.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_glass_break_small.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "day_transition",
+      "resource_path": "res://assets/audio/sfx/sfx_day_bell.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_day_bell.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "echo_discovery",
+      "resource_path": "res://assets/audio/sfx/sfx_echo_memory_shimmer.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_echo_memory_shimmer.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 3.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "expedition_camp_fire",
+      "resource_path": "res://assets/audio/ambience/amb_expedition_camp_fire.wav",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_expedition_camp_fire.wav"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -10.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "expedition_vehicle_breakdown",
+      "resource_path": "res://assets/audio/sfx/sfx_vehicle_breakdown_stall.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_vehicle_breakdown_stall.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "expedition_vehicle_dirtbike",
+      "resource_path": "res://assets/audio/sfx/sfx_vehicle_engine_dirtbike.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_vehicle_engine_dirtbike.wav"
+      ],
+      "bus": "SFX",
+      "loop": true,
+      "default_volume_db": -10.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "expedition_vehicle_engine",
+      "resource_path": "res://assets/audio/sfx/sfx_vehicle_engine_diesel.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_vehicle_engine_diesel.wav"
+      ],
+      "bus": "SFX",
+      "loop": true,
+      "default_volume_db": -12.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "expedition_vehicle_refuel",
+      "resource_path": "res://assets/audio/sfx/sfx_vehicle_refuel.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_vehicle_refuel.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "expedition_vehicle_repair",
+      "resource_path": "res://assets/audio/sfx/sfx_vehicle_repair.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_vehicle_repair.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "expedition_vehicle_truck",
+      "resource_path": "res://assets/audio/sfx/sfx_vehicle_engine_truck.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_vehicle_engine_truck.wav"
+      ],
+      "bus": "SFX",
+      "loop": true,
+      "default_volume_db": -11.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "flashback_grounded",
+      "resource_path": "res://assets/audio/sfx/sfx_flashback_grounded.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_flashback_grounded.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "flashback_trigger",
+      "resource_path": "res://assets/audio/sfx/sfx_flashback_distortion.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_flashback_distortion.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 3.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "game_over",
+      "resource_path": "res://assets/audio/music/game_over.ogg",
+      "resource_paths": [
+        "res://assets/audio/music/game_over.ogg"
+      ],
+      "bus": "Music",
+      "loop": false,
+      "default_volume_db": -10.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "hazard_toxic_sizzle",
+      "resource_path": "res://assets/audio/sfx/sfx_hazard_toxic_sizzle.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_hazard_toxic_sizzle.mp3"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.95,
+      "pitch_max": 1.05,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "item_handling_ammo",
+      "resource_path": "res://assets/audio/sfx/sfx_item_handling_ammo_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_item_handling_ammo_01.wav",
+        "res://assets/audio/sfx/sfx_item_handling_ammo_02.wav",
+        "res://assets/audio/sfx/sfx_item_handling_ammo_03.wav",
+        "res://assets/audio/sfx/sfx_item_handling_ammo_04.wav",
+        "res://assets/audio/sfx/sfx_item_handling_ammo_05.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "item_handling_meds",
+      "resource_path": "res://assets/audio/sfx/sfx_item_handling_meds_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_item_handling_meds_01.wav",
+        "res://assets/audio/sfx/sfx_item_handling_meds_02.wav",
+        "res://assets/audio/sfx/sfx_item_handling_meds_03.wav",
+        "res://assets/audio/sfx/sfx_item_handling_meds_04.wav",
+        "res://assets/audio/sfx/sfx_item_handling_meds_05.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "item_handling_ration",
+      "resource_path": "res://assets/audio/sfx/sfx_item_handling_ration_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_item_handling_ration_01.wav",
+        "res://assets/audio/sfx/sfx_item_handling_ration_02.wav",
+        "res://assets/audio/sfx/sfx_item_handling_ration_03.wav",
+        "res://assets/audio/sfx/sfx_item_handling_ration_04.wav",
+        "res://assets/audio/sfx/sfx_item_handling_ration_05.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "log_tape_button",
+      "resource_path": "res://assets/audio/sfx/sfx_tape_deck_button.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_tape_deck_button.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "log_tape_hiss",
+      "resource_path": "res://assets/audio/sfx/sfx_tape_hiss_loop.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_tape_hiss_loop.wav"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -18.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "log_tape_insert",
+      "resource_path": "res://assets/audio/sfx/sfx_tape_deck_insert.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_tape_deck_insert.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "log_tape_rewind",
+      "resource_path": "res://assets/audio/sfx/sfx_tape_rewind.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_tape_rewind.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.2,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "log_tape_stop",
+      "resource_path": "res://assets/audio/sfx/sfx_tape_stop.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_tape_stop.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "med_coughing",
+      "resource_path": "res://assets/audio/sfx/sfx_coughing_fit.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_coughing_fit.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 8.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "med_heartbeat",
+      "resource_path": "res://assets/audio/sfx/sfx_heartbeat_slow.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_heartbeat_slow.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "med_infirmary_beep",
+      "resource_path": "res://assets/audio/sfx/sfx_infirmary_monitor_beep.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_infirmary_monitor_beep.wav"
+      ],
+      "bus": "Medical",
+      "loop": false,
+      "default_volume_db": -12.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.98,
+      "pitch_max": 1.02,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "med_quarantine_clear",
+      "resource_path": "res://assets/audio/sfx/sfx_med_quarantine_clear.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_med_quarantine_clear.wav"
+      ],
+      "bus": "Medical",
+      "loop": false,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.75,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "med_quarantine_seal",
+      "resource_path": "res://assets/audio/sfx/sfx_med_quarantine_seal.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_med_quarantine_seal.wav"
+      ],
+      "bus": "Medical",
+      "loop": false,
+      "default_volume_db": -7.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "med_survivor_death",
+      "resource_path": "res://assets/audio/sfx/sfx_survivor_death.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_survivor_death.wav"
+      ],
+      "bus": "Medical",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 3.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "music_gameplay",
+      "resource_path": "res://assets/audio/music/gameplay_underscore.ogg",
+      "resource_paths": [
+        "res://assets/audio/music/gameplay_underscore.ogg"
+      ],
+      "bus": "Music",
+      "loop": false,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "music_menu",
+      "resource_path": "res://assets/audio/music/main_menu.ogg",
+      "resource_paths": [
+        "res://assets/audio/music/main_menu.ogg"
+      ],
+      "bus": "Music",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "rad_alert_acute",
+      "resource_path": "res://assets/audio/sfx/sfx_radiation_alarm.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_radiation_alarm.mp3",
+        "res://assets/audio/sfx/radiation_alert.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "rad_alert_chronic",
+      "resource_path": "res://assets/audio/sfx/sfx_radiation_chronic_alarm.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_radiation_chronic_alarm.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 10.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "rad_contamination",
+      "resource_path": "res://assets/audio/sfx/sfx_contamination_warning.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_contamination_warning.mp3"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "rad_geiger_burst",
+      "resource_path": "res://assets/audio/sfx/sfx_geiger_burst.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_geiger_burst.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "rad_geiger_intense",
+      "resource_path": "res://assets/audio/sfx/sfx_geiger_intense_crackling.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_geiger_intense_crackling.wav"
+      ],
+      "bus": "SFX",
+      "loop": true,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "rad_geiger_loop",
+      "resource_path": "res://assets/audio/sfx/geiger.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/geiger.wav"
+      ],
+      "bus": "SFX",
+      "loop": true,
+      "default_volume_db": -10.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_dead_hand_pulse",
+      "resource_path": "res://assets/audio/radio/radio_dead_hand_pulse.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/radio_dead_hand_pulse.wav"
+      ],
+      "bus": "Voice",
+      "loop": true,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_distress_beacon",
+      "resource_path": "res://assets/audio/radio/radio_distress_beacon.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/radio_distress_beacon.wav"
+      ],
+      "bus": "Voice",
+      "loop": true,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_ebs_alert",
+      "resource_path": "res://assets/audio/radio/radio_ebs_alert.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/radio_ebs_alert.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_morse",
+      "resource_path": "res://assets/audio/sfx/sfx_morse_key.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_morse_key.mp3"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_numbers_station",
+      "resource_path": "res://assets/audio/radio/radio_numbers_station.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/radio_numbers_station.wav"
+      ],
+      "bus": "Voice",
+      "loop": true,
+      "default_volume_db": -5.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_signal_lock",
+      "resource_path": "res://assets/audio/sfx/sfx_radio_signal_lock.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_radio_signal_lock.mp3"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_static",
+      "resource_path": "res://assets/audio/radio/radio_static_hiss.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/radio_static_hiss.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_tune",
+      "resource_path": "res://assets/audio/sfx/sfx_radio_tune.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_radio_tune.mp3"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_ch11_stockpile",
+      "resource_path": "res://assets/audio/radio/vo_ch11_stockpile.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_ch11_stockpile.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -2.3,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_ch3_ash_road",
+      "resource_path": "res://assets/audio/radio/vo_ch3_ash_road.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_ch3_ash_road.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -2.5,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_ch7_milband",
+      "resource_path": "res://assets/audio/radio/vo_ch7_milband.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_ch7_milband.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -4.7,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_kind_hatch",
+      "resource_path": "res://assets/audio/radio/vo_kind_hatch_relay.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_kind_hatch_relay.wav",
+        "res://assets/audio/radio/vo_kind_hatch.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_kind_parley",
+      "resource_path": "res://assets/audio/radio/vo_kind_parley_beacon.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_kind_parley_beacon.wav",
+        "res://assets/audio/radio/vo_kind_parley.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_verdict_count",
+      "resource_path": "res://assets/audio/radio/vo_verdict_count.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_verdict_count.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_verdict_eden",
+      "resource_path": "res://assets/audio/radio/vo_verdict_eden.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_verdict_eden.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_verdict_geophone",
+      "resource_path": "res://assets/audio/radio/vo_verdict_geophone.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_verdict_geophone.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_verdict_meter",
+      "resource_path": "res://assets/audio/radio/vo_verdict_meter.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_verdict_meter.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "radio_vo_verdict_reckoning",
+      "resource_path": "res://assets/audio/radio/vo_verdict_reckoning.wav",
+      "resource_paths": [
+        "res://assets/audio/radio/vo_verdict_reckoning.wav"
+      ],
+      "bus": "Voice",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "save_success",
+      "resource_path": "res://assets/audio/ui/ui_save_success.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_save_success.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_airlock_purge_cycle",
+      "resource_path": "res://assets/audio/sfx/sfx_airlock_purge_cycle.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_airlock_purge_cycle.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_artillery_incoming_whistle",
+      "resource_path": "res://assets/audio/sfx/sfx_artillery_incoming_whistle.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_artillery_incoming_whistle.mp3"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 8.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_bullet_whiz_ricochet",
+      "resource_path": "res://assets/audio/sfx/sfx_bullet_whiz_ricochet.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_bullet_whiz_ricochet.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.2,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_distant_artillery_barrage",
+      "resource_path": "res://assets/audio/sfx/sfx_distant_artillery_barrage_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_distant_artillery_barrage_01.wav",
+        "res://assets/audio/sfx/sfx_distant_artillery_barrage_02.wav",
+        "res://assets/audio/sfx/sfx_distant_artillery_barrage_03.wav",
+        "res://assets/audio/sfx/sfx_distant_artillery_barrage_04.wav",
+        "res://assets/audio/sfx/sfx_distant_artillery_barrage_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_distant_gunfire_skirmish",
+      "resource_path": "res://assets/audio/sfx/sfx_distant_gunfire_skirmish_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_distant_gunfire_skirmish_01.wav",
+        "res://assets/audio/sfx/sfx_distant_gunfire_skirmish_02.wav",
+        "res://assets/audio/sfx/sfx_distant_gunfire_skirmish_03.wav",
+        "res://assets/audio/sfx/sfx_distant_gunfire_skirmish_04.wav",
+        "res://assets/audio/sfx/sfx_distant_gunfire_skirmish_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -5.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 4.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_distant_mortar_launch",
+      "resource_path": "res://assets/audio/sfx/sfx_distant_mortar_launch.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_distant_mortar_launch.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 6.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_heavy_impact_fall",
+      "resource_path": "res://assets/audio/sfx/sfx_heavy_impact_fall.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_heavy_impact_fall.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_structural_collapse",
+      "resource_path": "res://assets/audio/sfx/sfx_structural_collapse.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_structural_collapse.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_weapon_assault_rifle_burst",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_assault_rifle_burst_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_assault_rifle_burst_01.wav",
+        "res://assets/audio/sfx/sfx_weapon_assault_rifle_burst_02.wav",
+        "res://assets/audio/sfx/sfx_weapon_assault_rifle_burst_03.wav",
+        "res://assets/audio/sfx/sfx_weapon_assault_rifle_burst_04.wav",
+        "res://assets/audio/sfx/sfx_weapon_assault_rifle_burst_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.7,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.25,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_weapon_bolt_rifle_report",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_bolt_rifle_report_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_bolt_rifle_report_01.wav",
+        "res://assets/audio/sfx/sfx_weapon_bolt_rifle_report_02.wav",
+        "res://assets/audio/sfx/sfx_weapon_bolt_rifle_report_03.wav",
+        "res://assets/audio/sfx/sfx_weapon_bolt_rifle_report_04.wav",
+        "res://assets/audio/sfx/sfx_weapon_bolt_rifle_report_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.6,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.4,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_weapon_cz75_report",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_cz75_report_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_cz75_report_01.wav",
+        "res://assets/audio/sfx/sfx_weapon_cz75_report_02.wav",
+        "res://assets/audio/sfx/sfx_weapon_cz75_report_03.wav",
+        "res://assets/audio/sfx/sfx_weapon_cz75_report_04.wav",
+        "res://assets/audio/sfx/sfx_weapon_cz75_report_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.7,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.15,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_weapon_lmg_burst",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_lmg_burst.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_lmg_burst.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.7,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_weapon_pipe_rifle_report",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_pipe_rifle_report_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_pipe_rifle_report_01.wav",
+        "res://assets/audio/sfx/sfx_weapon_pipe_rifle_report_02.wav",
+        "res://assets/audio/sfx/sfx_weapon_pipe_rifle_report_03.wav",
+        "res://assets/audio/sfx/sfx_weapon_pipe_rifle_report_04.wav",
+        "res://assets/audio/sfx/sfx_weapon_pipe_rifle_report_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.95,
+      "pitch_max": 1.05,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_weapon_scrap_shotgun_report",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_scrap_shotgun_report_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_scrap_shotgun_report_01.wav",
+        "res://assets/audio/sfx/sfx_weapon_scrap_shotgun_report_02.wav",
+        "res://assets/audio/sfx/sfx_weapon_scrap_shotgun_report_03.wav",
+        "res://assets/audio/sfx/sfx_weapon_scrap_shotgun_report_04.wav",
+        "res://assets/audio/sfx/sfx_weapon_scrap_shotgun_report_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -1.0,
+      "volume_jitter_db": 0.7,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_weapon_shotgun_rack",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_shotgun_rack.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_shotgun_rack.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "sfx_weapon_sniper_heavy_report",
+      "resource_path": "res://assets/audio/sfx/sfx_weapon_sniper_heavy_report_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weapon_sniper_heavy_report_01.wav",
+        "res://assets/audio/sfx/sfx_weapon_sniper_heavy_report_02.wav",
+        "res://assets/audio/sfx/sfx_weapon_sniper_heavy_report_03.wav",
+        "res://assets/audio/sfx/sfx_weapon_sniper_heavy_report_04.wav",
+        "res://assets/audio/sfx/sfx_weapon_sniper_heavy_report_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -1.0,
+      "volume_jitter_db": 0.6,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_air_filter",
+      "resource_path": "res://assets/audio/sfx/sfx_air_filter_degrade.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_air_filter_degrade.mp3"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 10.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_air_recycler",
+      "resource_path": "res://assets/audio/sfx/sfx_air_recycler_hiss.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_air_recycler_hiss.wav"
+      ],
+      "bus": "Ventilation",
+      "loop": true,
+      "default_volume_db": -14.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_door_open",
+      "resource_path": "res://assets/audio/sfx/sfx_bunker_door_open.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_bunker_door_open.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_door_seal",
+      "resource_path": "res://assets/audio/sfx/sfx_bunker_door_seal.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_bunker_door_seal.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_generator",
+      "resource_path": "res://assets/audio/sfx/sfx_generator_cough.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_generator_cough.mp3"
+      ],
+      "bus": "Generator",
+      "loop": true,
+      "default_volume_db": -16.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_generator_strain",
+      "resource_path": "res://assets/audio/sfx/sfx_generator_heavy_strain.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_generator_heavy_strain.wav"
+      ],
+      "bus": "Generator",
+      "loop": true,
+      "default_volume_db": -14.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_pipe_clang",
+      "resource_path": "res://assets/audio/sfx/sfx_pipe_clang.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_pipe_clang.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_ventilation",
+      "resource_path": "res://assets/audio/sfx/sfx_ventilation_fan.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_ventilation_fan.mp3"
+      ],
+      "bus": "Ventilation",
+      "loop": true,
+      "default_volume_db": -12.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_water_drip",
+      "resource_path": "res://assets/audio/sfx/sfx_water_drip_cave.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_water_drip_cave.mp3"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -15.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_water_filtration",
+      "resource_path": "res://assets/audio/sfx/sfx_water_filtration_loop.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_water_filtration_loop.wav"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -15.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "shelter_workshop_tools",
+      "resource_path": "res://assets/audio/sfx/sfx_workshop_lathe_hum.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_workshop_lathe_hum.wav"
+      ],
+      "bus": "SFX",
+      "loop": true,
+      "default_volume_db": -16.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "train_screech_crash",
+      "resource_path": "res://assets/audio/sfx/sfx_train_screech_crash.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_train_screech_crash.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.9,
+      "pitch_max": 1.1,
+      "max_instances": 2,
+      "priority": 80,
+      "cooldown_seconds": 2.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": "expedition_vehicle_breakdown"
+    },
+    {
+      "id": "trauma_cabin_fever",
+      "resource_path": "res://assets/audio/sfx/sfx_trauma_cabin_fever_whisper.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_trauma_cabin_fever_whisper.wav"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -14.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "trauma_heartbeat_rapid",
+      "resource_path": "res://assets/audio/sfx/sfx_trauma_heartbeat_rapid.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_trauma_heartbeat_rapid.wav"
+      ],
+      "bus": "SFX",
+      "loop": true,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "trauma_tinnitus",
+      "resource_path": "res://assets/audio/sfx/sfx_trauma_tinnitus_ring.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_trauma_tinnitus_ring.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 4.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_cancel",
+      "resource_path": "res://assets/audio/ui/ui_cancel.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_cancel.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_click",
+      "resource_path": "res://assets/audio/ui/ui_click.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_click.wav",
+        "res://assets/audio/ui/ui_click_01.wav",
+        "res://assets/audio/ui/ui_click_02.wav",
+        "res://assets/audio/ui/ui_click_03.wav",
+        "res://assets/audio/ui/ui_click_04.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.95,
+      "pitch_max": 1.05,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_confirm",
+      "resource_path": "res://assets/audio/ui/ui_confirm.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_confirm.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.98,
+      "pitch_max": 1.02,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_crt_power_on",
+      "resource_path": "res://assets/audio/ui/ui_crt_power_on.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_crt_power_on.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 1.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_drawer_slide",
+      "resource_path": "res://assets/audio/ui/ui_drawer_slide.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_drawer_slide.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_invalid_action",
+      "resource_path": "res://assets/audio/ui/ui_invalid_action.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_invalid_action.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.5,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_modal_close",
+      "resource_path": "res://assets/audio/ui/ui_modal_close.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_modal_close.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_modal_open",
+      "resource_path": "res://assets/audio/ui/ui_modal_open.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_modal_open.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_paper_rustle",
+      "resource_path": "res://assets/audio/ui/ui_paper_rustle.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_paper_rustle.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.1,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_rotary_click",
+      "resource_path": "res://assets/audio/ui/ui_rotary_click.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_rotary_click.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_stamp_heavy",
+      "resource_path": "res://assets/audio/ui/ui_stamp_heavy.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_stamp_heavy.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.2,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_switch_toggle",
+      "resource_path": "res://assets/audio/ui/ui_switch_toggle.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_switch_toggle.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_tab_change",
+      "resource_path": "res://assets/audio/ui/ui_tab_change.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_tab_change.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.97,
+      "pitch_max": 1.03,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "ui_warning",
+      "resource_path": "res://assets/audio/ui/ui_warning.wav",
+      "resource_paths": [
+        "res://assets/audio/ui/ui_warning.wav"
+      ],
+      "bus": "UI",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 0.98,
+      "pitch_max": 1.02,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.3,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "weather_alert",
+      "resource_path": "res://assets/audio/sfx/sfx_alarm_klaxon.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_alarm_klaxon.mp3"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -2.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 5.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "weather_black_rain",
+      "resource_path": "res://assets/audio/sfx/sfx_weather_black_rain.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weather_black_rain.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 10.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "weather_blizzard",
+      "resource_path": "res://assets/audio/sfx/sfx_weather_blizzard.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weather_blizzard.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 10.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "weather_corrosive_precipitation",
+      "resource_path": "res://assets/audio/sfx/sfx_weather_corrosive_precipitation.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weather_corrosive_precipitation.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 8.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "weather_emp_storm",
+      "resource_path": "res://assets/audio/sfx/sfx_weather_emp_storm.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weather_emp_storm.wav"
+      ],
+      "bus": "Alerts",
+      "loop": false,
+      "default_volume_db": -4.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 8.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "weather_fallout_storm",
+      "resource_path": "res://assets/audio/sfx/sfx_fallout_storm_approach.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_fallout_storm_approach.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": 0.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 10.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "weather_glass_storm",
+      "resource_path": "res://assets/audio/sfx/sfx_weather_glass_storm.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_weather_glass_storm.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -3.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 8.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "weather_wind_gust",
+      "resource_path": "res://assets/audio/sfx/sfx_wind_gust_harsh.mp3",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_wind_gust_harsh.mp3"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.0,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 3.0,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "footstep_granite",
+      "resource_path": "res://assets/audio/sfx/sfx_footstep_granite_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_footstep_granite_01.wav",
+        "res://assets/audio/sfx/sfx_footstep_granite_02.wav",
+        "res://assets/audio/sfx/sfx_footstep_granite_03.wav",
+        "res://assets/audio/sfx/sfx_footstep_granite_04.wav",
+        "res://assets/audio/sfx/sfx_footstep_granite_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "footstep_metal",
+      "resource_path": "res://assets/audio/sfx/sfx_footstep_metal_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_footstep_metal_01.wav",
+        "res://assets/audio/sfx/sfx_footstep_metal_02.wav",
+        "res://assets/audio/sfx/sfx_footstep_metal_03.wav",
+        "res://assets/audio/sfx/sfx_footstep_metal_04.wav",
+        "res://assets/audio/sfx/sfx_footstep_metal_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "footstep_dirt",
+      "resource_path": "res://assets/audio/sfx/sfx_footstep_dirt_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_footstep_dirt_01.wav",
+        "res://assets/audio/sfx/sfx_footstep_dirt_02.wav",
+        "res://assets/audio/sfx/sfx_footstep_dirt_03.wav",
+        "res://assets/audio/sfx/sfx_footstep_dirt_04.wav",
+        "res://assets/audio/sfx/sfx_footstep_dirt_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "footstep_glass",
+      "resource_path": "res://assets/audio/sfx/sfx_footstep_glass_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_footstep_glass_01.wav",
+        "res://assets/audio/sfx/sfx_footstep_glass_02.wav",
+        "res://assets/audio/sfx/sfx_footstep_glass_03.wav",
+        "res://assets/audio/sfx/sfx_footstep_glass_04.wav",
+        "res://assets/audio/sfx/sfx_footstep_glass_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -5.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "footstep_wood",
+      "resource_path": "res://assets/audio/sfx/sfx_footstep_wood_01.wav",
+      "resource_paths": [
+        "res://assets/audio/sfx/sfx_footstep_wood_01.wav",
+        "res://assets/audio/sfx/sfx_footstep_wood_02.wav",
+        "res://assets/audio/sfx/sfx_footstep_wood_03.wav",
+        "res://assets/audio/sfx/sfx_footstep_wood_04.wav",
+        "res://assets/audio/sfx/sfx_footstep_wood_05.wav"
+      ],
+      "bus": "SFX",
+      "loop": false,
+      "default_volume_db": -6.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
+    },
+    {
+      "id": "amb_loc_granite_quarry",
+      "resource_path": "res://assets/audio/ambience/amb_location_granite_quarry_01.wav",
+      "resource_paths": [
+        "res://assets/audio/ambience/amb_location_granite_quarry_01.wav",
+        "res://assets/audio/ambience/amb_location_granite_quarry_02.wav",
+        "res://assets/audio/ambience/amb_location_granite_quarry_03.wav",
+        "res://assets/audio/ambience/amb_location_granite_quarry_04.wav",
+        "res://assets/audio/ambience/amb_location_granite_quarry_05.wav"
+      ],
+      "bus": "Ambience",
+      "loop": true,
+      "default_volume_db": -8.0,
+      "volume_jitter_db": 0.8,
+      "pitch_min": 0.96,
+      "pitch_max": 1.04,
+      "max_instances": 4,
+      "priority": 50,
+      "cooldown_seconds": 0.05,
+      "fade_in_seconds": 0.0,
+      "fade_out_seconds": 0.0,
+      "fallback_cue_id": null
     }
   ]
 }

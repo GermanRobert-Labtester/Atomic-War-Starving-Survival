@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_weapon_cz75_report.mp3-b30ad2557aa40891f762456215d5ecae.mp3str"
+uid="uid://cu0tq0p2phyyh"
+path="res://.godot/imported/sfx_weapon_cz75_report.mp3-6ac28486d6059f1f30d0e62c026d5fa3.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_weapon_cz75_report.mp3"
-dest_files=["res://.godot/imported/sfx_weapon_cz75_report.mp3-b30ad2557aa40891f762456215d5ecae.mp3str"]
+dest_files=["res://.godot/imported/sfx_weapon_cz75_report.mp3-6ac28486d6059f1f30d0e62c026d5fa3.mp3str"]
 
 [params]
 

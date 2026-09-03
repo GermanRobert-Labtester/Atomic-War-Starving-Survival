@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/amb_warzone_distant_shelling.mp3-35e031a2cc97c3e04a58298803ea4a6b.mp3str"
+uid="uid://c2sqlukjmer1m"
+path="res://.godot/imported/amb_warzone_distant_shelling.mp3-9a48892d26d5ce7aacc909e414cc5078.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/ambience/amb_warzone_distant_shelling.mp3"
-dest_files=["res://.godot/imported/amb_warzone_distant_shelling.mp3-35e031a2cc97c3e04a58298803ea4a6b.mp3str"]
+dest_files=["res://.godot/imported/amb_warzone_distant_shelling.mp3-9a48892d26d5ce7aacc909e414cc5078.mp3str"]
 
 [params]
 

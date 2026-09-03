@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_weapon_scrap_shotgun_report.mp3-3f28fce08ae4152ed37d7f7e7cf9bb0d.mp3str"
+uid="uid://bdy4ikik3xdr4"
+path="res://.godot/imported/sfx_weapon_scrap_shotgun_report.mp3-dfba6a307a94aff35c91a1dae27679df.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_weapon_scrap_shotgun_report.mp3"
-dest_files=["res://.godot/imported/sfx_weapon_scrap_shotgun_report.mp3-3f28fce08ae4152ed37d7f7e7cf9bb0d.mp3str"]
+dest_files=["res://.godot/imported/sfx_weapon_scrap_shotgun_report.mp3-dfba6a307a94aff35c91a1dae27679df.mp3str"]
 
 [params]
 

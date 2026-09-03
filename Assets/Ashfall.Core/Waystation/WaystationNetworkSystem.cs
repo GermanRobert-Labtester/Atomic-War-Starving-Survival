@@ -84,6 +84,22 @@ namespace Ashfall.Core.Waystation
             return _state.stations.FirstOrDefault(s => s.stationId == stationId);
         }
 
+        /// <summary>
+        /// Plan 56 phase 6 — stock ids the last resupply lapsed (present in
+        /// the station definition but missing from availability). Non-empty
+        /// only after a shortage resupply dropped pure imports; the panel
+        /// renders these with an "import lapsed" text tag (Plan 14).
+        /// </summary>
+        public static List<string> LapsedImports(WaystationDef def, WaystationInstanceState station)
+        {
+            var lapsed = new List<string>();
+            if (def?.stock_item_ids == null || station?.availableStockItemIds == null) return lapsed;
+            foreach (var id in def.stock_item_ids)
+                if (!string.IsNullOrEmpty(id) && !station.availableStockItemIds.Contains(id))
+                    lapsed.Add(id);
+            return lapsed;
+        }
+
         public WaystationDef? GetDefinition(string stationId)
         {
             return _catalog.FirstOrDefault(d => d.id == stationId);

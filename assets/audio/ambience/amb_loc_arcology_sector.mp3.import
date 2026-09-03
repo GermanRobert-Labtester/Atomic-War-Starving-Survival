@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/amb_loc_arcology_sector.mp3-f02219143012585d191a01373a428368.mp3str"
+uid="uid://bmc3ixnjsokct"
+path="res://.godot/imported/amb_loc_arcology_sector.mp3-d5cc52e645641d8ee18f7c41a7891378.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/ambience/amb_loc_arcology_sector.mp3"
-dest_files=["res://.godot/imported/amb_loc_arcology_sector.mp3-f02219143012585d191a01373a428368.mp3str"]
+dest_files=["res://.godot/imported/amb_loc_arcology_sector.mp3-d5cc52e645641d8ee18f7c41a7891378.mp3str"]
 
 [params]
 

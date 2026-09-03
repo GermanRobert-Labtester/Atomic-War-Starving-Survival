@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/amb_loc_military_bunker.mp3-0a3e4a741c7cf8cb7eda38336cb14de9.mp3str"
+uid="uid://d21n4m8i0itkd"
+path="res://.godot/imported/amb_loc_military_bunker.mp3-8ce96712715d89db81ce113729ce6407.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/ambience/amb_loc_military_bunker.mp3"
-dest_files=["res://.godot/imported/amb_loc_military_bunker.mp3-0a3e4a741c7cf8cb7eda38336cb14de9.mp3str"]
+dest_files=["res://.godot/imported/amb_loc_military_bunker.mp3-8ce96712715d89db81ce113729ce6407.mp3str"]
 
 [params]
 

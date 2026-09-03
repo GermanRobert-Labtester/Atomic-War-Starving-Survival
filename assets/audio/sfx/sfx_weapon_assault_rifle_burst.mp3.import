@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_weapon_assault_rifle_burst.mp3-ba691655ab1f6f7e601f9825c30ac49e.mp3str"
+uid="uid://bjlcgq2qy1n2"
+path="res://.godot/imported/sfx_weapon_assault_rifle_burst.mp3-28c760f56779e9f136d40ddffcbc7acd.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_weapon_assault_rifle_burst.mp3"
-dest_files=["res://.godot/imported/sfx_weapon_assault_rifle_burst.mp3-ba691655ab1f6f7e601f9825c30ac49e.mp3str"]
+dest_files=["res://.godot/imported/sfx_weapon_assault_rifle_burst.mp3-28c760f56779e9f136d40ddffcbc7acd.mp3str"]
 
 [params]
 

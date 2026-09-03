@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_distant_gunfire_skirmish.mp3-506a5af5c8a35b8d509bd73ea9b6cedc.mp3str"
+uid="uid://mmyeitmblcie"
+path="res://.godot/imported/sfx_distant_gunfire_skirmish.mp3-057d601b7e3d6b9132ea1ead1ad3c9de.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_distant_gunfire_skirmish.mp3"
-dest_files=["res://.godot/imported/sfx_distant_gunfire_skirmish.mp3-506a5af5c8a35b8d509bd73ea9b6cedc.mp3str"]
+dest_files=["res://.godot/imported/sfx_distant_gunfire_skirmish.mp3-057d601b7e3d6b9132ea1ead1ad3c9de.mp3str"]
 
 [params]
 

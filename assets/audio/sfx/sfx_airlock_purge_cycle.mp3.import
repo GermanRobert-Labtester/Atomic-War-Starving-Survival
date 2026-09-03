@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_airlock_purge_cycle.mp3-70bb2bd1964355a449a2ed28070cc290.mp3str"
+uid="uid://dcad51lnb1pm1"
+path="res://.godot/imported/sfx_airlock_purge_cycle.mp3-fe9a1af449857ec3f35b93ec670f7730.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_airlock_purge_cycle.mp3"
-dest_files=["res://.godot/imported/sfx_airlock_purge_cycle.mp3-70bb2bd1964355a449a2ed28070cc290.mp3str"]
+dest_files=["res://.godot/imported/sfx_airlock_purge_cycle.mp3-fe9a1af449857ec3f35b93ec670f7730.mp3str"]
 
 [params]
 

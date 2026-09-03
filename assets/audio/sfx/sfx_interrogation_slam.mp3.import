@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/sfx_interrogation_slam.mp3-711cb98420b9ba5746d606b19470524d.mp3str"
+uid="uid://c66krn7asdnb4"
+path="res://.godot/imported/sfx_interrogation_slam.mp3-99a47a42f215b736dbac56051a189287.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_interrogation_slam.mp3"
-dest_files=["res://.godot/imported/sfx_interrogation_slam.mp3-711cb98420b9ba5746d606b19470524d.mp3str"]
+dest_files=["res://.godot/imported/sfx_interrogation_slam.mp3-99a47a42f215b736dbac56051a189287.mp3str"]
 
 [params]
 

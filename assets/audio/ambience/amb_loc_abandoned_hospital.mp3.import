@@ -2,12 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.godot/imported/amb_loc_abandoned_hospital.mp3-adb474c2c2c850360cb672457bd0aec0.mp3str"
+uid="uid://cf0mfcv2qbs6c"
+path="res://.godot/imported/amb_loc_abandoned_hospital.mp3-4f8f4bbd6a65e5d8545511ebf0f751df.mp3str"
 
 [deps]
 
 source_file="res://assets/audio/ambience/amb_loc_abandoned_hospital.mp3"
-dest_files=["res://.godot/imported/amb_loc_abandoned_hospital.mp3-adb474c2c2c850360cb672457bd0aec0.mp3str"]
+dest_files=["res://.godot/imported/amb_loc_abandoned_hospital.mp3-4f8f4bbd6a65e5d8545511ebf0f751df.mp3str"]
 
 [params]
 

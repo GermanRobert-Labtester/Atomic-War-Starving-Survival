@@ -13,6 +13,7 @@ using Ashfall.Core.World;
 using Ashfall.Core.Crafting;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Waystation;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -368,6 +369,18 @@ namespace AtomicWar.GodotApp
             var wsSys = new WaystationSystem();
             wsSys.RestoreState(wsState);
             _waystation = new WaystationHostSession(wsSys);
+
+            // Plan 56 phase 6 — the multi-node trade-stock network: its 7-day
+            // resupply is provenance-aware (locally produced + general stock
+            // survive a market shortage; pure imports lapse). The shortage
+            // policy reads the live market; the closure is null-safe because
+            // the economy session may not be set up yet when it is bound.
+            SetupEconomy();
+            var network = new WaystationNetworkSystem();
+            _waystation.AttachNetwork(
+                network,
+                _economy.Catalog,
+                () => _economy?.Market.IsSuppliesShort() ?? false);
             if (_waystationPanel != null && _waystationPanel.IsInsideTree())
                 RemoveChild(_waystationPanel);
             _waystationPanel = new WaystationNetworkPanel();
