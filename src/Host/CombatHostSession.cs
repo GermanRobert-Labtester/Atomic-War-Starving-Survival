@@ -206,9 +206,16 @@ namespace AtomicWar.GodotApp
 
         // ── Production Combat Entry Point ────────────────────────────────
 
+        /// <summary>Default enemy count for ambush encounters without an explicit count (Plan 45 handoff shares it).</summary>
+        public const int DefaultAmbushEnemyCount = 3;
+
         /// <summary>
         /// Start a tactical combat encounter at a location, sourcing survivors and
         /// weapons from live state when not explicitly provided.
+        /// When <paramref name="enemyCombatantIds"/> is supplied, enemies spawn
+        /// from the combat catalog (Plan 45): catalog base_health is honored
+        /// unless the caller forces <paramref name="enemyHealth"/>, and unknown
+        /// ids fall back to the legacy enemy block inside BeginEncounter.
         /// </summary>
         public string StartCombat(
             string locationId,
@@ -217,7 +224,8 @@ namespace AtomicWar.GodotApp
             IReadOnlyList<WeaponInstanceState>? weapons = null,
             int enemyCount = 0,
             int enemyHealth = 0,
-            int? seed = null)
+            int? seed = null,
+            IReadOnlyList<string>? enemyCombatantIds = null)
         {
             if (!Engine.State.Resolved && !string.IsNullOrEmpty(Engine.State.EncounterId)
                 && Engine.State.Phase != (int)CombatPhase.Setup)
@@ -285,8 +293,14 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            int finalEnemyCount = enemyCount > 0 ? enemyCount : 3;
-            int finalEnemyHealth = enemyHealth > 0 ? enemyHealth : 45;
+            int finalEnemyCount = enemyCount > 0 ? enemyCount : DefaultAmbushEnemyCount;
+            bool useCatalogEnemies = enemyCombatantIds != null && enemyCombatantIds.Count > 0;
+            // Catalog ids carry their own base_health — only an explicit
+            // caller-provided health may override it (Core honors 0 as "no
+            // override"). The legacy template keeps its 45 HP default.
+            int finalEnemyHealth = enemyHealth > 0
+                ? enemyHealth
+                : (useCatalogEnemies ? 0 : 45);
 
             bool ok = Engine.BeginEncounter(
                 "enc_" + locationId + "_" + ScheduleDay(),
@@ -298,7 +312,8 @@ namespace AtomicWar.GodotApp
                 players,
                 weaponList,
                 enemyCount: finalEnemyCount,
-                enemyHealth: finalEnemyHealth);
+                enemyHealth: finalEnemyHealth,
+                enemyCombatantIds: useCatalogEnemies ? enemyCombatantIds : null);
 
             return ok ? "Combat engaged at " + (locationName ?? locationId) + "." : "Could not start combat.";
         }

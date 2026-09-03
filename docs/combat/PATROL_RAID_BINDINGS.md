@@ -1,6 +1,18 @@
 # Patrol / Raid / Wildlife / Excavation Bindings (Plan 54 §45–48)
 
-## Status at Plan 54 time
+## Status update (Plan 45 — patrol bindings are LIVE)
+
+The expedition ambush hand-off (`src/Main.Expeditions.cs` →
+`CombatHostSession.StartCombat`) now passes `enemyCombatantIds` resolved by
+`EnemyCompositionSelector` (`Assets/Ashfall.Core/Combat/`): the location's
+danger band (≤2 / 3–5 / ≥6, grounded in the locations.json danger
+distribution) picks the band pool from the matrix below, the band's anchor
+archetype leads, and catalog `base_health` is honored in the fight. The
+legacy count/health template remains the fallback for callers that do not
+pass ids and for unknown ids (`enemy_catalog_missing`). Pinned by
+`Plan45EnemyCompositionTests`.
+
+## Original status at Plan 54 time
 
 - `TacticalCombatSystem.BeginEncounter` accepts `enemyCombatantIds` (the
   sanctioned data → combat bridge), but **no src/ caller currently passes

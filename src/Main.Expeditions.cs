@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
+using Ashfall.Core.Combat;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
@@ -189,6 +190,10 @@ namespace AtomicWar.GodotApp
         /// expedition triggers an encounter, populate a tactical combat at that
         /// location (if none is already active). This is the raiding/ambush
         /// hand-off from the travel loop into the Combat expansion.
+        /// Plan 45: enemy composition is selected from the combat catalog by
+        /// the location's danger band (EnemyCompositionSelector → binding
+        /// matrix), so ambushes field warlord veterans on high ground and
+        /// desperate scavengers on the safe roads instead of template raiders.
         /// </summary>
         private void SetupExpeditionCombatHandoff(CombatHostSession combat)
         {
@@ -201,9 +206,11 @@ namespace AtomicWar.GodotApp
                 var cs = _combat.Engine.State;
                 bool idle = string.IsNullOrEmpty(cs.EncounterId) || cs.Resolved;
                 if (!idle) return;
-                _combat.StartCombat(state.locationId, state.displayName);
+                var enemyIds = EnemyCompositionSelector.SelectAmbushComposition(
+                    state.dangerLevel, CombatHostSession.DefaultAmbushEnemyCount);
+                _combat.StartCombat(state.locationId, state.displayName, enemyCombatantIds: enemyIds);
                 _combatDirty = true;
-                GD.Print($"[Ashfall Godot] Expedition encounter at {state.locationId} spawned combat.");
+                GD.Print($"[Ashfall Godot] Expedition encounter at {state.locationId} spawned combat (danger {state.dangerLevel}: {string.Join(", ", enemyIds)}).");
             };
         }
 
