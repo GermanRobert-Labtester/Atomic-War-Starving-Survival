@@ -141,6 +141,73 @@ channel feeding crisis stress input.
   (`subterranean_network`, `psyops`) which sort after `expeditions_caravans` and before `world_evolution`
   as required by the plan's daily order.
 
+## Slice 3 — Morale contagion (Plan 154)
+
+Status: PASS (core behavior + host wiring + save + UI readout + beacon)
+
+Changed:
+- `Assets/Ashfall.Core/Survivors/MoraleContagionSystem.cs` — `IMoraleContagion` +
+  `MoraleContagionSystem`: hope/despair/panic channels (typed enum), catalog-driven
+  source events (snapshot template values), social-influence weights
+  (eligibility × proximity × bond × resistance), buffered same-tick deltas committed
+  after evaluation, ordinal-sorted iteration, ZERO RNG. Breakdown = transition-based
+  Morale ≥90 crossing (polarity D3) routed through the canonical crisis authority
+  (delegate); 7-day cooldown; re-arms on leaving the band. Schism = duty-role
+  subgroup with ≥50% members ≥0.5 despair pressure sustained 3 days; cooldown 21d;
+  `OnMoraleSchismTriggered` stable payload, one per day (ordinal-first).
+  `TryApplySocialIsolation` calls canonical unassign + duty-clear ports, cuts
+  influence both ways, +1 morale/day cost. HopeBeacon = idempotent ambient
+  `contagion_hope_beacon` hope source while installed+staffed+powered.
+  Capture deep-copies; Restore is non-operative (guard flag available).
+- `Assets/Ashfall.Core/Survivors/MoraleContagionSave.cs` — versioned (v1) checksummed
+  codec mirroring RadioSaveCodec; rejects tamper/checksumless/future; domain↔save mappers.
+- `src/Host/MoraleContagionSaveStore.cs` — `SaveStoreHub.FromCodec` façade
+  (coverage-gate compliant), section `morale_contagion`.
+- `src/Host/MoraleContagionHostSession.cs` — thin session (LastEvent/StateChanged),
+  beacon install marker + power/staffing gates, `GetInfluenceLines` read model.
+- `src/Main.MoraleContagion.cs` — Setup/Save triad; ports wired to NeedsSystem,
+  ShelterAssignmentSystem, DutyRosterSystem, TraumaBondSystem,
+  MentalHealthCrisisSystem (`CrisisProfile.AcuteStress`); `InstallHopeBeacon`
+  charges scrap_metal×4 + cloth×2 + battery×1 via atomic `InventoryBill`.
+- `src/Main.CampaignOwners.cs` — contagion step in `SurvivorsNeedsDayOwner` after
+  decor morale (reads final day morale; deltas land in today's state).
+- `src/Main.SaveOrchestrator.cs` — `SaveMoraleContagion()` in SaveAll,
+  `SetupMoraleContagion()` in restore path.
+- `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` — `morale_contagion` section
+  + filename (NOTE: shared file; foreign in-flight edits preserved as-is per D1).
+- `Assets/StreamingAssets/Data/shelter_rooms.json` — `room_hope_beacon`
+  (CommonArea, capacity 3, build_cost 4×scrap_metal/2×cloth/1×battery).
+- `src/UI/SurvivorRelationsPanel.cs` — "Settlement Mood" text-status block
+  (influence lines + beacon state; not color-only) via `BindContagion`.
+
+Tests: `Ashfall.Core.Tests/Flagship11/MoraleContagionSystemTests.cs` — 16 tests
+covering the §154.15 matrix: determinism, proximity grading, bond scaling,
+hope/despair polarity, distinct panic + crisis stress, buffered multi-source,
+breakdown once-per-crossing + re-arm + cooldown, isolation (authorities called,
+influence cut, cost, source-side), beacon counter-pressure + decay, schism
+sustain/threshold/cooldown/min-size/reset, event validation/idempotency, save
+round-trip with identical continuation, restore non-operative, codec tamper
+rejection, real-catalog resolution. 32/32 Flagship11 tests PASS.
+
+Result: `dotnet build Ashfall.csproj` 0 errors/0 warnings; companion tests 32/32;
+`--data-integrity-selftest` PASS (10573 ids; room_hope_beacon registered);
+host boot completes ("Headless interactive boot completed").
+
+Divergences:
+- D4: plan field `narrativeEventId` omitted from contagion_events.json — no
+  resolvable narrative-event id authority exists to reference; narrative surfacing
+  is host-side via typed events + LastEvent.
+- D5 (baseline, pre-existing, not this milestone): `ExpeditionRadarPanel._Ready` and
+  `FactionsNarrativePanel._Ready` raise ObjectDisposedException on disposed Labels
+  during headless boot — both are foreign in-flight UI files; boot completes anyway.
+  Not touched, not attributed to Flagship XI.
+- UI influence readout lands in the existing `SurvivorRelationsPanel` (no
+  standalone `SurvivorUI` exists in this repo).
+
+Remaining: host-side triggers for contagion sources (world events calling
+`StartContagionEvent` — e.g. death → funeral grief) arrive with Slice 8
+cross-system integration; Schism event consumption by narrative in Slice 7/8.
+
 ### Verification path note
 
 All milestone gates run through the companion project (D1) until the foreign streams land:

@@ -261,6 +261,15 @@ namespace AtomicWar.GodotApp
                 int decorRecipients = _m._shelterDecor?.ApplyDailyMorale(day) ?? 0;
                 if (decorRecipients > 0)
                     events.Add(new DayStateChangeEvent("shelter_decor_morale", "shelter_decor", null, null, decorRecipients));
+                // Flagship XI (Plan 154): contagion runs after needs + decor morale
+                // so it reads the day's final morale; its deltas are part of today.
+                _m.SetupMoraleContagion();
+                if (_m._moraleContagion != null)
+                {
+                    _m._moraleContagion.EvaluateDay(day);
+                    events.Add(new DayStateChangeEvent("morale_contagion_ticked", "morale_contagion", null, null,
+                        _m._moraleContagion.System.State.survivors.Count));
+                }
                 // Drain any survivor_perished events from the death pipeline
                 // into the briefing feed. Needs/radiation OnDied fires inside
                 // TickHour — every death this day lands here exactly once.
@@ -623,7 +632,7 @@ namespace AtomicWar.GodotApp
                         // supply line escalate (1.5×). Active origin regions come
                         // from the caravan data authority.
                         var origins = new List<string>();
-                        foreach (var cd in CaravanCatalogLoader.Load(_dataDir))
+                        foreach (var cd in CaravanCatalogLoader.Load(_m._dataDir))
                             if (!string.IsNullOrEmpty(cd.origin_region) && !origins.Contains(cd.origin_region))
                                 origins.Add(cd.origin_region);
                         foreach (var g in goods)

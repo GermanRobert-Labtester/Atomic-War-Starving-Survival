@@ -416,6 +416,26 @@
         { "item_id": "cloth", "quantity": 2 }
       ],
       "tags": ["life_support", "infrastructure"]
+    },
+    {
+      "id": "room_hope_beacon",
+      "display_name": "Beacon Common Room",
+      "description": "The mess hall's lamplit corner where someone reads the news aloud each evening. Staffed and powered, it gives the holdfast a place to put its hope down.",
+      "function": "CommonArea",
+      "capacity": 3,
+      "max_upgrade_level": 2,
+      "required_skill_id": "",
+      "workstation_id": "",
+      "base_condition": 100.0,
+      "build_cost": [
+        { "item_id": "scrap_metal", "quantity": 4 },
+        { "item_id": "cloth", "quantity": 2 },
+        { "item_id": "battery", "quantity": 1 }
+      ],
+      "repair_cost": [
+        { "item_id": "cloth", "quantity": 1 }
+      ],
+      "tags": ["social", "morale", "hope", "flagship11"]
     }
   ],
   "assignment_rules": [

@@ -21,6 +21,7 @@ namespace AtomicWar.GodotApp.UI
 
         private SurvivorRelationsHostSession? _host;
         private SurvivorSocialReadModel? _socialReadModel;
+        private MoraleContagionHostSession? _contagion;
 
         public bool IsBound => _host != null;
 
@@ -28,6 +29,13 @@ namespace AtomicWar.GodotApp.UI
         public void SetSocialReadModel(SurvivorSocialReadModel? rm)
         {
             _socialReadModel = rm;
+            RefreshView();
+        }
+
+        /// <summary>Attach the morale-contagion session (Flagship XI Plan 154) to surface social-influence status lines.</summary>
+        public void BindContagion(MoraleContagionHostSession? contagion)
+        {
+            _contagion = contagion;
             RefreshView();
         }
 
@@ -135,6 +143,29 @@ namespace AtomicWar.GodotApp.UI
                             sb.Append($" atrophied:[{string.Join(", ", e.atrophiedSkills)}]");
                         sb.Append('\n');
                     }
+                }
+
+                if (_contagion != null)
+                {
+                    // Flagship XI Plan 154 — text-status influence readout (not
+                    // color-only; strength and direction are named in words).
+                    sb.Append("\n── Settlement Mood ──\n");
+                    sb.Append(_contagion.IsHopeBeaconInstalled
+                        ? "Beacon lamp: installed"
+                        : "Beacon lamp: not built");
+                    if (_contagion.IsHopeBeaconOperating()) sb.Append(" (lit)");
+                    sb.Append('\n');
+                    if (_socialReadModel != null)
+                    {
+                        foreach (var e in _socialReadModel.entries)
+                        {
+                            var lines = _contagion.GetInfluenceLines(e.survivorId);
+                            bool notable = lines.Count > 1 || lines[0] != "No social pressure worth naming.";
+                            if (!notable) continue;
+                            sb.Append($"  • {e.survivorId}: {string.Join("; ", lines)}\n");
+                        }
+                    }
+                    sb.Append($"Last mood event: {_contagion.LastEvent}\n");
                 }
 
                 sb.Append($"\nLast Event: {_host.LastEvent}");
