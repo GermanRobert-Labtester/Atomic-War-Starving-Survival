@@ -144,6 +144,105 @@
       "fatalist": "A debt without a debtor is still a debt. It will surface when it wants to surface. These pages have outlived everyone who could explain them.",
       "empath": "Someone kept records this long — through a war, through a change of command — of a debt nobody claims. That is a life's worth of care about something.",
       "sociopath": "Three verified PAID debt vouchers with unidentified account origins. Leverage on whichever ledger house holds the duplicate."
+    },
+    "faction_military_history": {
+      "default": "Unit records and regimental archives reveal the pre-Exchange command structure that preceded the Garrison. The photographs are formal and the captions are terse. An institution shows itself in how it lined people up.",
+      "paranoid": "Old war photos. Officers staring through us. The Garrison still operates on their unrevoked directives.",
+      "cautious": "Pre-war military documentation. It shows how the regional chain of command disintegrated into martial law.",
+      "realist": "Archival unit photographs and regimental notes: supply lines, command posts, insignia, all documented before the detonations. The records stop abruptly that morning. What survives is enough to put a few names to faces.",
+      "reckless": "Old brass in sepia. They had rifles, orders, and no clue what was dropping from the sky.",
+      "denialist": "Just old service photos. Standard garrison history before everything went sideways.",
+      "fatalist": "Regiments named on paper that do not exist anymore. Their ghosts still hold the bunker."
+    },
+    "faction_state_propaganda": {
+      "default": "Civil defense leaflets and wartime state posters show the curated optimism broadcast before the Exchange. The reassurances were already stale when printed, if the supply queues were any measure. Keep the paper and distrust the promises.",
+      "paranoid": "Paper lies glued to concrete. The state told everyone to shelter and then sealed the gates from the inside.",
+      "cautious": "Wartime propaganda broadsheet. Promising orderly relocation and civil defense reserves that never arrived.",
+      "realist": "State morale print: cheerful figures, firm type, instructions to remain calm. The same press run promised railway service that had already been diverted for ordnance. It is a record of what they wanted believed.",
+      "reckless": "Bright colors, bold letters, complete fiction. Good kindling if nothing else.",
+      "denialist": "Official notices from the ministry. Standard civil order protocols for emergency conditions.",
+      "fatalist": "Smiling workers on glossy paper. They starved in the same basements as the rest of us."
+    },
+    "faction_military_operations": {
+      "default": "Tactical log fragments detail the final troop redeployments toward the perimeter bunkers. The handwriting degrades page by page. The last entries are numbers only.",
+      "paranoid": "Operation orders for scorched-earth withdrawal. They burned their own fuel depots to starve the towns.",
+      "cautious": "Operational dispatch logs. Outlines perimeter sweep sectors and fallback zones during the initial strikes.",
+      "realist": "Unit log entries tracking munitions expenditure and vehicle attrition across the first week. The accounting stays professional long after the situation stops being manageable. It reads like a ledger outliving its office.",
+      "reckless": "Tactical notes from officers who realized too late that reinforcements were not coming.",
+      "denialist": "Routine patrol logs. Standard exercises during the alert phase.",
+      "fatalist": "Hour by hour logs of radio silence falling over every sector until only static remained."
+    },
+    "faction_military_deployment": {
+      "default": "Official deployment orders dispatching regional defense battalions to subterranean holdfast sectors. The movement tables are precise to the hour. Precision was not the problem.",
+      "paranoid": "Orders signed in carbon copy: seize civilian grain elevators and shoot any councilman who objects.",
+      "cautious": "Formal deployment manifests. Useful for identifying which bunkers were equipped with heavy armories.",
+      "realist": "Signed deployment documents detailing battalion assignments, ammunition allotments, and bunker coordinates. The paperwork is complete, and the plan it describes failed anyway. The coordinates alone justify keeping it.",
+      "reckless": "Old deployment orders. Useful roadmap for finding where they stashed the ordnance.",
+      "denialist": "Standard military transfers. All by the book, even when the book was burning.",
+      "fatalist": "Orders sending young men to guard empty crossroads while the sky tore open."
+    },
+    "faction_civil_defense": {
+      "default": "Civil defense credentials and district sector notices reveal the emergency administration network. The wardens were issued whistles, rosters, and keys to the shelters. The keys mattered more than anything else that autumn.",
+      "paranoid": "Civil defense badges. The wardens who had keys to the community shelters while neighbors banged on iron.",
+      "cautious": "Warden documentation. Details fallout shelter air circulation specs and ration stockpiling protocols.",
+      "realist": "An emergency warden registry recording which municipal sectors received filtration equipment before the war. The distribution was uneven, and the registry notes it without comment. The omission is informative.",
+      "reckless": "Enamel badges from men who blew whistles at sirens. Did not stop a single megaton.",
+      "denialist": "Municipal emergency management tokens. Proves civil authorities had an orderly plan in place.",
+      "fatalist": "Badges for volunteers who stayed above ground to guide others into holes they could not enter."
+    },
+    "faction_military_units": {
+      "default": "Insignia patches identify the specific armored and infantry regiments stationed across the valley. Collectors once traded these at market stalls. Identification matters more than sentiment does now.",
+      "paranoid": "Regimental crests of the units that turned their machine guns inward to secure their own rations.",
+      "cautious": "Unit patches recovered from the wasteland. Correlates vehicle wrecks with their parent armories.",
+      "realist": "Unit insignia tying the valley wrecks and abandoned posts to their parent regiments: an armored detachment, a border guard company. Lineage, in the end, is bookkeeping that outlives the book. The stitching survives the soldiers.",
+      "reckless": "Embroidered skull and eagle patches. Looks impressive on a coat, means nothing to fallout.",
+      "denialist": "Standard brigade insignia. Just uniform decoration from regular armed service.",
+      "fatalist": "Thread and cloth identifying divisions whose bones are powdered across the ruins."
+    },
+    "faction_trade_guilds": {
+      "default": "Trade guild tokens and merchant charters record the commercial syndicates operating across the river routes. Their marks promised fair weight. The charters also record what happened when the weight was short.",
+      "paranoid": "Guild marks of the merchant cartels. They monopolized salt and clean water within six months of the war.",
+      "cautious": "Pre-war and early post-war trade charters. Clarifies barter ratios and safe route markers used by caravans.",
+      "realist": "Guild insignia and route charters establishing the early trade consortiums between the valley settlements. Barter ratios and safe-passage marks are all written down. Those routes still decide who trades with whom.",
+      "reckless": "Merchant badges. Those traders were ruthless, but their route maps are worth every coin.",
+      "denialist": "Commercial guild tokens. Business continuity agreements to keep trade flowing.",
+      "fatalist": "Coins and emblems of syndicates that traded gold for bread until the bread ran out too."
+    },
+    "journal_casualty_records": {
+      "default": "A typed casualty list from the first strike waves, recording civilian and military losses by bunker zone. The columns stay neat long after the numbers stop being bearable. Someone did the bookkeeping anyway.",
+      "paranoid": "Names typed on cheap paper. Thousands marked deceased while their commanders sat in air-conditioned vaults.",
+      "cautious": "Verified casualty ledgers from Sector 4. A grim reference for tracing survivors and lost family lines.",
+      "realist": "A strike casualty manifest: name, service number, evacuation code, zone of loss. The counts stop being statistics once you have read enough of the names. I copy the spellings carefully in case anyone ever asks.",
+      "reckless": "Pages and pages of names. The world ended and someone still bothered to type the ledger.",
+      "denialist": "Preliminary missing-persons reports. Many of them probably made it to southern evacuation centers.",
+      "fatalist": "Neat rows of typewriter ink recording the end of four thousand lives on a Tuesday morning."
+    },
+    "journal_soldier_letters": {
+      "default": "Unsent letters from garrison soldiers to families cut off on the surface as the fallout closed in. Most stop mid-thought, as if the writer expected to finish them later. None of them are finished.",
+      "paranoid": "Private notes smuggled past the censors. They knew the rations were toxic weeks before they were relieved.",
+      "cautious": "Soldiers personal correspondence. Gives human context and emotional weight to the concrete ruins.",
+      "realist": "Handwritten letters out of the garrison: morale thinning, water rumored unsafe, hunger counted in days. The writers exaggerate and understate by turns, which is how you can tell it is honest. Not one was ever posted.",
+      "reckless": "Love letters and regrets written on ration box cardboard. Stashes and secrets hidden between the lines.",
+      "denialist": "Ordinary mail that was held up by communication disruptions. They will read them eventually.",
+      "fatalist": "Words written to people who had already turned to ash when the pen touched the paper."
+    },
+    "journal_religious_texts": {
+      "default": "Annotated liturgical texts and scriptures preserved in wasteland shelters, marked with prayers for the dead. The margins hold more handwriting than the printed pages. People needed somewhere to put the names.",
+      "paranoid": "Apocalyptic verses highlighted in red pen. People convinced themselves the fire was divine judgment.",
+      "cautious": "Religious texts recovered from the cloister. Shows how spiritual communities adapted to subterranean life.",
+      "realist": "A shelter scripture volume with funeral dates handwritten in the margins and counsel copied out for the sick. Whatever the theology, the book did steady work down here. The ribbon marker has moved many times.",
+      "reckless": "Holy book with pages missing for rolling paper. Still has the old hymns inside.",
+      "denialist": "Traditional faith texts. Good to keep old cultural traditions intact while we rebuild.",
+      "fatalist": "Prayers asking for mercy from an empty sky that answered with burning dust."
+    },
+    "journal_exchange_day": {
+      "default": "Newspaper edition rushed to press on the morning of the Exchange, headline frozen in the first hours of the war. The inside pages are ordinary: weather, markets, a school fundraiser. The ordinary pages are the hardest to read now.",
+      "paranoid": "The morning edition of the end. Government denials on page one, while sirens were already sounding outside.",
+      "cautious": "Exchange Day newspaper preserved in a sealed mail pouch. Details the timeline of initial missile detections.",
+      "realist": "A special morning bulletin: launch detections, blackout orders, instructions to remain indoors. The typesetting is no different from any other Tuesday. That is the detail worth recording.",
+      "reckless": "Headline screaming nuclear war in eighty-point type. The ultimate historical souvenir.",
+      "denialist": "Temporary crisis reporting. Urging citizens to remain calm until negotiations resumed.",
+      "fatalist": "The last words ever printed on a press in this city. Wet ink that survived everyone who read it."
     }
   }
 }

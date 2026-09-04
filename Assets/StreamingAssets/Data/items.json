@@ -5665,7 +5665,7 @@
     {
       "id": "item_collectible_mothers_letter",
       "displayName": "Mother's Letter",
-      "description": "A handwritten letter on lined paper. The script is careful and slightly uneven. It asks about food, sleep, and whether the heating is working. The envelope is addressed but unsealed.",
+      "description": "A handwritten letter on lined paper, the script careful and slightly uneven. It asks about food, sleep, and whether the heating is working. The envelope is addressed but unsealed.",
       "type": "Quest",
       "stackMax": 5,
       "weight": 0.02,
@@ -5675,7 +5675,7 @@
     {
       "id": "item_collectible_soldiers_letter",
       "displayName": "Soldier's Unsent Letter",
-      "description": "A letter folded into a small square, never posted. The handwriting is hurried. It describes a cold night and a missing friend. The paper is creased from being carried in a pocket.",
+      "description": "A letter folded into a small square, never posted, the handwriting hurried. It describes a cold night and a missing friend. The paper is creased from being carried in a pocket.",
       "type": "Quest",
       "stackMax": 5,
       "weight": 0.02,
@@ -5715,7 +5715,7 @@
     {
       "id": "item_collectible_military_patch",
       "displayName": "Military Unit Patch",
-      "description": "An embroidered shoulder patch with a unit insignia. The thread is frayed at the edges where it was torn from a uniform. The colors are still distinct.",
+      "description": "An embroidered shoulder patch with a unit insignia. The thread is frayed at the edges where it was pulled from a uniform. The colors are still distinct.",
       "type": "Quest",
       "stackMax": 10,
       "weight": 0.02,
@@ -5745,7 +5745,7 @@
     {
       "id": "item_collectible_music_box",
       "displayName": "Wind-Up Music Box",
-      "description": "A small tin music box with a painted lid. The mechanism still turns when wound. The melody is simple and slightly out of tune. The key is bent but functional.",
+      "description": "A small tin music box with a painted lid. The mechanism still turns when wound, though the melody is simple and slightly out of tune. The key is bent but functional.",
       "type": "Comfort",
       "stackMax": 3,
       "weight": 0.3,
@@ -5775,7 +5775,7 @@
     {
       "id": "item_collectible_team_pennant",
       "displayName": "Local Team Pennant",
-      "description": "A triangular pennant in faded team colors. The felt is soft and the stitching is loose at one corner. A date and score are printed below the team name.",
+      "description": "A triangular pennant in washed-out team colors. The felt is soft and the stitching is loose at one corner. A date and score are printed below the team name.",
       "type": "Comfort",
       "stackMax": 5,
       "weight": 0.1,
