@@ -10,6 +10,7 @@ using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Foundry;
+using Ashfall.Core.Greenhouse;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.Journal;
@@ -60,19 +61,39 @@ namespace AtomicWar.GodotApp
             if (_greenhouse == null || plotIndex < 0) return;
             SetupInventory();
             int day = _core != null ? _core.Clock.Day : _simDay;
-            switch (action)
+
+            // Plan 22 GAP action routing: parameters encoded in action string
+            // so the panel event signature (string, int) stays stable.
+            string baseAction = action;
+            string? param = null;
+            int colon = action.IndexOf(':');
+            if (colon > 0)
+            {
+                baseAction = action.Substring(0, colon);
+                param = action.Substring(colon + 1);
+            }
+
+            switch (baseAction)
             {
                 case "plant":
-                    _greenhouse.Plant(plotIndex, "item_seed_tuber", day);
+                    _greenhouse.Plant(plotIndex, param ?? GreenhouseExpansionCatalog.Items.SeedTuber, day);
                     break;
                 case "water":
-                    _greenhouse.Water(plotIndex, 50f, tainted: false);
-                    break;
-                case "treat":
-                    _greenhouse.TreatBlight(plotIndex);
+                    if (param == "tainted")
+                        _greenhouse.Water(plotIndex, 50f, tainted: true);
+                    else
+                    {
+                        float units = 50f;
+                        if (param != null && float.TryParse(param, NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed))
+                            units = parsed;
+                        _greenhouse.Water(plotIndex, Math.Max(1f, units), tainted: false);
+                    }
                     break;
                 case "clear":
                     _greenhouse.Clear(plotIndex);
+                    break;
+                case "treat":
+                    _greenhouse.TreatBlight(plotIndex);
                     break;
                 case "harvest":
                     _greenhouse.Harvest(plotIndex);
@@ -88,6 +109,9 @@ namespace AtomicWar.GodotApp
                     break;
                 case "apiary_install":
                     _greenhouse.InstallHive("hive_01", "bay_orchard", day);
+                    break;
+                default:
+                    GD.PrintErr($"[Ashfall] unhandled greenhouse action: {action}");
                     break;
             }
             if (_greenhouseDirty) SaveGreenhouse();
