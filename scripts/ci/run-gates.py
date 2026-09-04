@@ -31,6 +31,78 @@ from datetime import datetime, timezone
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 DEFAULT_MANIFEST = REPO_ROOT / "docs" / "ci" / "CI_GATE_MANIFEST.json"
+DEFAULT_QUARANTINE = REPO_ROOT / "scripts" / "ci" / "quarantine.json"
+QUARANTINE_MAX_DAYS = 14
+
+
+def load_quarantine(path=DEFAULT_QUARANTINE):
+    """Plan VIII Task 24.7 — flake quarantine registry.
+
+    Returns (by_gate, errors): by_gate maps gate_id → entry; errors is a list of
+    policy violations (protected gate targeted, expired entry, bad fields).
+    Expired entries are reported and then ignored — the gate's failure then
+    fails the run like any other gate.
+    """
+    by_gate, errors = {}, []
+    if not path.exists():
+        return by_gate, errors
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as ex:
+        return by_gate, [f"quarantine registry unreadable: {ex}"]
+
+    protected = set(data.get("protected_gates", []))
+    today = datetime.now(timezone.utc).date()
+    for entry in data.get("quarantines", []):
+        gid = entry.get("gate", "")
+        if not gid or not entry.get("owner") or not entry.get("reason") or not entry.get("added"):
+            errors.append(f"quarantine entry for '{gid}' missing owner/reason/added fields")
+            continue
+        if gid in protected:
+            errors.append(f"quarantine entry targets protected Core-invariant gate '{gid}' — rejected")
+            continue
+        try:
+            expiry = datetime.strptime(entry["expiry"], "%Y-%m-%d").date()
+        except Exception:
+            errors.append(f"quarantine entry for '{gid}' has bad expiry (need YYYY-MM-DD)")
+            continue
+        added = datetime.strptime(entry["added"], "%Y-%m-%d").date()
+        if (expiry - added).days > QUARANTINE_MAX_DAYS:
+            errors.append(
+                f"quarantine entry for '{gid}' exceeds max duration "
+                f"({QUARANTINE_MAX_DAYS} days): {added} → {expiry}")
+            continue
+        if expiry < today:
+            errors.append(
+                f"quarantine entry for '{gid}' EXPIRED on {expiry} — remove it or re-justify with the owner")
+            continue
+        by_gate[gid] = entry
+    return by_gate, errors
+
+
+def classify_failure(record):
+    """Plan VIII Task 24.9 — failure taxonomy. Returns one of
+    blocked / timeout / build-break / assert-fail / selftest-fail /
+    infrastructure / quarantined / fail."""
+    if record.get("blocked"):
+        return "blocked"
+    if record.get("exit_code") == 124:
+        return "timeout"
+    output = record.get("output", "")
+    cmd = record.get("command", "")
+    if record.get("exit_code") == 127 or "command not found" in output:
+        return "infrastructure"
+    if record.get("exit_code") == 125:
+        return "infrastructure"
+    if "error CS" in output or "MSBUILD" in output[:200] or cmd.startswith("dotnet build"):
+        return "build-break"
+    if cmd.startswith("dotnet test") and ("Failed!" in output or "error" in output.lower()):
+        return "assert-fail"
+    if "SELFTEST FAIL" in output or "FAIL" in output[-2000:]:
+        return "selftest-fail"
+    if "Execution error" in record.get("error_reason", ""):
+        return "infrastructure"
+    return "fail"
 
 
 def load_manifest(manifest_path):
@@ -213,6 +285,15 @@ def main():
         list_gates(manifest)
         return 0
 
+    # Task 24.7 — quarantine policy. Policy violations are fatal: an expired
+    # or illegal quarantine must never silently soften the gate set.
+    quarantine_by_gate, quarantine_errors = load_quarantine()
+    if quarantine_errors:
+        print("❌ Quarantine policy violations:", file=sys.stderr)
+        for qe in quarantine_errors:
+            print(f"   - {qe}", file=sys.stderr)
+        return 1
+
     all_gates = manifest.get("gates", [])
 
     dep_problems = validate_dependencies(all_gates)
@@ -297,6 +378,8 @@ def main():
                 "classification": gate.get("classification", "fast"),
                 "passed": False,
                 "blocked": True,
+                "quarantined": False,
+                "failure_type": "blocked",
                 "exit_code": 1,
                 "duration": 0.0,
                 "error_reason": reason,
@@ -361,11 +444,28 @@ def main():
             "classification": gate.get("classification", "fast"),
             "passed": passed,
             "blocked": False,
+            "quarantined": False,
             "exit_code": exit_code,
             "duration": gate_elapsed,
             "error_reason": error_reason,
             "output": output
         }
+
+        if not passed:
+            # Task 24.7/24.9 — quarantine flag + failure taxonomy. A quarantined
+            # failure is displayed, recorded, and does not by itself fail the run;
+            # downstream gates that depend on it still run (it did execute).
+            res_record["failure_type"] = classify_failure(res_record)
+            q = quarantine_by_gate.get(gid)
+            if q is not None:
+                res_record["quarantined"] = True
+                res_record["failure_type"] = "quarantined"
+                results.append(res_record)
+                outcome_by_id[gid] = True
+                print(f"  -> 🛡 QUARANTINED ({gate_elapsed:.2f}s): {error_reason}")
+                print(f"     owner={q.get('owner')} reason={q.get('reason')} expiry={q.get('expiry')}")
+                continue
+
         results.append(res_record)
         outcome_by_id[gid] = passed
 
@@ -391,12 +491,19 @@ def main():
     if args.report_json:
         rep_path = pathlib.Path(args.report_json)
         rep_path.parent.mkdir(parents=True, exist_ok=True)
+        taxonomy = {}
+        for r in results:
+            if not r["passed"]:
+                taxonomy[r["failure_type"]] = taxonomy.get(r["failure_type"], 0) + 1
         report_data = {
             "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "tier": args.tier,
             "total_duration_seconds": total_elapsed,
             "total_gates": len(gates_to_run),
             "passed_count": len(gates_to_run) - len(failed_gates),
             "failed_count": len(failed_gates),
+            "failure_taxonomy": taxonomy,
+            "quarantined_failures": [r["gate_id"] for r in results if r.get("quarantined")],
             "all_passed": len(failed_gates) == 0,
             "results": results
         }

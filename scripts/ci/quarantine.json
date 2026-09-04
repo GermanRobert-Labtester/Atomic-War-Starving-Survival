@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "description": "Plan VIII Task 24.7 — flake quarantine registry. A quarantined gate still RUNS; a quarantined failure is flagged QUARANTINED in the summary and JSON report and does not by itself fail the run. Rules: max duration 14 days from added date; every entry needs owner, reason, and tracking note; Core-invariant gates (protected_gates) can never be quarantined — the runner rejects such entries; expired entries are ignored (the gate's failure then fails the run like any other).",
+  "protected_gates": [
+    "build_core_tests",
+    "test_core_suite",
+    "build_godot_host",
+    "data_integrity",
+    "bridge_removal"
+  ],
+  "quarantines": []
+}

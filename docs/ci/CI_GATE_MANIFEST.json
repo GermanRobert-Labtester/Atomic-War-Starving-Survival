@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 46,
-  "fast_tier_count": 45,
+  "total_gates": 49,
+  "fast_tier_count": 47,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -512,6 +512,38 @@
       "expected_summary": "Passed!",
       "classification": "fast",
       "critical": true
+    },
+    {
+      "gate_id": "case_alias_guard",
+      "name": "Case-folded path collision guard (Plan VIII 25.9/25.10)",
+      "category": "Repository hygiene",
+      "command": "bash scripts/ci/case-collision-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "CASE_COLLISION_GATE PASS",
+      "classification": "fast",
+      "depends_on": []
+    },
+    {
+      "gate_id": "selftest_manifest_drift",
+      "name": "Selftest manifest in sync with HostCliRegistry (Plan VIII 24.6)",
+      "category": "Drift guard",
+      "command": "python3 scripts/ci/generate-selftest-manifest.py --check",
+      "timeout_seconds": 60,
+      "expected_summary": "is valid and in sync",
+      "classification": "fast",
+      "depends_on": []
+    },
+    {
+      "gate_id": "export_parity",
+      "name": "Packaged-data parity of the exported Linux build (Plan VIII 23/24.11)",
+      "category": "Release",
+      "command": "godot --headless --path . -- --export-parity-selftest",
+      "timeout_seconds": 300,
+      "expected_summary": "EXPORT_PARITY_SELFTEST PASS",
+      "classification": "full",
+      "depends_on": [
+        "build_godot_host"
+      ]
     }
   ]
 }
