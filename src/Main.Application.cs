@@ -296,6 +296,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
                     return;
+                case HostCliAction.ExportParitySelfTest:
+                    GetTree().Quit(HostCli.RunExportParitySelfTest(_dataDir, HostCli.GetOptionValue(OS.GetCmdlineUserArgs(), "--parity-target")));
+                    return;
                 case HostCliAction.ResearchCatalogSelfTest:
                     GetTree().Quit(HostCli.RunResearchCatalogSelfTest(_dataDir));
                     return;

@@ -33,6 +33,7 @@ namespace AtomicWar.GodotApp
         Interactive,
         Help,
         Version,
+        ExportParitySelfTest,
         HoldfastSelfTest,
         IceRoadSelfTest,
         CensusSelfTest,
@@ -326,6 +327,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.UtilityAiUiTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
+            if (Has(args, "--export-parity-selftest"))
+                return HostCliAction.ExportParitySelfTest;
             if (Has(args, "--research-catalog-selftest"))
                 return HostCliAction.ResearchCatalogSelfTest;
             if (Has(args, "--catalog-boot-preflight"))
@@ -425,6 +428,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
             GD.Print("  --core-selftest          Ice road + census headless demos");
             GD.Print("  --data-integrity-selftest Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
+            GD.Print("  --export-parity-selftest [--parity-target <dir>] Packaged-data parity: exported build's catalogs byte-identical + parseable vs the data authority, exact Linux casing, no LFS pointers, ELF exe + PCK present");
             GD.Print("  --catalog-boot-preflight   Machine-readable preflight: checks all catalogs are present, well-formed, and reports classification (required/optional/dev-only) with any load errors");
             GD.Print("  --panel-bind-lifecycle-selftest / --panel-bind-selftest / --panel-lifecycle-selftest Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch");
             GD.Print("  --save-load-ui-failure-selftest / --save-load-failure-selftest / --save-load-failure-uitest / --save-load-selftest Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact");
