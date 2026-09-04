@@ -57,6 +57,7 @@ namespace AtomicWar.GodotApp.Audio
         {
             ThrowIfDisposed();
             _active = true;
+            AudioManager.Instance?.SetBunkerOcclusion(false);
             Sync();
         }
 
@@ -64,6 +65,7 @@ namespace AtomicWar.GodotApp.Audio
         {
             if (_disposed) return;
             _active = false;
+            AudioManager.Instance?.SetBunkerOcclusion(true);
             StopAllAmbiences();
         }
 
@@ -77,11 +79,27 @@ namespace AtomicWar.GodotApp.Audio
                 return;
             }
 
-            bool storm = IsStorm(_weather?.Current ?? WeatherKind.Clear);
-            string desired = storm ? AudioCueCatalog.AmbSurfaceStorm : ResolveLocationAmbience(_currentLocationId);
+            WeatherKind weather = _weather?.Current ?? WeatherKind.Clear;
+            if (weather is WeatherKind.Silence or WeatherKind.SilentSpring)
+            {
+                StopAllAmbiences();
+                return;
+            }
+
+            string desired = ResolveWeatherAmbience(weather) ?? ResolveLocationAmbience(_currentLocationId);
             StopOtherAmbiences(desired);
             _playCue(desired);
         }
+
+        internal static string? ResolveWeatherAmbience(WeatherKind kind) => kind switch
+        {
+            WeatherKind.Ashfall => AudioCueCatalog.AmbSurfaceAshfall,
+            WeatherKind.FalloutStorm => AudioCueCatalog.AmbSurfaceFalloutStorm,
+            WeatherKind.Blizzard or WeatherKind.AcidSnow or WeatherKind.BlackSnow
+                or WeatherKind.IceStorm => AudioCueCatalog.AmbSurfaceBlizzard,
+            _ when IsStorm(kind) => AudioCueCatalog.AmbSurfaceStorm,
+            _ => null,
+        };
 
         public static string ResolveLocationAmbience(string? locationId)
         {
@@ -99,6 +117,8 @@ namespace AtomicWar.GodotApp.Audio
                 return AudioCueCatalog.AmbLocGeothermalRuins;
             if (lower.Contains("arcology") || lower.Contains("sector") || lower.Contains("tower") || lower.Contains("facility"))
                 return AudioCueCatalog.AmbLocArcologySector;
+            if (lower.Contains("granite") || lower.Contains("quarry") || lower.Contains("mine") || lower.Contains("cave") || lower.Contains("cavern"))
+                return AudioCueCatalog.AmbLocGraniteQuarry;
             if (lower.Contains("warzone") || lower.Contains("front") || lower.Contains("battle") || lower.Contains("trench") || lower.Contains("crossing"))
                 return AudioCueCatalog.AmbWarzoneDistantShelling;
             return AudioCueCatalog.AmbSurface;
@@ -107,6 +127,9 @@ namespace AtomicWar.GodotApp.Audio
         private static readonly string[] s_surfaceAmbiences = new[]
         {
             AudioCueCatalog.AmbSurface,
+            AudioCueCatalog.AmbSurfaceAshfall,
+            AudioCueCatalog.AmbSurfaceBlizzard,
+            AudioCueCatalog.AmbSurfaceFalloutStorm,
             AudioCueCatalog.AmbSurfaceStorm,
             AudioCueCatalog.AmbLocAbandonedHospital,
             AudioCueCatalog.AmbLocRuralGasStation,
@@ -114,6 +137,7 @@ namespace AtomicWar.GodotApp.Audio
             AudioCueCatalog.AmbLocMilitaryBunker,
             AudioCueCatalog.AmbLocGeothermalRuins,
             AudioCueCatalog.AmbLocArcologySector,
+            AudioCueCatalog.AmbLocGraniteQuarry,
             AudioCueCatalog.AmbWarzoneDistantShelling
         };
 

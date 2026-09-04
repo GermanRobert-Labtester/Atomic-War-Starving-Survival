@@ -29,6 +29,7 @@ namespace AtomicWar.GodotApp.Audio
         PowerGridSystem? AudioPowerGrid { get; }
         StartingLevelSystem? AudioStartingLevel { get; }
         Ashfall.Core.AudioConditionSystem? AudioConditions { get; }
+        SomaticFlashbackSystem? AudioFlashbacks { get; }
     }
 
     /// <summary>
@@ -39,6 +40,7 @@ namespace AtomicWar.GodotApp.Audio
     public sealed class AudioEventBridge : IDisposable
     {
         private readonly Action<string> _playCue;
+        private readonly Action<string> _stopCue;
         private RadiationSystem? _radiation;
         private WeatherSystem? _weather;
         private TacticalCombatSystem? _combat;
@@ -46,17 +48,21 @@ namespace AtomicWar.GodotApp.Audio
         private ExpeditionSystem? _expeditions;
         private DiseaseSystem? _disease;
         private SurvivorFateSystem? _survivorFate;
+        private SomaticFlashbackSystem? _flashbacks;
         private readonly Dictionary<string, float> _radiationDoseBySurvivor = new(StringComparer.Ordinal);
         private bool _disposed;
 
         public AudioEventBridge(AudioManager audio)
-            : this((audio ?? throw new ArgumentNullException(nameof(audio))).PlayCue)
+            : this(
+                (audio ?? throw new ArgumentNullException(nameof(audio))).PlayCue,
+                audio.StopCue)
         {
         }
 
-        internal AudioEventBridge(Action<string> playCue)
+        internal AudioEventBridge(Action<string> playCue, Action<string>? stopCue = null)
         {
             _playCue = playCue ?? throw new ArgumentNullException(nameof(playCue));
+            _stopCue = stopCue ?? (_ => { });
         }
 
         /// <summary>
@@ -70,7 +76,8 @@ namespace AtomicWar.GodotApp.Audio
             CraftingSystem? crafting = null,
             ExpeditionSystem? expeditions = null,
             DiseaseSystem? disease = null,
-            SurvivorFateSystem? survivorFate = null)
+            SurvivorFateSystem? survivorFate = null,
+            SomaticFlashbackSystem? flashbacks = null)
         {
             ThrowIfDisposed();
             BindRadiation(radiation);
@@ -80,6 +87,7 @@ namespace AtomicWar.GodotApp.Audio
             BindExpeditions(expeditions);
             BindDisease(disease);
             BindSurvivorFate(survivorFate);
+            BindFlashbacks(flashbacks);
         }
 
         public void BindRadiation(RadiationSystem? radiation)
@@ -144,6 +152,8 @@ namespace AtomicWar.GodotApp.Audio
                 "fire" => ResolveWeaponFireCue(evt.Detail),
                 "suppress" => AudioCueCatalog.WeaponLmgBurst,
                 "weapon_jam" => AudioCueCatalog.CombatJam,
+                "jam_persist" => AudioCueCatalog.CombatDryFire,
+                "weapon_burst" => AudioCueCatalog.CombatWeaponBurst,
                 "reload" => evt.Detail.Contains("shotgun") ? AudioCueCatalog.WeaponShotgunRack : AudioCueCatalog.CombatReload,
                 "clear_jam" => AudioCueCatalog.CombatReload,
                 "downed" => AudioCueCatalog.HeavyImpactFall,
@@ -156,12 +166,32 @@ namespace AtomicWar.GodotApp.Audio
                 "enemy_fire" when evt.Detail.Contains("hits") => AudioCueCatalog.CombatHit,
                 "repair" => AudioCueCatalog.ActionRepair,
                 "bandage" => AudioCueCatalog.ActionInjection,
-                "bleed" => AudioCueCatalog.MedHeartbeat,
+                "bleed" => AudioCueCatalog.TraumaHeartbeatRapid,
+                "concussion" => AudioCueCatalog.TraumaTinnitus,
+                "critical" => AudioCueCatalog.TraumaHeartbeatRapid,
+                "last_stand" => AudioCueCatalog.CombatLastStand,
+                "decon" => AudioCueCatalog.CombatDeconFlush,
                 _ => null,
             };
 
             if (cueId != null)
                 _playCue(cueId);
+
+            if (evt.Kind == "fire")
+            {
+                _playCue(AudioCueCatalog.CombatCasingDrop);
+                string lower = evt.Detail.ToLowerInvariant();
+                if (lower.Contains("spear") || lower.Contains("rod"))
+                    _playCue(AudioCueCatalog.CombatImprovisedSpear);
+                else if (lower.Contains("molotov") || lower.Contains("burn"))
+                    _playCue(AudioCueCatalog.CombatImprovisedFire);
+                else if (lower.Contains("wood"))
+                    _playCue(AudioCueCatalog.CombatImpactWood);
+                else if (lower.Contains("armor") || lower.Contains("metal") || lower.Contains("stopped"))
+                    _playCue(AudioCueCatalog.CombatImpactMetal);
+                else if (lower.Contains("blocked") || lower.Contains("cover") || lower.Contains("concrete"))
+                    _playCue(AudioCueCatalog.CombatImpactConcrete);
+            }
 
             if (evt.Detail.Contains("Ricochet") || evt.Detail.Contains("ricochet"))
                 _playCue(AudioCueCatalog.BulletWhizRicochet);
@@ -221,6 +251,7 @@ namespace AtomicWar.GodotApp.Audio
                 _expeditions.OnExpeditionCompleted -= OnExpeditionCompleted;
                 _expeditions.OnExpeditionFailed -= OnExpeditionFailed;
                 _expeditions.OnLootAdded -= OnLootAdded;
+                _expeditions.OnCampEntered -= OnCampEntered;
             }
 
             _expeditions = expeditions;
@@ -232,19 +263,62 @@ namespace AtomicWar.GodotApp.Audio
                 _expeditions.OnExpeditionCompleted += OnExpeditionCompleted;
                 _expeditions.OnExpeditionFailed += OnExpeditionFailed;
                 _expeditions.OnLootAdded += OnLootAdded;
+                _expeditions.OnCampEntered += OnCampEntered;
             }
         }
 
-        private void OnExpeditionStarted(ExpeditionState state) => _playCue(AudioCueCatalog.ShelterDoorOpen);
+        private void OnExpeditionStarted(ExpeditionState state)
+        {
+            _playCue(AudioCueCatalog.ShelterDoorOpen);
+            if (state != null && !string.IsNullOrEmpty(state.vehicleId))
+            {
+                string cue = ResolveVehicleEngineCue(state.vehicleId);
+                _playCue(cue);
+            }
+        }
+
+        private static string ResolveVehicleEngineCue(string vehicleId)
+        {
+            if (string.IsNullOrEmpty(vehicleId)) return AudioCueCatalog.ExpeditionVehicleEngine;
+            string lower = vehicleId.ToLowerInvariant();
+            if (lower.Contains("bike") || lower.Contains("cycle"))
+                return AudioCueCatalog.ExpeditionVehicleDirtBike;
+            if (lower.Contains("truck") || lower.Contains("halftrack") || lower.Contains("base"))
+                return AudioCueCatalog.ExpeditionVehicleTruck;
+            return AudioCueCatalog.ExpeditionVehicleEngine;
+        }
+
+        private void StopAllVehicleLoops()
+        {
+            _stopCue(AudioCueCatalog.ExpeditionVehicleEngine);
+            _stopCue(AudioCueCatalog.ExpeditionVehicleDirtBike);
+            _stopCue(AudioCueCatalog.ExpeditionVehicleTruck);
+        }
+
         private void OnEncounterTriggered(ExpeditionState state) => _playCue(AudioCueCatalog.CombatStart);
-        private void OnVehicleBreakdown(ExpeditionState state) => _playCue(AudioCueCatalog.DangerAlarmKlaxon);
+
+        private void OnVehicleBreakdown(ExpeditionState state)
+        {
+            StopAllVehicleLoops();
+            _playCue(AudioCueCatalog.ExpeditionVehicleBreakdown);
+        }
+
         private void OnExpeditionCompleted(ExpeditionState state)
         {
+            StopAllVehicleLoops();
             _playCue(AudioCueCatalog.ShelterDoorSeal);
             _playCue(AudioCueCatalog.ActionItemPickup);
         }
-        private void OnExpeditionFailed(ExpeditionState state, string reason) => _playCue(AudioCueCatalog.DangerDebris);
+
+        private void OnExpeditionFailed(ExpeditionState state, string reason)
+        {
+            StopAllVehicleLoops();
+            _playCue(AudioCueCatalog.DangerDebris);
+        }
+
         private void OnLootAdded(ExpeditionState state) => _playCue(AudioCueCatalog.ActionItemPickup);
+
+        private void OnCampEntered(ExpeditionState state) => _playCue(AudioCueCatalog.ExpeditionCampFire);
 
         public void BindDisease(DiseaseSystem? disease)
         {
@@ -311,6 +385,37 @@ namespace AtomicWar.GodotApp.Audio
 
         private void OnSurvivorFate(SurvivorFateEvent fate) =>
             _playCue(AudioCueCatalog.MedSurvivorDeath);
+
+        public void BindFlashbacks(SomaticFlashbackSystem? flashbacks)
+        {
+            ThrowIfDisposed();
+            if (ReferenceEquals(_flashbacks, flashbacks))
+                return;
+
+            if (_flashbacks != null)
+            {
+                _flashbacks.OnFlashbackTriggered -= OnFlashbackTriggered;
+                _flashbacks.OnFlashbackGrounded -= OnFlashbackGrounded;
+            }
+
+            _flashbacks = flashbacks;
+            if (_flashbacks != null)
+            {
+                _flashbacks.OnFlashbackTriggered += OnFlashbackTriggered;
+                _flashbacks.OnFlashbackGrounded += OnFlashbackGrounded;
+            }
+        }
+
+        private void OnFlashbackTriggered(string survivorId, float durationHours)
+        {
+            _playCue(AudioCueCatalog.FlashbackTrigger);
+            _playCue(AudioCueCatalog.TraumaTinnitus);
+        }
+
+        private void OnFlashbackGrounded(string survivorId, float orig, float red)
+        {
+            _playCue(AudioCueCatalog.FlashbackGrounded);
+        }
 
         private void OnRadiationStatusGained(SurvivorRadState state, SurvivorStatus status)
         {
@@ -397,6 +502,8 @@ namespace AtomicWar.GodotApp.Audio
                 _expeditions.OnExpeditionCompleted -= OnExpeditionCompleted;
                 _expeditions.OnExpeditionFailed -= OnExpeditionFailed;
                 _expeditions.OnLootAdded -= OnLootAdded;
+                _expeditions.OnCampEntered -= OnCampEntered;
+                StopAllVehicleLoops();
             }
 
             if (_disease != null)
@@ -410,6 +517,11 @@ namespace AtomicWar.GodotApp.Audio
             }
             if (_survivorFate != null)
                 _survivorFate.OnSurvivorFate -= OnSurvivorFate;
+            if (_flashbacks != null)
+            {
+                _flashbacks.OnFlashbackTriggered -= OnFlashbackTriggered;
+                _flashbacks.OnFlashbackGrounded -= OnFlashbackGrounded;
+            }
 
             _radiation = null;
             _radiationDoseBySurvivor.Clear();
@@ -419,6 +531,7 @@ namespace AtomicWar.GodotApp.Audio
             _expeditions = null;
             _disease = null;
             _survivorFate = null;
+            _flashbacks = null;
             _disposed = true;
         }
 
@@ -435,5 +548,6 @@ namespace AtomicWar.GodotApp.Audio
         internal bool HasExpeditionsBinding => _expeditions != null;
         internal bool HasDiseaseBinding => _disease != null;
         internal bool HasSurvivorFateBinding => _survivorFate != null;
+        internal bool HasFlashbacksBinding => _flashbacks != null;
     }
 }

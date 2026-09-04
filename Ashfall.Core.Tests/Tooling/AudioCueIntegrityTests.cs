@@ -61,19 +61,37 @@ namespace Ashfall.Core.Tests.Tooling
             }
         }
 
+        private static string DataCatalogPath => Path.Combine(GetRepositoryRoot(), "Assets", "StreamingAssets", "Data", "audio_cues.json");
+
         [Fact]
         public void AudioCueCatalog_AllRegistrations_ReferenceValidBuses()
         {
-            var content = File.ReadAllText(CatalogPath);
-            var regPattern = new Regex(@"Reg\(\s*\w+\s*,\s*""res://[^""]+""\s*,\s*(?:AudioBusNames\.)?(\w+)");
-            var matches = regPattern.Matches(content);
+            Assert.True(File.Exists(DataCatalogPath), $"audio_cues.json must exist at {DataCatalogPath}");
+            using var doc = JsonDocument.Parse(File.ReadAllText(DataCatalogPath));
+            var cues = doc.RootElement.GetProperty("cues");
+            Assert.True(cues.GetArrayLength() > 0, "audio_cues.json must contain registered cues");
 
-            Assert.NotEmpty(matches);
-
-            foreach (Match match in matches)
+            foreach (var cue in cues.EnumerateArray())
             {
-                var bus = match.Groups[1].Value;
+                var bus = cue.GetProperty("bus").GetString();
+                Assert.NotNull(bus);
                 Assert.Contains(bus, ValidBusIdentifiers);
+            }
+        }
+
+        [Fact]
+        public void AudioCueCatalog_AllJsonCues_HaveConstantsInCode()
+        {
+            var constants = new HashSet<string>(StringComparer.Ordinal);
+            var constPattern = new Regex(@"public\s+const\s+string\s+\w+\s*=\s*""([^""]+)"";");
+            foreach (Match match in constPattern.Matches(File.ReadAllText(CatalogPath)))
+                constants.Add(match.Groups[1].Value);
+
+            using var doc = JsonDocument.Parse(File.ReadAllText(DataCatalogPath));
+            foreach (var cue in doc.RootElement.GetProperty("cues").EnumerateArray())
+            {
+                string id = cue.GetProperty("id").GetString()!;
+                Assert.Contains(id, constants);
             }
         }
 

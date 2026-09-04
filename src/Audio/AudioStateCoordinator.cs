@@ -27,6 +27,11 @@ namespace AtomicWar.GodotApp.Audio
             if (_currentSnapshot == snapshot) return;
             _currentSnapshot = snapshot;
             ApplyDucking(snapshot);
+
+            if (snapshot == AudioSnapshot.Surface)
+                AudioManager.Instance?.SetBunkerOcclusion(false);
+            else if (snapshot == AudioSnapshot.Normal || snapshot == AudioSnapshot.ShelterCrisis || snapshot == AudioSnapshot.MedicalCritical)
+                AudioManager.Instance?.SetBunkerOcclusion(true);
         }
 
         private void ApplyDucking(AudioSnapshot snapshot)

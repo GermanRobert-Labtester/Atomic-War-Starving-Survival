@@ -121,6 +121,32 @@ namespace AtomicWar.GodotApp
 
             // Plan 29 29B: daily machine glitch pass — journal one-shots, evaluate continuous.
             TickMachineGlitchEvents(day);
+
+            // Plan 29 §29B.21: machine tell audio — quirk cues start on threshold
+            // crossings and stop on recovery; personality beds sustain.
+            TickMachineTellAudio();
+        }
+
+        /// <summary>
+        /// Plan 29 §29B.21 consumer side: daily machine tell audio sync. Evaluates
+        /// the same readings the text tells use and diffs the fired quirks against
+        /// the live audio conditions — newly degraded tells start their ElevenLabs
+        /// cue, recovered tells stop it, personality beds stay continuous. The
+        /// condition system's already_active guard makes repeated applies no-ops,
+        /// so audio fires on threshold transitions (§14), never per frame. No new
+        /// state authority: tells re-derive from the owning systems' live condition.
+        /// </summary>
+        private void TickMachineTellAudio()
+        {
+            var catalog = GetMachineTellCatalog();
+            if (catalog == null || catalog.MachineCount == 0) return;
+
+            var readings = BuildMachineReadings();
+            if (readings == null) return;
+
+            Ashfall.Core.Shelter.MachineTellAudioSync.Apply(
+                catalog, readings, _audioConditions,
+                cueId => AtomicWar.GodotApp.Audio.AudioCueCatalog.Resolve(cueId)?.Loop ?? false);
         }
 
         /// <summary>Apply an unlock batch through the journal (the single persistence authority).</summary>
@@ -249,10 +275,11 @@ namespace AtomicWar.GodotApp
         private void SetupWaterTreatment()
         {
             if (_waterTreatment != null) return;
+            SetupInventory();
             var wtState = WaterTreatmentSaveStore.TryLoad() ?? new WaterTreatmentState();
             var wtSys = new WaterTreatmentSystem(new GodotLog());
             wtSys.RestoreState(wtState);
-            _waterTreatment = new WaterTreatmentHostSession(wtSys);
+            _waterTreatment = new WaterTreatmentHostSession(wtSys, _inventory);
             if (_waterTreatmentPanel != null && _waterTreatmentPanel.IsInsideTree())
                 RemoveChild(_waterTreatmentPanel);
             _waterTreatmentPanel = new WaterTreatmentPanel();
@@ -335,9 +362,10 @@ namespace AtomicWar.GodotApp
                 CaptureSection("shelter_schedule", ShelterScheduleSaveStore.TryCapturePersisted(_shelterSchedule.System.CaptureState()));
         }
 
-        private void SetupAutopsy(ResearchSystem sharedResearch)
+        private void SetupAutopsy(ResearchSystem? sharedResearch = null)
         {
             if (_autopsy != null) return;
+            sharedResearch ??= _sharedResearch;
             var auState = AutopsySaveStore.TryLoad() ?? new AutopsyState();
             var auInv = _inventory.Inventory;
             var auRad = _survivors.Radiation;

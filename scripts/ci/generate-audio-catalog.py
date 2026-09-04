@@ -16,51 +16,38 @@ import pathlib
 from datetime import datetime, timezone
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
-SOURCE_FILE = REPO_ROOT / "src" / "Audio" / "AudioCueCatalog.cs"
 OUTPUT_FILE = REPO_ROOT / "docs" / "audio" / "AUDIO_CUE_CATALOG.md"
+DATA_FILE = REPO_ROOT / "Assets" / "StreamingAssets" / "Data" / "audio_cues.json"
 
 
 def parse_audio_cues():
-    if not SOURCE_FILE.is_file():
-        print(f"Error: {SOURCE_FILE} not found.", file=sys.stderr)
+    import json
+    if not DATA_FILE.is_file():
+        print(f"Error: {DATA_FILE} not found.", file=sys.stderr)
         sys.exit(1)
 
-    content = SOURCE_FILE.read_text(encoding="utf-8")
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-    # Match Reg(Id, "res://...", Bus, ...)
-    # Reg(UiClick, "res://assets/audio/ui/ui_click.wav", AudioBusNames.Ui, cooldown: 0.05f);
-    pattern = re.compile(
-        r'Reg\(\s*(?P<id_var>\w+)\s*,\s*"(?P<path>[^"]+)"\s*,\s*(?:AudioBusNames\.)?(?P<bus>\w+)(?P<extras>[^)]*)\);'
-    )
-
-    # Match constant definitions to resolve variable names to string values
-    const_pattern = re.compile(r'public\s+const\s+string\s+(?P<var>\w+)\s*=\s*"(?P<val>[^"]+)";')
-    id_map = {}
-    for match in const_pattern.finditer(content):
-        id_map[match.group("var")] = match.group("val")
-
+    cues_data = data.get("cues", [])
     cues = []
-    for match in pattern.finditer(content):
-        id_var = match.group("id_var")
-        cue_id = id_map.get(id_var, id_var)
-        res_path = match.group("path")
-        bus = match.group("bus")
-        extras = match.group("extras")
+    for c in cues_data:
+        cue_id = c.get("id", "")
+        res_path = c.get("resource_path", "")
+        bus = c.get("bus", "SFX")
+        loop = c.get("loop", False)
+        vol_db = c.get("default_volume_db", 0.0)
+        cd_sec = c.get("cooldown_seconds", 0.0)
 
-        loop = "loop: true" in extras
-        vol_match = re.search(r'vol:\s*(-?[\d\.]+)f?', extras)
-        vol = f"{vol_match.group(1)} dB" if vol_match else "0 dB"
-        cd_match = re.search(r'cooldown:\s*([\d\.]+)f?', extras)
-        cooldown = f"{cd_match.group(1)}s" if cd_match else "—"
+        vol = f"{vol_db} dB"
+        cooldown = f"{cd_sec}s" if cd_sec > 0 else "—"
 
-        # Check local asset file resolution
         local_rel = res_path.replace("res://", "")
         local_path = REPO_ROOT / local_rel
         resolved = local_path.is_file()
 
         cues.append({
             "id": cue_id,
-            "var": id_var,
             "res_path": res_path,
             "bus": bus,
             "loop": "Yes" if loop else "No",

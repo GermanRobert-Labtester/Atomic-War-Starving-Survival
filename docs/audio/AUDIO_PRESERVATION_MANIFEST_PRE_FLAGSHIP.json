@@ -1,0 +1,412 @@
+{
+  "assets/audio/radio/radio_dead_hand_pulse.wav": {
+    "sha256": "0d13487d85c65765fe149bbb22e6d77c136cbacbc17554a6787a364fd2dfa451",
+    "size_bytes": 176444,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/radio_dead_hand_pulse.wav"
+  },
+  "assets/audio/radio/radio_distress_beacon.wav": {
+    "sha256": "7183ace783507e2cf4621bf22697c940661b123ed9e568d231bbd550e28f8723",
+    "size_bytes": 158804,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/radio_distress_beacon.wav"
+  },
+  "assets/audio/radio/radio_ebs_alert.wav": {
+    "sha256": "30aeadb2b3a096935831b4c4802212ea476268c63e10b89b7104c1d29d6f35bd",
+    "size_bytes": 282284,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/radio_ebs_alert.wav"
+  },
+  "assets/audio/radio/radio_numbers_station.wav": {
+    "sha256": "d273847d42cd243ad0dfd65b8ed902e6943389da9ef49b1298641ebf00cef710",
+    "size_bytes": 370484,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/radio_numbers_station.wav"
+  },
+  "assets/audio/radio/radio_static_hiss.wav": {
+    "sha256": "f03a78278c02f068960f916371534776affb275a80e04c421d7af42abc829f56",
+    "size_bytes": 26504,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/radio_static_hiss.wav"
+  },
+  "assets/audio/radio/vo_ch11_stockpile.wav": {
+    "sha256": "12e04a5212c27babf19b9cb53eb4a3c037e589e3f8072e2313c26d19f20f3bce",
+    "size_bytes": 26944,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_ch11_stockpile.wav"
+  },
+  "assets/audio/radio/vo_ch3_ash_road.wav": {
+    "sha256": "99349338d5b20f6102d688a4835610aca807f6844fb6f36ad541aa20492c690f",
+    "size_bytes": 23416,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_ch3_ash_road.wav"
+  },
+  "assets/audio/radio/vo_ch7_milband.wav": {
+    "sha256": "61535991c5baeb3537971a44eba10490c80497ffb5ecd9a799434a717c9bfc6b",
+    "size_bytes": 24298,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_ch7_milband.wav"
+  },
+  "assets/audio/radio/vo_kind_hatch.wav": {
+    "sha256": "e565f99db7239adbb9d2e84126a3cb3a9b0ede9b4bf008d96dbb1b8fd746d79c",
+    "size_bytes": 15478,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_kind_hatch.wav"
+  },
+  "assets/audio/radio/vo_kind_hatch_relay.wav": {
+    "sha256": "0ab6a177309c440507db9c1380b134cea31942c540149a728d51fd0a4144e514",
+    "size_bytes": 442326,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_kind_hatch_relay.wav"
+  },
+  "assets/audio/radio/vo_kind_parley.wav": {
+    "sha256": "92499bea176b5c332572ffc0419b36c76b39f6861aadb57da7306957ae03535c",
+    "size_bytes": 13274,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_kind_parley.wav"
+  },
+  "assets/audio/radio/vo_kind_parley_beacon.wav": {
+    "sha256": "e862d790ca9780a7dccd7e36b7b51c300949e442c8c79d9bc00378e961733fa6",
+    "size_bytes": 494314,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_kind_parley_beacon.wav"
+  },
+  "assets/audio/radio/vo_verdict_count.wav": {
+    "sha256": "9d4b5e695157824d447d55ea3e577d6c3d3614b6b425796cf390ea956f1989e3",
+    "size_bytes": 567582,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_verdict_count.wav"
+  },
+  "assets/audio/radio/vo_verdict_eden.wav": {
+    "sha256": "3e2839572d9e3064358833ce9f28aaa4b9f48f378d7d437ad41bdd6ac39701b1",
+    "size_bytes": 456214,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_verdict_eden.wav"
+  },
+  "assets/audio/radio/vo_verdict_geophone.wav": {
+    "sha256": "46f48f135cacb1d3be9dbb32acfdf2ca9da9e19a504c7686b468ddfe49481341",
+    "size_bytes": 628522,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_verdict_geophone.wav"
+  },
+  "assets/audio/radio/vo_verdict_meter.wav": {
+    "sha256": "d677549be25b649bac17b1260ce100f520b792a2ac8a353a784480286f02984c",
+    "size_bytes": 551362,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_verdict_meter.wav"
+  },
+  "assets/audio/radio/vo_verdict_reckoning.wav": {
+    "sha256": "ef8acd09c2159c7bdcbb697174a78bdceec7d16abd1367ba21f626a928fc6785",
+    "size_bytes": 482018,
+    "backup_path": ".cache/audio_preservation_pre_flagship/radio/vo_verdict_reckoning.wav"
+  },
+  "assets/audio/ui/ui_click.wav": {
+    "sha256": "e4a979e3ad49a7b39d82baebdfd8f1f6ddc935aae616eb6803287683fff0427d",
+    "size_bytes": 7100,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_click.wav"
+  },
+  "assets/audio/ui/ui_click_01.wav": {
+    "sha256": "4dd78e809cb77f7ec36e84f083c07a5ec05fc19d7613a325ec6fac1cd829b27c",
+    "size_bytes": 4012,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_click_01.wav"
+  },
+  "assets/audio/ui/ui_click_02.wav": {
+    "sha256": "a8f0275ffe687dc96527473f510d429579a689ff1daebeb72ce6d3365ec2a0b3",
+    "size_bytes": 4012,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_click_02.wav"
+  },
+  "assets/audio/ui/ui_click_03.wav": {
+    "sha256": "c5db3404e0b70bb343396bdb447ad5abad217b52b35cc6dbc672f05b7eb3e194",
+    "size_bytes": 4012,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_click_03.wav"
+  },
+  "assets/audio/ui/ui_click_04.wav": {
+    "sha256": "1035e975c2cd3b1edb1fc3a1fd90336070166675426cf53b9c80ba98b7e3e45e",
+    "size_bytes": 4012,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_click_04.wav"
+  },
+  "assets/audio/ui/ui_confirm.wav": {
+    "sha256": "ac540cfd8cbfa4673155fb18472bebfc607dde469658f04236b51276f7c73227",
+    "size_bytes": 22094,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_confirm.wav"
+  },
+  "assets/audio/ui/ui_crt_power_on.wav": {
+    "sha256": "2e72f19849dd0f6104cf39f25a742b62f5855b1bc910821b016bc611131c6ccb",
+    "size_bytes": 48554,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_crt_power_on.wav"
+  },
+  "assets/audio/ui/ui_drawer_slide.wav": {
+    "sha256": "adf5fca1e7b9ec6641dc2657adfcfdbaf685a17b2dbad223364c83b822929769",
+    "size_bytes": 22976,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_drawer_slide.wav"
+  },
+  "assets/audio/ui/ui_paper_rustle.wav": {
+    "sha256": "a8579c679ab4810de62fcbbbf036739af92d03793adf361252d19e77a177200e",
+    "size_bytes": 24740,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_paper_rustle.wav"
+  },
+  "assets/audio/ui/ui_rotary_click.wav": {
+    "sha256": "d84b91a445f6ea316c2ed8283226ec5efcf20f16418442a072ec38a46aeda938",
+    "size_bytes": 4454,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_rotary_click.wav"
+  },
+  "assets/audio/ui/ui_stamp_heavy.wav": {
+    "sha256": "e383f18d236ecfcfdb5931b5b77e4d0a73569edf85bebe78ccbd6346840c03fc",
+    "size_bytes": 17684,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_stamp_heavy.wav"
+  },
+  "assets/audio/ui/ui_switch_toggle.wav": {
+    "sha256": "572a2c5b1b143c610e86370cf11a8997b3cebfe76e21e2d68cdac7e81cb9cd90",
+    "size_bytes": 7982,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_switch_toggle.wav"
+  },
+  "assets/audio/ui/ui_warning.wav": {
+    "sha256": "f1e86d55e4aa6c0c7a58f88c1ba550dd432fa29926d0298a4fedeeb3f42b94ed",
+    "size_bytes": 52964,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ui/ui_warning.wav"
+  },
+  "assets/audio/sfx/geiger.wav": {
+    "sha256": "f44cd6d428db6b0e1bc5d3e41a330fb808321b5c6526a1ec7af95d94a76a1db4",
+    "size_bytes": 705644,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/geiger.wav"
+  },
+  "assets/audio/sfx/radiation_alert.wav": {
+    "sha256": "bcd0a4b7f18ef3f2690c362f65ae5bf324daf72b73ba2b7cc479d4ff893d542b",
+    "size_bytes": 176444,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/radiation_alert.wav"
+  },
+  "assets/audio/sfx/sfx_air_recycler_hiss.wav": {
+    "sha256": "7093d6cc39f5f946e7e6b038efd405261702d7317346021a5f4a6274d899f275",
+    "size_bytes": 264644,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_air_recycler_hiss.wav"
+  },
+  "assets/audio/sfx/sfx_combat_decon_spray.wav": {
+    "sha256": "3d1ce1fc5466053f184ca4a65bb621334a6c10889176e5b748acbe6ce32f2d60",
+    "size_bytes": 105884,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_combat_decon_spray.wav"
+  },
+  "assets/audio/sfx/sfx_combat_last_stand.wav": {
+    "sha256": "ded22993e40edd45741ec6969d3116199dd4ce831048d37c00b86074689472b5",
+    "size_bytes": 176444,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_combat_last_stand.wav"
+  },
+  "assets/audio/sfx/sfx_danger_alarm_klaxon.wav": {
+    "sha256": "390a8048d9090c829c053c58e2924621f2716b40eba72025730ad745cab0932e",
+    "size_bytes": 181201,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_danger_alarm_klaxon.wav"
+  },
+  "assets/audio/sfx/sfx_echo_memory_shimmer.wav": {
+    "sha256": "1388d8683657b5932cb8785075a8508aa5c13b4e554b206b14bf1f0276860e45",
+    "size_bytes": 220544,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_echo_memory_shimmer.wav"
+  },
+  "assets/audio/sfx/sfx_flashback_distortion.wav": {
+    "sha256": "69795cf21b7791970329b8cd0da23a669f9c2416baef4641039c9ea5b96f503b",
+    "size_bytes": 194084,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_flashback_distortion.wav"
+  },
+  "assets/audio/sfx/sfx_flashback_grounded.wav": {
+    "sha256": "5a53fa76847ff05c373fde5744078270913201ee18155140fa9091363bf01166",
+    "size_bytes": 132344,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_flashback_grounded.wav"
+  },
+  "assets/audio/sfx/sfx_geiger_intense_crackling.wav": {
+    "sha256": "3da0bab4ccc0704154118927fcff3fa750fa32d085485b39e83da69ed0d081ea",
+    "size_bytes": 220544,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_geiger_intense_crackling.wav"
+  },
+  "assets/audio/sfx/sfx_generator_heavy_strain.wav": {
+    "sha256": "1c8e4a1def3d86a43871b0720823979acad0506863c0979ece1d41089c65aba8",
+    "size_bytes": 211724,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_generator_heavy_strain.wav"
+  },
+  "assets/audio/sfx/sfx_impact_concrete_crack.wav": {
+    "sha256": "e7a398a4059f412003f09f48cecd38831e29ee37a5e0973ae8303500cf44fb73",
+    "size_bytes": 35324,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_impact_concrete_crack.wav"
+  },
+  "assets/audio/sfx/sfx_impact_metal_ricochet.wav": {
+    "sha256": "bc252add119f75f1c406769c284b8fc7ab9826373745735492f32388900a3cf0",
+    "size_bytes": 48554,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_impact_metal_ricochet.wav"
+  },
+  "assets/audio/sfx/sfx_impact_wood_splinter.wav": {
+    "sha256": "ebaf811f313bcccc0e5e75c19b24d9861d55b04493b058dda9c454e0785b4c4d",
+    "size_bytes": 30912,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_impact_wood_splinter.wav"
+  },
+  "assets/audio/sfx/sfx_infirmary_monitor_beep.wav": {
+    "sha256": "1302355f6d7e84cf4abd894bdc299ac719e25284feb65e77de5596ba6288b927",
+    "size_bytes": 30912,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_infirmary_monitor_beep.wav"
+  },
+  "assets/audio/sfx/sfx_item_ammo_box.wav": {
+    "sha256": "0b189130dc7c265f7e8f786d139657fbf6686f8734848b9b36ea919be64d7c9b",
+    "size_bytes": 30912,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_item_ammo_box.wav"
+  },
+  "assets/audio/sfx/sfx_item_med_vial.wav": {
+    "sha256": "f032e1b20d42a1affa14ecba0a4530846e56fbfb3c1b7c80590e23090d43a834",
+    "size_bytes": 26504,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_item_med_vial.wav"
+  },
+  "assets/audio/sfx/sfx_item_ration_pack.wav": {
+    "sha256": "fa9f0abce1cc260199d23c7409b20a8daa4b3ea6bd8a5e6d9fb37dff3f11b69a",
+    "size_bytes": 39734,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_item_ration_pack.wav"
+  },
+  "assets/audio/sfx/sfx_med_quarantine_clear.wav": {
+    "sha256": "8ecc4cd002ce2ab1b3f82d66c70dfc229a057cf02cce3f0a2204d364c8350aca",
+    "size_bytes": 54728,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_med_quarantine_clear.wav"
+  },
+  "assets/audio/sfx/sfx_med_quarantine_seal.wav": {
+    "sha256": "abe7f922ec03728ad2d4a9024f5da06577df5a228fa8f33cc4a39d55cdac16b8",
+    "size_bytes": 75014,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_med_quarantine_seal.wav"
+  },
+  "assets/audio/sfx/sfx_radiation_chronic_alarm.wav": {
+    "sha256": "41250916f556f250344765b555f632ef3a16d5ffdae78c975026ac01ded9802d",
+    "size_bytes": 82558,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_radiation_chronic_alarm.wav"
+  },
+  "assets/audio/sfx/sfx_shell_casing_drop_01.wav": {
+    "sha256": "db12bad4b965f9af06d1c29eef52e2dc57a3fe93c745b01721e5ecde8f271418",
+    "size_bytes": 44144,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_shell_casing_drop_01.wav"
+  },
+  "assets/audio/sfx/sfx_shell_casing_drop_02.wav": {
+    "sha256": "aedbd25e13b48f4a742c1ab80499853b255f01f10fdd990950ebe889fd0e96a9",
+    "size_bytes": 44144,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_shell_casing_drop_02.wav"
+  },
+  "assets/audio/sfx/sfx_survivor_death.wav": {
+    "sha256": "cb0c2b33a9826f09680ff5b64c6cba8195261aa3a8ffcbec496710b70ce8293f",
+    "size_bytes": 158804,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_survivor_death.wav"
+  },
+  "assets/audio/sfx/sfx_tape_deck_button.wav": {
+    "sha256": "9492845ea32f51f2dc50684449082d94641dfa5a6f1d5f8fd838609c041def2e",
+    "size_bytes": 22094,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_tape_deck_button.wav"
+  },
+  "assets/audio/sfx/sfx_tape_deck_insert.wav": {
+    "sha256": "077d91cf9c7265eda82de3c449e097afac51fc4ec27718ae6254c043ebef88fe",
+    "size_bytes": 39734,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_tape_deck_insert.wav"
+  },
+  "assets/audio/sfx/sfx_tape_hiss_loop.wav": {
+    "sha256": "ba294935804f96240a7a9a027c44578f4aa02f2b5a99ae9dcb0dd186e5231859",
+    "size_bytes": 264644,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_tape_hiss_loop.wav"
+  },
+  "assets/audio/sfx/sfx_tape_rewind.wav": {
+    "sha256": "27527438327638d5fec6fd0d545f4dd2538e72105d4633b90a27e6f48425de78",
+    "size_bytes": 105884,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_tape_rewind.wav"
+  },
+  "assets/audio/sfx/sfx_tape_stop.wav": {
+    "sha256": "2a6daf7923c7c0220b9a6631fb58875d04bd8d96cac8856143e21cfb51a182a5",
+    "size_bytes": 22094,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_tape_stop.wav"
+  },
+  "assets/audio/sfx/sfx_trauma_cabin_fever_whisper.wav": {
+    "sha256": "b105b02227a79694dcc65882f4055639ca2e08a88340ae3ead9c61a3f7a30897",
+    "size_bytes": 264644,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_trauma_cabin_fever_whisper.wav"
+  },
+  "assets/audio/sfx/sfx_trauma_heartbeat_rapid.wav": {
+    "sha256": "845a72e7bb64148d49493d74bb4797c964c09aa6f94628232725c0dfd7ca37bc",
+    "size_bytes": 158804,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_trauma_heartbeat_rapid.wav"
+  },
+  "assets/audio/sfx/sfx_trauma_tinnitus_ring.wav": {
+    "sha256": "ca4ef5fd671981f2b44306d315a32594afb788e685ad6711f2bc67d5b3b78dbd",
+    "size_bytes": 220544,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_trauma_tinnitus_ring.wav"
+  },
+  "assets/audio/sfx/sfx_vehicle_breakdown_stall.wav": {
+    "sha256": "c6f57b1b0f087b7d4c1c10d866be8faecfff2020e1ce857b6478b734ef8eb174",
+    "size_bytes": 167624,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_vehicle_breakdown_stall.wav"
+  },
+  "assets/audio/sfx/sfx_vehicle_engine_diesel.wav": {
+    "sha256": "db04ddbd63710dc2c68330ce2f4a4db3b78f6b8a90cda010f2da9c12b2180687",
+    "size_bytes": 220544,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_vehicle_engine_diesel.wav"
+  },
+  "assets/audio/sfx/sfx_vehicle_engine_dirtbike.wav": {
+    "sha256": "d29079e6c2ee84f128feaf8cdd5f432b2109b015e8266bb3ef83bbc2124c3b3a",
+    "size_bytes": 176444,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_vehicle_engine_dirtbike.wav"
+  },
+  "assets/audio/sfx/sfx_vehicle_engine_truck.wav": {
+    "sha256": "62be834248761e69a4a93e7cb564b2444ee96f1e99cdf28174248ef77f89a06b",
+    "size_bytes": 211724,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_vehicle_engine_truck.wav"
+  },
+  "assets/audio/sfx/sfx_vehicle_refuel.wav": {
+    "sha256": "45162712c273a2130f8b2da7a9998d8b52bcd337207fed709c1f24dbb82697ec",
+    "size_bytes": 123522,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_vehicle_refuel.wav"
+  },
+  "assets/audio/sfx/sfx_vehicle_repair.wav": {
+    "sha256": "bb75688fd767cb959b019ef365b7e0760a2e433e51cae14cb3b20cfa9fffeaff",
+    "size_bytes": 105884,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_vehicle_repair.wav"
+  },
+  "assets/audio/sfx/sfx_water_filtration_loop.wav": {
+    "sha256": "11d378da5f8296ec8dd84647f34eb14a67d97c757e9d38e76203aa6652e1dda6",
+    "size_bytes": 264644,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_water_filtration_loop.wav"
+  },
+  "assets/audio/sfx/sfx_weapon_burst_rupture.wav": {
+    "sha256": "df8dea134bceac4e69b67204970e83e6c454110feae9bf1cb289d6fac9a142d1",
+    "size_bytes": 123522,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weapon_burst_rupture.wav"
+  },
+  "assets/audio/sfx/sfx_weapon_dry_fire_click.wav": {
+    "sha256": "eb1141057ea4ad19170b419f043ec4c0947acf7c4406fa890c07983360e6fc5f",
+    "size_bytes": 14156,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weapon_dry_fire_click.wav"
+  },
+  "assets/audio/sfx/sfx_weapon_molotov_burst.wav": {
+    "sha256": "38000108d3905e2b0f975cbdefaf00fe8ebf004c1ecd1c295922a02bf6b81a92",
+    "size_bytes": 141164,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weapon_molotov_burst.wav"
+  },
+  "assets/audio/sfx/sfx_weapon_rebar_spear_thud.wav": {
+    "sha256": "50d317dabcdbd7624e93764c3d0ea39f4b8e27f0ae5e341941122f25dbd94d31",
+    "size_bytes": 52964,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weapon_rebar_spear_thud.wav"
+  },
+  "assets/audio/sfx/sfx_weather_black_rain.wav": {
+    "sha256": "2396b2615e994ed63e98893962c4baaeca729d6013c53f103c8c927a4522793a",
+    "size_bytes": 119727,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weather_black_rain.wav"
+  },
+  "assets/audio/sfx/sfx_weather_blizzard.wav": {
+    "sha256": "178ea2711c74f613115601512a948e2f904e9cd92f7fa4e88e229c25c6ae189b",
+    "size_bytes": 237868,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weather_blizzard.wav"
+  },
+  "assets/audio/sfx/sfx_weather_corrosive_precipitation.wav": {
+    "sha256": "6fc1e043b9585325f6b12beb08537ca579e9622e210e4ca14c62e09027a3e1a7",
+    "size_bytes": 100044,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weather_corrosive_precipitation.wav"
+  },
+  "assets/audio/sfx/sfx_weather_emp_storm.wav": {
+    "sha256": "d59ff0b0b6ffd3e12b7635306c2c1092592709ed00a8dbd3357f50313e6fa211",
+    "size_bytes": 64473,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weather_emp_storm.wav"
+  },
+  "assets/audio/sfx/sfx_weather_glass_storm.wav": {
+    "sha256": "31e9bead6c60937c36954b93f34d2758b33639ce466a2a89432d71162306cf47",
+    "size_bytes": 102831,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_weather_glass_storm.wav"
+  },
+  "assets/audio/sfx/sfx_workshop_lathe_hum.wav": {
+    "sha256": "ac31069ab863dafe834e68b73e8f0c4d46e36aa59925463e31464a9837a2462f",
+    "size_bytes": 220544,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/sfx_workshop_lathe_hum.wav"
+  },
+  "assets/audio/sfx/weather_alert.wav": {
+    "sha256": "57fa52e59d0f87ab03cb616f3038bf070feff25d3b22f7579c83e7bca1975775",
+    "size_bytes": 158804,
+    "backup_path": ".cache/audio_preservation_pre_flagship/sfx/weather_alert.wav"
+  },
+  "assets/audio/ambience/amb_expedition_camp_fire.wav": {
+    "sha256": "ec4dbf7e1a608c65980b8dcedabc7062d1e38201c0830ff19967198823d37c8c",
+    "size_bytes": 308744,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ambience/amb_expedition_camp_fire.wav"
+  },
+  "assets/audio/ambience/amb_surface_storm.wav": {
+    "sha256": "8006a99d433a2f03ff4813f5e9289db3cbc5847dfa79724e9914e0cad87d81c6",
+    "size_bytes": 507355,
+    "backup_path": ".cache/audio_preservation_pre_flagship/ambience/amb_surface_storm.wav"
+  }
+}

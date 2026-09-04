@@ -1,0 +1,144 @@
+{
+  "schema_version": 2,
+  "generated_by": "elevenlabs_sound_generation",
+  "primary_transport": "elevenlabs_mcp_oauth",
+  "batch": "shelter_machine_quirks (Plan 29 audio hooks, Task 29B.21)",
+  "data_source": "Assets/StreamingAssets/Data/shelter_machine_identities.json (quirks[].audio_cue)",
+  "spec": "docs/shelter/PLAN29_AUDIO_HOOKS.md",
+  "generation_policy": {
+    "candidate_review_required": true,
+    "runtime_formats": [
+      "wav",
+      "ogg",
+      "mp3"
+    ],
+    "overwrite_existing": false,
+    "duplicate_generation_forbidden": true,
+    "pre_generation_verification": "AudioCueCatalog + assets/audio disk scan + sfx_manifest.json dedup check (0 collisions)"
+  },
+  "total": 20,
+  "success": 20,
+  "failed": 0,
+  "assets": [
+    {
+      "id": "hepa_intake_whistle",
+      "prompt": "Thin high air whistle from a clogged industrial HEPA intake duct under heavy draw, steady tone, underground bunker ventilation, cold and restrained",
+      "duration_target": 3.0,
+      "file": "sfx_hepa_intake_whistle.mp3"
+    },
+    {
+      "id": "hepa_storm_cough",
+      "prompt": "Large ventilation intake coughing and sputtering dust twice, muffled thumps of grit inside sheet metal ducting, underground bunker after an ash storm, restrained industrial",
+      "duration_target": 3.0,
+      "file": "sfx_hepa_storm_cough.mp3"
+    },
+    {
+      "id": "hepa_cooling_tick",
+      "prompt": "Two quiet metallic cooling ticks from a steel blower housing, slow thermal contraction, very quiet underground bunker room, restrained",
+      "duration_target": 3.0,
+      "file": "sfx_hepa_cooling_tick.mp3"
+    },
+    {
+      "id": "hepa_radon_hum",
+      "prompt": "Continuous low industrial blower hum strained slightly higher under heavier load, steady drone, underground bunker ventilation stack, cold and restrained",
+      "duration_target": 5,
+      "file": "sfx_hepa_radon_hum.mp3"
+    },
+    {
+      "id": "foundry_tuyere_knock",
+      "prompt": "Three rhythmic muffled metallic knocks deep inside an iron foundry cupola, heard through refractory brick, underground workshop, restrained",
+      "duration_target": 3.0,
+      "file": "sfx_foundry_tuyere_knock.mp3"
+    },
+    {
+      "id": "foundry_exhaust_whine",
+      "prompt": "Continuous thin metallic whine of a foundry exhaust stack losing pull on the up-draft, steady strained drone, industrial underground foundry, restrained",
+      "duration_target": 5,
+      "file": "sfx_foundry_exhaust_whine.mp3"
+    },
+    {
+      "id": "foundry_heat_shimmer",
+      "prompt": "Very quiet residual heat crackle and faint shimmer hiss above a large iron furnace cooling slowly, barely audible, underground foundry, restrained",
+      "duration_target": 5,
+      "file": "sfx_foundry_heat_shimmer.mp3"
+    },
+    {
+      "id": "foundry_vibration_tune",
+      "prompt": "Quiet low floor vibration drone with a faint musical pitch coming through a concrete slab from heavy machinery, underground foundry, restrained",
+      "duration_target": 5,
+      "file": "sfx_foundry_vibration_tune.mp3"
+    },
+    {
+      "id": "generator_fuel_cough",
+      "prompt": "Diesel generator coughing twice from fuel starvation then almost catching, rough sputtering idle, underground bunker power vault, cold and restrained",
+      "duration_target": 3.0,
+      "file": "sfx_generator_fuel_cough.mp3"
+    },
+    {
+      "id": "generator_relay_chatter",
+      "prompt": "Rapid electrical relay chatter and buzzing contacts as voltage dips, breaker panel in an underground bunker, restrained industrial",
+      "duration_target": 3.0,
+      "file": "sfx_generator_relay_chatter.mp3"
+    },
+    {
+      "id": "generator_brownout_flicker",
+      "prompt": "Electrical brownout buzz with fluorescent lamp flicker and relay clicks, unstable power on a panel board, underground bunker, restrained",
+      "duration_target": 3.0,
+      "file": "sfx_generator_brownout_flicker.mp3"
+    },
+    {
+      "id": "generator_vibration_tick",
+      "prompt": "Quiet steady metronome-like metallic tick from an idling diesel generator on its mounts, continuous, underground bunker power vault, restrained",
+      "duration_target": 4,
+      "file": "sfx_generator_vibration_tick.mp3"
+    },
+    {
+      "id": "ventilation_rattle",
+      "prompt": "Continuous sheet-metal duct rattle from an exhaust leg building pressure differential, strained ventilation, underground bunker, cold and restrained",
+      "duration_target": 5,
+      "file": "sfx_ventilation_rattle.mp3"
+    },
+    {
+      "id": "ventilation_soot_smell",
+      "prompt": "Heavy strained exhaust drone with coarse particulate rasp, overloaded sooty ventilation duct, underground bunker, restrained",
+      "duration_target": 5,
+      "file": "sfx_ventilation_soot_smell.mp3"
+    },
+    {
+      "id": "water_flutter",
+      "prompt": "Unsteady fluttering gurgle inside a water distillation still drawing slowly through worn membranes, continuous, underground bunker water plant, restrained",
+      "duration_target": 5,
+      "file": "sfx_water_flutter.mp3"
+    },
+    {
+      "id": "water_distillation_hum",
+      "prompt": "Soft steady unusual electrical hum from a water distillation still, barely noticeable, continuous, quiet underground bunker, restrained",
+      "duration_target": 5,
+      "file": "sfx_water_distillation_hum.mp3"
+    },
+    {
+      "id": "boiler_cutout_sputter",
+      "prompt": "Old shelter boiler sputtering on the last of its fuel, uneven flame and knocking before cutout, underground heating plant, cold and restrained",
+      "duration_target": 4,
+      "file": "sfx_boiler_cutout_sputter.mp3"
+    },
+    {
+      "id": "boiler_jacket_tick",
+      "prompt": "Quiet slow cooling ticks of a steel boiler jacket contracting as the fire settles, continuous gentle rhythm, underground shelter, restrained",
+      "duration_target": 4,
+      "file": "sfx_boiler_jacket_tick.mp3"
+    },
+    {
+      "id": "airlock_seal_drag",
+      "prompt": "Heavy airlock door dragging against its rubber seal mid-cycle, slow friction groan then seating, underground bunker hatch, restrained",
+      "duration_target": 3.0,
+      "file": "sfx_airlock_seal_drag.mp3"
+    },
+    {
+      "id": "airlock_machinery_grind",
+      "prompt": "Single short mechanical grind on the up-stroke of airlock machinery followed by a clean seating clunk, underground bunker hatch, restrained",
+      "duration_target": 3.0,
+      "file": "sfx_airlock_machinery_grind.mp3"
+    }
+  ]
+}
