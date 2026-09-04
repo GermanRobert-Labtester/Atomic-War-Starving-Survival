@@ -155,7 +155,9 @@ namespace Ashfall.Core
             "aircraft_", "camp_", "chem_", "policy_",
             // Plans 90-93 — acoustic listening arrays (rig_/mold_/charge_/synth_ ids
             // register via definition keys; references validate via ReferenceKeys)
-            "array_"
+            "array_",
+            // Flagship institutions (Tasks 5-8) — culture / diplomacy / sky defense / sanatorium
+            "tome_", "treaty_", "therapy_", "condition_"
         };
 
         /// <summary>
@@ -200,7 +202,9 @@ namespace Ashfall.Core
             // Plans 178-181
             "trait_id", "tactic_id", "mutation_id", "camo_id",
             // Plans 182-185
-            "aircraft_id", "camp_id", "chem_id", "policy_id", "stage_id"
+            "aircraft_id", "camp_id", "chem_id", "policy_id", "stage_id",
+            // Flagship institutions (Tasks 5-8)
+            "tome_id", "treaty_id", "ordnance_id", "therapy_id", "condition_id"
         };
 
         /// <summary>
@@ -236,7 +240,9 @@ namespace Ashfall.Core
             // Plans 90-93 — cupola foundry, vertical ascent, acoustic detection
             "feedstock_item_id", "fuel_item_id", "flux_item_id", "base_yield_item_id",
             "allowed_mold_ids", "output_item_id", "refractory_item_id", "descale_item_id",
-            "install_item_ids", "repair_item_ids", "dampening_item_id"
+            "install_item_ids", "repair_item_ids", "dampening_item_id",
+            // Flagship institutions (Tasks 5-8) — sanatorium condition refs
+            "eligible_conditions"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -250,6 +256,10 @@ namespace Ashfall.Core
         /// </summary>
         public static readonly string[] VocabularyKeys =
         {
+            // Flagship institutions (Tasks 5-8) + Plans 90-93 label columns whose
+            // slug vocabularies are not catalog references (repaired alongside the
+            // flagship institutions data registration).
+            "agenda_clauses", "canonical_surface", "sensor_class", "tool_class", "effectType",
             "tags", "intel_tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name", "exclusive_group",
             "collection_id", "affinity_key", "legacy_aliases", "observation_clue",

@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "conditions": [
+    {
+      "condition_id": "condition_combat_ptsd",
+      "display_name": "Combat-Rooted Startle Sickness",
+      "description": "The body keeps answering a door that closed months ago. Sleep comes in fits; loud nights undo weeks.",
+      "canonical_surface": "hypervigilance",
+      "reversible": false
+    },
+    {
+      "condition_id": "condition_flash_blindness_shock",
+      "display_name": "Flash-Blindness After shock",
+      "description": "The burst printed itself on the eyes. Vision returns in patches; the dark patches last longer each time.",
+      "canonical_surface": "flashback",
+      "reversible": true
+    },
+    {
+      "condition_id": "condition_severe_survivor_guilt",
+      "display_name": "Severe Survivor Guilt",
+      "description": "Every ration is an argument with someone who is not here to eat it.",
+      "canonical_surface": "guilt_insomnia",
+      "reversible": false
+    },
+    {
+      "condition_id": "condition_paranoid_psychosis",
+      "display_name": "Siege Paranoia",
+      "description": "The walls have ears and the ears have allegiances. Grounding work, done slowly, sometimes quiets them.",
+      "canonical_surface": "none",
+      "reversible": false
+    },
+    {
+      "condition_id": "condition_chronic_hypervigilance",
+      "display_name": "Chronic Hypervigilance",
+      "description": "Watches that never end, kept by people who are no longer on the roster.",
+      "canonical_surface": "hypervigilance",
+      "reversible": true
+    },
+    {
+      "condition_id": "condition_guilt_insomnia_loop",
+      "display_name": "Guilt-Insomnia Loop",
+      "description": "The night shift of the conscience, working overtime without pay.",
+      "canonical_surface": "guilt_insomnia",
+      "reversible": true
+    }
+  ],
+  "therapies": [
+    {
+      "therapy_id": "therapy_sensory_deprivation_immersion",
+      "display_name": "Dark-Tank Immersion",
+      "description": "A lined cistern, warm water, measured salts, and one hour where nothing demands anything. The quiet does the work.",
+      "eligible_conditions": ["condition_combat_ptsd", "condition_chronic_hypervigilance"],
+      "duration_days": 1,
+      "staff_skill_id": "skill_watchful",
+      "staff_skill_threshold": 30,
+      "resource_costs": [
+        {"item_id": "clean_water", "amount": 2},
+        {"item_id": "item_preservation_salt", "amount": 1}
+      ],
+      "acute_stress_reduction_permille": 400,
+      "recovery_progress": 20,
+      "relapse_modifier": 0.05,
+      "work_restriction": "bedrest",
+      "side_effects": ["disorientation_hours"],
+      "tags": ["immersion", "intensive"]
+    },
+    {
+      "therapy_id": "therapy_cognitive_catharsis",
+      "display_name": "Guided Catharsis Sessions",
+      "description": "An hour a day of saying the unsayable to someone trained not to flinch.",
+      "eligible_conditions": ["condition_severe_survivor_guilt", "condition_guilt_insomnia_loop"],
+      "duration_days": 3,
+      "staff_skill_id": "skill_cold_analysis",
+      "staff_skill_threshold": 40,
+      "resource_costs": [
+        {"item_id": "clean_water", "amount": 1}
+      ],
+      "acute_stress_reduction_permille": 250,
+      "recovery_progress": 25,
+      "relapse_modifier": 0.1,
+      "work_restriction": "light_duty",
+      "side_effects": [],
+      "tags": ["talk", "structured"]
+    },
+    {
+      "therapy_id": "therapy_trauma_desensitization",
+      "display_name": "Graded Desensitization",
+      "description": "Controlled exposure, one trigger at a time, at the patient's pace. Setbacks are part of the arithmetic.",
+      "eligible_conditions": ["condition_combat_ptsd", "condition_flash_blindness_shock"],
+      "duration_days": 4,
+      "staff_skill_id": "skill_cold_analysis",
+      "staff_skill_threshold": 50,
+      "resource_costs": [
+        {"item_id": "bandage", "amount": 1}
+      ],
+      "acute_stress_reduction_permille": 300,
+      "recovery_progress": 30,
+      "relapse_modifier": 0.15,
+      "work_restriction": "light_duty",
+      "side_effects": ["temporary_sleep_disruption"],
+      "tags": ["exposure", "graduated"]
+    },
+    {
+      "therapy_id": "therapy_dream_transcription",
+      "display_name": "Dream Transcription",
+      "description": "Mornings, a warm lamp, and a blank book. What the patient remembers gets written down and kept — for the archive, and out of the skull.",
+      "eligible_conditions": ["condition_guilt_insomnia_loop", "condition_paranoid_psychosis"],
+      "duration_days": 2,
+      "staff_skill_id": "skill_watchful",
+      "staff_skill_threshold": 20,
+      "resource_costs": [
+        {"item_id": "paper_stock", "amount": 1}
+      ],
+      "acute_stress_reduction_permille": 150,
+      "recovery_progress": 15,
+      "relapse_modifier": 0.0,
+      "work_restriction": "none",
+      "side_effects": [],
+      "grants_journal_entry": true,
+      "tags": ["journal", "archive_link"]
+    },
+    {
+      "therapy_id": "therapy_sedative_stabilization",
+      "display_name": "Sedative Stabilization",
+      "description": "Short, measured draughts to break the worst nights. Not a cure — a pause long enough to start one.",
+      "eligible_conditions": ["condition_paranoid_psychosis", "condition_combat_ptsd", "condition_guilt_insomnia_loop"],
+      "duration_days": 1,
+      "staff_skill_id": "skill_cold_analysis",
+      "staff_skill_threshold": 25,
+      "resource_costs": [
+        {"item_id": "sedative_draught", "amount": 1}
+      ],
+      "acute_stress_reduction_permille": 200,
+      "recovery_progress": 5,
+      "relapse_modifier": 0.2,
+      "work_restriction": "bedrest",
+      "side_effects": ["sedation_restriction_days"],
+      "tags": ["chemical", "stabilizing"]
+    },
+    {
+      "therapy_id": "therapy_watch_rotation_counseling",
+      "display_name": "Watch-Rotation Counseling",
+      "description": "The therapist stands part of the patient's watch beside them, then talks it through while it is still warm.",
+      "eligible_conditions": ["condition_chronic_hypervigilance", "condition_combat_ptsd"],
+      "duration_days": 3,
+      "staff_skill_id": "skill_watchful",
+      "staff_skill_threshold": 45,
+      "resource_costs": [],
+      "acute_stress_reduction_permille": 220,
+      "recovery_progress": 20,
+      "relapse_modifier": 0.1,
+      "work_restriction": "none",
+      "side_effects": [],
+      "tags": ["in_field", "talk"]
+    },
+    {
+      "therapy_id": "therapy_memorial_testimony_circle",
+      "display_name": "Memorial Testimony Circle",
+      "description": "The patient tells the shelter who they lost, and the shelter writes it into the memorial book. Grief with witnesses weighs less.",
+      "eligible_conditions": ["condition_severe_survivor_guilt", "condition_guilt_insomnia_loop"],
+      "duration_days": 2,
+      "staff_skill_id": "skill_watchful",
+      "staff_skill_threshold": 35,
+      "resource_costs": [
+        {"item_id": "paper_stock", "amount": 1}
+      ],
+      "acute_stress_reduction_permille": 180,
+      "recovery_progress": 20,
+      "relapse_modifier": 0.05,
+      "work_restriction": "none",
+      "side_effects": [],
+      "grants_journal_entry": true,
+      "tags": ["memorial", "communal"]
+    },
+    {
+      "therapy_id": "therapy_work_rhythm_restoration",
+      "display_name": "Work-Rhythm Restoration",
+      "description": "Half-shifts of real, useful work with a supervisor who stops before the shaking starts. The road back to the roster, graded.",
+      "eligible_conditions": ["condition_flash_blindness_shock", "condition_chronic_hypervigilance", "condition_paranoid_psychosis"],
+      "duration_days": 5,
+      "staff_skill_id": "skill_cold_analysis",
+      "staff_skill_threshold": 30,
+      "resource_costs": [
+        {"item_id": "clean_water", "amount": 1}
+      ],
+      "acute_stress_reduction_permille": 120,
+      "recovery_progress": 35,
+      "relapse_modifier": 0.1,
+      "work_restriction": "light_duty",
+      "side_effects": [],
+      "tags": ["rehabilitation", "graded"]
+    }
+  ]
+}
