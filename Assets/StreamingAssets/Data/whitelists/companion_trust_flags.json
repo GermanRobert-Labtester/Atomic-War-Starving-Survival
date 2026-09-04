@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "companion_trust_flags": [
+    {
+      "flag_id": "trust_edor_above_zero",
+      "gating_flag": "trust_edor_above_zero",
+      "producer": [
+        "runtime: companion-recruitment trust evaluation — shelter standing with npc_edor_vale above zero (evaluation condition, not a persisted ledger flag)"
+      ],
+      "consumers": [
+        "holdfast_npcs.json/npcs[npc_edor_vale]/companion_requirements"
+      ],
+      "canon_note": "Holdfast companion recruitment gate: Edor Vale only joins a shelter he does not distrust. Registered in CatalogIntegrityValidator.KnownRuntimeIds; mirrors the Plan 25 runtime-flag pattern."
+    },
+    {
+      "flag_id": "trust_leva_above_zero",
+      "gating_flag": "trust_leva_above_zero",
+      "producer": [
+        "runtime: companion-recruitment trust evaluation — shelter standing with npc_leva_quist above zero (evaluation condition, not a persisted ledger flag)"
+      ],
+      "consumers": [
+        "holdfast_npcs.json/npcs[npc_leva_quist]/companion_requirements"
+      ],
+      "canon_note": "Holdfast companion recruitment gate: Leva Quist only joins a shelter she does not distrust. Registered in CatalogIntegrityValidator.KnownRuntimeIds; mirrors the Plan 25 runtime-flag pattern."
+    },
+    {
+      "flag_id": "trust_yara_above_zero",
+      "gating_flag": "trust_yara_above_zero",
+      "producer": [
+        "runtime: companion-recruitment trust evaluation — shelter standing with npc_yara_holm above zero (evaluation condition, not a persisted ledger flag)"
+      ],
+      "consumers": [
+        "holdfast_npcs.json/npcs[npc_yara_holm]/companion_requirements"
+      ],
+      "canon_note": "Holdfast companion recruitment gate: Yara Holm only joins a shelter she does not distrust. Registered in CatalogIntegrityValidator.KnownRuntimeIds; mirrors the Plan 25 runtime-flag pattern."
+    },
+    {
+      "flag_id": "trust_mire_above_zero",
+      "gating_flag": "trust_mire_above_zero",
+      "producer": [
+        "runtime: companion-recruitment trust evaluation — shelter standing with npc_halden_mire above zero (evaluation condition, not a persisted ledger flag)"
+      ],
+      "consumers": [
+        "holdfast_npcs.json/npcs[npc_halden_mire]/companion_requirements"
+      ],
+      "canon_note": "Holdfast companion recruitment gate: Halden Mire only joins a shelter he does not distrust. Registered in CatalogIntegrityValidator.KnownRuntimeIds; mirrors the Plan 25 runtime-flag pattern."
+    }
+  ]
+}
