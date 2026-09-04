@@ -197,7 +197,7 @@ namespace Ashfall.Core
             // Plans 178-181
             "trait_id", "tactic_id", "mutation_id", "camo_id",
             // Plans 182-185
-            "aircraft_id", "camp_id", "chem_id", "policy_id"
+            "aircraft_id", "camp_id", "chem_id", "policy_id", "stage_id"
         };
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Ashfall.Core
         /// </summary>
         public static readonly string[] VocabularyKeys =
         {
-            "tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
+            "tags", "intel_tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name", "exclusive_group",
             "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
@@ -457,7 +457,13 @@ namespace Ashfall.Core
             // strings from unlock_trigger fields).
             "trap_catch", "combat_encounter", "encounter_sighting",
             "forage_discovery", "greenhouse_cultivation", "harvest_event",
-            "scout_observation"
+            "scout_observation",
+            // Radio rumor / broadcast quest hooks
+            "quest_patrol_bounty", "quest_missing_caravan", "quest_orphaned_stock",
+            // Companion trust gating flags (whitelists/companion_trust_flags.json)
+            "trust_edor_above_zero", "trust_leva_above_zero", "trust_yara_above_zero", "trust_mire_above_zero",
+            // Radio station owner / broadcast factions
+            "faction_civil_defense", "faction_independent_survivors", "faction_unknown_intelligence", "faction_automated_infrastructure"
         };
 
         private sealed class Ctx
