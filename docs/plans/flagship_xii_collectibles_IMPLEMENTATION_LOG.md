@@ -96,7 +96,17 @@ New (self-contained, live-data-driven, no hardcoded target IDs):
   FactionWarSystem standing isolation (no record created/modified, no
   event, unrelated faction standing intact).
 
-## Stage 9/10 — Docs and closure — PASS (gates pending foreign churn)
+## Stage 9/10 — Docs and closure — PASS
+
+Follow-up restoration: 12 Plan 95 situation prose keys recovered from the
+same pre-reset snapshot (additive; 25 → 37 keys) — unblocked the foreign
+`JournalVoiceProseExpansionTests` (7/7 PASS after restore).
+
+Final gates: host build PASS (0/0); bridge-selftest PASS; content-utilization
+CI gate PASS; isolated harness 18/18 (twice); full-suite green window
+7837/342 with every failure proven foreign via the parent-data experiment;
+data-integrity FAIL(8) foreign treaty/debt/therapy ids; `--collectible-selftest`
+not routable on rolled-back HEAD (verb registration was destroyed state).
 
 - `docs/narrative/COLLECTIBLES_NARRATIVE_QUALITY_AUDIT.md` — 40-row matrix,
   register distribution (16 distinct primaries; loss 4; routine 5; joy/pride

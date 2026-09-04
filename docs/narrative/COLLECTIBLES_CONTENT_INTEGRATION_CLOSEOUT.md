@@ -67,6 +67,16 @@ journal_voice_prose.json` (trait voices restored byte-for-byte), and the
 entry contract. The restored file diff against HEAD is purely additive
 (99 insertions, 0 deletions; 14 → 25 prose keys).
 
+The same reset also destroyed twelve Plan 95 *situation* prose keys
+(`low_food`, `low_water`, `death_of_survivor`, `successful_expedition`,
+`failed_expedition`, `faction_raid`, `disease_outbreak`, `power_failure`,
+`new_survivor_arrived`, `severe_cold`, `high_radiation_zone`,
+`moral_compromise`) that another stream's untracked
+`JournalVoiceProseExpansionTests` (7 tests) require — restored from the same
+snapshot in a follow-up commit (additive; catalog 25 → 37 keys), since the
+committed `Content/CollectibleCatalogIntegrityValidator` and the codex
+contract assume a complete prose authority.
+
 ## Faction intel mapping
 
 All seven targets route through the codex authority
@@ -168,9 +178,39 @@ ProjectReference → Ashfall.Core, xunit):
 dotnet test Builds/_verify_flagship_xii/_verify_flagship_xii.csproj
 Passed: 18 / 18   (13 acquisition/idempotency/save/standing + 5 corpus gates incl. cliché theory rows)
 ```
+Re-confirmed 18/18 after the situation-key restoration. The same two test
+files are committed into `Ashfall.Core.Tests` and run as part of the normal
+suite.
 
-The same two test files are committed into `Ashfall.Core.Tests` and run as
-part of the normal suite once the shared project compiles again.
+### Canonical gates (final state at closure)
+
+```text
+dotnet build Ashfall.csproj                                  PASS (0 errors, 0 warnings)
+dotnet test  (shared suite, one green window)                7837 passed / 342 failed / 8179
+  -> all 342 failures in foreign namespaces (see below)
+dotnet test --filter Collectible|JournalVoice|Journal|Content...  my namespaces:
+  CollectibleCodexUnlockLiveTests + CollectibleNarrativeQualityTests   PASS (18/18)
+  JournalVoiceProseExpansionTests (7)                       PASS after situation-key restore
+godot --headless -- --bridge-selftest                        PASS (exit 0)
+godot --headless -- --content-utilization-selftest           CI gate PASS (exit 0)
+godot --headless -- --data-integrity-selftest                FAIL (8) — foreign, see below
+godot --headless -- --collectible-selftest                   NOT ROUTABLE on current HEAD
+```
+
+Failure-independence proof: the scavenging-placement / merchant-balance /
+generation-channel failures reproduce IDENTICALLY with the parent-commit
+versions of `items.json` + `journal_voice_prose.json` checked out
+(parent-data experiment, same run) — they are casualties of the same reset
+(the destroyed tree evidently also carried collectible scavenging-table
+placements that the untracked placement tests expect; restoring those is the
+expedition/economy streams' lane). The 8 data-integrity findings are
+unresolved ids in `diplomatic_treaties.json`, `ledger_debt_templates.json`,
+`psychological_therapies.json` — foreign treaty/debt/therapy TDD churn; zero
+findings touch collectibles, items, or prose. `--collectible-selftest` is
+"Unrecognized headless argument" on the rolled-back HEAD: the untracked
+`HostCli.Collectibles.cs` survives but its verb registration was part of the
+destroyed working-tree state; the host also crashed in foreign
+`Main.SetupExpandedShelterSystems` during that probe.
 
 ## Remaining risks
 
