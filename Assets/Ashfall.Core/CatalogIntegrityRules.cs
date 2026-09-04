@@ -139,7 +139,11 @@ namespace Ashfall.Core
             "countermeasure_item_id",
             "from", "to",
             // Plan 46 — Scavenging Tables
-            "scavenging_table_id"
+            "scavenging_table_id",
+            // Plans 90-93 — cupola foundry, vertical ascent, acoustic detection
+            "feedstock_item_id", "fuel_item_id", "flux_item_id", "base_yield_item_id",
+            "allowed_mold_ids", "output_item_id", "refractory_item_id", "descale_item_id",
+            "install_item_ids", "repair_item_ids", "dampening_item_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>

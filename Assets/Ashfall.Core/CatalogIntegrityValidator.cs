@@ -152,7 +152,10 @@ namespace Ashfall.Core
             // Plan 40 — Ledger Debt Templates
             "debt_", "conseq_",
             // Plans 182-185 — Aviation, Forced Labor, Narcotics, Settlement Politics
-            "aircraft_", "camp_", "chem_", "policy_"
+            "aircraft_", "camp_", "chem_", "policy_",
+            // Plans 90-93 — acoustic listening arrays (rig_/mold_/charge_/synth_ ids
+            // register via definition keys; references validate via ReferenceKeys)
+            "array_"
         };
 
         /// <summary>
@@ -229,7 +232,11 @@ namespace Ashfall.Core
             // Plan 46 — Scavenging Tables
             "scavenging_table_id",
             // Plans 178-181
-            "parent_mutation_ids", "exclusive_mutation_ids"
+            "parent_mutation_ids", "exclusive_mutation_ids",
+            // Plans 90-93 — cupola foundry, vertical ascent, acoustic detection
+            "feedstock_item_id", "fuel_item_id", "flux_item_id", "base_yield_item_id",
+            "allowed_mold_ids", "output_item_id", "refractory_item_id", "descale_item_id",
+            "install_item_ids", "repair_item_ids", "dampening_item_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>

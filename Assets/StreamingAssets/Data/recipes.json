@@ -1510,6 +1510,15 @@
       "resultAmount": 1,
       "craftingTimeHours": 1.5,
       "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_battery_maintenance_fluid",
+      "recipeName": "Blend Battery Maintenance Fluid",
+      "ingredients": [ { "itemId": "item_battery_electrolyte_concentrate", "amount": 1 }, { "itemId": "clean_water", "amount": 1 } ],
+      "resultItemId": "item_battery_maintenance_fluid",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
     }
   ]
 }

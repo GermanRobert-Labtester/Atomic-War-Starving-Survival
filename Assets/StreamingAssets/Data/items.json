@@ -6759,6 +6759,114 @@
       "hungerRestore": 45,
       "moraleEffect": 3,
       "empShielded": true
+    },
+    {
+      "id": "item_geophone_probe",
+      "displayName": "Geophone Probe",
+      "description": "A weighted coil in a spiked can. Driven into soil or bedrock, it turns the ground's shudder into a whisper of current.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 0.8,
+      "tradeValue": 30
+    },
+    {
+      "id": "item_low_noise_sensor_amplifier",
+      "displayName": "Low-Noise Sensor Amplifier",
+      "description": "A shielded preamp box wound for quiet. The hard part was never hearing; it was hearing only the ground.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 1.5,
+      "tradeValue": 55
+    },
+    {
+      "id": "item_vibration_dampening_mount",
+      "displayName": "Vibration Dampening Mount",
+      "description": "Sand-filled pads and rubber gaskets that convince machinery noise to stay home instead of walking into the sensor lines.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 2.2,
+      "tradeValue": 40
+    },
+    {
+      "id": "item_bedrock_sensor_rig",
+      "displayName": "Bedrock Sensor Rig",
+      "description": "A cased borehole string with grouting kit. Lowered, sealed, and forgotten \u2014 until the deep rock has news.",
+      "type": "Material",
+      "stackMax": 3,
+      "weight": 6.0,
+      "tradeValue": 90
+    },
+    {
+      "id": "item_iron_pyrite_ore",
+      "displayName": "Iron Pyrite Ore",
+      "description": "Fool's gold, so called. The acid line knows better: roasted and worked, it gives up its sulfur honestly.",
+      "type": "Material",
+      "stackMax": 12,
+      "weight": 3.0,
+      "tradeValue": 14
+    },
+    {
+      "id": "item_industrial_acid_carboy",
+      "displayName": "Industrial Acid Carboy",
+      "description": "A waxed-glass carboy of bench acid, packed in straw. Everyone in the shelter knows exactly which shelf it lives on.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 8.0,
+      "tradeValue": 60
+    },
+    {
+      "id": "item_industrial_oxidizer_reagent",
+      "displayName": "Industrial Oxidizer Reagent",
+      "description": "A general-purpose oxidizing reagent for the bench train. It makes slow chemistry out of stubborn slag and old metal.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 3.5,
+      "tradeValue": 48
+    },
+    {
+      "id": "item_oxidizer_reagent_flask",
+      "displayName": "Precision Oxidizer Flask",
+      "description": "A sealed bench flask of the third fraction. Small, expensive, and never stored where a lamp could fall on it.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 1.2,
+      "tradeValue": 85
+    },
+    {
+      "id": "item_battery_electrolyte_concentrate",
+      "displayName": "Battery Electrolyte Concentrate",
+      "description": "Fractionated acid cut to cell strength in waxed flasks. The difference between a battery and a planter box.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 2.5,
+      "tradeValue": 38
+    },
+    {
+      "id": "item_foundry_pickling_reagent",
+      "displayName": "Foundry Pickling Reagent",
+      "description": "A dilute bath that eats scale and slag film off fresh castings. Rinsed in time, it stops where told.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 4.0,
+      "tradeValue": 42
+    },
+    {
+      "id": "item_neutralizer_lime_bag",
+      "displayName": "Neutralizer Lime Bag",
+      "description": "Burnt lime slaked and bagged. The quiet answer to everything the acid line spills, stored within reach of the retort room.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 5.0,
+      "tradeValue": 18
+    },
+    {
+      "id": "item_battery_maintenance_fluid",
+      "displayName": "Battery Maintenance Fluid",
+      "description": "Topped-up electrolyte blended for aging cells. The generator crew takes it without being asked twice.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 3.0,
+      "tradeValue": 32
     }
   ]
 }
