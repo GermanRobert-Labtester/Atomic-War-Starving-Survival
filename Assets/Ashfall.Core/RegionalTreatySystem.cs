@@ -22,14 +22,20 @@ namespace Ashfall.Core
         public int ratification_cost_day;
         public List<string> prerequisites = new List<string>();
         public List<TreatyEffect> effects = new List<TreatyEffect>();
+        /// <summary>Task 21 — all signatory factions; effect consumers match against
+        /// the full list (first entry is kept in faction_id for compatibility).</summary>
+        public List<string> signatory_factions = new List<string>();
         public float compliance_check_interval_days = 30f;
         public float violation_penalty_affinity = -20f;
+        /// <summary>Task 21.9 — treaty term length in days; 0 = indefinite.
+        /// Expiry uses the same effect-removal path as breach (no orphan modifiers).</summary>
+        public float term_days;
     }
 
     [Serializable]
     public sealed class TreatyEffect
     {
-        public string effect_type = string.Empty; // "economy_discount", "route_access", "water_quota", "labor", "power"
+        public string effect_type = string.Empty; // "economy_discount", "raid_pressure_relief", "water_quota", "power"
         public string target_id = string.Empty;
         public float value;
     }
@@ -58,6 +64,12 @@ namespace Ashfall.Core
 
         public RegionalTreatyState State => _state;
         public event Action<TreatyInstance> OnTreatyStatusChanged;
+
+        /// <summary>Task 21.2 — typed transition emitted AFTER the state mutation,
+        /// for every status change except the initial Propose (which starts no
+        /// world effects). Restoring a save never emits this — consumers may
+        /// treat transitions as exactly-once per lifecycle change.</summary>
+        public event Action<TreatyTransition>? OnTreatyTransition;
 
         public RegionalTreatySystem(ILog? log = null)
         {
@@ -112,8 +124,31 @@ namespace Ashfall.Core
             treaty.ratifiedDay = _currentDay;
             _log.Info($"[Treaty] ratified {treatyId}");
             OnTreatyStatusChanged?.Invoke(treaty);
+            OnTreatyTransition?.Invoke(BuildTransition(treaty, TreatyStatus.Proposed,
+                TreatyViolationCause.None, endedEffects: null, startedEffects: ActiveDescriptorsFor(treaty)));
             return ActionResult.Success("treaty.ratified",
                 new Dictionary<string, double> { { "scrap_cost", def.ratification_cost_scrap } });
+        }
+
+        /// <summary>Task 21.5/21.7 — player-initiated breach. Removes all ratified
+        /// benefits and flags the treaty Violated with cause Betrayal; consumers
+        /// apply breach consequences (standing penalty, raid pressure) from the
+        /// typed transition or derived state — never by poking their own stats.</summary>
+        public ActionResult BreakTreaty(string treatyId)
+        {
+            var treaty = _state.treaties.Find(t => t.treatyId == treatyId);
+            if (treaty == null) return ActionResult.Failed("unknown_treaty", "treaty.unknown");
+            if (treaty.status != TreatyStatus.Ratified && treaty.status != TreatyStatus.Active)
+                return ActionResult.Blocked("not_active", "treaty.not_active");
+
+            var ended = ActiveDescriptorsFor(treaty);
+            var from = treaty.status;
+            treaty.status = TreatyStatus.Violated;
+            treaty.violatedDay = _currentDay;
+            _log.Warn($"[Treaty] {treatyId} BROKEN by signatory breach");
+            OnTreatyStatusChanged?.Invoke(treaty);
+            OnTreatyTransition?.Invoke(BuildTransition(treaty, from, TreatyViolationCause.Betrayal, ended, null));
+            return ActionResult.Success("treaty.broken");
         }
 
         public bool IsActive(string treatyId)
@@ -134,6 +169,166 @@ namespace Ashfall.Core
             return effects;
         }
 
+        /// <summary>Task 21.2/21.11 — typed active-effect descriptors. Deterministic
+        /// order: ordinal by treaty id, then effect kind, then target id. Unknown
+        /// data effect_type strings are skipped rather than guessed at.</summary>
+        public List<TreatyActiveEffect> GetActiveEffectDescriptors()
+        {
+            var result = new List<TreatyActiveEffect>();
+            foreach (var t in _state.treaties)
+            {
+                if (t.status != TreatyStatus.Ratified && t.status != TreatyStatus.Active) continue;
+                result.AddRange(ActiveDescriptorsFor(t));
+            }
+            result.Sort(CompareDescriptors);
+            return result;
+        }
+
+        /// <summary>Task 21.5 — aggregate raid-pressure modifier for the canonical
+        /// authority (Muster.IronRaidersSystem.EvaluateRaidChance):
+        /// +TreatyEffectTable.BreachRaidPressure per Violated treaty,
+        /// −relief per active RaidPressureRelief descriptor, symmetrically clamped.
+        /// Derived from state on every read — nothing to persist, nothing to double-apply.</summary>
+        public float GetRaidPressureModifier()
+        {
+            float total = 0f;
+            foreach (var t in _state.treaties)
+            {
+                if (t.status == TreatyStatus.Violated)
+                {
+                    total += TreatyEffectTable.BreachRaidPressure;
+                    continue;
+                }
+                if (t.status != TreatyStatus.Ratified && t.status != TreatyStatus.Active) continue;
+                if (_catalog.TryGetValue(t.treatyId, out var def))
+                {
+                    foreach (var d in BuildDescriptors(t, def))
+                        if (d.Kind == TreatyEffectKind.RaidPressureRelief)
+                            total -= Math.Max(0f, d.Value);
+                }
+            }
+            return Math.Max(-TreatyEffectTable.RaidPressureModifierClamp,
+                   Math.Min(TreatyEffectTable.RaidPressureModifierClamp, total));
+        }
+
+        /// <summary>Task 21.4 — best active TradeDiscount available to a faction
+        /// (any signatory of the pact; empty signatory list = applies to all partners).
+        /// Fraction, e.g. 0.10 = −10%.</summary>
+        public float GetTradeDiscount(string factionId)
+        {
+            float best = 0f;
+            foreach (var t in _state.treaties)
+            {
+                if (t.status != TreatyStatus.Ratified && t.status != TreatyStatus.Active) continue;
+                if (!_catalog.TryGetValue(t.treatyId, out var def)) continue;
+                if (!DefIncludesFaction(def, factionId)) continue;
+                foreach (var d in BuildDescriptors(t, def))
+                    if (d.Kind == TreatyEffectKind.TradeDiscount)
+                        best = Math.Max(best, Math.Max(0f, d.Value));
+            }
+            return best;
+        }
+
+        /// <summary>Best active SupplyPriceRelief for a faction, same matching rule.</summary>
+        public float GetSupplyPriceRelief(string factionId)
+        {
+            float best = 0f;
+            foreach (var t in _state.treaties)
+            {
+                if (t.status != TreatyStatus.Ratified && t.status != TreatyStatus.Active) continue;
+                if (!_catalog.TryGetValue(t.treatyId, out var def)) continue;
+                if (!DefIncludesFaction(def, factionId)) continue;
+                foreach (var d in BuildDescriptors(t, def))
+                    if (d.Kind == TreatyEffectKind.SupplyPriceRelief)
+                        best = Math.Max(best, Math.Max(0f, d.Value));
+            }
+            return best;
+        }
+
+        /// <summary>Count of treaties in a given status — feeds the Plan 25C
+        /// escalation spine's MusterPathInput.ActiveTreatyCount/ViolatedTreatyCount.</summary>
+        public int CountByStatus(TreatyStatus status)
+        {
+            int n = 0;
+            for (int i = 0; i < _state.treaties.Count; i++)
+                if (_state.treaties[i].status == status) n++;
+            return n;
+        }
+
+        private bool DefIncludesFaction(TreatyDefinition def, string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return true;
+            if (def.signatory_factions != null && def.signatory_factions.Count > 0)
+            {
+                for (int i = 0; i < def.signatory_factions.Count; i++)
+                    if (string.Equals(def.signatory_factions[i], factionId, StringComparison.Ordinal))
+                        return true;
+                return false;
+            }
+            return string.IsNullOrEmpty(def.faction_id) ||
+                   string.Equals(def.faction_id, factionId, StringComparison.Ordinal);
+        }
+
+        private List<TreatyActiveEffect> ActiveDescriptorsFor(TreatyInstance t)
+        {
+            return _catalog.TryGetValue(t.treatyId, out var def)
+                ? BuildDescriptors(t, def)
+                : new List<TreatyActiveEffect>();
+        }
+
+        private List<TreatyActiveEffect> BuildDescriptors(TreatyInstance t, TreatyDefinition def)
+        {
+            var list = new List<TreatyActiveEffect>();
+            if (def.effects == null) return list;
+            foreach (var e in def.effects)
+            {
+                if (e == null) continue;
+                if (!TreatyEffectTable.TryMapKind(e.effect_type, out var kind, out var fallback))
+                    continue;
+                float value = e.value != 0f ? e.value : fallback;
+                list.Add(new TreatyActiveEffect
+                {
+                    TreatyId = t.treatyId,
+                    FactionId = def.faction_id,
+                    Kind = kind,
+                    TargetId = e.target_id,
+                    Value = value,
+                    SourceId = TreatyActiveEffect.MakeSourceId(t.treatyId, kind)
+                });
+            }
+            list.Sort(CompareDescriptors);
+            return list;
+        }
+
+        private static int CompareDescriptors(TreatyActiveEffect a, TreatyActiveEffect b)
+        {
+            int c = string.CompareOrdinal(a.TreatyId, b.TreatyId);
+            if (c != 0) return c;
+            c = ((int)a.Kind).CompareTo((int)b.Kind);
+            if (c != 0) return c;
+            return string.CompareOrdinal(a.TargetId, b.TargetId);
+        }
+
+        private TreatyTransition BuildTransition(
+            TreatyInstance t, TreatyStatus from, TreatyViolationCause cause,
+            List<TreatyActiveEffect>? endedEffects, List<TreatyActiveEffect>? startedEffects)
+        {
+            var transition = new TreatyTransition
+            {
+                TreatyId = t.treatyId,
+                FactionId = _catalog.TryGetValue(t.treatyId, out var def) ? def.faction_id : string.Empty,
+                From = from,
+                To = t.status,
+                Day = _currentDay,
+                Cause = cause,
+                EndedEffects = endedEffects ?? new List<TreatyActiveEffect>(),
+                StartedEffects = startedEffects ?? new List<TreatyActiveEffect>()
+            };
+            transition.EndedEffects.Sort(CompareDescriptors);
+            transition.StartedEffects.Sort(CompareDescriptors);
+            return transition;
+        }
+
         public void TickDay(int day)
         {
             _currentDay = day;
@@ -142,16 +337,32 @@ namespace Ashfall.Core
                 if (t.status != TreatyStatus.Ratified && t.status != TreatyStatus.Active) continue;
                 if (!_catalog.TryGetValue(t.treatyId, out var def)) continue;
 
+                // Task 21.9 — term expiry. Same removal path as breach: the active
+                // effects end (EndedEffects on the transition), nothing is orphaned.
+                if (def.term_days > 0 && day - t.ratifiedDay >= def.term_days)
+                {
+                    var expiredEffects = ActiveDescriptorsFor(t);
+                    var fromStatus = t.status;
+                    t.status = TreatyStatus.Expired;
+                    _log.Info($"[Treaty] {t.treatyId} EXPIRED after {def.term_days:0} day term");
+                    OnTreatyStatusChanged?.Invoke(t);
+                    OnTreatyTransition?.Invoke(BuildTransition(t, fromStatus, TreatyViolationCause.None, expiredEffects, null));
+                    continue;
+                }
+
                 if (day - t.lastComplianceCheckDay >= def.compliance_check_interval_days)
                 {
                     t.lastComplianceCheckDay = day;
                     t.complianceScore = Math.Max(0, t.complianceScore - 0.1f);
                     if (t.complianceScore <= 0)
                     {
+                        var endedEffects = ActiveDescriptorsFor(t);
+                        var fromStatus = t.status;
                         t.status = TreatyStatus.Violated;
                         t.violatedDay = day;
                         _log.Warn($"[Treaty] {t.treatyId} VIOLATED");
                         OnTreatyStatusChanged?.Invoke(t);
+                        OnTreatyTransition?.Invoke(BuildTransition(t, fromStatus, TreatyViolationCause.ComplianceFailure, endedEffects, null));
                     }
                 }
             }
