@@ -20,6 +20,16 @@ namespace AtomicWar.GodotApp.UI
         public event Action<SaveSlotId>? OnDeleteRequested;
         public event Action<string>? OnImportRequested;
 
+        /// <summary>Plan VIII · Task 22.9 — new-game reset request for the
+        /// selected slot (routed through SaveLoadHostSession.ResetSlotForNewGame).</summary>
+        public event Action<SaveSlotId>? OnResetRequested;
+
+        // Task 22.6 — destructive actions are two-step: the first click arms,
+        // the second click (same selection) confirms. Selecting anything else
+        // disarms. No typed-confirmation convention exists in this UI.
+        private SaveSlotId? _pendingDeleteSlot;
+        private bool _pendingReset;
+
         private SaveLoadHostSession? _session;
         private VBoxContainer _contentVBox = null!;
         private Label _lblSlotsTitle = null!;
@@ -122,6 +132,8 @@ namespace AtomicWar.GodotApp.UI
                     var btnSelect = AshfallUiHelpers.MakeButton("SELECT", () =>
                     {
                         _selectedSlotId = slotId;
+                        _pendingDeleteSlot = null;
+                        _pendingReset = false;
                         OnSlotSelected?.Invoke(slotId);
                         RefreshView();
                     });
@@ -130,12 +142,25 @@ namespace AtomicWar.GodotApp.UI
 
                     if (!card.IsTerminalIronMan)
                     {
-                        var btnDelete = AshfallUiHelpers.MakeButton("DEL", () =>
+                        bool armed = _pendingDeleteSlot.HasValue && _pendingDeleteSlot.Value == slotId;
+                        var btnDelete = AshfallUiHelpers.MakeButton(armed ? "SURE?" : "DEL", () =>
                         {
-                            OnDeleteRequested?.Invoke(slotId);
+                            if (_pendingDeleteSlot.HasValue && _pendingDeleteSlot.Value == slotId)
+                            {
+                                _pendingDeleteSlot = null;
+                                _pendingReset = false;
+                                OnDeleteRequested?.Invoke(slotId);
+                            }
+                            else
+                            {
+                                _pendingDeleteSlot = slotId;
+                                _pendingReset = false;
+                            }
                             RefreshView();
                         });
-                        btnDelete.CustomMinimumSize = new Vector2(60, 32);
+                        if (armed)
+                            btnDelete.AddThemeColorOverride("font_color", new Color(1f, 0.45f, 0.4f));
+                        btnDelete.CustomMinimumSize = new Vector2(90, 32);
                         hbox.AddChild(btnDelete);
                     }
 
@@ -165,6 +190,24 @@ namespace AtomicWar.GodotApp.UI
                     infoLines.Add($"Game Version: {manifest.gameVersion}");
                     infoLines.Add($"Build: {manifest.buildId}");
                     infoLines.Add($"Seed: {manifest.seed}");
+                }
+
+                // Task 22.4 — envelope health from the last persisted save.
+                var health = _session.GetEnvelopeHealth(_selectedSlotId.Value);
+                if (health == null || !health.EnvelopePresent)
+                {
+                    infoLines.Add(health != null && health.LoadFailed
+                        ? "Envelope: LOAD FAILED (corrupt — keep for recovery)"
+                        : "Envelope: none (empty slot)");
+                }
+                else
+                {
+                    infoLines.Add($"Envelope: v{health.ManifestVersion} — aggregate checksum "
+                        + (health.AggregateChecksumPresent ? "present" : "MISSING")
+                        + (health.MigratedFromLegacy ? " — migrated from legacy save" : string.Empty));
+                    infoLines.Add($"Sections saved: {health.SectionCount}");
+                    foreach (string line in health.SectionLines)
+                        infoLines.Add("  · " + line);
                 }
 
                 foreach (string line in infoLines)
@@ -217,6 +260,28 @@ namespace AtomicWar.GodotApp.UI
             btnLoad.CustomMinimumSize = new Vector2(160, 40);
             btnLoad.Disabled = !_selectedSlotId.HasValue;
             _actionButtons.AddChild(btnLoad);
+
+            // Task 22.9 — new-game reset via the save authority, two-step confirm.
+            var btnReset = AshfallUiHelpers.MakeButton(_pendingReset ? "SURE? ERASE SLOT" : "NEW GAME (RESET)", () =>
+            {
+                if (_pendingReset)
+                {
+                    _pendingReset = false;
+                    if (_selectedSlotId.HasValue)
+                        OnResetRequested?.Invoke(_selectedSlotId.Value);
+                }
+                else
+                {
+                    _pendingReset = true;
+                    _pendingDeleteSlot = null;
+                }
+                RefreshView();
+            });
+            btnReset.CustomMinimumSize = new Vector2(160, 40);
+            btnReset.Disabled = !_selectedSlotId.HasValue;
+            if (_pendingReset)
+                btnReset.AddThemeColorOverride("font_color", new Color(1f, 0.45f, 0.4f));
+            _actionButtons.AddChild(btnReset);
 
             var btnImport = AshfallUiHelpers.MakeButton("IMPORT LEGACY", () =>
             {

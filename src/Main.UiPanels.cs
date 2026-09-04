@@ -548,6 +548,15 @@ namespace AtomicWar.GodotApp
                 _saveLoadHost?.DeleteSlot(slotId);
                 UpdateContinueButton();
             };
+            // Plan VIII · Task 22.9 — reset flows through the save authority.
+            _saveLoadPanel.OnResetRequested += slotId =>
+            {
+                if (_saveLoadHost != null && _saveLoadHost.ResetSlotForNewGame(slotId))
+                    _saveLoadPanel.ShowSuccess($"Slot {slotId.Value} reset for a new campaign.");
+                else
+                    _saveLoadPanel.ShowError($"Could not reset slot {slotId.Value}.");
+                UpdateContinueButton();
+            };
             _saveLoadPanel.OnImportRequested += profileId =>
             {
                 string basePath = ProjectSettings.GlobalizePath("user://");
