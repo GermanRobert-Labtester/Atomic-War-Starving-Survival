@@ -169,15 +169,25 @@ namespace AtomicWar.GodotApp
         {
             SetupMuster();
             var ir = _muster.IronRaiders;
+            // Plan VIII · Task 21.5 — raid pressure reads include the treaty term:
+            // ratified security pacts relieve pressure, breached accords raise it.
+            float treatyMod = _regionalTreaty != null ? _regionalTreaty.System.GetRaidPressureModifier() : 0f;
+            // Compose at the read site (same pattern as DebtConsequenceHostBridge):
+            // EvaluateRaidChance owns base+visibility; treaty pressure is an additive term.
+            float effectiveChance = System.Math.Clamp(ir.EvaluateRaidChance() + treatyMod, 0f, 1f);
+            string treatyNote = MathF.Abs(treatyMod) > 0.0005f
+                ? $"\nRegional treaties: {treatyMod:+0%;-0%} raid pressure\n"
+                : string.Empty;
             _codexViewer.Text =
                 "=== FACTION: IRON RAIDERS (DEN DEFENSE) ===\n" +
                 $"Is Active: {ir.State.isActive}\n" +
                 $"Aggression Level: {ir.AggressionLevel:P0}\n" +
                 $"Shelter Visibility: {ir.State.shelterVisibility:P0}\n" +
-                $"Raid Chance Today: {ir.EvaluateRaidChance():P0}\n" +
+                $"Raid Chance Today: {effectiveChance:P0}\n" +
+                treatyNote +
                 $"Raids This Season: {ir.RaidsThisSeason}\n\n" +
                 "The Toll's den at loc_iron_raiders_den. Fortifying approach routes reduces shelter visibility and raid chance.";
-            _statusLabel.Text = $"Iron Raiders: Aggression {ir.AggressionLevel:P0}, Raid Chance {ir.EvaluateRaidChance():P0}.";
+            _statusLabel.Text = $"Iron Raiders: Aggression {ir.AggressionLevel:P0}, Raid Chance {effectiveChance:P0}.";
         }
 
         public void OnLongWalkClicked()

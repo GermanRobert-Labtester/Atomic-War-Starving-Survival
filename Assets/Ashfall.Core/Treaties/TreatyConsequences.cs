@@ -108,4 +108,69 @@ namespace Ashfall.Core
             }
         }
     }
+
+    /// <summary>Plan VIII · Task 21.6 — plain-language radio copy for typed treaty
+    /// transitions. Cold, exhausted, restrained: facts only, no faction ids, no
+    /// moralizing. The host injects the returned line through
+    /// RadioScheduleCoordinator.InjectTreatyAlert; tests pin the composition.</summary>
+    public static class TreatyBulletins
+    {
+        public static string Compose(TreatyTransition transition, TreatyDefinition? definition)
+        {
+            string title = definition?.display_name;
+            if (string.IsNullOrEmpty(title)) title = transition.TreatyId;
+            string consequences = SummarizeEffects(
+                transition.IsBreach ? transition.EndedEffects : FirstNonEmpty(transition.StartedEffects, transition.EndedEffects),
+                transition.IsBreach);
+            return transition.Cause switch
+            {
+                TreatyViolationCause.Betrayal =>
+                    $"{title}: broken. {consequences} The signatories will remember.",
+                TreatyViolationCause.ComplianceFailure =>
+                    $"{title}: obligations unmet too long. {consequences}",
+                _ when transition.To == TreatyStatus.Expired =>
+                    $"{title}: term served. {consequences}",
+                _ when transition.To == TreatyStatus.Ratified =>
+                    $"{title}: ratified. {consequences}",
+                _ => $"{title}: status now {transition.To}. {consequences}"
+            };
+        }
+
+        private static IReadOnlyList<TreatyActiveEffect> FirstNonEmpty(
+            IReadOnlyList<TreatyActiveEffect> first, IReadOnlyList<TreatyActiveEffect> second) =>
+            first.Count > 0 ? first : second;
+
+        private static string SummarizeEffects(IReadOnlyList<TreatyActiveEffect> effects, bool ended)
+        {
+            if (effects.Count == 0) return string.Empty;
+            var parts = new List<string>();
+            for (int i = 0; i < effects.Count; i++)
+            {
+                var e = effects[i];
+                string tail = ended ? " no longer holds" : " while the accord holds";
+                switch (e.Kind)
+                {
+                    case TreatyEffectKind.TradeDiscount:
+                        parts.Add($"caravan prices {(ended ? "back to full tariff" : $"ease {FormatPct(e.Value)}")}");
+                        break;
+                    case TreatyEffectKind.SupplyPriceRelief:
+                        parts.Add($"supply prices {(ended ? "back to full rate" : $"ease {FormatPct(e.Value)}")}");
+                        break;
+                    case TreatyEffectKind.RaidPressureRelief:
+                        parts.Add(ended ? "the roads are less patient now" : "raiders keep their distance");
+                        break;
+                    case TreatyEffectKind.WaterQuota:
+                        parts.Add($"{e.Value:0} liters a day guaranteed" + (ended ? "" : tail));
+                        break;
+                    case TreatyEffectKind.PowerQuota:
+                        parts.Add($"{e.Value:0} kilowatts allotted" + (ended ? "" : tail));
+                        break;
+                }
+            }
+            return parts.Count > 0 ? string.Join("; ", parts) + "." : string.Empty;
+        }
+
+        private static string FormatPct(float fraction) =>
+            $"{MathF.Round(fraction * 100f):0}%";
+    }
 }

@@ -64,6 +64,7 @@ namespace Ashfall.Core.Radio
         private string? _diseaseOutbreakAlert;
         private string? _routeDisruptionAlert;
         private string? _foundryStrikeAlert;
+        private string? _treatyAlert;
 
         public RadioScheduleCoordinator(RadioBroadcastCatalog catalog, RadioStationCatalog stations)
         {
@@ -158,6 +159,10 @@ namespace Ashfall.Core.Radio
         public void InjectDiseaseAlert(string? alertMessage) => _diseaseOutbreakAlert = alertMessage;
         public void InjectRouteAlert(string? alertMessage) => _routeDisruptionAlert = alertMessage;
         public void InjectFoundryAlert(string? alertMessage) => _foundryStrikeAlert = alertMessage;
+        /// <summary>Plan VIII · Task 21.6 — canonical broadcast surfacing for typed
+        /// treaty transitions (ratified/broken/expired). Rendered as a Regional
+        /// Compact Wire bulletin on the market/classroom civilian stations.</summary>
+        public void InjectTreatyAlert(string? alertMessage) => _treatyAlert = alertMessage;
 
         public void ClearDynamicAlerts()
         {
@@ -166,6 +171,7 @@ namespace Ashfall.Core.Radio
             _diseaseOutbreakAlert = null;
             _routeDisruptionAlert = null;
             _foundryStrikeAlert = null;
+            _treatyAlert = null;
         }
 
         // ── Schedule Resolution ─────────────────────────────────────────────────
@@ -306,6 +312,27 @@ namespace Ashfall.Core.Radio
                     SignalStrength = 6,
                     VuStrength = 0.7f,
                     BroadcastId = "alert_dynamic_route_disruption"
+                };
+            }
+
+            if (!string.IsNullOrEmpty(_treatyAlert) &&
+                (station.StationId == RadioStationCatalog.StationOpenClassroom || station.StationId == RadioStationCatalog.StationAutomatedRelay))
+            {
+                return new ScheduledBroadcastResult
+                {
+                    HasTransmission = true,
+                    FrequencyMhz = frequencyMhz,
+                    StationId = station.StationId,
+                    StationName = station.DisplayName,
+                    SourceName = "Regional Compact Wire",
+                    Headline = "DIPLOMATIC ACCORD BULLETIN",
+                    Message = _treatyAlert,
+                    Genre = BroadcastGenre.CivilianNews,
+                    Reliability = SourceReliability.Official,
+                    Priority = BroadcastPriority.Important,
+                    SignalStrength = 6,
+                    VuStrength = 0.7f,
+                    BroadcastId = "alert_dynamic_treaty_bulletin"
                 };
             }
 

@@ -88,12 +88,39 @@ namespace AtomicWar.GodotApp
                 }
             }
             _regionalTreaty = new RegionalTreatyHostSession(rtSys);
+
+            // Plan VIII · Task 21 — typed treaty transitions become world
+            // consequences through the canonical consumers: faction-war standing
+            // (escalation spine, 21.10) and the radio broadcast wire (21.6).
+            // RestoreState never emits transitions, so neither consumer can
+            // double-apply across a save/load.
+            rtSys.OnTreatyTransition += transition =>
+                OnTreatyTransitionWorldConsequences(rtSys, transition);
+
             if (_regionalTreatyPanel != null && _regionalTreatyPanel.IsInsideTree())
                 RemoveChild(_regionalTreatyPanel);
             _regionalTreatyPanel = new RegionalTreatyPanel();
             _regionalTreatyPanel.Bind(_regionalTreaty);
             _regionalTreatyPanel.Visible = false;
             AddChild(_regionalTreatyPanel);
+        }
+
+        private void OnTreatyTransitionWorldConsequences(RegionalTreatySystem treatySystem, TreatyTransition transition)
+        {
+            if (transition.IsBreach && !string.IsNullOrEmpty(transition.FactionId))
+            {
+                // Task 21.10 — through the canonical escalation API only
+                // (FactionWarSystem.ModifyStanding clamps and raises its own event).
+                var def = treatySystem.GetDefinition(transition.TreatyId);
+                int penalty = def != null ? (int)def.violation_penalty_affinity : -20;
+                _yearOfAsh?.FactionWar.ModifyStanding(transition.FactionId, penalty);
+            }
+
+            if (_radio != null)
+            {
+                var def = treatySystem.GetDefinition(transition.TreatyId);
+                _radio.ScheduleCoordinator.InjectTreatyAlert(TreatyBulletins.Compose(transition, def));
+            }
         }
 
         private void SaveRegionalTreaty()
