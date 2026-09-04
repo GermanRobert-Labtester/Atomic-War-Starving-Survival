@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "collection_id": "subterranean_zone_catalog",
+  "subterranean_zones": [
+    {
+      "id": "subnode_metro_relay_annex",
+      "display_name": "Relay Annex Substation",
+      "description": "A sealed annex beneath the relay bunker. Switchgear racks stand open like rib cages, and the dark holds a battery smell.",
+      "zone_type": "Metro",
+      "depth_tier": 1,
+      "base_structural_risk": 0.2,
+      "oxygen_class": "stale",
+      "flood_susceptibility": 0.35,
+      "scavenging_table_id": "table_loot_metro_station",
+      "narrative_tags": ["derelict_transit", "switchgear"],
+      "surface_anchor_id": "loc_hidden_relay_bunker",
+      "connection_rules": [
+        { "to": "subnode_bunker_annex_vault", "kind": "blast_door" }
+      ]
+    },
+    {
+      "id": "subnode_utility_parallel_conduit",
+      "display_name": "Parallel Conduit",
+      "description": "A utility crawl beneath the old depot road. Cable trays run ahead into a dark that answers to the drip.",
+      "zone_type": "UtilityTunnel",
+      "depth_tier": 1,
+      "base_structural_risk": 0.3,
+      "oxygen_class": "stale",
+      "flood_susceptibility": 0.55,
+      "scavenging_table_id": "table_loot_collapsed_structure",
+      "narrative_tags": ["cable_trays", "drip_line"],
+      "surface_anchor_id": "loc_cut_abandoned_depot",
+      "connection_rules": [
+        { "to": "subnode_transit_undercrossing", "kind": "platform_gap" }
+      ]
+    },
+    {
+      "id": "subnode_cellar_warren",
+      "display_name": "Cellar Warren",
+      "description": "Hand-dug cellars joined by someone's stubborn scooped passages. Chalk marks on the walls count days nobody remembers.",
+      "zone_type": "Cave",
+      "depth_tier": 1,
+      "base_structural_risk": 0.35,
+      "oxygen_class": "thin",
+      "flood_susceptibility": 0.4,
+      "scavenging_table_id": "table_loot_collapsed_structure",
+      "narrative_tags": ["hand_dug", "chalk_marks"],
+      "surface_anchor_id": "loc_logistics_reserve_cache",
+      "connection_rules": [
+        { "to": "subnode_flooded_maintenance_reach", "kind": "collapsed_wall" }
+      ]
+    },
+    {
+      "id": "subnode_transit_undercrossing",
+      "display_name": "Undercrossing Platform",
+      "description": "A platform under the depot interchange. The departure board still hangs by one bolt, listing places that no longer answer.",
+      "zone_type": "Metro",
+      "depth_tier": 2,
+      "base_structural_risk": 0.45,
+      "oxygen_class": "stale",
+      "flood_susceptibility": 0.6,
+      "scavenging_table_id": "table_loot_transit_depot",
+      "narrative_tags": ["derelict_transit", "departure_board"],
+      "surface_anchor_id": "loc_cut_abandoned_depot",
+      "connection_rules": [
+        { "to": "subnode_collapsed_platform_deep", "kind": "stairwell" }
+      ]
+    },
+    {
+      "id": "subnode_mine_slope_galleries",
+      "display_name": "Slope Galleries",
+      "description": "Timbered galleries following the coal seam downslope. Some timers were set by people who intended to come back.",
+      "zone_type": "Mine",
+      "depth_tier": 2,
+      "base_structural_risk": 0.55,
+      "oxygen_class": "thin",
+      "flood_susceptibility": 0.45,
+      "scavenging_table_id": "table_loot_industrial_district",
+      "narrative_tags": ["timbered_sets", "ore_cart_rails"],
+      "surface_anchor_id": "loc_cut_arsenal_ruin",
+      "connection_rules": [
+        { "to": "subnode_deep_sump_gallery", "kind": "winze" }
+      ]
+    },
+    {
+      "id": "subnode_storm_cistern",
+      "display_name": "Storm Cistern",
+      "description": "The holdfast's own cistern gallery, older than the bunker above it. When rain finds the grates, the water keeps its own time.",
+      "zone_type": "Cave",
+      "depth_tier": 2,
+      "base_structural_risk": 0.3,
+      "oxygen_class": "stale",
+      "flood_susceptibility": 0.85,
+      "scavenging_table_id": "table_loot_waterworks",
+      "narrative_tags": ["cistern", "grates", "rain_noise"],
+      "surface_anchor_id": "loc_holdfast",
+      "connection_rules": [
+        { "to": "subnode_utility_parallel_conduit", "kind": "overflow_scuttle" }
+      ]
+    },
+    {
+      "id": "subnode_bunker_annex_vault",
+      "display_name": "Annex Strong Room",
+      "description": "A vaulted records room behind the relay annex. Cabinet drawers half-open on papers the damp has been editing for years.",
+      "zone_type": "Bunker",
+      "depth_tier": 2,
+      "base_structural_risk": 0.25,
+      "oxygen_class": "stale",
+      "flood_susceptibility": 0.3,
+      "scavenging_table_id": "table_loot_municipal_archive",
+      "narrative_tags": ["records", "damp_paper"],
+      "surface_anchor_id": "loc_hidden_relay_bunker",
+      "connection_rules": []
+    },
+    {
+      "id": "subnode_collapsed_platform_deep",
+      "display_name": "The Under-Platform",
+      "description": "Where the platform fell into its own foundations. Progress is a rumour between slabs of ceiling.",
+      "zone_type": "CollapsedFacility",
+      "depth_tier": 3,
+      "base_structural_risk": 0.7,
+      "oxygen_class": "thin",
+      "flood_susceptibility": 0.65,
+      "scavenging_table_id": "table_loot_collapsed_structure",
+      "narrative_tags": ["slab_fall", "strainer_passages"],
+      "surface_anchor_id": "loc_cut_abandoned_depot",
+      "connection_rules": []
+    },
+    {
+      "id": "subnode_flooded_maintenance_reach",
+      "display_name": "Maintenance Reach",
+      "description": "A walkback flooded to the cable runs. The water is cold enough to ache and clear enough to lie.",
+      "zone_type": "UtilityTunnel",
+      "depth_tier": 3,
+      "base_structural_risk": 0.5,
+      "oxygen_class": "thin",
+      "flood_susceptibility": 0.9,
+      "scavenging_table_id": "table_loot_waterworks",
+      "narrative_tags": ["flooded_walkback", "cable_runs"],
+      "surface_anchor_id": "loc_logistics_reserve_cache",
+      "connection_rules": []
+    },
+    {
+      "id": "subnode_deep_sump_gallery",
+      "display_name": "Deep Sump",
+      "description": "The mine's lowest working, where the pumps used to win the nightly argument. The sump water has risen an unhurried inch a year.",
+      "zone_type": "Mine",
+      "depth_tier": 3,
+      "base_structural_risk": 0.65,
+      "oxygen_class": "foul",
+      "flood_susceptibility": 0.8,
+      "scavenging_table_id": "table_loot_geo_thermal_plant",
+      "narrative_tags": ["sump", "pump_ruins"],
+      "surface_anchor_id": "loc_cut_arsenal_ruin",
+      "connection_rules": []
+    }
+  ]
+}

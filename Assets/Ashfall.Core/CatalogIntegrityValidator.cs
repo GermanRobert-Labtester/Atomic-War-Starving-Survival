@@ -157,7 +157,11 @@ namespace Ashfall.Core
             // register via definition keys; references validate via ReferenceKeys)
             "array_",
             // Flagship institutions (Tasks 5-8) — culture / diplomacy / sky defense / sanatorium
-            "tome_", "treaty_", "therapy_", "condition_"
+            "tome_", "treaty_", "therapy_", "condition_",
+            // Flagship XI (Plans 154-157) — morale contagion, pathogen strains,
+            // subterranean networks, psyops campaigns (ids register via `id`;
+            // cross-references validate via ReferenceKeys)
+            "contagion_", "pathogen_", "subnode_", "psyops_"
         };
 
         /// <summary>
@@ -242,7 +246,10 @@ namespace Ashfall.Core
             "allowed_mold_ids", "output_item_id", "refractory_item_id", "descale_item_id",
             "install_item_ids", "repair_item_ids", "dampening_item_id",
             // Flagship institutions (Tasks 5-8) — sanatorium condition refs
-            "eligible_conditions"
+            "eligible_conditions",
+            // Flagship XI (Plans 154-157) — pathogen strain lineage, subterranean
+            // anchors, psyops faction targets
+            "strain_of", "mutation_targets", "surface_anchor_id", "target_faction_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
