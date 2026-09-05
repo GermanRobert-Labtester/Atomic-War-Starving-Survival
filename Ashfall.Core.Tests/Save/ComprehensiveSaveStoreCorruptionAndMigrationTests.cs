@@ -263,9 +263,9 @@ namespace Ashfall.Core.Tests.Save
             // Plans 186-189 added fallout, desperation, mercenary_bounties, archaeology,
             // Plans 190-193 added amputation, railway, fungi_cultivation, wasteland_justice;
             // Plans 178-181 added child_development, prisoner_management, mutation_tree, expedition_stealth).
-            Assert.Equal(95, SaveSectionRegistry.All.Count);
+            Assert.Equal(97, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(95, keys.Count);
+            Assert.Equal(97, keys.Count);
         }
     }
 }

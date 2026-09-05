@@ -252,3 +252,4 @@ codex_alt_*.png
 
 # Local audio/tooling working cache — never commit
 .cache/
+_verify_*.csproj

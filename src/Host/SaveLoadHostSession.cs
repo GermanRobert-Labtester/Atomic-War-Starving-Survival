@@ -269,6 +269,7 @@ public partial class SaveLoadHostSession : Node
         }
         catch (Exception)
         {
+            /* cleanup: envelope load probe — absent/unreadable slot is a valid health state, not a hard error */
             return new SlotEnvelopeHealth { EnvelopePresent = false, LoadFailed = true };
         }
         if (envelope == null)

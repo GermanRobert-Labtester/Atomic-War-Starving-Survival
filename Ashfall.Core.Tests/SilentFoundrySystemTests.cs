@@ -146,7 +146,7 @@ namespace Ashfall.Core.Tests
             var production = SilentFoundryCatalogLoader.LoadProduction(dataDir, files, json);
             Assert.NotNull(production);
             Assert.Equal(1, production.schema_version);
-            Assert.Equal(25, production.products.Count);
+            Assert.Equal(26, production.products.Count);
 
             var faction = SilentFoundryCatalogLoader.LoadFaction(dataDir, files, json);
             Assert.NotNull(faction);
@@ -154,7 +154,7 @@ namespace Ashfall.Core.Tests
 
             var catalog = new SilentFoundryCatalog();
             catalog.Load(production, faction);
-            Assert.Equal(25, catalog.ProductCount);
+            Assert.Equal(26, catalog.ProductCount);
             Assert.NotNull(catalog.GetProduct("foundry_prod_ice_anchor"));
             Assert.NotNull(catalog.GetProduct("foundry_prod_brine_pipe"));
             Assert.Null(catalog.GetProduct("foundry_prod_missing"));

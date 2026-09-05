@@ -54,6 +54,7 @@ namespace Ashfall.Core.Tests
                 ["HoldfastNpcCatalogLoader"] = "Holdfast NPC definitions await holdfast quest-loop integration.",
                 // Foreign concurrent stream landed the catalog 2026-09-01 (7738facc); wiring presumed in-flight.
                 ["CollectibleCatalogLoader"] = "Collectibles catalog is fresh concurrent-stream work; do not wire from this stream.",
+                ["DynamicQuestlineCatalogLoader"] = "Dynamic questlines catalog awaits narrative quest-loop host wiring.",
             };
 
         [Fact]

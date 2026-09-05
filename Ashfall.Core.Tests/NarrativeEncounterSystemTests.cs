@@ -222,7 +222,7 @@ namespace Ashfall.Core.Tests
 
             var defs = NarrativeEncounterCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            Assert.Equal(5, defs.Count);
+            Assert.Equal(62, defs.Count);
             Assert.Contains(defs, d => d.id == "enc_dead_letter_office");
             Assert.Contains(defs, d => d.id == "enc_weather_station");
             Assert.Contains(defs, d => d.id == "enc_pianist");
