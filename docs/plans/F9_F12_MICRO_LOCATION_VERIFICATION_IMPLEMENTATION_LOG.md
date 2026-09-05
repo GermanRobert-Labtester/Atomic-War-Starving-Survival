@@ -162,18 +162,25 @@ micros are a minority of the full encounter pool at ~0.06 trigger odds/tick.
 
 Status: PARTIAL — see below.
 
-- Wave suite (31 tests: F9 8 + F10 9 + F11 7 + F12 7): **PASS** (serial execution;
+- Wave suite (31 tests: F9 8 + F10 9 + F11 7 + F12 7): **PASS** — re-run green on
+  the latest trunk (incl. Flagship XI Slice 5) before closeout; serial execution;
   `ExpeditionDefinitionRegistry` is a static shared by loader paths, so the audit
-  classes require the repo's DisableTestParallelization contract).
-- `dotnet build Ashfall.csproj` / full-repo `dotnet test`: **blocked by concurrent
-  in-flight work from other streams** (untracked Collectible*/CraftAttribution* /
-  ContentAcceptanceLadder test files reference APIs that no longer exist on trunk —
-  `SeededRng.State`, `CollectibleCatalogFileRaw`, `TradeSpecialtySystem.OnCraftCompleted`,
-  `ContentExemption.ExpiryDate`). Not attributable to this wave; this wave's files
-  compile against current trunk (proven by the scaffold build).
+  classes require the repo's DisableTestParallelization contract.
+- `godot --headless --path . -- --data-integrity-selftest`: **PASS — 0 errors
+  across 262 catalogs** (10837 ids authored).
+- `dotnet build Ashfall.csproj`: **PASS, 0 errors** (observed in a clean window).
+- Full `dotnet test` on the repo test project: **STALLED >25 min with no output
+  (baseline 45 s)** — reproduces the pre-existing full-suite stall recorded in the
+  UI-21 audit verification table; killed after 25 min. Not attributable to this
+  wave (all wave changes are additive test files; the longest wave test runs in
+  seconds). The repo test project also oscillates between compilable and broken
+  as other streams edit in-flight files (`Plans146_149IntegrationTests.cs` broke
+  again during closeout).
 - Disclosed one-token fix to unblock the whole tree for every stream:
   `Assets/Ashfall.Core/Farming/CropStrainCatalog.cs:140` `files.Exists(path)` →
-  `files.FileExists(path)` (the `IFileIO` port has no `Exists`).
+  `files.FileExists(path)` (the `IFileIO` port has no `Exists`). The file is an
+  untracked in-flight work product of the Farming stream — left uncommitted for
+  its owner to ship.
 
 ## Cross-cutting adaptations (mid-wave trunk drift)
 
