@@ -375,6 +375,28 @@
       "fatalist": "Survival keeps asking for pieces of us and calling the exchange temporary. We paid again.",
       "empath": "Sometimes I wonder if what we’re saving is worth what we’re becoming.",
       "sociopath": "Tactical decision executed. Moral considerations are secondary to the survival of the primary infrastructure."
+    },
+    "micro_radio_tower_log": {
+      "default": "The cabinet log is intact. Two frequencies circled, dated the same autumn everything else stopped. Someone kept this mast listening long after the rest of the grid went quiet.",
+      "paranoid": "A maintenance log, too neat for the mess around it. Two frequencies circled like bait. If someone kept this tower alive, someone may still be watching what answers.",
+      "cautious": "Careful work — dates, cable runs, two frequencies marked live in a steady hand. Years old. I copied the numbers. Listening costs nothing; answering is another matter.",
+      "realist": "Maintenance log, last entry five years back. Two frequencies circled as active, mast checked on a schedule. Either the writer was thorough or hopeful. The numbers are still numbers. Worth a listen.",
+      "reckless": "Somebody’s old dial notes — two live frequencies and a maintenance rota. If anything still broadcasts, we’ll find it before the static does.",
+      "denialist": "Just a logbook. Dates, grease, a couple of stations circled. Doesn’t mean anyone is out there. Doesn’t mean anything.",
+      "fatalist": "The last entry is years old and the handwriting never wavers. They listened until they couldn’t. The frequencies will be quiet. I copied them anyway.",
+      "empath": "Whoever kept this log measured the mast every week. The last page is a schedule with no names left to run it. I copied the frequencies. Someone should remember they tried.",
+      "sociopath": "A record of habit and sentiment. The useful part is two frequencies that might still carry. The rest is a dead man’s calendar."
+    },
+    "micro_dead_livestock_tags": {
+      "default": "Most tags are gone. One kept its stamp: a farm name worn thin and a date from the first autumn. The trench was never finished. I wrote the name down. It seemed wrong to leave it in the weeds.",
+      "paranoid": "Tags on every animal, but no fence, no feed store, no people. Somebody moved this herd here after the camps closed. You don’t stage livestock next to a road unless you want it found.",
+      "cautious": "One tag legible — farm name, animal number, a date from the first autumn. I noted it and kept my hands to myself. A paper trail can matter more than loot.",
+      "realist": "Ear tags, plastic, mostly blank. One still reads: a farm name and a date from the first autumn. The herd came from somewhere organized. The trench says nobody came back for them.",
+      "reckless": "Chased tags in the weeds for ten minutes. Got a name and a number, that’s it. Somebody’s farm, somebody’s loss. Moving on.",
+      "denialist": "Just tags. Farmers tag everything. Doesn’t tell you a thing except they had cows once. It’s fine.",
+      "fatalist": "The tag I found was still bright plastic. The animal it named has been part of this trench longer than the words lasted. Nothing here ends well. Nothing here ends at all.",
+      "empath": "Someone stamped a name into each tag so the animals could be found again. One still says it clearly. I copied it down — not for trade. Just so it was somewhere.",
+      "sociopath": "Tags mean inventory. A farm with inventory this size had stores, maybe medicine. The name is a lead. The rest is weather."
     }
   }
 }

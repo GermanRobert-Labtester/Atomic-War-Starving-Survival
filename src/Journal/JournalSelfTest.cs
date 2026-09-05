@@ -53,6 +53,20 @@ namespace AtomicWar.Journal
             string voice = JournalVoice.ComposeFullText(KnowledgeKeys.HighCo2, RiskBiasTrait.Paranoid, 3);
             Check(!string.IsNullOrEmpty(voice) && voice.StartsWith("Day 3."), "voice text shape");
 
+            // --- JournalVoice prose binding (F17/F19 follow-up) ---
+            // Production binds the catalog in Main.SetupJournal; this gate proves
+            // the binding contract end-to-end: the data file loads, and the
+            // flagship micro-location keys render authored prose instead of the
+            // generic "Something changed." placeholder.
+            var proseCatalog = JournalVoiceProseCatalogLoader.LoadDefault();
+            Check(proseCatalog.Count > 0, "prose catalog loads from data authority");
+            JournalVoice.BindCatalog(proseCatalog);
+            const string Placeholder = "Something changed. I wrote it down so I would not forget.";
+            Check(JournalVoice.ComposeFullText("micro_radio_tower_log", RiskBiasTrait.Realist, 6) != Placeholder,
+                "radio tower log prose is authored (not placeholder)");
+            Check(JournalVoice.ComposeFullText("micro_dead_livestock_tags", RiskBiasTrait.Fatalist, 6) != Placeholder,
+                "livestock tags prose is authored (not placeholder)");
+
             // --- Tab clamping + unread tracking ---
             sys.SwitchTab(99);
             Check(sys.ActiveTab == JournalSystem.TabCount - 1, "tab clamp on switch");
