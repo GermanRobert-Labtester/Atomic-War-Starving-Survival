@@ -204,6 +204,8 @@ namespace AtomicWar.GodotApp
             SetupForcedLabor();
             SetupNarcotics();
             SetupPolitics();
+            // ── Flagship institutions (Tasks 5-8) ──
+            SetupFlagshipInstitutions();
             SetupFallout();
             SetupDesperation();
             SetupMercenary();
@@ -351,6 +353,10 @@ namespace AtomicWar.GodotApp
                 SaveForcedLabor();
                 SaveNarcotics();
                 SavePolitics();
+                SaveCulturalArchive();
+                SaveDiplomaticSummit();
+                SaveSkyDefense();
+                SaveSanatorium();
                 SaveFallout();
                 SaveDesperation();
                 SaveMercenary();

@@ -106,6 +106,9 @@ namespace Ashfall.Core.Content
             "mutations.json", "camouflage_gear.json",
             "aircraft_parts.json", "labor_camps.json",
             "narcotics.json", "political_policies.json",
+            // Flagship institutions (Tasks 5-8)
+            "cultural_archive_tomes.json", "diplomatic_treaties.json",
+            "sky_defense_ordnance.json", "psychological_therapies.json",
             "sump_drainage_catalog.json", "electrostatic_filtration_catalog.json",
             "atmospheric_sounding_catalog.json",
             "caravan_trade_routes.json", "power_subgrid_nodes.json", "perimeter_defenses.json",
@@ -387,6 +390,12 @@ namespace Ashfall.Core.Content
 
             // Additional mappings for previously UNRESOLVED catalogs
             loaderPatterns["vel_triage_log_names.json"] = new[] { "NarrativeBatchCatalog" };
+
+            // Flagship institutions (Tasks 5-8)
+            loaderPatterns["cultural_archive_tomes.json"] = new[] { "CulturalArchiveTomeCatalogLoader" };
+            loaderPatterns["diplomatic_treaties.json"] = new[] { "DiplomaticTreatyCatalogLoader" };
+            loaderPatterns["sky_defense_ordnance.json"] = new[] { "SkyDefenseOrdnanceCatalogLoader" };
+            loaderPatterns["psychological_therapies.json"] = new[] { "PsychologicalTherapyCatalogLoader" };
             loaderPatterns["echoes.json"] = Array.Empty<string>(); // Future content, no loader
             loaderPatterns["orphan_knocks.json"] = Array.Empty<string>(); // Whitelist infrastructure
             foreach (var cat in _graph.Catalogs)
@@ -745,6 +754,11 @@ namespace Ashfall.Core.Content
                 ["labor_camps.json"] = new[] { "ForcedLaborSystem" },
                 ["narcotics.json"] = new[] { "NarcoticsSystem" },
                 ["political_policies.json"] = new[] { "PoliticsSystem" },
+                // Flagship institutions (Tasks 5-8)
+                ["cultural_archive_tomes.json"] = new[] { "CulturalArchiveVaultSystem" },
+                ["diplomatic_treaties.json"] = new[] { "DiplomaticSummitSystem" },
+                ["sky_defense_ordnance.json"] = new[] { "SkyDefenseBatterySystem" },
+                ["psychological_therapies.json"] = new[] { "PsychologicalSanatoriumSystem" },
                 ["sump_drainage_catalog.json"] = new[] { "SumpFloodingSystem", "VentilationSystem" },
                 ["electrostatic_filtration_catalog.json"] = new[] { "VentilationSystem" },
                 ["atmospheric_sounding_catalog.json"] = new[] { "WeatherSondeSystem" },

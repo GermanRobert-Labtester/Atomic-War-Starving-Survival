@@ -44,6 +44,9 @@ namespace AtomicWar.GodotApp
             // Plan IV: ledger debt ages with the campaign; forfeits dispatch
             // consequences into faction war / raids / inventory / labor.
             _campaignDay.Register("debt_ledger", new DebtLedgerDayOwner(this), phase: 4);
+            // Flagship XI (Plan 156): underground hazards tick after expeditions
+            // (ordinal 's' > 'e', < 'w') so the bridge reads fresh sortie phases.
+            _campaignDay.Register("subterranean_network", new SubterraneanDayOwner(this), phase: 4);
 
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
@@ -51,6 +54,8 @@ namespace AtomicWar.GodotApp
             // Plan 29 29A: room-history day milestones. Reads only the identity
             // catalog and writes journal knowledge keys; no system ticks here.
             _campaignDay.Register("shelter_room_history", new ShelterRoomHistoryDayOwner(this), phase: 5);
+            // Flagship institutions (Tasks 5-8): culture, diplomacy, sky defense, sanatorium.
+            RegisterFlagshipInstitutionsOwner();
         }
 
         // ── Phase 1 Owners ───────────────────────────────────────────────
@@ -497,6 +502,37 @@ namespace AtomicWar.GodotApp
                 _m._caravans.TickRoute();
 
                 events.Add(new DayStateChangeEvent("expeditions_caravans_ticked", "expeditions_caravans", null, null, day));
+            }
+        }
+
+        /// <summary>
+        /// Flagship XI (Plan 156) — underground day: oxygen, cave-in and flood
+        /// hazards for every active underground sortie, claustrophobia morale
+        /// through the needs authority, and forced retreats back through the
+        /// expedition engine. Runs after expeditions (registration phase 4,
+        /// ordinal after expeditions_caravans) and before world_evolution.
+        /// </summary>
+        private sealed class SubterraneanDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public SubterraneanDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { /* no snapshot: hazards are day-local */ }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupSubterranean();
+                if (_m._subterranean == null) return;
+
+                _m._subterranean.TickDay(day, requestRetreat: survivorId =>
+                {
+                    _m._expeditions?.Retreat(survivorId);
+                });
+
+                int discovered = 0;
+                var nodes = _m._subterranean.System.State.nodes;
+                for (int i = 0; i < nodes.Count; i++)
+                    if (nodes[i] != null && nodes[i].discovered) discovered++;
+
+                events.Add(new DayStateChangeEvent("subterranean_ticked", "subterranean_network", null, null, discovered));
             }
         }
 
