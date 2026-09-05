@@ -183,22 +183,23 @@ Host needs are interfaces in `Assets/Ashfall.Core/Ports.cs`:
 | `ILog`          | Info/Warn/Error logging       | `GodotLog`             |
 | `IClock`        | Day counter                   | core default           |
 | `ISeededRng`    | Deterministic PRNG            | `CoreSeededRng`        |
-| `IEventBus`     | String-based pub/sub          | **NOT USED** (direct calls) |
+| `IEventBus`     | Bounded radio/intercept bus   | `SimpleEventBus` (strictly bounded; see `docs/architecture/EVENT_SURFACE.md`) |
 
-`ISimClock` (tick-based) duplicates `IClock` — consolidation planned.
+`IClock` (day-level whole days) and `ISimClock` (tick-based intraday resolution) are intentionally decoupled by architectural directive: DO NOT MERGE. Governed by `docs/architecture/CLOCK_POLICY.md` and verified by `ClockPolicyTests`.
 
 ### Invariant 3 — Cross-host save compatibility
 A save written by one host must load in the other. **Unity host removed** — save compatibility is now Godot-only. The `SaveWireContract` tests (7 tests) pin the JSON shape and `SaveChecksum` hash for the Godot host. All save stores ship checksummed envelopes; the legacy `JsonUtility` path is gone with `_Game/`.
 
 ### Invariant 4 — Determinism
-Same seed ⇒ identical simulation in both engines. Use `ISeededRng` (xorshift64*). Never `System.Random`. Never `Guid.NewGuid()`.
+Same seed ⇒ identical simulation in both engines. Use `ISeededRng` (xorshift64*). Never `System.Random`. Never `Guid.NewGuid()`. Strongly typed C# events (`event Action<T>`) are the canonical event default (see `docs/architecture/EVENT_SURFACE.md`).
 
 Known offenders (fix when touching these):
 - ~~`Assets/Ashfall.Core/FinalWishSystem.cs:66` — `public System.Random Rng;`~~ — **RESOLVED** (now uses `ISeededRng`)
 - ~~`Assets/Ashfall.Core/CombatTraumaSystem.cs:53` — `public System.Random Rng;`~~ — **RESOLVED** (now uses `ISeededRng`)
 - ~~`Assets/Ashfall.Core/WeatherSystem.cs:144` — `new Random(unchecked(...))`~~ — **RESOLVED** (now uses `SeededRng`)
-- `Assets/Ashfall.Core/Inventory/ProceduralItemInstance.cs:36` — `Guid.NewGuid()`
-- `InMemoryFlagLedger` uses `StringComparer.OrdinalIgnoreCase` — case-normalization drift risk across hosts.
+- ~~`Assets/Ashfall.Core/Inventory/ProceduralItemInstance.cs` — `Guid.NewGuid()`~~ — **RESOLVED** (deterministic id path; documented at line ~48; sequence state pinned by `ProceduralItemInstanceDeterminismTests`)
+- ~~`InMemoryFlagLedger` OrdinalIgnoreCase drift~~ — **RESOLVED** (`Normalize` + `StringComparer.Ordinal` in `Flags/IFlagLedger.cs`; pinned by `FlagLedgerDeterminismTests`)
+- ~~Unsanctioned `System.Random` / `new Random(` / `Random.Shared` / `Guid.NewGuid` / `DateTime.Now` / `DateTime.UtcNow`~~ — **RESOLVED & MECHANICALLY GATED** (Plan 44: gated by `Ashfall.Core.Tests/DeterminismGuardTests.cs`; non-gameplay call sites documented via `DETERMINISM_ALLOWLIST:`; verified across Core and src)
 
 ### Invariant 5 — No gameplay logic in hosts
 Thin MonoBehaviours (Unity) and thin Nodes (Godot) handle only presentation, input, and wiring. Gameplay lives in plain C# systems inside `Ashfall.Core`.
@@ -256,15 +257,27 @@ DTOs are `[Serializable]` plain C# classes. Use `IJsonSerializer`, not `JsonUtil
 
 ## EVENT SYSTEM
 
-Two parallel buses (architectural debt, merge planned):
+Two parallel buses (architectural debt; full merge deferred — audit #32 disposition):
 
 | Bus                              | Style                            | Where it's real       |
 |----------------------------------|----------------------------------|-----------------------|
-| `IEventBus` / `SimpleEventBus`   | String-based, constructor-injected | Defined, **underused** |
+| `IEventBus` / `SimpleEventBus`   | String-based, constructor-injected | Verdict radio/census + DiveInstanceRunner (+ HostEventAdapter). Not a general gameplay bus. |
 | ~~`EventBus` static class~~ — **REMOVED** (Unity host deleted) | Type-safe generics, allocation-free, editor profiling | Unity host deleted with `_Game/` |
-| Godot                            | No bus — direct method calls on host sessions | — |
+| Godot                            | No bus — direct method calls / C# events on host sessions | Primary pattern |
 
-Rule: every public system raises C# events on state change (for UI + save). Use whichever bus the host wires.
+Rule: every public system raises C# events on state change (for UI + save). Prefer typed C# events; do not expand `IEventBus` string topics without an explicit migration plan.
+
+---
+
+## MICRO-LOCATION INTEGRATION CONTRACT (F17–F20)
+
+Micro-locations (`Assets/StreamingAssets/Data/micro_locations.json`) resolve through `NarrativeEncounterSystem.TryResolve`, which returns a consequence payload the host applies **in this fixed order**: item delta → journal unlock → location discovery → world flag → hazard routing. Effects must flow into the subsystem that already owns the mechanic — never a parallel `MicroLocationXxxSystem`.
+
+- **Hazard flags** (e.g. `micro_contamination_exposure` → `disease_zoonotic_flu`) route through `MicroLocationHazardRegistry` (`Assets/Ashfall.Core/Narrative/`) into the owning disease authority. Every authored `setWorldFlag` must have a registered hazard consumer or sit on the reviewed-inert list in `MicroLocationIntegrationDeterminismTests` — a flag with no consumer fails the suite.
+- **`seed_packets` is plantable** through the canonical `GreenhouseExpansionCatalog.CropCatalog` (13 crops; mixed packet → tuber profile). Never add a micro-location-specific planting exception.
+- **One-shot discipline:** depleting choices exhaust the site (Core F1); hazard consequences fire only on the flag's unset→set transition plus `DiseaseSystem.Infect`'s own already-infected no-op. Deterministic: no new RNG in the resolution or hazard path.
+
+Authoritative per-task docs: `docs/discovery/MICRO_LOCATION_HAZARDS.md`, `MICRO_LOCATION_GREENHOUSE.md`, `MICRO_LOCATION_RADIO.md`, `MICRO_LOCATION_WATER.md`. Known pending extension: discovery selection has no season/drought/skill context yet — see `docs/plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md`.
 
 ---
 
@@ -324,16 +337,16 @@ Known issues:
 | #  | Issue                                                              | Location                                                         |
 |----|--------------------------------------------------------------------|------------------------------------------------------------------|
 | H1 | ~~`HoldfastRuntimeSession` duplicates core survival mechanics~~ — **RESOLVED** (thin projection onto `NeedsSystem`/`RadiationSystem` via `SurvivorsHostSession`; fallback `_fallback*` only for headless tests) | `src/Host/HoldfastRuntimeSession.cs:44` (`Health`/`Hunger`/`Thirst`/`Radiation` project via `Survivors?.Find()`; `TickDay:164` fallback decay only when `Survivors==null`) |
-| H2 | Duplicate `WornGear` class                                         | both in Core (`Inventory/Inventory.cs:22` + `Radiation/RadiationSystem.cs:64`); consolidate to one location. **Bridge exists:** `Radiation.WornGear.FromInventory(Inventory.WornGear)` is the single sanctioned conversion point, wired by the Godot host `SurvivorsHostSession` (equipped gas mask/hazmat now cuts dose; verified by `--survivors-selftest` gear probes + `InventoryGearBridgeTests`). |
-| H3 | ~~`SimClock` duplicate~~ — **CLARIFIED** (not a duplicate: `Ashfall.Core/HostDefaults.cs:90` `SimClock:IClock` day-based vs `Ashfall.Core/Clock/ISimClock.cs:16` `SimClock:ISimClock,IClock` tick-based; both intentional, `ISimClock` tick granularity for Verdict/Warlord clocks) | `Ashfall.Core/Clock/ISimClock.cs:6` + `HostDefaults.cs:90` — keep both; consolidation is tick→day alias only if needed |
+| H2 | ~~Duplicate `WornGear` class~~ — **RESOLVED** (consolidated)         | Radiation uses `Inventory.WornGear` directly (`using InventoryWornGear = Ashfall.Core.Inventory.WornGear` in `RadiationSystem.cs`); `FromInventory` removed. Host path is `Inventory.FillWornGear` via `SurvivorsHostSession` (gas mask/hazmat cuts dose; `--survivors-selftest` + `InventoryGearBridgeTests`). |
+| H3 | ~~`SimClock` duplicate~~ — **RESOLVED & POLICY-ENFORCED** (Plan 45) | Non-merge directive in `docs/architecture/CLOCK_POLICY.md`: `IClock` (day-based) and `ISimClock` (tick-based) serve decoupled horizons. Verified by `ClockPolicyTests` (Verdict 7-day 03:00 cadence, Warlord daily idempotency, tick-day conversion, and replay). |
 | H4 | ~~13 bare `catch { }` blocks swallow exceptions~~ — **RESOLVED** | `YearOfAshCatalogLoader.cs` (7) + `VerdictCatalogLoader.cs` (3) — zero bare `catch { }`; every parse failure routes through `CatalogDiagnostics.Warn(path, shape, ex)` → an injectable `ILog` sink (default `ConsoleLog`, overridable via `RegisterLog`), carrying file path + attempted JSON shape. Missing optional files stay silent-empty by design (not a failure). Regression coverage in `Ashfall.Core.Tests/CatalogLoaderHardeningTests.cs` (6 tests: malformed→logged for both loaders, valid→baseline, missing→silent-empty). |
 | H5 | Utility AI forked — **Core vs Godot host** (not Unity)             | `Assets/Ashfall.Core/UtilityAI/` vs `src/UtilityAI/` (Godot host) |
 | H6 | ~~Unity has no `IFileIO`, `IJsonSerializer`, `IClock` adapters~~ — **RESOLVED** (Unity host removed) | Unity host deleted with `_Game/` |
-| H7 | `Main.cs` (Godot) — one `partial class Main` in a single ~6.5k-line file, but internally regular: per-subsystem triads of `SetupXxx` (construct + wire system), `SaveXxx` (capture into save; `SaveAll` orchestrates all 24), `FlushXxxIfDirty` (deferred flush) — 31 Setup / 24 Save + `SaveAll` / 17 Flush methods across domains (Expeditions, Combat, Economy, Medical, Narrative, Holdfast, YearOfAsh, Maritime, Muster, …). Risks: triad drift (a Setup without a Save silently drops state) and single-file navigation; end state is one true partial file per domain | `src/Main.cs` |
+| H7 | `Main` host sprawl — ~19.8k lines across **74** `Main*.cs` partials | Triad pattern holds (`SetupXxx` / `SaveXxx` / optional `FlushXxxIfDirty`); SaveAll enrolls registered sections. Drift gated by `MainTriadDriftGateTests` (audit #28/#29). Full decomposition remains deferred (`ashfall-decompose-godot`). |
 | H8 | ~~`SettingsManager` uses `PlayerPrefs` (Unity-only)~~ — **RESOLVED** | Unity `SettingsManager.cs` deleted with `_Game/` |
 | H9 | ~~124 compiler warnings in tests~~ — RESOLVED                       | test suite builds with 0 errors, 3 minor analyzer warnings (xUnit2013/xUnit2020) — not nullable refs |
 | H10 | ~~NeedsSystem & RadiationSystem save/load round-trip tests~~ — **RESOLVED** | `NeedsRadiationSystemTests.cs` covers tick behaviour (58 tests); `NeedsRadiationSaveRoundTripTests.cs` now adds save/load round-trip coverage (17 tests): all-fields round-trip + restored-state-drives-tick, capture→tick→differs no-op guard, default/empty restore with documented defaults, checksum stability, paired capture/restore determinism for both systems, and the Core no-projection half of the `HoldfastRuntimeSession` `Survivors==null` fallback (`HoldfastRuntimeSession.cs:177`). Fallback-decay math itself lives in the Godot host (Godot.NET.Sdk/net8.0), not referenceable from the net9.0 test project, and is covered by host integration tests. |
-| H11 | JournalSystem coverage                                            | 6 Core files; `JournalSaveStore` has integrity tests; `JournalSystem` core behaviour still untested |
+| H11 | ~~JournalSystem coverage~~ — **RESOLVED** (Plan 43)                 | Full coverage closed by Plan 43 across all 6 Core journal files (`JournalSystemTests`, `JournalSystemCoreBehaviorTests`, `JournalProducerIntegrationTests`): lifecycle, newest-first, dedup, dual discovery contract, eviction at 64, tabs, object recycling, event suppression on restore, trait-driven `JournalVoice`, `ProceduralEulogyEngine`, and producer integrations (Autopsy, LibraryStudy, MoralChoice). |
 | H12 | ~~ScriptableObject definitions~~ — **RESOLVED** (migrated to JSON) | 0 ScriptableObjects remain; all data authority now in `Assets/StreamingAssets/Data/` JSON files |
 
 ---
