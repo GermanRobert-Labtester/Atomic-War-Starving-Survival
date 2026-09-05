@@ -173,7 +173,10 @@ namespace Ashfall.Core.Tests
         public void ScarceInventory_IsContendedAtomically_NoLocalCaching()
         {
             var w = new World();
-            // scarce stock (plan §14 list mapped to real ids)
+            // scarce stock (plan §14 list mapped to real ids); drain the fixture
+            // stock first so the scarcity arithmetic is hermetic
+            foreach (var id in new[] { "machine_oil", "scrap_chemical", "clean_water", "mechanical_parts", "sedative_draught", "paper_stock", "item_preservation_salt", "microfiche_film", "acetate_blank_disc", "bandage", "fuel", "battery" })
+                w.Inventory.TryConsume(id, w.Inventory.CountById(id));
             foreach (var id in new[] { "machine_oil", "scrap_chemical", "clean_water", "mechanical_parts", "sedative_draught", "paper_stock", "item_preservation_salt", "microfiche_film" })
                 w.Inventory.TryProduce(id, 2);
 

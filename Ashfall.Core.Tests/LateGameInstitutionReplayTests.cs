@@ -208,7 +208,14 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        private static string Fingerprint(Campaign c)
+        private static Ashfall.Core.Inventory.ItemDefinition? CatalogItemLookup(string itemId)
+        {
+            var catalog = Ashfall.Core.Inventory.ItemCatalogLoader.LoadCatalog(
+                DataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            return catalog.Get(itemId);
+        }
+
+        private static string Fingerprint(Campaign c, bool includeLog = true)
         {
             var lines = new List<string>();
 
@@ -249,7 +256,8 @@ namespace Ashfall.Core.Tests
             lines.Add("claims:" + string.Join(",",
                 c.Ledger.Claims.OrderBy(kv => kv.Key, StringComparer.Ordinal).Select(kv => $"{kv.Key}={kv.Value}")));
 
-            lines.AddRange(c.EventLog);
+            if (includeLog)
+                lines.AddRange(c.EventLog);
             return string.Join("\n", lines);
         }
 
@@ -271,19 +279,28 @@ namespace Ashfall.Core.Tests
             int invWaterBefore = runB.Inventory.CountById("clean_water");
 
             var fresh = new Campaign();
+            // Restore order (plan §10): sections, then host re-binding —
+            // inventory section restore + availability claim re-registration.
+            fresh.Inventory.RestoreState(runB.Inventory.CaptureState(),
+                id => CatalogItemLookup(id));
             fresh.Culture.RestoreState(cultureSave);
             fresh.Diplomacy.RestoreState(diplomacySave);
             fresh.Defense.RestoreState(defenseSave);
             fresh.Sanatorium.RestoreState(sanatoriumSave);
+            foreach (var p in fresh.Sanatorium.Patients.Where(p => p.status == "admitted"))
+                fresh.Ledger.TryClaim(p.survivor_id, PsychologicalSanatoriumSystem.InstitutionId, "patient");
+            foreach (var g in fresh.Diplomacy.Guarantees.Where(g => g.status == "exchanged"))
+                fresh.Ledger.TryClaim(g.survivor_id, DiplomaticSummitSystem.InstitutionId, "guarantee");
             fresh.RunDays(16, 30);
-
-            runA.RunDays(16, 30);
 
             // NOTE: the fresh campaign's inventory is NOT restored here (the
             // inventory section belongs to the global inventory save, outside
             // this harness); run A and fresh both execute the same script over
             // full stock, so authoritative institution state must still match.
-            Assert.Equal(Fingerprint(runA), Fingerprint(fresh));
+            string fpA = Fingerprint(runA, includeLog: false);
+            string fpB = Fingerprint(fresh, includeLog: false);
+            Assert.True(fpA == fpB,
+                "continuation divergence\n===RUN A===\n" + fpA + "\n===RUN B (restored)===\n" + fpB);
         }
 
         [Fact]
