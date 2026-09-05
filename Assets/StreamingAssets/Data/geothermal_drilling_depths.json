@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "strata": [
+    {
+      "strata_id": "strata_caprock_100m",
+      "display_name": "Caprock",
+      "start_depth_m": 0,
+      "end_depth_m": 100,
+      "rock_hardness": 2.0,
+      "drill_wear_per_meter": 0.02,
+      "seismic_hazard": 0.05,
+      "steam_temperature_c": 0,
+      "thermal_output_kw": 0,
+      "water_yield_liters_per_day": 0,
+      "min_casing_tier": 0,
+      "tags": ["surface", "shallow"]
+    },
+    {
+      "strata_id": "strata_hot_granite_300m",
+      "display_name": "Hot Granite",
+      "start_depth_m": 100,
+      "end_depth_m": 300,
+      "rock_hardness": 4.0,
+      "drill_wear_per_meter": 0.05,
+      "seismic_hazard": 0.10,
+      "steam_temperature_c": 0,
+      "thermal_output_kw": 0,
+      "water_yield_liters_per_day": 0,
+      "min_casing_tier": 1,
+      "tags": ["granite", "warm"]
+    },
+    {
+      "strata_id": "strata_steam_pocket_500m",
+      "display_name": "Steam Pocket",
+      "start_depth_m": 300,
+      "end_depth_m": 500,
+      "rock_hardness": 5.0,
+      "drill_wear_per_meter": 0.08,
+      "seismic_hazard": 0.20,
+      "steam_temperature_c": 180,
+      "thermal_output_kw": 1500,
+      "water_yield_liters_per_day": 0,
+      "min_casing_tier": 2,
+      "tags": ["steam", "geothermal"]
+    },
+    {
+      "strata_id": "strata_artesian_aquifer_750m",
+      "display_name": "Artesian Aquifer",
+      "start_depth_m": 500,
+      "end_depth_m": 750,
+      "rock_hardness": 6.0,
+      "drill_wear_per_meter": 0.10,
+      "seismic_hazard": 0.35,
+      "steam_temperature_c": 0,
+      "thermal_output_kw": 0,
+      "water_yield_liters_per_day": 40,
+      "min_casing_tier": 3,
+      "tags": ["aquifer", "water"]
+    },
+    {
+      "strata_id": "strata_magmatic_basement_1000m",
+      "display_name": "Magmatic Basement",
+      "start_depth_m": 750,
+      "end_depth_m": 1000,
+      "rock_hardness": 8.0,
+      "drill_wear_per_meter": 0.15,
+      "seismic_hazard": 0.60,
+      "steam_temperature_c": 350,
+      "thermal_output_kw": 3000,
+      "water_yield_liters_per_day": 0,
+      "min_casing_tier": 4,
+      "tags": ["magma", "deep"]
+    }
+  ]
+}

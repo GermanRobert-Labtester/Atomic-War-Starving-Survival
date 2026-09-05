@@ -313,8 +313,17 @@ namespace Ashfall.Core
                 && _state.activeCase.survivorId == survivorId
                 && _state.activeCase.status != DeconStatus.Complete
                 && _state.activeCase.status != DeconStatus.Bypassed
-                && _state.activeCase.status != DeconStatus.Failed)
+                && _state.activeCase.status != DeconStatus.Failed
+                && _state.activeCase.status != DeconStatus.RewashRequired)
                 return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
+
+            // Consume chelator FIRST — a failed precondition must consume
+            // no resources (Plans 78-81 §15 resource transaction policy).
+            if (protocol.total_chelator_units > 0)
+            {
+                if (!_inventory.TryConsume("item_decon_chelator_concentrate", protocol.total_chelator_units))
+                    return ActionResult.Blocked("no_chelator", "decon.no_chelator");
+            }
 
             // Check resources
             if (!_inventory.TryConsumeBill(new[] { "water_clean", "soap" }))
@@ -322,13 +331,6 @@ namespace Ashfall.Core
                 if (_inventory.CountById("water_clean") < 1)
                     return ActionResult.Blocked("no_water", "decon.no_water");
                 return ActionResult.Blocked("no_soap", "decon.no_soap");
-            }
-
-            // Consume chelator if required
-            if (protocol.total_chelator_units > 0)
-            {
-                if (!_inventory.TryConsume("item_decon_chelator_concentrate", protocol.total_chelator_units))
-                    return ActionResult.Blocked("no_chelator", "decon.no_chelator");
             }
 
             var caseId = $"decon_{_currentDay}_{survivorId}";
@@ -458,7 +460,8 @@ namespace Ashfall.Core
 
                 _log.Info($"[Decon] case {c.caseId}: {c.outcome} (surface={c.surfaceContamination:F2}, gate={c.radiometricGateReading:F2})");
                 OnCaseCompleted?.Invoke(c);
-                _state.activeCase = null;
+                if (c.status == DeconStatus.Complete)
+                    _state.activeCase = null;
                 OnDeconChanged?.Invoke();
 
                 return new DeconStageResult

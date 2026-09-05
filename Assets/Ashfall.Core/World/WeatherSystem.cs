@@ -222,6 +222,17 @@ namespace Ashfall.Core.World
         public bool IsScavengingBlocked(bool hasFullSuit) =>
             (Current == WeatherKind.FalloutStorm || Current == WeatherKind.BlackRain) && !hasFullSuit;
 
+        public float GetTemperaturePenaltyCelsius()
+        {
+            return Current switch
+            {
+                WeatherKind.Blizzard => BlizzardTemperaturePenaltyC,
+                WeatherKind.FalloutStorm => FalloutStormTemperaturePenaltyC,
+                WeatherKind.BlackRain => BlackRainTemperaturePenaltyC,
+                _ => 0f
+            };
+        }
+
         public float HazmatDegradeMultiplier =>
             Current == WeatherKind.BlackRain ? BlackRainHazmatMeltMultiplier : 1f;
 

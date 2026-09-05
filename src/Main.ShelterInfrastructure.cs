@@ -28,6 +28,8 @@ namespace AtomicWar.GodotApp
         private ShelterThermalHostSession _shelterThermal = null!;
         private ShelterThermalPanel _shelterThermalPanel = null!;
         private bool _shelterThermalDirty;
+        private WeatherHardeningHostSession _weatherHardening = null!;
+        private bool _weatherHardeningDirty;
         private Ashfall.Core.VentilationSystem _ventilation = null!; // Plan 29 29B: machine tell readings
         private VentilationHostSession? _ventilationHost;                    // Plan 72 stage console session
         private Ashfall.Core.Shelter.ShelterFireHazardSystem? _stageFireHazard; // Plan 72 arc-fault fire handoff
@@ -342,6 +344,29 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterThermal != null)
                 CaptureSection("shelter_thermal", ShelterThermalSaveStore.TryCapturePersisted(_shelterThermal.System.CaptureState()));
+        }
+
+        private void SetupWeatherHardening()
+        {
+            if (_weatherHardening != null) return;
+            var whState = WeatherHardeningSaveStore.TryLoad() ?? new WeatherHardeningState();
+            var whSys = new WeatherHardeningSystem(
+                whState,
+                new SeededRng(1999),
+                new GodotLog(),
+                _world?.Weather,
+                _shelterThermal?.System,
+                _powerGrid?.System,
+                _waterTreatment?.System,
+                _inventory?.Inventory);
+            _weatherHardening = new WeatherHardeningHostSession(whSys);
+            _weatherHardening.LoadCatalog(_dataDir);
+        }
+
+        private void SaveWeatherHardening()
+        {
+            if (_weatherHardening != null)
+                CaptureSection("weather_hardening", WeatherHardeningSaveStore.TryCapturePersisted(_weatherHardening.System.CaptureState()));
         }
 
         private void SetupShelterSchedule()

@@ -400,6 +400,7 @@ namespace Ashfall.Core.Tests
 
             VehicleCatalog catalog = VehicleCatalogLoader.Load(dataDir!, files, json);
             Assert.True(catalog.vehicles.Count >= 3, "vehicles.json must define the starter fleet");
+            Assert.Contains(catalog.track_gear, g => g.gear_id == "vehicle_track_gear_standard");
             foreach (var v in catalog.vehicles)
                 Assert.False(string.IsNullOrEmpty(v.vehicle_id));
 

@@ -75,7 +75,8 @@ namespace AtomicWar.GodotApp
                 AddChild(_plans94To97Panel);
                 _plans94To97Panel.OnClose += () => _plans94To97Panel.Visible = false;
             }
-            _plans94To97Panel.Bind(_grainProcessing!, _cryogenicAirSeparation!, _heliograph!);
+            _plans94To97Panel.Bind(
+                _grainProcessing!, _cryogenicAirSeparation!, _heliograph!, () => _simDay);
         }
 
         private float ResolveHeliographVisibility()

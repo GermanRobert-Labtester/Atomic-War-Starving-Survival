@@ -567,6 +567,43 @@ namespace Ashfall.Core.Expeditions
             return ActionResult.Success("railway.derailment_cleared");
         }
 
+        /// <summary>
+        /// Canonical recovery seam for the draisine re-railing authority.
+        /// Recovery equipment is consumed by the caller; this method owns the
+        /// train and track mutations so no host or recovery system can create
+        /// a second rail-condition authority.
+        /// </summary>
+        public bool RestoreTrainAfterRecovery(
+            string trainId,
+            float trainConditionRestored,
+            string segmentId,
+            float trackIntegrityRestored)
+        {
+            var train = _state.trains.Find(t => t.trainId == trainId);
+            if (train == null || train.status != TrainDispatchStatus.Derailment)
+                return false;
+
+            for (int i = 0; i < train.cars.Count; i++)
+                train.cars[i].condition = Math.Min(100f, train.cars[i].condition + Math.Max(0f, trainConditionRestored));
+
+            if (!string.IsNullOrEmpty(segmentId))
+            {
+                var segment = EnsureSegmentState(segmentId);
+                segment.integrity = Math.Min(1f, segment.integrity + Math.Max(0f, trackIntegrityRestored));
+            }
+
+            train.status = TrainDispatchStatus.Idle;
+            train.segmentProgress = 0f;
+            train.activeSegmentId = null;
+            train.isCrewExhausted = false;
+            if (!string.IsNullOrEmpty(segmentId))
+                OnTrackRepaired?.Invoke(segmentId, EnsureSegmentState(segmentId).integrity);
+            return true;
+        }
+
+        public TrainState? GetTrain(string trainId)
+            => _state.trains.Find(t => t != null && t.trainId == trainId);
+
         public void RestoreState(RailwayState state)
         {
             if (state == null) return;

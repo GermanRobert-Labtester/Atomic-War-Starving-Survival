@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "platforms": [
+    {
+      "platform_id": "probe_tethered_kite_antenna",
+      "display_name": "Tethered Kite Antenna",
+      "platform_type": "kite",
+      "range_km": 10,
+      "operational_altitude_m": 200,
+      "endurance_hours": 48,
+      "wind_limit_kph": 30,
+      "launch_costs": [
+        {"item_id": "item_cloth", "amount": 2},
+        {"item_id": "item_electronic_parts", "amount": 1}
+      ],
+      "battery_cost": 0.0,
+      "survey_resolution": 0,
+      "sensor_suite": ["radio"],
+      "recoverable": true,
+      "radio_range_multiplier": 1.40,
+      "tags": ["radio", "short_range"]
+    },
+    {
+      "platform_id": "probe_helium_sounding_balloon",
+      "display_name": "Helium Sounding Balloon",
+      "platform_type": "balloon",
+      "range_km": 50,
+      "operational_altitude_m": 5000,
+      "endurance_hours": 72,
+      "wind_limit_kph": 25,
+      "launch_costs": [
+        {"item_id": "item_electronic_parts", "amount": 2},
+        {"item_id": "item_cloth", "amount": 3}
+      ],
+      "battery_cost": 0.5,
+      "survey_resolution": 1,
+      "sensor_suite": ["radiation", "weather"],
+      "recoverable": false,
+      "forecast_horizon_hours": 48,
+      "tags": ["weather", "fallout_forecast"]
+    },
+    {
+      "platform_id": "probe_solar_recon_glider",
+      "display_name": "Solar Recon Glider",
+      "platform_type": "glider",
+      "range_km": 80,
+      "operational_altitude_m": 3000,
+      "endurance_hours": 8,
+      "wind_limit_kph": 40,
+      "launch_costs": [
+        {"item_id": "item_electronic_parts", "amount": 1},
+        {"item_id": "item_scrap_metal", "amount": 2}
+      ],
+      "battery_cost": 1.0,
+      "survey_resolution": 2,
+      "sensor_suite": ["terrain", "radiation", "ash_drift"],
+      "recoverable": true,
+      "survey_radius_sectors": 1,
+      "route_speed_multiplier": 0.75,
+      "tags": ["mapping", "route_scout"]
+    },
+    {
+      "platform_id": "probe_solid_fuel_survey_rocket",
+      "display_name": "Solid-Fuel Survey Rocket",
+      "platform_type": "rocket",
+      "range_km": 120,
+      "operational_altitude_m": 8000,
+      "endurance_hours": 1,
+      "wind_limit_kph": 60,
+      "launch_costs": [
+        {"item_id": "item_electronic_parts", "amount": 3},
+        {"item_id": "item_scrap_metal", "amount": 4},
+        {"item_id": "item_machine_oil", "amount": 1}
+      ],
+      "battery_cost": 0.0,
+      "survey_resolution": 1,
+      "sensor_suite": ["terrain", "radiation", "weather"],
+      "recoverable": false,
+      "survey_radius_sectors": 2,
+      "tags": ["high_altitude", "deep_scan"]
+    },
+    {
+      "platform_id": "probe_short_range_quad_uav",
+      "display_name": "Short-Range Quadcopter UAV",
+      "platform_type": "uav",
+      "range_km": 15,
+      "operational_altitude_m": 500,
+      "endurance_hours": 2,
+      "wind_limit_kph": 35,
+      "launch_costs": [
+        {"item_id": "item_electronic_parts", "amount": 2},
+        {"item_id": "item_scrap_metal", "amount": 1}
+      ],
+      "battery_cost": 1.0,
+      "survey_resolution": 3,
+      "sensor_suite": ["terrain", "radiation"],
+      "recoverable": true,
+      "survey_radius_sectors": 1,
+      "tags": ["short_range", "recoverable"]
+    },
+    {
+      "platform_id": "probe_high_altitude_radio_repeater",
+      "display_name": "High-Altitude Radio Repeater",
+      "platform_type": "balloon",
+      "range_km": 200,
+      "operational_altitude_m": 6000,
+      "endurance_hours": 96,
+      "wind_limit_kph": 45,
+      "launch_costs": [
+        {"item_id": "item_electronic_parts", "amount": 4},
+        {"item_id": "item_cloth", "amount": 4}
+      ],
+      "battery_cost": 2.0,
+      "survey_resolution": 0,
+      "sensor_suite": ["radio"],
+      "recoverable": false,
+      "radio_range_multiplier": 2.0,
+      "tags": ["radio", "long_range"]
+    }
+  ]
+}

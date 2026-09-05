@@ -47,7 +47,7 @@ namespace AtomicWar.GodotApp
                 _ultrasonicDecontamAirlockPanel,
                 _troposphericRadioRelayPanel, _inductionCupolaFurnacePanel,
                 _heavyMarineDieselGenPanel, _slurryDewateringSumpPanel,
-                _magneticDrumArchivePanel
+                _magneticDrumArchivePanel, _plans130To133Panel
             };
 
             foreach (Control panel in panels)

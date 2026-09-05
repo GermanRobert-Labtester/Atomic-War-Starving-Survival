@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "channels": [
+    {
+      "channel_id": "nvis_channel_regional_status",
+      "display_name": "Regional Status Net",
+      "frequency_khz": 4820,
+      "range_km": 180.0,
+      "base_signal_quality": 0.78,
+      "required_power_watts": 150.0,
+      "recall_capable": true,
+      "night_favorable": true
+    },
+    {
+      "channel_id": "nvis_channel_civilian_relay",
+      "display_name": "Civilian Relay Window",
+      "frequency_khz": 5375,
+      "range_km": 120.0,
+      "base_signal_quality": 0.66,
+      "required_power_watts": 100.0,
+      "recall_capable": false,
+      "night_favorable": false
+    }
+  ]
+}

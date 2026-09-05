@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "recipes": [
+    {
+      "recipe_id": "recipe_lyophilize_blood_plasma",
+      "display_name": "Preserved Blood Plasma",
+      "input_item_id": "blood_sample",
+      "input_amount": 1,
+      "container_item_id": "item_hermetic_sample_ampoule",
+      "container_amount": 1,
+      "output_item_id": "item_medical_saline_salt",
+      "output_amount": 1,
+      "duration_days": 2,
+      "shelf_life_days": 30,
+      "required_power_watts": 100.0,
+      "base_viability01": 0.84,
+      "viability_variance01": 0.08,
+      "medical_category": "preserved_biologic"
+    },
+    {
+      "recipe_id": "recipe_lyophilize_organic_residue",
+      "display_name": "Preserved Culture Sample",
+      "input_item_id": "organic_residue",
+      "input_amount": 2,
+      "container_item_id": "item_hermetic_sample_ampoule",
+      "container_amount": 1,
+      "output_item_id": "item_medical_saline_salt",
+      "output_amount": 1,
+      "duration_days": 1,
+      "shelf_life_days": 18,
+      "required_power_watts": 80.0,
+      "base_viability01": 0.68,
+      "viability_variance01": 0.12,
+      "medical_category": "culture_sample"
+    }
+  ]
+}

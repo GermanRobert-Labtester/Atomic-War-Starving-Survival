@@ -17,6 +17,7 @@ namespace AtomicWar.GodotApp.UI
         private GrainProcessingHostSession? _grain;
         private CryogenicAirSeparationHostSession? _cryogenic;
         private HeliographHostSession? _heliograph;
+        private Func<int>? _dayProvider;
         private VBoxContainer _content = null!;
         private VBoxContainer _systemContent = null!;
         private Label _eventLog = null!;
@@ -26,12 +27,14 @@ namespace AtomicWar.GodotApp.UI
         public void Bind(
             GrainProcessingHostSession grain,
             CryogenicAirSeparationHostSession cryogenic,
-            HeliographHostSession heliograph)
+            HeliographHostSession heliograph,
+            Func<int>? dayProvider = null)
         {
             Unbind();
             _grain = grain;
             _cryogenic = cryogenic;
             _heliograph = heliograph;
+            _dayProvider = dayProvider;
             _grain.StateChanged += RefreshView;
             _cryogenic.StateChanged += RefreshView;
             _heliograph.StateChanged += RefreshView;
@@ -46,6 +49,7 @@ namespace AtomicWar.GodotApp.UI
             _grain = null;
             _cryogenic = null;
             _heliograph = null;
+            _dayProvider = null;
         }
 
         public override void _Ready()
@@ -200,7 +204,7 @@ namespace AtomicWar.GodotApp.UI
                     "heliograph_holdfast",
                     "heliograph_relay",
                     "shelter_status",
-                    0);
+                    _dayProvider?.Invoke() ?? 0);
                 _eventLog.Text = result.IsSuccess
                     ? "Optical status signal delivered."
                     : $"Transmission blocked: {result.FailureCode}.";

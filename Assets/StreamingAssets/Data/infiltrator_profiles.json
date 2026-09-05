@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "profile_id": "agent_cutter_saboteur",
+      "source_faction_id": "faction_the_cutters",
+      "deception_skill": 0.72,
+      "loyalty_mask": 0.80,
+      "behavior_flags": ["avoids_watch", "asks_about_power"],
+      "forged_credentials": ["laborer"],
+      "sabotage_targets": ["water", "power"],
+      "confession_threshold": 0.75,
+      "confession_triggers": ["evidence_cache_found"],
+      "defector_probability": 0.05
+    },
+    {
+      "profile_id": "agent_compact_informant",
+      "source_faction_id": "faction_the_compact",
+      "deception_skill": 0.55,
+      "loyalty_mask": 0.65,
+      "behavior_flags": ["asks_about_radio", "loiters_near_armory"],
+      "forged_credentials": ["medic_aide"],
+      "sabotage_targets": ["radio", "armory"],
+      "confession_threshold": 0.60,
+      "confession_triggers": ["contradictory_testimony"],
+      "defector_probability": 0.12
+    },
+    {
+      "profile_id": "agent_flotilla_smuggler",
+      "source_faction_id": "faction_black_flotilla",
+      "deception_skill": 0.68,
+      "loyalty_mask": 0.70,
+      "behavior_flags": ["avoids_watch", "requests_water_access"],
+      "forged_credentials": ["dock_hand"],
+      "sabotage_targets": ["water", "food_stores"],
+      "confession_threshold": 0.70,
+      "confession_triggers": ["evidence_cache_found", "contradictory_testimony"],
+      "defector_probability": 0.08
+    },
+    {
+      "profile_id": "agent_rebel_agitator",
+      "source_faction_id": "faction_rebel",
+      "deception_skill": 0.60,
+      "loyalty_mask": 0.75,
+      "behavior_flags": ["asks_about_power", "argues_with_guards"],
+      "forged_credentials": ["agri_hand"],
+      "sabotage_targets": ["power", "food_stores"],
+      "confession_threshold": 0.65,
+      "confession_triggers": ["contradictory_testimony"],
+      "defector_probability": 0.15
+    },
+    {
+      "profile_id": "agent_raider_sleeper",
+      "source_faction_id": "faction_the_cutters",
+      "deception_skill": 0.80,
+      "loyalty_mask": 0.90,
+      "behavior_flags": ["avoids_watch", "volunteers_for_danger"],
+      "forged_credentials": ["wasteland_scout"],
+      "sabotage_targets": ["power", "armory", "water"],
+      "confession_threshold": 0.85,
+      "confession_triggers": ["evidence_cache_found"],
+      "defector_probability": 0.03
+    },
+    {
+      "profile_id": "agent_false_defector",
+      "source_faction_id": "faction_military",
+      "deception_skill": 0.78,
+      "loyalty_mask": 0.85,
+      "behavior_flags": ["asks_about_radio", "requests_asylum"],
+      "forged_credentials": ["military_deserter"],
+      "sabotage_targets": ["radio", "power"],
+      "confession_threshold": 0.80,
+      "confession_triggers": ["contradictory_testimony", "evidence_cache_found"],
+      "defector_probability": 0.02
+    },
+    {
+      "profile_id": "agent_logistics_spotter",
+      "source_faction_id": "faction_the_compact",
+      "deception_skill": 0.50,
+      "loyalty_mask": 0.60,
+      "behavior_flags": ["loiters_near_armory", "asks_about_supply_routes"],
+      "forged_credentials": ["supply_clerk"],
+      "sabotage_targets": ["food_stores", "armory"],
+      "confession_threshold": 0.55,
+      "confession_triggers": ["contradictory_testimony"],
+      "defector_probability": 0.18
+    },
+    {
+      "profile_id": "agent_water_poisoner",
+      "source_faction_id": "faction_the_cutters",
+      "deception_skill": 0.65,
+      "loyalty_mask": 0.70,
+      "behavior_flags": ["requests_water_access", "avoids_watch"],
+      "forged_credentials": ["water_tech"],
+      "sabotage_targets": ["water"],
+      "confession_threshold": 0.68,
+      "confession_triggers": ["evidence_cache_found"],
+      "defector_probability": 0.06
+    },
+    {
+      "profile_id": "agent_signal_interceptor",
+      "source_faction_id": "faction_rebel",
+      "deception_skill": 0.62,
+      "loyalty_mask": 0.72,
+      "behavior_flags": ["asks_about_radio", "loiters_near_radio"],
+      "forged_credentials": ["signal_tech"],
+      "sabotage_targets": ["radio"],
+      "confession_threshold": 0.62,
+      "confession_triggers": ["contradictory_testimony", "evidence_cache_found"],
+      "defector_probability": 0.10
+    },
+    {
+      "profile_id": "agent_embedded_recruiter",
+      "source_faction_id": "faction_military",
+      "deception_skill": 0.70,
+      "loyalty_mask": 0.75,
+      "behavior_flags": ["asks_about_power", "argues_with_guards", "volunteers_for_danger"],
+      "forged_credentials": ["tech_mechanic"],
+      "sabotage_targets": ["power", "water"],
+      "confession_threshold": 0.72,
+      "confession_triggers": ["evidence_cache_found", "contradictory_testimony"],
+      "defector_probability": 0.07
+    }
+  ]
+}

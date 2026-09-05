@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "equipment": [
+    {
+      "equipment_id": "rerail_hydraulic_actuator",
+      "display_name": "Hydraulic Rerailing Actuator",
+      "required_item_id": "item_hydraulic_actuator",
+      "required_item_amount": 1,
+      "required_power_watts": 300.0,
+      "duration_days": 1,
+      "success_chance01": 0.9,
+      "train_condition_restored": 18.0,
+      "track_integrity_restored": 0.08,
+      "supports_armored_draisine": true,
+      "tags": ["railway", "recovery", "armored_draisine"]
+    },
+    {
+      "equipment_id": "rerail_field_winch",
+      "display_name": "Field Rerailing Winch",
+      "required_item_id": "item_foundry_press_fitting",
+      "required_item_amount": 1,
+      "required_power_watts": 120.0,
+      "duration_days": 2,
+      "success_chance01": 0.72,
+      "train_condition_restored": 10.0,
+      "track_integrity_restored": 0.04,
+      "supports_armored_draisine": true,
+      "tags": ["railway", "recovery", "manual"]
+    }
+  ]
+}

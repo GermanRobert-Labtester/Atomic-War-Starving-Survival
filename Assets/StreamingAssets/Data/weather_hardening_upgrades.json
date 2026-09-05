@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "upgrades": [
+    {
+      "upgrade_id": "upgrade_intake_defrost_element",
+      "display_name": "Intake Defrost Element",
+      "target_type": "ventilation-intake",
+      "thermal_retention": 0.0,
+      "electrical_watts": 300,
+      "freeze_risk_reduction": 0.85,
+      "material_costs": [
+        {"item_id": "item_electronic_parts", "amount": 1},
+        {"item_id": "item_scrap_metal", "amount": 2}
+      ],
+      "tags": ["weather_hardening", "ventilation"]
+    },
+    {
+      "upgrade_id": "upgrade_aerogel_wall_lagging",
+      "display_name": "Aerogel Wall Lagging",
+      "target_type": "wall-insulation",
+      "thermal_retention": 0.40,
+      "electrical_watts": 0,
+      "freeze_risk_reduction": 0.0,
+      "material_costs": [
+        {"item_id": "item_cloth", "amount": 4},
+        {"item_id": "item_scrap_chemical", "amount": 2}
+      ],
+      "tags": ["weather_hardening", "insulation"]
+    },
+    {
+      "upgrade_id": "upgrade_glycol_pipe_trace",
+      "display_name": "Glycol Pipe Trace",
+      "target_type": "plumbing-pipes",
+      "thermal_retention": 0.0,
+      "electrical_watts": 150,
+      "freeze_risk_reduction": 0.90,
+      "material_costs": [
+        {"item_id": "item_scrap_chemical", "amount": 3},
+        {"item_id": "item_scrap_metal", "amount": 1}
+      ],
+      "tags": ["weather_hardening", "plumbing"]
+    },
+    {
+      "upgrade_id": "upgrade_heavy_thermal_curtains",
+      "display_name": "Heavy Thermal Curtains",
+      "target_type": "wall-insulation",
+      "thermal_retention": 0.20,
+      "electrical_watts": 0,
+      "freeze_risk_reduction": 0.0,
+      "material_costs": [
+        {"item_id": "item_cloth", "amount": 6},
+        {"item_id": "item_scrap_metal", "amount": 1}
+      ],
+      "tags": ["weather_hardening", "insulation"]
+    },
+    {
+      "upgrade_id": "upgrade_secondary_kerosene_burner",
+      "display_name": "Secondary Kerosene Burner",
+      "target_type": "aux-heater",
+      "thermal_retention": 0.0,
+      "electrical_watts": 0,
+      "freeze_risk_reduction": 0.0,
+      "material_costs": [
+        {"item_id": "item_scrap_metal", "amount": 3},
+        {"item_id": "item_electronic_parts", "amount": 1}
+      ],
+      "fuel_item_id": "item_machine_oil",
+      "fuel_consumption_per_day": 0.5,
+      "heat_output_kw": 3.0,
+      "tags": ["weather_hardening", "auxiliary_heat"]
+    },
+    {
+      "upgrade_id": "upgrade_airlock_heat_recovery",
+      "display_name": "Airlock Heat Recovery",
+      "target_type": "ventilation-intake",
+      "thermal_retention": 0.15,
+      "electrical_watts": 50,
+      "freeze_risk_reduction": 0.30,
+      "material_costs": [
+        {"item_id": "item_scrap_metal", "amount": 4},
+        {"item_id": "item_electronic_parts", "amount": 1}
+      ],
+      "tags": ["weather_hardening", "ventilation"]
+    },
+    {
+      "upgrade_id": "upgrade_frost_heave_foundation_bracing",
+      "display_name": "Frost-Heave Foundation Bracing",
+      "target_type": "foundation",
+      "thermal_retention": 0.0,
+      "electrical_watts": 0,
+      "freeze_risk_reduction": 0.0,
+      "material_costs": [
+        {"item_id": "item_scrap_metal", "amount": 8},
+        {"item_id": "item_cloth", "amount": 2}
+      ],
+      "tags": ["weather_hardening", "structure"]
+    },
+    {
+      "upgrade_id": "upgrade_pipe_insulation_wrap",
+      "display_name": "Pipe Insulation Wrap",
+      "target_type": "plumbing-pipes",
+      "thermal_retention": 0.0,
+      "electrical_watts": 0,
+      "freeze_risk_reduction": 0.60,
+      "material_costs": [
+        {"item_id": "item_cloth", "amount": 3},
+        {"item_id": "item_scrap_chemical", "amount": 1}
+      ],
+      "tags": ["weather_hardening", "plumbing"]
+    }
+  ]
+}

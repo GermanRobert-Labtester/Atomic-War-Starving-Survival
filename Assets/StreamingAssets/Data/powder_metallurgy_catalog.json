@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "processes": [
+    {
+      "process_id": "process_powder_press_structural_coupling",
+      "display_name": "Compacted Structural Coupling",
+      "feedstock_costs": [
+        { "item_id": "scrap_metal", "amount": 4 },
+        { "item_id": "mechanical_parts", "amount": 1 }
+      ],
+      "output_item_id": "item_foundry_structural_coupling",
+      "output_units": 1,
+      "duration_days": 2,
+      "required_power_watts": 850.0,
+      "quality_floor": 0.55,
+      "quality_ceiling": 0.92,
+      "wear_multiplier_at_floor": 1.12,
+      "wear_multiplier_at_ceiling": 0.82,
+      "tags": ["structural", "advanced_material", "shelter"]
+    },
+    {
+      "process_id": "process_powder_press_casing_blanks",
+      "display_name": "Compacted Casing Blank Set",
+      "feedstock_costs": [
+        { "item_id": "scrap_metal", "amount": 3 },
+        { "item_id": "item_foundry_replacement_die", "amount": 1 }
+      ],
+      "output_item_id": "item_foundry_casing_blanks",
+      "output_units": 2,
+      "duration_days": 1,
+      "required_power_watts": 650.0,
+      "quality_floor": 0.48,
+      "quality_ceiling": 0.88,
+      "wear_multiplier_at_floor": 1.18,
+      "wear_multiplier_at_ceiling": 0.86,
+      "tags": ["casing", "advanced_material", "workshop"]
+    }
+  ]
+}

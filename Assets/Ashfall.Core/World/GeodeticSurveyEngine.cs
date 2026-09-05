@@ -173,6 +173,15 @@ namespace Ashfall.Core.World
             return null;
         }
 
+        /// <summary>Finds the monument established at a survey point.</summary>
+        public SurveyMonumentState? FindMonumentBySurveyPoint(string surveyPointId)
+        {
+            if (string.IsNullOrEmpty(surveyPointId)) return null;
+            foreach (var m in _state.monuments)
+                if (m.surveyPointId == surveyPointId) return m;
+            return null;
+        }
+
         /// <summary>
         /// Establish a survey monument at a survey point. Consumes required items.
         /// </summary>
@@ -219,7 +228,7 @@ namespace Ashfall.Core.World
         /// </summary>
         public SurveyObservation Observe(string fromMonumentId, string targetPointId, string weatherCondition, float surveyorSkill = 0.5f)
         {
-            var monument = FindMonument(fromMonumentId);
+            var monument = FindMonument(fromMonumentId) ?? FindMonumentBySurveyPoint(fromMonumentId);
             if (monument == null || !monument.isActive)
                 return new SurveyObservation { observationId = "invalid" };
 
@@ -274,9 +283,9 @@ namespace Ashfall.Core.World
         /// </summary>
         public ResolvedTriangle? TryResolveTriangle(string pointAId, string pointBId, string pointCId)
         {
-            var mA = FindMonument(pointAId);
-            var mB = FindMonument(pointBId);
-            var mC = FindMonument(pointCId);
+            var mA = FindMonument(pointAId) ?? FindMonumentBySurveyPoint(pointAId);
+            var mB = FindMonument(pointBId) ?? FindMonumentBySurveyPoint(pointBId);
+            var mC = FindMonument(pointCId) ?? FindMonumentBySurveyPoint(pointCId);
 
             if (mA == null || !mA.isActive || mB == null || !mB.isActive || mC == null || !mC.isActive)
                 return null;
@@ -346,7 +355,7 @@ namespace Ashfall.Core.World
         /// </summary>
         public void DamageMonument(string monumentId, float damage)
         {
-            var m = FindMonument(monumentId);
+            var m = FindMonument(monumentId) ?? FindMonumentBySurveyPoint(monumentId);
             if (m == null) return;
             m.integrity = Math.Max(0, m.integrity - damage);
             if (m.integrity <= 0)

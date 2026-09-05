@@ -289,7 +289,6 @@ namespace Ashfall.Core.Shelter
 
             f.storedEnergyJ = newEnergy;
             f.rotorRpm = ComputeRpmFromEnergy(momentOfInertia, newEnergy);
-            f.activeChargeKw = chargePower;
 
             // Bearing heating
             f.bearingTemperatureC += fc.bearing_heat_per_charge_kw * chargePower * durationSeconds / 3600f;
@@ -317,7 +316,6 @@ namespace Ashfall.Core.Shelter
             f.storedEnergyJ -= energyOut;
             float momentOfInertia = ComputeMomentOfInertia(fc.rotor_mass_kg, fc.effective_radius_m, fc.moment_of_inertia_factor);
             f.rotorRpm = ComputeRpmFromEnergy(momentOfInertia, f.storedEnergyJ);
-            f.activeDischargeKw = dischargePower;
 
             // Bearing heating
             f.bearingTemperatureC += fc.bearing_heat_per_discharge_kw * dischargePower * durationSeconds / 3600f;
@@ -403,7 +401,7 @@ namespace Ashfall.Core.Shelter
                 // Idle drag loss
                 if (f.storedEnergyJ > 0 && f.activeChargeKw <= 0)
                 {
-                    float dragLoss = f.storedEnergyJ * fc.idle_drag_loss_percent_per_hour * deltaSeconds / 3600f;
+                    float dragLoss = f.storedEnergyJ * (fc.idle_drag_loss_percent_per_hour / 100f) * deltaSeconds / 3600f;
                     f.storedEnergyJ = Math.Max(0, f.storedEnergyJ - dragLoss);
                     f.rotorRpm = ComputeRpmFromEnergy(momentOfInertia, f.storedEnergyJ);
                 }

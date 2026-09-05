@@ -167,6 +167,7 @@ namespace Ashfall.Core.UI
             R("slurry_dewatering_sump",    "Slurry Dewatering Sump",      PanelGroup.Expanded); // LIVE: bound to SumpFloodingHostSession
             R("plans_94_97",               "Plans 94–97 Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "world", "radio" });
             R("plans_110_113",              "Plans 110–113 Industrial Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "world" });
+            R("plans_130_133",              "Plans 130–133 Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "radio", "medical", "expedition" });
             R("magnetic_drum_archive",     "Magnetic Drum & Microfiche",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
         }
 

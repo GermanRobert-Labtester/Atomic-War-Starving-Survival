@@ -174,7 +174,11 @@ namespace Ashfall.Core.Save
             new("chlor_alkali_synthesis", "SaveChlorAlkali", "SetupChlorAlkali", "shelter", "Plans 110-113 — chlor-alkali electrolytic plant, membrane health, hazard load, and chemical production"),
             new("solar_concentrator", "SaveSolarConcentrator", "SetupSolarConcentrator", "power_grid", "Plans 110-113 — parabolic solar concentrator, mirror condition, tracking mode, and thermal output"),
             new("precision_optics", "SavePrecisionOptics", "SetupPrecisionOptics", "shelter", "Plans 110-113 — precision optical blank grinding, figure testing, and telescope/shield viewports"),
-            new("ballistic_shield", "SaveBallisticShield", "SetupBallisticShield", "combat", "Plans 110-113 — defensive ballistic shields, stances, integrity, and ground anchoring")
+            new("ballistic_shield", "SaveBallisticShield", "SetupBallisticShield", "combat", "Plans 110-113 — defensive ballistic shields, stances, integrity, and ground anchoring"),
+            new("powder_metallurgy", "SavePowderMetallurgy", "SetupPowderMetallurgy", "foundry", "Plans 130-133 — abstract advanced-material production quality and reliability", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("nvis_communications", "SaveNvisCommunications", "SetupNvisCommunications", "radio", "Plans 130-133 — regional NVIS status communications and recall queue", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("lyophilization", "SaveLyophilization", "SetupLyophilization", "medical", "Plans 130-133 — preserved-biologic batches and viability ledger", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("draisine_recovery", "SaveDraisineRerailing", "SetupDraisineRerailing", "expedition", "Plans 130-133 — armored draisine derailment recovery")
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -319,6 +323,10 @@ namespace Ashfall.Core.Save
                 { "solar_concentrator", "solar_concentrator_save.json" },
                 { "precision_optics", "precision_optics_save.json" },
                 { "ballistic_shield", "ballistic_shield_save.json" },
+                { "powder_metallurgy", "powder_metallurgy_save.json" },
+                { "nvis_communications", "nvis_communications_save.json" },
+                { "lyophilization", "lyophilization_save.json" },
+                { "draisine_recovery", "draisine_recovery_save.json" },
             };
 
         /// <summary>

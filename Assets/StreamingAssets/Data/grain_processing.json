@@ -12,7 +12,7 @@
   ],
   "silos": [
     {
-      "silo_id": "silo_holdfast",
+      "silo_id": "grain_silo_holdfast",
       "integrity": 100.0,
       "moisture_pct": 12.0
     }

@@ -40,6 +40,7 @@ namespace Ashfall.Core.Tests.Medical
                 Projector = new PatientRecordProjector(Pipeline);
                 Inventory.TryProduce("inhaler", 5);
                 Inventory.TryProduce("herbal_tea", 5);
+                Inventory.TryProduce(MedicalTreatmentCatalog.ItemOxygenSupply, 2);
             }
 
             public Ashfall.Core.Survivors.SurvivorId Sv => Ashfall.Core.Survivors.SurvivorId.Parse(SvId);
@@ -82,6 +83,21 @@ namespace Ashfall.Core.Tests.Medical
             Assert.Equal(
                 RespiratoryChecksum(legacy),
                 RespiratoryChecksum(fx.Respiratory));
+        }
+
+        [Fact]
+        public void PipelineOxygenSupport_ConsumesCryogenicSupplyAndAppliesRelief()
+        {
+            var fx = new Fixture();
+            fx.Respiratory.GetOrCreate(SvId).respiratoryDegradation = 55f;
+            int before = fx.Inventory.CountById(MedicalTreatmentCatalog.ItemOxygenSupply);
+
+            var result = fx.Pipeline.ExecuteTreatment(
+                fx.Sv, MedicalTreatmentCatalog.TreatmentOxygenSupport);
+
+            Assert.True(result.Success, result.ReasonCode);
+            Assert.Equal(before - 1, fx.Inventory.CountById(MedicalTreatmentCatalog.ItemOxygenSupply));
+            Assert.Equal(45f, fx.Respiratory.RespiratoryDegradation(SvId), 3);
         }
 
         // ── Single progression owner (Phase 64): the pipeline never ticks ──

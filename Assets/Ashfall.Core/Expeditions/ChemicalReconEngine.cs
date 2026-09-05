@@ -165,6 +165,8 @@ namespace Ashfall.Core.Expeditions
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
+            // Battery capacity is catalog-owned, not a hardcoded DTO default.
+            _state.detectorBatteryRemaining = _catalog.detector_equipment.battery_ticks_per_charge;
         }
 
         public ChemicalHazardProfile? FindHazard(string hazardId)

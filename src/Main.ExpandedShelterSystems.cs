@@ -98,6 +98,7 @@ namespace AtomicWar.GodotApp
             SetupApprenticeship();
             SetupCaregiving();
             SetupShelterThermal();
+            SetupWeatherHardening();
             SetupShelterSchedule();
             SetupAutopsy(_sharedResearch);
             SetupWaystation();
@@ -109,6 +110,7 @@ namespace AtomicWar.GodotApp
             SetupDecontamination();
             SetupPlans78To81();
             SetupPlans110To113();
+            SetupPlans130To133();
             SetupKitchenNutrition();
             SetupGrainProcessing();
             SetupCryogenicAirSeparation();
@@ -262,6 +264,7 @@ namespace AtomicWar.GodotApp
             SaveApprenticeship();
             SaveCaregiving();
             SaveShelterThermal();
+            SaveWeatherHardening();
             SaveShelterSchedule();
             SaveAutopsy();
             SaveWaystation();
@@ -269,6 +272,7 @@ namespace AtomicWar.GodotApp
             SaveDecontamination();
             SavePlans78To81();
             SavePlans110To113();
+            SavePlans130To133();
             SaveKitchenNutrition();
             SaveGrainProcessing();
             SaveCryogenicAirSeparation();
@@ -316,6 +320,7 @@ namespace AtomicWar.GodotApp
             _apprenticeship?.TickDay(day);
             _caregiving?.TickDay(day);
             _shelterThermal?.TickDay(day);
+            _weatherHardening?.TickDay(day);
             _shelterSchedule?.TickDay(day);
             _autopsy?.TickDay(day);
             // Plan 72 §3 ordering: advance ventilation/air filtration — hosts
@@ -334,6 +339,7 @@ namespace AtomicWar.GodotApp
             _decontamination?.TickDay(day);
             TickPlans78To81(day);
             TickPlans110To113(day);
+            TickPlans130To133(day);
             _kitchenNutrition?.TickDay(day);
             TickPlans94To97(day);
             _equipmentCondition?.TickDay(day);
@@ -435,6 +441,9 @@ namespace AtomicWar.GodotApp
                     SetupPlans94To97Panel();
                     if (_plans94To97Panel != null) { _plans94To97Panel.Visible = true; _plans94To97Panel.RefreshView(); }
                     break;
+                case "plans_130_133":
+                    OpenPlans130To133Panel();
+                    break;
                 case "journal":
                     SetupJournal();
                     if (_journalPanel != null) { _journalPanel.Bind(_journal); _journalPanel.Visible = true; _journalPanel.RefreshView(); }
@@ -482,12 +491,15 @@ namespace AtomicWar.GodotApp
             RemovePanel(_powerGridPanel); _powerGridPanel = null!;
             RemovePanel(_medicalWardPanel); _medicalWardPanel = null!;
             RemovePanel(_shelterDecorPanel); _shelterDecorPanel = null!;
+            _plans94To97Panel?.Unbind();
             RemovePanel(_plans94To97Panel); _plans94To97Panel = null;
+            ResetPlans130To133Panel();
 
             // Dispose / null host sessions
             _waterTreatment?.Dispose(); _waterTreatment = null!;
             _airlockSecurity?.Dispose(); _airlockSecurity = null!;
             _shelterThermal?.Dispose(); _shelterThermal = null!;
+            _weatherHardening?.Dispose(); _weatherHardening = null!;
             _shelterSchedule?.Dispose(); _shelterSchedule = null!;
             _autopsy?.Dispose(); _autopsy = null!;
             _waystation?.Dispose(); _waystation = null!;
@@ -507,6 +519,10 @@ namespace AtomicWar.GodotApp
             _archiveDesk?.Dispose(); _archiveDesk = null!;
             _contractorRoster?.Dispose(); _contractorRoster = null!;
             _mentalHealthCrisis?.Dispose(); _mentalHealthCrisis = null!;
+            _powderMetallurgy?.Dispose(); _powderMetallurgy = null;
+            _nvisCommunications?.Dispose(); _nvisCommunications = null;
+            _lyophilization?.Dispose(); _lyophilization = null;
+            _draisineRerailing?.Dispose(); _draisineRerailing = null;
             _grainProcessing?.Dispose(); _grainProcessing = null;
             _cryogenicAirSeparation?.Dispose(); _cryogenicAirSeparation = null;
             _heliograph?.Dispose(); _heliograph = null;
@@ -523,6 +539,7 @@ namespace AtomicWar.GodotApp
 
             _airlockSecurityDirty = false;
             _shelterThermalDirty = false;
+            _weatherHardeningDirty = false;
             _shelterScheduleDirty = false;
             _autopsyDirty = false;
             _waystationDirty = false;

@@ -212,6 +212,16 @@ namespace AtomicWar.GodotApp.UI
             btnRefuel.TooltipText = "Burn 10 carried fuel items into the selected tank.";
             prepRow.AddChild(btnRefuel);
 
+            var btnTrackGear = AshfallUiHelpers.MakeButton("FIT TRACK GEAR", () =>
+            {
+                string vehicleId = SelectedVehicleId;
+                if (_expeditionHost == null || string.IsNullOrEmpty(vehicleId)) return;
+                _expeditionHost.InstallTrackGear(vehicleId, "vehicle_track_gear_standard");
+                RefreshView();
+            });
+            btnTrackGear.TooltipText = "Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.";
+            prepRow.AddChild(btnTrackGear);
+
             rootBox.AddChild(prepRow);
 
             _estimateLabel = AshfallUiHelpers.MakeMono("");

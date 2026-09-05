@@ -267,10 +267,11 @@ namespace Ashfall.Core.Tests.Save
             // Plans 46-49 Task 6 added dynamic_quests;
             // Plans 94-97 added grain_processing, cryogenic_air_separation, heliograph;
             // Plans 78-81 added geodetic_survey, kinetic_storage, chemical_recon;
-            // Plans 110-113 added chlor_alkali_synthesis, solar_concentrator, precision_optics, ballistic_shield).
-            Assert.Equal(122, SaveSectionRegistry.All.Count);
+            // Plans 110-113 added chlor_alkali_synthesis, solar_concentrator, precision_optics, ballistic_shield;
+            // Plans 130-133 added powder_metallurgy, nvis_communications, lyophilization, draisine_recovery).
+            Assert.Equal(126, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(122, keys.Count);
+            Assert.Equal(126, keys.Count);
         }
     }
 }

@@ -399,7 +399,7 @@ namespace Ashfall.Core
                 // (numerical instability, not physics).
                 float gainW = heatGainKw * 1000f;
                 float conductionWPerK = Math.Max(1f, NewtonCoolingCoefficient * volumeM3
-                                      / Math.Max(0.05f, room.insulationFactor) * 1000f)
+                                      / Math.Max(0.05f, GetEffectiveInsulationFactor(room.roomId)) * 1000f)
                                       * deepFreezeFactor;
                 float steadyC = outdoorTemp + gainW / conductionWPerK;
                 float relaxFactor = (float)Math.Exp(-conductionWPerK * SecondsPerDay / heatCapacityJ);
@@ -611,6 +611,58 @@ namespace Ashfall.Core
             var room = _state.rooms.Find(r => r.roomId == roomId);
             if (room == null) return false;
             return !room.isFrozen;
+        }
+
+        // ── External Hardening Modifiers ────────────────────────────
+
+        private readonly Dictionary<string, float> _externalInsulationModifiers = new Dictionary<string, float>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// Set an external insulation modifier for a zone (e.g. from WeatherHardeningSystem).
+        /// 0 = no modifier, 0.4 = +40% insulation retention.
+        /// </summary>
+        public void SetExternalInsulationModifier(string zoneId, float modifier)
+        {
+            if (string.IsNullOrEmpty(zoneId)) return;
+            _externalInsulationModifiers[zoneId] = Math.Clamp(modifier, 0f, 1f);
+        }
+
+        /// <summary>Effective insulation factor including external hardening modifiers.</summary>
+        public float GetEffectiveInsulationFactor(string zoneId)
+        {
+            var room = _state.rooms.Find(r => r.roomId == zoneId);
+            if (room == null) return 1f;
+            float modifier = 0f;
+            if (_externalInsulationModifiers.TryGetValue(zoneId, out var m))
+                modifier = m;
+            return Math.Max(0.1f, room.insulationFactor * (1f + modifier));
+        }
+
+        /// <summary>
+        /// Register an externally caused pipe burst (e.g. freeze progression from WeatherHardeningSystem).
+        /// Idempotent: a pipe already burst returns Blocked.
+        /// </summary>
+        public ActionResult RegisterExternalBurst(string pipeId, int day, float severity, string description)
+        {
+            var pipe = _state.pipes.Find(p => p.pipeId == pipeId);
+            if (pipe == null) return ActionResult.Failed("unknown_pipe", "thermal.unknown_pipe");
+            if (pipe.hasBurst) return ActionResult.Blocked("already_burst", "thermal.already_burst");
+
+            pipe.hasBurst = true;
+            pipe.burstDay = day;
+            pipe.burstSeverity = Math.Clamp(severity, 0f, 1f);
+            _state.lastIncidentDay = day;
+
+            var incident = new ThermalIncident
+            {
+                day = day, pipeId = pipe.pipeId, roomId = pipe.fromRoomId,
+                kind = ThermalIncidentKind.PipeBurst,
+                description = description ?? $"External freeze burst in {pipeId} on day {day}"
+            };
+            _state.incidentLog.Add(incident);
+            OnIncident?.Invoke(incident);
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.external_burst");
         }
 
         public ShelterThermalState CaptureState() => CloneState(_state);

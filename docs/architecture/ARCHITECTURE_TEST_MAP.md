@@ -177,6 +177,10 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 120 | `solar_concentrator` | Power & Energy | `SolarConcentratorEngine` | `solar_concentrator_catalog.json` | `SolarConcentratorHostSession` | `SolarConcentratorSaveStore` | `Main.Plans110_113` | `SolarConcentratorEngineTests` | ✅ 6/6 |
 | 121 | `precision_optics` | Shelter & Production | `PrecisionOpticsEngine` | `precision_optics_catalog.json` | `PrecisionOpticsHostSession` | `PrecisionOpticsSaveStore` | `Main.Plans110_113` | `PrecisionOpticsEngineTests` | ✅ 6/6 |
 | 122 | `ballistic_shield` | Tactical Combat | `BallisticShieldEngine` | `ballistic_shield_catalog.json` | `BallisticShieldHostSession` | `BallisticShieldSaveStore` | `Main.Plans110_113` | `BallisticShieldEngineTests` | ✅ 6/6 |
+| 123 | `powder_metallurgy` | Foundry & Production | `PowderMetallurgySystem` | `powder_metallurgy_catalog.json` | `PowderMetallurgyHostSession` | `PowderMetallurgySaveStore` | `Main.Plans130_133` | `Plans130To133CoreTests` | ✅ 6/6 |
+| 124 | `nvis_communications` | Communications & Radio | `NvisCommunicationsSystem` | `nvis_communications_catalog.json` | `NvisCommunicationsHostSession` | `NvisCommunicationsSaveStore` | `Main.Plans130_133` | `Plans130To133CoreTests` | ✅ 6/6 |
+| 125 | `lyophilization` | Medical & Biology | `LyophilizationSystem` | `lyophilization_catalog.json` | `LyophilizationHostSession` | `LyophilizationSaveStore` | `Main.Plans130_133` | `Plans130To133CoreTests` | ✅ 6/6 |
+| 126 | `draisine_recovery` | Expeditions & Logistics | `DraisineRerailingSystem` | `rerailing_equipment_catalog.json` | `DraisineRerailingHostSession` | `DraisineRerailingSaveStore` | `Main.Plans130_133` | `Plans130To133CoreTests` | ✅ 6/6 |
 
 ---
 
@@ -1609,6 +1613,10 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `solar_concentrator` | ✅ | ✅ | ✅ `Daily Solar Tracking & Thermal Output` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `precision_optics` | ✅ | ✅ | ⚡ `On-Demand (Optical Figuring)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `ballistic_shield` | ✅ | ✅ | ⚡ `On-Demand (Tactical Intercept)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `powder_metallurgy` | ✅ | ✅ | ✅ `Daily Compaction & Sintering Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `nvis_communications` | ✅ | ✅ | ⚡ `On-Demand (NVIS Broadcast & Recall)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `lyophilization` | ✅ | ✅ | ✅ `Daily Desiccation & Viability Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `draisine_recovery` | ✅ | ✅ | ⚡ `On-Demand (Rerailing Operation)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 
 ---
 

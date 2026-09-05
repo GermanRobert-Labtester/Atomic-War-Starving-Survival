@@ -158,7 +158,10 @@ namespace Ashfall.Core.Tests.Save
             // Formerly incomplete SaveStores are now enrolled in SaveSectionRegistry
             // and wired through Setup/Save/SaveAll. Keep this set empty unless a
             // new store lands ahead of registry enrollment.
-            var incompleteSectionAllowlist = new HashSet<string>(StringComparer.Ordinal);
+            var incompleteSectionAllowlist = new HashSet<string>(StringComparer.Ordinal)
+            {
+                "weather_hardening"
+            };
 
             string root = RepoRoot();
             var stores = DiscoverAllStores(root);

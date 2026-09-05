@@ -164,7 +164,9 @@ namespace Ashfall.Core
             // cross-references validate via ReferenceKeys)
             "contagion_", "pathogen_", "subnode_", "psyops_",
             // Plans 110-113 — Industrial Chemistry, Solar-Thermal, Precision Optics, Ballistic Shields
-            "process_chlor_alkali_", "solar_dish_", "optic_", "shield_"
+            "process_chlor_alkali_", "solar_dish_", "optic_", "shield_",
+            // Flagship Tasks 5-8 — Weather Hardening, Counter-Intelligence, Geothermal, Recon Telemetry
+            "upgrade_", "agent_", "strata_", "probe_"
         };
 
         /// <summary>
@@ -213,7 +215,8 @@ namespace Ashfall.Core
             // Flagship institutions (Tasks 5-8)
             "tome_id", "treaty_id", "ordnance_id", "therapy_id", "condition_id",
             // Plans 110-113
-            "process_id", "concentrator_id", "optic_recipe_id", "shield_id"
+            "process_id", "concentrator_id", "optic_recipe_id", "shield_id",
+            "upgrade_id", "strata_id", "channel_id", "platform_id", "equipment_id"
         };
 
         /// <summary>
@@ -278,7 +281,8 @@ namespace Ashfall.Core
             "stance", "short_name", "identity", "sink", "notes", "display_name", "exclusive_group",
             "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
-            "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",
+            "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile", "target_type",
+            "forged_credentials", "behavior_flags", "platform_type", "sensor_suite",
             "callsign", "entry_type", "record_type", "directive_code", "classification",
             "issuing_authority", "vault_id", "audit_type", "sub_level", "auditor_designation",
             "compliance_status", "carrier_id", "timestamp_relative", "telemetry_channel",
