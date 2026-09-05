@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "concentrators": [
+    {
+      "concentrator_id": "solar_dish_scavenged",
+      "display_name": "Scavenged Sheet-Metal Solar Dish",
+      "dish_size_tier": 1,
+      "optical_efficiency": 0.55,
+      "tracking_quality": 0.60,
+      "max_thermal_kw": 4.0,
+      "stirling_output_kw": 0.8,
+      "reflectivity_decay_per_storm": 0.05,
+      "cleaning_restore": 0.25,
+      "deployment_tags": ["outdoor", "clear_sky_required", "improvised"]
+    },
+    {
+      "concentrator_id": "solar_dish_medium",
+      "display_name": "Standard Parabolic Solar Concentrator",
+      "dish_size_tier": 2,
+      "optical_efficiency": 0.70,
+      "tracking_quality": 0.80,
+      "max_thermal_kw": 7.0,
+      "stirling_output_kw": 1.5,
+      "reflectivity_decay_per_storm": 0.03,
+      "cleaning_restore": 0.20,
+      "deployment_tags": ["outdoor", "clear_sky_required", "standard"]
+    },
+    {
+      "concentrator_id": "solar_dish_parabolic_array",
+      "display_name": "High-Efficiency Solar Concentrator Array",
+      "dish_size_tier": 3,
+      "optical_efficiency": 0.85,
+      "tracking_quality": 0.95,
+      "max_thermal_kw": 12.0,
+      "stirling_output_kw": 3.0,
+      "reflectivity_decay_per_storm": 0.02,
+      "cleaning_restore": 0.15,
+      "deployment_tags": ["outdoor", "clear_sky_required", "gimbal_stabilized"]
+    }
+  ]
+}

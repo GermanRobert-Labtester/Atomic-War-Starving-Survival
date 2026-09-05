@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "recipes": [
+    {
+      "optic_recipe_id": "optic_periscope_prism",
+      "display_name": "Optical Periscope Prism Assembly",
+      "blank_item_id": "item_cast_borosilicate_glass_blank",
+      "stages": [
+        { "stage": "rough_grind", "work_units": 6.0, "quality_gain": 0.20 },
+        { "stage": "fine_grind", "work_units": 8.0, "quality_gain": 0.25 },
+        { "stage": "polish", "work_units": 10.0, "quality_gain": 0.25 },
+        { "stage": "figure_test", "work_units": 3.0, "quality_gain": 0.15 }
+      ],
+      "max_quality": 0.85,
+      "required_tool_tags": ["optics_bench"],
+      "target_system": "periscope"
+    },
+    {
+      "optic_recipe_id": "optic_rangefinder_achromat",
+      "display_name": "Laser Rangefinder Achromat Doublet",
+      "blank_item_id": "item_cast_borosilicate_glass_blank",
+      "stages": [
+        { "stage": "rough_grind", "work_units": 8.0, "quality_gain": 0.20 },
+        { "stage": "fine_grind", "work_units": 10.0, "quality_gain": 0.25 },
+        { "stage": "polish", "work_units": 12.0, "quality_gain": 0.30 },
+        { "stage": "figure_test", "work_units": 4.0, "quality_gain": 0.15 }
+      ],
+      "max_quality": 0.90,
+      "required_tool_tags": ["optics_bench"],
+      "target_system": "rangefinder"
+    },
+    {
+      "optic_recipe_id": "optic_heliograph_mirror",
+      "display_name": "Flat Heliograph Signaling Speculum",
+      "blank_item_id": "item_cast_borosilicate_glass_blank",
+      "stages": [
+        { "stage": "rough_grind", "work_units": 4.0, "quality_gain": 0.25 },
+        { "stage": "fine_grind", "work_units": 6.0, "quality_gain": 0.30 },
+        { "stage": "polish", "work_units": 8.0, "quality_gain": 0.25 }
+      ],
+      "max_quality": 0.80,
+      "required_tool_tags": ["optics_bench"],
+      "target_system": "heliograph"
+    },
+    {
+      "optic_recipe_id": "optic_telescope_parabolic_mirror",
+      "display_name": "Astronomical Observatory Primary Mirror",
+      "blank_item_id": "item_cast_borosilicate_glass_blank",
+      "stages": [
+        { "stage": "rough_grind", "work_units": 12.0, "quality_gain": 0.20 },
+        { "stage": "fine_grind", "work_units": 16.0, "quality_gain": 0.20 },
+        { "stage": "polish", "work_units": 20.0, "quality_gain": 0.30 },
+        { "stage": "figure_test", "work_units": 8.0, "quality_gain": 0.15 },
+        { "stage": "corrective_polish", "work_units": 10.0, "quality_gain": 0.15 }
+      ],
+      "max_quality": 1.00,
+      "required_tool_tags": ["optics_bench", "foucault_rig"],
+      "target_system": "observatory"
+    },
+    {
+      "optic_recipe_id": "optic_shield_viewport_laminate",
+      "display_name": "Laminated Armored Viewport Optic",
+      "blank_item_id": "item_cast_borosilicate_glass_blank",
+      "stages": [
+        { "stage": "rough_grind", "work_units": 4.0, "quality_gain": 0.30 },
+        { "stage": "fine_grind", "work_units": 6.0, "quality_gain": 0.25 },
+        { "stage": "polish", "work_units": 6.0, "quality_gain": 0.20 }
+      ],
+      "max_quality": 0.75,
+      "required_tool_tags": ["optics_bench"],
+      "target_system": "ballistic_shield"
+    }
+  ]
+}

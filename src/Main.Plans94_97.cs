@@ -56,7 +56,7 @@ namespace AtomicWar.GodotApp
                     && _world.WastelandMap.IsDiscovered(targetNode),
                 visibility01: ResolveHeliographVisibility,
                 isMapNodeKnown: _world.WastelandMap.IsDiscovered,
-                discoverMapNode: mapNodeId => _world.WastelandMap.Discover(mapNodeId),
+                discoverMapNode: mapNodeId => { _world.WastelandMap.Discover(mapNodeId); },
                 dispatchDistress: signalId => _radio.DistressSystem.DispatchExpedition(signalId));
             system.LoadCatalog(HeliographCatalogLoader.Load(
                 _dataDir, new FileSystemIO(), new SystemTextJsonSerializer(), new GodotLog()));

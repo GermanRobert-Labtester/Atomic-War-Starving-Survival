@@ -7212,6 +7212,146 @@
       "weight": 1.0,
       "tradeValue": 10,
       "empShielded": true
+    },
+    {
+      "id": "item_rock_salt_sack",
+      "displayName": "Rock Salt Sack",
+      "description": "Crude mined rock salt crystals used as electrochemical feedstock for chlor-alkali sanitation chemistry.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 2.5,
+      "tradeValue": 6,
+      "empShielded": true
+    },
+    {
+      "id": "item_liquid_bleach_carboy",
+      "displayName": "Liquid Bleach Carboy",
+      "description": "Concentrated sodium hypochlorite solution produced by the chlor-alkali plant for water disinfection and medical hygiene.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 2.0,
+      "tradeValue": 14,
+      "empShielded": true
+    },
+    {
+      "id": "item_caustic_soda_flakes",
+      "displayName": "Caustic Soda Flakes",
+      "description": "Solid sodium hydroxide byproduct used in industrial soap synthesis, scrubbing, and chemical neutralization.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 1.0,
+      "tradeValue": 8,
+      "empShielded": true
+    },
+    {
+      "id": "item_industrial_cell_anode",
+      "displayName": "Industrial Cell Anode",
+      "description": "Dimensionally stable dimensioned anode plate used in high-purity chlor-alkali synthesis cells.",
+      "type": "Material",
+      "stackMax": 5,
+      "weight": 3.0,
+      "tradeValue": 25,
+      "empShielded": true
+    },
+    {
+      "id": "item_parabolic_aluminum_dish_segment",
+      "displayName": "Parabolic Aluminum Dish Segment",
+      "description": "Precision-stamped polished aluminum curved segment for assembling high-temperature solar concentrators.",
+      "type": "Material",
+      "stackMax": 12,
+      "weight": 1.5,
+      "tradeValue": 18,
+      "empShielded": true
+    },
+    {
+      "id": "item_dual_axis_tracking_gimbal",
+      "displayName": "Dual-Axis Tracking Gimbal",
+      "description": "Motorized or counterweighted mechanical mount that keeps optical concentrators aligned with the sun.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 5.0,
+      "tradeValue": 35,
+      "empShielded": true
+    },
+    {
+      "id": "item_focal_stirling_engine_generator",
+      "displayName": "Focal Stirling Engine Generator",
+      "description": "Closed-cycle heat engine mounted at a solar dish focal point to generate electricity from concentrated sunlight.",
+      "type": "Material",
+      "stackMax": 2,
+      "weight": 8.0,
+      "tradeValue": 55,
+      "empShielded": true
+    },
+    {
+      "id": "item_cast_borosilicate_glass_blank",
+      "displayName": "Cast Borosilicate Glass Blank",
+      "description": "Annealed thick glass disc with low thermal expansion, ready for rough grinding, polishing, and parabolization.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 2.0,
+      "tradeValue": 20,
+      "empShielded": true
+    },
+    {
+      "id": "item_cerium_oxide_polishing_rouge",
+      "displayName": "Cerium Oxide Polishing Rouge",
+      "description": "Ultra-fine optical polishing compound used to achieve scratch-free optical surfaces and figure correction.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 0.5,
+      "tradeValue": 12,
+      "empShielded": true
+    },
+    {
+      "id": "item_optical_pitch_lap",
+      "displayName": "Optical Pitch Lap",
+      "description": "Channelled optical pitch tool cast on a backing plate, used for precision parabolization and figuring.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 1.2,
+      "tradeValue": 15,
+      "empShielded": true
+    },
+    {
+      "id": "item_foucault_tester_rig",
+      "displayName": "Foucault Knife-Edge Tester Rig",
+      "description": "Optical bench knife-edge testing apparatus for quantitative shadowgram surface figure measurement.",
+      "type": "Material",
+      "stackMax": 2,
+      "weight": 4.0,
+      "tradeValue": 40,
+      "empShielded": true
+    },
+    {
+      "id": "item_titanium_breaching_shield",
+      "displayName": "Titanium Breaching Shield",
+      "description": "Heavy reinforced tactical breaching shield offering high frontal kinetic protection and anchorable phalanx defense.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 12.0,
+      "tradeValue": 80,
+      "empShielded": true
+    },
+    {
+      "id": "item_laminated_ballistic_viewport_glass",
+      "displayName": "Laminated Ballistic Viewport Glass",
+      "description": "Multi-layer polycarbonate-glass composite viewport insert providing optical clarity under tactical fire.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 1.8,
+      "tradeValue": 22,
+      "empShielded": true
+    },
+    {
+      "id": "item_hardened_ground_anchor_spikes",
+      "displayName": "Hardened Ground Anchor Spikes",
+      "description": "Tungsten-tipped deployable anchor spikes allowing tactical shields to lock into concrete or frozen earth.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 1.0,
+      "tradeValue": 16,
+      "empShielded": true
     }
   ]
 }

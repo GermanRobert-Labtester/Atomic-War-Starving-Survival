@@ -162,7 +162,9 @@ namespace Ashfall.Core
             // Flagship XI (Plans 154-157) — morale contagion, pathogen strains,
             // subterranean networks, psyops campaigns (ids register via `id`;
             // cross-references validate via ReferenceKeys)
-            "contagion_", "pathogen_", "subnode_", "psyops_"
+            "contagion_", "pathogen_", "subnode_", "psyops_",
+            // Plans 110-113 — Industrial Chemistry, Solar-Thermal, Precision Optics, Ballistic Shields
+            "process_chlor_alkali_", "solar_dish_", "optic_", "shield_"
         };
 
         /// <summary>
@@ -185,7 +187,7 @@ namespace Ashfall.Core
             "questlineId", "stageId", "firstStageId",
             // The Weight of Choices — faction branching system (Military slice).
             "ponr_flag", "ending_id",
-            "recipe_id", "silo_id", "key",
+            "recipe_id", "silo_id", "gear_id", "key",
             // Plan 20
             "choice_id", "chain_id",
             // Plan 21
@@ -209,7 +211,9 @@ namespace Ashfall.Core
             // Plans 182-185
             "aircraft_id", "camp_id", "chem_id", "policy_id", "stage_id",
             // Flagship institutions (Tasks 5-8)
-            "tome_id", "treaty_id", "ordnance_id", "therapy_id", "condition_id"
+            "tome_id", "treaty_id", "ordnance_id", "therapy_id", "condition_id",
+            // Plans 110-113
+            "process_id", "concentrator_id", "optic_recipe_id", "shield_id"
         };
 
         /// <summary>
@@ -238,6 +242,8 @@ namespace Ashfall.Core
             // Plan 40 — Ledger Debt Templates
             "creditorId", "principalItemId", "consequenceId", "escalationId",
             "targetFactionId", "collateralItemId",
+            // Plans 110-113
+            "blank_item_id",
             // Plan 46 — Scavenging Tables
             "scavenging_table_id",
             // Plans 178-181

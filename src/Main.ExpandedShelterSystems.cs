@@ -107,6 +107,8 @@ namespace AtomicWar.GodotApp
             WireVinylRadioBridge();
             WireAutopsyBridge();
             SetupDecontamination();
+            SetupPlans78To81();
+            SetupPlans110To113();
             SetupKitchenNutrition();
             SetupGrainProcessing();
             SetupCryogenicAirSeparation();
@@ -265,6 +267,8 @@ namespace AtomicWar.GodotApp
             SaveWaystation();
             SaveSumpFlooding();
             SaveDecontamination();
+            SavePlans78To81();
+            SavePlans110To113();
             SaveKitchenNutrition();
             SaveGrainProcessing();
             SaveCryogenicAirSeparation();
@@ -328,6 +332,8 @@ namespace AtomicWar.GodotApp
             _waystation?.TickDaily(iceRoadOpen: true);
             _sumpFlooding?.TickDay(day);
             _decontamination?.TickDay(day);
+            TickPlans78To81(day);
+            TickPlans110To113(day);
             _kitchenNutrition?.TickDay(day);
             TickPlans94To97(day);
             _equipmentCondition?.TickDay(day);
@@ -501,6 +507,9 @@ namespace AtomicWar.GodotApp
             _archiveDesk?.Dispose(); _archiveDesk = null!;
             _contractorRoster?.Dispose(); _contractorRoster = null!;
             _mentalHealthCrisis?.Dispose(); _mentalHealthCrisis = null!;
+            _grainProcessing?.Dispose(); _grainProcessing = null;
+            _cryogenicAirSeparation?.Dispose(); _cryogenicAirSeparation = null;
+            _heliograph?.Dispose(); _heliograph = null;
             _chemicalDependency?.Dispose(); _chemicalDependency = null!;
             _shelterAssignment?.Dispose(); _shelterAssignment = null!;
             _shelterDecor?.Dispose(); _shelterDecor = null!;

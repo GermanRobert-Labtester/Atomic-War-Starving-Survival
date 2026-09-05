@@ -75,10 +75,20 @@ namespace Ashfall.Core
     }
 
     [Serializable]
+    public sealed class VehicleTrackGearDefinition
+    {
+        public string gear_id = string.Empty;
+        public string display_name = string.Empty;
+        public float traction_multiplier = 1.1f;
+        public float breakdown_risk_multiplier = 0.9f;
+    }
+
+    [Serializable]
     public sealed class VehicleCatalog
     {
         public int schema_version = 1;
         public List<VehicleDefinition> vehicles = new List<VehicleDefinition>();
+        public List<VehicleTrackGearDefinition> track_gear = new List<VehicleTrackGearDefinition>();
     }
 
     public sealed class ExpeditionVehicleSystem
@@ -86,6 +96,7 @@ namespace Ashfall.Core
         public const string SystemId = "expedition_vehicle";
         private ExpeditionVehicleState _state = new ExpeditionVehicleState();
         private readonly Dictionary<string, VehicleDefinition> _catalog = new Dictionary<string, VehicleDefinition>(StringComparer.Ordinal);
+        private readonly Dictionary<string, VehicleTrackGearDefinition> _trackGearCatalog = new Dictionary<string, VehicleTrackGearDefinition>(StringComparer.Ordinal);
         private readonly ISeededRng _rng;
         private readonly ILog _log;
 
@@ -102,14 +113,24 @@ namespace Ashfall.Core
         {
             if (catalog?.vehicles == null) return;
             _catalog.Clear();
+            _trackGearCatalog.Clear();
             foreach (var v in catalog.vehicles)
                 if (!string.IsNullOrEmpty(v.vehicle_id))
                     _catalog[v.vehicle_id] = v;
+            foreach (var gear in catalog.track_gear)
+                if (!string.IsNullOrEmpty(gear.gear_id))
+                    _trackGearCatalog[gear.gear_id] = gear;
         }
 
         public VehicleDefinition? GetDefinition(string id)
         {
             _catalog.TryGetValue(id, out var def);
+            return def;
+        }
+
+        public VehicleTrackGearDefinition? GetTrackGearDefinition(string id)
+        {
+            _trackGearCatalog.TryGetValue(id, out var def);
             return def;
         }
 
@@ -212,6 +233,18 @@ namespace Ashfall.Core
                     { "traction_multiplier", v.trackGear.EffectiveTractionMultiplier() },
                     { "breakdown_risk_multiplier", v.trackGear.EffectiveBreakdownRiskMultiplier() }
                 });
+        }
+
+        public ActionResult InstallTrackGear(string vehicleId, string gearId, float condition = 100f)
+        {
+            if (!_trackGearCatalog.TryGetValue(gearId, out var def))
+                return ActionResult.Failed("unknown_track_gear", "vehicle.unknown_track_gear");
+            return InstallTrackGear(
+                vehicleId,
+                gearId,
+                def.traction_multiplier,
+                def.breakdown_risk_multiplier,
+                condition);
         }
 
         public ActionResult RemoveTrackGear(string vehicleId)

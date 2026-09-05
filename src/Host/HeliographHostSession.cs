@@ -24,7 +24,7 @@ namespace AtomicWar.GodotApp
                 LastEvent = $"Heliograph message blocked: {message.block_reason}.";
                 RaiseStateChanged();
             };
-            System.OnStateChanged += () => RaiseStateChanged();
+            System.OnStateChanged += () => { RaiseStateChanged(); };
         }
 
         public ActionResult Transmit(

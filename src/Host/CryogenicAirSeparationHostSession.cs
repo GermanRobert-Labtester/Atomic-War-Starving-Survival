@@ -23,7 +23,7 @@ namespace AtomicWar.GodotApp
                 LastEvent = $"Air-separation cycle blocked: {reason}.";
                 RaiseStateChanged();
             };
-            System.OnStateChanged += () => RaiseStateChanged();
+            System.OnStateChanged += () => { RaiseStateChanged(); };
         }
 
         public bool SetRunning(bool running) => System.SetRunning(running);

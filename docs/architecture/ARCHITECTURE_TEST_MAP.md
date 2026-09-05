@@ -170,6 +170,13 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 113 | `grain_processing` | Shelter & Life Support | `GrainProcessingSystem` | `grain_processing.json` | `GrainProcessingHostSession` | `GrainProcessingSaveStore` | `Plans94To97Panel` | `GrainProcessingTests` | ✅ 6/6 |
 | 114 | `cryogenic_air_separation` | Shelter & Life Support | `CryogenicAirSeparationSystem` | `cryogenic_air_separation.json` | `CryogenicAirSeparationHostSession` | `CryogenicAirSeparationSaveStore` | `Plans94To97Panel` | `CryogenicAirSeparationTests` | ✅ 6/6 |
 | 115 | `heliograph` | Communications & Radio | `HeliographSystem` | `heliograph.json` | `HeliographHostSession` | `HeliographSaveStore` | `Plans94To97Panel` | `HeliographSystemTests` | ✅ 6/6 |
+| 116 | `geodetic_survey` | World & Expeditions | `GeodeticSurveyEngine` | `geodetic_survey_catalog.json` | `GeodeticSurveyHostSession` | `GeodeticSurveySaveStore` | `Main.Plans78_81` | `GeodeticSurveyEngineTests` | ✅ 6/6 |
+| 117 | `kinetic_storage` | Power & Energy | `KineticStorageSystem` | `kinetic_flywheel_catalog.json` | `KineticStorageHostSession` | `KineticStorageSaveStore` | `Main.Plans78_81` | `KineticStorageSystemTests` | ✅ 6/6 |
+| 118 | `chemical_recon` | Expeditions & Hazards | `ChemicalReconEngine` | `toxic_chemical_catalog.json` | `ChemicalReconHostSession` | `ChemicalReconSaveStore` | `Main.Plans78_81` | `ChemicalReconEngineTests` | ✅ 6/6 |
+| 119 | `chlor_alkali_synthesis` | Shelter & Life Support | `ChlorAlkaliSynthesisEngine` | `chlor_alkali_synthesis_catalog.json` | `ChlorAlkaliHostSession` | `ChlorAlkaliSaveStore` | `Main.Plans110_113` | `ChlorAlkaliSynthesisEngineTests` | ✅ 6/6 |
+| 120 | `solar_concentrator` | Power & Energy | `SolarConcentratorEngine` | `solar_concentrator_catalog.json` | `SolarConcentratorHostSession` | `SolarConcentratorSaveStore` | `Main.Plans110_113` | `SolarConcentratorEngineTests` | ✅ 6/6 |
+| 121 | `precision_optics` | Shelter & Production | `PrecisionOpticsEngine` | `precision_optics_catalog.json` | `PrecisionOpticsHostSession` | `PrecisionOpticsSaveStore` | `Main.Plans110_113` | `PrecisionOpticsEngineTests` | ✅ 6/6 |
+| 122 | `ballistic_shield` | Tactical Combat | `BallisticShieldEngine` | `ballistic_shield_catalog.json` | `BallisticShieldHostSession` | `BallisticShieldSaveStore` | `Main.Plans110_113` | `BallisticShieldEngineTests` | ✅ 6/6 |
 
 ---
 
@@ -1595,6 +1602,13 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `cryogenic_air_separation` | ✅ | ✅ | ✅ `Daily Air Separation Cycle` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `grain_processing` | ✅ | ✅ | ✅ `Daily Milling & Silo Care` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `heliograph` | ✅ | ✅ | ⚡ `On-Demand (Optical Signaling)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `geodetic_survey` | ✅ | ✅ | ✅ `Daily Survey Drift & Alignment` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `kinetic_storage` | ✅ | ✅ | ✅ `Daily Flywheel Parasitic Decay` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `chemical_recon` | ✅ | ✅ | ✅ `Daily Chemical Vapor Dispersion` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `chlor_alkali_synthesis` | ✅ | ✅ | ✅ `Daily Membrane Health & Synthesis` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `solar_concentrator` | ✅ | ✅ | ✅ `Daily Solar Tracking & Thermal Output` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `precision_optics` | ✅ | ✅ | ⚡ `On-Demand (Optical Figuring)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `ballistic_shield` | ✅ | ✅ | ⚡ `On-Demand (Tactical Intercept)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 
 ---
 

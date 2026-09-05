@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "processes": [
+    {
+      "process_id": "process_chlor_alkali_sanitation_basic",
+      "display_name": "Standard Industrial Sanitation Batch",
+      "feedstock_costs": [
+        { "item_id": "item_rock_salt_sack", "amount": 1 }
+      ],
+      "power_kw": 3.5,
+      "duration_ticks": 4,
+      "process_efficiency": 0.70,
+      "sanitation_output_units": 8,
+      "caustic_output_units": 4,
+      "byproduct_hazard_load": 0.25,
+      "membrane_wear": 0.04,
+      "tags": ["sanitation", "industrial_chemistry", "standard"]
+    },
+    {
+      "process_id": "process_chlor_alkali_high_purity",
+      "display_name": "High-Purity Disinfectant Run",
+      "feedstock_costs": [
+        { "item_id": "item_rock_salt_sack", "amount": 2 },
+        { "item_id": "item_industrial_cell_anode", "amount": 1 }
+      ],
+      "power_kw": 5.0,
+      "duration_ticks": 6,
+      "process_efficiency": 0.85,
+      "sanitation_output_units": 16,
+      "caustic_output_units": 8,
+      "byproduct_hazard_load": 0.40,
+      "membrane_wear": 0.08,
+      "tags": ["sanitation", "high_purity", "medical_grade"]
+    },
+    {
+      "process_id": "process_chlor_alkali_rapid_batch",
+      "display_name": "Emergency Accelerated Batch",
+      "feedstock_costs": [
+        { "item_id": "item_rock_salt_sack", "amount": 1 }
+      ],
+      "power_kw": 6.0,
+      "duration_ticks": 2,
+      "process_efficiency": 0.60,
+      "sanitation_output_units": 6,
+      "caustic_output_units": 3,
+      "byproduct_hazard_load": 0.50,
+      "membrane_wear": 0.12,
+      "tags": ["sanitation", "emergency", "accelerated"]
+    }
+  ]
+}

@@ -206,10 +206,10 @@ namespace AtomicWar.GodotApp.UI
             // Standard recipe catalog definitions
             var recipes = new[]
             {
-                new RecipeOption { id = "recipe_fungal_stew", name = "Nutritive Fungal Stew", desc = "Hearty broth fortified with underground mushroom caps.", cost = "1x Mushroom, 1x Clean Water", morale = 3 },
-                new RecipeOption { id = "recipe_canned_mash", name = "Heated Military Rations", desc = "Standard shelf-stable calories with mild vitamin paste.", cost = "1x Rations, 1x Fuel", morale = 2 },
-                new RecipeOption { id = "recipe_greenhouse_salad", name = "Fresh Harvest Greens", desc = "Crisp hydroponic root leaves and tuber salad.", cost = "2x Fresh Greens", morale = 5 },
-                new RecipeOption { id = "recipe_cured_jerky_broth", name = "Smoked Jerky & Bone Broth", desc = "Rich protein soup providing sustained work endurance.", cost = "1x Meat, 2x Clean Water", morale = 4 },
+                new RecipeOption { id = "recipe_fungal_stew", name = "Nutritive Fungal Stew", desc = "Hearty broth fortified with underground mushroom caps.", cost = "1x Phosphor Cap Fungi, 1x Clean Water", morale = 3, inputs = new Dictionary<string, int> { ["crop_biolum_mushroom"] = 1, ["clean_water"] = 1 } },
+                new RecipeOption { id = "recipe_canned_mash", name = "Heated Military Rations", desc = "Standard shelf-stable calories with mild vitamin paste.", cost = "1x Military Rations, 1x Fuel", morale = 2, inputs = new Dictionary<string, int> { ["military_rations"] = 1, ["fuel"] = 1 } },
+                new RecipeOption { id = "recipe_greenhouse_salad", name = "Fresh Harvest Greens", desc = "Crisp hydroponic root leaves and tuber salad.", cost = "2x Fresh Winter Cress", morale = 5, inputs = new Dictionary<string, int> { ["crop_leafy_green"] = 2 } },
+                new RecipeOption { id = "recipe_cured_jerky_broth", name = "Smoked Jerky & Bone Broth", desc = "Rich protein soup providing sustained work endurance.", cost = "1x Cooked Meat, 2x Clean Water", morale = 4, inputs = new Dictionary<string, int> { ["cooked_meat"] = 1, ["clean_water"] = 2 } },
                 new RecipeOption
                 {
                     id = "recipe_ash_flour_bread",

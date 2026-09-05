@@ -24,7 +24,7 @@ namespace AtomicWar.GodotApp
                 LastEvent = "Grain output blocked: storage is full.";
                 RaiseStateChanged();
             };
-            System.OnStateChanged += () => RaiseStateChanged();
+            System.OnStateChanged += () => { RaiseStateChanged(); };
         }
 
         public ActionResult StartMilling(string recipeId, string siloId, string workerId = "")

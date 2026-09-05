@@ -126,7 +126,7 @@ namespace AtomicWar.GodotApp.UI
 
         private Control BuildGrainColumn()
         {
-            var panel = MakeColumn("GRAIN MILL & SILO SAFETY");
+            var panel = MakeColumn("GRAIN MILL & SILO SAFETY", out var shell);
             var state = _grain!.System.State;
             panel.AddChild(AshfallUiHelpers.MakeDataRow(
                 "ACTIVE BATCHES", state.active_jobs.Count.ToString(), AshfallUiHelpers.ToColor(DesignTheme.Pale)));
@@ -145,18 +145,18 @@ namespace AtomicWar.GodotApp.UI
             panel.AddChild(AshfallUiHelpers.MakeButton("MILL ASH-BARLEY BATCH", () =>
             {
                 var result = _grain.StartMilling(
-                    "recipe_ash_grain_flour", "silo_holdfast");
+                    "recipe_ash_grain_flour", "grain_silo_holdfast");
                 _eventLog.Text = result.IsSuccess
                     ? "Milling batch reserved. It will complete on the next processing tick."
                     : $"Milling blocked: {result.FailureCode}.";
                 RefreshView();
             }));
-            return panel;
+            return shell;
         }
 
         private Control BuildCryogenicColumn()
         {
-            var panel = MakeColumn("CRYOGENIC AIR SEPARATION");
+            var panel = MakeColumn("CRYOGENIC AIR SEPARATION", out var shell);
             var state = _cryogenic!.System.State;
             panel.AddChild(AshfallUiHelpers.MakeDataRow(
                 "PLANT", state.is_running ? "RUNNING" : "IDLE",
@@ -168,7 +168,7 @@ namespace AtomicWar.GodotApp.UI
             panel.AddChild(AshfallUiHelpers.MakeDataRow(
                 "CYCLES", state.cycles_completed.ToString(), AshfallUiHelpers.ToColor(DesignTheme.Pale)));
             panel.AddChild(AshfallUiHelpers.MakeSmall(
-                "Oxygen is a medical treatment input. Nitrogen is consumed by the structural foundry line."));
+                "Oxygen is a medical treatment input. Nitrogen is consumed by the weather-canister foundry line."));
             panel.AddChild(AshfallUiHelpers.MakeButton(
                 state.is_running ? "STOP PLANT" : "START PLANT",
                 () =>
@@ -179,12 +179,12 @@ namespace AtomicWar.GodotApp.UI
                         : "Plant command blocked.";
                     RefreshView();
                 }));
-            return panel;
+            return shell;
         }
 
         private Control BuildHeliographColumn()
         {
-            var panel = MakeColumn("HELIOGRAPH SIGNALING");
+            var panel = MakeColumn("HELIOGRAPH SIGNALING", out var shell);
             var state = _heliograph!.System.State;
             panel.AddChild(AshfallUiHelpers.MakeDataRow(
                 "MESSAGES", state.messages.Count.ToString(), AshfallUiHelpers.ToColor(DesignTheme.Pale)));
@@ -206,10 +206,10 @@ namespace AtomicWar.GodotApp.UI
                     : $"Transmission blocked: {result.FailureCode}.";
                 RefreshView();
             }));
-            return panel;
+            return shell;
         }
 
-        private static Control MakeColumn(string title)
+        private static VBoxContainer MakeColumn(string title, out Control shell)
         {
             var panel = AshfallUiHelpers.MakePanel(minWidth: 320);
             panel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -221,7 +221,8 @@ namespace AtomicWar.GodotApp.UI
             body.SizeFlagsVertical = SizeFlags.ExpandFill;
             margin.AddChild(body);
             body.AddChild(AshfallUiHelpers.MakeSectionHeader(title));
-            return panel;
+            shell = panel;
+            return body;
         }
 
         private string FirstEvent()

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "shields": [
+    {
+      "shield_id": "shield_scavenged_car_door",
+      "display_name": "Improvised Scrap Shield",
+      "coverage_arc_deg": 70.0,
+      "frontal_block_rating": 0.60,
+      "integrity_max": 60.0,
+      "viewport_clarity": 0.60,
+      "stamina_cost_per_tick": 2.0,
+      "anchor_supported": false,
+      "movement_multiplier": 0.75,
+      "suppression_resistance": 0.40,
+      "tags": ["improvised", "light"]
+    },
+    {
+      "shield_id": "shield_riot_polycarbonate",
+      "display_name": "Tactical Riot Shield",
+      "coverage_arc_deg": 90.0,
+      "frontal_block_rating": 0.70,
+      "integrity_max": 80.0,
+      "viewport_clarity": 0.95,
+      "stamina_cost_per_tick": 2.5,
+      "anchor_supported": false,
+      "movement_multiplier": 0.80,
+      "suppression_resistance": 0.55,
+      "tags": ["tactical", "viewport"]
+    },
+    {
+      "shield_id": "shield_heavy_breaching",
+      "display_name": "Heavy Breaching Shield",
+      "coverage_arc_deg": 100.0,
+      "frontal_block_rating": 0.82,
+      "integrity_max": 120.0,
+      "viewport_clarity": 0.85,
+      "stamina_cost_per_tick": 3.5,
+      "anchor_supported": true,
+      "movement_multiplier": 0.55,
+      "suppression_resistance": 0.75,
+      "tags": ["heavy", "breaching", "anchorable"]
+    },
+    {
+      "shield_id": "shield_titanium_mantlet",
+      "display_name": "Titanium Trench Mantlet",
+      "coverage_arc_deg": 120.0,
+      "frontal_block_rating": 0.90,
+      "integrity_max": 160.0,
+      "viewport_clarity": 0.80,
+      "stamina_cost_per_tick": 4.5,
+      "anchor_supported": true,
+      "movement_multiplier": 0.45,
+      "suppression_resistance": 0.85,
+      "tags": ["mantlet", "phalanx_capable", "anchorable"]
+    },
+    {
+      "shield_id": "shield_kinetic_phalanx",
+      "display_name": "Kinetic Aegis Phalanx Shield",
+      "coverage_arc_deg": 110.0,
+      "frontal_block_rating": 0.88,
+      "integrity_max": 150.0,
+      "viewport_clarity": 0.90,
+      "stamina_cost_per_tick": 4.0,
+      "anchor_supported": true,
+      "movement_multiplier": 0.50,
+      "suppression_resistance": 0.90,
+      "tags": ["phalanx_capable", "anchorable", "advanced"]
+    }
+  ]
+}

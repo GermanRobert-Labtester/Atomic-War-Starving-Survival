@@ -521,6 +521,54 @@ namespace AtomicWar.GodotApp
             return result;
         }
 
+        /// <summary>Install an authored track-gear definition from vehicles.json.</summary>
+        public CommandResult InstallTrackGear(string vehicleId, string gearId, float condition = 100f)
+        {
+            var action = Vehicles.InstallTrackGear(vehicleId, gearId, condition);
+            var result = action.Status == ActionResult.StatusKind.Success
+                ? CommandResult.FromSuccess(
+                    PlayerCommandCode.RepairVehicle,
+                    action,
+                    StateVersion,
+                    StateVersion + 1)
+                : new CommandResult(
+                    PlayerCommandCode.RepairVehicle,
+                    action,
+                    StateVersion,
+                    StateVersion);
+            if (result.IsSuccess) RaiseStateChanged();
+            LastEvent = result.IsSuccess
+                ? $"Installed {gearId} on {vehicleId}."
+                : $"Cannot install {gearId}: {action.FailureCode}.";
+            return result;
+        }
+
+        public CommandResult RemoveTrackGear(string vehicleId)
+        {
+            var action = Vehicles.RemoveTrackGear(vehicleId);
+            var result = action.Status == ActionResult.StatusKind.Success
+                ? CommandResult.FromSuccess(PlayerCommandCode.RepairVehicle, action, StateVersion, StateVersion + 1)
+                : new CommandResult(PlayerCommandCode.RepairVehicle, action, StateVersion, StateVersion);
+            if (result.IsSuccess) RaiseStateChanged();
+            LastEvent = result.IsSuccess
+                ? $"Removed track gear from {vehicleId}."
+                : $"Cannot remove track gear: {action.FailureCode}.";
+            return result;
+        }
+
+        public CommandResult RepairTrackGear(string vehicleId, float amount)
+        {
+            var action = Vehicles.RepairTrackGear(vehicleId, amount);
+            var result = action.Status == ActionResult.StatusKind.Success
+                ? CommandResult.FromSuccess(PlayerCommandCode.RepairVehicle, action, StateVersion, StateVersion + 1)
+                : new CommandResult(PlayerCommandCode.RepairVehicle, action, StateVersion, StateVersion);
+            if (result.IsSuccess) RaiseStateChanged();
+            LastEvent = result.IsSuccess
+                ? $"Repaired track gear on {vehicleId}."
+                : $"Cannot repair track gear: {action.FailureCode}.";
+            return result;
+        }
+
         /// <summary>
         /// Plan 60 — vehicle kit → vehicle assembly bridge. Consumes one kit
         /// item from the shelter inventory atomically and acquires the mapped

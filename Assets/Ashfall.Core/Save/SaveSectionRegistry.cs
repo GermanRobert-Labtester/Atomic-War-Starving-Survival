@@ -167,7 +167,14 @@ namespace Ashfall.Core.Save
             new("collectible_discovery", "SaveCollectibles", "SetupCollectibles", "inventory", "One-time collectible discovery ledger"),
             new("unique_claims", "SaveCollectibles", "SetupCollectibles", "inventory", "Global unique-item claim ledger"),
             new("shelter_fire", "SaveShelterFire", "SetupShelterFireHazard", "shelter", "Shelter fire incidents, smoke, and brigade response"),
-            new("dynamic_quests", "SaveDynamicQuests", "SetupDynamicQuests", "quests", "Campaign-wide emergency dynamic quests")
+            new("dynamic_quests", "SaveDynamicQuests", "SetupDynamicQuests", "quests", "Campaign-wide emergency dynamic quests"),
+            new("geodetic_survey", "SaveGeodeticSurvey", "SetupGeodeticSurvey", "world", "Plans 78-81 — survey monuments, observations, resolved triangles, and network accuracy"),
+            new("kinetic_storage", "SaveKineticStorage", "SetupKineticStorage", "power_grid", "Plans 78-81 — flywheel rotor, vacuum, bearing, and containment state"),
+            new("chemical_recon", "SaveChemicalRecon", "SetupChemicalRecon", "expeditions", "Plans 78-81 — chemical hazard observations, samples, and safe corridors"),
+            new("chlor_alkali_synthesis", "SaveChlorAlkali", "SetupChlorAlkali", "shelter", "Plans 110-113 — chlor-alkali electrolytic plant, membrane health, hazard load, and chemical production"),
+            new("solar_concentrator", "SaveSolarConcentrator", "SetupSolarConcentrator", "power_grid", "Plans 110-113 — parabolic solar concentrator, mirror condition, tracking mode, and thermal output"),
+            new("precision_optics", "SavePrecisionOptics", "SetupPrecisionOptics", "shelter", "Plans 110-113 — precision optical blank grinding, figure testing, and telescope/shield viewports"),
+            new("ballistic_shield", "SaveBallisticShield", "SetupBallisticShield", "combat", "Plans 110-113 — defensive ballistic shields, stances, integrity, and ground anchoring")
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -305,6 +312,13 @@ namespace Ashfall.Core.Save
                 { "unique_claims", "unique_claims_save.json" },
                 { "shelter_fire", "shelter_fire_save.json" },
                 { "dynamic_quests", "dynamic_quests_save.json" },
+                { "geodetic_survey", "geodetic_survey_save.json" },
+                { "kinetic_storage", "kinetic_storage_save.json" },
+                { "chemical_recon", "chemical_recon_save.json" },
+                { "chlor_alkali_synthesis", "chlor_alkali_synthesis_save.json" },
+                { "solar_concentrator", "solar_concentrator_save.json" },
+                { "precision_optics", "precision_optics_save.json" },
+                { "ballistic_shield", "ballistic_shield_save.json" },
             };
 
         /// <summary>

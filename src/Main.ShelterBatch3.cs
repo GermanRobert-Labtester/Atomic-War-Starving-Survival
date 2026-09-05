@@ -94,12 +94,16 @@ namespace AtomicWar.GodotApp
         {
             if (_decontamination != null) return;
             SetupCampaignDay();
+            var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
+            var dcJson = new SystemTextJsonSerializer();
+            // Plan 78: data-driven decon protocols (wash stages, effluent rules).
+            var dcCatalog = DeconProtocolCatalogLoader.Load(_dataDir, fileIO, dcJson);
             var dcState = DecontaminationSaveStore.TryLoad() ?? new DecontaminationState();
             var dcInv = _inventory.Inventory;
             var dcRad = _survivors.Radiation;
             var dcAirlock = _airlockSecurity.System;
             var dcStarting = _startingLevel.System;
-            var dcSys = new DecontaminationSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 11), dcRad, dcInv, dcAirlock, dcStarting, new GodotLog());
+            var dcSys = new DecontaminationSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 11), dcRad, dcInv, dcAirlock, dcStarting, dcCatalog, new GodotLog());
             dcSys.RestoreState(dcState);
             _decontamination = new DecontaminationHostSession(dcSys, dcRad, dcInv, dcAirlock, dcStarting);
             if (_decontaminationPanel != null && _decontaminationPanel.IsInsideTree())
