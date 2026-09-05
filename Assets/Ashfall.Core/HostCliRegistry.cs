@@ -30,6 +30,7 @@ namespace Ashfall.Core
         CoreSelfTest,
         DataIntegritySelfTest,
         ResearchCatalogSelfTest,
+        RadioCatalogSelfTest,
         PanelBindLifecycleSelfTest,
         SaveLoadUiFailureSelfTest,
         SaveStoreChecksumSelfTest,
@@ -256,6 +257,12 @@ namespace Ashfall.Core
                     "--research-catalog-selftest",
                     null,
                     "Research knowledge catalog gate (Plan 34): load count, DAG validity, original 15 save-contract nodes, and cross-catalog unlock references (breakthrough items, relic research unlocks, manual/autopsy knowledge grants)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RadioCatalogSelfTest,
+                    "Core & System Gates",
+                    "--radio-catalog-selftest",
+                    null,
+                    "Radio station catalog gate (AF-B1 / Plan 60): JSON authority, schedules, signal degradation model, and overrides"),
                 new HostCliActionDescriptor(
                     HostCliAction.PanelBindLifecycleSelfTest,
                     "Core & System Gates",

@@ -33,6 +33,38 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void Timeline_IgnoresRepeatedAndOutOfOrderDays()
+        {
+            var timeline = new YearOfAshTimelineSystem();
+            int notifications = 0;
+            timeline.OnDayAdvanced += _ => notifications++;
+
+            timeline.AdvanceDay(250);
+            timeline.AdvanceDay(250);
+            timeline.AdvanceDay(220);
+
+            Assert.Equal(250, timeline.CurrentDay);
+            Assert.Equal(YearOfAshPhase.Phase5_FactionSiege, timeline.CurrentPhase);
+            Assert.Equal(1, notifications);
+        }
+
+        [Fact]
+        public void Timeline_RestoreDerivesPhaseFromAuthoritativeDay()
+        {
+            var timeline = new YearOfAshTimelineSystem();
+            timeline.RestoreState(new YearOfAshTimelineState
+            {
+                currentDay = 320,
+                phase = YearOfAshPhase.Phase4_DeepFreeze,
+                ambientTemperatureCelsius = -40f
+            });
+
+            Assert.Equal(320, timeline.CurrentDay);
+            Assert.Equal(YearOfAshPhase.Phase6_TheGreatThaw, timeline.CurrentPhase);
+            Assert.True(timeline.AmbientTemperatureCelsius > -11f);
+        }
+
+        [Fact]
         public void DoorEncounters_EvaluatesHumanistVsRuthlessReactionsDeterministically()
         {
             var encounters = new DoorEncounterSystem();

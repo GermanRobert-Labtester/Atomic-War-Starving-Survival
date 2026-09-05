@@ -18,6 +18,7 @@ namespace Ashfall.Core.World
     public static class WeatherGateFile
     {
         public const string FileName = "weather_route_gates.json";
+        public const int CurrentSchemaVersion = WeatherGateCatalogLoader.CurrentSchemaVersion;
 
         public static WeatherGateCatalog? Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
@@ -28,51 +29,8 @@ namespace Ashfall.Core.World
             if (!fileIO.FileExists(path))
                 return null; // optional file: catalog stays empty, silently
 
-            string raw = fileIO.ReadAllText(path);
-            if (string.IsNullOrWhiteSpace(raw))
-                return null;
-
-            // Shape A: root object { "schema_version": 1, "gates": [ ... ] }
-            try
-            {
-                var envelope = json.Deserialize<WeatherGateEnvelope>(raw);
-                if (envelope != null && envelope.gates != null)
-                {
-                    var catalog = new WeatherGateCatalog();
-                    foreach (var def in envelope.gates)
-                    {
-                        if (def != null)
-                            catalog.Register(WeatherGateEvaluator.FromDef(def));
-                    }
-                    return catalog;
-                }
-            }
-            catch (Exception ex)
-            {
-                CatalogDiagnostics.Warn(path, "WeatherGateEnvelope", ex);
-            }
-
-            // Shape B: bare array [ { ... }, ... ]
-            try
-            {
-                var list = json.Deserialize<System.Collections.Generic.List<WeatherGateDef>>(raw);
-                if (list != null && list.Count > 0)
-                {
-                    var catalog = new WeatherGateCatalog();
-                    foreach (var def in list)
-                    {
-                        if (def != null)
-                            catalog.Register(WeatherGateEvaluator.FromDef(def));
-                    }
-                    return catalog;
-                }
-            }
-            catch (Exception ex)
-            {
-                CatalogDiagnostics.Warn(path, "List<WeatherGate>", ex);
-            }
-
-            return null;
+            var catalog = WeatherGateCatalogLoader.LoadFromDirectory(dataDir, fileIO, json);
+            return catalog;
         }
 
         [Serializable]

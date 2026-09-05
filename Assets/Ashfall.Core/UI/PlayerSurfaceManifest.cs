@@ -40,7 +40,7 @@ namespace Ashfall.Core.UI
             foreach (string id in PanelRegistry.AllIds)
             {
                 var desc = PanelRegistry.Get(id);
-                if (desc == null) continue;
+                if (desc == null || !desc.IsPlayerNavigable) continue;
                 list.Add(BuildContractFor(desc));
             }
             return new PlayerSurfaceManifest(list);

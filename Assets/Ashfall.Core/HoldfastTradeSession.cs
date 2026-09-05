@@ -115,24 +115,72 @@ namespace Ashfall.Core
             return total;
         }
 
-        public void AddItem(string itemId, int count)
+        private ItemDefinition CreateItemDefinition(string canonicalId)
         {
-            if (string.IsNullOrEmpty(itemId) || count <= 0) return;
+            var def = _catalog?.GetItem(canonicalId);
+            return new ItemDefinition
+            {
+                id = canonicalId,
+                displayName = def?.DisplayName ?? canonicalId,
+                description = def?.Description ?? string.Empty,
+                type = ParseHoldfastItemType(def?.Type),
+                stackMax = def != null && def.StackMax > 0 ? def.StackMax : (def != null && (def.Type == "gear" || def.Type == "equipment") ? 1 : 99),
+                weight = def?.Weight ?? 1f,
+                tradeValue = def?.TradeValue ?? 1f
+            };
+        }
+
+        private static ItemType ParseHoldfastItemType(string? type)
+        {
+            if (string.IsNullOrWhiteSpace(type)) return ItemType.Material;
+            if (Enum.TryParse<ItemType>(type, true, out var parsed)) return parsed;
+            switch (type.Trim().ToLowerInvariant())
+            {
+                case "food": return ItemType.Food;
+                case "water": return ItemType.Water;
+                case "medical": return ItemType.Medical;
+                case "gear":
+                case "equipment": return ItemType.Protective;
+                case "device": return ItemType.Device;
+                case "tool": return ItemType.Tool;
+                default: return ItemType.Material;
+            }
+        }
+
+        public bool CanAdd(string itemId, int count)
+        {
+            if (string.IsNullOrEmpty(itemId) || count <= 0) return false;
             string canonical = ItemAliases.ToCanonical(itemId);
             if (_backingInventory != null)
             {
-                var def = _catalog?.GetItem(canonical);
-                var itemDef = new ItemDefinition
-                {
-                    id = canonical,
-                    displayName = def?.DisplayName ?? canonical,
-                    stackMax = 99,
-                    weight = def?.Weight ?? 1f
-                };
-                _backingInventory.Add(itemDef, count);
+                var itemDef = CreateItemDefinition(canonical);
+                return _backingInventory.CanAdd(itemDef, count);
             }
+            float currentWeight = GetCurrentWeight();
+            var def = _catalog?.GetItem(canonical);
+            float unitWeight = def?.Weight ?? 1f;
+            if (MaxWeight > 0f && currentWeight + unitWeight * count > MaxWeight) return false;
+            int stackMax = def != null && def.StackMax > 0 ? def.StackMax : 99;
+            _items.TryGetValue(canonical, out int currentCount);
+            if (currentCount == 0 && OccupiedCount >= Capacity) return false;
+            return true;
+        }
+
+        public bool AddItem(string itemId, int count)
+        {
+            if (string.IsNullOrEmpty(itemId) || count <= 0) return false;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            if (!CanAdd(canonical, count)) return false;
+
+            if (_backingInventory != null)
+            {
+                var itemDef = CreateItemDefinition(canonical);
+                return _backingInventory.Add(itemDef, count);
+            }
+
             _items.TryGetValue(canonical, out int existing);
             _items[canonical] = existing + count;
+            return true;
         }
 
         public void RemoveItem(string itemId, int count)
@@ -142,6 +190,7 @@ namespace Ashfall.Core
             if (_backingInventory != null)
             {
                 _backingInventory.RemoveById(canonical, count);
+                return;
             }
             if (_items.TryGetValue(canonical, out int existing))
             {
@@ -253,6 +302,7 @@ namespace Ashfall.Core
         private readonly long _initialValue;
 
         public HoldfastTradeInventory Inventory { get; }
+        public Inventory.Inventory? PlayerInventory => _playerInventory;
         public string SelectedFactionId { get; private set; } = string.Empty;
 
         /// <summary>
@@ -329,8 +379,7 @@ namespace Ashfall.Core
             string canonical = ItemAliases.ToCanonical(itemId);
             if (_playerInventory != null)
             {
-                int c = _playerInventory.CountById(canonical);
-                if (c > 0) return c;
+                return _playerInventory.CountById(canonical);
             }
             return _held.TryGetValue(canonical, out int h) ? h : (_held.TryGetValue(itemId, out int raw) ? raw : 0);
         }
@@ -353,7 +402,28 @@ namespace Ashfall.Core
 
         public long Value => _value;
         public long PlayerValue => _value;
-        public IReadOnlyDictionary<string, int> Held => _held;
+        public IReadOnlyDictionary<string, int> Held
+        {
+            get
+            {
+                if (_playerInventory != null)
+                {
+                    var map = new Dictionary<string, int>(StringComparer.Ordinal);
+                    for (int i = 0; i < _playerInventory.Slots.Count; i++)
+                    {
+                        var s = _playerInventory.Slots[i];
+                        if (s?.Item != null && s.Amount > 0)
+                        {
+                            string canonical = ItemAliases.ToCanonical(s.Item.id);
+                            map.TryGetValue(canonical, out int cur);
+                            map[canonical] = cur + s.Amount;
+                        }
+                    }
+                    return map;
+                }
+                return _held;
+            }
+        }
 
         public bool TryGetUnitValue(string itemId, out long unitValue)
         {
@@ -398,15 +468,44 @@ namespace Ashfall.Core
             if (cost > _value)
                 return HoldfastTradeResult.Fail("Insufficient funds.", HoldfastTradeFailure.InsufficientFunds);
 
-            if (GetHeld(canonical) == 0 && Inventory.OccupiedCount >= Inventory.Capacity)
+            if (!Inventory.CanAdd(canonical, quantity))
+            {
+                float unitWeight = def.Weight;
+                if (Inventory.MaxWeight > 0f && Inventory.GetCurrentWeight() + unitWeight * quantity > Inventory.MaxWeight)
+                    return HoldfastTradeResult.Fail("Inventory weight limit exceeded.", HoldfastTradeFailure.InventoryCapacity);
+                return HoldfastTradeResult.Fail("Inventory capacity reached.", HoldfastTradeFailure.InventoryCapacity);
+            }
+
+            long prevValue = _value;
+            int prevStock = currentStock;
+            int prevHeld = GetHeld(canonical);
+
+            bool added = Inventory.AddItem(canonical, quantity);
+            if (!added)
                 return HoldfastTradeResult.Fail("Inventory capacity reached.", HoldfastTradeFailure.InventoryCapacity);
 
-            _value -= cost;
-            _held[canonical] = GetHeld(canonical) + quantity;
-            _stock[canonical] = currentStock - quantity;
-            Inventory.AddItem(canonical, quantity);
-            StateChanged?.Invoke();
-            return HoldfastTradeResult.Ok(canonical, quantity, factionId, cost);
+            try
+            {
+                _value -= cost;
+                _stock[canonical] = currentStock - quantity;
+                if (_playerInventory == null)
+                {
+                    _held[canonical] = prevHeld + quantity;
+                }
+                StateChanged?.Invoke();
+                return HoldfastTradeResult.Ok(canonical, quantity, factionId, cost);
+            }
+            catch (Exception ex)
+            {
+                Inventory.RemoveItem(canonical, quantity);
+                _value = prevValue;
+                _stock[canonical] = prevStock;
+                if (_playerInventory == null)
+                {
+                    _held[canonical] = prevHeld;
+                }
+                return HoldfastTradeResult.Fail("Trade transaction failed: " + ex.Message, HoldfastTradeFailure.InvalidPrice);
+            }
         }
 
         public HoldfastTradeResult Sell(string itemId, int quantity, string factionId)
@@ -479,19 +578,25 @@ namespace Ashfall.Core
                 }
                 else
                 {
-                    // _held still tracks "how much of this item is held for
-                    // trade purposes" against the authoritative counts the
-                    // migration establishes/preserves in _playerInventory.
-                    foreach (var kv in state.held)
+                    if (state.schemaVersion < 2)
                     {
-                        string canonical = ItemAliases.ToCanonical(kv.Key);
-                        _held[canonical] = kv.Value;
+                        InventoryMigrator.MigrateHoldfastHeld(state, _playerInventory, id =>
+                        {
+                            var def = _catalog?.GetItem(id);
+                            return def != null ? new ItemDefinition { id = id, displayName = def.DisplayName, stackMax = 99, weight = def.Weight } : null;
+                        }, allowResurrectLowerPhysicalCount: false);
                     }
-                    InventoryMigrator.MigrateHoldfastHeld(state, _playerInventory, id =>
+                    _held.Clear();
+                    for (int i = 0; i < _playerInventory.Slots.Count; i++)
                     {
-                        var def = _catalog?.GetItem(id);
-                        return def != null ? new ItemDefinition { id = id, displayName = def.DisplayName, stackMax = 99, weight = def.Weight } : null;
-                    });
+                        var s = _playerInventory.Slots[i];
+                        if (s?.Item != null && s.Amount > 0)
+                        {
+                            string canonical = ItemAliases.ToCanonical(s.Item.id);
+                            _held.TryGetValue(canonical, out int cur);
+                            _held[canonical] = cur + s.Amount;
+                        }
+                    }
                 }
             }
             if (state.stock != null)
@@ -561,7 +666,7 @@ namespace Ashfall.Core
             if (cost > _value)
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_funds", "trade.insufficient_funds", stateVersion);
 
-            if (GetHeld(canonical) == 0 && Inventory.OccupiedCount >= Inventory.Capacity)
+            if (!Inventory.CanAdd(canonical, quantity))
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "inventory_capacity", "trade.inventory_capacity", stateVersion);
 
             var deltas = new Dictionary<string, double>
@@ -686,13 +791,23 @@ namespace Ashfall.Core
         }
 
         public HoldfastTradeSaveState CaptureState()
-            => new HoldfastTradeSaveState { value = _value, held = new Dictionary<string, int>(_held), stock = new Dictionary<string, int>(_stock) };
+        {
+            var heldMap = new Dictionary<string, int>(Held, StringComparer.Ordinal);
+            return new HoldfastTradeSaveState
+            {
+                schemaVersion = 2,
+                value = _value,
+                held = heldMap,
+                stock = new Dictionary<string, int>(_stock, StringComparer.Ordinal)
+            };
+        }
     }
 
     /// <summary>Serializable trade save envelope (value + held + stock).</summary>
     [Serializable]
     public class HoldfastTradeSaveState
     {
+        public int schemaVersion = 0;
         public long value;
         public Dictionary<string, int> held = new Dictionary<string, int>();
         public Dictionary<string, int> stock = new Dictionary<string, int>();

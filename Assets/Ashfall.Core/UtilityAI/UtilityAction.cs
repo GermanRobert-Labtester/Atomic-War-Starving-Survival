@@ -144,9 +144,11 @@ namespace Ashfall.Core.UtilityAI
         public const string TraitExCon = "ex_con";
         public const string TraitHitman = "hitman";
         public const string TraitGermaphobe = "germaphobe";
+        public const string TraitPolitician = "politician";
 
         public const string TagLoudLabor = "loud_labor";
         public const string TagMenialLabor = "menial_labor";
+        public const string TagDirtyLabor = "dirty_labor";
         public const string TagWeapon = "weapon";
         public const string TagGun = "gun";
         public const string TagOrder = "order";

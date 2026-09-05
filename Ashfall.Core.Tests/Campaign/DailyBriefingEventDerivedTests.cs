@@ -138,5 +138,106 @@ namespace Ashfall.Core.Tests.Campaign
             Assert.Equal("overflow", section.Entries[5].PrimaryId);
             Assert.Contains("more items", section.Entries[5].Text);
         }
+
+        [Fact]
+        public void WorkshopJobsAndTooling_AppearsInProductionAndWarnings()
+        {
+            var events = new List<DayStateChangeEvent>
+            {
+                new DayStateChangeEvent("workshop_job_completed", "shelter_workshop", "9x19mm FMJ Reload", "room_workshop", 40f),
+                new DayStateChangeEvent("workshop_machine_degraded", "shelter_workshop", "room_workshop", null, 0.20f),
+                new DayStateChangeEvent("workshop_machine_overhauled", "shelter_workshop", "room_workshop", null, 1.0f)
+            };
+
+            var report = DailyBriefingReportBuilder.BuildFromDayEvents(day: 8, buildSeed: 8, events: events);
+
+            Assert.NotNull(report);
+            var prod = report.Sections.FirstOrDefault(s => s.Title == "Production & Maintenance");
+            var warn = report.Sections.FirstOrDefault(s => s.Title == "Warnings");
+
+            Assert.NotNull(prod);
+            Assert.NotNull(warn);
+            Assert.Contains(prod.Entries, e => e.Text.Contains("40 units"));
+            Assert.Contains(prod.Entries, e => e.Text.Contains("overhaul completed"));
+            Assert.Contains(warn.Entries, e => e.Text.Contains("tooling degraded"));
+        }
+
+        [Fact]
+        public void RadioDistressAndDecryption_AppearsInBriefingSections()
+        {
+            var events = new List<DayStateChangeEvent>
+            {
+                new DayStateChangeEvent("radio_intercept_decrypted", "radio_station", "MERIDIAN-ACT-7", "Convoy supply manifest decoded", 0f),
+                new DayStateChangeEvent("radio_distress_active", "radio_station", "SHELTER-44-SOS", null, 3f),
+                new DayStateChangeEvent("radio_distress_expiring", "radio_station", "SHELTER-44-SOS", null, 1f),
+                new DayStateChangeEvent("radio_location_triangulated", "radio_station", "MERIDIAN-ACT-7", "loc_diesel_tank_farm", 0f)
+            };
+
+            var report = DailyBriefingReportBuilder.BuildFromDayEvents(day: 16, buildSeed: 16, events: events);
+
+            Assert.NotNull(report);
+            var radioSec = report.Sections.FirstOrDefault(s => s.Title == "Radio Intercepts");
+            var warnSec = report.Sections.FirstOrDefault(s => s.Title == "Warnings");
+
+            Assert.NotNull(radioSec);
+            Assert.NotNull(warnSec);
+            Assert.Contains(radioSec.Entries, e => e.PrimaryId == "MERIDIAN-ACT-7");
+            Assert.Contains(radioSec.Entries, e => e.Text.Contains("loc_diesel_tank_farm"));
+            Assert.Contains(warnSec.Entries, e => e.Text.Contains("expires in 1 day"));
+        }
+
+        [Fact]
+        public void ShelterSocialFrictionAndMediation_AppearsInShelterSocialSection()
+        {
+            var events = new List<DayStateChangeEvent>
+            {
+                new DayStateChangeEvent("social_privacy_warning", "shelter_social_dynamics", "survivor_1", "room_dormitory", 780f),
+                new DayStateChangeEvent("social_dispute_unresolved", "shelter_social_dynamics", "inc_bunk_noise", "room_dormitory", 0f),
+                new DayStateChangeEvent("social_dispute_mediated", "shelter_social_dynamics", "inc_bunk_noise", "survivor_leader", 0f)
+            };
+
+            var report = DailyBriefingReportBuilder.BuildFromDayEvents(day: 6, buildSeed: 6, events: events);
+
+            Assert.NotNull(report);
+            var socialSec = report.Sections.FirstOrDefault(s => s.Title == "Shelter Social");
+            var warnSec = report.Sections.FirstOrDefault(s => s.Title == "Warnings");
+
+            Assert.NotNull(socialSec);
+            Assert.NotNull(warnSec);
+            Assert.Contains(warnSec.Entries, e => e.Text.Contains("privacy fatigue"));
+            Assert.Contains(socialSec.Entries, e => e.Text.Contains("Unresolved dispute"));
+            Assert.Contains(socialSec.Entries, e => e.Text.Contains("mediated"));
+        }
+
+        [Fact]
+        public void SubterraneanHazardsAndRescues_AppearsInSubterraneanOperationsAndDeaths()
+        {
+            var events = new List<DayStateChangeEvent>
+            {
+                new DayStateChangeEvent("subterranean_methane_warning", "excavation_hazards", "sector_alpha", null, 3200f),
+                new DayStateChangeEvent("subterranean_flood_warning", "excavation_hazards", "sector_alpha", null, 600f),
+                new DayStateChangeEvent("subterranean_shoring_warning", "excavation_hazards", "sector_alpha", null, 250f),
+                new DayStateChangeEvent("subterranean_cave_in", "excavation_hazards", "sector_alpha", null, 2f),
+                new DayStateChangeEvent("subterranean_rescue_active", "excavation_hazards", "sector_alpha", null, 180f),
+                new DayStateChangeEvent("subterranean_rescue_completed", "excavation_hazards", "sector_alpha", null, 0f),
+                new DayStateChangeEvent("subterranean_rescue_failed", "excavation_hazards", "sector_beta", null, 0f)
+            };
+
+            var report = DailyBriefingReportBuilder.BuildFromDayEvents(day: 19, buildSeed: 19, events: events);
+
+            Assert.NotNull(report);
+            var subSec = report.Sections.FirstOrDefault(s => s.Title == "Subterranean Operations");
+            var warnSec = report.Sections.FirstOrDefault(s => s.Title == "Warnings");
+            var deathSec = report.Sections.FirstOrDefault(s => s.Title == "Deaths");
+
+            Assert.NotNull(subSec);
+            Assert.NotNull(warnSec);
+            Assert.NotNull(deathSec);
+            Assert.Contains(warnSec.Entries, e => e.Text.Contains("Cave-in collapse"));
+            Assert.Contains(warnSec.Entries, e => e.Text.Contains("3200 PPM"));
+            Assert.Contains(subSec.Entries, e => e.Text.Contains("Rescue underway"));
+            Assert.Contains(subSec.Entries, e => e.Text.Contains("completed successfully"));
+            Assert.Contains(deathSec.Entries, e => e.Text.Contains("Rescue in sector_beta failed"));
+        }
     }
 }

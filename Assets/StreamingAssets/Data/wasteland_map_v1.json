@@ -99,6 +99,28 @@
       "positionY": 450,
       "discoverable": true,
       "startingUnlocked": false
+    },
+    {
+      "id": "loc_diesel_tank_farm",
+      "displayName": "Tank Farm 4-East",
+      "danger": "medium",
+      "faction": null,
+      "lootTable": "salvage_common",
+      "positionX": 750,
+      "positionY": 150,
+      "discoverable": true,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_recovery_yard",
+      "displayName": "Recovery Yard",
+      "danger": "medium",
+      "faction": null,
+      "lootTable": "salvage_common",
+      "positionX": 450,
+      "positionY": 550,
+      "discoverable": true,
+      "startingUnlocked": false
     }
   ],
   "routes": [
@@ -123,6 +145,10 @@
     { "from": "loc_holdfast", "to": "loc_logistics_reserve_cache", "distanceKm": 10, "weatherHazard": 0.15 },
     { "from": "loc_logistics_reserve_cache", "to": "loc_holdfast", "distanceKm": 10, "weatherHazard": 0.15 },
     { "from": "loc_holdfast", "to": "loc_broadcast_bunker_echo", "distanceKm": 15, "weatherHazard": 0.3, "terrain_tags": ["vertical_rock"] },
-    { "from": "loc_broadcast_bunker_echo", "to": "loc_holdfast", "distanceKm": 15, "weatherHazard": 0.3, "terrain_tags": ["vertical_rock"] }
+    { "from": "loc_broadcast_bunker_echo", "to": "loc_holdfast", "distanceKm": 15, "weatherHazard": 0.3, "terrain_tags": ["vertical_rock"] },
+    { "from": "loc_holdfast", "to": "loc_diesel_tank_farm", "distanceKm": 16, "weatherHazard": 0.25 },
+    { "from": "loc_diesel_tank_farm", "to": "loc_holdfast", "distanceKm": 16, "weatherHazard": 0.25 },
+    { "from": "loc_holdfast", "to": "loc_recovery_yard", "distanceKm": 14, "weatherHazard": 0.2 },
+    { "from": "loc_recovery_yard", "to": "loc_holdfast", "distanceKm": 14, "weatherHazard": 0.2 }
   ]
 }

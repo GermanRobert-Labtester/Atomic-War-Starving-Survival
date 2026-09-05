@@ -154,7 +154,7 @@ namespace AtomicWar.GodotApp
         {
             if (_libraryStudy != null) return;
             var lsState = LibraryStudySaveStore.TryLoad() ?? new LibraryStudyState();
-            var lsSkills = new SkillProgressionSystem();
+            var lsSkills = EnsureSharedSkillProgression();
             var lsResearch = sharedResearch;
             var lsJournal = _journal;
             var lsSys = new LibraryStudySystem(lsSkills, lsResearch, lsJournal, _expandedShelterRoster, new GodotLog());
@@ -246,7 +246,7 @@ namespace AtomicWar.GodotApp
             if (_phantomMemoryPanel != null && _phantomMemoryPanel.IsInsideTree())
                 RemoveChild(_phantomMemoryPanel);
             _phantomMemoryPanel = new PhantomMemoryPanel();
-            if (_phantomMemory != null) _phantomMemoryPanel.Bind(_phantomMemory);
+            if (_phantomMemory != null) _phantomMemoryPanel.Bind(_phantomMemory, _inventory);
             _phantomMemoryPanel.Visible = false;
             AddChild(_phantomMemoryPanel);
 

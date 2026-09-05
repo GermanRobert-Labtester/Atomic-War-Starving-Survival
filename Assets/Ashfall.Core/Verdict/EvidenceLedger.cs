@@ -94,7 +94,15 @@ namespace Ashfall.Core.Verdict
         {
             if (state == null) return;
             _state.enrolled.Clear();
-            _state.enrolled.AddRange(state.enrolled);
+            if (state.enrolled != null)
+            {
+                for (int i = 0; i < state.enrolled.Count; i++)
+                {
+                    string id = state.enrolled[i];
+                    if (string.IsNullOrEmpty(id) || IsEnrolled(id)) continue;
+                    _state.enrolled.Add(id);
+                }
+            }
             _state.lastEnrolled = state.lastEnrolled;
             _state.enrollmentDay = state.enrollmentDay;
         }

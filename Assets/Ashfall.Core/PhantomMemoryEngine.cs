@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.IO;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -130,7 +131,19 @@ namespace Ashfall.Core
                 rules = new List<PhantomTriggerRule>();
                 _rulesByBackground[backgroundId] = rules;
             }
-            rules.Add(rule);
+            int existingIndex = -1;
+            if (!string.IsNullOrEmpty(rule.triggerId))
+            {
+                existingIndex = rules.FindIndex(r => string.Equals(r.triggerId, rule.triggerId, StringComparison.OrdinalIgnoreCase));
+            }
+            if (existingIndex >= 0)
+            {
+                rules[existingIndex] = rule; // Documented override policy: latest rule with same triggerId replaces older
+            }
+            else
+            {
+                rules.Add(rule);
+            }
         }
 
         // ── Core mechanic ─────────────────────────────────────────────
@@ -356,15 +369,20 @@ namespace Ashfall.Core
         public void RestoreState(PhantomMemoryEngineState saved)
         {
             if (saved == null) return;
-            _state.systemId = SystemId;
-            _records.Clear();
-            _state.records.Clear();
+
+            var validatedList = new List<PhantomMemoryRecord>();
+            var seen = new HashSet<string>(StringComparer.Ordinal);
             if (saved.records != null)
             {
                 foreach (var r in saved.records)
                 {
                     if (r == null || string.IsNullOrEmpty(r.survivorId)) continue;
-                    var copy = new PhantomMemoryRecord
+                    if (!seen.Add(r.survivorId))
+                    {
+                        CatalogDiagnostics.Warn("PhantomMemoryEngine", "RestoreState", new InvalidOperationException($"Duplicate survivorId in restore payload: {r.survivorId}"));
+                        return; // Reject without mutating live state
+                    }
+                    validatedList.Add(new PhantomMemoryRecord
                     {
                         survivorId = r.survivorId,
                         triggersExperienced = r.triggersExperienced,
@@ -376,10 +394,17 @@ namespace Ashfall.Core
                         triggeredTriggerIds = r.triggeredTriggerIds != null
                             ? new List<string>(r.triggeredTriggerIds)
                             : new List<string>()
-                    };
-                    _records[r.survivorId] = copy;
-                    _state.records.Add(copy);
+                    });
                 }
+            }
+
+            _state.systemId = SystemId;
+            _records.Clear();
+            _state.records.Clear();
+            foreach (var copy in validatedList)
+            {
+                _records[copy.survivorId] = copy;
+                _state.records.Add(copy);
             }
             RaiseChanged();
         }

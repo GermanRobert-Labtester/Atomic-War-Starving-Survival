@@ -49,7 +49,7 @@ namespace AtomicWar.GodotApp
             // banner is timezone- and locale-stable and can never be mistaken for sim day.
             summary.AppendLine(
                 "Timestamp: " +
-                DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss'Z'", CultureInfo.InvariantCulture) +
+                DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss'Z'", CultureInfo.InvariantCulture) + // DETERMINISM_ALLOWLIST: Host diagnostics banner timestamp
                 "\n");
 
             if (Directory.Exists(_dataDir))
@@ -174,9 +174,27 @@ namespace AtomicWar.GodotApp
             });
             if (descriptor == null) return; // dead route — diagnostic already emitted above
 
+            if (!descriptor.IsPlayerNavigable)
+            {
+                string msg = $"[PanelRegistry] PROTOTYPE ROUTE: '{panelId}' is a shelved prototype and not player-navigable.";
+                GD.PrintErr(msg);
+                if (_statusLabel != null)
+                    _statusLabel.Text = msg;
+                return;
+            }
+
             if (_state == GameState.Menu && !descriptor.AvailableInMenu)
             {
                 string msg = "[PanelRegistry] BLOCKED ROUTE: '" + panelId + "' is not accessible from the main menu.";
+                GD.PrintErr(msg);
+                if (_statusLabel != null)
+                    _statusLabel.Text = msg;
+                return;
+            }
+
+            if (!descriptor.IsPlayerNavigable)
+            {
+                string msg = "[PanelRegistry] PROTOTYPE ROUTE: '" + panelId + "' is a shelved prototype and not player-navigable.";
                 GD.PrintErr(msg);
                 if (_statusLabel != null)
                     _statusLabel.Text = msg;
@@ -200,6 +218,11 @@ namespace AtomicWar.GodotApp
 
             switch (panelId)
             {
+                case "guidance":
+                    SetupOnboarding();
+                    EnsureOnboardingPanel();
+                    _onboardingHintPanel?.Show();
+                    break;
                 case "status":
                     SetupSurvivors();
                     SetupWorld();
@@ -365,8 +388,12 @@ namespace AtomicWar.GodotApp
                     SetupDutyRoster();
                     SetupFactionBranch();
                     SetupMoralChoice();
-                    _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice);
+                    _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice, _moralChoiceDefs);
                     _questsPanel.Open();
+                    break;
+                case "moral_choice":
+                    SetupMoralChoice();
+                    OpenMoralChoiceModal(null);
                     break;
                 case "journal":
                     SetupJournal();
@@ -441,9 +468,7 @@ namespace AtomicWar.GodotApp
                     _centurySeedPanel.Open();
                     break;
                 case "epilogue":
-                    SetupExpansions();
-                    SetupSurvivors();
-                    _epiloguePanel.Bind(_simDay, _survivors?.RosterState?.Count ?? 4, 0, true, true, true, true, true);
+                    _epiloguePanel.Bind(BuildCampaignOutcomeSnapshot());
                     _epiloguePanel.Open();
                     break;
                 case "verdict":

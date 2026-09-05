@@ -117,6 +117,81 @@ namespace AtomicWar.GodotApp
                 "{\"State\":{\"systemId\":\"moral_choice\",\"schemaVersion\":1,\"moralScore\":5},\"Checksum\":\"\"}");
             Check(MoralChoiceSaveStore.TryLoad(path) == null, "empty-checksum envelope rejected as corrupt");
 
+            // 8. UI Decision Spine & Canonical Resolver (Task 31 / Journey J1).
+            var uiQuest = Def(MoralChoiceIds.ShareChild);
+            Check(uiQuest != null, "authored quest exists for UI decision spine test");
+            if (uiQuest != null)
+            {
+                Check(uiQuest.Choices.Count >= 2, $"quest has authored choices (got {uiQuest.Choices.Count})");
+
+                // Verify hidden morality constraint: no raw deltas in labels
+                bool noExposedScores = true;
+                foreach (var c in uiQuest.Choices)
+                {
+                    if (c.Label.Contains(c.MoralDelta.ToString(), StringComparison.Ordinal) ||
+                        c.Label.Contains(c.EmpathyDelta.ToString(), StringComparison.Ordinal))
+                    {
+                        noExposedScores = false;
+                    }
+                }
+                Check(noExposedScores, "authored choice labels do not expose hidden numeric scores");
+
+                // Test UI modal binding
+                var modal = new AtomicWar.GodotApp.UI.MoralChoiceModal();
+                modal._Ready();
+                bool callbackFired = false;
+                string? resolvedQuestId = null;
+                int resolvedChoiceIdx = -1;
+
+                modal.Bind(uiQuest, sys, (qId, idx) =>
+                {
+                    callbackFired = true;
+                    resolvedQuestId = qId;
+                    resolvedChoiceIdx = idx;
+                    sys.Resolve(uiQuest, idx, uiQuest.LocationId, day);
+                });
+
+                // Choice was already resolved in earlier arc step, so modal detects resolved state
+                Check(sys.IsResolved(uiQuest.Id), "quest is recognized as resolved in ledger");
+
+                // Test an unresolved quest through UI decision spine
+                var freshQuest = defs.Find(d => !sys.IsResolved(d.Id));
+                Check(freshQuest != null, "found unresolved authored quest for UI interaction");
+                if (freshQuest != null)
+                {
+                    int priorScore = sys.MoralScore;
+                    int priorResolvedCount = sys.QuestsResolved;
+
+                    modal.Bind(freshQuest, sys, (qId, idx) =>
+                    {
+                        callbackFired = true;
+                        resolvedQuestId = qId;
+                        resolvedChoiceIdx = idx;
+                        sys.Resolve(freshQuest, idx, freshQuest.LocationId, day);
+                    });
+
+                    // Trigger resolution of choice 0 via UI callback
+                    var firstOpt = freshQuest.Choices[0];
+                    modal.SelectChoiceForTest(0);
+
+                    Check(callbackFired, "UI decision spine callback fired");
+                    Check(resolvedQuestId == freshQuest.Id, "UI decision spine passed target quest id");
+                    Check(resolvedChoiceIdx == 0, "UI decision spine passed selected choice index");
+                    Check(sys.IsResolved(freshQuest.Id), "fresh quest successfully resolved via decision spine");
+                    Check(sys.QuestsResolved == priorResolvedCount + 1, "resolved quest count incremented");
+                    Check(sys.MoralScore == priorScore + firstOpt.MoralDelta, "moral score updated by authored delta");
+
+                    // Re-binding modal now displays resolved state
+                    modal.Bind(freshQuest, sys);
+                    Check(sys.IsResolved(freshQuest.Id), "modal confirms resolved state");
+
+                    // Verify QuestDetailPanel binding
+                    var detailPanel = new AtomicWar.GodotApp.UI.QuestDetailPanel();
+                    detailPanel.Bind(freshQuest, sys);
+                    Check(detailPanel != null, "QuestDetailPanel successfully binds moral choice quest");
+                }
+            }
+
             return EmitSummary("moral_choice_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
     }

@@ -23,10 +23,10 @@ namespace Ashfall.Core
     {
         public static readonly SystemWallClock Instance = new SystemWallClock();
 
-        public DateTime UtcNow => DateTime.UtcNow;
-        public long UtcTicks => DateTime.UtcNow.Ticks;
-        public string FormatIsoUtc() => DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture);
-        public string FormatFileTimestamp() => DateTime.UtcNow.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
+        public DateTime UtcNow => DateTime.UtcNow; // DETERMINISM_ALLOWLIST: Port adapter for host wall clock
+        public long UtcTicks => DateTime.UtcNow.Ticks; // DETERMINISM_ALLOWLIST: Port adapter for host wall clock
+        public string FormatIsoUtc() => DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture); // DETERMINISM_ALLOWLIST: Port adapter for host wall clock
+        public string FormatFileTimestamp() => DateTime.UtcNow.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture); // DETERMINISM_ALLOWLIST: Port adapter for host wall clock
     }
 
     /// <summary>

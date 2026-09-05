@@ -151,6 +151,30 @@
           ]
         }
       ],
+      "raider_dialogue": [
+        {
+          "speaker": "Raider scout, crouching in brush",
+          "location": "Ridge overlooking shelter",
+          "lines": [
+            "The Peacekeepers posted a guard on your door. Makes hitting you complicated.",
+            "My crew isn't looking for a firefight with an armored squad.",
+            "We'll stay out of your yard for now. Just remember that guards change shifts.",
+            "Nobody stands sentry forever out here."
+          ]
+        }
+      ],
+      "knowledge_keeper_dialogue": [
+        {
+          "speaker": "Knowledge Keeper observer",
+          "location": "Roadside waystation",
+          "lines": [
+            "A military perimeter around a civilian shelter is a rare sight.",
+            "Historically, protectors eventually become occupiers if left unchecked.",
+            "Keep their vigilance focused outward, friend.",
+            "The archive watches with keen interest how long this balance lasts."
+          ]
+        }
+      ],
       "journal_entry": "A Peacekeeper patrol has taken position at my shelter perimeter. Captain's orders. They've got the east approach covered from dusk to dawn."
     },
 
@@ -165,6 +189,30 @@
             "You're not a person to most of them anymore. You're a story. Stories don't eat, don't bleed, don't fail.",
             "That's dangerous. For you, and for them. When the story fails — and it will, because you're human — the fall is longer.",
             "I'll keep supporting you. But I wanted you to hear it from someone who still sees the person."
+          ]
+        }
+      ],
+      "raider_dialogue": [
+        {
+          "speaker": "Veteran raider captain",
+          "location": "Neutral trading depot",
+          "lines": [
+            "The settlers talk about you like you're some kind of miracle.",
+            "I've seen saints before. Usually they die first when the winter turns harsh.",
+            "Still, my people give your convoys a wide berth these days.",
+            "Nobody wants to be the one who shot down the wasteland's good omen."
+          ]
+        }
+      ],
+      "knowledge_keeper_dialogue": [
+        {
+          "speaker": "Archivist primus",
+          "location": "Great Archive scriptorium",
+          "lines": [
+            "We have opened a dedicated ledger for your deeds.",
+            "Few figures in the century since the strike have unified disparate camps in song.",
+            "Whether you intended to become a myth or not, the survivors needed one.",
+            "We will preserve your chronicle exactly as the witnesses speak it."
           ]
         }
       ],
@@ -216,6 +264,18 @@
             "Past that point, you become a problem I have to solve instead of use.",
             "So here's the arrangement: you stay south of the river, I stay north. We don't cross paths.",
             "Cross the river, and I'll put fifty guns on you. Not because I hate you — because you're too dangerous to let roam."
+          ]
+        }
+      ],
+      "knowledge_keeper_dialogue": [
+        {
+          "speaker": "Senior archivist, voice trembling",
+          "location": "Barricaded archive reading room",
+          "lines": [
+            "Your file has been transferred to the closed index of catastrophic threats.",
+            "We do not erase history, but we do warn the future about what walk among us.",
+            "Take what you will from the ruins, but do not set fire to the knowledge within.",
+            "Even monsters should leave the books alone."
           ]
         }
       ],

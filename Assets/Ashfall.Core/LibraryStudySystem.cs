@@ -51,6 +51,30 @@ namespace Ashfall.Core
 
         [JsonPropertyName("requires_power")]
         public bool requiresPower { get; set; } = true;
+
+        [JsonPropertyName("loot_table_ids")]
+        public List<string> lootTableIds { get; set; } = new List<string>();
+
+        [JsonPropertyName("expedition_reward_ids")]
+        public List<string> expeditionRewardIds { get; set; } = new List<string>();
+
+        [JsonPropertyName("trader_pool_ids")]
+        public List<string> traderPoolIds { get; set; } = new List<string>();
+
+        [JsonPropertyName("archive_scribing_recipe_id")]
+        public string archiveScribingRecipeId { get; set; } = string.Empty;
+
+        [JsonPropertyName("starting_origin_ids")]
+        public List<string> startingOriginIds { get; set; } = new List<string>();
+
+        [JsonPropertyName("origin_facility")]
+        public string originFacility { get; set; } = string.Empty;
+
+        [JsonPropertyName("technical_complexity_tier")]
+        public int technicalComplexityTier { get; set; } = 1;
+
+        [JsonPropertyName("schematic_summary")]
+        public string schematicSummary { get; set; } = string.Empty;
     }
 
     [Serializable]
@@ -87,13 +111,75 @@ namespace Ashfall.Core
             ResearchSystem research,
             JournalSystem journal,
             DutyRosterSystem roster,
-ILog? log = null)
+            ILog? log = null)
         {
             _skills = skills ?? throw new ArgumentNullException(nameof(skills));
             _research = research ?? throw new ArgumentNullException(nameof(research));
             _journal = journal ?? throw new ArgumentNullException(nameof(journal));
             _roster = roster ?? throw new ArgumentNullException(nameof(roster));
             _log = log ?? NullLog.Instance;
+
+            // Bidirectional availability reservation with DutyRoster (B2-009)
+            var prevReservation = _roster.IsSurvivorReservedExternally;
+            _roster.IsSurvivorReservedExternally = id =>
+                (prevReservation != null && prevReservation(id)) || IsReaderStudying(id);
+        }
+
+        public bool IsReaderStudying(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return false;
+            return _state.activeJobs.Exists(j => !j.isComplete && !j.isCancelled && j.readerId == survivorId);
+        }
+
+        public static string NormalizeDiscipline(string category)
+        {
+            if (string.IsNullOrEmpty(category)) return "survival";
+            string lower = category.Trim().ToLowerInvariant();
+            switch (lower)
+            {
+                case "technical":
+                case "engineering":
+                case "crafting":
+                    return "crafting";
+                case "military":
+                case "combat":
+                    return "combat";
+                case "medical":
+                    return "medical";
+                case "science":
+                    return "science";
+                case "scavenging":
+                    return "scavenging";
+                case "survival":
+                default:
+                    return "survival";
+            }
+        }
+
+        public float GetComprehensionRate(string readerId, string manualId)
+        {
+            if (!_catalog.TryGetValue(manualId, out var manual)) return 1.0f;
+            string disc = NormalizeDiscipline(manual.category);
+            float progress01 = _skills.GetDisciplineProgress01(readerId, disc);
+            float bonus = _skills.GetCachedBonus(readerId, disc);
+            // Monotonic: rate = 1.0 + 0.6 * progress01 + 0.4 * bonus
+            float rate = 1.0f + 0.6f * progress01 + 0.4f * bonus;
+            // Strict bounds: [0.75f, 2.0f] (B2-006)
+            return Math.Clamp(rate, 0.75f, 2.0f);
+        }
+
+        public float GetEffectiveStudyHours(string readerId, string manualId)
+        {
+            if (!_catalog.TryGetValue(manualId, out var manual)) return 0f;
+            float rate = GetComprehensionRate(readerId, manualId);
+            return (float)Math.Round(manual.studyHoursRequired / rate, 1);
+        }
+
+        public float GetEstimatedDays(string readerId, string manualId)
+        {
+            float effHours = GetEffectiveStudyHours(readerId, manualId);
+            if (effHours <= 0f) return 0f;
+            return (float)Math.Ceiling(effHours / 8.0f);
         }
 
         public void LoadCatalog(List<ManualDefinition> manuals)
@@ -138,8 +224,12 @@ ILog? log = null)
                     return ActionResult.Blocked("missing_prerequisite", "library.missing_prerequisite");
             }
 
-            // Check duty roster availability
-            if (_roster.GetAssignment(readerId) != null)
+            // Check duty roster availability (B2-008: GetRoleOf checks if reader is on duty)
+            if (!string.IsNullOrEmpty(_roster.GetRoleOf(readerId)))
+                return ActionResult.Blocked("busy", "library.busy");
+
+            // Reader cannot study two manuals simultaneously
+            if (IsReaderStudying(readerId))
                 return ActionResult.Blocked("busy", "library.busy");
 
             var job = new StudyJob
@@ -170,14 +260,20 @@ ILog? log = null)
             foreach (var job in _state.activeJobs)
             {
                 if (job.isComplete || job.isCancelled) continue;
-                if (!_catalog.TryGetValue(job.manualId, out var manual)) continue;
+                if (!_catalog.TryGetValue(job.manualId, out var manual))
+                {
+                    _log.Warn($"[Library] active job '{job.jobId}' references unknown manual '{job.manualId}'");
+                    continue;
+                }
 
-                job.progressHours += 8f; // standard study day
+                float rate = GetComprehensionRate(job.readerId, job.manualId);
+                job.progressHours += 8f * rate;
 
                 if (job.progressHours >= manual.studyHoursRequired)
                 {
                     job.isComplete = true;
-                    _state.completedManualIds.Add(job.manualId);
+                    if (!_state.completedManualIds.Contains(job.manualId))
+                        _state.completedManualIds.Add(job.manualId);
                     _state.totalStudyHours += (int)job.progressHours;
 
                     // Grant skill XP
@@ -188,13 +284,15 @@ ILog? log = null)
                             _skills.RecordAction(new SimpleSkillActor(job.readerId), skillId, xp, _currentDay);
                     }
 
-                    // Unlock research
+                    // Unlock research (reveal / discover only — NEVER CompleteResearch!)
                     foreach (var unlock in manual.researchUnlocks)
                         _research.UnlockManual(unlock);
 
-                    // Add knowledge evidence
+                    // Add knowledge evidence (idempotent and deduped in JournalSystem)
                     foreach (var knowledge in manual.knowledgeUnlocks)
+                    {
                         _journal.AddKnowledgeEvidence(job.readerId, knowledge);
+                    }
 
                     _log.Info($"[Library] {job.readerId} completed {manual.display_name}");
                     OnJobCompleted?.Invoke(job);

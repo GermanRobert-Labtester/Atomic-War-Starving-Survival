@@ -53,7 +53,8 @@ namespace AtomicWar.GodotApp
             SiteEncounterSystem siteEncounters,
             StandingRecordCatalog recordQuests,
             VouchAccessSystem vouch,
-            GreenhouseSystem greenhouse)
+            GreenhouseSystem greenhouse,
+            Ashfall.Core.Flags.IFlagLedger? consequenceLedger = null)
         {
             Waystation = waystation ?? new WaystationSystem();
             Layouts = layouts ?? new LocationLayoutSystem(
@@ -67,6 +68,7 @@ namespace AtomicWar.GodotApp
             Arbitration = new CrossingArbitrationSystem();
             Ledger = new LedgerDebtSystem();
             CrossingQuests = new CrossingQuestSystem();
+            CrossingQuests.BindConsequenceLedger(consequenceLedger);
             Generational = new GenerationalSuccessionEngine();
             Epilogue = new EpilogueMatrixRuntime();
 
@@ -98,7 +100,10 @@ namespace AtomicWar.GodotApp
 
         public event Action<CrossingStageNarrativeEvent>? OnCrossingStageNarrative;
 
-        public static ExpansionHostSession Create(string dataDirectory, ILog log = null!)
+        public static ExpansionHostSession Create(
+            string dataDirectory,
+            ILog log = null!,
+            Ashfall.Core.Flags.IFlagLedger? consequenceLedger = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? new GodotLog();
@@ -119,7 +124,8 @@ namespace AtomicWar.GodotApp
                 new SiteEncounterSystem(DefaultSeed),
                 quests,
                 new VouchAccessSystem(),
-                new GreenhouseSystem(DefaultSeed));
+                new GreenhouseSystem(DefaultSeed),
+                consequenceLedger);
             session.CrossingQuests.BindCatalog(crossingQuests);
 
             // The Silent Foundry (Exp 10): static catalogs + blueprint + treaty anchors.

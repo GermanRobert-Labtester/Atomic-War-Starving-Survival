@@ -5,6 +5,7 @@ using System.Text;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.IO;
+using Xunit;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.Random;
 

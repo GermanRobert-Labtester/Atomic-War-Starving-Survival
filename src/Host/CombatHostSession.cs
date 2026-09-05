@@ -39,6 +39,7 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Condition-at-start of bridge-bound weapons, for the post-combat write-back.</summary>
         private readonly Dictionary<string, float> _boundWeaponConditionAtStart = new();
+        private string _boundWeaponsSyncedForResolution = string.Empty;
 
         public string LastEvent { get; private set; } = string.Empty;
         public CombatHostSession(TacticalCombatSystem engine = null!, CombatHostPorts ports = null!)
@@ -61,16 +62,27 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void SyncBoundWeaponsAfterCombat(CombatState state)
         {
-            if (Equipment == null || _boundWeaponConditionAtStart.Count == 0 || state?.Weapons == null)
+            if (Equipment == null || state?.Weapons == null)
             {
                 _boundWeaponConditionAtStart.Clear();
                 return;
             }
 
+            if (!string.IsNullOrEmpty(state.ResolutionId) &&
+                string.Equals(_boundWeaponsSyncedForResolution, state.ResolutionId, StringComparison.Ordinal))
+            {
+                return; // already synced for this resolution (exactly-once guard)
+            }
+            _boundWeaponsSyncedForResolution = state.ResolutionId ?? string.Empty;
+
             foreach (var weapon in state.Weapons)
             {
                 if (weapon == null || string.IsNullOrEmpty(weapon.InstanceId)) continue;
-                if (_boundWeaponConditionAtStart.TryGetValue(weapon.InstanceId, out float start))
+                float start = state.GetBoundWeaponStartCondition(weapon.InstanceId, -1f);
+                if (start < 0f && _boundWeaponConditionAtStart.TryGetValue(weapon.InstanceId, out float cached))
+                    start = cached;
+
+                if (start >= 0f)
                     Ashfall.Core.Combat.WeaponEquipmentBridge.SyncAfterCombat(Equipment, weapon, start);
             }
             _boundWeaponConditionAtStart.Clear();
@@ -79,12 +91,13 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Wire the engine's host ports to real inventory + survivor sessions
         /// when present. <paramref name="markCombatSurvived"/> is an explicit
-        /// callback rather than a new session-reference property: the combat
-        /// host doesn't otherwise depend on Phase0/trauma tracking, and a
-        /// required-effect port is small enough to pass directly without
-        /// widening the session's dependency surface.
+        /// callback rather than a new session-reference property.
+        /// <paramref name="onSurvivorDeath"/> routes lethal casualties to the canonical
+        /// death authority (SurvivorFateSystem).
         /// </summary>
-        public void WireRealState(Action<string>? markCombatSurvived = null)
+        public void WireRealState(
+            Action<string>? markCombatSurvived = null,
+            Action<string, string>? onSurvivorDeath = null)
         {
             var prior = Engine.Ports ?? CombatHostPorts.NoOp();
 
@@ -123,8 +136,17 @@ namespace AtomicWar.GodotApp
                 {
                     var s = Survivors.Find(id);
                     if (s == null) return d;
+                    bool wasAlive = s.IsAlive;
                     s.Health = MathfCompat.Max(0f, s.Health - d);
-                    if (s.Health <= 0f) { s.IsAlive = false; s.IsDead = true; }
+                    if (s.Health <= 0f)
+                    {
+                        s.IsAlive = false;
+                        s.IsDead = true;
+                        if (wasAlive)
+                        {
+                            onSurvivorDeath?.Invoke(id, "tactical_combat");
+                        }
+                    }
                     return s.Health;
                 };
                 healSurvivor = (id, h) =>
@@ -315,6 +337,16 @@ namespace AtomicWar.GodotApp
                 enemyHealth: finalEnemyHealth,
                 enemyCombatantIds: useCatalogEnemies ? enemyCombatantIds : null);
 
+            if (ok && weaponList.Count > 0)
+            {
+                for (int i = 0; i < weaponList.Count; i++)
+                {
+                    var w = weaponList[i];
+                    if (!string.IsNullOrEmpty(w.InstanceId))
+                        Engine.SetBoundWeaponStartCondition(w.InstanceId, w.ConditionPct);
+                }
+            }
+
             return ok ? "Combat engaged at " + (locationName ?? locationId) + "." : "Could not start combat.";
         }
 
@@ -419,6 +451,15 @@ namespace AtomicWar.GodotApp
             var r = Engine.TickEnvironmental(severity, new SeededRng(RollSeed()));
             return r.Message;
         }
+
+        // ── Action Preflight / Legality Queries ──────────────────────────
+
+        public ActionPreflight EvaluateFire(string targetId) => Engine.EvaluateFire(targetId);
+        public ActionPreflight EvaluateSuppress() => Engine.EvaluateSuppress();
+        public ActionPreflight EvaluateClearJam(string subjectId) => Engine.EvaluateClearJam(subjectId);
+        public ActionPreflight EvaluateRepair(string subjectId) => Engine.EvaluateRepair(subjectId);
+        public ActionPreflight EvaluateRetreat() => Engine.EvaluateRetreat();
+        public ActionPreflight EvaluateEndTurn() => Engine.EvaluateEndTurn();
 
         /// <summary>Deterministic roll seed for this action (host owns seeding).</summary>
         private int RollSeed()

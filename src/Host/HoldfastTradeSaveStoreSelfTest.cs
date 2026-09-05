@@ -27,7 +27,7 @@ namespace AtomicWar.GodotApp
 
             GD.Print("[HoldfastTradeSaveStoreSelfTest] begin");
 
-            string tempPath = Path.Combine(ProjectSettings.GlobalizePath("user://"), "holdfast_test_" + Guid.NewGuid().ToString("N") + ".json");
+            string tempPath = Path.Combine(ProjectSettings.GlobalizePath("user://"), "holdfast_test_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Test scratch file path
             string backupPath = tempPath + ".bak";
 
             try

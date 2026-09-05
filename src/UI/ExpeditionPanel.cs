@@ -452,12 +452,27 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_worldHost == null || string.IsNullOrEmpty(locationId)) return null;
             var rec = _worldHost.LocationEvolution?.TryGetRecord(locationId);
-            if (rec == null) return null;
+            string? flavor = _worldHost.FlavorTextForLocation(locationId, _worldHost.Weather?.Current.ToString());
+
+            if (rec == null)
+            {
+                return string.IsNullOrEmpty(flavor) ? null : TruncateFlavor(flavor);
+            }
 
             string owner = rec.currentOwner == "none" ? "unclaimed" : rec.currentOwner.Replace("faction_", "");
             string state = rec.isRuined ? " · RUINED" : string.Empty;
             string threats = rec.activeThreats.Count > 0 ? $" · {rec.activeThreats.Count} threat(s)" : string.Empty;
-            return $"WORLD: {owner} · {rec.lootDepletionFactor:P0} spoilage{state}{threats}";
+            string line = $"WORLD: {owner} · {rec.lootDepletionFactor:P0} spoilage{state}{threats}";
+            if (!string.IsNullOrEmpty(flavor))
+                line += "\n" + TruncateFlavor(flavor);
+            return line;
+        }
+
+        private static string TruncateFlavor(string flavor)
+        {
+            const int max = 160;
+            if (flavor.Length <= max) return flavor;
+            return flavor.Substring(0, max - 1) + "…";
         }
 
         // ── Dispatch preparation helpers ──────────────────────────────
@@ -785,6 +800,8 @@ namespace AtomicWar.GodotApp.UI
             float danger = _lastSurfaced?.trigger?.dangerLevel ?? 5f;
             string stance = _lastSurfaced?.trigger?.stance ?? "Balanced";
 
+            var inv = _expeditionHost?.ShelterInventory ?? _inventoryHost?.Inventory;
+
             foreach (var c in _lastSurfaced!.choices)
             {
                 string choiceId = c.choiceId;
@@ -798,7 +815,7 @@ namespace AtomicWar.GodotApp.UI
                     : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe);
 
                 var choiceCard = AshfallUiHelpers.MakeVBox(2);
-                choiceCard.CustomMinimumSize = new Vector2(210, 80);
+                choiceCard.CustomMinimumSize = new Vector2(210, 100);
 
                 var headerLabel = AshfallUiHelpers.MakeSmall($"{riskTag} · {stance.ToUpperInvariant()}");
                 headerLabel.Modulate = riskColor;
@@ -806,7 +823,74 @@ namespace AtomicWar.GodotApp.UI
 
                 string previewText = c.moraleDelta != 0 ? $"Morale: {(c.moraleDelta > 0 ? "+" : "")}{c.moraleDelta}" : "Stamina: -15 · Ammo: 0";
                 if (c.guiltDelta > 0) previewText += $" · Guilt: +{c.guiltDelta}";
+                if (c.factionStandingDelta != 0) previewText += $" · Standing: {(c.factionStandingDelta > 0 ? "+" : "")}{c.factionStandingDelta}";
                 choiceCard.AddChild(AshfallUiHelpers.MakeMetadata(previewText));
+
+                bool canAfford = true;
+                bool meetsRequirement = true;
+                string requirementText = string.Empty;
+
+                if (!string.IsNullOrWhiteSpace(c.requiredItemId) && c.requiredItemQuantity > 0)
+                {
+                    int held = inv?.CountById(c.requiredItemId) ?? 0;
+                    string itemName = _expeditionHost?.Items?.Get(c.requiredItemId)?.displayName ?? c.requiredItemId;
+                    requirementText = $"Req: {itemName} x{c.requiredItemQuantity} ({held}/{c.requiredItemQuantity})";
+                    if (held < c.requiredItemQuantity)
+                    {
+                        canAfford = false;
+                        meetsRequirement = false;
+                    }
+                }
+
+                // costItems is List<string> of item ids; duplicates encode quantity
+                // (same aggregation as TravelEncounterChoice.GetNormalizedCosts).
+                string costText = string.Empty;
+                if (c.costItems != null && c.costItems.Count > 0)
+                {
+                    var aggregated = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+                    foreach (var itemId in c.costItems)
+                    {
+                        if (string.IsNullOrWhiteSpace(itemId)) continue;
+                        string clean = itemId.Trim();
+                        aggregated[clean] = aggregated.TryGetValue(clean, out int qty) ? qty + 1 : 1;
+                    }
+
+                    var costParts = new List<string>();
+                    foreach (var kvp in aggregated)
+                    {
+                        int needed = kvp.Value;
+                        if (needed <= 0) continue;
+                        int held = inv?.CountById(kvp.Key) ?? 0;
+                        string itemName = _expeditionHost?.Items?.Get(kvp.Key)?.displayName ?? kvp.Key;
+                        costParts.Add($"{itemName} x{needed} ({held}/{needed})");
+                        if (held < needed)
+                        {
+                            canAfford = false;
+                        }
+                    }
+                    if (costParts.Count > 0)
+                    {
+                        costText = "Cost: " + string.Join(", ", costParts);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(requirementText))
+                {
+                    var reqLabel = AshfallUiHelpers.MakeSmall(requirementText);
+                    reqLabel.Modulate = meetsRequirement
+                        ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)
+                        : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical);
+                    choiceCard.AddChild(reqLabel);
+                }
+
+                if (!string.IsNullOrEmpty(costText))
+                {
+                    var costLabel = AshfallUiHelpers.MakeSmall(costText);
+                    costLabel.Modulate = canAfford
+                        ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LetheAmber)
+                        : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical);
+                    choiceCard.AddChild(costLabel);
+                }
 
                 var btn = AshfallUiHelpers.MakeButton(choiceText.ToUpperInvariant(), () =>
                 {
@@ -820,11 +904,26 @@ namespace AtomicWar.GodotApp.UI
                         if (ok)
                         {
                             GD.Print($"[Expedition] Resolved {_lastSurfaced!.encounter_id} via {choiceId}.");
+                            DismissEncounter();
+                        }
+                        else
+                        {
+                            if (_encounterBody != null)
+                            {
+                                _encounterBody.Text += "\n\n[Action cannot be taken: requirements or costs not met.]";
+                            }
                         }
                     }
-                    DismissEncounter();
+                    else
+                    {
+                        DismissEncounter();
+                    }
                 }, false);
                 btn.CustomMinimumSize = new Vector2(210, 32);
+                if (!canAfford)
+                {
+                    btn.Disabled = true;
+                }
                 choiceCard.AddChild(btn);
 
                 choiceRow.AddChild(choiceCard);

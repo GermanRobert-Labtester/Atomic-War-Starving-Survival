@@ -22,7 +22,7 @@ namespace AtomicWar.GodotApp
     {
         public static int Run(string dataDirectory = "")
         {
-            string tempDir = Path.Combine(Path.GetTempPath(), "ashfall_save_load_failure_smoke_" + DateTime.UtcNow.Ticks);
+            string tempDir = Path.Combine(Path.GetTempPath(), "ashfall_save_load_failure_smoke_" + DateTime.UtcNow.Ticks); // DETERMINISM_ALLOWLIST: Test harness temporary directory
             try
             {
                 if (Directory.Exists(tempDir))

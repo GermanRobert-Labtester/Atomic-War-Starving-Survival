@@ -155,23 +155,10 @@ namespace Ashfall.Core.Tests.Save
         [Fact]
         public void EverySaveStoreSectionName_IsRepresentedInSaveSectionRegistry()
         {
-            // Branch-landed SaveStores not yet enrolled in SaveSectionRegistry / campaign envelope.
-            // Remove entries as each section is registered and wired through Setup/Save.
-            var incompleteSectionAllowlist = new HashSet<string>(StringComparer.Ordinal)
-            {
-                "personal_quests",
-                "endgame",
-                "caravan_trade_network",
-                "surgical_ward",
-                "power_subgrids",
-                "perimeter_defense",
-                "collectible_discovery",
-                "unique_claims",
-                "hydroponic_biomes",
-                "chemical_synthesis",
-                "nuclear_core_lifecycle",
-                "armored_crawlers",
-            };
+            // Formerly incomplete SaveStores are now enrolled in SaveSectionRegistry
+            // and wired through Setup/Save/SaveAll. Keep this set empty unless a
+            // new store lands ahead of registry enrollment.
+            var incompleteSectionAllowlist = new HashSet<string>(StringComparer.Ordinal);
 
             string root = RepoRoot();
             var stores = DiscoverAllStores(root);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Factions;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.YearOfAsh
@@ -56,17 +57,25 @@ namespace Ashfall.Core.YearOfAsh
 
         public int GetStanding(string factionId)
         {
-            var record = _state.factions.Find(f => f.factionId == factionId);
+            if (string.IsNullOrWhiteSpace(factionId)) return 0;
+            string canonical = FactionStandingIdResolver.ToSystemsId(factionId);
+            var record = _state.factions.Find(f => f.factionId == canonical || f.factionId == factionId);
             return record != null ? record.standing : 0;
         }
 
         public void ModifyStanding(string factionId, int delta)
         {
-            var record = _state.factions.Find(f => f.factionId == factionId);
+            if (string.IsNullOrWhiteSpace(factionId)) return;
+            string canonical = FactionStandingIdResolver.ToSystemsId(factionId);
+            var record = _state.factions.Find(f => f.factionId == canonical || f.factionId == factionId);
             if (record == null)
             {
-                record = new FactionStandingRecord { factionId = factionId, standing = 0 };
+                record = new FactionStandingRecord { factionId = canonical, standing = 0 };
                 _state.factions.Add(record);
+            }
+            else
+            {
+                record.factionId = canonical;
             }
 
             record.standing += delta;
@@ -76,7 +85,7 @@ namespace Ashfall.Core.YearOfAsh
             record.isHostile = record.standing <= -50;
             record.isAllied = record.standing >= 50;
 
-            OnFactionStandingChanged?.Invoke(factionId, record.standing);
+            OnFactionStandingChanged?.Invoke(canonical, record.standing);
         }
 
         public void EnactDecree(string decreeId)

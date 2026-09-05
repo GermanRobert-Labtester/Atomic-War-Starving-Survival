@@ -209,6 +209,7 @@ namespace Ashfall.Core.Combat
                 GrantVictoryLoot();
                 RecordSurvivorsSurvived();
                 AddEvent("victory", _state.EncounterId, "Victory — " + _state.Loot.Count + " loot captured.");
+                BuildAndApplyAftermath("Won", +5f);
                 OnEncounterEnded?.Invoke(_state);
                 Notify();
                 return;
@@ -227,9 +228,97 @@ namespace Ashfall.Core.Combat
                 if (_ports.ApplyMoraleDelta != null)
                     _ports.ApplyMoraleDelta(_state.EncounterId, -12f);
                 AddEvent("defeat", _state.EncounterId, "Defeat — no survivors standing.");
+                BuildAndApplyAftermath("Lost", -12f);
                 OnEncounterEnded?.Invoke(_state);
                 Notify();
             }
+        }
+
+        public void BuildAndApplyAftermath(string outcome, float moraleDelta)
+        {
+            if (_state.Aftermath != null) return; // exactly-once guard
+
+            string resId = string.IsNullOrEmpty(_state.ResolutionId)
+                ? "cres_" + _state.EncounterId
+                : _state.ResolutionId;
+            _state.ResolutionId = resId;
+
+            var aftermath = new CombatAftermath
+            {
+                ResolutionId = resId,
+                EncounterId = _state.EncounterId,
+                Outcome = outcome,
+                MoraleConsequences = moraleDelta,
+                IsApplied = true
+            };
+
+            for (int i = 0; i < _state.Combatants.Count; i++)
+            {
+                var c = _state.Combatants[i];
+                if (!c.IsPlayer || string.IsNullOrEmpty(c.SurvivorId)) continue;
+                if (c.Health <= 0f)
+                {
+                    if (!aftermath.SurvivorDeaths.Contains(c.SurvivorId))
+                        aftermath.SurvivorDeaths.Add(c.SurvivorId);
+                }
+                else if (c.IsDowned || c.Health < c.MaxHealth)
+                {
+                    if (!aftermath.SurvivorInjuries.Contains(c.SurvivorId))
+                        aftermath.SurvivorInjuries.Add(c.SurvivorId);
+                }
+            }
+
+            for (int i = 0; i < _state.Weapons.Count; i++)
+            {
+                var w = _state.Weapons[i];
+                if (w == null) continue;
+                float startCond = GetBoundWeaponStartCondition(w.InstanceId, 1f);
+                float wearDelta = Math.Max(0f, startCond - w.ConditionPct);
+                aftermath.WeaponWear.Add(new CombatWeaponWearRecord
+                {
+                    InstanceId = w.InstanceId,
+                    WeaponId = w.WeaponId,
+                    OwnerSurvivorId = w.OwnerSurvivorId,
+                    StartConditionPct = startCond,
+                    FinalConditionPct = w.ConditionPct,
+                    WearDeltaPct = wearDelta
+                });
+            }
+
+            var ammoMap = new Dictionary<string, int>(StringComparer.Ordinal);
+            for (int i = 0; i < _state.Weapons.Count; i++)
+            {
+                var w = _state.Weapons[i];
+                if (w != null && !string.IsNullOrEmpty(w.AmmoId) && w.ShotsFired > 0)
+                {
+                    ammoMap.TryGetValue(w.AmmoId, out int cur);
+                    ammoMap[w.AmmoId] = cur + w.ShotsFired;
+                }
+            }
+            foreach (var kv in ammoMap)
+            {
+                aftermath.AmmoSpent.Add(new CombatAmmoSpentRecord
+                {
+                    AmmoId = kv.Key,
+                    RoundsSpent = kv.Value
+                });
+            }
+
+            if (_state.Loot != null)
+            {
+                for (int i = 0; i < _state.Loot.Count; i++)
+                {
+                    var l = _state.Loot[i];
+                    aftermath.LootConsequences.Add(new CombatLootEntry
+                    {
+                        itemId = l.itemId,
+                        quantity = l.quantity,
+                        weightKg = l.weightKg
+                    });
+                }
+            }
+
+            _state.Aftermath = aftermath;
         }
 
         private void GrantVictoryLoot()

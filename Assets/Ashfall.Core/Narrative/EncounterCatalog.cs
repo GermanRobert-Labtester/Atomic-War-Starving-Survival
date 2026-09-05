@@ -41,6 +41,18 @@ namespace Ashfall.Core.Narrative
         /// <summary>Choice id recorded into the expansion-quest progress when
         /// this encounter choice resolves. Empty = complete without a choice.</summary>
         public string completesQuestChoiceId = string.Empty;
+
+        // Plan 45 / Patrol Encounter extensions (backward-compatible defaults)
+        /// <summary>Required item ID to enable this choice.</summary>
+        public string requiredItemId = string.Empty;
+        /// <summary>Required quantity of the gating item.</summary>
+        public int requiredItemQuantity = 0;
+        /// <summary>Faction associated with this choice.</summary>
+        public string factionId = string.Empty;
+        /// <summary>Delta applied to faction standing on resolution.</summary>
+        public int factionStandingDelta = 0;
+        /// <summary>Items consumed by selecting this choice.</summary>
+        public List<string> costItems = new List<string>();
     }
 
     /// <summary>

@@ -108,6 +108,15 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void TryStart_UnknownCatalogQuest_IsRejectedWithoutCreatingProgress()
+        {
+            var (system, _) = Fixture();
+
+            Assert.False(system.TryStart("quest_holdfast_not_authored", 200));
+            Assert.Null(system.GetProgress("quest_holdfast_not_authored"));
+        }
+
+        [Fact]
         public void AdvanceCompletesSheetAndSetsFlags()
         {
             var (system, _) = Fixture();

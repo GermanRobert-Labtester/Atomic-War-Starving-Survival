@@ -22,6 +22,8 @@ namespace AtomicWar.GodotApp.UI
         public event Action<int>? OnWarlordTributePay;
         /// <summary>Player refused the warlord tribute this week.</summary>
         public event Action? OnWarlordTributeRefuse;
+        /// <summary>Player committed allegiance to a specific faction branch.</summary>
+        public event Action<string>? OnCommitBranchRequested;
 
         private VBoxContainer _overviewContainer = null!;
         private VBoxContainer _factionsContainer = null!;
@@ -365,6 +367,21 @@ namespace AtomicWar.GodotApp.UI
                     {
                         var desc = AshfallUiHelpers.MakeSmall($"Consequence: {opt.ConsequencesSummary} · Trigger: {opt.PonrTrigger}");
                         branchBox.AddChild(desc);
+                    }
+
+                    if (opt.IsAvailable && !_branchCoordinator.IsCommitted)
+                    {
+                        string branchId = opt.BranchId;
+                        var commitBtn = AshfallUiHelpers.MakeButton($"COMMIT ALLEGIANCE // [{opt.DisplayName.ToUpperInvariant()}]", () =>
+                        {
+                            OnCommitBranchRequested?.Invoke(branchId);
+                        });
+                        commitBtn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                        branchBox.AddChild(commitBtn);
+
+                        var warn = AshfallUiHelpers.MakeSmall("WARNING: Committing allegiance permanently locks out competing factions. The door will close.");
+                        warn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warning));
+                        branchBox.AddChild(warn);
                     }
                     rendered++;
                 }

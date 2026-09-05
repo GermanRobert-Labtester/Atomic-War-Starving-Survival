@@ -112,7 +112,12 @@ namespace Ashfall.Core.Shelter
             return true;
         }
 
-        public void MarkTripped(string roomId, int day) => _state.MarkTripped(roomId, day);
+        public void MarkTripped(string roomId, int day)
+        {
+            _state.MarkTripped(roomId, day);
+            OnPowerChanged?.Invoke(new PowerGridEvent(PowerGridEventKind.Tripped,
+                roomId, day, "manual_trip"));
+        }
 
         public void ClearTripped(string roomId) => _state.ClearTripped(roomId);
 

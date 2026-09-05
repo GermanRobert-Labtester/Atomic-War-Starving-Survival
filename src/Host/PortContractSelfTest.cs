@@ -121,7 +121,7 @@ namespace AtomicWar.GodotApp
 
                     if (!string.IsNullOrWhiteSpace(port.expiry) && DateTime.TryParse(port.expiry, out var expDate))
                     {
-                        if (DateTime.UtcNow > expDate.AddDays(1))
+                        if (DateTime.UtcNow > expDate.AddDays(1)) // DETERMINISM_ALLOWLIST: Mock expiration date check in self-test
                         {
                             GD.PrintErr($"[FAIL] DEFERRED seam '{port.class_name}.{port.method_name}' has expired ({port.expiry})");
                             failures++;

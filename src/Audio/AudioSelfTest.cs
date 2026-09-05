@@ -164,6 +164,7 @@ namespace AtomicWar.GodotApp.Audio
                 AudioBusNames.Sfx, AudioBusNames.Ui, AudioBusNames.Voice,
                 AudioBusNames.Alerts, AudioBusNames.Generator, AudioBusNames.Ventilation,
                 AudioBusNames.Radio, AudioBusNames.Medical, AudioBusNames.Surface,
+                AudioBusNames.Machinery, AudioBusNames.ShelterSocial, AudioBusNames.Subterranean,
             };
             foreach (var kvp in AudioCueCatalog.All)
             {
@@ -292,8 +293,18 @@ namespace AtomicWar.GodotApp.Audio
                 if (!kvp.Value.Loop)
                     continue;
 
-                var stream = ResourceLoader.Load<AudioStream>(kvp.Value.ResourcePath)
-                    ?? AudioManager.LoadDirectStream(kvp.Value.ResourcePath);
+                string resPath = kvp.Value.ResourcePath;
+                var stream = ResourceLoader.Load<AudioStream>(resPath)
+                    ?? AudioManager.LoadDirectStream(resPath);
+                if (stream == null && kvp.Value.FallbackCueId != null)
+                {
+                    var fallbackCue = AudioCueCatalog.Resolve(kvp.Value.FallbackCueId);
+                    if (fallbackCue != null)
+                    {
+                        stream = ResourceLoader.Load<AudioStream>(fallbackCue.ResourcePath)
+                            ?? AudioManager.LoadDirectStream(fallbackCue.ResourcePath);
+                    }
+                }
                 bool loopCapable = stream is AudioStreamWav
                     || stream is AudioStreamOggVorbis
                     || stream is AudioStreamMP3;

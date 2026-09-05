@@ -3,8 +3,8 @@
 **Wave Target:** Flagship Player Experience, Runtime Hardening & Campaign Closure
 **Baseline Commit SHA:** `d37406a765af964c4ee8176ccee9cc8413cd5389`
 **Baseline Tests:** 7,110 passed, 0 failed
-**Baseline Save Section Count:** 95 sections registered in `Ashfall.Core.Save.SaveSectionRegistry`
-**Date:** 2026-09-03
+**Baseline Save Section Count:** 109 sections registered in `Ashfall.Core.Save.SaveSectionRegistry` (includes `personal_quests`, `endgame`, `shelter_fire`, advanced shelter, collectibles)
+**Date:** 2026-09-05 (audit #40 refresh)
 
 ---
 
@@ -22,7 +22,7 @@
 | **Moral Ledger & Moral Choice** | `MoralChoiceSystem`, `MoralDecisionLedger` | `Assets/Ashfall.Core/Events/MoralChoiceSystem.cs` | `HostEventHostSession` | Canonical moral bands and decisions. Personal quests and endgame final acts route choices through this authority. |
 | **Memorial System** | `MemorialSystem`, `SurvivorFateRegistry` | `Assets/Ashfall.Core/Memorial/MemorialSystem.cs`, `SurvivorFateRegistry.cs` | `MemorialHostSession`, `MemorialWallPanel.cs` | Fallen survivor ledger and epitaphs. Concluded campaign chronicle references this record without mutating it. |
 | **Endgame Facts & Epilogue** | `EndgameSystem`, `EndingRecord`, `EpilogueMatrixRuntime` | `Assets/Ashfall.Core/Endgame/EndgameSystem.cs`, `Assets/StreamingAssets/Data/endings.json` | `EndgameHostSession`, `ChroniclePanel.cs` | Typed, deterministic trigger families. 8 moral ending families. Sourced epilogue lines traceable to campaign facts. Immutable `EndingRecord` upon conclusion. Read-only chronicle mode. |
-| **Save Section Registry** | `SaveSectionRegistry` | `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` | `CampaignEnvelopeBuilder`, `SaveStoreHub` | Single versioned campaign envelope (`campaign.json`). 95 baseline sections + `personal_quests` & `endgame` registration. |
+| **Save Section Registry** | `SaveSectionRegistry` | `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` | `CampaignEnvelopeBuilder`, `SaveStoreHub` | Single versioned campaign envelope (`campaign.json`). **109** registered sections including `personal_quests`, `endgame`, `shelter_fire`, advanced shelter, and collectible/unique-claim sections (audit waves 1–10 + #40). |
 
 ---
 

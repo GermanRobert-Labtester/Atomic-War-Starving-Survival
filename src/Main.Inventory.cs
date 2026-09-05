@@ -36,11 +36,22 @@ namespace AtomicWar.GodotApp
         {
             if (_inventory != null) return;
             _inventory = InventoryHostSession.Create(_dataDir);
+            if (_survivors != null)
+            {
+                _inventory.Survivors = _survivors;
+                _survivors.Inventory = _inventory;
+            }
+            if (_holdfastRuntime != null)
+            {
+                _holdfastRuntime.InventorySession = _inventory;
+                _holdfastRuntime.Inventory = _inventory.Inventory;
+            }
             _inventory.StateChanged += () =>
             {
                 SaveInventory();
                 _inventoryPanel?.RefreshView();
                 _inventoryOverlay?.RefreshView();
+                _inventoryDetailPanel?.RefreshView();
                 _medicalPanel?.RefreshView();
                 _shelterPanel?.RefreshView();
                 if (_state == GameState.Playing) UpdateHud();
@@ -54,9 +65,15 @@ namespace AtomicWar.GodotApp
             if (_inventoryPanel != null)
             {
                 _inventoryPanel.Bind(_inventory);
+                _inventoryPanel.OnItemSelected -= OnInventoryItemSelected;
+                _inventoryPanel.OnItemSelected += OnInventoryItemSelected;
                 _inventoryPanel.RefreshView();
             }
             _inventoryOverlay?.Bind(_inventory);
+
+            // Collectible effect feeder (audit #27): inventory may construct
+            // after SetupCollectibles at boot; wire when both sides exist.
+            WireCollectibleInventoryFeeder();
         }
 
         private void OnInventoryOpenClicked()
@@ -81,12 +98,22 @@ namespace AtomicWar.GodotApp
             _inventoryPanel.RefreshView();
         }
 
+        private void OnInventoryItemSelected(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return;
+            SetupInventory();
+            _inventoryDetailPanel?.Bind(_inventory, itemId);
+            _inventoryDetailPanel?.Open();
+        }
+
         private void OnInventoryConsumeClicked(string itemId)
         {
             SetupInventory();
             var result = _inventory.ConsumeResult(itemId);
-            _statusLabel.Text = result.IsSuccess ? $"Consumed {itemId}." : result.MessageKey;
-            _inventoryPanel.RefreshView();
+            string deltas = HoldfastTerminalPanel.FormatDeltas(result.Deltas);
+            _statusLabel.Text = result.IsSuccess ? $"Consumed {itemId}. {deltas}".Trim() : result.MessageKey;
+            _inventoryPanel?.RefreshView();
+            _inventoryDetailPanel?.RefreshView();
             if (result.IsSuccess) ObserveSigil("inventory.used");
         }
 
@@ -95,7 +122,8 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             var result = _inventory.EquipResult(itemId);
             _statusLabel.Text = result.IsSuccess ? $"Equipped {itemId}." : result.MessageKey;
-            _inventoryPanel.RefreshView();
+            _inventoryPanel?.RefreshView();
+            _inventoryDetailPanel?.RefreshView();
             if (result.IsSuccess) ObserveSigil("inventory.used");
         }
 

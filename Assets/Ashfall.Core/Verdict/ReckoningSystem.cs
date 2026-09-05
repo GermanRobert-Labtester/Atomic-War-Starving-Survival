@@ -116,6 +116,16 @@ namespace Ashfall.Core.Verdict
             _state.enrolledEvidence += Math.Max(1, amount);
         }
 
+        /// <summary>
+        /// Restores the derived evidence count from the canonical ledger after
+        /// an older save is reconciled. This is intentionally not an eventful
+        /// gameplay mutation.
+        /// </summary>
+        internal void ReconcileEvidenceCount(int amount)
+        {
+            _state.enrolledEvidence = Math.Max(0, amount);
+        }
+
         /// <summary>The census window is open when phase is Culpable+ and the carrier is scheduled.</summary>
         public bool IsCensusWindowOpen(int day)
             => _state.phase >= ReckoningPhase.Culpable && day >= CulpableDay;

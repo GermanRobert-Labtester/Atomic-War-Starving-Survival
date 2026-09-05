@@ -60,6 +60,7 @@ namespace AtomicWar.GodotApp
 
             _moralChoice.OnQuestResolved += WriteMoralChoiceJournalEntry;
             _moralChoice.OnQuestResolved += _ => _moralChoiceDirty = true;
+            _moralChoice.OnThresholdEventFired += WriteThresholdEventJournalEntry;
             _moralChoice.OnThresholdEventFired += _ => _moralChoiceDirty = true;
             _moralChoice.OnBranchLocked += WriteBranchLockoutJournalEntry;
             _moralChoice.OnBranchLocked += _ => _moralChoiceDirty = true;
@@ -83,18 +84,66 @@ namespace AtomicWar.GodotApp
                      $"{_moralGossipData.CampChatter.Neutral.Count} neutral chatter lines).");
         }
 
+        public MoralChoiceSystem MoralChoice => _moralChoice;
+        public IReadOnlyList<MoralChoiceQuestDefinition> MoralChoiceDefs => _moralChoiceDefs;
+
+        public MoralChoiceQuestDefinition? GetMoralChoiceDef(string questId)
+        {
+            SetupMoralChoice();
+            return _moralChoiceDefs.FirstOrDefault(
+                d => string.Equals(d.Id, questId, StringComparison.Ordinal));
+        }
+
+        public List<MoralChoiceQuestDefinition> GetAvailableMoralChoices()
+        {
+            SetupMoralChoice();
+            var list = new List<MoralChoiceQuestDefinition>();
+            foreach (var d in _moralChoiceDefs)
+            {
+                if (!_moralChoice.IsResolved(d.Id) &&
+                    MoralChoiceSystem.IsAvailableOnDay(d, _simDay) &&
+                    _moralChoice.IsChainQuestAccessible(d.Id, _simDay))
+                {
+                    list.Add(d);
+                }
+            }
+            return list;
+        }
+
+        public List<MoralChoiceQuestDefinition> GetResolvedMoralChoices()
+        {
+            SetupMoralChoice();
+            var list = new List<MoralChoiceQuestDefinition>();
+            foreach (var d in _moralChoiceDefs)
+            {
+                if (_moralChoice.IsResolved(d.Id))
+                    list.Add(d);
+            }
+            return list;
+        }
+
+        public MoralChoiceResolution? GetMoralChoiceResolution(string questId)
+        {
+            SetupMoralChoice();
+            if (_moralChoice.TryGetResolution(questId, out var res))
+                return res;
+            return null;
+        }
+
         /// <summary>
         /// Resolve a catalog quest by id. Returns false when the id is unknown
         /// or the quest is already resolved; the journal line is written by
         /// the event hook, and overnight settlement lands in TickSimDay.
         /// </summary>
-        private bool TryResolveMoralChoice(string questId, int choiceIndex)
+        public bool TryResolveMoralChoice(string questId, int choiceIndex)
         {
             SetupMoralChoice();
             var def = _moralChoiceDefs.FirstOrDefault(
                 d => string.Equals(d.Id, questId, StringComparison.Ordinal));
             if (def == null || _moralChoice.IsResolved(questId)) return false;
             _moralChoice.Resolve(def, choiceIndex, def.LocationId, _simDay);
+            _moralChoiceDirty = true;
+            AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiConfirm);
             return true;
         }
 
@@ -133,6 +182,22 @@ namespace AtomicWar.GodotApp
             if (_moralFactionReactions.ThresholdReactions.TryGetValue(eventId, out var reaction))
                 return reaction;
             return null;
+        }
+
+        /// <summary>
+        /// Journal the authored faction reaction when a moral threshold fires.
+        /// Uses the catalog journal line when present; otherwise a restrained fallback.
+        /// </summary>
+        private void WriteThresholdEventJournalEntry(string eventId)
+        {
+            var reaction = GetFactionReaction(eventId);
+            string text = reaction != null && !string.IsNullOrWhiteSpace(reaction.JournalEntry)
+                ? reaction.JournalEntry
+                : $"Threshold crossed: {eventId}.";
+
+            SetupJournal();
+            _journal.TryAddRawEntry($"moral_threshold_{eventId}", text, null!, _simDay);
+            _journalDirty = true;
         }
 
         /// <summary>

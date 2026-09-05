@@ -16,6 +16,8 @@ namespace Ashfall.Core.Inventory
         public float weight { get; set; }
         public float radProtection { get; set; }
         public float durability { get; set; }
+        public float degradeRate { get; set; }
+        public float degrade_rate { get; set; }
         public bool isEquipable { get; set; }
         public string equipSlot { get; set; } = string.Empty;
         public float contamination { get; set; }
@@ -53,6 +55,26 @@ namespace Ashfall.Core.Inventory
     {
         public string itemId { get; set; } = string.Empty;
         public int amount { get; set; } = 1;
+    }
+
+    public enum StartingSuppliesLoadStatus
+    {
+        Success,
+        MissingFile,
+        EmptyFile,
+        ParseFailure,
+        InvalidRow,
+        DuplicateRow,
+        UnknownItem
+    }
+
+    public sealed class StartingSuppliesLoadResult
+    {
+        public StartingSuppliesLoadStatus Status { get; set; } = StartingSuppliesLoadStatus.Success;
+        public string ErrorMessage { get; set; } = string.Empty;
+        public List<(string itemId, int amount)> Supplies { get; } = new List<(string itemId, int amount)>();
+        public int AcceptedRowCount => Supplies.Count;
+        public bool IsSuccess => Status == StartingSuppliesLoadStatus.Success;
     }
 
     /// <summary>
@@ -99,22 +121,26 @@ namespace Ashfall.Core.Inventory
         }
 
         public static CatalogLoadResult<ItemCatalog> LoadCatalogWithResult(
-            string dataDir, IFileIO fileIO, IJsonSerializer serializer)
+            string dataDir, IFileIO fileIO, IJsonSerializer serializer, ItemCatalog? targetCatalog = null)
         {
+            if (fileIO == null || serializer == null || string.IsNullOrEmpty(dataDir))
+            {
+                var failResult = new CatalogLoadResult<ItemCatalog>(
+                    PrimaryFileName,
+                    "ItemCatalog",
+                    CatalogClassification.Required);
+                failResult.AddFatal("Required dependencies are null or dataDir is empty");
+                return failResult;
+            }
+
             var result = new CatalogLoadResult<ItemCatalog>(
                 fileIO.Combine(dataDir, PrimaryFileName),
                 "ItemCatalog",
                 CatalogClassification.Required);
 
-            if (fileIO == null || serializer == null || string.IsNullOrEmpty(dataDir))
-            {
-                result.AddFatal("Required dependencies are null");
-                return result;
-            }
-
             try
             {
-                var catalog = new ItemCatalog();
+                var catalog = targetCatalog ?? new ItemCatalog();
 
                 // 1. Primary items.json
                 string primaryPath = fileIO.Combine(dataDir, PrimaryFileName);
@@ -159,51 +185,101 @@ namespace Ashfall.Core.Inventory
             if (catalog == null || fileIO == null || serializer == null || string.IsNullOrEmpty(dataDir))
                 return;
 
-            // 1. Primary items.json
-            LoadFileInto(catalog, fileIO.Combine(dataDir, PrimaryFileName), fileIO, serializer);
-
-            // 2. Secondary expansion item files
-            for (int i = 0; i < SecondaryItemFiles.Length; i++)
-            {
-                string path = fileIO.Combine(dataDir, SecondaryItemFiles[i]);
-                if (fileIO.FileExists(path))
-                {
-                    LoadFileInto(catalog, path, fileIO, serializer);
-                }
-            }
+            LoadCatalogWithResult(dataDir, fileIO, serializer, catalog);
         }
 
         public static List<(string itemId, int amount)> LoadStartingSupplies(string dataDir, IFileIO fileIO, IJsonSerializer serializer)
         {
-            var result = new List<(string itemId, int amount)>();
+            var res = LoadStartingSuppliesDetailed(dataDir, fileIO, serializer);
+            return res.IsSuccess ? res.Supplies : new List<(string itemId, int amount)>();
+        }
+
+        public static StartingSuppliesLoadResult LoadStartingSuppliesDetailed(
+            string dataDir,
+            IFileIO fileIO,
+            IJsonSerializer serializer,
+            ItemCatalog? catalog = null)
+        {
+            var result = new StartingSuppliesLoadResult();
             if (fileIO == null || serializer == null || string.IsNullOrEmpty(dataDir))
+            {
+                result.Status = StartingSuppliesLoadStatus.MissingFile;
+                result.ErrorMessage = "fileIO, serializer, or dataDir is null or empty.";
                 return result;
+            }
 
             string path = fileIO.Combine(dataDir, StartingSuppliesFileName);
             if (!fileIO.FileExists(path))
+            {
+                result.Status = StartingSuppliesLoadStatus.MissingFile;
+                result.ErrorMessage = $"Authoritative starting supplies file missing: {path}";
                 return result;
+            }
 
             string raw = fileIO.ReadAllText(path);
             if (string.IsNullOrWhiteSpace(raw))
+            {
+                result.Status = StartingSuppliesLoadStatus.EmptyFile;
+                result.ErrorMessage = $"Authoritative starting supplies file is empty: {path}";
                 return result;
+            }
 
+            List<StartingSupplyJsonDto> dtos;
             try
             {
-                var dtos = CatalogLocator.LoadWrappedList<StartingSupplyJsonDto>(raw, SystemTextJsonSerializer.Options);
-                for (int i = 0; i < dtos.Count; i++)
-                {
-                    var dto = dtos[i];
-                    if (dto != null && !string.IsNullOrEmpty(dto.itemId) && dto.amount > 0)
-                    {
-                        result.Add((dto.itemId, dto.amount));
-                    }
-                }
+                dtos = CatalogLocator.LoadWrappedList<StartingSupplyJsonDto>(raw, SystemTextJsonSerializer.Options);
             }
             catch (Exception ex)
             {
                 CatalogDiagnostics.Warn("ItemCatalogLoader", StartingSuppliesFileName, ex);
+                result.Status = StartingSuppliesLoadStatus.ParseFailure;
+                result.ErrorMessage = $"Failed to parse starting supplies from {path}: {ex.Message}";
+                return result;
             }
 
+            if (dtos == null || dtos.Count == 0)
+            {
+                result.Status = StartingSuppliesLoadStatus.EmptyFile;
+                result.ErrorMessage = $"No supply entries found in {path}";
+                return result;
+            }
+
+            var seenIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            for (int i = 0; i < dtos.Count; i++)
+            {
+                var dto = dtos[i];
+                if (dto == null || string.IsNullOrWhiteSpace(dto.itemId))
+                {
+                    result.Status = StartingSuppliesLoadStatus.InvalidRow;
+                    result.ErrorMessage = $"Row {i + 1} has null or empty itemId in {path}";
+                    return result;
+                }
+
+                if (dto.amount <= 0)
+                {
+                    result.Status = StartingSuppliesLoadStatus.InvalidRow;
+                    result.ErrorMessage = $"Row {i + 1} ('{dto.itemId}') has non-positive amount {dto.amount} in {path}";
+                    return result;
+                }
+
+                if (!seenIds.Add(dto.itemId))
+                {
+                    result.Status = StartingSuppliesLoadStatus.DuplicateRow;
+                    result.ErrorMessage = $"Row {i + 1} has duplicate itemId '{dto.itemId}' in {path}";
+                    return result;
+                }
+
+                if (catalog != null && !catalog.Contains(dto.itemId) && !catalog.Contains(ItemAliases.ToCanonical(dto.itemId)))
+                {
+                    result.Status = StartingSuppliesLoadStatus.UnknownItem;
+                    result.ErrorMessage = $"Row {i + 1} itemId '{dto.itemId}' not found in item catalog.";
+                    return result;
+                }
+
+                result.Supplies.Add((dto.itemId, dto.amount));
+            }
+
+            result.Status = StartingSuppliesLoadStatus.Success;
             return result;
         }
 
@@ -271,7 +347,11 @@ namespace Ashfall.Core.Inventory
                 {
                     var dto = dtos[i];
                     if (dto == null || string.IsNullOrEmpty(dto.id)) continue;
-                    if (catalog.Contains(dto.id)) continue;
+                    if (catalog.Contains(dto.id))
+                    {
+                        result.AddWarning($"Duplicate item id '{dto.id}' encountered in '{path}'. Primary definition retained (provenance collision).");
+                        continue;
+                    }
 
                     var def = ConvertDto(dto);
                     catalog.Register(def);
@@ -306,6 +386,7 @@ namespace Ashfall.Core.Inventory
                 weight = dto.weight,
                 radProtection = dto.radProtection,
                 durability = dto.durability,
+                degradeRate = dto.degradeRate > 0f ? dto.degradeRate : dto.degrade_rate,
                 isEquipable = dto.isEquipable,
                 equipSlot = EquipSlots.Parse(dto.equipSlot),
                 contamination = dto.contamination,

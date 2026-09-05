@@ -52,6 +52,12 @@ namespace Ashfall.Core.UI
         /// </summary>
         public Action? CloseAction { get; set; }
 
+        /// <summary>Indicates whether this panel is production-ready or a prototype.</summary>
+        public PanelMaturity Maturity { get; }
+
+        /// <summary>True only when this panel is a live, player-navigable surface.</summary>
+        public bool IsPlayerNavigable => Maturity == PanelMaturity.Live;
+
         public PanelDescriptor(
             string id,
             string displayName,
@@ -61,7 +67,8 @@ namespace Ashfall.Core.UI
             Func<bool>? availabilityRule = null,
             Action? bindAction = null,
             Action? openAction = null,
-            Action? closeAction = null)
+            Action? closeAction = null,
+            PanelMaturity maturity = PanelMaturity.Live)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException("Panel id must not be empty.", nameof(id));
             Id = id;
@@ -73,6 +80,7 @@ namespace Ashfall.Core.UI
             BindAction = bindAction;
             OpenAction = openAction;
             CloseAction = closeAction;
+            Maturity = maturity;
         }
 
         /// <summary>
@@ -95,6 +103,14 @@ namespace Ashfall.Core.UI
         public void Close() => CloseAction?.Invoke();
 
         public override string ToString() => $"[Panel:{Id}({Group})]";
+    }
+
+    public enum PanelMaturity
+    {
+        /// <summary>Production-ready, player-navigable surface.</summary>
+        Live,
+        /// <summary>Shelved prototype surface; available for dev/snapshots but not player-routable.</summary>
+        Prototype
     }
 
     public enum PanelGroup
@@ -122,13 +138,40 @@ namespace Ashfall.Core.UI
 
         private static readonly List<string> s_registrationOrder = new();
 
-        /// <summary>Register a descriptor. Idempotent — second registration for the same id is a no-op.</summary>
+        /// <summary>
+        /// Register a descriptor. Re-registering the same descriptor is
+        /// idempotent; conflicting descriptors fail so duplicate IDs cannot
+        /// silently change player-surface meaning.
+        /// </summary>
         public static void Register(PanelDescriptor descriptor)
         {
             if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
-            if (s_descriptors.ContainsKey(descriptor.Id)) return;
+            if (s_descriptors.TryGetValue(descriptor.Id, out var existing))
+            {
+                if (!Equivalent(existing, descriptor))
+                    throw new InvalidOperationException(
+                        $"PanelRegistry: conflicting descriptor for duplicate id '{descriptor.Id}'.");
+                return;
+            }
             s_descriptors[descriptor.Id] = descriptor;
             s_registrationOrder.Add(descriptor.Id);
+        }
+
+        private static bool Equivalent(PanelDescriptor left, PanelDescriptor right)
+        {
+            if (!string.Equals(left.DisplayName, right.DisplayName, StringComparison.Ordinal)
+                || left.Group != right.Group
+                || left.AvailableInMenu != right.AvailableInMenu
+                || left.Maturity != right.Maturity
+                || left.SetupDependencies.Length != right.SetupDependencies.Length)
+                return false;
+
+            for (int i = 0; i < left.SetupDependencies.Length; i++)
+            {
+                if (!string.Equals(left.SetupDependencies[i], right.SetupDependencies[i], StringComparison.Ordinal))
+                    return false;
+            }
+            return true;
         }
 
         /// <summary>Returns the descriptor for <paramref name="panelId"/>, or null if unknown.</summary>
@@ -197,6 +240,13 @@ namespace Ashfall.Core.UI
         {
             var d = Resolve(panelId, onDiagnostic);
             if (d == null) return false;
+
+            if (!d.IsPlayerNavigable)
+            {
+                string msg = $"[PanelRegistry] PROTOTYPE ROUTE: '{panelId}' is a shelved prototype and not player-navigable.";
+                onDiagnostic?.Invoke(msg);
+                return false;
+            }
 
             if (isMenu && !d.AvailableInMenu)
             {

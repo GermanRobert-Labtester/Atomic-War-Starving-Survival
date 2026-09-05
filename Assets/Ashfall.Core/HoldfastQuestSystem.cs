@@ -125,9 +125,15 @@ namespace Ashfall.Core
         public bool TryStart(string questId, int day)
         {
             if (string.IsNullOrEmpty(questId)) return false;
-            var p = GetOrCreate(questId);
-            if (p.started || p.completed) return false;
+            if (_catalog.Count > 0 && GetDef(questId) == null && !IsBuiltInQuestId(questId))
+                return false;
+
+            var existing = GetProgress(questId);
+            if (existing != null && (existing.started || existing.completed || existing.failed))
+                return false;
             if (!PrereqsMet(questId, day)) return false;
+
+            var p = existing ?? GetOrCreate(questId);
             p.started = true;
             p.stage = 0;
             OnQuestStarted?.Invoke(questId);
@@ -299,6 +305,13 @@ namespace Ashfall.Core
             p = new HoldfastQuestProgress { questId = questId };
             _state.quests.Add(p);
             return p;
+        }
+
+        private static bool IsBuiltInQuestId(string questId)
+        {
+            for (int i = 0; i < MainQuestIds.Length; i++)
+                if (MainQuestIds[i] == questId) return true;
+            return false;
         }
 
         private void RaiseChanged() => OnStateChanged?.Invoke(_state);

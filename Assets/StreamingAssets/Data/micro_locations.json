@@ -177,7 +177,7 @@
     {
       "id": "micro_drainage_pipe",
       "title": "Drainage Pipe",
-      "description": "Rags and irradiated blankets have been pushed deep into this dark concrete culvert. A desperate warning is gouged into the wall just beyond the reach of the freezing rain. The smell of copper and unwashed bodies lingers.",
+      "description": "Rags and irradiated blankets have been pushed deep into this dark concrete culvert. Words are gouged into the wall just beyond the reach of the freezing rain, the letters uneven and going downhill. The smell of copper and unwashed bodies lingers.",
       "category": "Discovery",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -283,7 +283,7 @@
     {
       "id": "micro_ruined_greenhouse",
       "title": "Ruined Greenhouse",
-      "description": "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—someone tried to pry it open with a crowbar, but gave up or died trying.",
+      "description": "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—the paint around its lock is scarred by crowbar marks that stop short of success.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -320,7 +320,7 @@
     {
       "id": "micro_shell_crater",
       "title": "Shell Crater",
-      "description": "The blast fused the earth into dark, jagged glass along one side of the massive crater. A torn military harness and scorched metal fragments are fused into the soil. Stepping near the rim, the ground sounds terrifyingly hollow.",
+      "description": "The blast fused the earth into dark, jagged glass along one side of the massive crater. A torn military harness and scorched metal fragments are fused into the soil. Stepping near the rim, each footfall lands with a hollow knock that carries further than it should.",
       "category": "Hazard",
       "baseWeight": 0.4,
       "stealthWeightMultiplier": 0.8,
@@ -357,7 +357,7 @@
     {
       "id": "micro_field_kitchen",
       "title": "Abandoned Field Kitchen",
-      "description": "A massive cast-iron cooking pot is frozen solid to its metal stand. Bent ladles hang from rusted wire hooks. Hundreds of desperate tally marks are gouged into the serving table, tracking rations that eventually ran out.",
+      "description": "A massive cast-iron cooking pot is frozen solid to its metal stand. Bent ladles hang from rusted wire hooks. Hundreds of tally marks are gouged into the serving table, five bars to a group, tracking rations that eventually ran out.",
       "category": "Discovery",
       "baseWeight": 0.6,
       "stealthWeightMultiplier": 1.0,
@@ -431,7 +431,7 @@
     {
       "id": "micro_shrine",
       "title": "Roadside Shrine",
-      "description": "Tallow candles have burned down to stubs inside a rusted ration tin. Desperate little offerings—screws, shiny pebbles, a bullet—sit beneath a faded cloth carefully knotted around the twisted guardrail.",
+      "description": "Tallow candles have burned down to stubs inside a rusted ration tin. Small offerings—screws, shiny pebbles, a bullet—sit beneath a faded cloth carefully knotted around the twisted guardrail.",
       "category": "Social",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -708,7 +708,7 @@
     {
       "id": "micro_makeshift_clinic",
       "title": "Makeshift Clinic",
-      "description": "Desperate triage categories are scrawled in blood on torn cardboard strips. Empty, frozen saline bags hang from a rusted IV cable. The medicine cabinet was ransacked in a panic—leaving some shelves completely bare while ignoring others entirely.",
+      "description": "Desperate triage categories are scrawled in blood on torn cardboard strips. Empty, frozen saline bags hang from a rusted IV cable. The medicine cabinet was ransacked—some shelves stripped bare while others were ignored entirely.",
       "category": "Discovery",
       "baseWeight": 0.4,
       "stealthWeightMultiplier": 1.0,
@@ -813,7 +813,7 @@
     {
       "id": "micro_water_source",
       "title": "Water Source",
-      "description": "A dented tin cup is bound to the rusted hand pump with frayed wire. Heavy, unnatural mineral staining marks the concrete basin. Someone wrote 'SAFE' in charcoal, alongside a date from five years ago. The pump handle still groans when moved.",
+      "description": "A dented tin cup is bound to the rusted hand pump with frayed wire, the concrete basin stained with heavy, unnatural mineral deposits. Someone wrote 'SAFE' in charcoal, alongside a date from five years ago. The pump handle still groans when moved.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,

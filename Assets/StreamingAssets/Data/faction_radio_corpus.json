@@ -1023,6 +1023,76 @@
       "day_max": 280,
       "scheduled": false,
       "intel_tags": ["industrial_shortage", "trade_leverage"]
+    },
+    {
+      "id": "radio_patrol_garrison_checkpoint",
+      "type": "patrol_report",
+      "faction_id": "military_remnants",
+      "frequency_mhz": 88.4,
+      "callsign": "OVERLORD ACTUAL / CHECKPOINT",
+      "title": "Garrison Checkpoint Operational",
+      "message": "Checkpoint Echo confirms road tax collection active at the north scarp barricade. Authorized couriers must display valid paperwork.",
+      "signal_strength": 6,
+      "day_min": 1,
+      "day_max": 300,
+      "scheduled": false,
+      "intel_tags": ["patrol_movement", "checkpoint_active"]
+    },
+    {
+      "id": "radio_patrol_warlord_raid",
+      "type": "patrol_report",
+      "faction_id": "upland_militia",
+      "frequency_mhz": 104.2,
+      "callsign": "RIDGE WATCH / MILITIA NET",
+      "title": "Warlord Raid Warning",
+      "message": "All civilian travelers: Sector 4 raiding party spotted operating along the toll road. Armed hostiles moving with supply sleds.",
+      "signal_strength": 5,
+      "day_min": 1,
+      "day_max": 300,
+      "scheduled": false,
+      "intel_tags": ["raid_warning", "contested_zone"]
+    },
+    {
+      "id": "radio_patrol_border_closed",
+      "type": "patrol_report",
+      "faction_id": "military_remnants",
+      "frequency_mhz": 88.4,
+      "callsign": "CENTRAL COMMAND / BORDER POST",
+      "title": "Border Transit Restriction",
+      "message": "Notice to all non-combatants: Central Garrison perimeter gate restricted. Unstamped transit manifests will be turned back at gunpoint.",
+      "signal_strength": 6,
+      "day_min": 1,
+      "day_max": 300,
+      "scheduled": false,
+      "intel_tags": ["border_closure", "transit_denied"]
+    },
+    {
+      "id": "radio_patrol_convoy_attacked",
+      "type": "patrol_report",
+      "faction_id": "military_remnants",
+      "frequency_mhz": 88.4,
+      "callsign": "OVERLORD ACTUAL / RECON",
+      "title": "Railway Supply Convoy Under Fire",
+      "message": "Urgent traffic: Armoured rail transport took fire near the industrial spur. Security detachment returning fire. Avoid the corridor.",
+      "signal_strength": 6,
+      "day_min": 1,
+      "day_max": 300,
+      "scheduled": false,
+      "intel_tags": ["convoy_attack", "hostile_engagement"]
+    },
+    {
+      "id": "radio_patrol_press_gang",
+      "type": "patrol_report",
+      "faction_id": "upland_militia",
+      "frequency_mhz": 104.2,
+      "callsign": "RIDGE WATCH / CIVIL DEFENSE",
+      "title": "Forced Conscription Sighting",
+      "message": "Warning to refugees near the toll ruins: Sector 4 recruiters operating aggressively. Move in groups and keep off the main roads.",
+      "signal_strength": 5,
+      "day_min": 1,
+      "day_max": 300,
+      "scheduled": false,
+      "intel_tags": ["press_gang", "refugee_warning"]
     }
   ]
 }

@@ -11,7 +11,7 @@ namespace Ashfall.Core.Tests.UI
 {
     public sealed class PlayerSurfaceLivenessGateTests
     {
-        private static readonly string[] QuarantinedFakeConsoleIds = new[]
+        private static readonly string[] ShelvedPrototypeIds = new[]
         {
             "biogas_digester",
             "cartography_gis",
@@ -25,6 +25,7 @@ namespace Ashfall.Core.Tests.UI
             "logistics_airlock",
             "cryo_permafrost_core",
             "basal_radon_migration",
+            "trauma_bonding_cohort",
             "clandestine_insurgency",
             "surface_shrapnel_aegis",
             "long_walk_expedition",
@@ -46,13 +47,27 @@ namespace Ashfall.Core.Tests.UI
         }
 
         [Fact]
-        public void QuarantinedConsoles_AreNotRegisteredInPanelRegistry()
+        public void ShelvedPrototypes_AreRegisteredButNotPlayerNavigable()
         {
-            foreach (var id in QuarantinedFakeConsoleIds)
+            foreach (var id in ShelvedPrototypeIds)
             {
-                Assert.False(PanelRegistry.IsRegistered(id),
-                    $"Unbacked/fake console '{id}' is registered in PanelRegistry. It must be removed from player routing until backed by Core systems.");
+                var descriptor = PanelRegistry.Get(id);
+                Assert.NotNull(descriptor);
+                Assert.Equal(PanelMaturity.Prototype, descriptor!.Maturity);
+                Assert.False(descriptor.IsPlayerNavigable,
+                    $"Shelved prototype '{id}' must not be player-navigable.");
+                Assert.Null(descriptor.BindAction);
+                Assert.Null(descriptor.OpenAction);
+                Assert.Null(descriptor.CloseAction);
             }
+        }
+
+        [Fact]
+        public void LiveSlurrySurface_RemainsLive()
+        {
+            var descriptor = PanelRegistry.Get("slurry_dewatering_sump");
+            Assert.NotNull(descriptor);
+            Assert.Equal(PanelMaturity.Live, descriptor!.Maturity);
         }
 
         private static readonly System.Collections.Generic.HashSet<string> StandaloneAutonomousPanels = new(StringComparer.OrdinalIgnoreCase)

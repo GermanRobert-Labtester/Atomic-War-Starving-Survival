@@ -73,6 +73,7 @@ namespace Ashfall.Core.World
         public string Id = string.Empty;
         public string GateType = "route";           // "route" | "destination"
         public string TargetId = string.Empty;      // route_XX_... or loc_XX_...
+        public string Target { get => TargetId; set => TargetId = value; }
         public List<string> BlockedWeather = new List<string>();
         public List<string> RequiredWeather = new List<string>();
         public string OverrideItem = string.Empty;

@@ -91,6 +91,7 @@ namespace Ashfall.Core.Save
             new("disease", "SaveDisease", "SetupDisease", "medical", "Epidemics, contagions, and pathogen spread"),
             new("wasteland_map", "SaveWastelandMap", null, "world", "Wasteland map markers and fog-of-war", RequiresSetup: false),
             new("encounter_choice", "SaveEncounterChoice", "SetupEncounterChoice", "encounters", "Encounter choice history & outcomes"),
+            new("travel_encounters", "SaveTravelEncounters", "SetupTravelEncounters", "encounters", "Travel encounters and cooldown states"),
             new("water_treatment", "SaveWaterTreatment", "SetupWaterTreatment", "infrastructure", "Water filtration and purification", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("airlock_security", "SaveAirlockSecurity", "SetupAirlockSecurity", "infrastructure", "Airlock decontamination and security", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("apprenticeship", "SaveApprenticeship", "SetupApprenticeship", "social", "Mentorship pairings and skill growth", LifecycleGroup: ExpandedShelterLifecycleGroup),
@@ -148,7 +149,22 @@ namespace Ashfall.Core.Save
             new("aviation", "SaveAviation", "SetupAviation", "expedition", "Aviation airframes, flight plans, aerial mapping, and crash rescue", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("forced_labor", "SaveForcedLabor", "SetupForcedLabor", "factions", "Captive forced labor assignments, cruelty index, and rebellion risks"),
             new("narcotics", "SaveNarcotics", "SetupNarcotics", "medical", "Chemical medicines, toxicity, tolerance, addiction, and rehab beds"),
-            new("settlement_politics", "SavePolitics", "SetupPolitics", "narrative", "Settlement elections, political policies, approval rating, and coups")
+            new("settlement_politics", "SavePolitics", "SetupPolitics", "narrative", "Settlement elections, political policies, approval rating, and coups"),
+            // Advanced shelter / endgame sections previously allowlisted as incomplete.
+            new("endgame", "SaveEndgame", "SetupEndgame", "endgame", "Campaign endgame phase, ending selection, sealed epilogue report"),
+            new("caravan_trade_network", "SaveCaravanTrade", "SetupCaravanTrade", "economy", "Faction caravan trade network routes and arrivals"),
+            new("surgical_ward", "SaveSurgicalWard", "SetupSurgicalWard", "medical", "Advanced surgical ward operations and sterile field"),
+            new("power_subgrids", "SavePowerSubgrids", "SetupPowerSubgrids", "power_grid", "Power distribution sub-grid nodes and thermal state"),
+            new("perimeter_defense", "SavePerimeterDefense", "SetupPerimeterDefense", "combat", "Surface perimeter defense emplacements"),
+            new("hydroponic_biomes", "SaveHydroponicBiomes", "SetupHydroponicBiomes", "farming", "Hydroponic biome racks and crop state"),
+            new("nuclear_core_lifecycle", "SaveNuclearCore", "SetupNuclearCore", "power_grid", "Nuclear core lifecycle and thermal state"),
+            new("armored_crawlers", "SaveArmoredCrawlers", "SetupArmoredCrawlers", "expedition", "Armored crawler modules and forward camps"),
+            new("personal_quests", "SavePersonalQuests", "SetupPersonalQuests", "quests", "Survivor personal quest progression"),
+            new("chemical_synthesis", "SaveChemicalSynthesis", "SetupChemicalSynthesis", "crafting", "Chemical synthesis retorts and apparatus"),
+            new("collectible_discovery", "SaveCollectibles", "SetupCollectibles", "inventory", "One-time collectible discovery ledger"),
+            new("unique_claims", "SaveCollectibles", "SetupCollectibles", "inventory", "Global unique-item claim ledger"),
+            new("shelter_fire", "SaveShelterFire", "SetupShelterFireHazard", "shelter", "Shelter fire incidents, smoke, and brigade response"),
+            new("dynamic_quests", "SaveDynamicQuests", "SetupDynamicQuests", "quests", "Campaign-wide emergency dynamic quests")
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -210,6 +226,7 @@ namespace Ashfall.Core.Save
                 { "disease", "disease_save.json" },
                 { "wasteland_map", "wasteland_map_save.json" },
                 { "encounter_choice", "encounter_choice_save.json" },
+                { "travel_encounters", "travel_encounters_save.json" },
                 { "water_treatment", "water_treatment_save.json" },
                 { "airlock_security", "airlock_security_save.json" },
                 { "apprenticeship", "apprenticeship_save.json" },
@@ -268,6 +285,20 @@ namespace Ashfall.Core.Save
                 { "forced_labor", "forced_labor_save.json" },
                 { "narcotics", "narcotics_save.json" },
                 { "settlement_politics", "settlement_politics_save.json" },
+                { "endgame", "endgame_save.json" },
+                { "caravan_trade_network", "caravan_trade_network_save.json" },
+                { "surgical_ward", "surgical_ward_save.json" },
+                { "power_subgrids", "power_subgrids_save.json" },
+                { "perimeter_defense", "perimeter_defense_save.json" },
+                { "hydroponic_biomes", "hydroponic_biomes_save.json" },
+                { "nuclear_core_lifecycle", "nuclear_core_lifecycle_save.json" },
+                { "armored_crawlers", "armored_crawlers_save.json" },
+                { "personal_quests", "personal_quests_save.json" },
+                { "chemical_synthesis", "chemical_synthesis_save.json" },
+                { "collectible_discovery", "collectible_discovery_save.json" },
+                { "unique_claims", "unique_claims_save.json" },
+                { "shelter_fire", "shelter_fire_save.json" },
+                { "dynamic_quests", "dynamic_quests_save.json" },
             };
 
         /// <summary>

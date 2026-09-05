@@ -24,8 +24,13 @@ namespace Ashfall.Core.World
     {
         private readonly Dictionary<string, WeatherGate> _gates =
             new Dictionary<string, WeatherGate>(StringComparer.Ordinal);
+        private readonly Dictionary<string, WeatherGate> _gatesByTarget =
+            new Dictionary<string, WeatherGate>(StringComparer.Ordinal);
+        private readonly List<WeatherGate> _orderedGates = new List<WeatherGate>();
 
         public int Count => _gates.Count;
+        public List<string> Errors { get; } = new List<string>();
+        public bool IsValid => Errors.Count == 0;
 
         public void Register(WeatherGate gate)
         {
@@ -35,6 +40,21 @@ namespace Ashfall.Core.World
             if (_gates.ContainsKey(gate.Id))
                 throw new WeatherGateCatalogException($"duplicate gate id '{gate.Id}'");
             _gates[gate.Id] = gate;
+            _orderedGates.Add(gate);
+            if (!string.IsNullOrEmpty(gate.TargetId) && !_gatesByTarget.ContainsKey(gate.TargetId))
+                _gatesByTarget[gate.TargetId] = gate;
+        }
+
+        public void Add(WeatherGate gate)
+        {
+            if (gate == null) return;
+            if (!_gates.ContainsKey(gate.Id))
+            {
+                _gates[gate.Id] = gate;
+                _orderedGates.Add(gate);
+                if (!string.IsNullOrEmpty(gate.TargetId) && !_gatesByTarget.ContainsKey(gate.TargetId))
+                    _gatesByTarget[gate.TargetId] = gate;
+            }
         }
 
         public bool TryGet(string gateId, out WeatherGate? gate)
@@ -45,11 +65,16 @@ namespace Ashfall.Core.World
             return _gates.TryGetValue(gateId, out gate) && gate != null;
         }
 
+        public WeatherGate? GetById(string id) => TryGet(id, out var g) ? g : null;
+
         public WeatherGate? FindByTargetId(string targetId)
         {
             if (string.IsNullOrEmpty(targetId)) return null;
-            return _gates.Values.FirstOrDefault(g => string.Equals(g.TargetId, targetId, StringComparison.Ordinal));
+            if (_gatesByTarget.TryGetValue(targetId, out var g)) return g;
+            return _gates.Values.FirstOrDefault(gate => string.Equals(gate.TargetId, targetId, StringComparison.Ordinal));
         }
+
+        public WeatherGate? GetByTarget(string target) => FindByTargetId(target);
 
         /// <summary>Registration order first, then ordinal id sort. Stable.</summary>
         public IReadOnlyList<WeatherGate> GetAll()
@@ -60,6 +85,12 @@ namespace Ashfall.Core.World
         }
 
         public IEnumerable<string> AllGateIds => _gates.Keys.OrderBy(k => k, StringComparer.Ordinal);
+
+        public static WeatherGateCatalog LoadFromJson(string json, Ashfall.Core.IJsonSerializer? jsonSerializer = null) =>
+            WeatherGateCatalogLoader.LoadFromJson(json, jsonSerializer);
+
+        public static WeatherGateCatalog LoadFromDirectory(string dataDir, Ashfall.Core.IFileIO fileIO, Ashfall.Core.IJsonSerializer? jsonSerializer = null) =>
+            WeatherGateCatalogLoader.LoadFromDirectory(dataDir, fileIO, jsonSerializer);
 
         // ── Validation ────────────────────────────────────────────────
 

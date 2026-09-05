@@ -2,8 +2,8 @@
 
 > **Living Architecture Authority**: Documents all registered audio cues, target Godot audio buses, asset resource paths, loop behavior, volume trim, and cooldown timers in `src/Audio/AudioCueCatalog.cs`.
 
-**Total Registered Cues:** `154`<br>
-**Last Verified:** `2026-09-03`<br>
+**Total Registered Cues:** `195`<br>
+**Last Verified:** `2026-09-05`<br>
 **Drift Gated:** `python3 scripts/ci/generate-audio-catalog.py --check`
 
 ---
@@ -42,11 +42,13 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `expedition_vehicle_breakdown` | `Alerts` | `res://assets/audio/sfx/sfx_vehicle_breakdown_stall.wav` | No | -2.0 dB | 2.0s | ✅ Exists |
 | `flashback_trigger` | `Alerts` | `res://assets/audio/sfx/sfx_flashback_distortion.wav` | No | -3.0 dB | 3.0s | ✅ Exists |
 | `hazard_toxic_sizzle` | `Alerts` | `res://assets/audio/sfx/sfx_hazard_toxic_sizzle.mp3` | No | -3.0 dB | 1.0s | ✅ Exists |
+| `methane_alarm_beep` | `Alerts` | `res://assets/audio/sfx/sfx_alarm_klaxon.mp3` | No | 0.0 dB | 0.8s | ✅ Exists |
 | `rad_alert_acute` | `Alerts` | `res://assets/audio/sfx/sfx_radiation_alarm.mp3` | No | -2.0 dB | 5.0s | ✅ Exists |
 | `rad_alert_chronic` | `Alerts` | `res://assets/audio/sfx/sfx_radiation_chronic_alarm.wav` | No | -6.0 dB | 10.0s | ✅ Exists |
 | `rad_contamination` | `Alerts` | `res://assets/audio/sfx/sfx_contamination_warning.mp3` | No | 0.0 dB | 5.0s | ✅ Exists |
 | `radio_ebs_alert` | `Alerts` | `res://assets/audio/radio/radio_ebs_alert.wav` | No | -2.0 dB | 5.0s | ✅ Exists |
 | `sfx_artillery_incoming_whistle` | `Alerts` | `res://assets/audio/sfx/sfx_artillery_incoming_whistle.mp3` | No | -3.0 dB | 8.0s | ✅ Exists |
+| `sfx_breaker_trip` | `Alerts` | `res://assets/audio/sfx/sfx_breaker_trip.wav` | No | -1.0 dB | 1.0s | ✅ Exists |
 | `shelter_air_filter` | `Alerts` | `res://assets/audio/sfx/sfx_air_filter_degrade.mp3` | No | 0.0 dB | 10.0s | ✅ Exists |
 | `train_screech_crash` | `Alerts` | `res://assets/audio/sfx/sfx_train_screech_crash.wav` | No | -2.0 dB | 2.0s | ✅ Exists |
 | `trauma_tinnitus` | `Alerts` | `res://assets/audio/sfx/sfx_trauma_tinnitus_ring.wav` | No | -4.0 dB | 4.0s | ✅ Exists |
@@ -55,17 +57,34 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `weather_corrosive_precipitation` | `Alerts` | `res://assets/audio/sfx/sfx_weather_corrosive_precipitation.wav` | No | -4.0 dB | 8.0s | ✅ Exists |
 | `weather_emp_storm` | `Alerts` | `res://assets/audio/sfx/sfx_weather_emp_storm.wav` | No | -4.0 dB | 8.0s | ✅ Exists |
 | `amb_bunker` | `Ambience` | `res://assets/audio/ambience/bunker_ambience.ogg` | Yes | -3.0 dB | — | ✅ Exists |
+| `amb_bunker_low_power_loop` | `Ambience` | `res://assets/audio/ambience/amb_bunker_low_power_loop.ogg` | Yes | -4.0 dB | — | ✅ Exists |
 | `amb_loc_abandoned_hospital` | `Ambience` | `res://assets/audio/ambience/amb_loc_abandoned_hospital.mp3` | Yes | -5.0 dB | — | ✅ Exists |
 | `amb_loc_arcology_sector` | `Ambience` | `res://assets/audio/ambience/amb_loc_arcology_sector.mp3` | Yes | -5.0 dB | — | ✅ Exists |
 | `amb_loc_granite_quarry` | `Ambience` | `res://assets/audio/ambience/amb_location_granite_quarry_01.wav` | Yes | -8.0 dB | 0.05s | ✅ Exists |
 | `amb_loc_military_bunker` | `Ambience` | `res://assets/audio/ambience/amb_loc_military_bunker.mp3` | Yes | -4.0 dB | — | ✅ Exists |
+| `boiler_jacket_tick` | `Ambience` | `res://assets/audio/sfx/sfx_boiler_jacket_tick.mp3` | Yes | -17.0 dB | — | ✅ Exists |
 | `expedition_camp_fire` | `Ambience` | `res://assets/audio/ambience/amb_expedition_camp_fire.wav` | Yes | -10.0 dB | — | ✅ Exists |
+| `foundry_heat_shimmer` | `Ambience` | `res://assets/audio/sfx/sfx_foundry_heat_shimmer.mp3` | Yes | -16.0 dB | — | ✅ Exists |
+| `foundry_vibration_tune` | `Ambience` | `res://assets/audio/sfx/sfx_foundry_vibration_tune.mp3` | Yes | -16.0 dB | — | ✅ Exists |
+| `generator_vibration_tick` | `Ambience` | `res://assets/audio/sfx/sfx_generator_vibration_tick.mp3` | Yes | -17.0 dB | — | ✅ Exists |
+| `hepa_cooling_tick` | `Ambience` | `res://assets/audio/sfx/sfx_hepa_cooling_tick.mp3` | No | -12.0 dB | 45s | ✅ Exists |
 | `log_tape_hiss` | `Ambience` | `res://assets/audio/sfx/sfx_tape_hiss_loop.wav` | Yes | -18.0 dB | — | ✅ Exists |
 | `shelter_water_drip` | `Ambience` | `res://assets/audio/sfx/sfx_water_drip_cave.mp3` | Yes | -15.0 dB | — | ✅ Exists |
 | `shelter_water_filtration` | `Ambience` | `res://assets/audio/sfx/sfx_water_filtration_loop.wav` | Yes | -15.0 dB | — | ✅ Exists |
 | `trauma_cabin_fever` | `Ambience` | `res://assets/audio/sfx/sfx_trauma_cabin_fever_whisper.wav` | Yes | -14.0 dB | — | ✅ Exists |
+| `water_distillation_hum` | `Ambience` | `res://assets/audio/sfx/sfx_water_distillation_hum.mp3` | Yes | -17.0 dB | — | ✅ Exists |
+| `generator_brownout_flicker` | `Generator` | `res://assets/audio/sfx/sfx_generator_brownout_flicker.mp3` | No | -8.0 dB | 30s | ✅ Exists |
+| `generator_fuel_cough` | `Generator` | `res://assets/audio/sfx/sfx_generator_fuel_cough.mp3` | No | -8.0 dB | 30s | ✅ Exists |
+| `generator_relay_chatter` | `Generator` | `res://assets/audio/sfx/sfx_generator_relay_chatter.mp3` | No | -8.0 dB | 30s | ✅ Exists |
+| `sfx_generator_start` | `Generator` | `res://assets/audio/sfx/sfx_generator_start.wav` | No | -1.0 dB | 1.0s | ✅ Exists |
+| `sfx_generator_stop` | `Generator` | `res://assets/audio/sfx/sfx_generator_stop.wav` | No | -1.0 dB | 1.0s | ✅ Exists |
+| `sfx_power_restore` | `Generator` | `res://assets/audio/sfx/sfx_power_restore.wav` | No | -1.0 dB | 1.0s | ✅ Exists |
 | `shelter_generator` | `Generator` | `res://assets/audio/sfx/sfx_generator_cough.mp3` | Yes | -16.0 dB | — | ✅ Exists |
 | `shelter_generator_strain` | `Generator` | `res://assets/audio/sfx/sfx_generator_heavy_strain.wav` | Yes | -14.0 dB | — | ✅ Exists |
+| `ammo_press_stamp` | `Machinery` | `res://assets/audio/sfx/sfx_ammo_press_stamp.wav` | No | -2.0 dB | 0.2s | ⚠️ Fallback/Missing |
+| `machine_overhaul_clank` | `Machinery` | `res://assets/audio/sfx/sfx_machine_overhaul_clank.wav` | No | -1.0 dB | 0.5s | ⚠️ Fallback/Missing |
+| `weapon_clean_click` | `Machinery` | `res://assets/audio/sfx/sfx_weapon_clean_click.wav` | No | -4.0 dB | 0.15s | ⚠️ Fallback/Missing |
+| `workshop_lathe_loop` | `Machinery` | `res://assets/audio/sfx/sfx_workshop_lathe_hum.wav` | Yes | -6.0 dB | — | ✅ Exists |
 | `med_infirmary_beep` | `Medical` | `res://assets/audio/sfx/sfx_infirmary_monitor_beep.wav` | No | -12.0 dB | 1.5s | ✅ Exists |
 | `med_quarantine_clear` | `Medical` | `res://assets/audio/sfx/sfx_med_quarantine_clear.wav` | No | -8.0 dB | 0.75s | ✅ Exists |
 | `med_quarantine_seal` | `Medical` | `res://assets/audio/sfx/sfx_med_quarantine_seal.wav` | No | -7.0 dB | 1.0s | ✅ Exists |
@@ -74,6 +93,8 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `game_over` | `Music` | `res://assets/audio/music/game_over.ogg` | No | -10.0 dB | — | ✅ Exists |
 | `music_gameplay` | `Music` | `res://assets/audio/music/gameplay_underscore.ogg` | No | -8.0 dB | — | ✅ Exists |
 | `music_menu` | `Music` | `res://assets/audio/music/main_menu.ogg` | No | -6.0 dB | — | ✅ Exists |
+| `radio_decrypted_beep` | `Radio` | `res://assets/audio/sfx/sfx_radio_decrypted_beep.wav` | No | -2.0 dB | 0.5s | ⚠️ Fallback/Missing |
+| `radio_tuning_heterodyne` | `Radio` | `res://assets/audio/radio/radio_static_hiss.wav` | Yes | -8.0 dB | — | ✅ Exists |
 | `action_crafting` | `SFX` | `res://assets/audio/sfx/sfx_crafting_assemble.mp3` | No | 0.0 dB | 1.0s | ✅ Exists |
 | `action_injection` | `SFX` | `res://assets/audio/sfx/sfx_injection.mp3` | No | 0.0 dB | 0.5s | ✅ Exists |
 | `action_interrogation_slam` | `SFX` | `res://assets/audio/sfx/sfx_interrogation_slam.mp3` | No | -2.0 dB | 0.5s | ✅ Exists |
@@ -82,7 +103,10 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `action_repair` | `SFX` | `res://assets/audio/sfx/sfx_repair_wrench.mp3` | No | 0.0 dB | 0.5s | ✅ Exists |
 | `action_trade` | `SFX` | `res://assets/audio/sfx/sfx_trade_exchange.mp3` | No | 0.0 dB | 0.5s | ✅ Exists |
 | `action_water_pour` | `SFX` | `res://assets/audio/sfx/sfx_water_pour.mp3` | No | 0.0 dB | 0.5s | ✅ Exists |
+| `airlock_machinery_grind` | `SFX` | `res://assets/audio/sfx/sfx_airlock_machinery_grind.mp3` | No | -12.0 dB | 45s | ✅ Exists |
+| `airlock_seal_drag` | `SFX` | `res://assets/audio/sfx/sfx_airlock_seal_drag.mp3` | No | -8.0 dB | 20s | ✅ Exists |
 | `bio_mutation_pulse` | `SFX` | `res://assets/audio/sfx/sfx_mutation_pulse.mp3` | No | -4.0 dB | 2.0s | ✅ Exists |
+| `boiler_cutout_sputter` | `SFX` | `res://assets/audio/sfx/sfx_boiler_cutout_sputter.mp3` | No | -8.0 dB | 30s | ✅ Exists |
 | `combat_casing_drop` | `SFX` | `res://assets/audio/sfx/sfx_shell_casing_drop_01.wav` | No | -8.0 dB | 0.08s | ✅ Exists |
 | `combat_decon_flush` | `SFX` | `res://assets/audio/sfx/sfx_combat_decon_spray.wav` | No | -4.0 dB | 1.0s | ✅ Exists |
 | `combat_downed` | `SFX` | `res://assets/audio/sfx/sfx_combat_downed.mp3` | No | -4.0 dB | 1.0s | ✅ Exists |
@@ -111,6 +135,8 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `footstep_granite` | `SFX` | `res://assets/audio/sfx/sfx_footstep_granite_01.wav` | No | -6.0 dB | 0.05s | ✅ Exists |
 | `footstep_metal` | `SFX` | `res://assets/audio/sfx/sfx_footstep_metal_01.wav` | No | -6.0 dB | 0.05s | ✅ Exists |
 | `footstep_wood` | `SFX` | `res://assets/audio/sfx/sfx_footstep_wood_01.wav` | No | -6.0 dB | 0.05s | ✅ Exists |
+| `foundry_exhaust_whine` | `SFX` | `res://assets/audio/sfx/sfx_foundry_exhaust_whine.mp3` | Yes | -12.0 dB | — | ✅ Exists |
+| `foundry_tuyere_knock` | `SFX` | `res://assets/audio/sfx/sfx_foundry_tuyere_knock.mp3` | No | -7.0 dB | 30s | ✅ Exists |
 | `med_coughing` | `SFX` | `res://assets/audio/sfx/sfx_coughing_fit.mp3` | No | -4.0 dB | 8.0s | ✅ Exists |
 | `med_heartbeat` | `SFX` | `res://assets/audio/sfx/sfx_heartbeat_slow.mp3` | No | -6.0 dB | 5.0s | ✅ Exists |
 | `rad_geiger_burst` | `SFX` | `res://assets/audio/sfx/sfx_geiger_burst.mp3` | No | 0.0 dB | 2.0s | ✅ Exists |
@@ -136,14 +162,24 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `shelter_pipe_clang` | `SFX` | `res://assets/audio/sfx/sfx_pipe_clang.mp3` | No | -6.0 dB | 5.0s | ✅ Exists |
 | `shelter_workshop_tools` | `SFX` | `res://assets/audio/sfx/sfx_workshop_lathe_hum.wav` | Yes | -16.0 dB | — | ✅ Exists |
 | `trauma_heartbeat_rapid` | `SFX` | `res://assets/audio/sfx/sfx_trauma_heartbeat_rapid.wav` | Yes | -6.0 dB | — | ✅ Exists |
+| `water_flutter` | `SFX` | `res://assets/audio/sfx/sfx_water_flutter.mp3` | Yes | -13.0 dB | — | ✅ Exists |
 | `weather_blizzard` | `SFX` | `res://assets/audio/sfx/sfx_weather_blizzard.wav` | No | 0.0 dB | 10.0s | ✅ Exists |
 | `weather_fallout_storm` | `SFX` | `res://assets/audio/sfx/sfx_fallout_storm_approach.mp3` | No | 0.0 dB | 10.0s | ✅ Exists |
 | `weather_glass_storm` | `SFX` | `res://assets/audio/sfx/sfx_weather_glass_storm.wav` | No | -3.0 dB | 8.0s | ✅ Exists |
 | `weather_wind_gust` | `SFX` | `res://assets/audio/sfx/sfx_wind_gust_harsh.mp3` | No | -8.0 dB | 3.0s | ✅ Exists |
+| `dispute_argument_shout` | `ShelterSocial` | `res://assets/audio/sfx/sfx_dispute_argument_shout.wav` | No | -2.0 dB | 1.0s | ⚠️ Fallback/Missing |
+| `mediation_accord_chime` | `ShelterSocial` | `res://assets/audio/sfx/sfx_mediation_accord_chime.wav` | No | -3.0 dB | 0.5s | ⚠️ Fallback/Missing |
+| `mess_hall_chatter_loop` | `ShelterSocial` | `res://assets/audio/sfx/sfx_mess_hall_chatter_loop.wav` | Yes | -12.0 dB | — | ⚠️ Fallback/Missing |
+| `bulkhead_hydraulic_slam` | `Subterranean` | `res://assets/audio/sfx/sfx_bunker_door_seal.mp3` | No | 0.0 dB | 0.5s | ✅ Exists |
+| `cave_in_collapse_rumble` | `Subterranean` | `res://assets/audio/sfx/sfx_structural_collapse.mp3` | No | 2.0 dB | 2.0s | ✅ Exists |
+| `water_pump_hum_loop` | `Subterranean` | `res://assets/audio/sfx/sfx_water_filtration_loop.wav` | Yes | -8.0 dB | — | ✅ Exists |
 | `amb_loc_geothermal_ruins` | `Surface` | `res://assets/audio/ambience/amb_loc_geothermal_ruins.mp3` | Yes | -5.0 dB | — | ✅ Exists |
 | `amb_loc_rural_gas_station` | `Surface` | `res://assets/audio/ambience/amb_loc_rural_gas_station.mp3` | Yes | -5.0 dB | — | ✅ Exists |
 | `amb_loc_suburban_ruins` | `Surface` | `res://assets/audio/ambience/amb_loc_suburban_ruins.mp3` | Yes | -6.0 dB | — | ✅ Exists |
 | `amb_surface` | `Surface` | `res://assets/audio/ambience/surface_ambience.ogg` | Yes | -4.0 dB | — | ✅ Exists |
+| `amb_surface_ashfall_loop` | `Surface` | `res://assets/audio/ambience/amb_surface_ashfall_loop.ogg` | Yes | -2.0 dB | — | ✅ Exists |
+| `amb_surface_blizzard_loop` | `Surface` | `res://assets/audio/ambience/amb_surface_blizzard_loop.ogg` | Yes | -2.0 dB | — | ✅ Exists |
+| `amb_surface_fallout_storm_loop` | `Surface` | `res://assets/audio/ambience/amb_surface_fallout_storm_loop.ogg` | Yes | -2.0 dB | — | ✅ Exists |
 | `amb_surface_storm` | `Surface` | `res://assets/audio/ambience/amb_surface_storm.wav` | Yes | -7.0 dB | — | ✅ Exists |
 | `amb_warzone_distant_shelling` | `Surface` | `res://assets/audio/ambience/amb_warzone_distant_shelling.mp3` | Yes | -6.0 dB | — | ✅ Exists |
 | `item_handling_ammo` | `UI` | `res://assets/audio/sfx/sfx_item_handling_ammo_01.wav` | No | -4.0 dB | 0.1s | ✅ Exists |
@@ -168,8 +204,13 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `ui_switch_toggle` | `UI` | `res://assets/audio/ui/ui_switch_toggle.wav` | No | -2.0 dB | 0.05s | ✅ Exists |
 | `ui_tab_change` | `UI` | `res://assets/audio/ui/ui_tab_change.wav` | No | -2.0 dB | 0.05s | ✅ Exists |
 | `ui_warning` | `UI` | `res://assets/audio/ui/ui_warning.wav` | No | 0.0 dB | 0.3s | ✅ Exists |
+| `hepa_intake_whistle` | `Ventilation` | `res://assets/audio/sfx/sfx_hepa_intake_whistle.mp3` | No | -6.0 dB | 30s | ✅ Exists |
+| `hepa_radon_hum` | `Ventilation` | `res://assets/audio/sfx/sfx_hepa_radon_hum.mp3` | Yes | -11.0 dB | — | ✅ Exists |
+| `hepa_storm_cough` | `Ventilation` | `res://assets/audio/sfx/sfx_hepa_storm_cough.mp3` | No | -7.0 dB | 30s | ✅ Exists |
 | `shelter_air_recycler` | `Ventilation` | `res://assets/audio/sfx/sfx_air_recycler_hiss.wav` | Yes | -14.0 dB | — | ✅ Exists |
 | `shelter_ventilation` | `Ventilation` | `res://assets/audio/sfx/sfx_ventilation_fan.mp3` | Yes | -12.0 dB | — | ✅ Exists |
+| `ventilation_rattle` | `Ventilation` | `res://assets/audio/sfx/sfx_ventilation_rattle.mp3` | Yes | -12.0 dB | — | ✅ Exists |
+| `ventilation_soot_smell` | `Ventilation` | `res://assets/audio/sfx/sfx_ventilation_soot_smell.mp3` | Yes | -13.0 dB | — | ✅ Exists |
 | `radio_dead_hand_pulse` | `Voice` | `res://assets/audio/radio/radio_dead_hand_pulse.wav` | Yes | -6.0 dB | — | ✅ Exists |
 | `radio_distress_beacon` | `Voice` | `res://assets/audio/radio/radio_distress_beacon.wav` | Yes | -6.0 dB | — | ✅ Exists |
 | `radio_morse` | `Voice` | `res://assets/audio/sfx/sfx_morse_key.mp3` | No | 0.0 dB | 0.5s | ✅ Exists |
@@ -178,8 +219,8 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `radio_static` | `Voice` | `res://assets/audio/radio/radio_static_hiss.wav` | No | -8.0 dB | 0.5s | ✅ Exists |
 | `radio_tune` | `Voice` | `res://assets/audio/sfx/sfx_radio_tune.mp3` | No | 0.0 dB | 1.0s | ✅ Exists |
 | `radio_vo_ch11_stockpile` | `Voice` | `res://assets/audio/radio/vo_ch11_stockpile.wav` | No | -2.3 dB | 2.0s | ✅ Exists |
-| `radio_vo_ch3_ash_road` | `Voice` | `res://assets/audio/radio/vo_ch3_ash_road.wav` | No | -2.5 dB | 2.0s | ✅ Exists |
-| `radio_vo_ch7_milband` | `Voice` | `res://assets/audio/radio/vo_ch7_milband.wav` | No | -4.7 dB | 2.0s | ✅ Exists |
+| `radio_vo_ch3_ash_road` | `Voice` | `res://assets/audio/radio/vo_ch3_ash_road_elevenlabs_v1.wav` | No | 0.0 dB | 2.0s | ✅ Exists |
+| `radio_vo_ch7_milband` | `Voice` | `res://assets/audio/radio/vo_ch7_milband_elevenlabs_v1.wav` | No | 0.0 dB | 2.0s | ✅ Exists |
 | `radio_vo_kind_hatch` | `Voice` | `res://assets/audio/radio/vo_kind_hatch_relay.wav` | No | -6.0 dB | 2.0s | ✅ Exists |
 | `radio_vo_kind_parley` | `Voice` | `res://assets/audio/radio/vo_kind_parley_beacon.wav` | No | -6.0 dB | 2.0s | ✅ Exists |
 | `radio_vo_verdict_count` | `Voice` | `res://assets/audio/radio/vo_verdict_count.wav` | No | -6.0 dB | 2.0s | ✅ Exists |

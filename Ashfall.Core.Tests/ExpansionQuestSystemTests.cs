@@ -573,7 +573,11 @@ namespace Ashfall.Core.Tests
 
             var quests = ExpansionQuestCatalogLoader.Load(dataDir);
             Assert.NotEmpty(quests);
-            Assert.Equal(82, quests.Count);
+            // Audit #38 — floor + uniqueness, not a brittle exact census.
+            // Exact counts churn whenever expansion quest JSON grows.
+            Assert.True(quests.Count >= 80,
+                $"expected a substantial expansion-quest catalog, found {quests.Count}");
+            Assert.Equal(quests.Count, quests.Select(q => q.id).Distinct(StringComparer.Ordinal).Count());
 
             Assert.All(quests, q =>
             {

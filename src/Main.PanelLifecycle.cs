@@ -18,7 +18,7 @@ namespace AtomicWar.GodotApp
                 _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
                 _silentFoundryPanel,
                 _tradePanel,
-                _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel,
+                _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel, _moralChoiceModal,
                 _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
                 _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
                 _combatDetailPanel, _factionDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
@@ -88,6 +88,11 @@ namespace AtomicWar.GodotApp
         private void CloseQuestDetailPanel()
         {
             _questDetailPanel.Visible = false;
+        }
+
+        private void CloseMoralChoiceModal()
+        {
+            _moralChoiceModal.Visible = false;
         }
 
         private void CloseFactionDetailPanel()

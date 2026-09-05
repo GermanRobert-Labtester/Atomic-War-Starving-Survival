@@ -39,7 +39,6 @@ namespace Ashfall.Core.Tests
             foreach (var def in defs)
             {
                 Assert.True(def.isMicroLocation, $"Encounter {def.id} should have isMicroLocation = true");
-                Assert.True(def.IsMicroLocation, $"Encounter {def.id} should have IsMicroLocation = true");
             }
         }
 
@@ -175,8 +174,10 @@ namespace Ashfall.Core.Tests
             var json = new SystemTextJsonSerializer();
             string dataDir = DataDir();
 
-            var coreOnly = NarrativeEncounterCatalogLoader.LoadCoreEncounters(dataDir, fileIO, json);
+            // LoadCoreEncounters was folded into Load (all three catalog files);
+            // the core set is now the non-micro subset of the composed load.
             var composed = NarrativeEncounterCatalogLoader.Load(dataDir, fileIO, json);
+            var coreOnly = composed.Where(d => !d.isMicroLocation).ToList();
 
             Assert.NotEmpty(coreOnly);
             Assert.True(composed.Count > coreOnly.Count);

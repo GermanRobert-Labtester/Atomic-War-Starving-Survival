@@ -137,6 +137,7 @@ namespace Ashfall.Core.Tests
             sys.TickHours(1f, Rng(1));  // inbound 1
             sys.TickHours(1f, Rng(1));  // inbound 2 -> completed
             Assert.Equal(0, sys.ActiveCount);
+            Assert.Equal(1, sys.CompletedCount);
         }
 
         [Fact]
@@ -152,6 +153,7 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(reason);
             Assert.Contains("exhaustion", reason);
             Assert.Equal(0, sys.ActiveCount);
+            Assert.Equal(0, sys.CompletedCount); // failures do not count as completed returns
         }
 
         [Fact]

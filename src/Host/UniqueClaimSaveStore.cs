@@ -1,7 +1,7 @@
 // ============================================================================
 // Save Store : UniqueClaimSaveStore
 // Core State : Ashfall.Core.UniqueClaimSave
-// Host Caller: Main.SetupCollectibles / Main.SaveCollectibles
+// Host Caller: Main.SetupCollectibles / Main.SaveCollectibles (SaveAll + RestoreAll)
 // Purpose    : Global unique-item claim ledger — which globally unique items
 //              have already entered the campaign economy, so no generation
 //              channel (scavenging, trade, procedural, scripted) can ever

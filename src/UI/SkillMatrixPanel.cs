@@ -43,14 +43,23 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
 
     public bool IsBound => _skills != null;
 
-    public void Bind(SkillProgressionSystem skills, SurvivorsHostSession? survivors = null)
-    {
-        _skills = skills;
-        _survivors = survivors;
-        if (_skills != null)
-            _skills.OnSkillEarned += HandleSkillChanged;
-        RefreshView();
-    }
+        public void Bind(SkillProgressionSystem skills, SurvivorsHostSession? survivors = null)
+        {
+            Unbind();
+            _skills = skills;
+            _survivors = survivors;
+            if (_skills != null)
+                _skills.OnSkillEarned += HandleSkillChanged;
+            RefreshView();
+        }
+
+        public void Unbind()
+        {
+            if (_skills != null)
+                _skills.OnSkillEarned -= HandleSkillChanged;
+            _skills = null;
+            _survivors = null;
+        }
 
     public override void _Ready()
     {
@@ -141,7 +150,13 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
         RefreshDetail();
     }
 
-    private void HandleSkillChanged(SkillActor actor, string skillId) => RefreshView();
+        private void HandleSkillChanged(SkillActor actor, string skillId) => RefreshView();
+
+        public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
 
     public void RefreshView()
     {
@@ -480,19 +495,4 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
             GetViewport().SetInputAsHandled();
         }
     }
-
-
-    public void Unbind()
-    {
-        if (_skills != null)
-        {
-            _skills.OnSkillEarned -= HandleSkillChanged;
-        }
-    }
-
-    public override void _ExitTree()
-        {
-            Unbind();
-            base._ExitTree();
-        }
 }

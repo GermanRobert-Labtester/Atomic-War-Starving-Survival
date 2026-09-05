@@ -1,18 +1,26 @@
-# Plan 45 — Expedition Handoff
+# Flagship Integration — Patrol Expedition Handoff (PATROL-INT-F1-F4)
 
-## Integration Point
-The `ExpeditionEncounterBridge` uses `NarrativeEncounterSystem`, not `TravelEncounterSystem`. Patrol encounters live in `travel_encounters.json` and are selected by `TravelEncounterSystem.SelectEncounter()`.
+## Architecture: Option B Direct Bridge
 
-## Current State
-Expedition encounters and travel encounters are separate systems. Patrol encounters are reachable through the travel encounter path.
+`ExpeditionEncounterBridge` bridges directly to the shared `TravelEncounterSystem` without duplicating patrol encounter JSON into `narrative_encounters.json`.
 
-## Future Integration
-To wire patrols into expeditions:
-1. Add patrol entries to `narrative_encounters.json` (or its expansion)
-2. Use `EncounterDefinition.GetEffectiveWeight(stance, dangerLevel, locationId)` for territory-aware selection
-3. The ExpeditionEncounterBridge will surface them automatically
+### 1. Unified Candidate Pool & Single RNG Draw
+- During expedition travel, `ExpeditionEncounterBridge.Surface(state)` queries:
+  - `NarrativeEncounterSystem.GetEligibleCandidates(...)` (0 RNG)
+  - `TravelEncounterSystem.GetEligiblePatrolCandidates(...)` (0 RNG)
+- Combines candidate weights and rolls exactly once via the shared expedition `ISeededRng` stream.
+- Respects region tags (`the_toll`, `high_scarp`, `industrial_belt`, `dead_suburbs`, `coastal_shelf`), danger level, stance multipliers, and season windows.
 
-## Current Reachability
-Patrol encounters are reachable through:
-- Travel encounter selection (region + danger + stance + season)
-- Territory danger modifier (increases encounter chance in controlled/contested zones)
+### 2. Resolution & Mechanical Consequences
+- When the player selects a patrol encounter choice on `ExpeditionPanel`:
+  - Routed through `TravelEncounterSystem.ResolveChoice(...)`.
+  - Costs (`cost_items`) paid atomically via `InventoryBill` / `Inventory.BeginTransaction`. Any shortage aborts with zero deductions.
+  - Required items (`required_item_id`) act as non-consuming prerequisites; items are verified but never deducted.
+  - Faction standing delta applies via canonical systems ID using `FactionStandingIdResolver.ToSystemsId` (e.g. `iron_garrison` -> `faction_central_garrison`).
+  - Cooldowns recorded in `TravelEncounterState` (`EncounterAvailableDay`) preventing re-surfacing until expiry day.
+  - `ExpeditionEncounterBridge.LastResolution` populated for host event logging.
+
+### 3. UI Presentation & Guardrails
+- `ExpeditionPanel` renders tactical risk, stance weighting, requirement badges, item costs, and faction standing deltas.
+- Buttons are disabled when shelter inventory cannot satisfy requirements or costs.
+- Click-time verification ensures atomic failure feedback without prematurely closing the encounter modal.

@@ -134,7 +134,7 @@ namespace Ashfall.Core.Combat
                 IsPlayerShooter = true,
                 WeaponId = weapon.WeaponId,
                 WeaponName = def.displayName,
-                WeaponAccuracy = def.accuracy,
+                WeaponAccuracy = def.accuracy + (DoctrineCapability?.AccuracyBonus ?? 0f),
                 WeaponDamage = def.damage,
                 WeaponRangeMod = def.range,
                 AmmoId = weapon.AmmoId,
@@ -477,7 +477,7 @@ namespace Ashfall.Core.Combat
                 return res;
             }
 
-            float success = mods.Mobility;
+            float success = mods.Mobility + (DoctrineCapability?.TacticalMobilityBonus ?? 0f);
             foreach (var c in LivingPlayers())
             {
                 var p = PerksFor(c.SurvivorId, _state.Seed);
@@ -492,6 +492,7 @@ namespace Ashfall.Core.Combat
                 _state.Resolved = true;
                 _state.OutcomeText = "Your people fall back and break contact.";
                 AddEvent("retreat", _state.EncounterId, "The squad disengages and retreats.");
+                BuildAndApplyAftermath("Retreated", -2f);
                 OnEncounterEnded?.Invoke(_state);
                 Notify();
                 res.Success = true;

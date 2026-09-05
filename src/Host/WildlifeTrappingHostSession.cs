@@ -120,27 +120,32 @@ namespace AtomicWar.GodotApp
             var res = System.Butcher(siteId, butcherId);
             if (res.IsSuccess)
             {
-                // Plan 36 Closure II: apply disease/contamination from catalog
+                // Plan 36 Closure II / Tasks 5-8: apply disease/contamination from site state
                 var site = System.State.trapSites.Find(s => s.siteId == siteId);
                 if (site != null && Catalog != null && Catalog.Prey.TryGetValue(site.catchSpecies, out var preyDef))
                 {
                     string survivor = string.IsNullOrEmpty(butcherId) ? "unknown" : butcherId;
                     int day = _currentDay > 0 ? _currentDay : site.setDay;
 
-                    // Disease roll (deterministic via system RNG)
-                    if (ApplyDisease != null && System.RollDiseaseRisk(preyDef.diseaseRisk))
+                    // Disease application (deterministic from site state, with catalog fallback if unauthored)
+                    string diseaseId = !string.IsNullOrEmpty(site.diseaseId)
+                        ? site.diseaseId
+                        : (site.contaminationDose <= 0f && System.RollDiseaseRisk(preyDef.diseaseRisk) ? ResolveDiseaseId(preyDef) : string.Empty);
+
+                    if (ApplyDisease != null && !string.IsNullOrEmpty(diseaseId))
                     {
-                        string diseaseId = ResolveDiseaseId(preyDef);
-                        if (!string.IsNullOrEmpty(diseaseId))
-                            ApplyDisease(survivor, diseaseId, day);
+                        ApplyDisease(survivor, diseaseId, day);
                     }
 
-                    // Contamination roll (deterministic via system RNG)
-                    if (ApplyContamination != null && System.RollContaminationRisk(preyDef.contaminationRisk))
+                    // Contamination application (deterministic from site state, with catalog fallback if unauthored)
+                    float dose = site.contaminationDose > 0f
+                        ? site.contaminationDose
+                        : (string.IsNullOrEmpty(site.diseaseId) && System.RollContaminationRisk(preyDef.contaminationRisk)
+                            ? (preyDef.contaminationDose > 0f ? preyDef.contaminationDose : FallbackContaminationDose)
+                            : 0f);
+
+                    if (ApplyContamination != null && dose > 0f)
                     {
-                        float dose = preyDef.contaminationDose > 0f
-                            ? preyDef.contaminationDose
-                            : FallbackContaminationDose;
                         ApplyContamination(survivor, dose);
                     }
                 }
@@ -157,14 +162,7 @@ namespace AtomicWar.GodotApp
         /// Resolve disease ID: explicit per-species mapping wins, otherwise tier fallback.
         /// Low risk (≤0.1) → no disease; medium/high → fallback wildlife disease.
         /// </summary>
-        private static string ResolveDiseaseId(PreyDefinition prey)
-        {
-            if (!string.IsNullOrEmpty(prey.diseaseId))
-                return prey.diseaseId;
-            if (prey.diseaseRisk <= 0.1f)
-                return string.Empty; // low risk, no disease
-            return FallbackDiseaseId;
-        }
+        public static string ResolveDiseaseId(PreyDefinition prey) => PreyDefinition.ResolveDiseaseId(prey);
 
         public ActionResult RemoveToxin(string siteId)
         {

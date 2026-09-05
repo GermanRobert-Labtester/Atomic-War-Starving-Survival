@@ -18,6 +18,7 @@ public partial class WeatherForecastPanel : Control
     public event Action? OnClose;
 
     private WeatherSystem? _weather;
+    private Action<WeatherKind>? _onWeatherChanged;
 
     private VBoxContainer _forecastData = null!;
     private VBoxContainer _temperatureTrend = null!;
@@ -26,15 +27,26 @@ public partial class WeatherForecastPanel : Control
 
     public void Bind(WeatherSystem weather)
     {
-        if (_weather != null)
-            _weather.OnWeatherChanged -= _ => RefreshView();
+        if (_weather != null && _onWeatherChanged != null)
+            _weather.OnWeatherChanged -= _onWeatherChanged;
 
         _weather = weather;
+        _onWeatherChanged ??= _ => RefreshView();
 
         if (_weather != null)
-            _weather.OnWeatherChanged += _ => RefreshView();
+            _weather.OnWeatherChanged += _onWeatherChanged;
 
         RefreshView();
+    }
+
+    public override void _ExitTree()
+    {
+        if (_weather != null && _onWeatherChanged != null)
+        {
+            _weather.OnWeatherChanged -= _onWeatherChanged;
+            _weather = null;
+        }
+        base._ExitTree();
     }
 
     public void RefreshView()

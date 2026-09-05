@@ -164,8 +164,10 @@ namespace Ashfall.Core.Tests
             var choice = def!.choices.Find(c => c.choiceId == "add_shrine_offering");
             Assert.NotNull(choice);
 
-            Assert.Equal("canned_food", choice!.requiredItemId);
-            Assert.Equal(1, choice.requiredItemQuantity);
+            // Authored shape: the offering is an unconditional negative grant —
+            // sufficiency is enforced atomically by the host's F2 consumption
+            // flow (ShelterInventory.TryConsume), not by a choice-level gate.
+            Assert.True(string.IsNullOrEmpty(choice!.requiredItemId));
             Assert.Equal("canned_food", choice.grantItemId);
             Assert.Equal(-1, choice.grantItemQuantity);
             Assert.Equal(3, choice.moraleDelta);

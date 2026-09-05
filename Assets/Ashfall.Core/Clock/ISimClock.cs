@@ -3,6 +3,11 @@ using Ashfall.Core;
 
 namespace Ashfall.Core.Clock
 {
+    /// <summary>
+    /// Sub-day simulation clock providing tick and hour resolution.
+    /// Canonical constants: 60 ticks/hour, 1440 ticks/day.
+    /// See docs/architecture/CLOCK_POLICY.md for clock governance rules and non-merge invariant.
+    /// </summary>
     public interface ISimClock
     {
         long CurrentTick { get; }

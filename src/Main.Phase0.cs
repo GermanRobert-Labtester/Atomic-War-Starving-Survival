@@ -40,15 +40,25 @@ namespace AtomicWar.GodotApp
         private void SetupPhantom()
         {
             if (_phantomMemory != null) return;
-            _phantomMemory = PhantomMemoryHostSession.Create(_dataDir);
+            SetupCampaignDay();
+            var rng = _campaignDay?.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Psychology).Rng;
+            _phantomMemory = PhantomMemoryHostSession.Create(_dataDir, rng);
             _phantomMemory.StateChanged += () => SavePhantomMemory();
             SetupSurvivors();
-            _phantomMemory.Engine.OnPhantomTriggered += (svId, itemId, isMotivation) =>
+            if (_survivors != null)
+            {
+                _phantomMemory.BindSurvivors(_survivors);
+            }
+            SetupInventory();
+            if (_inventory != null)
+            {
+                _phantomMemory.BindInventory(_inventory);
+            }
+            _phantomMemory.Engine.OnPhantomMemoryResolved += (svId, itemId, isMotivation, moraleDelta, guiltDelta) =>
             {
                 var sv = _survivors?.Find(svId);
-                if (sv != null)
+                if (sv != null && moraleDelta != 0f)
                 {
-                    float moraleDelta = isMotivation ? PhantomMemoryEngine.MotivationMoraleBoost : PhantomMemoryEngine.BreakdownMoraleDrop;
                     _survivors!.Needs.Modify(sv, NeedKind.Morale, moraleDelta);
                 }
             };
@@ -64,7 +74,7 @@ namespace AtomicWar.GodotApp
         private void OnPhantomScavengeClicked()
         {
             SetupPhantom();
-            _statusLabel.Text = _phantomMemory.ScavengeItem("survivor_gunner_mikhail", "armour_heavy_military");
+            _statusLabel.Text = _phantomMemory.ScavengeItem("survivor_gunner_mikhail", "dog_tags");
         }
 
         private void OnPhantomTickClicked()

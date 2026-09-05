@@ -69,11 +69,17 @@ namespace AtomicWar.GodotApp
             if (_holdfastRuntime != null)
             {
                 _holdfastRuntime.Survivors = _survivors;
+                if (_inventory != null)
+                {
+                    _holdfastRuntime.InventorySession = _inventory;
+                    _holdfastRuntime.Inventory = _inventory.Inventory;
+                }
                 return;
             }
 
             SetupInventory();
             _holdfastRuntime = HoldfastRuntimeSession.Create(_core, inventory: _inventory?.Inventory);
+            _holdfastRuntime.InventorySession = _inventory;
             _holdfastRuntime.Survivors = _survivors;
             if (_holdfastTerminal == null || !_holdfastTerminal.IsInsideTree())
             {
@@ -81,6 +87,15 @@ namespace AtomicWar.GodotApp
                 AddChild(_holdfastTerminal);
             }
             _holdfastTerminal.BindSession(_holdfastRuntime);
+            _holdfastTerminal.RequestCampaignSave = () => SaveAll(playCue: true);
+            _holdfastTerminal.RequestCampaignReload = () =>
+            {
+                if (_saveLoadHost?.ActiveSlotId != null)
+                {
+                    return TryLoadAndRestoreGame(_saveLoadHost.ActiveSlotId.Value, out _);
+                }
+                return false;
+            };
             // Plan IV: bind whatever credit coordinator exists (rebound by
             // EnsureDebtConsequenceIntegration once the authority graph is up).
             _holdfastTerminal.BindCredit(_tradeCredit);
@@ -236,6 +251,9 @@ namespace AtomicWar.GodotApp
             try
             {
                 _campaignDayDirty = true;
+
+                SetupEndgame();
+                CheckAndTriggerEndgame(targetDay);
 
                 _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.DayTransition);
                 _statusLabel.Text = $"Day {targetDay} advanced successfully.";

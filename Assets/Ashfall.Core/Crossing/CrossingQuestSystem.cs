@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using Ashfall.Core.Flags;
 using Ashfall.Core.IO;
 namespace Ashfall.Core.Crossing
 {
@@ -86,6 +87,7 @@ namespace Ashfall.Core.Crossing
 
         private CrossingQuestSystemState _state = new();
         private IReadOnlyList<CrossingQuestDef> _catalog = Array.Empty<CrossingQuestDef>();
+        private IFlagLedger? _consequenceLedger;
 
         public event Action<string, int> OnQuestStageChanged;
         public event Action<string> OnQuestStarted;
@@ -111,6 +113,17 @@ namespace Ashfall.Core.Crossing
         }
 
         public IReadOnlyList<CrossingQuestDef> Catalog => _catalog;
+
+        /// <summary>
+        /// Binds the campaign's existing consequence ledger. Crossing keeps its
+        /// local projection for quest save compatibility, while every new flag
+        /// is also recorded in the canonical campaign ledger.
+        /// </summary>
+        public void BindConsequenceLedger(IFlagLedger? ledger)
+        {
+            _consequenceLedger = ledger;
+            ProjectFlagsToLedger();
+        }
 
         /// <summary>Quests available given current day, prereqs, and flags.</summary>
         public List<CrossingQuestDef> GetAvailableQuests(int currentDay)
@@ -281,7 +294,7 @@ namespace Ashfall.Core.Crossing
         public bool MakeChoice(string questId, string choiceId)
         {
             var progress = GetProgress(questId);
-            if (progress == null) return false;
+            if (progress == null || !progress.started || progress.completed || progress.failed) return false;
             var def = GetDef(questId);
             if (def == null) return false;
 
@@ -289,10 +302,17 @@ namespace Ashfall.Core.Crossing
             {
                 var choice = def.choices[i];
                 if (choice.id != choiceId) continue;
+                if (!string.IsNullOrEmpty(progress.chosenChoiceId))
+                    return progress.chosenChoiceId == choiceId;
+
                 progress.chosenChoiceId = choiceId;
                 if (!string.IsNullOrEmpty(choice.set_flag))
                 {
                     _state.setFlags.Add(choice.set_flag);
+                    _consequenceLedger?.Set(
+                        choice.set_flag,
+                        SystemId,
+                        questId);
                     OnFlagSet?.Invoke(questId, choice.set_flag);
                 }
                 RaiseChanged();
@@ -342,10 +362,42 @@ namespace Ashfall.Core.Crossing
             if (saved == null) return;
             _state.systemId = SystemId;
             _state.lastTickedDay = saved.lastTickedDay;
-            _state.quests = saved.quests ?? new();
-            _state.setFlags = saved.setFlags ?? new();
-            _state.dispatchedStageEvents = saved.dispatchedStageEvents ?? new();
+            _state.quests = new List<CrossingQuestProgress>();
+            if (saved.quests != null)
+            {
+                for (int i = 0; i < saved.quests.Count; i++)
+                {
+                    var q = saved.quests[i];
+                    if (q == null) continue;
+                    _state.quests.Add(new CrossingQuestProgress
+                    {
+                        questId = q.questId ?? string.Empty,
+                        currentStage = q.currentStage,
+                        started = q.started,
+                        completed = q.completed,
+                        failed = q.failed,
+                        chosenChoiceId = q.chosenChoiceId ?? string.Empty
+                    });
+                }
+            }
+            _state.setFlags = saved.setFlags != null
+                ? new HashSet<string>(saved.setFlags)
+                : new HashSet<string>();
+            _state.dispatchedStageEvents = saved.dispatchedStageEvents != null
+                ? new HashSet<string>(saved.dispatchedStageEvents)
+                : new HashSet<string>();
+            ProjectFlagsToLedger();
             RaiseChanged();
+        }
+
+        private void ProjectFlagsToLedger()
+        {
+            if (_consequenceLedger == null || _state.setFlags == null) return;
+            foreach (string flag in _state.setFlags)
+            {
+                if (!string.IsNullOrEmpty(flag))
+                    _consequenceLedger.Set(flag, SystemId);
+            }
         }
 
         private void RaiseChanged() => OnStateChanged?.Invoke(_state);

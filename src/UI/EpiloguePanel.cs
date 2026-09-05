@@ -19,7 +19,9 @@ namespace AtomicWar.GodotApp.UI
 
         private readonly EpilogueMatrixRuntime _runtime = new EpilogueMatrixRuntime();
         private EpilogueEvaluationContext _context = new EpilogueEvaluationContext();
+        private CampaignOutcomeSnapshot? _snapshot;
         private VBoxContainer _outcomesContainer = null!;
+        private VBoxContainer _traceContainer = null!;
         private Label _narrativeLabel = null!;
         private Label _statusLabel = null!;
 
@@ -40,6 +42,24 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        /// <summary>Authoritative derived binding from live campaign snapshot (FX-01).</summary>
+        public void Bind(CampaignOutcomeSnapshot snapshot)
+        {
+            if (snapshot == null) return;
+            _snapshot = snapshot;
+            _context = snapshot.ToContext();
+            RefreshView();
+        }
+
+        /// <summary>Context binding for standalone tests and direct context evaluation.</summary>
+        public void Bind(EpilogueEvaluationContext context)
+        {
+            _context = context ?? new EpilogueEvaluationContext();
+            _snapshot = null;
+            RefreshView();
+        }
+
+        /// <summary>Legacy parameter bundle — routes through CampaignOutcomeEvaluator.</summary>
         public void Bind(
             int daysSurvived,
             int livingCount,
@@ -50,18 +70,18 @@ namespace AtomicWar.GodotApp.UI
             bool childrenAlive,
             bool velExposed)
         {
-            _context = new EpilogueEvaluationContext
+            var input = new CampaignOutcomeEvaluationInput
             {
-                totalDaysSurvived = daysSurvived,
-                livingDwellerCount = livingCount,
-                totalDeathsRecorded = deathsCount,
-                grandTreatySigned = grandTreaty,
-                tempestDecommissioned = tempestDecom,
-                debtLedgersBurned = ledgersBurned,
-                childrenSurvived = childrenAlive,
-                velSecretExposed = velExposed
+                TotalDaysSurvived = daysSurvived,
+                LivingDwellerCount = livingCount,
+                TotalDeathsRecorded = deathsCount,
+                GrandTreatySignedOverride = grandTreaty,
+                TempestDecommissionedOverride = tempestDecom,
+                DebtLedgersBurnedOverride = ledgersBurned,
+                ChildrenSurvivedOverride = childrenAlive,
+                VelSecretExposedOverride = velExposed
             };
-            RefreshView();
+            Bind(CampaignOutcomeEvaluator.Evaluate(input));
         }
 
         public void Open()
@@ -137,6 +157,18 @@ namespace AtomicWar.GodotApp.UI
 
             contentBox.AddChild(narrCard);
 
+            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("AUTHORITATIVE CAMPAIGN PROVENANCE & EVALUATION TRACE"));
+
+            var traceCard = AshfallUiHelpers.MakePanel();
+            var traceMargin = AshfallUiHelpers.MakeMargins((int)CoreTheme.SpacingSm);
+            traceCard.AddChild(traceMargin);
+
+            _traceContainer = new VBoxContainer();
+            _traceContainer.AddThemeConstantOverride("separation", (int)CoreTheme.SpacingXs);
+            traceMargin.AddChild(_traceContainer);
+
+            contentBox.AddChild(traceCard);
+
             // ── Bottom Action Bar ──
             var bottomBar = new HBoxContainer();
             bottomBar.AddThemeConstantOverride("separation", (int)CoreTheme.SpacingMd);
@@ -153,13 +185,19 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_outcomesContainer == null || _narrativeLabel == null) return;
+            if (_outcomesContainer == null || _narrativeLabel == null || _traceContainer == null) return;
 
             ClearContainer(_outcomesContainer);
+            ClearContainer(_traceContainer);
 
-            var fate = _runtime.EvaluateRegionalFate(_context);
-            var demographics = _runtime.EvaluateDemographics(_context);
-            var moral = _runtime.EvaluateMoralStanding(_context);
+            // Prefer the bound CampaignOutcomeSnapshot classifications/prose so
+            // Bind(snapshot) cannot drift from a second matrix re-evaluation.
+            var fate = _snapshot?.Fate ?? _runtime.EvaluateRegionalFate(_context);
+            var demographics = _snapshot?.Demographics ?? _runtime.EvaluateDemographics(_context);
+            var moral = _snapshot?.MoralStanding ?? _runtime.EvaluateMoralStanding(_context);
+            string narrative = !string.IsNullOrEmpty(_snapshot?.NarrativeProse)
+                ? _snapshot!.NarrativeProse
+                : _runtime.GenerateEpilogueNarrative(_context);
 
             var outCard = AshfallUiHelpers.MakePanel();
             var outMargin = AshfallUiHelpers.MakeMargins((int)CoreTheme.SpacingSm);
@@ -179,7 +217,23 @@ namespace AtomicWar.GodotApp.UI
 
             _outcomesContainer.AddChild(outCard);
 
-            _narrativeLabel.Text = _runtime.GenerateEpilogueNarrative(_context);
+            _narrativeLabel.Text = narrative;
+
+            if (_snapshot != null && _snapshot.OutcomeTrace.Count > 0)
+            {
+                foreach (var line in _snapshot.OutcomeTrace)
+                {
+                    var lbl = AshfallUiHelpers.MakeMono(line);
+                    lbl.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+                    _traceContainer.AddChild(lbl);
+                }
+                _statusLabel.Text = $"Chronicle derived from live campaign authorities ({_snapshot.OutcomeTrace.Count} trace facts).";
+            }
+            else
+            {
+                _traceContainer.AddChild(AshfallUiHelpers.MakeMono("Direct matrix context evaluation (no external trace)."));
+                _statusLabel.Text = "Chronicle matrix evaluated against active world ledger flags.";
+            }
         }
 
         private static string FormatEnum<T>(T val) where T : struct

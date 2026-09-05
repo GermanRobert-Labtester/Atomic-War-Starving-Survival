@@ -37,6 +37,14 @@ namespace Ashfall.Core.Combat
             return best;
         }
 
+        /// <summary>Convert equipment condition (0–100) to combat condition percent (0–1).</summary>
+        public static float ConditionToCombatPct(float equipmentCondition0To100)
+            => Math.Clamp(equipmentCondition0To100 / 100f, 0f, 1f);
+
+        /// <summary>Convert combat condition percent (0–1) to equipment condition (0–100).</summary>
+        public static float CombatPctToEquipmentCondition(float combatPct0To1)
+            => Math.Clamp(combatPct0To1 * 100f, 0f, 100f);
+
         /// <summary>
         /// Project the persisted authority into combat's weapon token. When no
         /// equipment instance exists, returns a pristine token carrying no
@@ -48,7 +56,7 @@ namespace Ashfall.Core.Combat
             string ownerSurvivorId)
         {
             var inst = FindWeaponFor(equipment, weaponId, ownerSurvivorId);
-            float pct = inst != null ? Math.Clamp(inst.condition / 100f, 0f, 1f) : 1f;
+            float pct = inst != null ? ConditionToCombatPct(inst.condition) : 1f;
             return new WeaponInstanceState
             {
                 InstanceId = inst?.instanceId ?? string.Empty,
@@ -62,7 +70,7 @@ namespace Ashfall.Core.Combat
         public static void ApplyWear(EquipmentConditionSystem? equipment, string instanceId, float degrade)
         {
             if (equipment == null || string.IsNullOrEmpty(instanceId) || degrade <= 0f) return;
-            equipment.UseItem(instanceId, degrade * 100f);
+            equipment.UseItem(instanceId, CombatPctToEquipmentCondition(degrade));
         }
 
         /// <summary>

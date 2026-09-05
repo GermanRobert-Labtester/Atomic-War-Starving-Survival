@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp
         {
             CatalogLocator.UseInvariantCulture();
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_year_of_ash_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_year_of_ash_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
 
             int failures = 0;
             void Check(bool condition, string name)
@@ -164,7 +164,7 @@ namespace AtomicWar.GodotApp
         {
             CatalogLocator.UseInvariantCulture();
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_duty_roster_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_duty_roster_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
 
             int failures = 0;
             void Check(bool condition, string name)
@@ -245,7 +245,7 @@ namespace AtomicWar.GodotApp
         {
             CatalogLocator.UseInvariantCulture();
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_expansion_hub_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_expansion_hub_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
 
             int failures = 0;
             void Check(bool condition, string name)
@@ -1211,7 +1211,7 @@ namespace AtomicWar.GodotApp
             var report = EconomyHeadlessDemo.Run(dataDirectory, new GodotLog());
             // Save-integrity probe: tampered saves must be refused (checksum).
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_economy_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_economy_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
             try
             {
                 var session = new EconomyHostSession();
@@ -1256,7 +1256,7 @@ namespace AtomicWar.GodotApp
             // Legacy-save probe: a bare MarketState (pre-checksum store shape)
             // must migrate, not be silently dropped as corrupt.
             string legacyPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_economy_legacy_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_economy_legacy_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
             try
             {
                 var legacy = new MarketState
@@ -1343,7 +1343,7 @@ namespace AtomicWar.GodotApp
             // reload, continue — the resumed trajectory must match an
             // uninterrupted run hash-for-hash.
             string continuityPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_economy_continuity_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_economy_continuity_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
             try
             {
                 var catalogResult = new GoodsCatalogLoadResult();
@@ -1401,7 +1401,7 @@ namespace AtomicWar.GodotApp
         {
             CatalogLocator.UseInvariantCulture();
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_dose_ledger_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_dose_ledger_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
 
             int failures = 0;
             void Check(bool condition, string name)
@@ -1517,7 +1517,7 @@ namespace AtomicWar.GodotApp
             }
 
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_black_flotilla_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_black_flotilla_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
 
             try
             {
@@ -1655,7 +1655,7 @@ namespace AtomicWar.GodotApp
             }
 
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_radio_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_radio_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
 
             try
             {
@@ -1708,7 +1708,7 @@ namespace AtomicWar.GodotApp
 
                 // No-radio-save fallback → fresh receiver.
                 string missing = Path.Combine(
-                    Path.GetTempPath(), "ashfall_radio_selftest_missing_" + Guid.NewGuid().ToString("N") + ".json");
+                    Path.GetTempPath(), "ashfall_radio_selftest_missing_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
                 Check(RadioSaveStore.TryLoad(missing) == null, "no radio save falls back to fresh state");
             }
             catch (Exception e)
@@ -1789,7 +1789,7 @@ namespace AtomicWar.GodotApp
         {
             CatalogLocator.UseInvariantCulture();
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_holdfast_s1_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_holdfast_s1_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
 
             int failures = 0;
             void Check(bool condition, string name)

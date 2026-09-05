@@ -3,6 +3,7 @@ using System.Collections.Generic;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Phantoms;
 
 namespace AtomicWar.GodotApp
@@ -14,15 +15,40 @@ namespace AtomicWar.GodotApp
     public sealed class PhantomMemoryHostSession
     : HostSessionBase{
         public PhantomMemoryEngine Engine { get; }
-        public List<PhantomSurvivorSnapshot> Survivors { get; }
-        public List<PhantomSurvivorSnapshot> DemoSurvivors => Survivors;
+        private readonly List<PhantomSurvivorSnapshot> _demoSurvivors;
+        public SurvivorsHostSession? SurvivorsSession { get; private set; }
+        public InventoryHostSession? InventorySession { get; private set; }
+        public ExpansionEnrichmentCatalog? EnrichmentCatalog { get; private set; }
+
+        private ISeededRng _rng;
+        public ISeededRng Rng
+        {
+            get => _rng;
+            set => _rng = value ?? new SeededRng(42);
+        }
+
+        public IReadOnlyList<PhantomSurvivorSnapshot> Survivors
+        {
+            get
+            {
+                if (SurvivorsSession != null)
+                    return ProjectSurvivors(SurvivorsSession, EnrichmentCatalog);
+                return _demoSurvivors;
+            }
+        }
+        public List<PhantomSurvivorSnapshot> DemoSurvivors => _demoSurvivors;
 
         public string LastEvent { get; private set; } = string.Empty;
-        public PhantomMemoryHostSession(PhantomMemoryEngine engine = null!)
+
+        public PhantomMemoryHostSession(PhantomMemoryEngine engine = null!, bool loadDefaults = true, ISeededRng? rng = null)
         {
             Engine = engine ?? new PhantomMemoryEngine();
-            Survivors = CreateDemoSurvivors();
-            LoadDefaultRules();
+            _demoSurvivors = CreateDemoSurvivors();
+            _rng = rng ?? new SeededRng(42);
+            if (loadDefaults)
+            {
+                LoadDefaultRules();
+            }
             Engine.OnPhantomTriggered += (svId, itemId, isMotivation) =>
             {
                 LastEvent = $"Phantom triggered for {svId}: {(isMotivation ? "motivation" : "breakdown")}";
@@ -36,12 +62,25 @@ namespace AtomicWar.GodotApp
             Engine.OnStateChanged += _ => RaiseStateChanged();
         }
 
+        public void BindSurvivors(SurvivorsHostSession session, ExpansionEnrichmentCatalog? enrichment = null)
+        {
+            SurvivorsSession = session;
+            EnrichmentCatalog = enrichment;
+            RaiseStateChanged();
+        }
+
+        public void BindInventory(InventoryHostSession inventory)
+        {
+            InventorySession = inventory;
+            RaiseStateChanged();
+        }
+
         /// <summary>Load the phantom_triggers.json catalog into the engine.</summary>
-        public static PhantomMemoryHostSession Create(string dataDir)
+        public static PhantomMemoryHostSession Create(string dataDir, ISeededRng? rng = null)
         {
             var engine = new PhantomMemoryEngine();
-            LoadRulesFromJson(engine, dataDir);
-            return new PhantomMemoryHostSession(engine);
+            bool loaded = LoadRulesFromJson(engine, dataDir);
+            return new PhantomMemoryHostSession(engine, loadDefaults: !loaded, rng: rng);
         }
 
         public void LoadDefaultRules()
@@ -75,34 +114,130 @@ namespace AtomicWar.GodotApp
         public PhantomMemoryEngineState CaptureSave() => Engine.CaptureState();
         public void RestoreSave(PhantomMemoryEngineState state) => Engine.RestoreState(state);
 
-        // ── Demo actions ─────────────────────────────────────────────
+        // ── Actions ──────────────────────────────────────────────────
+
+        public bool InspectRelic(string survivorId, string itemId, out string resultText, bool consumeItem = false)
+        {
+            resultText = string.Empty;
+            if (string.IsNullOrWhiteSpace(itemId))
+            {
+                resultText = "Invalid relic item ID.";
+                return false;
+            }
+
+            // F02: Rejects category tokens passed as item IDs
+            if (itemId == "military" || itemId == "medical" || itemId == "correspondence" ||
+                itemId == "photograph" || itemId == "personal_item" || itemId == "generic")
+            {
+                resultText = $"Invalid item ID '{itemId}': category tokens are not item IDs.";
+                return false;
+            }
+
+            var sv = System.Linq.Enumerable.FirstOrDefault(Survivors, s => s.survivorId == survivorId);
+            if (sv == null)
+            {
+                resultText = "Unknown survivor.";
+                return false;
+            }
+            if (!sv.isAlive)
+            {
+                resultText = "Survivor is deceased and cannot inspect relics.";
+                return false;
+            }
+
+            if (InventorySession != null)
+            {
+                string canonical = ItemAliases.ToCanonical(itemId);
+                if (InventorySession.Inventory.CountById(canonical) <= 0 && InventorySession.Inventory.CountById(itemId) <= 0)
+                {
+                    resultText = $"Item '{itemId}' not present in shelter inventory.";
+                    return false;
+                }
+                if (consumeItem)
+                {
+                    InventorySession.Inventory.TryConsume(canonical, 1);
+                }
+            }
+
+            var outcome = Engine.OnItemScavenged(sv, itemId, _rng);
+            resultText = outcome != TriggerOutcome.None
+                ? Engine.ResolveTriggerText(sv, itemId, outcome == TriggerOutcome.Motivation)
+                : "No memory triggered. The item is just an object.";
+            LastEvent = resultText;
+            RaiseStateChanged();
+            return true;
+        }
 
         public string ScavengeItem(string survivorId, string itemId)
         {
-            var sv = Survivors.Find(s => s.survivorId == survivorId);
-            if (sv == null) return "Unknown survivor.";
-            var rng = new SystemSeededRng(42);
-            var outcome = Engine.OnItemScavenged(sv, itemId, rng);
-            string text = outcome != TriggerOutcome.None
-                ? Engine.ResolveTriggerText(sv, itemId, outcome == TriggerOutcome.Motivation)
-                : "No memory triggered. The item is just an object.";
-            LastEvent = text;
-            RaiseStateChanged();
+            InspectRelic(survivorId, itemId, out string text, consumeItem: false);
             return text;
         }
 
         public string TickDemo()
         {
-            for (int i = 0; i < Survivors.Count; i++)
-                Engine.TickHour(Survivors[i].survivorId, 1f);
+            var list = Survivors;
+            for (int i = 0; i < list.Count; i++)
+                Engine.TickHour(list[i].survivorId, 1f);
             LastEvent = "Phantom timers ticked.";
             RaiseStateChanged();
             return LastEvent;
         }
 
-        // ── Demo survivors ───────────────────────────────────────────
+        // ── Survivors Projection & Fixtures ─────────────────────────
 
-        private static List<PhantomSurvivorSnapshot> CreateDemoSurvivors()
+        public static List<PhantomSurvivorSnapshot> ProjectSurvivors(SurvivorsHostSession session, ExpansionEnrichmentCatalog? enrichment)
+        {
+            var list = new List<PhantomSurvivorSnapshot>();
+            if (session == null) return list;
+            for (int i = 0; i < session.RosterState.Count; i++)
+            {
+                var state = session.RosterState[i];
+                if (state == null) continue;
+                var def = session.Roster.FindDefinition(state.Id);
+                string name = !string.IsNullOrEmpty(def?.displayName) ? def.displayName : state.Id;
+                string bg = "generic";
+                if (enrichment != null)
+                {
+                    var fields = enrichment.GetSurvivorFields(state.Id);
+                    if (!string.IsNullOrEmpty(fields?.phantom_background_id))
+                        bg = fields.phantom_background_id;
+                }
+                if (bg == "generic" && def != null && !string.IsNullOrEmpty(def.profession))
+                {
+                    bg = MapProfessionToBackground(def.profession);
+                }
+                bool isAlive = state.IsAliveState;
+                list.Add(new PhantomSurvivorSnapshot
+                {
+                    survivorId = state.Id,
+                    displayName = name,
+                    backgroundId = bg,
+                    traitIds = def?.traitIds ?? new List<string>(),
+                    isAlive = isAlive
+                });
+            }
+            return list;
+        }
+
+        private static string MapProfessionToBackground(string profession)
+        {
+            if (string.IsNullOrEmpty(profession)) return "generic";
+            string p = profession.ToLowerInvariant();
+            if (p.Contains("soldier") || p.Contains("gunner") || p.Contains("artillery") || p.Contains("guard") || p.Contains("military"))
+                return "former_soldier";
+            if (p.Contains("nurse") || p.Contains("paramedic") || p.Contains("surgeon") || p.Contains("doctor") || p.Contains("medic"))
+                return "nurse";
+            if (p.Contains("teacher") || p.Contains("professor") || p.Contains("instructor"))
+                return "teacher";
+            if (p.Contains("machinist") || p.Contains("mechanic") || p.Contains("engineer") || p.Contains("technician"))
+                return "machinist";
+            if (p.Contains("child") || p.Contains("orphan") || p.Contains("refugee"))
+                return "child_refugee";
+            return "generic";
+        }
+
+        public static List<PhantomSurvivorSnapshot> CreateDemoSurvivors()
         {
             return new List<PhantomSurvivorSnapshot>
             {
@@ -131,15 +266,15 @@ namespace AtomicWar.GodotApp
             };
         }
 
-        private static void LoadRulesFromJson(PhantomMemoryEngine engine, string dataDir)
+        private static bool LoadRulesFromJson(PhantomMemoryEngine engine, string dataDir)
         {
-            if (string.IsNullOrEmpty(dataDir)) return;
+            if (string.IsNullOrEmpty(dataDir)) return false;
             try
             {
                 var files = new FileSystemIO();
                 var json = new SystemTextJsonSerializer();
                 string path = System.IO.Path.Combine(dataDir, "phantom_triggers.json");
-                if (!files.FileExists(path)) return;
+                if (!files.FileExists(path)) return false;
 
                 string text = files.ReadAllText(path);
                 List<PhantomTriggerJsonEntry>? entries = null;
@@ -154,8 +289,9 @@ namespace AtomicWar.GodotApp
                     entries = json.Deserialize<List<PhantomTriggerJsonEntry>>(text);
                 }
 
-                if (entries == null) return;
+                if (entries == null || entries.Count == 0) return false;
 
+                int registered = 0;
                 for (int i = 0; i < entries.Count; i++)
                 {
                     var entry = entries[i];
@@ -181,27 +317,16 @@ namespace AtomicWar.GodotApp
                             gatingFlag = t.gating_flag ?? string.Empty,
                             repeatable = t.repeatable
                         }, entry.background_id);
+                        registered++;
                     }
                 }
+                return registered > 0;
             }
             catch (Exception ex)
             {
                 GD.PrintErr($"[PhantomMemory] Failed to load rules: {ex.Message}");
+                return false;
             }
-        }
-
-        // ── JSON DTOs: shared with Phase0HostSession (see Assets/Ashfall.Core/Phantoms/PhantomTriggerDto.cs) ─
-
-        /// <summary>A11: ISeededRng adapter now delegates to the core SeededRng
-        /// (deterministic xorshift64) — no System.Random in decision paths.</summary>
-        private sealed class SystemSeededRng : ISeededRng
-        {
-            private readonly SeededRng _rng;
-            public int Seed { get; }
-            public SystemSeededRng(int seed) { Seed = seed; _rng = new SeededRng(seed); }
-            public int Next(int min, int max) => _rng.Next(min, max);
-            public float NextFloat() => _rng.NextFloat();
-            public double NextDouble() => _rng.NextDouble();
         }
     }
 }

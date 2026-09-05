@@ -102,6 +102,10 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 var serializer = new SystemTextJsonSerializer();
                 DoorEncounterCatalogLoader.LoadAndRegister(session.Encounters, dataDir, fileIO, serializer);
                 YearOfAshCatalogLoader.LoadAndRegisterQuests(session.Quests, dataDir, fileIO, serializer);
+                // Shelter campaign dynamic questlines (Plan 59) share the YoA
+                // questline runtime; register after the expansion catalog so
+                // dynamic_questlines.json is reachable from the same host.
+                DynamicQuestlineCatalogLoader.LoadAndRegister(session.Quests, dataDir, fileIO, serializer);
                 // ASHFALL: THE VERDICT (Expansion 08) questlines are NOT registered
                 // here — Verdict is the sole owner of its quest progress, registered
                 // and persisted via VerdictHostSession / VerdictSave (v3+). Older

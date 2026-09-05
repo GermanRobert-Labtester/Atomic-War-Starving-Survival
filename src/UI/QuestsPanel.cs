@@ -29,9 +29,10 @@ namespace AtomicWar.GodotApp.UI
         private DutyRosterHostSession? _dutyRoster;
         private Ashfall.Core.Factions.FactionBranchCoordinator? _branchCoordinator;
         private Ashfall.Core.MoralChoice.MoralChoiceSystem? _moralChoice;
+        private IReadOnlyList<Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition>? _moralDefs;
         private int _currentDay = 1;
 
-        public bool IsBound => _holdfastQuests != null || _crossingQuests != null || _branchCoordinator != null;
+        public bool IsBound => _holdfastQuests != null || _crossingQuests != null || _branchCoordinator != null || _moralDefs != null;
 
         public void Bind(
             HoldfastQuestSystem? holdfastQuests,
@@ -39,7 +40,8 @@ namespace AtomicWar.GodotApp.UI
             DutyRosterHostSession? dutyRoster = null,
             int currentDay = 1,
             Ashfall.Core.Factions.FactionBranchCoordinator? branchCoordinator = null,
-            Ashfall.Core.MoralChoice.MoralChoiceSystem? moralChoice = null)
+            Ashfall.Core.MoralChoice.MoralChoiceSystem? moralChoice = null,
+            IReadOnlyList<Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition>? moralDefs = null)
         {
             Unbind();
 
@@ -49,6 +51,7 @@ namespace AtomicWar.GodotApp.UI
             _currentDay = currentDay;
             _branchCoordinator = branchCoordinator;
             _moralChoice = moralChoice;
+            _moralDefs = moralDefs;
 
             if (_holdfastQuests != null)
                 _holdfastQuests.OnStateChanged += HandleHoldfastStateChanged;
@@ -79,6 +82,7 @@ namespace AtomicWar.GodotApp.UI
             }
             _dutyRoster = null;
             _moralChoice = null;
+            _moralDefs = null;
         }
 
 
@@ -222,6 +226,32 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
 
+            // ── 1d. Ethical Dilemmas ("The Weight of Survival") ──
+            if (_moralDefs != null && _moralChoice != null)
+            {
+                foreach (var mDef in _moralDefs)
+                {
+                    if (_moralChoice.IsResolved(mDef.Id))
+                    {
+                        if (_moralChoice.TryGetResolution(mDef.Id, out var res) && res != null)
+                        {
+                            completedCount++;
+                            completedList.Add((mDef.Id, mDef.DisplayName, $"The Weight of Survival // {mDef.Category.ToUpperInvariant()}", res.epitaph));
+                        }
+                    }
+                    else if (Ashfall.Core.MoralChoice.MoralChoiceSystem.IsAvailableOnDay(mDef, _currentDay) &&
+                             _moralChoice.IsChainQuestAccessible(mDef.Id, _currentDay))
+                    {
+                        availableList.Add((
+                            mDef.Id,
+                            mDef.DisplayName,
+                            $"Moral Dilemma ({mDef.Category})",
+                            $"Encounter · Day >= {mDef.MinDay}",
+                            mDef.Trigger));
+                    }
+                }
+            }
+
             // If no active quests found in live session, provide the initial starting protocol
             if (activeList.Count == 0)
             {
@@ -290,7 +320,7 @@ namespace AtomicWar.GodotApp.UI
             // ── Available / Upcoming Missions ──
             if (availableList.Count > 0)
             {
-                int showCount = Math.Min(4, availableList.Count);
+                int showCount = Math.Min(8, availableList.Count);
                 for (int i = 0; i < showCount; i++)
                 {
                     var avail = availableList[i];

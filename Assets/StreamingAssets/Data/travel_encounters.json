@@ -639,14 +639,59 @@
       "title": "Iron Garrison Road Checkpoint",
       "category": "Human",
       "faction_id": "iron_garrison",
+      "cooldown_group": "patrol_garrison_checkpoint",
       "territory_state": "controlled",
       "region_tags": ["high_scarp", "the_toll"],
       "min_danger_level": 0.5,
       "max_danger_level": 2.0,
-      "base_weight": 1.8,
+      "base_weight": 0.6,
       "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.4 },
       "season_tags": ["all"],
       "description": "Two Iron Garrison sentries block the road with a steel barricade painted in regimental stripes. The senior soldier checks a clipboard while the junior keeps a rifle trained on your approach.",
+      "choices": [
+        { "choice_id": "choice_pay_garrison_toll", "text": "Pay the road tax: two tins of canned food per traveller.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food"] },
+        { "choice_id": "choice_show_garrison_pass", "text": "Present a Garrison travel authorization document.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 2, "required_item_id": "sealed_government_document", "required_item_quantity": 1 },
+        { "choice_id": "choice_negotiate_garrison", "text": "Negotiate passage by offering information about road conditions ahead.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 0 },
+        { "choice_id": "choice_avoid_garrison", "text": "Detour through the frozen creek bed to bypass the checkpoint.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_garrison_checkpoint_v2",
+      "title": "Iron Garrison Road Checkpoint (Relief Sentry)",
+      "category": "Human",
+      "faction_id": "iron_garrison",
+      "cooldown_group": "patrol_garrison_checkpoint",
+      "territory_state": "controlled",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.0,
+      "base_weight": 0.6,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.4 },
+      "season_tags": ["all"],
+      "description": "A fresh relief detachment from the Iron Garrison has taken over the sandbagged barrier. The corporal on duty taps his logbook with a grease pencil, demanding travel tokens before clearing the road spikes.",
+      "choices": [
+        { "choice_id": "choice_pay_garrison_toll", "text": "Pay the road tax: two tins of canned food per traveller.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food"] },
+        { "choice_id": "choice_show_garrison_pass", "text": "Present a Garrison travel authorization document.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 2, "required_item_id": "sealed_government_document", "required_item_quantity": 1 },
+        { "choice_id": "choice_negotiate_garrison", "text": "Negotiate passage by offering information about road conditions ahead.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 0 },
+        { "choice_id": "choice_avoid_garrison", "text": "Detour through the frozen creek bed to bypass the checkpoint.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -2, "guilt_delta": 0 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_garrison_checkpoint_v3",
+      "title": "Iron Garrison Road Checkpoint (Night Watch)",
+      "category": "Human",
+      "faction_id": "iron_garrison",
+      "cooldown_group": "patrol_garrison_checkpoint",
+      "territory_state": "controlled",
+      "region_tags": ["high_scarp", "the_toll"],
+      "min_danger_level": 0.5,
+      "max_danger_level": 2.0,
+      "base_weight": 0.6,
+      "stance_weights": { "Cautious": 1.2, "Balanced": 1.0, "Aggressive": 0.6, "Scavenging": 0.8, "Rapid": 0.4 },
+      "season_tags": ["all"],
+      "description": "Under sputtering carbide lamps, the night-shift Garrison watch peers through the falling ash. The barricade searchlight sweeps across your party as an armed sentry steps forward to inspect your manifest.",
       "choices": [
         { "choice_id": "choice_pay_garrison_toll", "text": "Pay the road tax: two tins of canned food per traveller.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food"] },
         { "choice_id": "choice_show_garrison_pass", "text": "Present a Garrison travel authorization document.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0, "faction_id": "iron_garrison", "faction_standing_delta": 2, "required_item_id": "sealed_government_document", "required_item_quantity": 1 },
@@ -720,14 +765,59 @@
       "title": "Warlord Raid Party",
       "category": "Human",
       "faction_id": "warlords_sector_4",
+      "cooldown_group": "patrol_warlord_raid",
       "territory_state": "contested",
       "region_tags": ["the_toll", "industrial_belt"],
       "min_danger_level": 2.0,
       "max_danger_level": 5.0,
-      "base_weight": 1.5,
+      "base_weight": 0.5,
       "stance_weights": { "Cautious": 0.4, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.6, "Rapid": 1.0 },
       "season_tags": ["all"],
       "description": "A warlord raiding party moves through the contested zone in loose formation — six fighters with scavenged military gear and a supply sled. Their leader spots you and raises a hand: stop or be stopped.",
+      "choices": [
+        { "choice_id": "choice_warlord_comply", "text": "Stop and submit to inspection. Resistance is not worth the risk.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 0 },
+        { "choice_id": "choice_warlord_bribe", "text": "Offer food to let your team pass uninspected.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food", "canned_food"] },
+        { "choice_id": "choice_warlord_flee", "text": "Break into a sprint toward cover. The warlords may not chase.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -3, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": -5 },
+        { "choice_id": "choice_warlord_fight", "text": "Draw weapons and engage the raiding party.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -4, "guilt_delta": 2, "faction_id": "warlords_sector_4", "faction_standing_delta": -15 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_warlord_raid_v2",
+      "title": "Warlord Raid Party (Ironjaw Vanguard)",
+      "category": "Human",
+      "faction_id": "warlords_sector_4",
+      "cooldown_group": "patrol_warlord_raid",
+      "territory_state": "contested",
+      "region_tags": ["the_toll", "industrial_belt"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 5.0,
+      "base_weight": 0.5,
+      "stance_weights": { "Cautious": 0.4, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.6, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "Ironjaw's vanguard sweeps through the rubble, their customized assault rifles slung low. The squad sergeant signals his gunners to fan out and intercept your line of march.",
+      "choices": [
+        { "choice_id": "choice_warlord_comply", "text": "Stop and submit to inspection. Resistance is not worth the risk.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 0 },
+        { "choice_id": "choice_warlord_bribe", "text": "Offer food to let your team pass uninspected.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food", "canned_food"] },
+        { "choice_id": "choice_warlord_flee", "text": "Break into a sprint toward cover. The warlords may not chase.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": -3, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": -5 },
+        { "choice_id": "choice_warlord_fight", "text": "Draw weapons and engage the raiding party.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": -4, "guilt_delta": 2, "faction_id": "warlords_sector_4", "faction_standing_delta": -15 }
+      ]
+    },
+
+    {
+      "id": "enc_patrol_warlord_raid_v3",
+      "title": "Warlord Raid Party (Culvert Ambush)",
+      "category": "Human",
+      "faction_id": "warlords_sector_4",
+      "cooldown_group": "patrol_warlord_raid",
+      "territory_state": "contested",
+      "region_tags": ["the_toll", "industrial_belt"],
+      "min_danger_level": 2.0,
+      "max_danger_level": 5.0,
+      "base_weight": 0.5,
+      "stance_weights": { "Cautious": 0.4, "Balanced": 0.8, "Aggressive": 1.5, "Scavenging": 0.6, "Rapid": 1.0 },
+      "season_tags": ["all"],
+      "description": "Warlord scouts emerge abruptly from a drainage culvert, weapons drawn and cocked. Their lookout whistles from an overhead pipe as the ambush circle tightens around you.",
       "choices": [
         { "choice_id": "choice_warlord_comply", "text": "Stop and submit to inspection. Resistance is not worth the risk.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -2, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 0 },
         { "choice_id": "choice_warlord_bribe", "text": "Offer food to let your team pass uninspected.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": -1, "guilt_delta": 0, "faction_id": "warlords_sector_4", "faction_standing_delta": 1, "cost_items": ["canned_food", "canned_food", "canned_food"] },

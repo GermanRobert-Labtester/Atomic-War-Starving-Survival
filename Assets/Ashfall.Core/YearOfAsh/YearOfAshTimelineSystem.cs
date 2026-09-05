@@ -61,27 +61,23 @@ namespace Ashfall.Core.YearOfAsh
         {
             if (day < StartDay) day = StartDay;
             if (day > EndDay) day = EndDay;
+            if (day <= _state.currentDay) return;
 
             int previousDay = _state.currentDay;
             _state.currentDay = day;
 
             YearOfAshPhase oldPhase = _state.phase;
-            if (day <= 240)
+            _state.phase = PhaseForDay(day);
+            if (_state.phase == YearOfAshPhase.Phase5_FactionSiege)
             {
-                _state.phase = YearOfAshPhase.Phase4_DeepFreeze;
-            }
-            else if (day <= 300)
-            {
-                _state.phase = YearOfAshPhase.Phase5_FactionSiege;
                 if (!_state.continuityDecreeActive)
                 {
                     _state.continuityDecreeActive = true;
                     OnEnvironmentalCrisisTriggered?.Invoke(day, "Continuity Reclamation Decree officially issued across Sector 4 frequencies.");
                 }
             }
-            else
+            else if (_state.phase == YearOfAshPhase.Phase6_TheGreatThaw)
             {
-                _state.phase = YearOfAshPhase.Phase6_TheGreatThaw;
                 if (!_state.finalBroadcastsActive)
                 {
                     _state.finalBroadcastsActive = true;
@@ -102,6 +98,7 @@ namespace Ashfall.Core.YearOfAsh
         public void RecalculateEnvironmentalParameters()
         {
             int d = _state.currentDay;
+            _state.phase = PhaseForDay(d);
 
             if (_state.phase == YearOfAshPhase.Phase4_DeepFreeze)
             {
@@ -170,7 +167,7 @@ namespace Ashfall.Core.YearOfAsh
         {
             if (state == null) return;
             _state.currentDay = Math.Max(StartDay, Math.Min(EndDay, state.currentDay));
-            _state.phase = state.phase;
+            _state.phase = PhaseForDay(_state.currentDay);
             _state.ambientTemperatureCelsius = state.ambientTemperatureCelsius;
             _state.ashCloudOpacity = state.ashCloudOpacity;
             _state.radonInfiltrationRate = state.radonInfiltrationRate;
@@ -180,6 +177,13 @@ namespace Ashfall.Core.YearOfAsh
             _state.continuityDecreeActive = state.continuityDecreeActive;
             _state.finalBroadcastsActive = state.finalBroadcastsActive;
             RecalculateEnvironmentalParameters();
+        }
+
+        private static YearOfAshPhase PhaseForDay(int day)
+        {
+            if (day <= 240) return YearOfAshPhase.Phase4_DeepFreeze;
+            if (day <= 300) return YearOfAshPhase.Phase5_FactionSiege;
+            return YearOfAshPhase.Phase6_TheGreatThaw;
         }
     }
 }

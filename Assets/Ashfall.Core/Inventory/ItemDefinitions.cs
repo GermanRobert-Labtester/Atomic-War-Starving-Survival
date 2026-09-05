@@ -78,6 +78,7 @@ namespace Ashfall.Core.Inventory
 
         public float radProtection;
         public float durability;
+        public float degradeRate;
         public bool isEquipable;
         public EquipSlot equipSlot;
 
@@ -125,6 +126,25 @@ namespace Ashfall.Core.Inventory
             }
         }
 
+        public bool IsConsumable()
+        {
+            if (hungerRestore != 0f || thirstRestore != 0f || healthEffect != 0f || radCleanse > 0f || moraleEffect != 0f || contamination > 0f)
+                return true;
+            switch (type)
+            {
+                case ItemType.Food:
+                case ItemType.ContaminatedFood:
+                case ItemType.Water:
+                case ItemType.IrradiatedWater:
+                case ItemType.Medical:
+                case ItemType.AntiRad:
+                case ItemType.Iodine:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static bool IsScrapMaterialId(string itemId)
         {
             if (string.IsNullOrEmpty(itemId)) return false;
@@ -134,6 +154,32 @@ namespace Ashfall.Core.Inventory
         }
 
         public bool CanDisassemble => !IsConsumableOrScrapMaterial();
+
+        /// <summary>
+        /// Effective degradation rate (durability loss per hour of active radiation exposure).
+        /// If explicitly authored (> 0), uses authored degradeRate.
+        /// Otherwise, derives sensible default based on gear category and slot for equipable protective gear.
+        /// Returns 0 for non-protective or zero-durability items (intentional zero-rate).
+        /// </summary>
+        public float GetEffectiveDegradeRate()
+        {
+            if (degradeRate > 0f)
+                return Math.Clamp(degradeRate, 0f, 100f);
+
+            if (!isEquipable || radProtection <= 0f || durability <= 0f)
+                return 0f;
+
+            // Derived baseline by gear category/slot:
+            // Face filters (gas masks, respirators) wear faster under airborne particulate (1.0 durability/hr).
+            // Heavy body suits (hazmat, lead aprons) wear at 0.5 durability/hr.
+            // Minor protective gear wears at 0.25 durability/hr.
+            if (equipSlot == EquipSlot.Face)
+                return 1.0f;
+            if (equipSlot == EquipSlot.Body)
+                return 0.5f;
+
+            return 0.25f;
+        }
 
         /// <summary>Deep copy for host use.</summary>
         public ItemDefinition Clone()
@@ -149,6 +195,7 @@ namespace Ashfall.Core.Inventory
                 weight = weight,
                 radProtection = radProtection,
                 durability = durability,
+                degradeRate = degradeRate,
                 isEquipable = isEquipable,
                 equipSlot = equipSlot,
                 contamination = contamination,

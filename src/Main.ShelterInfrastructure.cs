@@ -31,6 +31,11 @@ namespace AtomicWar.GodotApp
         private Ashfall.Core.VentilationSystem _ventilation = null!; // Plan 29 29B: machine tell readings
         private VentilationHostSession? _ventilationHost;                    // Plan 72 stage console session
         private Ashfall.Core.Shelter.ShelterFireHazardSystem? _stageFireHazard; // Plan 72 arc-fault fire handoff
+        private Ashfall.Core.Shelter.ShelterFireHazardSystem? _shelterFireHazard;
+        private ShelterFireHostSession? _shelterFireSession;
+
+        public Ashfall.Core.Shelter.ShelterFireHazardSystem ShelterFireHazard => GetShelterFireHazardSystem();
+        public ShelterFireHostSession? ShelterFireSession => _shelterFireSession;
         private ShelterScheduleHostSession _shelterSchedule = null!;
         private ShelterSchedulePanel _shelterSchedulePanel = null!;
         private bool _shelterScheduleDirty;
@@ -375,7 +380,7 @@ namespace AtomicWar.GodotApp
             // Plan 72: electrostatic stage catalog + persistent arc-fire hazard.
             auVent.ApplyElectrostaticCatalog(Ashfall.Core.ElectrostaticFiltrationCatalogLoader.Load(
                 _dataDir, new FileSystemIO(), new SystemTextJsonSerializer()));
-            _stageFireHazard = new Ashfall.Core.Shelter.ShelterFireHazardSystem();
+            SetupShelterFireHazard();
             _ventilationHost = new VentilationHostSession(auVent);
             var auRes = sharedResearch;
             var auMedical = _medicalWard;
@@ -428,6 +433,45 @@ namespace AtomicWar.GodotApp
         {
             if (_waystation != null)
                 CaptureSection("waystation", WaystationSaveStore.TryCapturePersisted(_waystation.System.CaptureState()));
+        }
+
+        private bool _shelterFireDirty;
+
+        private void SetupShelterFireHazard()
+        {
+            if (_shelterFireHazard != null) return;
+            _shelterFireHazard = new Ashfall.Core.Shelter.ShelterFireHazardSystem();
+            _stageFireHazard = _shelterFireHazard;
+            _shelterFireSession = new ShelterFireHostSession(_shelterFireHazard);
+            _shelterFireSession.StateChanged += () => _shelterFireDirty = true;
+
+            var saved = ShelterFireSaveStore.TryLoad();
+            if (saved != null)
+                ShelterFireSaveStore.ApplyToSystem(_shelterFireHazard, saved);
+        }
+
+        private void SaveShelterFire()
+        {
+            if (_shelterFireHazard == null) return;
+            if (CaptureSection(
+                    "shelter_fire",
+                    ShelterFireSaveStore.TryCapturePersisted(
+                        ShelterFireSaveStore.FromSystem(_shelterFireHazard))))
+            {
+                _shelterFireDirty = false;
+            }
+        }
+
+        private void FlushShelterFireIfDirty()
+        {
+            if (_shelterFireDirty) SaveShelterFire();
+        }
+
+        public Ashfall.Core.Shelter.ShelterFireHazardSystem GetShelterFireHazardSystem()
+        {
+            if (_shelterFireHazard == null)
+                SetupShelterFireHazard();
+            return _shelterFireHazard!;
         }
     }
 }

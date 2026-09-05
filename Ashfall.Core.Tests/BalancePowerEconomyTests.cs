@@ -30,12 +30,8 @@ namespace Ashfall.Core.Tests
             var scenario = Enum.Parse<Scenario>(scenarioName);
             var rows = RunScenario(seed, scenario, days, out var invFood, out var invWater, out var fuel, out var health);
 
-            try
-            {
-                Directory.CreateDirectory(ArtifactDir);
-                File.WriteAllLines(Path.Combine(ArtifactDir, $"power_econ_{scenarioName.ToLower()}_seed_{seed}_{days}d.csv"), rows);
-            }
-            catch { }
+            string fileName = $"power_econ_{scenarioName.ToLowerInvariant()}_seed_{seed}_{days}d.csv";
+            TelemetryArtifactWriter.TryWriteLines(ArtifactDir, fileName, rows);
 
             // Basic invariants: inventory never negative due to clamped Remove
             Assert.True(invFood >= 0, $"Food inventory {invFood} should be >=0");
@@ -95,7 +91,10 @@ namespace Ashfall.Core.Tests
                     var goods = GoodsCatalogLoader.Load(dataDir, io, ser);
                 }
             }
-            catch { }
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+            {
+                Console.Error.WriteLine($"[BalancePowerEconomyTests] Optional goods catalog load skipped: {ex.Message}");
+            }
 
             var rows = new List<string>();
             rows.Add("seed,scenario,day,health,hunger,thirst,fatigue,warmth,morale,radiationDose,foodInv,waterInv,fuelInv,foodConsumed,waterConsumed,fuelConsumed,foodPrice,waterPrice,fuelPrice,powerAvailable,heatAvailable,criticalCount,healthLoss");
@@ -126,7 +125,15 @@ namespace Ashfall.Core.Tests
                 market.TickDay(day, rng);
                 // Observe prices (if catalog loaded, price may be 0 if not; we still record)
                 float foodPrice = 0f, waterPrice = 0f, fuelPrice = 0f;
-                try { foodPrice = market.GetPrice("canned_food"); waterPrice = market.GetPrice("clean_water"); fuelPrice = market.GetPrice("fuel_canister"); } catch { }
+                try
+                {
+                    foodPrice = market.GetPrice("canned_food");
+                    waterPrice = market.GetPrice("clean_water");
+                    fuelPrice = market.GetPrice("fuel_canister");
+                }
+                catch (Exception ex) when (ex is KeyNotFoundException || ex is InvalidOperationException)
+                {
+                }
 
                 bool powerAvailable = !power.IsBrownout;
                 bool heatAvailable = powerAvailable; // simplified: heat requires power

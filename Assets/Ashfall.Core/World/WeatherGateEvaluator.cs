@@ -32,6 +32,8 @@ namespace Ashfall.Core.World
         public WeatherGatePolarity Polarity { get; init; }
         public string Reason { get; init; } = "";
         public string Description { get; init; } = "";
+        public bool OverrideAvailable { get; init; }
+        public bool IsBlocked => !IsOpen;
     }
 
     /// <summary>
@@ -73,6 +75,7 @@ namespace Ashfall.Core.World
             return new WeatherGate
             {
                 Id = def.id ?? "",
+                GateType = def.gate_type ?? "route",
                 TargetId = def.target ?? "",
                 BlockedWeather = def.blocked_weather?.ToList() ?? new List<string>(),
                 RequiredWeather = def.required_weather?.ToList() ?? new List<string>(),
@@ -174,7 +177,77 @@ namespace Ashfall.Core.World
 
         public WeatherGateState EvaluateLive(string gateId, WeatherKind weather, IEnumerable<string>? inventoryItemIds = null)
         {
-            return EvaluateWeatherOnly(gateId, weather);
+            var gate = _catalog.TryGet(gateId, out var g) && g != null ? g : null;
+            if (gate == null)
+            {
+                return new WeatherGateState
+                {
+                    GateId = gateId ?? "",
+                    TargetId = "",
+                    IsOpen = false,
+                    IsPositiveGate = false,
+                    Polarity = WeatherGatePolarity.NegativeBlockedDuring,
+                    Reason = "unknown_gate",
+                    Description = $"Gate '{gateId}' is not in the catalog.",
+                    OverrideAvailable = false
+                };
+            }
+
+            return EvaluateLive(gate, weather, inventoryItemIds);
+        }
+
+        public WeatherGateState EvaluateLive(WeatherGate gate, WeatherKind weather, IEnumerable<string>? inventoryItemIds = null)
+        {
+            if (gate == null) throw new ArgumentNullException(nameof(gate));
+            var baseState = EvaluateGate(gate, weather);
+            bool hasOverrideItemDeclared = !string.IsNullOrWhiteSpace(gate.OverrideItem);
+
+            if (baseState.IsOpen)
+            {
+                return new WeatherGateState
+                {
+                    GateId = baseState.GateId,
+                    TargetId = baseState.TargetId,
+                    IsOpen = true,
+                    IsPositiveGate = baseState.IsPositiveGate,
+                    Polarity = baseState.Polarity,
+                    OverrideAvailable = false,
+                    Reason = baseState.Reason,
+                    Description = baseState.Description
+                };
+            }
+
+            // Blocked/closed by weather — check if inventory item satisfies override
+            bool inventoryHasItem = hasOverrideItemDeclared &&
+                inventoryItemIds != null &&
+                inventoryItemIds.Any(item => string.Equals(item, gate.OverrideItem, StringComparison.OrdinalIgnoreCase));
+
+            if (inventoryHasItem)
+            {
+                return new WeatherGateState
+                {
+                    GateId = baseState.GateId,
+                    TargetId = baseState.TargetId,
+                    IsOpen = true,
+                    IsPositiveGate = baseState.IsPositiveGate,
+                    Polarity = baseState.Polarity,
+                    OverrideAvailable = true,
+                    Reason = $"override_used:{gate.OverrideItem}",
+                    Description = $"Passable via equipment override: {gate.OverrideItem} equipped/carried."
+                };
+            }
+
+            return new WeatherGateState
+            {
+                GateId = baseState.GateId,
+                TargetId = baseState.TargetId,
+                IsOpen = false,
+                IsPositiveGate = baseState.IsPositiveGate,
+                Polarity = baseState.Polarity,
+                OverrideAvailable = hasOverrideItemDeclared,
+                Reason = baseState.Reason,
+                Description = baseState.Description
+            };
         }
 
         /// <summary>Classify a gate's polarity from its catalog fields alone.</summary>

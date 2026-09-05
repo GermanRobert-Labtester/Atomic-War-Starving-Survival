@@ -66,21 +66,27 @@ public class SaveSlotService
     }
 
     /// <summary>
-    /// Check whether a slot has a valid manifest on disk.
+    /// Check whether a slot has a valid manifest or campaign aggregate on disk.
+    /// An empty or abandoned directory without save content is NOT a valid slot.
     /// </summary>
     public bool SlotExists(SaveProfileId profileId, SaveSlotId slotId)
     {
-        string slotRoot = GetSlotRoot(profileId, slotId);
-        if (_files.DirectoryExists(slotRoot))
-            return true;
-        return _files.FileExists(GetManifestPath(profileId, slotId));
+        return _files.FileExists(GetManifestPath(profileId, slotId)) ||
+               _files.FileExists(GetAggregatePath(profileId, slotId));
     }
 
     /// <summary>
     /// Create a new empty slot with a default manifest. Returns false if the
     /// slot already exists.
     /// </summary>
-    public bool CreateSlot(SaveProfileId profileId, SaveSlotId slotId)
+    public bool CreateSlot(
+        SaveProfileId profileId,
+        SaveSlotId slotId,
+        string? campaignName = null,
+        string? gameVersion = null,
+        string? buildId = null,
+        int seed = 0,
+        CampaignMode mode = CampaignMode.Normal)
     {
         if (SlotExists(profileId, slotId))
             return false;
@@ -89,13 +95,13 @@ public class SaveSlotService
         {
             profileId = profileId,
             slotId = slotId,
-            campaignName = $"Campaign {slotId.Value}",
-            gameVersion = "test",
-            buildId = "test",
+            campaignName = !string.IsNullOrWhiteSpace(campaignName) ? campaignName : $"Campaign {slotId.Value}",
+            gameVersion = !string.IsNullOrWhiteSpace(gameVersion) ? gameVersion : "test",
+            buildId = !string.IsNullOrWhiteSpace(buildId) ? buildId : "test",
             currentDay = 1,
-            seed = 0,
+            seed = seed,
             lastSaveTick = 0,
-            mode = CampaignMode.Normal,
+            mode = mode,
             ironManTerminalState = IronManTerminalState.Active,
             lastSaveTimestamp = string.Empty
         };
@@ -119,7 +125,7 @@ public class SaveSlotService
         string[] entries;
         try
         {
-            entries = Directory.GetDirectories(profileDir, "slot-*");
+            entries = _files.GetDirectories(profileDir, "slot-*");
         }
         catch (Exception ex)
         {
@@ -129,7 +135,7 @@ public class SaveSlotService
 
         foreach (string dir in entries)
         {
-            string name = Path.GetFileName(dir);
+            string name = _files.GetFileName(dir);
             if (name.StartsWith("slot-", StringComparison.Ordinal))
             {
                 string id = name.Substring(5);
@@ -164,7 +170,7 @@ public class SaveSlotService
         string[] entries;
         try
         {
-            entries = Directory.GetDirectories(savesDir, "profile-*");
+            entries = _files.GetDirectories(savesDir, "profile-*");
         }
         catch (Exception ex)
         {
@@ -174,7 +180,7 @@ public class SaveSlotService
 
         foreach (string dir in entries)
         {
-            string name = Path.GetFileName(dir);
+            string name = _files.GetFileName(dir);
             if (name.StartsWith("profile-", StringComparison.Ordinal))
             {
                 string id = name.Substring(8);
@@ -276,9 +282,9 @@ public class SaveSlotService
     {
         if (manifest == null) throw new ArgumentNullException(nameof(manifest));
         string path = GetManifestPath(profileId, slotId);
-        string? dir = Path.GetDirectoryName(path);
+        string? dir = _files.GetDirectoryName(path);
         if (!string.IsNullOrEmpty(dir) && !_files.DirectoryExists(dir))
-            Directory.CreateDirectory(dir);
+            _files.CreateDirectory(dir);
         _files.WriteAllText(path, _json.Serialize(manifest));
     }
 
@@ -847,7 +853,7 @@ public class SaveSlotService
         try
         {
             if (_files.DirectoryExists(slotRoot))
-                Directory.Delete(slotRoot, recursive: true);
+                _files.DeleteDirectory(slotRoot, recursive: true);
             return true;
         }
         catch (Exception ex)
@@ -875,7 +881,7 @@ public class SaveSlotService
         {
             if (_files.DirectoryExists(slotRoot))
             {
-                Directory.Delete(slotRoot, recursive: true);
+                _files.DeleteDirectory(slotRoot, recursive: true);
             }
             return true;
         }
@@ -1086,7 +1092,7 @@ public class SaveSlotService
             return false;
         }
 
-        if (!File.Exists(legacyFilePath))
+        if (!_files.FileExists(legacyFilePath))
         {
             error = $"Legacy file not found: {legacyFilePath}";
             return false;
@@ -1101,7 +1107,7 @@ public class SaveSlotService
 
         try
         {
-            string raw = File.ReadAllText(legacyFilePath);
+            string raw = _files.ReadAllText(legacyFilePath);
             if (string.IsNullOrWhiteSpace(raw))
             {
                 error = "Legacy file is empty.";
@@ -1116,7 +1122,7 @@ public class SaveSlotService
                 {
                     profileId = targetProfileId,
                     slotId = targetSlotId,
-                    campaignName = $"Imported ({Path.GetFileName(legacyFilePath)})",
+                    campaignName = $"Imported ({_files.GetFileName(legacyFilePath)})",
                     gameVersion = "imported",
                     buildId = "legacy",
                     currentDay = 1,

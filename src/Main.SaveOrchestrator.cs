@@ -181,6 +181,7 @@ namespace AtomicWar.GodotApp
             SetupSilentFoundry();
             SetupDisease();
             SetupEncounterChoiceResolver();
+            SetupTravelEncounters();
             SetupSurvivorSocial();
             SetupMemorial();
             SetupSurvivorFate();
@@ -193,6 +194,7 @@ namespace AtomicWar.GodotApp
             SetupRadioStation();
             SetupShelterSocial();
             SetupExcavationHazards();
+            SetupDynamicQuests();
             // ── Plans 178-201: expansion systems (Ensure* restores persisted state) ──
             SetupGenerational();
             SetupPrisoners();
@@ -215,6 +217,22 @@ namespace AtomicWar.GodotApp
             SetupCommsArray();
             SetupCeremony();
             SetupRobotics();
+            // ── Previously incomplete SaveStores — Setup restores persisted state ──
+            SetupEndgame();
+            SetupCaravanTrade();
+            SetupSurgicalWard();
+            SetupPowerSubgrids();
+            SetupPerimeterDefense();
+            SetupHydroponicBiomes();
+            SetupNuclearCore();
+            SetupArmoredCrawlers();
+            SetupPersonalQuests();
+            SetupChemicalSynthesis();
+            SetupCollectibles();
+            SetupShelterFireHazard();
+            // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
+            // before any early SaveAll so Continue cannot drop resolved choices.
+            SetupMoralChoice();
 
             UpdateHud();
         }
@@ -309,11 +327,13 @@ namespace AtomicWar.GodotApp
                 SaveRadioStation();
                 SaveShelterSocial();
                 SaveExcavationHazards();
+                SaveDynamicQuests();
                 // ── Audit-PR triad repairs ───────────────────────────────
                 SaveSilentFoundry();
                 SaveDisease();
                 SaveWastelandMap();
                 SaveEncounterChoice();
+                SaveTravelEncounters();
                 // ─────────────────────────────────────────────────────────
                 SaveAllExpandedShelterSystems();
                 SaveSurvivorSocial();
@@ -341,6 +361,19 @@ namespace AtomicWar.GodotApp
                 SaveCommsArray();
                 SaveCeremony();
                 SaveRobotics();
+                // ── Previously incomplete SaveStores now enrolled in registry ──
+                SaveEndgame();
+                SaveCaravanTrade();
+                SaveSurgicalWard();
+                SavePowerSubgrids();
+                SavePerimeterDefense();
+                SaveHydroponicBiomes();
+                SaveNuclearCore();
+                SaveArmoredCrawlers();
+                SavePersonalQuests();
+                SaveChemicalSynthesis();
+                SaveCollectibles();
+                SaveShelterFire();
 
                 if (_sectionCaptureFailed)
                 {

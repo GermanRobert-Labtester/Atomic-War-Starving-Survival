@@ -75,6 +75,7 @@ namespace Ashfall.Core
         /// <summary>Id namespaces recognised as ids. Extend when a catalog introduces a new one.</summary>
         public static readonly string[] IdPrefixes =
         {
+            "weather_gate_",
             "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "chem_agent_", "comms_target_", "ceremony_", "robot_",
             "vessel_", "hobby_", "degrade_profile_", "thermal_gear_",
@@ -173,7 +174,7 @@ namespace Ashfall.Core
         /// </summary>
         public static readonly string[] DefinitionKeys =
         {
-            "id", "survivor_id", "item_id", "relic_id", "quest_id", "faction_id",
+            "route_id", "id", "survivor_id", "item_id", "relic_id", "quest_id", "faction_id",
             "choiceId", "fragment_id", "frequency_id", "narrative_id", "step_id",
             "archetype_id", "background_id", "belief_profile_id", "profession_id",
             "pre_war_profession_id", "personal_keepsake_item_id",
@@ -570,6 +571,95 @@ namespace Ashfall.Core
                 if (prefixed || r.Strict)
                     report.Error("unresolved " + (prefixed ? "id '" : "reference '")
                         + r.Value + "' at " + r.Path);
+            }
+
+            // Plan 45 / F15: Patrol encounter specific integrity validation
+            string travelPath = Path.Combine(dataDirectory, "travel_encounters.json");
+            if (files.FileExists(travelPath))
+            {
+                try
+                {
+                    string travelJson = files.ReadAllText(travelPath);
+                    var factionIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                    var itemIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                    foreach (var key in ctx.Registry.Keys)
+                    {
+                        var paths = ctx.Registry[key];
+                        bool isItem = key.StartsWith("item_", StringComparison.OrdinalIgnoreCase);
+                        bool isFaction = key.StartsWith("faction_", StringComparison.OrdinalIgnoreCase);
+                        for (int i = 0; i < paths.Count && (!isItem || !isFaction); i++)
+                        {
+                            string p = paths[i];
+                            if (!isItem && p.StartsWith("items.json", StringComparison.OrdinalIgnoreCase)) isItem = true;
+                            if (!isFaction && (p.StartsWith("faction_lore.json", StringComparison.OrdinalIgnoreCase) || p.StartsWith("factions.json", StringComparison.OrdinalIgnoreCase))) isFaction = true;
+                        }
+                        if (isItem) itemIds.Add(key);
+                        if (isFaction) factionIds.Add(key);
+                    }
+                    factionIds.Add("iron_garrison");
+                    factionIds.Add("ash_militia");
+                    factionIds.Add("cult_of_ash_sign");
+                    factionIds.Add("warlords_sector_4");
+                    factionIds.Add("military_remnants");
+                    factionIds.Add("upland_militia");
+
+                    var patrolErrors = Ashfall.Core.Narrative.PatrolEncounterValidator.ValidateJson(travelJson, factionIds, itemIds);
+                    foreach (var err in patrolErrors)
+                    {
+                        report.Error(err);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    report.Error("patrol encounter validator error: " + ex.Message);
+                }
+            }
+
+            // Plan 48 / F7: Weather route gate integrity validation
+            string weatherGatePath = Path.Combine(dataDirectory, "weather_route_gates.json");
+            if (files.FileExists(weatherGatePath))
+            {
+                try
+                {
+                    string gateJson = files.ReadAllText(weatherGatePath);
+                    var gateCatalog = Ashfall.Core.World.WeatherGateCatalogLoader.LoadFromJson(gateJson);
+                    foreach (var err in gateCatalog.Errors)
+                    {
+                        report.Error("weather_route_gates.json: " + err);
+                    }
+
+                    var routeResolver = new Ashfall.Core.World.RouteGateContextResolver();
+                    foreach (var gate in gateCatalog.GetAll())
+                    {
+                        // Target resolution
+                        if (!string.IsNullOrWhiteSpace(gate.TargetId))
+                        {
+                            bool resolved = ctx.Registry.ContainsKey(gate.TargetId);
+                            if (!resolved && string.Equals(gate.GateType, "route", StringComparison.OrdinalIgnoreCase))
+                            {
+                                resolved = routeResolver.IsRegisteredRoute(gate.TargetId);
+                            }
+
+                            if (!resolved)
+                            {
+                                report.Error($"weather_route_gates.json: gate '{gate.Id}' has unresolved target '{gate.TargetId}' (gate_type '{gate.GateType}')");
+                            }
+                        }
+
+                        // Override item resolution
+                        if (!string.IsNullOrWhiteSpace(gate.OverrideItem))
+                        {
+                            if (!ctx.Registry.ContainsKey(gate.OverrideItem))
+                            {
+                                report.Error($"weather_route_gates.json: gate '{gate.Id}' has unresolved override_item '{gate.OverrideItem}'");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    report.Error("weather route gate validator error: " + ex.Message);
+                }
             }
 
             report.AuthoredIds = ctx.Authored;

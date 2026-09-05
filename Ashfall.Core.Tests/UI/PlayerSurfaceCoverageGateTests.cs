@@ -29,8 +29,30 @@ namespace Ashfall.Core.Tests.UI
             var manifest = PlayerSurfaceManifest.Generate();
 
             Assert.NotNull(manifest);
-            Assert.Equal(PanelRegistry.Count, manifest.TotalSurfaces);
-            Assert.True(manifest.TotalSurfaces >= 70, $"Expected >= 70 player surfaces, found {manifest.TotalSurfaces}");
+            int liveCount = PanelRegistry.AllIds.Count(id => PanelRegistry.Get(id)!.IsPlayerNavigable);
+            Assert.Equal(liveCount, manifest.TotalSurfaces);
+            Assert.True(manifest.TotalSurfaces >= 60, $"Expected >= 60 player surfaces, found {manifest.TotalSurfaces}");
+        }
+
+        [Fact]
+        public void Prototypes_ExcludedFromManifestAndNotPlayerNavigable()
+        {
+            var manifest = PlayerSurfaceManifest.Generate();
+            var manifestIds = new HashSet<string>(manifest.Contracts.Select(c => c.PanelId), StringComparer.Ordinal);
+
+            int prototypeCount = 0;
+            foreach (var id in PanelRegistry.AllIds)
+            {
+                var desc = PanelRegistry.Get(id)!;
+                if (desc.Maturity == PanelMaturity.Prototype)
+                {
+                    prototypeCount++;
+                    Assert.False(desc.IsPlayerNavigable, $"Prototype panel '{id}' must not be player-navigable.");
+                    Assert.DoesNotContain(id, manifestIds);
+                }
+            }
+
+            Assert.Equal(29, prototypeCount);
         }
 
         [Fact]

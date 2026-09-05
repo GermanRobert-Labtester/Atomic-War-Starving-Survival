@@ -22,10 +22,14 @@ namespace Ashfall.Core.Inventory
     /// <summary>Authoritative worn-gear record consumed by radiation exposure.</summary>
     public class WornGear
     {
+        public EquippedItem? SourceEquipped;
+        public IEquipmentConditionSink? ConditionSink;
+        public ItemDefinition? SourceItem;
         public float RadProtection;
         public float MaxDurability;
         public float CurrentDurability;
         public float DegradeRate;
+        public Action<float>? OnDegraded;
 
         public float DurabilityFraction()
         {
@@ -40,7 +44,18 @@ namespace Ashfall.Core.Inventory
         public void Degrade(float gameHours)
         {
             if (gameHours <= 0f) return;
-            CurrentDurability = Math.Max(0f, CurrentDurability - DegradeRate * gameHours);
+            float loss = DegradeRate * gameHours;
+            if (loss <= 0f) return;
+            CurrentDurability = Math.Max(0f, CurrentDurability - loss);
+            if (ConditionSink != null && SourceEquipped != null)
+            {
+                ConditionSink.RecordWear(SourceEquipped, loss, "radiation");
+            }
+            else if (SourceEquipped != null)
+            {
+                SourceEquipped.CurrentDurability = Math.Max(0f, SourceEquipped.CurrentDurability - loss);
+            }
+            OnDegraded?.Invoke(loss);
         }
 
         public static WornGear FromInventory(EquippedGearData src)
@@ -59,15 +74,19 @@ namespace Ashfall.Core.Inventory
             if (src == null) return null;
             return new WornGear
             {
+                SourceEquipped = src.SourceEquipped,
+                ConditionSink = src.ConditionSink,
+                SourceItem = src.SourceItem,
                 RadProtection = src.RadProtection,
                 MaxDurability = src.MaxDurability,
                 CurrentDurability = src.CurrentDurability,
-                DegradeRate = src.DegradeRate
+                DegradeRate = src.DegradeRate,
+                OnDegraded = src.OnDegraded
             };
         }
     }
 
-    public class Inventory : IPlayerInventoryPort
+    public class Inventory : IPlayerInventoryPort, IEquipmentConditionSink
     {
         public const float ContaminationDosePerUnit = 50f;
 
@@ -935,6 +954,11 @@ namespace Ashfall.Core.Inventory
             return list;
         }
 
+        /// <summary>
+        /// Assembles a read projection of equipped protective gear for exposure and simulation calculations.
+        /// Wear and degradation are written back to canonical EquippedItem instances through the
+        /// IEquipmentConditionSink interface.
+        /// </summary>
         public void FillWornGear(List<WornGear> buffer)
         {
             if (buffer == null) return;
@@ -945,21 +969,55 @@ namespace Ashfall.Core.Inventory
                 if (equipped == null || equipped.Item == null || equipped.Item.radProtection <= 0f) continue;
                 buffer.Add(new WornGear
                 {
+                    SourceEquipped = equipped,
+                    ConditionSink = this,
+                    SourceItem = equipped.Item,
                     RadProtection = equipped.Item.radProtection,
                     MaxDurability = equipped.Item.durability,
                     CurrentDurability = equipped.CurrentDurability,
-                    DegradeRate = 0f
+                    DegradeRate = Math.Clamp(equipped.Item.GetEffectiveDegradeRate(), 0f, 100f)
                 });
             }
+        }
+
+        public void RecordWear(EquippedItem item, float wearDelta, string cause = "radiation")
+        {
+            if (item == null || wearDelta <= 0f) return;
+            item.CurrentDurability = Math.Max(0f, item.CurrentDurability - wearDelta);
+            OnInventoryChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Degrades all equipped protective items once by the specified hours and optional multiplier.
+        /// </summary>
+        public void DegradeEquippedGear(float gameHours, float multiplier = 1f)
+        {
+            if (gameHours <= 0f || multiplier <= 0f) return;
+            bool changed = false;
+            for (int i = 0; i < _equipped.Count; i++)
+            {
+                var equipped = _equipped[i];
+                if (equipped?.Item == null) continue;
+                float rate = equipped.Item.GetEffectiveDegradeRate();
+                if (rate <= 0f) continue;
+                float loss = rate * gameHours * multiplier;
+                if (loss > 0f)
+                {
+                    equipped.CurrentDurability = Math.Max(0f, equipped.CurrentDurability - loss);
+                    changed = true;
+                }
+            }
+            if (changed)
+                OnInventoryChanged?.Invoke();
         }
 
         /// <summary>Consume one unit, applying effects via optional needs/radiation callbacks.</summary>
         public bool Consume(
             ItemDefinition item,
-Func<ItemType, float, bool>? applyNeed = null,
-Action<float>? applyRadCleanse = null,
-Action? applyIodine = null,
-Action<float>? applyContamination = null,
+            Func<ItemType, float, bool>? applyNeed = null,
+            Action<float>? applyRadCleanse = null,
+            Action? applyIodine = null,
+            Action<float>? applyContamination = null,
             float therapeuticScale = 1f)
         {
             if (item == null) return false;
@@ -968,18 +1026,45 @@ Action<float>? applyContamination = null,
 
             float scale = MathfCompat.Clamp01(therapeuticScale);
 
-            applyNeed?.Invoke(ItemType.Food, -item.hungerRestore);
-            applyNeed?.Invoke(ItemType.Water, -item.thirstRestore);
-            applyNeed?.Invoke(ItemType.Medical, item.healthEffect * scale);
-            applyNeed?.Invoke(ItemType.Comfort, item.moraleEffect);
+            try
+            {
+                if (applyNeed != null)
+                {
+                    if (item.hungerRestore != 0f && !applyNeed(ItemType.Food, -item.hungerRestore))
+                    {
+                        Add(item, 1);
+                        return false;
+                    }
+                    if (item.thirstRestore != 0f && !applyNeed(ItemType.Water, -item.thirstRestore))
+                    {
+                        Add(item, 1);
+                        return false;
+                    }
+                    if (item.healthEffect != 0f && !applyNeed(ItemType.Medical, item.healthEffect * scale))
+                    {
+                        Add(item, 1);
+                        return false;
+                    }
+                    if (item.moraleEffect != 0f && !applyNeed(ItemType.Comfort, item.moraleEffect))
+                    {
+                        Add(item, 1);
+                        return false;
+                    }
+                }
 
-            if (item.radCleanse > 0f && scale > 0f)
-                applyRadCleanse?.Invoke(item.radCleanse * scale);
-            if (item.type == ItemType.Iodine)
-                applyIodine?.Invoke();
-            if (item.contamination > 0f)
-                applyContamination?.Invoke(item.contamination * ContaminationDosePerUnit);
-            return true;
+                if (item.radCleanse > 0f && scale > 0f)
+                    applyRadCleanse?.Invoke(item.radCleanse * scale);
+                if (item.type == ItemType.Iodine)
+                    applyIodine?.Invoke();
+                if (item.contamination > 0f)
+                    applyContamination?.Invoke(item.contamination * ContaminationDosePerUnit);
+                return true;
+            }
+            catch
+            {
+                Add(item, 1);
+                throw;
+            }
         }
 
         // ── Save / load ────────────────────────────────────────────────

@@ -89,6 +89,7 @@ namespace AtomicWar.GodotApp
         UtilityAiUiTest,
         DataIntegritySelfTest,
         ResearchCatalogSelfTest,
+        RadioCatalogSelfTest,
         CatalogBootPreflight,
         CaravanSelfTest,
         AssetRegistrySelfTest,
@@ -331,6 +332,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ExportParitySelfTest;
             if (Has(args, "--research-catalog-selftest"))
                 return HostCliAction.ResearchCatalogSelfTest;
+            if (Has(args, "--radio-catalog-selftest"))
+                return HostCliAction.RadioCatalogSelfTest;
             if (Has(args, "--catalog-boot-preflight"))
                 return HostCliAction.CatalogBootPreflight;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
@@ -494,6 +497,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --expedition-encounter-bridge-selftest  ExpeditionEncounterBridge bare-notice + resolved surface smoke test");
             GD.Print("  --expedition-selftest    Expedition domain: sorties, encounter resolution, loot drops, and save round-trip");
             GD.Print("  --research-catalog-selftest  Research knowledge catalog: load count, DAG validity, and cross-catalog unlock references (Plan 34)");
+            GD.Print("  --radio-catalog-selftest     Radio station catalog: JSON authority, schedules, and signal model (AF-B1 / Plan 60)");
             GD.Print("  --holdfast-save-selftest S1 save write → reload → restore → checksum/tamper checks");
             GD.Print("  --holdfast-trade-save-selftest Holdfast trade ledger and save store round-trip and tamper checks");
             GD.Print("  --inventory-save-selftest Inventory system save store round-trip, item serialization, and checksum verification");

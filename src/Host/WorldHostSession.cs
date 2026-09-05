@@ -25,6 +25,15 @@ namespace AtomicWar.GodotApp
         public DamagedMapSystem? DamagedMap { get; private set; }
         public SeasonProfileDef Profile { get; private set; }
 
+        /// <summary>Plan 48 weather gate catalog loaded from weather_route_gates.json.</summary>
+        public WeatherGateCatalog GateCatalog { get; private set; } = new WeatherGateCatalog();
+
+        /// <summary>Location atmosphere flavor texts loaded from environmental_atmosphere_expansion.json.</summary>
+        public AtmosphereTextSystem AtmosphereTexts { get; } = new AtmosphereTextSystem();
+
+        /// <summary>Environmental flavor texts loaded from environmental_texts_expansion_05.json.</summary>
+        public EnvironmentalTextSystem EnvironmentalTexts { get; } = new EnvironmentalTextSystem();
+
         /// <summary>
         /// Seed catalog for the evolving-world trio (loaded once in Create).
         /// Null when no data dir was provided; hosts read the shelter sector
@@ -138,10 +147,48 @@ namespace AtomicWar.GodotApp
             if (seasonalEvents != null && seasonalEvents.Count > 0)
                 session.WeatherIntelligence.Seasonal.BindDefinitions(seasonalEvents);
 
+            // Atmosphere / environmental flavor catalogs — consumed by location
+            // presentation (expedition/map detail) via FlavorTextForLocation.
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                var files = new FileSystemIO();
+                var json = new SystemTextJsonSerializer();
+                session.GateCatalog = WeatherGateCatalogLoader.LoadFromDirectory(dataDir, files, json);
+                session.WeatherIntelligence.Station.GateCatalog = session.GateCatalog;
+                AtmosphereCatalogLoader.LoadAndRegister(session.AtmosphereTexts, dataDir, files, json);
+                EnvironmentalTextCatalogLoader.LoadAndRegister(session.EnvironmentalTexts, dataDir, files, json);
+            }
+
             var mapSave = WastelandMapSaveStore.TryLoad();
             if (mapSave != null)
                 session.WastelandMap.RestoreState(mapSave);
             return session;
+        }
+
+        /// <summary>
+        /// Prefer atmosphere catalog text for a location; fall back to environmental texts.
+        /// Empty string when neither catalog has an entry (presentation must handle silence).
+        /// </summary>
+        public string FlavorTextForLocation(string locationId, string? weather = null)
+        {
+            if (string.IsNullOrEmpty(locationId)) return string.Empty;
+
+            if (!string.IsNullOrEmpty(weather))
+            {
+                var atmWeather = AtmosphereTexts.GetTextForLocationAndWeather(locationId, weather);
+                if (atmWeather != null && !string.IsNullOrEmpty(atmWeather.text))
+                    return atmWeather.text;
+            }
+
+            var atm = AtmosphereTexts.GetTextForLocation(locationId);
+            if (atm != null && !string.IsNullOrEmpty(atm.text))
+                return atm.text;
+
+            var env = EnvironmentalTexts.GetTextForLocation(locationId);
+            if (env != null && !string.IsNullOrEmpty(env.text))
+                return env.text;
+
+            return string.Empty;
         }
 
         // ── Production Runtime Actions ───────────────────────────────

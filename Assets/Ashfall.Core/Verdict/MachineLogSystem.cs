@@ -143,7 +143,12 @@ namespace Ashfall.Core.Verdict
                 countdownActive = _state.countdownActive,
                 countdownDaysLeft = _state.countdownDaysLeft
             };
-            copy.entries.AddRange(_state.entries);
+            for (int i = 0; i < _state.entries.Count; i++)
+            {
+                var entry = _state.entries[i];
+                if (entry == null) continue;
+                copy.entries.Add(CopyEntry(entry));
+            }
             return copy;
         }
 
@@ -151,11 +156,32 @@ namespace Ashfall.Core.Verdict
         {
             if (state == null) return;
             _state.entries.Clear();
-            _state.entries.AddRange(state.entries);
+            if (state.entries != null)
+            {
+                for (int i = 0; i < state.entries.Count; i++)
+                {
+                    var entry = state.entries[i];
+                    if (entry == null) continue;
+                    _state.entries.Add(CopyEntry(entry));
+                }
+            }
             _state.lastTapeSpinDay = state.lastTapeSpinDay;
             _state.logIndex = state.logIndex;
             _state.countdownActive = state.countdownActive;
             _state.countdownDaysLeft = state.countdownDaysLeft;
+        }
+
+        private static MachineLogEntry CopyEntry(MachineLogEntry entry)
+        {
+            return new MachineLogEntry
+            {
+                facilityId = entry.facilityId ?? string.Empty,
+                day = entry.day,
+                kind = entry.kind ?? string.Empty,
+                bodyShort = entry.bodyShort ?? string.Empty,
+                evidenceTag = entry.evidenceTag ?? string.Empty,
+                read = entry.read
+            };
         }
     }
 }

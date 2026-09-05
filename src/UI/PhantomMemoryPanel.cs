@@ -24,23 +24,32 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _relicInspector = null!;
         private VBoxContainer _triggerLogContainer = null!;
         private Label _eventLogLabel = null!;
-
         private PhantomMemoryHostSession? _host;
+        private InventoryHostSession? _inventory;
         private string _selectedSurvivorId = "survivor_gunner_mikhail";
         private string _selectedItemCategory = "military";
 
         public bool IsBound => _host != null;
 
-        public void Bind(PhantomMemoryHostSession session)
+        public void Bind(PhantomMemoryHostSession session, InventoryHostSession? inventory = null)
         {
             if (_host != null)
             {
                 _host.StateChanged -= RefreshView;
             }
+            if (_inventory != null)
+            {
+                _inventory.StateChanged -= RefreshView;
+            }
             _host = session;
+            _inventory = inventory ?? session?.InventorySession;
             if (_host != null)
             {
                 _host.StateChanged += RefreshView;
+            }
+            if (_inventory != null)
+            {
+                _inventory.StateChanged += RefreshView;
             }
             RefreshView();
         }
@@ -224,24 +233,64 @@ namespace AtomicWar.GodotApp.UI
                 _relicInspector.AddChild(AshfallUiHelpers.MakeSeparator());
                 _relicInspector.AddChild(AshfallUiHelpers.MakeSubsectionHeader("PRESENT RELIC ARTIFACT"));
 
-            var itemOptions = new[]
+            if (_inventory != null)
             {
-                new { cat = "military", name = "Dog Tags / Military Insignia" },
-                new { cat = "medical", name = "Vintage Stethoscope / Surgical Tools" },
-                new { cat = "correspondence", name = "Handwritten Pre-War Letter" },
-                new { cat = "photograph", name = "Faded Family Photograph" },
-                new { cat = "personal_item", name = "Pre-War Pocket Watch / Remains" }
-            };
-
-            foreach (var opt in itemOptions)
-            {
-                var btnPresent = AshfallUiHelpers.MakeButton($"SCAVENGE: {opt.name.ToUpperInvariant()}", () =>
+                var heldRelics = new List<Ashfall.Core.Inventory.InventorySlot>();
+                for (int i = 0; i < _inventory.Inventory.Slots.Count; i++)
                 {
-                    _selectedItemCategory = opt.cat;
-                    string res = _host.ScavengeItem(curSv.survivorId, opt.cat);
-                    RefreshView();
-                });
-                _relicInspector.AddChild(btnPresent);
+                    var slot = _inventory.Inventory.Slots[i];
+                    if (slot?.Item != null && slot.Amount > 0)
+                    {
+                        string? cat = PhantomMemoryEngine.GetCategoryFromId(slot.Item.id);
+                        if (cat != null && cat != "generic")
+                        {
+                            heldRelics.Add(slot);
+                        }
+                    }
+                }
+
+                if (heldRelics.Count == 0)
+                {
+                    _relicInspector.AddChild(AshfallUiHelpers.MakeMetadata("No relic artifacts or keepsakes found in shelter inventory."));
+                }
+                else
+                {
+                    foreach (var slot in heldRelics)
+                    {
+                        string itemId = slot.Item.id;
+                        string itemName = slot.Item.displayName;
+                        int qty = slot.Amount;
+                        var btnPresent = AshfallUiHelpers.MakeButton($"INSPECT: {itemName.ToUpperInvariant()} (x{qty})", () =>
+                        {
+                            _selectedItemCategory = PhantomMemoryEngine.GetCategoryFromId(itemId) ?? "relic";
+                            _host.InspectRelic(curSv.survivorId, itemId, out string res, consumeItem: false);
+                            RefreshView();
+                        });
+                        _relicInspector.AddChild(btnPresent);
+                    }
+                }
+            }
+            else
+            {
+                var fallbackRelics = new[]
+                {
+                    new { id = "dog_tags", cat = "military", name = "Dog Tags / Military Insignia" },
+                    new { id = "worn_stethoscope", cat = "medical", name = "Vintage Stethoscope / Surgical Tools" },
+                    new { id = "undelivered_mail", cat = "correspondence", name = "Handwritten Pre-War Letter" },
+                    new { id = "worn_photograph", cat = "photograph", name = "Faded Family Photograph" },
+                    new { id = "tarnished_pocket_watch", cat = "personal_item", name = "Pre-War Pocket Watch / Remains" }
+                };
+
+                foreach (var opt in fallbackRelics)
+                {
+                    var btnPresent = AshfallUiHelpers.MakeButton($"INSPECT: {opt.name.ToUpperInvariant()}", () =>
+                    {
+                        _selectedItemCategory = opt.cat;
+                        _host.InspectRelic(curSv.survivorId, opt.id, out string res, consumeItem: false);
+                        RefreshView();
+                    });
+                    _relicInspector.AddChild(btnPresent);
+                }
             }
 
             // Log / Summary

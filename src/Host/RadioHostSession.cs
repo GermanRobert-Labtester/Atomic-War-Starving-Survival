@@ -109,13 +109,16 @@ namespace AtomicWar.GodotApp
                 distressSystem.LoadFromJson(File.ReadAllText(distressExpPath));
             }
 
+            var stationCatalog = new RadioStationCatalog();
+            stationCatalog.LoadFromDataDirectory(actualDataDir);
+
             var session = new RadioHostSession(
                 FactionRadioEngine.LoadFromJson(json),
                 new SeededRng(DemoSeed),
                 day,
                 null,
                 broadcastCatalog,
-                null,
+                stationCatalog,
                 distressSystem);
 
             session.Listen();
@@ -547,6 +550,28 @@ namespace AtomicWar.GodotApp
                 : "no carrier sampled";
             return $"Radio: {Engine.FactionCount} channels · {CurrentFrequency:0.00} MHz · {carrier} · " +
                    $"{_history.Count} intercepts logged (day {Day}).";
+        }
+
+        public RadioProgramSlot? GetCurrentSlot(string stationId, int? hour = null)
+        {
+            int h = hour ?? 12;
+            return Stations.GetCurrentSlot(stationId, Day, h);
+        }
+
+        public RadioProgramSlot? GetNextSlot(string stationId, int? hour = null)
+        {
+            int h = hour ?? 12;
+            return Stations.GetNextSlot(stationId, Day, h);
+        }
+
+        public RadioSignalStrength GetSignalStrength(string stationId, RadioReceptionFactors? factors = null)
+        {
+            return Stations.ComputeSignalStrength(stationId, factors);
+        }
+
+        public RadioStationDefinition? GetStationAtCurrentFrequency()
+        {
+            return Stations.FindStationAtFrequency(CurrentFrequency, 0.2f);
         }
 
         private float FirstFrequency()

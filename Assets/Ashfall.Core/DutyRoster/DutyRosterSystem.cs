@@ -208,6 +208,11 @@ namespace Ashfall.Core
         public bool MutationInUse => _state.mutationRosterInUse;
         public int OccupiedRowCount => _state.rows != null ? _state.rows.Count : 0;
         public IReadOnlyList<DutyRosterRow> Rows => _state.rows;
+        public Func<string, bool>? IsSurvivorReservedExternally
+        {
+            get => _assignments.IsExternalReserved;
+            set => _assignments.IsExternalReserved = value;
+        }
 
         public DutyRosterSystem() : this(SeedUtilityOffset)
         {

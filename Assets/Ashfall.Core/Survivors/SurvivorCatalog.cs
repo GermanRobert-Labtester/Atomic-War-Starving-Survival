@@ -171,29 +171,39 @@ namespace Ashfall.Core.Survivors
 
         public void RestoreState(SurvivorRosterState saved)
         {
+            if (saved == null) return;
+
+            var validated = new List<SurvivorRosterEntry>();
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            if (saved.entries != null)
+            {
+                for (int i = 0; i < saved.entries.Count; i++)
+                {
+                    var e = saved.entries[i];
+                    if (e == null || string.IsNullOrEmpty(e.survivorId)) continue;
+                    if (!seen.Add(e.survivorId))
+                    {
+                        CatalogDiagnostics.Warn("SurvivorCatalog", "RestoreState", new InvalidOperationException($"Duplicate survivorId in restore payload: {e.survivorId}"));
+                        return; // Reject without mutating live state
+                    }
+                    validated.Add(new SurvivorRosterEntry
+                    {
+                        survivorId = e.survivorId,
+                        definitionId = e.definitionId,
+                        joinedDay = e.joinedDay,
+                        isAlive = e.isAlive,
+                        deathReason = e.deathReason
+                    });
+                }
+            }
+
             _state.entries.Clear();
             _byId.Clear();
-            if (saved != null)
+            _state.systemId = SystemId;
+            foreach (var copy in validated)
             {
-                _state.systemId = SystemId;
-                if (saved.entries != null)
-                {
-                    for (int i = 0; i < saved.entries.Count; i++)
-                    {
-                        var e = saved.entries[i];
-                        if (e == null || string.IsNullOrEmpty(e.survivorId)) continue;
-                        var copy = new SurvivorRosterEntry
-                        {
-                            survivorId = e.survivorId,
-                            definitionId = e.definitionId,
-                            joinedDay = e.joinedDay,
-                            isAlive = e.isAlive,
-                            deathReason = e.deathReason
-                        };
-                        _state.entries.Add(copy);
-                        _byId[copy.survivorId] = copy;
-                    }
-                }
+                _state.entries.Add(copy);
+                _byId[copy.survivorId] = copy;
             }
             RaiseChanged();
         }

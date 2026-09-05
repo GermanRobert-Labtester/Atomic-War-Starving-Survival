@@ -24,17 +24,29 @@ public partial class WeatherHistoryPanel : Control
     private VBoxContainer _weatherPatterns = null!;
     private VBoxContainer _weatherAnomalies = null!;
 
+    private void OnWeatherStateChanged(WorldWeatherState _) => RefreshView();
+
     public void Bind(WeatherSystem weather)
     {
         if (_weather != null)
-            _weather.OnStateChanged -= _ => RefreshView();
+            _weather.OnStateChanged -= OnWeatherStateChanged;
 
         _weather = weather;
 
         if (_weather != null)
-            _weather.OnStateChanged += _ => RefreshView();
+            _weather.OnStateChanged += OnWeatherStateChanged;
 
         RefreshView();
+    }
+
+    public override void _ExitTree()
+    {
+        if (_weather != null)
+        {
+            _weather.OnStateChanged -= OnWeatherStateChanged;
+            _weather = null;
+        }
+        base._ExitTree();
     }
 
     public void RefreshView()
@@ -48,7 +60,6 @@ public partial class WeatherHistoryPanel : Control
         var state = _weather.State;
         var current = _weather.Current;
         float elapsedDays = state.totalElapsedHours / 24f;
-        float checkIntervalHours = _weather.GetType().GetField("_profile") != null ? 6f : 6f; // default
 
         // ── Current conditions ──
         AddLabel(_weatherHistory, $"Current: {current}");

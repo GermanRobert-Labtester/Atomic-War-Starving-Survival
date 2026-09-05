@@ -24,6 +24,7 @@ namespace Ashfall.Core.Radiation
         public bool HasAcuteRadiationSyndrome;
 
         public bool IsAlive = true;
+        public string LastExposureReason = string.Empty;
 
         public bool HasStatus(SurvivorStatus status)
         {
@@ -57,6 +58,8 @@ namespace Ashfall.Core.Radiation
         public float ShelterShielding;
         public Func<float, float> ShelterRadQuery; // zone -> interior rads/hr
         public List<InventoryWornGear> WornGear = new List<InventoryWornGear>();
+        public string ExposureReason = string.Empty;
+        public ExposureEnvironment? Environment;
     }
 
     /// <summary>
@@ -161,6 +164,7 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
         public void Tick(float gameHours)
         {
             if (IsPaused || gameHours <= 0f) return;
+            var degradedThisTick = new HashSet<object>(ReferenceEqualityComparer.Instance);
             for (int i = 0; i < _survivors.Count; i++)
             {
                 var survivor = _survivors[i];
@@ -172,9 +176,10 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
 
                 float gearProtection = ComputeGearProtection(worn!);
                 float exposurePerHour;
+                float interiorRads = 0f;
                 if (context != null && context.ShelterRadQuery != null)
                 {
-                    float interiorRads = context.ShelterRadQuery(zone);
+                    interiorRads = context.ShelterRadQuery(zone);
                     exposurePerHour = MathfCompat.Max(0f, interiorRads - gearProtection);
                 }
                 else
@@ -186,12 +191,19 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
                 if (survivor.HasRadResistance)
                     exposurePerHour *= RadResistanceFactor;
 
-                DegradeWornGear(worn!, gameHours);
+                if (context != null && !string.IsNullOrEmpty(context.ExposureReason))
+                    survivor.LastExposureReason = context.ExposureReason;
+
+                float ambientExposure = context != null && context.ShelterRadQuery != null ? interiorRads : zone;
+                if (ambientExposure > 0f)
+                    DegradeWornGear(survivor, worn!, gameHours, degradedThisTick);
+
                 Expose(survivor, exposurePerHour, gameHours);
 
                 var dosimeter = GetDosimeter(survivor.Id);
                 dosimeter.Record(exposurePerHour * gameHours, gameHours);
                 dosimeter.LifetimeDose = survivor.LifetimeRadiationExposure;
+                dosimeter.LastExposureReason = survivor.LastExposureReason;
 
                 TickRadResistance(survivor, gameHours);
             }
@@ -322,12 +334,26 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
             }
         }
 
-        private void DegradeWornGear(List<InventoryWornGear> worn, float gameHours)
+        private void DegradeWornGear(
+            SurvivorRadState? survivor,
+            List<InventoryWornGear> worn,
+            float gameHours,
+            HashSet<object>? degradedThisTick = null)
         {
             if (worn == null) return;
-            float mult = _hazmatDegradeMultiplier != null ? _hazmatDegradeMultiplier(null!) : 1f;
+            float mult = _hazmatDegradeMultiplier != null ? _hazmatDegradeMultiplier(survivor!) : 1f;
             for (int i = 0; i < worn.Count; i++)
-                worn[i]?.Degrade(gameHours * mult);
+            {
+                var gear = worn[i];
+                if (gear == null) continue;
+                if (degradedThisTick != null)
+                {
+                    object identity = (object?)gear.SourceEquipped ?? gear;
+                    if (!degradedThisTick.Add(identity))
+                        continue;
+                }
+                gear.Degrade(gameHours * mult);
+            }
         }
 
         private void GrantStatus(SurvivorRadState survivor, SurvivorStatus status)
@@ -350,11 +376,19 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
         public string SurvivorId = string.Empty;
         public float CurrentReading;
         public float LifetimeDose;
+        public string LastExposureReason = string.Empty;
 
         public void Record(float doseRecorded, float hours)
         {
             if (hours <= 0f) return;
             CurrentReading = doseRecorded / hours;
         }
+    }
+
+    internal sealed class ReferenceEqualityComparer : IEqualityComparer<object>
+    {
+        public static readonly ReferenceEqualityComparer Instance = new ReferenceEqualityComparer();
+        public new bool Equals(object? x, object? y) => ReferenceEquals(x, y);
+        public int GetHashCode(object obj) => System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
     }
 }

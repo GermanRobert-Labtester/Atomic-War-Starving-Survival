@@ -28,6 +28,7 @@ namespace AtomicWar.GodotApp
         public MachineLogSystem MachineLog { get; }
         public ReckoningSystem Reckoning { get; }
         public EvidenceLedger Evidence { get; }
+        public VerdictEvidenceChain EvidenceChain { get; }
         public VerdictNpcSystem Npcs { get; }
         public VerdictCensusBroadcast Census { get; }
         public VerdictRadioSystem Radio { get; internal set; }
@@ -37,6 +38,7 @@ namespace AtomicWar.GodotApp
         public IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> RadioEntries { get; }
         public IReadOnlyList<string> CorruptionCorpus { get; private set; }
         private readonly ISeededRng _machineRng;
+        private int _currentDay = -1;
 
         /// <summary>Flag-gate materialization: the six Verdict figures unlock from
         /// real progress (evidence, phase, call). Hosts present this; no NPC gate is
@@ -76,6 +78,7 @@ namespace AtomicWar.GodotApp
             MachineLog = machineLog ?? new MachineLogSystem();
             Reckoning = reckoning ?? new ReckoningSystem();
             Evidence = evidence ?? new EvidenceLedger();
+            EvidenceChain = new VerdictEvidenceChain(MachineLog, Evidence, Reckoning);
             Npcs = npcs ?? new VerdictNpcSystem();
             Quests = quests ?? new QuestlineSystem();
             Census = census;
@@ -151,6 +154,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Coarse game-time step — call once per sim-day, not per-frame.</summary>
         public void AdvanceDay(int day, int livingCount, int logReadCount)
         {
+            _currentDay = day;
             var fired = Reckoning.Poll(day, livingCount, logReadCount, Evidence.Count);
             if (fired.Count > 0) LastEvent = string.Join(";", fired);
         }
@@ -220,6 +224,7 @@ namespace AtomicWar.GodotApp
         /// at a deterministic schedule (every 11th day of the countdown). Data-driven corpus.</summary>
         public void TickCorruption(int day)
         {
+            if (day > _currentDay) _currentDay = day;
             if (Reckoning.Phase < ReckoningPhase.Culpable) return;
             if (day <= 0 || day % 11 != 0) return; // deterministic cadence, not per-frame
             MachineLog.InsertCorruptionMarker(day, _machineRng, (IReadOnlyList<string>)CorruptionCorpus);
@@ -228,12 +233,15 @@ namespace AtomicWar.GodotApp
         public VerdictSave CaptureSave()
         {
             return VerdictSaveCodec.Capture(
-                CurrentDaySafe(), MachineLog, Reckoning, Evidence, Census.LastWindowDay, Npcs, Radio, Quests);
+                CurrentDaySafe(), MachineLog, Reckoning, Evidence,
+                Census != null ? Census.LastWindowDay : -1,
+                Npcs, Radio, Quests);
         }
 
         public void RestoreSave(VerdictSave save)
         {
             VerdictSaveCodec.Restore(save, MachineLog, Reckoning, Evidence, Npcs, Radio, Quests);
+            EvidenceChain.ReconcileReadEntries();
             LastEvent = "Verdict state restored.";
         }
 
@@ -255,7 +263,16 @@ namespace AtomicWar.GodotApp
 
         private int CurrentDaySafe()
         {
-            return 0; // replaced by the host's real sim-day when wired in Main.cs
+            if (_currentDay >= 0) return _currentDay;
+
+            int latestLogDay = -1;
+            for (int i = 0; i < MachineLog.Entries.Count; i++)
+            {
+                var entry = MachineLog.Entries[i];
+                if (entry != null && entry.day > latestLogDay)
+                    latestLogDay = entry.day;
+            }
+            return latestLogDay >= 0 ? latestLogDay : 0;
         }
     }
 }

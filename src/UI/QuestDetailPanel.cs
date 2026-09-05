@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Crossing;
+using Ashfall.Core.MoralChoice;
 using Ashfall.Core.UI;
 
 namespace AtomicWar.GodotApp.UI
@@ -15,6 +16,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class QuestDetailPanel : Control
     {
         public event Action? OnClose;
+        public event Action<string, int>? OnMoralChoiceSelected;
 
         private VBoxContainer _infoContainer = null!;
         private VBoxContainer _stagesContainer = null!;
@@ -195,6 +197,96 @@ namespace AtomicWar.GodotApp.UI
                 crossingDef.target_location_id,
                 "Vouch Access Authorization, Crossing Transit Rights",
                 isComp);
+        }
+
+        public void Bind(
+            MoralChoiceQuestDefinition? moralDef,
+            MoralChoiceSystem? moralChoice = null,
+            Action<string, int>? onChoiceSelected = null)
+        {
+            if (moralDef == null) return;
+
+            bool isResolved = moralChoice?.IsResolved(moralDef.Id) ?? false;
+            MoralChoiceResolution? resolution = null;
+            moralChoice?.TryGetResolution(moralDef.Id, out resolution);
+
+            var stages = new List<string>
+            {
+                isResolved
+                    ? "Ethical dilemma evaluated and permanently committed to camp chronicle."
+                    : "Evaluate situational encounter and commit authoritative leadership resolution."
+            };
+
+            Bind(
+                moralDef.Id,
+                moralDef.DisplayName,
+                $"The Weight of Survival // {moralDef.Category.ToUpperInvariant()} DILEMMA",
+                $"SITUATION: {moralDef.Trigger}\n\n{moralDef.Discovery}",
+                isResolved ? 1 : 0,
+                stages,
+                null,
+                moralDef.LocationId,
+                "Permanently records camp chronicle and shapes faction alignment.",
+                isResolved);
+
+            // Override choices container with interactive decision buttons or resolution card
+            if (_choicesContainer != null)
+            {
+                AshfallUiHelpers.EmptyChildren(_choicesContainer);
+                var choiceCard = AshfallUiHelpers.MakeCardFrame("CRITICAL DECISION GATES & BRANCHES", isResolved ? "RESOLUTION RECORDED" : "TACTICAL CHOICE");
+                var choiceBox = choiceCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                if (!isResolved)
+                {
+                    var warn = AshfallUiHelpers.MakeSmall("ATTENTION: Decisions are irrevocable once committed. Hidden moral and empathy dynamics will settle overnight.");
+                    warn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warning));
+                    choiceBox.AddChild(warn);
+                    choiceBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                }
+
+                for (int i = 0; i < moralDef.Choices.Count; i++)
+                {
+                    int idx = i;
+                    var opt = moralDef.Choices[i];
+                    bool wasChosen = isResolved && resolution != null && resolution.choiceIndex == i;
+
+                    if (isResolved)
+                    {
+                        if (wasChosen)
+                        {
+                            choiceBox.AddChild(AshfallUiHelpers.MakeDataRow($"[COMMITTED] Path {i + 1}", opt.Label, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)));
+                            if (!string.IsNullOrEmpty(opt.OutcomeText))
+                                choiceBox.AddChild(AshfallUiHelpers.MakeSmall($"Outcome: {opt.OutcomeText}"));
+                            if (!string.IsNullOrEmpty(opt.Epitaph))
+                                choiceBox.AddChild(AshfallUiHelpers.MakeSmall($"Chronicle: \"{opt.Epitaph}\""));
+                        }
+                        else
+                        {
+                            choiceBox.AddChild(AshfallUiHelpers.MakeDataRow($"[UNSELECTED] Path {i + 1}", opt.Label, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
+                        }
+                    }
+                    else
+                    {
+                        var btn = AshfallUiHelpers.MakeButton($"[{i + 1}] COMMIT PATH // {opt.Label.ToUpperInvariant()}", () =>
+                        {
+                            // Prefer Bind(onChoiceSelected) when present so hosts that
+                            // pass a callback are not also hit by OnMoralChoiceSelected
+                            // (double-resolve). Event remains for standalone/preview use.
+                            if (onChoiceSelected != null)
+                                onChoiceSelected.Invoke(moralDef.Id, idx);
+                            else
+                                OnMoralChoiceSelected?.Invoke(moralDef.Id, idx);
+                        });
+                        btn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                        choiceBox.AddChild(btn);
+                    }
+
+                    if (i < moralDef.Choices.Count - 1)
+                        choiceBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                }
+
+                _choicesContainer.AddChild(choiceCard);
+            }
         }
 
         public override void _Ready()

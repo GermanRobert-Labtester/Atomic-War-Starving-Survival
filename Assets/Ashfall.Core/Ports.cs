@@ -1,3 +1,5 @@
+using System;
+
 namespace Ashfall.Core
 {
     /// <summary>
@@ -51,6 +53,41 @@ namespace Ashfall.Core
                 return new string[0];
             }
         }
+
+        string[] GetDirectories(string path, string searchPattern = "*")
+        {
+            if (string.IsNullOrEmpty(path)) return new string[0];
+            if (!DirectoryExists(path)) return new string[0];
+            try
+            {
+                return System.IO.Directory.GetDirectories(path, searchPattern);
+            }
+            catch
+            {
+                return new string[0];
+            }
+        }
+
+        void DeleteDirectory(string path, bool recursive = false)
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            try
+            {
+                if (System.IO.Directory.Exists(path))
+                    System.IO.Directory.Delete(path, recursive);
+            }
+            catch { /* cleanup: best-effort directory deletion */ }
+        }
+
+        string GetFileName(string path)
+        {
+            return System.IO.Path.GetFileName(path);
+        }
+
+        string? GetDirectoryName(string path)
+        {
+            return System.IO.Path.GetDirectoryName(path);
+        }
     }
 
     public interface ILog
@@ -60,7 +97,10 @@ namespace Ashfall.Core
         void Error(string message);
     }
 
-    /// <summary>Simulation calendar. Never DateTime.Now.</summary>
+    /// <summary>
+    /// Simulation calendar tracking whole integer days. Never DateTime.Now.
+    /// See docs/architecture/CLOCK_POLICY.md for clock governance rules and non-merge invariant.
+    /// </summary>
     public interface IClock
     {
         int Day { get; }

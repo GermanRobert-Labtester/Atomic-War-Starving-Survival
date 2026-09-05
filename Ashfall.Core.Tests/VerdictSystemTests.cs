@@ -162,6 +162,81 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void MachineLog_CaptureRestore_DoesNotAliasEntries()
+        {
+            var log = new MachineLogSystem();
+            log.Post("fac_a", 160, "operating", "body", "ev_a");
+
+            var captured = log.CaptureState();
+            captured.entries[0].bodyShort = "mutated save";
+            Assert.Equal("body", log.Entries[0].bodyShort);
+
+            var restored = new MachineLogSystem();
+            restored.RestoreState(captured);
+            captured.entries[0].bodyShort = "mutated after restore";
+            Assert.Equal("mutated save", restored.Entries[0].bodyShort);
+        }
+
+        [Fact]
+        public void VerdictEvidenceChain_ReadEnrollsLedgerAndReckoningExactlyOnce()
+        {
+            var log = new MachineLogSystem();
+            var ledger = new EvidenceLedger();
+            var reckoning = new ReckoningSystem();
+            var chain = new VerdictEvidenceChain(log, ledger, reckoning);
+
+            log.Post("fac_a", 162, "maintenance", "read this", "evidence_geophone_hymn");
+            Assert.Equal("evidence_geophone_hymn", log.ReadEntry(0));
+            Assert.Equal(1, ledger.Count);
+            Assert.Equal(1, reckoning.State.enrolledEvidence);
+
+            Assert.Equal(string.Empty, log.ReadEntry(0));
+            Assert.Equal(0, chain.ReconcileReadEntries());
+            Assert.Equal(1, ledger.Count);
+            Assert.Equal(1, reckoning.State.enrolledEvidence);
+        }
+
+        [Fact]
+        public void VerdictEvidenceChain_ReconcileIsSafeAfterSaveRestore()
+        {
+            var log = new MachineLogSystem();
+            var ledger = new EvidenceLedger();
+            var reckoning = new ReckoningSystem();
+            var chain = new VerdictEvidenceChain(log, ledger, reckoning);
+            log.Post("fac_a", 170, "operating", "read this", "evidence_fuse_linen");
+            log.ReadEntry(0);
+
+            var logB = new MachineLogSystem();
+            logB.RestoreState(log.CaptureState());
+            var ledgerB = new EvidenceLedger();
+            ledgerB.RestoreState(ledger.CaptureState());
+            var reckoningB = new ReckoningSystem();
+            reckoningB.RestoreState(reckoning.CaptureState());
+            var chainB = new VerdictEvidenceChain(logB, ledgerB, reckoningB);
+
+            Assert.Equal(0, chainB.ReconcileReadEntries());
+            Assert.Equal(1, ledgerB.Count);
+            Assert.Equal(1, reckoningB.State.enrolledEvidence);
+        }
+
+        [Fact]
+        public void VerdictEvidenceChain_ReconcileRepairsDerivedReckoningCount()
+        {
+            var log = new MachineLogSystem();
+            log.Post("fac_a", 170, "operating", "read this", "evidence_fuse_linen");
+            log.ReadEntry(0);
+
+            var ledger = new EvidenceLedger();
+            ledger.Enroll("evidence_fuse_linen", 170);
+            var reckoning = new ReckoningSystem();
+            reckoning.EnrollEvidence(3);
+            var chain = new VerdictEvidenceChain(log, ledger, reckoning);
+
+            chain.ReconcileReadEntries();
+            Assert.Equal(1, reckoning.State.enrolledEvidence);
+        }
+
+        [Fact]
         public void MachineLog_Post_RejectsEmptyFacility()
         {
             var log = new MachineLogSystem();

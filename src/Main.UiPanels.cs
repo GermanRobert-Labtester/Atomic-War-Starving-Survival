@@ -106,6 +106,7 @@ namespace AtomicWar.GodotApp
         private SurvivorDetailPanel _survivorDetailPanel = null!;
         private InventoryDetailPanel _inventoryDetailPanel = null!;
         private QuestDetailPanel _questDetailPanel = null!;
+        private MoralChoiceModal _moralChoiceModal = null!;
         private AchievementsPanel _achievementsPanel = null!;
         private WeatherDetailPanel _weatherDetailPanel = null!;
         private RadiationDetailPanel _radiationDetailPanel = null!;
@@ -330,6 +331,7 @@ namespace AtomicWar.GodotApp
             _factionsPanel.OnFactionDetailRequested += OpenFactionDetailPanel;
             _factionsPanel.OnMusterPanelRequested += () => OpenPlayerPanel("muster");
             _factionsPanel.OnFoundryPanelRequested += () => OpenPlayerPanel("silent_foundry");
+            _factionsPanel.OnCommitBranchRequested += bId => { CommitFactionBranch(bId); _factionsPanel.RefreshView(); };
             AddChild(_factionsPanel);
 
             // ── Muster panel (overlay) ──
@@ -424,12 +426,23 @@ namespace AtomicWar.GodotApp
             // ── Inventory Detail panel (overlay) ──
             _inventoryDetailPanel = PanelSceneLoader.Load<InventoryDetailPanel>("res://assets/ui/panels/InventoryDetailPanel.tscn");
             _inventoryDetailPanel.OnClose += CloseInventoryDetailPanel;
+            _inventoryDetailPanel.OnConsume += OnInventoryConsumeClicked;
+            _inventoryDetailPanel.OnEquip += OnInventoryEquipClicked;
             AddChild(_inventoryDetailPanel);
 
             // ── Quest Detail panel (overlay) ──
+            // Resolve only via Bind(onChoiceSelected) in OpenQuestDetailPanel —
+            // do not also subscribe OnMoralChoiceSelected (avoids double-resolve).
             _questDetailPanel = PanelSceneLoader.Load<QuestDetailPanel>("res://assets/ui/panels/QuestDetailPanel.tscn");
             _questDetailPanel.OnClose += CloseQuestDetailPanel;
             AddChild(_questDetailPanel);
+
+            // ── Moral Choice modal (overlay) ──
+            // Resolve only via Bind(onChoiceCallback) in OpenMoralChoiceModal —
+            // do not also subscribe OnChoiceSelected (avoids double-resolve).
+            _moralChoiceModal = new MoralChoiceModal();
+            _moralChoiceModal.OnClose += CloseMoralChoiceModal;
+            AddChild(_moralChoiceModal);
 
             // ── Achievements panel (overlay) ──
             _achievementsPanel = new AchievementsPanel();

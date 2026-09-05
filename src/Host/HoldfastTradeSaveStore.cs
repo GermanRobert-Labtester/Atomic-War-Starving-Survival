@@ -143,7 +143,7 @@ namespace AtomicWar.GodotApp
         {
             try
             {
-                string corruptPath = path + ".corrupt-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
+                string corruptPath = path + ".corrupt-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture); // DETERMINISM_ALLOWLIST: Corrupt file quarantine timestamp
                 if (!File.Exists(corruptPath))
                     File.WriteAllText(corruptPath, text);
                 GD.Print("[HoldfastTrade] Corrupt save quarantined to " + Path.GetFileName(corruptPath));

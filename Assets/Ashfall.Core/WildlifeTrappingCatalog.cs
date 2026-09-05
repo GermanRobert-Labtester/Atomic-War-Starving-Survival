@@ -67,6 +67,33 @@ namespace Ashfall.Core
         public float contaminationRisk = 0.05f;
         public string diseaseId = string.Empty; // Plan 36 Closure II: per-species disease mapping
         public float contaminationDose = 0f; // Plan 36 Closure II: explicit contamination dose in rads
+
+        public const string FallbackDiseaseId = "disease_zoonotic_flu";
+
+        /// <summary>
+        /// Resolve disease ID: explicit per-species mapping wins, otherwise tier fallback.
+        /// Low risk (≤0.1) → no disease; medium/high (>0.1) → fallback wildlife disease ("disease_zoonotic_flu").
+        /// </summary>
+        public string ResolveDiseaseId() => ResolveDiseaseId(this);
+
+        public static string ResolveDiseaseId(PreyDefinition? prey)
+        {
+            if (prey == null) return string.Empty;
+            if (!string.IsNullOrEmpty(prey.diseaseId))
+                return prey.diseaseId;
+            if (prey.diseaseRisk <= 0.1f)
+                return string.Empty;
+            return FallbackDiseaseId;
+        }
+
+        public static string ResolveDiseaseId(float diseaseRisk, string? explicitDiseaseId = null)
+        {
+            if (!string.IsNullOrEmpty(explicitDiseaseId))
+                return explicitDiseaseId;
+            if (diseaseRisk <= 0.1f)
+                return string.Empty;
+            return FallbackDiseaseId;
+        }
     }
 
     [Serializable]

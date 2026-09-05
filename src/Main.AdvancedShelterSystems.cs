@@ -83,9 +83,9 @@ namespace AtomicWar.GodotApp
 
         private void SaveCaravanTrade()
         {
-            if (_caravanTradeNetwork != null)
+            if (_caravanTradeNetwork != null
+                && CaptureSection("caravan_trade_network", CaravanTradeSaveStore.TryCapturePersisted(_caravanTradeNetwork.CaptureState())))
             {
-                CaptureSection("caravan_trade_network", CaravanTradeSaveStore.TryCapturePersisted(_caravanTradeNetwork.CaptureState()));
                 _caravanTradeNetworkDirty = false;
             }
         }
@@ -141,9 +141,9 @@ namespace AtomicWar.GodotApp
 
         private void SaveSurgicalWard()
         {
-            if (_surgicalWard != null)
+            if (_surgicalWard != null
+                && CaptureSection("surgical_ward", SurgicalWardSaveStore.TryCapturePersisted(_surgicalWard.CaptureState())))
             {
-                CaptureSection("surgical_ward", SurgicalWardSaveStore.TryCapturePersisted(_surgicalWard.CaptureState()));
                 _surgicalWardDirty = false;
             }
         }
@@ -197,9 +197,9 @@ namespace AtomicWar.GodotApp
 
         private void SavePowerSubgrids()
         {
-            if (_powerSubgrids != null)
+            if (_powerSubgrids != null
+                && CaptureSection("power_subgrids", PowerDistributionSaveStore.TryCapturePersisted(_powerSubgrids.CaptureState())))
             {
-                CaptureSection("power_subgrids", PowerDistributionSaveStore.TryCapturePersisted(_powerSubgrids.CaptureState()));
                 _powerSubgridsDirty = false;
             }
         }
@@ -263,9 +263,9 @@ namespace AtomicWar.GodotApp
 
         private void SavePerimeterDefense()
         {
-            if (_perimeterDefense != null)
+            if (_perimeterDefense != null
+                && CaptureSection("perimeter_defense", PerimeterDefenseSaveStore.TryCapturePersisted(_perimeterDefense.CaptureState())))
             {
-                CaptureSection("perimeter_defense", PerimeterDefenseSaveStore.TryCapturePersisted(_perimeterDefense.CaptureState()));
                 _perimeterDefenseDirty = false;
             }
         }
@@ -336,9 +336,9 @@ namespace AtomicWar.GodotApp
 
         private void SaveHydroponicBiomes()
         {
-            if (_hydroponicBiomes != null)
+            if (_hydroponicBiomes != null
+                && CaptureSection("hydroponic_biomes", HydroponicBiomeSaveStore.TryCapturePersisted(_hydroponicBiomes.CaptureState())))
             {
-                CaptureSection("hydroponic_biomes", HydroponicBiomeSaveStore.TryCapturePersisted(_hydroponicBiomes.CaptureState()));
                 _hydroponicBiomesDirty = false;
             }
         }
@@ -411,9 +411,9 @@ namespace AtomicWar.GodotApp
 
         private void SaveNuclearCore()
         {
-            if (_nuclearCore != null)
+            if (_nuclearCore != null
+                && CaptureSection("nuclear_core_lifecycle", NuclearCoreSaveStore.TryCapturePersisted(_nuclearCore.CaptureState())))
             {
-                CaptureSection("nuclear_core_lifecycle", NuclearCoreSaveStore.TryCapturePersisted(_nuclearCore.CaptureState()));
                 _nuclearCoreDirty = false;
             }
         }
@@ -477,9 +477,9 @@ namespace AtomicWar.GodotApp
 
         private void SaveArmoredCrawlers()
         {
-            if (_armoredCrawlers != null)
+            if (_armoredCrawlers != null
+                && CaptureSection("armored_crawlers", ArmoredCrawlerSaveStore.TryCapturePersisted(_armoredCrawlers.CaptureState())))
             {
-                CaptureSection("armored_crawlers", ArmoredCrawlerSaveStore.TryCapturePersisted(_armoredCrawlers.CaptureState()));
                 _armoredCrawlersDirty = false;
             }
         }

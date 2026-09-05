@@ -192,7 +192,7 @@ namespace AtomicWar.GodotApp.UI
         {
             if (!Visible) return;
 
-            if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+            if (AshfallInputActions.IsCloseOrCancel(@event))
             {
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();

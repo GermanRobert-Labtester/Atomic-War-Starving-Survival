@@ -18,6 +18,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class InventoryPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public event Action<string>? OnItemSelected;
 
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
@@ -93,6 +94,11 @@ namespace AtomicWar.GodotApp.UI
                 count.AddThemeColorOverride("font_color",
                     slot.Amount <= 1 ? AshfallUiHelpers.ToColor(DesignTheme.Warm) : AshfallUiHelpers.ToColor(DesignTheme.Hot));
                 row.AddChild(count);
+                var selectBtn = new Button { Text = "SELECT" };
+                selectBtn.CustomMinimumSize = new Vector2(64, 24);
+                string itemId = slot.Item.id;
+                selectBtn.Pressed += () => OnItemSelected?.Invoke(itemId);
+                row.AddChild(selectBtn);
                 _storageGrid.AddChild(row);
             }
             if (_storageGrid.GetChildCount() == 0)
@@ -250,7 +256,7 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-            if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+            if (AshfallInputActions.IsCloseOrCancel(@event))
             {
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();

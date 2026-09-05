@@ -23,6 +23,9 @@ namespace Ashfall.Core.Expeditions
         /// aggregates (restore then reconstructs from the narrative resolution
         /// history); a present list (even empty) is authoritative.</summary>
         public List<string>? knownLocationIds = new List<string>();
+
+        /// <summary>Lifetime successful returns. Defaults to 0 on legacy aggregates.</summary>
+        public int completedCount;
     }
 
     /// <summary>

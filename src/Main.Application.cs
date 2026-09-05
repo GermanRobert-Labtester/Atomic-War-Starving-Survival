@@ -302,6 +302,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ResearchCatalogSelfTest:
                     GetTree().Quit(HostCli.RunResearchCatalogSelfTest(_dataDir));
                     return;
+                case HostCliAction.RadioCatalogSelfTest:
+                    GetTree().Quit(HostCli.RunRadioCatalogSelfTest(_dataDir));
+                    return;
                 case HostCliAction.CatalogBootPreflight:
                     GetTree().Quit(HostCli.RunCatalogBootPreflight(_dataDir));
                     return;
@@ -429,6 +432,15 @@ namespace AtomicWar.GodotApp
             // Moral choice ledger ("The Weight of Survival"): constructed at boot so
             // its save restores before any encounter can resolve against a blank ledger.
             SetupMoralChoice();
+            // Endgame phase authority + collectible/unique ledgers restore at boot
+            // so day-tick triggers and loot channels never start from blank state.
+            SetupEndgame();
+            SetupCollectibles();
+            SetupShelterFireHazard();
+            // Personal quests + chemical synthesis restore at boot so SaveAll /
+            // day-tick never capture blank instances after a Continue/slot switch.
+            SetupPersonalQuests();
+            SetupChemicalSynthesis();
 
             if (DisplayServer.GetName() == "headless")
             {
@@ -486,6 +498,7 @@ namespace AtomicWar.GodotApp
             FlushVerdictIfDirty();
             FlushMaritimeIfDirty();
             FlushExpeditionIfDirty();
+            FlushTravelEncountersIfDirty();
             FlushNarrativeIfDirty();
             FlushEventAdapterIfDirty();
             FlushMedicalIfDirty();
@@ -495,6 +508,11 @@ namespace AtomicWar.GodotApp
             FlushYearOfAshIfDirty();
             FlushPhase0IfDirty();
             FlushMoralChoiceIfDirty();
+            FlushEndgameIfDirty();
+            FlushShelterFireIfDirty();
+            FlushPersonalQuestsIfDirty();
+            FlushChemicalSynthesisIfDirty();
+            FlushCollectiblesIfDirty();
             FlushCampaignDayIfDirty();
 
             // ── Sleep / End Day countdown timer (Phase 2 continuation)
@@ -538,7 +556,17 @@ namespace AtomicWar.GodotApp
             }
             else if (AshfallInputActions.IsHelp(@event) && _state == GameState.Playing)
             {
-                ToggleDeveloperConsole();
+                OpenPlayerPanel("help");
+                GetViewport().SetInputAsHandled();
+            }
+            else if (AshfallInputActions.IsHoldfast(@event) && _state == GameState.Playing)
+            {
+                OpenPlayerPanel("holdfast");
+                GetViewport().SetInputAsHandled();
+            }
+            else if (AshfallInputActions.IsExpeditions(@event) && _state == GameState.Playing)
+            {
+                OpenPlayerPanel("expeditions");
                 GetViewport().SetInputAsHandled();
             }
             else if (AshfallInputActions.IsEvents(@event) && _state == GameState.Playing)

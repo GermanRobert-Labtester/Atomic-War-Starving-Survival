@@ -135,8 +135,16 @@ namespace AtomicWar.GodotApp
             return worst;
         }
 
+        public DiseaseQuarantineCoordinator? Coordinator { get; private set; }
+
+        public void BindCoordinator(DiseaseQuarantineCoordinator coordinator)
+        {
+            Coordinator = coordinator;
+        }
+
         public void TickDaily(int day)
         {
+            Coordinator?.TickDaily(day);
             Engine.TickDaily(day, _populationProvider?.Invoke()!);
         }
 

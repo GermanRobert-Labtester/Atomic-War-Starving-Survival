@@ -465,6 +465,12 @@ namespace Ashfall.Core.Factions
             OnStateChanged?.Invoke();
         }
 
+        /// <summary>Advance PRPF daily influence once join/oppose is committed.</summary>
+        public void TickDay(int day)
+        {
+            Prpf.TickDay(day);
+        }
+
         public FactionBranchKind DetectBranchKind(string branchId)
         {
             if (string.IsNullOrEmpty(branchId)) return FactionBranchKind.None;

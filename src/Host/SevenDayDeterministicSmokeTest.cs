@@ -70,7 +70,7 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            string tmpDir = Path.Combine(Path.GetTempPath(), $"ashfall_7day_smoke_{DateTime.UtcNow.Ticks}");
+            string tmpDir = Path.Combine(Path.GetTempPath(), $"ashfall_7day_smoke_{DateTime.UtcNow.Ticks}"); // DETERMINISM_ALLOWLIST: Test harness temporary directory
             Directory.CreateDirectory(tmpDir);
 
             try

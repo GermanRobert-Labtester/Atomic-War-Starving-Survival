@@ -23,6 +23,7 @@ namespace Ashfall.Core.World
     public interface IRouteContextResolver
     {
         RouteGateContext Resolve(string routeOrTargetId);
+        bool IsRegisteredRoute(string routeOrTargetId);
     }
 
     /// <summary>
@@ -101,6 +102,138 @@ namespace Ashfall.Core.World
                 CreditorFactionIdsReachable = Array.Empty<string>(),
                 EncounterRegionTag = "lowland_marsh"
             }, "route_07");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_03_the_black_loess_grain_haul",
+                OriginHubId = "settlement_03_the_sunken_grain_silo_collective",
+                DestinationHubId = "settlement_20_the_valley_sunken_atrium_republic",
+                ControllerFactionId = "commune_republic",
+                TraversedLocationIds = new[] { "settlement_03", "settlement_20" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "river_basin"
+            }, "route_03");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_04_the_holy_spring_mercy_trek",
+                OriginHubId = "settlement_04_church_of_the_broken_bell",
+                DestinationHubId = "settlement_06_the_drowned_sanatorium_baths",
+                ControllerFactionId = "sisterhood_of_mercy",
+                TraversedLocationIds = new[] { "settlement_04", "settlement_06" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "holy_spring"
+            }, "route_04");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_06_the_thermal_brine_salt_pass",
+                OriginHubId = "settlement_06_the_drowned_sanatorium_baths",
+                DestinationHubId = "settlement_02_lock_seven_canal_tollgate",
+                ControllerFactionId = "faction_hydro_barons",
+                TraversedLocationIds = new[] { "settlement_06", "settlement_02" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "frozen_lake"
+            }, "route_06");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_09_the_nomad_ridge_drift",
+                OriginHubId = "settlement_09_the_volga_steppe_nomad_encampment",
+                DestinationHubId = "settlement_08_hydro_dam_nine_overlook",
+                ControllerFactionId = "steppe_nomads",
+                TraversedLocationIds = new[] { "settlement_09", "settlement_08" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "exposed_ridge"
+            }, "route_09");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_10_the_blind_substation_courier_run",
+                OriginHubId = "settlement_10_the_blind_substation_market",
+                DestinationHubId = "settlement_11_the_quarry_crusher_works",
+                ControllerFactionId = "neutral_merchants",
+                TraversedLocationIds = new[] { "settlement_10", "settlement_11" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "substation_grid"
+            }, "route_10");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_11_the_quarry_pit_granite_cartage",
+                OriginHubId = "settlement_11_the_quarry_crusher_works",
+                DestinationHubId = "settlement_05_the_black_cinder_slag_camp",
+                ControllerFactionId = "quarry_syndicate",
+                TraversedLocationIds = new[] { "settlement_11", "settlement_05" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "quarry_pit"
+            }, "route_11");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_13_the_subway_tile_vault_underpass",
+                OriginHubId = "settlement_13_the_flooded_subway_terminal",
+                DestinationHubId = "settlement_14_the_dry_dock_barge_citadel",
+                ControllerFactionId = "subway_scavengers",
+                TraversedLocationIds = new[] { "settlement_13", "settlement_14" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "metro_underpass"
+            }, "route_13");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_14_the_flotilla_coastal_shallows_run",
+                OriginHubId = "settlement_14_the_dry_dock_barge_citadel",
+                DestinationHubId = "settlement_07_the_crashed_antheus_cargo_hull",
+                ControllerFactionId = "black_flotilla",
+                TraversedLocationIds = new[] { "settlement_14", "settlement_07" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "coastal_shallows"
+            }, "route_14");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_15_the_tar_cauldron_pitch_express",
+                OriginHubId = "settlement_15_the_tar_cauldron_refinery",
+                DestinationHubId = "settlement_16_the_radioactive_graveyard_siding",
+                ControllerFactionId = "bitumen_refiners",
+                TraversedLocationIds = new[] { "settlement_15", "settlement_16" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "tar_cauldron"
+            }, "route_15");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_16_the_radioactive_graveyard_salvage_crawl",
+                OriginHubId = "settlement_16_the_radioactive_graveyard_siding",
+                DestinationHubId = "settlement_17_the_telegraph_wire_runner_post",
+                ControllerFactionId = "graveyard_salvagers",
+                TraversedLocationIds = new[] { "settlement_16", "settlement_17" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "radioactive_graveyard"
+            }, "route_16");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_17_the_telegraph_wire_runner_post",
+                OriginHubId = "settlement_17_the_telegraph_wire_runner_post",
+                DestinationHubId = "settlement_18_the_ash_waste_hermitage",
+                ControllerFactionId = "wire_runners",
+                TraversedLocationIds = new[] { "settlement_17", "settlement_18" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "telegraph_post"
+            }, "route_17");
+
+            RegisterRoute(new RouteGateContext
+            {
+                RouteId = "route_18_the_ash_waste_pilgrim_way",
+                OriginHubId = "settlement_18_the_ash_waste_hermitage",
+                DestinationHubId = "settlement_04_church_of_the_broken_bell",
+                ControllerFactionId = "ash_pilgrims",
+                TraversedLocationIds = new[] { "settlement_18", "settlement_04" },
+                CreditorFactionIdsReachable = Array.Empty<string>(),
+                EncounterRegionTag = "ash_waste"
+            }, "route_18");
         }
 
         private static void RegisterRoute(RouteGateContext context, string alias)
@@ -140,6 +273,18 @@ namespace Ashfall.Core.World
                 RouteId = routeOrTargetId,
                 ControllerFactionId = string.Empty
             };
+        }
+
+        public bool IsRegisteredRoute(string routeOrTargetId)
+        {
+            if (string.IsNullOrWhiteSpace(routeOrTargetId))
+                return false;
+
+            if (s_canonicalRoutes.ContainsKey(routeOrTargetId))
+                return true;
+
+            var ctx = Resolve(routeOrTargetId);
+            return !string.IsNullOrEmpty(ctx.ControllerFactionId);
         }
     }
 }

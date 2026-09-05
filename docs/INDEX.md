@@ -249,7 +249,7 @@ The following documents share identical or near-identical filenames across root,
 | Status | Document | Title / Summary |
 |---|---|---|
 | 🟢 `CURRENT` | [`ANTIGRAVITY.md`](../ANTIGRAVITY.md) | **ASHFALL PROJECT — ANTIGRAVITY Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
-| 🟢 `CURRENT` | [`ASHFALL_UNIFIED_MASTER_EXECUTION_PLAN.md`](../ASHFALL_UNIFIED_MASTER_EXECUTION_PLAN.md) | **ASHFALL — Unified Master Execution Plan** — **Derived from:** `masterplans.md` (30 repository-grounded implementation plans, generated 2026-08-29) |
+| 🟢 `CURRENT` | [`ASHFALL_UNIFIED_MASTER_EXECUTION_PLAN.md`](remediation/plans/ASHFALL_UNIFIED_MASTER_EXECUTION_PLAN.md) | **ASHFALL — Unified Master Execution Plan** — **Derived from:** `masterplans.md` (30 repository-grounded implementation plans, generated 2026-08-29) |
 | 🟢 `CURRENT` | [`CLAUDE.md`](../CLAUDE.md) | **CLAUDE CODE INSTRUCTIONS — ASHFALL PROJECT** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
 | 🟢 `CURRENT` | [`CODEX.md`](../CODEX.md) | **ASHFALL PROJECT — CODEX Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |
 | 🟢 `CURRENT` | [`CRUSH.md`](../CRUSH.md) | **ASHFALL PROJECT — CRUSH Instructions** — These five rules override anything else in this file. If a later section contradicts them, the rule below wins. |

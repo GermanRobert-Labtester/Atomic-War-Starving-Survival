@@ -66,6 +66,49 @@ namespace Ashfall.Core.Tests.Tooling
         }
 
         [Fact]
+        public void ProjectGodot_HasNoPairwiseKeycodeCollisionsBetweenCanonicalActions()
+        {
+            string repoRoot = FindRepoRoot();
+            string projectGodotPath = Path.Combine(repoRoot, "project.godot");
+            Assert.True(File.Exists(projectGodotPath), $"project.godot must exist at {projectGodotPath}");
+
+            string content = File.ReadAllText(projectGodotPath);
+            var actionKeycodes = new Dictionary<string, int>();
+
+            foreach (string action in CanonicalActions)
+            {
+                var match = Regex.Match(content, $@"{action}=\{{[^}}]*""keycode"":(\d+)", RegexOptions.Singleline);
+                if (match.Success && int.TryParse(match.Groups[1].Value, out int keycode))
+                {
+                    actionKeycodes[action] = keycode;
+                }
+            }
+
+            var keycodeToActions = new Dictionary<int, List<string>>();
+            foreach (var kvp in actionKeycodes)
+            {
+                if (!keycodeToActions.TryGetValue(kvp.Value, out var list))
+                {
+                    list = new List<string>();
+                    keycodeToActions[kvp.Value] = list;
+                }
+                list.Add(kvp.Key);
+            }
+
+            var collisions = new List<string>();
+            foreach (var kvp in keycodeToActions)
+            {
+                if (kvp.Value.Count > 1)
+                {
+                    collisions.Add($"Keycode {kvp.Key} shared by [{string.Join(", ", kvp.Value)}]");
+                }
+            }
+
+            Assert.True(collisions.Count == 0,
+                $"Detected pairwise keycode collision in project.godot: {string.Join("; ", collisions)}");
+        }
+
+        [Fact]
         public void GlobalShortcutHandlers_UseInputMapActions_NotRawKeycodes()
         {
             string repoRoot = FindRepoRoot();

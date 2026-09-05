@@ -22,59 +22,55 @@
     <ProjectReference Include="..\Ashfall.Core\Ashfall.Core.csproj" />
   </ItemGroup>
 
-  <!-- CI orphan quarantine: expansion tests whose Core APIs or catalog data
+    <!-- CI orphan quarantine: expansion tests whose Core APIs or catalog data
        are not yet on this branch. Re-enable per file when implementations land.
+       First green reinstatement: MoralChoiceFactionReactionsExpansionTests (10/10).
        From CI runs 33957813182 / 33958204127 + local test_core_suite. -->
   <ItemGroup>
+    <!-- Audit #47: ContentAcceptanceLadderTests API-drifted (ExpiryDate/Run arity); rematch before re-enable. -->
+    <Compile Remove="Content/ContentAcceptanceLadderTests.cs" />
+    <!-- Audit #47: PortContractGateTests — policy drift (untracked seams + stale HOST_REQUIRED); rematch docs/ci/port_contract_policy.json. -->
+    <Compile Remove="Tooling/PortContractGateTests.cs" />
+    <!-- Audit #39: UtilityAiExpandedCatalogTests expects 20 actions; live catalog has 6 — rematch catalog or soften census. -->
+    <Compile Remove="UtilityAiExpandedCatalogTests.cs" />
     <Compile Remove="ArchiveInksCatalogTests.cs" />
     <Compile Remove="CollectibleCatalogIntegrityTests.cs" />
     <Compile Remove="CollectibleCatalogPerformanceTests.cs" />
     <Compile Remove="CollectibleEffectTargetResolutionTests.cs" />
+    <Compile Remove="Plan57IncidentTests.cs" />
+    <Compile Remove="FoundryTreatyConsequenceExpansionTests.cs" />
+    <Compile Remove="RegionalTreatyConsequenceTests.cs" />
+    <Compile Remove="Medical/AutopsyProceduresCatalogTests.cs" />
+    <Compile Remove="Shelter/PowerGridCatalogTests.cs" />
+    <Compile Remove="Memorial/WastelandGraveEpitaphsCatalogTests.cs" />
+    <Compile Remove="GreenhouseItemCatalogTests.cs" />
+    <Compile Remove="Narrative/HoldfastNpcCatalogTests.cs" />
+    <Compile Remove="DutyRoster/DutyRosterSeasonCatalogTests.cs" />
+    <Compile Remove="MusterEpilogueMatrixTests.cs" />
+    <Compile Remove="Endgame/EpilogueChronicleCatalogTests.cs" />
     <Compile Remove="CollectibleMerchantBalanceTests.cs" />
     <Compile Remove="CollectibleReplayFixture.cs" />
     <Compile Remove="CollectibleReplayTests.cs" />
     <Compile Remove="CollectibleScavengingSimulationTests.cs" />
-    <Compile Remove="Content/ContentAcceptanceLadderTests.cs" />
     <Compile Remove="CraftAttributionTradeSpecialtyTests.cs" />
     <Compile Remove="DebtBountyHandoffTests.cs" />
     <Compile Remove="DebtLifecycleSmokeTests.cs" />
     <Compile Remove="DebtStandingHandoffTests.cs" />
-    <Compile Remove="DutyRoster/DutyRosterSeasonCatalogTests.cs" />
-    <Compile Remove="Endgame/EpilogueChronicleCatalogTests.cs" />
     <Compile Remove="Expeditions/ArmoredCrawlerExpeditionTests.cs" />
     <Compile Remove="Expeditions/CollectibleGenerationChannelGateTests.cs" />
     <Compile Remove="Expeditions/CollectibleScavengingPlacementTests.cs" />
     <Compile Remove="FactionRadioBroadcastExpansionTests.cs" />
     <Compile Remove="FactionWarDialogueExpansionTests.cs" />
-    <Compile Remove="FoundryTreatyConsequenceExpansionTests.cs" />
     <Compile Remove="GreenhouseEquipmentScalingTests.cs" />
-    <Compile Remove="GreenhouseItemCatalogTests.cs" />
     <Compile Remove="HardcoreEconomyTuningExpansionTests.cs" />
     <Compile Remove="Integration/InfrastructureSystemsIntegrationTests.cs" />
     <Compile Remove="LateGameInstitutionCrossSystemTests.cs" />
     <Compile Remove="LateGameInstitutionReplayTests.cs" />
     <Compile Remove="Medical/AdvancedSurgicalWardTests.cs" />
-    <Compile Remove="Medical/AutopsyProceduresCatalogTests.cs" />
-    <Compile Remove="Memorial/WastelandGraveEpitaphsCatalogTests.cs" />
-    <Compile Remove="MicroLocationCatalogLoaderTests.cs" />
-    <Compile Remove="MicroLocationDeterminismHarness.cs" />
-    <Compile Remove="MicroLocationDeterminismTests.cs" />
-    <Compile Remove="MicroLocationEconomyAuditTests.cs" />
-    <Compile Remove="MicroLocationEthicsIntegrationTests.cs" />
-    <Compile Remove="MicroLocationRouteAffinityTests.cs" />
-    <Compile Remove="MicroLocationRumorIntegrationTests.cs" />
-    <Compile Remove="MicroLocationSimulationTests.cs" />
-    <Compile Remove="MicroLocationStorytellingIntegrityTests.cs" />
-    <Compile Remove="MicroLocationUtilizationAuditTests.cs" />
-    <Compile Remove="MoralChoiceFactionReactionsExpansionTests.cs" />
-    <Compile Remove="MusterEpilogueMatrixTests.cs" />
     <Compile Remove="Narrative/AtmosphereTextSystemConsolidationTests.cs" />
-    <Compile Remove="Narrative/HoldfastNpcCatalogTests.cs" />
     <Compile Remove="NarrativeEncounterCatalogRegressionTests.cs" />
     <Compile Remove="NarrativeQuestlineCatalogTests.cs" />
-    <Compile Remove="PatrolEncounterIntegrationTests.cs" />
     <Compile Remove="Plan55CraftingCatalogTests.cs" />
-    <Compile Remove="Plan57IncidentTests.cs" />
     <Compile Remove="Plan68WallCarvingTests.cs" />
     <Compile Remove="Plan84WitnessExpansionTests.cs" />
     <Compile Remove="Progression/Plan80LibraryManualsExpansionTests.cs" />
@@ -84,22 +80,15 @@
     <Compile Remove="Radio/DistressSignalMoralChoiceTests.cs" />
     <Compile Remove="Radio/DistressSignalNarrativeTests.cs" />
     <Compile Remove="Radio/DistressSignalPerformanceTests.cs" />
-    <Compile Remove="Radio/RadioStationCatalogTests.cs" />
-    <Compile Remove="RegionalTreatyConsequenceTests.cs" />
     <Compile Remove="Shelter/NuclearCoreLifecycleTests.cs" />
-    <Compile Remove="Shelter/PowerGridCatalogTests.cs" />
     <Compile Remove="StandingRecordFactionExpansionTests.cs" />
     <Compile Remove="Survivors/DeathMemoryPipelineTests.cs" />
     <Compile Remove="Survivors/LeadershipAffinityMaturationTests.cs" />
     <Compile Remove="Survivors/SeededSurvivorIdentityJourneyTests.cs" />
     <Compile Remove="Survivors/SurvivorIdentityTests.cs" />
-    <Compile Remove="Tooling/PortContractGateTests.cs" />
-    <Compile Remove="UI/AccessibilitySourceAuditTests.cs" />
+    <!-- Accessibility + PanelSubscriptionHygiene restored (audit #12). -->
     <Compile Remove="UI/InputVerbRoutingTests.cs" />
-    <Compile Remove="UI/PanelSubscriptionHygieneTests.cs" />
-    <Compile Remove="UI/PlayerSurfaceLivenessGateTests.cs" />
     <Compile Remove="UI/RemediationPhase3PanelTests.cs" />
-    <Compile Remove="UtilityAiExpandedCatalogTests.cs" />
     <Compile Remove="Verdict/Plan82VerdictLocationsExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictNpcExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictRadioExpansionTests.cs" />
@@ -123,6 +112,16 @@
     <Compile Remove="World/WeatherGateTerritoryInteractionTests.cs" />
     <Compile Remove="World/WeatherGateWarInteractionTests.cs" />
     <Compile Remove="World/WeatherSeasonExpansionTests.cs" />
+    <Compile Remove="MicroLocationRumorIntegrationTests.cs" />
+    <Compile Remove="MicroLocationRouteAffinityTests.cs" />
+    <Compile Remove="MicroLocationUtilizationAuditTests.cs" />
+    <Compile Remove="MicroLocationCatalogLoaderTests.cs" />
+    <Compile Remove="MicroLocationDeterminismTests.cs" />
+    <Compile Remove="MicroLocationSimulationTests.cs" />
+    <Compile Remove="MicroLocationDeterminismHarness.cs" />
+    <Compile Remove="MicroLocationEconomyAuditTests.cs" />
+    <Compile Remove="MicroLocationEthicsIntegrationTests.cs" />
+    <Compile Remove="MicroLocationStorytellingIntegrityTests.cs" />
   </ItemGroup>
 
 </Project>

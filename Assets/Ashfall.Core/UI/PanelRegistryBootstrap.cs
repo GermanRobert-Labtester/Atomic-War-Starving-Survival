@@ -14,6 +14,7 @@ namespace Ashfall.Core.UI
             // ── Dashboard panels ────────────────────────────────────────────
             R("status",              "Survival Status",               PanelGroup.Dashboard,  new[] { "survivors", "world", "inventory" });
             R("help",                "Tutorial / Help",               PanelGroup.Dashboard);
+            R("guidance",            "Onboarding Guidance",           PanelGroup.Dashboard,  new[] { "onboarding" });
             R("afflictions",         "Afflictions",                   PanelGroup.Dashboard,  new[] { "survivors", "inventory", "medical", "phase0" });
             R("radiation_detail",    "Radiation Detail",              PanelGroup.Dashboard,  new[] { "survivors", "phase0" });
             R("research",            "Research",                      PanelGroup.Dashboard,  new[] { "research" });
@@ -43,6 +44,7 @@ namespace Ashfall.Core.UI
             R("faction_detail",      "Faction Detail",                PanelGroup.Secondary,  new[] { "factions" });
             R("quests",              "Quests Panel",                  PanelGroup.Dashboard,  new[] { "core", "expansions", "duty_roster" });
             R("quest_detail",        "Quest Detail",                  PanelGroup.Secondary,  new[] { "quests" });
+            R("moral_choice",         "Moral Choice / Ethical Dilemma", PanelGroup.Dashboard,  new[] { "moral_choice" });
             R("journal",             "Journal Panel",                 PanelGroup.Dashboard,  new[] { "journal" });
             R("protocol",            "Opening Protocol",              PanelGroup.Dashboard,  new[] { "starting_level" });
             R("greenhouse",          "Greenhouse Panel",              PanelGroup.Dashboard,  new[] { "greenhouse" });
@@ -55,7 +57,7 @@ namespace Ashfall.Core.UI
             R("maritime",            "Maritime / Black Flotilla",     PanelGroup.Dashboard,  new[] { "maritime", "survivors" });
             R("deep_coast",          "Deep Coast Panel",              PanelGroup.Dashboard,  new[] { "deep_coast", "core" });
             R("century_seed",        "Century Seed Panel",            PanelGroup.Dashboard,  new[] { "expansions", "survivors" });
-            R("epilogue",            "Epilogue Panel",                PanelGroup.Dashboard,  new[] { "expansions", "survivors" });
+            R("epilogue",            "Epilogue Panel",                PanelGroup.Dashboard,  new[] { "expansions", "survivors", "verdict", "regional_treaty", "muster" });
             R("verdict",             "Verdict Panel",                 PanelGroup.Dashboard,  new[] { "verdict" });
             R("holdfast",            "Holdfast Terminal",             PanelGroup.Dashboard,  new[] { "core" });
             R("duty_roster",         "Duty Roster Panel",             PanelGroup.Dashboard,  new[] { "duty_roster", "survivors" });
@@ -105,7 +107,7 @@ namespace Ashfall.Core.UI
             // ── Standalone & Subsystem Consoles ──────────────────────────────
             R("brine_extraction",    "Brine Extraction",              PanelGroup.Expanded,   new[] { "silent_foundry" });
             R("expedition_camp",     "Expedition Camp",               PanelGroup.Secondary,  new[] { "expeditions" });
-            R("fire_incident",       "Fire Incident",                 PanelGroup.Secondary,  new[] { "survivors" });
+            R("fire_incident",       "Fire Incident",                 PanelGroup.Secondary,  new[] { "survivors", "shelter_fire" });
             R("geiger_calibration",  "Geiger Calibration",            PanelGroup.Secondary,  new[] { "phase0" });
             R("triangulation",       "Radio Triangulation",           PanelGroup.Secondary,  new[] { "radio" });
             R("weather_sonde",       "Weather Sonde",                 PanelGroup.Secondary,  new[] { "world" });
@@ -127,43 +129,43 @@ namespace Ashfall.Core.UI
             R("combat_hud",          "Tactical Combat HUD",           PanelGroup.Secondary,  new[] { "combat" });
             R("emergency_response",  "Emergency Response",            PanelGroup.Secondary,  new[] { "survivors", "world", "inventory", "medical", "phase0", "power_grid", "events" });
 
-            // ── Advanced Survival Consoles ───────────────────────────────────
-            R("biogas_digester",     "Anaerobic Biogas Digester",     PanelGroup.Expanded);
-            R("cartography_gis",     "3D Cavity GIS Cartography",     PanelGroup.Expanded);
-            R("printing_press",      "Clandestine Printing Press",    PanelGroup.Expanded);
-            R("silicon_slicing",     "Silicon Ingot Slicing",         PanelGroup.Expanded);
-            R("geothermal_turbine",  "Geothermal Steam Turbine",      PanelGroup.Expanded);
-            R("war_dog_kennel",      "War Dog Kennel & Bio-Monitor",  PanelGroup.Expanded);
-            R("isotope_separator",   "Isotope Separator & Calutron",  PanelGroup.Expanded);
-            R("plasma_smelting",     "Plasma Arc Smelting",           PanelGroup.Expanded);
-            R("borehole_seismograph","Deep Borehole Seismograph",     PanelGroup.Expanded);
-            R("logistics_airlock",   "Heavy Logistics Airlock",       PanelGroup.Expanded);
+            // ── Advanced Survival Consoles (Shelved Prototypes) ───────────────
+            R("biogas_digester",     "Anaerobic Biogas Digester",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("cartography_gis",     "3D Cavity GIS Cartography",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("printing_press",      "Clandestine Printing Press",    PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("silicon_slicing",     "Silicon Ingot Slicing",         PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("geothermal_turbine",  "Geothermal Steam Turbine",      PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("war_dog_kennel",      "War Dog Kennel & Bio-Monitor",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("isotope_separator",   "Isotope Separator & Calutron",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("plasma_smelting",     "Plasma Arc Smelting",           PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("borehole_seismograph","Deep Borehole Seismograph",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("logistics_airlock",   "Heavy Logistics Airlock",       PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
 
-            // ── Subsystem Consoles (Batch 16 & 17) ───────────────────────────
-            R("cryo_permafrost_core", "Cryogenic Permafrost Core",     PanelGroup.Expanded);
-            R("basal_radon_migration","Basal Radon Migration",        PanelGroup.Expanded);
-            R("trauma_bonding_cohort","Trauma Bonding & Cohort",       PanelGroup.Expanded);
-            R("clandestine_insurgency","Clandestine Insurgency",      PanelGroup.Expanded);
-            R("subterranean_debt_ledger","Subterranean Debt Ledger",   PanelGroup.Expanded);
-            R("surface_shrapnel_aegis","Surface Shrapnel Aegis",       PanelGroup.Expanded);
-            R("long_walk_expedition", "Long Walk Expedition",          PanelGroup.Expanded);
-            R("sonic_rupture_drill",  "Sonic Rupture Drill",           PanelGroup.Expanded);
-            R("vault_door_breaching", "Vault Door Breaching",          PanelGroup.Expanded);
-            R("iron_cenotaph_memorial","Iron Cenotaph Memorial",       PanelGroup.Expanded);
+            // ── Subsystem Consoles (Batch 16 & 17 - Shelved Prototypes) ────────
+            R("cryo_permafrost_core", "Cryogenic Permafrost Core",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("basal_radon_migration","Basal Radon Migration",        PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("trauma_bonding_cohort","Trauma Bonding & Cohort",       PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("clandestine_insurgency","Clandestine Insurgency",      PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("subterranean_debt_ledger","Subterranean Debt Ledger",   PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("surface_shrapnel_aegis","Surface Shrapnel Aegis",       PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("long_walk_expedition", "Long Walk Expedition",          PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("sonic_rupture_drill",  "Sonic Rupture Drill",           PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("vault_door_breaching", "Vault Door Breaching",          PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("iron_cenotaph_memorial","Iron Cenotaph Memorial",       PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
 
-            // ── Subsystem Consoles (Batch 18) ────────────────────────────────
-            R("aquifer_treaty_concession", "Aquifer Treaty Concession",   PanelGroup.Expanded);
-            R("crossing_safe_conduct_vouch","Crossing Safe Conduct Vouch",PanelGroup.Expanded);
-            R("mechanical_prosthetics_lathe","Mechanical Prosthetics Lathe",PanelGroup.Expanded);
-            R("fungal_protein_fermenter", "Fungal Protein Fermenter",     PanelGroup.Expanded);
-            R("ultrasonic_decontam_airlock","Ultrasonic Decontam Airlock",PanelGroup.Expanded);
+            // ── Subsystem Consoles (Batch 18 - Shelved Prototypes) ─────────────
+            R("aquifer_treaty_concession", "Aquifer Treaty Concession",   PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("crossing_safe_conduct_vouch","Crossing Safe Conduct Vouch",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("mechanical_prosthetics_lathe","Mechanical Prosthetics Lathe",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("fungal_protein_fermenter", "Fungal Protein Fermenter",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("ultrasonic_decontam_airlock","Ultrasonic Decontam Airlock",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
 
             // ── Subsystem Consoles (Batch 19) ────────────────────────────────
-            R("tropospheric_radio_relay",  "Tropospheric Radio Relay",    PanelGroup.Expanded);
-            R("induction_cupola_furnace",  "Induction Cupola Furnace",    PanelGroup.Expanded);
-            R("heavy_marine_diesel_gen",   "Heavy Marine Turbodiesel Gen",PanelGroup.Expanded);
-            R("slurry_dewatering_sump",    "Slurry Dewatering Sump",      PanelGroup.Expanded);
-            R("magnetic_drum_archive",     "Magnetic Drum & Microfiche",  PanelGroup.Expanded);
+            R("tropospheric_radio_relay",  "Tropospheric Radio Relay",    PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("induction_cupola_furnace",  "Induction Cupola Furnace",    PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("heavy_marine_diesel_gen",   "Heavy Marine Turbodiesel Gen",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("slurry_dewatering_sump",    "Slurry Dewatering Sump",      PanelGroup.Expanded); // LIVE: bound to SumpFloodingHostSession
+            R("magnetic_drum_archive",     "Magnetic Drum & Microfiche",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
         }
 
         private static void R(
@@ -171,9 +173,10 @@ namespace Ashfall.Core.UI
             string displayName,
             PanelGroup group,
             string[]? setupDeps = null,
-            bool availableInMenu = false)
+            bool availableInMenu = false,
+            PanelMaturity maturity = PanelMaturity.Live)
         {
-            PanelRegistry.Register(new PanelDescriptor(id, displayName, group, setupDeps, availableInMenu));
+            PanelRegistry.Register(new PanelDescriptor(id, displayName, group, setupDeps, availableInMenu, maturity: maturity));
         }
     }
 }

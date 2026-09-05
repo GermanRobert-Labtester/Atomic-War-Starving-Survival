@@ -40,11 +40,13 @@ namespace AtomicWar.GodotApp.UI
         public bool IsBound => _doseHost != null;
         public int SimDay { get; set; } = 1;
 
+        private void OnCalibrationStateChanged(DosimeterCalibrationState _) => RefreshView();
+
         public void Bind(DoseLedgerHostSession doseHost, string deviceTag = "tag_1")
         {
             if (_doseHost != null)
             {
-                _doseHost.Calibration.OnStateChanged -= _ => RefreshView();
+                _doseHost.Calibration.OnStateChanged -= OnCalibrationStateChanged;
             }
 
             _doseHost = doseHost;
@@ -52,7 +54,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_doseHost != null)
             {
-                _doseHost.Calibration.OnStateChanged += _ => RefreshView();
+                _doseHost.Calibration.OnStateChanged += OnCalibrationStateChanged;
                 RefreshView();
             }
         }
@@ -177,6 +179,11 @@ namespace AtomicWar.GodotApp.UI
 
         private void RefreshView()
         {
+            if (_deviceTagLabel == null)
+                BuildUI();
+
+            if (_deviceTagLabel == null) return;
+
             if (_doseHost == null)
             {
                 if (_deviceTagLabel != null) _deviceTagLabel.Text = "Device: No dosimeter session bound";
@@ -244,8 +251,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_doseHost != null)
             {
-                _doseHost.Calibration.OnStateChanged -= _ => RefreshView();
+                _doseHost.Calibration.OnStateChanged -= OnCalibrationStateChanged;
+                _doseHost = null;
             }
+            base._ExitTree();
         }
     }
 }

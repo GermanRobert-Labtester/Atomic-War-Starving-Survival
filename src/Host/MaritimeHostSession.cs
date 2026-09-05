@@ -251,7 +251,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Attempt to open a safe with a guess.</summary>
         public string AttemptSafe(string safeId, int[] guess, float toolCondition = 1.0f)
         {
-            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
+            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + StableHash.Of(safeId));
             var feedback = SafeCrack.Attempt(safeId, guess, toolCondition, rng);
             LastEvent = $"Safe attempt: {feedback.Message} (correct: {feedback.CorrectTumblers}/{feedback.TotalTumblers}, noise: {feedback.NoiseLevel:F2})";
             RaiseStateChanged();
@@ -264,7 +264,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Attempt accessible mode.</summary>
         public string AttemptSafeAccessible(string safeId, float confidence = 0.5f, float toolCondition = 1.0f, float skill = 0.3f)
         {
-            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
+            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + StableHash.Of(safeId));
             var feedback = SafeCrack.AttemptAccessible(safeId, confidence, toolCondition, skill, rng);
             LastEvent = $"Safe attempt (accessible): {feedback.Message} (noise: {feedback.NoiseLevel:F2})";
             RaiseStateChanged();
@@ -277,7 +277,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Transfer loot from an opened safe.</summary>
         public string TransferSafeLoot(string safeId)
         {
-            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
+            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + StableHash.Of(safeId));
             var loot = SafeCrack.TransferLoot(safeId, rng);
             if (loot == null) return $"Cannot transfer loot from {safeId} (not opened or already transferred).";
             var sb = new System.Text.StringBuilder($"Loot from {safeId}:");

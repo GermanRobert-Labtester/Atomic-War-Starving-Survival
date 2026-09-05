@@ -186,22 +186,22 @@ namespace AtomicWar.GodotApp.UI
             mainVBox.AddChild(bodyHBox);
 
             // Left column — stage state
-            var leftPanel = CreatePanelFrame("PRECIPITATOR STATE");
+            var (leftPanel, leftMargin) = CreatePanelFrame("PRECIPITATOR STATE");
             bodyHBox.AddChild(leftPanel);
             var telemetry = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             telemetry.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(telemetry);
+            leftMargin.AddChild(telemetry);
             _profileValue = AddRow(telemetry, "OPERATING PROFILE");
             _captureValue = AddRow(telemetry, "CAPTURE EFFICIENCY");
             _powerValue = AddRow(telemetry, "ELECTRICAL DRAW");
             _conditionValue = AddRow(telemetry, "PLATES / TRANSFORMER");
 
             // Center column — commands
-            var centerPanel = CreatePanelFrame("STAGE COMMANDS");
+            var (centerPanel, centerMargin) = CreatePanelFrame("STAGE COMMANDS");
             bodyHBox.AddChild(centerPanel);
             var buttons = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             buttons.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(buttons);
+            centerMargin.AddChild(buttons);
 
             _rapButton = new Button { Text = "[RAP PLATES — DUST TO HOPPER]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
             _rapButton.Pressed += OnRapPressed;
@@ -216,11 +216,11 @@ namespace AtomicWar.GodotApp.UI
             buttons.AddChild(_serviceButton);
 
             // Right column — waste & gas
-            var rightPanel = CreatePanelFrame("DUST WASTE & GAS");
+            var (rightPanel, rightMargin) = CreatePanelFrame("DUST WASTE & GAS");
             bodyHBox.AddChild(rightPanel);
             var data = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             data.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(data);
+            rightMargin.AddChild(data);
             _dustValue = AddRow(data, "PLATE DUST LOAD");
             _hopperValue = AddRow(data, "HOPPER (RADIOACTIVE)");
             _ozoneValue = AddRow(data, "OZONE CONCENTRATION");
@@ -296,7 +296,7 @@ namespace AtomicWar.GodotApp.UI
             return val;
         }
 
-        private static PanelContainer CreatePanelFrame(string headerText)
+        private static (PanelContainer panel, MarginContainer margin) CreatePanelFrame(string headerText)
         {
             var panel = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
             var vbox = new VBoxContainer();
@@ -313,7 +313,7 @@ namespace AtomicWar.GodotApp.UI
             margin.AddThemeConstantOverride("margin_bottom", 8);
             vbox.AddChild(margin);
 
-            return panel;
+            return (panel, margin);
         }
     }
 }

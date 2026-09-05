@@ -48,6 +48,7 @@ namespace Ashfall.Core.Combat
 
         public CombatState State => _state;
         public CombatHostPorts Ports { get => _ports; set => _ports = value; }
+        public CombatDoctrineCapability DoctrineCapability { get; set; } = CombatDoctrineCapability.None;
 
         public TacticalCombatSystem(CombatState? state = null, CombatHostPorts? ports = null)
         {
@@ -159,18 +160,26 @@ namespace Ashfall.Core.Combat
                 Phase = (int)CombatPhase.PlayerTurn,
                 PlayerStance = StanceId(TacticalStance.HoldPosition),
                 RoundNumber = 1,
-                Resolved = false
+                Resolved = false,
+                ResolutionId = "cres_" + encounterId
             };
 
             // Deep-copy players into state with stable ids.
             for (int i = 0; i < players.Count; i++)
                 _state.Combatants.Add(CloneCombatant(players[i]));
 
-            // Register player weapons.
+            // Register player weapons and track their starting conditions.
             if (playerWeapons != null)
             {
                 for (int i = 0; i < playerWeapons.Count; i++)
-                    _state.Weapons.Add(CloneWeapon(playerWeapons[i]));
+                {
+                    var pw = playerWeapons[i];
+                    _state.Weapons.Add(CloneWeapon(pw));
+                    if (!string.IsNullOrEmpty(pw.InstanceId))
+                    {
+                        SetBoundWeaponStartCondition(pw.InstanceId, pw.ConditionPct);
+                    }
+                }
             }
 
             // Link each player combatant to its weapon (first unassigned).
@@ -282,6 +291,110 @@ namespace Ashfall.Core.Combat
             };
             _state.Events.Add(e);
             OnCombatEvent?.Invoke(_state, e);
+        }
+
+        public float GetBoundWeaponStartCondition(string instanceId, float defaultVal = 1f)
+        {
+            if (string.IsNullOrEmpty(instanceId)) return defaultVal;
+            for (int i = 0; i < _state.BoundWeaponConditions.Count; i++)
+            {
+                if (string.Equals(_state.BoundWeaponConditions[i].instanceId, instanceId, StringComparison.Ordinal))
+                    return _state.BoundWeaponConditions[i].conditionPct;
+            }
+            return defaultVal;
+        }
+
+        public void SetBoundWeaponStartCondition(string instanceId, float condition)
+        {
+            if (string.IsNullOrEmpty(instanceId)) return;
+            for (int i = 0; i < _state.BoundWeaponConditions.Count; i++)
+            {
+                if (string.Equals(_state.BoundWeaponConditions[i].instanceId, instanceId, StringComparison.Ordinal))
+                {
+                    _state.BoundWeaponConditions[i].conditionPct = condition;
+                    return;
+                }
+            }
+            _state.BoundWeaponConditions.Add(new BoundWeaponConditionEntry
+            {
+                instanceId = instanceId,
+                conditionPct = condition
+            });
+        }
+
+        // ══ Action Preflight & Reason Explanations ═════════════════════════
+
+        public ActionPreflight EvaluateFire(string targetId)
+        {
+            if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
+            if (_state.Phase != (int)CombatPhase.PlayerTurn) return ActionPreflight.Blocked("Not player turn");
+            var shooter = PickActiveShooter();
+            if (shooter == null) return ActionPreflight.Blocked("No standing armed survivor");
+            var weapon = WeaponOf(shooter);
+            if (weapon == null) return ActionPreflight.Blocked("Survivor has no weapon");
+            if (weapon.IsJammed) return ActionPreflight.Blocked("Weapon is jammed (clear jam first)");
+            if (string.IsNullOrEmpty(targetId)) return ActionPreflight.Blocked("No target selected");
+            var target = FindCombatant(targetId);
+            if (target == null || target.IsPlayer || target.HasFled) return ActionPreflight.Blocked("Invalid or eliminated target");
+            var def = CombatCatalog.GetWeapon(weapon.WeaponId);
+            int burst = def != null ? Math.Max(1, def.burst) : 1;
+            var mods = GetStanceMods(CurrentStance());
+            int rounds = (int)Math.Max(1, Math.Round(burst * mods.AmmoUse, MidpointRounding.AwayFromZero));
+            if (_ports.ConsumeAmmo == null && weapon.AmmoRemaining < rounds)
+                return ActionPreflight.Blocked("Out of ammunition");
+            return ActionPreflight.Ok;
+        }
+
+        public ActionPreflight EvaluateSuppress()
+        {
+            if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
+            if (_state.Phase != (int)CombatPhase.PlayerTurn) return ActionPreflight.Blocked("Not player turn");
+            var shooter = PickActiveShooter();
+            if (shooter == null) return ActionPreflight.Blocked("No standing armed survivor");
+            var weapon = WeaponOf(shooter);
+            if (weapon == null) return ActionPreflight.Blocked("Survivor has no weapon");
+            var def = CombatCatalog.GetWeapon(weapon.WeaponId);
+            if (def == null || !def.isSuppressionCapable) return ActionPreflight.Blocked("Weapon cannot suppress (requires rifle or LMG)");
+            if (weapon.IsJammed) return ActionPreflight.Blocked("Weapon is jammed (clear jam first)");
+            return ActionPreflight.Ok;
+        }
+
+        public ActionPreflight EvaluateClearJam(string subjectId)
+        {
+            if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
+            if (_state.Phase != (int)CombatPhase.PlayerTurn) return ActionPreflight.Blocked("Not player turn");
+            var c = FindPlayerCombatant(subjectId);
+            if (c == null) return ActionPreflight.Blocked("Survivor not in encounter");
+            var weapon = WeaponOf(c);
+            if (weapon == null) return ActionPreflight.Blocked("No equipped weapon");
+            if (!weapon.IsJammed) return ActionPreflight.Blocked("Weapon is not jammed");
+            return ActionPreflight.Ok;
+        }
+
+        public ActionPreflight EvaluateRepair(string subjectId)
+        {
+            if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
+            var c = FindPlayerCombatant(subjectId);
+            if (c == null) return ActionPreflight.Blocked("Survivor not in encounter");
+            var weapon = WeaponOf(c);
+            if (weapon == null) return ActionPreflight.Blocked("No equipped weapon");
+            if (weapon.ConditionPct >= 0.98f) return ActionPreflight.Blocked("Weapon at maximum condition");
+            return ActionPreflight.Ok;
+        }
+
+        public ActionPreflight EvaluateRetreat()
+        {
+            if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
+            var mods = GetStanceMods(CurrentStance());
+            if (!mods.CanFlee) return ActionPreflight.Blocked("Cannot retreat during Last Stand");
+            return ActionPreflight.Ok;
+        }
+
+        public ActionPreflight EvaluateEndTurn()
+        {
+            if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
+            if (_state.Phase != (int)CombatPhase.PlayerTurn) return ActionPreflight.Blocked("Not player turn");
+            return ActionPreflight.Ok;
         }
 
         private void Notify() => OnStateChanged?.Invoke(_state);

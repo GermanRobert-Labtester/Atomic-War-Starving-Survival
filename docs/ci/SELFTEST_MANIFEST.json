@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 95,
-  "headless_test_count": 93,
+  "total_tests": 96,
+  "headless_test_count": 94,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -82,6 +82,17 @@
       "description": "Research knowledge catalog gate (Plan 34): load count, DAG validity, original 15 save-contract nodes, and cross-catalog unlock references (breakthrough items, relic research unlocks, manual/autopsy knowledge grants)",
       "headless_compatible": true,
       "expected_summary_id": "research_catalog_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "radio_catalog_selftest",
+      "action": "RadioCatalogSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--radio-catalog-selftest",
+      "aliases": [],
+      "description": "Radio station catalog gate (AF-B1 / Plan 60): JSON authority, schedules, signal degradation model, and overrides",
+      "headless_compatible": true,
+      "expected_summary_id": "radio_catalog_selftest",
       "timeout_seconds": 30
     },
     {

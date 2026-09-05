@@ -31,7 +31,7 @@ namespace AtomicWar.GodotApp
 
             // Isolate from real user data so a run never clobbers slot_1.
             string defaultDataDir = SaveSlotRoot.ResolveBaseDirectory();
-            string scratchRoot = Path.Combine(Path.GetTempPath(), "ashfall_onboarding_selftest_" + Guid.NewGuid().ToString("N"));
+            string scratchRoot = Path.Combine(Path.GetTempPath(), "ashfall_onboarding_selftest_" + Guid.NewGuid().ToString("N")); // DETERMINISM_ALLOWLIST: Selftest scratch folder path
             Directory.CreateDirectory(scratchRoot);
             SaveSlotRoot.CurrentRoot = scratchRoot;
 

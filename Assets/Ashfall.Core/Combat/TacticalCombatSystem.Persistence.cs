@@ -12,6 +12,7 @@ namespace Ashfall.Core.Combat
             var snap = new CombatSnapshot
             {
                 EncounterId = _state.EncounterId,
+                ResolutionId = _state.ResolutionId,
                 LocationName = _state.LocationName,
                 Day = _state.Day,
                 Turn = _state.Turn,
@@ -19,7 +20,8 @@ namespace Ashfall.Core.Combat
                 StanceId = _state.PlayerStance,
                 Resolved = _state.Resolved,
                 OutcomeText = _state.OutcomeText,
-                IsActive = !string.IsNullOrEmpty(_state.EncounterId) && !_state.Resolved
+                IsActive = !string.IsNullOrEmpty(_state.EncounterId) && !_state.Resolved,
+                Aftermath = CloneAftermath(_state.Aftermath)
             };
 
             var combatants = new List<CombatantState>(_state.Combatants);
@@ -98,8 +100,11 @@ namespace Ashfall.Core.Combat
                 PlayerStance = _state.PlayerStance,
                 RoundNumber = _state.RoundNumber,
                 Resolved = _state.Resolved,
-                OutcomeText = _state.OutcomeText
+                OutcomeText = _state.OutcomeText,
+                ResolutionId = _state.ResolutionId,
+                Aftermath = CloneAftermath(_state.Aftermath)
             };
+            copy.BoundWeaponConditions = CloneBoundWeaponConditions(_state.BoundWeaponConditions);
             copy.Combatants = CloneCombatants(_state.Combatants);
             copy.Weapons = CloneWeapons(_state.Weapons);
             copy.Barriers = CloneBarriers(_state.Barriers);
@@ -138,14 +143,93 @@ namespace Ashfall.Core.Combat
                 PlayerStance = string.IsNullOrEmpty(s.PlayerStance) ? StanceId(TacticalStance.HoldPosition) : s.PlayerStance,
                 RoundNumber = s.RoundNumber,
                 Resolved = s.Resolved,
-                OutcomeText = s.OutcomeText ?? string.Empty
+                OutcomeText = s.OutcomeText ?? string.Empty,
+                ResolutionId = s.ResolutionId ?? string.Empty,
+                Aftermath = CloneAftermath(s.Aftermath)
             };
+            m.BoundWeaponConditions = CloneBoundWeaponConditions(s.BoundWeaponConditions);
             m.Combatants = CloneCombatants(s.Combatants);
             m.Weapons = CloneWeapons(s.Weapons);
             m.Barriers = CloneBarriers(s.Barriers);
             m.Events = CloneEvents(s.Events);
             if (s.Loot != null) m.Loot.AddRange(s.Loot);
             return m;
+        }
+
+        public static CombatAftermath? CloneAftermath(CombatAftermath? src)
+        {
+            if (src == null) return null;
+            var copy = new CombatAftermath
+            {
+                ResolutionId = src.ResolutionId ?? string.Empty,
+                EncounterId = src.EncounterId ?? string.Empty,
+                Outcome = src.Outcome ?? string.Empty,
+                MoraleConsequences = src.MoraleConsequences,
+                IsApplied = src.IsApplied
+            };
+            if (src.SurvivorInjuries != null) copy.SurvivorInjuries.AddRange(src.SurvivorInjuries);
+            if (src.SurvivorDeaths != null) copy.SurvivorDeaths.AddRange(src.SurvivorDeaths);
+            if (src.WeaponWear != null)
+            {
+                foreach (var w in src.WeaponWear)
+                {
+                    if (w == null) continue;
+                    copy.WeaponWear.Add(new CombatWeaponWearRecord
+                    {
+                        InstanceId = w.InstanceId ?? string.Empty,
+                        WeaponId = w.WeaponId ?? string.Empty,
+                        OwnerSurvivorId = w.OwnerSurvivorId ?? string.Empty,
+                        StartConditionPct = w.StartConditionPct,
+                        FinalConditionPct = w.FinalConditionPct,
+                        WearDeltaPct = w.WearDeltaPct
+                    });
+                }
+            }
+            if (src.AmmoSpent != null)
+            {
+                foreach (var a in src.AmmoSpent)
+                {
+                    if (a == null) continue;
+                    copy.AmmoSpent.Add(new CombatAmmoSpentRecord
+                    {
+                        AmmoId = a.AmmoId ?? string.Empty,
+                        RoundsSpent = a.RoundsSpent
+                    });
+                }
+            }
+            if (src.LootConsequences != null)
+            {
+                foreach (var l in src.LootConsequences)
+                {
+                    if (l == null) continue;
+                    copy.LootConsequences.Add(new CombatLootEntry
+                    {
+                        itemId = l.itemId ?? string.Empty,
+                        quantity = l.quantity,
+                        weightKg = l.weightKg
+                    });
+                }
+            }
+            return copy;
+        }
+
+        public static List<BoundWeaponConditionEntry> CloneBoundWeaponConditions(List<BoundWeaponConditionEntry>? src)
+        {
+            var copy = new List<BoundWeaponConditionEntry>();
+            if (src != null)
+            {
+                for (int i = 0; i < src.Count; i++)
+                {
+                    var b = src[i];
+                    if (b == null) continue;
+                    copy.Add(new BoundWeaponConditionEntry
+                    {
+                        instanceId = b.instanceId ?? string.Empty,
+                        conditionPct = b.conditionPct
+                    });
+                }
+            }
+            return copy;
         }
 
         private static List<CombatantState> CloneCombatants(List<CombatantState> src)

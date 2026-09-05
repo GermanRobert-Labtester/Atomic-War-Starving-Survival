@@ -56,6 +56,8 @@ namespace Ashfall.Core
                 : ActionResult.Success("duty_roster.assigned");
         }
 
+        public Func<string, bool>? IsExternalReserved { get; set; }
+
         public ActionResult ValidateAssign(string role, string survivorId)
         {
             if (!IsKnownRole(role))
@@ -67,6 +69,8 @@ namespace Ashfall.Core
                 return ActionResult.Blocked("unknown_survivor", "duty_roster.unknown_survivor");
             if (!CanAssign(row))
                 return ActionResult.Blocked("cannot_assign", "duty_roster.cannot_assign");
+            if (IsExternalReserved != null && IsExternalReserved(survivorId))
+                return ActionResult.Blocked("busy", "duty_roster.busy");
             string currentRole = GetRoleOf(survivorId)!;
             if (currentRole != null && currentRole != role)
                 return ActionResult.Blocked("already_assigned", "duty_roster.already_assigned");

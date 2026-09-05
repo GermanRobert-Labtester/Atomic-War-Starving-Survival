@@ -197,11 +197,6 @@ namespace Ashfall.Core.Radio
                 DetectedDay = _state.currentDay
             };
 
-            if (_catalog.TryGetValue(interceptId, out var def) && def.ExpiryDays > 0)
-            {
-                created.ExpiresOnDay = _state.currentDay + def.ExpiryDays;
-            }
-
             _state.intercepts.Add(created);
             return created;
         }
@@ -220,8 +215,8 @@ namespace Ashfall.Core.Radio
 
             foreach (var intercept in _catalog.Values)
             {
-                var progress = GetOrCreateInterceptProgress(intercept.Id);
-                if (progress.IsExpired) continue;
+                var progress = _state.intercepts.Find(i => i.InterceptId == intercept.Id);
+                if (progress != null && progress.IsExpired) continue;
 
                 // Check frequency tolerance (+/- 15 kHz)
                 int deltaKhz = Math.Abs(_state.tunedFrequencyKhz - intercept.FrequencyKhz);
@@ -246,6 +241,11 @@ namespace Ashfall.Core.Radio
             if (!activeProgress.Detected)
             {
                 activeProgress.Detected = true;
+                activeProgress.DetectedDay = _state.currentDay;
+                if (_catalog.TryGetValue(bestMatch.Id, out var def) && def.ExpiryDays > 0)
+                {
+                    activeProgress.ExpiresOnDay = _state.currentDay + def.ExpiryDays;
+                }
                 OnInterceptDetected?.Invoke(bestMatch.Id);
             }
 
@@ -270,6 +270,16 @@ namespace Ashfall.Core.Radio
             if (!_catalog.TryGetValue(interceptId, out var def)) return 0;
             var progress = GetOrCreateInterceptProgress(interceptId);
             if (progress.IsDecrypted || progress.IsExpired) return 0;
+
+            if (!progress.Detected)
+            {
+                progress.Detected = true;
+                progress.DetectedDay = _state.currentDay;
+                if (def.ExpiryDays > 0 && !progress.ExpiresOnDay.HasValue)
+                {
+                    progress.ExpiresOnDay = _state.currentDay + def.ExpiryDays;
+                }
+            }
 
             if (def.Encryption.Difficulty <= 0 || def.Encryption.Scheme == "none")
             {
@@ -311,6 +321,16 @@ namespace Ashfall.Core.Radio
             if (!_catalog.TryGetValue(interceptId, out var def)) return false;
             var progress = GetOrCreateInterceptProgress(interceptId);
             if (progress.Resolved || progress.IsExpired) return false;
+
+            if (!progress.Detected)
+            {
+                progress.Detected = true;
+                progress.DetectedDay = _state.currentDay;
+                if (def.ExpiryDays > 0 && !progress.ExpiresOnDay.HasValue)
+                {
+                    progress.ExpiresOnDay = _state.currentDay + def.ExpiryDays;
+                }
+            }
 
             int normAzimuth = ((azimuthDegrees % 360) + 360) % 360;
 

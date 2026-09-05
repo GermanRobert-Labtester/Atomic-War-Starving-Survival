@@ -1,7 +1,9 @@
 using System;
 #pragma warning disable CS8618
+using System.Collections.Generic;
 using System.IO;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
@@ -31,8 +33,33 @@ namespace AtomicWar.GodotApp
         public bool HasPurchasedThisSession { get; set; }
 
         // ── Authoritative Cohort / Player Binding ────────────────────
-        public SurvivorsHostSession? Survivors { get; set; }
+        private SurvivorsHostSession? _survivors;
+        public SurvivorsHostSession? Survivors
+        {
+            get => _survivors;
+            set
+            {
+                _survivors = value;
+                WireInventorySession();
+            }
+        }
         public string PlayerSurvivorId { get; set; } = "survivor_dr_sarah_chen";
+
+        private InventoryHostSession? _inventorySession;
+        public InventoryHostSession? InventorySession
+        {
+            get => _inventorySession;
+            set
+            {
+                _inventorySession = value;
+                WireInventorySession();
+            }
+        }
+
+        public Ashfall.Core.Inventory.Inventory? Inventory { get; set; }
+
+        public Ashfall.Core.Inventory.Inventory? EffectiveInventory =>
+            _inventorySession?.Inventory ?? Inventory ?? Trade.PlayerInventory;
 
         // ── Fallback survival state (for headless/standalone tests) ──
         private int _fallbackHealth = MaxHealth;
@@ -80,13 +107,14 @@ namespace AtomicWar.GodotApp
         public HoldfastRuntimeSession(CoreDemoSession world, long startingValue = DefaultStartingValue, Ashfall.Core.Inventory.Inventory? inventory = null)
         {
             World = world ?? throw new ArgumentNullException(nameof(world));
+            Inventory = inventory;
             Trade = new HoldfastTradeSession(World.Catalog, startingValue, inventory);
             Trade.StateChanged += () => StateChanged?.Invoke();
         }
 
         public static HoldfastRuntimeSession Create(
             CoreDemoSession world,
-            bool seedDevelopmentState = true,
+            bool seedDevelopmentState = false,
             bool loadTradeSave = true,
             Ashfall.Core.Inventory.Inventory? inventory = null)
         {
@@ -113,6 +141,7 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
+        [Obsolete("Migrate to aggregate campaign persistence.")]
         public bool TrySave(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool baseSaved = HoldfastSaveStore.TrySave(World.CaptureSave(), basePathOverride);
@@ -124,31 +153,51 @@ namespace AtomicWar.GodotApp
             return saved;
         }
 
+        [Obsolete("Migrate to aggregate campaign persistence.")]
         public bool TryReload(string basePathOverride = null!, string tradePathOverride = null!)
         {
-            bool restoredAny = false;
+            var worldSnapshot = World.CaptureSave();
+            var tradeSnapshot = Trade.CaptureState();
+
             var baseSave = HoldfastSaveStore.TryLoad(basePathOverride);
-            if (baseSave != null)
-            {
-                World.RestoreSave(baseSave);
-                restoredAny = true;
-            }
-
             var tradeSave = HoldfastTradeSaveStore.TryLoad(tradePathOverride);
-            if (tradeSave != null)
+
+            if (baseSave == null && tradeSave == null)
             {
-                if (!Trade.TryRestoreState(tradeSave, out string error))
-                {
-                    LastPersistenceMessage = "Holdfast trade reload rejected: " + error;
-                    return false;
-                }
-                restoredAny = true;
+                LastPersistenceMessage = "No Holdfast save was available to reload.";
+                return false;
             }
 
-            LastPersistenceMessage = restoredAny
-                ? "Holdfast state reloaded from disk."
-                : "No Holdfast save was available to reload.";
-            return restoredAny;
+            try
+            {
+                if (baseSave != null)
+                {
+                    World.RestoreSave(baseSave);
+                }
+
+                if (tradeSave != null)
+                {
+                    if (!Trade.TryRestoreState(tradeSave, out string error))
+                    {
+                        // Rollback on partial or corrupted trade load
+                        World.RestoreSave(worldSnapshot);
+                        Trade.TryRestoreState(tradeSnapshot, out _);
+                        LastPersistenceMessage = "Holdfast trade reload rejected: " + error;
+                        return false;
+                    }
+                }
+
+                LastPersistenceMessage = "Holdfast state reloaded from disk.";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Rollback on any failure
+                World.RestoreSave(worldSnapshot);
+                Trade.TryRestoreState(tradeSnapshot, out _);
+                LastPersistenceMessage = "Holdfast reload failed: " + ex.Message;
+                return false;
+            }
         }
 
         public void SeedDevelopmentState()
@@ -223,27 +272,99 @@ namespace AtomicWar.GodotApp
             return $"Day {Day}. HP:{Health} Hunger:{Hunger} Thirst:{Thirst} Rad:{Radiation:F0}mSv.";
         }
 
+        private void WireInventorySession()
+        {
+            if (_inventorySession == null) return;
+            if (Survivors != null)
+            {
+                _inventorySession.Survivors = Survivors;
+            }
+            else
+            {
+                _inventorySession.ApplyNeedOverride = (survivorId, needType, delta) =>
+                {
+                    switch (needType)
+                    {
+                        case ItemType.Food:
+                            _fallbackHunger = Math.Max(0, (int)(_fallbackHunger + delta));
+                            break;
+                        case ItemType.Water:
+                            _fallbackThirst = Math.Max(0, (int)(_fallbackThirst + delta));
+                            break;
+                        case ItemType.Medical:
+                            _fallbackHealth = Math.Min(MaxHealth, Math.Max(0, (int)(_fallbackHealth + delta)));
+                            break;
+                    }
+                    return true;
+                };
+                _inventorySession.ApplyRadCleanseOverride = (survivorId, rads) =>
+                {
+                    _fallbackRadiation = Math.Max(0f, _fallbackRadiation - rads);
+                };
+                _inventorySession.ApplyContaminationOverride = (survivorId, dose) =>
+                {
+                    _fallbackRadiation += dose;
+                };
+            }
+        }
+
+        private InventoryHostSession? GetOrCreateInventorySession()
+        {
+            if (_inventorySession != null)
+            {
+                WireInventorySession();
+                return _inventorySession;
+            }
+
+            var inv = EffectiveInventory;
+            if (inv != null)
+            {
+                _inventorySession = new InventoryHostSession(inv);
+                WireInventorySession();
+                return _inventorySession;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Consume food items from inventory to reduce hunger.
         /// Returns true if food was consumed.
         /// </summary>
         public bool ConsumeFood(string itemId, int amount = 1)
         {
-            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
-            int held = Trade.GetHeld(itemId);
-            if (held < amount) return false;
+            return ConsumeFoodResult(itemId, amount).IsSuccess;
+        }
 
-            Trade.Inventory.RemoveItem(itemId, amount);
-            if (Survivors != null)
+        public ActionResult ConsumeFoodResult(string itemId, int amount = 1, string? survivorId = null)
+        {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0)
+                return ActionResult.Blocked("invalid_args", "Invalid item or amount.");
+
+            string targetSurvivor = survivorId ?? PlayerSurvivorId;
+            var session = GetOrCreateInventorySession();
+            if (session != null)
             {
-                Survivors.Needs.Modify(PlayerSurvivorId, NeedKind.Hunger, -30f * amount);
+                int held = session.Inventory.CountById(itemId);
+                if (held < amount)
+                    return ActionResult.Blocked("insufficient_inventory", $"Insufficient {itemId} in inventory ({held}/{amount}).");
+
+                var aggregatedDeltas = new Dictionary<string, double>(StringComparer.Ordinal);
+                for (int i = 0; i < amount; i++)
+                {
+                    var r = session.ConsumeResult(itemId, targetSurvivor);
+                    if (!r.IsSuccess) return r;
+                    foreach (var kv in r.Deltas)
+                    {
+                        aggregatedDeltas.TryGetValue(kv.Key, out double cur);
+                        aggregatedDeltas[kv.Key] = cur + kv.Value;
+                    }
+                }
+                StateChanged?.Invoke();
+                return ActionResult.Success($"Ate {amount} × {itemId}.", aggregatedDeltas);
             }
-            else
-            {
-                _fallbackHunger = Math.Max(0, _fallbackHunger - 30 * amount);
-            }
-            StateChanged?.Invoke();
-            return true;
+
+            return FallbackConsume(itemId, amount, targetSurvivor, ItemType.Food);
         }
 
         /// <summary>
@@ -252,21 +373,38 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool ConsumeWater(string itemId, int amount = 1)
         {
-            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
-            int held = Trade.GetHeld(itemId);
-            if (held < amount) return false;
+            return ConsumeWaterResult(itemId, amount).IsSuccess;
+        }
 
-            Trade.Inventory.RemoveItem(itemId, amount);
-            if (Survivors != null)
+        public ActionResult ConsumeWaterResult(string itemId, int amount = 1, string? survivorId = null)
+        {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0)
+                return ActionResult.Blocked("invalid_args", "Invalid item or amount.");
+
+            string targetSurvivor = survivorId ?? PlayerSurvivorId;
+            var session = GetOrCreateInventorySession();
+            if (session != null)
             {
-                Survivors.Needs.Modify(PlayerSurvivorId, NeedKind.Thirst, -35f * amount);
+                int held = session.Inventory.CountById(itemId);
+                if (held < amount)
+                    return ActionResult.Blocked("insufficient_inventory", $"Insufficient {itemId} in inventory ({held}/{amount}).");
+
+                var aggregatedDeltas = new Dictionary<string, double>(StringComparer.Ordinal);
+                for (int i = 0; i < amount; i++)
+                {
+                    var r = session.ConsumeResult(itemId, targetSurvivor);
+                    if (!r.IsSuccess) return r;
+                    foreach (var kv in r.Deltas)
+                    {
+                        aggregatedDeltas.TryGetValue(kv.Key, out double cur);
+                        aggregatedDeltas[kv.Key] = cur + kv.Value;
+                    }
+                }
+                StateChanged?.Invoke();
+                return ActionResult.Success($"Drank {amount} × {itemId}.", aggregatedDeltas);
             }
-            else
-            {
-                _fallbackThirst = Math.Max(0, _fallbackThirst - 35 * amount);
-            }
-            StateChanged?.Invoke();
-            return true;
+
+            return FallbackConsume(itemId, amount, targetSurvivor, ItemType.Water);
         }
 
         /// <summary>
@@ -289,23 +427,173 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Use anti-rad items to reduce radiation.
         /// </summary>
-        public bool UseAntiRad(string itemId, float reduction = 20f)
+        public bool UseAntiRad(string itemId, float reduction = 0f)
         {
-            if (string.IsNullOrEmpty(itemId) || reduction <= 0f) return false;
-            int held = Trade.GetHeld(itemId);
-            if (held < 1) return false;
+            return UseAntiRadResult(itemId, reduction: reduction).IsSuccess;
+        }
 
-            Trade.Inventory.RemoveItem(itemId, 1);
+        public ActionResult UseAntiRadResult(string itemId, string? survivorId = null, float reduction = 0f)
+        {
+            if (string.IsNullOrEmpty(itemId))
+                return ActionResult.Blocked("invalid_args", "Invalid item.");
+
+            string targetSurvivor = survivorId ?? PlayerSurvivorId;
+            var session = GetOrCreateInventorySession();
+            if (session != null)
+            {
+                int held = session.Inventory.CountById(itemId);
+                if (held < 1)
+                    return ActionResult.Blocked("insufficient_inventory", $"Insufficient {itemId} in inventory ({held}/1).");
+
+                var r = session.ConsumeResult(itemId, targetSurvivor);
+                if (r.IsSuccess)
+                    StateChanged?.Invoke();
+                return r;
+            }
+
+            return FallbackConsume(itemId, 1, targetSurvivor, ItemType.AntiRad, reduction);
+        }
+
+        private ActionResult FallbackConsume(string itemId, int amount, string targetSurvivor, ItemType expectedType, float customReduction = 0f)
+        {
+            int held = Trade.GetHeld(itemId);
+            if (held < amount)
+                return ActionResult.Blocked("insufficient_inventory", $"Insufficient {itemId} held ({held}/{amount}).");
+
+            Trade.Inventory.RemoveItem(itemId, amount);
+
+            float hungerRestore = 0f;
+            float thirstRestore = 0f;
+            float healthEffect = 0f;
+            float radCleanse = 0f;
+            float contamination = 0f;
+
+            string canonical = ItemAliases.ToCanonical(itemId);
+
+            if (canonical == "canned_food") { hungerRestore = 40f; }
+            else if (canonical == "crop_wheat") { hungerRestore = 50f; }
+            else if (canonical == "crop_tuber") { hungerRestore = 35f; }
+            else if (canonical == "crop_grain") { hungerRestore = 30f; }
+            else if (canonical == "crop_mushroom") { hungerRestore = 25f; }
+            else if (canonical == "clean_water" || canonical == "water_bottle" || canonical == "purified_water") { thirstRestore = 40f; }
+            else if (canonical == "irradiated_water") { thirstRestore = 25f; contamination = 0.5f; }
+            else if (canonical == "bandage") { healthEffect = 30f; }
+            else if (canonical == "anti_rad") { radCleanse = customReduction > 0f ? customReduction : 50f; }
+            else if (canonical == "rad_away") { radCleanse = customReduction > 0f ? customReduction : 30f; }
+            else if (canonical == "iodine_pills") { radCleanse = customReduction > 0f ? customReduction : 20f; }
+            else if (expectedType == ItemType.Food) { hungerRestore = 30f; }
+            else if (expectedType == ItemType.Water) { thirstRestore = 35f; }
+            else if (expectedType == ItemType.AntiRad) { radCleanse = customReduction > 0f ? customReduction : 20f; }
+
+            var deltas = new Dictionary<string, double>(StringComparer.Ordinal);
+            if (hungerRestore > 0f) deltas["hunger"] = -hungerRestore * amount;
+            if (thirstRestore > 0f) deltas["thirst"] = -thirstRestore * amount;
+            if (healthEffect > 0f) deltas["health"] = healthEffect * amount;
+            if (radCleanse > 0f) deltas["rad_cleanse"] = radCleanse * amount;
+            if (contamination > 0f) deltas["contamination"] = contamination * amount * Ashfall.Core.Inventory.Inventory.ContaminationDosePerUnit;
+
             if (Survivors != null)
             {
-                Survivors.AdministerAntiRad(PlayerSurvivorId, reduction);
+                if (hungerRestore > 0f) Survivors.Needs.Modify(targetSurvivor, NeedKind.Hunger, -hungerRestore * amount);
+                if (thirstRestore > 0f) Survivors.Needs.Modify(targetSurvivor, NeedKind.Thirst, -thirstRestore * amount);
+                if (healthEffect > 0f) Survivors.Needs.Modify(targetSurvivor, NeedKind.Health, healthEffect * amount);
+                if (radCleanse > 0f) Survivors.AdministerAntiRad(targetSurvivor, radCleanse * amount);
+                if (contamination > 0f)
+                {
+                    var rad = Survivors.RadStateFor(targetSurvivor);
+                    if (rad != null) Survivors.Radiation.AdjustDose(rad, contamination * amount * Ashfall.Core.Inventory.Inventory.ContaminationDosePerUnit);
+                }
             }
             else
             {
-                _fallbackRadiation = Math.Max(0, _fallbackRadiation - reduction);
+                if (hungerRestore > 0f) _fallbackHunger = Math.Max(0, (int)(_fallbackHunger - hungerRestore * amount));
+                if (thirstRestore > 0f) _fallbackThirst = Math.Max(0, (int)(_fallbackThirst - thirstRestore * amount));
+                if (healthEffect > 0f) _fallbackHealth = Math.Min(MaxHealth, (int)(_fallbackHealth + healthEffect * amount));
+                if (radCleanse > 0f) _fallbackRadiation = Math.Max(0f, _fallbackRadiation - radCleanse * amount);
+                if (contamination > 0f) _fallbackRadiation += contamination * amount * Ashfall.Core.Inventory.Inventory.ContaminationDosePerUnit;
             }
+
             StateChanged?.Invoke();
-            return true;
+            return ActionResult.Success($"Consumed {amount} × {itemId}.", deltas);
+        }
+
+        public string? FindAvailableFoodItemId()
+        {
+            var inv = EffectiveInventory;
+            if (inv != null)
+            {
+                for (int i = 0; i < inv.Slots.Count; i++)
+                {
+                    var slot = inv.Slots[i];
+                    if (slot?.Item != null && slot.Amount > 0)
+                    {
+                        if (slot.Item.type == ItemType.Food ||
+                            slot.Item.type == ItemType.ContaminatedFood ||
+                            slot.Item.hungerRestore > 0f)
+                            return slot.Item.id;
+                    }
+                }
+            }
+            string[] preferredFood = { "canned_food", "crop_wheat", "crop_tuber", "crop_grain", "crop_mushroom", "ration_pack", "dried_meat", "mre" };
+            foreach (var food in preferredFood)
+            {
+                if (Trade.GetHeld(food) > 0) return food;
+            }
+            return null;
+        }
+
+        public string? FindAvailableWaterItemId()
+        {
+            var inv = EffectiveInventory;
+            if (inv != null)
+            {
+                if (inv.CountById("clean_water") > 0) return "clean_water";
+                for (int i = 0; i < inv.Slots.Count; i++)
+                {
+                    var slot = inv.Slots[i];
+                    if (slot?.Item != null && slot.Amount > 0)
+                    {
+                        if (slot.Item.type == ItemType.Water ||
+                            slot.Item.type == ItemType.IrradiatedWater ||
+                            slot.Item.thirstRestore > 0f)
+                            return slot.Item.id;
+                    }
+                }
+            }
+            string[] preferredWater = { "clean_water", "water_bottle", "purified_water", "irradiated_water" };
+            foreach (var water in preferredWater)
+            {
+                if (Trade.GetHeld(water) > 0) return water;
+            }
+            return null;
+        }
+
+        public string? FindAvailableAntiRadItemId()
+        {
+            var inv = EffectiveInventory;
+            if (inv != null)
+            {
+                if (inv.CountById("anti_rad") > 0) return "anti_rad";
+                if (inv.CountById("rad_away") > 0) return "rad_away";
+                if (inv.CountById("iodine_pills") > 0) return "iodine_pills";
+                for (int i = 0; i < inv.Slots.Count; i++)
+                {
+                    var slot = inv.Slots[i];
+                    if (slot?.Item != null && slot.Amount > 0)
+                    {
+                        if (slot.Item.type == ItemType.AntiRad ||
+                            slot.Item.type == ItemType.Iodine ||
+                            slot.Item.radCleanse > 0f)
+                            return slot.Item.id;
+                    }
+                }
+            }
+            string[] preferredAntiRad = { "anti_rad", "rad_away", "iodine_pills" };
+            foreach (var item in preferredAntiRad)
+            {
+                if (Trade.GetHeld(item) > 0) return item;
+            }
+            return null;
         }
 
         /// <summary>
@@ -419,7 +707,7 @@ namespace AtomicWar.GodotApp
             {
                 string basePath = basePathOverride ?? HoldfastSaveStore.SavePath;
                 string tradePath = tradePathOverride ?? HoldfastTradeSaveStore.SavePath;
-                string timestamp = DateTime.UtcNow.ToString("yyyyMMdd-HHmmss", System.Globalization.CultureInfo.InvariantCulture);
+                string timestamp = DateTime.UtcNow.ToString("yyyyMMdd-HHmmss", System.Globalization.CultureInfo.InvariantCulture); // DETERMINISM_ALLOWLIST: Archive folder timestamp
                 string archiveDir = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(basePath) ?? string.Empty, "holdfast_archive_" + timestamp);
 
                 bool archived = true;

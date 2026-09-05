@@ -165,6 +165,77 @@ namespace Ashfall.Core.Combat
         public float Value;
     }
 
+    /// <summary>
+    /// Record of weapon wear during a combat encounter.
+    /// </summary>
+    [Serializable]
+    public class CombatWeaponWearRecord
+    {
+        public string InstanceId = string.Empty;
+        public string WeaponId = string.Empty;
+        public string OwnerSurvivorId = string.Empty;
+        public float StartConditionPct = 1f;
+        public float FinalConditionPct = 1f;
+        public float WearDeltaPct = 0f;
+    }
+
+    /// <summary>
+    /// Record of ammunition consumed during a combat encounter.
+    /// </summary>
+    [Serializable]
+    public class CombatAmmoSpentRecord
+    {
+        public string AmmoId = string.Empty;
+        public int RoundsSpent = 0;
+    }
+
+    /// <summary>
+    /// Exactly-once aftermath report generated upon encounter resolution.
+    /// Keyed to a stable ResolutionId to prevent duplicate application on save/reload.
+    /// </summary>
+    [Serializable]
+    public class CombatAftermath
+    {
+        public string ResolutionId = string.Empty;
+        public string EncounterId = string.Empty;
+        public string Outcome = string.Empty;
+        public List<string> SurvivorInjuries = new List<string>();
+        public List<string> SurvivorDeaths = new List<string>();
+        public List<CombatWeaponWearRecord> WeaponWear = new List<CombatWeaponWearRecord>();
+        public List<CombatAmmoSpentRecord> AmmoSpent = new List<CombatAmmoSpentRecord>();
+        public List<CombatLootEntry> LootConsequences = new List<CombatLootEntry>();
+        public float MoraleConsequences = 0f;
+        public bool IsApplied;
+    }
+
+    /// <summary>
+    /// Persisted start condition of a weapon instance for wear reconciliation.
+    /// </summary>
+    [Serializable]
+    public class BoundWeaponConditionEntry
+    {
+        public string instanceId = string.Empty;
+        public float conditionPct = 1f;
+    }
+
+    /// <summary>
+    /// Preflight check for tactical action legality and reason code.
+    /// </summary>
+    public readonly struct ActionPreflight
+    {
+        public bool CanExecute { get; }
+        public string Reason { get; }
+
+        public ActionPreflight(bool canExecute, string reason = "")
+        {
+            CanExecute = canExecute;
+            Reason = reason ?? string.Empty;
+        }
+
+        public static ActionPreflight Ok => new ActionPreflight(true, string.Empty);
+        public static ActionPreflight Blocked(string reason) => new ActionPreflight(false, reason);
+    }
+
     /// <summary>Full serialized combat-save state (one active or past encounter).</summary>
     [Serializable]
     public class CombatState
@@ -185,11 +256,44 @@ namespace Ashfall.Core.Combat
         public int RoundNumber = 0;
         public bool Resolved;
         public string OutcomeText = string.Empty;
+        public string ResolutionId = string.Empty;
+        public CombatAftermath? Aftermath;
+        public List<BoundWeaponConditionEntry> BoundWeaponConditions = new List<BoundWeaponConditionEntry>();
         public List<CombatantState> Combatants = new List<CombatantState>();
         public List<WeaponInstanceState> Weapons = new List<WeaponInstanceState>();
         public List<BarrierState> Barriers = new List<BarrierState>();
         public List<CombatEvent> Events = new List<CombatEvent>();
         public List<CombatLootEntry> Loot = new List<CombatLootEntry>();
+
+        public float GetBoundWeaponStartCondition(string instanceId, float defaultVal = 1f)
+        {
+            if (string.IsNullOrEmpty(instanceId) || BoundWeaponConditions == null) return defaultVal;
+            for (int i = 0; i < BoundWeaponConditions.Count; i++)
+            {
+                if (string.Equals(BoundWeaponConditions[i].instanceId, instanceId, StringComparison.Ordinal))
+                    return BoundWeaponConditions[i].conditionPct;
+            }
+            return defaultVal;
+        }
+
+        public void SetBoundWeaponStartCondition(string instanceId, float condition)
+        {
+            if (string.IsNullOrEmpty(instanceId)) return;
+            BoundWeaponConditions ??= new List<BoundWeaponConditionEntry>();
+            for (int i = 0; i < BoundWeaponConditions.Count; i++)
+            {
+                if (string.Equals(BoundWeaponConditions[i].instanceId, instanceId, StringComparison.Ordinal))
+                {
+                    BoundWeaponConditions[i].conditionPct = condition;
+                    return;
+                }
+            }
+            BoundWeaponConditions.Add(new BoundWeaponConditionEntry
+            {
+                instanceId = instanceId,
+                conditionPct = condition
+            });
+        }
     }
 
     /// <summary>Result of a player action — success + message + appended events.</summary>
@@ -204,6 +308,7 @@ namespace Ashfall.Core.Combat
     public class CombatSnapshot
     {
         public string EncounterId = string.Empty;
+        public string ResolutionId = string.Empty;
         public string LocationName = string.Empty;
         public int Day;
         public int Turn;
@@ -212,6 +317,7 @@ namespace Ashfall.Core.Combat
         public bool Resolved;
         public string OutcomeText = string.Empty;
         public bool IsActive;
+        public CombatAftermath? Aftermath;
         public List<CombatantSnapshot> Combatants = new List<CombatantSnapshot>();
         public List<WeaponSnapshot> Weapons = new List<WeaponSnapshot>();
         public List<CombatEvent> Events = new List<CombatEvent>();

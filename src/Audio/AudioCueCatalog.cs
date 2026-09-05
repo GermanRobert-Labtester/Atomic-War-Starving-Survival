@@ -20,6 +20,9 @@ namespace AtomicWar.GodotApp.Audio
         public const string Radio = "Radio";
         public const string Medical = "Medical";
         public const string Surface = "Surface";
+        public const string Machinery = "Machinery";
+        public const string ShelterSocial = "ShelterSocial";
+        public const string Subterranean = "Subterranean";
     }
 
     /// <summary>
@@ -372,6 +375,27 @@ namespace AtomicWar.GodotApp.Audio
         public const string GameOver = "game_over";
         public const string SaveSuccess = "save_success";
         public const string DayTransition = "day_transition";
+
+        // Shelter Operations & Workshop (Plans 46–49)
+        public const string WorkshopLatheLoop = "workshop_lathe_loop";
+        public const string AmmoPressStamp = "ammo_press_stamp";
+        public const string WeaponCleanClick = "weapon_clean_click";
+        public const string MachineOverhaulClank = "machine_overhaul_clank";
+
+        // Radio Intelligence (Plan 47)
+        public const string RadioTuningHeterodyne = "radio_tuning_heterodyne";
+        public const string RadioDecryptedBeep = "radio_decrypted_beep";
+
+        // Shelter Social Dynamics (Plan 48)
+        public const string MessHallChatterLoop = "mess_hall_chatter_loop";
+        public const string DisputeArgumentShout = "dispute_argument_shout";
+        public const string MediationAccordChime = "mediation_accord_chime";
+
+        // Subterranean Excavation & Hazards (Plan 49)
+        public const string MethaneAlarmBeep = "methane_alarm_beep";
+        public const string WaterPumpHumLoop = "water_pump_hum_loop";
+        public const string BulkheadHydraulicSlam = "bulkhead_hydraulic_slam";
+        public const string CaveInCollapseRumble = "cave_in_collapse_rumble";
 
         static AudioCueCatalog()
         {

@@ -5,22 +5,15 @@ using Ashfall.Core.MoralChoice;
 namespace Ashfall.Core.Factions
 {
     /// <summary>
-    /// Stub standing/alignment system for Peace Reputation Protection Forces
-    /// (PRPF), the hidden third-power faction. This slice deliberately does
-    /// NOT simulate PRPF's autonomous power-growth curve, the chance-based
-    /// hidden-recruitment encounter roll, or its concealed HQ — it exists so
-    /// the Military and Rebel branch systems (and later Independent) have a
-    /// real, save-durable faction to read/modify standing against, instead of
-    /// a placeholder string with no backing state.
+    /// Standing/alignment system for Peace Reputation Protection Forces
+    /// (PRPF), the hidden third-power faction. Owns the player's standing
+    /// toward PRPF (-100..+100, FactionWarSystem-shaped), PRPF's own internal
+    /// alignment (positive-leaning by design, swayable once allied), the
+    /// join/oppose gate (morality-band gated), and a deterministic daily
+    /// influence tick once joined or opposed.
     ///
-    /// What this system DOES own: the player's standing toward PRPF
-    /// (-100..+100, FactionWarSystem-shaped), PRPF's own internal alignment
-    /// (positive-leaning by design, swayable by the player once allied), and
-    /// the join/oppose gate — joining requires the player's morality band to
-    /// be at or above JoinMinPlayerMoralBand ("play too evil and you won't
-    /// even get the chance to join them because the faction is a positive
-    /// leveled faction"). Standing can rise or fall freely regardless of
-    /// morality band; only the formal join action is band-gated.
+    /// Autonomous power-growth, chance-based hidden recruitment, and
+    /// concealed HQ remain out of scope here.
     ///
     /// Zero engine dependencies; deterministic.
     /// </summary>
@@ -140,6 +133,27 @@ namespace Ashfall.Core.Factions
             OnOpposed?.Invoke();
         }
 
+        /// <summary>
+        /// Deterministic daily influence once the join/oppose fork is taken.
+        /// Joined: slow positive alignment drift. Opposed: slow standing decay.
+        /// No-op before commitment so passive observation does not mint loyalty.
+        /// </summary>
+        public void TickDay(int day)
+        {
+            if (day < 0) return;
+            if (day <= _state.lastTickedDay) return;
+            _state.lastTickedDay = day;
+
+            if (_state.joined)
+            {
+                ShiftFactionAlignment(+1);
+                return;
+            }
+
+            if (_state.opposed)
+                ModifyStanding(-1);
+        }
+
         public PrpfSystemState CaptureState() => Clone(_state);
 
         public void RestoreState(PrpfSystemState state)
@@ -180,7 +194,8 @@ namespace Ashfall.Core.Factions
                     alignment = source.alignment.alignment
                 },
                 joined = source.joined,
-                opposed = source.opposed
+                opposed = source.opposed,
+                lastTickedDay = source.lastTickedDay
             };
         }
     }

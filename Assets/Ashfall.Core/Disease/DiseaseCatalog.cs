@@ -108,6 +108,71 @@ namespace Ashfall.Core.Disease
             string.Equals(role, Curative, StringComparison.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// Plan 63 / B4 — canonical 8-stage clinical progression arc.
+    /// </summary>
+    public enum DiseaseStage
+    {
+        Incubating = 0,
+        Prodromal = 1,
+        Symptomatic = 2,
+        Severe = 3,
+        Critical = 4,
+        Recovering = 5,
+        Recovered = 6,
+        Terminal = 7
+    }
+
+    public static class DiseaseStageNames
+    {
+        public const string Incubating = "Incubating";
+        public const string Prodromal = "Prodromal";
+        public const string Symptomatic = "Symptomatic";
+        public const string Severe = "Severe";
+        public const string Critical = "Critical";
+        public const string Recovering = "Recovering";
+        public const string Recovered = "Recovered";
+        public const string Terminal = "Terminal";
+
+        public static DiseaseStage Parse(string name)
+        {
+            if (string.Equals(name, Prodromal, StringComparison.OrdinalIgnoreCase)) return DiseaseStage.Prodromal;
+            if (string.Equals(name, Symptomatic, StringComparison.OrdinalIgnoreCase)) return DiseaseStage.Symptomatic;
+            if (string.Equals(name, Severe, StringComparison.OrdinalIgnoreCase)) return DiseaseStage.Severe;
+            if (string.Equals(name, Critical, StringComparison.OrdinalIgnoreCase)) return DiseaseStage.Critical;
+            if (string.Equals(name, Recovering, StringComparison.OrdinalIgnoreCase)) return DiseaseStage.Recovering;
+            if (string.Equals(name, Recovered, StringComparison.OrdinalIgnoreCase)) return DiseaseStage.Recovered;
+            if (string.Equals(name, Terminal, StringComparison.OrdinalIgnoreCase)) return DiseaseStage.Terminal;
+            return DiseaseStage.Incubating;
+        }
+    }
+
+    /// <summary>
+    /// Plan 63 / B4 — authored phase within a disease's clinical progression arc.
+    /// </summary>
+    [Serializable]
+    public sealed class DiseasePhaseDefinition
+    {
+        public string stage = DiseaseStageNames.Incubating;
+        public int duration_days = 1;
+        public float contagiousness = 1.0f; // multiplier on base infectivity
+        public List<string> symptom_tags = new List<string>();
+        public float work_modifier = 1.0f;
+        public float care_modifier = 1.0f;
+    }
+
+    /// <summary>
+    /// Plan 63 / B4 — data-driven exposure source tuning for butchery, autopsy, hazards, etc.
+    /// </summary>
+    [Serializable]
+    public sealed class DiseaseExposureSource
+    {
+        public string source_id = string.Empty;
+        public string disease_id = string.Empty;
+        public float base_probability = 0f;
+        public string mitigating_trait_id = string.Empty;
+    }
+
     public sealed class DiseaseDefinition
     {
         public string id = string.Empty;                 // disease_*
@@ -174,6 +239,21 @@ namespace Ashfall.Core.Disease
         /// </summary>
         public List<DiseaseTreatment> treatments = new List<DiseaseTreatment>();
 
+        /// <summary>
+        /// Plan 63 / B4 — authored progression phases. Empty defaults to synthesized 8-stage mapping.
+        /// </summary>
+        public List<DiseasePhaseDefinition> phases = new List<DiseasePhaseDefinition>();
+
+        /// <summary>
+        /// Plan 63 / B4 — temporary immunity granted on recovery in days. 0 = no immunity.
+        /// </summary>
+        public int immunity_duration_days = 14;
+
+        /// <summary>
+        /// Resistance multiplier during the immunity window (0..1, where 1.0 = 100% resistance).
+        /// </summary>
+        public float immunity_strength = 1.0f;
+
         /// <summary>Find the authorised treatment entry for an item id, if any.</summary>
         public DiseaseTreatment? TreatmentFor(string itemId)
         {
@@ -185,6 +265,67 @@ namespace Ashfall.Core.Disease
                     return t;
             }
             return null;
+        }
+
+        public DiseaseStage GetStage(int daysSick)
+        {
+            if (phases != null && phases.Count > 0)
+            {
+                int accumulatedDays = 0;
+                for (int i = 0; i < phases.Count; i++)
+                {
+                    var p = phases[i];
+                    if (p == null) continue;
+                    accumulatedDays += Math.Max(1, p.duration_days);
+                    if (daysSick < accumulatedDays)
+                        return DiseaseStageNames.Parse(p.stage);
+                }
+                return DiseaseStage.Recovering;
+            }
+
+            // Fallback synthesis based on incubation_days and illness_days
+            if (daysSick < incubation_days) return DiseaseStage.Incubating;
+            int activeDays = daysSick - incubation_days;
+            int illnessWindow = Math.Max(1, illness_days);
+            if (activeDays < 1) return DiseaseStage.Prodromal;
+            if (activeDays < Math.Max(2, illnessWindow / 2)) return DiseaseStage.Symptomatic;
+            if (activeDays < (int)(illnessWindow * 0.75f)) return DiseaseStage.Severe;
+            if (activeDays < illnessWindow) return DiseaseStage.Critical;
+            return DiseaseStage.Recovering;
+        }
+
+        public DiseasePhaseDefinition? GetPhaseDefinition(DiseaseStage stage)
+        {
+            if (phases == null) return null;
+            string targetName = stage.ToString();
+            for (int i = 0; i < phases.Count; i++)
+            {
+                var p = phases[i];
+                if (p != null && string.Equals(p.stage, targetName, StringComparison.OrdinalIgnoreCase))
+                    return p;
+            }
+            return null;
+        }
+
+        public float GetPhaseContagiousness(int daysSick, float baseInfectivity)
+        {
+            var stage = GetStage(daysSick);
+            var phaseDef = GetPhaseDefinition(stage);
+            if (phaseDef != null)
+                return baseInfectivity * phaseDef.contagiousness;
+
+            switch (stage)
+            {
+                case DiseaseStage.Incubating: return 0f;
+                case DiseaseStage.Prodromal: return baseInfectivity * 0.25f;
+                case DiseaseStage.Symptomatic: return baseInfectivity * 1.0f;
+                case DiseaseStage.Severe: return baseInfectivity * 1.20f;
+                case DiseaseStage.Critical: return baseInfectivity * 0.80f;
+                case DiseaseStage.Recovering: return baseInfectivity * 0.15f;
+                case DiseaseStage.Recovered: return 0f;
+                case DiseaseStage.Terminal: return 0f;
+                default: return baseInfectivity;
+            }
         }
     }
 
@@ -200,6 +341,9 @@ namespace Ashfall.Core.Disease
         /// lapses. Absent (or zero) means the protocol holds until manually
         /// disengaged, which is the pre-D4 behaviour.</summary>
         public List<VectorProtocolFile> vector_protocols = new List<VectorProtocolFile>();
+
+        /// <summary>Plan 63 / B4 — data-driven exposure source tuning.</summary>
+        public List<DiseaseExposureSource> exposure_sources = new List<DiseaseExposureSource>();
     }
 
     /// <summary>Authored maintenance window for one vector countermeasure.</summary>
@@ -221,12 +365,10 @@ namespace Ashfall.Core.Disease
         public const string CollectionId = "disease_catalog";
 
         /// <summary>
-        /// 1 → 2 (Plan 60 / D3 + D2): added <c>treatments[]</c> per disease and the
-        /// clinical tell fields (<c>tell</c>, <c>tell_secondary</c>, <c>timing_clue</c>).
-        /// Both are additive and optional — a version-1 file loads unchanged, with no
-        /// authorised treatment and no tell, exactly as it behaved before.
+        /// 1 → 2 (Plan 60 / D3 + D2): added <c>treatments[]</c> per disease and clinical tells.
+        /// 2 → 3 (Plan 63 / B4): added <c>phases[]</c>, <c>immunity_duration_days</c>, and <c>exposure_sources[]</c>.
         /// </summary>
-        public const int SchemaVersion = 2;
+        public const int SchemaVersion = 3;
 
         public readonly List<string> Errors = new List<string>();
         public readonly List<DiseaseDefinition> Diseases = new List<DiseaseDefinition>();
@@ -236,6 +378,9 @@ namespace Ashfall.Core.Disease
         /// goes stale, seals get opened by work details, filters clog. Zero means
         /// the protocol holds until manually disengaged.</summary>
         public readonly List<VectorProtocolFile> VectorProtocols = new List<VectorProtocolFile>();
+
+        /// <summary>Plan 63 / B4 — data-driven exposure source tuning entries.</summary>
+        public readonly List<DiseaseExposureSource> ExposureSources = new List<DiseaseExposureSource>();
 
         public IReadOnlyList<DiseaseDefinition> All => Diseases;
         public int Count => Diseases.Count;
@@ -256,6 +401,20 @@ namespace Ashfall.Core.Disease
                 var d = Diseases[i];
                 if (d != null && string.Equals(d.id, id, StringComparison.Ordinal))
                     return d;
+            }
+            return null;
+        }
+
+        public DiseaseDefinition? GetDefinition(string id) => GetById(id);
+
+        public DiseaseExposureSource? GetExposureSource(string sourceId)
+        {
+            if (string.IsNullOrEmpty(sourceId)) return null;
+            for (int i = 0; i < ExposureSources.Count; i++)
+            {
+                var s = ExposureSources[i];
+                if (s != null && string.Equals(s.source_id, sourceId, StringComparison.Ordinal))
+                    return s;
             }
             return null;
         }
@@ -392,6 +551,28 @@ namespace Ashfall.Core.Disease
                     continue;
                 }
 
+                // Plan 63 / B4 — phase definitions and immunity validation
+                if (d.phases != null && d.phases.Count > 0)
+                {
+                    for (int ph = 0; ph < d.phases.Count; ph++)
+                    {
+                        var phase = d.phases[ph];
+                        if (phase == null) continue;
+                        if (phase.duration_days < 0)
+                            catalog.Errors.Add($"disease_catalog.json: '{d.id}' phase[{ph}] duration_days must be >= 0");
+                        if (phase.contagiousness < 0f)
+                            catalog.Errors.Add($"disease_catalog.json: '{d.id}' phase[{ph}] contagiousness must be >= 0");
+                    }
+                }
+                if (d.immunity_duration_days < 0)
+                {
+                    catalog.Errors.Add($"disease_catalog.json: '{d.id}' immunity_duration_days must be >= 0");
+                }
+                if (d.immunity_strength < 0f || d.immunity_strength > 1f)
+                {
+                    catalog.Errors.Add($"disease_catalog.json: '{d.id}' immunity_strength outside 0..1");
+                }
+
                 // Normalise the vector enum; unknown/empty defaults to water so a
                 // typo degrades safe (vector blocked only when its protocol is set).
                 if (string.IsNullOrEmpty(d.vector))
@@ -421,6 +602,26 @@ namespace Ashfall.Core.Disease
                         continue;
                     }
                     catalog.VectorProtocols.Add(p);
+                }
+            }
+
+            // Plan 63 / B4 — exposure sources validation
+            if (file.exposure_sources != null)
+            {
+                for (int i = 0; i < file.exposure_sources.Count; i++)
+                {
+                    var s = file.exposure_sources[i];
+                    if (s == null || string.IsNullOrEmpty(s.source_id))
+                    {
+                        catalog.Errors.Add("disease_catalog.json: exposure_sources[" + i + "] missing source_id");
+                        continue;
+                    }
+                    if (s.base_probability < 0f || s.base_probability > 1f)
+                    {
+                        catalog.Errors.Add("disease_catalog.json: exposure_sources['" + s.source_id + "'] base_probability outside 0..1");
+                        continue;
+                    }
+                    catalog.ExposureSources.Add(s);
                 }
             }
             return catalog;

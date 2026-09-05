@@ -549,16 +549,56 @@ namespace Ashfall.Core
                     OnHazardWarning?.Invoke(arcEntry);
 
                     // Local fire hazard through the canonical fire system.
+                    // Build a duct-hub adjacency graph so arc fires can propagate
+                    // to sibling electrostatic rooms instead of remaining single-zone.
                     if (_stageFire != null)
                     {
-                        var zones = new List<FireZoneState>
-                        {
-                            new FireZoneState { zoneId = stage.roomId, displayName = stage.roomId }
-                        };
+                        var zones = BuildArcFireZones(stage.roomId);
                         _stageFire.Ignite($"vent_arc_{stage.roomId}_{day}", stage.roomId, day, zones);
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Arc-ignition zone graph: source room + shared vent duct hub
+        /// (+ the installed electrostatic room id when distinct), so
+        /// <see cref="ShelterFireHazardSystem.Tick"/> can propagate smoke/fire.
+        /// </summary>
+        private List<FireZoneState> BuildArcFireZones(string sourceRoomId)
+        {
+            const string ductHubId = "vent_duct_main";
+            var rooms = new HashSet<string>(StringComparer.Ordinal) { sourceRoomId, ductHubId };
+            if (_state.electrostatic != null && !string.IsNullOrEmpty(_state.electrostatic.roomId))
+                rooms.Add(_state.electrostatic.roomId);
+
+            var zones = new List<FireZoneState>(rooms.Count);
+            foreach (var room in rooms)
+            {
+                var adjacent = new List<string>();
+                if (string.Equals(room, ductHubId, StringComparison.Ordinal))
+                {
+                    foreach (var other in rooms)
+                    {
+                        if (!string.Equals(other, ductHubId, StringComparison.Ordinal))
+                            adjacent.Add(other);
+                    }
+                }
+                else
+                {
+                    adjacent.Add(ductHubId);
+                }
+
+                zones.Add(new FireZoneState
+                {
+                    zoneId = room,
+                    displayName = room,
+                    damperOpen = true,
+                    adjacentZoneIds = adjacent
+                });
+            }
+
+            return zones;
         }
 
         // ── Persistence ──────────────────────────────────────────────────────

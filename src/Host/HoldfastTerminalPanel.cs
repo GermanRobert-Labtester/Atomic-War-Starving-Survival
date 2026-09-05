@@ -224,8 +224,23 @@ namespace AtomicWar.GodotApp
             return result;
         }
 
+        /// <summary>Optional delegate for triggering campaign-wide atomic save.</summary>
+        public Func<bool>? RequestCampaignSave { get; set; }
+
+        /// <summary>Optional delegate for triggering campaign-wide reload.</summary>
+        public Func<bool>? RequestCampaignReload { get; set; }
+
         public bool PressSave(string basePathOverride = null!, string tradePathOverride = null!)
         {
+            if (string.IsNullOrEmpty(basePathOverride) && string.IsNullOrEmpty(tradePathOverride) && RequestCampaignSave != null)
+            {
+                bool campaignSaved = RequestCampaignSave();
+                _feedback.Text = campaignSaved ? "Campaign saved." : "Campaign save failed.";
+                if (campaignSaved) _dispatch?.OnSaveCommitted("campaign");
+                RefreshDispatchLog();
+                return campaignSaved;
+            }
+
             bool saved = _session != null && _session.TrySave(basePathOverride, tradePathOverride);
             _feedback.Text = _session == null
                 ? "Holdfast terminal is not connected."
@@ -241,6 +256,16 @@ namespace AtomicWar.GodotApp
 
         public bool PressReload(string basePathOverride = null!, string tradePathOverride = null!)
         {
+            if (string.IsNullOrEmpty(basePathOverride) && string.IsNullOrEmpty(tradePathOverride) && RequestCampaignReload != null)
+            {
+                bool campaignReloaded = RequestCampaignReload();
+                _feedback.Text = campaignReloaded ? "Campaign reloaded." : "Campaign reload failed.";
+                if (campaignReloaded) _dispatch?.OnReloaded("campaign");
+                RefreshView();
+                RefreshDispatchLog();
+                return campaignReloaded;
+            }
+
             bool loaded = _session != null && _session.TryReload(basePathOverride, tradePathOverride);
             _feedback.Text = _session == null
                 ? "Holdfast terminal is not connected."
@@ -257,19 +282,45 @@ namespace AtomicWar.GodotApp
 
         // ── Survival actions ──────────────────────────────────────────
 
+        public static string FormatDeltas(IReadOnlyDictionary<string, double>? deltas)
+        {
+            if (deltas == null || deltas.Count == 0) return string.Empty;
+            var parts = new List<string>();
+            if (deltas.TryGetValue("hunger", out double hunger) && hunger != 0)
+                parts.Add($"Hunger {(hunger > 0 ? "+" : string.Empty)}{hunger:0.#}");
+            if (deltas.TryGetValue("thirst", out double thirst) && thirst != 0)
+                parts.Add($"Thirst {(thirst > 0 ? "+" : string.Empty)}{thirst:0.#}");
+            if (deltas.TryGetValue("health", out double health) && health != 0)
+                parts.Add($"Health {(health > 0 ? "+" : string.Empty)}{health:0.#}");
+            if (deltas.TryGetValue("morale", out double morale) && morale != 0)
+                parts.Add($"Morale {(morale > 0 ? "+" : string.Empty)}{morale:0.#}");
+            if (deltas.TryGetValue("rad_cleanse", out double rad) && rad > 0)
+                parts.Add($"Rad -{rad:0.#} mSv");
+            if (deltas.TryGetValue("iodine", out double iod) && iod > 0)
+                parts.Add("Iodine protected");
+            if (deltas.TryGetValue("contamination", out double contam) && contam > 0)
+                parts.Add($"Rad +{contam:0.#} mSv");
+
+            if (parts.Count == 0) return string.Empty;
+            return string.Join(" · ", parts) + ". ";
+        }
+
         private void ConsumeFood()
         {
             if (_session == null) return;
-            // Try to consume any food item from inventory
-            string[] foodItems = { "canned_food", "ration_pack", "dried_meat", "mre" };
-            foreach (var food in foodItems)
+            string? food = _session.FindAvailableFoodItemId();
+            if (food != null)
             {
-                if (_session.ConsumeFood(food))
+                var res = _session.ConsumeFoodResult(food, 1);
+                if (res.IsSuccess)
                 {
-                    _feedback.Text = $"Ate {food}. Hunger reduced. Day {_session.Day}.";
+                    string deltas = FormatDeltas(res.Deltas);
+                    _feedback.Text = $"Ate {food}. {deltas}Day {_session.Day}.";
                     RefreshDispatchLog();
                     return;
                 }
+                _feedback.Text = res.MessageKey;
+                return;
             }
             _feedback.Text = "No food in inventory. The shelves are bare.";
         }
@@ -277,15 +328,19 @@ namespace AtomicWar.GodotApp
         private void ConsumeWater()
         {
             if (_session == null) return;
-            string[] waterItems = { "clean_water", "water_bottle", "purified_water" };
-            foreach (var water in waterItems)
+            string? water = _session.FindAvailableWaterItemId();
+            if (water != null)
             {
-                if (_session.ConsumeWater(water))
+                var res = _session.ConsumeWaterResult(water, 1);
+                if (res.IsSuccess)
                 {
-                    _feedback.Text = $"Drank {water}. Thirst reduced. Day {_session.Day}.";
+                    string deltas = FormatDeltas(res.Deltas);
+                    _feedback.Text = $"Drank {water}. {deltas}Day {_session.Day}.";
                     RefreshDispatchLog();
                     return;
                 }
+                _feedback.Text = res.MessageKey;
+                return;
             }
             _feedback.Text = "No clean water. The taps ran dry.";
         }
@@ -293,15 +348,19 @@ namespace AtomicWar.GodotApp
         private void UseAntiRad()
         {
             if (_session == null) return;
-            string[] antiRadItems = { "iodine_pills", "anti_rad", "rad_away" };
-            foreach (var item in antiRadItems)
+            string? item = _session.FindAvailableAntiRadItemId();
+            if (item != null)
             {
-                if (_session.UseAntiRad(item))
+                var res = _session.UseAntiRadResult(item);
+                if (res.IsSuccess)
                 {
-                    _feedback.Text = $"Took {item}. Radiation reduced to {_session.Radiation:F0} mSv.";
+                    string deltas = FormatDeltas(res.Deltas);
+                    _feedback.Text = $"Took {item}. {deltas}Radiation at {_session.Radiation:F0} mSv.";
                     RefreshDispatchLog();
                     return;
                 }
+                _feedback.Text = res.MessageKey;
+                return;
             }
             _feedback.Text = "No anti-rad supplies. The glow persists.";
         }

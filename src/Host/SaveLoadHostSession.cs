@@ -172,7 +172,7 @@ public partial class SaveLoadHostSession : Node
             lastSaveTick = 0,
             mode = CampaignMode.Normal,
             ironManTerminalState = IronManTerminalState.Active,
-            lastSaveTimestamp = DateTime.UtcNow.ToString("o")
+            lastSaveTimestamp = DateTime.UtcNow.ToString("o") // DETERMINISM_ALLOWLIST: Host save metadata timestamp
         };
 
         _slotService.SaveManifest(_currentProfileId, slotId, manifest);
@@ -526,8 +526,8 @@ public partial class SaveLoadHostSession : Node
         if (_activeSlotId == null) return;
         UpdateManifest(m =>
         {
-            m.lastSaveTick = DateTime.UtcNow.Ticks;
-            m.lastSaveTimestamp = DateTime.UtcNow.ToString("o");
+            m.lastSaveTick = DateTime.UtcNow.Ticks; // DETERMINISM_ALLOWLIST: Host save metadata timestamp
+            m.lastSaveTimestamp = DateTime.UtcNow.ToString("o"); // DETERMINISM_ALLOWLIST: Host save metadata timestamp
         });
     }
 
@@ -618,8 +618,8 @@ public partial class SaveLoadHostSession : Node
 
             manifest.profileId = _currentProfileId;
             manifest.slotId = _activeSlotId.Value;
-            manifest.lastSaveTick = DateTime.UtcNow.Ticks;
-            manifest.lastSaveTimestamp = DateTime.UtcNow.ToString("o");
+            manifest.lastSaveTick = DateTime.UtcNow.Ticks; // DETERMINISM_ALLOWLIST: Host save metadata timestamp
+            manifest.lastSaveTimestamp = DateTime.UtcNow.ToString("o"); // DETERMINISM_ALLOWLIST: Host save metadata timestamp
             manifest.generationId = $"gen_{_activeSlotId.Value.Value}_{manifest.lastSaveTick}";
 
             // Strict mode rejects empty required captures and the registry
@@ -867,7 +867,7 @@ public partial class SaveLoadHostSession : Node
             // crash partway through the loop below leaves unambiguous
             // evidence on disk, then clear the marker only once every move
             // and every stale-file deletion has completed.
-            File.WriteAllText(inProgressMarkerPath, DateTime.UtcNow.ToString("o"));
+            File.WriteAllText(inProgressMarkerPath, DateTime.UtcNow.ToString("o")); // DETERMINISM_ALLOWLIST: In-progress save marker timestamp
             markerWritten = true;
 
             // Commit every derived projection only after all staging and reads

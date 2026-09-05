@@ -15,6 +15,8 @@ using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using Ashfall.Core.Radio;
+using Ashfall.Core.IO;
+using Ashfall.Core.Radiation;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -45,6 +47,29 @@ namespace AtomicWar.GodotApp
             _survivors = new SurvivorsHostSession();
             _survivors.LoadCatalog(_dataDir);
             _survivors.LoadStartingRoster(_dataDir);
+
+            // Wire environmental exposure from location catalogs, weather, and active expeditions
+            var locRads = ExposureEnvironmentResolver.LoadLocationRadRates(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            _survivors.ExposureResolver.LocationRadRateProvider = locId =>
+                locRads.TryGetValue(locId, out float r) ? r : ExposureEnvironmentResolver.DefaultWastelandOutdoorRadRate;
+            _survivors.ExposureResolver.WeatherRadModifierProvider = () => _world?.Weather?.OutdoorRadModifier ?? 0f;
+            // Fallout plume contamination overlays expedition/outdoor exposure when clouds overlap a location.
+            _survivors.ExposureResolver.FalloutContaminationProvider = locId =>
+            {
+                if (_fallout == null || string.IsNullOrEmpty(locId)) return 0f;
+                return _fallout.GetLocationContamination(locId);
+            };
+            _survivors.ExposureResolver.SurvivorLocationQuery = id =>
+            {
+                if (_expeditions?.Engine != null &&
+                    _expeditions.Engine.Active.TryGetValue(id, out var exp))
+                {
+                    return (SurvivorExposureLocation.Expedition, exp.locationId);
+                }
+                return _survivors.GetSurvivorLocation(id);
+            };
+
             _survivors.StateChanged += () =>
             {
                 SaveSurvivors();
@@ -53,6 +78,16 @@ namespace AtomicWar.GodotApp
                 _shelterPanel?.RefreshView();
                 if (_state == GameState.Playing) UpdateHud();
             };
+
+            if (_inventory != null)
+            {
+                _survivors.Inventory = _inventory;
+                _inventory.Survivors = _survivors;
+            }
+            if (_holdfastRuntime != null)
+            {
+                _holdfastRuntime.Survivors = _survivors;
+            }
 
             var save = SurvivorsSaveStore.TryLoad();
             if (save != null && save.survivors.Count > 0)

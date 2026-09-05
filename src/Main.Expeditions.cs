@@ -185,6 +185,7 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             SetupSurvivors();
             SetupPhase0();
+            SetupSurvivorFate();
             _combat = CombatHostSession.Create(_dataDir);
             if (_combat != null)
             {
@@ -196,7 +197,9 @@ namespace AtomicWar.GodotApp
                 // UnboundRequiredEffects) that was previously left unwired,
                 // so every surviving combatant's hypervigilance/trauma
                 // tracking silently no-op'd in production.
-                _combat.WireRealState(markCombatSurvived: survivorId => _phase0.RegisterCombatSurvived(survivorId));
+                _combat.WireRealState(
+                    markCombatSurvived: survivorId => _phase0.RegisterCombatSurvived(survivorId),
+                    onSurvivorDeath: (survivorId, causeDetail) => _survivorFate?.ReportDeath(survivorId, Ashfall.Core.Survivors.SurvivorDeathCause.Combat, causeDetail, "combat", isPlayerAvatar: false, day: _simDay));
                 _combat.ValidatePorts();
                 _combat.StateChanged += () => _combatDirty = true;
                 // Expedition encounters auto-populate a real combat encounter.

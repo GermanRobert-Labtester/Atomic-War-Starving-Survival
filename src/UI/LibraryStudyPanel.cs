@@ -253,7 +253,27 @@ namespace AtomicWar.GodotApp.UI
                 _studyDesk.AddChild(AshfallUiHelpers.MakeSectionHeader($"MANUAL: {curManual.display_name.ToUpperInvariant()}"));
                 _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Manual ID", curManual.manual_id, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
                 _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Target Discipline", curManual.category, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-                _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Study Duration", $"{curManual.studyHoursRequired} Hours", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+                _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Study Duration", $"{curManual.studyHoursRequired}h (Est. {Math.Ceiling(curManual.studyHoursRequired / 8.0f)} Standard Days)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+
+                string source = !string.IsNullOrEmpty(curManual.originFacility)
+                    ? curManual.originFacility
+                    : curManual.expeditionRewardIds.Count > 0
+                        ? string.Join(", ", curManual.expeditionRewardIds)
+                        : curManual.traderPoolIds.Count > 0
+                            ? string.Join(", ", curManual.traderPoolIds)
+                            : "Shelter Archives";
+                _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Acquisition Source", source, AshfallUiHelpers.ToColor(DesignTheme.Muted)));
+
+                string prereqs = curManual.prerequisites.Count > 0
+                    ? string.Join(", ", curManual.prerequisites)
+                    : "None (Entry-Level)";
+                _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Prerequisites", prereqs, AshfallUiHelpers.ToColor(curManual.prerequisites.All(p => s.completedManualIds.Contains(p)) ? DesignTheme.Pale : DesignTheme.Warning)));
+
+                string unlocks = curManual.knowledgeUnlocks.Count > 0
+                    ? string.Join(", ", curManual.knowledgeUnlocks)
+                    : "None";
+                _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Knowledge Reveals", unlocks, AshfallUiHelpers.ToColor(DesignTheme.Hot)));
+
                 _studyDesk.AddChild(AshfallUiHelpers.MakeDataRow("Archival Status", isCompleted ? "Fully Mastered & Transcribed" : activeJob != null ? $"Under Study ({activeJob.progressHours:F0}/{curManual.studyHoursRequired}h)" : "On Shelf", AshfallUiHelpers.ToColor(isCompleted ? DesignTheme.Lethe : activeJob != null ? DesignTheme.Hot : DesignTheme.Dim)));
 
                 _studyDesk.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -265,11 +285,22 @@ namespace AtomicWar.GodotApp.UI
                 }
                 else if (activeJob != null)
                 {
-                    _studyDesk.AddChild(AshfallUiHelpers.MakeBody($"Reader {activeJob.readerId.ToUpperInvariant()} is currently assigned to study ({activeJob.progressHours:F0}/{curManual.studyHoursRequired}h)."));
+                    float compRate = _host.System.GetComprehensionRate(activeJob.readerId, curManual.manual_id);
+                    float estDays = _host.System.GetEstimatedDays(activeJob.readerId, curManual.manual_id);
+                    _studyDesk.AddChild(AshfallUiHelpers.MakeBody($"Reader {activeJob.readerId.ToUpperInvariant()} assigned ({activeJob.progressHours:F0}/{curManual.studyHoursRequired}h)."));
+                    _studyDesk.AddChild(AshfallUiHelpers.MakeSmall($"Comprehension Rate: {compRate:F2}x | Est. Remaining: {estDays:F0} days."));
                 }
                 else
                 {
-                    _studyDesk.AddChild(AshfallUiHelpers.MakeBody("Manual is available on archive shelf for reader study assignment through the Duty Roster."));
+                    bool prereqsMet = curManual.prerequisites.All(p => s.completedManualIds.Contains(p));
+                    if (!prereqsMet)
+                    {
+                        _studyDesk.AddChild(AshfallUiHelpers.MakeBody("LOCKED: Missing prerequisite manuals in archival collection."));
+                    }
+                    else
+                    {
+                        _studyDesk.AddChild(AshfallUiHelpers.MakeBody("Manual is available on archive shelf for reader study assignment."));
+                    }
                 }
             }
             else

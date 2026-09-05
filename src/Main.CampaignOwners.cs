@@ -25,6 +25,7 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("economy_market", new EconomyMarketDayOwner(this), phase: 2);
             _campaignDay.Register("greenhouse_foundry", new GreenhouseFoundryDayOwner(this), phase: 2);
             _campaignDay.Register("shelter_facilities", new ShelterFacilitiesDayOwner(this), phase: 2);
+            _campaignDay.Register("shelter_fire", new ShelterFireDayOwner(this), phase: 2);
             _campaignDay.Register("starting_level_rations", new StartingLevelRationsDayOwner(this), phase: 2);
 
             // Phase 3: Survivors, Medical, Disease & Social
@@ -233,6 +234,38 @@ namespace AtomicWar.GodotApp
             {
                 _m.TickAllExpandedShelterSystems(day);
                 events.Add(new DayStateChangeEvent("shelter_facilities_ticked", "shelter_facilities", null, null, day));
+            }
+        }
+
+        private sealed class ShelterFireDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Dictionary<string, Ashfall.Core.Shelter.FireIncidentState>? _snapshot;
+
+            public ShelterFireDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupShelterFireHazard();
+                _snapshot = _m._shelterFireHazard?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null)
+                {
+                    _m.SetupShelterFireHazard();
+                    _m._shelterFireHazard!.RestoreState(_snapshot);
+                }
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupShelterFireHazard();
+                int advanced = _m._shelterFireSession!.TickDay(
+                    day,
+                    _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, day, 15));
+                events.Add(new DayStateChangeEvent("shelter_fire_ticked", "shelter_fire", null, null, advanced));
             }
         }
 
@@ -770,6 +803,7 @@ namespace AtomicWar.GodotApp
             {
                 _m.SetupMoralChoice();
                 _m._moralChoice.Reconcile(day);
+                _m.TickFactionBranchDay(day);
 
                 _m.TickVerdict(day, _m.LivingDwellerCountEstimate());
 

@@ -1,154 +1,52 @@
-# ASHFALL Patrol Encounter Schema & Transaction Specification
-## Technical Reference: Core Narrative, Inventory & Faction Authority
+# Plan 45 — Patrol Encounter Schema
 
-### Overview
-This document specifies the data contracts, JSON schema standards, evaluation lifecycles, and transaction semantics for patrol and travel encounters in ASHFALL.
+## TravelEncounterDefinition (extended)
 
----
+| Field | Type | Required | Description |
+|---|---|---|---|
+| id | string | yes | Stable encounter ID |
+| title | string | yes | Player-facing title |
+| category | string | yes | "Human" for patrols |
+| faction_id | string | no | Primary faction (Plan 45 addition) |
+| territory_state | string | no | "controlled", "contested", "border" |
+| cooldown_group | string | no | Cooldown grouping key for presentation variants (Plan 45 / F13) |
+| region_tags | string[] | yes | Region eligibility |
+| min_danger_level | float | yes | Minimum danger for eligibility |
+| max_danger_level | float | yes | Maximum danger for eligibility |
+| base_weight | float | yes | Selection weight |
+| stance_weights | dict | yes | Weight multipliers per stance |
+| season_tags | string[] | yes | Season eligibility |
+| description | string | yes | Encounter description |
+| choices | list | yes | Player choices (2-4) |
 
-### 1. JSON Data Contract (`travel_encounters.json`)
+## TravelEncounterChoice (extended)
 
-Each encounter definition adheres to the following JSON structure:
+| Field | Type | Required | Description |
+|---|---|---|---|
+| choice_id | string | yes | Stable choice ID |
+| text | string | yes | Player-facing text |
+| is_nonviolent | bool | yes | Whether choice avoids combat |
+| is_avoidance | bool | yes | Whether choice avoids interaction |
+| morale_delta | int | yes | Morale change |
+| guilt_delta | int | yes | Guilt change |
+| faction_id | string | no | Faction affected (Plan 45) |
+| faction_standing_delta | int | no | Standing change (Plan 45) |
+| cost_items | string[] | no | Items consumed (Plan 45) |
+| required_item_id | string | no | Item required (Plan 45) |
+| required_item_quantity | int | no | Quantity required (Plan 45) |
 
-```json
-{
-  "id": "enc_patrol_garrison_checkpoint",
-  "title": "Iron Garrison Checkpoint",
-  "category": "Human",
-  "faction_id": "iron_garrison",
-  "territory_state": "Contested",
-  "region_tags": ["high_scarp", "the_toll"],
-  "min_danger_level": 0.5,
-  "max_danger_level": 2.0,
-  "base_weight": 1.2,
-  "stance_weights": {
-    "Cautious": 0.8,
-    "Aggressive": 1.5,
-    "Diplomatic": 1.4
-  },
-  "season_tags": ["all"],
-  "description": "A fortified roadblock formed from rusted ISO containers...",
-  "choices": [
-    {
-      "choice_id": "choice_pay_garrison_toll",
-      "text": "Pay the toll in rations (2 Canned Food)",
-      "is_nonviolent": true,
-      "is_avoidance": false,
-      "morale_delta": 0,
-      "guilt_delta": 0,
-      "unlocks_field_guide_id": "",
-      "advances_chain_stage": 0,
-      "faction_id": "iron_garrison",
-      "faction_standing_delta": 1,
-      "cost_items": ["canned_food", "canned_food"],
-      "required_item_id": "",
-      "required_item_quantity": 0,
-      "required_flag": ""
-    },
-    {
-      "choice_id": "choice_show_garrison_pass",
-      "text": "Present sealed government transit pass",
-      "is_nonviolent": true,
-      "is_avoidance": false,
-      "morale_delta": 1,
-      "guilt_delta": 0,
-      "unlocks_field_guide_id": "",
-      "advances_chain_stage": 0,
-      "faction_id": "iron_garrison",
-      "faction_standing_delta": 2,
-      "cost_items": [],
-      "required_item_id": "sealed_government_document",
-      "required_item_quantity": 1,
-      "required_flag": ""
-    }
-  ]
-}
-```
+## Validation (Plan 45 / F15)
 
----
+The `PatrolEncounterValidator` mechanically enforces data integrity across all `enc_patrol_*` definitions during CI and `--data-integrity-selftest`:
 
-### 2. Domain Models & Contracts (C#)
-
-#### A. Normalized Item Costs
-Cost item lists (`cost_items: ["canned_food", "canned_food"]`) are parsed and aggregated into immutable `ItemCost` pairs:
-```csharp
-public readonly record struct ItemCost(
-    string ItemId,
-    int Quantity);
-```
-
-#### B. Requirement Failure Categories & Accessibility Diagnostics
-Failure diagnostics provide machine-typed categories and user-facing accessibility text:
-```csharp
-public enum ChoiceRequirementFailureType
-{
-    MissingRequiredItem,
-    MissingCostItem,
-    CooldownActive,
-    OtherExistingRequirement
-}
-
-public sealed record ChoiceRequirementFailure(
-    ChoiceRequirementFailureType FailureType,
-    string ItemId,
-    int RequiredQuantity,
-    int AvailableQuantity,
-    string Reason);
-```
-
-#### C. Choice Availability Evaluation
-Availability is non-mutating and dynamically re-evaluated at UI render or choice selection time:
-```csharp
-public sealed record TravelEncounterChoiceAvailability
-{
-    public bool IsAvailable { get; init; }
-    public IReadOnlyList<ChoiceRequirementFailure> Failures { get; init; }
-}
-```
-
-#### D. Full Resolution Result
-Upon successful commitment, `TravelEncounterResolution` encapsulates the complete atomic outcome:
-```csharp
-public sealed record TravelEncounterResolution
-{
-    public string EncounterId { get; init; }
-    public string ChoiceId { get; init; }
-    public int MoraleDelta { get; init; }
-    public int GuiltDelta { get; init; }
-    public string? UnlockedFieldGuideId { get; init; }
-    public string? FactionId { get; init; }
-    public int FactionStandingDelta { get; init; }
-    public IReadOnlyList<ItemCost> CostItems { get; init; }
-    public int ResolvedDay { get; init; }
-    public int CooldownDays { get; init; } // Default: 5
-}
-```
-
----
-
-### 3. Execution & Transaction Lifecycle
-
-1. **Pre-Flight Validation**:
-   - `EvaluateChoiceAvailability` checks cooldown, required items (`CountById >= RequiredItemQuantity`), and cost items (`CountById >= CostQuantity`).
-   - If any condition fails, execution immediately halts with `false` and zero mutations occur.
-2. **Atomic Cost Deduction**:
-   - Costs are bundled into an `InventoryBill`.
-   - `inv.TryExecuteTransaction(bill)` deducts all items in a single atomic operation. If any item is missing or inventory locks, rollback is automatic.
-3. **Faction Standing Mutation**:
-   - `FactionWarSystem.ModifyStanding(choice.FactionId, choice.FactionStandingDelta)` mutates the authoritative faction ledger.
-   - Standing is clamped within `[-100, +100]`.
-4. **State & Cooldown Updates**:
-   - Encounter cooldown is marked: `_encounterAvailableDay[encounterId] = currentDay + 5`.
-   - Chain stage advanced if configured.
-5. **Event Emission**:
-   - Emits `OnChoiceResolved(encounterId, choiceId)` for backward compatibility.
-   - Emits `OnTravelChoiceResolved(resolution)` with rich payload for host telemetry and UI presentation.
-
----
-
-### 4. Expedition Bridge Integration (Option B)
-
-- `ExpeditionEncounterBridge` binds both `NarrativeEncounterSystem` and `TravelEncounterSystem`.
-- `Surface(ExpeditionState)` evaluates narrative and patrol candidates simultaneously.
-- When surfacing patrol encounters, `TravelEncounterDefinition` choices are projected onto `EncounterChoiceDefinition`, preserving `costItems`, `requiredItemId`, `requiredItemQuantity`, `factionId`, and `factionStandingDelta`.
-- `ExpeditionEncounterBridge.ResolveChoice` intercepts patrol encounters and routes resolution through `TravelEngine.ResolveChoice`, guaranteeing that expeditions and normal travel share the same inventory authority, faction standing consequences, and 5-day cooldown clock.
+1. **Category**: Must equal `"Human"`.
+2. **Faction Identity**: `faction_id` must resolve to an authored faction in `faction_lore.json`.
+3. **Territory State**: Must be one of `controlled`, `contested`, or `border`.
+4. **Choice Cardinality**: Each encounter must contain between 2 and 4 choices.
+5. **Choice Uniqueness**: Choice IDs and player-facing texts must be unique within the encounter.
+6. **Standing Deltas**: Standing changes must fall strictly within `[-25, 10]`.
+7. **Item Referential Integrity**: All `cost_items` and `required_item_id` references must resolve in `items.json`.
+8. **Item Gate Separation**: An item cannot appear in both `required_item_id` and `cost_items` within the same choice (gates are non-consuming).
+9. **Weight & Danger Bounds**: `base_weight` must be between `[0.1, 5.0]`; `0 <= min_danger_level <= max_danger_level`.
+10. **Tag Completeness**: `region_tags` and `season_tags` cannot be empty.
+11. **Variant Family Invariance**: All encounters sharing a `cooldown_group` must share identical mechanics: category, faction, territory state, chain linkage, and all choice properties/costs.

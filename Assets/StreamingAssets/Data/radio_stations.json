@@ -11,7 +11,62 @@
       "reliability": "Official",
       "default_state": "Normal",
       "silence_text": "STATIC... [ Civil Defense carrier lost. Emergency tone unmonitored. ] ...STATIC",
-      "jammed_text": "STATIC... [ Heavy ionospheric flutter overriding Civil Defense frequency. ]"
+      "jammed_text": "STATIC... [ Heavy ionospheric flutter overriding Civil Defense frequency. ]",
+      "signal_profile_id": "signal_profile_omni_high_power",
+      "equipment_requirements": [
+        "equipment_receiver_standard"
+      ],
+      "tags": [
+        "civil_defense",
+        "emergency",
+        "official"
+      ],
+      "schedule": [
+        {
+          "slot_id": "slot_cd_morning",
+          "start_hour": 6,
+          "end_hour": 11,
+          "program_type": "CivilianNews",
+          "broadcast_pool_id": "pool_cd_morning",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_cd_midday",
+          "start_hour": 12,
+          "end_hour": 17,
+          "program_type": "PublicAdvisory",
+          "broadcast_pool_id": "pool_cd_midday",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_cd_evening",
+          "start_hour": 18,
+          "end_hour": 23,
+          "program_type": "CivilDefense",
+          "broadcast_pool_id": "pool_cd_evening",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_cd_night",
+          "start_hour": 0,
+          "end_hour": 5,
+          "program_type": "AutomatedLoop",
+          "broadcast_pool_id": "pool_cd_night",
+          "min_state": "Normal",
+          "weight": 5,
+          "day_min": 1,
+          "day_max": 9999
+        }
+      ]
     },
     {
       "id": "station_garrison_overlord",
@@ -23,7 +78,62 @@
       "reliability": "Partisan",
       "default_state": "Normal",
       "silence_text": "STATIC... [ Garrison tactical frequency silent. No carrier active. ] ...STATIC",
-      "jammed_text": "STATIC... [ Tactical frequency jammed with pulsed tactical noise. ]"
+      "jammed_text": "STATIC... [ Tactical frequency jammed with pulsed tactical noise. ]",
+      "signal_profile_id": "signal_profile_directional_vhf",
+      "equipment_requirements": [
+        "equipment_receiver_standard"
+      ],
+      "tags": [
+        "military",
+        "garrison",
+        "tactical"
+      ],
+      "schedule": [
+        {
+          "slot_id": "slot_garrison_morning",
+          "start_hour": 5,
+          "end_hour": 10,
+          "program_type": "TacticalOrders",
+          "broadcast_pool_id": "pool_garrison_morning",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_garrison_day",
+          "start_hour": 11,
+          "end_hour": 16,
+          "program_type": "LogisticsUpdate",
+          "broadcast_pool_id": "pool_garrison_day",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_garrison_evening",
+          "start_hour": 17,
+          "end_hour": 22,
+          "program_type": "SecurityAlert",
+          "broadcast_pool_id": "pool_garrison_evening",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_garrison_night",
+          "start_hour": 23,
+          "end_hour": 4,
+          "program_type": "TacticalMonitoring",
+          "broadcast_pool_id": "pool_garrison_night",
+          "min_state": "Normal",
+          "weight": 5,
+          "day_min": 1,
+          "day_max": 9999
+        }
+      ]
     },
     {
       "id": "station_vitrified_crater",
@@ -35,7 +145,62 @@
       "reliability": "Partisan",
       "default_state": "Normal",
       "silence_text": "STATIC... [ The sermon has ended. Pure analog vacuum hiss fills the band. ]",
-      "jammed_text": "STATIC... [ Static screams with electrical discharge from the fallout cloud. ]"
+      "jammed_text": "STATIC... [ Static screams with electrical discharge from the fallout cloud. ]",
+      "signal_profile_id": "signal_profile_fallout_flutter",
+      "equipment_requirements": [
+        "equipment_receiver_standard"
+      ],
+      "tags": [
+        "cult",
+        "crater",
+        "liturgical"
+      ],
+      "schedule": [
+        {
+          "slot_id": "slot_crater_dawn",
+          "start_hour": 4,
+          "end_hour": 9,
+          "program_type": "Sermon",
+          "broadcast_pool_id": "pool_crater_dawn",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_crater_day",
+          "start_hour": 10,
+          "end_hour": 15,
+          "program_type": "Liturgy",
+          "broadcast_pool_id": "pool_crater_day",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_crater_dusk",
+          "start_hour": 16,
+          "end_hour": 21,
+          "program_type": "Chant",
+          "broadcast_pool_id": "pool_crater_dusk",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_crater_night",
+          "start_hour": 22,
+          "end_hour": 3,
+          "program_type": "StaticMeditation",
+          "broadcast_pool_id": "pool_crater_night",
+          "min_state": "Normal",
+          "weight": 5,
+          "day_min": 1,
+          "day_max": 9999
+        }
+      ]
     },
     {
       "id": "station_open_classroom",
@@ -47,7 +212,62 @@
       "reliability": "Anonymous",
       "default_state": "Normal",
       "silence_text": "STATIC... [ The classroom is empty. Antenna line swaying in the ash wind. ]",
-      "jammed_text": "STATIC... [ Weak pirate signal buried in thermal receiver noise. ]"
+      "jammed_text": "STATIC... [ Weak pirate signal buried in thermal receiver noise. ]",
+      "signal_profile_id": "signal_profile_pirate_fm",
+      "equipment_requirements": [
+        "equipment_receiver_standard"
+      ],
+      "tags": [
+        "civilian",
+        "scavenger",
+        "free_airwaves"
+      ],
+      "schedule": [
+        {
+          "slot_id": "slot_classroom_morning",
+          "start_hour": 7,
+          "end_hour": 12,
+          "program_type": "Education",
+          "broadcast_pool_id": "pool_classroom_morning",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_classroom_day",
+          "start_hour": 13,
+          "end_hour": 18,
+          "program_type": "CivilianChatter",
+          "broadcast_pool_id": "pool_classroom_day",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_classroom_evening",
+          "start_hour": 19,
+          "end_hour": 23,
+          "program_type": "Culture",
+          "broadcast_pool_id": "pool_classroom_evening",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_classroom_night",
+          "start_hour": 0,
+          "end_hour": 6,
+          "program_type": "OpenCarrier",
+          "broadcast_pool_id": "pool_classroom_night",
+          "min_state": "Normal",
+          "weight": 5,
+          "day_min": 1,
+          "day_max": 9999
+        }
+      ]
     },
     {
       "id": "station_numbers_sigint",
@@ -59,7 +279,62 @@
       "reliability": "Automated",
       "default_state": "Normal",
       "silence_text": "STATIC... [ Clandestine carrier dead. Transmitter room RTG depleted. ] ...STATIC",
-      "jammed_text": "STATIC... [ Heterodyne whistle shifting across the shortwave band. ]"
+      "jammed_text": "STATIC... [ Heterodyne whistle shifting across the shortwave band. ]",
+      "signal_profile_id": "signal_profile_pulsed_hf",
+      "equipment_requirements": [
+        "equipment_shortwave_receiver"
+      ],
+      "tags": [
+        "sigint",
+        "numbers",
+        "clandestine"
+      ],
+      "schedule": [
+        {
+          "slot_id": "slot_sigint_alpha",
+          "start_hour": 0,
+          "end_hour": 5,
+          "program_type": "NumbersCipher",
+          "broadcast_pool_id": "pool_sigint_alpha",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_sigint_bravo",
+          "start_hour": 6,
+          "end_hour": 11,
+          "program_type": "NumbersCipher",
+          "broadcast_pool_id": "pool_sigint_bravo",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_sigint_charlie",
+          "start_hour": 12,
+          "end_hour": 17,
+          "program_type": "NumbersCipher",
+          "broadcast_pool_id": "pool_sigint_charlie",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_sigint_delta",
+          "start_hour": 18,
+          "end_hour": 23,
+          "program_type": "NumbersCipher",
+          "broadcast_pool_id": "pool_sigint_delta",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        }
+      ]
     },
     {
       "id": "station_automated_relay",
@@ -71,7 +346,62 @@
       "reliability": "Automated",
       "default_state": "Normal",
       "silence_text": "STATIC... [ Automated repeater shut down. Battery bank drained to zero. ]",
-      "jammed_text": "STATIC... [ Telemetry carrier mutilated by EMP surge. ]"
+      "jammed_text": "STATIC... [ Telemetry carrier mutilated by EMP surge. ]",
+      "signal_profile_id": "signal_profile_beacon_vhf",
+      "equipment_requirements": [
+        "equipment_vhf_beacon_receiver"
+      ],
+      "tags": [
+        "beacon",
+        "automated",
+        "telemetry"
+      ],
+      "schedule": [
+        {
+          "slot_id": "slot_relay_north",
+          "start_hour": 0,
+          "end_hour": 5,
+          "program_type": "TelemetryBeacon",
+          "broadcast_pool_id": "pool_relay_north",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_relay_east",
+          "start_hour": 6,
+          "end_hour": 11,
+          "program_type": "TelemetryBeacon",
+          "broadcast_pool_id": "pool_relay_east",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_relay_south",
+          "start_hour": 12,
+          "end_hour": 17,
+          "program_type": "TelemetryBeacon",
+          "broadcast_pool_id": "pool_relay_south",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        },
+        {
+          "slot_id": "slot_relay_west",
+          "start_hour": 18,
+          "end_hour": 23,
+          "program_type": "TelemetryBeacon",
+          "broadcast_pool_id": "pool_relay_west",
+          "min_state": "Normal",
+          "weight": 10,
+          "day_min": 1,
+          "day_max": 9999
+        }
+      ]
     }
   ]
 }

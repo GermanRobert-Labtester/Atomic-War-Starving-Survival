@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_currentData == null || _dosimeterData == null || _protectionData == null || _eventsList == null) return;
+            EnsureUI();
 
             AshfallUiHelpers.EmptyChildren(_currentData);
             AshfallUiHelpers.EmptyChildren(_dosimeterData);
@@ -58,6 +58,28 @@ namespace AtomicWar.GodotApp.UI
 
         private void RenderCurrent()
         {
+            if (_survivors != null && _survivors.RosterState.Count > 0)
+            {
+                foreach (var state in _survivors.RosterState)
+                {
+                    if (state == null) continue;
+                    var rad = _survivors.RadStateFor(state.Id);
+                    var env = _survivors.GetLastExposureEnvironment(state.Id);
+                    string reason = !string.IsNullOrEmpty(env?.ExposureReason)
+                        ? env.ExposureReason
+                        : (!string.IsNullOrEmpty(rad?.LastExposureReason) ? rad.LastExposureReason : "Shelter Interior");
+                    float dose = rad?.RadiationDose ?? 0f;
+                    float zone = env?.EffectiveZoneRadLevel ?? 0f;
+                    var row = AshfallUiHelpers.MakeDataRow(Name(state.Id),
+                        $"{dose:0.0}/100 mSv · {reason} ({zone:0.0} mSv/h zone)",
+                        AshfallUiHelpers.ToColor(dose >= 50f
+                            ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe));
+                    _currentData.AddChild(row);
+                    RenderedCurrentCount++;
+                }
+                return;
+            }
+
             if (_dose?.Ledger == null || _dose.Ledger.Entries.Count == 0)
             {
                 _currentData.AddChild(MakeDimLine("No dose ledger bound."));
@@ -78,23 +100,42 @@ namespace AtomicWar.GodotApp.UI
 
         private void RenderDosimeter()
         {
-            if (_dose?.Calibration == null || _dose.Calibration.Devices.Count == 0)
+            if (_dose?.Calibration != null && _dose.Calibration.Devices.Count > 0)
             {
-                _dosimeterData.AddChild(MakeDimLine("No dosimeters registered."));
+                foreach (var dev in _dose.Calibration.Devices.Values)
+                {
+                    if (dev == null) continue;
+                    string assigned = string.IsNullOrEmpty(dev.assignedSurvivorId)
+                        ? "unassigned" : Name(dev.assignedSurvivorId);
+                    _dosimeterData.AddChild(AshfallUiHelpers.MakeDataRow(
+                        $"{dev.deviceTag} ({assigned})",
+                        $"Battery {dev.batteryLevel * 100f:0}% · Cal {dev.calibrationQuality * 100f:0}% · ±{dev.errorBandMsv:0.0} mSv{(dev.isOverdue ? " · OVERDUE" : "")}",
+                        AshfallUiHelpers.ToColor(dev.isOverdue
+                            ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+                }
                 return;
             }
 
-            foreach (var dev in _dose.Calibration.Devices.Values)
+            if (_survivors?.Radiation != null && _survivors.RosterState.Count > 0)
             {
-                if (dev == null) continue;
-                string assigned = string.IsNullOrEmpty(dev.assignedSurvivorId)
-                    ? "unassigned" : Name(dev.assignedSurvivorId);
-                _dosimeterData.AddChild(AshfallUiHelpers.MakeDataRow(
-                    $"{dev.deviceTag} ({assigned})",
-                    $"Battery {dev.batteryLevel * 100f:0}% · Cal {dev.calibrationQuality * 100f:0}% · ±{dev.errorBandMsv:0.0} mSv{(dev.isOverdue ? " · OVERDUE" : "")}",
-                    AshfallUiHelpers.ToColor(dev.isOverdue
-                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+                foreach (var s in _survivors.RosterState)
+                {
+                    if (s == null) continue;
+                    var dosimeter = _survivors.Radiation.GetDosimeter(s.Id);
+                    if (dosimeter == null) continue;
+                    string reason = !string.IsNullOrEmpty(dosimeter.LastExposureReason)
+                        ? $" · {dosimeter.LastExposureReason}"
+                        : "";
+                    _dosimeterData.AddChild(AshfallUiHelpers.MakeDataRow(
+                        $"{Name(s.Id)} Pen",
+                        $"Rate {dosimeter.CurrentReading:0.0} mSv/h · Lifetime {dosimeter.LifetimeDose:0.0} mSv{reason}",
+                        AshfallUiHelpers.ToColor(dosimeter.CurrentReading > 10f
+                            ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+                }
+                return;
             }
+
+            _dosimeterData.AddChild(MakeDimLine("No dosimeters registered."));
         }
 
         private void RenderProtection()
@@ -165,6 +206,21 @@ namespace AtomicWar.GodotApp.UI
             if (string.IsNullOrEmpty(id)) return "Unknown";
             int us = id.IndexOf('_');
             return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
+        }
+
+        private void EnsureUI()
+        {
+            if (_currentData == null)
+            {
+                _currentData = new VBoxContainer { Name = "CurrentData" };
+                _dosimeterData = new VBoxContainer { Name = "DosimeterData" };
+                _protectionData = new VBoxContainer { Name = "ProtectionData" };
+                _eventsList = new VBoxContainer { Name = "EventsList" };
+                AddChild(_currentData);
+                AddChild(_dosimeterData);
+                AddChild(_protectionData);
+                AddChild(_eventsList);
+            }
         }
 
         public override void _Ready()

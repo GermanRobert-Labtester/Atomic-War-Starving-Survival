@@ -70,12 +70,22 @@ namespace Ashfall.Core.UtilityAI
         }
 
         /// <summary>
-        /// Soft biases (reweight, never veto). Politician scores dirty labor
-        /// lower so they prefer delegating; placeholder for future gates.
+        /// Soft biases (reweight, never veto).
+        /// Re-weights action priority based on trait-tag synergy/aversion without vetoing.
+        /// Politician scores dirty labor lower (0.6x) so they prefer delegating.
         /// </summary>
-        private static float ApplyTraitBiases(float score, UtilityActionDef action, AIActionContext context)
+        public static float ApplyTraitBiases(float score, UtilityActionDef action, AIActionContext context)
         {
-            return score;
+            if (action == null || context == null || score <= 0f) return score;
+
+            float multiplier = 1.0f;
+            if (context.HasTrait(UtilityTags.TraitPolitician) && action.HasTag(UtilityTags.TagDirtyLabor))
+            {
+                multiplier *= 0.6f;
+            }
+
+            multiplier = Math.Clamp(multiplier, 0.1f, 2.0f);
+            return score * multiplier;
         }
     }
 }

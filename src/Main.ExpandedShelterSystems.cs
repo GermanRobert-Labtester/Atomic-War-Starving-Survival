@@ -161,12 +161,14 @@ namespace AtomicWar.GodotApp
                 var def = _survivors?.Roster?.FindDefinition(butcherId);
                 if (def != null && def.traitIds != null && def.traitIds.Contains("skill_sanitization_expert"))
                     return;
-                int seed = StableHash.Of(butcherId) ^ _simDay;
-                var rng = new SeededRng(seed);
-                if (rng.NextDouble() < 0.30)
+                _disease.Engine.TryExpose(new DiseaseExposureContext
                 {
-                    _disease.Engine.Infect(butcherId, DiseaseIds.ZoonoticFlu, _simDay);
-                }
+                    SurvivorId = butcherId,
+                    DiseaseId = DiseaseIds.ZoonoticFlu,
+                    SourceId = "wildlife_butchery",
+                    Day = _simDay,
+                    ProbabilityModifier = 1.0f
+                });
             };
         }
 
@@ -178,7 +180,7 @@ namespace AtomicWar.GodotApp
                 // 150W transmitter load — if brownout, cancel broadcast and cut signal
                 if (_powerGrid.System.IsBrownout)
                 {
-                    _vinylMorale.System.Stop();
+                    _vinylMorale.System.CancelBroadcastBrownout();
                     return;
                 }
                 _radio.RecordCulturalBroadcast(record.record_id, record.genre, record.display_name, day, _vinylMorale.System.State.lastBroadcastSignalStrength);
@@ -195,7 +197,16 @@ namespace AtomicWar.GodotApp
                 if (finding.IndexOf("zoonotic", StringComparison.OrdinalIgnoreCase) >= 0 || finding.IndexOf("influenza", StringComparison.OrdinalIgnoreCase) >= 0 || finding.IndexOf("spore", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     if (_disease != null && !string.IsNullOrEmpty(c.assignedMedicId))
-                        _disease.Engine.Infect(c.assignedMedicId, DiseaseIds.ZoonoticFlu, _simDay);
+                    {
+                        _disease.Engine.TryExpose(new DiseaseExposureContext
+                        {
+                            SurvivorId = c.assignedMedicId,
+                            DiseaseId = DiseaseIds.ZoonoticFlu,
+                            SourceId = "autopsy_pathogen",
+                            Day = _simDay,
+                            ProbabilityModifier = 1.0f
+                        });
+                    }
                 }
                 // Always journal the forensic result for memorial/continuity
                 _journal?.TryAddRawEntry("autopsy_completed", $"Autopsy {c.caseId} ({c.specimenId}): {finding}", null!, _simDay);

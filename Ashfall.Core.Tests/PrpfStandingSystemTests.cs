@@ -188,5 +188,64 @@ namespace Ashfall.Core.Tests
 
             Assert.Throws<InvalidOperationException>(() => PrpfSaveCodec.Decode(tampered, jsonSerializer));
         }
+
+        [Fact]
+        public void TickDay_BeforeCommitment_IsNoOp()
+        {
+            var system = new PrpfStandingSystem(new InMemoryFlagLedger());
+            int standing = system.Standing;
+            int alignment = system.Alignment;
+
+            system.TickDay(10);
+
+            Assert.Equal(standing, system.Standing);
+            Assert.Equal(alignment, system.Alignment);
+        }
+
+        [Fact]
+        public void TickDay_WhenJoined_DriftsAlignmentPositive()
+        {
+            var system = new PrpfStandingSystem(new InMemoryFlagLedger());
+            var moral = new MoralChoiceSystem(new StubRng(1));
+            var quest = new MoralChoiceQuestDefinition
+            {
+                Id = "quest_moral_share_child",
+                Choices = { new MoralChoiceOption { MoralDelta = 60, EmpathyDelta = 1 } }
+            };
+            moral.Resolve(quest, 0, "loc_test", 1);
+            Assert.True(system.TryJoin(moral));
+
+            int before = system.Alignment;
+            system.TickDay(42);
+            Assert.Equal(before + 1, system.Alignment);
+        }
+
+        [Fact]
+        public void TickDay_WhenOpposed_DecaysStanding()
+        {
+            var system = new PrpfStandingSystem(new InMemoryFlagLedger());
+            system.ModifyStanding(20);
+            system.Oppose();
+
+            int before = system.Standing;
+            system.TickDay(7);
+            Assert.Equal(before - 1, system.Standing);
+        }
+
+        [Fact]
+        public void TickDay_SameDayRetry_IsIdempotent()
+        {
+            var system = new PrpfStandingSystem(new InMemoryFlagLedger());
+            system.ModifyStanding(20);
+            system.Oppose();
+
+            system.TickDay(7);
+            int afterFirst = system.Standing;
+            system.TickDay(7);
+            Assert.Equal(afterFirst, system.Standing);
+
+            system.TickDay(8);
+            Assert.Equal(afterFirst - 1, system.Standing);
+        }
     }
 }

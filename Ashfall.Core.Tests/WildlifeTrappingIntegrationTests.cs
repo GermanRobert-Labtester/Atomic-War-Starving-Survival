@@ -453,5 +453,267 @@ namespace Ashfall.Core.Tests
             Assert.Equal(50f, station.condition);
             Assert.True(station.IsOperational);
         }
+
+        // ====================================================================
+        // Workstream E: Task 8 Cross-System Integration Smoke Test
+        // ====================================================================
+
+        public sealed record EndToEndRunSignature(
+            int CraftedWireDelta,
+            int CraftedSnareDelta,
+            int UnrelatedItemCount,
+            string DeployedTrapId,
+            int InitialDurability,
+            int InitialInterval,
+            bool InitialBroken,
+            List<string> DailyCatchSequence,
+            List<int> DailyDurabilitySequence,
+            string CaughtPrey,
+            string ResolvedDiseaseId,
+            float ResolvedContaminationDose,
+            bool IsMeatProcessed,
+            int PostSaveInventoryWireCount,
+            int PostSaveInventorySnareCount,
+            int PostSaveTrapDurability,
+            bool PostSaveTrapBroken,
+            int BreakDay,
+            int TerminalDurability,
+            bool TerminalBroken,
+            int PostBreakCatchCount
+        );
+
+        private static EndToEndRunSignature ExecuteEndToEndScenario(int seed)
+        {
+            var catalog = LoadTrappingCatalog();
+            Assert.NotNull(catalog);
+
+            // A. Crafting -> Inventory
+            var wireItem = new ItemDefinition { id = "copper_wire_10m_of_10m", displayName = "Copper Wire", type = ItemType.Material, stackMax = 99 };
+            var snareItem = new ItemDefinition { id = "trap_improvised_wire", displayName = "Improvised Wire Snare", type = ItemType.Tool, stackMax = 5 };
+            var breadItem = new ItemDefinition { id = "bread", displayName = "Ration Bread", type = ItemType.Food, stackMax = 99 };
+
+            var inventory = new Ashfall.Core.Inventory.Inventory { Capacity = 20, MaxWeight = 50f };
+            inventory.Add(wireItem, 5);
+            inventory.Add(breadItem, 10);
+
+            int initialWire = inventory.CountById("copper_wire_10m_of_10m");
+            int initialBread = inventory.CountById("bread");
+
+            var crafting = new CraftingSystem(inventory);
+            var recipe = new Recipe
+            {
+                id = "craft_trap_improvised_wire",
+                recipeName = "Craft Improvised Wire Snare",
+                ingredients = new List<Ingredient>
+                {
+                    new Ingredient { item = wireItem, amount = 1 }
+                },
+                result = snareItem,
+                resultAmount = 1,
+                craftingTimeHours = 0.25f,
+                requiredStationId = ""
+            };
+
+            bool started = crafting.StartCraft(recipe);
+            Assert.True(started);
+            int postStartWire = inventory.CountById("copper_wire_10m_of_10m");
+            Assert.Equal(initialWire - 1, postStartWire);
+
+            crafting.Tick(0.25f);
+            int postCraftSnare = inventory.CountById("trap_improvised_wire");
+            Assert.Equal(1, postCraftSnare);
+            Assert.Equal(initialBread, inventory.CountById("bread"));
+
+            int craftedWireDelta = postStartWire - initialWire;
+            int craftedSnareDelta = postCraftSnare;
+
+            // B. Inventory -> Deployed trap
+            var trapping = new WildlifeTrappingSystem(new SeededRng(seed));
+            catalog!.RegisterWith(trapping);
+
+            var trapDef = catalog.Traps["trap_improvised_wire"];
+
+            // Atomic payment from inventory
+            var bill = new InventoryBill();
+            bill.AddCost(trapDef.trap_id, 1);
+            using (var tx = inventory.BeginTransaction(bill))
+            {
+                Assert.True(tx.Validation.IsValid);
+                var setRes = trapping.SetTrap("site_alpha", "bait_grain_lure", "hunter_dweller",
+                    trapDef.trapType, trapDef.trap_id, trapDef.checkIntervalDays, trapDef.durabilityChecks);
+                Assert.True(setRes.IsSuccess);
+                tx.TryCommit();
+            }
+
+            Assert.Equal(0, inventory.CountById("trap_improvised_wire"));
+            var site = trapping.State.trapSites[0];
+            Assert.Equal(trapDef.trap_id, site.trapId);
+            Assert.Equal(3, site.remainingDurability);
+            Assert.Equal(1, site.checkIntervalDays);
+            Assert.False(site.isBroken);
+
+            string deployedTrapId = site.trapId;
+            int initialDurability = site.remainingDurability;
+            int initialInterval = site.checkIntervalDays;
+            bool initialBroken = site.isBroken;
+
+            // C. Season + Migration context
+            var selectionCtx = new WildlifeSelectionContext
+            {
+                SeasonWindowId = "window_thaw"
+            };
+            selectionCtx.PresentMigrationSpecies.Add("species_cotton_hare");
+            trapping.SetSelectionContext(selectionCtx);
+
+            var dailyCatches = new List<string>();
+            var dailyDurabilities = new List<int>();
+
+            // Day 2 (Check 1)
+            trapping.TickDay(2, 1.2f);
+            dailyCatches.Add(site.hasCatch ? site.catchSpecies : "none");
+            dailyDurabilities.Add(site.remainingDurability);
+
+            // D. Catch -> Butchery -> Health
+            // Ensure at least one catch exists to butcher (if not naturally caught, set one deterministic catch)
+            if (!site.hasCatch)
+            {
+                site.hasCatch = true;
+                site.catchSpecies = "cotton_hare";
+                site.carcassYield = 1.5f;
+                site.isToxic = false;
+                site.diseaseId = string.Empty;
+                site.contaminationDose = 0f;
+            }
+
+            string caughtPrey = site.catchSpecies;
+            string diseaseId = site.diseaseId;
+            float dose = site.contaminationDose;
+
+            var butcherRes = trapping.Butcher(site.siteId, "dweller_butcher");
+            Assert.True(butcherRes.IsSuccess);
+            Assert.True(site.isMeatProcessed);
+
+            // E. Campaign Save -> Restore
+            var serializer = new SystemTextJsonSerializer();
+            var invSave = inventory.CaptureState();
+            var trapSave = trapping.CaptureState();
+
+            string invJson = serializer.Serialize(invSave);
+            string trapJson = serializer.Serialize(trapSave);
+
+            var restoredInvSave = serializer.Deserialize<InventorySaveState>(invJson);
+            var restoredTrapSave = serializer.Deserialize<WildlifeTrappingState>(trapJson);
+            Assert.NotNull(restoredInvSave);
+            Assert.NotNull(restoredTrapSave);
+
+            var freshInv = new Ashfall.Core.Inventory.Inventory { Capacity = 20, MaxWeight = 50f };
+            freshInv.RestoreState(restoredInvSave!, id => id switch
+            {
+                "copper_wire_10m_of_10m" => wireItem,
+                "trap_improvised_wire" => snareItem,
+                "bread" => breadItem,
+                _ => null
+            });
+
+            var freshTrapping = new WildlifeTrappingSystem(new SeededRng(seed));
+            catalog.RegisterWith(freshTrapping);
+            freshTrapping.RestoreState(restoredTrapSave!);
+
+            int postSaveWire = freshInv.CountById("copper_wire_10m_of_10m");
+            int postSaveSnare = freshInv.CountById("trap_improvised_wire");
+            var restoredSite = freshTrapping.State.trapSites[0];
+            int postSaveDurability = restoredSite.remainingDurability;
+            bool postSaveBroken = restoredSite.isBroken;
+
+            // Assert restored matches pre-save exactly
+            Assert.Equal(site.remainingDurability, restoredSite.remainingDurability);
+            Assert.Equal(site.isBroken, restoredSite.isBroken);
+
+            // F. Continue until break and verify broken state
+            // Reset catch so trap is primed for subsequent check days
+            restoredSite.hasCatch = false;
+
+            // Day 3 (Check 2: durability 2 -> 1)
+            freshTrapping.TickDay(3, 1.2f);
+            dailyCatches.Add(restoredSite.hasCatch ? restoredSite.catchSpecies : "none");
+            dailyDurabilities.Add(restoredSite.remainingDurability);
+            restoredSite.hasCatch = false;
+
+            // Day 4 (Check 3: durability 1 -> 0, breaks)
+            freshTrapping.TickDay(4, 1.2f);
+            dailyCatches.Add(restoredSite.hasCatch ? restoredSite.catchSpecies : "none");
+            dailyDurabilities.Add(restoredSite.remainingDurability);
+
+            int breakDay = 4;
+            Assert.True(restoredSite.isBroken);
+            Assert.Equal(0, restoredSite.remainingDurability);
+
+            int prePostBreakCatches = freshTrapping.State.totalCatch;
+            // Advance additional eligible check days after break (days 5, 6, 7)
+            freshTrapping.TickDay(5, 1.2f);
+            freshTrapping.TickDay(6, 1.2f);
+            freshTrapping.TickDay(7, 1.2f);
+
+            int postBreakCatchCount = freshTrapping.State.totalCatch - prePostBreakCatches;
+            Assert.Equal(0, postBreakCatchCount);
+            Assert.Equal(0, restoredSite.remainingDurability);
+            Assert.True(restoredSite.isBroken);
+
+            return new EndToEndRunSignature(
+                craftedWireDelta,
+                craftedSnareDelta,
+                inventory.CountById("bread"),
+                deployedTrapId,
+                initialDurability,
+                initialInterval,
+                initialBroken,
+                dailyCatches,
+                dailyDurabilities,
+                caughtPrey,
+                diseaseId,
+                dose,
+                site.isMeatProcessed,
+                postSaveWire,
+                postSaveSnare,
+                postSaveDurability,
+                postSaveBroken,
+                breakDay,
+                restoredSite.remainingDurability,
+                restoredSite.isBroken,
+                postBreakCatchCount
+            );
+        }
+
+        [Fact]
+        public void WildlifeTrapping_EndToEnd_CraftDeployMigrateButcherSaveRestoreBreak_IsDeterministic()
+        {
+            var run1 = ExecuteEndToEndScenario(42);
+            var run2 = ExecuteEndToEndScenario(42);
+            var run3 = ExecuteEndToEndScenario(42);
+
+            string json1 = JsonSerializer.Serialize(run1);
+            string json2 = JsonSerializer.Serialize(run2);
+            string json3 = JsonSerializer.Serialize(run3);
+
+            Assert.Equal(json1, json2);
+            Assert.Equal(json1, json3);
+
+            // Direct assertions on the contract
+            Assert.Equal(-1, run1.CraftedWireDelta);
+            Assert.Equal(1, run1.CraftedSnareDelta);
+            Assert.Equal(10, run1.UnrelatedItemCount);
+            Assert.Equal("trap_improvised_wire", run1.DeployedTrapId);
+            Assert.Equal(3, run1.InitialDurability);
+            Assert.Equal(1, run1.InitialInterval);
+            Assert.False(run1.InitialBroken);
+            Assert.True(run1.IsMeatProcessed);
+            Assert.Equal(4, run1.PostSaveInventoryWireCount);
+            Assert.Equal(0, run1.PostSaveInventorySnareCount);
+            Assert.Equal(2, run1.PostSaveTrapDurability);
+            Assert.False(run1.PostSaveTrapBroken);
+            Assert.Equal(0, run1.TerminalDurability);
+            Assert.True(run1.TerminalBroken);
+            Assert.Equal(0, run1.PostBreakCatchCount);
+        }
     }
 }

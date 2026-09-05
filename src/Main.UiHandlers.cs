@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Inventory;
@@ -55,7 +57,9 @@ namespace AtomicWar.GodotApp
             SetupHoldfastRuntime();
             SetupExpansions();
             SetupDutyRoster();
-            _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay);
+            SetupFactionBranch();
+            SetupMoralChoice();
+            _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice, _moralChoiceDefs);
             _questsPanel.Open();
         }
         public void OpenJournalPanel()
@@ -136,20 +140,82 @@ namespace AtomicWar.GodotApp
         {
             SetupHoldfastRuntime();
             SetupExpansions();
+            SetupMoralChoice();
             var holdfastDef = _core?.Quests?.GetDef(questId);
             var holdfastProgress = _core?.Quests?.GetProgress(questId);
             if (holdfastDef != null)
             {
                 _questDetailPanel.Bind(holdfastDef, holdfastProgress);
             }
-            else if (_expansions?.CrossingQuests != null)
+            else if (_expansions?.CrossingQuests != null && _expansions.CrossingQuests.GetDef(questId) != null)
             {
                 var crossingDef = _expansions.CrossingQuests.GetDef(questId);
                 var crossingProgress = _expansions.CrossingQuests.GetProgress(questId);
-                if (crossingDef != null)
-                    _questDetailPanel.Bind(crossingDef, crossingProgress);
+                _questDetailPanel.Bind(crossingDef, crossingProgress);
+            }
+            else
+            {
+                var moralDef = GetMoralChoiceDef(questId);
+                if (moralDef != null)
+                {
+                    _questDetailPanel.Bind(moralDef, _moralChoice, (qId, idx) =>
+                    {
+                        TryResolveMoralChoice(qId, idx);
+                        OpenQuestDetailPanel(qId);
+                    });
+                }
             }
             _questDetailPanel.Open();
+        }
+
+        public void OpenMoralChoiceModal(string? questId = null)
+        {
+            SetupMoralChoice();
+            Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition? targetDef = null;
+            if (!string.IsNullOrEmpty(questId))
+            {
+                targetDef = GetMoralChoiceDef(questId);
+            }
+            else
+            {
+                var available = GetAvailableMoralChoices();
+                if (available.Count > 0)
+                    targetDef = available[0];
+                else
+                {
+                    var resolved = GetResolvedMoralChoices();
+                    if (resolved.Count > 0)
+                        targetDef = resolved[0];
+                    else if (_moralChoiceDefs.Count > 0)
+                        targetDef = _moralChoiceDefs[0];
+                }
+            }
+
+            if (targetDef != null)
+            {
+                _moralChoiceModal.Bind(targetDef, _moralChoice, (qId, idx) =>
+                {
+                    TryResolveMoralChoice(qId, idx);
+                });
+                _moralChoiceModal.Open();
+                return;
+            }
+
+            if (_statusLabel != null)
+                _statusLabel.Text = "No moral choices are available right now.";
+            GD.Print("[Ashfall] OpenMoralChoiceModal: no available/resolved/catalog moral choice to present.");
+        }
+        public void OpenFireIncidentPanel(string? incidentId = null)
+        {
+            CloseAllOverlayPanels();
+            SetupShelterFireHazard();
+            SetupSurvivors();
+            _fireIncidentPanel.RosterWorkerProvider = () =>
+                _survivors?.RosterState?.Where(s => s.IsAlive && !s.IsDead)
+                    .Select(s => s.Id).Take(3).ToList() ?? new List<string>();
+            _fireIncidentPanel.Rng = _campaignDay?.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 15);
+            _fireIncidentPanel.Bind(_shelterFireSession!, incidentId);
+            _fireIncidentPanel.Open();
         }
         public void OpenSaveLoadPanel() => _saveLoadPanel?.Open();
         public void OpenCrossingQuestPanel()
@@ -343,18 +409,29 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private async void QuitUiTestAfterFrame(int exitCode)
         {
-            var tree = GetTree();
-            await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+            // Audit #46 — async void must not silently swallow exceptions on the
+            // headless quit path; log and force a non-zero exit on failure.
+            try
+            {
+                var tree = GetTree();
+                await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
 
-            // The UI smoke tests construct the shell directly under Main rather
-            // than loading a disposable child scene. Free those test-owned roots
-            // explicitly so Godot does not leave their controls in ObjectDB at
-            // process exit (normal gameplay never calls this path).
-            AshfallUiHelpers.EmptyChildren(this);
+                // The UI smoke tests construct the shell directly under Main rather
+                // than loading a disposable child scene. Free those test-owned roots
+                // explicitly so Godot does not leave their controls in ObjectDB at
+                // process exit (normal gameplay never calls this path).
+                AshfallUiHelpers.EmptyChildren(this);
 
-            await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
-            await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
-            tree.Quit(exitCode);
+                await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+                await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+                tree.Quit(exitCode);
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[QuitUiTestAfterFrame] {ex.GetType().Name}: {ex.Message}");
+                try { GetTree()?.Quit(exitCode == 0 ? 1 : exitCode); }
+                catch { /* last-resort: process may already be tearing down */ }
+            }
         }
 
         /// <summary>Headless smoke test for the player-facing Godot shell.</summary>

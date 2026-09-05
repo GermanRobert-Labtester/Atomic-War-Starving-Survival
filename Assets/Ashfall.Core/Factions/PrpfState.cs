@@ -47,5 +47,9 @@ namespace Ashfall.Core.Factions
 
         public bool joined = false;
         public bool opposed = false;
+
+        /// <summary>Last campaign day that applied daily influence (−1 = never).
+        /// Idempotent TickDay guard so day-advance retries do not double-drift.</summary>
+        public int lastTickedDay = -1;
     }
 }

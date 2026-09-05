@@ -64,7 +64,7 @@ namespace AtomicWar.GodotApp
             CloseAllOverlayPanels();
 
             var panelIds = PanelRegistry.AllIds.ToList();
-            var rng = new Random(unchecked((int)0xDEADBEEF));
+            var rng = new Random(unchecked((int)0xDEADBEEF)); // DETERMINISM_ALLOWLIST: UI test composition root fixed seed
             var shuffled = panelIds.OrderBy(_ => rng.Next()).ToList();
 
             bool panelConstructionPass = true;

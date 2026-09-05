@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using Ashfall.Core;
+using Ashfall.Core.Random;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.UI;
 
@@ -17,8 +21,17 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
 
+        private ShelterFireHostSession? _hostSession;
         private ShelterFireHazardSystem? _fireSystem;
         private string _incidentId = string.Empty;
+
+        private void OnFireStateChanged(Dictionary<string, FireIncidentState> _) => RefreshView();
+
+        public ShelterFireHostSession? HostSession => _hostSession;
+        public ShelterFireHazardSystem? FireSystem => _fireSystem;
+        public string CurrentIncidentId => _incidentId;
+        public ISeededRng? Rng { get; set; }
+        public Func<List<string>>? RosterWorkerProvider { get; set; }
 
         private Label _headerLabel = null!;
         private Label _statusLabel = null!;
@@ -31,26 +44,75 @@ namespace AtomicWar.GodotApp.UI
         private Button _alarmButton = null!;
         private Button _brigadeButton = null!;
         private Button _extinguisherButton = null!;
-        private Button _tickButton = null!;
         private Button _closeButton = null!;
 
         public bool IsBound => _fireSystem != null;
 
-        public void Bind(ShelterFireHazardSystem fireSystem, string incidentId)
+        public void Bind(ShelterFireHostSession session, string? incidentId = null)
+        {
+            _hostSession = session;
+            BindSystem(session.System, incidentId);
+        }
+
+        public void Bind(ShelterFireHazardSystem fireSystem, string? incidentId = null)
+        {
+            _hostSession = null;
+            BindSystem(fireSystem, incidentId);
+        }
+
+        private void BindSystem(ShelterFireHazardSystem fireSystem, string? incidentId)
         {
             if (_fireSystem != null)
             {
-                _fireSystem.OnStateChanged -= _ => RefreshView();
+                _fireSystem.OnStateChanged -= OnFireStateChanged;
             }
 
             _fireSystem = fireSystem;
-            _incidentId = incidentId;
+            _incidentId = ResolveActiveIncidentId(fireSystem, incidentId);
 
             if (_fireSystem != null)
             {
-                _fireSystem.OnStateChanged += _ => RefreshView();
+                _fireSystem.OnStateChanged += OnFireStateChanged;
                 RefreshView();
             }
+        }
+
+        /// <summary>Detach the panel before its campaign authority is replaced.</summary>
+        public void Unbind()
+        {
+            if (_fireSystem != null)
+                _fireSystem.OnStateChanged -= OnFireStateChanged;
+            _fireSystem = null;
+            _hostSession = null;
+            _incidentId = string.Empty;
+            Rng = null;
+            RosterWorkerProvider = null;
+        }
+
+        public void SelectIncident(string incidentId)
+        {
+            _incidentId = incidentId ?? string.Empty;
+            RefreshView();
+        }
+
+        private static string ResolveActiveIncidentId(ShelterFireHazardSystem? fireSystem, string? incidentId)
+        {
+            if (fireSystem == null) return string.Empty;
+            if (!string.IsNullOrEmpty(incidentId) && fireSystem.Incidents.ContainsKey(incidentId))
+                return incidentId;
+
+            foreach (var kvp in fireSystem.Incidents)
+            {
+                if (!kvp.Value.isResolved)
+                    return kvp.Key;
+            }
+
+            foreach (var kvp in fireSystem.Incidents)
+            {
+                return kvp.Key;
+            }
+
+            return string.Empty;
         }
 
         public void Open()
@@ -61,7 +123,8 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
-            BuildUI();
+            if (_statusLabel == null)
+                BuildUI();
         }
 
         private void BuildUI()
@@ -118,9 +181,6 @@ namespace AtomicWar.GodotApp.UI
             _extinguisherButton = AshfallUiHelpers.MakeButton("Deploy Extinguisher", OnDeployExtinguisher);
             buttonRow.AddChild(_extinguisherButton);
 
-            _tickButton = AshfallUiHelpers.MakeButton("Advance Tick", OnTick);
-            buttonRow.AddChild(_tickButton);
-
             _closeButton = AshfallUiHelpers.MakeButton("Close", () => OnClose?.Invoke());
             buttonRow.AddChild(_closeButton);
         }
@@ -136,7 +196,13 @@ namespace AtomicWar.GodotApp.UI
         private void OnDispatchBrigade()
         {
             if (_fireSystem == null) return;
-            var workers = new System.Collections.Generic.List<string> { "sv_a", "sv_b" };
+            var workers = RosterWorkerProvider?.Invoke();
+            if (workers == null || workers.Count == 0)
+            {
+                _feedbackLabel.Text = "Cannot dispatch brigade: no eligible survivors available.";
+                RefreshView();
+                return;
+            }
             bool ok = _fireSystem.AssignBrigade(_incidentId, workers);
             _feedbackLabel.Text = ok ? "Brigade dispatched." : "Cannot dispatch brigade.";
             RefreshView();
@@ -162,42 +228,56 @@ namespace AtomicWar.GodotApp.UI
         private void OnTick()
         {
             if (_fireSystem == null) return;
-            _fireSystem.Tick(_incidentId, new CoreSeededRng(_incidentId.GetHashCode()));
+            var rng = Rng ?? new CoreSeededRng(StableHash.Of(_incidentId));
+            _fireSystem.Tick(_incidentId, rng);
             _feedbackLabel.Text = "Tick advanced.";
             RefreshView();
         }
 
         private void RefreshView()
         {
+            if (_statusLabel == null)
+                BuildUI();
+
             if (_fireSystem == null)
             {
                 if (_statusLabel != null) _statusLabel.Text = "Status: Fire suppression system offline (no session bound)";
                 if (_alarmButton != null) _alarmButton.Disabled = true;
                 if (_brigadeButton != null) _brigadeButton.Disabled = true;
                 if (_extinguisherButton != null) _extinguisherButton.Disabled = true;
-                if (_tickButton != null) _tickButton.Disabled = true;
                 return;
             }
 
-            var incident = _fireSystem.GetIncident(_incidentId);
+            if (string.IsNullOrEmpty(_incidentId) || _fireSystem.GetIncident(_incidentId) == null)
+            {
+                _incidentId = ResolveActiveIncidentId(_fireSystem, null);
+            }
+
+            var incident = string.IsNullOrEmpty(_incidentId) ? null : _fireSystem.GetIncident(_incidentId);
             if (incident == null)
             {
-                _statusLabel.Text = "Status: No active fire incidents in shelter";
+                if (_statusLabel != null) _statusLabel.Text = "Status: No active fire incidents in shelter";
                 if (_zonesContainer != null)
                 {
                     AshfallUiHelpers.EmptyChildren(_zonesContainer);
                     _zonesContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("All shelter sectors clear of thermal hazards"));
                 }
+                if (_alarmButton != null) _alarmButton.Disabled = true;
+                if (_brigadeButton != null) _brigadeButton.Disabled = true;
+                if (_extinguisherButton != null) _extinguisherButton.Disabled = true;
                 return;
             }
 
-            _statusLabel.Text = incident.isResolved
-                ? $"Status: RESOLVED ({incident.resolution})"
-                : $"Status: Active (tick {incident.ticksElapsed})";
-            _alarmLabel.Text = $"Alarm: {(incident.alarmRaised ? "RAISED" : "Not raised")}";
-            _brigadeLabel.Text = $"Brigade: {incident.brigadeWorkers.Count} workers";
-            _extinguisherLabel.Text = $"Extinguishers: {incident.extinguisherChargesUsed}/{ShelterFireHazardSystem.ExtinguisherMaxCharges} used";
-            _damageLabel.Text = $"Structural Damage: {incident.structuralDamage:P0}";
+            if (_statusLabel != null)
+            {
+                _statusLabel.Text = incident.isResolved
+                    ? $"Status: RESOLVED ({incident.resolution})"
+                    : $"Status: Active (tick {incident.ticksElapsed})";
+            }
+            if (_alarmLabel != null) _alarmLabel.Text = $"Alarm: {(incident.alarmRaised ? "RAISED" : "Not raised")}";
+            if (_brigadeLabel != null) _brigadeLabel.Text = $"Brigade: {incident.brigadeWorkers.Count} workers";
+            if (_extinguisherLabel != null) _extinguisherLabel.Text = $"Extinguishers: {incident.extinguisherChargesUsed}/{ShelterFireHazardSystem.ExtinguisherMaxCharges} used";
+            if (_damageLabel != null) _damageLabel.Text = $"Structural Damage: {incident.structuralDamage:P0}";
 
             // Clear and rebuild zone display
             foreach (var child in _zonesContainer.GetChildren())
@@ -220,16 +300,21 @@ namespace AtomicWar.GodotApp.UI
             }
 
             _alarmButton.Disabled = incident.alarmRaised || incident.isResolved;
-            _tickButton.Disabled = incident.isResolved;
+            // Re-enable after empty/offline paths disabled the control; stay
+            // disabled once a brigade is already assigned or the incident ended.
+            _brigadeButton.Disabled = incident.isResolved || incident.brigadeWorkers.Count > 0;
             _extinguisherButton.Disabled = incident.isResolved || incident.extinguisherChargesUsed >= ShelterFireHazardSystem.ExtinguisherMaxCharges;
         }
 
+        public void RaiseAlarmForTest() => OnRaiseAlarm();
+        public void DispatchBrigadeForTest() => OnDispatchBrigade();
+        public void DeployExtinguisherForTest() => OnDeployExtinguisher();
+        public void AdvanceTickForTest() => OnTick();
+
         public override void _ExitTree()
         {
-            if (_fireSystem != null)
-            {
-                _fireSystem.OnStateChanged -= _ => RefreshView();
-            }
+            Unbind();
+            base._ExitTree();
         }
     }
 }

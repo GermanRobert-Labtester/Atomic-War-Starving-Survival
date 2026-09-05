@@ -42,5 +42,28 @@ namespace AtomicWar.GodotApp
             if (_factionBranchDirty)
                 SaveFactionBranch();
         }
+
+        public bool CommitFactionBranch(string branchId)
+        {
+            SetupFactionBranch();
+            SetupMoralChoice();
+            if (_factionBranch == null || _moralChoice == null) return false;
+            var result = _factionBranch.Coordinator.CommitBranch(branchId, _moralChoice);
+            if (result.IsSuccess)
+            {
+                _factionBranchDirty = true;
+                _moralChoiceDirty = true;
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiConfirm);
+                return true;
+            }
+            return false;
+        }
+
+        private void TickFactionBranchDay(int day)
+        {
+            SetupFactionBranch();
+            _factionBranch?.Coordinator.TickDay(day);
+            _factionBranchDirty = true;
+        }
     }
 }

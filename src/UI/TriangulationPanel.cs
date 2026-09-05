@@ -37,11 +37,15 @@ namespace AtomicWar.GodotApp.UI
 
         public bool IsBound => _radioHost != null;
 
+        private void OnTriangulationStateChanged(TriangulationState _) => RefreshView();
+        private void HandleLocationRevealed(string id) => OnLocationDiscovered?.Invoke(id);
+
         public void Bind(RadioHostSession radioHost, string signalId = "sig_distress")
         {
             if (_radioHost != null)
             {
-                _radioHost.Triangulation.OnStateChanged -= _ => RefreshView();
+                _radioHost.Triangulation.OnStateChanged -= OnTriangulationStateChanged;
+                _radioHost.Triangulation.OnLocationRevealed -= HandleLocationRevealed;
             }
 
             _radioHost = radioHost;
@@ -49,8 +53,8 @@ namespace AtomicWar.GodotApp.UI
 
             if (_radioHost != null)
             {
-                _radioHost.Triangulation.OnStateChanged += _ => RefreshView();
-                _radioHost.Triangulation.OnLocationRevealed += id => OnLocationDiscovered?.Invoke(id);
+                _radioHost.Triangulation.OnStateChanged += OnTriangulationStateChanged;
+                _radioHost.Triangulation.OnLocationRevealed += HandleLocationRevealed;
                 RefreshView();
             }
         }
@@ -154,7 +158,10 @@ namespace AtomicWar.GodotApp.UI
 
         private void RefreshView()
         {
-            if (_radioHost == null) return;
+            if (_signalLabel == null)
+                BuildUI();
+
+            if (_signalLabel == null || _radioHost == null) return;
 
             _signalLabel.Text = $"Signal: {_activeSignalId}";
             _observationCountLabel.Text = $"Observations: {_radioHost.Triangulation.GetObservationCount(_activeSignalId)}";
@@ -184,8 +191,11 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_radioHost != null)
             {
-                _radioHost.Triangulation.OnStateChanged -= _ => RefreshView();
+                _radioHost.Triangulation.OnStateChanged -= OnTriangulationStateChanged;
+                _radioHost.Triangulation.OnLocationRevealed -= HandleLocationRevealed;
+                _radioHost = null;
             }
+            base._ExitTree();
         }
     }
 }

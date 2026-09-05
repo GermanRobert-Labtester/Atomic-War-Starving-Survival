@@ -7,6 +7,7 @@ using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.Radio;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -26,7 +27,7 @@ namespace AtomicWar.GodotApp
         {
             GD.Print("── GODOT-NODE CALLBACK PANEL BIND/UNBIND/REBIND SELF-TEST ──");
             int passedGates = 0;
-            int totalGates = 12;
+            int totalGates = 15;
 
             try
             {
@@ -111,7 +112,7 @@ namespace AtomicWar.GodotApp
 
                 // ── GATE 2: SaveLoadPanel Bind -> Unbind -> Rebind Callback Test ──
                 GD.Print("\n[Gate 2] Testing SaveLoadPanel node callback lifecycle...");
-                string tempDir = Path.Combine(Path.GetTempPath(), "ashfall_panel_lifecycle_saveload_" + DateTime.UtcNow.Ticks);
+                string tempDir = Path.Combine(Path.GetTempPath(), "ashfall_panel_lifecycle_saveload_" + DateTime.UtcNow.Ticks); // DETERMINISM_ALLOWLIST: Test harness temporary directory
                 Directory.CreateDirectory(tempDir);
 
                 try
@@ -524,6 +525,217 @@ namespace AtomicWar.GodotApp
                 }
 
                 GD.Print("[PASS] Gate 12: IBindablePanel contract conformance verified cleanly.");
+                passedGates++;
+
+                // ── GATE 13: FireIncidentPanel Dynamic Resolution & Action Lifecycle ──
+                GD.Print("\n[Gate 13] Testing FireIncidentPanel dynamic incident resolution and action lifecycle...");
+                var fireSys = new ShelterFireHazardSystem();
+                var fireHost = new ShelterFireHostSession(fireSys);
+                var firePanel = new FireIncidentPanel();
+
+                // 1. Initial bind with no incidents: should be bound and have empty incident id
+                firePanel.Bind(fireHost);
+                if (!firePanel.IsBound)
+                {
+                    GD.PrintErr("[FAIL] Gate 13: FireIncidentPanel IsBound is false after initial Bind.");
+                    return 1;
+                }
+                if (!string.IsNullOrEmpty(firePanel.CurrentIncidentId))
+                {
+                    GD.PrintErr($"[FAIL] Gate 13: Expected empty incident id before ignition, got '{firePanel.CurrentIncidentId}'.");
+                    return 1;
+                }
+
+                // 2. Incident ignites dynamically in the canonical authority
+                var zones = new System.Collections.Generic.List<FireZoneState>
+                {
+                    new FireZoneState
+                    {
+                        zoneId = "zone_workshop",
+                        displayName = "Workshop Bay",
+                        fireLevel = 0.5f,
+                        smokeLevel = 0.2f,
+                        coLevel = 0.1f,
+                        heatLevel = 0.3f,
+                        damperOpen = true
+                    }
+                };
+                string incId = "arc_workshop_d10";
+                fireSys.Ignite(incId, "zone_workshop", 10, zones);
+
+                // 3. Re-resolves dynamically via Bind / SelectIncident or OnStateChanged
+                firePanel.Bind(fireHost);
+                if (firePanel.CurrentIncidentId != incId)
+                {
+                    GD.PrintErr($"[FAIL] Gate 13: Expected panel to resolve to active incident '{incId}', got '{firePanel.CurrentIncidentId}'.");
+                    return 1;
+                }
+
+                // 4. Raise alarm through panel action
+                firePanel.RaiseAlarmForTest();
+                var activeInc = fireSys.GetIncident(incId);
+                if (activeInc == null || !activeInc.alarmRaised)
+                {
+                    GD.PrintErr("[FAIL] Gate 13: Panel RaiseAlarm action did not mutate canonical fire incident.");
+                    return 1;
+                }
+
+                // 5. Deploy extinguisher through panel action
+                float fireBefore = activeInc.zones[0].fireLevel;
+                firePanel.DeployExtinguisherForTest();
+                if (activeInc.extinguisherChargesUsed != 1 || activeInc.zones[0].fireLevel >= fireBefore)
+                {
+                    GD.PrintErr("[FAIL] Gate 13: Panel DeployExtinguisher action did not reduce fire level on canonical incident.");
+                    return 1;
+                }
+
+                // 6. Advance tick
+                firePanel.AdvanceTickForTest();
+                if (activeInc.ticksElapsed != 1)
+                {
+                    GD.PrintErr("[FAIL] Gate 13: Panel AdvanceTick action did not advance tick on canonical incident.");
+                    return 1;
+                }
+
+                firePanel.QueueFree();
+                GD.Print("[PASS] Gate 13: FireIncidentPanel dynamic resolution and action lifecycle verified cleanly.");
+                passedGates++;
+
+                // ── GATE 14: RadiationDetailPanel Bind with Environmental Survivors ──
+                GD.Print("\n[Gate 14] Testing RadiationDetailPanel with Environmental Exposure...");
+                var survivorsHost = new SurvivorsHostSession();
+                survivorsHost.AddSurvivor("surv_indoor", "Indoor Worker", health: 100f);
+                survivorsHost.AddSurvivor("surv_outdoor", "Scout", health: 100f);
+                survivorsHost.SetSurvivorLocation("surv_indoor", Ashfall.Core.Radiation.SurvivorExposureLocation.ShelterInterior);
+                survivorsHost.SetSurvivorLocation("surv_outdoor", Ashfall.Core.Radiation.SurvivorExposureLocation.WastelandOutdoors);
+                survivorsHost.ExposureResolver.WeatherRadModifierProvider = () => 10f;
+
+                survivorsHost.TickHour(1f);
+
+                var indoorRad = survivorsHost.RadStateFor("surv_indoor");
+                var outdoorRad = survivorsHost.RadStateFor("surv_outdoor");
+                if (indoorRad == null || outdoorRad == null || indoorRad.RadiationDose >= outdoorRad.RadiationDose)
+                {
+                    GD.PrintErr($"[FAIL] Gate 14: Indoor dose ({indoorRad?.RadiationDose}) must be strictly less than outdoor dose ({outdoorRad?.RadiationDose}).");
+                    return 1;
+                }
+
+                var radDetailPanel = new RadiationDetailPanel();
+                radDetailPanel.Bind(null, survivorsHost);
+                if (!radDetailPanel.IsBound || radDetailPanel.RenderedCurrentCount != 2)
+                {
+                    GD.PrintErr($"[FAIL] Gate 14: Expected RadiationDetailPanel to be bound with 2 survivor rows, got isBound={radDetailPanel.IsBound}, count={radDetailPanel.RenderedCurrentCount}.");
+                    return 1;
+                }
+
+                radDetailPanel.QueueFree();
+                GD.Print("[PASS] Gate 14: RadiationDetailPanel environmental exposure binding verified cleanly.");
+                passedGates++;
+
+                // ── GATE 15: Repeated Bind Subscription Symmetry Regression Gate ──
+                GD.Print("\n[Gate 15] Testing repeated Bind subscription symmetry across four flagship panels...");
+
+                // 1. WeatherHistoryPanel (repeated x10 bind and switch)
+                var weatherHistPanel = new WeatherHistoryPanel();
+                var wSys1 = new WeatherSystem();
+                var wSys2 = new WeatherSystem();
+                for (int i = 0; i < 10; i++)
+                {
+                    weatherHistPanel.Bind(wSys1);
+                }
+                weatherHistPanel.Bind(wSys2);
+                weatherHistPanel.QueueFree();
+
+                // 2. GeigerCalibrationPanel (repeated x10 bind and switch)
+                var geigerPanel = new GeigerCalibrationPanel();
+                var doseHost1 = new DoseLedgerHostSession();
+                var doseHost2 = new DoseLedgerHostSession();
+                for (int i = 0; i < 10; i++)
+                {
+                    geigerPanel.Bind(doseHost1, "tag_1");
+                }
+                geigerPanel.Bind(doseHost2, "tag_1");
+                geigerPanel.QueueFree();
+
+                // 3. FireIncidentPanel (repeated x10 bind and switch)
+                var fireIncPanel = new FireIncidentPanel();
+                var fSys1 = new ShelterFireHazardSystem();
+                var fSys2 = new ShelterFireHazardSystem();
+                for (int i = 0; i < 10; i++)
+                {
+                    fireIncPanel.Bind(fSys1);
+                }
+                fireIncPanel.Bind(fSys2);
+                fireIncPanel.QueueFree();
+
+                // 4. TriangulationPanel (repeated x10 bind, location-revealed single propagation, and switch)
+                var triPanel = new TriangulationPanel();
+                var radHost1 = new RadioHostSession(new FactionRadioEngine(), new CoreSeededRng(1), 1);
+                var radHost2 = new RadioHostSession(new FactionRadioEngine(), new CoreSeededRng(2), 1);
+                int discoveredLocationsCount = 0;
+                triPanel.OnLocationDiscovered += _ => discoveredLocationsCount++;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    triPanel.Bind(radHost1, "sig_distress");
+                }
+
+                // Add 6 high-accuracy observations to guarantee discovery threshold is met
+                for (int i = 0; i < 6; i++)
+                {
+                    radHost1.Triangulation.RecordObservation(new RadioObservation
+                    {
+                        signalId = "sig_distress",
+                        stationId = "st_" + i,
+                        day = 1,
+                        bearingDegrees = i * 60f,
+                        errorDegrees = 2f,
+                        signalStrength = 0.95f,
+                        noiseLevel = 0.02f,
+                        operatorSkill = 0.9f
+                    });
+                }
+                radHost1.Triangulation.Triangulate("sig_distress", new CoreSeededRng(42));
+
+                if (discoveredLocationsCount != 1)
+                {
+                    GD.PrintErr($"[FAIL] Gate 15: Expected exactly 1 location discovery after 10x rebind on radHost1, got {discoveredLocationsCount}.");
+                    return 1;
+                }
+
+                // Switch to radHost2; mutating radHost1 must no longer fire into triPanel
+                triPanel.Bind(radHost2, "sig_distress");
+                radHost1.Triangulation.Triangulate("sig_distress", new CoreSeededRng(42));
+                if (discoveredLocationsCount != 1)
+                {
+                    GD.PrintErr($"[FAIL] Gate 15: Detached radHost1 propagated discovery to triPanel after session switch (got {discoveredLocationsCount}).");
+                    return 1;
+                }
+
+                // Now observe and triangulate on radHost2
+                for (int i = 0; i < 6; i++)
+                {
+                    radHost2.Triangulation.RecordObservation(new RadioObservation
+                    {
+                        signalId = "sig_distress",
+                        stationId = "st2_" + i,
+                        day = 1,
+                        bearingDegrees = i * 60f,
+                        errorDegrees = 2f,
+                        signalStrength = 0.95f,
+                        noiseLevel = 0.02f,
+                        operatorSkill = 0.9f
+                    });
+                }
+                radHost2.Triangulation.Triangulate("sig_distress", new CoreSeededRng(42));
+                if (discoveredLocationsCount != 2)
+                {
+                    GD.PrintErr($"[FAIL] Gate 15: Expected second discovery from radHost2, got {discoveredLocationsCount}.");
+                    return 1;
+                }
+
+                triPanel.QueueFree();
+                GD.Print("[PASS] Gate 15: Repeated Bind subscription symmetry verified across WeatherHistory, GeigerCalibration, FireIncident, and Triangulation.");
                 passedGates++;
 
                 GD.Print($"\n=== PANEL BIND LIFECYCLE SELF-TEST PASS ({passedGates}/{totalGates} gates verified) ===");

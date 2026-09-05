@@ -230,6 +230,60 @@ namespace Ashfall.Core.Tests.UI
         }
 
         [Fact]
+        public void GuidanceRoute_IsFormallyRegistered()
+        {
+            Assert.True(PanelRegistry.IsRegistered("guidance"),
+                "Panel 'guidance' must be registered for player onboarding assistance.");
+            var d = PanelRegistry.Get("guidance")!;
+            Assert.Equal(PanelGroup.Dashboard, d.Group);
+            Assert.Equal(PanelMaturity.Live, d.Maturity);
+            Assert.True(d.IsPlayerNavigable);
+        }
+
+        [Fact]
+        public void ShelvedPrototypes_AreRegisteredAsPrototypes_AndNotPlayerNavigable()
+        {
+            string[] prototypes =
+            {
+                "biogas_digester", "cartography_gis", "printing_press", "silicon_slicing",
+                "geothermal_turbine", "war_dog_kennel", "isotope_separator", "plasma_smelting",
+                "borehole_seismograph", "logistics_airlock", "cryo_permafrost_core",
+                "basal_radon_migration", "trauma_bonding_cohort", "clandestine_insurgency",
+                "subterranean_debt_ledger", "surface_shrapnel_aegis", "long_walk_expedition",
+                "sonic_rupture_drill", "vault_door_breaching", "iron_cenotaph_memorial",
+                "aquifer_treaty_concession", "crossing_safe_conduct_vouch", "mechanical_prosthetics_lathe",
+                "fungal_protein_fermenter", "ultrasonic_decontam_airlock", "tropospheric_radio_relay",
+                "induction_cupola_furnace", "heavy_marine_diesel_gen", "magnetic_drum_archive"
+            };
+
+            Assert.Equal(29, prototypes.Length);
+
+            foreach (var id in prototypes)
+            {
+                Assert.True(PanelRegistry.IsRegistered(id), $"Prototype panel '{id}' must be registered in PanelRegistry.");
+                var desc = PanelRegistry.Get(id)!;
+                Assert.Equal(PanelMaturity.Prototype, desc.Maturity);
+                Assert.False(desc.IsPlayerNavigable, $"Prototype '{id}' must not be player-navigable.");
+
+                string? diag = null;
+                bool opened = PanelRegistry.TryOpen(id, msg => diag = msg);
+                Assert.False(opened, $"TryOpen on prototype '{id}' must return false.");
+                Assert.NotNull(diag);
+                Assert.Contains("PROTOTYPE ROUTE", diag);
+            }
+        }
+
+        [Fact]
+        public void SlurryDewateringSump_IsLiveAndNavigable()
+        {
+            Assert.True(PanelRegistry.IsRegistered("slurry_dewatering_sump"),
+                "slurry_dewatering_sump must be registered.");
+            var desc = PanelRegistry.Get("slurry_dewatering_sump")!;
+            Assert.Equal(PanelMaturity.Live, desc.Maturity);
+            Assert.True(desc.IsPlayerNavigable);
+        }
+
+        [Fact]
         public void AllEmittedPanelIds_HaveRegisteredDescriptor()
         {
             // Source-scan all emitted panel IDs from the host src/ tree and

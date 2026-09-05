@@ -8,11 +8,18 @@ namespace Ashfall.Core.Tests.Radio
 {
     public class RadioScheduleCoordinatorTests
     {
+        private static RadioStationCatalog CreateStations()
+        {
+            var stations = new RadioStationCatalog();
+            RadioLegacyCatalogFixture.Populate(stations);
+            return stations;
+        }
+
         [Fact]
         public void Resolve_ReturnsStaticDeadAir_WhenNoStationInTolerance()
         {
             var catalog = new RadioBroadcastCatalog();
-            var stations = new RadioStationCatalog();
+            var stations = CreateStations();
             var coordinator = new RadioScheduleCoordinator(catalog, stations);
             var rng = new SeededRng(2026);
 
@@ -27,7 +34,7 @@ namespace Ashfall.Core.Tests.Radio
         {
             var catalog = new RadioBroadcastCatalog();
             catalog.RegisterAuthoredGapBroadcasts();
-            var stations = new RadioStationCatalog();
+            var stations = CreateStations();
             stations.SetStationState(RadioStationCatalog.StationCivilDefense, RadioStationState.Silent);
 
             var coordinator = new RadioScheduleCoordinator(catalog, stations);
@@ -44,7 +51,7 @@ namespace Ashfall.Core.Tests.Radio
         {
             var catalog = new RadioBroadcastCatalog();
             catalog.RegisterAuthoredGapBroadcasts();
-            var stations = new RadioStationCatalog();
+            var stations = CreateStations();
             stations.SetStationState(RadioStationCatalog.StationGarrisonOverlord, RadioStationState.Jammed);
 
             var coordinator = new RadioScheduleCoordinator(catalog, stations);
@@ -61,7 +68,7 @@ namespace Ashfall.Core.Tests.Radio
         {
             var catalog = new RadioBroadcastCatalog();
             catalog.RegisterAuthoredGapBroadcasts();
-            var stations = new RadioStationCatalog();
+            var stations = CreateStations();
             var coordinator = new RadioScheduleCoordinator(catalog, stations);
             var rng = new SeededRng(2026);
 
@@ -78,7 +85,7 @@ namespace Ashfall.Core.Tests.Radio
         public void DynamicOrbitalAlert_InjectsEmergencyWarningOnAutomatedArray()
         {
             var catalog = new RadioBroadcastCatalog();
-            var stations = new RadioStationCatalog();
+            var stations = CreateStations();
             var coordinator = new RadioScheduleCoordinator(catalog, stations);
             var rng = new SeededRng(2026);
 
@@ -94,7 +101,7 @@ namespace Ashfall.Core.Tests.Radio
         public void AppointmentPrograms_AreSixCanonicalPrograms()
         {
             var catalog = new RadioBroadcastCatalog();
-            var stations = new RadioStationCatalog();
+            var stations = CreateStations();
             var coordinator = new RadioScheduleCoordinator(catalog, stations);
 
             Assert.Equal(6, coordinator.AppointmentPrograms.Count);

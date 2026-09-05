@@ -53,6 +53,9 @@ namespace AtomicWar.GodotApp
                 onReset: () =>
                 {
                     _inventory = null!;
+                    // Collectible OnItemAdded subscription dies with the inventory
+                    // instance; allow WireCollectibleInventoryFeeder to rebind.
+                    _collectibleInventoryWired = false;
                 }));
 
             // Duty Roster
@@ -91,6 +94,8 @@ namespace AtomicWar.GodotApp
                     _expeditions?.Dispose();
                     _expeditions = null!;
                     _expeditionDirty = false;
+                    _travelEncounters = null;
+                    _travelEncountersDirty = false;
                 }));
 
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
@@ -290,6 +295,15 @@ namespace AtomicWar.GodotApp
                 dependsOn: new[] { "survivors", "inventory", "world_weather" },
                 onReset: ResetPlansExpansionSessions));
 
+            // Newly enrolled save sections (endgame, advanced shelter, personal
+            // quests, chemical synthesis, collectibles, shelter fire) + moral
+            // choice ledger. Must null so Setup* re-runs and restores from disk
+            // after Continue / slot switch / new-game reset.
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "enrolled_flagship_sections",
+                dependsOn: new[] { "survivors", "inventory", "journal" },
+                onReset: ResetEnrolledFlagshipSessions));
+
             // First-Hour Onboarding Journey (Task 120)
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "onboarding",
@@ -345,6 +359,53 @@ namespace AtomicWar.GodotApp
             _commsArrayDirty = false;
             _ceremonyDirty = false;
             _roboticsDirty = false;
+        }
+
+        /// <summary>
+        /// Drops newly enrolled flagship sessions so the next Setup* reconstructs
+        /// from disk (restored campaign envelope), never from a stale pre-load instance.
+        /// </summary>
+        private void ResetEnrolledFlagshipSessions()
+        {
+            _moralChoice = null!;
+            _moralChoiceDirty = false;
+
+            _endgame = null;
+            _endgameDirty = false;
+
+            _caravanTradeNetwork = null;
+            _surgicalWard = null;
+            _powerSubgrids = null;
+            _perimeterDefense = null;
+            _hydroponicBiomes = null;
+            _nuclearCore = null;
+            _armoredCrawlers = null;
+            _caravanTradeNetworkDirty = false;
+            _surgicalWardDirty = false;
+            _powerSubgridsDirty = false;
+            _perimeterDefenseDirty = false;
+            _hydroponicBiomesDirty = false;
+            _nuclearCoreDirty = false;
+            _armoredCrawlersDirty = false;
+
+            _personalQuests = null;
+            _personalQuestsDirty = false;
+
+            _chemicalSynthesis = null;
+            _chemicalSynthesisDirty = false;
+
+            _collectibleCatalog = null;
+            _collectibleDiscovery = null;
+            _uniqueClaims = null;
+            _collectibleDispatcher = null;
+            _collectibleInventoryWired = false;
+            _collectiblesDirty = false;
+
+            _fireIncidentPanel?.Unbind();
+            _shelterFireHazard = null;
+            _stageFireHazard = null;
+            _shelterFireSession = null;
+            _shelterFireDirty = false;
         }
 
         /// <summary>

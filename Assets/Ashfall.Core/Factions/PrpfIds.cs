@@ -4,12 +4,11 @@ namespace Ashfall.Core.Factions
 {
     /// <summary>
     /// Canonical ids for the hidden third-power faction, Peace Reputation
-    /// Protection Forces (PRPF). This file owns only the stub surface this
-    /// task builds: a player-relationship standing track and PRPF's own
-    /// internal alignment. PRPF's autonomous power-growth curve, the
-    /// chance-based hidden-recruitment encounter roll, and its concealed HQ
-    /// location are explicitly out of scope here — later tasks build those
-    /// on top of this id set and PrpfStandingSystem/PrpfAlignmentRecord.
+    /// Protection Forces (PRPF). Standing, alignment, join, and oppose are
+    /// live via <see cref="PrpfStandingSystem"/> (wired through
+    /// <c>FactionBranchCoordinator</c>). Autonomous power-growth, the
+    /// chance-based hidden-recruitment encounter roll, and concealed HQ
+    /// location remain follow-on work on top of this id set.
     /// </summary>
     public static class PrpfIds
     {

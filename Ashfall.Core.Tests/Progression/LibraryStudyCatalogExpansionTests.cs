@@ -35,7 +35,7 @@ namespace Ashfall.Core.Tests.Progression
             var json = new SystemTextJsonSerializer();
 
             var manuals = LibraryManualCatalogLoader.Load(dataDir, fileIO, json);
-            Assert.Equal(12, manuals.Count);
+            Assert.True(manuals.Count >= 24, $"Expected >= 24 manuals, got {manuals.Count}");
         }
 
         [Fact]

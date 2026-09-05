@@ -37,6 +37,9 @@ namespace Ashfall.Core
         public WeatherKind weather;
         public float confidence;
         public bool isRouteSafe;
+        public bool? routeSafety;
+        [System.Text.Json.Serialization.JsonIgnore]
+        public bool? RouteSafety { get => routeSafety; set => routeSafety = value; }
         public float temperature;
         public string warning = string.Empty;
         public string preparationPayoff = string.Empty;
@@ -80,11 +83,14 @@ namespace Ashfall.Core
         public event Action OnForecastUpdated;
         public event Action OnStationStateChanged;
 
-        public WeatherStationSystem(WeatherSystem weatherSystem, ISeededRng rng, ILog? log = null)
+        public WeatherGateCatalog? GateCatalog { get; set; }
+
+        public WeatherStationSystem(WeatherSystem weatherSystem, ISeededRng rng, ILog? log = null, WeatherGateCatalog? gateCatalog = null)
         {
             _weatherSystem = weatherSystem ?? throw new ArgumentNullException(nameof(weatherSystem));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
+            GateCatalog = gateCatalog;
         }
 
         public ActionResult Install(int day)
@@ -153,7 +159,9 @@ namespace Ashfall.Core
             OnStationStateChanged?.Invoke();
         }
 
-        public ActionResult GenerateForecast(int currentDay)
+        public ActionResult GenerateForecast(int currentDay) => GenerateForecast(currentDay, null);
+
+        public ActionResult GenerateForecast(int currentDay, string? routeId)
         {
             if (!IsOperational)
             {
@@ -186,12 +194,17 @@ namespace Ashfall.Core
                     _ => confidence > 0.5f
                 };
 
+                bool? routeSafety = !string.IsNullOrEmpty(routeId)
+                    ? ComputeRouteSafety(f.Kind, isRouteSafe, routeId)
+                    : null;
+
                 _state.cachedForecast.Add(new ForecastEntry
                 {
                     day = f.Day,
                     weather = f.Kind,
                     confidence = confidence,
                     isRouteSafe = isRouteSafe,
+                    routeSafety = routeSafety,
                     temperature = 5f + WeatherSystem.TemperaturePenaltyForWeather(f.Kind),
                     warning = (!isRouteSafe && confidence > 0.35f)
                         ? $"WARNING: {f.Kind} expected — overland travel dangerous"
@@ -245,6 +258,58 @@ namespace Ashfall.Core
             foreach (var e in _state.cachedForecast)
                 if (e.day == day) return e.isRouteSafe;
             return false;
+        }
+
+        public bool IsRouteSafe(int day, string? routeId)
+        {
+            if (string.IsNullOrEmpty(routeId) || GateCatalog == null)
+                return IsRouteSafe(day);
+
+            foreach (var e in _state.cachedForecast)
+            {
+                if (e.day == day)
+                {
+                    return ComputeRouteSafety(e.weather, e.isRouteSafe, routeId);
+                }
+            }
+            return false;
+        }
+
+        private bool ComputeRouteSafety(WeatherKind weather, bool globalIsRouteSafe, string routeId)
+        {
+            if (GateCatalog == null)
+                return globalIsRouteSafe;
+
+            string canonical = new RouteGateContextResolver().Resolve(routeId).RouteId;
+            var gate = GateCatalog.GetByTarget(canonical)
+                    ?? GateCatalog.GetByTarget(routeId)
+                    ?? GateCatalog.GetById(routeId);
+
+            if (gate == null)
+                return globalIsRouteSafe;
+
+            string weatherStr = weather.ToString();
+
+            // 1. If G.BlockedWeather contains W -> false
+            foreach (var b in gate.BlockedWeather)
+            {
+                if (string.Equals(b, weatherStr, StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+
+            // 2. If G.RequiredWeather is non-empty:
+            if (gate.RequiredWeather.Count > 0)
+            {
+                foreach (var r in gate.RequiredWeather)
+                {
+                    if (string.Equals(r, weatherStr, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                }
+                return false;
+            }
+
+            // 3. Otherwise -> existing global safety result
+            return globalIsRouteSafe;
         }
 
         public float GetConfidence(int day)

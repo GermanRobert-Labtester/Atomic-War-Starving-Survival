@@ -38,12 +38,14 @@ namespace Ashfall.Core.Campaign
 
             var deaths = new List<DailyBriefingEntry>();
             var warnings = new List<DailyBriefingEntry>();
+            var subterranean = new List<DailyBriefingEntry>();
             var survivorChanges = new List<DailyBriefingEntry>();
+            var shelterSocial = new List<DailyBriefingEntry>();
             var resourceConsumption = new List<DailyBriefingEntry>();
+            var production = new List<DailyBriefingEntry>();
             var weatherForecast = new List<DailyBriefingEntry>();
             var radioIntercepts = new List<DailyBriefingEntry>();
             var expeditionMilestones = new List<DailyBriefingEntry>();
-            var production = new List<DailyBriefingEntry>();
 
             int order = 0;
             foreach (var evt in events)
@@ -93,6 +95,76 @@ namespace Ashfall.Core.Campaign
                             string.IsNullOrEmpty(evt.SecondaryId) ? $"Intercept on {evt.PrimaryId}" : $"[{evt.PrimaryId}] {evt.SecondaryId}", order: order));
                         break;
 
+                    case "radio_intercept_decrypted":
+                        radioIntercepts.Add(new DailyBriefingEntry("Radio Intercepts", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"Decrypted signal: {evt.PrimaryId}" : $"[{evt.PrimaryId}] Decrypted: {evt.SecondaryId}", order: order));
+                        break;
+
+                    case "radio_distress_active":
+                        radioIntercepts.Add(new DailyBriefingEntry("Radio Intercepts", evt.PrimaryId,
+                            $"Active SOS: {evt.PrimaryId} ({evt.Numeric:F0} days remaining).", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "radio_distress_expiring":
+                        warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
+                            $"CRITICAL: Distress signal {evt.PrimaryId} expires in {evt.Numeric:F0} day(s)!", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "radio_location_triangulated":
+                        radioIntercepts.Add(new DailyBriefingEntry("Radio Intercepts", evt.PrimaryId,
+                            $"Triangulated coordinates for {evt.SecondaryId} from {evt.PrimaryId}.", order: order));
+                        break;
+
+                    case "social_privacy_warning":
+                        warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
+                            $"Severe privacy fatigue in {evt.PrimaryId} ({evt.Numeric:F0}‰) - high friction risk!", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "social_dispute_unresolved":
+                        shelterSocial.Add(new DailyBriefingEntry("Shelter Social", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"Unresolved dispute: {evt.PrimaryId}" : $"Unresolved dispute in {evt.SecondaryId}: {evt.PrimaryId}", order: order));
+                        break;
+
+                    case "social_dispute_mediated":
+                        shelterSocial.Add(new DailyBriefingEntry("Shelter Social", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"Dispute mediated: {evt.PrimaryId}" : $"Dispute in {evt.SecondaryId} mediated by {evt.PrimaryId}.", order: order));
+                        break;
+
+                    case "subterranean_methane_warning":
+                        warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
+                            $"Methane accumulation in {evt.PrimaryId} at {evt.Numeric:F0} PPM!", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "subterranean_flood_warning":
+                        warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
+                            $"Flood water depth in {evt.PrimaryId} at {evt.Numeric:F0}‰!", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "subterranean_shoring_warning":
+                        warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
+                            $"Shoring integrity degraded in {evt.PrimaryId} ({evt.Numeric:F0}‰)!", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "subterranean_cave_in":
+                        warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
+                            $"CRITICAL: Cave-in collapse in {evt.PrimaryId}! Miners trapped!", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "subterranean_rescue_active":
+                        subterranean.Add(new DailyBriefingEntry("Subterranean Operations", evt.PrimaryId,
+                            $"Rescue underway in {evt.PrimaryId}: {evt.Numeric:F0} labor ticks remaining.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "subterranean_rescue_completed":
+                        subterranean.Add(new DailyBriefingEntry("Subterranean Operations", evt.PrimaryId,
+                            $"Rescue in {evt.PrimaryId} completed successfully! Miners extracted.", order: order));
+                        break;
+
+                    case "subterranean_rescue_failed":
+                        deaths.Add(new DailyBriefingEntry("Deaths", evt.PrimaryId,
+                            $"Rescue in {evt.PrimaryId} failed. Trapped miners perished.", order: order));
+                        break;
+
                     case "expedition_milestone":
                     case "expeditions_caravans_ticked":
                         if (!string.IsNullOrEmpty(evt.PrimaryId) && !string.Equals(evt.PrimaryId, "none", StringComparison.OrdinalIgnoreCase))
@@ -107,17 +179,34 @@ namespace Ashfall.Core.Campaign
                         production.Add(new DailyBriefingEntry("Production & Maintenance", evt.PrimaryId,
                             string.IsNullOrEmpty(evt.PrimaryId) ? "Crafting work advanced." : $"Crafting completed: {evt.PrimaryId}", order: order, numeric: evt.Numeric));
                         break;
+
+                    case "workshop_job_completed":
+                        production.Add(new DailyBriefingEntry("Production & Maintenance", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"Workshop completed: {evt.PrimaryId} ({evt.Numeric:F0} units)." : $"Workshop completed {evt.SecondaryId}: {evt.PrimaryId} ({evt.Numeric:F0} units).", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "workshop_machine_degraded":
+                        warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
+                            $"Machine tooling degraded in {evt.PrimaryId} ({evt.Numeric * 100f:F0}% health).", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "workshop_machine_overhauled":
+                        production.Add(new DailyBriefingEntry("Production & Maintenance", evt.PrimaryId,
+                            $"Machine overhaul completed in {evt.PrimaryId}.", order: order, numeric: evt.Numeric));
+                        break;
                 }
             }
 
             AddSectionIfNotEmpty(r, "Deaths", deaths, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Warnings", warnings, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Subterranean Operations", subterranean, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Survivor Changes", survivorChanges, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Shelter Social", shelterSocial, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Resource Consumption", resourceConsumption, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Production & Maintenance", production, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Weather Forecast", weatherForecast, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Radio Intercepts", radioIntercepts, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Expedition Milestones", expeditionMilestones, maxEntriesPerSection);
-            AddSectionIfNotEmpty(r, "Production & Maintenance", production, maxEntriesPerSection);
 
             return r;
         }

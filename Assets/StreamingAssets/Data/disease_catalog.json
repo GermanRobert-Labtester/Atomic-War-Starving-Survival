@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "collection_id": "disease_catalog",
   "diseases": [
     {
@@ -13,7 +13,7 @@
       "spread_interval_days": 2,
       "spread_radius": 3,
       "countermeasure_item_id": "clean_water",
-      "guidance": "Boil every litre that passes a lip. Purified stores block the water route entirely. The first cramps are just the beginning—then comes the purging.",
+      "guidance": "Boil every litre that passes a lip. Purified stores block the water route entirely. The first cramps are just the beginning\u2014then comes the purging.",
       "source_note": "Shared cisterns and ration lines were the old strain's best friend. It lives in what we drink, not in us. The water tastes faintly of copper and decay before the symptoms even begin.",
       "treatments": [
         {
@@ -31,7 +31,56 @@
       ],
       "tell": "rice-water stool within a day of drinking",
       "tell_secondary": "vomiting, then cramps that will not let go",
-      "timing_clue": "hours after a shared water source; the whole intake line falls first"
+      "timing_clue": "hours after a shared water source; the whole intake line falls first",
+      "immunity_duration_days": 21,
+      "immunity_strength": 1.0,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 2,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "silent_colonization"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.25,
+          "symptom_tags": [
+            "mild_nausea",
+            "abdominal_unease"
+          ],
+          "work_modifier": 0.8,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 2,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "severe_cramps",
+            "rice_water_stool",
+            "rapid_dehydration"
+          ],
+          "work_modifier": 0.3,
+          "care_modifier": 1.2
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 1,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "hypovolemic_shock",
+            "sunken_eyes",
+            "muscle_spasms"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.5
+        }
+      ]
     },
     {
       "id": "disease_zoonotic_flu",
@@ -45,7 +94,7 @@
       "spread_radius": 4,
       "countermeasure_item_id": "gas_mask",
       "guidance": "Seal the vents and keep masks on shift hands. Air moves faster than rumor does. The cough starts as a tickle, then becomes a rasp that sounds like grinding teeth.",
-      "source_note": "Carried in from scavenged bedding and dead livestock. It jumps mouths before it jumps fences. The fever burns away memories first—then the body.",
+      "source_note": "Carried in from scavenged bedding and dead livestock. It jumps mouths before it jumps fences. The fever burns away memories first\u2014then the body.",
       "treatments": [
         {
           "item_id": "herbal_tea",
@@ -62,7 +111,57 @@
       ],
       "tell": "abrupt fever with dry cough and aching",
       "tell_secondary": "sore throat first, then chest tightness",
-      "timing_clue": "one day after crowded animal contact"
+      "timing_clue": "one day after crowded animal contact",
+      "immunity_duration_days": 28,
+      "immunity_strength": 1.0,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 1,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "throat_tickle"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.3,
+          "symptom_tags": [
+            "dry_cough",
+            "fever_onset",
+            "joint_ache"
+          ],
+          "work_modifier": 0.75,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 2,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "grinding_cough",
+            "high_fever",
+            "chest_tightness"
+          ],
+          "work_modifier": 0.4,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 2,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "delirium",
+            "dyspnea",
+            "exhaustion"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.4
+        }
+      ]
     },
     {
       "id": "disease_blood_fever",
@@ -76,7 +175,7 @@
       "spread_radius": 2,
       "countermeasure_item_id": "antibiotics",
       "guidance": "Sterilise every tool before it touches skin. One reused blade can seed a ward. The fever starts with a chill that feels like ice water in the veins.",
-      "source_note": "Spread through unsterilised surgical tools and shared field dressings. The worst cases die with clean hands nearby. The blood never washes clean—only diluted.",
+      "source_note": "Spread through unsterilised surgical tools and shared field dressings. The worst cases die with clean hands nearby. The blood never washes clean\u2014only diluted.",
       "treatments": [
         {
           "item_id": "antibiotics",
@@ -93,7 +192,56 @@
       ],
       "tell": "fever with ache behind the eyes and at the wounds",
       "tell_secondary": "bleeding gums; confusion late",
-      "timing_clue": "days after shared needles or unwashed tools"
+      "timing_clue": "days after shared needles or unwashed tools",
+      "immunity_duration_days": 30,
+      "immunity_strength": 1.0,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 3,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "vascular_parasitism"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "orbital_ache",
+            "chill_waves"
+          ],
+          "work_modifier": 0.8,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 3,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "petechiae",
+            "bleeding_gums",
+            "spiking_fever"
+          ],
+          "work_modifier": 0.3,
+          "care_modifier": 1.3
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 2,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "internal_hemorrhage",
+            "toxic_shock",
+            "confusion"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.6
+        }
+      ]
     },
     {
       "id": "disease_spore_blight",
@@ -124,7 +272,57 @@
       ],
       "tell": "fever with a spreading grey rash",
       "tell_secondary": "eyes weeping, throat raw",
-      "timing_clue": "a few days after working spore-heavy ground unsealed"
+      "timing_clue": "a few days after working spore-heavy ground unsealed",
+      "immunity_duration_days": 14,
+      "immunity_strength": 0.8,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 2,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "mycelial_germination"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.25,
+          "symptom_tags": [
+            "grey_skin_patches",
+            "eye_weeping",
+            "raw_throat"
+          ],
+          "work_modifier": 0.75,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 3,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "black_fleck_sputum",
+            "bronchial_spasm",
+            "fever"
+          ],
+          "work_modifier": 0.35,
+          "care_modifier": 1.2
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 3,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "pulmonary_occlusion",
+            "cyanosis",
+            "hypoxia"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.5
+        }
+      ]
     },
     {
       "id": "disease_acute_radiation_syndrome",
@@ -138,7 +336,7 @@
       "spread_radius": 1,
       "countermeasure_item_id": "iodine_pills",
       "guidance": "Take iodine immediately. Then pray. The vomiting starts with clear fluid, then becomes bloody. The skin burns from the inside out.",
-      "source_note": "The silent killer. No cough, no fever—just the slow unraveling of the body's ability to heal itself. The first sign is often the refusal to eat.",
+      "source_note": "The silent killer. No cough, no fever\u2014just the slow unraveling of the body's ability to heal itself. The first sign is often the refusal to eat.",
       "treatments": [
         {
           "item_id": "rad_away",
@@ -161,7 +359,58 @@
       ],
       "tell": "vomiting within a day of heavy exposure, then a false calm",
       "tell_secondary": "reddened skin, gums bleeding, hair loosening",
-      "timing_clue": "hours to a day of onset marks the dose; the calm before day five fools everyone"
+      "timing_clue": "hours to a day of onset marks the dose; the calm before day five fools everyone",
+      "immunity_duration_days": 0,
+      "immunity_strength": 0.0,
+      "phases": [
+        {
+          "stage": "Prodromal",
+          "duration_days": 2,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "nausea",
+            "vomiting",
+            "epilation_onset"
+          ],
+          "work_modifier": 0.5,
+          "care_modifier": 1.2
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 4,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "latent_phase_fatigue",
+            "erythema"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 5,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "bone_marrow_suppression",
+            "mucosal_bleeding",
+            "petechiae"
+          ],
+          "work_modifier": 0.1,
+          "care_modifier": 1.8
+        },
+        {
+          "stage": "Critical",
+          "duration_days": 3,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "gastrointestinal_collapse",
+            "pancytopenia",
+            "sepsis"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 2.0
+        }
+      ]
     },
     {
       "id": "disease_fungal_respiratory",
@@ -192,7 +441,55 @@
       ],
       "tell": "cough with flecked, rust-coloured sputum",
       "tell_secondary": "night sweats and weight loss",
-      "timing_clue": "slow — a fortnight after dust exposure"
+      "timing_clue": "slow \u2014 a fortnight after dust exposure",
+      "immunity_duration_days": 14,
+      "immunity_strength": 0.85,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 5,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "dormant_colonization"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 2,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "dry_hacking",
+            "night_sweats"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 5,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "rust_sputum",
+            "weight_loss",
+            "persistent_fever"
+          ],
+          "work_modifier": 0.4,
+          "care_modifier": 1.2
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 3,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "fibrous_bronchial_casts",
+            "severe_dyspnea"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.5
+        }
+      ]
     },
     {
       "id": "disease_typhoid_waterborne",
@@ -223,7 +520,56 @@
       ],
       "tell": "sustained fever that will not break by morning",
       "tell_secondary": "rose spots on the belly, dull headache",
-      "timing_clue": "days after the water, not hours — it sneaks"
+      "timing_clue": "days after the water, not hours \u2014 it sneaks",
+      "immunity_duration_days": 30,
+      "immunity_strength": 1.0,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 3,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "bacterial_proliferation"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 2,
+          "contagiousness": 0.25,
+          "symptom_tags": [
+            "frontal_headache",
+            "climbing_step_ladder_fever"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 4,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "rose_spots",
+            "delirium",
+            "intestinal_ulceration"
+          ],
+          "work_modifier": 0.2,
+          "care_modifier": 1.3
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 2,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "peritonitis_risk",
+            "splenomegaly",
+            "exhaustion"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.6
+        }
+      ]
     },
     {
       "id": "disease_wellspring_cramps",
@@ -254,7 +600,53 @@
       ],
       "tell": "griping diarrhoea, no fever to speak of",
       "tell_secondary": "flatulence and cramping after drawing water",
-      "timing_clue": "same-day after a suspect draw"
+      "timing_clue": "same-day after a suspect draw",
+      "immunity_duration_days": 14,
+      "immunity_strength": 0.9,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 2,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "gut_irritation"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.25,
+          "symptom_tags": [
+            "gastric_gurgling",
+            "low_nausea"
+          ],
+          "work_modifier": 0.8,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 2,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "intermittent_purging",
+            "subcostal_spasms"
+          ],
+          "work_modifier": 0.4,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Recovering",
+          "duration_days": 1,
+          "contagiousness": 0.15,
+          "symptom_tags": [
+            "digestive_exhaustion"
+          ],
+          "work_modifier": 0.6,
+          "care_modifier": 1.0
+        }
+      ]
     },
     {
       "id": "disease_silt_jaundice",
@@ -285,7 +677,56 @@
       ],
       "tell": "yellow in the eyes before the skin",
       "tell_secondary": "dark urine, pale stool, itching",
-      "timing_clue": "a week or more after flood-water contact"
+      "timing_clue": "a week or more after flood-water contact",
+      "immunity_duration_days": 21,
+      "immunity_strength": 1.0,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 7,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "hepatic_colonization"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 3,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "dark_urine",
+            "anorexia",
+            "fatigue"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 7,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "scleral_icterus",
+            "clay_stools",
+            "pruritus"
+          ],
+          "work_modifier": 0.3,
+          "care_modifier": 1.3
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 4,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "hepatic_encephalopathy",
+            "coagulopathy"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.7
+        }
+      ]
     },
     {
       "id": "disease_condemned_air_cough",
@@ -316,7 +757,54 @@
       ],
       "tell": "tight cough with breathlessness on the stairs",
       "tell_secondary": "low fever that worsens in the sealed rooms",
-      "timing_clue": "days, worse for those who sleep below the vents"
+      "timing_clue": "days, worse for those who sleep below the vents",
+      "immunity_duration_days": 21,
+      "immunity_strength": 0.9,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 4,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "alveolar_irritation"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 2,
+          "contagiousness": 0.25,
+          "symptom_tags": [
+            "dry_throat",
+            "slight_wheeze"
+          ],
+          "work_modifier": 0.8,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 4,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "spasmodic_cough",
+            "substernal_burning"
+          ],
+          "work_modifier": 0.4,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 3,
+          "contagiousness": 1.15,
+          "symptom_tags": [
+            "intercostal_retractions",
+            "hypoxemia"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.4
+        }
+      ]
     },
     {
       "id": "disease_dry_bunker_hiss",
@@ -341,7 +829,54 @@
       ],
       "tell": "dry hacking cough, no phlegm at all",
       "tell_secondary": "hoarseness and a headache that lifts outdoors",
-      "timing_clue": "weeks of unfiltered air; improves on surface duty"
+      "timing_clue": "weeks of unfiltered air; improves on surface duty",
+      "immunity_duration_days": 14,
+      "immunity_strength": 0.85,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 4,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "mucous_membrane_desiccation"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 2,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "nasal_crusting",
+            "hoarseness"
+          ],
+          "work_modifier": 0.85,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 6,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "inspiratory_stridor",
+            "persistent_wheeze"
+          ],
+          "work_modifier": 0.5,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 4,
+          "contagiousness": 1.1,
+          "symptom_tags": [
+            "vocal_cord_edema",
+            "airway_narrowing"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.3
+        }
+      ]
     },
     {
       "id": "disease_septic_rust_wound_fever",
@@ -355,7 +890,7 @@
       "spread_radius": 2,
       "countermeasure_item_id": "antibiotics",
       "guidance": "Clean every scratch before it closes. The wound looks fine on day one and angry on day three. By day five the patient is shaking in the bed. Sterilise the dressing, sterilise the blade, sterilise the hand.",
-      "source_note": "Gram-positive sepsis seeded by dirty iron wounds — rebar, tin sheeting, rusted car-door edges. Three-phase tell: a hot and angry red line on day two, a shaking chill on day three, a clouded mind on day five. Always kills through the wound, never through the air.",
+      "source_note": "Gram-positive sepsis seeded by dirty iron wounds \u2014 rebar, tin sheeting, rusted car-door edges. Three-phase tell: a hot and angry red line on day two, a shaking chill on day three, a clouded mind on day five. Always kills through the wound, never through the air.",
       "treatments": [
         {
           "item_id": "antibiotics",
@@ -372,7 +907,67 @@
       ],
       "tell": "red streaking out from an unhealing wound",
       "tell_secondary": "fever that spikes in the evening; the dressing smells",
-      "timing_clue": "two or three days after a rust-wound, on the limb it entered"
+      "timing_clue": "two or three days after a rust-wound, on the limb it entered",
+      "immunity_duration_days": 14,
+      "immunity_strength": 0.9,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 2,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "local_tissue_necrosis"
+          ],
+          "work_modifier": 0.9,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "erythematous_wound_edges",
+            "throbbing_pain"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 3,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "purulent_exudate",
+            "lymphangitis",
+            "fever_spike"
+          ],
+          "work_modifier": 0.3,
+          "care_modifier": 1.3
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 2,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "bacteremia",
+            "hypotension",
+            "septic_rigors"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.6
+        },
+        {
+          "stage": "Critical",
+          "duration_days": 1,
+          "contagiousness": 0.8,
+          "symptom_tags": [
+            "septic_shock",
+            "multiorgan_dysfunction"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 2.0
+        }
+      ]
     },
     {
       "id": "disease_reused_needle_fever",
@@ -386,7 +981,7 @@
       "spread_radius": 3,
       "countermeasure_item_id": "antibiotics",
       "guidance": "One needle, one patient, one draw. Sharing the syringe shares the ward. The rash starts on the forearms, climbs to the chest, and stops only when the antibiotics start. Three-phase tell: a hot vein on day one, a creeping rash on day two, a fever that does not break on day three.",
-      "source_note": "Gram-positive infection spread by field-side needle reuse: vaccinations, blood draws, IV lines. Less lethal than septic rust but faster moving. Carries the moral weight of the choice to share — the ward remembers who kept their kit separate. Three-phase tell: first a hot vein on day one, the second sign is a creeping rash on day two, and the third is a fever that will not break on day three.",
+      "source_note": "Gram-positive infection spread by field-side needle reuse: vaccinations, blood draws, IV lines. Less lethal than septic rust but faster moving. Carries the moral weight of the choice to share \u2014 the ward remembers who kept their kit separate. Three-phase tell: first a hot vein on day one, the second sign is a creeping rash on day two, and the third is a fever that will not break on day three.",
       "treatments": [
         {
           "item_id": "antibiotics",
@@ -403,7 +998,54 @@
       ],
       "tell": "fever with flank pain after an injection",
       "tell_secondary": "the injection site is warm, but looks clean",
-      "timing_clue": "days after a needle was reused, wherever it went in"
+      "timing_clue": "days after a needle was reused, wherever it went in",
+      "immunity_duration_days": 14,
+      "immunity_strength": 0.9,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 1,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "venous_inoculation"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.25,
+          "symptom_tags": [
+            "vein_tenderness",
+            "shivering"
+          ],
+          "work_modifier": 0.75,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 2,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "thrombophlebitis",
+            "swinging_pyrexia"
+          ],
+          "work_modifier": 0.35,
+          "care_modifier": 1.2
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 2,
+          "contagiousness": 1.15,
+          "symptom_tags": [
+            "endocarditis_risk",
+            "splinter_hemorrhages"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.5
+        }
+      ]
     },
     {
       "id": "disease_deep_excavation_mold_lung",
@@ -434,7 +1076,66 @@
       ],
       "tell": "breathlessness with a sweet, earthy smell on the breath",
       "tell_secondary": "chest pain on deep breath; black specks in sputum",
-      "timing_clue": "late — a week past the dig, and only for those who went down"
+      "timing_clue": "late \u2014 a week past the dig, and only for those who went down",
+      "immunity_duration_days": 14,
+      "immunity_strength": 0.85,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 6,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "deep_parenchyma_spore_lodgement"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 3,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "exertional_breathlessness",
+            "dull_pleuritic_ache"
+          ],
+          "work_modifier": 0.65,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 7,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "hemoptysis",
+            "cavitary_cough",
+            "wasting"
+          ],
+          "work_modifier": 0.2,
+          "care_modifier": 1.4
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 4,
+          "contagiousness": 1.25,
+          "symptom_tags": [
+            "aspergilloma_expansion",
+            "respiratory_failure"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.8
+        },
+        {
+          "stage": "Critical",
+          "duration_days": 2,
+          "contagiousness": 0.8,
+          "symptom_tags": [
+            "massive_hemoptysis",
+            "asphyxiation_risk"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 2.0
+        }
+      ]
     },
     {
       "id": "disease_silo_lung",
@@ -448,7 +1149,7 @@
       "spread_radius": 2,
       "countermeasure_item_id": "hazmat_suit",
       "guidance": "Hoods on, vents cracked, and never sleep inside a sealed silo. The whisper-cough arrives a week after the exposure, and it never fully leaves. Three-phase tell: a hard breath at the top of the stairs on day nine, a wheeze at night on day twelve, a chest cold that returns every harvest.",
-      "source_note": "Hypersensitivity pneumonitis from compacted grain-spore aerosol. It is not the spores themselves but the immune reaction to them. Commonest among longtime bunker-farmers. Three-phase tell: first a hard breath at the top of the stairs on day nine, the second sign is a wheeze at night on day twelve, and the third is a chest cold that returns every harvest. Pairs with fungal respiratory — patients with one rarely get the other; once the immune system bets wrong, it stops betting again.",
+      "source_note": "Hypersensitivity pneumonitis from compacted grain-spore aerosol. It is not the spores themselves but the immune reaction to them. Commonest among longtime bunker-farmers. Three-phase tell: first a hard breath at the top of the stairs on day nine, the second sign is a wheeze at night on day twelve, and the third is a chest cold that returns every harvest. Pairs with fungal respiratory \u2014 patients with one rarely get the other; once the immune system bets wrong, it stops betting again.",
       "treatments": [
         {
           "item_id": "inhaler",
@@ -465,7 +1166,55 @@
       ],
       "tell": "cough that worsens some hours after dust, not during",
       "tell_secondary": "tightness and fever after clean-out work",
-      "timing_clue": "half a day to two days after silo or grain dust"
+      "timing_clue": "half a day to two days after silo or grain dust",
+      "immunity_duration_days": 21,
+      "immunity_strength": 0.9,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 9,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "allergic_granuloma_formation"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 2,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "tight_chest_at_rest",
+            "dry_cough"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 6,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "interstitial_crackles",
+            "chills",
+            "cyanosis"
+          ],
+          "work_modifier": 0.3,
+          "care_modifier": 1.3
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 3,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "fibrotic_stiffness",
+            "hypoxic_exhaustion"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.6
+        }
+      ]
     },
     {
       "id": "disease_prion_tremor",
@@ -490,7 +1239,67 @@
       ],
       "tell": "uncontrollable hand tremors and involuntary laughing fits",
       "tell_secondary": "ataxic gait and sudden loss of motor coordination",
-      "timing_clue": "two to three weeks following consumption of taboo rations"
+      "timing_clue": "two to three weeks following consumption of taboo rations",
+      "immunity_duration_days": 0,
+      "immunity_strength": 0.0,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 14,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "spongeiform_neurodegeneration"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 4,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "sleep_inversion",
+            "unprovoked_laughter"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 8,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "intention_tremor",
+            "ataxic_stumble",
+            "dysarthria"
+          ],
+          "work_modifier": 0.2,
+          "care_modifier": 1.4
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 6,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "myoclonus",
+            "dementia",
+            "akinetic_mutism"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.8
+        },
+        {
+          "stage": "Terminal",
+          "duration_days": 3,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "coma",
+            "bulbar_palsy"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 2.0
+        }
+      ]
     }
   ],
   "vector_protocols": [
@@ -513,6 +1322,32 @@
       "vector": "spore",
       "duration_days": 4,
       "note": "Filters clog. Swap them or the blower pushes spores deeper."
+    }
+  ],
+  "exposure_sources": [
+    {
+      "source_id": "wildlife_butchery",
+      "disease_id": "disease_zoonotic_flu",
+      "base_probability": 0.3,
+      "mitigating_trait_id": "skill_sanitization_expert"
+    },
+    {
+      "source_id": "autopsy_pathogen",
+      "disease_id": "disease_zoonotic_flu",
+      "base_probability": 0.25,
+      "mitigating_trait_id": "skill_sanitization_expert"
+    },
+    {
+      "source_id": "micro_hazard_contamination",
+      "disease_id": "disease_zoonotic_flu",
+      "base_probability": 1.0,
+      "mitigating_trait_id": ""
+    },
+    {
+      "source_id": "foul_water_draw",
+      "disease_id": "disease_cholera",
+      "base_probability": 0.4,
+      "mitigating_trait_id": ""
     }
   ]
 }

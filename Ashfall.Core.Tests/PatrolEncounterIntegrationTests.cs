@@ -149,9 +149,9 @@ namespace Ashfall.Core.Tests
             bool ok = sys.ResolveChoice("enc_patrol_garrison_checkpoint", "choice_pay_garrison_toll", 1, out _);
             Assert.True(ok);
 
-            // Only iron_garrison changed
+            // Only garrison changed (iron_garrison resolves to faction_central_garrison)
             Assert.Equal(1, war.GetStanding("iron_garrison"));
-            Assert.Equal(centralBefore, war.GetStanding("faction_central_garrison"));
+            Assert.Equal(centralBefore + 1, war.GetStanding("faction_central_garrison"));
             Assert.Equal(rebuildersBefore, war.GetStanding("faction_rebuilders"));
             Assert.Equal(blackOpsBefore, war.GetStanding("faction_black_ops"));
         }

@@ -39,7 +39,18 @@ namespace AtomicWar.GodotApp
             SetupUtilityAi();
 
             bool panel = _utilityAiPanel != null;
-            bool catalog = _utilityAi.Actions.Count == 4;
+            var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
+            var serializer = new SystemTextJsonSerializer();
+            var loadedActions = Ashfall.Core.UtilityAI.UtilityActionCatalogLoader.Load(_dataDir, fileIO, serializer);
+            var expectedIds = new System.Collections.Generic.HashSet<string>();
+            foreach (var act in loadedActions)
+            {
+                if (!string.IsNullOrEmpty(act.id))
+                    expectedIds.Add(act.id);
+            }
+            bool catalog = _utilityAi.Actions.Count == expectedIds.Count &&
+                           _utilityAi.Actions.Count > 0 &&
+                           _utilityAi.Actions.TrueForAll(a => expectedIds.Contains(a.id));
 
             int before = _utilityAiPanel!.GetChild(0).GetChildCount();
             _utilityAiPanel.RefreshView();

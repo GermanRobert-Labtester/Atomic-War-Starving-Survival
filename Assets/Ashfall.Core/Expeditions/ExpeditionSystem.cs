@@ -201,6 +201,9 @@ namespace Ashfall.Core.Expeditions
 
         private readonly Dictionary<string, ExpeditionState> _active = new Dictionary<string, ExpeditionState>();
 
+        /// <summary>Lifetime successful returns (Completed phase). Failed sorties do not count.</summary>
+        private int _completedCount;
+
         /// <summary>F4 — expedition-destination discovery ledger. Idempotent,
         /// ordinal comparer, bounded by the authored destination catalog.
         /// Canonical authority for "the player knows this destination exists";
@@ -296,6 +299,9 @@ namespace Ashfall.Core.Expeditions
 
         public IReadOnlyDictionary<string, ExpeditionState> Active => _active;
         public int ActiveCount => _active.Count;
+
+        /// <summary>Lifetime successful expedition returns for epilogue / campaign metrics.</summary>
+        public int CompletedCount => _completedCount;
 
         // ── Lifecycle ──────────────────────────────────────────────────
 
@@ -629,6 +635,7 @@ namespace Ashfall.Core.Expeditions
 
                 if (exp.phase == (int)ExpeditionPhase.Completed)
                 {
+                    _completedCount++;
                     OnExpeditionCompleted?.Invoke(exp);
                     _active.Remove(exp.survivorId);
                     OnStateChanged?.Invoke(exp);
@@ -1184,6 +1191,12 @@ namespace Ashfall.Core.Expeditions
             for (int i = 0; i < ids.Count; i++)
                 copy.Add(CloneExpedition(_active[ids[i]]));
             return copy;
+        }
+
+        /// <summary>Restore the lifetime completed-sortie counter (aggregate save).</summary>
+        public void RestoreCompletedCount(int count)
+        {
+            _completedCount = count < 0 ? 0 : count;
         }
 
         public void RestoreState(List<ExpeditionState> saved)

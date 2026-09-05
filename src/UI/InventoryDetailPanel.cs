@@ -19,6 +19,8 @@ namespace AtomicWar.GodotApp.UI;
 public partial class InventoryDetailPanel : Control
 {
     public event Action? OnClose;
+    public event Action<string>? OnConsume;
+    public event Action<string>? OnEquip;
 
     private SceneBinder? _binder;
 
@@ -117,10 +119,31 @@ public partial class InventoryDetailPanel : Control
             _itemStats.AddChild(MakeDimLine("No special stats."));
 
         // ── Actions (contextual) ──
-        AddRow(_itemActions, $"Consume: {(def.hungerRestore > 0 || def.thirstRestore > 0 || def.healthEffect > 0 ? "available" : "not consumable")}",
-            (def.hungerRestore > 0 || def.thirstRestore > 0 || def.healthEffect > 0) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
-        AddRow(_itemActions, $"Equip: {(def.isEquipable ? "available (" + def.equipSlot + ")" : "not equipable")}",
-            def.isEquipable ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+        if (def.IsConsumable())
+        {
+            var btn = new Button { Text = count > 0 ? $"CONSUME {def.displayName.ToUpperInvariant()}" : "CONSUME (OUT OF STOCK)", Disabled = count <= 0 };
+            btn.CustomMinimumSize = new Vector2(240, 32);
+            string capturedId = def.id;
+            btn.Pressed += () => OnConsume?.Invoke(capturedId);
+            _itemActions.AddChild(btn);
+        }
+        else
+        {
+            AddRow(_itemActions, "Consume: not consumable", Ashfall.Core.UI.Theme.Dim);
+        }
+
+        if (def.isEquipable)
+        {
+            var btn = new Button { Text = count > 0 ? $"EQUIP ({def.equipSlot})" : $"EQUIP ({def.equipSlot}) (OUT OF STOCK)", Disabled = count <= 0 };
+            btn.CustomMinimumSize = new Vector2(240, 32);
+            string capturedId = def.id;
+            btn.Pressed += () => OnEquip?.Invoke(capturedId);
+            _itemActions.AddChild(btn);
+        }
+        else
+        {
+            AddRow(_itemActions, "Equip: not equipable", Ashfall.Core.UI.Theme.Dim);
+        }
         RenderedRowCount += 2;
     }
 

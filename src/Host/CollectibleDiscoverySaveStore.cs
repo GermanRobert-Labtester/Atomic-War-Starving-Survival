@@ -1,7 +1,7 @@
 // ============================================================================
 // Save Store : CollectibleDiscoverySaveStore
 // Core State : Ashfall.Core.CollectibleDiscoverySave
-// Host Caller: Main.SetupCollectibles / Main.SaveCollectibles
+// Host Caller: Main.SetupCollectibles / Main.SaveCollectibles (SaveAll + RestoreAll)
 // Purpose    : One-time collectible discovery ledger — which collectible
 //              effects have already been handled for this campaign, so
 //              selling, re-acquiring, or reloading can never replay them.

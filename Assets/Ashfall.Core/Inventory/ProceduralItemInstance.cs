@@ -31,8 +31,28 @@ namespace Ashfall.Core.Inventory
 
         public ProceduralItemInstance() { }
 
+        /// <summary>Configurable seed feeding the deterministic instance sequence.</summary>
+        private static int _sequenceSeed;
         /// <summary>Stable per-process counter feeding the deterministic instance id.</summary>
         private static int _instanceCounter;
+
+        /// <summary>
+        /// Configure the seed and counter for procedural item instance generation.
+        /// Allows deterministic re-execution and state restoration across save/load.
+        /// </summary>
+        public static void ConfigureSequence(int seed, int counter = 0)
+        {
+            _sequenceSeed = seed;
+            _instanceCounter = counter;
+        }
+
+        /// <summary>
+        /// Retrieve the current sequence state (seed, counter) for persistence.
+        /// </summary>
+        public static (int seed, int counter) GetSequenceState()
+        {
+            return (_sequenceSeed, _instanceCounter);
+        }
 
         public ProceduralItemInstance(string itemId, int quantity = 1,
             float condition = 1f, float contamination = 0f)
@@ -45,7 +65,7 @@ namespace Ashfall.Core.Inventory
         }
 
         /// <summary>
-        /// Deterministic 8-char hex instance id (FNV-1a over itemId + counter).
+        /// Deterministic 8-char hex instance id (FNV-1a over itemId + counter + seed).
         /// No Guid.NewGuid, no string.GetHashCode: both are runtime-dependent and
         /// would violate the cross-host determinism invariant.
         /// </summary>
@@ -53,6 +73,8 @@ namespace Ashfall.Core.Inventory
         {
             int n = System.Threading.Interlocked.Increment(ref _instanceCounter);
             ulong h = 1469598103934665603UL;
+            h ^= (uint)_sequenceSeed;
+            h *= 1099511628211UL;
             for (int i = 0; i < itemId.Length; i++)
             {
                 h ^= itemId[i];

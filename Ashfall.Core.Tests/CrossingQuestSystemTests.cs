@@ -171,6 +171,59 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void MakeChoice_ForwardsFlagToCanonicalConsequenceLedger_AndIsIdempotent()
+        {
+            var sys = FreshSystem();
+            var ledger = new Ashfall.Core.Flags.InMemoryFlagLedger();
+            sys.BindConsequenceLedger(ledger);
+            sys.StartQuest("quest_crossing_the_vouch", 10);
+
+            int eventCount = 0;
+            sys.OnFlagSet += (_, _) => eventCount++;
+
+            Assert.True(sys.MakeChoice("quest_crossing_the_vouch", "vouch_ostrowski"));
+            Assert.True(ledger.IsSet("flag_vouched_clean"));
+            Assert.Equal(1, eventCount);
+
+            Assert.True(sys.MakeChoice("quest_crossing_the_vouch", "vouch_ostrowski"));
+            Assert.Equal(1, eventCount);
+            Assert.False(sys.MakeChoice("quest_crossing_the_vouch", "vouch_mattis_at_truss"));
+        }
+
+        [Fact]
+        public void RestoreState_DoesNotAliasSavedCollections()
+        {
+            var sys = FreshSystem();
+            sys.StartQuest("quest_crossing_the_vouch", 10);
+            sys.MakeChoice("quest_crossing_the_vouch", "vouch_ostrowski");
+            var saved = sys.CaptureState();
+
+            var restored = FreshSystem();
+            restored.RestoreState(saved);
+            saved.quests[0].chosenChoiceId = "mutated";
+            saved.setFlags.Clear();
+
+            Assert.Equal("vouch_ostrowski", restored.GetProgress("quest_crossing_the_vouch")!.chosenChoiceId);
+            Assert.True(restored.HasFlag("flag_vouched_clean"));
+        }
+
+        [Fact]
+        public void RestoreState_ProjectsPersistedFlagsToCanonicalLedger()
+        {
+            var source = FreshSystem();
+            source.StartQuest("quest_crossing_the_vouch", 10);
+            source.MakeChoice("quest_crossing_the_vouch", "vouch_ostrowski");
+            var saved = source.CaptureState();
+
+            var restored = FreshSystem();
+            var ledger = new Ashfall.Core.Flags.InMemoryFlagLedger();
+            restored.BindConsequenceLedger(ledger);
+            restored.RestoreState(saved);
+
+            Assert.True(ledger.IsSet("flag_vouched_clean"));
+        }
+
+        [Fact]
         public void MakeChoice_Fails_For_InvalidChoice()
         {
             var sys = FreshSystem();

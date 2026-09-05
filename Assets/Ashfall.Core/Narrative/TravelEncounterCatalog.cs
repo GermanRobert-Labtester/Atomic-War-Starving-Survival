@@ -57,6 +57,41 @@ namespace Ashfall.Core.Narrative
         /// </summary>
         [JsonPropertyName("required_flag")]
         public string RequiredFlag { get; set; } = string.Empty;
+
+        public List<NormalizedItemCost> GetNormalizedCosts()
+        {
+            if (CostItems == null || CostItems.Count == 0)
+                return new List<NormalizedItemCost>();
+
+            var dict = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            foreach (var item in CostItems)
+            {
+                if (string.IsNullOrWhiteSpace(item)) continue;
+                string clean = item.Trim();
+                dict[clean] = dict.TryGetValue(clean, out int qty) ? qty + 1 : 1;
+            }
+
+            var result = new List<NormalizedItemCost>();
+            foreach (var kvp in dict)
+            {
+                result.Add(new NormalizedItemCost(kvp.Key, kvp.Value));
+            }
+            return result;
+        }
+    }
+
+    [Serializable]
+    public sealed class NormalizedItemCost
+    {
+        public string ItemId { get; set; } = string.Empty;
+        public int Quantity { get; set; } = 1;
+
+        public NormalizedItemCost() { }
+        public NormalizedItemCost(string itemId, int quantity)
+        {
+            ItemId = itemId;
+            Quantity = quantity;
+        }
     }
 
     [Serializable]
@@ -121,6 +156,15 @@ namespace Ashfall.Core.Narrative
 
         [JsonPropertyName("territory_state")]
         public string TerritoryState { get; set; } = string.Empty; // "controlled", "contested", "border"
+
+        // Task F13 — Cooldown group for variant presentation rotation
+        [JsonPropertyName("cooldown_group")]
+        public string CooldownGroup { get; set; } = string.Empty;
+
+        public string GetCooldownKey()
+        {
+            return !string.IsNullOrWhiteSpace(CooldownGroup) ? CooldownGroup.Trim() : Id;
+        }
     }
 
     [Serializable]

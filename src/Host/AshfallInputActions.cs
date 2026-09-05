@@ -68,9 +68,34 @@ namespace AtomicWar.GodotApp
             HoldfastStatus
         };
 
+        public static readonly IReadOnlyDictionary<string, Key> CanonicalDefaults = new Dictionary<string, Key>
+        {
+            { Close, Key.Escape },
+            { Confirm, Key.Enter },
+            { NextTab, Key.Tab },
+            { NavUp, Key.W },
+            { NavDown, Key.S },
+            { NavLeft, Key.A },
+            { NavRight, Key.D },
+            { Journal, Key.J },
+            { Help, Key.F1 },
+            { Forecast, Key.F },
+            { WeatherHistory, Key.H },
+            { Events, Key.E },
+            { Expeditions, Key.X },
+            { Holdfast, Key.T },
+            { JournalTab1, Key.Key1 },
+            { JournalTab2, Key.Key2 },
+            { JournalTab3, Key.Key3 },
+            { JournalTab4, Key.Key4 },
+            { JournalTab5, Key.Key5 },
+            { HoldfastBuild, Key.B },
+            { HoldfastStatus, Key.S }
+        };
+
         /// <summary>
         /// Ensures all canonical ASHFALL actions are registered in the runtime InputMap
-        /// if not already loaded from project.godot.
+        /// if not already loaded from project.godot, and reconciles pairwise collisions.
         /// </summary>
         public static void EnsureActionsRegistered()
         {
@@ -95,6 +120,55 @@ namespace AtomicWar.GodotApp
             RegisterAction(JournalTab5, Key.Key5);
             RegisterAction(HoldfastBuild, Key.B);
             RegisterAction(HoldfastStatus, Key.S);
+
+            ReconcileCollisions();
+        }
+
+        public static int ReconcileCollisions()
+        {
+            int repaired = 0;
+            var keyOwners = new Dictionary<Key, string>();
+
+            foreach (var action in AllActions)
+            {
+                if (!InputMap.HasAction(action)) continue;
+                Key primaryKey = Key.None;
+                InputEventKey? keyEvent = null;
+
+                foreach (var ev in InputMap.ActionGetEvents(action))
+                {
+                    if (ev is InputEventKey k)
+                    {
+                        primaryKey = k.PhysicalKeycode != Key.None ? k.PhysicalKeycode : k.Keycode;
+                        keyEvent = k;
+                        break;
+                    }
+                }
+
+                if (primaryKey != Key.None)
+                {
+                    if (keyOwners.TryGetValue(primaryKey, out var existingAction))
+                    {
+                        // Collision detected! Repair this action to its canonical default.
+                        if (CanonicalDefaults.TryGetValue(action, out var canonicalKey))
+                        {
+                            if (keyEvent != null)
+                            {
+                                InputMap.ActionEraseEvent(action, keyEvent);
+                            }
+                            var repairedEvent = new InputEventKey { Keycode = canonicalKey, PhysicalKeycode = canonicalKey };
+                            InputMap.ActionAddEvent(action, repairedEvent);
+                            repaired++;
+                            keyOwners[canonicalKey] = action;
+                        }
+                    }
+                    else
+                    {
+                        keyOwners[primaryKey] = action;
+                    }
+                }
+            }
+            return repaired;
         }
 
         private static void RegisterAction(string action, Key primaryKey, JoyButton? joyButton = null, Key? secondaryKey = null)

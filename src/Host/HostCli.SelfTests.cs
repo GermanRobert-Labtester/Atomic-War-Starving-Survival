@@ -151,6 +151,18 @@ namespace AtomicWar.GodotApp
                 details: errors == 0 ? $"{nodes.Count} nodes, DAG valid, cross-refs resolve" : $"{errors} catalog defects");
         }
 
+        /// <summary>
+        /// AF-B1 / Plan 60 gate: validates radio_stations.json authority, canonical station presence,
+        /// valid frequencies, schedule slots, signal model, overrides roundtrip, and zero hardcoded Core defaults.
+        /// </summary>
+        public static int RunRadioCatalogSelfTest(string dataDirectory)
+        {
+            int code = RadioCatalogSelfTest.Run(dataDirectory);
+            return EmitSummary("radio_catalog_selftest", code == 0, code,
+                passedCount: code == 0 ? 1 : 0, failedCount: code == 0 ? 0 : 1,
+                details: code == 0 ? "All 6 stations valid with schedules and signal models" : "Radio catalog validation failure");
+        }
+
         /// <summary>The 15 original save-contract research node ids (Plan 34 §1.2).</summary>
         private static readonly string[] OriginalResearchNodeIds =
         {
@@ -708,7 +720,7 @@ namespace AtomicWar.GodotApp
         {
             CatalogLocator.UseInvariantCulture();
             string tmpPath = Path.Combine(
-                Path.GetTempPath(), "ashfall_verdict_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+                Path.GetTempPath(), "ashfall_verdict_selftest_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
 
             int failures = 0;
             void Check(bool condition, string name)

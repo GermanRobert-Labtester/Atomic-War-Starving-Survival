@@ -38,6 +38,8 @@ namespace AtomicWar.GodotApp
         public float maxHealthCap = 100f;
         public bool isDead;
         public bool isAlive = true;
+        public string locationKind = "ShelterInterior";
+        public string locationId = string.Empty;
     }
 
     /// <summary>
@@ -60,6 +62,11 @@ namespace AtomicWar.GodotApp
         /// gas mask / hazmat suit actually reduces ambient dose (AGENTS Loop 9 gap).
         /// </summary>
         public InventoryHostSession Inventory { get; set; }
+
+        /// <summary>Environmental exposure resolver calculating doses from position, weather, and shelter shielding.</summary>
+        public ExposureEnvironmentResolver ExposureResolver { get; } = new ExposureEnvironmentResolver();
+        private readonly System.Collections.Generic.Dictionary<string, ExposureEnvironment> _lastExposureEnvironments =
+            new System.Collections.Generic.Dictionary<string, ExposureEnvironment>(StringComparer.Ordinal);
 
         /// <summary>Demo geiger exposure context: one survivor outside, rest sheltered.</summary>
         private readonly System.Collections.Generic.Dictionary<string, RadSurvivorWrapper> _radStates;
@@ -99,6 +106,7 @@ namespace AtomicWar.GodotApp
                     Needs.Modify(survivor, NeedKind.Health, delta);
                 });
             _radStates = new System.Collections.Generic.Dictionary<string, RadSurvivorWrapper>();
+            ExposureResolver.ShelterAttenuationProvider = () => Shelter.GetWeakestCeilingAttenuation();
 
             // Default Holdfast room ceiling shielding
             Shelter.UpgradeCeiling("room_bunker_corridor", MaterialShieldingSystem.WallMaterial.Concrete);
@@ -139,25 +147,38 @@ namespace AtomicWar.GodotApp
         public SurvivorRosterSystem Roster { get; } = new SurvivorRosterSystem();
 
         /// <summary>Load starting roster and initial conditions from starting_survivors.json (the authority).</summary>
-        public void LoadStartingRoster(string dataDir)
+        public void LoadStartingRoster(string dataDir, bool failClosed = true)
         {
             if (RosterState.Count > 0) return;
-            if (!string.IsNullOrEmpty(dataDir))
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            var detailed = SurvivorStartingStateLoader.LoadDetailed(dataDir, fileIO, serializer);
+            if (!detailed.IsSuccess)
             {
-                var fileIO = new FileSystemIO();
-                var serializer = new SystemTextJsonSerializer();
-                var starting = SurvivorStartingStateLoader.Load(dataDir, fileIO, serializer);
-                if (starting != null && starting.Count > 0)
+                if (failClosed)
                 {
-                    for (int i = 0; i < starting.Count; i++)
-                    {
-                        var s = starting[i];
-                        AddSurvivor(s.id, s.displayName, s.health, s.hunger, s.thirst, s.warmth, s.morale, s.lifetimeDose, s.acuteRad);
-                    }
+                    LastEvent = $"ERROR: Failed to load authoritative starting survivors: {detailed.ErrorMessage}";
+                    GD.PrintErr($"[SurvivorsHostSession] {LastEvent}");
+                    throw new InvalidOperationException(LastEvent);
+                }
+                else
+                {
+                    SeedDemoRoster();
                     return;
                 }
             }
-            SeedDemoRoster();
+
+            for (int i = 0; i < detailed.Survivors.Count; i++)
+            {
+                var s = detailed.Survivors[i];
+                if (!AddSurvivor(s.id, s.displayName, s.health, s.hunger, s.thirst, s.warmth, s.morale, s.lifetimeDose, s.acuteRad))
+                {
+                    if (failClosed)
+                    {
+                        throw new InvalidOperationException($"Failed to register starting survivor '{s.id}': duplicate survivor ID.");
+                    }
+                }
+            }
         }
 
         /// <summary>Seed the demo roster with canonical survivor ids from the master list.</summary>
@@ -178,7 +199,7 @@ namespace AtomicWar.GodotApp
             Roster.RegisterRange(SurvivorCatalogLoader.Load(dataDir, fileIO, serializer));
         }
 
-        public void AddSurvivor(
+        public bool AddSurvivor(
             string id,
             string displayName,
             float health = 100f,
@@ -189,7 +210,7 @@ namespace AtomicWar.GodotApp
             float lifetimeDose = 0f,
             bool acuteRad = false)
         {
-            if (Find(id) != null) return;
+            if (Find(id) != null) return false;
             Roster.RegisterDefinition(new SurvivorDefinition
             {
                 id = id,
@@ -217,6 +238,7 @@ namespace AtomicWar.GodotApp
             };
             _radStates[id] = rad;
             Radiation.Register(rad);
+            return true;
         }
 
         public SurvivorNeedsState? Find(string id)
@@ -233,19 +255,59 @@ namespace AtomicWar.GodotApp
 
         private ExposureContext BuildExposure(SurvivorRadState state)
         {
-            // Mikhail is outside in the zone; others are in the shelter, so the
-            // shelter's weakest ceiling attenuates their ambient dose. Unity's
-            // ExposureContext.ShelterShielding is a flat subtraction from the zone
-            // rate (max(0, zone - gear - shielding)); we feed rads blocked.
-            float zone = state.Id == "survivor_gunner_mikhail" ? 40f : 2f;
-            float shielding = state.Id == "survivor_gunner_mikhail"
-                ? 0f
-                : 2f * Shelter.GetWeakestCeilingAttenuation();
-            return new ExposureContext
+            var env = ExposureResolver.Resolve(state.Id);
+            _lastExposureEnvironments[state.Id] = env;
+            return env.ToExposureContext(CollectWornGear());
+        }
+
+        /// <summary>Get the last calculated exposure environment snapshot for UI and debug traces.</summary>
+        public ExposureEnvironment? GetLastExposureEnvironment(string survivorId)
+        {
+            return _lastExposureEnvironments.TryGetValue(survivorId, out var env) ? env : null;
+        }
+
+        /// <summary>Set survivor location explicitly (e.g. ShelterInterior, ShelterPerimeter, WastelandOutdoors).</summary>
+        public void SetSurvivorLocation(string survivorId, SurvivorExposureLocation kind, string locationId = "")
+        {
+            ExposureResolver.SetSurvivorLocation(survivorId, kind, locationId);
+        }
+
+        /// <summary>Get current resolved survivor location.</summary>
+        public (SurvivorExposureLocation Kind, string LocationId) GetSurvivorLocation(string survivorId)
+        {
+            return ExposureResolver.GetSurvivorLocation(survivorId);
+        }
+
+        /// <summary>Bind weather provider supplying outdoor rad modifier (from WeatherSystem).</summary>
+        public void BindWeatherProvider(Func<float> weatherRadModifierProvider)
+        {
+            ExposureResolver.WeatherRadModifierProvider = weatherRadModifierProvider;
+        }
+
+        /// <summary>Bind location provider supplying base rads per hour for expedition nodes.</summary>
+        public void BindLocationRadRateProvider(Func<string, float> locationRadRateProvider)
+        {
+            ExposureResolver.LocationRadRateProvider = locationRadRateProvider;
+        }
+
+        /// <summary>Bind fallout contamination provider (rad add-on by location id).</summary>
+        public void BindFalloutContaminationProvider(Func<string, float> falloutContaminationProvider)
+        {
+            ExposureResolver.FalloutContaminationProvider = falloutContaminationProvider;
+        }
+
+        /// <summary>Bind expedition session so deployed survivors automatically resolve to expedition location.</summary>
+        public void BindExpeditionSession(ExpeditionHostSession expeditionSession)
+        {
+            if (expeditionSession == null) return;
+            ExposureResolver.SurvivorLocationQuery = id =>
             {
-                ZoneRadLevel = zone,
-                ShelterShielding = shielding,
-                WornGear = CollectWornGear()
+                if (expeditionSession.Engine != null &&
+                    expeditionSession.Engine.Active.TryGetValue(id, out var exp))
+                {
+                    return (SurvivorExposureLocation.Expedition, exp.locationId);
+                }
+                return GetSurvivorLocation(id);
             };
         }
 
@@ -396,6 +458,9 @@ namespace AtomicWar.GodotApp
                     slice.hasAcuteRadiationSyndrome = rad.HasAcuteRadiationSyndrome;
                     slice.radiationIsAlive = rad.IsAlive;
                 }
+                var loc = GetSurvivorLocation(s.Id);
+                slice.locationKind = loc.Kind.ToString();
+                slice.locationId = loc.LocationId;
                 save.survivors.Add(slice);
             }
             return save;
@@ -459,6 +524,11 @@ namespace AtomicWar.GodotApp
                 };
                 _radStates[slice.id] = rad;
                 Radiation.Register(rad);
+                if (!string.IsNullOrEmpty(slice.locationKind) &&
+                    Enum.TryParse<SurvivorExposureLocation>(slice.locationKind, out var parsedKind))
+                {
+                    SetSurvivorLocation(slice.id, parsedKind, slice.locationId ?? string.Empty);
+                }
             }
             RaiseStateChanged();
         }

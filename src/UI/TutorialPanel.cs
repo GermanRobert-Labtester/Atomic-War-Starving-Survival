@@ -34,8 +34,8 @@ namespace AtomicWar.GodotApp.UI
         public int RenderedControlsCount { get; private set; }
 
         // Real controls — curated to match Main.Application.cs key handlers +
-        // the sidebar-driven navigation. No InputMap actions exist in this
-        // project, so the list is honest and hand-maintained against the code.
+        // the sidebar-driven navigation. Canonical InputMap actions are defined
+        // in AshfallInputActions.cs and reconciled at runtime.
         private static (string key, string action)[] GetCurrentControls() => new[]
         {
             ("[Click Sidebar]", "Open shelter systems — Survivors, Inventory, Medical, Map, etc."),

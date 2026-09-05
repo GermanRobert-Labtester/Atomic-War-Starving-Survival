@@ -178,11 +178,11 @@ namespace AtomicWar.GodotApp.UI
             mainVBox.AddChild(bodyHBox);
 
             // Left Column (Telemetry)
-            var leftPanel = CreatePanelFrame("SUMP BASIN & SLUDGE STATE");
+            var (leftPanel, leftMargin) = CreatePanelFrame("SUMP BASIN & SLUDGE STATE");
             bodyHBox.AddChild(leftPanel);
             var telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(telemetryContainer);
+            leftMargin.AddChild(telemetryContainer);
             var basinRow = SplitRow(telemetryContainer, "BASIN LEVEL (WORST NODE)");
             _basinLevelValue = basinRow.value;
             var sludgeRow = SplitRow(telemetryContainer, "SLUDGE (SETTLED / SUSPENDED)");
@@ -193,11 +193,11 @@ namespace AtomicWar.GodotApp.UI
             _conditionValue = conditionRow.value;
 
             // Center Column (Interactive Controls)
-            var centerPanel = CreatePanelFrame("SLUDGE PROCESSING COMMANDS");
+            var (centerPanel, centerMargin) = CreatePanelFrame("SLUDGE PROCESSING COMMANDS");
             bodyHBox.AddChild(centerPanel);
             var buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(buttonContainer);
+            centerMargin.AddChild(buttonContainer);
 
             _flocculateButton = new Button { Text = "[DOSE FLOCCULANT — SETTLE SILT]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
             _flocculateButton.Pressed += OnFlocculatePressed;
@@ -220,11 +220,11 @@ namespace AtomicWar.GodotApp.UI
             buttonContainer.AddChild(packDrumsButton);
 
             // Right Column (Data & Logistics)
-            var rightPanel = CreatePanelFrame("DEWATERED OUTPUT & WASTE");
+            var (rightPanel, rightMargin) = CreatePanelFrame("DEWATERED OUTPUT & WASTE");
             bodyHBox.AddChild(rightPanel);
             var dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(dataContainer);
+            rightMargin.AddChild(dataContainer);
             var cakeRow = SplitRow(dataContainer, "SLUDGE CAKE STOCK");
             _cakeValue = cakeRow.value;
             var tailingsRow = SplitRow(dataContainer, "HAZARDOUS TAILINGS");
@@ -319,9 +319,13 @@ namespace AtomicWar.GodotApp.UI
             return (row, (Label)row.GetChild(1));
         }
 
-        private static PanelContainer CreatePanelFrame(string headerText)
+        private static (PanelContainer panel, MarginContainer margin) CreatePanelFrame(string headerText)
         {
-            var panel = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
+            var panel = new PanelContainer
+            {
+                SizeFlagsHorizontal = SizeFlags.ExpandFill,
+                SizeFlagsVertical = SizeFlags.ExpandFill
+            };
             var vbox = new VBoxContainer();
             panel.AddChild(vbox);
 
@@ -339,7 +343,7 @@ namespace AtomicWar.GodotApp.UI
             margin.AddThemeConstantOverride("margin_bottom", 8);
             vbox.AddChild(margin);
 
-            return panel;
+            return (panel, margin);
         }
 
         private static HBoxContainer CreateTelemetryRow(string label, string value, Color valueColor)

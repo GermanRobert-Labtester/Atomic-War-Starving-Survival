@@ -125,5 +125,32 @@ namespace Ashfall.Core.Tests.World
             Assert.True(groundwaterTainted);
             Assert.Contains("loc_water_well", system.State.taintedWaterSources);
         }
+
+        [Fact]
+        public void GetLocationContamination_SumsActiveCloudToxicityForOverlappingZone()
+        {
+            var system = new FalloutSystem();
+            var cloud = system.SpawnCloud("fallout_pattern_strontium_plume", 0f, 0f);
+            cloud.toxicity = 80f;
+            cloud.activeZoneOverlaps.Add("loc_crater_rim");
+
+            Assert.Equal(80f, system.GetLocationContamination("loc_crater_rim"));
+            Assert.Equal(0f, system.GetLocationContamination("loc_unrelated"));
+            Assert.Equal(0f, system.GetLocationContamination(""));
+        }
+
+        [Fact]
+        public void GetLocationContamination_ShelterSealAttenuatesHoldfastDose()
+        {
+            var system = new FalloutSystem();
+            var cloud = system.SpawnCloud("fallout_pattern_strontium_plume", 0f, 0f);
+            cloud.toxicity = 100f;
+            cloud.activeZoneOverlaps.Add("loc_holdfast");
+
+            Assert.Equal(100f, system.GetLocationContamination("loc_holdfast"));
+
+            Assert.True(system.SealShelter(24f, 0.80f));
+            Assert.Equal(20f, system.GetLocationContamination("loc_holdfast"), 2);
+        }
     }
 }

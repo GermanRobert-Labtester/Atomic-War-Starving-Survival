@@ -48,13 +48,8 @@ namespace Ashfall.Core.Tests
             var rows = RunFedLoop(seed, scenario, days, out var survivor, out var radState, out var totalFood, out var totalWater);
 
             // Write CSV per scenario/seed/days
-            try
-            {
-                Directory.CreateDirectory(ArtifactDir);
-                var path = Path.Combine(ArtifactDir, $"fed_{scenarioName.ToLower()}_seed_{seed}_{days}d.csv");
-                File.WriteAllLines(path, rows);
-            }
-            catch { }
+            string fileName = $"fed_{scenarioName.ToLowerInvariant()}_seed_{seed}_{days}d.csv";
+            TelemetryArtifactWriter.TryWriteLines(ArtifactDir, fileName, rows);
 
             // Basic invariants
             Assert.True(survivor.Hunger is >= 0f and <= 100f, "Hunger clamped");

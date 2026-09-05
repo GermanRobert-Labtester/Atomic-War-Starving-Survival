@@ -44,6 +44,7 @@ namespace AtomicWar.GodotApp
         private bool _greenhouseDirty;
         private WorldHostSession _world = null!;
         private bool _worldDirty;
+        private WeatherHostSession _weatherSondeHost = null!;
 
         private void OnGreenhousePlantClicked()
         {
@@ -150,6 +151,18 @@ namespace AtomicWar.GodotApp
                 if (_state == GameState.Playing) UpdateHud();
             };
             GD.Print("[Ashfall Godot] World host ready.");
+        }
+
+        private void SetupWeatherSonde()
+        {
+            if (_weatherSondeHost != null) return;
+            SetupWorld();
+            SetupInventory();
+            var catalog = Ashfall.Core.World.AtmosphericSoundingCatalogLoader.Load(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            _weatherSondeHost = new WeatherHostSession(_world?.Weather);
+            _weatherSondeHost.SetupSoundingCatalog(catalog?.altitude_bands, catalog?.payloads);
+            _weatherSondeHost.BindRecoveryInventory(_inventory?.Inventory);
         }
 
         private void SaveWorld()

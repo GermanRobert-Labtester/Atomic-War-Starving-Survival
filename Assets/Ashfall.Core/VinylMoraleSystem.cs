@@ -132,6 +132,28 @@ namespace Ashfall.Core
             return ActionResult.Success("vinyl.stopped");
         }
 
+        /// <summary>
+        /// Brownout handling: if power fails during broadcast, cancel the broadcast,
+        /// leave record unplayed, grant no morale, and revert broadcast counters.
+        /// </summary>
+        public void CancelBroadcastBrownout()
+        {
+            if (_state.isTurntableActive)
+            {
+                _state.isTurntableActive = false;
+                _state.currentPlayingId = string.Empty;
+                _state.lastBroadcastSignalStrength = 0f;
+                if (_state.broadcastCount > 0)
+                {
+                    _state.broadcastCount--;
+                }
+                _state.lastBroadcastRecordId = string.Empty;
+                _state.lastBroadcastDay = -1;
+                _log.Warn("[Vinyl] broadcast cancelled due to power brownout — record left unplayed, no morale applied");
+                OnPlaybackChanged?.Invoke();
+            }
+        }
+
         /// <summary>Called once per day to apply the daily morale effect.</summary>
         public void ApplyDailyEffect(int day)
         {

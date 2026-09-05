@@ -64,6 +64,23 @@ namespace AtomicWar.GodotApp
 
                 // Wiring that needs all services up
                 SetupExpeditionCombatHandoff(_combat);
+                if (_inventory != null && _survivors != null)
+                {
+                    _inventory.Survivors = _survivors;
+                    _survivors.Inventory = _inventory;
+                }
+                if (_holdfastRuntime != null)
+                {
+                    if (_inventory != null)
+                    {
+                        _holdfastRuntime.InventorySession = _inventory;
+                        _holdfastRuntime.Inventory = _inventory.Inventory;
+                    }
+                    if (_survivors != null)
+                    {
+                        _holdfastRuntime.Survivors = _survivors;
+                    }
+                }
 
                 // Plans 178-201: expansion systems must also exist in a NEW game
                 // (RestoreAllSubsystemsFromDisk covers only the load/continue
@@ -119,6 +136,23 @@ namespace AtomicWar.GodotApp
                 }
             }
             return _sharedSkillProgression;
+        }
+
+        private Ashfall.Core.Economy.FactionStanceEngine? _sharedFactionStance;
+
+        public Ashfall.Core.Economy.FactionStanceEngine EnsureSharedFactionStance()
+        {
+            if (_sharedFactionStance != null) return _sharedFactionStance;
+            SetupSilentFoundry();
+            if (_silentFoundry != null)
+            {
+                _sharedFactionStance = _silentFoundry.GuildStanceEngine;
+            }
+            else
+            {
+                _sharedFactionStance = new Ashfall.Core.Economy.FactionStanceEngine();
+            }
+            return _sharedFactionStance;
         }
     }
 }

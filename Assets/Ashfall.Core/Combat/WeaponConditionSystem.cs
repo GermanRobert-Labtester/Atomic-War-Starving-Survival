@@ -60,9 +60,9 @@ namespace Ashfall.Core.Combat
         public IReadOnlyList<string> UnboundRequiredEffects => _unboundRequired;
 
         public CombatHostPorts(
-            Func<string, float, float>? damageSurvivor,
-            Func<string, float, float>? healSurvivor,
-            Action<string, float>? applyMoraleDelta,
+            Func<string, float, float>? damageSurvivor = null,
+            Func<string, float, float>? healSurvivor = null,
+            Action<string, float>? applyMoraleDelta = null,
             Func<string, int, int>? consumeAmmo = null,
             Func<string, int, bool>? consumeItem = null,
             Action<string, string, float>? raiseTrauma = null,

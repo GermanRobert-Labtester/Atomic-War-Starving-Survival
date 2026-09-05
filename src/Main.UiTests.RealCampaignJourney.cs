@@ -33,7 +33,7 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void RunRealCampaignJourneySelfTestAndQuit()
         {
-            string tempDir = Path.Combine(Path.GetTempPath(), "ashfall_real_campaign_journey_" + DateTime.UtcNow.Ticks);
+            string tempDir = Path.Combine(Path.GetTempPath(), "ashfall_real_campaign_journey_" + DateTime.UtcNow.Ticks); // DETERMINISM_ALLOWLIST: Test harness temporary directory
             bool pass = true;
             void Check(bool cond, string name)
             {

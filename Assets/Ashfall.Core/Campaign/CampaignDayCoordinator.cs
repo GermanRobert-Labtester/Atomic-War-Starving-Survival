@@ -158,11 +158,32 @@ namespace Ashfall.Core.Campaign
         }
 
         /// <summary>
-        /// Advance the campaign by exactly one in-game day. Returns a
-        /// <see cref="DayAdvancedEventArgs"/> describing every owner result,
-        /// or null when a guard rejects the call (already advancing, or stale
-        /// day). The host should treat a null return as "no-op".
-        /// In fail-closed mode (default), any owner failure aborts persistence
+        /// Advance the campaign sequentially day-by-day until <paramref name="targetDay"/> is reached.
+        /// Returns the final DayAdvancedEventArgs, or the first failing report if any day fails closed.
+        /// </summary>
+        public DayAdvancedEventArgs? AdvanceTo(int targetDay, IDayAdvancePersistence? persistence = null, bool failClosed = true)
+        {
+            int startDay = _lastAdvancedDay == int.MinValue ? Calendar.CurrentDay : _lastAdvancedDay;
+            if (targetDay <= startDay) return null;
+
+            DayAdvancedEventArgs? lastResult = null;
+            for (int d = startDay + 1; d <= targetDay; d++)
+            {
+                lastResult = Advance(d, persistence, failClosed);
+                if (lastResult == null || (failClosed && lastResult.HasFailures))
+                {
+                    return lastResult;
+                }
+            }
+            return lastResult;
+        }
+
+        /// <summary>
+        /// Advance the campaign to <paramref name="day"/>. For multi-day sequential progression,
+        /// prefer <see cref="AdvanceTo(int, IDayAdvancePersistence?, bool)"/>.
+        /// Returns a <see cref="DayAdvancedEventArgs"/> describing every owner result,
+        /// or null when a guard rejects the call (already advancing, or stale day).
+        /// In fail-closed mode (default), any preflight or owner failure aborts persistence
         /// and leaves <see cref="LastAdvancedDay"/> uncommitted.
         /// </summary>
         public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence? persistence = null, bool failClosed = true)
@@ -203,16 +224,27 @@ namespace Ashfall.Core.Campaign
                     }
                 }
 
-                // Phase 0: Capture pre-day snapshot across all registered owners first.
+                // Phase 0: Capture pre-day snapshot across all registered owners first (preflight barrier).
                 for (int i = 0; i < _owners.Count; i++)
                 {
                     try
                     {
                         _owners[i].Owner.CapturePreDaySnapshot(day);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         anyFailure = true;
+                        if (failClosed)
+                        {
+                            _pendingRestoreDay = day;
+                            for (int j = 0; j < _owners.Count; j++)
+                            {
+                                var r = _owners[j];
+                                string msg = j == i ? $"Snapshot preflight failed: {ex.Message}" : "Aborted: snapshot preflight failed on another owner.";
+                                reports.Add(new DayOwnerReport(r.OwnerId, false, Array.Empty<DayStateChangeEvent>(), msg));
+                            }
+                            return new DayAdvancedEventArgs(day, reports);
+                        }
                     }
                 }
 
@@ -248,7 +280,23 @@ namespace Ashfall.Core.Campaign
                 }
 
                 // Persistence must happen once, after all required owners succeed and before briefing display.
-                persistence?.PersistBeforeBriefing(day, reports);
+                if (persistence != null)
+                {
+                    try
+                    {
+                        persistence.PersistBeforeBriefing(day, reports);
+                    }
+                    catch (Exception pEx)
+                    {
+                        if (failClosed)
+                        {
+                            _pendingRestoreDay = day;
+                            reports.Add(new DayOwnerReport("persistence", false, Array.Empty<DayStateChangeEvent>(), pEx.Message));
+                            return new DayAdvancedEventArgs(day, reports);
+                        }
+                        throw;
+                    }
+                }
 
                 _lastAdvancedDay = day;
                 Calendar.SetDay(day);

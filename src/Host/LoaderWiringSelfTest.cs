@@ -126,7 +126,7 @@ namespace AtomicWar.GodotApp
 
                     if (!string.IsNullOrWhiteSpace(item.expiry) && DateTime.TryParse(item.expiry, out var expDate))
                     {
-                        if (DateTime.UtcNow > expDate.AddDays(1))
+                        if (DateTime.UtcNow > expDate.AddDays(1)) // DETERMINISM_ALLOWLIST: Mock expiration date check in self-test
                         {
                             GD.PrintErr($"[FAIL] DEFERRED loader '{item.loader_type}' has expired ({item.expiry})");
                             failures++;

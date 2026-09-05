@@ -21,6 +21,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _tutorialPanel.Open(),
                 closeAction: () => CloseTutorialPanel());
 
+            PanelRegistry.ConfigureActions("guidance",
+                bindAction: () => { SetupOnboarding(); EnsureOnboardingPanel(); },
+                openAction: () => { EnsureOnboardingPanel(); _onboardingHintPanel?.Show(); },
+                closeAction: () => { if (_onboardingHintPanel != null) _onboardingHintPanel.Visible = false; });
+
             PanelRegistry.ConfigureActions("emergency_response",
                 bindAction: () =>
                 {
@@ -255,13 +260,18 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseFactionDetailPanel());
 
             PanelRegistry.ConfigureActions("quests",
-                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupDutyRoster(); SetupFactionBranch(); SetupMoralChoice(); _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice); },
+                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupDutyRoster(); SetupFactionBranch(); SetupMoralChoice(); _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice, _moralChoiceDefs); },
                 openAction: () => _questsPanel.Open(),
                 closeAction: () => CloseQuestsPanel());
 
             PanelRegistry.ConfigureActions("quest_detail",
                 openAction: () => _questDetailPanel.Open(),
                 closeAction: () => CloseQuestDetailPanel());
+
+            PanelRegistry.ConfigureActions("moral_choice",
+                bindAction: () => SetupMoralChoice(),
+                openAction: () => OpenMoralChoiceModal(null),
+                closeAction: () => CloseMoralChoiceModal());
 
             PanelRegistry.ConfigureActions("journal",
                 bindAction: () => SetupJournal(),
@@ -329,7 +339,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseCenturySeedPanel());
 
             PanelRegistry.ConfigureActions("epilogue",
-                bindAction: () => { SetupExpansions(); SetupSurvivors(); _epiloguePanel.Bind(_simDay, _survivors?.RosterState?.Count ?? 4, 0, true, true, true, true, true); },
+                bindAction: () => { _epiloguePanel.Bind(BuildCampaignOutcomeSnapshot()); },
                 openAction: () => _epiloguePanel.Open(),
                 closeAction: () => CloseEpiloguePanel());
 
@@ -386,7 +396,16 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _expeditionCampPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("fire_incident",
-                bindAction: () => _fireIncidentPanel.Bind(new Ashfall.Core.Shelter.ShelterFireHazardSystem(), "inc_default"),
+                bindAction: () =>
+                {
+                    SetupShelterFireHazard();
+                    SetupSurvivors();
+                    _fireIncidentPanel.RosterWorkerProvider = () =>
+                        _survivors?.RosterState?.Where(s => s.IsAlive && !s.IsDead)
+                            .Select(s => s.Id).Take(3).ToList() ?? new System.Collections.Generic.List<string>();
+                    _fireIncidentPanel.Rng = _campaignDay?.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 15);
+                    _fireIncidentPanel.Bind(_shelterFireSession!);
+                },
                 openAction: () => _fireIncidentPanel.Open(),
                 closeAction: () => _fireIncidentPanel.Visible = false);
 
@@ -403,13 +422,8 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("weather_sonde",
                 bindAction: () =>
                 {
-                    SetupWorld(); SetupInventory();
-                    var catalog = Ashfall.Core.World.AtmosphericSoundingCatalogLoader.Load(
-                        _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-                    var sondeHost = new WeatherHostSession(_world?.Weather);
-                    sondeHost.SetupSoundingCatalog(catalog?.altitude_bands, catalog?.payloads);
-                    sondeHost.BindRecoveryInventory(_inventory?.Inventory);
-                    _weatherSondePanel.Bind(sondeHost);
+                    SetupWeatherSonde();
+                    _weatherSondePanel.Bind(_weatherSondeHost);
                 },
                 openAction: () => _weatherSondePanel.Open(),
                 closeAction: () => _weatherSondePanel.Visible = false);
@@ -434,12 +448,12 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _caravanBarterLedgerPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("faction_matrix",
-                bindAction: () => _factionMatrixPanel.Bind(new Ashfall.Core.Economy.FactionStanceEngine()),
+                bindAction: () => _factionMatrixPanel.Bind(EnsureSharedFactionStance()),
                 openAction: () => _factionMatrixPanel.Open(),
                 closeAction: () => _factionMatrixPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("factions_narrative",
-                bindAction: () => _factionsNarrativePanel.Bind(new Ashfall.Core.Economy.FactionStanceEngine()),
+                bindAction: () => _factionsNarrativePanel.Bind(EnsureSharedFactionStance()),
                 openAction: () => _factionsNarrativePanel.Open(),
                 closeAction: () => _factionsNarrativePanel.Visible = false);
 
@@ -539,126 +553,15 @@ namespace AtomicWar.GodotApp
                 openAction: () => _falloutPlumePanel.Open(),
                 closeAction: () => _falloutPlumePanel.Close());
 
-            // ── Flagship Consoles (Stitch Suite) ─────────────────────────────
-            PanelRegistry.ConfigureActions("biogas_digester",
-                openAction: () => _biogasDigesterPanel.Open(),
-                closeAction: () => _biogasDigesterPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("cartography_gis",
-                openAction: () => _cartographyGisPanel.Open(),
-                closeAction: () => _cartographyGisPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("printing_press",
-                openAction: () => _printingPressPanel.Open(),
-                closeAction: () => _printingPressPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("silicon_slicing",
-                openAction: () => _siliconSlicingPanel.Open(),
-                closeAction: () => _siliconSlicingPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("geothermal_turbine",
-                openAction: () => _geothermalTurbinePanel.Open(),
-                closeAction: () => _geothermalTurbinePanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("war_dog_kennel",
-                openAction: () => _warDogKennelPanel.Open(),
-                closeAction: () => _warDogKennelPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("isotope_separator",
-                openAction: () => _isotopeSeparatorPanel.Open(),
-                closeAction: () => _isotopeSeparatorPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("plasma_smelting",
-                openAction: () => _plasmaSmeltingPanel.Open(),
-                closeAction: () => _plasmaSmeltingPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("borehole_seismograph",
-                openAction: () => _boreholeSeismographPanel.Open(),
-                closeAction: () => _boreholeSeismographPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("logistics_airlock",
-                openAction: () => _logisticsAirlockPanel.Open(),
-                closeAction: () => _logisticsAirlockPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("cryo_permafrost_core",
-                openAction: () => _cryoPermafrostCorePanel.Open(),
-                closeAction: () => _cryoPermafrostCorePanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("basal_radon_migration",
-                openAction: () => _basalRadonMigrationPanel.Open(),
-                closeAction: () => _basalRadonMigrationPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("trauma_bonding_cohort",
-                openAction: () => _traumaBondingCohortPanel.Open(),
-                closeAction: () => _traumaBondingCohortPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("clandestine_insurgency",
-                openAction: () => _clandestineInsurgencyPanel.Open(),
-                closeAction: () => _clandestineInsurgencyPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("subterranean_debt_ledger",
-                openAction: () => _subterraneanDebtLedgerPanel.Open(),
-                closeAction: () => _subterraneanDebtLedgerPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("surface_shrapnel_aegis",
-                openAction: () => _surfaceShrapnelAegisPanel.Open(),
-                closeAction: () => _surfaceShrapnelAegisPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("long_walk_expedition",
-                openAction: () => _longWalkExpeditionPanel.Open(),
-                closeAction: () => _longWalkExpeditionPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("sonic_rupture_drill",
-                openAction: () => _sonicRuptureDrillPanel.Open(),
-                closeAction: () => _sonicRuptureDrillPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("vault_door_breaching",
-                openAction: () => _vaultDoorBreachingPanel.Open(),
-                closeAction: () => _vaultDoorBreachingPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("iron_cenotaph_memorial",
-                openAction: () => _ironCenotaphMemorialPanel.Open(),
-                closeAction: () => _ironCenotaphMemorialPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("aquifer_treaty_concession",
-                openAction: () => _aquiferTreatyConcessionPanel.Open(),
-                closeAction: () => _aquiferTreatyConcessionPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("crossing_safe_conduct_vouch",
-                openAction: () => _crossingSafeConductVouchPanel.Open(),
-                closeAction: () => _crossingSafeConductVouchPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("mechanical_prosthetics_lathe",
-                openAction: () => _mechanicalProstheticsLathePanel.Open(),
-                closeAction: () => _mechanicalProstheticsLathePanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("fungal_protein_fermenter",
-                openAction: () => _fungalProteinFermenterPanel.Open(),
-                closeAction: () => _fungalProteinFermenterPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("ultrasonic_decontam_airlock",
-                openAction: () => _ultrasonicDecontamAirlockPanel.Open(),
-                closeAction: () => _ultrasonicDecontamAirlockPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("tropospheric_radio_relay",
-                openAction: () => _troposphericRadioRelayPanel.Open(),
-                closeAction: () => _troposphericRadioRelayPanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("induction_cupola_furnace",
-                openAction: () => _inductionCupolaFurnacePanel.Open(),
-                closeAction: () => _inductionCupolaFurnacePanel.Visible = false);
-
-            PanelRegistry.ConfigureActions("heavy_marine_diesel_gen",
-                openAction: () => _heavyMarineDieselGenPanel.Open(),
-                closeAction: () => _heavyMarineDieselGenPanel.Visible = false);
-
+            // ── Flagship Consoles (Shelter Systems) ───────────────────────────
             PanelRegistry.ConfigureActions("slurry_dewatering_sump",
+                bindAction: () => { SetupSumpFlooding(); _slurryDewateringSumpPanel.Bind(_sumpFlooding); },
                 openAction: () => _slurryDewateringSumpPanel.Open(),
                 closeAction: () => _slurryDewateringSumpPanel.Visible = false);
 
-            PanelRegistry.ConfigureActions("magnetic_drum_archive",
-                openAction: () => _magneticDrumArchivePanel.Open(),
-                closeAction: () => _magneticDrumArchivePanel.Visible = false);
+            // Note: 29 flagship prototype consoles (Issues 01–28, 30) are registered as
+            // PanelMaturity.Prototype and excluded from player navigation. Their classes
+            // remain available for snapshots, previews, and future host session development.
 
             // Expanded Panels
             string[] expandedIds =

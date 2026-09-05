@@ -284,6 +284,8 @@ namespace Ashfall.Core.Tests
         {
             var json = new SystemTextJsonSerializer();
             var aggregate = SampleAggregate();
+            aggregate.completedCount = 7;
+            aggregate.knownLocationIds = new List<string> { "loc_x", "loc_y" };
 
             string encoded = ExpeditionAggregateCodec.Encode(aggregate, json);
             ExpeditionAggregateState? decoded = ExpeditionAggregateCodec.Decode(encoded, json);
@@ -294,7 +296,32 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(decoded.vehicles);
             Assert.True(decoded.vehicles.ownedVehicles.ContainsKey("vehicle_utility_quad"));
             Assert.Equal(80f, decoded.vehicles.ownedVehicles["vehicle_utility_quad"].condition);
+            Assert.Equal(7, decoded.completedCount);
+            Assert.Equal(2, decoded.knownLocationIds!.Count);
             Assert.True(encoded.Contains("Checksum", StringComparison.Ordinal), "payload keeps the checksummed envelope");
+        }
+
+        [Fact]
+        public void RestoreCompletedCount_SurvivesAggregateRestore()
+        {
+            var sys = new ExpeditionSystem();
+            sys.RestoreCompletedCount(4);
+            Assert.Equal(4, sys.CompletedCount);
+
+            var aggregate = new ExpeditionAggregateState
+            {
+                expeditions = sys.CaptureState(),
+                vehicles = new ExpeditionVehicleState(),
+                knownLocationIds = new List<string> { "loc_known" },
+                completedCount = sys.CompletedCount,
+            };
+
+            var restored = new ExpeditionSystem();
+            restored.RestoreState(aggregate.expeditions);
+            restored.RestoreCompletedCount(aggregate.completedCount);
+            restored.RestoreKnownLocations(aggregate.knownLocationIds);
+            Assert.Equal(4, restored.CompletedCount);
+            Assert.True(restored.IsLocationKnown("loc_known"));
         }
 
         [Fact]

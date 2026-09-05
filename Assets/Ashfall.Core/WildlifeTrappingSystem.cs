@@ -35,6 +35,8 @@ namespace Ashfall.Core
         public bool toxinRemoved;
         public bool isMeatProcessed;
         public bool hidePreserved;
+        public string diseaseId = string.Empty; // Tasks 5-8: resolved disease ID from catch
+        public float contaminationDose; // Tasks 5-8: resolved contamination dose in rads
     }
 
     /// <summary>
@@ -414,6 +416,8 @@ namespace Ashfall.Core
                 existing.isBroken = false;
                 existing.assignedHunterId = hunterId ?? string.Empty;
                 existing.hasCatch = false;
+                existing.diseaseId = string.Empty;
+                existing.contaminationDose = 0f;
             }
             else
             {
@@ -610,6 +614,23 @@ namespace Ashfall.Core
                                     break;
                                 }
                             }
+                        }
+                    }
+
+                    // Plan 36 Closure II / Tasks 5-8: Resolve disease and contamination deterministically at catch time
+                    site.diseaseId = string.Empty;
+                    site.contaminationDose = 0f;
+                    if (_preyDefinitionCatalog.TryGetValue(speciesId, out var preyDef))
+                    {
+                        if (RollDiseaseRisk(preyDef.diseaseRisk))
+                        {
+                            site.diseaseId = PreyDefinition.ResolveDiseaseId(preyDef);
+                        }
+                        if (RollContaminationRisk(preyDef.contaminationRisk))
+                        {
+                            site.contaminationDose = preyDef.contaminationDose > 0f
+                                ? preyDef.contaminationDose
+                                : 2.0f;
                         }
                     }
 

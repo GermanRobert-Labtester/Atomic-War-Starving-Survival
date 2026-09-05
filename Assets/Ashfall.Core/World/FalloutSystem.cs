@@ -307,6 +307,37 @@ namespace Ashfall.Core.World
             return totalRate;
         }
 
+        /// <summary>
+        /// Location-id contamination contribution for exposure resolution when
+        /// map coordinates are unavailable. Sums active cloud toxicity for any
+        /// cloud currently overlapping the named zone.
+        /// </summary>
+        public float GetLocationContamination(string locationId)
+        {
+            if (string.IsNullOrEmpty(locationId)) return 0f;
+
+            float total = 0f;
+            for (int i = 0; i < _state.clouds.Count; i++)
+            {
+                var c = _state.clouds[i];
+                if (!c.active) continue;
+                if (c.activeZoneOverlaps == null || c.activeZoneOverlaps.Count == 0) continue;
+                for (int z = 0; z < c.activeZoneOverlaps.Count; z++)
+                {
+                    if (string.Equals(c.activeZoneOverlaps[z], locationId, StringComparison.Ordinal))
+                    {
+                        total += Math.Max(0f, c.toxicity);
+                        break;
+                    }
+                }
+            }
+
+            if (locationId == "loc_holdfast" && IsShelterSealed)
+                total *= (1.0f - _state.sealEfficiency);
+
+            return total;
+        }
+
         public bool SealShelter(float durationHours, float efficiency = 0.85f)
         {
             if (durationHours <= 0f) return false;

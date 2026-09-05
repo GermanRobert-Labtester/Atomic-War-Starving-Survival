@@ -29,6 +29,9 @@ namespace AtomicWar.GodotApp.Audio
             AudioBusNames.Radio,
             AudioBusNames.Medical,
             AudioBusNames.Surface,
+            AudioBusNames.Machinery,
+            AudioBusNames.ShelterSocial,
+            AudioBusNames.Subterranean,
         };
 
         // ── Players ─────────────────────────────────────────────
@@ -183,7 +186,14 @@ namespace AtomicWar.GodotApp.Audio
             {
                 AudioServer.AddBus(AudioServer.BusCount);
                 AudioServer.SetBusName(AudioServer.BusCount - 1, name);
-                AudioServer.SetBusSend(AudioServer.BusCount - 1, AudioBusNames.Master);
+                string sendTo = name switch
+                {
+                    AudioBusNames.Machinery => AudioBusNames.Sfx,
+                    AudioBusNames.ShelterSocial => AudioBusNames.Sfx,
+                    AudioBusNames.Subterranean => AudioBusNames.Ambience,
+                    _ => AudioBusNames.Master
+                };
+                AudioServer.SetBusSend(AudioServer.BusCount - 1, sendTo);
             }
         }
 
@@ -915,5 +925,53 @@ namespace AtomicWar.GodotApp.Audio
 
         public void SetSnapshot(AudioSnapshot snapshot) => _stateCoordinator?.SetSnapshot(snapshot);
 
+        // ── Explicit Context-Owned Loop Lifecycle (Task 5 / Plan 46–49) ──
+
+        public void StartLoop(string cueId, string ownerKey)
+        {
+            if (string.IsNullOrEmpty(cueId) || string.IsNullOrEmpty(ownerKey)) return;
+            string loopKey = $"{ownerKey}:{cueId}";
+            var cue = AudioCueCatalog.Resolve(cueId);
+            if (cue == null) return;
+
+            var stream = LoadStream(cue.ResourcePath);
+            if (stream == null && !string.IsNullOrEmpty(cue.FallbackCueId))
+            {
+                var fallbackCue = AudioCueCatalog.Resolve(cue.FallbackCueId);
+                if (fallbackCue != null) stream = LoadStream(fallbackCue.ResourcePath);
+            }
+            if (stream == null) return;
+
+            float volumeDb = cue.DefaultVolumeDb + GetBusVolumeOffset(cue.Bus);
+            PlayLoopStream(loopKey, stream, cue.Bus, volumeDb, 1f, cue.FadeInSeconds);
+        }
+
+        public void UpdateLoop(string cueId, string ownerKey, float volumeDbOffset = 0f, float pitchScale = 1f)
+        {
+            if (string.IsNullOrEmpty(cueId) || string.IsNullOrEmpty(ownerKey)) return;
+            string loopKey = $"{ownerKey}:{cueId}";
+            if (_loopPlayers.TryGetValue(loopKey, out var player))
+            {
+                var cue = AudioCueCatalog.Resolve(cueId);
+                float baseVol = cue != null ? cue.DefaultVolumeDb + GetBusVolumeOffset(cue.Bus) : 0f;
+                player.VolumeDb = baseVol + volumeDbOffset;
+                player.PitchScale = Mathf.Clamp(pitchScale, 0.1f, 4f);
+            }
+        }
+
+        public void StopLoop(string cueId, string ownerKey)
+        {
+            if (string.IsNullOrEmpty(cueId) || string.IsNullOrEmpty(ownerKey)) return;
+            string loopKey = $"{ownerKey}:{cueId}";
+            var cue = AudioCueCatalog.Resolve(cueId);
+            StopLoop(loopKey, cue?.FadeOutSeconds ?? 0f);
+        }
+
+        public void UpdateRadioTuningHeterodyne(float frequencyKhz, float minKhz = 3000f, float maxKhz = 30000f)
+        {
+            float norm = Mathf.Clamp((frequencyKhz - minKhz) / (maxKhz - minKhz), 0f, 1f);
+            float pitch = Mathf.Lerp(0.8f, 1.4f, norm);
+            UpdateLoop(AudioCueCatalog.RadioTuningHeterodyne, "radio:tuner", 0f, pitch);
+        }
     }
 }

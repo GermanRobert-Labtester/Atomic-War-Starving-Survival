@@ -45,7 +45,7 @@ namespace AtomicWar.GodotApp
             {
                 lock (s_lock)
                 {
-                    string entry = $"[{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss.fff}] [{level}] {message}{System.Environment.NewLine}";
+                    string entry = $"[{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss.fff}] [{level}] {message}{System.Environment.NewLine}"; // DETERMINISM_ALLOWLIST: Host diagnostic log timestamp
                     File.AppendAllText(s_logFilePath, entry);
                 }
             }

@@ -30,7 +30,8 @@ namespace Ashfall.Core.Tests.Tooling
         private static readonly HashSet<string> ValidBusIdentifiers = new(StringComparer.OrdinalIgnoreCase)
         {
             "Master", "Music", "Ambience", "SFX", "UI", "Voice",
-            "Alerts", "Generator", "Ventilation", "Radio", "Medical", "Surface"
+            "Alerts", "Generator", "Ventilation", "Radio", "Medical", "Surface",
+            "Machinery", "ShelterSocial", "Subterranean"
         };
 
         [Fact]

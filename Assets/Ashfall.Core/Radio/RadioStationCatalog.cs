@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using Ashfall.Core.IO;
 
 namespace Ashfall.Core.Radio
 {
@@ -8,6 +11,7 @@ namespace Ashfall.Core.Radio
     /// Authoritative catalog of the 6 canonical radio stations in ASHFALL.
     /// Manages station identities, default frequencies, persona descriptions,
     /// and dynamic station state transitions (Normal, Degraded, Jammed, Silent).
+    /// Loaded from authoritative radio_stations.json in StreamingAssets/Data.
     /// </summary>
     public sealed class RadioStationCatalog
     {
@@ -26,96 +30,44 @@ namespace Ashfall.Core.Radio
 
         public RadioStationCatalog()
         {
-            RegisterDefaults();
         }
 
         public IReadOnlyCollection<RadioStationDefinition> AllStations => _stations.Values;
 
-        public void RegisterDefaults()
+        public void Clear()
         {
-            // 1. Civil Defense & Public Service
-            Register(new RadioStationDefinition
-            {
-                StationId = StationCivilDefense,
-                DisplayName = "Central Civil Defense Radio",
-                FrequencyMhz = 88.50f,
-                OwnerFactionId = "faction_civil_defense",
-                PersonaVoice = "Formal, measured mid-century emergency announcer with periodic half-hour chimes.",
-                Reliability = SourceReliability.Official,
-                DefaultState = RadioStationState.Normal,
-                SilenceText = "STATIC... [ Civil Defense carrier lost. Emergency tone unmonitored. ] ...STATIC",
-                JammedText = "STATIC... [ Heavy ionospheric flutter overriding Civil Defense frequency. ]"
-            });
+            _stations.Clear();
+            _stateOverrides.Clear();
+        }
 
-            // 2. Iron Garrison Command / Overlord Actual
-            Register(new RadioStationDefinition
+        public int LoadFromJson(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return 0;
+            try
             {
-                StationId = StationGarrisonOverlord,
-                DisplayName = "Iron Garrison / Overlord Actual",
-                FrequencyMhz = 88.40f,
-                OwnerFactionId = "military_remnants",
-                PersonaVoice = "Barked tactical military orders, diesel generator hum, squelch tail clicks.",
-                Reliability = SourceReliability.Partisan,
-                DefaultState = RadioStationState.Normal,
-                SilenceText = "STATIC... [ Garrison tactical frequency silent. No carrier active. ] ...STATIC",
-                JammedText = "STATIC... [ Tactical frequency jammed with pulsed tactical noise. ]"
-            });
+                return RadioStationCatalogLoader.LoadFromJsonString(this, json);
+            }
+            catch (Exception ex_CATDIAG)
+            {
+                CatalogDiagnostics.Warn("<json>", "RadioStationCatalog", ex_CATDIAG);
+                return 0;
+            }
+        }
 
-            // 3. Voice of the Vitrified Crater / Ash Pulpit
-            Register(new RadioStationDefinition
+        public int LoadFromDataDirectory(string dataDir)
+        {
+            if (string.IsNullOrWhiteSpace(dataDir)) return 0;
+            string path = Path.Combine(dataDir, RadioStationCatalogLoader.StationsFileName);
+            if (!File.Exists(path)) return 0;
+            try
             {
-                StationId = StationVitrifiedCrater,
-                DisplayName = "Voice of the Vitrified Crater",
-                FrequencyMhz = 104.20f,
-                OwnerFactionId = "children_of_the_crater",
-                PersonaVoice = "Deep resonant liturgical chanting recorded in sealed subterranean chambers.",
-                Reliability = SourceReliability.Partisan,
-                DefaultState = RadioStationState.Normal,
-                SilenceText = "STATIC... [ The sermon has ended. Pure analog vacuum hiss fills the band. ]",
-                JammedText = "STATIC... [ Static screams with electrical discharge from the fallout cloud. ]"
-            });
-
-            // 4. The Open Airwaves / Civilian Free Network
-            Register(new RadioStationDefinition
+                return RadioStationCatalogLoader.LoadAndRegister(this, dataDir);
+            }
+            catch (Exception ex_CATDIAG)
             {
-                StationId = StationOpenClassroom,
-                DisplayName = "The Open Airwaves (Classroom & Lineman)",
-                FrequencyMhz = 91.30f,
-                OwnerFactionId = "faction_independent_survivors",
-                PersonaVoice = "Warm, patient human voices; chalk taps, tool rattles, wind in antenna masts.",
-                Reliability = SourceReliability.Anonymous,
-                DefaultState = RadioStationState.Normal,
-                SilenceText = "STATIC... [ The classroom is empty. Antenna line swaying in the ash wind. ]",
-                JammedText = "STATIC... [ Weak pirate signal buried in thermal receiver noise. ]"
-            });
-
-            // 5. Unidentified Numbers Stations & Sigint
-            Register(new RadioStationDefinition
-            {
-                StationId = StationNumbersSigint,
-                DisplayName = "Clandestine Numbers Array",
-                FrequencyMhz = 14.487f,
-                OwnerFactionId = "faction_unknown_intelligence",
-                PersonaVoice = "Synthetic female voice reading 5-figure phonetic number groups, music box chimes.",
-                Reliability = SourceReliability.Automated,
-                DefaultState = RadioStationState.Normal,
-                SilenceText = "STATIC... [ Clandestine carrier dead. Transmitter room RTG depleted. ] ...STATIC",
-                JammedText = "STATIC... [ Heterodyne whistle shifting across the shortwave band. ]"
-            });
-
-            // 6. Automated Meteorological & Emergency Relay
-            Register(new RadioStationDefinition
-            {
-                StationId = StationAutomatedRelay,
-                DisplayName = "Automated Emergency Beacon Array",
-                FrequencyMhz = 142.85f,
-                OwnerFactionId = "faction_automated_infrastructure",
-                PersonaVoice = "Synthetic robotic teletype synthesizer, continuous navigational carrier pings.",
-                Reliability = SourceReliability.Automated,
-                DefaultState = RadioStationState.Normal,
-                SilenceText = "STATIC... [ Automated repeater shut down. Battery bank drained to zero. ]",
-                JammedText = "STATIC... [ Telemetry carrier mutilated by EMP surge. ]"
-            });
+                CatalogDiagnostics.Warn(path, "RadioStationCatalog", ex_CATDIAG);
+                return 0;
+            }
         }
 
         public void Register(RadioStationDefinition def)
@@ -181,6 +133,30 @@ namespace Ashfall.Core.Radio
                 if (!string.IsNullOrEmpty(kvp.Key))
                     _stateOverrides[kvp.Key] = kvp.Value;
             }
+        }
+
+        public RadioProgramSlot? GetCurrentSlot(string stationId, int campaignDay, int hour)
+        {
+            var station = GetStation(stationId);
+            return station?.GetCurrentSlot(campaignDay, hour);
+        }
+
+        public RadioProgramSlot? GetNextSlot(string stationId, int campaignDay, int hour)
+        {
+            var station = GetStation(stationId);
+            return station?.GetNextSlot(campaignDay, hour);
+        }
+
+        public RadioSignalStrength ComputeSignalStrength(string stationId, RadioReceptionFactors? factors)
+        {
+            var station = GetStation(stationId);
+            float baseStrength = station != null ? 0.9f : 0.2f;
+            if (station != null && station.FrequencyMhz < 30.0f)
+            {
+                // Shortwave base attenuation
+                baseStrength = 0.85f;
+            }
+            return RadioSignalStrength.Evaluate(baseStrength, factors);
         }
     }
 }

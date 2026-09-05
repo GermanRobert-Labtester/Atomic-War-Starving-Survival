@@ -16,9 +16,13 @@ namespace Ashfall.Core.Inventory
         public static int MigrateHoldfastHeld(
             HoldfastTradeSaveState? legacyTradeState,
             Inventory targetInventory,
-            Func<string, ItemDefinition?>? catalogLookup = null)
+            Func<string, ItemDefinition?>? catalogLookup = null,
+            bool allowResurrectLowerPhysicalCount = true)
         {
             if (legacyTradeState?.held == null || legacyTradeState.held.Count == 0 || targetInventory == null)
+                return 0;
+
+            if (legacyTradeState.schemaVersion >= 2)
                 return 0;
 
             int migratedCount = 0;
@@ -29,10 +33,11 @@ namespace Ashfall.Core.Inventory
                 if (legacyQty <= 0) continue;
 
                 int currentQty = targetInventory.CountById(canonicalId);
-                // If the target inventory already has items, only add the difference if legacy holds more
-                if (currentQty < legacyQty)
+                // Non-resurrecting: only migrate if target inventory doesn't have the item at all,
+                // or if allowResurrectLowerPhysicalCount is explicitly enabled.
+                if (currentQty == 0 || (allowResurrectLowerPhysicalCount && currentQty < legacyQty))
                 {
-                    int delta = legacyQty - currentQty;
+                    int delta = currentQty == 0 ? legacyQty : (legacyQty - currentQty);
                     var def = catalogLookup?.Invoke(canonicalId) ?? new ItemDefinition
                     {
                         id = canonicalId,
@@ -47,6 +52,7 @@ namespace Ashfall.Core.Inventory
 
             // Clear legacy held dictionary so subsequent saves do not duplicate
             legacyTradeState.held.Clear();
+            legacyTradeState.schemaVersion = 2;
             return migratedCount;
         }
     }

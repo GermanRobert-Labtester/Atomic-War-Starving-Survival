@@ -225,6 +225,16 @@ namespace Ashfall.Core.Tests
             Assert.Equal(85f, stage.transformerCondition, 3); // 100 − 15 wear
             Assert.True(power.State.IsRoomTripped(RoomId));    // canonical breaker handoff
             Assert.Equal(1, ignited);                          // canonical fire handoff
+
+            // Audit #19: arc ignition must hand a multi-zone duct graph
+            // (source room + vent_duct_main) so Tick can propagate.
+            Assert.True(fire.Incidents.TryGetValue($"vent_arc_{RoomId}_1", out var incident));
+            Assert.Contains(incident!.zones, z => z.zoneId == RoomId);
+            Assert.Contains(incident.zones, z => z.zoneId == "vent_duct_main");
+            var source = Assert.Single(incident.zones, z => z.zoneId == RoomId);
+            Assert.Contains("vent_duct_main", source.adjacentZoneIds);
+            var hub = Assert.Single(incident.zones, z => z.zoneId == "vent_duct_main");
+            Assert.Contains(RoomId, hub.adjacentZoneIds);
         }
 
         [Fact]

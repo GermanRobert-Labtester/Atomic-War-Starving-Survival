@@ -432,6 +432,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "RAD HISTORY", "radiation_history");
             AddNavButton(content, "ACHIEVEMENTS", "achievements");
             AddNavButton(content, "HELP", "help");
+            AddNavButton(content, "GUIDANCE", "guidance");
 
             content.AddChild(AshfallUiHelpers.MakeSeparator());
             content.AddChild(AshfallUiHelpers.MakeSectionHeader("EXPANSION SURFACES"));

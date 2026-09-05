@@ -9,6 +9,7 @@
 | category | string | yes | "Human" for patrols |
 | faction_id | string | no | Primary faction (Plan 45 addition) |
 | territory_state | string | no | "controlled", "contested", "border" |
+| cooldown_group | string | no | Cooldown grouping key for presentation variants (Plan 45 / F13) |
 | region_tags | string[] | yes | Region eligibility |
 | min_danger_level | float | yes | Minimum danger for eligibility |
 | max_danger_level | float | yes | Maximum danger for eligibility |
@@ -33,3 +34,19 @@
 | cost_items | string[] | no | Items consumed (Plan 45) |
 | required_item_id | string | no | Item required (Plan 45) |
 | required_item_quantity | int | no | Quantity required (Plan 45) |
+
+## Validation (Plan 45 / F15)
+
+The `PatrolEncounterValidator` mechanically enforces data integrity across all `enc_patrol_*` definitions during CI and `--data-integrity-selftest`:
+
+1. **Category**: Must equal `"Human"`.
+2. **Faction Identity**: `faction_id` must resolve to an authored faction in `faction_lore.json`.
+3. **Territory State**: Must be one of `controlled`, `contested`, or `border`.
+4. **Choice Cardinality**: Each encounter must contain between 2 and 4 choices.
+5. **Choice Uniqueness**: Choice IDs and player-facing texts must be unique within the encounter.
+6. **Standing Deltas**: Standing changes must fall strictly within `[-25, 10]`.
+7. **Item Referential Integrity**: All `cost_items` and `required_item_id` references must resolve in `items.json`.
+8. **Item Gate Separation**: An item cannot appear in both `required_item_id` and `cost_items` within the same choice (gates are non-consuming).
+9. **Weight & Danger Bounds**: `base_weight` must be between `[0.1, 5.0]`; `0 <= min_danger_level <= max_danger_level`.
+10. **Tag Completeness**: `region_tags` and `season_tags` cannot be empty.
+11. **Variant Family Invariance**: All encounters sharing a `cooldown_group` must share identical mechanics: category, faction, territory state, chain linkage, and all choice properties/costs.

@@ -49,6 +49,12 @@ namespace Ashfall.Core.Disease
         public int days_sick = 0;
         public bool quarantined = false;
 
+        /// <summary>Plan 63 / B4 — current clinical stage of this infection.</summary>
+        public string current_stage = DiseaseStageNames.Incubating;
+
+        /// <summary>Day the infection entered its current clinical stage.</summary>
+        public int stage_entered_day = 0;
+
         /// <summary>
         /// Plan 60 / D3 — doses of authorised treatment this patient has received.
         /// Additive: a pre-D3 save loads as 0, i.e. "never treated", the truth.
@@ -64,6 +70,49 @@ namespace Ashfall.Core.Disease
 
         /// <summary>Day of the last accepted treatment (-1 = none).</summary>
         public int last_treatment_day = -1;
+    }
+
+    /// <summary>
+    /// Plan 63 / B4 — temporary immunity window acquired upon recovery.
+    /// </summary>
+    [Serializable]
+    public sealed class DiseaseImmunityRecord
+    {
+        public string survivor_id = string.Empty;
+        public string disease_id = string.Empty;
+        public int immunity_until_day = 0;
+        public float strength = 1.0f;
+    }
+
+    /// <summary>
+    /// Plan 63 / B4 — typed exposure context for all disease ingestion and environmental bridges.
+    /// </summary>
+    public sealed class DiseaseExposureContext
+    {
+        public string SurvivorId { get; set; } = string.Empty;
+        public string DiseaseId { get; set; } = string.Empty;
+        public string SourceId { get; set; } = string.Empty;
+        public float ProbabilityModifier { get; set; } = 1.0f;
+        public bool BypassImmunity { get; set; } = false;
+        public int Day { get; set; } = 0;
+    }
+
+    /// <summary>
+    /// Plan 63 / B4 — typed exposure evaluation result.
+    /// </summary>
+    public sealed class DiseaseExposureResult
+    {
+        public bool Infected { get; set; }
+        public string Reason { get; set; } = string.Empty;
+        public string SurvivorId { get; set; } = string.Empty;
+        public string DiseaseId { get; set; } = string.Empty;
+        public float EffectiveProbability { get; set; }
+
+        public static DiseaseExposureResult CreateInfected(string survivorId, string diseaseId, float prob) =>
+            new DiseaseExposureResult { Infected = true, Reason = "infected", SurvivorId = survivorId, DiseaseId = diseaseId, EffectiveProbability = prob };
+
+        public static DiseaseExposureResult CreateBlocked(string reason, string survivorId, string diseaseId, float prob = 0f) =>
+            new DiseaseExposureResult { Infected = false, Reason = reason, SurvivorId = survivorId, DiseaseId = diseaseId, EffectiveProbability = prob };
     }
 
     /// <summary>
@@ -138,7 +187,7 @@ namespace Ashfall.Core.Disease
     [Serializable]
     public sealed class DiseaseSystemState
     {
-        public const int CurrentVersion = 1;
+        public const int CurrentVersion = 2;
 
         public int stateVersion = CurrentVersion;
         public string system_id = DiseaseIds.ExpansionId;
@@ -163,6 +212,9 @@ namespace Ashfall.Core.Disease
         public int rngSeed = 0;
 
         public List<DiseaseEntryState> diseases = new List<DiseaseEntryState>();
+
+        /// <summary>Plan 63 / B4 — temporary immunity records per survivor and disease.</summary>
+        public List<DiseaseImmunityRecord> immunities = new List<DiseaseImmunityRecord>();
     }
 
     // ---------------------------------------------------------------------
@@ -188,6 +240,10 @@ namespace Ashfall.Core.Disease
         /// reads this rather than re-deriving it.
         /// </summary>
         public float effective_lethality = 0f;
+
+        /// <summary>Plan 63 / B4 — 8-stage clinical progression arc stage.</summary>
+        public string current_stage = DiseaseStageNames.Incubating;
+        public string stage_token = "incubating";
     }
 
     /// <summary>Derived read model for the ward / HUD. Always rebuilt on demand.</summary>
@@ -262,6 +318,17 @@ namespace Ashfall.Core.Disease
         /// <summary>Raised when an active infection transitions between strains (Plan 155.10): survivorId, newStrainId.</summary>
         public event Action<string, string>? OnStrainMutated;
 
+        /// <summary>
+        /// Plan 63 / B4 — optional isolation quality provider: survivorId -> isolationQuality01.
+        /// When null, defaults to 1.0f for isolated patients.
+        /// </summary>
+        public Func<string, float>? GetIsolationQuality;
+
+        /// <summary>
+        /// Plan 63 / B4 — optional containment capability projected from research.
+        /// </summary>
+        public ContainmentCapability Containment { get; set; } = ContainmentCapability.None;
+
         private readonly DiseaseSystemState _state;
         private readonly List<DiseaseEntryState> _entries = new List<DiseaseEntryState>();
         private readonly Dictionary<string, DiseaseEntryState> _byId =
@@ -289,6 +356,125 @@ ILog? log = null)
         public DiseaseSystemState State => _state;
         public DiseaseCatalog Catalog => _catalog;
         public string SystemId => _state.system_id;
+
+        // -----------------------------------------------------------------
+        // Immunity & Exposure APIs (Plan 63 / B4)
+        // -----------------------------------------------------------------
+
+        public bool HasImmunity(string survivorId, string diseaseId, int currentDay)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(diseaseId) || _state.immunities == null)
+                return false;
+            for (int i = 0; i < _state.immunities.Count; i++)
+            {
+                var imm = _state.immunities[i];
+                if (imm != null && string.Equals(imm.survivor_id, survivorId, StringComparison.Ordinal)
+                    && string.Equals(imm.disease_id, diseaseId, StringComparison.Ordinal)
+                    && currentDay < imm.immunity_until_day)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public DiseaseImmunityRecord? GetImmunity(string survivorId, string diseaseId)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(diseaseId) || _state.immunities == null)
+                return null;
+            for (int i = 0; i < _state.immunities.Count; i++)
+            {
+                var imm = _state.immunities[i];
+                if (imm != null && string.Equals(imm.survivor_id, survivorId, StringComparison.Ordinal)
+                    && string.Equals(imm.disease_id, diseaseId, StringComparison.Ordinal))
+                    return imm;
+            }
+            return null;
+        }
+
+        public void SetImmunity(string survivorId, string diseaseId, int untilDay, float strength = 1.0f)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(diseaseId)) return;
+            if (_state.immunities == null) _state.immunities = new List<DiseaseImmunityRecord>();
+            for (int i = 0; i < _state.immunities.Count; i++)
+            {
+                var imm = _state.immunities[i];
+                if (imm != null && string.Equals(imm.survivor_id, survivorId, StringComparison.Ordinal)
+                    && string.Equals(imm.disease_id, diseaseId, StringComparison.Ordinal))
+                {
+                    imm.immunity_until_day = untilDay;
+                    imm.strength = strength;
+                    return;
+                }
+            }
+            _state.immunities.Add(new DiseaseImmunityRecord
+            {
+                survivor_id = survivorId,
+                disease_id = diseaseId,
+                immunity_until_day = untilDay,
+                strength = strength
+            });
+        }
+
+        public DiseaseExposureResult TryExpose(DiseaseExposureContext context)
+        {
+            if (context == null || string.IsNullOrEmpty(context.SurvivorId) || string.IsNullOrEmpty(context.DiseaseId))
+                return DiseaseExposureResult.CreateBlocked("invalid_arguments", context?.SurvivorId ?? "", context?.DiseaseId ?? "");
+
+            if (!_byId.TryGetValue(context.DiseaseId, out var entry))
+                return DiseaseExposureResult.CreateBlocked("unknown_disease", context.SurvivorId, context.DiseaseId);
+
+            var def = _catalog.GetById(context.DiseaseId);
+            if (def == null)
+                return DiseaseExposureResult.CreateBlocked("unknown_disease", context.SurvivorId, context.DiseaseId);
+
+            // 1. Check if already infected
+            if (ContainsInfection(entry, context.SurvivorId))
+                return DiseaseExposureResult.CreateBlocked("already_infected", context.SurvivorId, context.DiseaseId);
+
+            // 2. Check vector countermeasure
+            if (IsVectorBlocked(entry.vector_type))
+                return DiseaseExposureResult.CreateBlocked("vector_blocked", context.SurvivorId, context.DiseaseId);
+
+            // 3. Check temporary immunity
+            if (!context.BypassImmunity && HasImmunity(context.SurvivorId, context.DiseaseId, context.Day))
+            {
+                var imm = GetImmunity(context.SurvivorId, context.DiseaseId);
+                float immStrength = imm?.strength ?? 1.0f;
+                if (_rng.NextDouble() < immStrength)
+                    return DiseaseExposureResult.CreateBlocked("immune", context.SurvivorId, context.DiseaseId);
+            }
+
+            // 4. Calculate effective probability
+            float prob = def.infectivity;
+            if (!string.IsNullOrEmpty(context.SourceId))
+            {
+                var src = _catalog.GetExposureSource(context.SourceId);
+                if (src != null) prob = src.base_probability;
+            }
+            prob = Math.Min(1.0f, Math.Max(0f, prob * Math.Max(0f, context.ProbabilityModifier)));
+
+            // 5. Roll exposure
+            if (_rng.NextDouble() < prob)
+            {
+                Infect(context.SurvivorId, context.DiseaseId, context.Day);
+                return DiseaseExposureResult.CreateInfected(context.SurvivorId, context.DiseaseId, prob);
+            }
+
+            return DiseaseExposureResult.CreateBlocked("roll_passed", context.SurvivorId, context.DiseaseId, prob);
+        }
+
+        public DiseaseExposureResult TryInfect(string survivorId, string diseaseId, int day, string? sourceId = null)
+        {
+            return TryExpose(new DiseaseExposureContext
+            {
+                SurvivorId = survivorId,
+                DiseaseId = diseaseId,
+                Day = day,
+                SourceId = sourceId ?? string.Empty,
+                ProbabilityModifier = 1.0f
+            });
+        }
 
         private void RebuildIndexFromState()
         {
@@ -401,7 +587,9 @@ ILog? log = null)
             {
                 survivor_id = survivorId,
                 infected_day = day,
-                days_sick = 0
+                days_sick = 0,
+                current_stage = DiseaseStageNames.Incubating,
+                stage_entered_day = day
             });
             entry.infections_total++;
 
@@ -564,8 +752,8 @@ ILog? log = null)
         private void TrySpread(DiseaseEntryState entry, DiseaseDefinition def,
             IReadOnlyList<string> candidates, int day)
         {
-            // Public candidates: everyone not already infected with this disease
-            // and not quarantined (quarantine is the isolation protocol).
+            // Public candidates: everyone not already infected with this disease,
+            // not quarantined (quarantine is the isolation protocol), and without active immunity.
             var pool = new List<string>(candidates.Count);
             for (int i = 0; i < candidates.Count; i++)
             {
@@ -573,19 +761,33 @@ ILog? log = null)
                 if (string.IsNullOrEmpty(c)) continue;
                 if (ContainsInfection(entry, c)) continue;      // already infected
                 if (IsQuarantinedAnywhere(c)) continue;         // isolation ward
+                if (HasImmunity(c, entry.disease_id, day)) continue; // temporary immunity (Plan 63 / B4)
                 if (!pool.Contains(c)) pool.Add(c);              // de-dupe, keep host order
             }
             if (pool.Count == 0 || def.infectivity <= 0f) return;
 
-            // The first contagious (past-incubation, un-quarantined) patient
+            // The first contagious (past-incubation, un-quarantined or leaking isolation) patient
             // drives this interval's spread attempt; one patient per interval.
             var targets = new List<string>();
             for (int p = 0; p < entry.infected.Count; p++)
             {
                 var patient = entry.infected[p];
-                if (patient == null || patient.quarantined) continue;
-                if (!IsContagious(entry, patient, def)) continue; // still incubating
-                if (_rng.NextDouble() >= def.infectivity) break;  // this patient does not shed
+                if (patient == null) continue;
+                if (patient.quarantined && GetIsolationQuality == null) continue; // legacy/unmanaged quarantine blocks 100%
+                if (!IsPhysiologicallyContagious(patient, def)) continue; // still incubating
+
+                float baseContagiousness = def.GetPhaseContagiousness(patient.days_sick, def.infectivity);
+                float sheddingProb = baseContagiousness;
+
+                if (patient.quarantined && GetIsolationQuality != null)
+                {
+                    float isolationQuality = Math.Clamp(GetIsolationQuality(patient.survivor_id), 0f, 1.0f);
+                    float efficacy = Math.Min(0.95f, 0.85f + Containment.EfficacyBonus);
+                    float reductionFactor = Math.Max(0.02f, 1.0f - (isolationQuality * efficacy));
+                    sheddingProb *= reductionFactor;
+                }
+
+                if (_rng.NextDouble() >= sheddingProb) break;  // this patient does not shed
 
                 int toExpose = Math.Max(1, def.spread_radius);
                 int remaining = pool.Count;
@@ -619,10 +821,19 @@ ILog? log = null)
                 if (patient == null) continue;
                 patient.days_sick++;
 
+                // Plan 63 / B4: advance clinical stage
+                var currentStage = def.GetStage(patient.days_sick);
+                string stageName = currentStage.ToString();
+                if (!string.Equals(patient.current_stage, stageName, StringComparison.Ordinal))
+                {
+                    patient.current_stage = stageName;
+                    patient.stage_entered_day = day;
+                }
+
                 if (patient.days_sick < def.illness_days) continue;
 
                 // Plan 60 / D3 — the roll is against what is left of the disease for
-                // <em>this</em> patient after treatment, not the raw authored value.
+                // this patient after treatment, not the raw authored value.
                 // Flagship XI (Plan 155): the optional modifier carries abstract
                 // radiation-severity pressure for strain infections; null = 0.
                 float modifier = EffectiveLethalityModifier?.Invoke(patient.survivor_id, entry.disease_id) ?? 0f;
@@ -631,6 +842,8 @@ ILog? log = null)
                 removed.Add(patient);
                 if (died)
                 {
+                    patient.current_stage = DiseaseStageNames.Terminal;
+                    patient.stage_entered_day = day;
                     entry.deaths_total++;
                     if (entry.outbreak_active) entry.deaths_during_outbreak++;
                     Raise(OnOutcomeResolved, DiseaseIds.EventDied,
@@ -639,7 +852,13 @@ ILog? log = null)
                 }
                 else
                 {
+                    patient.current_stage = DiseaseStageNames.Recovered;
+                    patient.stage_entered_day = day;
                     entry.recovered_total++;
+                    if (def.immunity_duration_days > 0)
+                    {
+                        SetImmunity(patient.survivor_id, entry.disease_id, day + def.immunity_duration_days, def.immunity_strength);
+                    }
                     bool prevQuarantined = patient.quarantined;
                     Raise(OnOutcomeResolved, DiseaseIds.EventRecovered,
                         patient.survivor_id + " recovered from " + entry.disease_id + " (day " + day + ")",
@@ -837,8 +1056,14 @@ ILog? log = null)
                 // Curative means the infection is gone, not that the next roll is
                 // kinder — the patient recovers now and stops being contagious.
                 cured = true;
+                patient.current_stage = DiseaseStageNames.Recovered;
+                patient.stage_entered_day = day;
                 entry.infected.Remove(patient);
                 entry.recovered_total++;
+                if (def.immunity_duration_days > 0)
+                {
+                    SetImmunity(survivorId, diseaseId, day + def.immunity_duration_days, def.immunity_strength);
+                }
                 Raise(OnOutcomeResolved, DiseaseIds.EventRecovered,
                     survivorId + " was treated and recovered from " + diseaseId + " (day " + day + ")",
                     survivorId, diseaseId, true);
@@ -931,6 +1156,13 @@ ILog? log = null)
             DiseaseDefinition def)
         {
             if (patient == null || patient.quarantined) return false;
+            int incubation = def != null ? def.incubation_days : 0;
+            return patient.days_sick >= incubation;
+        }
+
+        private static bool IsPhysiologicallyContagious(DiseaseInfectionState patient, DiseaseDefinition def)
+        {
+            if (patient == null) return false;
             int incubation = def != null ? def.incubation_days : 0;
             return patient.days_sick >= incubation;
         }
@@ -1197,6 +1429,10 @@ ILog? log = null)
                     bool contagious = IsContagious(entry!, patient!, def!);
                     if (contagious) snap.total_contagious++;
 
+                    var stage = def != null ? def.GetStage(patient.days_sick) : DiseaseStage.Incubating;
+                    string stageName = stage.ToString();
+                    string stageToken = stageName.ToLowerInvariant();
+
                     snap.patients.Add(new DiseasePatientSnapshot
                     {
                         survivor_id = patient.survivor_id,
@@ -1212,7 +1448,9 @@ ILog? log = null)
                         effective_lethality = def != null
                             ? Math.Max(0f, def.lethality - patient.lethality_reduction) : 0f,
                         contagion_risk_percent = def != null
-                            ? (int)(Math.Min(1f, Math.Max(0f, def.infectivity)) * 100f) : 0
+                            ? (int)(Math.Min(1f, Math.Max(0f, def.infectivity)) * 100f) : 0,
+                        current_stage = stageName,
+                        stage_token = stageToken
                     });
                 }
             }
@@ -1293,6 +1531,8 @@ ILog? log = null)
                                 infected_day = p.infected_day,
                                 days_sick = p.days_sick,
                                 quarantined = p.quarantined,
+                                current_stage = string.IsNullOrEmpty(p.current_stage) ? DiseaseStageNames.Incubating : p.current_stage,
+                                stage_entered_day = p.stage_entered_day,
                                 // Additive D3 fields: absent in a pre-D3 save, which
                                 // truthfully means "this patient was never treated".
                                 treatments_applied = p.treatments_applied,
@@ -1302,6 +1542,23 @@ ILog? log = null)
                         }
                     }
                     _state.diseases.Add(copy);
+                }
+            }
+
+            _state.immunities = new List<DiseaseImmunityRecord>();
+            if (saved.immunities != null)
+            {
+                for (int k = 0; k < saved.immunities.Count; k++)
+                {
+                    var imm = saved.immunities[k];
+                    if (imm == null || string.IsNullOrEmpty(imm.survivor_id) || string.IsNullOrEmpty(imm.disease_id)) continue;
+                    _state.immunities.Add(new DiseaseImmunityRecord
+                    {
+                        survivor_id = imm.survivor_id,
+                        disease_id = imm.disease_id,
+                        immunity_until_day = imm.immunity_until_day,
+                        strength = imm.strength
+                    });
                 }
             }
 

@@ -15,6 +15,7 @@ namespace AtomicWar.GodotApp.UI
     /// Exposes real player actions (fire, suppress, clear jam, repair, move lane,
     /// deploy trap, decontaminate, bandage, retreat, last stand, end turn) — the
     /// same commands the Core engine resolves. UI refreshes after every action.
+    /// Uses standard AshfallDataGrid with explicit MinWidth floors for lane-2 fit.
     /// </summary>
     public partial class CombatPanel : Control, IBindablePanel
     {
@@ -25,12 +26,26 @@ namespace AtomicWar.GodotApp.UI
 
         private Label _header = null!;
         private Label _summary = null!;
-        private RichTextLabel _combatants = null!;
-        private RichTextLabel _weapons = null!;
+        private AshfallDataGrid _combatantsGrid = null!;
+        private AshfallDataGrid _weaponsGrid = null!;
         private RichTextLabel _log = null!;
         private Label _outcome = null!;
         private OptionButton _targetSelect = null!;
         private Label _lastActionResult = null!;
+
+        // Tactical action buttons
+        private Button _btnFire = null!;
+        private Button _btnSuppress = null!;
+        private Button _btnTrap = null!;
+        private Button _btnClearJam = null!;
+        private Button _btnRepair = null!;
+        private Button _btnDecon = null!;
+        private Button _btnLastStand = null!;
+        private Button _btnHold = null!;
+        private Button _btnAdvance = null!;
+        private Button _btnSuppressStance = null!;
+        private Button _btnRetreat = null!;
+        private Button _btnEndTurn = null!;
 
         public bool IsBound => _bound;
 
@@ -64,31 +79,63 @@ namespace AtomicWar.GodotApp.UI
                 _summary.Text = "No active combat. Use START to engage a raider skirmish.";
             }
 
-            // Combatants
-            _combatants.Clear();
+            // Rebuild target selector from living enemies first so action evaluation uses current target
+            RebuildTargetList(snap);
+
+            // Action button preflight & honest reason tooltips
+            UpdateButtonPreflights(snap);
+
+            // Combatants Grid (AshfallDataGrid)
+            var combatantRows = new List<AshfallDataGrid.Row>();
             foreach (var c in snap.Combatants)
             {
-                string mark = c.IsPlayer ? "▶" : "●";
-                string line = $"{mark}  {c.Name}  [{c.Lane}]  HP {c.Health}/{c.MaxHealth}  cover {c.CoverRating}%  armor {c.ArmorRating}%";
-                line += c.IsDowned ? "  ✖ DOWNED" : (c.IsPinned ? "  ⊘ PINNED" : "");
-                line += c.IsLastStand ? "  ☠ LAST STAND" : "";
-                line += $"  · {c.WeaponName} {c.WeaponConditionPct}%" + (c.WeaponJammed ? " [JAM]" : "");
-                _combatants.AppendText(line + "\n");
-            }
+                var hpState = c.IsDowned ? AshfallDataGrid.CellState.Critical
+                    : (c.Health < c.MaxHealth * 0.4f ? AshfallDataGrid.CellState.Warning : AshfallDataGrid.CellState.Normal);
 
-            // Weapons (armory monitor — real condition/jam)
-            _weapons.Clear();
-            if (snap.Weapons.Count == 0)
-            {
-                _weapons.AppendText("No firearms registered.\n");
+                var statusState = (c.IsDowned || c.IsLastStand) ? AshfallDataGrid.CellState.Critical
+                    : (c.IsPinned ? AshfallDataGrid.CellState.Warning : AshfallDataGrid.CellState.Normal);
+
+                var weaponState = c.WeaponJammed ? AshfallDataGrid.CellState.Critical : AshfallDataGrid.CellState.Normal;
+                string weaponDisplay = $"{c.WeaponName} ({c.WeaponConditionPct}%)" + (c.WeaponJammed ? " [JAM]" : "");
+
+                var cells = new List<AshfallDataGrid.Cell>
+                {
+                    new(c.IsPlayer ? "▶" : "●", c.IsPlayer ? AshfallDataGrid.CellState.Positive : AshfallDataGrid.CellState.Critical),
+                    new(c.Name, AshfallDataGrid.CellState.Normal),
+                    new(c.Lane, AshfallDataGrid.CellState.Normal),
+                    new($"{c.Health}/{c.MaxHealth}", hpState),
+                    new($"{c.CoverRating}%", AshfallDataGrid.CellState.Normal),
+                    new($"{c.ArmorRating}%", AshfallDataGrid.CellState.Normal),
+                    new(c.Status, statusState),
+                    new(weaponDisplay, weaponState)
+                };
+                combatantRows.Add(new AshfallDataGrid.Row { Cells = cells, Selectable = true });
             }
+            _combatantsGrid.SetRows(combatantRows);
+
+            // Weapons Grid (AshfallDataGrid armory monitor)
+            var weaponRows = new List<AshfallDataGrid.Row>();
             foreach (var w in snap.Weapons)
             {
-                _weapons.AppendText(
-                    $"• {w.WeaponName} — cond {w.ConditionPct}% · jam {w.JamChancePct}% · " +
-                    (w.IsJammed ? "✖ JAMMED" : "✔ functional") +
-                    " · scrap repair " + w.ScrapRepairCost + " · ammo " + w.AmmoRemaining + "\n");
+                var condState = w.ConditionPct < 30 ? AshfallDataGrid.CellState.Critical
+                    : (w.ConditionPct < 60 ? AshfallDataGrid.CellState.Warning : AshfallDataGrid.CellState.Normal);
+
+                var jamState = w.JamChancePct > 20 ? AshfallDataGrid.CellState.Warning : AshfallDataGrid.CellState.Normal;
+                var statusState = w.IsJammed ? AshfallDataGrid.CellState.Critical : AshfallDataGrid.CellState.Positive;
+                var ammoState = w.AmmoRemaining <= 5 ? AshfallDataGrid.CellState.Warning : AshfallDataGrid.CellState.Normal;
+
+                var cells = new List<AshfallDataGrid.Cell>
+                {
+                    new(w.WeaponName, AshfallDataGrid.CellState.Normal),
+                    new($"{w.ConditionPct}%", condState),
+                    new($"{w.JamChancePct}%", jamState),
+                    new(w.IsJammed ? "✖ JAMMED" : "✔ READY", statusState),
+                    new($"{w.ScrapRepairCost} scrap", AshfallDataGrid.CellState.Normal),
+                    new(w.AmmoRemaining.ToString(), ammoState)
+                };
+                weaponRows.Add(new AshfallDataGrid.Row { Cells = cells, Selectable = true });
             }
+            _weaponsGrid.SetRows(weaponRows);
 
             // Combat log
             _log.Clear();
@@ -100,29 +147,83 @@ namespace AtomicWar.GodotApp.UI
             _outcome.Text = snap.Resolved
                 ? "OUTCOME: " + snap.OutcomeText + (snap.Loot.Count > 0 ? "  ·  loot " + snap.Loot.Count + " lines" : "")
                 : "";
+        }
 
-            // Rebuild target selector from living enemies
-            RebuildTargetList(snap);
+        private void UpdateButtonPreflights(CombatSnapshot snap)
+        {
+            if (_combat == null) return;
+
+            bool active = snap.IsActive;
+
+            var firePf = _combat.EvaluateFire(SelectedTargetId());
+            _btnFire.Disabled = !firePf.CanExecute;
+            _btnFire.TooltipText = firePf.CanExecute ? "Fire equipped weapon at selected hostile target [1]" : firePf.Reason;
+
+            var suppPf = _combat.EvaluateSuppress();
+            _btnSuppress.Disabled = !suppPf.CanExecute;
+            _btnSuppress.TooltipText = suppPf.CanExecute ? "Lay area suppressive fire across all hostile lanes [2]" : suppPf.Reason;
+
+            _btnTrap.Disabled = !active;
+            _btnTrap.TooltipText = active ? "Deploy an obstacle trap in active lanes" : "Encounter not active";
+
+            var jamPf = _combat.EvaluateClearJam("survivor_yuki");
+            _btnClearJam.Disabled = !jamPf.CanExecute;
+            _btnClearJam.TooltipText = jamPf.CanExecute ? "Clear jammed weapon action [3]" : jamPf.Reason;
+
+            var repPf = _combat.EvaluateRepair("survivor_yuki");
+            _btnRepair.Disabled = !repPf.CanExecute;
+            _btnRepair.TooltipText = repPf.CanExecute ? "Field repair weapon condition with scrap [4]" : repPf.Reason;
+
+            _btnDecon.Disabled = !active;
+            _btnDecon.TooltipText = active ? "Decontaminate weapon action from ash fouling" : "Encounter not active";
+
+            _btnLastStand.Disabled = !active;
+            _btnLastStand.TooltipText = active ? "Enter terminal Last Stand stance (drastic offense, no retreat)" : "Encounter not active";
+
+            _btnHold.Disabled = !active;
+            _btnAdvance.Disabled = !active;
+            _btnSuppressStance.Disabled = !active;
+
+            var retPf = _combat.EvaluateRetreat();
+            _btnRetreat.Disabled = !retPf.CanExecute;
+            _btnRetreat.TooltipText = retPf.CanExecute ? "Attempt tactical disengagement and retreat" : retPf.Reason;
+
+            var endPf = _combat.EvaluateEndTurn();
+            _btnEndTurn.Disabled = !endPf.CanExecute;
+            _btnEndTurn.TooltipText = endPf.CanExecute ? "End turn and permit enemy actions [5]" : endPf.Reason;
         }
 
         private void RebuildTargetList(CombatSnapshot snap)
         {
+            string previousTarget = SelectedTargetId();
             _targetSelect.Clear();
             int idx = 0;
+            int restoredIdx = -1;
             foreach (var c in snap.Combatants)
             {
                 if (c.IsPlayer || c.IsDowned) continue;
-                _targetSelect.AddItem(c.Name + "  [" + c.Lane + "]  HP " + c.Health, idx++);
-                _targetSelect.SetItemMetadata(idx - 1, c.Id);
+                _targetSelect.AddItem(c.Name + "  [" + c.Lane + "]  HP " + c.Health, idx);
+                _targetSelect.SetItemMetadata(idx, c.Id);
+                if (!string.IsNullOrEmpty(previousTarget) && string.Equals(c.Id, previousTarget, StringComparison.Ordinal))
+                    restoredIdx = idx;
+                idx++;
             }
             if (idx == 0)
+            {
                 _targetSelect.AddItem("(no living targets)", 0);
+                _targetSelect.SetItemMetadata(0, string.Empty);
+            }
+            else if (restoredIdx >= 0)
+            {
+                _targetSelect.Select(restoredIdx);
+            }
         }
 
         private string SelectedTargetId()
         {
             int i = _targetSelect.Selected;
-            var meta = _targetSelect.GetItemMetadata(Math.Max(0, i));
+            if (i < 0 || _targetSelect.ItemCount == 0) return string.Empty;
+            var meta = _targetSelect.GetItemMetadata(i);
             return meta.AsString();
         }
 
@@ -185,24 +286,36 @@ namespace AtomicWar.GodotApp.UI
 
             // Fire / suppression / tactical
             var row1 = Row();
-            row1.AddChild(Btn("FIRE", () => DoAction(() => _combat.ActionFire(SelectedTargetId()))));
-            row1.AddChild(Btn("SUPPRESS", () => DoAction(_combat.ActionSuppress)));
-            row1.AddChild(Btn("DEPLOY TRAP", () => DoAction(_combat.ActionDeployTrap)));
+            _btnFire = Btn("FIRE [1]", () => DoAction(() => _combat.ActionFire(SelectedTargetId())));
+            row1.AddChild(_btnFire);
+            _btnSuppress = Btn("SUPPRESS [2]", () => DoAction(_combat.ActionSuppress));
+            row1.AddChild(_btnSuppress);
+            _btnTrap = Btn("DEPLOY TRAP", () => DoAction(_combat.ActionDeployTrap));
+            row1.AddChild(_btnTrap);
             vbox.AddChild(row1);
 
             var row2 = Row();
-            row2.AddChild(Btn("CLEAR JAM", () => DoAction(() => _combat.ActionClearJam("survivor_yuki"))));
-            row2.AddChild(Btn("REPAIR", () => DoAction(() => _combat.ActionRepair("survivor_yuki").MessageKey)));
-            row2.AddChild(Btn("DECON FLUSH", () => DoAction(_combat.ActionDecontaminate)));
-            row2.AddChild(Btn("LAST STAND", () => DoAction(() => _combat.ActionLastStand("survivor_yuki"))));
+            _btnClearJam = Btn("CLEAR JAM [3]", () => DoAction(() => _combat.ActionClearJam("survivor_yuki")));
+            row2.AddChild(_btnClearJam);
+            _btnRepair = Btn("REPAIR [4]", () => DoAction(() => _combat.ActionRepair("survivor_yuki").MessageKey));
+            row2.AddChild(_btnRepair);
+            _btnDecon = Btn("DECON FLUSH", () => DoAction(_combat.ActionDecontaminate));
+            row2.AddChild(_btnDecon);
+            _btnLastStand = Btn("LAST STAND", () => DoAction(() => _combat.ActionLastStand("survivor_yuki")));
+            row2.AddChild(_btnLastStand);
             vbox.AddChild(row2);
 
             var row3 = Row();
-            row3.AddChild(Btn("HOLD LINE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.HoldPosition)))));
-            row3.AddChild(Btn("ADVANCE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.Advance)))));
-            row3.AddChild(Btn("SUPPRESS STANCE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.SuppressiveFire)))));
-            row3.AddChild(Btn("RETREAT", () => DoAction(_combat.ActionRetreat)));
-            row3.AddChild(Btn("END TURN", () => DoAction(_combat.ActionEndTurn)));
+            _btnHold = Btn("HOLD LINE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.HoldPosition))));
+            row3.AddChild(_btnHold);
+            _btnAdvance = Btn("ADVANCE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.Advance))));
+            row3.AddChild(_btnAdvance);
+            _btnSuppressStance = Btn("SUPPRESS STANCE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.SuppressiveFire))));
+            row3.AddChild(_btnSuppressStance);
+            _btnRetreat = Btn("RETREAT", () => DoAction(_combat.ActionRetreat));
+            row3.AddChild(_btnRetreat);
+            _btnEndTurn = Btn("END TURN [5]", () => DoAction(_combat.ActionEndTurn));
+            row3.AddChild(_btnEndTurn);
             vbox.AddChild(row3);
 
             _lastActionResult = AshfallUiHelpers.MakeBody("");
@@ -211,19 +324,39 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
+            // Combatants Grid (AshfallDataGrid)
             vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("COMBATANTS"));
-            _combatants = new RichTextLabel { BbcodeEnabled = false, ScrollActive = true };
-            _combatants.CustomMinimumSize = new Vector2(820, 130);
-            vbox.AddChild(_combatants);
+            var combatantCols = new List<AshfallDataGrid.Column>
+            {
+                new() { Header = "Mark", MinWidth = 40, Alignment = AshfallDataGrid.ColumnAlign.Center },
+                new() { Header = "Combatant", MinWidth = 160, Alignment = AshfallDataGrid.ColumnAlign.Left },
+                new() { Header = "Lane", MinWidth = 70, Alignment = AshfallDataGrid.ColumnAlign.Center },
+                new() { Header = "Health", MinWidth = 90, Alignment = AshfallDataGrid.ColumnAlign.Right },
+                new() { Header = "Cover", MinWidth = 70, Alignment = AshfallDataGrid.ColumnAlign.Right },
+                new() { Header = "Armor", MinWidth = 70, Alignment = AshfallDataGrid.ColumnAlign.Right },
+                new() { Header = "Status", MinWidth = 130, Alignment = AshfallDataGrid.ColumnAlign.Left },
+                new() { Header = "Weapon / Cond", MinWidth = 190, Alignment = AshfallDataGrid.ColumnAlign.Left }
+            };
+            _combatantsGrid = new AshfallDataGrid(combatantCols, showHeader: true, minWidth: 820, minHeight: 140);
+            vbox.AddChild(_combatantsGrid);
 
+            // Armory / Weapon Monitor Grid (AshfallDataGrid)
             vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("ARMORY / WEAPON MONITOR"));
-            _weapons = new RichTextLabel { BbcodeEnabled = false, ScrollActive = true };
-            _weapons.CustomMinimumSize = new Vector2(820, 90);
-            vbox.AddChild(_weapons);
+            var weaponCols = new List<AshfallDataGrid.Column>
+            {
+                new() { Header = "Weapon", MinWidth = 180, Alignment = AshfallDataGrid.ColumnAlign.Left },
+                new() { Header = "Condition", MinWidth = 90, Alignment = AshfallDataGrid.ColumnAlign.Right },
+                new() { Header = "Jam Risk", MinWidth = 80, Alignment = AshfallDataGrid.ColumnAlign.Right },
+                new() { Header = "Status", MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Center },
+                new() { Header = "Scrap Repair", MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Right },
+                new() { Header = "Ammo", MinWidth = 80, Alignment = AshfallDataGrid.ColumnAlign.Right }
+            };
+            _weaponsGrid = new AshfallDataGrid(weaponCols, showHeader: true, minWidth: 820, minHeight: 100);
+            vbox.AddChild(_weaponsGrid);
 
             vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("COMBAT LOG"));
             _log = new RichTextLabel { BbcodeEnabled = false, ScrollActive = true };
-            _log.CustomMinimumSize = new Vector2(820, 170);
+            _log.CustomMinimumSize = new Vector2(820, 150);
             vbox.AddChild(_log);
 
             _outcome = AshfallUiHelpers.MakeBody("");
@@ -236,7 +369,7 @@ namespace AtomicWar.GodotApp.UI
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
 
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close  ·  every action resolves through the deterministic Core engine");
+            var hint = AshfallUiHelpers.MakeSmall("[Tab] Cycle Target · [1-5] Tactical Actions · [Esc] Close · Resolves via deterministic Core engine");
             vbox.AddChild(hint);
 
             RefreshView();
@@ -252,23 +385,75 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-            if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+            if (@event is InputEventKey key && key.Pressed)
             {
-                OnClose?.Invoke();
-                GetViewport().SetInputAsHandled();
+                if (key.Keycode == Key.Escape)
+                {
+                    OnClose?.Invoke();
+                    GetViewport().SetInputAsHandled();
+                }
+                else if (key.Keycode == Key.Tab)
+                {
+                    if (_targetSelect.ItemCount > 0)
+                    {
+                        int next = (_targetSelect.Selected + 1) % _targetSelect.ItemCount;
+                        _targetSelect.Select(next);
+                        RefreshView();
+                        GetViewport().SetInputAsHandled();
+                    }
+                }
+                else if (key.Keycode == Key.Key1 || key.Keycode == Key.Kp1)
+                {
+                    if (!_btnFire.Disabled)
+                    {
+                        DoAction(() => _combat.ActionFire(SelectedTargetId()));
+                        GetViewport().SetInputAsHandled();
+                    }
+                }
+                else if (key.Keycode == Key.Key2 || key.Keycode == Key.Kp2)
+                {
+                    if (!_btnSuppress.Disabled)
+                    {
+                        DoAction(_combat.ActionSuppress);
+                        GetViewport().SetInputAsHandled();
+                    }
+                }
+                else if (key.Keycode == Key.Key3 || key.Keycode == Key.Kp3)
+                {
+                    if (!_btnClearJam.Disabled)
+                    {
+                        DoAction(() => _combat.ActionClearJam("survivor_yuki"));
+                        GetViewport().SetInputAsHandled();
+                    }
+                }
+                else if (key.Keycode == Key.Key4 || key.Keycode == Key.Kp4)
+                {
+                    if (!_btnRepair.Disabled)
+                    {
+                        DoAction(() => _combat.ActionRepair("survivor_yuki").MessageKey);
+                        GetViewport().SetInputAsHandled();
+                    }
+                }
+                else if (key.Keycode == Key.Key5 || key.Keycode == Key.Kp5)
+                {
+                    if (!_btnEndTurn.Disabled)
+                    {
+                        DoAction(_combat.ActionEndTurn);
+                        GetViewport().SetInputAsHandled();
+                    }
+                }
             }
         }
 
-
-    public void Unbind()
-    {
-        if (_combat != null)
+        public void Unbind()
+        {
+            if (_combat != null)
             {
                 _combat.StateChanged -= RefreshView;
             }
-    }
+        }
 
-    public override void _ExitTree()
+        public override void _ExitTree()
         {
             Unbind();
             base._ExitTree();

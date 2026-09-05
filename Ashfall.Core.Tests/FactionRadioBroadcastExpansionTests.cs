@@ -461,7 +461,9 @@ namespace Ashfall.Core.Tests
         {
             string dataDir = FindDataDir();
             var catalog = LoadCatalog(dataDir);
-            var coordinator = new RadioScheduleCoordinator(catalog, new RadioStationCatalog());
+            var stations = new RadioStationCatalog();
+            stations.LoadFromDataDirectory(dataDir);
+            var coordinator = new RadioScheduleCoordinator(catalog, stations);
 
             // Day 18 on 104.7: the distress broadcast is the only Urgent entry in
             // window — the priority sort must surface it deterministically.
@@ -476,7 +478,9 @@ namespace Ashfall.Core.Tests
         {
             string dataDir = FindDataDir();
             var catalog = LoadCatalog(dataDir);
-            var coordinator = new RadioScheduleCoordinator(catalog, new RadioStationCatalog());
+            var stations = new RadioStationCatalog();
+            stations.LoadFromDataDirectory(dataDir);
+            var coordinator = new RadioScheduleCoordinator(catalog, stations);
 
             // Day 32 on 142.85: the readiness ping shares the band with the
             // (higher-priority) clinic distress in window — either way, the
@@ -505,7 +509,9 @@ namespace Ashfall.Core.Tests
         {
             string dataDir = FindDataDir();
             var catalog = LoadCatalog(dataDir);
-            var coordinator = new RadioScheduleCoordinator(catalog, new RadioStationCatalog());
+            var stations = new RadioStationCatalog();
+            stations.LoadFromDataDirectory(dataDir);
+            var coordinator = new RadioScheduleCoordinator(catalog, stations);
 
             for (int day = 40; day <= 44; day++)
             {

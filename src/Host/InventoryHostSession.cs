@@ -1,9 +1,11 @@
 using System;
 #pragma warning disable CS8618
+using System.Collections.Generic;
 using System.IO;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.Survivors;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 
 namespace AtomicWar.GodotApp
@@ -18,6 +20,14 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public InventoryContainer Inventory { get; }
         public ItemCatalog Catalog { get; }
+
+        public SurvivorsHostSession? Survivors { get; set; }
+
+        public Func<string, ItemType, float, bool>? ApplyNeedOverride { get; set; }
+        public Action<string, float>? ApplyRadCleanseOverride { get; set; }
+        public Action<string>? ApplyIodineOverride { get; set; }
+        public Action<string, float>? ApplyContaminationOverride { get; set; }
+        public Func<string?>? DefaultSurvivorResolver { get; set; }
 
         public string LastEvent { get; private set; } = string.Empty;
         public InventoryHostSession(InventoryContainer inventory = null!, ItemCatalog catalog = null!)
@@ -51,23 +61,38 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        public void LoadOrSeedStartingSupplies(string dataDir, IFileIO fileIO = null!, IJsonSerializer serializer = null!)
+        public void LoadOrSeedStartingSupplies(string dataDir, IFileIO fileIO = null!, IJsonSerializer serializer = null!, bool failClosed = true)
         {
             fileIO ??= new FileSystemIO();
             serializer ??= new SystemTextJsonSerializer();
-            var supplies = ItemCatalogLoader.LoadStartingSupplies(dataDir, fileIO, serializer);
-            if (supplies != null && supplies.Count > 0)
+            var detailed = ItemCatalogLoader.LoadStartingSuppliesDetailed(dataDir, fileIO, serializer, Catalog);
+            if (!detailed.IsSuccess)
             {
-                for (int i = 0; i < supplies.Count; i++)
+                if (failClosed)
                 {
-                    Add(supplies[i].itemId, supplies[i].amount);
+                    LastEvent = $"ERROR: Failed to load authoritative starting supplies: {detailed.ErrorMessage}";
+                    GD.PrintErr($"[InventoryHostSession] {LastEvent}");
+                    throw new InvalidOperationException(LastEvent);
                 }
-                LastEvent = "Starting supplies loaded into Holdfast storage from JSON authority.";
+                else
+                {
+                    SeedStartingSupplies();
+                    return;
+                }
             }
-            else
+
+            for (int i = 0; i < detailed.Supplies.Count; i++)
             {
-                SeedStartingSupplies();
+                var entry = detailed.Supplies[i];
+                if (!TryAdd(entry.itemId, entry.amount))
+                {
+                    if (failClosed)
+                    {
+                        throw new InvalidOperationException($"Failed to add starting supply '{entry.itemId}' x{entry.amount}: inventory capacity or weight exceeded.");
+                    }
+                }
             }
+            LastEvent = "Starting supplies loaded into Holdfast storage from JSON authority.";
         }
 
         public void SeedStartingSupplies()
@@ -104,11 +129,12 @@ namespace AtomicWar.GodotApp
                 MakeDef("bandage", "Bandage", ItemType.Medical, stackMax: 8, weight: 0.1f, health: 10f, trade: 5f),
                 MakeDef("iodine_pills", "Iodine Pills", ItemType.Iodine, stackMax: 5, weight: 0.05f, trade: 12f),
                 MakeDef("rad_away", "Rad-Away", ItemType.AntiRad, stackMax: 3, weight: 0.2f, radCleanse: 30f, trade: 20f),
+                MakeDef("anti_rad", "Anti-Rad", ItemType.AntiRad, stackMax: 5, weight: 0.1f, radCleanse: 50f, trade: 8f),
                 MakeDef("fuel_canister", "Fuel Canister", ItemType.Fuel, stackMax: 3, weight: 4f, trade: 15f),
                 MakeDef("battery", "Battery", ItemType.Tool, stackMax: 10, weight: 0.1f, trade: 4f),
                 MakeDef("calibration_kit", "Calibration Kit", ItemType.Tool, stackMax: 4, weight: 0.3f, trade: 18f),
-                MakeDef("gas_mask", "Gas Mask", ItemType.Protective, stackMax: 1, weight: 1.5f, equip: true, equipSlot: EquipSlot.Face, radProt: 30f, durability: 100f, trade: 40f),
-                MakeDef("hazmat_suit", "Hazmat Suit", ItemType.Protective, stackMax: 1, weight: 5f, equip: true, equipSlot: EquipSlot.Body, radProt: 80f, durability: 100f, trade: 40f),
+                MakeDef("gas_mask", "Gas Mask", ItemType.Protective, stackMax: 1, weight: 1.5f, equip: true, equipSlot: EquipSlot.Face, radProt: 30f, durability: 100f, trade: 40f, degradeRate: 1.0f),
+                MakeDef("hazmat_suit", "Hazmat Suit", ItemType.Protective, stackMax: 1, weight: 5f, equip: true, equipSlot: EquipSlot.Body, radProt: 80f, durability: 100f, trade: 40f, degradeRate: 0.5f),
                 MakeDef("geiger_counter", "Geiger Counter", ItemType.Device, stackMax: 1, weight: 0.9f, trade: 25f),
                 MakeDef("item_geiger_m3", "Geiger Counter (M3)", ItemType.Device, stackMax: 1, weight: 0.9f, trade: 35f),
                 MakeDef("item_dosimeter_pen", "Quartz Pen Dosimeter", ItemType.Device, stackMax: 2, weight: 0.1f, trade: 15f),
@@ -201,7 +227,8 @@ namespace AtomicWar.GodotApp
             float hunger = 0f, float thirst = 0f, float health = 0f,
             float morale = 0f, float radCleanse = 0f, float contamination = 0f,
             bool equip = false, EquipSlot equipSlot = EquipSlot.None,
-            float radProt = 0f, float durability = 0f, float trade = 0f)
+            float radProt = 0f, float durability = 0f, float trade = 0f,
+            float degradeRate = 0f)
         {
             return new ItemDefinition
             {
@@ -220,11 +247,23 @@ namespace AtomicWar.GodotApp
                 equipSlot = equipSlot,
                 radProtection = radProt,
                 durability = durability,
-                tradeValue = trade
+                tradeValue = trade,
+                degradeRate = degradeRate
             };
         }
 
         // ── Item operations ────────────────────────────────────────────
+
+        public bool TryAdd(string itemId, int amount)
+        {
+            var def = Catalog.Get(itemId);
+            if (def == null) return false;
+            bool ok = Inventory.Add(def, amount);
+            LastEvent = ok
+                ? $"Added {amount} × {def.displayName}."
+                : $"Cannot add {amount} × {def.displayName} (weight/capacity/stack limit).";
+            return ok;
+        }
 
         public string Add(string itemId, int amount)
         {
@@ -283,7 +322,34 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string Consume(string itemId, float therapeuticScale = 1f) => ConsumeResult(itemId, therapeuticScale).MessageKey;
+        public string? ResolveTargetSurvivorId(string? requestedSurvivorId = null)
+        {
+            if (!string.IsNullOrEmpty(requestedSurvivorId))
+                return requestedSurvivorId;
+
+            if (DefaultSurvivorResolver != null)
+            {
+                var id = DefaultSurvivorResolver();
+                if (!string.IsNullOrEmpty(id)) return id;
+            }
+
+            if (Survivors != null)
+            {
+                for (int i = 0; i < Survivors.RosterState.Count; i++)
+                {
+                    var s = Survivors.RosterState[i];
+                    if (s != null && s.IsAliveState)
+                        return s.Id;
+                }
+            }
+
+            return null;
+        }
+
+        public string Consume(string itemId, float therapeuticScale = 1f) => ConsumeResult(itemId, null, therapeuticScale).MessageKey;
+        public string Consume(string itemId, string? survivorId, float therapeuticScale = 1f) => ConsumeResult(itemId, survivorId, therapeuticScale).MessageKey;
+
+        public ActionResult ConsumeResult(string itemId, float therapeuticScale = 1f) => ConsumeResult(itemId, null, therapeuticScale);
 
         /// <summary>
         /// Typed consume result. The host's Consume(string, float)
@@ -291,7 +357,7 @@ namespace AtomicWar.GodotApp
         /// surfaces stay identical; new callers should branch on Status
         /// rather than parsing text.
         /// </summary>
-        public ActionResult ConsumeResult(string itemId, float therapeuticScale = 1f)
+        public ActionResult ConsumeResult(string itemId, string? survivorId, float therapeuticScale = 1f)
         {
             var def = Catalog.Get(itemId);
             if (def == null)
@@ -300,10 +366,153 @@ namespace AtomicWar.GodotApp
                 LastEvent = failed.MessageKey;
                 return failed;
             }
-            bool ok = Inventory.Consume(def, therapeuticScale: therapeuticScale);
-            var result = ok
-                ? ActionResult.Success($"Consumed 1 × {def.displayName}.")
-                : ActionResult.Blocked("cannot_consume", $"Cannot consume {def.displayName}: none held.");
+
+            if (!def.IsConsumable())
+            {
+                var blocked = ActionResult.Blocked("not_consumable", $"{def.displayName} cannot be consumed.");
+                LastEvent = blocked.MessageKey;
+                return blocked;
+            }
+
+            if (Inventory.Count(def) < 1)
+            {
+                var blocked = ActionResult.Blocked("cannot_consume", $"Cannot consume {def.displayName}: none held.");
+                LastEvent = blocked.MessageKey;
+                return blocked;
+            }
+
+            string? targetId = ResolveTargetSurvivorId(survivorId);
+            if (Survivors != null)
+            {
+                if (string.IsNullOrEmpty(targetId))
+                {
+                    var blocked = ActionResult.Blocked("no_survivors", $"Cannot consume {def.displayName}: no living survivors.");
+                    LastEvent = blocked.MessageKey;
+                    return blocked;
+                }
+
+                var target = Survivors.Find(targetId);
+                if (target == null || !target.IsAliveState)
+                {
+                    var blocked = ActionResult.Blocked("invalid_target", $"Cannot consume {def.displayName}: survivor {targetId} not found or deceased.");
+                    LastEvent = blocked.MessageKey;
+                    return blocked;
+                }
+            }
+
+            var deltas = new Dictionary<string, double>(StringComparer.Ordinal);
+            float scale = Mathf.Clamp(therapeuticScale, 0f, 1f);
+
+            if (def.hungerRestore != 0f) deltas["hunger"] = -def.hungerRestore;
+            if (def.thirstRestore != 0f) deltas["thirst"] = -def.thirstRestore;
+            if (def.healthEffect != 0f) deltas["health"] = def.healthEffect * scale;
+            if (def.moraleEffect != 0f) deltas["morale"] = def.moraleEffect;
+            if (def.radCleanse > 0f && scale > 0f) deltas["rad_cleanse"] = def.radCleanse * scale;
+            if (def.type == ItemType.Iodine) deltas["iodine"] = 1.0;
+            if (def.contamination > 0f) deltas["contamination"] = def.contamination * InventoryContainer.ContaminationDosePerUnit;
+
+            Func<ItemType, float, bool> applyNeed = (needType, delta) =>
+            {
+                if (ApplyNeedOverride != null)
+                    return ApplyNeedOverride(targetId ?? string.Empty, needType, delta);
+
+                if (Survivors != null && targetId != null)
+                {
+                    var s = Survivors.Find(targetId);
+                    if (s == null || !s.IsAliveState) return false;
+
+                    switch (needType)
+                    {
+                        case ItemType.Food:
+                            Survivors.Needs.Modify(s, NeedKind.Hunger, delta);
+                            break;
+                        case ItemType.Water:
+                            Survivors.Needs.Modify(s, NeedKind.Thirst, delta);
+                            break;
+                        case ItemType.Medical:
+                            Survivors.Needs.Modify(s, NeedKind.Health, delta);
+                            break;
+                        case ItemType.Comfort:
+                            Survivors.Needs.Modify(s, NeedKind.Morale, delta);
+                            break;
+                    }
+                    return true;
+                }
+                return true;
+            };
+
+            Action<float> applyRadCleanse = rads =>
+            {
+                if (ApplyRadCleanseOverride != null)
+                {
+                    ApplyRadCleanseOverride(targetId ?? string.Empty, rads);
+                    return;
+                }
+
+                if (Survivors != null && targetId != null)
+                {
+                    var rad = Survivors.RadStateFor(targetId);
+                    if (rad != null)
+                    {
+                        Survivors.Radiation.AdministerAntiRad(rad, rads);
+                    }
+                }
+            };
+
+            Action applyIodine = () =>
+            {
+                if (ApplyIodineOverride != null)
+                {
+                    ApplyIodineOverride(targetId ?? string.Empty);
+                    return;
+                }
+
+                if (Survivors != null && targetId != null)
+                {
+                    var rad = Survivors.RadStateFor(targetId);
+                    if (rad != null)
+                    {
+                        Survivors.Radiation.AdministerIodine(rad);
+                    }
+                }
+            };
+
+            Action<float> applyContamination = dose =>
+            {
+                if (ApplyContaminationOverride != null)
+                {
+                    ApplyContaminationOverride(targetId ?? string.Empty, dose);
+                    return;
+                }
+
+                if (Survivors != null && targetId != null)
+                {
+                    var rad = Survivors.RadStateFor(targetId);
+                    if (rad != null)
+                    {
+                        Survivors.Radiation.AdjustDose(rad, dose);
+                    }
+                }
+            };
+
+            bool ok = Inventory.Consume(def, applyNeed, applyRadCleanse, applyIodine, applyContamination, therapeuticScale: scale);
+            if (!ok)
+            {
+                var blocked = ActionResult.Blocked("cannot_consume", $"Cannot consume {def.displayName}: effect failed or item unavailable.");
+                LastEvent = blocked.MessageKey;
+                return blocked;
+            }
+
+            if (def.type == ItemType.Water || def.type == ItemType.IrradiatedWater || def.thirstRestore > 0f)
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionWaterPour);
+            else if (def.type == ItemType.Iodine)
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionPillBottle);
+            else if (def.type == ItemType.AntiRad || def.type == ItemType.Medical || def.radCleanse > 0f || def.healthEffect > 0f)
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionInjection);
+            else
+                AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionItemPickup);
+
+            var result = ActionResult.Success($"Consumed 1 × {def.displayName}.", deltas);
             LastEvent = result.MessageKey;
             return result;
         }
