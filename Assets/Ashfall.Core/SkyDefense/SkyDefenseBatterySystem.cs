@@ -159,6 +159,7 @@ namespace Ashfall.Core.SkyDefense
         public IReadOnlyList<CounterBatteryTurretState> Turrets => _state.turrets.AsReadOnly();
         public IReadOnlyList<OrbitalTrackState> Tracks => _state.tracks.AsReadOnly();
         public int TotalInterceptions => _state.total_interceptions;
+        public int TotalVolleys => _state.total_volleys;
         public SkyDefenseOrdnanceDefinition? GetOrdnance(string ordnanceId) =>
             _ordnance.GetValueOrDefault(ordnanceId);
         public CounterBatteryTurretState? GetTurret(string turretId) =>

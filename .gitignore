@@ -249,3 +249,6 @@ codex_alt_*.png
 # the CI orphan-regression gate has a stable seed across clones.
 /artifacts/content-utilization.json
 /artifacts/content-utilization.md
+
+# Local audio/tooling working cache — never commit
+.cache/

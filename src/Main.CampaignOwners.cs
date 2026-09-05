@@ -333,6 +333,16 @@ namespace AtomicWar.GodotApp
                 _m.SetupDisease();
                 _m._disease.TickDaily(day);
 
+                // Flagship XI (Plan 155): the strain layer runs immediately after
+                // disease progression — mutations transition this day's outcomes,
+                // cure research advances before triage reads the ward.
+                _m.SetupPathogenStrains();
+                if (_m._pathogenStrains != null)
+                {
+                    _m._pathogenStrains.TickMutations(day);
+                    _m._pathogenStrains.AdvanceCureProjects(day);
+                }
+
                 // Plan 60 / D5 + D7 — bridge illness into the shared sick-list band
                 // ladder and keep the memorial grief sink bound. Runs after the
                 // disease tick so it reads this day's stage, and is idempotent.

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Faction Diplomacy &amp; Geopolitical Standing Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#a1cfd3",
+                        "outline": "#8a9293",
+                        "surface-variant": "#353534",
+                        "outline-variant": "#404849",
+                        "error": "#ffb4ab",
+                        "on-surface-variant": "#c0c8c9",
+                        "on-primary-container": "#a2d0d4",
+                        "on-tertiary": "#003907",
+                        "tertiary-container": "#006112",
+                        "secondary-fixed": "#ffdbcc",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary": "#00363a",
+                        "inverse-on-surface": "#313030",
+                        "tertiary": "#00e639",
+                        "on-surface": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "error-container": "#93000a",
+                        "surface-dim": "#131313",
+                        "on-error": "#690005",
+                        "surface-bright": "#393939",
+                        "surface-container": "#201f1f",
+                        "primary": "#a1cfd3",
+                        "surface-container-highest": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#00530e",
+                        "on-secondary-fixed": "#351000",
+                        "surface-container-low": "#1c1b1b",
+                        "surface": "#131313",
+                        "secondary": "#ffb693",
+                        "tertiary-fixed": "#72ff70",
+                        "tertiary-fixed-dim": "#00e639",
+                        "background": "#131313",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "on-tertiary-fixed": "#002203",
+                        "on-secondary": "#562000",
+                        "secondary-container": "#ea6b1e",
+                        "on-secondary-container": "#4b1b00",
+                        "inverse-primary": "#396569",
+                        "secondary-fixed-dim": "#ffb693",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed": "#bcebef",
+                        "primary-container": "#2d5a5e",
+                        "on-primary-fixed": "#002022",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "on-tertiary-container": "#00e639",
+                        "on-background": "#e5e2e1",
+                        "hostile": "#cc5500",
+                        "neutral": "#8a9293",
+                        "allied": "#2d5a5e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "container-max": "1440px",
+                        "margin": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-lg": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "1.4", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.1", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.0", "fontWeight": "500" }]
+                    },
+                    "animation": {
+                        'crt-flicker': 'flicker 0.15s infinite',
+                        'scanline': 'scan 8s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    "keyframes": {
+                        flicker: {
+                            '0%': { opacity: '0.98' },
+                            '50%': { opacity: '0.95' },
+                            '100%': { opacity: '1' },
+                        },
+                        scan: {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '0 100vh' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .crt-glow {
+            text-shadow: 0 0 5px currentColor;
+        }
+        .box-glow {
+            box-shadow: inset 0 0 10px rgba(45, 90, 94, 0.3), 0 0 5px rgba(45, 90, 94, 0.2);
+        }
+        /* Custom scrollbar for terminal feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+            border-left: 1px solid #404849;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #404849;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1cfd3;
+        }
+
+        .terminal-bg {
+            background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden h-screen flex flex-col antialiased selection:bg-primary-container selection:text-primary">
+<!-- Global Overlays -->
+<div class="fixed inset-0 scanlines z-[100] mix-blend-overlay"></div>
+<div class="fixed inset-0 bg-surface/80 z-0 pointer-events-none terminal-bg" data-alt="Atmospheric background for a post-nuclear survival game. A snow-covered ruined cityscape under a heavy, ash-grey sky. Cold, desolate, cinematic, moody, 2D art style, highly detailed. Muted ashen grey and teal tones. No people, just the haunting remains of a city in winter."></div>
+<!-- Top App Bar (Shared Component - Injected via JSON) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface border-b-2 border-primary/30 relative">
+<div class="flex items-center space-x-4">
+<span class="font-display-lg text-display-lg text-primary tracking-tighter crt-glow">WASTELAND_DIPLOMACY_v4.2</span>
+</div>
+<div class="flex items-center space-x-6 text-primary">
+<div class="hidden md:flex items-center space-x-2 border-b border-primary-container pb-1 w-64 focus-within:border-primary focus-within:box-glow transition-all">
+<span class="material-symbols-outlined text-sm">search</span>
+<input class="bg-transparent border-none text-on-surface placeholder:text-outline focus:ring-0 w-full font-label-sm uppercase" placeholder="QUERY_RECORDS..." type="text"/>
+<span class="animate-pulse">_</span>
+</div>
+<span class="material-symbols-outlined hover:text-surface-tint cursor-pointer">security</span>
+<span class="material-symbols-outlined hover:text-surface-tint cursor-pointer">terminal</span>
+<span class="material-symbols-outlined hover:text-surface-tint cursor-pointer">settings_input_component</span>
+</div>
+</header>
+<div class="flex h-full pt-16 relative z-10 animate-crt-flicker">
+<!-- Side Nav Bar (Shared Component) -->
+<nav class="hidden md:flex flex-col w-64 bg-surface-container border-r border-outline-variant h-full overflow-y-auto shrink-0 relative">
+<div class="p-gutter border-b border-primary/20 bg-surface-container-low flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-surface border border-primary/30 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-headline-lg text-primary">account_circle</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary uppercase">SECTOR_ADMIN</div>
+<div class="font-label-sm text-outline uppercase tracking-widest">FACTION_AUTH_LEVEL_01</div>
+</div>
+<div class="flex-1 py-4 flex flex-col space-y-1">
+<a class="flex items-center px-gutter py-3 text-on-surface-variant border-l-4 border-transparent hover:bg-surface-variant hover:text-primary transition-none" href="#">
+<span class="material-symbols-outlined mr-4">groups</span>
+<span class="font-body-md text-body-md uppercase tracking-tight">FACTION_INDEX</span>
+</a>
+<a class="flex items-center px-gutter py-3 bg-primary text-on-primary font-bold border-l-4 border-tertiary focus:ring-1 focus:ring-primary instant-color-invert" href="#">
+<span class="material-symbols-outlined mr-4">gavel</span>
+<span class="font-body-md text-body-md uppercase tracking-tight">TREATY_PROTOCOLS</span>
+</a>
+<a class="flex items-center px-gutter py-3 text-on-surface-variant border-l-4 border-transparent hover:bg-surface-variant hover:text-primary transition-none" href="#">
+<span class="material-symbols-outlined mr-4">radar</span>
+<span class="font-body-md text-body-md uppercase tracking-tight">COMM_RELAY</span>
+</a>
+<a class="flex items-center px-gutter py-3 text-on-surface-variant border-l-4 border-transparent hover:bg-surface-variant hover:text-primary transition-none" href="#">
+<span class="material-symbols-outlined mr-4">language</span>
+<span class="font-body-md text-body-md uppercase tracking-tight">GEOPOL_DATA</span>
+</a>
+<a class="flex items-center px-gutter py-3 text-on-surface-variant border-l-4 border-transparent hover:bg-surface-variant hover:text-primary transition-none" href="#">
+<span class="material-symbols-outlined mr-4">history</span>
+<span class="font-body-md text-body-md uppercase tracking-tight">SYSTEM_LOGS</span>
+</a>
+</div>
+<div class="p-gutter mt-auto flex flex-col space-y-2 border-t border-primary/20 bg-surface-container-low">
+<button class="w-full bg-primary-container text-surface-dim font-data-lg uppercase py-2 hover:bg-primary transition-none flicker-on-click">INITIALIZE_NEGOTIATION</button>
+<div class="flex justify-between pt-2">
+<span class="material-symbols-outlined text-outline hover:text-primary cursor-pointer">memory</span>
+<span class="material-symbols-outlined text-outline hover:text-error cursor-pointer">power_settings_new</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col lg:flex-row overflow-hidden bg-surface/90">
+<!-- Left Panel: Wasteland Factions Matrix -->
+<section class="lg:w-1/3 p-4 flex flex-col h-full border-r border-outline-variant/30 overflow-y-auto">
+<div class="bg-primary-container text-surface-dim px-2 py-1 mb-4 flex items-center justify-between">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase m-0">FACTION MATRIX</h2>
+<span class="font-label-sm">UPLINK ACTIVE</span>
+</div>
+<div class="space-y-4">
+<!-- Faction 1 -->
+<div class="border border-outline-variant p-3 bg-surface-container-low">
+<div class="flex justify-between items-end mb-2 border-b border-outline-variant/50 pb-1">
+<h3 class="font-data-lg text-data-lg uppercase text-on-surface">The Iron Syndicate</h3>
+<span class="font-label-sm text-allied">+68 ALLIED</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center font-label-sm text-outline uppercase">
+<span class="w-24 shrink-0">IDEOLOGY:</span>
+<span class="text-on-surface-variant truncate">Industrial Collectivism</span>
+</div>
+<div class="flex items-center font-label-sm text-outline uppercase">
+<span class="w-24 shrink-0">ACTIVE PACT:</span>
+<span class="text-on-surface-variant truncate">Salt-Road Scavenge Rights</span>
+</div>
+<div class="mt-2">
+<div class="w-full bg-surface-dim h-2 border border-outline-variant/50">
+<div class="bg-allied h-full" style="width: 68%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Faction 2 -->
+<div class="border border-outline-variant p-3 bg-surface-container-low">
+<div class="flex justify-between items-end mb-2 border-b border-outline-variant/50 pb-1">
+<h3 class="font-data-lg text-data-lg uppercase text-on-surface">The Meridian Compact</h3>
+<span class="font-label-sm text-neutral">+12 NEUTRAL</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center font-label-sm text-outline uppercase">
+<span class="w-24 shrink-0">IDEOLOGY:</span>
+<span class="text-on-surface-variant truncate">Techno-Humanitarianism</span>
+</div>
+<div class="flex items-center font-label-sm text-outline uppercase">
+<span class="w-24 shrink-0">STANCE:</span>
+<span class="text-on-surface-variant truncate">Demand Clean Antibiotics</span>
+</div>
+<div class="mt-2">
+<div class="w-full bg-surface-dim h-2 border border-outline-variant/50">
+<div class="bg-neutral h-full" style="width: 50%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Faction 3 -->
+<div class="border border-hostile/30 p-3 bg-surface-container-low relative overflow-hidden">
+<div class="absolute inset-0 bg-hostile/5 animate-pulse-slow"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-end mb-2 border-b border-hostile/30 pb-1">
+<h3 class="font-data-lg text-data-lg uppercase text-on-surface">Ashen Nomad Cohorts</h3>
+<span class="font-label-sm text-hostile animate-pulse">-45 HOSTILE</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center font-label-sm text-outline uppercase">
+<span class="w-24 shrink-0">IDEOLOGY:</span>
+<span class="text-on-surface-variant truncate">Rad-Worship Fanaticism</span>
+</div>
+<div class="flex items-center font-label-sm text-hostile uppercase bg-hostile/10 px-1">
+<span class="material-symbols-outlined text-sm mr-1">warning</span>
+<span class="truncate">Border Dispute at Sector 14</span>
+</div>
+<div class="mt-2 flex">
+<div class="w-1/2 bg-surface-dim h-2 border border-outline-variant/50 flex justify-end">
+<div class="bg-hostile h-full" style="width: 45%;"></div>
+</div>
+<div class="w-1/2 bg-surface-dim h-2 border border-outline-variant/50 border-l-0">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Center Panel: Active Treaty Negotiation -->
+<section class="lg:w-2/3 p-4 flex flex-col h-full bg-surface">
+<div class="border border-primary-container p-4 bg-surface-container h-full flex flex-col">
+<div class="text-center mb-6 border-b-2 border-primary-container pb-4 border-dashed">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-widest uppercase mb-1">IRON ROAD COALITION ACCORD (V2)</h1>
+<p class="font-label-sm text-outline uppercase">STATUS: ACTIVE NEGOTIATION / VERIFYING TERMS...</p>
+</div>
+<div class="grid grid-cols-2 gap-4 flex-1">
+<!-- Left Provision -->
+<div class="border border-outline-variant p-4 flex flex-col bg-surface-dim">
+<div class="bg-surface-variant text-on-surface font-label-sm px-2 py-1 uppercase w-max mb-3 border-l-2 border-outline">OUR OBLIGATION</div>
+<div class="font-data-lg text-on-primary-container mb-2">Bunker Contribution</div>
+<div class="font-body-md text-outline font-bold">12L DIESEL FUEL MONTHLY</div>
+<div class="mt-auto pt-4 border-t border-outline-variant/50 border-dotted">
+<span class="bg-tertiary-container/30 text-tertiary font-label-sm px-1">RESOURCE_OK</span>
+</div>
+</div>
+<!-- Right Provision -->
+<div class="border border-outline-variant p-4 flex flex-col bg-surface-dim">
+<div class="bg-surface-variant text-on-surface font-label-sm px-2 py-1 uppercase w-max mb-3 border-l-2 border-allied">SYNDICATE RETURN</div>
+<div class="font-data-lg text-on-primary-container mb-2">Protection &amp; Materials</div>
+<div class="font-body-md text-outline font-bold">8 LEAD SHIELD PLATES &amp; SENTRY ESCORT</div>
+<div class="mt-auto pt-4 border-t border-outline-variant/50 border-dotted">
+<span class="bg-surface-variant text-on-surface-variant font-label-sm px-1">AWAITING_DELIVERY</span>
+</div>
+</div>
+</div>
+<!-- Compliance Meter -->
+<div class="my-6 p-4 border border-outline-variant bg-surface-container-low flex flex-col items-center justify-center relative">
+<div class="font-label-sm text-outline uppercase mb-2 absolute top-2 left-2">TREATY ADHERENCE METRIC</div>
+<div class="w-32 h-32 rounded-full border-4 border-surface-dim flex items-center justify-center relative mt-4">
+<!-- Fake SVG radial progress -->
+<svg class="absolute inset-0 w-full h-full -rotate-90" viewbox="0 0 100 100">
+<circle class="opacity-80" cx="50" cy="50" fill="none" r="45" stroke="#2D5A5E" stroke-dasharray="282.7" stroke-dashoffset="33.9" stroke-width="8"></circle>
+</svg>
+<span class="font-headline-lg text-primary z-10 crt-glow">88%</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="mt-auto grid grid-cols-1 md:grid-cols-3 gap-2">
+<button class="border border-primary-container bg-surface hover:bg-primary-container/20 text-primary font-data-lg uppercase py-3 transition-none hover:text-on-primary-container">PROPOSE NON-AGGRESSION PACT</button>
+<button class="border border-hostile/50 bg-hostile/10 hover:bg-hostile text-hostile hover:text-on-error font-data-lg uppercase py-3 transition-none">DEMAND REPARATIONS</button>
+<button class="border border-outline-variant bg-surface-variant hover:bg-outline text-on-surface font-data-lg uppercase py-3 transition-none">PAY SCRAP TRIBUTE</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

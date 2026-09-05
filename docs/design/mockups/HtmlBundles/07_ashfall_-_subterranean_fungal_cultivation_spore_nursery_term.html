@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SUBTERRA-GROW V1.04 - CROP MATRIX</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        /* CRT Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Inner Glow for Panels */
+        .panel-glow {
+            box-shadow: inset 0.5px 0.5px 0px 0px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Flickering Animation for Critical States */
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        .animate-flicker {
+            animation: flicker 1s infinite;
+        }
+
+        /* Subdued Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d5a5e;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f2ff;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tactical-teal": "#2d5a5e",
+                      "secondary-container": "#225054",
+                      "inverse-on-surface": "#313030",
+                      "tertiary-fixed-dim": "#c8c6c5",
+                      "warning-orange": "#cc5500",
+                      "surface-container": "#201f1f",
+                      "on-primary": "#00363a",
+                      "inverse-surface": "#e5e2e1",
+                      "secondary-fixed-dim": "#a1cfd3",
+                      "on-secondary": "#00363a",
+                      "tertiary": "#faf6f5",
+                      "on-surface-variant": "#b9cacb",
+                      "on-surface": "#e5e2e1",
+                      "error-container": "#93000a",
+                      "on-tertiary-fixed": "#1c1b1b",
+                      "surface-variant": "#353534",
+                      "surface-bright": "#3a3939",
+                      "on-error": "#690005",
+                      "surface-dim": "#131313",
+                      "outline": "#849495",
+                      "primary": "#e1fdff",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-fixed": "#e5e2e1",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-secondary-container": "#93c0c5",
+                      "primary-fixed": "#74f5ff",
+                      "inverse-primary": "#00696f",
+                      "on-background": "#e5e2e1",
+                      "on-primary-container": "#006a71",
+                      "on-secondary-fixed-variant": "#1f4d51",
+                      "on-tertiary-fixed-variant": "#474746",
+                      "background": "#131313",
+                      "surface-container-high": "#2a2a2a",
+                      "on-tertiary-container": "#605f5f",
+                      "error": "#ffb4ab",
+                      "surface": "#131313",
+                      "on-secondary-fixed": "#002022",
+                      "secondary": "#a1cfd3",
+                      "terminal-black": "#0e0e0e",
+                      "surface-tint": "#00dbe7",
+                      "surface-container-low": "#1c1b1b",
+                      "primary-fixed-dim": "#00dbe7",
+                      "surface-gray": "#131313",
+                      "secondary-fixed": "#bcebef",
+                      "surface-container-highest": "#353534",
+                      "on-tertiary": "#313030",
+                      "outline-variant": "#3a494b",
+                      "biolume-cyan": "#00f2ff",
+                      "primary-container": "#00f2ff",
+                      "tertiary-container": "#dddad9",
+                      "on-primary-fixed-variant": "#004f54",
+                      "on-primary-fixed": "#002022"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "24px",
+                      "margin-edge": "40px",
+                      "gutter": "16px",
+                      "stack-lg": "48px",
+                      "unit": "4px",
+                      "stack-sm": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Bebas Neue"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Bebas Neue"
+                      ],
+                      "headline-xl": [
+                              "Bebas Neue"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "subheading": [
+                              "Bebas Neue"
+                      ],
+                      "code-data": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "26px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "subheading": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "code-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.15em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden min-h-screen">
+<!-- TopAppBar Shell Component -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-edge h-20 border-b border-tactical-teal/40 bg-surface-dim">
+<div class="flex items-center gap-gutter">
+<span class="font-headline-lg text-headline-lg text-biolume-cyan dark:text-biolume-cyan tracking-widest uppercase">SUBTERRA-GROW V1.04</span>
+</div>
+<div class="hidden md:flex items-center gap-stack-md">
+<!-- Trailing Icons -->
+<div class="flex items-center gap-unit text-biolume-cyan dark:text-biolume-cyan">
+<span class="material-symbols-outlined" data-icon="humidity_high" style="font-variation-settings: 'FILL' 1;">humidity_high</span>
+<span class="font-code-data text-code-data">94%</span>
+</div>
+<div class="flex items-center gap-unit text-biolume-cyan dark:text-biolume-cyan">
+<span class="material-symbols-outlined" data-icon="air_purifier_gen" style="font-variation-settings: 'FILL' 1;">air_purifier_gen</span>
+<span class="font-code-data text-code-data">24PPM</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell Component (Hidden on Mobile, persistent on md+) -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full w-64 z-40 flex-col pt-24 pb-12 border-r border-tactical-teal/30 bg-terminal-black">
+<div class="px-gutter mb-stack-md">
+<div class="flex items-center gap-gutter mb-stack-sm">
+<!-- Avatar Placeholder -->
+<div class="w-10 h-10 bg-surface-container-high rounded border border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-outline" data-icon="person">person</span>
+</div>
+<div>
+<div class="font-code-data text-code-data text-biolume-cyan">OP-001</div>
+<div class="font-label-caps text-label-caps text-outline">SECTOR-7</div>
+</div>
+</div>
+<button class="w-full py-2 px-4 border border-outline text-outline font-label-caps text-label-caps uppercase hover:bg-biolume-cyan hover:text-terminal-black transition-colors text-center">INITIALIZE CYCLE</button>
+</div>
+<ul class="flex flex-col flex-1">
+<li class="group cursor-pointer text-terminal-black bg-biolume-cyan rounded-none border-l-4 border-white flex items-center gap-gutter px-gutter py-3">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-label-caps text-label-caps">CROP MATRIX</span>
+</li>
+<li class="group cursor-pointer text-outline hover:text-biolume-cyan hover:bg-secondary-fixed-variant dark:hover:bg-on-secondary-fixed-variant transition-colors border-l-2 border-transparent hover:border-biolume-cyan flex items-center gap-gutter px-gutter py-3 mt-1">
+<span class="material-symbols-outlined" data-icon="vital_signs">vital_signs</span>
+<span class="font-label-caps text-label-caps">BIO-TELEMETRY</span>
+</li>
+<li class="group cursor-pointer text-outline hover:text-biolume-cyan hover:bg-secondary-fixed-variant dark:hover:bg-on-secondary-fixed-variant transition-colors border-l-2 border-transparent hover:border-biolume-cyan flex items-center gap-gutter px-gutter py-3 mt-1">
+<span class="material-symbols-outlined" data-icon="science">science</span>
+<span class="font-label-caps text-label-caps">DISTILLERY</span>
+</li>
+<li class="group cursor-pointer text-outline hover:text-biolume-cyan hover:bg-secondary-fixed-variant dark:hover:bg-on-secondary-fixed-variant transition-colors border-l-2 border-transparent hover:border-biolume-cyan flex items-center gap-gutter px-gutter py-3 mt-1">
+<span class="material-symbols-outlined" data-icon="folder_zip">folder_zip</span>
+<span class="font-label-caps text-label-caps">ARCHIVE</span>
+</li>
+</ul>
+<ul class="flex flex-col px-gutter">
+<li class="group cursor-pointer text-outline hover:text-biolume-cyan hover:bg-secondary-fixed-variant dark:hover:bg-on-secondary-fixed-variant transition-colors flex items-center gap-gutter py-2">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-caps text-label-caps">SETTINGS</span>
+</li>
+<li class="group cursor-pointer text-outline hover:text-biolume-cyan hover:bg-secondary-fixed-variant dark:hover:bg-on-secondary-fixed-variant transition-colors flex items-center gap-gutter py-2 mt-1">
+<span class="material-symbols-outlined" data-icon="power_settings_new">power_settings_new</span>
+<span class="font-label-caps text-label-caps">LOGOUT</span>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-20 md:pl-64 px-margin-edge min-h-screen">
+<!-- Page Header -->
+<div class="mb-stack-lg border-b border-tactical-teal/30 pb-stack-sm flex justify-between items-end">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface uppercase mb-0 leading-none">FUNGAL CULTIVATION</h1>
+<p class="font-code-data text-code-data text-on-surface-variant uppercase tracking-widest mt-1">SPORE NURSERY - SUB-LEVEL 3</p>
+</div>
+<div class="hidden md:flex gap-unit">
+<div class="h-2 w-8 bg-tactical-teal"></div>
+<div class="h-2 w-8 bg-tactical-teal"></div>
+<div class="h-2 w-8 bg-biolume-cyan"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-stack-md">
+<!-- Fungal Bed Matrix (Main Zone) -->
+<section class="xl:col-span-8 flex flex-col gap-stack-md">
+<div class="flex items-center gap-unit mb-stack-sm">
+<span class="material-symbols-outlined text-biolume-cyan" data-icon="grid_4x4">grid_4x4</span>
+<h2 class="font-subheading text-subheading text-biolume-cyan uppercase m-0">BED MATRIX STATUS</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Bed 01 -->
+<div class="bg-surface-container-low border border-tactical-teal/40 p-gutter panel-glow relative">
+<div class="absolute top-0 right-0 bg-tactical-teal/20 border-b border-l border-tactical-teal/40 px-2 py-1">
+<span class="font-code-data text-label-caps text-biolume-cyan">BED-01</span>
+</div>
+<h3 class="font-subheading text-body-lg text-on-surface uppercase mb-unit">WINTER RYE</h3>
+<div class="flex items-center gap-unit mb-stack-sm">
+<span class="inline-block w-2 h-2 rounded-none bg-biolume-cyan"></span>
+<span class="font-code-data text-code-data text-on-surface-variant">STABLE</span>
+</div>
+<div class="space-y-stack-sm mt-stack-md">
+<div>
+<div class="flex justify-between font-code-data text-label-caps text-outline mb-unit">
+<span>GROWTH RATE</span>
+<span class="text-biolume-cyan">82%</span>
+</div>
+<div class="h-2 bg-surface-dim relative border border-outline/20">
+<div class="absolute top-0 left-0 h-full bg-biolume-cyan" style="width: 82%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-gutter pt-stack-sm border-t border-tactical-teal/20 border-dashed">
+<div>
+<span class="block font-label-caps text-label-caps text-outline mb-1">TOXICITY</span>
+<span class="font-code-data text-code-data text-on-surface">1.2 µSv/h</span>
+</div>
+<div>
+<span class="block font-label-caps text-label-caps text-outline mb-1">YIELD EST.</span>
+<span class="font-code-data text-code-data text-on-surface">14 DAYS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bed 02 -->
+<div class="bg-surface-container-low border border-warning-orange/40 p-gutter panel-glow relative overflow-hidden">
+<!-- Hazard Stripes Top -->
+<div class="absolute top-0 left-0 w-full h-1 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxwYXRoIGQ9Ik0wLDIwIEwyMCwwIE0wLDEwIEwxMCwwIE0xMCwyMCBMMjAsMTAiIHN0cm9rZT0iI2NjNTUwMCIgc3Ryb2tlLXdpZHRoPSI1Ii8+Cjwvc3ZnPg==')] opacity-50"></div>
+<div class="absolute top-0 right-0 bg-warning-orange/20 border-b border-l border-warning-orange/40 px-2 py-1">
+<span class="font-code-data text-label-caps text-warning-orange">BED-02</span>
+</div>
+<h3 class="font-subheading text-body-lg text-warning-orange uppercase mb-unit pr-12">RAD-RESISTANT FUNGAL SPORES</h3>
+<div class="flex items-center gap-unit mb-stack-sm">
+<span class="inline-block w-2 h-2 rounded-none bg-warning-orange animate-flicker"></span>
+<span class="font-code-data text-code-data text-warning-orange">MUTATING</span>
+</div>
+<div class="space-y-stack-sm mt-stack-md">
+<div>
+<div class="flex justify-between font-code-data text-label-caps text-outline mb-unit">
+<span>GROWTH RATE</span>
+<span class="text-warning-orange">45%</span>
+</div>
+<div class="h-2 bg-surface-dim relative border border-outline/20">
+<div class="absolute top-0 left-0 h-full bg-warning-orange" style="width: 45%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-gutter pt-stack-sm border-t border-warning-orange/20 border-dashed">
+<div>
+<span class="block font-label-caps text-label-caps text-outline mb-1">TOXICITY</span>
+<span class="font-code-data text-code-data text-warning-orange animate-flicker">8.4 µSv/h</span>
+</div>
+<div>
+<span class="block font-label-caps text-label-caps text-outline mb-1">YIELD EST.</span>
+<span class="font-code-data text-code-data text-on-surface">CALCULATING...</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bed 03 -->
+<div class="bg-surface-container-low border border-error-container p-gutter panel-glow relative">
+<div class="absolute top-0 right-0 bg-error-container/20 border-b border-l border-error-container px-2 py-1">
+<span class="font-code-data text-label-caps text-error">BED-03</span>
+</div>
+<h3 class="font-subheading text-body-lg text-on-surface uppercase mb-unit pr-12">CLEAN POTATO TUBERS</h3>
+<div class="flex items-center gap-unit mb-stack-sm">
+<span class="inline-block w-2 h-2 rounded-none bg-error animate-flicker"></span>
+<span class="font-code-data text-code-data text-error uppercase">CRITICAL: Low Moisture</span>
+</div>
+<div class="space-y-stack-sm mt-stack-md">
+<div>
+<div class="flex justify-between font-code-data text-label-caps text-outline mb-unit">
+<span>GROWTH RATE</span>
+<span class="text-error">18%</span>
+</div>
+<div class="h-2 bg-surface-dim relative border border-outline/20">
+<div class="absolute top-0 left-0 h-full bg-error" style="width: 18%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-gutter pt-stack-sm border-t border-error-container/40 border-dashed">
+<div>
+<span class="block font-label-caps text-label-caps text-outline mb-1">TOXICITY</span>
+<span class="font-code-data text-code-data text-on-surface">0.4 µSv/h</span>
+</div>
+<div>
+<span class="block font-label-caps text-label-caps text-outline mb-1">YIELD EST.</span>
+<span class="font-code-data text-code-data text-error">HALTED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bed 04 -->
+<div class="bg-surface-dim border border-outline/30 p-gutter panel-glow relative border-dashed flex flex-col justify-center items-center min-h-[200px] opacity-70">
+<div class="absolute top-0 right-0 border-b border-l border-outline/30 px-2 py-1">
+<span class="font-code-data text-label-caps text-outline">BED-04</span>
+</div>
+<span class="material-symbols-outlined text-outline text-4xl mb-unit" data-icon="yard">yard</span>
+<h3 class="font-subheading text-body-lg text-outline uppercase mb-unit">EMPTY</h3>
+<span class="font-code-data text-code-data text-on-surface-variant uppercase">READY FOR SEEDING</span>
+</div>
+</div>
+</section>
+<!-- Sidebar Controls Zone -->
+<section class="xl:col-span-4 flex flex-col gap-stack-md">
+<!-- Environmental Controls -->
+<div class="bg-surface-container-high border border-tactical-teal/30 p-gutter panel-glow">
+<div class="flex items-center gap-unit border-b border-tactical-teal/30 pb-unit mb-stack-sm">
+<span class="material-symbols-outlined text-biolume-cyan" data-icon="thermostat">thermostat</span>
+<h2 class="font-subheading text-subheading text-on-surface uppercase m-0">ENV CONTROLS</h2>
+</div>
+<div class="space-y-stack-sm">
+<!-- UV Lamps -->
+<div class="flex items-center justify-between border border-tactical-teal/20 bg-surface-dim p-2">
+<div class="flex items-center gap-unit">
+<span class="material-symbols-outlined text-outline" data-icon="lightbulb">lightbulb</span>
+<span class="font-code-data text-code-data uppercase">UV Grow Lamps</span>
+</div>
+<div class="flex items-center gap-gutter">
+<span class="font-code-data text-label-caps text-biolume-cyan">75%</span>
+<span class="bg-tactical-teal text-on-primary font-label-caps text-label-caps px-2 py-0.5">ON</span>
+</div>
+</div>
+<!-- H2O Flow -->
+<div class="flex items-center justify-between border border-tactical-teal/20 bg-surface-dim p-2">
+<div class="flex items-center gap-unit">
+<span class="material-symbols-outlined text-outline" data-icon="water_drop">water_drop</span>
+<span class="font-code-data text-code-data uppercase">H2O Flow Reg</span>
+</div>
+<div class="flex items-center gap-gutter">
+<span class="font-code-data text-code-data text-on-surface">4.2 L/min</span>
+</div>
+</div>
+<!-- Nutrient Dosing -->
+<div class="flex items-center justify-between border border-tactical-teal/20 bg-surface-dim p-2">
+<div class="flex items-center gap-unit">
+<span class="material-symbols-outlined text-outline" data-icon="science">science</span>
+<span class="font-code-data text-code-data uppercase">Nutrient Dose</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-code-data text-label-caps text-outline mb-1">CAPACITY</span>
+<div class="w-20 h-1 bg-surface-container relative border border-outline/20">
+<div class="absolute top-0 right-0 h-full bg-biolume-cyan" style="width: 62%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Seed Vault & Genetic Bank -->
+<div class="bg-surface-container-high border border-tactical-teal/30 p-gutter panel-glow flex-1 flex flex-col">
+<div class="flex items-center gap-unit border-b border-tactical-teal/30 pb-unit mb-stack-sm">
+<span class="material-symbols-outlined text-biolume-cyan" data-icon="inventory_2">inventory_2</span>
+<h2 class="font-subheading text-subheading text-on-surface uppercase m-0">SEED VAULT / GEN-BANK</h2>
+</div>
+<div class="flex-1 border border-tactical-teal/20 bg-surface-dim p-2 mb-stack-sm overflow-y-auto max-h-48 relative">
+<!-- Decorative scanline inside terminal -->
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxIiBoZWlnaHQ9IjIiPgo8cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+Cjwvc3ZnPg==')] pointer-events-none"></div>
+<ul class="space-y-unit relative z-10">
+<li class="flex items-center text-outline hover:bg-tactical-teal/20 transition-colors cursor-default">
+<span class="font-code-data text-code-data mr-2 text-biolume-cyan">&gt;</span>
+<span class="font-code-data text-code-data flex-1 uppercase">Heirloom Maize</span>
+<span class="font-code-data text-label-caps">x12</span>
+</li>
+<li class="flex items-center text-outline hover:bg-tactical-teal/20 transition-colors cursor-default">
+<span class="font-code-data text-code-data mr-2 text-biolume-cyan">&gt;</span>
+<span class="font-code-data text-code-data flex-1 uppercase">Rad-Hardened Soy</span>
+<span class="font-code-data text-label-caps">x08</span>
+</li>
+<li class="flex items-center text-outline hover:bg-tactical-teal/20 transition-colors cursor-default">
+<span class="font-code-data text-code-data mr-2 text-biolume-cyan">&gt;</span>
+<span class="font-code-data text-code-data flex-1 uppercase">Medicinal Poppy</span>
+<span class="font-code-data text-label-caps">x04</span>
+</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 gap-unit">
+<button class="w-full py-2 px-4 border border-outline bg-transparent text-outline font-label-caps text-label-caps uppercase hover:bg-biolume-cyan hover:text-terminal-black hover:border-biolume-cyan transition-all text-center">HARVEST ALL</button>
+<button class="w-full py-2 px-4 border border-outline bg-transparent text-outline font-label-caps text-label-caps uppercase hover:bg-biolume-cyan hover:text-terminal-black hover:border-biolume-cyan transition-all text-center">TREAT SOIL</button>
+<button class="w-full py-2 px-4 border border-outline bg-transparent text-outline font-label-caps text-label-caps uppercase hover:bg-biolume-cyan hover:text-terminal-black hover:border-biolume-cyan transition-all text-center">EXTRACT SEEDS</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer Shell Component -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-margin-edge py-2 border-t border-tactical-teal/20 bg-terminal-black">
+<div class="font-label-caps text-label-caps text-on-surface">STABILITY: 99.8% | ENCRYPTION: AES-256-ACT</div>
+<div class="flex items-center gap-gutter">
+<a class="font-code-data text-code-data text-on-tertiary-container hover:text-warning-orange transition-colors uppercase" href="#">SYS-REBOOT</a>
+<span class="text-tactical-teal/50">|</span>
+<a class="font-code-data text-code-data text-on-tertiary-container hover:text-warning-orange transition-colors uppercase" href="#">DIAGNOSTICS</a>
+</div>
+</footer>
+<script>
+        // Terminal text typing effect for immersion (Optional micro-interaction)
+        document.addEventListener("DOMContentLoaded", () => {
+            const listItems = document.querySelectorAll('li span.flex-1');
+            listItems.forEach((item, index) => {
+                const originalText = item.textContent;
+                item.textContent = '';
+                let i = 0;
+
+                setTimeout(() => {
+                    const typingInterval = setInterval(() => {
+                        if (i < originalText.length) {
+                            item.textContent += originalText.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typingInterval);
+                        }
+                    }, 50); // Baud rate simulation
+                }, 500 + (index * 200)); // Stagger start times
+            });
+        });
+    </script>
+</body></html>

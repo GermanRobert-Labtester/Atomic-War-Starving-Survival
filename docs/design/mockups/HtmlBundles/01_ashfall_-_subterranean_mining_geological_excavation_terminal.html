@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Subterranean Mining &amp; Geological Excavation Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "on-error": "#690005",
+                        "surface-bright": "#393939",
+                        "on-background": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "primary-fixed": "#dfe3e9",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-tertiary-container": "#9c3f00",
+                        "primary": "#eef1f7",
+                        "on-secondary": "#00363a",
+                        "on-secondary-fixed": "#002022",
+                        "surface-variant": "#353534",
+                        "outline": "#8f9194",
+                        "secondary-container": "#225054",
+                        "on-tertiary-fixed": "#351000",
+                        "background": "#131313",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "inverse-primary": "#5a5f64",
+                        "on-surface-variant": "#c5c6ca",
+                        "on-primary-fixed-variant": "#43474c",
+                        "tertiary-container": "#ffc9b0",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "tertiary": "#ffede7",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "inverse-on-surface": "#313030",
+                        "tertiary-fixed": "#ffdbcc",
+                        "secondary": "#a1cfd3",
+                        "secondary-fixed": "#bcebef",
+                        "surface-container": "#201f1f",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#562000",
+                        "surface": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "primary-container": "#d1d5db",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-highest": "#353534",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "inverse-surface": "#e5e2e1",
+                        "outline-variant": "#44474a",
+                        "on-secondary-container": "#93c0c5",
+                        "on-primary-fixed": "#171c20",
+                        "on-primary-container": "#585c61",
+                        "on-primary": "#2c3136",
+                        "surface-tint": "#c3c7cd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "12px",
+                        "container-padding": "12px",
+                        "unit": "4px",
+                        "margin-base": "16px",
+                        "gutter": "8px",
+                        "stack-tight": "4px"
+                    },
+                    "fontFamily": {
+                        "data-md": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "data-sm": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"]
+                    },
+                    "fontSize": {
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+        }
+        .bracket-border {
+            position: relative;
+        }
+        .bracket-border::before, .bracket-border::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-color: #8f9194; /* outline */
+            border-style: solid;
+        }
+        .bracket-border::before {
+            top: 0; left: 0; border-width: 1px 0 0 1px;
+        }
+        .bracket-border::after {
+            bottom: 0; right: 0; border-width: 0 1px 1px 0;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-data-md h-screen w-screen overflow-hidden relative selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Scanline Overlay -->
+<div class="absolute inset-0 scanlines pointer-events-none z-50 opacity-20"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-margin-base h-16 z-40 bg-surface dark:bg-surface border-b border-outline dark:border-outline-variant flat no shadows">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-headline-lg text-primary dark:text-primary tracking-widest">MINING_EXCAVATION_TERMINAL_v4.2</span>
+</div>
+<div class="flex items-center gap-4 hidden md:flex">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer active:opacity-70 hover:bg-surface-variant hover:text-on-surface p-2">settings_input_component</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer active:opacity-70 hover:bg-surface-variant hover:text-on-surface p-2">terminal</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer active:opacity-70 hover:bg-surface-variant hover:text-on-surface p-2">power_settings_new</span>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container dark:bg-surface-container border-r border-outline dark:border-outline-variant flat no shadows flex flex-col py-4 z-30 hidden md:flex">
+<div class="px-4 mb-6">
+<h2 class="font-headline-md text-headline-md text-primary">EXPEDITION_UNIT</h2>
+<p class="font-data-sm text-data-sm text-secondary dark:text-secondary opacity-80 uppercase">SECTOR_7_NULL_ZONE</p>
+</div>
+<div class="flex flex-col gap-1 flex-grow">
+<a class="bg-secondary-container text-on-secondary-container border-l-2 border-secondary font-bold px-4 py-3 flex items-center gap-3 font-data-sm text-data-sm uppercase tracking-tighter active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined">layers</span>
+                STRATA_VIEW
+            </a>
+<a class="text-on-surface-variant px-4 py-3 opacity-60 flex items-center gap-3 font-data-sm text-data-sm uppercase tracking-tighter hover:bg-surface-container-high transition-colors active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined">monitor_heart</span>
+                TELEMETRY
+            </a>
+<a class="text-on-surface-variant px-4 py-3 opacity-60 flex items-center gap-3 font-data-sm text-data-sm uppercase tracking-tighter hover:bg-surface-container-high transition-colors active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined">diamond</span>
+                YIELDS
+            </a>
+<a class="text-on-surface-variant px-4 py-3 opacity-60 flex items-center gap-3 font-data-sm text-data-sm uppercase tracking-tighter hover:bg-surface-container-high transition-colors active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined">settings</span>
+                SYSTEMS
+            </a>
+</div>
+<div class="px-4 mt-auto">
+<button class="w-full border border-outline px-4 py-2 text-center text-primary hover:bg-primary hover:text-surface transition-colors uppercase font-data-sm text-data-sm flex items-center justify-center gap-2">
+                 INITIATE_SCAN_
+             </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-16 md:pl-64 h-full w-full bg-surface-lowest relative">
+<!-- Atmospheric Background -->
+<div class="absolute inset-0 opacity-10 blur-sm pointer-events-none z-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8')"></div>
+<div class="h-full p-margin-base z-10 relative overflow-y-auto grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Telemetry & Health (Left) -->
+<section class="md:col-span-3 flex flex-col gap-gutter">
+<div class="border border-outline bg-surface-container-low p-container-padding flex flex-col gap-2">
+<div class="bg-secondary-container px-2 py-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">speed</span>
+<h3 class="font-headline-md text-headline-md text-on-secondary-container uppercase">Telemetry</h3>
+</div>
+<div class="flex justify-between items-center border-b border-surface-variant pb-2 mt-2">
+<span class="text-on-surface-variant font-data-sm uppercase">RPM</span>
+<span class="font-data-lg text-primary">840</span>
+</div>
+<div class="w-full h-2 bg-surface-variant mt-1 relative">
+<div class="absolute top-0 left-0 h-full w-[84%] bg-secondary"></div>
+</div>
+<div class="flex justify-between items-center border-b border-surface-variant pb-2 mt-2">
+<span class="text-on-surface-variant font-data-sm uppercase">Thermal Load</span>
+<span class="font-data-lg text-[#CC5500] drop-shadow-[0_0_4px_#CC5500]">280°C</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-variant pb-2 mt-2">
+<span class="text-on-surface-variant font-data-sm uppercase">Shaft Integrity</span>
+<span class="font-data-lg text-secondary">91%</span>
+</div>
+<div class="flex justify-between items-center pb-2 mt-2">
+<span class="text-on-surface-variant font-data-sm uppercase">Fuel Burn</span>
+<span class="font-data-lg text-primary">1.6 L/hr</span>
+</div>
+</div>
+</section>
+<!-- Strata View (Center) -->
+<section class="md:col-span-6 flex flex-col h-full border border-outline bg-surface-container-low p-container-padding relative bracket-border">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline-lg text-headline-lg text-primary uppercase flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">straight</span>
+                         Strata Profiler
+                     </h3>
+<span class="font-data-lg text-secondary">DEPTH: 142m</span>
+</div>
+<div class="flex-grow flex flex-col relative border-l-2 border-surface-variant pl-4 py-4 space-y-4">
+<!-- Strata Layers -->
+<div class="relative h-1/4 border border-outline-variant bg-surface-variant/30 flex items-center justify-center">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-widest">Basalt Layer [0-40m]</span>
+</div>
+<div class="relative h-1/4 border border-outline-variant bg-surface-variant/50 flex items-center justify-center">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-widest">Shale Deposit [40-85m]</span>
+</div>
+<div class="relative h-1/4 border border-outline-variant bg-[#1f4d51]/20 flex items-center justify-center">
+<span class="font-data-sm text-secondary uppercase tracking-widest">Irradiated Granite [85-130m]</span>
+<div class="absolute right-2 top-2 text-label-caps text-secondary bg-secondary-container px-1">RAD WARNING</div>
+</div>
+<div class="relative h-1/4 border border-outline-variant bg-surface-container flex items-center justify-center">
+<span class="font-data-sm text-primary font-bold uppercase tracking-widest">Dense Lead Vein [130m+]</span>
+</div>
+<!-- Drill Head Indicator -->
+<div class="absolute left-[-9px] bottom-[10%] flex items-center gap-2 z-10">
+<div class="w-4 h-4 bg-secondary transform rotate-45 shadow-[0_0_8px_#a1cfd3]"></div>
+<div class="h-px w-full bg-secondary absolute left-2 pointer-events-none opacity-50"></div>
+</div>
+<!-- Hazards -->
+<div class="absolute right-4 top-1/2 flex flex-col gap-2">
+<div class="border border-[#CC5500] bg-[#351000] px-2 py-1 flex items-center gap-2 animate-pulse">
+<div class="w-2 h-2 bg-[#CC5500]"></div>
+<span class="font-data-sm text-[#CC5500] uppercase">Methane 14%</span>
+</div>
+<div class="border border-outline bg-surface-variant px-2 py-1 flex items-center gap-2">
+<div class="w-2 h-2 bg-on-surface-variant"></div>
+<span class="font-data-sm text-on-surface-variant uppercase">Radon 8%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Yields & Directives (Right) -->
+<section class="md:col-span-3 flex flex-col gap-gutter justify-between h-full">
+<!-- Yields -->
+<div class="border border-outline bg-surface-container-low p-container-padding flex-grow flex flex-col">
+<div class="bg-surface-variant px-2 py-1 flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-on-surface" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<h3 class="font-headline-md text-headline-md text-on-surface uppercase">Yields</h3>
+</div>
+<ul class="flex flex-col gap-2 font-data-sm uppercase">
+<li class="flex justify-between items-center border-b border-surface-variant pb-1">
+<span class="text-on-surface-variant">Raw Lead Ore</span>
+<span class="text-primary font-bold">48 kg</span>
+</li>
+<li class="flex justify-between items-center border-b border-surface-variant pb-1">
+<span class="text-[#a1cfd3]">Radioactive Slag</span>
+<span class="text-[#a1cfd3] font-bold">12 kg</span>
+</li>
+<li class="flex justify-between items-center border-b border-surface-variant pb-1">
+<span class="text-on-surface-variant">Quartz Crystals</span>
+<span class="text-primary font-bold">6 units</span>
+</li>
+<li class="flex justify-between items-center border-b border-surface-variant pb-1">
+<span class="text-on-surface-variant">Titanium Scrap</span>
+<span class="text-primary font-bold">14 kg</span>
+</li>
+</ul>
+</div>
+<!-- Directives -->
+<div class="border border-outline bg-surface-container p-container-padding flex flex-col gap-2 mt-auto">
+<h4 class="font-label-caps text-on-surface-variant uppercase mb-1">Directives</h4>
+<button class="w-full border border-[#CC5500] text-[#CC5500] hover:bg-[#CC5500] hover:text-surface transition-colors py-2 uppercase font-data-sm tracking-widest text-left px-2 flex justify-between items-center group">
+<span>[OVERDRIVE DRILL HEAD]</span>
+<span class="opacity-0 group-hover:opacity-100 font-bold">_</span>
+</button>
+<button class="w-full border border-outline text-primary hover:bg-primary hover:text-surface transition-colors py-2 uppercase font-data-sm tracking-widest text-left px-2 flex justify-between items-center group">
+<span>[INJECT STRUCTURAL CONCRETE]</span>
+<span class="opacity-0 group-hover:opacity-100 font-bold">_</span>
+</button>
+<button class="w-full border border-outline text-primary hover:bg-primary hover:text-surface transition-colors py-2 uppercase font-data-sm tracking-widest text-left px-2 flex justify-between items-center group">
+<span>[VENT METHANE GAS POCKET]</span>
+<span class="opacity-0 group-hover:opacity-100 font-bold">_</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+</body></html>

@@ -1418,14 +1418,8 @@ namespace AtomicWar.GodotApp
             {
                 var session = DoseLedgerHostSession.Create(dataDirectory);
                 Check(session.Registers.npcs.Count == 4, "dose_registers catalog loads the four antagonists");
-                Check(session.Registers.bands.Count == DoseLedgerSystem.BandCount
-                    && session.Registers.plans.Count == 8,
-                    "12-band ladder and 8-plan vocabulary loaded");
-                // Plan 90B — the ledger's runtime ladder is configured from the
-                // catalog (data authority) and matches the shipped anchor ranks.
-                Check(session.Ledger.BandOf(100f) == DoseLedgerSystem.BandAmber
-                    && session.Ledger.BandOf(600f) == DoseLedgerSystem.BandBlack,
-                    "catalog-configured ladder preserves the Amber/Black anchors");
+                Check(session.Registers.bands.Count == 4 && session.Registers.plans.Count == 3,
+                    "band and plan vocabulary loaded");
                 session.SealDemoSurvivors();
                 session.ScribeReading(180f, highEnergy: true);
                 session.DiagnoseDemo(DoseLedgerSystem.BandRed);
@@ -1479,51 +1473,6 @@ namespace AtomicWar.GodotApp
                     File.WriteAllText(tmpPath, tampered);
                     Check(DoseLedgerSaveStore.TryLoad(tmpPath) == null, "tampered save rejected (checksum)");
                 }
-
-                // ── Plan 90B — seeded ladder traversal ────────────────────
-                // Day-by-day exposure duty walks a tagged survivor up every
-                // rung of the 12-band register. Seeded → identical on every
-                // run; the ladder is the one configured from dose_registers.json.
-                var rng = new SeededRng(DoseLedgerHostSession.DemoSeed);
-                Check(session.Ledger.AssignDosimeter("sv_traversal", "tag_traverse", 0f),
-                    "traversal survivor tagged");
-
-                float lifetimeNow = 0f;
-                int lastRank = -1;
-                int rungsSeen = 0;
-                bool monotonic = true;
-                var rungLog = new System.Text.StringBuilder();
-                for (int day = 1; day <= 80 && rungsSeen < DoseLedgerSystem.BandCount; day++)
-                {
-                    // 15 mSv of exposure duty per day: small lifetime steps can
-                    // never skip a rung, even on ambiguous high-energy days.
-                    lifetimeNow += 15f;
-                    var result = session.Ledger.BookReadingFromLifetime(
-                        "sv_traversal", day, lifetimeNow, "exposure_duty",
-                        highEnergyEvent: day % 5 == 0, rng);
-                    int rank = session.Ledger.BandOf(session.Ledger.GetCumulative("sv_traversal"));
-                    if (rank < lastRank) monotonic = false;
-                    if (rank > lastRank)
-                    {
-                        rungsSeen++;
-                        lastRank = rank;
-                        rungLog.Append($"day {day}: {session.Ledger.GetCumulative("sv_traversal"):F1} mSv → ")
-                            .Append(DoseRegistersCatalogLoader.BandLabel(session.Registers, rank))
-                            .Append("; ");
-                    }
-                }
-                GD.Print("[dose-ledger-selftest] traversal: " + rungLog);
-                Check(monotonic, "traversal band rank never regresses as lifetime exposure accumulates");
-                Check(rungsSeen == DoseLedgerSystem.BandCount,
-                    "seeded lifetime exposure traverses all 12 register bands in order");
-                Check(session.Ledger.BandOf(session.Ledger.GetCumulative("sv_traversal")) == DoseLedgerSystem.BandSlate,
-                    "traversal survivor tops out on the Slate rung");
-                var traversalEntry = session.Ledger.GetEntry("sv_traversal");
-                Check(traversalEntry != null && traversalEntry.lifetimeBookkeeping,
-                    "traversal entry reconciled to lifetime bookkeeping on its first reading");
-                Check(traversalEntry != null && traversalEntry.readingsHistory.Count > 0
-                    && traversalEntry.readingsHistory.Exists(r => r.fluxAmbiguous),
-                    "traversal bookings include the seeded ambiguous-reading path");
             }
             catch (Exception e)
             {

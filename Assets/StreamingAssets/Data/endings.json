@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "endings": [
+    {
+      "id": "ending_dawn_of_thaw",
+      "title": "The Spring of Year Two",
+      "category": "victory",
+      "tone": "hopeful",
+      "min_days_survived": 360,
+      "min_living_survivors": 12,
+      "summary": "Three hundred and sixty days beneath the permafrost. The soot-choked stratospheric clouds slowly thin, and the first meltwater drips from the observation turret.",
+      "epilogue_text": "The long dark of the Year of Ash finally breaks. Through the armored glass of the surface cupola, the survivors watch pale sunlight strike the valley for the first time in twelve months. The hydroponic trays in the greenhouse are bursting with green shoots, and the generator hums steadily on conserved fuel. The bunker did not just hold—it endured. As the heavy hydraulic airlock grinds open to the warming air, the dwellers step out into a quiet, barren world ready for the first seeds of rebuilding.",
+      "factions_alignment": "independent"
+    },
+    {
+      "id": "ending_iron_hegemony",
+      "title": "The Iron Bastion",
+      "category": "victory",
+      "tone": "militaristic",
+      "min_days_survived": 200,
+      "min_living_survivors": 8,
+      "summary": "By forging a martial pact with the Garrison and arming every dweller, the shelter establishes undisputed military dominion over the sector.",
+      "epilogue_text": "The valley belongs to the Iron Bastion. Outpost flags snap in the gale along the perimeter ridge, guarding the electrified wire and reinforced pillboxes. Raider warbands have learned to steer clear of the sector, and smaller homesteads offer tithes in exchange for garrison patrols. Inside the bunker, curfews are absolute, and every citizen knows their station and rifle serial. It is not a gentle life, but in an unforgiving wasteland, iron has proven harder than ash.",
+      "factions_alignment": "garrison"
+    },
+    {
+      "id": "ending_exodus_to_sea",
+      "title": "The Flotilla Fleet",
+      "category": "exodus",
+      "tone": "wistful",
+      "min_days_survived": 240,
+      "min_living_survivors": 6,
+      "summary": "With continental soils poisoned by heavy fallout, the survivors salvage naval diesels and join the Black Flotilla on a voyage south.",
+      "epilogue_text": "The blast doors of the shelter are welded shut from the outside. A convoy of tracked haulers transports the final crates of preserved seeds, library microfilms, and medical equipment to the coastal drydocks. Aboard the armored hulls of the Black Flotilla, the engines rumble with life. As the gray shoreline of the mainland fades into the mist, the survivors look toward open horizon and warmer equatorial waters where the sky is rumored to be blue once more.",
+      "factions_alignment": "black_flotilla"
+    },
+    {
+      "id": "ending_silent_tombs",
+      "title": "The Silent Vault",
+      "category": "tragedy",
+      "tone": "bleak",
+      "min_days_survived": 1,
+      "min_living_survivors": 0,
+      "summary": "No heartbeats remain in the lower corridors. The automated emergency circuits continue to hum in the darkness.",
+      "epilogue_text": "A meter of snow blankets the intake grates above the cliff face. Inside the holdfast, the emergency indicator lamps flicker in empty corridors. The bunk rooms are silent, the workbenches cold, and the medical ward still. Decades from now, wasteland wanderers may find the rusted access hatch and wonder who lived here and how long they fought before the quiet claimed them.",
+      "factions_alignment": "none"
+    },
+    {
+      "id": "ending_the_reckoning",
+      "title": "The Truth of the Strike",
+      "category": "transcendence",
+      "tone": "revelatory",
+      "min_days_survived": 180,
+      "min_living_survivors": 6,
+      "summary": "The tribunal uncovers the unredacted missile launch logs and broadcasts the telemetry across all shortwave bands.",
+      "epilogue_text": "The truth could no longer be contained within classified steel lockboxes. From the communications array tower, the unedited transmitter logs of the final days are broadcast on open emergency channels. Across five wasteland sectors, radio operators in raider fortresses, trading posts, and naval cutters hear the authenticated record of the automated glitch that doomed the old world. The revelations shatter pre-war dogmas and sow the seeds of a new continental accord.",
+      "factions_alignment": "verdict"
+    },
+    {
+      "id": "ending_wasteland_sanctuary",
+      "title": "The Open Haven",
+      "category": "victory",
+      "tone": "humanitarian",
+      "min_days_survived": 300,
+      "min_living_survivors": 15,
+      "summary": "By prioritizing compassion over suspicion, the bunker becomes a legendary beacon of refuge and mutual aid.",
+      "epilogue_text": "Smokestacks rise from the hillside settlement that has blossomed around the bunker entrance. What began as a fortified hole in the ground has transformed into a thriving trade nexus and sanctuary for the displaced. Children study from salvaged books in the courtyard, and the clinic treats wounded travelers without requiring armed escort. In the heart of an era defined by hunger and cruelty, humanity chose to remain human.",
+      "factions_alignment": "humanitarian"
+    },
+    {
+      "id": "ending_frozen_silence",
+      "title": "The Deep Freeze",
+      "category": "tragedy",
+      "tone": "somber",
+      "min_days_survived": 90,
+      "min_living_survivors": 1,
+      "summary": "Thermal systems fail during the black blizzards of the winter solstice, dropping shelter temperatures below survivable limits.",
+      "epilogue_text": "When the central boiler cracked, the cold crept through the conduits like spilled water. Frost spread across the bulkheads, crystalline and silent, encasing the machinery in white rime. The remaining dwellers huddled together in the generator room wrapped in blankets and insulation foam, listening to the shrieking wind outside until the shivering finally stopped.",
+      "factions_alignment": "none"
+    },
+    {
+      "id": "ending_warlord_tribute",
+      "title": "The Subjugated Hold",
+      "category": "compromise",
+      "tone": "cynical",
+      "min_days_survived": 150,
+      "min_living_survivors": 5,
+      "summary": "Survival purchased through steady payments of ammunition, fuel, and food to the marauding warlord coalitions.",
+      "epilogue_text": "Every full moon, the rumble of heavy technicals announces the collector's arrival. The heavy crane hoists wooden crates of refined copper, clean water, and ammunition up to the trucks. The warlords laugh as they inspect the manifest and throw down a few sacks of coarse meal in exchange. It is an undignified existence of tribute and submission, but the blast doors remain intact, and another month of breath is secured.",
+      "factions_alignment": "warlord"
+    }
+  ]
+}

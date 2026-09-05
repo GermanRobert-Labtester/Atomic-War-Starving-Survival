@@ -19,7 +19,7 @@ namespace Ashfall.Core.Tests.Flagship11;
 /// </summary>
 public abstract class Flagship11TestBase
 {
-    protected static string FindDataDirectory()
+    public static string FindDataDirectory()
     {
         foreach (string start in new[] { Directory.GetCurrentDirectory(), AppContext.BaseDirectory })
         {

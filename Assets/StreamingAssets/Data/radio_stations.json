@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "radio_stations": [
+    {
+      "id": "station_civil_defense",
+      "station_id": "station_civil_defense",
+      "display_name": "Central Civil Defense Radio",
+      "frequency_mhz": 88.50,
+      "owner_faction_id": "faction_civil_defense",
+      "persona_voice": "Formal, measured mid-century emergency announcer with periodic half-hour chimes.",
+      "reliability": "Official",
+      "default_state": "Normal",
+      "silence_text": "STATIC... [ Civil Defense carrier lost. Emergency tone unmonitored. ] ...STATIC",
+      "jammed_text": "STATIC... [ Heavy ionospheric flutter overriding Civil Defense frequency. ]"
+    },
+    {
+      "id": "station_garrison_overlord",
+      "station_id": "station_garrison_overlord",
+      "display_name": "Iron Garrison / Overlord Actual",
+      "frequency_mhz": 88.40,
+      "owner_faction_id": "military_remnants",
+      "persona_voice": "Barked tactical military orders, diesel generator hum, squelch tail clicks.",
+      "reliability": "Partisan",
+      "default_state": "Normal",
+      "silence_text": "STATIC... [ Garrison tactical frequency silent. No carrier active. ] ...STATIC",
+      "jammed_text": "STATIC... [ Tactical frequency jammed with pulsed tactical noise. ]"
+    },
+    {
+      "id": "station_vitrified_crater",
+      "station_id": "station_vitrified_crater",
+      "display_name": "Voice of the Vitrified Crater",
+      "frequency_mhz": 104.20,
+      "owner_faction_id": "children_of_the_crater",
+      "persona_voice": "Deep resonant liturgical chanting recorded in sealed subterranean chambers.",
+      "reliability": "Partisan",
+      "default_state": "Normal",
+      "silence_text": "STATIC... [ The sermon has ended. Pure analog vacuum hiss fills the band. ]",
+      "jammed_text": "STATIC... [ Static screams with electrical discharge from the fallout cloud. ]"
+    },
+    {
+      "id": "station_open_classroom",
+      "station_id": "station_open_classroom",
+      "display_name": "The Open Airwaves (Classroom & Lineman)",
+      "frequency_mhz": 91.30,
+      "owner_faction_id": "faction_independent_survivors",
+      "persona_voice": "Warm, patient human voices; chalk taps, tool rattles, wind in antenna masts.",
+      "reliability": "Anonymous",
+      "default_state": "Normal",
+      "silence_text": "STATIC... [ The classroom is empty. Antenna line swaying in the ash wind. ]",
+      "jammed_text": "STATIC... [ Weak pirate signal buried in thermal receiver noise. ]"
+    },
+    {
+      "id": "station_numbers_sigint",
+      "station_id": "station_numbers_sigint",
+      "display_name": "Clandestine Numbers Array",
+      "frequency_mhz": 14.487,
+      "owner_faction_id": "faction_unknown_intelligence",
+      "persona_voice": "Synthetic female voice reading 5-figure phonetic number groups, music box chimes.",
+      "reliability": "Automated",
+      "default_state": "Normal",
+      "silence_text": "STATIC... [ Clandestine carrier dead. Transmitter room RTG depleted. ] ...STATIC",
+      "jammed_text": "STATIC... [ Heterodyne whistle shifting across the shortwave band. ]"
+    },
+    {
+      "id": "station_automated_relay",
+      "station_id": "station_automated_relay",
+      "display_name": "Automated Emergency Beacon Array",
+      "frequency_mhz": 142.85,
+      "owner_faction_id": "faction_automated_infrastructure",
+      "persona_voice": "Synthetic robotic teletype synthesizer, continuous navigational carrier pings.",
+      "reliability": "Automated",
+      "default_state": "Normal",
+      "silence_text": "STATIC... [ Automated repeater shut down. Battery bank drained to zero. ]",
+      "jammed_text": "STATIC... [ Telemetry carrier mutilated by EMP surge. ]"
+    }
+  ]
+}

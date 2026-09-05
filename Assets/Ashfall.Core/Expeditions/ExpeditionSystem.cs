@@ -221,6 +221,18 @@ namespace Ashfall.Core.Expeditions
         public ScavengingTableCatalog? ScavengingCatalog { get; set; }
 
         /// <summary>
+        /// Optional predicate gating generation of unique/collectible items.
+        /// When bound, loot rolls filter out items returning false.
+        /// </summary>
+        public Func<string, bool>? IsItemGenerationAvailable { get; set; }
+
+        /// <summary>
+        /// Fired when an item is generated and committed to expedition loot.
+        /// Used by unique item registries to claim the generated unique id.
+        /// </summary>
+        public Action<string>? OnItemGenerationCommitted { get; set; }
+
+        /// <summary>
         /// Optional damaged-map authority (Plan 85). When bound, scavenging
         /// rolls carrying a map fragment token register discovery, and
         /// dispatch to unrevealed hidden installations is refused.
@@ -967,7 +979,7 @@ namespace Ashfall.Core.Expeditions
 
             if (ScavengingCatalog != null && !string.IsNullOrEmpty(tableId))
             {
-                var rollResult = ScavengingCatalog.RollLoot(tableId, rng);
+                var rollResult = ScavengingCatalog.RollLoot(tableId, rng, IsItemGenerationAvailable);
                 if (rollResult != null)
                 {
                     // Plan 85 — scavenging can surface damaged-map fragments.
@@ -990,6 +1002,7 @@ namespace Ashfall.Core.Expeditions
                         return;
                     }
 
+                    OnItemGenerationCommitted?.Invoke(rollResult.ItemId);
                     AddLoot(exp, rollResult.ItemId, itemWeight, rollResult.Quantity);
                     return;
                 }

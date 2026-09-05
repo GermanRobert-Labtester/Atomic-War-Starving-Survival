@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "defenses": [
+    {
+      "defense_id": "def_sandbag_berm",
+      "display_name": "Tiered Sandbag Embankment",
+      "defense_type": "barrier",
+      "max_hp": 250,
+      "cover_bonus": 0.40,
+      "slow_factor": 0.0,
+      "power_draw_watts": 0,
+      "required_ammo_type": "",
+      "magazine_capacity": 0,
+      "base_damage": 0.0,
+      "fire_rate_burst": 0,
+      "night_accuracy_bonus": 0.0,
+      "prevents_stealth_breach": false,
+      "build_costs": {
+        "sandbags": 4,
+        "scrap_wood": 2
+      }
+    },
+    {
+      "defense_id": "def_razorwire_obstacle",
+      "display_name": "Concertina Razorwire Entanglement",
+      "defense_type": "entanglement",
+      "max_hp": 150,
+      "cover_bonus": 0.10,
+      "slow_factor": 0.60,
+      "power_draw_watts": 0,
+      "required_ammo_type": "",
+      "magazine_capacity": 0,
+      "base_damage": 5.0,
+      "fire_rate_burst": 0,
+      "night_accuracy_bonus": 0.0,
+      "prevents_stealth_breach": false,
+      "build_costs": {
+        "scrap_metal": 3,
+        "electrical_wire": 2
+      }
+    },
+    {
+      "defense_id": "def_tripwire_flare_line",
+      "display_name": "Phosphor Flare Tripwire Perimeter",
+      "defense_type": "early_warning",
+      "max_hp": 50,
+      "cover_bonus": 0.0,
+      "slow_factor": 0.0,
+      "power_draw_watts": 0,
+      "required_ammo_type": "",
+      "magazine_capacity": 0,
+      "base_damage": 0.0,
+      "fire_rate_burst": 0,
+      "night_accuracy_bonus": 0.30,
+      "prevents_stealth_breach": true,
+      "build_costs": {
+        "flare_tripwire": 2,
+        "scrap_wood": 1
+      }
+    },
+    {
+      "defense_id": "def_sentry_turret_9mm",
+      "display_name": "Automated 9mm Ballistic Sentry",
+      "defense_type": "automated_turret",
+      "max_hp": 300,
+      "cover_bonus": 0.20,
+      "slow_factor": 0.0,
+      "power_draw_watts": 350,
+      "required_ammo_type": "ammo_9x19",
+      "magazine_capacity": 100,
+      "base_damage": 15.0,
+      "fire_rate_burst": 10,
+      "night_accuracy_bonus": 0.0,
+      "prevents_stealth_breach": false,
+      "build_costs": {
+        "scrap_metal": 6,
+        "electrical_wire": 2
+      }
+    },
+    {
+      "defense_id": "def_sentry_turret_556",
+      "display_name": "Heavy 5.56mm Rotary Emplacement",
+      "defense_type": "automated_turret",
+      "max_hp": 450,
+      "cover_bonus": 0.25,
+      "slow_factor": 0.0,
+      "power_draw_watts": 600,
+      "required_ammo_type": "ammo_556",
+      "magazine_capacity": 150,
+      "base_damage": 28.0,
+      "fire_rate_burst": 15,
+      "night_accuracy_bonus": 0.0,
+      "prevents_stealth_breach": false,
+      "build_costs": {
+        "scrap_metal": 10,
+        "electrical_wire": 4
+      }
+    },
+    {
+      "defense_id": "def_reinforced_outer_gate",
+      "display_name": "Armored Perimeter Slag Gate",
+      "defense_type": "blast_barrier",
+      "max_hp": 800,
+      "cover_bonus": 0.60,
+      "slow_factor": 0.0,
+      "power_draw_watts": 0,
+      "required_ammo_type": "",
+      "magazine_capacity": 0,
+      "base_damage": 0.0,
+      "fire_rate_burst": 0,
+      "night_accuracy_bonus": 0.0,
+      "prevents_stealth_breach": false,
+      "build_costs": {
+        "scrap_metal": 8,
+        "scrap_wood": 4
+      }
+    },
+    {
+      "defense_id": "def_heavy_barricade",
+      "display_name": "Ballistic Steel Plate Redoubt",
+      "defense_type": "barrier",
+      "max_hp": 400,
+      "cover_bonus": 0.50,
+      "slow_factor": 0.0,
+      "power_draw_watts": 0,
+      "required_ammo_type": "",
+      "magazine_capacity": 0,
+      "base_damage": 0.0,
+      "fire_rate_burst": 0,
+      "night_accuracy_bonus": 0.0,
+      "prevents_stealth_breach": false,
+      "build_costs": {
+        "scrap_metal": 5,
+        "sandbags": 3
+      }
+    },
+    {
+      "defense_id": "def_searchlight_tower",
+      "display_name": "High-Intensity Arc Searchlight",
+      "defense_type": "observation",
+      "max_hp": 200,
+      "cover_bonus": 0.10,
+      "slow_factor": 0.0,
+      "power_draw_watts": 250,
+      "required_ammo_type": "",
+      "magazine_capacity": 0,
+      "base_damage": 0.0,
+      "fire_rate_burst": 0,
+      "night_accuracy_bonus": 0.25,
+      "prevents_stealth_breach": false,
+      "build_costs": {
+        "scrap_metal": 4,
+        "electrical_wire": 3
+      }
+    }
+  ]
+}

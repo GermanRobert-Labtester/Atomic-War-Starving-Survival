@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Terminal - Chemical Synthesis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#ffc9b0",
+                        "surface-container-low": "#1c1b1b",
+                        "error-container": "#93000a",
+                        "on-secondary": "#00363a",
+                        "on-primary": "#2c3136",
+                        "surface-bright": "#393939",
+                        "on-primary-container": "#585c61",
+                        "surface": "#131313",
+                        "on-surface-variant": "#c5c6ca",
+                        "on-primary-fixed": "#171c20",
+                        "on-tertiary": "#562000",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "outline-variant": "#44474a",
+                        "on-primary-fixed-variant": "#43474c",
+                        "background": "#131313",
+                        "surface-container-highest": "#353534",
+                        "on-background": "#e5e2e1",
+                        "surface-container": "#201f1f",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "tertiary-fixed": "#ffdbcc",
+                        "tertiary": "#ffede7",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed": "#dfe3e9",
+                        "on-surface": "#e5e2e1",
+                        "outline": "#8f9194",
+                        "secondary": "#a1cfd3",
+                        "inverse-primary": "#5a5f64",
+                        "surface-tint": "#c3c7cd",
+                        "error": "#ffb4ab",
+                        "primary-container": "#d1d5db",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#9c3f00",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#bcebef",
+                        "secondary-container": "#225054",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "on-secondary-fixed": "#002022",
+                        "on-secondary-container": "#93c0c5",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "primary": "#eef1f7",
+                        "surface-variant": "#353534",
+                        "inverse-on-surface": "#313030",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#351000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-tight": "4px",
+                        "stack-md": "12px",
+                        "margin-base": "16px",
+                        "unit": "4px",
+                        "gutter": "8px",
+                        "container-padding": "12px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-md": ["JetBrains Mono"],
+                        "data-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            background-image: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(255, 255, 255, 0.03) 1px,
+                rgba(255, 255, 255, 0.03) 2px
+            );
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.98; }
+            50% { opacity: 0.95; }
+            100% { opacity: 1; }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 4px currentColor;
+        }
+
+        .box-glow {
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* Custom Scrollbar for Terminal */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface');
+            border-left: 1px solid theme('colors.outline-variant');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.outline');
+            border: 1px solid theme('colors.surface');
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.primary');
+        }
+    </style>
+</head>
+<body class="font-data-md text-data-md antialiased overflow-x-hidden selection:bg-primary selection:text-surface">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface text-primary dark:text-primary-fixed-dim font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg flex justify-between items-center w-full px-margin-base py-unit border-b border-outline-variant docked full-width top-0 z-50">
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-3xl" data-icon="science">science</span>
+<span class="font-headline-lg text-headline-lg text-primary tracking-widest text-glow">ASHFALL TERMINAL v4.0.2</span>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="p-2 hover:bg-primary-container hover:text-on-primary-container transition-transform active:scale-95 text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings_ethernet">settings_ethernet</span>
+</button>
+<button class="p-2 hover:bg-primary-container hover:text-on-primary-container transition-transform active:scale-95 text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<button class="p-2 hover:bg-primary-container hover:text-on-primary-container transition-transform active:scale-95 text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="power_settings_new">power_settings_new</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-margin-base gap-gutter bg-surface-container-low dark:bg-surface-container-low text-tertiary dark:text-tertiary font-body-md text-body-md border-r border-outline-variant docked left-0 h-screen w-64 flex-shrink-0">
+<div class="px-container-padding mb-gutter flex items-center gap-gutter border-b border-outline-variant pb-gutter">
+<span class="material-symbols-outlined text-4xl" data-icon="fingerprint">fingerprint</span>
+<div>
+<h2 class="font-headline-lg text-primary text-glow m-0 leading-none">SECTOR 07</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant m-0 mt-unit">SYSTEM: ONLINE</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-unit px-unit">
+<a class="flex items-center gap-gutter px-container-padding py-stack-md text-on-surface-variant opacity-70 hover:bg-surface-variant hover:text-on-surface-variant transition-colors border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span>Roster</span>
+</a>
+<a class="flex items-center gap-gutter px-container-padding py-stack-md bg-tertiary-container text-on-tertiary-container border-l-4 border-tertiary active:ring-1 active:ring-tertiary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="backpack">backpack</span>
+<span class="font-bold text-glow">Inventory</span>
+</a>
+<a class="flex items-center gap-gutter px-container-padding py-stack-md text-on-surface-variant opacity-70 hover:bg-surface-variant hover:text-on-surface-variant transition-colors border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span>Skill Tree</span>
+</a>
+<a class="flex items-center gap-gutter px-container-padding py-stack-md text-on-surface-variant opacity-70 hover:bg-surface-variant hover:text-on-surface-variant transition-colors border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Logs</span>
+</a>
+</div>
+<div class="mt-auto px-unit flex flex-col gap-unit border-t border-outline-variant pt-gutter">
+<a class="flex items-center gap-gutter px-container-padding py-stack-md text-on-surface-variant opacity-70 hover:bg-surface-variant hover:text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
+<span>Diagnostics</span>
+</a>
+<a class="flex items-center gap-gutter px-container-padding py-stack-md text-on-surface-variant opacity-70 hover:bg-surface-variant hover:text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+<div class="px-container-padding mt-gutter">
+<button class="w-full border border-primary text-primary py-stack-tight hover:bg-primary hover:text-surface transition-colors font-label-caps text-label-caps flex justify-center items-center gap-unit">
+                    SYNC DATA <span class="animate-pulse">_</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 p-margin-base overflow-y-auto crt-flicker flex flex-col gap-margin-base">
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Main Workbench Section -->
+<section class="lg:col-span-8 border border-outline-variant bg-surface-container-lowest p-container-padding flex flex-col">
+<header class="bg-secondary-container p-stack-tight border-b border-outline-variant mb-stack-md flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-secondary m-0 tracking-wider">DISTILLATION &amp; SYNTHESIS WORKBENCH</h2>
+<span class="material-symbols-outlined text-secondary" data-icon="precision_manufacturing">precision_manufacturing</span>
+</header>
+<div class="flex-1 flex flex-col md:flex-row gap-gutter">
+<!-- Process List -->
+<div class="flex-1 flex flex-col gap-gutter">
+<!-- Rad-Away -->
+<div class="border border-outline p-stack-md bg-surface-container flex flex-col gap-stack-tight relative">
+<div class="absolute top-0 right-0 p-unit bg-surface text-secondary font-label-caps text-label-caps border-l border-b border-outline">PRIORITY 1</div>
+<h3 class="font-data-lg text-data-lg text-primary m-0">RAD-AWAY CHELATION SERUM</h3>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant">
+<span>Reaction Temp: <span class="text-error">78°C</span></span>
+<span>Purity: <span class="text-secondary">91%</span></span>
+</div>
+<div class="mt-unit w-full h-4 border border-outline bg-surface">
+<div class="h-full bg-secondary-fixed w-[64%] flex items-center pl-unit font-label-caps text-label-caps text-surface">64% [||||||....]</div>
+</div>
+</div>
+<!-- Penicillin -->
+<div class="border border-outline-variant p-stack-md bg-surface-container-low flex flex-col gap-stack-tight">
+<h3 class="font-data-md text-data-md text-primary-fixed-dim m-0">PENICILLIN MOLD BIO-CULTURE BROTH</h3>
+<div class="flex items-center gap-unit text-secondary font-label-caps text-label-caps">
+<div class="w-2 h-2 bg-secondary box-glow"></div>
+<span>STATUS: INCUBATING</span>
+</div>
+</div>
+<!-- Morphine -->
+<div class="border border-outline-variant p-stack-md bg-surface-container-low flex flex-col gap-stack-tight">
+<h3 class="font-data-md text-data-md text-primary-fixed-dim m-0">SYNTHETIC MORPHINE DISTILLATE</h3>
+<div class="flex items-center gap-unit text-tertiary font-label-caps text-label-caps">
+<div class="w-2 h-2 bg-tertiary animate-pulse box-glow"></div>
+<span>STATUS: PURIFYING</span>
+</div>
+</div>
+</div>
+<!-- Schematic Graphic -->
+<div class="md:w-1/3 border border-outline border-dashed p-stack-md flex flex-col items-center justify-center bg-[#0a1215] relative min-h-[200px]">
+<span class="font-label-caps text-label-caps text-secondary-fixed opacity-50 absolute top-stack-tight left-stack-tight">SCHEMATIC_VIEW</span>
+<!-- SVG Placeholder for Chemical Apparatus -->
+<svg class="w-full h-full text-secondary-fixed opacity-80" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 100 100">
+<!-- Beaker -->
+<path d="M40 20 L40 60 C30 70 30 80 40 90 L60 90 C70 80 70 70 60 60 L60 20 Z" stroke-dasharray="2 2"></path>
+<line x1="30" x2="70" y1="20" y2="20"></line>
+<!-- Liquid Level -->
+<path d="M35 75 Q50 80 65 75" fill="currentColor" fill-opacity="0.2" stroke="currentColor"></path>
+<!-- Bubbles -->
+<circle cx="45" cy="85" fill="currentColor" r="2"></circle>
+<circle cx="55" cy="80" fill="currentColor" r="1.5"></circle>
+<circle cx="50" cy="70" fill="currentColor" r="1"></circle>
+<!-- Tubing -->
+<path d="M60 40 L80 40 L80 10 L90 10" stroke-dasharray="1 1"></path>
+<!-- Labels -->
+<text fill="currentColor" font-family="monospace" font-size="4" x="10" y="50">FLOW_RATE</text>
+<text fill="currentColor" font-family="monospace" font-size="4" x="10" y="55">0.8ml/s</text>
+</svg>
+</div>
+</div>
+</section>
+<!-- Inventory & Safety Column -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Inventory Panel -->
+<section class="border border-outline-variant bg-surface-container-lowest p-container-padding flex-1 flex flex-col">
+<header class="bg-surface-container p-stack-tight border-b border-outline-variant mb-stack-md">
+<h2 class="font-headline-md text-headline-md text-on-surface m-0 tracking-wider">RAW CHEMICAL REAGENT INVENTORY</h2>
+</header>
+<div class="flex-1 overflow-y-auto">
+<table class="w-full text-left font-data-sm text-data-sm text-on-surface-variant border-collapse">
+<thead>
+<tr class="border-b border-outline-variant text-primary-fixed-dim">
+<th class="py-unit font-normal">REAGENT</th>
+<th class="py-unit text-right font-normal">QTY</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-variant/50 transition-colors">
+<td class="py-unit">Potassium Iodide Crystals</td>
+<td class="py-unit text-right font-data-md text-primary">450g</td>
+</tr>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-variant/50 transition-colors">
+<td class="py-unit">Medical Ethanol</td>
+<td class="py-unit text-right font-data-md text-primary">2.4L</td>
+</tr>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-variant/50 transition-colors">
+<td class="py-unit">Activated Carbon Powder</td>
+<td class="py-unit text-right font-data-md text-primary">800g</td>
+</tr>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-variant/50 transition-colors">
+<td class="py-unit text-error-container">Sulfuric Acid [HAZ]</td>
+<td class="py-unit text-right font-data-md text-primary">500mL</td>
+</tr>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-variant/50 transition-colors">
+<td class="py-unit">Sterile Distilled Water</td>
+<td class="py-unit text-right font-data-md text-primary">18L</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Safety Panel -->
+<section class="border border-outline p-container-padding bg-[#0d1f11] flex flex-col relative overflow-hidden">
+<!-- Toxic Green Scanline specific to this panel -->
+<div class="absolute inset-0 pointer-events-none opacity-20 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,#4ade80_2px,#4ade80_4px)]"></div>
+<header class="border-b border-[#4ade80]/50 mb-stack-md flex items-center justify-between z-10">
+<h2 class="font-headline-md text-headline-md text-[#4ade80] m-0 tracking-wider text-glow">HAZARDOUS FUME SCRUBBER</h2>
+<span class="material-symbols-outlined text-[#4ade80]" data-icon="warning">warning</span>
+</header>
+<div class="flex flex-col gap-unit z-10 font-data-sm text-data-sm">
+<div class="flex justify-between items-center border-b border-[#4ade80]/20 pb-unit">
+<span class="text-[#86efac]">Fume Hood Ventilation</span>
+<span class="text-[#4ade80] font-data-md text-glow">1.4 m/s (NOMINAL)</span>
+</div>
+<div class="flex justify-between items-center border-b border-[#4ade80]/20 pb-unit">
+<span class="text-[#86efac]">Chemical Leak Sensor</span>
+<span class="text-[#4ade80] font-data-md flex items-center gap-unit text-glow">
+<div class="w-2 h-2 bg-[#4ade80] rounded-full"></div>
+                                    ZERO DETECTED
+                                </span>
+</div>
+<div class="flex justify-between items-center pt-unit">
+<span class="text-[#86efac]">Contamination Bio-Rating</span>
+<span class="text-[#4ade80] font-label-caps border border-[#4ade80] px-unit py-[2px]">GRADE 2 CLEANROOM</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Directives/Actions -->
+<section class="border border-outline-variant p-container-padding bg-surface-container-lowest mt-auto">
+<header class="mb-stack-md">
+<h2 class="font-headline-md text-headline-md text-on-surface m-0 tracking-wider">OPERATIONAL DIRECTIVES</h2>
+</header>
+<div class="flex flex-wrap gap-gutter">
+<button class="flex-1 min-w-[250px] border border-outline px-container-padding py-stack-md text-primary font-data-md text-left hover:bg-primary hover:text-surface transition-colors flex justify-between items-center group">
+<span>[ BEGIN CHELATION SERUM SYNTHESIS ]</span>
+<span class="opacity-0 group-hover:opacity-100 animate-pulse">_</span>
+</button>
+<button class="flex-1 min-w-[250px] border border-outline px-container-padding py-stack-md text-primary font-data-md text-left hover:bg-primary hover:text-surface transition-colors flex justify-between items-center group">
+<span>[ EXTRACT PENICILLIUM ISOLATE ]</span>
+<span class="opacity-0 group-hover:opacity-100 animate-pulse">_</span>
+</button>
+<button class="flex-1 min-w-[250px] border border-outline px-container-padding py-stack-md text-primary font-data-md text-left hover:bg-primary hover:text-surface transition-colors flex justify-between items-center group">
+<span>[ STERILIZE GLASSWARE APPARATUS ]</span>
+<span class="opacity-0 group-hover:opacity-100 animate-pulse">_</span>
+</button>
+</div>
+</section>
+</main>
+</div>
+</body></html>

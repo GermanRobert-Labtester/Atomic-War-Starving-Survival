@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UAV TERMINAL 09-AF - Ashfall</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "surface-container-high": "#2a2a2a",
+                        "on-error": "#690005",
+                        "on-surface": "#e5e2e1",
+                        "on-primary": "#00363a",
+                        "surface-bright": "#393939",
+                        "on-primary-container": "#a2d0d4",
+                        "on-tertiary-container": "#ffbc41",
+                        "on-error-container": "#ffdad6",
+                        "secondary-container": "#494949",
+                        "primary-container": "#2d5a5e",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#474747",
+                        "secondary-fixed-dim": "#c8c6c6",
+                        "on-primary-fixed": "#002022",
+                        "on-secondary-container": "#b9b8b8",
+                        "inverse-on-surface": "#313030",
+                        "tertiary": "#ffba38",
+                        "tertiary-container": "#704d00",
+                        "inverse-primary": "#396569",
+                        "on-secondary": "#303030",
+                        "on-tertiary-fixed": "#281900",
+                        "on-surface-variant": "#c0c8c9",
+                        "surface-container": "#201f1f",
+                        "primary-fixed": "#bcebef",
+                        "on-background": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "outline": "#8a9293",
+                        "on-tertiary-fixed-variant": "#604100",
+                        "secondary": "#c8c6c6",
+                        "background": "#131313",
+                        "on-tertiary": "#432c00",
+                        "surface-container-low": "#1c1b1b",
+                        "outline-variant": "#404849",
+                        "surface-variant": "#353534",
+                        "surface-tint": "#a1cfd3",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-fixed": "#ffdeac",
+                        "surface": "#131313",
+                        "secondary-fixed": "#e4e2e2",
+                        "surface-dim": "#131313",
+                        "inverse-surface": "#e5e2e1",
+                        "error-container": "#93000a",
+                        "primary": "#a1cfd3",
+                        "tertiary-fixed-dim": "#ffba38",
+                        "primary-fixed-dim": "#a1cfd3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "terminal-padding": "8px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-mobile": "12px",
+                        "margin-desktop": "24px"
+                    },
+                    "fontFamily": {
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "telemetry-bold": ["JetBrains Mono"],
+                        "telemetry-md": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "headline-md": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "telemetry-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "telemetry-bold": ["16px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "telemetry-md": ["14px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "60px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .hud-border {
+            border: 1px solid rgba(45, 90, 94, 0.3);
+        }
+        .hud-border-active {
+            border: 1px solid rgba(161, 207, 211, 0.6);
+            box-shadow: 0 0 4px rgba(161, 207, 211, 0.5);
+        }
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .glitch-hover:hover {
+            animation: glitch 0.2s linear infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 1px) }
+            40% { transform: translate(-1px, -1px) }
+            60% { transform: translate(2px, 1px) }
+            80% { transform: translate(1px, -1px) }
+            100% { transform: translate(0) }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden flex flex-col font-telemetry-md selection:bg-primary-container selection:text-primary">
+<!-- Global Scanline Overlay -->
+<div class="scanlines absolute inset-0 z-[100]"></div>
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-container-lowest border-b border-primary/30 bg-surface-container-lowest/80 backdrop-blur-md docked full-width top-0 flex justify-between items-center px-gutter w-full h-12 z-50">
+<div class="font-headline-md text-headline-md text-primary tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">flight_takeoff</span>
+            UAV TERMINAL 09-AF
+        </div>
+<div class="hidden search-bar"></div>
+<div class="flex items-center gap-4 text-primary">
+<span class="material-symbols-outlined hover:bg-primary/10 hover:text-primary transition-all duration-150 active:scale-95 cursor-pointer">signal_cellular_alt</span>
+<span class="material-symbols-outlined hover:bg-primary/10 hover:text-primary transition-all duration-150 active:scale-95 cursor-pointer">battery_charging_full</span>
+<span class="material-symbols-outlined hover:bg-primary/10 hover:text-primary transition-all duration-150 active:scale-95 cursor-pointer">timer</span>
+</div>
+</header>
+<div class="flex flex-1 h-[calc(100vh-3rem)] overflow-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-surface-container-low dark:bg-surface-container-low border-r border-primary/20 bg-surface-container-low/90 backdrop-blur-lg docked left-0 h-full w-64 fixed left-0 top-12 bottom-0 z-40 flex-col justify-between">
+<div>
+<div class="p-gutter border-b border-primary/20 hud-border">
+<h2 class="font-headline-sm text-headline-sm text-primary tracking-wide">RECON_SYS</h2>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">V_2.0.4-ASH</p>
+<div class="mt-2 text-xs text-primary/70">ID: Tactical Unit ID</div>
+</div>
+<div class="flex flex-col py-2">
+<a class="flex items-center gap-4 bg-primary-container text-on-primary-container border-r-2 border-primary py-3 px-4 active:scale-98 hover:brightness-110" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">videocam</span>
+<span class="font-label-caps text-label-caps uppercase">Feed</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:text-on-surface py-3 px-4 hover:bg-surface-container-high transition-colors active:scale-98 hover:brightness-110" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-label-caps text-label-caps uppercase">Telemetry</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:text-on-surface py-3 px-4 hover:bg-surface-container-high transition-colors active:scale-98 hover:brightness-110" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-label-caps text-label-caps uppercase">Intel</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:text-on-surface py-3 px-4 hover:bg-surface-container-high transition-colors active:scale-98 hover:brightness-110" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-caps text-label-caps uppercase">Logs</span>
+</a>
+</div>
+</div>
+<div class="p-4 border-t border-primary/20">
+<button class="w-full bg-error text-on-error font-telemetry-bold text-telemetry-bold py-2 px-4 uppercase glitch-hover flex items-center justify-center gap-2 mb-4">
+<span class="material-symbols-outlined">warning</span> DEPLOY_EMP
+                </button>
+<a class="flex items-center gap-4 text-on-surface-variant hover:text-on-surface py-2 px-4 hover:bg-surface-container-high transition-colors active:scale-98 hover:brightness-110" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps uppercase">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 p-gutter overflow-y-auto bg-surface-dim relative">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-unit h-full">
+<!-- Main Feed Canvas -->
+<div class="md:col-span-8 lg:col-span-9 flex flex-col gap-unit h-full">
+<div class="flex-1 bg-surface-container-highest hud-border relative overflow-hidden group">
+<!-- FLIR Placeholder Background -->
+<div class="absolute inset-0 bg-cover bg-center opacity-80 mix-blend-luminosity filter grayscale contrast-125 sepia-[.3] hue-rotate-[90deg]" data-alt="Monochrome grey and green high-altitude FLIR thermal video feed showing ruins of a concrete missile silo surrounded by snow. An intense glowing orange thermal heatmap overlays the center structure indicating a massive heat spike. The mood is tense, cold, and tactical, resembling a military drone interface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAOiXphFdYcHL1szz2hUWgabMji_zK4ZBgoacaItfCUVGh4VajQyrx7vMB2qVM9qE_1H0H6enbjDELnjDpoH1PjdCqc4MJsWAFDo1ddw3L9PQF03kc3JBDv8siKLmLZEXh4GhHq3Sd4yW42w6MHRZ0cdIKx3r9T2pWXTdLa7ntZ7KRpfrZrLwd0cmjVCUSiuJ1SLSC74zH7Qls5LS3kRQAKeZAO7qAZOhGEKeB7V3C4QAlNGtegp_9KicNB_cheMsdmJ5lHDgIVmuZd')"></div>
+<!-- Thermal Heatmap Overlay (simulated) -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-tertiary/40 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
+<!-- HUD Elements Overlays -->
+<div class="absolute inset-0 pointer-events-none p-terminal-padding flex flex-col justify-between">
+<!-- Top HUD row -->
+<div class="flex justify-between items-start text-primary font-telemetry-bold text-telemetry-bold">
+<div class="bg-surface/60 px-2 py-1 hud-border backdrop-blur-sm">REC ● 00:14:32</div>
+<div class="bg-surface/60 px-2 py-1 hud-border backdrop-blur-sm text-tertiary">THERMAL_SPIKE DETECTED</div>
+</div>
+<!-- Center Crosshair -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+<div class="w-32 h-32 border-2 border-primary/50 rounded-full relative">
+<div class="absolute top-0 left-1/2 w-0.5 h-4 bg-primary -translate-x-1/2 -translate-y-full"></div>
+<div class="absolute bottom-0 left-1/2 w-0.5 h-4 bg-primary -translate-x-1/2 translate-y-full"></div>
+<div class="absolute left-0 top-1/2 w-4 h-0.5 bg-primary -translate-x-full -translate-y-1/2"></div>
+<div class="absolute right-0 top-1/2 w-4 h-0.5 bg-primary translate-x-full -translate-y-1/2"></div>
+</div>
+<div class="absolute w-2 h-2 bg-tertiary rounded-full animate-pulse"></div>
+</div>
+<!-- Artificial Horizon (Simplified) -->
+<div class="absolute top-1/2 right-1/4 transform -translate-y-1/2 w-8 h-48 border-l-2 border-primary/40 flex flex-col justify-between items-start py-2 text-primary/70 font-telemetry-sm text-telemetry-sm pl-2">
+<span>+20</span>
+<span>+10</span>
+<span class="text-primary font-bold border-l-4 border-primary -ml-[6px] pl-2">0</span>
+<span>-10</span>
+<span>-20</span>
+</div>
+<!-- Bottom HUD row -->
+<div class="flex justify-between items-end text-primary font-telemetry-bold text-telemetry-sm uppercase">
+<div class="flex flex-col gap-1">
+<div class="bg-surface/80 px-2 py-1 hud-border backdrop-blur-sm">ALT: 420m</div>
+<div class="bg-surface/80 px-2 py-1 hud-border backdrop-blur-sm">SPD: 88 km/h</div>
+</div>
+<div class="bg-surface/80 px-2 py-1 hud-border backdrop-blur-sm">PITCH: -12 deg</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Panels -->
+<div class="md:col-span-4 lg:col-span-3 flex flex-col gap-unit h-full overflow-y-auto pr-2">
+<!-- Flight Telemetry -->
+<div class="bg-surface-container hud-border p-terminal-padding">
+<div class="flex items-center gap-2 border-b border-primary/30 pb-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">flight</span>
+<h3 class="font-label-caps text-label-caps text-primary uppercase">Flight Telemetry</h3>
+</div>
+<div class="flex flex-col gap-2 font-telemetry-sm text-telemetry-sm">
+<div class="flex justify-between">
+<span class="text-on-surface-variant">MODEL:</span>
+<span class="text-on-surface">Talon-IV</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">BATTERY:</span>
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-surface-container-highest border border-primary/30">
+<div class="h-full bg-tertiary w-[42%]"></div>
+</div>
+<span class="text-tertiary">42% (08m 14s RTH)</span>
+</div>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">SIGNAL:</span>
+<span class="text-primary">88% ENCRYPTED</span>
+</div>
+<div class="mt-2 pt-2 border-t border-primary/20">
+<div class="text-on-surface-variant mb-1">SENSOR STATUS:</div>
+<div class="grid grid-cols-2 gap-1">
+<div class="bg-surface-container-highest px-2 py-1 hud-border flex justify-between">
+<span>Thermal</span> <span class="text-primary">[ACTIVE]</span>
+</div>
+<div class="bg-surface-container-highest px-2 py-1 hud-border flex justify-between">
+<span>Gamma</span> <span class="text-tertiary">[SENSING]</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Intel Panel -->
+<div class="bg-surface-container hud-border p-terminal-padding flex-1">
+<div class="flex items-center gap-2 border-b border-primary/30 pb-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">radar</span>
+<h3 class="font-label-caps text-label-caps text-primary uppercase">Intel Panel - POI</h3>
+</div>
+<ul class="flex flex-col gap-2 font-telemetry-sm text-telemetry-sm">
+<li class="bg-surface-container-highest hud-border p-2 flex justify-between items-center border-l-2 border-l-error">
+<div>
+<span class="text-error font-bold">POI 01:</span> Raider Patrol
+                                </div>
+<span class="bg-error/20 text-error px-1">[4 SIGS]</span>
+</li>
+<li class="bg-surface-container-highest hud-border p-2 flex justify-between items-center border-l-2 border-l-tertiary">
+<div>
+<span class="text-tertiary font-bold">POI 02:</span> Fuel Tanker
+                                </div>
+</li>
+<li class="bg-surface-container-highest hud-border p-2 flex justify-between items-center border-l-2 border-l-primary">
+<div>
+<span class="text-primary font-bold">POI 03:</span> Radio Beacon
+                                </div>
+</li>
+</ul>
+</div>
+<!-- Directives -->
+<div class="bg-surface-container hud-border p-terminal-padding">
+<div class="flex items-center gap-2 border-b border-primary/30 pb-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">terminal</span>
+<h3 class="font-label-caps text-label-caps text-primary uppercase">Directives<span class="blinking-cursor">_</span></h3>
+</div>
+<div class="flex flex-col gap-2">
+<button class="bg-primary/10 border border-primary text-primary font-telemetry-md text-telemetry-md py-2 px-2 hover:bg-primary hover:text-on-primary transition-colors glitch-hover text-left">
+                                [ CAPTURE SECTOR SNAPSHOT ]
+                            </button>
+<button class="bg-tertiary/10 border border-tertiary text-tertiary font-telemetry-md text-telemetry-md py-2 px-2 hover:bg-tertiary hover:text-on-tertiary transition-colors glitch-hover text-left">
+                                [ DEPLOY EMP FLARE ]
+                            </button>
+<button class="bg-surface-container-highest border border-outline text-on-surface font-telemetry-md text-telemetry-md py-2 px-2 hover:bg-outline hover:text-surface transition-colors glitch-hover text-left">
+                                [ AUTO RETURN-TO-BASE ]
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

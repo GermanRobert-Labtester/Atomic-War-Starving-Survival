@@ -79,4 +79,139 @@ namespace Ashfall.Core.Muster
             public string prose;
         }
     }
+
+    public enum FactionTerminalOutcome
+    {
+        None = 0,
+        GarrisonAbsorbed,
+        RebuildersJoined,
+        Independent,
+        FoundryAnnexed
+    }
+
+    public sealed class EpilogueMatrixInput
+    {
+        public bool ShelterFallen { get; set; }
+        public bool WaterPlantHeld { get; set; }
+        public bool GrainSiloCaptured { get; set; }
+        public bool FuelDepotBurned { get; set; }
+        public bool MercyPattern { get; set; }
+        public bool IronPattern { get; set; }
+        public bool DiplomacyPattern { get; set; }
+        public string VerdictEndingKey { get; set; } = string.Empty;
+        public string MusterEndingKey { get; set; } = string.Empty;
+        public FactionTerminalOutcome FactionOutcome { get; set; } = FactionTerminalOutcome.None;
+    }
+
+    public static class EpilogueMatrix
+    {
+        public const string TheOpenMuster = "the_open_muster";
+        public const string TheAmnesty = "the_amnesty";
+        public const string TheCorridor = "the_corridor";
+        public const string TheBloodPrice = "the_blood_price";
+        public const string TheRateCardRevised = "the_rate_card_revised";
+        public const string TheAdministrator = "the_administrator";
+        public const string TheMeasuredTruthContested = "the_measured_truth_contested";
+        public const string TheMeasuredTruth = "the_measured_truth";
+        public const string Unwritten = "unwritten";
+        public const string VerdictSectorRecounts = "ending_verdict_the_sector_recounts";
+        public const string VerdictCountHeld = "ending_verdict_the_count_is_held";
+        public const string VerdictOfferLease = "ending_verdict_the_offer_is_a_lease";
+
+        // Faction (4)
+        public const string GarrisonAbsorbsCoalition = "ending_garrison_absorbs_coalition";
+        public const string RebuildersJoined = "ending_rebuilders_joined";
+        public const string CoalitionIndependent = "ending_coalition_independent";
+        public const string FoundryAnnexation = "ending_foundry_annexation";
+
+        // Resource (3)
+        public const string WaterPlantHeld = "ending_water_plant_held";
+        public const string GrainSiloCaptured = "ending_grain_silo_captured";
+        public const string FuelDepotBurned = "ending_fuel_depot_burned";
+
+        // Moral (3)
+        public const string MercyRoad = "ending_mercy_road";
+        public const string IronWay = "ending_iron_way";
+        public const string ListenersThread = "ending_listeners_thread";
+
+        // Compound (2)
+        public const string MercyWaterHeld = "ending_mercy_water_held";
+        public const string IronFuelAsh = "ending_iron_fuel_ash";
+
+        // Failure (1)
+        public const string ShelterFalls = "ending_shelter_falls";
+
+        public static readonly string[] AllKeys =
+        {
+            TheOpenMuster,
+            TheAmnesty,
+            TheCorridor,
+            TheBloodPrice,
+            TheRateCardRevised,
+            TheAdministrator,
+            TheMeasuredTruthContested,
+            TheMeasuredTruth,
+            Unwritten,
+            VerdictSectorRecounts,
+            VerdictCountHeld,
+            VerdictOfferLease,
+            GarrisonAbsorbsCoalition,
+            RebuildersJoined,
+            CoalitionIndependent,
+            FoundryAnnexation,
+            WaterPlantHeld,
+            GrainSiloCaptured,
+            FuelDepotBurned,
+            MercyRoad,
+            IronWay,
+            ListenersThread,
+            MercyWaterHeld,
+            IronFuelAsh,
+            ShelterFalls
+        };
+
+        public static string Evaluate(EpilogueMatrixInput? input)
+        {
+            if (input == null) return Unwritten;
+
+            // 1. Terminal Failure / Collapse
+            if (input.ShelterFallen) return ShelterFalls;
+
+            // 2. Specific Compound Endings
+            if (input.MercyPattern && input.WaterPlantHeld) return MercyWaterHeld;
+            if (input.IronPattern && input.FuelDepotBurned) return IronFuelAsh;
+
+            // 3. Verdict Specific Outcome
+            if (!string.IsNullOrEmpty(input.VerdictEndingKey)) return input.VerdictEndingKey;
+
+            // 4. Muster Specific Approach
+            if (!string.IsNullOrEmpty(input.MusterEndingKey)) return input.MusterEndingKey;
+
+            // 5. Faction Terminal Outcome
+            switch (input.FactionOutcome)
+            {
+                case FactionTerminalOutcome.GarrisonAbsorbed:
+                    return GarrisonAbsorbsCoalition;
+                case FactionTerminalOutcome.RebuildersJoined:
+                    return RebuildersJoined;
+                case FactionTerminalOutcome.Independent:
+                    return CoalitionIndependent;
+                case FactionTerminalOutcome.FoundryAnnexed:
+                    return FoundryAnnexation;
+            }
+
+            // 6. Strategic Resource Outcome
+            if (input.WaterPlantHeld) return WaterPlantHeld;
+            if (input.GrainSiloCaptured) return GrainSiloCaptured;
+            if (input.FuelDepotBurned) return FuelDepotBurned;
+
+            // 7. Moral Pattern Outcome
+            if (input.MercyPattern) return MercyRoad;
+            if (input.IronPattern) return IronWay;
+            if (input.DiplomacyPattern) return ListenersThread;
+
+            // 8. Fallback / Uninvestigated
+            return Unwritten;
+        }
+    }
 }

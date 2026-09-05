@@ -66,6 +66,8 @@ namespace Ashfall.Core.Narrative
         /// encounter. Empty = anonymous encounter. Data-linkage only; the arc
         /// resolver never reads it.</summary>
         public string npcId = string.Empty;
+        public bool isMicroLocation = false;
+        public string sourceFile = string.Empty;
 
         public List<EncounterChoiceDefinition> choices = new List<EncounterChoiceDefinition>();
 

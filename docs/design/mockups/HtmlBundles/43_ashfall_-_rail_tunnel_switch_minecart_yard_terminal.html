@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Rail Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#dfe3e3",
+                        "on-error": "#690005",
+                        "surface-variant": "#313636",
+                        "inverse-on-surface": "#2c3132",
+                        "surface-container-highest": "#313636",
+                        "on-primary": "#00363a",
+                        "secondary-fixed-dim": "#ffba38",
+                        "on-secondary": "#432c00",
+                        "on-secondary-fixed-variant": "#604100",
+                        "on-background": "#dfe3e3",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "on-surface": "#dfe3e3",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "tertiary": "#c4c7c7",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#505454",
+                        "background": "#0f1415",
+                        "tertiary-fixed-dim": "#c4c7c7",
+                        "surface-container-low": "#171c1d",
+                        "on-tertiary-fixed-variant": "#434747",
+                        "secondary": "#ffd799",
+                        "primary-container": "#2d5a5e",
+                        "on-surface-variant": "#c0c8c9",
+                        "on-primary-container": "#a2d0d4",
+                        "tertiary-fixed": "#e0e3e2",
+                        "inverse-primary": "#396569",
+                        "surface-dim": "#0f1415",
+                        "surface-bright": "#353a3a",
+                        "outline": "#8a9293",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0a0f0f",
+                        "surface-container": "#1b2021",
+                        "surface-container-high": "#262b2b",
+                        "on-tertiary-fixed": "#181c1c",
+                        "on-tertiary-container": "#c5c8c7",
+                        "on-secondary-container": "#6a4800",
+                        "surface": "#0f1415",
+                        "primary-fixed": "#bcebef",
+                        "on-primary-fixed": "#002022",
+                        "on-secondary-fixed": "#281900",
+                        "primary": "#a1cfd3",
+                        "on-tertiary": "#2d3131",
+                        "secondary-container": "#feb300",
+                        "surface-tint": "#a1cfd3",
+                        "outline-variant": "#404849",
+                        "secondary-fixed": "#ffdeac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "margin-desktop": "32px",
+                        "stack-lg": "32px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "headline-md": ["Bebas Neue"],
+                        "body-lg": ["JetBrains Mono"],
+                        "label-bold": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg": ["80px", { "lineHeight": "80px", "letterSpacing": "0.05em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0f1415; color: #dfe3e3; }
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 9999;
+            position: absolute;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(161, 207, 211, 0.1) 50%, rgba(255,255,255,0));
+            animation: scanline 8s linear infinite;
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        .glow-active { box-shadow: 0 0 8px 0px rgba(161, 207, 211, 0.4); }
+        .glow-warning { box-shadow: 0 0 8px 0px rgba(254, 179, 0, 0.4); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0f1415; }
+        ::-webkit-scrollbar-thumb { background: #313636; }
+        ::-webkit-scrollbar-thumb:hover { background: #404849; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden font-body-md text-body-md">
+<div class="scanline"></div>
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background border-b-2 border-surface-variant flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 shrink-0 z-10 relative">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary tracking-widest">RAIL_SYS_TERMINAL_V4.2</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-primary dark:text-primary hover:bg-surface-variant hover:text-secondary p-2 transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+</button>
+<button class="text-primary dark:text-primary hover:bg-surface-variant hover:text-secondary p-2 transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<button class="text-primary dark:text-primary hover:bg-surface-variant hover:text-secondary p-2 transition-colors duration-150 ease-in-out relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-secondary-container rounded-full"></span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-stack-md bg-surface-container-low dark:bg-surface-container-low border-r-2 border-surface-variant w-64 shrink-0 relative z-10">
+<div class="px-4 mb-8">
+<div class="font-headline-md text-headline-md text-primary mb-1">SECTOR_07</div>
+<div class="font-label-bold text-label-bold text-on-surface-variant mb-4">TUNNEL_ACTIVE</div>
+<div class="flex items-center gap-2 mb-6">
+<div class="w-8 h-8 bg-surface-variant rounded flex items-center justify-center text-label-bold">O1</div>
+<span class="text-label-bold">OPERATOR_01</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2 px-2">
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container border-l-4 border-secondary scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-bold text-label-bold">SCHEMATIC</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-bold text-label-bold">TELEMETRY</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="alt_route">alt_route</span>
+<span class="font-label-bold text-label-bold">SWITCH_CTRL</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-bold text-label-bold">YARD_LOGS</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+<span class="font-label-bold text-label-bold">SYSTEM</span>
+</a>
+</div>
+<div class="mt-auto px-4 flex flex-col gap-4">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-label-bold text-label-bold">DIAGNOSTICS</span>
+</a>
+<button class="w-full py-2 bg-error text-on-error font-headline-md text-headline-md border-2 border-error hover:bg-transparent hover:text-error transition-colors">
+                    EMERGENCY_STOP
+                </button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto p-gutter relative bg-background">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter max-w-7xl mx-auto">
+<!-- Schematic Panel (Track) -->
+<section class="md:col-span-8 flex flex-col gap-gutter">
+<div class="border-2 border-surface-variant bg-surface-container flex flex-col">
+<header class="bg-surface-container-high border-b-2 border-surface-variant p-2 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary m-0">SUBTERRANEAN RAIL SCHEMATIC</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">[ SCH-892 ]</span>
+</header>
+<div class="p-4 flex-1 min-h-[400px] relative flex items-center justify-center bg-[#0a0f0f] overflow-hidden">
+<!-- Abstract schematic map -->
+<div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, #313636 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, #313636 20px);"></div>
+<div class="relative w-full max-w-2xl h-64 border border-outline-variant p-4">
+<!-- Main Trunk -->
+<div class="absolute top-1/2 left-4 right-1/2 h-2 bg-primary-container -translate-y-1/2"></div>
+<!-- Junction -->
+<div class="absolute top-1/2 left-1/2 w-4 h-4 bg-secondary rounded-full -translate-x-1/2 -translate-y-1/2 glow-warning z-10 flex items-center justify-center text-background font-label-bold text-[8px]">J1</div>
+<!-- Track A -->
+<div class="absolute top-1/4 left-1/2 w-[45%] h-2 bg-surface-variant origin-left rotate-[-20deg]"></div>
+<div class="absolute top-[10%] right-4 text-label-sm text-on-surface-variant bg-surface-container-high px-1 border border-surface-variant">TRK-A: FOUNDRY</div>
+<!-- Track B (Active) -->
+<div class="absolute top-1/2 left-1/2 w-[45%] h-2 bg-primary-container origin-left -translate-y-1/2 glow-active"></div>
+<div class="absolute top-1/2 right-4 text-label-sm text-primary bg-primary-container/20 px-1 border border-primary -translate-y-1/2">TRK-B: SURFACE</div>
+<!-- Track C -->
+<div class="absolute bottom-1/4 left-1/2 w-[45%] h-2 bg-surface-variant origin-left rotate-[20deg]"></div>
+<div class="absolute bottom-[10%] right-4 text-label-sm text-on-surface-variant bg-surface-container-high px-1 border border-surface-variant">TRK-C: MAGMA</div>
+<!-- Train indicator -->
+<div class="absolute top-1/2 left-1/4 w-8 h-4 bg-secondary border border-secondary-container -translate-y-1/2 -translate-x-1/2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-on-secondary" data-icon="train">train</span>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between">
+<div class="border border-surface-variant p-2 bg-surface-container-low">
+<div class="text-label-sm text-on-surface-variant mb-1">JUNCTION STATUS</div>
+<div class="text-label-bold text-secondary">[ SW-02 : TRK-B ]</div>
+</div>
+<div class="border border-surface-variant p-2 bg-surface-container-low text-right">
+<div class="text-label-sm text-on-surface-variant mb-1">NETWORK HEALTH</div>
+<div class="text-label-bold text-primary">[ NOMINAL ]</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sidebar Modules -->
+<section class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Telemetry -->
+<div class="border-2 border-surface-variant bg-surface-container">
+<header class="bg-surface-container-high border-b-2 border-surface-variant p-2 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary m-0">HAULER TELEMETRY</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">[ TLM-03 ]</span>
+</header>
+<div class="p-4 flex flex-col gap-4 font-body-md">
+<div class="flex justify-between border-b border-dashed border-outline-variant pb-2">
+<span class="text-on-surface-variant">ASSET</span>
+<span class="text-primary font-label-bold">MINECART_TRN_03</span>
+</div>
+<div class="flex justify-between border-b border-dashed border-outline-variant pb-2">
+<span class="text-on-surface-variant">PAYLOAD</span>
+<span class="text-on-surface font-label-bold">4.2 T (IRON_SCRAP)</span>
+</div>
+<div class="flex flex-col gap-1 mt-2">
+<div class="flex justify-between">
+<span class="text-on-surface-variant text-label-sm">BATTERY_LVL</span>
+<span class="text-on-surface text-label-sm">74%</span>
+</div>
+<div class="w-full h-2 bg-surface-variant relative">
+<div class="absolute top-0 left-0 h-full bg-primary" style="width: 74%;"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1 mt-2">
+<div class="flex justify-between">
+<span class="text-on-surface-variant text-label-sm">TRAC_MTR_TEMP</span>
+<span class="text-secondary text-label-sm">68°C</span>
+</div>
+<div class="w-full h-2 bg-surface-variant relative">
+<div class="absolute top-0 left-0 h-full bg-secondary" style="width: 68%;"></div>
+</div>
+</div>
+<div class="mt-4 p-2 bg-[#0a0f0f] border border-surface-variant flex justify-between items-center">
+<span class="text-label-sm text-on-surface-variant">SONAR_RADAR</span>
+<span class="text-label-bold text-primary px-2 border border-primary bg-primary-container/20">[ CLEAR ]</span>
+</div>
+</div>
+</div>
+<!-- Command Module -->
+<div class="border-2 border-surface-variant bg-surface-container flex-1">
+<header class="bg-surface-container-high border-b-2 border-surface-variant p-2 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary m-0">CTRL_DIRECTIVES</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">[ CMD-44 ]</span>
+</header>
+<div class="p-4 flex flex-col gap-3">
+<button class="w-full py-2 px-4 border border-outline text-on-surface hover:text-secondary hover:border-secondary transition-colors text-left flex justify-between items-center group">
+<span class="font-label-bold">TOGGLE SW-01 (A/B)</span>
+<span class="text-label-sm text-on-surface-variant group-hover:text-secondary">&gt;</span>
+</button>
+<button class="w-full py-2 px-4 border-2 border-primary bg-primary-container/20 text-primary text-left flex justify-between items-center glow-active">
+<span class="font-label-bold">TOGGLE SW-02 (B/C)</span>
+<span class="text-label-sm">[ ACTIVE: B ]</span>
+</button>
+<button class="w-full py-2 px-4 border border-outline text-on-surface hover:text-secondary hover:border-secondary transition-colors text-left flex justify-between items-center group">
+<span class="font-label-bold">ENGAGE DE-ICE COILS</span>
+<span class="text-label-sm text-on-surface-variant group-hover:text-secondary">&gt;</span>
+</button>
+<div class="mt-4 pt-4 border-t border-surface-variant">
+<button class="w-full py-3 bg-primary-container text-on-primary-container font-headline-md text-headline-md border border-primary hover:bg-primary hover:text-on-primary transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+                                    DISPATCH TO FOUNDRY
+                                </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Terminal Output Footer -->
+<div class="mt-gutter max-w-7xl mx-auto border-2 border-surface-variant bg-[#0a0f0f] h-32 flex flex-col">
+<header class="bg-surface-container border-b border-surface-variant px-2 py-1 flex items-center gap-2">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary">SYS_LOG</span>
+</header>
+<div class="p-2 font-label-sm text-label-sm text-on-surface-variant overflow-y-auto flex-1 flex flex-col gap-1" id="terminal-feed">
+<div>&gt; INITIALIZING SECTOR_07 COMM LINK... <span class="text-primary">OK</span></div>
+<div>&gt; AUTHENTICATING OPERATOR_01... <span class="text-primary">OK</span></div>
+<div>&gt; SW-02 ACTUATOR REALIGNMENT CONFIRMED. PATH SET TO TRK-B.</div>
+<div>&gt; SENSOR ALERT: EXTERNAL TEMP -42C DETECTED AT PORTAL.</div>
+<div class="flex items-center gap-2">&gt; <span class="inline-block w-2 h-4 bg-primary animate-pulse"></span></div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface-container-lowest dark:bg-surface-container-lowest border-t-2 border-surface-variant z-50">
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-lg p-unit" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-sm text-label-sm">MAP</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-unit hover:text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-label-sm text-label-sm">DATA</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-unit hover:text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_hdmi">settings_input_hdmi</span>
+<span class="font-label-sm text-label-sm">SWITCH</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-unit hover:text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="font-label-sm text-label-sm">LOGS</span>
+</a>
+</nav>
+</body></html>

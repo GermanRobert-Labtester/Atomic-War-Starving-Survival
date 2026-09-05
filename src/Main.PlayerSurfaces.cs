@@ -13,7 +13,7 @@ namespace AtomicWar.GodotApp
             // Core Dashboard Panels
             PanelRegistry.ConfigureActions("status",
                 bindAction: () => { SetupSurvivors(); SetupWorld(); SetupInventory(); _statusPanel.Bind(_survivors, _world?.Weather, _powerGrid, _inventory, _simDay); },
-                openAction: () => _statusPanel.Open(GetViewport()?.GuiGetFocusOwner()),
+                openAction: () => _statusPanel.Open(),
                 closeAction: () => CloseStatusPanel());
 
             PanelRegistry.ConfigureActions("help",
@@ -119,7 +119,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("research",
                 bindAction: () => { _sharedResearch = EnsureSharedResearch(); _researchPanel.Bind(_sharedResearch); },
-                openAction: () => _researchPanel.Open(GetViewport()?.GuiGetFocusOwner()),
+                openAction: () => _researchPanel.Open(),
                 closeAction: () => CloseResearchPanel());
 
             PanelRegistry.ConfigureActions("weather_detail",
@@ -184,12 +184,12 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("inventory",
                 bindAction: () => { SetupInventory(); _inventoryOverlay.Bind(_inventory); _inventoryOverlay.RefreshView(); },
-                openAction: () => _inventoryOverlay.Open(GetViewport()?.GuiGetFocusOwner()),
+                openAction: () => _inventoryOverlay.Open(),
                 closeAction: () => CloseInventoryOverlay());
 
             PanelRegistry.ConfigureActions("crafting",
                 bindAction: () => { SetupCrafting(); SetupInventory(); _craftingPanel.Bind(_crafting, _inventory); },
-                openAction: () => _craftingPanel.Open(GetViewport()?.GuiGetFocusOwner()),
+                openAction: () => _craftingPanel.Open(),
                 closeAction: () => CloseCraftingPanel());
 
             PanelRegistry.ConfigureActions("workshop",
@@ -209,7 +209,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("medical",
                 bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); EnsureMedicalPipeline(); _medicalPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory); },
-                openAction: () => _medicalPanel.Open(GetViewport()?.GuiGetFocusOwner()),
+                openAction: () => _medicalPanel.Open(),
                 closeAction: () => CloseMedicalPanel());
 
             PanelRegistry.ConfigureActions("phase0",
@@ -474,7 +474,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _musterAtlasPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("quests_atlas",
-                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupPersonalQuests(); _questsAtlasPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _personalQuests?.System); },
+                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); _questsAtlasPanel.Bind(_core.Quests, _expansions?.CrossingQuests); },
                 openAction: () => _questsAtlasPanel.Open(),
                 closeAction: () => _questsAtlasPanel.Visible = false);
 

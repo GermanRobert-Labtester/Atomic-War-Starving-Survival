@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL_RIG_V4.2 // ASSEMBLY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ffb4ab",
+                      "surface-bright": "#393939",
+                      "tertiary": "#ffede7",
+                      "on-tertiary-fixed-variant": "#7a3000",
+                      "on-secondary": "#00363a",
+                      "surface": "#131313",
+                      "tertiary-fixed-dim": "#ffb693",
+                      "surface-dim": "#131313",
+                      "inverse-surface": "#e5e2e1",
+                      "on-primary-fixed-variant": "#43474c",
+                      "surface-tint": "#c3c7cd",
+                      "on-surface-variant": "#c5c6ca",
+                      "secondary": "#a1cfd3",
+                      "tertiary-fixed": "#ffdbcc",
+                      "warning-amber": "#CC5500",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface-container-low": "#1c1b1b",
+                      "on-tertiary-fixed": "#351000",
+                      "secondary-fixed-dim": "#a1cfd3",
+                      "on-surface": "#e5e2e1",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-fixed": "#171c20",
+                      "primary": "#eef1f7",
+                      "surface-variant": "#353534",
+                      "surface-container-highest": "#353534",
+                      "on-tertiary-container": "#9c3f00",
+                      "primary-fixed-dim": "#c3c7cd",
+                      "on-secondary-fixed": "#002022",
+                      "on-primary": "#2c3136",
+                      "on-error": "#690005",
+                      "on-secondary-container": "#93c0c5",
+                      "primary-fixed": "#dfe3e9",
+                      "secondary-fixed": "#bcebef",
+                      "surface-container": "#201f1f",
+                      "outline": "#8f9194",
+                      "background": "#131313",
+                      "on-primary-container": "#585c61",
+                      "surface-container-high": "#2a2a2a",
+                      "primary-container": "#d1d5db",
+                      "outline-variant": "#44474a",
+                      "on-tertiary": "#562000",
+                      "inverse-primary": "#5a5f64",
+                      "tertiary-container": "#ffc9b0",
+                      "ashen-grey": "#D1D5DB",
+                      "on-background": "#e5e2e1",
+                      "tactical-teal": "#2D5A5E",
+                      "on-secondary-fixed-variant": "#1f4d51",
+                      "inverse-on-surface": "#313030",
+                      "error-container": "#93000a",
+                      "secondary-container": "#225054"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "8px",
+                      "container-padding": "12px",
+                      "stack-md": "12px",
+                      "margin-base": "16px",
+                      "unit": "4px",
+                      "stack-tight": "4px"
+              },
+              "fontFamily": {
+                      "display-lg-mobile": [
+                              "Bebas Neue"
+                      ],
+                      "headline-lg": [
+                              "Bebas Neue"
+                      ],
+                      "headline-lg-mobile": [
+                              "Bebas Neue"
+                      ],
+                      "data-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "display-lg": [
+                              "Bebas Neue"
+                      ],
+                      "headline-md": [
+                              "Bebas Neue"
+                      ],
+                      "data-lg": [
+                              "JetBrains Mono"
+                      ],
+                      "data-md": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "data-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "10px",
+                              {
+                                      "lineHeight": "12px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.primary');
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Scanlines Overlay */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 9999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Industrial Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface-container-low');
+            border-left: 1px solid theme('colors.outline-variant');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.tactical-teal');
+        }
+        ::-webkit-scrollbar-corner {
+            background: theme('colors.surface-container-low');
+        }
+
+        /* Blinking Cursor */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* CRT Text Glow */
+        .crt-glow {
+            text-shadow: 0 0 2px currentColor;
+        }
+        .crt-glow-heavy {
+            text-shadow: 0 0 4px currentColor;
+        }
+
+        /* Bracket Input Focus */
+        .bracket-btn:hover {
+            color: theme('colors.surface');
+            background-color: theme('colors.primary');
+        }
+
+        .amber-btn:hover {
+            color: theme('colors.surface');
+            background-color: theme('colors.warning-amber');
+            border-color: theme('colors.warning-amber');
+        }
+
+        .red-btn:hover {
+            color: theme('colors.surface');
+            background-color: theme('colors.error');
+            border-color: theme('colors.error');
+        }
+
+        /* Wireframe Scanner Line */
+        .scanner-line {
+            width: 100%;
+            height: 2px;
+            background: theme('colors.tactical-teal');
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.5;
+            box-shadow: 0 0 10px theme('colors.tactical-teal');
+            animation: scan 4s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .data-bar-fill {
+            background-image: linear-gradient(90deg,
+                currentColor 25%,
+                transparent 25%,
+                transparent 50%,
+                currentColor 50%,
+                currentColor 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 8px 100%;
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row h-screen font-data-md">
+<!-- Mobile Top Navigation (md:hidden) -->
+<nav class="md:hidden flex justify-between items-center px-margin-base w-full h-16 bg-surface dark:bg-surface flex-shrink-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tactical-teal dark:text-tactical-teal" data-icon="build">build</span>
+<span class="font-headline-md text-headline-md text-tactical-teal dark:text-tactical-teal uppercase tracking-widest crt-glow">ASHFALL_RIG_V4.2</span>
+</div>
+<div class="flex items-center gap-4 text-primary dark:text-primary">
+<span class="font-data-sm text-data-sm crt-glow text-warning-amber">SECTOR_7_MOTOR_POOL</span>
+</div>
+</nav>
+<!-- Desktop Side Navigation (hidden md:flex) -->
+<nav class="hidden md:flex flex-col h-screen py-gutter bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant w-64 flex-shrink-0 z-40 transition-all duration-200 ease-in-out">
+<div class="px-container-padding mb-8 border-b border-outline-variant pb-4">
+<div class="text-ashen-grey font-label-caps text-label-caps mb-1">OPERATOR_ID_09</div>
+<div class="font-headline-md text-headline-md text-tactical-teal crt-glow">ASHFALL_V4.2</div>
+<div class="font-data-sm text-data-sm text-ashen-grey opacity-70">SECTOR_7_MOTOR_POOL</div>
+</div>
+<div class="flex-1 overflow-y-auto px-unit">
+<a class="flex items-center gap-3 px-container-padding py-3 mb-2 text-ashen-grey opacity-70 hover:bg-surface-container-high hover:text-primary border-l-4 border-transparent font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="garage">garage</span>
+<span>HANGAR</span>
+</a>
+<a class="flex items-center gap-3 px-container-padding py-3 mb-2 bg-tactical-teal text-surface font-bold border-l-4 border-primary font-label-caps text-label-caps crt-glow" href="#">
+<span class="material-symbols-outlined" data-icon="build" style="font-variation-settings: 'FILL' 1;">build</span>
+<span>ASSEMBLY</span>
+</a>
+<a class="flex items-center gap-3 px-container-padding py-3 mb-2 text-ashen-grey opacity-70 hover:bg-surface-container-high hover:text-primary border-l-4 border-transparent font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="security_update_good">security_update_good</span>
+<span>UPGRADES</span>
+</a>
+<a class="flex items-center gap-3 px-container-padding py-3 mb-2 text-ashen-grey opacity-70 hover:bg-surface-container-high hover:text-primary border-l-4 border-transparent font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span>TELEMETRY</span>
+</a>
+<a class="flex items-center gap-3 px-container-padding py-3 mb-2 text-ashen-grey opacity-70 hover:bg-surface-container-high hover:text-primary border-l-4 border-transparent font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span>LOGS</span>
+</a>
+</div>
+<div class="px-container-padding mt-auto pt-4 border-t border-outline-variant">
+<button class="w-full py-2 border border-tactical-teal text-tactical-teal font-data-sm text-data-sm hover:bg-tactical-teal hover:text-surface transition-colors crt-glow">
+                INITIATE_ASSEMBLY_<span class="cursor-blink">_</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col h-[calc(100vh-64px)] md:h-screen overflow-hidden bg-background relative z-10 p-gutter gap-gutter">
+<!-- Top Row: Blueprint & Telemetry -->
+<div class="flex-1 flex flex-col lg:flex-row gap-gutter overflow-hidden">
+<!-- Blueprint Area -->
+<div class="flex-[2] border border-ashen-grey bg-surface-container-lowest flex flex-col overflow-hidden relative">
+<!-- Blueprint Header -->
+<div class="h-8 bg-tactical-teal flex items-center px-container-padding justify-between flex-shrink-0">
+<span class="font-data-sm text-data-sm text-surface font-bold">VEHICLE_BLUEPRINT_SCHEMATIC</span>
+<span class="material-symbols-outlined text-surface text-[16px]" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<!-- Blueprint Canvas -->
+<div class="flex-1 relative p-margin-base overflow-hidden flex items-center justify-center">
+<!-- Scanner FX -->
+<div class="scanner-line"></div>
+<!-- Grid Background -->
+<div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(theme('colors.tactical-teal') 1px, transparent 1px), linear-gradient(90deg, theme('colors.tactical-teal') 1px, transparent 1px); background-size: 20px 20px;"></div>
+<!-- Schematic Image Placeholder -->
+<div class="relative w-full h-full max-w-3xl flex items-center justify-center z-10 border border-outline-variant/30 bg-surface/50">
+<img class="absolute inset-0 w-full h-full object-contain opacity-70 mix-blend-screen" data-alt="A highly detailed 2D side-view wireframe blueprint of a rugged, armored scavenger truck on a dark CRT terminal screen. The line art is stark white and tactical teal, showing exposed mechanical parts, spiked bull-bars, and heavy plating. The background is a dense, high-tech grid with scanlines, emphasizing a harsh, industrial brutalist aesthetic typical of a military vehicle assembly UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbyHtSZkqkrRMB9uWgXKLKuG5JDjMeTs6HjieQMwQUzZCcK4iLd30iQa_EYRqEoHK6L1xRLMdc9iPJPQNq7lgv4hqARHKOHqB6n5P11X3X_0qm2J-CznzKU29tn0BYRDanMbvIWgg9LgRrQii2M5X1LH5iGiqoIJ873aGuZMNpllucexH4WCkJGGiZyvmb_Wi5W5Tzrf1p5dbvpoWQiGeFnWzc0YZwRCyobOXltQqhqU7hbuOLGY3g0YOQ5kNLTnua5MPFgCRTg7xn"/>
+<!-- Callouts -->
+<div class="absolute top-[20%] left-[10%] flex flex-col items-start gap-1">
+<div class="w-16 h-[1px] bg-tactical-teal"></div>
+<span class="font-label-caps text-label-caps text-tactical-teal bg-surface/80 px-1 border border-tactical-teal/50 crt-glow">REINFORCED SPIKED BULL-BAR</span>
+</div>
+<div class="absolute top-[40%] right-[15%] flex flex-col items-end gap-1">
+<div class="w-24 h-[1px] bg-tactical-teal"></div>
+<span class="font-label-caps text-label-caps text-tactical-teal bg-surface/80 px-1 border border-tactical-teal/50 crt-glow">HEAVY LEAD CHASSIS PLATING</span>
+</div>
+<div class="absolute top-[10%] left-[45%] flex flex-col items-center gap-1">
+<span class="font-label-caps text-label-caps text-tactical-teal bg-surface/80 px-1 border border-tactical-teal/50 crt-glow">ROOF-MOUNTED RADIATION SNIFFER</span>
+<div class="w-[1px] h-12 bg-tactical-teal"></div>
+</div>
+<div class="absolute bottom-[20%] left-[30%] flex flex-col items-start gap-1">
+<span class="font-label-caps text-label-caps text-tactical-teal bg-surface/80 px-1 border border-tactical-teal/50 crt-glow">DUAL 40L FUEL CELLS</span>
+<div class="w-[1px] h-16 bg-tactical-teal -mt-1 ml-4 transform -rotate-45 origin-top"></div>
+</div>
+<div class="absolute bottom-[30%] right-[30%] flex flex-col items-end gap-1">
+<span class="font-label-caps text-label-caps text-warning-amber bg-surface/80 px-1 border border-warning-amber/50 crt-glow">NITRO-ETHANOL INJECTOR</span>
+<div class="w-[1px] h-16 bg-warning-amber -mt-1 mr-4 transform rotate-45 origin-top"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Telemetry Side Panel -->
+<div class="flex-1 lg:max-w-sm border border-ashen-grey bg-surface-container-lowest flex flex-col overflow-hidden">
+<div class="h-8 bg-ashen-grey flex items-center px-container-padding justify-between flex-shrink-0">
+<span class="font-data-sm text-data-sm text-surface font-bold">RIG_PERFORMANCE_TELEMETRY</span>
+<span class="material-symbols-outlined text-surface text-[16px]" data-icon="speed">speed</span>
+</div>
+<div class="p-container-padding flex-1 overflow-y-auto flex flex-col gap-stack-md">
+<!-- Stat Block -->
+<div>
+<div class="flex justify-between font-data-sm text-data-sm mb-1">
+<span class="text-ashen-grey opacity-70">TOP_SPEED</span>
+<span class="text-tactical-teal crt-glow">94 KM/H</span>
+</div>
+<div class="h-2 w-full border border-outline-variant p-[1px]">
+<div class="h-full bg-tactical-teal data-bar-fill w-[70%]"></div>
+</div>
+</div>
+<!-- Stat Block -->
+<div>
+<div class="flex justify-between font-data-sm text-data-sm mb-1">
+<span class="text-ashen-grey opacity-70">ARMOR_RATING</span>
+<span class="text-primary crt-glow">840 HP</span>
+</div>
+<div class="h-2 w-full border border-outline-variant p-[1px]">
+<div class="h-full bg-ashen-grey data-bar-fill w-[85%]"></div>
+</div>
+</div>
+<!-- Stat Block -->
+<div>
+<div class="flex justify-between font-data-sm text-data-sm mb-1">
+<span class="text-ashen-grey opacity-70">FUEL_EFFICIENCY</span>
+<span class="text-warning-amber crt-glow">12 L/100KM</span>
+</div>
+<div class="h-2 w-full border border-outline-variant p-[1px]">
+<div class="h-full bg-warning-amber data-bar-fill w-[40%]"></div>
+</div>
+</div>
+<!-- Stat Block -->
+<div>
+<div class="flex justify-between font-data-sm text-data-sm mb-1">
+<span class="text-ashen-grey opacity-70">CARGO_CAPACITY</span>
+<span class="text-primary crt-glow">450 KG</span>
+</div>
+<div class="h-2 w-full border border-outline-variant p-[1px]">
+<div class="h-full bg-ashen-grey data-bar-fill w-[60%]"></div>
+</div>
+</div>
+<!-- Stat Block -->
+<div>
+<div class="flex justify-between font-data-sm text-data-sm mb-1">
+<span class="text-ashen-grey opacity-70">RAD_SHIELDING</span>
+<span class="text-primary crt-glow">68%</span>
+</div>
+<div class="h-2 w-full border border-outline-variant p-[1px]">
+<div class="h-full bg-ashen-grey data-bar-fill w-[68%]"></div>
+</div>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-stack-md">
+<div class="font-label-caps text-label-caps text-warning-amber mb-2 crt-glow flex items-center gap-1">
+<span class="w-2 h-2 bg-warning-amber inline-block crt-glow animate-pulse"></span>
+                            DIAGNOSTIC_WARNING: ETHANOL_TANKS_LOW
+                        </div>
+<div class="font-data-sm text-data-sm text-ashen-grey opacity-60">
+                            &gt; SYS_CHECK_OK<br/>
+                            &gt; CHASSIS_INTEGRITY_NOMINAL<br/>
+                            &gt; AWAITING_OPERATOR_INPUT...
+                        </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Inventory & Controls -->
+<div class="h-1/3 min-h-[200px] flex flex-col lg:flex-row gap-gutter">
+<!-- Parts Inventory -->
+<div class="flex-[2] border border-ashen-grey bg-surface-container-lowest flex flex-col overflow-hidden">
+<div class="h-8 border-b border-ashen-grey flex items-center px-container-padding justify-between flex-shrink-0">
+<span class="font-data-sm text-data-sm text-ashen-grey font-bold">PARTS_INVENTORY_&amp;_ASSEMBLY_QUEUE</span>
+<span class="material-symbols-outlined text-ashen-grey text-[16px]" data-icon="inventory_2">inventory_2</span>
+</div>
+<div class="p-container-padding overflow-y-auto flex-1 font-data-sm text-data-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-ashen-grey opacity-50 border-b border-outline-variant">
+<th class="py-1 font-normal">PART_ID</th>
+<th class="py-1 font-normal">NOMENCLATURE</th>
+<th class="py-1 font-normal text-right">QTY</th>
+<th class="py-1 font-normal text-center">STATUS</th>
+</tr>
+</thead>
+<tbody class="text-primary">
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant cursor-pointer transition-colors">
+<td class="py-2 text-tactical-teal">PRT-001</td>
+<td class="py-2">WELDED STEEL TUBES</td>
+<td class="py-2 text-right">14</td>
+<td class="py-2 text-center"><span class="text-tactical-teal">[ READY ]</span></td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant cursor-pointer transition-colors bg-surface-variant/50 border-l-2 border-l-tactical-teal">
+<td class="py-2 text-tactical-teal">PRT-084</td>
+<td class="py-2">TRUCK ALTERNATORS</td>
+<td class="py-2 text-right">2</td>
+<td class="py-2 text-center"><span class="text-tactical-teal">[ READY ]</span></td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant cursor-pointer transition-colors">
+<td class="py-2 text-tactical-teal">PRT-112</td>
+<td class="py-2">HIGH-TREAD RUBBER TIRES</td>
+<td class="py-2 text-right">6</td>
+<td class="py-2 text-center"><span class="text-tactical-teal">[ READY ]</span></td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant cursor-pointer transition-colors opacity-50">
+<td class="py-2 text-ashen-grey">PRT-045</td>
+<td class="py-2">CERAMIC PLATING</td>
+<td class="py-2 text-right">0</td>
+<td class="py-2 text-center"><span class="text-error">[ DEPLETED ]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Control Directives -->
+<div class="flex-1 lg:max-w-sm border border-ashen-grey bg-surface-container-lowest flex flex-col p-container-padding gap-stack-md justify-center">
+<div class="font-label-caps text-label-caps text-ashen-grey mb-2 border-b border-outline-variant pb-1">CONTROL_DIRECTIVES</div>
+<button class="w-full py-3 px-4 border border-tactical-teal text-tactical-teal font-data-md text-data-md text-left bracket-btn flex justify-between items-center transition-colors">
+<span>[ INSTALL_SELECTED_UPGRADE_ ]<span class="cursor-blink">_</span></span>
+<span class="material-symbols-outlined text-[18px]" data-icon="system_update_alt">system_update_alt</span>
+</button>
+<button class="w-full py-3 px-4 border border-warning-amber text-warning-amber font-data-md text-data-md text-left amber-btn flex justify-between items-center transition-colors">
+<span>[ REFUEL_ETHANOL_TANKS_ ]</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="local_gas_station">local_gas_station</span>
+</button>
+<button class="w-full py-3 px-4 border border-error text-error font-data-md text-data-md text-left red-btn flex justify-between items-center transition-colors mt-auto">
+<span>[ STRIP_CHASSIS_FOR_SCRAP_ ]</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="delete_forever">delete_forever</span>
+</button>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL_TERMINAL_V1.04 - Trade Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#9c3f00",
+                        "surface": "#131313",
+                        "on-secondary-container": "#93c0c5",
+                        "background": "#131313",
+                        "on-tertiary": "#562000",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "on-primary-fixed": "#171c20",
+                        "surface-variant": "#353534",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "outline-variant": "#44474a",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "on-secondary": "#00363a",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary": "#a1cfd3",
+                        "primary": "#eef1f7",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "primary-container": "#d1d5db",
+                        "on-primary-container": "#585c61",
+                        "surface-tint": "#c3c7cd",
+                        "on-primary": "#2c3136",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface-container-low": "#1c1b1b",
+                        "outline": "#8f9194",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container": "#201f1f",
+                        "tertiary-container": "#ffc9b0",
+                        "secondary-container": "#225054",
+                        "secondary-fixed": "#bcebef",
+                        "primary-fixed": "#dfe3e9",
+                        "inverse-primary": "#5a5f64",
+                        "on-secondary-fixed": "#002022",
+                        "on-error": "#690005",
+                        "tertiary": "#ffede7",
+                        "on-primary-fixed-variant": "#43474c",
+                        "on-surface-variant": "#c5c6ca",
+                        "surface-bright": "#393939",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-dim": "#131313",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-on-surface": "#313030",
+                        "inverse-surface": "#e5e2e1",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "8px",
+                        "container-padding": "12px",
+                        "stack-md": "12px",
+                        "unit": "4px",
+                        "stack-tight": "4px",
+                        "margin-base": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "data-md": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"],
+                        "data-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .crt-glow {
+            text-shadow: 0 0 2px currentColor;
+        }
+        .bracket-border {
+            position: relative;
+        }
+        .bracket-border::before, .bracket-border::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-color: currentColor;
+            border-style: solid;
+        }
+        .bracket-border::before {
+            top: -1px; left: -1px;
+            border-width: 1px 0 0 1px;
+        }
+        .bracket-border::after {
+            bottom: -1px; right: -1px;
+            border-width: 0 1px 1px 0;
+        }
+        /* Custom Scrollbar for Inventory */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1c1b1b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #44474a;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8f9194;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen overflow-hidden flex flex-col font-data-md selection:bg-secondary-container selection:text-secondary">
+<!-- Global Scanlines -->
+<div class="fixed inset-0 scanlines z-50 mix-blend-overlay"></div>
+<!-- Atmospheric Background -->
+<div aria-hidden="true" class="fixed inset-0 -z-10 bg-cover bg-center opacity-20 filter grayscale contrast-125" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8');"></div>
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant bg-surface-dim flex justify-between items-center px-margin-base w-full h-16 shrink-0 z-30 relative">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-headline-lg text-primary-container dark:text-primary-container uppercase crt-glow">ASHFALL_TERMINAL_V1.04</span>
+<div class="hidden md:flex gap-4 ml-8">
+<!-- Suppressed global nav tabs as this is a focused trade view, but keeping structural space -->
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined">water_drop</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined">restaurant</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined">local_fire_department</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined">shield</span>
+</button>
+</div>
+</header>
+<!-- Main Layout Grid -->
+<main class="flex-1 overflow-hidden p-margin-base grid grid-cols-12 grid-rows-6 gap-gutter z-10 relative h-full">
+<!-- Top Left: Caravan Trader Profile (Cols 1-4, Row 1-2) -->
+<div class="col-span-12 md:col-span-4 row-span-2 bg-surface-container-low border border-outline-variant p-container-padding flex flex-col gap-unit bracket-border">
+<div class="border-b border-outline-variant pb-2 mb-2 flex justify-between items-start">
+<div>
+<h2 class="font-headline-md text-headline-md text-secondary crt-glow uppercase">VANE (IRON SYNDICATE CARAVAN)</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant">TRAVELING MERCHANT // ID: TRD-981-X</p>
+</div>
+<div class="w-12 h-12 bg-surface border border-outline-variant flex items-center justify-center relative overflow-hidden">
+<!-- Minimal Avatar representation -->
+<span class="material-symbols-outlined text-outline-variant" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-2 font-data-sm text-data-sm mb-auto">
+<div class="text-on-surface-variant">ATTITUDE</div>
+<div class="text-on-surface text-right">CAUTIOUS / FAIR</div>
+<div class="text-on-surface-variant">FACTION REP</div>
+<div class="text-secondary text-right">+15 (TOLERATED)</div>
+<div class="col-span-2 border-t border-outline-variant mt-2 pt-2 text-on-surface-variant font-label-caps text-label-caps">DEMAND MULTIPLIERS</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary"></span> WATER / RAD-AWAY
+                </div>
+<div class="text-secondary text-right crt-glow">1.8x PRICE</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-outline-variant"></span> LEAD SCRAP
+                </div>
+<div class="text-error text-right">0.6x PRICE</div>
+</div>
+</div>
+<!-- Center: Dual Trading Ledger (Cols 5-12, Row 1-4) -->
+<div class="col-span-12 md:col-span-8 row-span-4 bg-surface-container-low border border-outline-variant flex flex-col relative bracket-border">
+<!-- Ledger Headers -->
+<div class="grid grid-cols-2 border-b border-outline-variant bg-surface-container-high h-10 items-center shrink-0">
+<div class="px-container-padding font-headline-md text-headline-md text-primary flex items-center gap-2 uppercase crt-glow border-r border-outline-variant">
+<span class="material-symbols-outlined text-xl">person_pin_circle</span> SECTOR_7G OFFER
+                </div>
+<div class="px-container-padding font-headline-md text-headline-md text-secondary flex justify-end items-center gap-2 uppercase crt-glow text-right">
+                    VANE OFFER <span class="material-symbols-outlined text-xl">local_shipping</span>
+</div>
+</div>
+<!-- Ledger Content Area -->
+<div class="flex-1 grid grid-cols-2 relative overflow-hidden">
+<!-- Balance Barometer Scale (Center Divider) -->
+<div class="absolute left-1/2 top-0 bottom-0 w-8 -translate-x-1/2 flex flex-col items-center z-10 py-4 pointer-events-none">
+<div class="w-px bg-outline-variant flex-1"></div>
+<div class="w-full bg-surface border border-outline-variant py-2 flex flex-col items-center gap-1 shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+<span class="font-label-caps text-label-caps text-on-surface-variant">BAL</span>
+<!-- Status Pip -->
+<div class="w-3 h-3 bg-error animate-pulse shadow-[0_0_5px_#ffb4ab]"></div>
+<span class="font-data-md text-data-md text-error crt-glow">-14</span>
+</div>
+<div class="w-px bg-outline-variant flex-1"></div>
+</div>
+<!-- Player Offer Column (Left) -->
+<div class="border-r border-outline-variant p-container-padding flex flex-col gap-unit overflow-y-auto bg-surface-dim/50 pr-6">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2 flex justify-between border-b border-outline-variant pb-1">
+<span>ITEM</span><span>VAL (SCRAP)</span>
+</div>
+<!-- Item Row -->
+<div class="flex justify-between items-center bg-surface border border-outline-variant p-2 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container-high border border-outline-variant flex items-center justify-center group-hover:bg-primary-container group-hover:text-surface transition-colors">
+<span class="material-symbols-outlined text-sm">water_drop</span>
+</div>
+<div>
+<div class="font-data-sm text-data-sm text-primary group-hover:crt-glow">CLEAN WATER CANTEEN x3</div>
+<div class="font-label-caps text-label-caps text-secondary">DEMAND: HIGH</div>
+</div>
+</div>
+<div class="font-data-md text-data-md text-on-surface text-right">
+                            48
+                        </div>
+</div>
+<!-- Item Row -->
+<div class="flex justify-between items-center bg-surface border border-outline-variant p-2 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container-high border border-outline-variant flex items-center justify-center group-hover:bg-primary-container group-hover:text-surface transition-colors">
+<span class="material-symbols-outlined text-sm">hardware</span>
+</div>
+<div>
+<div class="font-data-sm text-data-sm text-primary group-hover:crt-glow">SCRAP METAL x12</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">WEIGHT: 6.0kg</div>
+</div>
+</div>
+<div class="font-data-md text-data-md text-on-surface text-right">
+                            12
+                        </div>
+</div>
+<!-- Item Row -->
+<div class="flex justify-between items-center bg-surface border border-outline-variant p-2 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container-high border border-outline-variant flex items-center justify-center group-hover:bg-primary-container group-hover:text-surface transition-colors relative">
+<!-- Contamination Pip -->
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-on-tertiary-container shadow-[0_0_3px_#9c3f00]"></div>
+<span class="material-symbols-outlined text-sm">battery_charging_full</span>
+</div>
+<div>
+<div class="font-data-sm text-data-sm text-primary group-hover:crt-glow">GEIGER BATTERIES x2</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">RAD: LOW</div>
+</div>
+</div>
+<div class="font-data-md text-data-md text-on-surface text-right">
+                            30
+                        </div>
+</div>
+</div>
+<!-- Merchant Offer Column (Right) -->
+<div class="p-container-padding flex flex-col gap-unit overflow-y-auto bg-surface-dim/30 pl-6">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2 flex justify-between border-b border-outline-variant pb-1">
+<span>VAL (SCRAP)</span><span>ITEM</span>
+</div>
+<!-- Item Row -->
+<div class="flex justify-between items-center bg-surface border border-outline-variant p-2 hover:border-secondary transition-colors cursor-pointer group">
+<div class="font-data-md text-data-md text-on-surface text-left">
+                            40
+                        </div>
+<div class="flex items-center gap-3 text-right">
+<div>
+<div class="font-data-sm text-data-sm text-secondary group-hover:crt-glow">HAZMAT PATCH KITS x2</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">CONDITION: MINT</div>
+</div>
+<div class="w-8 h-8 bg-surface-container-high border border-outline-variant flex items-center justify-center group-hover:bg-secondary-container group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">medical_services</span>
+</div>
+</div>
+</div>
+<!-- Item Row -->
+<div class="flex justify-between items-center bg-surface border border-outline-variant p-2 hover:border-secondary transition-colors cursor-pointer group">
+<div class="font-data-md text-data-md text-on-surface text-left">
+                            36
+                        </div>
+<div class="flex items-center gap-3 text-right">
+<div>
+<div class="font-data-sm text-data-sm text-secondary group-hover:crt-glow">POTASSIUM IODIDE x6</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">EXP: UNKNOWN</div>
+</div>
+<div class="w-8 h-8 bg-surface-container-high border border-outline-variant flex items-center justify-center group-hover:bg-secondary-container group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">medication</span>
+</div>
+</div>
+</div>
+<!-- Item Row -->
+<div class="flex justify-between items-center bg-surface border border-outline-variant p-2 hover:border-secondary transition-colors cursor-pointer group">
+<div class="font-data-md text-data-md text-on-surface text-left">
+                            28
+                        </div>
+<div class="flex items-center gap-3 text-right">
+<div>
+<div class="font-data-sm text-data-sm text-secondary group-hover:crt-glow">MIL CANNED BEEF x4</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">WEIGHT: 2.4kg</div>
+</div>
+<div class="w-8 h-8 bg-surface-container-high border border-outline-variant flex items-center justify-center group-hover:bg-secondary-container group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">restaurant</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ledger Totals Footer -->
+<div class="grid grid-cols-2 border-t border-outline-variant bg-surface-container-highest p-2 shrink-0">
+<div class="font-data-md text-data-md text-primary flex justify-between px-4 border-r border-outline-variant">
+<span>OFFER VALUE:</span> <span class="crt-glow">90</span>
+</div>
+<div class="font-data-md text-data-md text-secondary flex justify-between px-4">
+<span>ASK VALUE:</span> <span class="crt-glow">104</span>
+</div>
+</div>
+</div>
+<!-- Inventory Browsers (Bottom Left & Right - Cols 1-12, Row 5-6) -->
+<div class="col-span-12 row-span-2 grid grid-cols-2 gap-gutter">
+<!-- Shelter Storage (Left) -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col bracket-border">
+<div class="bg-[#1A1A1A] border-b border-outline-variant p-2 flex justify-between items-center shrink-0">
+<span class="font-label-caps text-label-caps text-primary">SHELTER INVENTORY [CAP: 45/100]</span>
+<span class="material-symbols-outlined text-outline-variant text-sm">filter_list</span>
+</div>
+<div class="p-2 overflow-x-auto flex gap-unit items-start h-full">
+<!-- Inventory Item Grid (Horizontal flow for demo) -->
+<div class="w-24 h-24 shrink-0 bg-surface border border-outline-variant hover:border-primary flex flex-col items-center justify-center relative cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-1">healing</span>
+<span class="font-label-caps text-label-caps text-on-surface">BANDAGE</span>
+<div class="absolute bottom-1 right-1 font-label-caps text-label-caps text-outline">x14</div>
+</div>
+<div class="w-24 h-24 shrink-0 bg-surface border border-outline-variant hover:border-primary flex flex-col items-center justify-center relative cursor-pointer group">
+<!-- Rad Warning Pip -->
+<div class="absolute top-1 right-1 w-2 h-2 bg-on-tertiary-container"></div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-1">build</span>
+<span class="font-label-caps text-label-caps text-on-surface text-center leading-tight">SCRAP<br/>ELECTRONICS</span>
+<div class="absolute bottom-1 right-1 font-label-caps text-label-caps text-outline">x5</div>
+</div>
+<div class="w-24 h-24 shrink-0 bg-surface border border-outline-variant hover:border-primary flex flex-col items-center justify-center relative cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-1">science</span>
+<span class="font-label-caps text-label-caps text-on-surface">ACID</span>
+<div class="absolute bottom-1 right-1 font-label-caps text-label-caps text-outline">x2</div>
+</div>
+</div>
+</div>
+<!-- Caravan Stash (Right) -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col bracket-border">
+<div class="bg-[#1A1A1A] border-b border-outline-variant p-2 flex justify-between items-center shrink-0">
+<span class="font-label-caps text-label-caps text-secondary">CARAVAN STASH [BROWSING]</span>
+<span class="material-symbols-outlined text-outline-variant text-sm">search</span>
+</div>
+<div class="p-2 overflow-x-auto flex gap-unit items-start h-full">
+<!-- Inventory Item Grid -->
+<div class="w-24 h-24 shrink-0 bg-surface border border-outline-variant hover:border-secondary flex flex-col items-center justify-center relative cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary mb-1">local_dining</span>
+<span class="font-label-caps text-label-caps text-on-surface">MRE PACK</span>
+<div class="absolute bottom-1 right-1 font-label-caps text-label-caps text-secondary">15s</div>
+</div>
+<div class="w-24 h-24 shrink-0 bg-surface border border-outline-variant hover:border-secondary flex flex-col items-center justify-center relative cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary mb-1">hardware</span>
+<span class="font-label-caps text-label-caps text-on-surface text-center leading-tight">WEAPON<br/>PARTS</span>
+<div class="absolute bottom-1 right-1 font-label-caps text-label-caps text-secondary">40s</div>
+</div>
+<div class="w-24 h-24 shrink-0 bg-surface border border-outline-variant hover:border-secondary flex flex-col items-center justify-center relative cursor-pointer group">
+<div class="absolute top-1 right-1 w-2 h-2 bg-on-tertiary-container animate-pulse"></div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary mb-1">warning</span>
+<span class="font-label-caps text-label-caps text-on-surface text-center leading-tight">UNKNOWN<br/>ISOTOPE</span>
+<div class="absolute bottom-1 right-1 font-label-caps text-label-caps text-secondary">???s</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Center: Trade Stance & Negotiation Buttons (Overlay/Fixed bottom area within grid) -->
+<div class="absolute bottom-margin-base left-1/2 -translate-x-1/2 flex gap-4 z-20">
+<button class="bg-surface border border-outline-variant px-6 py-3 font-data-md text-data-md text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface hover:border-primary transition-all flex items-center gap-2">
+                [ EQUAL VALUE TRADE_ ]
+            </button>
+<button class="bg-surface border border-secondary text-secondary px-6 py-3 font-data-md text-data-md hover:bg-secondary hover:text-surface transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(161,207,211,0.2)] crt-glow">
+                [ HAGGLE / PRESSURE (72% SUCCESS)_ ]
+            </button>
+<button class="bg-surface border border-error px-6 py-3 font-data-md text-data-md text-error hover:bg-error hover:text-surface transition-all flex items-center gap-2 opacity-50 cursor-not-allowed" disabled="">
+                [ OFFER DEBT LEDGER IOU_ ]
+            </button>
+<button class="bg-surface-container-highest border border-outline px-8 py-3 font-headline-md text-headline-md text-outline hover:bg-primary hover:text-surface hover:border-primary transition-all flex items-center gap-2 opacity-50 cursor-not-allowed" disabled="">
+                ACCEPT TRADE
+            </button>
+</div>
+</main>
+</body></html>

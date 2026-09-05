@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Wasteland Caravan Staging</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#eef1f7",
+                        "surface-bright": "#393939",
+                        "outline-variant": "#44474a",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-low": "#1c1b1b",
+                        "background": "#131313",
+                        "surface": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-container": "#201f1f",
+                        "on-surface-variant": "#c5c6ca",
+                        "primary-fixed": "#dfe3e9",
+                        "on-error": "#690005",
+                        "outline": "#8f9194",
+                        "inverse-primary": "#5a5f64",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "surface-tint": "#c3c7cd",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-container": "#225054",
+                        "on-primary-fixed": "#171c20",
+                        "surface-variant": "#353534",
+                        "on-primary-container": "#585c61",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "tertiary-container": "#ffc9b0",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface-container-highest": "#353534",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "surface-dim": "#131313",
+                        "on-primary-fixed-variant": "#43474c",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "primary-container": "#d1d5db",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary": "#562000",
+                        "secondary-fixed": "#bcebef",
+                        "secondary": "#a1cfd3",
+                        "on-secondary-container": "#93c0c5",
+                        "on-secondary-fixed": "#002022",
+                        "on-tertiary-fixed": "#351000",
+                        "on-primary": "#2c3136",
+                        "tertiary": "#ffede7",
+                        "on-tertiary-container": "#9c3f00",
+                        "on-secondary": "#00363a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "8px",
+                        "unit": "4px",
+                        "stack-tight": "4px",
+                        "margin-base": "16px",
+                        "stack-md": "12px",
+                        "container-padding": "12px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Bebas Neue"],
+                        "data-md": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-sm": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        .panel-border {
+            border: 1px solid theme('colors.outline-variant');
+        }
+
+        .pulse-warning {
+            animation: pulse-warning 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { color: theme('colors.on-surface-variant'); opacity: 1; }
+            50% { color: #CC5500; opacity: 0.7; }
+        }
+
+        .crt-glow {
+            text-shadow: 0 0 4px theme('colors.secondary-container');
+        }
+
+        .crt-glow-amber {
+            text-shadow: 0 0 4px #CC5500;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: theme('colors.surface-container-low'); }
+        ::-webkit-scrollbar-thumb { background: theme('colors.outline-variant'); }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline'); }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-data-md min-h-screen overflow-hidden flex flex-col relative selection:bg-secondary-container selection:text-on-surface">
+<!-- CRT Overlay -->
+<div class="fixed inset-0 scanlines z-50 mix-blend-overlay"></div>
+<!-- Top Navigation from Shared JSON -->
+<header class="flex justify-between items-center w-full px-margin-base h-16 border-b-2 border-outline-variant bg-background z-40 shrink-0">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg text-primary tracking-tighter">BUNKER_OS_V4.2</span>
+</div>
+<div class="flex items-center gap-6">
+<!-- Trailing Icon Actions -->
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded hover:bg-surface-variant group">
+<span class="material-symbols-outlined text-[24px]">emergency_home</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded hover:bg-surface-variant group">
+<span class="material-symbols-outlined text-[24px]">settings_input_component</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded hover:bg-surface-variant group">
+<span class="material-symbols-outlined text-[24px]">terminal</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden h-[calc(100vh-64px)] relative z-30">
+<!-- Side Navigation from Shared JSON -->
+<nav class="w-64 border-r-2 border-outline-variant bg-surface-container-low flex flex-col shrink-0 overflow-y-auto">
+<div class="p-4 border-b border-outline-variant">
+<div class="font-headline-md text-headline-md text-secondary crt-glow mb-1">SECTOR_7</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">STATUS: NOMINAL</div>
+</div>
+<div class="flex flex-col py-2 flex-1">
+<a class="text-on-surface-variant px-4 py-3 flex items-center gap-2 hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">potted_plant</span>
+<span class="font-label-caps text-label-caps uppercase">Hydroponics</span>
+</a>
+<a class="text-on-surface-variant px-4 py-3 flex items-center gap-2 hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">construction</span>
+<span class="font-label-caps text-label-caps uppercase">Engineering</span>
+</a>
+<a class="bg-secondary-container text-on-secondary-container border-l-4 border-secondary px-4 py-3 flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+<span class="font-label-caps text-label-caps uppercase">Caravan Logistics</span>
+</a>
+</div>
+<div class="p-4 border-t border-outline-variant mt-auto">
+<button class="w-full bg-error-container text-on-error border border-on-error hover:bg-on-error hover:text-error-container transition-colors py-2 font-label-caps text-label-caps flex items-center justify-center gap-2 group relative overflow-hidden">
+<span class="relative z-10">INITIATE_LOCKDOWN _</span>
+</button>
+</div>
+<div class="flex flex-col py-2 border-t border-outline-variant bg-surface-container-lowest">
+<a class="text-on-surface-variant px-4 py-2 flex items-center gap-2 hover:bg-surface-container-highest transition-colors opacity-70" href="#">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+<span class="font-label-caps text-label-caps uppercase">System Logs</span>
+</a>
+<a class="text-on-surface-variant px-4 py-2 flex items-center gap-2 hover:bg-surface-container-highest transition-colors opacity-70" href="#">
+<span class="material-symbols-outlined text-[16px]">biotech</span>
+<span class="font-label-caps text-label-caps uppercase">Diagnostics</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area - 3 Column Tactical Interface -->
+<main class="flex-1 p-margin-base gap-gutter grid grid-cols-1 md:grid-cols-12 overflow-y-auto bg-background">
+<!-- Left Column: Route Hazard & Weather Profiler (3 cols) -->
+<div class="md:col-span-3 flex flex-col gap-gutter h-full">
+<section class="panel-border bg-surface-container-low flex flex-col h-full overflow-hidden flex-1 relative group">
+<div class="bg-surface-bright px-3 py-2 border-b border-outline-variant flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-wide uppercase">ROUTE PROFILER</h2>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">satellite_alt</span>
+</div>
+<div class="p-3 flex flex-col gap-stack-md flex-1 overflow-y-auto">
+<!-- Route Map Segment -->
+<div class="w-full h-40 border border-outline-variant relative overflow-hidden bg-[#1A1A1A]">
+<div class="absolute inset-0 opacity-40 mix-blend-screen bg-cover bg-center" data-alt="Tactical top-down satellite map of a desolate wasteland salt flat leading to a rusty industrial smelter, high contrast, monochrome green hue, digital artifacts, military bunker aesthetic, UI grid overlay." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAw5gwRsfNmiIebYPALbeoeonPSPigg4zUgj8TohSVdaSnfphPd71uhv575k3kwPhEN9JI5XgpReg0aAFTH0goEPiPhmFJBzCQi88mCDZpIeXGC2o_Fmi0NI8XR0dIBKEp5zz2yAsTO4F-0x3luFMOc25qyPg42pFPMdnbk2Myk-ORH7gb0F4iNCAtaYWAiu2khL5TWa-so6B63mMS7XAi4ll4wOtll0NiTGXA1ewzOzizhPP2QVJdXm20Se-ezJWvEE6nYhLtMTDX6')"></div>
+<!-- Route Line Overlay (Simulated) -->
+<div class="absolute inset-0 p-4">
+<div class="w-full h-full border border-dashed border-secondary-container/50 relative">
+<div class="absolute top-2 left-2 w-3 h-3 bg-secondary rounded-full crt-glow"></div>
+<div class="absolute bottom-2 right-2 w-3 h-3 bg-[#CC5500] rounded-sm pulse-warning"></div>
+<svg class="absolute inset-0 w-full h-full pointer-events-none" style="stroke: theme('colors.secondary-container'); stroke-width: 2; fill: none; stroke-dasharray: 4;">
+<path d="M 20 20 Q 80 50, 150 120"></path>
+</svg>
+</div>
+</div>
+<div class="absolute bottom-2 left-2 font-label-caps text-label-caps bg-surface/80 px-1 border border-outline-variant text-secondary">SAT-UPLINK_SEC-4</div>
+</div>
+<!-- Route Details -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-baseline border-b border-outline-variant/30 pb-1">
+<span class="font-data-sm text-data-sm text-on-surface-variant">ORIGIN:</span>
+<span class="font-data-sm text-data-sm text-primary uppercase">Sector 4 Salt Flats</span>
+</div>
+<div class="flex justify-between items-baseline border-b border-outline-variant/30 pb-1">
+<span class="font-data-sm text-data-sm text-on-surface-variant">DEST:</span>
+<span class="font-data-sm text-data-sm text-primary uppercase text-right">Industrial Smelter</span>
+</div>
+<div class="flex justify-between items-baseline border-b border-outline-variant/30 pb-1">
+<span class="font-data-sm text-data-sm text-on-surface-variant">DURATION:</span>
+<span class="font-data-sm text-data-sm text-primary">3.5 DAYS [EST]</span>
+</div>
+</div>
+<!-- Hazards -->
+<div class="flex flex-col gap-2 mt-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest border-l-2 border-outline-variant pl-2">Environmental Hazards</div>
+<div class="flex items-center gap-3 bg-surface-container px-2 py-1.5 border border-outline-variant/50">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant pulse-warning">weather_mix</span>
+<div class="flex flex-col flex-1">
+<div class="flex justify-between">
+<span class="font-data-sm text-data-sm uppercase">Acid Rain</span>
+<span class="font-data-sm text-data-sm text-[#CC5500]">30%</span>
+</div>
+<div class="w-full h-1 bg-surface-bright mt-1">
+<div class="h-full bg-[#CC5500]" style="width: 30%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-surface-container px-2 py-1.5 border border-outline-variant/50">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">warning</span>
+<div class="flex flex-col flex-1">
+<div class="flex justify-between">
+<span class="font-data-sm text-data-sm uppercase">Raider Ambush</span>
+<span class="font-data-sm text-data-sm text-secondary">15%</span>
+</div>
+<div class="w-full h-1 bg-surface-bright mt-1 flex">
+<!-- Segmented bar simulation -->
+<div class="h-full w-full flex gap-[1px]">
+<div class="h-full bg-secondary-container flex-1"></div>
+<div class="h-full bg-secondary-container flex-1"></div>
+<div class="h-full bg-surface-bright flex-1"></div>
+<div class="h-full bg-surface-bright flex-1"></div>
+<div class="h-full bg-surface-bright flex-1"></div>
+<div class="h-full bg-surface-bright flex-1"></div>
+<div class="h-full bg-surface-bright flex-1"></div>
+<div class="h-full bg-surface-bright flex-1"></div>
+<div class="h-full bg-surface-bright flex-1"></div>
+<div class="h-full bg-surface-bright flex-1"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Logistics -->
+<div class="mt-auto border-t border-outline-variant pt-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Consumption Rate</div>
+<div class="flex items-baseline gap-2 font-data-md text-data-md text-primary">
+                                 2,400 <span class="font-data-sm text-data-sm text-on-surface-variant">kcal/day/guard</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Center Column: Pack-Beast Loadout (6 cols) -->
+<div class="md:col-span-6 flex flex-col gap-gutter h-full">
+<section class="panel-border bg-surface-container-low flex flex-col h-full overflow-hidden flex-1 relative">
+<div class="bg-[#225054] px-4 py-2 border-b border-outline-variant flex items-center justify-between">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-wide uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[24px]">pets</span>
+                            [B-09 HEAVY DRAFT BEAST]
+                        </h2>
+<div class="font-data-sm text-data-sm bg-surface-container px-2 py-0.5 border border-outline-variant text-secondary">ID: MX-8842</div>
+</div>
+<div class="p-4 flex flex-col gap-4 flex-1 overflow-y-auto">
+<!-- Main Visual: Wireframe Diagram -->
+<div class="w-full aspect-[16/9] border border-outline-variant relative bg-surface-container-lowest flex items-center justify-center group overflow-hidden">
+<!-- Placeholder for 2D Wireframe Image -->
+<div class="absolute inset-0 bg-cover bg-center opacity-70 mix-blend-screen" data-alt="Monochrome 2D side-view wireframe schematic of a massive mutant pack beast fitted with heavy armor plating and canvas saddlebags. Tactical CRT terminal aesthetic, neon teal lines on deep black background, technical annotations and grid lines." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBFYmn4dku9k0OWOxgVFEfYG9kP1NW5aY0RHlAH2sY2t7BpjWcYvFGSsmFIp0ORrqSWlZLfWQHqA6qHsGd8QMD8zRxSJt3l1k7WjwmUH0z1Z05Aaea5ssK4Ef1Cr-juKveu80Mka7qMcS_kp7ozqTcGt46Gw29F7sXgbcf8_yjPcty6kuXCRnr0gThfJEwuQQekJDdeC_ndoVZgtvjMOJXtRUJ9eJKrIb0jN92D-W3DXlJCdcrUSuFRsHTUyNSy0xnVA9ApwuJQGUiN')"></div>
+<!-- Overlay UI elements (Callouts) -->
+<div class="absolute inset-0 pointer-events-none">
+<!-- Top Callout -->
+<div class="absolute top-[20%] left-[30%] flex items-center gap-2">
+<div class="w-16 h-[1px] bg-secondary-container"></div>
+<div class="bg-surface/80 border border-secondary-container px-1 py-0.5 font-label-caps text-label-caps text-secondary crt-glow">CERAMIC CARAPACE</div>
+</div>
+<!-- Bottom Callout -->
+<div class="absolute bottom-[30%] right-[25%] flex items-center gap-2 flex-row-reverse">
+<div class="w-20 h-[1px] bg-secondary-container"></div>
+<div class="bg-surface/80 border border-secondary-container px-1 py-0.5 font-label-caps text-label-caps text-secondary crt-glow">HEAVY PANNIERS</div>
+</div>
+</div>
+<!-- Scanline effect internal to the viewer -->
+<div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] pointer-events-none opacity-40"></div>
+</div>
+<!-- Vitals Gauges -->
+<div class="grid grid-cols-3 gap-3 border border-outline-variant p-3 bg-[#1A1A1A]">
+<div class="flex flex-col gap-1 border-r border-outline-variant/30 pr-3">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Stamina</div>
+<div class="font-data-lg text-data-lg text-primary">85%</div>
+<div class="w-full h-2 bg-surface-bright mt-1 flex border border-outline-variant/50">
+<div class="h-full bg-secondary-container" style="width: 85%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1 border-r border-outline-variant/30 pr-3 pl-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Rad Tolerance</div>
+<div class="font-data-lg text-data-lg text-primary">92%</div>
+<div class="w-full h-2 bg-surface-bright mt-1 flex border border-outline-variant/50">
+<div class="h-full bg-secondary-container" style="width: 92%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1 pl-2">
+<div class="flex justify-between items-baseline">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Encumbrance</div>
+<div class="font-label-caps text-label-caps text-[#CC5500] pulse-warning">HEAVY</div>
+</div>
+<div class="font-data-lg text-data-lg text-primary">140<span class="text-on-surface-variant font-data-sm">/180 kg</span></div>
+<div class="w-full h-2 bg-surface-bright mt-1 flex border border-outline-variant/50 overflow-hidden relative">
+<!-- Segmented Look -->
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjEwIj48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxMCIgZmlsbD0iIzEzMTMxMyIvPjwvc3ZnPg==')] z-10 pointer-events-none"></div>
+<div class="h-full bg-[#CC5500]" style="width: 77%"></div>
+</div>
+</div>
+</div>
+<!-- Cargo Manifest -->
+<div class="flex flex-col mt-2">
+<h3 class="font-headline-md text-headline-md text-on-surface border-b border-outline-variant pb-1 mb-3">SADDLEBAG MANIFEST</h3>
+<div class="grid grid-cols-2 gap-x-4 gap-y-2">
+<!-- Left Pannier -->
+<div class="flex flex-col gap-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest bg-surface-bright px-1 border-l-2 border-secondary inline-block w-max mb-1">Left Pannier [PORT]</div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-1 hover:bg-surface-bright px-1 transition-colors group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">restaurant</span>
+<span class="font-data-sm text-data-sm text-primary uppercase">Calorie Rations</span>
+</div>
+<span class="font-data-sm text-data-sm text-secondary group-hover:text-primary">40 DAYS</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-1 hover:bg-surface-bright px-1 transition-colors group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">water_drop</span>
+<span class="font-data-sm text-data-sm text-primary uppercase">Purified Water</span>
+</div>
+<span class="font-data-sm text-data-sm text-secondary group-hover:text-primary">60L Casks</span>
+</div>
+</div>
+<!-- Right Pannier -->
+<div class="flex flex-col gap-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest bg-surface-bright px-1 border-l-2 border-secondary inline-block w-max mb-1">Right Pannier [STBD]</div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-1 hover:bg-surface-bright px-1 transition-colors group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">hardware</span>
+<span class="font-data-sm text-data-sm text-primary uppercase">Spare Ammo</span>
+</div>
+<span class="font-data-sm text-data-sm text-secondary group-hover:text-primary">120 RNDS</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-1 hover:bg-surface-bright px-1 transition-colors group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">shield</span>
+<span class="font-data-sm text-data-sm text-primary uppercase">Lead Plates</span>
+</div>
+<span class="font-data-sm text-data-sm text-secondary group-hover:text-primary">4 UNIT</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Expedition Crew & Actions (3 cols) -->
+<div class="md:col-span-3 flex flex-col gap-gutter h-full">
+<!-- Crew Roster -->
+<section class="panel-border bg-surface-container-low flex flex-col overflow-hidden relative mb-gutter">
+<div class="bg-surface-bright px-3 py-2 border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-wide uppercase">ESCORT CREW</h2>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<!-- Crew Member 1 -->
+<div class="border border-outline-variant/50 p-2 bg-[#1A1A1A] hover:border-outline transition-colors group">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">person</span>
+<span class="font-data-md text-data-md text-primary uppercase group-hover:text-secondary-fixed transition-colors">Vance</span>
+</div>
+<span class="font-label-caps text-label-caps bg-surface px-1 border border-outline-variant text-on-surface-variant">LEAD SCOUT</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-data-sm text-data-sm uppercase">Combat Rating</span>
+<span class="font-data-sm text-data-sm text-primary">78 [CMB]</span>
+</div>
+</div>
+<!-- Crew Member 2 -->
+<div class="border border-outline-variant/50 p-2 bg-[#1A1A1A] hover:border-outline transition-colors group">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">security</span>
+<span class="font-data-md text-data-md text-primary uppercase group-hover:text-secondary-fixed transition-colors">Miller</span>
+</div>
+<span class="font-label-caps text-label-caps bg-surface px-1 border border-outline-variant text-on-surface-variant">GUARD</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-data-sm text-data-sm uppercase">Combat Rating</span>
+<span class="font-data-sm text-data-sm text-primary">84 [CMB]</span>
+</div>
+</div>
+<!-- Crew Member 3 -->
+<div class="border border-outline-variant/50 p-2 bg-[#1A1A1A] hover:border-outline transition-colors group">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">backpack</span>
+<span class="font-data-md text-data-md text-primary uppercase group-hover:text-secondary-fixed transition-colors">Tyler</span>
+</div>
+<span class="font-label-caps text-label-caps bg-surface px-1 border border-outline-variant text-on-surface-variant">HANDLER</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-data-sm text-data-sm uppercase">Anim. Handling</span>
+<span class="font-data-sm text-data-sm text-primary">62 [ANM]</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Tactical Directives (Actions) -->
+<section class="panel-border bg-surface-container-low flex flex-col overflow-hidden relative flex-1">
+<div class="bg-surface-bright px-3 py-2 border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-wide uppercase">DIRECTIVES</h2>
+</div>
+<div class="p-3 flex flex-col gap-3 h-full justify-end">
+<!-- Input Field Simulation -->
+<div class="border-b border-outline-variant pb-1 mb-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase">AUTH CODE:</div>
+<div class="font-data-md text-data-md text-primary opacity-50 flex items-center">
+                                [ <span class="px-2 opacity-30 text-data-sm">ENTER_OVERRIDE</span> ] <span class="animate-pulse">_</span>
+</div>
+</div>
+<!-- Secondary Actions -->
+<button class="w-full bg-surface border border-outline-variant hover:bg-primary hover:text-surface transition-colors py-2 px-3 font-data-sm text-data-sm flex items-center justify-between group uppercase text-left">
+<span>ADD LEAD BEAST ARMOR</span>
+<span class="group-hover:opacity-100 opacity-50">_</span>
+</button>
+<button class="w-full bg-surface border border-outline-variant hover:bg-primary hover:text-surface transition-colors py-2 px-3 font-data-sm text-data-sm flex items-center justify-between group uppercase text-left">
+<span>REDUCE PAYLOAD FOR SPEED</span>
+<span class="group-hover:opacity-100 opacity-50">_</span>
+</button>
+<!-- Primary Action -->
+<button class="w-full bg-secondary-container text-on-secondary-container border border-secondary hover:bg-secondary hover:text-on-secondary-fixed transition-colors py-3 px-4 font-data-md text-data-md flex items-center justify-center gap-2 group mt-2 relative overflow-hidden">
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+<span class="uppercase tracking-widest relative z-10 font-bold">DISPATCH CARAVAN _</span>
+<!-- Button scanline effect -->
+<div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px] pointer-events-none opacity-50"></div>
+</button>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL INTERCEPT TERMINAL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "on-tertiary-fixed-variant": "#7a3000",
+                            "surface-dim": "#131313",
+                            "surface-container-low": "#1c1b1b",
+                            "surface-variant": "#353534",
+                            "on-tertiary-fixed": "#351000",
+                            "secondary-fixed-dim": "#a1cfd3",
+                            "surface-container": "#201f1f",
+                            "surface": "#131313",
+                            "tertiary-fixed": "#ffdbcc",
+                            "secondary-fixed": "#bcebef",
+                            "on-surface": "#e5e2e1",
+                            "outline": "#8f9194",
+                            "on-tertiary-container": "#9c3f00",
+                            "primary-fixed-dim": "#c3c7cd",
+                            "on-error-container": "#ffdad6",
+                            "surface-bright": "#393939",
+                            "on-tertiary": "#562000",
+                            "on-surface-variant": "#c5c6ca",
+                            "tertiary-container": "#ffc9b0",
+                            "on-background": "#e5e2e1",
+                            "on-secondary-container": "#93c0c5",
+                            "tertiary-fixed-dim": "#ffb693",
+                            "on-secondary": "#00363a",
+                            "background": "#131313",
+                            "error": "#ffb4ab",
+                            "primary-fixed": "#dfe3e9",
+                            "inverse-surface": "#e5e2e1",
+                            "inverse-primary": "#5a5f64",
+                            "surface-tint": "#c3c7cd",
+                            "secondary": "#a1cfd3",
+                            "on-error": "#690005",
+                            "surface-container-lowest": "#0e0e0e",
+                            "tertiary": "#ffede7",
+                            "secondary-container": "#225054",
+                            "surface-container-highest": "#353534",
+                            "on-primary-fixed": "#171c20",
+                            "on-secondary-fixed-variant": "#1f4d51",
+                            "error-container": "#93000a",
+                            "surface-container-high": "#2a2a2a",
+                            "on-secondary-fixed": "#002022",
+                            "primary-container": "#d1d5db",
+                            "on-primary-fixed-variant": "#43474c",
+                            "primary": "#eef1f7",
+                            "inverse-on-surface": "#313030",
+                            "outline-variant": "#44474a",
+                            "on-primary-container": "#585c61",
+                            "on-primary": "#2c3136"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "margin-base": "16px",
+                            "stack-md": "12px",
+                            "gutter": "8px",
+                            "container-padding": "12px",
+                            "unit": "4px",
+                            "stack-tight": "4px"
+                    },
+                    "fontFamily": {
+                            "display-lg": ["Bebas Neue"],
+                            "label-caps": ["JetBrains Mono"],
+                            "data-lg": ["JetBrains Mono"],
+                            "headline-md": ["Bebas Neue"],
+                            "data-md": ["JetBrains Mono"],
+                            "headline-lg": ["Bebas Neue"],
+                            "data-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                            "display-lg": ["48px", {"lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400"}],
+                            "label-caps": ["10px", {"lineHeight": "12px", "fontWeight": "700"}],
+                            "data-lg": ["18px", {"lineHeight": "24px", "fontWeight": "700"}],
+                            "headline-md": ["24px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "data-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                            "headline-lg": ["32px", {"lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                            "data-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .text-glow-primary {
+            text-shadow: 0 0 4px rgba(238, 241, 247, 0.5);
+        }
+        .text-glow-secondary {
+            text-shadow: 0 0 4px rgba(161, 207, 211, 0.5);
+        }
+        .text-glow-error {
+            text-shadow: 0 0 4px rgba(255, 180, 171, 0.5);
+        }
+        .border-glow {
+            box-shadow: 0 0 8px rgba(161, 207, 211, 0.2) inset;
+        }
+        /* Custom scrollbar for terminal feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #131313; border-left: 1px solid #44474a; }
+        ::-webkit-scrollbar-thumb { background: #44474a; }
+        ::-webkit-scrollbar-thumb:hover { background: #8f9194; }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden flex flex-col relative">
+<!-- Background Texture with Scanlines -->
+<div class="absolute inset-0 z-[-1]" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8'); background-size: cover; background-position: center; opacity: 0.15; filter: grayscale(100%);"></div>
+<div class="absolute inset-0 scanlines z-50"></div>
+<!-- TopAppBar -->
+<nav class="flex justify-between items-center w-full px-margin-base h-16 border-b border-outline-variant bg-surface shrink-0">
+<div class="flex items-center gap-gutter">
+<span class="font-display-lg text-display-lg text-primary tracking-widest text-glow-primary">ASHFALL INTERCEPT TERMINAL</span>
+</div>
+<div class="flex items-center gap-container-padding">
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-primary p-unit border border-transparent hover:border-outline-variant transition-colors duration-75 active:bg-primary active:text-surface">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">radio</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-primary p-unit border border-transparent hover:border-outline-variant transition-colors duration-75 active:bg-primary active:text-surface">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-primary p-unit border border-transparent hover:border-outline-variant transition-colors duration-75 active:bg-primary active:text-surface">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">power_settings_new</span>
+</button>
+</div>
+</nav>
+<!-- Main Layout -->
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="flex flex-col h-full w-64 border-r border-outline-variant py-container-padding bg-surface-container shrink-0">
+<div class="px-container-padding mb-container-padding border-b border-outline-variant pb-container-padding flex items-center gap-gutter">
+<div class="w-10 h-10 border border-outline-variant bg-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">radar</span>
+</div>
+<div class="flex flex-col overflow-hidden whitespace-nowrap">
+<span class="font-headline-md text-headline-md text-primary truncate">NODE_049</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant truncate">SECTOR-7G</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 gap-unit px-unit overflow-y-auto">
+<button class="flex items-center gap-container-padding px-container-padding py-gutter bg-secondary-container text-on-secondary-container border-l-4 border-secondary text-left group">
+<span class="material-symbols-outlined">radar</span>
+<span class="font-label-caps text-label-caps">RF SCAN</span>
+</button>
+<button class="flex items-center gap-container-padding px-container-padding py-gutter text-on-surface-variant hover:text-on-surface hover:bg-surface-variant text-left transition-all duration-100 ease-in-out border-l-4 border-transparent">
+<span class="material-symbols-outlined">enhanced_encryption</span>
+<span class="font-label-caps text-label-caps">DECRYPT</span>
+</button>
+<button class="flex items-center gap-container-padding px-container-padding py-gutter text-on-surface-variant hover:text-on-surface hover:bg-surface-variant text-left transition-all duration-100 ease-in-out border-l-4 border-transparent">
+<span class="material-symbols-outlined">emergency</span>
+<span class="font-label-caps text-label-caps">BEACONS</span>
+</button>
+<button class="flex items-center gap-container-padding px-container-padding py-gutter text-on-surface-variant hover:text-on-surface hover:bg-surface-variant text-left transition-all duration-100 ease-in-out border-l-4 border-transparent">
+<span class="material-symbols-outlined">settings_voice</span>
+<span class="font-label-caps text-label-caps">RECORD</span>
+</button>
+<button class="flex items-center gap-container-padding px-container-padding py-gutter text-on-surface-variant hover:text-on-surface hover:bg-surface-variant text-left transition-all duration-100 ease-in-out border-l-4 border-transparent">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-label-caps text-label-caps">ARCHIVE</span>
+</button>
+</div>
+<div class="px-container-padding mt-auto flex flex-col gap-unit pt-container-padding border-t border-outline-variant">
+<button class="w-full py-gutter px-container-padding bg-error-container text-on-error-container font-label-caps text-label-caps border border-error hover:bg-error hover:text-on-error transition-colors duration-75 flex items-center justify-center gap-unit">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                    EMERGENCY BROADCAST_
+                </button>
+<div class="flex items-center justify-between mt-gutter">
+<button class="text-on-surface-variant hover:text-on-surface flex items-center gap-unit">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+<span class="font-label-caps text-label-caps">SYSTEM</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-surface flex items-center gap-unit">
+<span class="material-symbols-outlined text-[14px]">logout</span>
+<span class="font-label-caps text-label-caps">LOGOUT</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Canvas -->
+<main class="flex-1 p-margin-base overflow-y-auto">
+<div class="max-w-7xl mx-auto flex flex-col gap-gutter">
+<!-- 1. RADIO WAVE SPECTROGRAM & TUNER -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col relative border-glow">
+<div class="bg-secondary-container text-on-secondary-container px-container-padding py-unit border-b border-outline-variant flex justify-between items-center">
+<span class="font-label-caps text-label-caps tracking-widest text-glow-secondary">SPECTROGRAM // WIDEBAND RF TUNER</span>
+<span class="font-data-sm text-data-sm animate-pulse">LIVE_FEED</span>
+</div>
+<div class="p-container-padding flex flex-col gap-gutter h-64 relative">
+<div class="flex justify-between font-data-md text-data-md text-secondary-fixed">
+<span>88.4 MHz</span>
+<span>115.6 MHz [LOCKED]</span>
+<span>142.8 MHz</span>
+</div>
+<div class="flex-1 border border-outline-variant relative overflow-hidden bg-surface-dim">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxMzEzMTMiLz48cGF0aCBkPSJNMCA1MCBRIDI1IDAgNTAgNTAgVCAxMDAgNTAgVCAxNTAgNTAiIHN0cm9rZT0iI2ExY2ZkMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+')] bg-cover opacity-50 mix-blend-screen animate-pulse" style="background-image: repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(161, 207, 211, 0.1) 10px, rgba(161, 207, 211, 0.1) 11px), repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(161, 207, 211, 0.1) 10px, rgba(161, 207, 211, 0.1) 11px);">
+<!-- Placeholder for procedural JS wave if needed, static CSS for now -->
+</div>
+<div class="absolute left-1/2 top-0 bottom-0 w-px bg-error-container z-10 shadow-[0_0_8px_rgba(255,180,171,1)]"></div>
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface border border-error px-unit py-1 z-20">
+<span class="font-data-lg text-data-lg text-error">115.600</span>
+</div>
+</div>
+<div class="flex justify-end items-center gap-container-padding">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SNR:</span>
+<span class="font-data-lg text-data-lg text-secondary-fixed text-glow-secondary">+12dB</span>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- 2. ENCRYPTED MORSE & CIPHER MATRIX -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col">
+<div class="bg-surface-variant text-on-surface-variant px-container-padding py-unit border-b border-outline-variant flex justify-between items-center">
+<span class="font-label-caps text-label-caps">CIPHER MATRIX // ENIGMA PROTOCOL</span>
+<span class="font-data-sm text-data-sm text-secondary">SRC: UNIDENTIFIED BUNKER SEC 9</span>
+</div>
+<div class="p-container-padding flex flex-col gap-gutter flex-1">
+<div class="border border-outline-variant p-gutter bg-surface-dim overflow-hidden h-20 relative">
+<div class="font-data-md text-data-md text-on-surface opacity-75 break-all animate-[slide_10s_linear_infinite]" style="white-space: nowrap;">
+                                    ... --- ... / -.-. .- .-.. .-.. .. -. --. / .- -. -.-- / ... ..- .-. ...- .. ...- --- .-. ... / .-.-.- .-.-.-
+                                </div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-dim via-transparent to-surface-dim pointer-events-none"></div>
+</div>
+<div class="flex items-center justify-between gap-gutter">
+<div class="flex gap-unit">
+<!-- Simplified Cipher Wheels -->
+<div class="w-12 h-16 border border-outline-variant bg-surface flex flex-col items-center justify-center relative overflow-hidden">
+<div class="font-data-lg text-data-lg text-secondary-fixed">A</div>
+</div>
+<div class="w-12 h-16 border border-outline-variant bg-surface flex flex-col items-center justify-center relative overflow-hidden">
+<div class="font-data-lg text-data-lg text-secondary-fixed">X</div>
+</div>
+<div class="w-12 h-16 border border-outline-variant bg-surface flex flex-col items-center justify-center relative overflow-hidden">
+<div class="font-data-lg text-data-lg text-error">7</div>
+</div>
+</div>
+<div class="flex flex-col flex-1 items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-unit">DECRYPTION PROGRESS</span>
+<div class="w-full flex items-center gap-unit">
+<span class="font-data-md text-data-md text-secondary-fixed">74%</span>
+<div class="flex-1 font-data-sm text-data-sm text-secondary-fixed tracking-[0.2em]">[|||||||...]</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. RADIO CHANNELS & BEACONS -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col">
+<div class="bg-surface-variant text-on-surface-variant px-container-padding py-unit border-b border-outline-variant">
+<span class="font-label-caps text-label-caps">LOCAL BEACON REGISTRY</span>
+</div>
+<div class="flex flex-col gap-unit p-container-padding flex-1 overflow-y-auto">
+<!-- Active -->
+<div class="border border-secondary-fixed-dim bg-secondary-container/20 p-gutter flex items-center gap-container-padding">
+<div class="w-2 h-2 bg-secondary-fixed shadow-[0_0_8px_#a1cfd3]"></div>
+<div class="flex-1">
+<div class="font-label-caps text-label-caps text-secondary-fixed">CH 1 // ACTIVE</div>
+<div class="font-data-md text-data-md text-on-surface">Meridian Weather Loop</div>
+</div>
+<span class="material-symbols-outlined text-secondary-fixed">volume_up</span>
+</div>
+<!-- Passive -->
+<div class="border border-outline-variant p-gutter flex items-center gap-container-padding">
+<div class="w-2 h-2 bg-outline-variant"></div>
+<div class="flex-1">
+<div class="font-label-caps text-label-caps text-on-surface-variant">CH 2 // PASSIVE</div>
+<div class="font-data-md text-data-md text-on-surface-variant">Syndicate Caravans</div>
+</div>
+</div>
+<!-- Critical/Muted -->
+<div class="border border-error-container p-gutter flex items-center gap-container-padding">
+<div class="w-2 h-2 bg-error animate-pulse shadow-[0_0_8px_#ffb4ab]"></div>
+<div class="flex-1">
+<div class="font-label-caps text-label-caps text-error">CH 3 // MUTED / CRITICAL</div>
+<div class="font-data-md text-data-md text-on-surface">Automated Distress SOS Beacon</div>
+</div>
+<span class="material-symbols-outlined text-error">volume_off</span>
+</div>
+</div>
+</section>
+</div>
+<!-- 4. DIRECTIVE OVERRIDE -->
+<section class="border border-outline-variant bg-surface flex flex-col p-container-padding">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-container-padding">DIRECTIVE OVERRIDE CONSOLE</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<button class="border border-secondary text-secondary-fixed font-data-md text-data-md py-container-padding px-gutter hover:bg-secondary hover:text-surface transition-colors flex items-center justify-center gap-unit uppercase">
+<span class="material-symbols-outlined">lock</span>
+                             [LOCK FREQ &amp; DECRYPT]_
+                         </button>
+<button class="border border-error text-error font-data-md text-data-md py-container-padding px-gutter hover:bg-error hover:text-on-error transition-colors flex items-center justify-center gap-unit uppercase">
+<span class="material-symbols-outlined">campaign</span>
+                             [BROADCAST EMERG SOS]_
+                         </button>
+<button class="border border-outline-variant text-on-surface font-data-md text-data-md py-container-padding px-gutter hover:bg-surface-variant transition-colors flex items-center justify-center gap-unit uppercase">
+<span class="material-symbols-outlined">mic</span>
+                             [RECORD LOG TO CASSETTE]_
+                         </button>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

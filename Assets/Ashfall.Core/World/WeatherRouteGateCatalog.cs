@@ -30,6 +30,11 @@ namespace Ashfall.Core.World
         /// dispatched survivor when forcing through. 0/absent = no dose.</summary>
         public float force_rad_dose { get; set; } = 0f;
         public string description { get; set; } = string.Empty;
+
+        public WarStateModifierDefinition? war_state_modifier { get; set; }
+        public TerritoryModifierDefinition? territory_modifier { get; set; }
+        public bool weather_delay_debt { get; set; }
+        public Dictionary<string, float>? compound_event_modifier { get; set; }
     }
 
     /// <summary>Outcome of evaluating one gate against current weather.</summary>

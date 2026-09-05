@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL TERMINAL - ELECTROLYSIS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#1e2021",
+                      "primary-container": "#00ffc2",
+                      "on-secondary-fixed": "#001f25",
+                      "surface-variant": "#333536",
+                      "surface-container-lowest": "#0c0e0f",
+                      "on-secondary-container": "#005f6d",
+                      "on-tertiary-fixed": "#410003",
+                      "on-error": "#690005",
+                      "error": "#ffb4ab",
+                      "surface-container-high": "#282a2b",
+                      "outline-variant": "#3a4a43",
+                      "on-surface-variant": "#b9cbc1",
+                      "on-primary-fixed": "#002116",
+                      "surface-container-low": "#1a1c1d",
+                      "on-primary": "#003828",
+                      "on-tertiary": "#680008",
+                      "secondary-fixed": "#a5eeff",
+                      "primary": "#fbfffa",
+                      "background": "#121415",
+                      "tertiary-fixed": "#ffdad6",
+                      "inverse-primary": "#006c50",
+                      "surface-bright": "#38393a",
+                      "surface": "#121415",
+                      "on-error-container": "#ffdad6",
+                      "on-secondary": "#00363f",
+                      "primary-fixed-dim": "#00e1ab",
+                      "surface-container-highest": "#333536",
+                      "on-tertiary-container": "#c80d1e",
+                      "on-primary-fixed-variant": "#00513c",
+                      "on-secondary-fixed-variant": "#004e5a",
+                      "secondary-container": "#00e0ff",
+                      "secondary": "#b9f1ff",
+                      "error-container": "#93000a",
+                      "on-primary-container": "#007255",
+                      "secondary-fixed-dim": "#00daf8",
+                      "outline": "#83958c",
+                      "tertiary": "#fffeff",
+                      "primary-fixed": "#36ffc4",
+                      "inverse-surface": "#e2e2e3",
+                      "surface-tint": "#00e1ab",
+                      "inverse-on-surface": "#2f3132",
+                      "tertiary-fixed-dim": "#ffb3ad",
+                      "on-tertiary-fixed-variant": "#930010",
+                      "tertiary-container": "#ffd9d5",
+                      "surface-dim": "#121415",
+                      "on-background": "#e2e2e3",
+                      "on-surface": "#e2e2e3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1440px",
+                      "unit": "4px",
+                      "margin-desktop": "32px",
+                      "gutter": "16px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Bebas Neue"
+                      ],
+                      "body-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Bebas Neue"
+                      ],
+                      "headline-sm": [
+                              "Bebas Neue"
+                      ],
+                      "body-md": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Bebas Neue"
+                      ],
+                      "headline-xl": [
+                              "Bebas Neue"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "36px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .glow-text {
+            text-shadow: 0 0 8px currentColor;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row relative selection:bg-primary-container selection:text-on-primary-container">
+<div class="absolute inset-0 scanlines z-50 mix-blend-overlay opacity-50"></div>
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex bg-surface-container-low dark:bg-surface-container-low docked left-0 h-full w-64 border-r border-outline-variant flex-col py-gutter px-unit z-40 fixed">
+<div class="mb-8 px-4">
+<h1 class="font-headline-sm text-headline-sm text-primary-container">SECTOR CONTROL</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">V.08-STABLE</p>
+<div class="mt-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-primary-container flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">System Operator</span>
+</div>
+</div>
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container border-l-4 border-primary-fixed shadow-[0px_0px_8px_primary-container] transition-all scale-95 duration-75" href="#">
+<span class="material-symbols-outlined">water_drop</span>
+<span class="font-label-caps text-label-caps">ELECTROLYSIS</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary-container hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-label-caps text-label-caps">STORAGE</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary-container hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">air</span>
+<span class="font-label-caps text-label-caps">AIR QUALITY</span>
+</a>
+</div>
+<div class="mt-auto px-4 pb-4">
+<button class="w-full bg-error text-on-error font-label-caps text-label-caps py-3 border border-error hover:bg-error-container hover:text-on-error-container transition-colors duration-150 uppercase shadow-[0_0_8px_theme(colors.error)]">
+                INITIATE PURGE
+            </button>
+</div>
+</nav>
+<div class="flex-1 flex flex-col md:ml-64 relative min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface-container dark:bg-surface-container border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 z-30 sticky top-0">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-sm text-headline-sm text-primary-container uppercase tracking-widest glow-text">ASHFALL TERMINAL</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-primary-container transition-colors duration-150 ease-in-out p-2 rounded">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-primary-container transition-colors duration-150 ease-in-out p-2 rounded">
+<span class="material-symbols-outlined">power_settings_new</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter mb-16 md:mb-12">
+<!-- Section 1: Water Electrolysis Cell Array -->
+<section class="md:col-span-12 border border-outline-variant bg-surface-container-low p-4 relative">
+<div class="border-b border-outline-variant pb-2 mb-4 flex justify-between items-center bg-[#14171A] p-2">
+<h2 class="font-headline-md text-headline-md text-primary-container uppercase glow-text">PEM STACK TELEMETRY</h2>
+<span class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-2 py-1 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-on-primary-container animate-pulse"></span>
+                        ACTIVE
+                    </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="border border-outline-variant p-4 flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2">water</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">WATER FEED INFLOW</span>
+<span class="font-headline-lg text-headline-lg text-tertiary">48 L/h</span>
+</div>
+<div class="border border-outline-variant p-4 flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-error mb-2">bolt</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">ELECTROLYSIS VOLTAGE</span>
+<span class="font-headline-lg text-headline-lg text-tertiary">48.2 V</span>
+</div>
+<div class="border border-outline-variant p-4 flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary-container mb-2">power</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">POWER CONSUMPTION</span>
+<span class="font-headline-lg text-headline-lg text-tertiary">32 kW</span>
+</div>
+</div>
+<!-- Schematic Placeholder -->
+<div class="mt-4 border border-outline-variant h-48 bg-[#0A0C0D] flex items-center justify-center relative overflow-hidden">
+<img class="w-full h-full object-cover opacity-30 mix-blend-screen" data-alt="A highly detailed technical schematic of a Polymer Electrolyte Membrane electrolysis stack, displayed on a glowing green terminal screen. The aesthetic is post-apocalyptic industrial, with tactical teal lines on a dark gray background, resembling an old military HUD." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkZXmyejyexrc9CcleuSEAd_qG0xqUaWRJ3dshmKXlyDziDPN2SsVjoyd_2RCBKxkdYFJqOjq5vRBB2wthavLWRxvduU2wdceI2o4HDWKlwkJdtwdH92j4oUPj_4qO97YtEik92PGu7BcHkkr8OcIh6hkq21L5F9Px5lqSmxLIL_rU9G-jUTpgI0tIBhZR1BzGmlzUqcFn9fltnUNHvdxzQ8wPIqQEAqGF1PvPh1kZswZHsXH5idTwSt0WkMxBJpQyJGBZTWX7if4d"/>
+<span class="absolute font-label-caps text-label-caps text-outline-variant">[ SCHEMATIC FEED ACTIVE ]</span>
+</div>
+</section>
+<!-- Section 2: Gas Separation & Storage -->
+<section class="md:col-span-8 border border-outline-variant bg-surface-container-low p-4">
+<div class="border-b border-outline-variant pb-2 mb-4 bg-[#14171A] p-2">
+<h2 class="font-headline-md text-headline-md text-primary-container uppercase">STORAGE TANKS</h2>
+</div>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-label-caps text-label-caps text-secondary flex items-center gap-2"><span class="material-symbols-outlined text-sm">co2</span>OXYGEN RESERVE</span>
+<span class="font-body-md text-body-md text-tertiary">8,400 L</span>
+</div>
+<div class="w-full bg-surface-variant h-4 flex gap-1">
+<div class="bg-secondary h-full w-[80%]"></div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 text-right">Shelter Air: 20.9% O2, 420 ppm CO2</p>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-label-caps text-label-caps text-primary-container flex items-center gap-2"><span class="material-symbols-outlined text-sm">local_gas_station</span>HYDROGEN TANK</span>
+<span class="font-body-md text-body-md text-tertiary">16,800 L @ 350 Bar</span>
+</div>
+<div class="w-full bg-surface-variant h-4 flex gap-1">
+<div class="bg-primary-container h-full w-[95%]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Air Scrubbing & Rebreather Station -->
+<section class="md:col-span-4 border border-outline-variant bg-surface-container-low p-4 flex flex-col justify-between">
+<div>
+<div class="border-b border-outline-variant pb-2 mb-4 bg-[#14171A] p-2">
+<h2 class="font-headline-md text-headline-md text-primary-container uppercase">AIR SCRUBBING</h2>
+</div>
+<div class="mb-6">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2">CO2 SCRUBBER ZEOLITE WEAR</span>
+<div class="flex items-center gap-4">
+<div class="relative w-16 h-16">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-variant" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-width="3"></path>
+<path class="text-error" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="24, 100" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-body-md text-body-md text-error">24%</span>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-outline-variant">Optimal Range</span>
+</div>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2">PORTABLE TANK REFILL DOCK</span>
+<div class="flex gap-2">
+<div class="flex-1 h-8 bg-primary-container border border-primary-container shadow-[0_0_4px_theme(colors.primary-container)]"></div>
+<div class="flex-1 h-8 bg-primary-container border border-primary-container shadow-[0_0_4px_theme(colors.primary-container)]"></div>
+<div class="flex-1 h-8 bg-primary-container border border-primary-container shadow-[0_0_4px_theme(colors.primary-container)]"></div>
+<div class="flex-1 h-8 bg-primary-container border border-primary-container shadow-[0_0_4px_theme(colors.primary-container)]"></div>
+<div class="flex-1 h-8 bg-surface-variant border border-outline-variant"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 block text-right">4 Tanks Charged</span>
+</div>
+</div>
+</section>
+<!-- Tactical Directives -->
+<section class="md:col-span-12 border border-outline-variant p-4 bg-[#1C2024]">
+<div class="border-b border-outline-variant pb-2 mb-4 bg-primary-container text-on-primary-container p-2">
+<h2 class="font-headline-sm text-headline-sm uppercase">TACTICAL DIRECTIVES</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<button class="bg-surface-container border border-primary-container text-primary-container font-label-caps text-label-caps py-3 px-4 uppercase hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-between">
+<span>Increase Oxygen Output (120%)</span>
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<button class="bg-surface-container border border-secondary text-secondary font-label-caps text-label-caps py-3 px-4 uppercase hover:bg-secondary hover:text-on-secondary transition-colors flex items-center justify-between">
+<span>Compress Hydrogen into Fuel Cells</span>
+<span class="material-symbols-outlined">compress</span>
+</button>
+<button class="bg-surface-container border border-error text-error font-label-caps text-label-caps py-3 px-4 uppercase hover:bg-error hover:text-on-error transition-colors flex items-center justify-between">
+<span>Purge Nitrogen Vent</span>
+<span class="material-symbols-outlined">air</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant fixed bottom-0 w-full flex justify-between items-center px-margin-mobile py-unit z-50 md:ml-0 md:w-[calc(100%-16rem)]">
+<span class="font-body-sm text-body-sm font-label-caps text-label-caps text-on-surface-variant">SYSTEM STABILITY: 98.4% // ENCRYPTION: ACTIVE</span>
+<div class="flex gap-4">
+<a class="font-body-sm text-body-sm font-label-caps text-label-caps text-on-surface-variant hover:text-primary-container underline transition-opacity duration-200" href="#">REBOOT</a>
+<a class="font-body-sm text-body-sm font-label-caps text-label-caps text-on-surface-variant hover:text-primary-container underline transition-opacity duration-200" href="#">LOGOUT</a>
+<a class="font-body-sm text-body-sm font-label-caps text-label-caps text-on-surface-variant hover:text-primary-container underline transition-opacity duration-200" href="#">DIAGNOSTICS</a>
+</div>
+</footer>
+</div>
+</body></html>

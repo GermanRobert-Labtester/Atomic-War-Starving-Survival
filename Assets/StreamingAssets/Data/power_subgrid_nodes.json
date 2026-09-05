@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "nodes": [
+    {
+      "node_id": "node_main_vault_bus",
+      "display_name": "Main Vault Master Feeder",
+      "target_room_id": "room_main",
+      "max_capacity_watts": 8000,
+      "surge_limit_watts": 10000,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.95,
+      "fuse_rating_amps": 50,
+      "is_critical": true
+    },
+    {
+      "node_id": "node_clinic_transformer",
+      "display_name": "Clinic Isolated Step-Down",
+      "target_room_id": "room_clinic",
+      "max_capacity_watts": 3500,
+      "surge_limit_watts": 4500,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.90,
+      "fuse_rating_amps": 25,
+      "is_critical": true
+    },
+    {
+      "node_id": "node_workshop_feed",
+      "display_name": "Fabrication Shop Heavy Bus",
+      "target_room_id": "room_workshop",
+      "max_capacity_watts": 4500,
+      "surge_limit_watts": 6000,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.85,
+      "fuse_rating_amps": 35,
+      "is_critical": false
+    },
+    {
+      "node_id": "node_foundry_subgrid",
+      "display_name": "Smelter High-Current Substation",
+      "target_room_id": "room_foundry",
+      "max_capacity_watts": 6000,
+      "surge_limit_watts": 7500,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.80,
+      "fuse_rating_amps": 45,
+      "is_critical": false
+    },
+    {
+      "node_id": "node_greenhouse_inverter",
+      "display_name": "Hydroponics Inverter Bank",
+      "target_room_id": "room_greenhouse",
+      "max_capacity_watts": 3000,
+      "surge_limit_watts": 3800,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.92,
+      "fuse_rating_amps": 20,
+      "is_critical": false
+    },
+    {
+      "node_id": "node_airlock_perimeter_relay",
+      "display_name": "Airlock & Perimeter Sentry Relay",
+      "target_room_id": "room_airlock",
+      "max_capacity_watts": 2500,
+      "surge_limit_watts": 3500,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.88,
+      "fuse_rating_amps": 20,
+      "is_critical": true
+    },
+    {
+      "node_id": "node_filtration_stepdown",
+      "display_name": "Ventilation Scrubber Step-Down",
+      "target_room_id": "room_filtration",
+      "max_capacity_watts": 3200,
+      "surge_limit_watts": 4200,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.89,
+      "fuse_rating_amps": 25,
+      "is_critical": true
+    },
+    {
+      "node_id": "node_water_pump_junction",
+      "display_name": "Deep Aquifer Lift Station Relay",
+      "target_room_id": "room_water_pump",
+      "max_capacity_watts": 3000,
+      "surge_limit_watts": 4000,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.82,
+      "fuse_rating_amps": 25,
+      "is_critical": true
+    },
+    {
+      "node_id": "node_galley_distribution",
+      "display_name": "Galley Preservation Sub-Feeder",
+      "target_room_id": "room_kitchen",
+      "max_capacity_watts": 2200,
+      "surge_limit_watts": 2800,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.90,
+      "fuse_rating_amps": 15,
+      "is_critical": false
+    },
+    {
+      "node_id": "node_storage_bay_branch",
+      "display_name": "Quartermaster Storage Feed",
+      "target_room_id": "room_storage_bay",
+      "max_capacity_watts": 1500,
+      "surge_limit_watts": 2000,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.95,
+      "fuse_rating_amps": 15,
+      "is_critical": false
+    },
+    {
+      "node_id": "node_living_quarters_bus",
+      "display_name": "Dweller Quarters Breaker Array",
+      "target_room_id": "room_bunks",
+      "max_capacity_watts": 2000,
+      "surge_limit_watts": 2600,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.94,
+      "fuse_rating_amps": 15,
+      "is_critical": false
+    },
+    {
+      "node_id": "node_communications_array",
+      "display_name": "Comms Array RF Transformer",
+      "target_room_id": "room_radio_tuner",
+      "max_capacity_watts": 1800,
+      "surge_limit_watts": 2400,
+      "transformer_oil_condition": 100.0,
+      "cooling_efficiency": 0.91,
+      "fuse_rating_amps": 15,
+      "is_critical": false
+    }
+  ]
+}
