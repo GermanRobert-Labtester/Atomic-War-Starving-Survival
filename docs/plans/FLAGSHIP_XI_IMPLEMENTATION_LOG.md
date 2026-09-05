@@ -420,3 +420,81 @@ Divergences:
 
 Remaining: `TroposphericRadioRelayPanel` revival (typed PsyOps binding) +
 leaflet expedition encounter data land in Slices 7-8.
+
+---
+
+## Slice 8 — Cross-system integration (the connected pressure network)
+
+Status: PASS (typed source-event links + boundary-true replay)
+
+Changed:
+- `src/Main.MoraleContagion.cs` — cross-system triggers, each the same typed
+  call the systems expose (no direct cross-system state mutation):
+  `DiseaseSystem.OnOutbreakDeclared` → ambient `contagion_outbreak_fear`;
+  `OnQuarantineStarted` → `contagion_quarantine_resentment` sourced on the
+  isolated survivor (bonded ward-mates accrue it; the contagion curtain is
+  contagion-owned, not disease-owned); `NeedsSystem.OnDied` → ambient
+  `contagion_funeral_grief`; `OnMoraleSchismTriggered` → canonical journal
+  entry (`JournalSystem.TryAddRawEntry`) + host log. Completed-sortie hope
+  trigger wired where the expeditions day owner already bridges hatch returns
+  (`src/Main.CampaignOwners.cs`).
+- `Assets/Ashfall.Core/HostDefaults.cs` — `SeededRng.PeekState()/SeekState()`:
+  position access for codecs that must reproduce a continuous roll sequence
+  across a save/load boundary (seed alone restarts the stream).
+- `Assets/Ashfall.Core/Disease/DiseaseSystem.cs` — `DiseaseSystemState.rngPosition`
+  (legacy saves default 0 = seed-only restore, byte-identical old behavior);
+  capture/restore preserve the live xorshift position. This closes a pre-existing
+  engine gap surfaced by the plan's save-boundary replay gate: a mid-run reload
+  used to replay early outcome rolls.
+- `Ashfall.Core.Tests/Flagship11/CrossSystemSmokeTests.cs` — the plan's
+  cross-system smoke scenario in compact deterministic form: outbreak scares the
+  holdfast (panic reaches the whole shelter), quarantine resentment accrues on
+  the bonded ward-mate, and the full chain replays IDENTICALLY across save
+  boundaries at day 5 and day 9 (fresh vs restored runs, morale carried the way
+  the host's survivors section carries it).
+
+Result: 63/63 companion tests; integrity + utilization PASS.
+
+---
+
+## Final status — Flagship Integration Plan XI
+
+Committed slices (this branch, path-scoped):
+- `778a11f3` Slice 2 — four catalogs + loaders + integrity registration
+- `012cce83` Slice 3 — Plan 154 morale contagion (full vertical)
+- `3fb7d3e9` Slice 4 — Plan 155 pathogen strain lineage (extends the disease engine)
+- `201ebecb` Slice 5 — Plan 156 subterranean networks
+- `f444bf8a` Slice 6 — Plan 157 psyops
+- `df877a42` Slice 8 — cross-system links + boundary-true replay
+
+Gates at close (2026-09-05):
+- `dotnet build Ashfall.csproj` — 0 errors at last full green check; transient
+  foreign in-flight breakage (Plans 146-149 delegate drift) observed after and
+  NOT repaired by this milestone (D8).
+- Companion `dotnet test _verify_flagship11.csproj` — **63/63 PASS** (in a
+  gitignored project; the shared Ashfall.Core.Tests tree is blocked by foreign
+  WIP per D1 — these test files join the canonical suite when it heals).
+- `--data-integrity-selftest` PASS — 0 findings, 262 catalogs.
+- `--content-utilization-selftest` PASS — 0 orphans; all four Flagship XI
+  catalogs gameplay-consumed.
+
+Deliberately deferred (logged, not silently skipped):
+- Slice 7 UI: `SubterraneanMapPanel` and the `TroposphericRadioRelayPanel`
+  revival (typed PsyOps binding — would clear an AGENTS.md stub entry) are
+  NOT done; `SurvivorRelationsPanel` carries the Plan 154 influence readout.
+  No panel-local gameplay state was invented to fake completion.
+- Leaflet expedition encounter content (data-only; `factionStandingDelta`
+  precedent exists) — deferred.
+- Cross-Tool QA Rule: this milestone was implemented in one tool; per repo rule
+  an independent review pass (diff + spec only) is recommended before closeout.
+
+Remaining risks:
+- Shared files (`CatalogIntegrityValidator`, `SaveSectionRegistry`,
+  `SaveOrchestrator`, `CampaignOwners`, `ContentUtilizationScanner`,
+  `DiseaseSystem`) were edited while foreign streams were mid-flight; my edits
+  are additive, but a rebase/review pass should confirm no hunks were lost to
+  concurrent sync commits (one sweep, `04884519`, absorbed earlier in-flight
+  copies of Slice 4 files — content verified present at HEAD).
+- The disease engine's RNG-position field is additive to its save DTO; old
+  saves load unchanged (0 = legacy), new saves are not loadable by pre-Flagship
+  builds (accept: same trade-off as every additive field in this repo).
