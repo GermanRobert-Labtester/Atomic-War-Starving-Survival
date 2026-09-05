@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL_OS_v2.1 - TRIAGE_STATION</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#93c0c5",
+                        "error-container": "#93000a",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#225054",
+                        "primary-container": "#d1d5db",
+                        "on-tertiary-fixed": "#351000",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-tertiary": "#562000",
+                        "tertiary-fixed": "#ffdbcc",
+                        "tertiary-container": "#ffc9b0",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-surface": "#e5e2e1",
+                        "outline-variant": "#44474a",
+                        "on-surface-variant": "#c5c6ca",
+                        "surface-container-highest": "#353534",
+                        "surface-container-low": "#1c1b1b",
+                        "surface": "#131313",
+                        "on-secondary": "#00363a",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#43474c",
+                        "inverse-surface": "#e5e2e1",
+                        "background": "#131313",
+                        "tertiary": "#ffede7",
+                        "inverse-on-surface": "#313030",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "surface-tint": "#c3c7cd",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "surface-container": "#201f1f",
+                        "primary": "#eef1f7",
+                        "on-secondary-fixed": "#002022",
+                        "on-tertiary-container": "#9c3f00",
+                        "inverse-primary": "#5a5f64",
+                        "primary-fixed": "#dfe3e9",
+                        "secondary": "#a1cfd3",
+                        "secondary-fixed": "#bcebef",
+                        "on-primary-container": "#585c61",
+                        "error": "#ffb4ab",
+                        "surface-dim": "#131313",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface-bright": "#393939",
+                        "on-primary": "#2c3136",
+                        "surface-variant": "#353534",
+                        "on-primary-fixed": "#171c20",
+                        "outline": "#8f9194"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "12px",
+                        "stack-tight": "4px",
+                        "unit": "4px",
+                        "margin-base": "16px",
+                        "container-padding": "12px",
+                        "gutter": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-sm": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "data-md": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .crt-glow {
+            text-shadow: 0 0 2px currentColor;
+        }
+        .panel-border {
+            border: 1px solid var(--tw-colors-outline-variant);
+        }
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #44474a;
+            border: 1px solid #131313;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden flex flex-col relative font-data-md selection:bg-secondary selection:text-on-secondary">
+<!-- Background Image Layer -->
+<div class="absolute inset-0 z-0 opacity-20 bg-cover bg-center grayscale mix-blend-overlay" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8')"></div>
+<!-- Global Scanline Overlay -->
+<div class="absolute inset-0 z-50 scanlines mix-blend-overlay"></div>
+<!-- TopAppBar -->
+<header class="z-40 bg-background dark:bg-background flex justify-between items-center w-full px-margin-base h-16 border-b border-outline-variant shrink-0 relative">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg text-primary dark:text-primary tracking-tighter crt-glow">ASHFALL_OS_v2.1</span>
+<div class="flex items-center gap-2 border-l border-outline-variant pl-4 ml-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+<span class="font-label-caps text-label-caps text-secondary tracking-widest uppercase mt-1">Triage_Protocol_Active</span>
+</div>
+</div>
+<div class="flex gap-6 items-center">
+<div class="flex gap-6 font-data-sm text-data-sm text-on-surface-variant uppercase tracking-wide">
+<span>UPTIME: 428:12:04</span>
+<span>SECTOR: B-09</span>
+<span class="text-error crt-glow font-bold">ALERTS: 04</span>
+</div>
+<div class="flex gap-4 border-l border-outline-variant pl-6">
+<span class="material-symbols-outlined text-on-surface hover:text-primary transition-colors cursor-pointer" data-icon="security">security</span>
+<span class="material-symbols-outlined text-error hover:text-error-container transition-colors cursor-pointer" data-icon="emergency_home" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden z-10 relative">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low dark:bg-surface-container-low flex flex-col h-full py-4 border-r border-outline-variant w-64 shrink-0 justify-between">
+<div>
+<div class="px-4 mb-6 border-b border-outline-variant pb-4">
+<div class="font-data-sm text-data-sm text-on-surface-variant mb-1">OPERATOR_ID_083</div>
+<div class="font-headline-md text-headline-md text-secondary crt-glow tracking-wide">TRIAGE_STATION</div>
+<div class="font-label-caps text-label-caps text-secondary-container mt-1 bg-secondary-fixed/10 inline-block px-2 py-0.5 border border-secondary-fixed/30">READY_STATE</div>
+</div>
+<ul class="flex flex-col gap-1 w-full">
+<!-- Active Tab -->
+<li class="w-full">
+<a class="text-primary bg-secondary-container font-bold border-l-4 border-primary px-4 py-3 flex items-center gap-3 w-full hover:bg-surface-container-high hover:text-primary transition-all translate-x-1" href="#">
+<span class="material-symbols-outlined text-[20px]">clinical_notes</span>
+<span class="font-label-caps text-label-caps tracking-widest mt-0.5">ROSTER</span>
+</a>
+</li>
+<li class="w-full">
+<a class="text-on-surface-variant px-4 py-3 opacity-70 flex items-center gap-3 w-full hover:bg-surface-container-high hover:text-primary transition-all hover:opacity-100" href="#">
+<span class="material-symbols-outlined text-[20px]">monitor_heart</span>
+<span class="font-label-caps text-label-caps tracking-widest mt-0.5">MED_BAY</span>
+</a>
+</li>
+<li class="w-full">
+<a class="text-on-surface-variant px-4 py-3 opacity-70 flex items-center gap-3 w-full hover:bg-surface-container-high hover:text-primary transition-all hover:opacity-100" href="#">
+<span class="material-symbols-outlined text-[20px]">medical_services</span>
+<span class="font-label-caps text-label-caps tracking-widest mt-0.5">INVENTORY</span>
+</a>
+</li>
+<li class="w-full">
+<a class="text-on-surface-variant px-4 py-3 opacity-70 flex items-center gap-3 w-full hover:bg-surface-container-high hover:text-primary transition-all hover:opacity-100" href="#">
+<span class="material-symbols-outlined text-[20px]">do_not_disturb_on</span>
+<span class="font-label-caps text-label-caps tracking-widest mt-0.5">QUARANTINE</span>
+</a>
+</li>
+<li class="w-full">
+<a class="text-on-surface-variant px-4 py-3 opacity-70 flex items-center gap-3 w-full hover:bg-surface-container-high hover:text-primary transition-all hover:opacity-100" href="#">
+<span class="material-symbols-outlined text-[20px]">settings_input_component</span>
+<span class="font-label-caps text-label-caps tracking-widest mt-0.5">SYSTEM</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="px-4 mt-auto">
+<button class="w-full border border-error text-error py-2 font-label-caps text-label-caps tracking-widest hover:bg-error hover:text-surface transition-colors uppercase group relative overflow-hidden">
+<span class="relative z-10 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                        TERMINAL_OVERRIDE<span class="blinking-cursor group-hover:text-surface">_</span>
+</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Area - 3 Panel Layout -->
+<main class="flex-1 flex gap-gutter p-gutter h-full overflow-hidden bg-surface-container-lowest">
+<!-- Panel 1: Roster (30%) -->
+<section class="flex flex-col flex-[0_0_30%] min-w-[300px] h-full gap-stack-md">
+<div class="bg-surface-container-low border border-outline-variant flex-1 flex flex-col overflow-hidden">
+<header class="bg-surface-container-highest border-b border-outline-variant p-2 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary tracking-wide">SURVIVOR_ROSTER</h2>
+<span class="font-data-sm text-data-sm text-on-surface-variant">[03_ACTIVE]</span>
+</header>
+<div class="p-3 flex-1 overflow-y-auto flex flex-col gap-2">
+<!-- Survivor: OP_83 -->
+<div class="border border-outline-variant p-2 hover:border-secondary transition-colors cursor-pointer bg-surface/50">
+<div class="flex justify-between items-start mb-2">
+<span class="font-data-md text-data-md font-bold text-primary">OP_83</span>
+<div class="flex gap-1">
+<span class="text-[10px] bg-secondary-container text-on-secondary-container px-1 border border-secondary/30 uppercase">ARS</span>
+</div>
+</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-1">
+<span>HLTH: <span class="text-secondary crt-glow">82%</span></span>
+<span>RAD: <span class="text-secondary crt-glow">0.4 Sv</span></span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 flex gap-[1px]">
+<div class="h-full bg-secondary w-4/5"></div>
+<div class="h-full bg-secondary-fixed-dim w-[2%]"></div>
+</div>
+</div>
+<!-- Survivor: OP_12 (ALERT) -->
+<div class="border border-error p-2 bg-error/5 relative overflow-hidden cursor-pointer">
+<div class="absolute top-0 left-0 w-1 h-full bg-error animate-pulse"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<span class="font-data-md text-data-md font-bold text-error crt-glow">OP_12</span>
+<div class="flex gap-1">
+<span class="text-[10px] bg-error-container text-on-error-container px-1 border border-error/30 uppercase animate-pulse">SHRAPNEL</span>
+<span class="text-[10px] bg-error-container text-on-error-container px-1 border border-error/30 uppercase">ARS_CRIT</span>
+</div>
+</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-1 pl-2">
+<span>HLTH: <span class="text-error font-bold">34%</span></span>
+<span>RAD: <span class="text-error font-bold animate-pulse">2.1 Sv</span></span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 flex gap-[1px] ml-2 w-[calc(100%-8px)]">
+<div class="h-full bg-error w-1/3 animate-pulse"></div>
+</div>
+</div>
+<!-- Survivor: CIV_09 -->
+<div class="border border-outline-variant p-2 hover:border-secondary transition-colors cursor-pointer bg-surface/50">
+<div class="flex justify-between items-start mb-2">
+<span class="font-data-md text-data-md font-bold text-primary">CIV_09</span>
+<div class="flex gap-1">
+<span class="text-[10px] bg-surface-container-highest text-on-surface-variant px-1 border border-outline-variant uppercase">HYPOTHERMIA</span>
+</div>
+</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-1">
+<span>HLTH: <span class="text-tertiary-fixed-dim">61%</span></span>
+<span>RAD: <span class="text-secondary crt-glow">0.8 Sv</span></span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 flex gap-[1px]">
+<div class="h-full bg-tertiary-fixed-dim w-[60%]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant h-48 flex flex-col shrink-0">
+<header class="bg-surface-container-highest border-b border-outline-variant p-1.5 flex justify-between items-center px-2">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-widest">RAD_EXPOSURE_HISTORY</h3>
+</header>
+<div class="p-2 flex-1 flex items-end gap-1 font-data-sm text-data-sm text-outline-variant relative pb-4">
+<div class="absolute bottom-1 left-2">0.0</div>
+<div class="absolute top-2 left-2 text-error">3.0 Sv (LTL)</div>
+<div class="absolute top-[30%] w-full border-t border-dashed border-error/30"></div>
+<!-- Simple CSS Bar Graph -->
+<div class="flex-1 flex items-end gap-[2px] h-full pl-16">
+<div class="w-full bg-secondary/40 h-[10%] hover:bg-secondary"></div>
+<div class="w-full bg-secondary/40 h-[15%] hover:bg-secondary"></div>
+<div class="w-full bg-secondary/40 h-[12%] hover:bg-secondary"></div>
+<div class="w-full bg-tertiary-fixed-dim/60 h-[30%] hover:bg-tertiary-fixed-dim"></div>
+<div class="w-full bg-error/80 h-[80%] hover:bg-error"></div>
+<div class="w-full bg-error/60 h-[70%] hover:bg-error"></div>
+<div class="w-full bg-error/90 h-[85%] hover:bg-error"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Panel 2: Diagnostic Bay (40%) -->
+<section class="flex flex-col flex-[1_1_40%] h-full gap-stack-md">
+<div class="bg-surface-container-low border border-outline-variant flex-1 flex flex-col overflow-hidden">
+<header class="bg-secondary-container/20 border-b border-secondary/30 p-2 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary animate-pulse block"></span>
+<h2 class="font-headline-md text-headline-md text-secondary tracking-wide crt-glow">DIAGNOSTIC_BAY_01</h2>
+</div>
+<span class="font-data-sm text-data-sm text-secondary border border-secondary px-1 uppercase animate-pulse">Monitoring: OP_12</span>
+</header>
+<div class="p-4 flex flex-col gap-4 flex-1">
+<!-- ECG Graph Placeholder -->
+<div class="border border-outline-variant bg-surface h-32 relative overflow-hidden flex items-center justify-center">
+<!-- Grid lines -->
+<div class="absolute inset-0 bg-[linear-gradient(rgba(45,90,94,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(45,90,94,0.1)_1px,transparent_1px)] bg-[size:10px_10px]"></div>
+<div class="absolute inset-0 bg-[linear-gradient(rgba(45,90,94,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(45,90,94,0.2)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+<div class="text-secondary/50 font-data-lg text-data-lg z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-[32px] animate-pulse">monitor_heart</span>
+<span class="font-data-sm text-data-sm mt-1">S_TELEMETRY_LINK_ESTABLISHED</span>
+</div>
+<!-- Fake ECG Line via CSS -->
+<svg class="absolute inset-0 w-full h-full text-secondary stroke-current drop-shadow-[0_0_3px_#a1cfd3]" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0,50 L20,50 L25,30 L30,70 L35,20 L40,80 L45,45 L50,55 L55,50 L100,50" fill="none" stroke-width="0.5" vector-effect="non-scaling-stroke">
+<animate attributename="d" dur="1s" repeatcount="indefinite" values="M0,50 L20,50 L25,30 L30,70 L35,20 L40,80 L45,45 L50,55 L55,50 L100,50; M-20,50 L0,50 L5,30 L10,70 L15,20 L20,80 L25,45 L30,55 L35,50 L80,50"></animate>
+</path>
+</svg>
+</div>
+<!-- Vitals Cluster -->
+<div class="grid grid-cols-3 gap-2">
+<div class="border border-outline-variant p-2 bg-surface">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Heart_Rate</div>
+<div class="font-display-lg text-display-lg text-error crt-glow text-right mt-[-4px]">142<span class="text-data-sm text-on-surface-variant font-data-sm ml-1">BPM</span></div>
+</div>
+<div class="border border-outline-variant p-2 bg-surface">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Blood_Press</div>
+<div class="font-headline-lg text-headline-lg text-tertiary-fixed-dim text-right mt-1">85/50<span class="text-data-sm text-on-surface-variant font-data-sm ml-1">mmHg</span></div>
+</div>
+<div class="border border-outline-variant p-2 bg-surface">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">O2_Sat</div>
+<div class="font-display-lg text-display-lg text-error crt-glow text-right mt-[-4px]">88<span class="text-data-sm text-on-surface-variant font-data-sm ml-1">%</span></div>
+</div>
+</div>
+<div class="border border-outline-variant p-3 mt-auto flex flex-col gap-3">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-widest border-b border-outline-variant pb-1">TREATMENT_CONTROLS</h3>
+<div class="flex gap-2">
+<button class="flex-1 border border-secondary text-secondary font-data-md text-data-md py-2 uppercase hover:bg-secondary hover:text-surface transition-colors whitespace-nowrap overflow-hidden text-ellipsis px-2 text-center group">
+                                    CHELATION_INJ<span class="group-hover:text-surface">_</span>
+</button>
+<button class="flex-1 border border-outline text-on-surface font-data-md text-data-md py-2 uppercase hover:bg-primary hover:text-surface transition-colors whitespace-nowrap overflow-hidden text-ellipsis px-2 text-center group">
+                                    SURGERY_AUTO<span class="group-hover:text-surface">_</span>
+</button>
+<button class="flex-1 border border-error text-error font-data-md text-data-md py-2 uppercase hover:bg-error hover:text-surface transition-colors whitespace-nowrap overflow-hidden text-ellipsis px-2 text-center group">
+                                    LOCKDOWN<span class="group-hover:text-surface">_</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pharmacy Dispenser -->
+<div class="bg-surface-container-low border border-outline-variant shrink-0">
+<header class="bg-surface-container-highest border-b border-outline-variant p-1.5 flex justify-between items-center px-2">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-widest">PHARMACY_DISPENSER</h3>
+<span class="material-symbols-outlined text-secondary text-[16px]">lock_open</span>
+</header>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-[1px] bg-outline-variant p-[1px]">
+<div class="bg-surface p-2 flex flex-col justify-between h-16 cursor-pointer hover:bg-surface-container-high group">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase group-hover:text-primary">Rad-Away</span>
+<div class="flex justify-between items-end">
+<span class="font-data-lg text-data-lg text-error">04</span>
+<span class="font-data-sm text-data-sm text-outline group-hover:text-primary">[DISP]</span>
+</div>
+</div>
+<div class="bg-surface p-2 flex flex-col justify-between h-16 cursor-pointer hover:bg-surface-container-high group">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase group-hover:text-primary truncate">Potassium_I</span>
+<div class="flex justify-between items-end">
+<span class="font-data-lg text-data-lg text-secondary">12</span>
+<span class="font-data-sm text-data-sm text-outline group-hover:text-primary">[DISP]</span>
+</div>
+</div>
+<div class="bg-surface p-2 flex flex-col justify-between h-16 cursor-pointer hover:bg-surface-container-high group">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase group-hover:text-primary">Morphine</span>
+<div class="flex justify-between items-end">
+<span class="font-data-lg text-data-lg text-error">02</span>
+<span class="font-data-sm text-data-sm text-outline group-hover:text-primary">[DISP]</span>
+</div>
+</div>
+<div class="bg-surface p-2 flex flex-col justify-between h-16 cursor-pointer hover:bg-surface-container-high group">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase group-hover:text-primary truncate">Clean_Bandages</span>
+<div class="flex justify-between items-end">
+<span class="font-data-lg text-data-lg text-primary">38</span>
+<span class="font-data-sm text-data-sm text-outline group-hover:text-primary">[DISP]</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Panel 3: Quarantine Sector (30%) -->
+<section class="flex flex-col flex-[0_0_30%] min-w-[280px] h-full gap-stack-md">
+<div class="bg-surface-container-low border border-outline-variant flex-1 flex flex-col overflow-hidden">
+<header class="bg-surface-container-highest border-b border-outline-variant p-2 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary tracking-wide">QUARANTINE_SECTOR</h2>
+<span class="material-symbols-outlined text-outline-variant text-[20px]">do_not_disturb_on</span>
+</header>
+<div class="p-3 flex-1 flex flex-col gap-4 overflow-y-auto">
+<div class="grid grid-cols-2 gap-2">
+<!-- Isolation Ward Status Grid -->
+<div class="border border-error p-2 bg-error/5 flex flex-col items-center justify-center relative cursor-pointer hover:bg-error/10">
+<span class="absolute top-1 left-1 font-label-caps text-[8px] text-error">Q-01</span>
+<span class="material-symbols-outlined text-error mt-1 text-[24px]">person</span>
+<span class="font-data-sm text-data-sm text-error mt-1 uppercase text-center w-full truncate">CIV_14</span>
+</div>
+<div class="border border-outline-variant p-2 bg-surface flex flex-col items-center justify-center relative cursor-pointer hover:border-secondary">
+<span class="absolute top-1 left-1 font-label-caps text-[8px] text-outline">Q-02</span>
+<span class="material-symbols-outlined text-outline-variant mt-1 text-[24px]">person_off</span>
+<span class="font-data-sm text-data-sm text-outline-variant mt-1 uppercase">EMPTY</span>
+</div>
+<div class="border border-secondary p-2 bg-secondary/5 flex flex-col items-center justify-center relative cursor-pointer hover:bg-secondary/10">
+<span class="absolute top-1 left-1 font-label-caps text-[8px] text-secondary">Q-03</span>
+<span class="material-symbols-outlined text-secondary mt-1 text-[24px]">person</span>
+<span class="font-data-sm text-data-sm text-secondary mt-1 uppercase text-center w-full truncate">OP_42</span>
+</div>
+<div class="border border-outline-variant p-2 bg-surface flex flex-col items-center justify-center relative cursor-pointer hover:border-secondary">
+<span class="absolute top-1 left-1 font-label-caps text-[8px] text-outline">Q-04</span>
+<span class="material-symbols-outlined text-outline-variant mt-1 text-[24px]">person_off</span>
+<span class="font-data-sm text-data-sm text-outline-variant mt-1 uppercase">EMPTY</span>
+</div>
+<div class="border border-secondary p-2 bg-secondary/5 flex flex-col items-center justify-center relative cursor-pointer hover:bg-secondary/10">
+<span class="absolute top-1 left-1 font-label-caps text-[8px] text-secondary">Q-05</span>
+<span class="material-symbols-outlined text-secondary mt-1 text-[24px]">person</span>
+<span class="font-data-sm text-data-sm text-secondary mt-1 uppercase text-center w-full truncate">CIV_02</span>
+</div>
+<div class="border border-outline-variant p-2 bg-surface flex flex-col items-center justify-center relative cursor-pointer hover:border-secondary opacity-50">
+<span class="absolute top-1 left-1 font-label-caps text-[8px] text-outline">Q-06</span>
+<span class="material-symbols-outlined text-outline-variant mt-1 text-[24px]">lock</span>
+<span class="font-data-sm text-data-sm text-outline-variant mt-1 uppercase">SEALED</span>
+</div>
+<div class="border border-outline-variant p-2 bg-surface flex flex-col items-center justify-center relative cursor-pointer hover:border-secondary opacity-50">
+<span class="absolute top-1 left-1 font-label-caps text-[8px] text-outline">Q-07</span>
+<span class="material-symbols-outlined text-outline-variant mt-1 text-[24px]">lock</span>
+<span class="font-data-sm text-data-sm text-outline-variant mt-1 uppercase">SEALED</span>
+</div>
+<div class="border border-outline-variant p-2 bg-surface flex flex-col items-center justify-center relative cursor-pointer hover:border-secondary opacity-50">
+<span class="absolute top-1 left-1 font-label-caps text-[8px] text-outline">Q-08</span>
+<span class="material-symbols-outlined text-outline-variant mt-1 text-[24px]">lock</span>
+<span class="font-data-sm text-data-sm text-outline-variant mt-1 uppercase">SEALED</span>
+</div>
+</div>
+<!-- Life Support Readouts -->
+<div class="border border-outline-variant p-3 bg-surface-container-highest mt-auto">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-widest border-b border-outline-variant pb-1 mb-2">LIFE_SUPPORT_SYS</h3>
+<div class="flex flex-col gap-2 font-data-sm text-data-sm">
+<div class="flex justify-between items-center">
+<span class="text-on-surface">AIR_FILTER_EFFICIENCY:</span>
+<span class="text-secondary crt-glow">94%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 flex gap-[1px]">
+<div class="h-full bg-secondary w-[94%]"></div>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="text-on-surface">PSYCH_STABILIZATION:</span>
+<span class="text-secondary crt-glow border border-secondary px-1 text-[10px]">ACTIVE</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="text-on-surface">RAD_SCRUBBERS:</span>
+<span class="text-tertiary-fixed-dim">CAP_WARN</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant h-32 flex flex-col shrink-0">
+<header class="bg-surface-container-highest border-b border-outline-variant p-1.5 flex justify-between items-center px-2">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-widest">SOMATIC_FLASHBACK_MONITOR</h3>
+</header>
+<div class="p-3 flex-1 flex flex-col justify-center">
+<!-- Gauge visualization -->
+<div class="flex justify-between font-label-caps text-label-caps text-on-surface-variant mb-1">
+<span>NOMINAL</span>
+<span class="text-error">DISSOCIATION</span>
+</div>
+<div class="w-full h-4 bg-outline-variant border border-outline-variant relative overflow-hidden flex">
+<!-- Segmented bar -->
+<div class="w-[65%] h-full bg-secondary/80 border-r border-background"></div>
+<div class="w-2 h-full bg-surface absolute left-[65%] top-0 bottom-0 animate-pulse mix-blend-difference"></div>
+</div>
+<div class="flex justify-between mt-1 w-full text-[10px] font-data-sm text-outline-variant">
+<span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
+</div>
+<div class="text-center font-data-md text-data-md text-primary mt-1">LVL: 0.65 <span class="text-on-surface-variant text-[10px]">[STABLE]</span></div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="z-50 bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant flex justify-between items-center px-margin-base h-8 shrink-0 relative">
+<div class="font-label-caps text-label-caps text-error crt-glow">ENCRYPTION_STATUS: AES-256_ACTIVE</div>
+<div class="flex gap-4 font-data-sm text-data-sm text-on-surface-variant uppercase">
+<span>SYSTEM_STABILITY: 99.8%</span>
+<a class="hover:underline hover:text-primary transition-colors border-l border-outline-variant pl-4" href="#">TERMINAL_OVERRIDE</a>
+<a class="hover:underline hover:text-primary transition-colors border-l border-outline-variant pl-4" href="#">LOG_OUT_<span class="blinking-cursor">_</span></a>
+</div>
+</footer>
+</body></html>

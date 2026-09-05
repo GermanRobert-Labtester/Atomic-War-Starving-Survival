@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "strata": [
+    {
+      "stratum_id": "stratum_alluvial_topsoil",
+      "display_name": "Alluvial Topsoil",
+      "water_table_pressure": 0.8,
+      "base_ingress_cm_per_day": 2.0,
+      "silt_fraction": 0.08,
+      "toxicity_tier": 0,
+      "metal_content_profile": "trace_oxide",
+      "gas_risk_profile": "low",
+      "temperature_modifier": 1.0,
+      "pump_load_modifier": 0.8,
+      "tags": ["shallow", "soft_dig"]
+    },
+    {
+      "stratum_id": "stratum_compact_clay",
+      "display_name": "Compact Clay",
+      "water_table_pressure": 0.6,
+      "base_ingress_cm_per_day": 1.0,
+      "silt_fraction": 0.03,
+      "toxicity_tier": 0,
+      "metal_content_profile": "none",
+      "gas_risk_profile": "low",
+      "temperature_modifier": 1.0,
+      "pump_load_modifier": 0.7,
+      "tags": ["shallow", "tight_ground"]
+    },
+    {
+      "stratum_id": "stratum_fractured_gravel_aquifer",
+      "display_name": "Fractured Gravel Aquifer",
+      "water_table_pressure": 1.4,
+      "base_ingress_cm_per_day": 5.0,
+      "silt_fraction": 0.12,
+      "toxicity_tier": 1,
+      "metal_content_profile": "iron_oxide",
+      "gas_risk_profile": "reduced_sulfur",
+      "temperature_modifier": 0.9,
+      "pump_load_modifier": 1.2,
+      "tags": ["aquifer", "high_flow", "silty"]
+    },
+    {
+      "stratum_id": "stratum_deep_fractured_bedrock",
+      "display_name": "Deep Fractured Bedrock",
+      "water_table_pressure": 2.0,
+      "base_ingress_cm_per_day": 4.0,
+      "silt_fraction": 0.06,
+      "toxicity_tier": 2,
+      "metal_content_profile": "galvanic_slime",
+      "gas_risk_profile": "reduced_sulfur",
+      "temperature_modifier": 0.8,
+      "pump_load_modifier": 1.5,
+      "tags": ["deep", "metal_bearing", "toxic"]
+    }
+  ]
+}

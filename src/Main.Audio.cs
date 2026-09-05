@@ -16,8 +16,9 @@ namespace AtomicWar.GodotApp
     /// AudioManager discovers this through its parent and safely rebinds when
     /// campaign host sessions are created, replaced, or cleared.
     /// </summary>
-    public partial class Main : IAudioDomainProvider
+    public partial class Main : IAudioDomainProvider, IExpansionAudioProvider
     {
+        private Ashfall.Core.AudioConditionSystem _audioConditions = new Ashfall.Core.AudioConditionSystem();
         RadiationSystem? IAudioDomainProvider.AudioRadiation => _survivors?.Radiation;
         WeatherSystem? IAudioDomainProvider.AudioWeather => _world?.Weather;
         TacticalCombatSystem? IAudioDomainProvider.AudioCombat => _combat?.Engine;
@@ -27,5 +28,12 @@ namespace AtomicWar.GodotApp
         SurvivorFateSystem? IAudioDomainProvider.AudioSurvivorFate => _survivorFate;
         PowerGridSystem? IAudioDomainProvider.AudioPowerGrid => _powerGrid?.System;
         StartingLevelSystem? IAudioDomainProvider.AudioStartingLevel => _startingLevel?.System;
+        Ashfall.Core.AudioConditionSystem? IAudioDomainProvider.AudioConditions => _audioConditions;
+        Ashfall.Core.Survivors.SomaticFlashbackSystem? IAudioDomainProvider.AudioFlashbacks => _phase0?.Flashbacks;
+
+        Ashfall.Core.Survivors.DesperationSystem? IExpansionAudioProvider.AudioDesperation => EnsureDesperation();
+        Ashfall.Core.Medical.MutationSystem? IExpansionAudioProvider.AudioMutation => EnsureMutations();
+        Ashfall.Core.Combat.ChemWarfareSystem? IExpansionAudioProvider.AudioChemWarfare => EnsureChemWarfare();
+        Ashfall.Core.Expeditions.RailwaySystem? IExpansionAudioProvider.AudioRailway => EnsureRailway();
     }
 }

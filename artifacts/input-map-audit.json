@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-03T17:45:00Z",
+  "total_actions": 22,
+  "canonical_verbs": [
+    {
+      "action": "ashfall_close",
+      "aliases": ["ui_cancel"],
+      "default_key": "Escape",
+      "default_joypad": "JoyButton.B",
+      "description": "Dismiss active overlay or close topmost modal in stack",
+      "rebindable": false,
+      "category": "Navigation"
+    },
+    {
+      "action": "ashfall_confirm",
+      "aliases": ["ui_accept"],
+      "default_key": "Enter",
+      "secondary_key": "Space",
+      "default_joypad": "JoyButton.A",
+      "description": "Confirm dialog, activate focused button, or select highlighted item",
+      "rebindable": true,
+      "category": "Navigation"
+    },
+    {
+      "action": "ashfall_next_tab",
+      "aliases": ["ui_focus_next"],
+      "default_key": "Tab",
+      "default_joypad": "JoyButton.RightShoulder",
+      "description": "Cycle focus forward or switch to next tab in multi-tab panels",
+      "rebindable": true,
+      "category": "Navigation"
+    },
+    {
+      "action": "ashfall_nav_up",
+      "aliases": ["ui_up"],
+      "default_key": "W",
+      "secondary_key": "Up",
+      "default_joypad": "JoyButton.DpadUp",
+      "description": "Navigate upward in lists and grids",
+      "rebindable": true,
+      "category": "Directional"
+    },
+    {
+      "action": "ashfall_nav_down",
+      "aliases": ["ui_down"],
+      "default_key": "S",
+      "secondary_key": "Down",
+      "default_joypad": "JoyButton.DpadDown",
+      "description": "Navigate downward in lists and grids",
+      "rebindable": true,
+      "category": "Directional"
+    },
+    {
+      "action": "ashfall_nav_left",
+      "aliases": ["ui_left"],
+      "default_key": "A",
+      "secondary_key": "Left",
+      "default_joypad": "JoyButton.DpadLeft",
+      "description": "Navigate leftward in grids and pagination",
+      "rebindable": true,
+      "category": "Directional"
+    },
+    {
+      "action": "ashfall_nav_right",
+      "aliases": ["ui_right"],
+      "default_key": "D",
+      "secondary_key": "Right",
+      "default_joypad": "JoyButton.DpadRight",
+      "description": "Navigate rightward in grids and pagination",
+      "rebindable": true,
+      "category": "Directional"
+    },
+    {
+      "action": "ashfall_journal",
+      "default_key": "J",
+      "default_joypad": "JoyButton.Y",
+      "description": "Toggle expedition and campaign journal ledger",
+      "rebindable": true,
+      "category": "Shortcuts"
+    },
+    {
+      "action": "ashfall_help",
+      "default_key": "F1",
+      "default_joypad": "JoyButton.Back",
+      "description": "Open interactive survival tutorial and reference codex",
+      "rebindable": true,
+      "category": "Shortcuts"
+    },
+    {
+      "action": "ashfall_forecast",
+      "default_key": "F",
+      "description": "Open weather forecast & atmospheric radar panel",
+      "rebindable": true,
+      "category": "Shortcuts"
+    },
+    {
+      "action": "ashfall_weather_history",
+      "default_key": "H",
+      "description": "Open historic fallout plume & barometric log",
+      "rebindable": true,
+      "category": "Shortcuts"
+    },
+    {
+      "action": "ashfall_events",
+      "default_key": "E",
+      "description": "Open shelter events log & crisis telemetry",
+      "rebindable": true,
+      "category": "Shortcuts"
+    },
+    {
+      "action": "ashfall_expeditions",
+      "default_key": "X",
+      "description": "Open wasteland expedition & scouting hub",
+      "rebindable": true,
+      "category": "Shortcuts"
+    },
+    {
+      "action": "ashfall_holdfast",
+      "default_key": "T",
+      "description": "Open holdfast operations & engineering terminal",
+      "rebindable": true,
+      "category": "Shortcuts"
+    },
+    {
+      "action": "ashfall_holdfast_build",
+      "default_key": "B",
+      "description": "Holdfast room construction & expansion modal",
+      "rebindable": true,
+      "category": "Holdfast"
+    },
+    {
+      "action": "ashfall_holdfast_status",
+      "default_key": "U",
+      "description": "Holdfast structural health & power status modal",
+      "rebindable": true,
+      "category": "Holdfast"
+    },
+    {
+      "action": "ashfall_journal_tab_1",
+      "default_key": "1",
+      "description": "Switch to Journal Tab 1 (Overview)",
+      "rebindable": true,
+      "category": "Journal"
+    },
+    {
+      "action": "ashfall_journal_tab_2",
+      "default_key": "2",
+      "description": "Switch to Journal Tab 2 (Directives)",
+      "rebindable": true,
+      "category": "Journal"
+    },
+    {
+      "action": "ashfall_journal_tab_3",
+      "default_key": "3",
+      "description": "Switch to Journal Tab 3 (Telemetry)",
+      "rebindable": true,
+      "category": "Journal"
+    },
+    {
+      "action": "ashfall_journal_tab_4",
+      "default_key": "4",
+      "description": "Switch to Journal Tab 4 (Subsystems)",
+      "rebindable": true,
+      "category": "Journal"
+    },
+    {
+      "action": "ashfall_journal_tab_5",
+      "default_key": "5",
+      "description": "Switch to Journal Tab 5 (Archive)",
+      "rebindable": true,
+      "category": "Journal"
+    }
+  ],
+  "audit_findings": [
+    {
+      "finding": "Cleaned dead binding collision where ashfall_help and ashfall_holdfast both bound Key 72 (H). Resolved: Help is F1, Holdfast is T.",
+      "severity": "Fixed"
+    },
+    {
+      "finding": "NavDown and HoldfastStatus both mapped to Key S. Resolved: HoldfastStatus mapped to Key U, reserving S strictly for NavDown directional control.",
+      "severity": "Fixed"
+    },
+    {
+      "finding": "Raw Key.Escape in panel _UnhandledInput eliminated across top 6 panels in favor of canonical AshfallInputActions.IsCloseOrCancel.",
+      "severity": "Fixed"
+    }
+  ]
+}

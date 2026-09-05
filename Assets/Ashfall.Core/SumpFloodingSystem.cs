@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 
+
 using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 using Ashfall.Core.YearOfAsh;
@@ -16,6 +17,15 @@ namespace Ashfall.Core
         public float globalGroundwaterLevel;
         public int lastFloodDay = -1;
         public List<FloodIncident> incidentLog = new List<FloodIncident>();
+
+        // ── Sludge processing plant (Plan 70; shelter-level, single machine) ──
+        public float dewateredCakeKg;             // recovered sludge cake (metallurgy seam later)
+        public string dewateredCakeProfileId = string.Empty; // tagged assay composition (sump_drainage_catalog)
+        public float hazardousTailingsKg;         // concentrated hazardous tailings (disposal seam later)
+        public float unroutedGreywaterLiters;     // greywater awaiting a bound water-treatment authority
+        public float centrifugeCondition = 100f;  // 0-100
+        public float centrifugeFilterMedia = 100f;// 0-100 cloth media
+        public int centrifugeBatchesCompleted;
     }
 
     [Serializable]
@@ -33,6 +43,9 @@ namespace Ashfall.Core
         public bool isFlooded;
         public bool equipmentDisabled;
         public float contaminationLevel;     // 0-1
+        public string stratumId = string.Empty;   // bound drainage stratum (sump_drainage_catalog)
+        public float suspendedSolidsKg;           // silt in suspension; settles daily into settledSludgeKg
+        public float settledSludgeKg;             // settled sludge mass awaiting treatment/dredging
         public List<string> adjacentNodeIds = new List<string>();
     }
 
@@ -50,12 +63,75 @@ namespace Ashfall.Core
     public sealed class SumpFloodingSystem
     {
         public const string SystemId = "sump_flooding";
+
+        // ── Stratum/sludge model constants (sump_drainage_catalog) ──────
+        /// <summary>Basin cross-section convention: 1 cm of node level = 10 L of water.</summary>
+        public const float BasinLitersPerCmLevel = 10f;
+        /// <summary>Fraction of suspended solids that settles into sludge each day.</summary>
+        public const float SettledFractionPerDay = 0.15f;
+        /// <summary>Solids mass (suspended + settled) at which the wear multiplier reaches 2×.</summary>
+        public const float SolidsWearReferenceKg = 10f;
+        /// <summary>Cap on the solids contribution to the pump wear multiplier.</summary>
+        public const float MaxSolidsWearFactor = 4f;
+        /// <summary>Throughput loss factor per kg of suspended solids (viscosity/throttling).</summary>
+        public const float ViscosityThroughputPenaltyPerKg = 0.02f;
+        /// <summary>Settled sludge above this mass clogs the strainer and halves throughput.</summary>
+        public const float StrainerBlockageThresholdKg = 25f;
+
+        // ── Flocculation (Plan 70 §4.8) ─────────────────────────────
+        /// <summary>Canonical consumable used as flocculant.</summary>
+        public const string FlocculantItemId = "chemicals";
+        /// <summary>Chemical units consumed per dose tier.</summary>
+        public const int FlocculantUnitsPerDoseTier = 2;
+        /// <summary>Abstract mass of one chemical unit joining the sludge phase.</summary>
+        public const float FlocculantKgPerUnit = 0.5f;
+        public const float FlocculationCaptureEfficiencyTier1 = 0.60f;
+        public const float FlocculationCaptureEfficiencyTier2 = 0.85f;
+        /// <summary>Suspended-solids load a single dose tier can fully treat; beyond it
+        /// capture efficiency drops proportionally (under-dosing penalty).</summary>
+        public const float FlocculationSolidsReferenceKg = 10f;
+        /// <summary>Bounded water-quality gain per successful dose tier.</summary>
+        public const float FlocculationContaminationRemovalPerTier = 0.05f;
+        /// <summary>Over-dosing penalty: residual chemical fouls the water.</summary>
+        public const float FlocculationOverdoseResidualContamination = 0.02f;
+
+        // ── Centrifuge dewatering (Plan 70 §4.9) ────────────────────
+        /// <summary>Canonical consumable used as centrifuge filter media.</summary>
+        public const string CentrifugeFilterItemId = "cloth";
+        public const float CentrifugeMaxBatchSludgeKg = 40f;
+        public const float CentrifugeCakeFraction = 0.45f;
+        public const float CentrifugeTailingsFraction = 0.15f;
+        /// <summary>Water recovered per kg of sludge at full separation efficiency.
+        /// Cake absorbs the remainder — cake + tailings + water ≡ batch mass.</summary>
+        public const float CentrifugeWaterRecoveryFraction = 0.40f;
+        /// <summary>Below this media condition separation efficiency halves (wetted cake).</summary>
+        public const float CentrifugeLowMediaThreshold = 20f;
+        public const float CentrifugeConditionWearPerBatch = 1.0f;
+        public const float CentrifugeMediaWearPerBatch = 5f;
+
+        // ── Cake/tailings logistics & sludge gas (Plan 70 §4.13/§4.15) ───
+        /// <summary>Canonical feedstock item handed to the foundry recovery melt.</summary>
+        public const string SludgeCakeItemId = "item_sludge_cake";
+        /// <summary>Canonical sealed-waste item for tailings disposal hauling.</summary>
+        public const string TailingsDrumItemId = "item_tailings_drum";
+        public const float CakeKgPerBlock = 5f;
+        public const float TailingsKgPerDrum = 10f;
+        /// <summary>Settled sludge above this mass emits hazardous digester gas.</summary>
+        public const float SludgeGasThresholdKg = 15f;
+        public const float SludgeGasCoPpmPerDayBase = 2f;
+        public const float SludgeGasCoPpmPerKg = 0.2f;
+
         private SumpFloodingState _state = new SumpFloodingState();
+        private readonly Dictionary<string, SumpStratumDef> _strata = new Dictionary<string, SumpStratumDef>(StringComparer.Ordinal);
         private readonly ISeededRng _rng;
         private readonly ILog _log;
         private readonly WeatherSystem _weather;
         private readonly PowerGridSystem _powerGrid;
         private readonly YearOfAshDeepFreezeSystem _deepFreeze;
+        private Inventory.Inventory? _inventory;
+        private WaterTreatmentSystem? _waterTreatment;
+        private VentilationSystem? _ventilation;
+        private readonly HashSet<string> _activeGasSources = new HashSet<string>(StringComparer.Ordinal);
         private int _currentDay;
 
         public SumpFloodingState State => _state;
@@ -74,6 +150,225 @@ ILog? log = null)
             _powerGrid = powerGrid ?? throw new ArgumentNullException(nameof(powerGrid));
             _deepFreeze = deepFreeze ?? throw new ArgumentNullException(nameof(deepFreeze));
             _log = log ?? NullLog.Instance;
+        }
+
+        /// <summary>
+        /// Late-binds the consumable inventory and the canonical water-treatment
+        /// authority. Greywater from centrifuge dewatering routes into
+        /// WaterTreatmentSystem as Raw water (never potable); without a bound
+        /// authority it is conserved in <see cref="SumpFloodingState.unroutedGreywaterLiters"/>.
+        /// </summary>
+        public void BindServices(Inventory.Inventory? inventory, WaterTreatmentSystem? waterTreatment,
+            VentilationSystem? ventilation = null)
+        {
+            _inventory = inventory;
+            _waterTreatment = waterTreatment;
+            _ventilation = ventilation;
+        }
+
+        /// <summary>
+        /// Flocculation treatment batch (Plan 70 §4.8): consumes flocculant from
+        /// inventory, captures a dose-tier-dependent fraction of suspended solids
+        /// into the settled sludge layer (mass-conserving), and improves water
+        /// quality. Under-dosing (solids load above the tier reference) lowers
+        /// capture; over-dosing on thin solids fouls the water with residual
+        /// chemical. Game-abstract chemistry only.
+        /// </summary>
+        public ActionResult StartFlocculation(string nodeId, int doseTier)
+        {
+            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
+            if (doseTier < 1 || doseTier > 2)
+                return ActionResult.Failed("invalid_dose", "sump.invalid_dose");
+            if (node.suspendedSolidsKg <= 0f)
+                return ActionResult.Blocked("no_solids", "sump.flocculation_no_solids");
+
+            int units = doseTier * FlocculantUnitsPerDoseTier;
+            if (_inventory == null || !_inventory.TryConsume(FlocculantItemId, units))
+                return ActionResult.Failed("treatment_resource_missing", "sump.flocculant_missing");
+
+            float reference = FlocculationSolidsReferenceKg * doseTier;
+            float efficiency = (doseTier == 1
+                ? FlocculationCaptureEfficiencyTier1
+                : FlocculationCaptureEfficiencyTier2)
+                * Math.Min(1f, node.suspendedSolidsKg / reference);
+            float captured = node.suspendedSolidsKg * efficiency;
+            float doseMassKg = units * FlocculantKgPerUnit;
+
+            node.suspendedSolidsKg = Math.Max(0f, node.suspendedSolidsKg - captured);
+            node.settledSludgeKg += captured + doseMassKg;
+
+            if (node.suspendedSolidsKg < 1f)
+            {
+                // Over-dosing: little solids left to capture — residual chemical
+                // stays in the water column as contamination.
+                node.contaminationLevel = Math.Min(1f,
+                    node.contaminationLevel + FlocculationOverdoseResidualContamination);
+            }
+            else
+            {
+                node.contaminationLevel = Math.Max(0f,
+                    node.contaminationLevel - FlocculationContaminationRemovalPerTier * doseTier);
+            }
+
+            _log.Info($"[Sump] Flocculation tier {doseTier} in {node.displayName}: " +
+                      $"captured {captured:F2}kg, dosed {units} units");
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.flocculation_applied",
+                new Dictionary<string, double>
+                {
+                    { "captured_kg", captured },
+                    { "dose_units", units },
+                });
+        }
+
+        /// <summary>
+        /// Centrifuge dewatering batch (Plan 70 §4.9): processes settled sludge
+        /// from a node into dewatered cake, concentrated hazardous tailings, and
+        /// reclaimed greywater (routed to the water-treatment authority as Raw
+        /// water). Mass balance: cake + tailings + greywater ≡ batch input.
+        /// Requires room power and one cloth filter media per batch.
+        /// </summary>
+        public ActionResult RunCentrifugeBatch(string nodeId)
+        {
+            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
+            if (node.settledSludgeKg <= 0f)
+                return ActionResult.Blocked("no_sludge", "sump.centrifuge_no_sludge");
+            if (_state.centrifugeCondition <= 0f)
+                return ActionResult.Failed("centrifuge_unavailable", "sump.centrifuge_broken");
+            if (!_powerGrid.IsRoomPowered(nodeId))
+                return ActionResult.Failed("power_unavailable", "sump.centrifuge_no_power");
+            if (_state.centrifugeFilterMedia <= 0f)
+                return ActionResult.Blocked("media_worn", "sump.centrifuge_media_worn");
+            if (_inventory == null || !_inventory.TryConsume(CentrifugeFilterItemId, 1))
+                return ActionResult.Failed("treatment_resource_missing", "sump.centrifuge_media_missing");
+
+            float batchKg = Math.Min(node.settledSludgeKg, CentrifugeMaxBatchSludgeKg);
+            float efficiency = _state.centrifugeFilterMedia >= CentrifugeLowMediaThreshold
+                ? 1f
+                : 0.5f; // worn media: wetter cake, less recovered water
+            float greywaterL = batchKg * CentrifugeWaterRecoveryFraction * efficiency;
+            float tailingsKg = batchKg * CentrifugeTailingsFraction;
+            float cakeKg = batchKg - greywaterL - tailingsKg; // remainder conserves mass
+
+            node.settledSludgeKg = Math.Max(0f, node.settledSludgeKg - batchKg);
+            _state.dewateredCakeKg += cakeKg;
+            _state.hazardousTailingsKg += tailingsKg;
+
+            // Tag the cake stock with the producing stratum's assay profile;
+            // mixed stocks are flagged rather than silently averaged.
+            _strata.TryGetValue(node.stratumId, out var cakeStratum);
+            string profile = cakeStratum != null ? cakeStratum.metal_content_profile : string.Empty;
+            if (string.IsNullOrEmpty(_state.dewateredCakeProfileId))
+                _state.dewateredCakeProfileId = profile;
+            else if (_state.dewateredCakeProfileId != profile)
+                _state.dewateredCakeProfileId = "mixed";
+
+            if (_waterTreatment != null)
+            {
+                var add = _waterTreatment.AddWater(WaterType.Raw, greywaterL);
+                if (add.Status != ActionResult.StatusKind.Success)
+                    _state.unroutedGreywaterLiters += greywaterL;
+            }
+            else
+            {
+                _state.unroutedGreywaterLiters += greywaterL;
+            }
+
+            _state.centrifugeCondition = Math.Max(0f, _state.centrifugeCondition - CentrifugeConditionWearPerBatch);
+            _state.centrifugeFilterMedia = Math.Max(0f, _state.centrifugeFilterMedia - CentrifugeMediaWearPerBatch);
+            _state.centrifugeBatchesCompleted++;
+
+            _log.Info($"[Sump] Centrifuge batch in {node.displayName}: {batchKg:F2}kg → " +
+                      $"cake {cakeKg:F2}kg, tailings {tailingsKg:F2}kg, greywater {greywaterL:F2}L");
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.centrifuge_batch_complete",
+                new Dictionary<string, double>
+                {
+                    { "sludge_processed_kg", batchKg },
+                    { "cake_kg", cakeKg },
+                    { "tailings_kg", tailingsKg },
+                    { "greywater_l", greywaterL },
+                });
+        }
+
+        /// <summary>Replaces worn centrifuge filter media. Consumes one cloth item.</summary>
+        public ActionResult ReplaceCentrifugeMedia()
+        {
+            if (_inventory == null || !_inventory.TryConsume(CentrifugeFilterItemId, 1))
+                return ActionResult.Failed("treatment_resource_missing", "sump.centrifuge_media_missing");
+
+            _state.centrifugeFilterMedia = 100f;
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.centrifuge_media_replaced");
+        }
+
+        /// <summary>
+        /// Tagged assay of the current cake stock (Plan 70 §4.15). The sump never
+        /// grants metal items — the foundry authority owns recovery melts.
+        /// </summary>
+        public (string profileId, float cakeKg, float tailingsKg) AssayCake()
+        {
+            string display = _state.dewateredCakeKg <= 0f
+                ? string.Empty
+                : _state.dewateredCakeProfileId;
+            return (display, _state.dewateredCakeKg, _state.hazardousTailingsKg);
+        }
+
+        /// <summary>
+        /// Packs dewatered cake into canonical feedstock items for the foundry
+        /// recovery melt. Converts stock mass into <see cref="SludgeCakeItemId"/>
+        /// blocks; the sump adds feedstock only, never recovered metal.
+        /// </summary>
+        public ActionResult PackCakeForSmelting(int maxBlocks)
+        {
+            if (maxBlocks <= 0)
+                return ActionResult.Failed("invalid_amount", "sump.invalid_amount");
+            if (_inventory == null)
+                return ActionResult.Failed("inventory_unavailable", "sump.inventory_unavailable");
+            if (_state.dewateredCakeKg < CakeKgPerBlock)
+                return ActionResult.Blocked("no_cake", "sump.no_cake_stock");
+
+            int blocks = Math.Min(maxBlocks, (int)Math.Floor(_state.dewateredCakeKg / CakeKgPerBlock));
+            if (!_inventory.TryProduce(SludgeCakeItemId, blocks))
+                return ActionResult.Failed("pack_failed", "sump.cake_pack_failed");
+
+            _state.dewateredCakeKg -= blocks * CakeKgPerBlock;
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.cake_packed",
+                new Dictionary<string, double>
+                {
+                    { "blocks", blocks },
+                    { "cake_kg_remaining", _state.dewateredCakeKg },
+                });
+        }
+
+        /// <summary>
+        /// Packs hazardous tailings into canonical sealed drums for hauling on
+        /// expeditions (canonical cargo). Mass is conserved into the drum items.
+        /// </summary>
+        public ActionResult PackTailingsDrums(int maxDrums)
+        {
+            if (maxDrums <= 0)
+                return ActionResult.Failed("invalid_amount", "sump.invalid_amount");
+            if (_inventory == null)
+                return ActionResult.Failed("inventory_unavailable", "sump.inventory_unavailable");
+            if (_state.hazardousTailingsKg < TailingsKgPerDrum)
+                return ActionResult.Blocked("no_tailings", "sump.no_tailings_stock");
+
+            int drums = Math.Min(maxDrums, (int)Math.Floor(_state.hazardousTailingsKg / TailingsKgPerDrum));
+            if (!_inventory.TryProduce(TailingsDrumItemId, drums))
+                return ActionResult.Failed("pack_failed", "sump.drums_pack_failed");
+
+            _state.hazardousTailingsKg -= drums * TailingsKgPerDrum;
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.tailings_packed",
+                new Dictionary<string, double>
+                {
+                    { "drums", drums },
+                    { "tailings_kg_remaining", _state.hazardousTailingsKg },
+                });
         }
 
         public ActionResult AddNode(string nodeId, string displayName, float maxWaterLevelCm = 200f)
@@ -132,6 +427,33 @@ ILog? log = null)
             return ActionResult.Success($"sump.{mitigationType}_added");
         }
 
+        /// <summary>Registers drainage strata from sump_drainage_catalog.json. Returns count applied.</summary>
+        public int ApplyStratumCatalog(IEnumerable<SumpStratumDef> defs)
+        {
+            if (defs == null) return 0;
+            int applied = 0;
+            foreach (var def in defs)
+            {
+                if (def == null || string.IsNullOrEmpty(def.stratum_id)) continue;
+                _strata[def.stratum_id] = def;
+                applied++;
+            }
+            return applied;
+        }
+
+        /// <summary>Binds a node to a catalog stratum. Nodes without a stratum keep the legacy inflow model.</summary>
+        public ActionResult AssignStratum(string nodeId, string stratumId)
+        {
+            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
+            if (string.IsNullOrEmpty(stratumId) || !_strata.ContainsKey(stratumId))
+                return ActionResult.Failed("unknown_stratum", "sump.unknown_stratum");
+
+            node.stratumId = stratumId;
+            OnFloodingChanged?.Invoke();
+            return ActionResult.Success("sump.stratum_assigned");
+        }
+
         public void TickDay(int day)
         {
             _currentDay = day;
@@ -155,14 +477,35 @@ ILog? log = null)
             {
                 if (node.isFlooded && node.equipmentDisabled) continue;
 
-                // Inflow from groundwater
-                float inflow = _state.globalGroundwaterLevel * 0.5f;
+                // Inflow from groundwater. Nodes bound to a drainage stratum use
+                // catalog-driven ingress scaled by live groundwater pressure;
+                // unbound nodes keep the legacy flat model.
+                _strata.TryGetValue(node.stratumId, out var stratum);
+                float inflow;
+                float siltFraction = 0f;
+                float pumpLoadModifier = 1f;
+                int toxicityTier = 0;
+                if (stratum != null)
+                {
+                    float pressure = 0.5f + _state.globalGroundwaterLevel / 10f;
+                    inflow = stratum.base_ingress_cm_per_day * pressure * stratum.water_table_pressure;
+                    siltFraction = stratum.silt_fraction;
+                    pumpLoadModifier = stratum.pump_load_modifier;
+                    toxicityTier = stratum.toxicity_tier;
+                }
+                else
+                {
+                    inflow = _state.globalGroundwaterLevel * 0.5f;
+                }
                 if (_deepFreeze.IsIntakeBlocked)
                     inflow *= 0.2f; // frozen ground
 
                 // Mitigation reduces inflow
                 if (node.hasFloatValve) inflow *= 0.5f;
                 if (node.hasSandbagMitigation) inflow *= 0.3f;
+
+                // Silt carried by the ingress (mass-conserving; settles below).
+                node.suspendedSolidsKg += inflow * BasinLitersPerCmLevel * siltFraction;
 
                 // Pump drainage
                 float drainage = 0f;
@@ -171,8 +514,17 @@ ILog? log = null)
                     bool hasPower = _powerGrid.IsRoomPowered(node.nodeId);
                     if (hasPower)
                     {
-                        drainage = 20f * (node.pumpCondition / 100f);
-                        node.pumpCondition = Math.Max(0, node.pumpCondition - 0.1f);
+                        // Solids load: suspended silt throttles throughput (viscosity)
+                        // and settled sludge above the strainer threshold blocks the
+                        // inlet. Wear scales with total solids and stratum load.
+                        float solidsFactor = Math.Min(
+                            MaxSolidsWearFactor,
+                            (node.suspendedSolidsKg + node.settledSludgeKg) / SolidsWearReferenceKg);
+                        float viscosity = 1f / (1f + node.suspendedSolidsKg * ViscosityThroughputPenaltyPerKg);
+                        float blockage = node.settledSludgeKg > StrainerBlockageThresholdKg ? 0.5f : 1f;
+                        drainage = 20f * (node.pumpCondition / 100f) * viscosity * blockage;
+                        node.pumpCondition = Math.Max(0, node.pumpCondition
+                            - 0.1f * (1f + pumpLoadModifier * solidsFactor));
                     }
                     else
                     {
@@ -197,11 +549,20 @@ ILog? log = null)
 
                 node.waterLevelCm = Math.Max(0, node.waterLevelCm + inflow - drainage);
 
+                // Daily settling: a fixed fraction of suspended solids settles into
+                // the sludge layer. Mass is conserved (moved, never deleted).
+                float settledMass = node.suspendedSolidsKg * SettledFractionPerDay;
+                node.suspendedSolidsKg = Math.Max(0f, node.suspendedSolidsKg - settledMass);
+                node.settledSludgeKg += settledMass;
+
                 // Flood threshold
                 if (node.waterLevelCm > node.maxWaterLevelCm * 0.8f && !node.isFlooded)
                 {
                     node.isFlooded = true;
-                    node.contaminationLevel = Math.Min(1f, node.contaminationLevel + 0.2f);
+                    float contaminationGain = stratum != null
+                        ? 0.05f * (toxicityTier + 1)
+                        : 0.2f;
+                    node.contaminationLevel = Math.Min(1f, node.contaminationLevel + contaminationGain);
                     _state.lastFloodDay = day;
 
                     var incident = new FloodIncident
@@ -254,6 +615,53 @@ ILog? log = null)
             }
 
             OnFloodingChanged?.Invoke();
+
+            UpdateSludgeGasSources();
+        }
+
+        /// <summary>
+        /// Plan 70 §4.13: stagnant sludge emits hazardous digester gas through the
+        /// canonical ventilation authority. The sump only registers/updates typed
+        /// emission sources; VentilationSystem owns concentration, mitigation and
+        /// survivor consequences. Emission rates are parameterized by the
+        /// stratum gas risk profile (sump_drainage_catalog).
+        /// </summary>
+        private void UpdateSludgeGasSources()
+        {
+            if (_ventilation == null) return;
+
+            var desired = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var node in _state.nodes)
+            {
+                _strata.TryGetValue(node.stratumId, out var stratum);
+                string gasProfile = stratum?.gas_risk_profile ?? string.Empty;
+                bool hazardous = gasProfile is "reduced_sulfur" or "combustible";
+                if (!hazardous || node.settledSludgeKg < SludgeGasThresholdKg)
+                    continue;
+
+                string sourceId = $"sump_gas_{node.nodeId}";
+                desired.Add(sourceId);
+                _ventilation.RegisterSource(new VentilationSource
+                {
+                    sourceId = sourceId,
+                    roomId = node.nodeId,
+                    smokeOutputPerDay = 0f,
+                    coOutputPerDay = SludgeGasCoPpmPerDayBase
+                        + node.settledSludgeKg * SludgeGasCoPpmPerKg,
+                    requiresExhaust = true,
+                    isActive = true
+                });
+            }
+
+            // Decommission sources whose sludge was dredged or strata changed.
+            foreach (string sourceId in _activeGasSources)
+            {
+                if (!desired.Contains(sourceId))
+                    _ventilation.SetSourceActive(sourceId, false);
+            }
+            _activeGasSources.Clear();
+            foreach (string sourceId in desired)
+                _activeGasSources.Add(sourceId);
         }
 
         public ActionResult DrainNode(string nodeId)

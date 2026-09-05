@@ -250,6 +250,18 @@ namespace Ashfall.Core.Disease
         /// <summary>Forwarder for the string event bus (optional).</summary>
         public event Action<string, string> OnEventRaised;                  // eventId, detail
 
+        /// <summary>
+        /// Flagship XI (Plan 155) — optional abstract severity coupling:
+        /// (survivorId, diseaseId) → additive lethality delta applied in
+        /// ResolveOutcomes. Null (default) leaves outcome math untouched. The
+        /// pathogen strain system supplies this from the canonical radiation
+        /// query; the engine never reads radiation itself.
+        /// </summary>
+        public Func<string, string, float>? EffectiveLethalityModifier;
+
+        /// <summary>Raised when an active infection transitions between strains (Plan 155.10): survivorId, newStrainId.</summary>
+        public event Action<string, string>? OnStrainMutated;
+
         private readonly DiseaseSystemState _state;
         private readonly List<DiseaseEntryState> _entries = new List<DiseaseEntryState>();
         private readonly Dictionary<string, DiseaseEntryState> _byId =
@@ -318,6 +330,31 @@ ILog? log = null)
                 if (d == null || string.IsNullOrEmpty(d.id)) continue;
                 EnsureEntry(d.id, d.vector);
             }
+        }
+
+        /// <summary>Definition lookup through the bound catalog (null when unknown).</summary>
+        public DiseaseDefinition? GetDefinition(string diseaseId)
+        {
+            return string.IsNullOrEmpty(diseaseId) ? null : _catalog.GetById(diseaseId);
+        }
+
+        /// <summary>
+        /// Flagship XI (Plan 155) — register a fictional strain as a first-class
+        /// simulation row: catalog definition + engine entry, idempotent. The
+        /// strain layer stays the authoring authority; the engine runs strains
+        /// exactly like authored diseases (spread, quarantine, treatment, save).
+        /// </summary>
+        public bool RegisterStrain(DiseaseDefinition strainDefinition)
+        {
+            if (strainDefinition == null || string.IsNullOrEmpty(strainDefinition.id)) return false;
+            if (_catalog.GetById(strainDefinition.id) != null)
+            {
+                EnsureEntry(strainDefinition.id, strainDefinition.vector); // restore path: state without definition
+                return true;
+            }
+            _catalog.Add(strainDefinition);
+            EnsureEntry(strainDefinition.id, strainDefinition.vector);
+            return true;
         }
 
         /// <summary>Ensure a simulation row exists for a disease id.</summary>
@@ -586,7 +623,10 @@ ILog? log = null)
 
                 // Plan 60 / D3 — the roll is against what is left of the disease for
                 // <em>this</em> patient after treatment, not the raw authored value.
-                float lethal = Math.Max(0f, def.lethality - patient.lethality_reduction);
+                // Flagship XI (Plan 155): the optional modifier carries abstract
+                // radiation-severity pressure for strain infections; null = 0.
+                float modifier = EffectiveLethalityModifier?.Invoke(patient.survivor_id, entry.disease_id) ?? 0f;
+                float lethal = Math.Max(0f, def.lethality + modifier - patient.lethality_reduction);
                 bool died = lethal > 0f && _rng.NextDouble() < lethal;
                 removed.Add(patient);
                 if (died)
@@ -674,6 +714,56 @@ ILog? log = null)
             Raise(OnQuarantineEnded, DiseaseIds.EventQuarantineEnded,
                 survivorId + " released from quarantine", survivorId, diseaseId);
             RaiseStateChanged();
+        }
+
+        /// <summary>
+        /// Flagship XI (Plan 155.10) — fictional mutation as a pure gameplay state
+        /// transition: move one survivor's active infection from one registered
+        /// disease/strain to another, preserving its clinical history (infection
+        /// day, days sick, treatment ledger, quarantine). No laboratory semantics.
+        /// Returns false when the survivor is not infected with the source id or
+        /// the target id is not registered.
+        /// </summary>
+        public bool MutateInfection(string survivorId, string fromDiseaseId, string toDiseaseId)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(fromDiseaseId)
+                || string.IsNullOrEmpty(toDiseaseId)
+                || string.Equals(fromDiseaseId, toDiseaseId, StringComparison.Ordinal))
+                return false;
+
+            if (!_byId.TryGetValue(fromDiseaseId, out var fromEntry)
+                || !_byId.TryGetValue(toDiseaseId, out var toEntry))
+                return false;
+
+            DiseaseInfectionState? patient = null;
+            for (int i = 0; i < fromEntry.infected.Count; i++)
+            {
+                if (string.Equals(fromEntry.infected[i].survivor_id, survivorId, StringComparison.Ordinal))
+                {
+                    patient = fromEntry.infected[i];
+                    fromEntry.infected.RemoveAt(i);
+                    break;
+                }
+            }
+            if (patient == null) return false;
+
+            // A survivor carries one infection per disease entry; the mutated
+            // strain replaces any pre-existing one for the same survivor.
+            for (int i = toEntry.infected.Count - 1; i >= 0; i--)
+            {
+                if (string.Equals(toEntry.infected[i].survivor_id, survivorId, StringComparison.Ordinal))
+                    toEntry.infected.RemoveAt(i);
+            }
+
+            toEntry.infected.Add(patient);
+            toEntry.infections_total++;
+
+            Raise(OnStrainMutated, "disease_strain_mutated",
+                survivorId + ": " + fromDiseaseId + " has shifted into " + toDiseaseId,
+                survivorId, toDiseaseId);
+            RaiseStateChanged();
+            MaybeContain(fromEntry);
+            return true;
         }
 
         /// <summary>

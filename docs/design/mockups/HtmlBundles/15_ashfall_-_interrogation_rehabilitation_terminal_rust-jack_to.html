@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Prisoner Interrogation Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#ffb693",
+                        "surface-container": "#201f1f",
+                        "terminal-text": "#e5e2e1",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#a1cfd3",
+                        "on-error": "#690005",
+                        "primary-fixed": "#bcebef",
+                        "inverse-primary": "#396569",
+                        "outline": "#8a9293",
+                        "on-primary-fixed": "#002022",
+                        "outline-variant": "#404849",
+                        "primary": "#a1cfd3",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary": "#562000",
+                        "pressure-critical": "#93000a",
+                        "on-background": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#a2d0d4",
+                        "pressure-low": "#2d5a5e",
+                        "secondary-fixed": "#ffdbcb",
+                        "surface-tint": "#a1cfd3",
+                        "surface-dim": "#131313",
+                        "on-surface-variant": "#c0c8c9",
+                        "primary-container": "#2d5a5e",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "surface-container-highest": "#353534",
+                        "secondary-container": "#ea6b1e",
+                        "surface-variant": "#353534",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#bcebef",
+                        "on-secondary-fixed": "#341000",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary": "#a1cfd3",
+                        "surface": "#131313",
+                        "on-tertiary": "#00363a",
+                        "on-secondary-container": "#4b1b00",
+                        "data-muted": "#8a9293",
+                        "tertiary-container": "#2d5a5e",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#002022",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-on-surface": "#313030",
+                        "surface-bright": "#3a3939",
+                        "secondary-fixed-dim": "#ffb693",
+                        "background": "#131313",
+                        "on-primary": "#00363a",
+                        "on-tertiary-fixed-variant": "#1f4d51",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "pressure-med": "#ea6b1e",
+                        "on-primary-container": "#a2d0d4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "block-gap": "8px",
+                        "gutter": "16px",
+                        "margin": "24px",
+                        "unit": "4px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "data-md": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "display-lg": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "data-md": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "64px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .step-graph path { stroke-linejoin: miter; stroke-linecap: square; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1c1b1b; }
+        ::-webkit-scrollbar-thumb { background: #404849; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1cfd3; }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-md h-screen overflow-hidden flex flex-col antialiased selection:bg-primary selection:text-on-primary relative">
+<!-- Scanline Overlay -->
+<div class="fixed inset-0 scanlines z-50 mix-blend-overlay"></div>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin h-16 border-b-2 border-outline-variant bg-surface-container-highest docked full-width top-0 z-30 shrink-0">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-widest uppercase">
+            BUNKER_OS // INT-TERM-09
+        </div>
+<div class="flex items-center gap-gutter">
+<button class="text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all duration-75 p-2 rounded-none flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</button>
+<button class="text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all duration-75 p-2 rounded-none flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+</button>
+<button class="text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all duration-75 p-2 rounded-none flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex fixed left-0 top-16 bottom-0 z-40 flex-col justify-between py-margin border-r-2 border-outline-variant bg-surface-container-low h-[calc(100vh-64px)] w-64 shrink-0">
+<div class="px-gutter mb-margin">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1">COMMAND_AUTH</div>
+<div class="font-headline-lg text-headline-lg text-primary">SECTOR_NAV</div>
+<div class="font-label-sm text-label-sm text-primary-fixed-dim">V.09.2</div>
+</div>
+<ul class="flex-1 flex flex-col gap-unit overflow-y-auto px-unit">
+<li>
+<a class="bg-primary text-on-primary font-bold flex items-center gap-block-gap px-gutter py-unit hover:bg-surface-variant hover:text-primary transition-colors duration-75 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span class="font-label-caps text-label-caps">DETENTION_A</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-block-gap px-gutter py-unit hover:bg-surface-variant hover:text-primary transition-colors duration-75 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="vibration">vibration</span>
+<span class="font-label-caps text-label-caps">DETENTION_B</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-block-gap px-gutter py-unit hover:bg-surface-variant hover:text-primary transition-colors duration-75 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-label-caps text-label-caps">LOG_STREAMS</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-block-gap px-gutter py-unit hover:bg-surface-variant hover:text-primary transition-colors duration-75 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-label-caps text-label-caps">DOSSIER_DB</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-block-gap px-gutter py-unit hover:bg-surface-variant hover:text-primary transition-colors duration-75 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-label-caps text-label-caps">TELEMETRY</span>
+</a>
+</li>
+</ul>
+<div class="px-gutter mt-auto flex flex-col gap-block-gap">
+<button class="w-full bg-error-container text-on-error-container font-label-caps text-label-caps py-2 border border-pressure-critical hover:bg-pressure-critical hover:text-on-error transition-colors uppercase tracking-widest flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
+                    LOCKDOWN
+                </button>
+<div class="text-on-surface-variant flex items-center gap-block-gap px-unit py-unit hover:bg-surface-variant hover:text-primary transition-colors duration-75 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-caps text-label-caps">SYS_STABILITY</span>
+</div>
+</div>
+</nav>
+<!-- Main Workspace Canvas -->
+<main class="flex-1 md:ml-64 p-margin overflow-y-auto bg-background grid grid-cols-12 gap-margin content-start">
+<!-- Dossier Panel -->
+<section class="col-span-12 lg:col-span-5 bg-surface-container border-2 border-outline-variant p-4 flex flex-col gap-4 relative">
+<div class="absolute top-0 right-0 p-2 bg-primary-container text-on-primary-container font-data-md text-data-md border-b-2 border-l-2 border-outline-variant">
+                    [ IN CUSTODY ]
+                </div>
+<div class="border-b border-outline-variant pb-2 mb-2">
+<h1 class="font-headline-lg text-headline-lg text-primary uppercase leading-tight">SUBJECT 'RUST-JACK' TORRENCE</h1>
+<h2 class="font-body-md text-body-md text-on-surface-variant">Captured Raider Scout (Faction: Rustborn Scavengers)</h2>
+</div>
+<div class="flex gap-4">
+<div class="w-32 h-32 border-2 border-outline bg-surface-container-lowest shrink-0 relative overflow-hidden">
+<img class="object-cover w-full h-full grayscale opacity-80 mix-blend-luminosity" data-alt="Gritty mugshot of a post-apocalyptic scavenger, rough skin, tactical gear, harsh overhead bunker lighting, stark shadows, monochromatic green tint." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6EkwHTUiUyi3zUPUGfAFKWVqYsdHspFnrMw0Pt3A4P-oq0I_52-aSevqhGw6FsJSiSv_l3R0V1SbIfKLtujOgv_aVmDcITvUpSpK1M8qJdbNhpAF6whyz61yDr6bODRELF3xhJbHGKu3LADVe_zWecQbaBuSpVIPpKLhKQ-cimwH6piyImXlWsAxPM7TIefVl5JwwxXSz8DKWg7ZLvGv-XgbzqQtz5TdLPRS0wo1TZ5sTas5kVk9BqdNy8tcXj0cwIbsjg543c5mj"/>
+<div class="absolute inset-0 bg-primary/10 pointer-events-none"></div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex justify-between items-center border border-outline-variant p-1 px-2 bg-surface-container-low">
+<span class="font-label-caps text-label-caps text-data-muted">HYDRATION</span>
+<span class="font-data-md text-data-md text-pressure-critical">[ CRITICAL ]</span>
+</div>
+<div class="flex justify-between items-center border border-outline-variant p-1 px-2 bg-surface-container-low">
+<span class="font-label-caps text-label-caps text-data-muted">RAD LEVEL</span>
+<span class="font-data-md text-data-md text-pressure-med">[ WARNING ]</span>
+</div>
+<div class="flex justify-between items-center border border-outline-variant p-1 px-2 bg-surface-container-low">
+<span class="font-label-caps text-label-caps text-data-muted">STANCE</span>
+<span class="font-data-md text-data-md text-pressure-critical">[ AGGRESSIVE ]</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Telemetry Panel -->
+<section class="col-span-12 lg:col-span-7 bg-surface-container border-2 border-outline-variant flex flex-col relative overflow-hidden">
+<div class="bg-surface-variant border-b-2 border-outline-variant px-4 py-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">monitor_heart</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-widest uppercase">PSYCHOLOGICAL TELEMETRY</span>
+</div>
+<div class="p-4 grid grid-cols-3 gap-4 border-b border-outline-variant bg-surface-container-low">
+<!-- Gauge 1 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span class="text-on-surface-variant">RESISTANCE</span>
+<span class="text-pressure-med">72%</span>
+</div>
+<div class="h-4 w-full bg-surface-container-highest border border-outline-variant flex">
+<div class="h-full bg-pressure-med w-[72%] border-r border-background"></div>
+<div class="h-full bg-transparent w-[28%] bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNCIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDRMMCAwTDEgMEw0IDRMMSAxWiIgZmlsbD0iIzQwNDg0OSIgZmlsbC1vcGFjaXR5PSIwLjUiLz48L3N2Zz4=')]"></div>
+</div>
+</div>
+<!-- Gauge 2 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span class="text-on-surface-variant">TRUST INDEX</span>
+<span class="text-primary">28%</span>
+</div>
+<div class="h-4 w-full bg-surface-container-highest border border-outline-variant flex">
+<div class="h-full bg-primary w-[28%] border-r border-background"></div>
+<div class="h-full bg-transparent w-[72%] bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNCIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDRMMCAwTDEgMEw0IDRMMSAxWiIgZmlsbD0iIzQwNDg0OSIgZmlsbC1vcGFjaXR5PSIwLjUiLz48L3N2Zz4=')]"></div>
+</div>
+</div>
+<!-- Gauge 3 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span class="text-on-surface-variant">DEFECTION PROB.</span>
+<span class="text-pressure-med animate-pulse">35% ↑</span>
+</div>
+<div class="h-4 w-full bg-surface-container-highest border border-outline-variant flex">
+<div class="h-full bg-pressure-med w-[35%] border-r border-background"></div>
+<div class="h-full bg-transparent w-[65%] bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNCIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDRMMCAwTDEgMEw0IDRMMSAxWiIgZmlsbD0iIzQwNDg0OSIgZmlsbC1vcGFjaXR5PSIwLjUiLz48L3N2Zz4=')]"></div>
+</div>
+</div>
+</div>
+<div class="flex-1 p-4 bg-surface-container-lowest relative min-h-[150px]">
+<!-- Mock Graph -->
+<svg class="w-full h-full step-graph absolute inset-0 opacity-50" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Grid lines -->
+<line stroke="#404849" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="25" y2="25"></line>
+<line stroke="#404849" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="50" y2="50"></line>
+<line stroke="#404849" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="75" y2="75"></line>
+<!-- EEG Line (Teal) -->
+<path d="M0 50 L10 50 L15 30 L20 60 L25 40 L30 50 L50 50 L55 20 L60 80 L65 40 L70 50 L90 50 L95 40 L100 60" fill="none" stroke="#a1cfd3" stroke-width="1.5"></path>
+<!-- HR Line (Amber) -->
+<path d="M0 70 L20 70 L25 40 L30 70 L60 70 L65 30 L70 70 L100 70" fill="none" stroke="#ea6b1e" stroke-dasharray="4,2" stroke-width="1.5"></path>
+</svg>
+<div class="absolute bottom-2 left-2 flex gap-4 font-label-sm text-label-sm">
+<span class="text-primary flex items-center gap-1"><span class="w-2 h-2 bg-primary inline-block"></span> EEG_ALPHA</span>
+<span class="text-pressure-med flex items-center gap-1"><span class="w-2 h-2 bg-pressure-med inline-block"></span> HR_BPM</span>
+</div>
+</div>
+</section>
+<!-- Transcript & Directives Grid -->
+<div class="col-span-12 grid grid-cols-12 gap-margin">
+<!-- Interrogation Log Transcript -->
+<section class="col-span-12 lg:col-span-6 bg-surface-container border-2 border-outline-variant flex flex-col h-64">
+<div class="bg-surface-variant border-b-2 border-outline-variant px-4 py-1 flex justify-between items-center">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-widest uppercase">INTERROGATION LOG</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant animate-pulse">REC ●</span>
+</div>
+<div class="p-4 flex-1 bg-surface-container-lowest overflow-y-auto font-data-md text-data-md text-terminal-text text-sm flex flex-col gap-2">
+<div class="flex gap-2"><span class="text-data-muted">[08:42]</span> <span class="text-on-surface">Subject refuses to cooperate.</span></div>
+<div class="flex gap-2"><span class="text-data-muted">[09:15]</span> <span class="text-primary">Subject requested water.</span></div>
+<div class="flex gap-2"><span class="text-data-muted">[09:16]</span> <span class="text-pressure-critical">Request Denied.</span></div>
+<div class="flex gap-2"><span class="text-data-muted">[10:30]</span> <span class="text-pressure-med">Initiating 'Stern Interrogation' protocol...</span></div>
+<div class="flex gap-2 mt-auto"><span class="text-data-muted">[10:31]</span> <span class="text-on-surface">Awaiting input <span class="blinking-cursor inline-block w-2 h-4 bg-primary align-middle"></span></span></div>
+</div>
+</section>
+<!-- Rehabilitation & Negotiation Directives -->
+<section class="col-span-12 lg:col-span-6 bg-surface-container border-2 border-outline-variant flex flex-col">
+<div class="bg-surface-variant border-b-2 border-outline-variant px-4 py-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-widest uppercase">TACTICAL DIRECTIVES</span>
+</div>
+<div class="p-4 flex flex-col gap-3 flex-1 bg-surface-container-low">
+<!-- Tactic Buttons -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+<button class="bg-surface-container border border-primary text-primary font-label-caps text-label-caps p-2 hover:bg-primary hover:text-on-primary transition-colors text-left flex flex-col gap-1 group">
+<span>[ OFFER CLEAN WATER ]</span>
+<span class="text-data-muted text-[10px] group-hover:text-on-primary/80">+Trust, -Resistance</span>
+</button>
+<button class="bg-surface-container border border-pressure-med text-pressure-med font-label-caps text-label-caps p-2 hover:bg-pressure-med hover:text-on-secondary-fixed transition-colors text-left flex flex-col gap-1 group">
+<span>[ STERN INTERROGATION ]</span>
+<span class="text-data-muted text-[10px] group-hover:text-on-secondary-fixed/80">+Info, +Stress</span>
+</button>
+<button class="bg-surface-container border border-outline-variant text-on-surface-variant font-label-caps text-label-caps p-2 hover:bg-surface-variant transition-colors text-left flex flex-col gap-1 group col-span-1 sm:col-span-2">
+<span>[ NEGOTIATE RANSOM ]</span>
+<span class="text-data-muted text-[10px]">Req: 120 Lead Bullets, 20L Water</span>
+</button>
+</div>
+<div class="border-t border-outline-variant my-1"></div>
+<!-- Global Directives -->
+<div class="flex gap-2 mt-auto">
+<button class="flex-1 bg-primary text-on-primary font-data-md text-data-md py-2 hover:brightness-110 active:scale-95 transition-all">
+                                [ EXECUTE TACTIC ]
+                            </button>
+<button class="px-3 bg-surface-container border border-outline-variant text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm align-middle">gavel</span>
+</button>
+<button class="px-3 bg-surface-container border border-outline-variant text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm align-middle">door_front</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

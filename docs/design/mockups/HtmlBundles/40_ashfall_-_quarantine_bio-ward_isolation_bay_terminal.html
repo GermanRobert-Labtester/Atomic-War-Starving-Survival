@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL ISO-BAY 04</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-muted": "#8a9293",
+                        "primary": "#bdebef",
+                        "secondary-container": "#ea6b1e",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "background": "#131313",
+                        "surface-bright": "#393939",
+                        "surface-variant": "#353534",
+                        "tertiary": "#75ff72",
+                        "secondary": "#ffb693",
+                        "primary-fixed": "#bcebef",
+                        "surface-dim": "#131313",
+                        "tertiary-container": "#00e639",
+                        "on-primary": "#00363a",
+                        "secondary-fixed": "#ffdbcb",
+                        "outline": "#8a9293",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-primary": "#396569",
+                        "primary-container": "#a1cfd3",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed-dim": "#ffb693",
+                        "surface-tint": "#a1cfd3",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#00e639",
+                        "on-secondary-fixed": "#341000",
+                        "surface-container": "#201f1f",
+                        "surface-container-low": "#1c1b1b",
+                        "outline-variant": "#404849",
+                        "on-tertiary": "#003907",
+                        "on-surface": "#e5e2e1",
+                        "on-tertiary-container": "#006112",
+                        "tactical-teal": "#2d5a5e",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e2e1",
+                        "on-primary-fixed": "#002022",
+                        "on-tertiary-fixed": "#002203",
+                        "on-secondary-container": "#4b1b00",
+                        "on-surface-variant": "#c0c8c8",
+                        "on-tertiary-fixed-variant": "#00530e",
+                        "on-secondary": "#562000",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#72ff70",
+                        "hazard-orange": "#ea6b1e",
+                        "inverse-on-surface": "#313030",
+                        "warning-amber": "#ffb693",
+                        "terminal-green": "#00e639",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "surface": "#131313",
+                        "surface-container-highest": "#353534",
+                        "on-primary-container": "#2c595d"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "module-padding": "12px",
+                        "gutter": "16px",
+                        "margin": "24px"
+                    },
+                    fontFamily: {
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "body-md": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.1", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "500" }],
+                        "data-lg": ["18px", { "lineHeight": "1.4", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        .scanline {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05));
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.98; }
+            50% { opacity: 1; }
+            100% { opacity: 0.98; }
+        }
+        .phosphor-glow {
+            box-shadow: 0 0 4px rgba(189, 235, 239, 0.4);
+        }
+        .phosphor-glow-alert {
+            box-shadow: 0 0 8px rgba(234, 107, 30, 0.6);
+        }
+        .grid-baseline {
+            background-image: linear-gradient(rgba(45, 90, 94, 0.1) 1px, transparent 1px);
+            background-size: 100% 4px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md h-screen overflow-hidden selection:bg-tactical-teal selection:text-primary relative grid-baseline">
+<div class="absolute inset-0 scanline z-50"></div>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full flex flex-col pt-16 pb-margin z-40 bg-surface-container border-r border-tactical-teal/30 w-64 hidden md:flex crt-flicker">
+<div class="px-gutter mb-8">
+<div class="font-headline-lg text-headline-lg text-hazard-orange mb-2 uppercase">WARD_CMD</div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-tactical-teal text-lg" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">STATION_ID_ALPHA</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-tertiary rounded-full animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-tertiary uppercase">SYSTEM_STABLE</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-gutter text-on-surface-muted px-4 py-3 opacity-70 hover:bg-tactical-teal/10 hover:text-primary transition-colors uppercase" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm">Roster</span>
+</a>
+<a class="flex items-center gap-gutter bg-primary/20 text-primary font-bold border-l-4 border-primary px-4 py-3 uppercase phosphor-glow" href="#">
+<span class="material-symbols-outlined">vital_signs</span>
+<span class="font-label-sm text-label-sm">Life Support</span>
+</a>
+<a class="flex items-center gap-gutter text-on-surface-muted px-4 py-3 opacity-70 hover:bg-tactical-teal/10 hover:text-primary transition-colors uppercase" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-label-sm text-label-sm">Pharmacy</span>
+</a>
+<a class="flex items-center gap-gutter text-on-surface-muted px-4 py-3 opacity-70 hover:bg-tactical-teal/10 hover:text-primary transition-colors uppercase" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-sm text-label-sm">Logs</span>
+</a>
+</div>
+<div class="px-4 mt-auto">
+<button class="w-full bg-surface-container border border-hazard-orange text-hazard-orange hover:bg-hazard-orange hover:text-background font-label-sm text-label-sm py-2 px-4 uppercase transition-colors mb-4 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">warning</span>
+                 EMERGENCY_OVERRIDE
+             </button>
+<a class="flex items-center gap-gutter text-on-surface-muted px-4 py-3 opacity-70 hover:bg-tactical-teal/10 hover:text-primary transition-colors uppercase border-t border-tactical-teal/30" href="#">
+<span class="material-symbols-outlined">settings_heart</span>
+<span class="font-label-sm text-label-sm">System Diagnostics</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin py-unit h-12 w-full z-50 bg-surface-container-low border-b border-tactical-teal/30 absolute top-0 left-0 crt-flicker">
+<div class="flex items-center md:pl-64">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-widest uppercase md:ml-4">ASHFALL ISO-BAY 04</h1>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary hover:bg-primary/10 transition-colors cursor-pointer p-1 rounded">settings_input_component</span>
+<span class="material-symbols-outlined text-primary hover:bg-primary/10 transition-colors cursor-pointer p-1 rounded">terminal</span>
+<span class="material-symbols-outlined text-primary hover:bg-primary/10 transition-colors cursor-pointer p-1 rounded">power_settings_new</span>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="pt-16 pb-margin px-4 md:pl-[17rem] md:pr-gutter h-full overflow-y-auto">
+<!-- Header Actions -->
+<div class="flex flex-wrap gap-4 mb-6 pt-4 border-b border-tactical-teal/30 pb-4">
+<button class="bg-tactical-teal text-surface-container-lowest border border-tactical-teal px-4 py-2 font-label-sm text-label-sm uppercase hover:bg-transparent hover:text-tactical-teal transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">syringe</span>
+                ADMINISTER ANTIVIRAL DOSING
+            </button>
+<button class="bg-transparent text-tertiary border border-tertiary px-4 py-2 font-label-sm text-label-sm uppercase hover:bg-tertiary hover:text-surface-container-lowest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">bolt</span>
+                ENGAGE EMERGENCY UV BLITZ STERILIZATION
+            </button>
+<button class="bg-surface-container-low text-on-surface-muted border border-surface-variant px-4 py-2 font-label-sm text-label-sm uppercase flex items-center gap-2 cursor-not-allowed opacity-80" disabled="">
+<span class="material-symbols-outlined text-sm text-hazard-orange">lock</span>
+                SEAL QUARANTINE BULKHEAD <span class="text-hazard-orange ml-2">[LOCKED]</span>
+</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-margin">
+<!-- Isolation Bay Bed Matrix -->
+<section class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+<h2 class="col-span-full font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase border-b border-tactical-teal/30 pb-1 mb-2">Isolation Bay Bed Matrix</h2>
+<!-- Bed 01 -->
+<article class="bg-surface-container-low border border-tactical-teal/30 flex flex-col">
+<header class="bg-tactical-teal px-3 py-1 flex justify-between items-center">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-surface-container-lowest uppercase leading-none mt-1">Bed 01: Vance</span>
+<span class="bg-surface-container-highest text-tertiary px-2 py-0.5 font-label-sm text-label-sm uppercase border border-tertiary/50">STABLE</span>
+</header>
+<div class="p-module-padding flex-1 flex flex-col gap-2">
+<div class="flex justify-between items-end border-b border-surface-variant pb-1 border-dashed">
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">Status</span>
+<span class="font-body-md text-body-md text-on-surface uppercase">Non-Infectious</span>
+</div>
+<div class="flex justify-between items-end border-b border-surface-variant pb-1 border-dashed">
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">Vitals</span>
+<span class="font-body-md text-body-md text-tertiary uppercase">NOMINAL</span>
+</div>
+</div>
+</article>
+<!-- Bed 02 CRITICAL -->
+<article class="bg-surface-container border border-hazard-orange flex flex-col phosphor-glow-alert relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-hazard-orange/10 transform rotate-45 translate-x-8 -translate-y-8"></div>
+<header class="bg-hazard-orange px-3 py-1 flex justify-between items-center border-b border-hazard-orange">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-surface-container-lowest uppercase leading-none mt-1">Bed 02: Miller</span>
+<span class="bg-surface-container-highest text-hazard-orange px-2 py-0.5 font-label-sm text-label-sm uppercase border border-hazard-orange/50 animate-pulse">CRITICAL</span>
+</header>
+<div class="p-module-padding flex-1 flex flex-col gap-2">
+<div class="flex justify-between items-start border-b border-surface-variant pb-1 border-dashed">
+<span class="font-label-sm text-label-sm text-hazard-orange uppercase">Diagnosis</span>
+<span class="font-body-md text-body-md text-hazard-orange text-right uppercase">Viral Hemorrhagic<br/>Ash-Fever Stage 2</span>
+</div>
+<div class="flex justify-between items-end border-b border-surface-variant pb-1 border-dashed">
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">Viral Load</span>
+<span class="font-data-lg text-data-lg text-secondary uppercase">850 cp/mL</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">O2 Sat</span>
+<span class="font-data-lg text-data-lg text-error uppercase">88%</span>
+</div>
+<!-- Step Graph Placeholder -->
+<div class="h-12 w-full mt-2 border-l border-b border-surface-variant flex items-end relative overflow-hidden opacity-80">
+<svg class="w-full h-full stroke-hazard-orange fill-none" preserveaspectratio="none" style="stroke-width: 2px;" viewbox="0 0 100 40">
+<path d="M0,30 L10,30 L10,25 L20,25 L20,35 L30,35 L30,15 L40,15 L40,20 L50,20 L50,10 L60,10 L60,30 L70,30 L70,5 L80,5 L80,25 L90,25 L90,35 L100,35" vector-effect="non-scaling-stroke"></path>
+</svg>
+</div>
+</div>
+</article>
+<!-- Bed 03 -->
+<article class="bg-surface-container-low border border-surface-variant flex flex-col opacity-60">
+<header class="bg-surface-variant px-3 py-1 flex justify-between items-center">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface-muted uppercase leading-none mt-1">Bed 03: EMPTY</span>
+<span class="bg-surface-container-highest text-on-surface-muted px-2 py-0.5 font-label-sm text-label-sm uppercase border border-surface-variant">STERILIZED</span>
+</header>
+<div class="p-module-padding flex-1 flex flex-col justify-center items-center h-24">
+<span class="material-symbols-outlined text-surface-variant text-4xl">bed</span>
+<span class="font-label-sm text-label-sm text-surface-variant mt-2 uppercase">Awaiting Occupancy</span>
+</div>
+</article>
+<!-- Bed 04 -->
+<article class="bg-surface-container-low border border-tactical-teal/30 flex flex-col">
+<header class="bg-tactical-teal px-3 py-1 flex justify-between items-center">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-surface-container-lowest uppercase leading-none mt-1">Bed 04: Tyler</span>
+<span class="bg-surface-container-highest text-primary px-2 py-0.5 font-label-sm text-label-sm uppercase border border-primary/50">RECOVERING</span>
+</header>
+<div class="p-module-padding flex-1 flex flex-col gap-2">
+<div class="flex justify-between items-end border-b border-surface-variant pb-1 border-dashed">
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">Diagnosis</span>
+<span class="font-body-md text-body-md text-on-surface uppercase text-right">Bacterial Pneumonia</span>
+</div>
+<div class="flex justify-between items-end border-b border-surface-variant pb-1 border-dashed">
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">Trajectory</span>
+<span class="font-body-md text-body-md text-primary uppercase">Improving</span>
+</div>
+</div>
+</article>
+</section>
+<!-- Right Column Sidebar -->
+<section class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Telemetry Panel -->
+<div class="bg-surface-container-low border border-tactical-teal/30 flex flex-col">
+<header class="bg-tactical-teal px-3 py-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-surface-container-lowest uppercase leading-none mt-1 block">Ventilation &amp; Filtration</span>
+</header>
+<div class="p-module-padding flex flex-col gap-3">
+<div class="bg-surface-container p-2 border border-surface-variant">
+<span class="block font-label-sm text-label-sm text-on-surface-muted uppercase mb-1">Room Air Pressure</span>
+<div class="flex justify-between items-center">
+<span class="font-data-lg text-data-lg text-tertiary">-25 Pa</span>
+<span class="text-[10px] text-tertiary uppercase border border-tertiary px-1 py-0.5 bg-tertiary/10">Active Neg-Press</span>
+</div>
+</div>
+<div class="bg-surface-container p-2 border border-surface-variant">
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">HEPA Integrity</span>
+<span class="font-data-lg text-data-lg text-warning-amber">82%</span>
+</div>
+<div class="w-full bg-surface-variant h-2 mt-1">
+<div class="bg-warning-amber h-full" style="width: 82%;"></div>
+</div>
+</div>
+<div class="bg-surface-container p-2 border border-tertiary/50 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-muted uppercase">UV Sterilization Scrubbers</span>
+<span class="font-body-md text-body-md text-tertiary uppercase">ACTIVE</span>
+</div>
+<span class="material-symbols-outlined text-tertiary animate-pulse">ac_unit</span>
+</div>
+</div>
+</div>
+<!-- Inventory Panel -->
+<div class="bg-surface-container-low border border-tactical-teal/30 flex flex-col flex-1">
+<header class="bg-tactical-teal px-3 py-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-surface-container-lowest uppercase leading-none mt-1 block">Therapy &amp; Dosing Inv.</span>
+</header>
+<div class="p-module-padding flex flex-col gap-0">
+<div class="flex justify-between items-center py-2 border-b border-surface-variant border-dashed">
+<span class="font-body-md text-body-md text-on-surface uppercase">Broad-Spectrum Serum</span>
+<span class="font-data-lg text-data-lg text-primary bg-surface-container px-2 border border-surface-variant">04</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant border-dashed">
+<span class="font-body-md text-body-md text-on-surface uppercase">Synth Immune Boosters</span>
+<span class="font-data-lg text-data-lg text-primary bg-surface-container px-2 border border-surface-variant">06</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant border-dashed">
+<span class="font-body-md text-body-md text-on-surface uppercase">Potassium Iodide (Tab)</span>
+<span class="font-data-lg text-data-lg text-primary bg-surface-container px-2 border border-surface-variant">12</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

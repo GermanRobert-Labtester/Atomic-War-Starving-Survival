@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Survivor Psychological Dossier - Operative K. Vance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#8a9293",
+                        "on-primary-container": "#a2d0d4",
+                        "error": "#ffb4ab",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#00530e",
+                        "on-primary-fixed": "#002022",
+                        "surface": "#131313",
+                        "surface-variant": "#353534",
+                        "surface-bright": "#393939",
+                        "primary-fixed": "#bcebef",
+                        "on-tertiary-fixed": "#002203",
+                        "surface-container": "#201f1f",
+                        "tertiary-fixed": "#72ff70",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "on-tertiary-container": "#00e639",
+                        "primary": "#a1cfd3",
+                        "on-error": "#690005",
+                        "inverse-primary": "#396569",
+                        "on-tertiary": "#003907",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#353534",
+                        "on-secondary-fixed": "#351000",
+                        "secondary-fixed-dim": "#ffb693",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "tertiary": "#00e639",
+                        "on-secondary": "#562000",
+                        "surface-tint": "#a1cfd3",
+                        "tertiary-container": "#006112",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "secondary-container": "#ea6b1e",
+                        "tertiary-fixed-dim": "#00e639",
+                        "on-background": "#e5e2e1",
+                        "background": "#131313",
+                        "on-surface-variant": "#c0c8c9",
+                        "surface-container-low": "#1c1b1b",
+                        "inverse-on-surface": "#313030",
+                        "on-primary": "#00363a",
+                        "primary-container": "#2d5a5e",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#ffdbcc",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-high": "#2a2a2a",
+                        "outline-variant": "#404849",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-container": "#4b1b00",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#ffb693"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "gutter": "16px",
+                        "margin": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "data-lg": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "display-lg": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.1", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "1.4", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .glow-active {
+            box-shadow: 0 0 8px theme('colors.primary'), inset 0 0 8px theme('colors.primary');
+            border-color: theme('colors.primary');
+        }
+        .crt-flicker:hover {
+            animation: flicker 0.1s infinite;
+            background-color: theme('colors.primary-container');
+            color: theme('colors.on-primary-container');
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        .crt-flicker-active {
+            animation: flicker 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen flex flex-col">
+<div class="scanlines"></div>
+<!-- TopAppBar -->
+<header class="bg-surface text-primary font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg docked full-width top-0 border-b border-primary/30 flat no shadows flex justify-between items-center w-full px-margin py-unit h-16 z-40 fixed">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg text-primary tracking-widest uppercase text-3xl">PSYCH-ARCHIVE TERMINAL v4.2</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-4">
+<button class="text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-none p-2"><span class="material-symbols-outlined">monitor_heart</span></button>
+<button class="text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-none p-2"><span class="material-symbols-outlined">settings_input_component</span></button>
+<button class="text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-none p-2"><span class="material-symbols-outlined">terminal</span></button>
+</div>
+<img alt="OPERATIVE K. VANCE" class="w-10 h-10 border border-primary/50 object-cover grayscale" data-alt="A gritty, high-contrast, black and white portrait of a weathered survivor with a determined expression, wearing scavenged tactical gear. Lighting is harsh and directional, emphasizing facial texture and survival fatigue. Brutalist industrial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtgANDj_fVaiOrCkyQnhel_xPNYe7oGeM0TQSsMreD1YsUIg84l7LXN4wA9OUShOTyR37hAhi0bo0u6cCAg1QWk3L3TYtQ0YsZSIwkA7FNx15nueJm2VuZw9bUO2ulRkuCk5srXTECJwIqvpS63PiF8DFvfv-3z_VhLWwiMP4lUDd6ni-zvThXKnD_7g3SeVaJjk_9M0ElO-3_tXmtcvR2Fi4KFVH-1njt_waP85CNMQ4YNZgpZNLdLWOYq4BsBElyZkT_pKZPXEm3"/>
+</div>
+</header>
+<div class="flex flex-1 pt-16 h-screen overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low text-primary font-label-sm text-label-sm uppercase docked full-height left-0 border-r border-primary/30 flat no shadows hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 pt-20 z-30">
+<div class="p-6 border-b border-primary/30">
+<img alt="OPERATIVE K. VANCE" class="w-16 h-16 border border-tertiary mb-4 object-cover grayscale" data-alt="A gritty, high-contrast, black and white portrait of a weathered survivor with a determined expression, wearing scavenged tactical gear. Lighting is harsh and directional, emphasizing facial texture and survival fatigue. Brutalist industrial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0ezAmTv06EU57bMv2ktCcy9KgjTo44xnxJSJoO4eJHPynpuJXIgRicnpoJz4yCNdevNPIMPa_cTJ1UfxN3_1xQeuACcjEiAV3qafHUEepmY9mz4MSKPTUjNBXI0BgKMj-Qjo8AV_dxmAFLRXVJvxEpN_OUcRXqJxs3YN_72Olc42xQ_b-MDq6MJrMKF9O0nGrqKHl7hGUspg4vCA5Ul9zAU_cd2qGc0ekYrkiikv_qVgmiZu8FnKN0_ElvGTssy55vEW0N3w-lwT7"/>
+<h2 class="font-headline-lg text-headline-lg text-tertiary">K. VANCE</h2>
+<p class="text-error font-data-lg text-sm mt-1">STATUS: UNSTABLE</p>
+<button class="mt-4 w-full bg-primary-container text-on-primary-container border border-primary p-2 hover:bg-surface-variant transition-none crt-flicker">INITIATE_STABILIZATION</button>
+</div>
+<ul class="flex-1 py-4 flex flex-col gap-2">
+<li><a class="flex items-center gap-4 px-6 py-3 bg-primary text-on-primary font-bold border-l-4 border-tertiary Active: scale-95 duration-75" href="#"><span class="material-symbols-outlined">account_tree</span> MEMORY_TREE</a></li>
+<li><a class="flex items-center gap-4 px-6 py-3 text-outline hover:text-primary hover:bg-surface-variant transition-none" href="#"><span class="material-symbols-outlined">hub</span> RELATION_MATRIX</a></li>
+<li><a class="flex items-center gap-4 px-6 py-3 text-outline hover:text-primary hover:bg-surface-variant transition-none" href="#"><span class="material-symbols-outlined">list_alt</span> DIRECTIVES</a></li>
+<li><a class="flex items-center gap-4 px-6 py-3 text-outline hover:text-primary hover:bg-surface-variant transition-none" href="#"><span class="material-symbols-outlined">psychology</span> TRAUMA_LOG</a></li>
+</ul>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 p-gutter md:p-margin overflow-y-auto bg-background pb-24 md:pb-margin relative">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter md:gap-4">
+<!-- Header Dossier Info -->
+<div class="col-span-1 md:col-span-12 border border-primary/30 bg-surface-container p-4 flex flex-col md:flex-row justify-between items-start md:items-center">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-background">SUBJECT 'OPERATIVE K. VANCE' - <span class="text-primary">RANK: LEAD SCAVENGER</span></h1>
+<p class="text-outline font-label-sm mt-1 uppercase">Pre-War Assignment: High-Voltage Grid Lineman</p>
+</div>
+<div class="flex gap-4 mt-4 md:mt-0">
+<div class="border border-outline/30 p-2 bg-surface">
+<span class="text-outline font-label-sm block mb-1">RAD BURDEN</span>
+<span class="font-data-lg text-secondary">1.4 Sv</span>
+</div>
+<div class="border border-error/50 p-2 bg-surface crt-flicker-active">
+<span class="text-outline font-label-sm block mb-1">MENTAL STABILITY</span>
+<span class="font-data-lg text-error">64% [FRAGILE]</span>
+</div>
+</div>
+</div>
+<!-- Left Panel: Memory Tree -->
+<div class="col-span-1 md:col-span-6 border border-primary/30 bg-surface-container flex flex-col">
+<div class="bg-primary-container p-2 border-b border-primary/30">
+<h2 class="font-headline-lg text-headline-lg text-on-primary-container text-xl">MEMORY_TREE &amp; TRAITS</h2>
+</div>
+<div class="p-4 space-y-6 flex-1">
+<div>
+<h3 class="font-label-sm text-outline mb-2 border-b border-outline/20 pb-1">IDENTIFIED TRAITS</h3>
+<div class="flex flex-wrap gap-2">
+<span class="border border-tertiary text-tertiary px-2 py-1 font-label-sm bg-tertiary/10">LEAD BELLY</span>
+<span class="border border-tertiary text-tertiary px-2 py-1 font-label-sm bg-tertiary/10">GRID SPECIALIST</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-sm text-outline mb-2 border-b border-outline/20 pb-1">ACTIVE TRAUMA</h3>
+<div class="flex flex-wrap gap-2">
+<span class="border border-secondary text-secondary px-2 py-1 font-label-sm bg-secondary/10 crt-flicker-active">NIGHT TERRORS</span>
+<span class="border border-error text-error px-2 py-1 font-label-sm bg-error/10">SOMATIC FLASHBACK: SIRENS</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-sm text-outline mb-2 border-b border-outline/20 pb-1">MEMORY NODES</h3>
+<ul class="space-y-3">
+<li class="border border-primary/30 p-3 bg-surface flex justify-between items-center hover:bg-surface-variant cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">lock_open</span>
+<span class="font-label-sm text-on-surface">PRE-WAR FAMILY PHOTOGRAPH</span>
+</div>
+<span class="text-tertiary font-label-sm">[UNLOCKED]</span>
+</li>
+<li class="border border-outline/30 p-3 bg-surface flex justify-between items-center opacity-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">lock</span>
+<span class="font-label-sm text-outline">THE DAY THE HORIZON BURNED</span>
+</div>
+<span class="text-outline font-label-sm">[LOCKED]</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Right Panel: Relation Matrix -->
+<div class="col-span-1 md:col-span-6 border border-primary/30 bg-surface-container flex flex-col">
+<div class="bg-primary-container p-2 border-b border-primary/30">
+<h2 class="font-headline-lg text-headline-lg text-on-primary-container text-xl">RELATION_MATRIX</h2>
+</div>
+<div class="p-4 flex-1 flex flex-col gap-4">
+<div class="border border-outline/30 p-3 bg-surface flex justify-between items-center">
+<div>
+<span class="font-label-sm text-primary block mb-1">SUBJECT: MILLER</span>
+<span class="text-outline font-label-sm text-[10px]">STATUS: TRAUMA BONDED</span>
+</div>
+<div class="text-right">
+<span class="font-data-lg text-tertiary block">85% TRUST</span>
+<div class="w-24 h-1 bg-surface-variant mt-1"><div class="h-full bg-tertiary w-[85%]"></div></div>
+</div>
+</div>
+<div class="border border-secondary/50 p-3 bg-surface flex justify-between items-center glow-active">
+<div>
+<span class="font-label-sm text-primary block mb-1">SUBJECT: ELENA</span>
+<span class="text-outline font-label-sm text-[10px]">STATUS: IDEOLOGICAL DISDAIN</span>
+</div>
+<div class="text-right">
+<span class="font-data-lg text-secondary block">42% TRUST</span>
+<div class="w-24 h-1 bg-surface-variant mt-1"><div class="h-full bg-secondary w-[42%]"></div></div>
+</div>
+</div>
+<div class="border border-outline/30 p-3 bg-surface flex justify-between items-center">
+<div>
+<span class="font-label-sm text-primary block mb-1">SUBJECT: LUCAS</span>
+<span class="text-outline font-label-sm text-[10px]">STATUS: NEUTRAL</span>
+</div>
+<div class="text-right">
+<span class="font-data-lg text-outline block">60% TRUST</span>
+<div class="w-24 h-1 bg-surface-variant mt-1"><div class="h-full bg-outline w-[60%]"></div></div>
+</div>
+</div>
+<div class="mt-auto border border-secondary/50 bg-secondary/10 p-4">
+<span class="font-label-sm text-secondary block mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-sm">warning</span> FRICTION FORECAST</span>
+<p class="font-data-lg text-on-background text-sm">28% CHANCE OF RATION DISPUTE WITH ELENA.</p>
+</div>
+</div>
+</div>
+<!-- Bottom Panel: Directives -->
+<div class="col-span-1 md:col-span-12 border border-primary/30 bg-surface-container flex flex-col mt-4">
+<div class="bg-primary-container p-2 border-b border-primary/30">
+<h2 class="font-headline-lg text-headline-lg text-on-primary-container text-xl">RECOMMENDED DIRECTIVES</h2>
+</div>
+<div class="p-4 flex flex-col md:flex-row gap-4">
+<button class="flex-1 bg-primary-container text-on-primary-container border border-primary p-3 font-label-sm hover:bg-surface-variant transition-none crt-flicker">[ADMINISTER SEDATIVE]</button>
+<button class="flex-1 bg-primary-container text-on-primary-container border border-primary p-3 font-label-sm hover:bg-surface-variant transition-none crt-flicker">[ASSIGN TO LIGHT DUTY]</button>
+<button class="flex-1 bg-primary-container text-on-primary-container border border-primary p-3 font-label-sm hover:bg-surface-variant transition-none crt-flicker">[COMMISSION MEMOIR RECORDING]</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container-highest text-primary font-label-sm text-label-sm docked full-width bottom-0 rounded-t-none border-t border-primary/50 flat no shadows md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-surface">
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary px-2 py-1 Active: ring-1 ring-tertiary w-1/4 h-full" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="mt-1 text-[10px]">MEM_TREE</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline px-2 py-1 hover:bg-surface-variant w-1/4 h-full" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="mt-1 text-[10px]">RELATIONS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline px-2 py-1 hover:bg-surface-variant w-1/4 h-full" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="mt-1 text-[10px]">DIRECTIVES</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline px-2 py-1 hover:bg-surface-variant w-1/4 h-full" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="mt-1 text-[10px]">STATUS</span>
+</a>
+</nav>
+</body></html>

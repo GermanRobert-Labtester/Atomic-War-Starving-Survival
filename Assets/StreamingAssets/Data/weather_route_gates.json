@@ -5,7 +5,9 @@
       "id": "gate_mountain_pass_blizzard",
       "gate_type": "route",
       "target": "route_12_the_cloud_eyrie_meteorological_ascent",
-      "blocked_weather": ["Blizzard"],
+      "blocked_weather": [
+        "Blizzard"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
@@ -16,7 +18,9 @@
       "id": "gate_highland_supply_blizzard",
       "gate_type": "route",
       "target": "route_05_the_spoil_heap_coke_and_steel_route",
-      "blocked_weather": ["Blizzard"],
+      "blocked_weather": [
+        "Blizzard"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
@@ -27,7 +31,9 @@
       "id": "gate_exposed_ridge_blizzard",
       "gate_type": "route",
       "target": "route_09_the_nomad_ridge_drift",
-      "blocked_weather": ["Blizzard"],
+      "blocked_weather": [
+        "Blizzard"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
@@ -38,7 +44,9 @@
       "id": "gate_lake_edge_blizzard",
       "gate_type": "route",
       "target": "route_02_the_canal_barge_waterway_run",
-      "blocked_weather": ["Blizzard"],
+      "blocked_weather": [
+        "Blizzard"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
@@ -49,7 +57,9 @@
       "id": "gate_lowland_marsh_fog",
       "gate_type": "route",
       "target": "route_07_the_aluminium_whale_salvage_run",
-      "blocked_weather": ["BioFog"],
+      "blocked_weather": [
+        "BioFog"
+      ],
       "required_weather": [],
       "override_item": "gas_mask",
       "override_skill": "",
@@ -60,7 +70,9 @@
       "id": "gate_industrial_valley_fog",
       "gate_type": "route",
       "target": "route_15_the_tar_cauldron_pitch_express",
-      "blocked_weather": ["BioFog"],
+      "blocked_weather": [
+        "BioFog"
+      ],
       "required_weather": [],
       "override_item": "gas_mask",
       "override_skill": "",
@@ -71,7 +83,9 @@
       "id": "gate_river_basin_fog",
       "gate_type": "route",
       "target": "route_03_the_black_loess_grain_haul",
-      "blocked_weather": ["BioFog"],
+      "blocked_weather": [
+        "BioFog"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
@@ -82,7 +96,9 @@
       "id": "gate_underpass_black_rain",
       "gate_type": "route",
       "target": "route_13_the_subway_tile_vault_underpass",
-      "blocked_weather": ["BlackRain"],
+      "blocked_weather": [
+        "BlackRain"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
@@ -93,7 +109,9 @@
       "id": "gate_riverside_black_rain",
       "gate_type": "route",
       "target": "route_04_the_holy_spring_mercy_trek",
-      "blocked_weather": ["BlackRain"],
+      "blocked_weather": [
+        "BlackRain"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
@@ -104,7 +122,9 @@
       "id": "gate_culvert_black_rain",
       "gate_type": "route",
       "target": "route_17_the_telegraph_wire_runner_post",
-      "blocked_weather": ["BlackRain"],
+      "blocked_weather": [
+        "BlackRain"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
@@ -115,7 +135,9 @@
       "id": "gate_open_wasteland_fallout",
       "gate_type": "route",
       "target": "route_16_the_radioactive_graveyard_salvage_crawl",
-      "blocked_weather": ["FalloutStorm"],
+      "blocked_weather": [
+        "FalloutStorm"
+      ],
       "required_weather": [],
       "override_item": "hazmat_suit",
       "override_skill": "",
@@ -126,7 +148,9 @@
       "id": "gate_exposed_highway_fallout",
       "gate_type": "route",
       "target": "route_01_the_iron_line_garrison_express",
-      "blocked_weather": ["FalloutStorm"],
+      "blocked_weather": [
+        "FalloutStorm"
+      ],
       "required_weather": [],
       "override_item": "hazmat_suit",
       "override_skill": "",
@@ -138,7 +162,9 @@
       "gate_type": "route",
       "target": "route_06_the_thermal_brine_salt_pass",
       "blocked_weather": [],
-      "required_weather": ["Blizzard"],
+      "required_weather": [
+        "Blizzard"
+      ],
       "override_item": "",
       "override_skill": "",
       "consequence_on_force": "",
@@ -149,7 +175,9 @@
       "gate_type": "route",
       "target": "route_08_the_high_voltage_grid_battery_relay",
       "blocked_weather": [],
-      "required_weather": ["Blizzard"],
+      "required_weather": [
+        "Blizzard"
+      ],
       "override_item": "",
       "override_skill": "",
       "consequence_on_force": "",
@@ -159,12 +187,59 @@
       "id": "gate_electronics_route_emp",
       "gate_type": "route",
       "target": "route_11_the_quarry_pit_granite_cartage",
-      "blocked_weather": ["EMPStorm"],
+      "blocked_weather": [
+        "EMPStorm"
+      ],
       "required_weather": [],
       "override_item": "",
       "override_skill": "",
       "consequence_on_force": "Vehicle electronics fail. Navigation and communication systems go dark.",
       "description": "The granite haul route depends on powered winches and electronic navigation through the quarry pit. During EMP storms, the vehicle electronics fail and the winch systems go dead, leaving the convoy stranded in the pit."
+    },
+    {
+      "id": "gate_dest_silent_observatory_blizzard",
+      "gate_type": "destination",
+      "target": "location_silent_observatory",
+      "blocked_weather": [
+        "Blizzard",
+        "IceStorm"
+      ],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Whiteout above the treeline. The switchbacks vanish, and the wind does the rest.",
+      "description": "The mountain road to the observatory closes in any blizzard or ice storm. At sixty below, the wind strips heat faster than a climber can replace it.",
+      "force_stamina_cost": 30
+    },
+    {
+      "id": "gate_dest_flooded_subway_depot_blackrain",
+      "gate_type": "destination",
+      "target": "location_flooded_subway_depot",
+      "blocked_weather": [
+        "BlackRain"
+      ],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "Black rain percolates straight into the flooded bay. Waders do not stop what dissolves.",
+      "description": "The depot floods from below and above. Black rain raises the waterline and feeds the radiation already dissolved in it.",
+      "force_stamina_cost": 25,
+      "force_rad_dose": 15
+    },
+    {
+      "id": "gate_dest_shallows_market_falloutstorm",
+      "gate_type": "destination",
+      "target": "loc_the_shallows_market",
+      "blocked_weather": [
+        "FalloutStorm"
+      ],
+      "required_weather": [],
+      "override_item": "",
+      "override_skill": "",
+      "consequence_on_force": "An open-air market under a fallout storm is a ledger of the dead. The stalls would stand empty anyway.",
+      "description": "The Shallows trades in the open air on the drowned waterfront. When fallout comes off the water, there is nowhere to shelter and no trade worth the dose.",
+      "force_stamina_cost": 25,
+      "force_rad_dose": 20
     }
   ]
 }

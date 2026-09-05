@@ -253,6 +253,49 @@ public partial class SaveLoadHostSession : Node
     }
 
     /// <summary>
+    /// Plan VIII · Task 22.4 — per-section health of the slot's last aggregate
+    /// save, read from the PERSISTED envelope (what the save said happened),
+    /// never recomputed from live runtime state. Honest states: no envelope /
+    /// aggregate checksum present / per-section checksum presence / legacy-
+    /// migrated marker. Returns null when the slot service is unavailable.
+    /// </summary>
+    public SlotEnvelopeHealth? GetEnvelopeHealth(SaveSlotId slotId)
+    {
+        if (_slotService == null) return null;
+        AggregateSaveEnvelope? envelope;
+        try
+        {
+            envelope = _slotService.LoadAggregate(_currentProfileId, slotId);
+        }
+        catch (Exception)
+        {
+            /* cleanup: envelope load probe — absent/unreadable slot is a valid health state, not a hard error */
+            return new SlotEnvelopeHealth { EnvelopePresent = false, LoadFailed = true };
+        }
+        if (envelope == null)
+            return new SlotEnvelopeHealth { EnvelopePresent = false };
+
+        var health = new SlotEnvelopeHealth
+        {
+            EnvelopePresent = true,
+            ManifestVersion = envelope.manifestVersion,
+            AggregateChecksumPresent = !string.IsNullOrEmpty(envelope.aggregateChecksum),
+            MigratedFromLegacy = envelope.migratedFromLegacy,
+            SectionCount = envelope.sections?.Count ?? 0
+        };
+        if (envelope.sections != null)
+        {
+            foreach (var s in envelope.sections)
+            {
+                if (s == null) continue;
+                health.SectionLines.Add(
+                    $"{s.sectionName} — {(string.IsNullOrEmpty(s.checksum) ? "no checksum" : "ok")}");
+            }
+        }
+        return health;
+    }
+
+    /// <summary>
     /// Update manifest fields for the active slot. Call after a successful save.
     /// </summary>
     public void UpdateManifest(Action<SaveManifest> update)
@@ -1039,6 +1082,19 @@ public partial class SaveLoadHostSession : Node
 /// <summary>
 /// Immutable slot card for UI display.
 /// </summary>
+public class SlotEnvelopeHealth
+{
+    public bool EnvelopePresent { get; set; }
+    /// <summary>True when the envelope file exists but failed to load (corrupt).</summary>
+    public bool LoadFailed { get; set; }
+    public int ManifestVersion { get; set; }
+    public bool AggregateChecksumPresent { get; set; }
+    public bool MigratedFromLegacy { get; set; }
+    public int SectionCount { get; set; }
+    /// <summary>"sectionName — ok/no checksum" lines, manifest order.</summary>
+    public List<string> SectionLines { get; } = new();
+}
+
 public class SlotCard
 {
     public SaveSlotId SlotId { get; set; } = new("empty");

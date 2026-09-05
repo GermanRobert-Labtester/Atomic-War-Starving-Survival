@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL Hydroponics and Cultivation Module</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#131313",
+                        "on-tertiary-fixed": "#351000",
+                        "inverse-primary": "#5a5f64",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary": "#00363a",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#225054",
+                        "surface-variant": "#353534",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "primary": "#eef1f7",
+                        "tertiary-container": "#ffc9b0",
+                        "surface-tint": "#c3c7cd",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "secondary": "#a1cfd3",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-container": "#d1d5db",
+                        "outline": "#8f9194",
+                        "on-surface": "#e5e2e1",
+                        "on-primary": "#2c3136",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-surface-variant": "#c5c6ca",
+                        "on-primary-container": "#585c61",
+                        "outline-variant": "#44474a",
+                        "on-secondary-fixed": "#002022",
+                        "surface-container-lowest": "#0e0e0e",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "surface-dim": "#131313",
+                        "on-secondary-container": "#93c0c5",
+                        "tertiary": "#ffede7",
+                        "on-primary-fixed": "#171c20",
+                        "surface-container-highest": "#353534",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "surface-bright": "#393939",
+                        "on-tertiary-container": "#9c3f00",
+                        "background": "#131313",
+                        "inverse-on-surface": "#313030",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "primary-fixed": "#dfe3e9",
+                        "on-tertiary": "#562000",
+                        "on-primary-fixed-variant": "#43474c",
+                        "surface-container": "#201f1f",
+                        "secondary-fixed": "#bcebef",
+                        "surface-container-high": "#2a2a2a",
+                        "tactical-teal": "#2D5A5E",
+                        "warning-orange": "#CC5500"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "8px",
+                        "container-padding": "12px",
+                        "unit": "4px",
+                        "stack-tight": "4px",
+                        "margin-base": "16px",
+                        "stack-md": "12px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Bebas Neue"],
+                        "data-sm": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "data-md": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-lg": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .pulse-warning {
+            animation: pulse-orange 2s infinite;
+        }
+
+        @keyframes pulse-orange {
+            0% { opacity: 1; box-shadow: 0 0 4px #CC5500; }
+            50% { opacity: 0.6; box-shadow: 0 0 1px #CC5500; }
+            100% { opacity: 1; box-shadow: 0 0 4px #CC5500; }
+        }
+
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            100% { opacity: 1; }
+        }
+
+        /* Custom scrollbar for that industrial feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #44474a;
+            border: 1px solid #8f9194;
+        }
+
+        .glitch-hover:hover {
+            text-shadow: 2px 0 #CC5500, -2px 0 #2D5A5E;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-data-md h-screen overflow-hidden flex flex-col antialiased selection:bg-tactical-teal selection:text-surface">
+<!-- CRT Overlay -->
+<div class="fixed inset-0 scanlines crt-flicker pointer-events-none mix-blend-overlay"></div>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-base h-16 w-full z-50 bg-surface dark:bg-surface border-b border-outline-variant shrink-0">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-headline-lg text-primary tracking-widest uppercase">SUBTERRA_AGRI_v4.2</span>
+</div>
+<div class="hidden md:flex flex-1 justify-center gap-8">
+<!-- Top Nav items suppressed as per logic, using SideNav for main destinations -->
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="font-data-md text-data-md" id="sys-time">SYS_T: 14:02:44 Z</span>
+</div>
+<div class="flex items-center gap-2 text-warning-orange">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span class="font-data-md text-data-md">SECTOR_G: HIGH_RAD</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors duration-150 p-2 rounded">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings_input_component</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors duration-150 p-2 rounded">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">terminal</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors duration-150 p-2 rounded relative">
+<span class="absolute top-1 right-1 w-2 h-2 bg-warning-orange pulse-warning rounded-full"></span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative z-10">
+<!-- SideNavBar -->
+<nav class="flex flex-col h-full w-64 border-r border-outline-variant bg-surface-container-low dark:bg-surface-container-low shrink-0 hidden md:flex">
+<div class="p-6 border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-primary mb-1 glitch-hover cursor-default">TERMINAL_01</h2>
+<div class="text-on-surface-variant font-data-sm text-data-sm uppercase tracking-wider mb-2">OPERATOR_ID_09</div>
+<div class="text-warning-orange font-data-sm text-data-sm flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-warning-orange pulse-warning"></span>
+                    SECTOR_G_GREENHOUSE
+                </div>
+</div>
+<div class="flex-1 py-4 flex flex-col gap-1 overflow-y-auto">
+<a class="text-secondary font-bold border-l-4 border-secondary bg-secondary-container/20 pl-4 py-3 flex items-center gap-3 active-nav" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+<span class="font-label-caps text-label-caps tracking-widest">CROP_MATRIX</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pl-4 py-3 flex items-center gap-3 hover:bg-surface-variant transition-all border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">thermostat</span>
+<span class="font-label-caps text-label-caps tracking-widest">ENV_CTRL</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pl-4 py-3 flex items-center gap-3 hover:bg-surface-variant transition-all border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">key</span>
+<span class="font-label-caps text-label-caps tracking-widest">SEED_VAULT</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pl-4 py-3 flex items-center gap-3 hover:bg-surface-variant transition-all border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">developer_board</span>
+<span class="font-label-caps text-label-caps tracking-widest">SYS_LOGS</span>
+</a>
+</div>
+<div class="p-4 border-t border-outline-variant">
+<button class="w-full border border-warning-orange text-warning-orange hover:bg-warning-orange hover:text-surface transition-colors py-2 font-label-caps text-label-caps tracking-widest uppercase flex justify-center items-center gap-2 group">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                    EMERGENCY_VENT_
+                </button>
+</div>
+<div class="border-t border-outline-variant flex flex-col gap-1 py-2">
+<a class="text-on-surface-variant hover:text-on-surface pl-4 py-2 flex items-center gap-3 hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">analytics</span>
+<span class="font-label-caps text-label-caps tracking-widest">STATUS</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pl-4 py-2 flex items-center gap-3 hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span class="font-label-caps text-label-caps tracking-widest">LOGOUT</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto p-margin-base md:p-6 bg-surface">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Section 1: HYDROPONIC_CROP_BEDS_MATRIX -->
+<section>
+<div class="flex items-center gap-3 mb-4 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-secondary">grid_on</span>
+<h3 class="font-headline-md text-headline-md text-primary uppercase">HYDROPONIC_CROP_BEDS_MATRIX</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Bed 01 -->
+<div class="border border-outline bg-surface-container-low flex flex-col relative overflow-hidden group">
+<div class="bg-tactical-teal px-3 py-1 border-b border-outline flex justify-between items-center">
+<span class="font-data-sm text-data-sm text-surface font-bold">BED_01</span>
+<span class="w-2 h-2 bg-surface rounded-none"></span>
+</div>
+<div class="p-container-padding flex-1 flex flex-col justify-between">
+<div>
+<div class="font-data-md text-data-md text-primary mb-2">WINTER RYE</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-1">
+<span>GROWTH:</span>
+<span class="text-secondary font-bold">82%</span>
+</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-3">
+<span>STATUS:</span>
+<span class="text-secondary">STABLE</span>
+</div>
+</div>
+<div class="mt-4">
+<div class="font-data-sm text-data-sm text-outline mb-1">[||||||||..]</div>
+<div class="w-full h-1 bg-surface-variant border border-outline-variant">
+<div class="h-full bg-tactical-teal" style="width: 82%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bed 02 -->
+<div class="border border-warning-orange bg-surface-container-low flex flex-col relative overflow-hidden group">
+<div class="bg-warning-orange px-3 py-1 border-b border-warning-orange flex justify-between items-center">
+<span class="font-data-sm text-data-sm text-surface font-bold">BED_02</span>
+<span class="w-2 h-2 bg-surface rounded-none pulse-warning"></span>
+</div>
+<div class="p-container-padding flex-1 flex flex-col justify-between">
+<div>
+<div class="font-data-md text-data-md text-primary mb-2">RAD-RESISTANT FUNGAL SPORES</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-1">
+<span>GROWTH:</span>
+<span class="text-warning-orange font-bold">45%</span>
+</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-3">
+<span>STATUS:</span>
+<span class="text-warning-orange pulse-warning">MUTATING</span>
+</div>
+</div>
+<div class="mt-4">
+<div class="font-data-sm text-data-sm text-outline mb-1">[||||......]</div>
+<div class="w-full h-1 bg-surface-variant border border-outline-variant">
+<div class="h-full bg-warning-orange pulse-warning" style="width: 45%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bed 03 -->
+<div class="border border-outline bg-surface-container-low flex flex-col relative overflow-hidden group">
+<div class="bg-outline-variant px-3 py-1 border-b border-outline flex justify-between items-center">
+<span class="font-data-sm text-data-sm text-primary font-bold">BED_03</span>
+<span class="w-2 h-2 bg-outline rounded-none"></span>
+</div>
+<div class="p-container-padding flex-1 flex flex-col justify-between">
+<div>
+<div class="font-data-md text-data-md text-primary mb-2">CLEAN POTATO TUBERS</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-1">
+<span>GROWTH:</span>
+<span class="text-on-surface-variant font-bold">18%</span>
+</div>
+<div class="flex justify-between font-data-sm text-data-sm text-on-surface-variant mb-3">
+<span>STATUS:</span>
+<span class="text-outline">CRITICAL_LOW</span>
+</div>
+</div>
+<div class="mt-4">
+<div class="font-data-sm text-data-sm text-outline mb-1">[|.........]</div>
+<div class="w-full h-1 bg-surface-variant border border-outline-variant">
+<div class="h-full bg-outline" style="width: 18%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bed 04 -->
+<div class="border border-outline border-dashed bg-surface-container-low flex flex-col relative overflow-hidden opacity-70 group">
+<div class="bg-surface-variant px-3 py-1 border-b border-outline border-dashed flex justify-between items-center">
+<span class="font-data-sm text-data-sm text-on-surface-variant font-bold">BED_04</span>
+<span class="w-2 h-2 border border-outline rounded-none"></span>
+</div>
+<div class="p-container-padding flex-1 flex flex-col justify-center items-center">
+<span class="material-symbols-outlined text-outline text-[32px] mb-2" style="font-variation-settings: 'FILL' 0;">agriculture</span>
+<div class="font-data-md text-data-md text-outline mb-1">EMPTY</div>
+<div class="font-data-sm text-data-sm text-on-surface-variant">READY_FOR_SEEDING</div>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Section 2: ENVIRONMENTAL_GROWTH_CONTROLS -->
+<section class="border border-outline bg-surface-container-low">
+<div class="bg-surface-variant px-4 py-2 border-b border-outline flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">tune</span>
+<h3 class="font-headline-md text-headline-md text-primary uppercase">ENVIRONMENTAL_GROWTH_CONTROLS</h3>
+</div>
+<div class="p-4 space-y-6">
+<!-- UV Lamps -->
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<div class="flex flex-col">
+<span class="font-data-md text-data-md text-primary">UV_GROW_LAMPS</span>
+<span class="font-data-sm text-data-sm text-secondary">INTENSITY: 75%</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="font-data-sm text-data-sm text-outline">[|||||||...]</div>
+<button class="border border-secondary bg-secondary/10 text-secondary px-3 py-1 font-label-caps hover:bg-secondary hover:text-surface transition-colors cursor-pointer">
+                                        ON_
+                                    </button>
+</div>
+</div>
+<!-- Water Flow -->
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<div class="flex flex-col">
+<span class="font-data-md text-data-md text-primary">H2O_FLOW_REGULATOR</span>
+<span class="font-data-sm text-data-sm text-on-surface-variant">VALVE_04_OPEN</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">water_drop</span>
+<span class="font-data-lg text-data-lg text-secondary font-bold">4.2 <span class="text-data-sm">L/min</span></span>
+</div>
+</div>
+<!-- Fertilizer Tank -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-data-md text-data-md text-primary">NUTRIENT_DOSING_TANK</span>
+<span class="font-data-sm text-data-sm text-warning-orange">REFILL_SOON</span>
+</div>
+<div class="flex items-center gap-3 h-12">
+<span class="font-data-md text-data-md text-primary">62%</span>
+<div class="w-4 h-full border border-outline bg-surface-variant flex flex-col justify-end">
+<div class="w-full bg-tactical-teal" style="height: 62%;"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: SEED_VAULT & GENETIC_BANK -->
+<section class="border border-outline bg-surface-container-low flex flex-col">
+<div class="bg-surface-variant px-4 py-2 border-b border-outline flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">inventory_2</span>
+<h3 class="font-headline-md text-headline-md text-primary uppercase">SEED_VAULT_&amp;_GENETIC_BANK</h3>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="font-data-sm text-data-sm text-outline mb-2 uppercase border-b border-outline-variant pb-1">Current_Inventory</div>
+<ul class="space-y-2 mb-6 flex-1">
+<li class="flex justify-between items-center group">
+<span class="font-data-md text-data-md text-primary group-hover:text-secondary transition-colors">&gt; HEIRLOOM_MAIZE</span>
+<span class="font-data-sm text-data-sm text-on-surface-variant">[ x12_UNITS ]</span>
+</li>
+<li class="flex justify-between items-center group">
+<span class="font-data-md text-data-md text-primary group-hover:text-secondary transition-colors">&gt; RAD-HARDENED_SOY</span>
+<span class="font-data-sm text-data-sm text-on-surface-variant">[ x08_UNITS ]</span>
+</li>
+<li class="flex justify-between items-center group">
+<span class="font-data-md text-data-md text-primary group-hover:text-secondary transition-colors">&gt; MEDICINAL_POPPY</span>
+<span class="font-data-sm text-data-sm text-warning-orange">[ x04_UNITS ]</span>
+</li>
+</ul>
+<div class="flex gap-2 mt-auto pt-4 border-t border-outline-variant">
+<button class="flex-1 border border-outline text-primary hover:bg-primary hover:text-surface transition-colors py-2 font-label-caps text-label-caps uppercase">
+                                    [ HARVEST_ALL_ ]
+                                </button>
+<button class="flex-1 border border-outline text-primary hover:bg-primary hover:text-surface transition-colors py-2 font-label-caps text-label-caps uppercase">
+                                    [ TREAT_SOIL_ ]
+                                </button>
+<button class="flex-1 border border-outline text-primary hover:bg-primary hover:text-surface transition-colors py-2 font-label-caps text-label-caps uppercase">
+                                    [ EXTRACT_SEEDS_ ]
+                                </button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) - Suppressed as per context, but included structure if viewport shrinks, though SideNav handles it mostly. Adding it for completeness of responsive design if strictly required, but usually hid based on rules. Leaving hidden as SideNav handles md+. -->
+<script>
+        // Simple script to update system time
+        function updateTime() {
+            const timeEl = document.getElementById('sys-time');
+            if(timeEl) {
+                const now = new Date();
+                const hh = String(now.getUTCHours()).padStart(2, '0');
+                const mm = String(now.getUTCMinutes()).padStart(2, '0');
+                const ss = String(now.getUTCSeconds()).padStart(2, '0');
+                timeEl.textContent = `SYS_T: ${hh}:${mm}:${ss} Z`;
+            }
+        }
+        setInterval(updateTime, 1000);
+    </script>
+</body></html>

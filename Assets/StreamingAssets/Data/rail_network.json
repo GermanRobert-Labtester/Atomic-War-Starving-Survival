@@ -24,6 +24,12 @@
       "display_name": "Hydro Dam Terminus",
       "zone_id": "loc_hydro_dam",
       "node_type": "Terminus"
+    },
+    {
+      "node_id": "rail_node_switchyard",
+      "display_name": "Old Railway Switchyard",
+      "zone_id": "loc_switchyard",
+      "node_type": "Junction"
     }
   ],
   "segments": [
@@ -59,6 +65,28 @@
       "bridge_required": true,
       "max_train_mass": 180.0,
       "hazard_tags": [ "trestle_bridge", "ambush_point" ]
+    },
+    {
+      "segment_id": "rail_segment_delta_to_switchyard",
+      "display_name": "Delta-Switchyard Branch",
+      "start_node_id": "rail_node_delta_junction",
+      "end_node_id": "rail_node_switchyard",
+      "distance_km": 12.0,
+      "base_integrity": 0.55,
+      "bridge_required": false,
+      "max_train_mass": 220.0,
+      "hazard_tags": [ ]
+    },
+    {
+      "segment_id": "rail_segment_switchyard_to_silo_alt",
+      "display_name": "Switchyard-Silo Industrial Bypass",
+      "start_node_id": "rail_node_switchyard",
+      "end_node_id": "rail_node_silo_depot",
+      "distance_km": 28.0,
+      "base_integrity": 0.60,
+      "bridge_required": false,
+      "max_train_mass": 200.0,
+      "hazard_tags": [ "derailment_risk" ]
     }
   ],
   "cars": [
@@ -97,6 +125,19 @@
       "armor_rating": 60.0,
       "max_fuel_capacity": 0.0,
       "fuel_burn_per_km": 0.0
+    },
+    {
+      "car_type_id": "car_handcar",
+      "display_name": "Field Handcar",
+      "empty_mass": 8.0,
+      "cargo_capacity": 20.0,
+      "armor_rating": 5.0,
+      "max_fuel_capacity": 0.0,
+      "fuel_burn_per_km": 0.0,
+      "vehicle_class": "handcar",
+      "crew_stamina_max": 1.0,
+      "stamina_drain_per_km": 0.035,
+      "stamina_recovery_per_stop": 0.35
     }
   ]
 }

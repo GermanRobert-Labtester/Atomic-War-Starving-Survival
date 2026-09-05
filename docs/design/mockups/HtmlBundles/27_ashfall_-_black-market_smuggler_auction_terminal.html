@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SMUGGLER_NET - Lot 047</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e5e2e1",
+                        "error-container": "#93000a",
+                        "surface": "#131313",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-fixed": "#bcebef",
+                        "error": "#ffb4ab",
+                        "primary": "#eef1f7",
+                        "surface-container-lowest": "#0e0e0e",
+                        "background": "#131313",
+                        "outline-variant": "#44474a",
+                        "on-secondary-fixed": "#002022",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-variant": "#353534",
+                        "tertiary-container": "#ffc9b0",
+                        "primary-container": "#d1d5db",
+                        "on-surface-variant": "#c5c6ca",
+                        "surface-container-highest": "#353534",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "on-secondary": "#00363a",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-container": "#9c3f00",
+                        "outline": "#8f9194",
+                        "on-primary-fixed": "#171c20",
+                        "on-surface": "#e5e2e1",
+                        "inverse-primary": "#5a5f64",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-primary": "#2c3136",
+                        "on-tertiary": "#562000",
+                        "secondary-container": "#225054",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#93c0c5",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "surface-tint": "#c3c7cd",
+                        "surface-dim": "#131313",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-primary-container": "#585c61",
+                        "tertiary": "#ffede7",
+                        "primary-fixed": "#dfe3e9",
+                        "secondary": "#a1cfd3",
+                        "on-background": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container": "#201f1f",
+                        "surface-bright": "#393939",
+                        "on-primary-fixed-variant": "#43474c",
+                        "surface-container-low": "#1c1b1b",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "amber-warning": "#d97706"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-tight": "4px",
+                        "gutter": "8px",
+                        "container-padding": "12px",
+                        "stack-md": "12px",
+                        "unit": "4px",
+                        "margin-base": "16px"
+                    },
+                    "fontFamily": {
+                        "data-sm": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "data-md": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.98; }
+            50% { opacity: 1; }
+            100% { opacity: 0.99; }
+        }
+        .glow-text {
+            text-shadow: 0 0 4px currentColor;
+        }
+        .terminal-btn {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .terminal-btn:hover {
+            background-color: theme('colors.primary');
+            color: theme('colors.surface');
+        }
+        .terminal-btn:hover .btn-cursor {
+            opacity: 1;
+        }
+        .btn-cursor {
+            opacity: 0;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Custom Scrollbar for Ledger */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: theme('colors.surface-container-high');
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: theme('colors.outline-variant');
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen overflow-hidden flex font-data-sm relative crt-flicker selection:bg-secondary selection:text-surface">
+<!-- CRT Scanline Overlay -->
+<div class="fixed inset-0 scanlines"></div>
+<!-- SideNavBar (Shared Component JSON) -->
+<nav class="hidden md:flex flex-col h-screen w-64 border-r border-outline-variant py-container-padding bg-surface-container dark:bg-surface-container docked left-0 z-10 shrink-0">
+<div class="px-margin-base mb-8">
+<h1 class="font-headline-md text-headline-md text-primary glow-text tracking-wider">SMUGGLER_NET</h1>
+<div class="flex items-center gap-2 mt-2 text-on-surface-variant font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-sm">settings_input_antenna</span>
+<span>NODE_049 | SECTOR-7G</span>
+</div>
+</div>
+<ul class="flex flex-col gap-1 px-2 flex-grow">
+<!-- Active Tab -->
+<li>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container border-l-4 border-secondary transition-all duration-100 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">gavel</span>
+                    CURRENT_AUCTION
+                </a>
+</li>
+<!-- Inactive Tabs -->
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-100 ease-in-out font-label-caps text-label-caps border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">storefront</span>
+                    MARKET_DEALS
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-100 ease-in-out font-label-caps text-label-caps border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">military_tech</span>
+                    REPUTATION
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-100 ease-in-out font-label-caps text-label-caps border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">enhanced_encryption</span>
+                    SIGNAL_DECRYPT
+                </a>
+</li>
+</ul>
+<div class="px-4 mt-auto">
+<button class="w-full flex items-center justify-center gap-2 py-2 border border-outline-variant text-on-surface-variant hover:bg-surface-variant transition-colors font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[16px]">logout</span>
+                DISCONNECT
+            </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative z-0">
+<!-- Top Mobile Header (Fallback) -->
+<header class="md:hidden flex justify-between items-center w-full px-margin-base h-16 border-b border-outline-variant bg-surface shrink-0">
+<h1 class="font-headline-md text-headline-md text-primary glow-text tracking-widest">SMUGGLER_NET</h1>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<div class="flex-1 overflow-y-auto p-margin-base md:p-6 lg:p-8 custom-scrollbar">
+<div class="max-w-6xl mx-auto space-y-gutter">
+<!-- Top Row: Lot Info & Status -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Contraband Spotlight (Spans 2 cols on lg) -->
+<section class="lg:col-span-2 border border-outline-variant bg-surface-container-low flex flex-col relative overflow-hidden group">
+<!-- Decorative bracket corners -->
+<div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary"></div>
+<div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary"></div>
+<div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary"></div>
+<header class="bg-secondary-container px-container-padding py-2 border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-data-md text-data-md text-on-secondary-container flex items-center gap-2 uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                                Active Lot Spotlight
+                            </h2>
+<span class="font-label-caps text-label-caps px-2 py-1 bg-surface text-primary border border-outline-variant">ID: LOT-047</span>
+</header>
+<div class="p-container-padding flex flex-col md:flex-row gap-6">
+<!-- Image Container -->
+<div class="w-full md:w-1/2 relative h-48 md:h-auto border border-outline-variant p-1 bg-surface-container">
+<div class="bg-cover bg-center w-full h-full grayscale opacity-80 mix-blend-luminosity" data-alt="A rugged, dimly lit workbench displaying a pair of pristine, bulky Gen-3 night-vision goggles. The goggles are military olive drab with scratched black metal accents, glowing faintly with a green phosphor hum. The scene is shot from a low, dramatic angle with deep shadows and harsh, cool bluish rim lighting typical of a tactical bunker setting. Small technical readouts are faintly visible in the background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7ClxlMWf-uJWDzGdihQKcRkDpzae9RwC9NtZsGmIr5JpiGTbz1FY_Yr-CwHC4Yp7FEgz7VtFWmI5fJgU8y31-8oVOkhESaiRnPb99p_X5dPxV65jw_IN1Z2qT8EdOn8E6saere_RyX9UeYSlrPhHgTw9KWlbfEF6OMvpA0ZxzJh0gKy1RU1deT-zk1sz_uO-Psducaw-tWcMV5sgL2aEf9UN1ztlOqn3fPrtJRrf3XSey9MFrSp81qOlpQDUX1EiSPZXW4HG15cSS')"></div>
+<!-- Scanline overlay on image -->
+<div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] pointer-events-none mix-blend-overlay"></div>
+<div class="absolute top-2 right-2 flex gap-1">
+<span class="w-1.5 h-1.5 bg-secondary animate-pulse"></span>
+</div>
+</div>
+<!-- Specs -->
+<div class="w-full md:w-1/2 flex flex-col justify-between space-y-4">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-primary uppercase mb-1 leading-none">Pristine Pre-War Night-Vision Goggles Gen-3</h3>
+<p class="text-on-surface-variant font-data-sm text-data-sm opacity-80 uppercase border-b border-outline-variant pb-2 mb-3">Origin: Unknown Cache / Grade: Mil-Spec</p>
+<div class="space-y-2">
+<div class="flex justify-between items-center border-b border-surface-container-high pb-1">
+<span class="text-outline uppercase">Condition</span>
+<span class="text-primary glow-text">98% (Mint)</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-container-high pb-1">
+<span class="text-outline uppercase">Power Cell</span>
+<span class="text-secondary glow-text">100% CHG</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-container-high pb-1">
+<span class="text-outline uppercase">Optics Mod</span>
+<span class="text-primary">8x IR Thermal</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Auction Status (Warning/Amber focus) -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col relative">
+<header class="bg-surface-variant px-container-padding py-2 border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-data-md text-data-md text-on-surface flex items-center gap-2 uppercase">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+                                Auction Status
+                            </h2>
+<span class="w-2 h-2 bg-amber-warning rounded-full animate-pulse shadow-[0_0_8px_theme('colors.amber-warning')]"></span>
+</header>
+<div class="p-container-padding flex flex-col items-center justify-center flex-grow space-y-6">
+<div class="text-center">
+<span class="text-outline font-label-caps text-label-caps tracking-widest uppercase block mb-1">Time Remaining</span>
+<div class="font-display-lg text-display-lg text-amber-warning glow-text tabular-nums leading-none" style="text-shadow: 0 0 10px rgba(217, 119, 6, 0.6);">
+                                    01:45
+                                </div>
+<div class="w-full bg-surface-container-high h-1 mt-2">
+<div class="bg-amber-warning h-full w-[15%]"></div>
+</div>
+</div>
+<div class="w-full border-t border-outline-variant pt-4 text-center">
+<span class="text-outline font-label-caps text-label-caps tracking-widest uppercase block mb-2">Current Top Bid</span>
+<div class="bg-surface border border-outline-variant p-3 inline-block w-full">
+<div class="font-data-lg text-data-lg text-secondary mb-1">340 Lead Bullets</div>
+<div class="font-data-sm text-data-sm text-on-surface-variant uppercase flex items-center justify-center gap-1">
+                                        Bidder: <span class="text-primary font-bold">Viper</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">verified_user</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Row: Bidding, Wallet, Actions -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Blind Bidding Ledger -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col h-64">
+<header class="bg-surface-variant px-container-padding py-2 border-b border-outline-variant">
+<h2 class="font-data-md text-data-md text-on-surface flex items-center gap-2 uppercase">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+                                Comm Intercepts
+                            </h2>
+</header>
+<div class="p-2 overflow-y-auto custom-scrollbar flex-grow space-y-2 font-data-sm text-data-sm relative">
+<!-- Faded history -->
+<div class="flex justify-between items-center text-on-surface-variant opacity-40 px-2 py-1">
+<span class="uppercase">Rustborn Raiders</span>
+<span>250 BLT</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant opacity-60 px-2 py-1">
+<span class="uppercase">Cobalt Syndicate</span>
+<span>290 BLT</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant opacity-80 px-2 py-1 border-l-2 border-transparent">
+<span class="uppercase">Vault 081</span>
+<span>315 BLT</span>
+</div>
+<!-- Current Leader in ledger -->
+<div class="flex justify-between items-center text-secondary bg-secondary-container/20 px-2 py-1 border-l-2 border-secondary relative overflow-hidden group">
+<div class="absolute inset-0 bg-secondary/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300"></div>
+<span class="uppercase relative z-10 font-bold">Viper</span>
+<span class="relative z-10">340 BLT</span>
+</div>
+<div class="flex justify-between items-center text-outline px-2 py-1 border-l-2 border-transparent animate-pulse">
+<span class="uppercase">Awaiting incoming...</span>
+<span>---</span>
+</div>
+</div>
+</section>
+<!-- Player Wallet HUD -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col">
+<header class="bg-surface-variant px-container-padding py-2 border-b border-outline-variant">
+<h2 class="font-data-md text-data-md text-on-surface flex items-center gap-2 uppercase">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+                                Operator Cache
+                            </h2>
+</header>
+<div class="p-container-padding flex flex-col justify-center h-full space-y-4">
+<div class="flex items-center justify-between border-b border-surface-container-high pb-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">scatter_plot</span>
+<span class="uppercase font-data-sm">Lead Bullets</span>
+</div>
+<span class="font-data-lg text-primary glow-text">520</span>
+</div>
+<div class="flex items-center justify-between border-b border-surface-container-high pb-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">water_drop</span>
+<span class="uppercase font-data-sm">Clean Water</span>
+</div>
+<span class="font-data-md text-on-surface">80L</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">medication</span>
+<span class="uppercase font-data-sm">Antibiotics</span>
+</div>
+<span class="font-data-md text-on-surface">14 doses</span>
+</div>
+<!-- Progress bar visualizing spending capacity relative to current bid -->
+<div class="mt-2 pt-2 border-t border-surface-container-high">
+<div class="flex justify-between text-[10px] text-outline mb-1 uppercase">
+<span>Current Bid (340)</span>
+<span>Capacity (520)</span>
+</div>
+<div class="flex h-1 gap-px">
+<div class="bg-secondary flex-grow opacity-50"></div>
+<div class="bg-secondary flex-grow opacity-50"></div>
+<div class="bg-secondary flex-grow opacity-50"></div>
+<div class="bg-secondary flex-grow opacity-50"></div>
+<div class="bg-surface-container-high flex-grow"></div>
+<div class="bg-surface-container-high flex-grow"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Tactical Directives -->
+<section class="border border-outline-variant bg-surface-container-low p-container-padding flex flex-col justify-center gap-3">
+<div class="text-outline font-label-caps text-label-caps tracking-widest uppercase mb-1 text-center">Execute Directive</div>
+<button class="terminal-btn w-full border border-primary text-primary py-3 px-4 font-data-md uppercase text-center flex justify-between items-center group">
+<span>[ Place Increment Bid +25 ]</span>
+<span class="btn-cursor font-bold">_</span>
+</button>
+<button class="terminal-btn w-full border border-secondary text-secondary py-3 px-4 font-data-md uppercase text-center flex justify-between items-center">
+<span>[ Submit Sealed Max Bid ]</span>
+<span class="btn-cursor font-bold">_</span>
+</button>
+<button class="terminal-btn w-full border border-error text-error py-3 px-4 font-data-md uppercase text-center flex justify-between items-center hover:bg-error hover:text-surface">
+<span>[ Withdraw From Lot ]</span>
+<span class="btn-cursor font-bold text-surface">_</span>
+</button>
+</section>
+</div>
+</div>
+</div>
+</main>
+</body></html>

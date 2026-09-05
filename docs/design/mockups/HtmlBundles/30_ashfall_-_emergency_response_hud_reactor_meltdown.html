@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL BUNKER_OS_v4.2 - HAZARD MAP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed": "#ffdbcc",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#00e639",
+                        "outline": "#8a9293",
+                        "secondary-fixed-dim": "#ffb693",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-fixed": "#351000",
+                        "surface": "#131313",
+                        "secondary": "#ffb693",
+                        "surface-container": "#201f1f",
+                        "tertiary-fixed-dim": "#00e639",
+                        "tertiary-container": "#006112",
+                        "on-secondary": "#562000",
+                        "on-primary-fixed": "#002022",
+                        "primary": "#a1cfd3",
+                        "on-surface": "#e5e2e1",
+                        "background": "#131313",
+                        "inverse-on-surface": "#313030",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#bcebef",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed": "#002203",
+                        "tertiary-fixed": "#72ff70",
+                        "inverse-primary": "#396569",
+                        "on-primary": "#00363a",
+                        "surface-variant": "#353534",
+                        "surface-dim": "#131313",
+                        "surface-bright": "#393939",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#00530e",
+                        "tertiary": "#00e639",
+                        "on-primary-container": "#a2d0d4",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "error-container": "#93000a",
+                        "secondary-container": "#ea6b1e",
+                        "primary-container": "#2d5a5e",
+                        "outline-variant": "#404849",
+                        "surface-container-highest": "#353534",
+                        "on-surface-variant": "#c0c8c9",
+                        "on-tertiary": "#003907",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-container": "#4b1b00",
+                        "surface-tint": "#a1cfd3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-max": "1440px",
+                        "gutter": "16px",
+                        "margin": "24px"
+                    },
+                    "fontFamily": {
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "body-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "data-lg": ["18px", { "lineHeight": "1.4", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.1", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .crt-glow {
+            text-shadow: 0 0 8px currentColor, 0 0 2px currentColor;
+        }
+        .box-glow {
+            box-shadow: 0 0 8px 1px currentColor;
+        }
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .animate-flash {
+            animation: flash 1s steps(2, end) infinite;
+        }
+        @keyframes pulse-fast {
+            0%, 100% { background-color: rgba(255, 180, 171, 0.1); }
+            50% { background-color: rgba(255, 180, 171, 0.3); }
+        }
+        .animate-pulse-fast {
+            animation: pulse-fast 1s infinite;
+        }
+        /* Custom scrollbar for tactical feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d5a5e;
+            border: 1px solid #131313;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden h-screen w-screen relative selection:bg-primary-container selection:text-on-primary-container">
+<!-- Global Scanline Overlay -->
+<div class="fixed inset-0 scanlines"></div>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-gutter h-16 z-50 bg-surface/90 backdrop-blur-md border-b border-primary/30 docked full-width top-0">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-error animate-flash text-3xl">warning</span>
+<div class="flex flex-col">
+<span class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg tracking-tighter text-secondary dark:text-secondary uppercase">ASHFALL_BUNKER_OS_v4.2</span>
+<span class="text-error font-data-lg text-sm animate-flash uppercase">EMERGENCY CODE RED: COOLANT LOOP FAILURE IN REACTOR BAY 3</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex flex-col items-end border border-error/50 bg-error-container/20 px-3 py-1 animate-pulse-fast">
+<span class="text-error font-label-sm uppercase">Meltdown Countdown</span>
+<span class="text-error font-display-lg text-4xl crt-glow">04:18</span>
+</div>
+<div class="flex flex-col items-end px-3 py-1">
+<span class="text-secondary font-label-sm uppercase">Ambient Heat</span>
+<span class="text-secondary font-data-lg">420°C (Rising)</span>
+</div>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-primary-container hover:text-on-primary-container p-2 rounded transition-none">notifications_active</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-primary-container hover:text-on-primary-container p-2 rounded transition-none">settings_power</span>
+</div>
+</div>
+</header>
+<div class="flex h-[calc(100vh-64px)] w-full">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col fixed left-0 top-16 h-[calc(100vh-64px)] z-40 bg-surface-container dark:bg-surface-container docked left-0 h-full w-64 border-r border-outline-variant">
+<div class="p-4 border-b border-outline-variant/30 flex flex-col gap-2">
+<div class="w-16 h-16 border border-primary/50 flex items-center justify-center bg-surface-container-high mb-2">
+<span class="material-symbols-outlined text-3xl text-primary">face</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-secondary uppercase">SECTOR_ALPHA</div>
+<div class="text-error font-label-sm uppercase animate-flash">CRITICAL_MELTDOWN_T-MINUS_12:00</div>
+<button class="mt-4 w-full bg-error text-on-error font-data-lg text-sm py-2 hover:bg-error-container hover:text-error transition-none border border-error uppercase">ABORT_SEQUENCE</button>
+</div>
+<ul class="flex flex-col flex-grow py-4">
+<li>
+<a class="flex items-center gap-3 bg-primary-container text-on-primary-container border-l-4 border-tertiary px-4 py-3 uppercase" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-data-lg text-sm">HAZARD_MAP</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors uppercase" href="#">
+<span class="material-symbols-outlined">air</span>
+<span class="font-data-lg text-sm">LIFE_SUPPORT</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors uppercase" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-data-lg text-sm">EVAC_ROSTER</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors uppercase" href="#">
+<span class="material-symbols-outlined">settings_input_antenna</span>
+<span class="font-data-lg text-sm">COMMS_RELAY</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors uppercase" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-data-lg text-sm">TERMINAL_LOG</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-64 w-full h-full flex flex-col md:flex-row relative z-20 pb-[72px] md:pb-0">
+<!-- Left Panel: Life Support -->
+<section class="w-full md:w-1/4 h-full border-r border-outline-variant/30 flex flex-col p-4 gap-4 overflow-y-auto">
+<div class="bg-surface-container-high border-b border-primary px-3 py-1">
+<h2 class="font-headline-lg text-xl uppercase text-primary tracking-widest">Life-Support &amp; Halon Suppression</h2>
+</div>
+<div class="flex flex-col gap-3 mt-2">
+<!-- Data Readouts -->
+<div class="border border-outline-variant/50 p-3 flex justify-between items-center bg-surface/50">
+<span class="font-label-sm uppercase text-on-surface-variant">O2 Reserves</span>
+<span class="font-data-lg text-secondary">42%</span>
+</div>
+<div class="border border-outline-variant/50 p-3 flex justify-between items-center bg-surface/50">
+<span class="font-label-sm uppercase text-on-surface-variant">Air Scrubber</span>
+<span class="font-data-lg text-error animate-flash">FAIL</span>
+</div>
+<!-- Actions -->
+<button class="w-full bg-primary-container text-on-primary-fixed border border-primary hover:bg-inverse-primary hover:text-on-surface transition-none py-3 px-4 flex items-center justify-between group mt-4">
+<span class="font-data-lg text-sm uppercase">DISCHARGE HALON GAS</span>
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform">valve</span>
+</button>
+<div class="text-xs font-label-sm text-error text-right uppercase">Target: REACTOR BAY 3</div>
+<button class="w-full bg-surface border border-primary/50 text-primary hover:bg-primary-container hover:text-on-primary-container transition-none py-3 px-4 flex items-center justify-between group">
+<span class="font-data-lg text-sm uppercase">ENGAGE DIESEL AUX PUMP</span>
+<span class="material-symbols-outlined">water_pump</span>
+</button>
+<div class="text-xs font-label-sm text-secondary text-right uppercase">Fuel: 10L</div>
+<button class="w-full bg-surface border border-primary/50 text-primary hover:bg-primary-container hover:text-on-primary-container transition-none py-3 px-4 flex items-center justify-between group">
+<span class="font-data-lg text-sm uppercase">SEAL VENT DUCTS</span>
+<span class="material-symbols-outlined">air</span>
+</button>
+</div>
+</section>
+<!-- Center Panel: Map -->
+<section class="w-full md:w-1/2 h-full relative flex flex-col p-4 border-r border-outline-variant/30">
+<div class="bg-surface-container-high border-b border-primary px-3 py-1 mb-4 z-20 flex justify-between items-center">
+<h2 class="font-headline-lg text-xl uppercase text-primary tracking-widest">BUNKER SCHEMATIC - SECTOR ALPHA</h2>
+<span class="font-label-sm uppercase text-outline"><span class="material-symbols-outlined text-sm align-middle">zoom_in</span> SCROLL TO ZOOM</span>
+</div>
+<!-- Map Container -->
+<div class="relative flex-grow border border-outline-variant/30 bg-surface-container-lowest overflow-hidden flex items-center justify-center">
+<!-- Background Reference -->
+<div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-luminosity" data-alt="Atmospheric background for a post-nuclear survival game. A snow-covered ruined cityscape under a heavy, ash-grey sky. Cold, desolate, cinematic, moody, 2D art style, highly detailed. Muted ashen grey and teal tones. No people, just the haunting remains of a city in winter." style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8'); background-size: cover; background-position: center;"></div>
+<!-- Grid Overlay -->
+<div class="absolute inset-0" style="background-image: linear-gradient(rgba(45, 90, 94, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(45, 90, 94, 0.1) 1px, transparent 1px); background-size: 32px 32px;"></div>
+<!-- Schematic Layers -->
+<div class="relative z-10 w-full max-w-sm flex flex-col gap-6 p-8">
+<!-- Level 0: Hatch -->
+<div class="relative border border-tertiary/30 bg-tertiary-container/10 p-4">
+<div class="absolute -left-6 top-1/2 -translate-y-1/2 w-4 h-px bg-tertiary"></div>
+<div class="flex justify-between items-center">
+<span class="font-data-lg text-sm uppercase text-tertiary-fixed">L0: Surface Hatch</span>
+<span class="bg-tertiary text-on-tertiary px-2 py-1 font-label-sm uppercase">OK</span>
+</div>
+</div>
+<!-- Connector -->
+<div class="w-px h-6 bg-outline-variant mx-auto"></div>
+<!-- Level 1: Living -->
+<div class="relative border border-secondary/50 bg-secondary-container/10 p-4 animate-pulse-fast">
+<div class="absolute -left-6 top-1/2 -translate-y-1/2 w-4 h-px bg-secondary"></div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-data-lg text-sm uppercase text-secondary">L1: Living Quarters</span>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-1 font-label-sm uppercase">WARN</span>
+</div>
+<div class="font-label-sm text-secondary opacity-80 uppercase">Smoke Hazard 45%</div>
+</div>
+<!-- Connector -->
+<div class="w-px h-6 bg-outline-variant mx-auto"></div>
+<!-- Level 2: MedBay -->
+<div class="relative border border-tertiary/30 bg-tertiary-container/10 p-4">
+<div class="absolute -left-6 top-1/2 -translate-y-1/2 w-4 h-px bg-tertiary"></div>
+<div class="flex justify-between items-center">
+<span class="font-data-lg text-sm uppercase text-tertiary-fixed">L2: Medical Bay</span>
+<span class="bg-tertiary text-on-tertiary px-2 py-1 font-label-sm uppercase">SAFE</span>
+</div>
+</div>
+<!-- Connector -->
+<div class="w-px h-6 bg-error/50 mx-auto animate-flash"></div>
+<!-- Level 3: Reactor -->
+<div class="relative border-2 border-error bg-error-container/20 p-4 shadow-[0_0_15px_rgba(255,180,171,0.2)]">
+<div class="absolute -left-6 top-1/2 -translate-y-1/2 w-4 h-px bg-error"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-data-lg text-sm uppercase text-error font-bold crt-glow">L3: Reactor Sub-Level 3</span>
+<span class="bg-error text-on-error px-2 py-1 font-label-sm uppercase animate-flash">CRITICAL</span>
+</div>
+<div class="font-label-sm text-error uppercase mb-1">MELTDOWN IMMINENT</div>
+<div class="font-data-lg text-sm text-error">Rad: 24 Sv/h</div>
+<!-- Flashing indicator -->
+<div class="absolute -right-2 -top-2 w-4 h-4 bg-error rounded-full animate-flash box-glow"></div>
+</div>
+</div>
+<!-- Axis Labels -->
+<div class="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 origin-left font-label-sm text-outline-variant tracking-widest uppercase">Depth Axis (Z)</div>
+</div>
+<!-- Global Directives Footer -->
+<div class="mt-4 flex gap-2 w-full">
+<button class="flex-1 bg-surface border border-error/50 text-error hover:bg-error hover:text-on-error transition-none py-2 px-2 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-sm mb-1">warning</span>
+<span class="font-label-sm uppercase">INITIATE PROTOCOL 9</span>
+</button>
+<button class="flex-1 bg-surface border border-secondary/50 text-secondary hover:bg-secondary hover:text-on-secondary transition-none py-2 px-2 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-sm mb-1">lock_open</span>
+<span class="font-label-sm uppercase">MANUAL OVERRIDE HATCH</span>
+</button>
+<button class="flex-1 bg-primary-container text-on-primary-container border border-primary hover:bg-inverse-primary transition-none py-2 px-2 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-sm mb-1">directions_run</span>
+<span class="font-label-sm uppercase">ORDER FULL RETREAT TO L1</span>
+</button>
+</div>
+</section>
+<!-- Right Panel: Evac Roster -->
+<section class="w-full md:w-1/4 h-full flex flex-col p-4 gap-4 overflow-y-auto">
+<div class="bg-surface-container-high border-b border-primary px-3 py-1 flex justify-between items-center">
+<h2 class="font-headline-lg text-xl uppercase text-primary tracking-widest">Survivor Evac Roster</h2>
+<span class="font-label-sm text-outline bg-surface px-2 border border-outline/30">3 ACTIVE</span>
+</div>
+<div class="flex flex-col gap-3 mt-2">
+<!-- Personnel Card: Vance -->
+<div class="border border-tertiary/30 bg-surface/50 p-3 flex flex-col gap-2">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary-fixed text-lg">person</span>
+<span class="font-data-lg text-sm text-on-surface uppercase">Vance, H.</span>
+</div>
+<span class="font-label-sm text-tertiary-fixed bg-tertiary-container/30 px-2 py-0.5 uppercase">SAFE</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-outline uppercase">Loc:</span>
+<span class="font-data-lg text-sm text-tertiary-fixed uppercase">Level 1</span>
+</div>
+</div>
+<!-- Personnel Card: Miller -->
+<div class="border border-error/50 bg-error-container/10 p-3 flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error animate-flash"></div>
+<div class="flex justify-between items-center border-b border-error/30 pb-2 pl-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-lg animate-flash">personal_injury</span>
+<span class="font-data-lg text-sm text-error uppercase crt-glow">Miller, T.</span>
+</div>
+<span class="font-label-sm text-on-error bg-error px-2 py-0.5 uppercase animate-pulse-fast">TRAPPED</span>
+</div>
+<div class="flex flex-col gap-1 pl-2">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-outline uppercase">Loc:</span>
+<span class="font-data-lg text-sm text-error uppercase">Level 3</span>
+</div>
+<div class="font-label-sm text-error uppercase mt-1">Status: Dose Spiking</div>
+</div>
+</div>
+<!-- Personnel Card: Lucas -->
+<div class="border border-secondary/50 bg-surface/50 p-3 flex flex-col gap-2">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg">directions_run</span>
+<span class="font-data-lg text-sm text-on-surface uppercase">Lucas, M.</span>
+</div>
+<span class="font-label-sm text-secondary bg-secondary-container/30 px-2 py-0.5 uppercase">EVAC</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-outline uppercase">Loc:</span>
+<span class="font-data-lg text-sm text-secondary uppercase">Level 2</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface-container-lowest dark:bg-surface-container-lowest docked full-width bottom-0 rounded-t-lg border-t-2 border-secondary/50">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-lg p-1 min-w-[64px]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">HAZARDS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 min-w-[64px] hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">bolt</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">SYSTEMS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 min-w-[64px] hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">person_search</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">SURVIVORS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 min-w-[64px] hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">LOGS</span>
+</a>
+</nav>
+</body></html>

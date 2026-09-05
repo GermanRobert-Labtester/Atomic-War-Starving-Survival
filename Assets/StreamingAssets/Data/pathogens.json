@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "collection_id": "pathogen_strain_catalog",
+  "pathogen_strains": [
+    {
+      "id": "pathogen_ash_fever",
+      "display_name": "Ash Fever Strain",
+      "description": "A variant of the settling-year respiratory sickness. Runs hotter, moves faster through shared bunks, and burns longer before it breaks.",
+      "strain_of": "disease_zoonotic_flu",
+      "incubation_days": 2,
+      "illness_days": 6,
+      "lethality": 0.22,
+      "infectivity": 0.6,
+      "radiation_severity_gain": 0.35,
+      "mutation_chance_per_day": 0.04,
+      "mutation_targets": ["pathogen_glass_cough"],
+      "treatment_tags": ["supportive", "suppressant"],
+      "fictional_note": "abstract fictional gameplay strain; models incubation, spread and outcome classes only"
+    },
+    {
+      "id": "pathogen_red_lung",
+      "display_name": "Red Lung",
+      "description": "A congestive chest variant that marks its carriers with a low wet cough. Slower to spread, harder to sit up through.",
+      "strain_of": "disease_condemned_air_cough",
+      "incubation_days": 3,
+      "illness_days": 9,
+      "lethality": 0.3,
+      "infectivity": 0.4,
+      "radiation_severity_gain": 0.45,
+      "mutation_chance_per_day": 0.03,
+      "mutation_targets": [],
+      "treatment_tags": ["supportive", "suppressive"],
+      "fictional_note": "abstract fictional gameplay strain; models incubation, spread and outcome classes only"
+    },
+    {
+      "id": "pathogen_frost_rot",
+      "display_name": "Frost Rot",
+      "description": "A waterborne gut sickness that favours the cold taps. Deceptively mild for two days, then it empties people.",
+      "strain_of": "disease_cholera",
+      "incubation_days": 2,
+      "illness_days": 5,
+      "lethality": 0.25,
+      "infectivity": 0.5,
+      "radiation_severity_gain": 0.2,
+      "mutation_chance_per_day": 0.02,
+      "mutation_targets": [],
+      "treatment_tags": ["rehydration", "supportive"],
+      "fictional_note": "abstract fictional gameplay strain; models incubation, spread and outcome classes only"
+    },
+    {
+      "id": "pathogen_glass_cough",
+      "display_name": "Glass Cough",
+      "description": "The brittle late variant. Carriers describe breathing through a cracked pane. Short incubation, thin margins.",
+      "strain_of": "disease_dry_bunker_hiss",
+      "incubation_days": 1,
+      "illness_days": 7,
+      "lethality": 0.35,
+      "infectivity": 0.55,
+      "radiation_severity_gain": 0.55,
+      "mutation_chance_per_day": 0.0,
+      "mutation_targets": [],
+      "treatment_tags": ["supportive"],
+      "fictional_note": "abstract fictional gameplay strain; models incubation, spread and outcome classes only"
+    }
+  ]
+}

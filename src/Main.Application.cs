@@ -272,6 +272,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.NarrativeSelfTest:
                     GetTree().Quit(HostCli.RunNarrativeSelfTest());
                     return;
+                case HostCliAction.NpcArcSelfTest:
+                    GetTree().Quit(HostCli.RunNpcArcSelfTest());
+                    return;
                 case HostCliAction.SurvivorsSelfTest:
                     GetTree().Quit(HostCli.RunSurvivorsSelfTest());
                     return;
@@ -292,6 +295,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
+                    return;
+                case HostCliAction.ExportParitySelfTest:
+                    GetTree().Quit(HostCli.RunExportParitySelfTest(_dataDir, HostCli.GetOptionValue(OS.GetCmdlineUserArgs(), "--parity-target")));
                     return;
                 case HostCliAction.ResearchCatalogSelfTest:
                     GetTree().Quit(HostCli.RunResearchCatalogSelfTest(_dataDir));

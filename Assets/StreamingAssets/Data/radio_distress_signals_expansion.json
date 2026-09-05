@@ -418,6 +418,141 @@
           "text": "...day six. The wheat is in the ground, I moved it to the cold frame, it is hardy, it is winter wheat, it is meant for this. The child came with her mother, the mother saw the wheat and she sat down, she did not speak, she sat and she looked, and then she said 'we will share the bread.' I said yes. Allotment seven, out, and planting."
         }
       ]
-    }
+    },
+{
+    "frequency_id": "freq_distress_142_8",
+    "frequency_mhz": "142.8",
+    "source_name": "Almshouse Emergency Handset",
+    "outcome_type": "survivor_isolated",
+    "days_to_trace": 4,
+    "npc_id": "npc_ilze_kaar",
+    "resolve_quest_id": "quest_arc_ilze_02_outbreak",
+    "revealed_location": "loc_st_brigids_almshouse",
+    "revealed_items": [
+        "medical_kit"
+    ],
+    "message_fragments": [
+        {
+            "day": 1,
+            "clarity": 0.25,
+            "text": "...almshouse... eight beds... asking for supplies, not rescue... wait..."
+        },
+        {
+            "day": 2,
+            "clarity": 0.5,
+            "text": "This is the almshouse clinic. We are full of a fever I can name but not stop. I am not asking to leave. I am asking for hands."
+        },
+        {
+            "day": 3,
+            "clarity": 0.75,
+            "text": "If anyone is counting: sixteen bedrolls, two doctors if the first one sleeps, and one door that stays open at the appointed hour. That is the inventory."
+        },
+        {
+            "day": 4,
+            "clarity": 0.9,
+            "text": "Odds stated. Work continues. Come for the people, or come for me, or do not come. The kettle will be on either way."
+        }
+    ]
+},
+{
+    "frequency_id": "freq_distress_166_2",
+    "frequency_mhz": "166.2",
+    "source_name": "Substation Omega Maintenance Band",
+    "outcome_type": "survivor_isolated",
+    "days_to_trace": 5,
+    "npc_id": "npc_anete_sarn",
+    "resolve_quest_id": "quest_arc_anete_01_substation",
+    "revealed_location": "location_substation_omega",
+    "revealed_items": [
+        "copper_wire_10m_of_10m"
+    ],
+    "message_fragments": [
+        {
+            "day": 1,
+            "clarity": 0.3,
+            "text": "...maintenance band... grounds are on... this is not an emergency, this is a census..."
+        },
+        {
+            "day": 2,
+            "clarity": 0.55,
+            "text": "One engineer at substation omega, badges expired, grounds checked daily. The grid is fine. The grid has no customers. Requesting copper before winter makes the survey lie to us."
+        },
+        {
+            "day": 3,
+            "clarity": 0.8,
+            "text": "Parts list follows at the same hour tomorrow. Do not send hands I have to teach from zero; send hands who will respect a switching order, or send the parts alone."
+        },
+        {
+            "day": 4,
+            "clarity": 0.9,
+            "text": "Repeat at the stated hour tomorrow. The grounds are on. The grounds stay on."
+        }
+    ]
+},
+{
+    "frequency_id": "freq_distress_128_5",
+    "frequency_mhz": "128.5",
+    "source_name": "Field Rig, Unsigned, Garrison Cadence",
+    "outcome_type": "survivor_isolated",
+    "days_to_trace": 3,
+    "npc_id": "npc_marek_voln",
+    "resolve_quest_id": "quest_arc_marek_02_deserter",
+    "revealed_location": "loc_grange_hall",
+    "revealed_items": [
+        "field_dressing_kit"
+    ],
+    "message_fragments": [
+        {
+            "day": 1,
+            "clarity": 0.2,
+            "text": "...checking... this frequency is not monitored... objection follows, dated, signed..."
+        },
+        {
+            "day": 2,
+            "clarity": 0.6,
+            "text": "To anyone holding: I wrote my objections in the margins and the margins ran out. I am where the sweeps do not look first. I am not asking to be turned in and I am not asking to be armed. Provisions are the lawful thing I am asking for."
+        },
+        {
+            "day": 3,
+            "clarity": 0.85,
+            "text": "If the garrison answers first, the kit goes to whoever finds it and I go quiet. If the shelter answers first — thank you, and I am sorry, and the field kit is already yours in trust."
+        }
+    ]
+},
+{
+    "frequency_id": "freq_distress_104_7",
+    "frequency_mhz": "104.7",
+    "source_name": "Relay Mast Automated Watch",
+    "outcome_type": "survivor_isolated",
+    "days_to_trace": 4,
+    "npc_id": "npc_liva_kern",
+    "resolve_quest_id": "quest_arc_liva_02_seizure",
+    "revealed_location": "loc_radio_relay_mast",
+    "revealed_items": [
+        "electronic_scrap"
+    ],
+    "message_fragments": [
+        {
+            "day": 1,
+            "clarity": 0.3,
+            "text": "Automated watch, relay mast. Logged contact attempts unanswered for six days. Somebody may still be counting the stations that answer."
+        },
+        {
+            "day": 2,
+            "clarity": 0.55,
+            "text": "Correction, manual key: the watch is mine, the silence is not automated. A survey party is mapping towers in this region and mine is on their schedule, not mine."
+        },
+        {
+            "day": 3,
+            "clarity": 0.8,
+            "text": "The log is copied in two hands, one to send, one to lose. If the station goes dark on schedule it was planned. If it goes dark off schedule — ask the survey party."
+        },
+        {
+            "day": 4,
+            "clarity": 0.9,
+            "text": "Next transmission at the stated hour, whether or not anyone is counting. Signing on schedule."
+        }
+    ]
+}
   ]
 }

@@ -48,6 +48,7 @@ namespace Ashfall.Core.Expeditions
         public float hazard_chance { get; set; } = 0.0f;
         public string hazard_type { get; set; } = string.Empty;
         public string codex_unlock_id { get; set; } = string.Empty;
+        public string map_fragment_id { get; set; } = string.Empty;
     }
 
     /// <summary>
@@ -62,6 +63,7 @@ namespace Ashfall.Core.Expeditions
         public bool HazardTriggered { get; set; }
         public string HazardType { get; set; } = string.Empty;
         public string CodexUnlockId { get; set; } = string.Empty;
+        public string MapFragmentId { get; set; } = string.Empty;
     }
 
     /// <summary>
@@ -107,22 +109,31 @@ namespace Ashfall.Core.Expeditions
         /// <summary>
         /// Deterministically rolls an item from the specified scavenging table using the provided ISeededRng.
         /// </summary>
-        public ScavengingRollResult? RollLoot(string tableId, ISeededRng rng)
+        public ScavengingRollResult? RollLoot(string tableId, ISeededRng rng, Func<string, bool>? itemFilter = null)
         {
             if (rng == null || string.IsNullOrEmpty(tableId)) return null;
             if (!TryGetTable(tableId, out var table) || table.entries == null || table.entries.Count == 0)
                 return null;
 
-            int totalWeight = table.TotalWeight;
+            var candidates = itemFilter != null
+                ? table.entries.FindAll(e => itemFilter(e.item_id))
+                : table.entries;
+            if (candidates.Count == 0) return null;
+
+            int totalWeight = 0;
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                if (candidates[i].weight > 0) totalWeight += candidates[i].weight;
+            }
             if (totalWeight <= 0) return null;
 
             int roll = rng.Next(0, totalWeight);
             int cumulative = 0;
             ScavengingLootEntryDef? selected = null;
 
-            for (int i = 0; i < table.entries.Count; i++)
+            for (int i = 0; i < candidates.Count; i++)
             {
-                var entry = table.entries[i];
+                var entry = candidates[i];
                 if (entry.weight <= 0) continue;
                 cumulative += entry.weight;
                 if (roll < cumulative)
@@ -134,7 +145,7 @@ namespace Ashfall.Core.Expeditions
 
             if (selected == null)
             {
-                selected = table.entries.FirstOrDefault(e => e.weight > 0) ?? table.entries[0];
+                selected = candidates.FirstOrDefault(e => e.weight > 0) ?? candidates[0];
             }
 
             int quantity = selected.min_quantity;
@@ -163,7 +174,8 @@ namespace Ashfall.Core.Expeditions
                 RarityTier = selected.rarity_tier,
                 HazardTriggered = hazardTriggered,
                 HazardType = hazardType,
-                CodexUnlockId = selected.codex_unlock_id ?? string.Empty
+                CodexUnlockId = selected.codex_unlock_id ?? string.Empty,
+                MapFragmentId = selected.map_fragment_id ?? string.Empty
             };
         }
 

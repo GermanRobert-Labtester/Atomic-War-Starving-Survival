@@ -49,6 +49,10 @@ namespace Ashfall.Core.Expeditions
         public float armor_rating { get; set; } = 50.0f;
         public float max_fuel_capacity { get; set; } = 0.0f;
         public float fuel_burn_per_km { get; set; } = 0.0f;
+        public string vehicle_class { get; set; } = "locomotive";      // "locomotive", "handcar"
+        public float crew_stamina_max { get; set; } = 1.0f;              // 0..1
+        public float stamina_drain_per_km { get; set; } = 0.0f;           // stamina units per km
+        public float stamina_recovery_per_stop { get; set; } = 0.3f;       // recovered at terminal
     }
 
     [Serializable]
@@ -90,6 +94,13 @@ namespace Ashfall.Core.Expeditions
         public List<TrainCarInstance> cars { get; set; } = new List<TrainCarInstance>();
         public TrainDispatchStatus status { get; set; } = TrainDispatchStatus.Idle;
         public List<string> plannedPath { get; set; } = new List<string>();
+        public float crewStamina { get; set; } = 1.0f;                  // 0..1
+        public float maxCrewStamina { get; set; } = 1.0f;
+        public float staminaDrainPerKm { get; set; } = 0.0f;
+        public float staminaRecoveryPerStop { get; set; } = 0.3f;
+        public bool isCrewExhausted { get; set; } = false;
+        public string vehicleClass { get; set; } = "locomotive";
+        public bool isOnExpedition { get; set; } = false;
     }
 
     [Serializable]
@@ -320,13 +331,19 @@ namespace Ashfall.Core.Expeditions
             var seg = EnsureSegmentState(train.activeSegmentId);
             _segmentDefs.TryGetValue(train.activeSegmentId, out var def);
 
-            // 1. Derailment risk check on degraded track
+            // 1. Derailment risk check on degraded track (Plan 73 §7.6)
             if (seg.integrity < 0.65f)
             {
                 double derailChance = (0.65f - seg.integrity) * 0.40;
                 if (_rng.NextDouble() < derailChance)
                 {
                     train.status = TrainDispatchStatus.Derailment;
+                    // Consequences: segment integrity loss + car condition damage
+                    seg.integrity = Math.Max(0f, seg.integrity - 0.15f);
+                    for (int i = 1; i < train.cars.Count && i <= 2; i++)
+                    {
+                        train.cars[i].condition = Math.Max(0f, train.cars[i].condition - 30f);
+                    }
                     OnDerailment?.Invoke(trainId, train.activeSegmentId);
                     return;
                 }
@@ -343,12 +360,35 @@ namespace Ashfall.Core.Expeditions
                 }
             }
 
-            // 3. Advance progress
-            train.segmentProgress += progressDelta;
+            // 3. Stamina drain for handcar (Plan 73 §7.1)
+            float effectiveDelta = progressDelta;
+            if (def != null && train.cars.Count > 0
+                && _carDefs.TryGetValue(train.cars[0].carTypeId, out var leadCarDef)
+                && leadCarDef.vehicle_class == "handcar")
+            {
+                float drain = leadCarDef.stamina_drain_per_km * def.distance_km * progressDelta;
+                train.crewStamina = Math.Max(0f, train.crewStamina - drain);
+                if (train.crewStamina <= 0f && !train.isCrewExhausted)
+                    train.isCrewExhausted = true;
+                if (train.isCrewExhausted)
+                    effectiveDelta *= 0.5f; // exhaustion speed penalty
+            }
+
+            // 4. Advance progress
+            train.segmentProgress += effectiveDelta;
             if (train.segmentProgress >= 1.0f)
             {
                 train.segmentProgress = 1.0f;
                 train.status = TrainDispatchStatus.Arrived;
+
+                // Recover crew stamina at terminal stop (handcar)
+                if (train.cars.Count > 0
+                    && _carDefs.TryGetValue(train.cars[0].carTypeId, out var recoverCar))
+                {
+                    float maxStamina = train.maxCrewStamina > 0f ? train.maxCrewStamina : 1f;
+                    train.crewStamina = Math.Min(maxStamina, train.crewStamina + recoverCar.stamina_recovery_per_stop);
+                    train.isCrewExhausted = false;
+                }
 
                 // Set new current node to destination
                 if (def != null)
@@ -359,7 +399,157 @@ namespace Ashfall.Core.Expeditions
                 string arrivedAt = train.currentNodeId;
                 train.activeSegmentId = null;
                 OnTrainArrived?.Invoke(trainId, arrivedAt);
+
+                // Auto-advance along planned expedition route (switchyard / Plan 73 §7.4)
+                if (train.plannedPath.Count > 0)
+                {
+                    string nextSeg = train.plannedPath[0];
+                    train.plannedPath.RemoveAt(0);
+                    if (_segmentDefs.TryGetValue(nextSeg, out var nextDef) &&
+                        (nextDef.start_node_id == train.currentNodeId || nextDef.end_node_id == train.currentNodeId))
+                    {
+                        if (CanTraverseSegment(train, nextSeg))
+                        {
+                            train.activeSegmentId = nextSeg;
+                            train.segmentProgress = 0f;
+                            train.status = TrainDispatchStatus.EnRoute;
+                            OnTrainDispatched?.Invoke(trainId, nextSeg);
+                        }
+                        else
+                        {
+                            train.status = TrainDispatchStatus.Idle;
+                        }
+                    }
+                    else
+                    {
+                        train.status = TrainDispatchStatus.Idle;
+                    }
+                }
             }
+        }
+
+        /// <summary>Plan a multi-segment route from the train's current node (Plan 73 §7.4).</summary>
+        public ActionResult PlanRoute(string trainId, List<string> segmentIds)
+        {
+            var train = _state.trains.Find(t => t.trainId == trainId);
+            if (train == null) return ActionResult.Blocked("train_not_found", "railway.train_not_found");
+            if (train.status != TrainDispatchStatus.Idle && train.status != TrainDispatchStatus.Arrived)
+                return ActionResult.Blocked("train_not_idle", "railway.train_not_idle");
+
+            train.plannedPath.Clear();
+            string currentNode = train.currentNodeId;
+            foreach (var segId in segmentIds)
+            {
+                if (!_segmentDefs.TryGetValue(segId, out var def))
+                    return ActionResult.Blocked("invalid_segment", "railway.invalid_segment");
+                if (def.start_node_id != currentNode && def.end_node_id != currentNode)
+                    return ActionResult.Blocked("segment_not_connected", "railway.segment_not_connected");
+                train.plannedPath.Add(segId);
+                currentNode = (def.start_node_id == currentNode) ? def.end_node_id : def.start_node_id;
+            }
+            return ActionResult.Success("railway.route_planned");
+        }
+
+        /// <summary>Shortest-path BFS between two nodes.</summary>
+        private List<string>? FindShortestPath(string startNodeId, string endNodeId)
+        {
+            if (startNodeId == endNodeId) return new List<string>();
+            var queue = new Queue<(string node, List<string> path)>();
+            var visited = new HashSet<string>(StringComparer.Ordinal) { startNodeId };
+            queue.Enqueue((startNodeId, new List<string>()));
+            while (queue.Count > 0)
+            {
+                var (node, path) = queue.Dequeue();
+                foreach (var seg in _segmentDefs.Values)
+                {
+                    string neighbor = seg.start_node_id == node ? seg.end_node_id
+                        : seg.end_node_id == node ? seg.start_node_id
+                        : null;
+                    if (neighbor == null) continue;
+                    if (!visited.Add(neighbor)) continue;
+                    var newPath = new List<string>(path) { seg.segment_id };
+                    if (neighbor == endNodeId) return newPath;
+                    queue.Enqueue((neighbor, newPath));
+                }
+            }
+            return null;
+        }
+
+        /// <summary>Estimate a rail expedition from origin to destination (Plan 73 §7.3).</summary>
+        public RailExpeditionEstimate? EstimateExpeditionTravel(string originNodeId, string destinationNodeId)
+        {
+            if (!_nodes.ContainsKey(originNodeId) || !_nodes.ContainsKey(destinationNodeId))
+                return null;
+            var path = FindShortestPath(originNodeId, destinationNodeId);
+            if (path == null || path.Count == 0) return null;
+
+            float totalFuel = 0f;
+            float totalStamina = 0f;
+            foreach (var segId in path)
+            {
+                if (_segmentDefs.TryGetValue(segId, out var def))
+                {
+                    totalFuel += def.distance_km * 2.0f; // rough locomotive per-km burn
+                    totalStamina += 0.035f * def.distance_km; // handcar stamina drain
+                }
+            }
+            return new RailExpeditionEstimate
+            {
+                travelTicks = path.Count * 2,
+                fuelRequired = totalFuel,
+                staminaCost = totalStamina,
+                path = path
+            };
+        }
+
+        /// <summary>Dispatch a train on an expedition route (Plan 73 §7.3).</summary>
+        public ActionResult DispatchExpedition(string trainId, string destinationNodeId)
+        {
+            var train = _state.trains.Find(t => t.trainId == trainId);
+            if (train == null) return ActionResult.Blocked("train_not_found", "railway.train_not_found");
+            if (train.status != TrainDispatchStatus.Idle && train.status != TrainDispatchStatus.Arrived)
+                return ActionResult.Blocked("train_not_idle", "railway.train_not_idle");
+
+            if (!_nodes.ContainsKey(destinationNodeId))
+                return ActionResult.Blocked("invalid_destination", "railway.invalid_destination");
+
+            var path = FindShortestPath(train.currentNodeId, destinationNodeId);
+            if (path == null || path.Count == 0)
+                return ActionResult.Blocked("no_route", "railway.no_route");
+
+            float totalFuel = 0f;
+            foreach (var segId in path)
+                totalFuel += EstimateCoalRequired(train, segId);
+
+            if (train.currentFuel < totalFuel)
+            {
+                int coalItemsNeeded = (int)Math.Ceiling(totalFuel - train.currentFuel);
+                if (_inventory.CountById("train_coal") < coalItemsNeeded)
+                    return ActionResult.Blocked("insufficient_fuel", "railway.insufficient_fuel");
+                _inventory.RemoveById("train_coal", coalItemsNeeded);
+                train.currentFuel += totalFuel;
+            }
+            train.currentFuel -= totalFuel;
+
+            train.isOnExpedition = true;
+            train.plannedPath.Clear();
+            train.plannedPath.AddRange(path);
+            return DispatchFirstSegment(train);
+        }
+
+        private ActionResult DispatchFirstSegment(TrainState train)
+        {
+            if (train.plannedPath.Count == 0)
+                return ActionResult.Blocked("empty_route", "railway.empty_route");
+            string firstSeg = train.plannedPath[0];
+            if (!CanTraverseSegment(train, firstSeg))
+                return ActionResult.Blocked("cannot_traverse_first_segment", "railway.cannot_traverse_segment");
+            train.activeSegmentId = firstSeg;
+            train.segmentProgress = 0f;
+            train.status = TrainDispatchStatus.EnRoute;
+            train.plannedPath.RemoveAt(0);
+            OnTrainDispatched?.Invoke(train.trainId, firstSeg);
+            return ActionResult.Success("railway.expedition_dispatched");
         }
 
         public ActionResult ClearDerailment(string trainId)
@@ -372,6 +562,7 @@ namespace Ashfall.Core.Expeditions
             train.status = TrainDispatchStatus.Idle;
             train.segmentProgress = 0f;
             train.activeSegmentId = null;
+            train.isCrewExhausted = false;
 
             return ActionResult.Success("railway.derailment_cleared");
         }
@@ -380,6 +571,15 @@ namespace Ashfall.Core.Expeditions
         {
             if (state == null) return;
             _state = state;
+        }
+
+        /// <summary>Simple estimate DTO for rail expedition planning.</summary>
+        public sealed class RailExpeditionEstimate
+        {
+            public int travelTicks { get; set; }
+            public float fuelRequired { get; set; }
+            public float staminaCost { get; set; }
+            public List<string> path { get; set; } = new List<string>();
         }
     }
 }

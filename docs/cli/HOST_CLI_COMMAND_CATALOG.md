@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-09-02<br>
-**Total Registered Actions:** 116 entries / 182 flag tokens (aliases included)
+**Total Registered Actions:** 117 entries / 183 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -90,6 +90,7 @@
 | `--medical-selftest` | — | Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip |
 | `--medical-ward-save-selftest` | — | Medical ward save store round-trip, bed allocation, and affliction persistence |
 | `--narrative-selftest` | — | Narrative domain: dialog trees, echoes, flags, and story event resolution |
+| `--npc-arc-selftest` | — | Plan 52 recurring NPC arcs: resolution precedence, encounter→quest memory, save round-trip, distress suppression |
 | `--oral-lore-selftest` | — | Oral Lore Codex: load 16 songs/poems from narrative catalogs, verify query by id/tag/genre |
 | `--radio-selftest` | — | Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected |
 | `--settings-selftest` | `--settings-test` | SettingsManager state, resolution, audio buses, and keybindings save/load |

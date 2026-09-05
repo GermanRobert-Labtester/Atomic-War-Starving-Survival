@@ -261,6 +261,15 @@ namespace AtomicWar.GodotApp
                 int decorRecipients = _m._shelterDecor?.ApplyDailyMorale(day) ?? 0;
                 if (decorRecipients > 0)
                     events.Add(new DayStateChangeEvent("shelter_decor_morale", "shelter_decor", null, null, decorRecipients));
+                // Flagship XI (Plan 154): contagion runs after needs + decor morale
+                // so it reads the day's final morale; its deltas are part of today.
+                _m.SetupMoraleContagion();
+                if (_m._moraleContagion != null)
+                {
+                    _m._moraleContagion.EvaluateDay(day);
+                    events.Add(new DayStateChangeEvent("morale_contagion_ticked", "morale_contagion", null, null,
+                        _m._moraleContagion.System.State.survivors.Count));
+                }
                 // Drain any survivor_perished events from the death pipeline
                 // into the briefing feed. Needs/radiation OnDied fires inside
                 // TickHour — every death this day lands here exactly once.
@@ -323,6 +332,16 @@ namespace AtomicWar.GodotApp
 
                 _m.SetupDisease();
                 _m._disease.TickDaily(day);
+
+                // Flagship XI (Plan 155): the strain layer runs immediately after
+                // disease progression — mutations transition this day's outcomes,
+                // cure research advances before triage reads the ward.
+                _m.SetupPathogenStrains();
+                if (_m._pathogenStrains != null)
+                {
+                    _m._pathogenStrains.TickMutations(day);
+                    _m._pathogenStrains.AdvanceCureProjects(day);
+                }
 
                 // Plan 60 / D5 + D7 — bridge illness into the shared sick-list band
                 // ladder and keep the memorial grief sink bound. Runs after the
@@ -617,8 +636,22 @@ namespace AtomicWar.GodotApp
                     if (Math.Abs(delta) > 0f)
                     {
                         _m.SetupEconomy();
+                        // Plan 56 phase 5 — provenance-aware scarcity: goods with
+                        // an active caravan supply line are buffered (0.5×);
+                        // general goods track the market (1.0×); goods with no
+                        // supply line escalate (1.5×). Active origin regions come
+                        // from the caravan data authority.
+                        var origins = new List<string>();
+                        foreach (var cd in CaravanCatalogLoader.Load(_m._dataDir))
+                            if (!string.IsNullOrEmpty(cd.origin_region) && !origins.Contains(cd.origin_region))
+                                origins.Add(cd.origin_region);
                         foreach (var g in goods)
-                            _m._economy.Market.AdjustDemand(g, delta);
+                        {
+                            float scaled = delta * RegionalSupplyRouter.WorldShortageDemandScale(
+                                _m._economy.Catalog, g, origins);
+                            if (Math.Abs(scaled) > 0f)
+                                _m._economy.Market.AdjustDemand(g, scaled);
+                        }
                     }
                 }
 
@@ -758,6 +791,7 @@ namespace AtomicWar.GodotApp
 
                 _m.SetupExpansionQuests();
                 _m._expansionQuests.TickDay(day);
+                _m.SetupNpcArcs();
 
                 events.Add(new DayStateChangeEvent("narrative_ticked", "narrative_quests_verdict", null, null, day));
             }

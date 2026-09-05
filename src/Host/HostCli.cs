@@ -33,6 +33,7 @@ namespace AtomicWar.GodotApp
         Interactive,
         Help,
         Version,
+        ExportParitySelfTest,
         HoldfastSelfTest,
         IceRoadSelfTest,
         CensusSelfTest,
@@ -79,6 +80,7 @@ namespace AtomicWar.GodotApp
         ExpeditionEncounterBridgeSelfTest,
         MedicalSelfTest,
         NarrativeSelfTest,
+        NpcArcSelfTest,
         SurvivorsSelfTest,
         WorldSelfTest,
         EconomySelfTest,
@@ -305,6 +307,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.MedicalSelfTest;
             if (Has(args, "--narrative-selftest"))
                 return HostCliAction.NarrativeSelfTest;
+            if (Has(args, "--npc-arc-selftest"))
+                return HostCliAction.NpcArcSelfTest;
             if (Has(args, "--survivors-selftest"))
                 return HostCliAction.SurvivorsSelfTest;
             if (Has(args, "--world-selftest"))
@@ -323,6 +327,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.UtilityAiUiTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
+            if (Has(args, "--export-parity-selftest"))
+                return HostCliAction.ExportParitySelfTest;
             if (Has(args, "--research-catalog-selftest"))
                 return HostCliAction.ResearchCatalogSelfTest;
             if (Has(args, "--catalog-boot-preflight"))
@@ -422,6 +428,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
             GD.Print("  --core-selftest          Ice road + census headless demos");
             GD.Print("  --data-integrity-selftest Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
+            GD.Print("  --export-parity-selftest [--parity-target <dir>] Packaged-data parity: exported build's catalogs byte-identical + parseable vs the data authority, exact Linux casing, no LFS pointers, ELF exe + PCK present");
             GD.Print("  --catalog-boot-preflight   Machine-readable preflight: checks all catalogs are present, well-formed, and reports classification (required/optional/dev-only) with any load errors");
             GD.Print("  --panel-bind-lifecycle-selftest / --panel-bind-selftest / --panel-lifecycle-selftest Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch");
             GD.Print("  --save-load-ui-failure-selftest / --save-load-failure-selftest / --save-load-failure-uitest / --save-load-selftest Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact");
@@ -496,6 +503,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --medical-selftest       Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip");
             GD.Print("  --medical-ward-save-selftest Medical ward save store round-trip, bed allocation, and affliction persistence");
             GD.Print("  --narrative-selftest     Narrative domain: dialog trees, echoes, flags, and story event resolution");
+            GD.Print("  --npc-arc-selftest       Plan 52 recurring NPC arcs: resolution precedence, encounter→quest memory, save round-trip, distress suppression");
             GD.Print("  --oral-lore-selftest     Oral Lore Codex: load 16 songs/poems from narrative catalogs, verify query by id/tag/genre");
             GD.Print("  --radio-selftest         Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected");
             GD.Print("  --settings-selftest / --settings-test SettingsManager state, resolution, audio buses, and keybindings save/load");

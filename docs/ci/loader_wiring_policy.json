@@ -1,0 +1,568 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Authoritative policy declaring catalog loaders, accepted production entry points, ownership, and wiring disposition for ASHFALL (REM-001 / R01).",
+  "loaders": [
+    {
+      "loader_type": "ArchiveInkCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Research",
+      "disposition": "LIVE",
+      "required_catalog": "archive_inks.json",
+      "owner": "research-team",
+      "reason": "Wired in Main.Research.cs during research session bootstrap."
+    },
+    {
+      "loader_type": "AtmosphericSoundingCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "WeatherHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "atmospheric_soundings.json",
+      "owner": "weather-team",
+      "reason": "Wired in WeatherHostSession for sounding telemetry and recovery."
+    },
+    {
+      "loader_type": "AutopsyProcedureCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Medical",
+      "disposition": "LIVE",
+      "required_catalog": "autopsy_procedures.json",
+      "owner": "medical-team",
+      "reason": "Wired in Main.Medical.cs during medical subsystem init."
+    },
+    {
+      "loader_type": "CaravanCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "TradeHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "caravans.json",
+      "owner": "economy-team",
+      "reason": "Wired in TradeHostSession for caravan trading."
+    },
+    {
+      "loader_type": "CollectibleCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.Inventory",
+      "disposition": "LIVE",
+      "required_catalog": "collectibles.json",
+      "owner": "inventory-team",
+      "reason": "Wired in Main.Inventory.cs:92 and HostCli.Collectibles.cs:354."
+    },
+    {
+      "loader_type": "CombatCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "CombatHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "combat_encounters.json",
+      "owner": "combat-team",
+      "reason": "Wired in CombatHostSession for tactical encounters."
+    },
+    {
+      "loader_type": "CrossingQuestCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.Narrative",
+      "disposition": "LIVE",
+      "required_catalog": "crossing_quests.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.Narrative.cs for crossing questlines."
+    },
+    {
+      "loader_type": "DebtTemplateCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ExpansionHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "debt_templates.json",
+      "owner": "economy-team",
+      "reason": "Wired in ExpansionHostSession.cs:165 during expansion session bootstrap."
+    },
+    {
+      "loader_type": "DiseaseCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "MedicalHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "diseases.json",
+      "owner": "medical-team",
+      "reason": "Wired in MedicalHostSession for pathogen diagnosis."
+    },
+    {
+      "loader_type": "DiveSiteCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "WorldHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "dive_sites.json",
+      "owner": "world-team",
+      "reason": "Wired in WorldHostSession for maritime exploration."
+    },
+    {
+      "loader_type": "DoorEncounterCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Narrative",
+      "disposition": "LIVE",
+      "required_catalog": "door_encounters.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.Narrative.cs:46 for bunker door encounter narrative."
+    },
+    {
+      "loader_type": "DoseContentCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "RadiationHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "dose_content.json",
+      "owner": "radiation-team",
+      "reason": "Wired in RadiationHostSession for radiological symptoms."
+    },
+    {
+      "loader_type": "DoseRegistersCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "RadiationHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "dose_registers.json",
+      "owner": "radiation-team",
+      "reason": "Wired in RadiationHostSession for radiation exposure profiles."
+    },
+    {
+      "loader_type": "DynamicQuestlineCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Narrative",
+      "disposition": "LIVE",
+      "required_catalog": "dynamic_questlines.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.Narrative.cs:47 for Year of Ash dynamic arcs."
+    },
+    {
+      "loader_type": "EcologicalInfestationCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "WorldHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "ecological_infestations.json",
+      "owner": "ecology-team",
+      "reason": "Wired in WorldHostSession for regional infestation simulation."
+    },
+    {
+      "loader_type": "ElectrostaticFiltrationCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ShelterHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "electrostatic_filtration.json",
+      "owner": "shelter-team",
+      "reason": "Wired in ShelterHostSession for air scrubbing system."
+    },
+    {
+      "loader_type": "EvolvingWorldCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "WorldHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "evolving_world_events.json",
+      "owner": "world-team",
+      "reason": "Wired in WorldHostSession for world evolution ticks."
+    },
+    {
+      "loader_type": "ExcavationCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ExcavationHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "excavations.json",
+      "owner": "shelter-team",
+      "reason": "Wired in ExcavationHostSession for shelter expansion."
+    },
+    {
+      "loader_type": "ExpansionQuestCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.Narrative",
+      "disposition": "LIVE",
+      "required_catalog": "expansion_quests.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.Narrative.cs for expansion quest tracking."
+    },
+    {
+      "loader_type": "ExpeditionCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ExpeditionHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "locations.json",
+      "owner": "expeditions-team",
+      "reason": "Wired in ExpeditionHostSession for overland journeys."
+    },
+    {
+      "loader_type": "GoodsCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "TradeHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "goods.json",
+      "owner": "economy-team",
+      "reason": "Wired in TradeHostSession for merchant trade goods."
+    },
+    {
+      "loader_type": "IndependentBranchCatalog",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "FactionBranchHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "independent_branch_quests.json",
+      "owner": "factions-team",
+      "reason": "Wired in FactionBranchCoordinator.cs:636 and FactionBranchHostSession.cs."
+    },
+    {
+      "loader_type": "ItemCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "InventoryHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "items.json",
+      "owner": "inventory-team",
+      "reason": "Wired in Main.cs and InventoryHostSession for all inventory items."
+    },
+    {
+      "loader_type": "LibraryManualCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Research",
+      "disposition": "LIVE",
+      "required_catalog": "library_manuals.json",
+      "owner": "research-team",
+      "reason": "Wired in Main.Research.cs:40 for technical manual research."
+    },
+    {
+      "loader_type": "MilitaryBranchCatalog",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "FactionBranchHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "military_branch_quests.json",
+      "owner": "factions-team",
+      "reason": "Wired in FactionBranchCoordinator.cs:635 and FactionBranchHostSession.cs."
+    },
+    {
+      "loader_type": "MoralChoiceBranchQuestCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.MoralChoice",
+      "disposition": "LIVE",
+      "required_catalog": "moral_choice_branch_quests.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.MoralChoice.cs for branch questlines."
+    },
+    {
+      "loader_type": "MoralChoiceCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.MoralChoice",
+      "disposition": "LIVE",
+      "required_catalog": "moral_choice_quests.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.MoralChoice.cs for baseline moral dilemmas."
+    },
+    {
+      "loader_type": "MoralChoiceChainCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.MoralChoice",
+      "disposition": "LIVE",
+      "required_catalog": "moral_choice_chains.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.MoralChoice.cs for multi-stage moral chains."
+    },
+    {
+      "loader_type": "MoralChoiceExpansionQuestCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.MoralChoice",
+      "disposition": "LIVE",
+      "required_catalog": "moral_choice_expansion_quests.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.MoralChoice.cs for expansion moral dilemmas."
+    },
+    {
+      "loader_type": "MoralChoiceFactionReactionsCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.MoralChoice",
+      "disposition": "LIVE",
+      "required_catalog": "moral_choice_faction_reactions.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.MoralChoice.cs for faction moral stance consequences."
+    },
+    {
+      "loader_type": "MoralChoiceFlagCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.MoralChoice",
+      "disposition": "LIVE",
+      "required_catalog": "moral_choice_flags.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.MoralChoice.cs for narrative flag triggers."
+    },
+    {
+      "loader_type": "MoralChoiceGossipCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.MoralChoice",
+      "disposition": "LIVE",
+      "required_catalog": "moral_choice_gossip.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.MoralChoice.cs for survivor gossip propagation."
+    },
+    {
+      "loader_type": "NarrativeEncounterCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "Main.Narrative",
+      "disposition": "LIVE",
+      "required_catalog": "encounters.json",
+      "owner": "narrative-team",
+      "reason": "Wired in Main.Narrative.cs for world encounter nodes."
+    },
+    {
+      "loader_type": "OrbitalHarrowCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ExpansionHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "orbital_harrow_events.json",
+      "owner": "expansion-team",
+      "reason": "Wired in ExpansionHostSession for orbital harrow defense."
+    },
+    {
+      "loader_type": "PharmaRecipeCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "MedicalHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "pharma_recipes.json",
+      "owner": "medical-team",
+      "reason": "Wired in MedicalHostSession for pharmaceutical compounding."
+    },
+    {
+      "loader_type": "RebelBranchCatalog",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "FactionBranchHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "rebel_branch_quests.json",
+      "owner": "factions-team",
+      "reason": "Wired in FactionBranchCoordinator.cs:634 and FactionBranchHostSession.cs."
+    },
+    {
+      "loader_type": "RecipeCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "CraftingHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "recipes.json",
+      "owner": "crafting-team",
+      "reason": "Wired in CraftingHostSession for crafting recipes."
+    },
+    {
+      "loader_type": "RelicCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ResearchHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "relics.json",
+      "owner": "research-team",
+      "reason": "Wired in ResearchHostSession for pre-war relic analysis."
+    },
+    {
+      "loader_type": "ResearchKnowledgeCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Research",
+      "disposition": "LIVE",
+      "required_catalog": "research_knowledge.json",
+      "owner": "research-team",
+      "reason": "Wired in Main.Research.cs:38 for knowledge tree research."
+    },
+    {
+      "loader_type": "SeasonalEventCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "WorldHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "seasonal_events.json",
+      "owner": "world-team",
+      "reason": "Wired in WorldHostSession for seasonal climate triggers."
+    },
+    {
+      "loader_type": "ShelterRoomCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ShelterHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "shelter_rooms.json",
+      "owner": "shelter-team",
+      "reason": "Wired in ShelterHostSession for bunker room expansion."
+    },
+    {
+      "loader_type": "ShelterScheduleCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Shelter",
+      "disposition": "LIVE",
+      "required_catalog": "shelter_schedules.json",
+      "owner": "shelter-team",
+      "reason": "Wired in Main.Shelter.cs:48 for daily work shifts."
+    },
+    {
+      "loader_type": "SilentFoundryConsequenceCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "WorldHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "foundry_treaty_consequences.json",
+      "owner": "world-team",
+      "reason": "Wired in WorldHostSession for foundry treaty reactions."
+    },
+    {
+      "loader_type": "SkillCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Survivors",
+      "disposition": "LIVE",
+      "required_catalog": "survivor_skills.json",
+      "owner": "survivors-team",
+      "reason": "Wired in Main.Survivors.cs:51 for skill leveling."
+    },
+    {
+      "loader_type": "SumpDrainageCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ShelterHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "sump_drainage.json",
+      "owner": "shelter-team",
+      "reason": "Wired in ShelterHostSession for flooding sump control."
+    },
+    {
+      "loader_type": "SurvivorCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "SurvivorsHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "survivors.json",
+      "owner": "survivors-team",
+      "reason": "Wired in SurvivorsHostSession for candidate pool roster."
+    },
+    {
+      "loader_type": "SurvivorStartingStateLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "SurvivorsHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "survivor_starting_states.json",
+      "owner": "survivors-team",
+      "reason": "Wired in SurvivorsHostSession for initial survivor conditions."
+    },
+    {
+      "loader_type": "ThirdonaryCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "TradeHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "thirdonary_trade.json",
+      "owner": "economy-team",
+      "reason": "Wired in TradeHostSession for barter exchange ratios."
+    },
+    {
+      "loader_type": "TradeSpecialtyCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Specialty",
+      "disposition": "LIVE",
+      "required_catalog": "trade_specialties.json",
+      "owner": "survivors-team",
+      "reason": "Wired in Main.Specialty.cs:30 for survivor trade proficiencies."
+    },
+    {
+      "loader_type": "UtilityActionCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "AiHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "utility_actions.json",
+      "owner": "ai-team",
+      "reason": "Wired in AiHostSession for autonomous survivor action selection."
+    },
+    {
+      "loader_type": "VehicleCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ExpeditionHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "vehicles.json",
+      "owner": "expeditions-team",
+      "reason": "Wired in ExpeditionHostSession for expedition overland transport."
+    },
+    {
+      "loader_type": "VerdictNpcCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Verdict",
+      "disposition": "LIVE",
+      "required_catalog": "verdict_npcs.json",
+      "owner": "verdict-team",
+      "reason": "Wired in Main.Verdict.cs:22 for tribunal NPC roles."
+    },
+    {
+      "loader_type": "VerdictQuestCatalogLoader",
+      "entry_points": ["LoadAndRegister"],
+      "owning_host_session": "Main.Verdict",
+      "disposition": "LIVE",
+      "required_catalog": "verdict_quests.json",
+      "owner": "verdict-team",
+      "reason": "Wired in Main.Verdict.cs:23 for tribunal justice trials."
+    },
+    {
+      "loader_type": "WarlordDoctrineCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "CombatHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "warlord_doctrines.json",
+      "owner": "combat-team",
+      "reason": "Wired in CombatHostSession for warlord doctrine modifiers."
+    },
+    {
+      "loader_type": "WaystationCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "ExpeditionHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "waystations.json",
+      "owner": "expeditions-team",
+      "reason": "Wired in ExpeditionHostSession for overland respite nodes."
+    },
+    {
+      "loader_type": "WeatherProfileLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "WeatherHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "weather_profiles.json",
+      "owner": "weather-team",
+      "reason": "Wired in WeatherHostSession for fallout climate forecasting."
+    },
+    {
+      "loader_type": "WildlifeTrappingCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "SurvivalHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "wildlife_trapping.json",
+      "owner": "survival-team",
+      "reason": "Wired in SurvivalHostSession for hunting and trap line yields."
+    },
+    {
+      "loader_type": "AtmosphereCatalogLoader",
+      "entry_points": ["LoadAndRegister", "Load"],
+      "owning_host_session": "ExpeditionHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "environmental_atmosphere_expansion.json",
+      "owner": "narrative-content",
+      "reason": "Atmosphere and environmental text loaded for expedition location discoveries and inspects (R02/R03)."
+    },
+    {
+      "loader_type": "HoldfastNpcCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "CoreDemoSession",
+      "disposition": "LIVE",
+      "required_catalog": "holdfast_npcs.json",
+      "owner": "holdfast-narrative",
+      "reason": "Holdfast NPC definitions loaded via HoldfastCatalogLoader into HoldfastCatalog / CoreDemoSession."
+    },
+    {
+      "loader_type": "ExpansionEnrichmentCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": "SurvivorsHostSession",
+      "disposition": "LIVE",
+      "required_catalog": "expansion_survivor_fields.json",
+      "owner": "survivor-identity",
+      "reason": "Authored survivor enrichment fields (beliefs, keepsakes, professions, phantom backgrounds) loaded at roster setup (R15)."
+    },
+    {
+      "loader_type": "SkyLayerArmorCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": null,
+      "disposition": "DEFERRED",
+      "required_catalog": "skylayer_armor.json",
+      "owner": "expansion-11-orbital-harrow",
+      "reason": "Expansion 11 'Orbital Harrow' system is designed-dormant; wire on expansion activation.",
+      "activation_condition": "Expansion 11 Orbital Harrow activation boundary.",
+      "expiry": "2026-12-31"
+    },
+    {
+      "loader_type": "SpiritualCatalogLoader",
+      "entry_points": ["Load"],
+      "owning_host_session": null,
+      "disposition": "DEFERRED",
+      "required_catalog": "spiritual_meanings.json",
+      "owner": "narrative-team",
+      "reason": "Plan 30 spiritual-meaning coordinator is designed-dormant; wire on plan activation.",
+      "activation_condition": "Plan 30 spiritual meaning activation boundary.",
+      "expiry": "2026-12-31"
+    }
+  ]
+}

@@ -6,196 +6,344 @@
       "treaty_id": "treaty_01_lock_4_sluice_and_brine_concession",
       "ratified_day": 45,
       "treaty_title": "The Sluice Gate Accord of Lock 4",
-      "signatory_factions": ["current_01_the_weigher_compact", "current_03_canal_salvage_syndicate"],
+      "signatory_factions": [
+        "current_01_the_weigher_compact",
+        "current_03_canal_salvage_syndicate"
+      ],
       "demarcated_territory": "From Canal Lock 4 Siding North to Milepost 12 Culvert",
       "water_allocation_lpm": 120.0,
       "power_quota_kw": 15.0,
       "tariff_schedule": "5% gross weight on dried salt cakes; zero tariff on potable artesian water.",
       "treaty_articles": "ARTICLE 1: The Canal Salvage Syndicate maintains exclusive diving rights to sunken coal barges in Basin 4. ARTICLE 2: The Weigher Compact shall provide continuous unadulterated salt cakes (minimum 98% NaCl) at a fixed parity of 1 kg salt per 5 kg dried peat fuel. ARTICLE 3: Armed sentries shall not cross the centerline of the Lock 4 bridge without 24 hours written telegraph notice.",
       "penalties": "Violation of water quotas forfeits all access to the Lock 2 freight hoist for sixty days.",
-      "tags": ["canal", "harlan", "water", "salt", "syndicate", "early_treaty"]
+      "tags": [
+        "canal",
+        "harlan",
+        "water",
+        "salt",
+        "syndicate",
+        "early_treaty"
+      ],
+      "term_days": 180
     },
     {
       "treaty_id": "treaty_02_north_ridge_timber_and_cordon_pact",
       "treaty_title": "The North Ridge Timber & Demarcation Pact",
       "ratified_day": 90,
-      "signatory_factions": ["current_02_garrison_continuity_council", "current_05_deep_drift_miners_union"],
+      "signatory_factions": [
+        "current_02_garrison_continuity_council",
+        "current_05_deep_drift_miners_union"
+      ],
       "demarcated_territory": "The crest of Mount Karkov from Birch Copse to Adit #4",
       "water_allocation_lpm": 40.0,
       "power_quota_kw": 25.0,
       "tariff_schedule": "10% of cut pine square sets allocated to Garrison airlock reinforcement.",
       "treaty_articles": "ARTICLE 1: The Miners' Union holds unhindered right to fell timber in Birch Copse for mine drift sets. ARTICLE 2: The Garrison shall maintain two manned perimeter machine-gun posts to protect miners against rogue wolf packs. ARTICLE 3: No military press-gangs may conscript active union shovelers or timber framers.",
       "penalties": "Unauthorized timber harvesting outside boundary invokes immediate confiscation of all crosscut saws.",
-      "tags": ["garrison", "miners", "timber", "karkov", "security"]
+      "tags": [
+        "garrison",
+        "miners",
+        "timber",
+        "karkov",
+        "security"
+      ]
     },
     {
       "treaty_id": "treaty_03_hydro_power_sharing_compact",
       "treaty_title": "The Upper Gorge Hydro-Electric Protocol",
       "ratified_day": 150,
-      "signatory_factions": ["current_04_tempest_directorate", "current_08_hydro_turbine_guild"],
+      "signatory_factions": [
+        "current_04_tempest_directorate",
+        "current_08_hydro_turbine_guild"
+      ],
       "demarcated_territory": "Gorge Substation #1 to Main Valley Busbar Pole 14",
       "water_allocation_lpm": 300.0,
       "power_quota_kw": 60.0,
       "tariff_schedule": "Fixed 4,000V AC transmission line fee: 2 liters turbine lubricant per megawatt-day.",
       "treaty_articles": "ARTICLE 1: The Hydro Guild shall operate the Lock 2 Francis turbines at constant 50.0 Hz +/- 0.2 Hz. ARTICLE 2: The Tempest Directorate guarantees unmolested transit for line repair crews along the 4kV pole line. ARTICLE 3: Priority power allocation: 1) Medical Clinic, 2) Blower Fans, 3) Radios, 4) Workshops.",
       "penalties": "Deliberate phase misalignment results in immediate disconnection of Directorate administrative bunkers.",
-      "tags": ["hydro", "tempest", "electricity", "power", "grid"]
+      "tags": [
+        "hydro",
+        "tempest",
+        "electricity",
+        "power",
+        "grid"
+      ]
     },
     {
       "treaty_id": "treaty_04_the_sanctuary_of_the_standing_record",
       "treaty_title": "The Granite Crypt Neutrality Accord",
       "ratified_day": 210,
-      "signatory_factions": ["current_06_the_standing_record_archivists", "current_02_garrison_continuity_council", "current_07_the_penitent_brotherhood"],
+      "signatory_factions": [
+        "current_06_the_standing_record_archivists",
+        "current_02_garrison_continuity_council",
+        "current_07_the_penitent_brotherhood"
+      ],
       "demarcated_territory": "Subterranean Level 4 Limestone Vault (The Memorial Crypt)",
       "water_allocation_lpm": 10.0,
       "power_quota_kw": 2.0,
       "tariff_schedule": "Zero tariffs; absolute immunity for all stonecutters and scribes.",
       "treaty_articles": "ARTICLE 1: The Memorial Crypt is declared inviolable neutral soil for all eternity. ARTICLE 2: Sister Mara and her apprentices shall inscribe every deceased human being without regard to faction, rank, or crime. ARTICLE 3: No weapons, ammunition, or military insignias may be carried past the stone weeping arch.",
       "penalties": "Drawing steel inside the Crypt invokes permanent banishment beyond the North Perimeter.",
-      "tags": ["crypt", "neutrality", "mara", "garrison", "penitent", "memorial"]
+      "tags": [
+        "crypt",
+        "neutrality",
+        "mara",
+        "garrison",
+        "penitent",
+        "memorial"
+      ]
     },
     {
       "treaty_id": "treaty_05_chemical_sulfur_and_acid_concession",
       "treaty_title": "The Acid Gorge Chemical Supply Treaty",
       "ratified_day": 280,
-      "signatory_factions": ["current_09_station_0_chemical_combine", "current_10_the_silent_foundry_guild"],
+      "signatory_factions": [
+        "current_09_station_0_chemical_combine",
+        "current_10_the_silent_foundry_guild"
+      ],
       "demarcated_territory": "Sulfur Runoff Flats at Milepost 22 to Foundry Rail Spur",
       "water_allocation_lpm": 50.0,
       "power_quota_kw": 35.0,
       "tariff_schedule": "50 kg refined yellow sulfur traded for 100 kg forged steel pickaxes.",
       "treaty_articles": "ARTICLE 1: Station 0 Chemist Ilya shall provide battery-grade sulfuric acid (SG 1.280) and vulcanizing sulfur. ARTICLE 2: The Silent Foundry shall cast acid-resistant lead-antimony pipes and valve bodies for the chemical lab. ARTICLE 3: Both parties agree to maintain joint hazardous containment barriers along the creek.",
       "penalties": "Failure of acid purity standards requires replacement of all corroded battery plates at supplier's expense.",
-      "tags": ["chemistry", "foundry", "sulfur", "acid", "industry"]
+      "tags": [
+        "chemistry",
+        "foundry",
+        "sulfur",
+        "acid",
+        "industry"
+      ]
     },
     {
       "treaty_id": "treaty_06_the_heirloom_seed_preservation_pact",
       "treaty_title": "The Cryogenic Seed Repository Demarcation Accord",
       "ratified_day": 365,
-      "signatory_factions": ["current_11_botanical_seed_trust", "current_01_the_weigher_compact", "current_05_deep_drift_miners_union"],
+      "signatory_factions": [
+        "current_11_botanical_seed_trust",
+        "current_01_the_weigher_compact",
+        "current_05_deep_drift_miners_union"
+      ],
       "demarcated_territory": "Sub-level 3 Cryo Vault to Central Hydroponic Greenhouse",
       "water_allocation_lpm": 80.0,
       "power_quota_kw": 20.0,
       "tariff_schedule": "10% of all viable sprout yields reserved for valley-wide seed hardening banks.",
       "treaty_articles": "ARTICLE 1: The Master Seed Vault shall not be unsealed for emergency food consumption under any circumstance. ARTICLE 2: Botanist Elena holds sole authority over germination trials and peat bed allocations. ARTICLE 3: The Miners' Union shall provide twenty tons of crushed agricultural limestone per season for soil de-acidification.",
       "penalties": "Consuming seed stock as grain carries immediate loss of voting franchise in the Valley Assembly.",
-      "tags": ["seed_vault", "agriculture", "elena", "harlan", "botany"]
+      "tags": [
+        "seed_vault",
+        "agriculture",
+        "elena",
+        "harlan",
+        "botany"
+      ]
     },
     {
       "treaty_id": "treaty_07_the_penitent_pilgrimage_safe_passage",
       "treaty_title": "The South Ridge Pilgrimage & Ash Way Treaty",
       "ratified_day": 450,
-      "signatory_factions": ["current_07_the_penitent_brotherhood", "current_02_garrison_continuity_council"],
+      "signatory_factions": [
+        "current_07_the_penitent_brotherhood",
+        "current_02_garrison_continuity_council"
+      ],
       "demarcated_territory": "The Ash Way trail from the Valley Floor to the High Cross Peak",
       "water_allocation_lpm": 15.0,
       "power_quota_kw": 0.0,
       "tariff_schedule": "Toll-free transit for unarmed pilgrims carrying burial urns or candles.",
       "treaty_articles": "ARTICLE 1: Unarmed penitents may climb the south trail during daylight hours without challenge. ARTICLE 2: Brotherhood elders agree not to preach against military airlock discipline during active fallout squalls. ARTICLE 3: The Brotherhood shall maintain trail cairns and emergency snow shelters along the pass.",
       "penalties": "Preaching civil disobedience at sentry stations closes the mountain trail for ninety days.",
-      "tags": ["penitent", "pilgrims", "garrison", "trail", "peace"]
+      "tags": [
+        "penitent",
+        "pilgrims",
+        "garrison",
+        "trail",
+        "peace"
+      ]
     },
     {
       "treaty_id": "treaty_08_the_black_flotilla_maritime_charter",
       "treaty_title": "The Port Morozov Coastal Maritime Charter",
       "ratified_day": 600,
-      "signatory_factions": ["current_12_the_black_flotilla", "current_03_canal_salvage_syndicate", "current_01_the_weigher_compact"],
+      "signatory_factions": [
+        "current_12_the_black_flotilla",
+        "current_03_canal_salvage_syndicate",
+        "current_01_the_weigher_compact"
+      ],
       "demarcated_territory": "Canal Lock 1 Basin to the Open Waters of Port Morozov",
       "water_allocation_lpm": 200.0,
       "power_quota_kw": 10.0,
       "tariff_schedule": "Standard maritime barter: 1 ton salt cod = 400 kg pig iron = 50 liters whale oil.",
       "treaty_articles": "ARTICLE 1: Black Flotilla steam tugs and diving scows have free mooring rights at Lock 1. ARTICLE 2: The Weigher Compact shall certify all trade weights on the dockside beam scale. ARTICLE 3: Flotilla navigators shall share coastal storm tide charts with inland valley scouts.",
       "penalties": "Smuggling uncertified scrap brass onto flotilla piers results in seizure of cargo scows.",
-      "tags": ["flotilla", "maritime", "coast", "trade", "syndicate"]
+      "tags": [
+        "flotilla",
+        "maritime",
+        "coast",
+        "trade",
+        "syndicate"
+      ]
     },
     {
       "treaty_id": "treaty_09_the_free_airwaves_radio_convention",
       "treaty_title": "The Valley Radio Spectrum Demarcation Accord",
       "ratified_day": 780,
-      "signatory_factions": ["current_13_pirate_free_net_coalition", "current_04_tempest_directorate"],
+      "signatory_factions": [
+        "current_13_pirate_free_net_coalition",
+        "current_04_tempest_directorate"
+      ],
       "demarcated_territory": "The Radio Spectrum (88.0 MHz to 108.0 MHz)",
       "water_allocation_lpm": 0.0,
       "power_quota_kw": 8.0,
       "tariff_schedule": "Zero fee; transmission power strictly capped at 50 watts ERP.",
       "treaty_articles": "ARTICLE 1: 99.0 MHz reserved for Tempest Directorate weather alarms and seismic telemetry. ARTICLE 2: 88.4 MHz allocated to Free-Net for community music, medical advisories, and lost dog bulletins. ARTICLE 3: 104.7 MHz reserved for The Keeper tracking and time pips. ARTICLE 4: All high-power radar pulses banned to avoid Harrow orbital retaliation.",
       "penalties": "Broadcasting above 50 watts results in immediate cutting of station feedline by sapper demolition.",
-      "tags": ["radio", "tempest", "free_net", "spectrum", "the_keeper"]
+      "tags": [
+        "radio",
+        "tempest",
+        "free_net",
+        "spectrum",
+        "the_keeper"
+      ]
     },
     {
       "treaty_id": "treaty_10_the_foundry_labor_and_milk_treaty",
       "treaty_title": "The Silent Foundry Labor & Slag Accord",
       "ratified_day": 950,
-      "signatory_factions": ["current_10_the_silent_foundry_guild", "current_05_deep_drift_miners_union", "current_14_the_valley_general_council"],
+      "signatory_factions": [
+        "current_10_the_silent_foundry_guild",
+        "current_05_deep_drift_miners_union",
+        "current_14_the_valley_general_council"
+      ],
       "demarcated_territory": "Sub-level 5 Smelting Hall to Slag Waste Adit",
       "water_allocation_lpm": 150.0,
       "power_quota_kw": 50.0,
       "tariff_schedule": "500ml fresh goat milk guaranteed per foundry stoker per 8-hour shift.",
       "treaty_articles": "ARTICLE 1: Foundry shifts capped at eight hours during liquid iron pour heats. ARTICLE 2: The General Council guarantees distribution of sulfur-clearing goat milk and lard biscuits to all furnace tenders. ARTICLE 3: The Foundry Guild guarantees production of 500 railway spikes and 20 rail car wheels per month.",
       "penalties": "Lockouts or unannounced strikes forfeit the monthly foundry fuel allotment.",
-      "tags": ["foundry", "labor", "strike", "treaty", "miners"]
+      "tags": [
+        "foundry",
+        "labor",
+        "strike",
+        "treaty",
+        "miners"
+      ]
     },
     {
       "treaty_id": "treaty_11_the_tessarat_medical_neutrality_pact",
       "treaty_title": "The Valley Medical Immunity & Epidemic Protocol",
       "ratified_day": 1200,
-      "signatory_factions": ["current_15_the_healers_cadre", "current_02_garrison_continuity_council", "current_01_the_weigher_compact"],
+      "signatory_factions": [
+        "current_15_the_healers_cadre",
+        "current_02_garrison_continuity_council",
+        "current_01_the_weigher_compact"
+      ],
       "demarcated_territory": "All District Clinics, Infirmaries & Decontamination Vestibules",
       "water_allocation_lpm": 60.0,
       "power_quota_kw": 12.0,
       "tariff_schedule": "Zero tariff on all pharmaceuticals, bandages, surgical steel, and insulin.",
       "treaty_articles": "ARTICLE 1: Dr. Sonya and her apprentice healers hold absolute freedom of movement across all sector checkpoints. ARTICLE 2: No patient may be refused emergency surgical care or triage based on factional alignment. ARTICLE 3: In the event of dysentery or typhus, the Healers' Cadre holds unilateral power to mandate 14-day sector quarantine.",
       "penalties": "Obstructing a physician carrying medical supplies invokes total boycott of clinic services.",
-      "tags": ["medical", "immunity", "sonya", "vel", "healers", "health"]
+      "tags": [
+        "medical",
+        "immunity",
+        "sonya",
+        "vel",
+        "healers",
+        "health"
+      ]
     },
     {
       "treaty_id": "treaty_12_the_trans_tessarat_railway_charter",
       "treaty_title": "The Valley Narrow-Gauge Rail Consortium Accord",
       "ratified_day": 1500,
-      "signatory_factions": ["current_16_the_railway_restoration_corps", "current_05_deep_drift_miners_union", "current_10_the_silent_foundry_guild"],
+      "signatory_factions": [
+        "current_16_the_railway_restoration_corps",
+        "current_05_deep_drift_miners_union",
+        "current_10_the_silent_foundry_guild"
+      ],
       "demarcated_territory": "Main Line Tracks from Coal Siding 4 to Lock 2 Terminal (28 km)",
       "water_allocation_lpm": 100.0,
       "power_quota_kw": 18.0,
       "tariff_schedule": "1 kg coal freight fee per 100 kg of general cargo hauled over 10 km.",
       "treaty_articles": "ARTICLE 1: The Railway Corps shall maintain steam locomotive 'Buran' and 12 ore gondolas in operable condition. ARTICLE 2: Miners guarantee 10 tons of lump anthracite coal per week for locomotive boilers. ARTICLE 3: Track maintenance crews hold right-of-way over all pedestrian and dog sled traffic.",
       "penalties": "Tampering with rail switches or fishplates is punishable by permanent quarry labor.",
-      "tags": ["railway", "locomotive", "transport", "logistics", "coal"]
+      "tags": [
+        "railway",
+        "locomotive",
+        "transport",
+        "logistics",
+        "coal"
+      ]
     },
     {
       "treaty_id": "treaty_13_the_sky_defense_and_harrow_watch",
       "treaty_title": "The Orbital Kinetic Hazard Mutual Defense Protocol",
       "ratified_day": 1850,
-      "signatory_factions": ["current_04_tempest_directorate", "current_02_garrison_continuity_council", "current_14_the_valley_general_council"],
+      "signatory_factions": [
+        "current_04_tempest_directorate",
+        "current_02_garrison_continuity_council",
+        "current_14_the_valley_general_council"
+      ],
       "demarcated_territory": "Summit Optical Observatory & Subterranean Sky Armor Deflectors",
       "water_allocation_lpm": 20.0,
       "power_quota_kw": 30.0,
       "tariff_schedule": "Joint funding: 5% of all quarry shale allocated to vertical bunker armor strata.",
       "treaty_articles": "ARTICLE 1: The Summit Observatory shall continuously track Harrow-4 orbital decay. ARTICLE 2: Upon detection of kinetic dart separation, a 3-long-horn siren alert will sound across the valley. ARTICLE 3: All citizens must take shelter below -15m depth until the all-clear chime is rung.",
       "penalties": "Failing to maintain sky armor gravel depth results in mandatory assignment to surface shovel details.",
-      "tags": ["orbital", "harrow", "sky_defense", "tempest", "garrison"]
+      "tags": [
+        "orbital",
+        "harrow",
+        "sky_defense",
+        "tempest",
+        "garrison"
+      ]
     },
     {
       "treaty_id": "treaty_14_the_universal_barter_currency_standard",
       "treaty_title": "The Valley Whole-Unit Barter Parity Standard",
       "ratified_day": 2300,
-      "signatory_factions": ["current_01_the_weigher_compact", "current_14_the_valley_general_council", "current_03_canal_salvage_syndicate"],
+      "signatory_factions": [
+        "current_01_the_weigher_compact",
+        "current_14_the_valley_general_council",
+        "current_03_canal_salvage_syndicate"
+      ],
       "demarcated_territory": "All Registered Valley Market Sittings & Trade Posts",
       "water_allocation_lpm": 0.0,
       "power_quota_kw": 0.0,
       "tariff_schedule": "Standard parity table: 1 kg Wheat = 200g Salt = 1 Box Matches = 2 Rounds 7.62mm.",
       "treaty_articles": "ARTICLE 1: All trade within the Valley of Tessarat shall be conducted in whole units without fractional fiat paper. ARTICLE 2: Harlan the Weigher and appointed municipal inspectors shall calibrate all market scales bi-weekly. ARTICLE 3: Adulteration of grain with sand or flour with chalk carries confiscation of goods.",
       "penalties": "Using shaved lead weights or false scale pans results in public exposure at the marketplace post.",
-      "tags": ["barter", "economy", "harlan", "weights", "market"]
+      "tags": [
+        "barter",
+        "economy",
+        "harlan",
+        "weights",
+        "market"
+      ]
     },
     {
       "treaty_id": "treaty_15_the_educational_and_historical_accord",
       "treaty_title": "The Valley Common School & Truth Archive Protocol",
       "ratified_day": 2900,
-      "signatory_factions": ["current_06_the_standing_record_archivists", "current_14_the_valley_general_council", "current_13_pirate_free_net_coalition"],
+      "signatory_factions": [
+        "current_06_the_standing_record_archivists",
+        "current_14_the_valley_general_council",
+        "current_13_pirate_free_net_coalition"
+      ],
       "demarcated_territory": "Central Schoolroom, Archive Vault & Public Tannoy System",
       "water_allocation_lpm": 15.0,
       "power_quota_kw": 5.0,
       "tariff_schedule": "Free education for all children between ages 6 and 16; zero tuition fees.",
       "treaty_articles": "ARTICLE 1: Every child in the valley shall receive instruction in reading, arithmetic, botany, and the history of the 45-Minute War. ARTICLE 2: The final log entry of Marshal Valery Rostok ('Do not rebuild rockets; plant wheat; forgive us') shall be read aloud at every graduation. ARTICLE 3: No political censorship may alter the historical text of the Standing Record.",
       "penalties": "Attempting to erase historical names or sanitize war causes forfeits all council representation.",
-      "tags": ["education", "school", "history", "standing_record", "sonya"]
+      "tags": [
+        "education",
+        "school",
+        "history",
+        "standing_record",
+        "sonya"
+      ]
     },
     {
       "treaty_id": "treaty_16_the_constitution_of_the_valley_of_tessarat",
@@ -225,7 +373,15 @@
       "tariff_schedule": "Perpetual free trade across all 16 districts; common defense, common harvest.",
       "treaty_articles": "ARTICLE 1: All sixteen currents of the valley are hereby united into the Democratic Commonwealth of Tessarat under the Forty Articles of the Slate Constitution. ARTICLE 2: The underground shelters shall remain open as municipal workshops and cold storage; all citizens hold the right to build homes in the daylight. ARTICLE 3: Sonya's Tree in the Sunken Atrium shall stand as the perpetual living emblem of our survival and our peace.",
       "penalties": "Taking up arms against the Commonwealth invokes perpetual outlawry from the valley.",
-      "tags": ["constitution", "century_seed", "all_16_currents", "peace", "finale", "grand_treaty", "victory"]
+      "tags": [
+        "constitution",
+        "century_seed",
+        "all_16_currents",
+        "peace",
+        "finale",
+        "grand_treaty",
+        "victory"
+      ]
     }
   ]
 }

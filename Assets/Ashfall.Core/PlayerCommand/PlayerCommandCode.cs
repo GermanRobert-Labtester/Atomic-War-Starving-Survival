@@ -22,6 +22,7 @@ namespace Ashfall.Core.PlayerCommand
         public const string ExpeditionCampTick = "expedition.camp_tick";
         public const string ExpeditionResolveEncounter = "expedition.resolve_encounter";
         public const string ExpeditionBreakCamp = "expedition.break_camp";
+        public const string AssembleVehicle = "vehicle.assemble";
 
         // ── Trade ─────────────────────────────────────────────────────
         public const string TradeConfirm = "trade.confirm";

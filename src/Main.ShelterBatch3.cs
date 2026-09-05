@@ -66,6 +66,12 @@ namespace AtomicWar.GodotApp
             var sfPower = _powerGrid.System;
             var sfDeepFreeze = new YearOfAshDeepFreezeSystem();
             var sfSys = new SumpFloodingSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 10), sfWeather, sfPower, sfDeepFreeze, new GodotLog());
+            // Plan 70: parameterize drainage ingress/silt/pump-load from the
+            // sump_drainage_catalog.json authority (strata stay optional —
+            // nodes without a bound stratum keep the legacy inflow model).
+            var sumpStrata = Ashfall.Core.SumpDrainageCatalogLoader.Load(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            sfSys.ApplyStratumCatalog(sumpStrata);
             sfSys.RestoreState(sfState);
             _sumpFlooding = new SumpFloodingHostSession(sfSys, sfWeather, sfPower, sfDeepFreeze);
             if (_sumpFloodingPanel != null && _sumpFloodingPanel.IsInsideTree())
@@ -74,6 +80,14 @@ namespace AtomicWar.GodotApp
             _sumpFloodingPanel.Bind(_sumpFlooding);
             _sumpFloodingPanel.Visible = false;
             AddChild(_sumpFloodingPanel);
+            // Plan 70: bind the sludge-plant console to the same session
+            // (replaces the hardcoded stub created in the bulk panel pass).
+            if (_slurryDewateringSumpPanel != null && _slurryDewateringSumpPanel.IsInsideTree())
+                RemoveChild(_slurryDewateringSumpPanel);
+            _slurryDewateringSumpPanel = new SlurryDewateringSumpPanel();
+            _slurryDewateringSumpPanel.Bind(_sumpFlooding);
+            _slurryDewateringSumpPanel.Visible = false;
+            AddChild(_slurryDewateringSumpPanel);
         }
 
         private void SetupDecontamination()

@@ -1486,6 +1486,2076 @@
           "rarity_tier": "rare"
         }
       ]
+    },
+    {
+      "id": "table_loot_veterinary_surgery",
+      "location_type": "veterinary_surgery",
+      "display_name": "Large-Animal Surgery Theatre & Drug Cabinet",
+      "description": "A livestock surgery three years abandoned: the drug cabinet stands cut open, the hoist still hangs over the table, and the disinfectant smell never quite left the drains.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "disease",
+      "entries": [
+        {
+          "item_id": "bandage",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "surgical_suture",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "splint",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antibiotics",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "sedative_draught",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "alcohol",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "chemicals",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "tweezers",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "forceps",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "scalpel",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_surgical_kit",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_surgical_log"
+        },
+        {
+          "item_id": "item_document_supply_inventory",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_dentists_row",
+      "location_type": "dentists_row",
+      "display_name": "Dentists' Row Stripped Practices",
+      "description": "Four dental practices, three of them stripped to the walls by someone methodical. The fourth keeps its chair, its drill, its instruments, and its locked cabinet of small relief.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.05,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "bandage",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "tweezers",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "painkillers",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "forceps",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "alcohol",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "surgical_mask",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "chemicals",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common",
+          "hazard_type": "chemical",
+          "hazard_chance": 0.15
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_journal_fragment",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_hospice_ward",
+      "location_type": "hospice_ward",
+      "display_name": "Almshouse Hospice Ward & Dormitories",
+      "description": "A hospice that ran through the worst of it and stopped on a day the charts still record. Beds made, lockers closed, the drug trolley parked where the last nurse left it.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.15,
+      "primary_hazard_type": "disease",
+      "entries": [
+        {
+          "item_id": "bandage",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "painkillers",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antibiotics",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "wool_blanket",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 20,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "iodine_pills",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "sedative_draught",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "alcohol",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_wood",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "book",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "medical_kit",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_death_certificate",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_document_last_letter",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_unsent_letter"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_collapsed_structure",
+      "location_type": "collapsed_structure",
+      "display_name": "Collapsed Building Rubble Field",
+      "description": "A structure that came down and stayed down. Floors pancaked into rebar cages, plank stacks under dust, and the slow work of pulling building material back out of the wreck.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "scrap_metal",
+          "weight": 35,
+          "min_quantity": 3,
+          "max_quantity": 6,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "wooden_plank",
+          "weight": 30,
+          "min_quantity": 3,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "box_of_nails_10",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "concrete_mix",
+          "weight": 20,
+          "min_quantity": 2,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "steel_rebar",
+          "weight": 15,
+          "min_quantity": 2,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_wood",
+          "weight": 15,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_maintenance_record",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_galvanized_rebar",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_weighbridge",
+      "location_type": "weighbridge",
+      "display_name": "Weighbridge Office & Fleet Yard",
+      "description": "The scale pit still holds its counterweights and the office still holds its ledgers: every load that crossed this deck was weighed, priced, and signed for, right up to the end.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "mechanical_parts",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "diesel_fuel",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel_canister",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_epoxy_injector",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_welders_glass",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_supply_requisition",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_requisition_4471"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_recovery_yard",
+      "location_type": "recovery_yard",
+      "description": "Dead vehicles stacked in rows by a crane that no longer moves. Engines hoisted and numbered, batteries on the shelf, fluids drained into drums nobody ever came back to collect.",
+      "display_name": "Vehicle Recovery Yard & Parts Rows",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "scrap_metal",
+          "weight": 40,
+          "min_quantity": 3,
+          "max_quantity": 6,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "steel_rebar",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "lubricant_oil",
+          "weight": 18,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_welders_glass",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "engine",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_document_supply_requisition",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_warehouse_discrepancy"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_tank_farm",
+      "location_type": "tank_farm",
+      "display_name": "Diesel Tank Farm 4-East",
+      "description": "Ranked storage tanks with fog-gauge ladders and vapour pockets between the bunds. The drums are stencilled, dated, and mostly still full, which is exactly the problem.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.15,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "diesel_fuel",
+          "weight": 40,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel_canister",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "lubricant_oil",
+          "weight": 18,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common",
+          "hazard_type": "chemical",
+          "hazard_chance": 0.15
+        },
+        {
+          "item_id": "item_document_supply_requisition",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_requisition_4471"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_concert_hall",
+      "location_type": "concert_hall",
+      "display_name": "Concert Hall Ruins & Meeting Place",
+      "description": "The roof is open to the sky and the stage is intact, and a whisper from the boards still reaches the back row. Someone keeps meeting here, and the aisles hold what they left behind.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "cloth",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_wood",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "book",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_vinyl_collection",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_document_journal_fragment",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_personal_journal"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_ration_plaza",
+      "location_type": "ration_plaza",
+      "display_name": "Ration Queue Plaza",
+      "description": "Queue lines painted fresh on the pavement because paint is cheaper than riot control. What the crowd drops, the gutters keep: ration tins, blankets, and the notices nobody wanted to read.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "dried_rations",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "canned_food",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_ration_record",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_ration_theft"
+        },
+        {
+          "item_id": "item_document_shelter_rejection_list",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_checkpoint",
+      "location_type": "checkpoint",
+      "display_name": "Garrison Checkpoint Post",
+      "description": "Sandbags, a boom barrier, and a guard shack repapered with schedules nobody reads any more. What the garrison left behind is what the garrison considered ordinary: rounds, rations, and the forms that went with them.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "ammo_9x19",
+          "weight": 30,
+          "min_quantity": 8,
+          "max_quantity": 20,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 18,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "gas_mask",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "reloading_primer",
+          "weight": 10,
+          "min_quantity": 4,
+          "max_quantity": 10,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_patrol_order",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_patrol_order"
+        },
+        {
+          "item_id": "item_document_barricade_placement",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_conscription_office",
+      "location_type": "conscription_office",
+      "display_name": "District Conscription Office",
+      "description": "A driving-licence bureau that changed its forms and nothing else. The ticket machine still works, the counters still stand, and the strongroom cabinet still holds the paperwork of everyone who was processed.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "book",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "ammo_9x19",
+          "weight": 20,
+          "min_quantity": 5,
+          "max_quantity": 12,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_supply_requisition",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_requisition_4471"
+        },
+        {
+          "item_id": "item_document_field_report",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_ordnance_shoulder",
+      "location_type": "ordnance_shoulder",
+      "display_name": "The Ordnance Shoulder",
+      "description": "Two kilometres of hard shoulder marked in Garrison yellow, in a pattern the Garrison trained its people to read and everyone else learned to fear. Crated rounds, propellant drums, and the patrol orders that explain the paint.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "ammo_762",
+          "weight": 30,
+          "min_quantity": 4,
+          "max_quantity": 10,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "ammo_12g",
+          "weight": 25,
+          "min_quantity": 3,
+          "max_quantity": 8,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "ammunition_brass",
+          "weight": 20,
+          "min_quantity": 2,
+          "max_quantity": 6,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "smokeless_powder",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common",
+          "hazard_type": "chemical",
+          "hazard_chance": 0.15
+        },
+        {
+          "item_id": "reloading_primer",
+          "weight": 15,
+          "min_quantity": 8,
+          "max_quantity": 20,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "gas_mask",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_patrol_order",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_patrol_order"
+        },
+        {
+          "item_id": "item_document_military_map",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_deployment_map"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_relay_mast",
+      "location_type": "relay_mast",
+      "display_name": "Relay Mast 12 Equipment Hut",
+      "description": "The lattice mast stands over the ridge line and the hut at its base is powered — not preserved, not maintained: powered, drawing current from a source that has outlasted three years of no visitors.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "electronic_scrap",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "aa_batteries",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "vacuum_tube",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "handheld_radio",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "solar_cell",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_radio_log",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_civil_defense"
+        },
+        {
+          "item_id": "item_document_broadcast_transcript",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_transit_depot",
+      "location_type": "transit_depot",
+      "display_name": "Transit Authority Garage & Dispatch",
+      "description": "Wall-sized route maps still sit under intact glass, annotated in grease pencil with times and transfers that correspond to no public timetable any more. Out back, the fleet sheds what it carried.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "mechanical_parts",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "electronic_scrap",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_evacuation_route_map",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_sector7_evacuation"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_geo_thermal_plant",
+      "location_type": "geo_thermal_plant",
+      "display_name": "Geo-Thermal Plant Works",
+      "description": "The ground here is not solid and never was. Cracks breathe hot vapor across the platform, boiling mud bubbles under a crust that looks safe until it is not, and the pipes still hiss from somewhere deep.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.15,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "mechanical_parts",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "electronic_scrap",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "steel_rebar",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "lubricant_oil",
+          "weight": 18,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_thermal_paste",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "solar_cell",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_maintenance_record",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_arcology_sector_4",
+      "location_type": "arcology_sector",
+      "display_name": "Arcology Sector 4 Sealed Stores",
+      "description": "Blast doors still powered, still closed, and someone inside still answers the intercom. What comes through the hatch is what a sealed community stocked: filters, cells, and the records of who did not make it to the door.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "electronic_scrap",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "solar_cell",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "air_filter",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "medical_kit",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "iodine_pills",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_casualty_list",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_sector4_casualties"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_tinkers_notch",
+      "location_type": "settlement_market",
+      "display_name": "Tinker's Notch Market Stalls",
+      "description": "A container-and-chassis market behind an electrified fence, where factor stalls trade copper, cells, and chips for whatever a hauler carried in. The stock turns over because the market is alive.",
+      "depletion_model": "renewable",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "electronic_scrap",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "aa_batteries",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "duct_tape",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_debt_default_notice",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_debt_default"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_waterworks",
+      "location_type": "waterworks",
+      "display_name": "Municipal Waterworks & Pump Halls",
+      "description": "Pumps, gates, and the pipes between them: some still running, some drowned to their motor housings, all of them holding the water where somebody wanted it or lost it.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.05,
+      "primary_hazard_type": "disease",
+      "entries": [
+        {
+          "item_id": "mechanical_parts",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "water_filter",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "dirty_water",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common",
+          "hazard_type": "disease",
+          "hazard_chance": 0.2
+        },
+        {
+          "item_id": "fuel",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "air_filter",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_water_notice",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_swimming_baths",
+      "location_type": "swimming_baths",
+      "display_name": "Municipal Baths Treatment Room & Shelters",
+      "description": "The deep end is a mattress floor now, and the tiled walls hold the heat the way they always did. The treatment room still smells of chlorine, and the tablets still purify what the taps deliver.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "clean_water",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "chemicals",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common",
+          "hazard_type": "chemical",
+          "hazard_chance": 0.15
+        },
+        {
+          "item_id": "cloth",
+          "weight": 20,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "water_purification_tablets",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_last_letter",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_apiary_rows",
+      "location_type": "apiary",
+      "display_name": "Apiary Rows & Honey House",
+      "description": "Rows of hives under mesh lids, a honey house with the extraction gear still in it, and the smoke pot by the door. Whether anything is still living in the boxes is a question the smoker answers.",
+      "depletion_model": "renewable",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "item_honey_pot",
+          "weight": 35,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "berries",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "roots",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_wood",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common",
+          "comment": "veils"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_convoy_cache",
+      "location_type": "supply_cache",
+      "display_name": "Convoy Echo-7 Supply Cache",
+      "description": "A convoy's fallback cache, hidden properly the first time: fuel cans wired shut, spare parts in greased paper, and ration tins stacked the way somebody's sergeant liked them.",
+      "depletion_model": "one_time",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "fuel_canister",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "canned_food",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_field_report",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_municipal_archive",
+      "location_type": "archive",
+      "display_name": "Municipal Archive Stacks",
+      "description": "The town's memory in bonded leather: deeds, minutes, surveys, and the wills of people who owned things once. The preservation alcohol is drinkable, which the archivists knew and wrote down.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "book",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "blueprint_roll",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "pocket_notebook",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "alcohol",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_will",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_handwritten_will"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_printworks",
+      "location_type": "printworks",
+      "display_name": "The Printworks Floor",
+      "description": "The presses stand ready and the ink drums are still sealed. Whatever the district needed printed last — notices, curricula, requisitions — is still in the racks, and the solvent still strips what it touches.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "book",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "chemicals",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common",
+          "hazard_type": "chemical",
+          "hazard_chance": 0.15
+        },
+        {
+          "item_id": "chemical_solvent",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common",
+          "hazard_type": "chemical",
+          "hazard_chance": 0.15
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_civil_defense_poster",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_civil_defense"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_ministry_bunker",
+      "location_type": "ministry_bunker",
+      "display_name": "Ministry of Truth Bunker Records",
+      "description": "Deep shelves of the record as it was ordered to be kept: maps amended by decree, broadcasts transcribed before transmission, and the rad tablets issued to staff who were never told why.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "radiation",
+      "entries": [
+        {
+          "item_id": "book",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "blueprint_roll",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_radio",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "anti_rad",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "electronic_scrap",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "dosimeter",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_vandalized_propaganda",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_document_broadcast_transcript",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_government_bunker",
+      "location_type": "government_bunker",
+      "display_name": "Government Bunker Stores",
+      "description": "The continuity stores: sealed ration pallets, service radios on charge racks, and a decontamination locker stocked for a evacuation that was cancelled rather than survived.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "radiation",
+      "entries": [
+        {
+          "item_id": "military_mre",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_radio",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "rad_away",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "anti_rad",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "iodine_pills",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "air_filter",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "dosimeter",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_document_military_map",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_deployment_map"
+        },
+        {
+          "item_id": "item_document_supply_requisition",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_dead_hand_core",
+      "location_type": "dead_hand_core",
+      "display_name": "The Dead Hand Core",
+      "description": "The lowest floor, where the air tastes metallic and every surface carries a faint permanent static. The detection equipment was left running, and the charts on the wall were updated to the end.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.2,
+      "primary_hazard_type": "radiation",
+      "entries": [
+        {
+          "item_id": "rad_away",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "anti_rad",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "electronic_scrap",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "geiger_counter",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "dosimeter",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "air_filter",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "hazmat_suit",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_lead_shielded_sample_cask",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_document_field_report",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_patrol_order"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_shallows_market",
+      "location_type": "market",
+      "display_name": "The Shallows Market Stalls",
+      "description": "A market that trades out of boats at the drowned waterfront: ration tins moving one way, salvage the other, and everything priced in whatever the buyer is holding. The stalls restock because the trade route holds.",
+      "depletion_model": "renewable",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "dried_rations",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_debt_default_notice",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_debt_default"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_pilgrim_hearth",
+      "location_type": "priory",
+      "display_name": "The Pilgrim's Hearth Almstry",
+      "description": "The priory keeps its dispensary stocked and its kettle on: bandages rolled, water drawn, and a bed for whoever asks. The stock turns over because the care does not stop.",
+      "depletion_model": "renewable",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "medical_kit",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "bandage",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_wood",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_last_letter",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_unsent_letter"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_brine_pans",
+      "location_type": "salt_camp",
+      "display_name": "Brine-Pan Hollow Salt Works",
+      "description": "Shallow pans evaporating down to their white crust, drying racks over the flues, and the salt traded out by the block. The camp works the pans in shifts because the pans never stop working.",
+      "depletion_model": "renewable",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "item_crossing_traded_salt",
+          "weight": 35,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "dried_rations",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_document_supply_inventory",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
     }
   ]
 }

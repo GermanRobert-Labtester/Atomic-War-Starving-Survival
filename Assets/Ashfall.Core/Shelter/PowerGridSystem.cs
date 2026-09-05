@@ -112,6 +112,12 @@ namespace Ashfall.Core.Shelter
             return true;
         }
 
+        public void MarkTripped(string roomId, int day) => _state.MarkTripped(roomId, day);
+
+        public void ClearTripped(string roomId) => _state.ClearTripped(roomId);
+
+        public bool IsRoomTripped(string roomId) => _state.IsRoomTripped(roomId);
+
         public bool SetPriority(string roomId, PowerGridRoomPriority priority)
         {
             var r = FindRoom(roomId);

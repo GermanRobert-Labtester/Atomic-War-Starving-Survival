@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route_compact_supply_line",
+      "display_name": "Compact Northern Supply Line",
+      "faction_id": "faction_the_compact",
+      "origin_region_id": "settlement",
+      "destination_region_id": "iron_basin",
+      "travel_days": 6,
+      "base_risk_permille": 120,
+      "season_start_day": 1,
+      "season_end_day": 360,
+      "arrival_interval_days": 18,
+      "base_guard_strength": 6,
+      "weather_risk_multiplier": 1.2,
+      "bandit_risk_multiplier": 1.0,
+      "import_demands": [
+        "anesthetic_ether",
+        "sterile_gauze"
+      ],
+      "export_surpluses": [
+        "ammo_556",
+        "clean_water"
+      ]
+    },
+    {
+      "route_id": "route_compact_iron_corridor",
+      "display_name": "Iron Corridor Heavy Haul",
+      "faction_id": "faction_the_compact",
+      "origin_region_id": "industrial_belt",
+      "destination_region_id": "settlement",
+      "travel_days": 8,
+      "base_risk_permille": 180,
+      "season_start_day": 15,
+      "season_end_day": 345,
+      "arrival_interval_days": 24,
+      "base_guard_strength": 8,
+      "weather_risk_multiplier": 1.4,
+      "bandit_risk_multiplier": 1.3,
+      "import_demands": [
+        "machine_oil",
+        "copper_fuse"
+      ],
+      "export_surpluses": [
+        "scrap_metal",
+        "ammo_556"
+      ]
+    },
+    {
+      "route_id": "route_compact_grain_express",
+      "display_name": "Meridian Granary Shuttle",
+      "faction_id": "faction_the_compact",
+      "origin_region_id": "settlement",
+      "destination_region_id": "ash_flats",
+      "travel_days": 5,
+      "base_risk_permille": 90,
+      "season_start_day": 30,
+      "season_end_day": 300,
+      "arrival_interval_days": 14,
+      "base_guard_strength": 4,
+      "weather_risk_multiplier": 1.1,
+      "bandit_risk_multiplier": 0.8,
+      "import_demands": [
+        "clean_water",
+        "chemical_filter"
+      ],
+      "export_surpluses": [
+        "sterile_gauze",
+        "scrap_wood"
+      ]
+    },
+    {
+      "route_id": "route_scale_salt_artery",
+      "display_name": "Scale Consortium Salt Artery",
+      "faction_id": "faction_the_scale",
+      "origin_region_id": "ash_flats",
+      "destination_region_id": "settlement",
+      "travel_days": 7,
+      "base_risk_permille": 140,
+      "season_start_day": 1,
+      "season_end_day": 360,
+      "arrival_interval_days": 20,
+      "base_guard_strength": 5,
+      "weather_risk_multiplier": 1.3,
+      "bandit_risk_multiplier": 1.1,
+      "import_demands": [
+        "ammo_9x19",
+        "sandbags"
+      ],
+      "export_surpluses": [
+        "chemical_filter",
+        "clean_water"
+      ]
+    },
+    {
+      "route_id": "route_scale_mercantile_circuit",
+      "display_name": "Grand Scale Caravan Circuit",
+      "faction_id": "faction_the_scale",
+      "origin_region_id": "settlement",
+      "destination_region_id": "deep_coast",
+      "travel_days": 10,
+      "base_risk_permille": 220,
+      "season_start_day": 20,
+      "season_end_day": 320,
+      "arrival_interval_days": 30,
+      "base_guard_strength": 9,
+      "weather_risk_multiplier": 1.5,
+      "bandit_risk_multiplier": 1.4,
+      "import_demands": [
+        "electrical_wire",
+        "surgical_scalpel"
+      ],
+      "export_surpluses": [
+        "anesthetic_ether",
+        "scrap_metal"
+      ]
+    },
+    {
+      "route_id": "route_scale_chemical_exchange",
+      "display_name": "Consortium Reagents Line",
+      "faction_id": "faction_the_scale",
+      "origin_region_id": "industrial_belt",
+      "destination_region_id": "ash_flats",
+      "travel_days": 6,
+      "base_risk_permille": 160,
+      "season_start_day": 40,
+      "season_end_day": 350,
+      "arrival_interval_days": 22,
+      "base_guard_strength": 6,
+      "weather_risk_multiplier": 1.2,
+      "bandit_risk_multiplier": 1.2,
+      "import_demands": [
+        "scrap_wood",
+        "machine_oil"
+      ],
+      "export_surpluses": [
+        "chemical_filter",
+        "anesthetic_ether"
+      ]
+    },
+    {
+      "route_id": "route_flotilla_coastal_drift",
+      "display_name": "Black Flotilla Coastal Haul",
+      "faction_id": "faction_black_flotilla",
+      "origin_region_id": "deep_coast",
+      "destination_region_id": "settlement",
+      "travel_days": 9,
+      "base_risk_permille": 250,
+      "season_start_day": 10,
+      "season_end_day": 330,
+      "arrival_interval_days": 25,
+      "base_guard_strength": 7,
+      "weather_risk_multiplier": 1.8,
+      "bandit_risk_multiplier": 1.0,
+      "import_demands": [
+        "ammo_556",
+        "electrical_wire"
+      ],
+      "export_surpluses": [
+        "machine_oil",
+        "sandbags"
+      ]
+    },
+    {
+      "route_id": "route_flotilla_salvage_run",
+      "display_name": "Shoal Breakers Salvage Run",
+      "faction_id": "faction_black_flotilla",
+      "origin_region_id": "deep_coast",
+      "destination_region_id": "industrial_belt",
+      "travel_days": 12,
+      "base_risk_permille": 290,
+      "season_start_day": 1,
+      "season_end_day": 360,
+      "arrival_interval_days": 32,
+      "base_guard_strength": 10,
+      "weather_risk_multiplier": 1.9,
+      "bandit_risk_multiplier": 1.5,
+      "import_demands": [
+        "sterile_gauze",
+        "copper_fuse"
+      ],
+      "export_surpluses": [
+        "scrap_metal",
+        "scrap_wood"
+      ]
+    },
+    {
+      "route_id": "route_flotilla_smugglers_deep",
+      "display_name": "Flotilla Skiff Infiltration Route",
+      "faction_id": "faction_black_flotilla",
+      "origin_region_id": "deep_coast",
+      "destination_region_id": "ash_flats",
+      "travel_days": 4,
+      "base_risk_permille": 340,
+      "season_start_day": 50,
+      "season_end_day": 280,
+      "arrival_interval_days": 12,
+      "base_guard_strength": 3,
+      "weather_risk_multiplier": 2.0,
+      "bandit_risk_multiplier": 2.0,
+      "import_demands": [
+        "clean_water",
+        "anesthetic_ether"
+      ],
+      "export_surpluses": [
+        "ammo_9x19",
+        "surgical_scalpel"
+      ]
+    },
+    {
+      "route_id": "route_compact_frontier_convoys",
+      "display_name": "Compact Outpost Convoy",
+      "faction_id": "faction_the_compact",
+      "origin_region_id": "settlement",
+      "destination_region_id": "deep_coast",
+      "travel_days": 11,
+      "base_risk_permille": 210,
+      "season_start_day": 15,
+      "season_end_day": 340,
+      "arrival_interval_days": 28,
+      "base_guard_strength": 8,
+      "weather_risk_multiplier": 1.4,
+      "bandit_risk_multiplier": 1.3,
+      "import_demands": [
+        "sandbags",
+        "scrap_wood"
+      ],
+      "export_surpluses": [
+        "sterile_gauze",
+        "electrical_wire"
+      ]
+    }
+  ]
+}

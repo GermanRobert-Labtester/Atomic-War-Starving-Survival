@@ -125,6 +125,7 @@ namespace Ashfall.Core.UI
             R("research_atlas",      "Research Technology Atlas",     PanelGroup.Dashboard,  new[] { "research" });
             R("standing_record_atlas","Standing Record Atlas",        PanelGroup.Dashboard,  new[] { "expansions" });
             R("combat_hud",          "Tactical Combat HUD",           PanelGroup.Secondary,  new[] { "combat" });
+            R("emergency_response",  "Emergency Response",            PanelGroup.Secondary,  new[] { "survivors", "world", "inventory", "medical", "phase0", "power_grid", "events" });
 
             // ── Advanced Survival Consoles ───────────────────────────────────
             R("biogas_digester",     "Anaerobic Biogas Digester",     PanelGroup.Expanded);

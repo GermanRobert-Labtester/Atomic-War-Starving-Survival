@@ -215,6 +215,27 @@ namespace Ashfall.Core.Radio
                 }
             }
 
+            // Plan 73 — mechanical dual-path bridge. Authored typed broadcasts whose
+            // frequency sits on (or within the engine's own 1.5 MHz matching tolerance
+            // of) their faction's channel enter that faction's intercept-chatter pool,
+            // so the same authored content is audible through the faction-band HUD
+            // path and the unified schedule catalog. Purely additive pool entries;
+            // selection logic is untouched.
+            if (root.TryGetProperty("broadcasts", out var broadcastsProp) && broadcastsProp.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var bProp in broadcastsProp.EnumerateArray())
+                {
+                    string bMsg = bProp.TryGetProperty("message", out var bm) ? bm.GetString() ?? string.Empty : string.Empty;
+                    string bFaction = bProp.TryGetProperty("faction_id", out var bf) ? bf.GetString() ?? string.Empty : string.Empty;
+                    float bFreq = bProp.TryGetProperty("frequency_mhz", out var bfr) ? (float)bfr.GetDouble() : 0f;
+                    if (string.IsNullOrWhiteSpace(bMsg) || string.IsNullOrWhiteSpace(bFaction)) continue;
+                    if (!engine._channels.TryGetValue(bFaction.ToLowerInvariant(), out var bChannel)) continue;
+                    if (Math.Abs(bChannel.FrequencyMhz - bFreq) > 1.5f) continue;
+                    if (bChannel.InterceptChatter.Contains(bMsg)) continue;
+                    bChannel.InterceptChatter.Add(bMsg);
+                }
+            }
+
             return engine;
         }
     }

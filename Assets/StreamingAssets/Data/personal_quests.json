@@ -1,0 +1,685 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "pq_buried_cache",
+      "title": "The Sibling's Cache",
+      "category": "personal_arc",
+      "required_trait": "scout",
+      "summary": "Scout remembers a buried emergency supply crate cached behind their family residence before the first strike.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Remembering the Landmark",
+          "description": "Consult the bunker cartography maps to pinpoint the coordinates of the old residential quadrant.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 2,
+          "choices": [
+            {
+              "choice_id": "study_thoroughly",
+              "label": "Study old cadastral maps thoroughly",
+              "description": "Spend extra hours analyzing street grids to ensure safe routing.",
+              "morale_delta": 5.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "High confidence in cache location; survivor morale improved."
+            },
+            {
+              "choice_id": "rush_preparation",
+              "label": "Rely on raw memory",
+              "description": "Save time and prepare gear immediately without map verification.",
+              "morale_delta": -2.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Survivor feels rushed and uneasy."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "Excavating the Basement",
+          "description": "Organize an expedition or allocate bunker tools to unearth the collapsed basement cache.",
+          "requirement_kind": "deliver_item",
+          "target_id": "scrap_metal",
+          "target_count": 5,
+          "choices": [
+            {
+              "choice_id": "share_supplies",
+              "label": "Donate recovered medicine to the infirmary",
+              "description": "Place the salvaged antibiotics into the bunker common stores.",
+              "morale_delta": 15.0,
+              "reward_item_id": "medicine",
+              "reward_amount": 3,
+              "next_stage": -1,
+              "consequence_summary": "The bunker infirmary receives critical medical aid. Survivor gains 'Generous Heart'."
+            },
+            {
+              "choice_id": "keep_memento",
+              "label": "Keep the family locket and private stash",
+              "description": "Hold on to the personal belongings as a talisman against despair.",
+              "morale_delta": 25.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 10,
+              "next_stage": -1,
+              "consequence_summary": "Survivor achieves deep emotional peace. Survivor gains 'Unshakable Resolve'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_last_confession",
+      "title": "The Last Confession",
+      "category": "personal_arc",
+      "required_trait": "medic",
+      "summary": "The shelter doctor is tormented by a wartime triage decision that prioritized officers over sick evacuees.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Sleepless Nights",
+          "description": "The medic spends night shifts writing an unvarnished account of the checkpoint triage.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 3,
+          "choices": [
+            {
+              "choice_id": "confide_leader",
+              "label": "Confide in the shelter council",
+              "description": "Read the written testimony aloud to fellow survivors.",
+              "morale_delta": 10.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Vulnerability builds trust and relieves psychological burden."
+            },
+            {
+              "choice_id": "burn_record",
+              "label": "Burn the testimony in the incinerator",
+              "description": "Destroy the pages and bury the memory forever.",
+              "morale_delta": -10.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "The past is sealed, but survivor carries persistent guilt."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "Penance in the Ward",
+          "description": "Dedicate extensive clinical shifts to formulating antiseptic wash from basic reagents.",
+          "requirement_kind": "deliver_item",
+          "target_id": "chemicals",
+          "target_count": 4,
+          "choices": [
+            {
+              "choice_id": "vow_of_healing",
+              "label": "Take the Oath of Triage Equality",
+              "description": "Swear never to prioritize rank or standing over medical urgency.",
+              "morale_delta": 20.0,
+              "reward_item_id": "medicine",
+              "reward_amount": 4,
+              "next_stage": -1,
+              "consequence_summary": "The medic rediscovers their vocational calling. Gains 'Righteous Triage'."
+            },
+            {
+              "choice_id": "clinical_detachment",
+              "label": "Adopt strict utilitarian clinical detachment",
+              "description": "View medicine purely as an objective statistical preservation equation.",
+              "morale_delta": 5.0,
+              "reward_item_id": "chemicals",
+              "reward_amount": 2,
+              "next_stage": -1,
+              "consequence_summary": "Medic becomes cold but remarkably efficient under trauma."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_radio_echoes",
+      "title": "Signals from Sector 4",
+      "category": "personal_arc",
+      "required_trait": "mechanic",
+      "summary": "A repeating faint carrier wave on emergency channel 14 matches an old civil defense callsign.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Building the Pre-Amplifier",
+          "description": "Construct a tuned copper choke to isolate the weak signal from atmospheric static.",
+          "requirement_kind": "deliver_item",
+          "target_id": "scrap_metal",
+          "target_count": 6,
+          "choices": [
+            {
+              "choice_id": "boost_gain",
+              "label": "Overclock RF transistor stage",
+              "description": "Risk burning out spare diodes to capture clear audio.",
+              "morale_delta": 5.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Audio clarifies: it is an automated looped beacon from a relay bunker."
+            },
+            {
+              "choice_id": "filter_conservatively",
+              "label": "Filter conservatively",
+              "description": "Keep signal levels within safe tolerances to preserve electronics.",
+              "morale_delta": 0.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Signal is noisy but confirmed authentic."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "Decoding the Transmission",
+          "description": "Log the Morse code timestamps over multiple watch shifts to uncover the message payload.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 3,
+          "choices": [
+            {
+              "choice_id": "broadcast_reply",
+              "label": "Transmit a reply pulse",
+              "description": "Send a short acknowledge burst into the ether.",
+              "morale_delta": 15.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 4,
+              "next_stage": -1,
+              "consequence_summary": "A return chime acknowledges receipt. Hope ripples through the comms room."
+            },
+            {
+              "choice_id": "maintain_radio_silence",
+              "label": "Maintain strict radio silence",
+              "description": "Log the frequency coordinates quietly without revealing shelter presence.",
+              "morale_delta": 5.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 8,
+              "next_stage": -1,
+              "consequence_summary": "Shelter remains cloaked from raiders. Signal data archived."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_lost_journal",
+      "title": "Pages of the Lost",
+      "category": "personal_arc",
+      "required_trait": "scholar",
+      "summary": "An archivist seeks to reconstruct an eyewitness chronicle of the final forty-eight hours before impact.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Gathering Witness Testimonies",
+          "description": "Interview elderly shelter residents regarding what they saw on the skyway on the day of sirens.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 2,
+          "choices": [
+            {
+              "choice_id": "gentle_inquiry",
+              "label": "Conduct gentle, trauma-sensitive interviews",
+              "description": "Take time to comfort interviewees through difficult recollections.",
+              "morale_delta": 12.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Bonds of empathy deepen among the community."
+            },
+            {
+              "choice_id": "uncompromising_fact",
+              "label": "Record exact timeline facts clinically",
+              "description": "Focus strictly on technical timestamps, wind direction, and shockwave delays.",
+              "morale_delta": 2.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Precise historical data captured without emotional variance."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "Binding the Volume",
+          "description": "Bind the collected pages into an archival volume using canvas scraps and synthetic glue.",
+          "requirement_kind": "deliver_item",
+          "target_id": "cloth",
+          "target_count": 4,
+          "choices": [
+            {
+              "choice_id": "public_library",
+              "label": "Place the chronicle in the common library",
+              "description": "Allow all survivors to read and remember their collective origins.",
+              "morale_delta": 20.0,
+              "reward_item_id": "cloth",
+              "reward_amount": 2,
+              "next_stage": -1,
+              "consequence_summary": "The shelter gains a shared identity. Scholar gains 'Keeper of Memory'."
+            },
+            {
+              "choice_id": "classified_archive",
+              "label": "Store the volume in council security archives",
+              "description": "Protect the text from wear and controversial revelations.",
+              "morale_delta": 5.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 5,
+              "next_stage": -1,
+              "consequence_summary": "Archived securely for future generations."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_oath_of_iron",
+      "title": "The Smith's Promise",
+      "category": "personal_arc",
+      "required_trait": "engineer",
+      "summary": "An engineer promised a fallen comrade to build a durable spring-loaded mobility brace for their surviving child.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Drafting the Articulation",
+          "description": "Draft precision blueprints at the drafting desk using salvaged caliper measurements.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 2,
+          "choices": [
+            {
+              "choice_id": "reinforced_struts",
+              "label": "Incorporate shock-damped titanium struts",
+              "description": "Design for extreme durability and heavy load carrying.",
+              "morale_delta": 8.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Heavyweight design finalized; high structural safety margins."
+            },
+            {
+              "choice_id": "lightweight_agility",
+              "label": "Design for lightweight flexibility",
+              "description": "Optimize for agility and comfort across narrow ladderways.",
+              "morale_delta": 8.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Flexible design finalized; rapid walking mobility prioritized."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "Forging the Linkages",
+          "description": "Fabricate and temper the joint hinges at the maintenance workbench.",
+          "requirement_kind": "deliver_item",
+          "target_id": "scrap_metal",
+          "target_count": 8,
+          "choices": [
+            {
+              "choice_id": "fit_with_care",
+              "label": "Fit the finished brace with custom leather padding",
+              "description": "Take extra days to ensure the brace never chafes or blisters.",
+              "morale_delta": 22.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 4,
+              "next_stage": -1,
+              "consequence_summary": "Promise fulfilled with craftsmanship. Engineer gains 'Master Artificer'."
+            },
+            {
+              "choice_id": "rigorous_field_test",
+              "label": "Stress-test the brace under heavy industrial haulage",
+              "description": "Verify that the brace can withstand bunker warehouse labor.",
+              "morale_delta": 14.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 8,
+              "next_stage": -1,
+              "consequence_summary": "Brace proves indestructible. Shelter gains labor efficiency."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_spores_of_mercy",
+      "title": "Botanist's Remedy",
+      "category": "personal_arc",
+      "required_trait": "farmer",
+      "summary": "A farmer attempts to isolate an edible mutant lichen whose tincture alleviates dry radiation cough.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Cultivating the Sporebed",
+          "description": "Prepare moist growing medium in the hydroponic drip beds and inoculate with wild spores.",
+          "requirement_kind": "deliver_item",
+          "target_id": "chemicals",
+          "target_count": 3,
+          "choices": [
+            {
+              "choice_id": "organic_compost",
+              "label": "Enrich with organic food compost",
+              "description": "Divert kitchen trimmings to accelerate fungal mycelium spread.",
+              "morale_delta": 5.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Lichen flourishes rapidly with sweet, earthy aroma."
+            },
+            {
+              "choice_id": "strict_isolation",
+              "label": "Maintain airtight glass isolation",
+              "description": "Prevent any risk of invasive airborne spore contamination.",
+              "morale_delta": 2.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Growth is slow but guaranteed biosecure."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "Brewing the Tincture",
+          "description": "Distill the harvested lichen mass using clean water and sterile glass retorts.",
+          "requirement_kind": "deliver_item",
+          "target_id": "clean_water",
+          "target_count": 6,
+          "choices": [
+            {
+              "choice_id": "distribute_freely",
+              "label": "Distribute cough syrup freely to all survivors",
+              "description": "Administer daily spoonfuls to anyone exhibiting throat irritation.",
+              "morale_delta": 18.0,
+              "reward_item_id": "medicine",
+              "reward_amount": 4,
+              "next_stage": -1,
+              "consequence_summary": "Coughing in the sleeping quarters subsides. Gains 'Bountiful Herbalist'."
+            },
+            {
+              "choice_id": "concentrate_extract",
+              "label": "Refine into concentrated emergency vials",
+              "description": "Store high-potency drops in the trauma locker for acute cases.",
+              "morale_delta": 10.0,
+              "reward_item_id": "medicine",
+              "reward_amount": 6,
+              "next_stage": -1,
+              "consequence_summary": "Infirmary reserves bolstered against sudden contagion."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_broken_locket",
+      "title": "The Tarnished Locket",
+      "category": "personal_arc",
+      "required_trait": "parent",
+      "summary": "A silver locket containing photographs of children lost during evacuation has suffered a broken hinge and clasp.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Procuring Fine Wire",
+          "description": "Salvage delicate brass or copper wire from electronic instruments to mend the miniature hinge.",
+          "requirement_kind": "deliver_item",
+          "target_id": "scrap_metal",
+          "target_count": 3,
+          "choices": [
+            {
+              "choice_id": "painstaking_repair",
+              "label": "Work under the jeweler's loupe through the night",
+              "description": "Carefully align the micro-pin without scratching the portraits.",
+              "morale_delta": 10.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Hinge pivots smoothly; closure snap restored."
+            },
+            {
+              "choice_id": "request_assistance",
+              "label": "Ask an engineer friend for help",
+              "description": "Share the memory with another survivor while repairing.",
+              "morale_delta": 15.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Shared grief creates an unbreakable companionship bond."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "The Memorial Vigil",
+          "description": "Light a solitary tallow candle at dusk on the anniversary of the Strike.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 2,
+          "choices": [
+            {
+              "choice_id": "dedicate_future",
+              "label": "Dedicate the locket to protecting the living",
+              "description": "Vow to channel love for the lost into guarding the bunker's children.",
+              "morale_delta": 24.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": -1,
+              "consequence_summary": "Survivor transforms grief into protective purpose. Gains 'Guardian Soul'."
+            },
+            {
+              "choice_id": "quiet_closure",
+              "label": "Close the locket and place it in the memorial niche",
+              "description": "Let go of daily sorrow and lay the keepsake in the shelter wall.",
+              "morale_delta": 16.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": -1,
+              "consequence_summary": "A calm, dignified peace settles over the survivor's heart."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_debt_of_blood",
+      "title": "Blood Debt",
+      "category": "personal_arc",
+      "required_trait": "veteran",
+      "summary": "A military veteran spots a wandering drifter outside the airlock who wore the insignia of an enemy brigade.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "The Confrontation",
+          "description": "Observe the drifter from the watchtower slit to determine their intent and condition.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 2,
+          "choices": [
+            {
+              "choice_id": "interrogate_sternly",
+              "label": "Interrogate the stranger over the external speaker",
+              "description": "Demand accountability for wartime military conduct.",
+              "morale_delta": 5.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "The stranger weeps: they deserted the brigade forty years ago and seek only water."
+            },
+            {
+              "choice_id": "prepare_ambush",
+              "label": "Ready weapons and inspect perimeter seals",
+              "description": "Assume hostile reconnaissance and prepare defensive measures.",
+              "morale_delta": -2.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Defensive posture heightened, but tension lingers."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "Judgment at the Threshold",
+          "description": "Decide the stranger's fate: grant amnesty or drive them away into the wasteland.",
+          "requirement_kind": "deliver_item",
+          "target_id": "clean_water",
+          "target_count": 4,
+          "choices": [
+            {
+              "choice_id": "grant_mercy",
+              "label": "Offer water and grant asylum",
+              "description": "Break the cycle of pre-war vengeance through compassion.",
+              "morale_delta": 20.0,
+              "reward_item_id": "food",
+              "reward_amount": 5,
+              "next_stage": -1,
+              "consequence_summary": "The war truly ends in the veteran's soul. Gains 'Forgiving Veteran'."
+            },
+            {
+              "choice_id": "banish_stranger",
+              "label": "Order the stranger away at gunpoint",
+              "description": "Refuse admission to any former enemy combatant.",
+              "morale_delta": 5.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 6,
+              "next_stage": -1,
+              "consequence_summary": "The shelter remains secure, but the shadow of war endures."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_silent_choir",
+      "title": "Hymns of the Concrete",
+      "category": "personal_arc",
+      "required_trait": "teacher",
+      "summary": "A former music instructor transcribes old folk melodies on salvaged scrap paper to distract frightened dwellers.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Reconstructing the Scores",
+          "description": "Transcribe melodic staves from memory during maintenance lulls.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 2,
+          "choices": [
+            {
+              "choice_id": "teach_children",
+              "label": "Teach songs to the younger children",
+              "description": "Hold afternoon singing lessons in the mess hall.",
+              "morale_delta": 14.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Laughter and song echo down the concrete corridors."
+            },
+            {
+              "choice_id": "orchestrate_rounds",
+              "label": "Arrange three-part vocal harmonies",
+              "description": "Organize an evening chorale for all off-duty workers.",
+              "morale_delta": 12.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Adults find solace in familiar harmonies."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "The Bunker Recital",
+          "description": "Stage a community performance under the warm glow of the generator bulb.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 1,
+          "choices": [
+            {
+              "choice_id": "community_anthem",
+              "label": "Lead a new shelter anthem of resilience",
+              "description": "Unite every survivor in a chorus of enduring survival.",
+              "morale_delta": 25.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": -1,
+              "consequence_summary": "Community cohesion peaks across all shifts. Teacher gains 'Voice of Hope'."
+            },
+            {
+              "choice_id": "quiet_lullaby",
+              "label": "Conclude with a quiet evening lullaby",
+              "description": "Send dwellers to bed with peaceful minds.",
+              "morale_delta": 18.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": -1,
+              "consequence_summary": "Insomnia rates drop significantly. Dwellers sleep soundly."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pq_watchers_remorse",
+      "title": "The Watcher's Blindspot",
+      "category": "personal_arc",
+      "required_trait": "guard",
+      "summary": "A security sentry discovers a corroded maintenance shaft that could bypass airlock barricades if breached.",
+      "stages": [
+        {
+          "stage_index": 0,
+          "title": "Inspecting the Conduit",
+          "description": "Crawl through the sub-ventilation duct to measure structural integrity and rust penetration.",
+          "requirement_kind": "days_elapsed",
+          "target_count": 2,
+          "choices": [
+            {
+              "choice_id": "weld_shut",
+              "label": "Propose welding the conduit completely shut",
+              "description": "Seal the shaft permanently, sacrificing secondary air circulation.",
+              "morale_delta": 0.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Breach vulnerability eliminated; slight drop in air quality."
+            },
+            {
+              "choice_id": "install_tripwire",
+              "label": "Rig silent alarm tripwires and keep airflow",
+              "description": "Preserve ventilation while establishing an early-warning trip system.",
+              "morale_delta": 6.0,
+              "reward_item_id": "",
+              "reward_amount": 0,
+              "next_stage": 1,
+              "consequence_summary": "Air circulation preserved; defense sensors active."
+            }
+          ]
+        },
+        {
+          "stage_index": 1,
+          "title": "Hardening the Hatch",
+          "description": "Bolt heavy steel grate plates over the shaft entrance using surplus rebar.",
+          "requirement_kind": "deliver_item",
+          "target_id": "scrap_metal",
+          "target_count": 7,
+          "choices": [
+            {
+              "choice_id": "vigilant_sentry",
+              "label": "Take personal responsibility for night inspections",
+              "description": "Vow to walk the perimeter ducting at the start of every graveyard shift.",
+              "morale_delta": 18.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 3,
+              "next_stage": -1,
+              "consequence_summary": "The bunker perimeter is impenetrable. Guard gains 'Iron Sentinel'."
+            },
+            {
+              "choice_id": "automate_defenses",
+              "label": "Install spring-loaded spear traps in the shaft",
+              "description": "Lethal automated defense ensures no infiltrator survives.",
+              "morale_delta": 8.0,
+              "reward_item_id": "scrap_metal",
+              "reward_amount": 5,
+              "next_stage": -1,
+              "consequence_summary": "Lethal deterrence in place; security heightened."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

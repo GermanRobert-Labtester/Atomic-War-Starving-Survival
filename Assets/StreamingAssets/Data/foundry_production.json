@@ -865,6 +865,39 @@
         "garrison",
         "accord"
       ]
+    },
+    {
+      "product_id": "foundry_prod_sludge_cake_recovery_melt",
+      "display_name": "Sludge Cake Recovery Melt",
+      "category": "recovery_melt",
+      "result_item_id": "scrap_metal",
+      "result_amount": 2,
+      "ingredients": [
+        {
+          "item_id": "item_sludge_cake",
+          "amount": 4
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
+      ],
+      "labor_hours": 6,
+      "cast_hours": 4,
+      "fuel_units": 6,
+      "water_litres": 60,
+      "skill_target": 0.35,
+      "quality_target": 40,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "recovery",
+      "notes": "Contaminated feedstock. A low-yield recovery melt: four pressed blocks of dewatered sump cake and flux surrender two scavenged kilos of scrap, no more. The slag goes back into the tailings drums.",
+      "tags": [
+        "foundry",
+        "recovery",
+        "contaminated",
+        "sludge"
+      ]
     }
   ]
 }

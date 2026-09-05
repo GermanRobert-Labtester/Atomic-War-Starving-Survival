@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "arrays": [
+    {
+      "id": "array_trench_geophone_line",
+      "display_name": "Trench Geophone Line",
+      "description": "Buried phones strung along a shallow trench behind the hatch. Crude ears against the ground's own weather.",
+      "sensor_class": "geophone_line",
+      "baseline_class": "short",
+      "noise_tolerance": 0.5,
+      "signal_bands": [ "band_tremor", "band_armored_column", "band_heavy_weapon" ],
+      "base_detection_range_km": 80,
+      "confidence_gain": 0.1,
+      "warning_window_class": "window_medium",
+      "power_demand_w": 40,
+      "maintenance_wear": 1.5,
+      "install_item_ids": [ "item_geophone_probe", "item_geophone_probe", "copper_wire_10m_of_10m" ],
+      "repair_item_ids": [ "item_geophone_probe", "copper_wire_10m_of_10m" ],
+      "tags": [ "acoustic", "early_warning" ]
+    },
+    {
+      "id": "array_bedrock_borehole_sonde",
+      "display_name": "Bedrock Borehole Sonde",
+      "description": "A sensor string lowered into a cased borehole and grouted in. It hears the deep rock think, and very little else.",
+      "sensor_class": "borehole_sonde",
+      "baseline_class": "long",
+      "noise_tolerance": 0.3,
+      "signal_bands": [ "band_tremor", "band_subterranean", "band_heavy_weapon", "band_industrial_blast" ],
+      "base_detection_range_km": 160,
+      "confidence_gain": 0.16,
+      "warning_window_class": "window_long",
+      "power_demand_w": 75,
+      "maintenance_wear": 2.0,
+      "install_item_ids": [ "item_bedrock_sensor_rig", "item_geophone_probe", "item_low_noise_sensor_amplifier" ],
+      "repair_item_ids": [ "item_geophone_probe", "item_low_noise_sensor_amplifier" ],
+      "tags": [ "acoustic", "early_warning", "deep_listening" ]
+    },
+    {
+      "id": "array_dampened_vault_grid",
+      "display_name": "Dampened Vault Grid",
+      "description": "A close-meshed array on isolation mounts, tuned to ignore the shelter's own stomping machinery and hear past it.",
+      "sensor_class": "vault_grid",
+      "baseline_class": "medium",
+      "noise_tolerance": 0.7,
+      "signal_bands": [ "band_subterranean", "band_industrial_blast", "band_armored_column" ],
+      "base_detection_range_km": 100,
+      "confidence_gain": 0.13,
+      "warning_window_class": "window_medium",
+      "power_demand_w": 55,
+      "maintenance_wear": 1.2,
+      "install_item_ids": [ "item_geophone_probe", "item_low_noise_sensor_amplifier", "item_vibration_dampening_mount" ],
+      "repair_item_ids": [ "item_low_noise_sensor_amplifier", "copper_wire_10m_of_10m" ],
+      "dampening_item_id": "item_vibration_dampening_mount",
+      "tags": [ "acoustic", "early_warning", "dampened" ]
+    }
+  ],
+  "signal_bands": [
+    { "id": "band_tremor", "display_name": "Natural Tremor", "is_hostile": false },
+    { "id": "band_industrial_blast", "display_name": "Industrial Blast", "is_hostile": false },
+    { "id": "band_heavy_weapon", "display_name": "Heavy Weapon Signature", "is_hostile": true },
+    { "id": "band_armored_column", "display_name": "Armored Column", "is_hostile": true },
+    { "id": "band_subterranean", "display_name": "Subterranean Excavation", "is_hostile": true }
+  ],
+  "warning_windows": [
+    { "id": "window_short", "display_name": "Short Warning", "tier": 1 },
+    { "id": "window_medium", "display_name": "Medium Warning", "tier": 2 },
+    { "id": "window_long", "display_name": "Long Warning", "tier": 3 }
+  ]
+}

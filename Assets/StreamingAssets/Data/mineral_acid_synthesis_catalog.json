@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "processes": [
+    {
+      "id": "synth_mineral_acid_reagent",
+      "displayName": "Mineral Acid Reagent Run",
+      "description": "Roasted ore liquor worked through the retort train until the carboy fills with something that bites. Labels stay on; gloves stay on longer.",
+      "requiredApparatusTier": 2,
+      "inputItems": {
+        "item_iron_pyrite_ore": 3,
+        "scrap_chemical": 1
+      },
+      "outputItems": {
+        "item_industrial_acid_carboy": 1
+      },
+      "processingTicks": 3,
+      "heatBand": "High",
+      "volatilityRating": 0.4,
+      "scrubberDemand": 2.0,
+      "equipmentWear": 3.5,
+      "corrosionRating": 2.0,
+      "skillRequirement": 20.0,
+      "tags": [ "mineral_chemistry", "industrial", "corrosive" ]
+    },
+    {
+      "id": "synth_industrial_oxidizer_reagent",
+      "displayName": "Industrial Oxidizer Workup",
+      "description": "Acid liquor fortified over the sand bath into a general-purpose oxidizing reagent for the bench and the furnace bench alike.",
+      "requiredApparatusTier": 2,
+      "inputItems": {
+        "item_industrial_acid_carboy": 1,
+        "item_iron_pyrite_ore": 1
+      },
+      "outputItems": {
+        "item_industrial_oxidizer_reagent": 2
+      },
+      "processingTicks": 2,
+      "heatBand": "Nominal",
+      "volatilityRating": 0.3,
+      "scrubberDemand": 1.5,
+      "equipmentWear": 2.5,
+      "corrosionRating": 1.5,
+      "skillRequirement": 25.0,
+      "tags": [ "mineral_chemistry", "industrial", "corrosive" ]
+    },
+    {
+      "id": "synth_battery_electrolyte_concentrate",
+      "displayName": "Battery Electrolyte Concentrate",
+      "description": "Fractionated acid cut to a battery-house strength and sealed in waxed flasks. Keeps a tired cell honest for another season.",
+      "requiredApparatusTier": 2,
+      "inputItems": {
+        "item_industrial_acid_carboy": 1,
+        "copper_wire_10m_of_10m": 1
+      },
+      "outputItems": {
+        "item_battery_electrolyte_concentrate": 2
+      },
+      "processingTicks": 2,
+      "heatBand": "Nominal",
+      "volatilityRating": 0.25,
+      "scrubberDemand": 1.0,
+      "equipmentWear": 2.0,
+      "corrosionRating": 1.0,
+      "skillRequirement": 15.0,
+      "tags": [ "mineral_chemistry", "power" ]
+    },
+    {
+      "id": "synth_foundry_pickling_reagent",
+      "displayName": "Foundry Pickling Reagent",
+      "description": "A dilute pickling bath cut from the acid line. Eats scale and slag film, not the iron underneath — if it is rinsed in time.",
+      "requiredApparatusTier": 1,
+      "inputItems": {
+        "item_industrial_acid_carboy": 1,
+        "clean_water": 2
+      },
+      "outputItems": {
+        "item_foundry_pickling_reagent": 2
+      },
+      "processingTicks": 2,
+      "heatBand": "Low",
+      "volatilityRating": 0.15,
+      "scrubberDemand": 0.5,
+      "equipmentWear": 1.0,
+      "corrosionRating": 1.0,
+      "skillRequirement": 10.0,
+      "tags": [ "mineral_chemistry", "foundry" ]
+    },
+    {
+      "id": "synth_neutralizer_base",
+      "displayName": "Neutralizer Base Batch",
+      "description": "Burnt lime slaked and pressed into bags. The quiet answer to everything the acid line spills.",
+      "requiredApparatusTier": 1,
+      "inputItems": {
+        "charcoal": 2,
+        "clean_water": 2
+      },
+      "outputItems": {
+        "item_neutralizer_lime_bag": 1
+      },
+      "processingTicks": 2,
+      "heatBand": "High",
+      "volatilityRating": 0.1,
+      "scrubberDemand": 0.5,
+      "equipmentWear": 1.5,
+      "corrosionRating": 0.5,
+      "skillRequirement": 8.0,
+      "tags": [ "mineral_chemistry", "safety" ]
+    },
+    {
+      "id": "synth_precision_oxidizer_reagent",
+      "displayName": "Precision Oxidizer Fraction",
+      "description": "The electrolyte line and the oxidizer line run together, third fraction kept. Bench-grade. The label says handle like glass; the vapor says otherwise.",
+      "requiredApparatusTier": 3,
+      "inputItems": {
+        "item_industrial_oxidizer_reagent": 2,
+        "item_battery_electrolyte_concentrate": 1
+      },
+      "outputItems": {
+        "item_oxidizer_reagent_flask": 1
+      },
+      "processingTicks": 3,
+      "heatBand": "High",
+      "volatilityRating": 0.35,
+      "scrubberDemand": 2.5,
+      "equipmentWear": 3.0,
+      "corrosionRating": 1.8,
+      "skillRequirement": 30.0,
+      "tags": [ "mineral_chemistry", "precision", "corrosive" ]
+    }
+  ]
+}

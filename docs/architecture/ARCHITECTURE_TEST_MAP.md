@@ -1374,3 +1374,9 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 4. **Invariant 6 (Data Authority):** `Assets/StreamingAssets/Data/` JSON files are the sole authority.
 5. **Mechanical Reachability Gate:** Every system in this matrix is verified by headless test runs in `verify-fast.sh` and xUnit suites in `Ashfall.Core.Tests`.
 6. **Zero Conceptual Placeholders:** If a layer is absent or procedural, it is documented with explicit status rather than filled with conceptual names.
+
+<!-- registered save section coverage -->
+- `morale_contagion`
+
+<!-- registered save section coverage -->
+- `pathogen_strains`

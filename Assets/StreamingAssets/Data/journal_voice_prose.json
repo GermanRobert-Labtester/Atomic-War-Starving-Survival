@@ -144,6 +144,237 @@
       "fatalist": "A debt without a debtor is still a debt. It will surface when it wants to surface. These pages have outlived everyone who could explain them.",
       "empath": "Someone kept records this long — through a war, through a change of command — of a debt nobody claims. That is a life's worth of care about something.",
       "sociopath": "Three verified PAID debt vouchers with unidentified account origins. Leverage on whichever ledger house holds the duplicate."
+    },
+    "faction_military_history": {
+      "default": "Unit records and regimental archives reveal the pre-Exchange command structure that preceded the Garrison. The photographs are formal and the captions are terse. An institution shows itself in how it lined people up.",
+      "paranoid": "Old war photos. Officers staring through us. The Garrison still operates on their unrevoked directives.",
+      "cautious": "Pre-war military documentation. It shows how the regional chain of command disintegrated into martial law.",
+      "realist": "Archival unit photographs and regimental notes: supply lines, command posts, insignia, all documented before the detonations. The records stop abruptly that morning. What survives is enough to put a few names to faces.",
+      "reckless": "Old brass in sepia. They had rifles, orders, and no clue what was dropping from the sky.",
+      "denialist": "Just old service photos. Standard garrison history before everything went sideways.",
+      "fatalist": "Regiments named on paper that do not exist anymore. Their ghosts still hold the bunker."
+    },
+    "faction_state_propaganda": {
+      "default": "Civil defense leaflets and wartime state posters show the curated optimism broadcast before the Exchange. The reassurances were already stale when printed, if the supply queues were any measure. Keep the paper and distrust the promises.",
+      "paranoid": "Paper lies glued to concrete. The state told everyone to shelter and then sealed the gates from the inside.",
+      "cautious": "Wartime propaganda broadsheet. Promising orderly relocation and civil defense reserves that never arrived.",
+      "realist": "State morale print: cheerful figures, firm type, instructions to remain calm. The same press run promised railway service that had already been diverted for ordnance. It is a record of what they wanted believed.",
+      "reckless": "Bright colors, bold letters, complete fiction. Good kindling if nothing else.",
+      "denialist": "Official notices from the ministry. Standard civil order protocols for emergency conditions.",
+      "fatalist": "Smiling workers on glossy paper. They starved in the same basements as the rest of us."
+    },
+    "faction_military_operations": {
+      "default": "Tactical log fragments detail the final troop redeployments toward the perimeter bunkers. The handwriting degrades page by page. The last entries are numbers only.",
+      "paranoid": "Operation orders for scorched-earth withdrawal. They burned their own fuel depots to starve the towns.",
+      "cautious": "Operational dispatch logs. Outlines perimeter sweep sectors and fallback zones during the initial strikes.",
+      "realist": "Unit log entries tracking munitions expenditure and vehicle attrition across the first week. The accounting stays professional long after the situation stops being manageable. It reads like a ledger outliving its office.",
+      "reckless": "Tactical notes from officers who realized too late that reinforcements were not coming.",
+      "denialist": "Routine patrol logs. Standard exercises during the alert phase.",
+      "fatalist": "Hour by hour logs of radio silence falling over every sector until only static remained."
+    },
+    "faction_military_deployment": {
+      "default": "Official deployment orders dispatching regional defense battalions to subterranean holdfast sectors. The movement tables are precise to the hour. Precision was not the problem.",
+      "paranoid": "Orders signed in carbon copy: seize civilian grain elevators and shoot any councilman who objects.",
+      "cautious": "Formal deployment manifests. Useful for identifying which bunkers were equipped with heavy armories.",
+      "realist": "Signed deployment documents detailing battalion assignments, ammunition allotments, and bunker coordinates. The paperwork is complete, and the plan it describes failed anyway. The coordinates alone justify keeping it.",
+      "reckless": "Old deployment orders. Useful roadmap for finding where they stashed the ordnance.",
+      "denialist": "Standard military transfers. All by the book, even when the book was burning.",
+      "fatalist": "Orders sending young men to guard empty crossroads while the sky tore open."
+    },
+    "faction_civil_defense": {
+      "default": "Civil defense credentials and district sector notices reveal the emergency administration network. The wardens were issued whistles, rosters, and keys to the shelters. The keys mattered more than anything else that autumn.",
+      "paranoid": "Civil defense badges. The wardens who had keys to the community shelters while neighbors banged on iron.",
+      "cautious": "Warden documentation. Details fallout shelter air circulation specs and ration stockpiling protocols.",
+      "realist": "An emergency warden registry recording which municipal sectors received filtration equipment before the war. The distribution was uneven, and the registry notes it without comment. The omission is informative.",
+      "reckless": "Enamel badges from men who blew whistles at sirens. Did not stop a single megaton.",
+      "denialist": "Municipal emergency management tokens. Proves civil authorities had an orderly plan in place.",
+      "fatalist": "Badges for volunteers who stayed above ground to guide others into holes they could not enter."
+    },
+    "faction_military_units": {
+      "default": "Insignia patches identify the specific armored and infantry regiments stationed across the valley. Collectors once traded these at market stalls. Identification matters more than sentiment does now.",
+      "paranoid": "Regimental crests of the units that turned their machine guns inward to secure their own rations.",
+      "cautious": "Unit patches recovered from the wasteland. Correlates vehicle wrecks with their parent armories.",
+      "realist": "Unit insignia tying the valley wrecks and abandoned posts to their parent regiments: an armored detachment, a border guard company. Lineage, in the end, is bookkeeping that outlives the book. The stitching survives the soldiers.",
+      "reckless": "Embroidered skull and eagle patches. Looks impressive on a coat, means nothing to fallout.",
+      "denialist": "Standard brigade insignia. Just uniform decoration from regular armed service.",
+      "fatalist": "Thread and cloth identifying divisions whose bones are powdered across the ruins."
+    },
+    "faction_trade_guilds": {
+      "default": "Trade guild tokens and merchant charters record the commercial syndicates operating across the river routes. Their marks promised fair weight. The charters also record what happened when the weight was short.",
+      "paranoid": "Guild marks of the merchant cartels. They monopolized salt and clean water within six months of the war.",
+      "cautious": "Pre-war and early post-war trade charters. Clarifies barter ratios and safe route markers used by caravans.",
+      "realist": "Guild insignia and route charters establishing the early trade consortiums between the valley settlements. Barter ratios and safe-passage marks are all written down. Those routes still decide who trades with whom.",
+      "reckless": "Merchant badges. Those traders were ruthless, but their route maps are worth every coin.",
+      "denialist": "Commercial guild tokens. Business continuity agreements to keep trade flowing.",
+      "fatalist": "Coins and emblems of syndicates that traded gold for bread until the bread ran out too."
+    },
+    "journal_casualty_records": {
+      "default": "A typed casualty list from the first strike waves, recording civilian and military losses by bunker zone. The columns stay neat long after the numbers stop being bearable. Someone did the bookkeeping anyway.",
+      "paranoid": "Names typed on cheap paper. Thousands marked deceased while their commanders sat in air-conditioned vaults.",
+      "cautious": "Verified casualty ledgers from Sector 4. A grim reference for tracing survivors and lost family lines.",
+      "realist": "A strike casualty manifest: name, service number, evacuation code, zone of loss. The counts stop being statistics once you have read enough of the names. I copy the spellings carefully in case anyone ever asks.",
+      "reckless": "Pages and pages of names. The world ended and someone still bothered to type the ledger.",
+      "denialist": "Preliminary missing-persons reports. Many of them probably made it to southern evacuation centers.",
+      "fatalist": "Neat rows of typewriter ink recording the end of four thousand lives on a Tuesday morning."
+    },
+    "journal_soldier_letters": {
+      "default": "Unsent letters from garrison soldiers to families cut off on the surface as the fallout closed in. Most stop mid-thought, as if the writer expected to finish them later. None of them are finished.",
+      "paranoid": "Private notes smuggled past the censors. They knew the rations were toxic weeks before they were relieved.",
+      "cautious": "Soldiers personal correspondence. Gives human context and emotional weight to the concrete ruins.",
+      "realist": "Handwritten letters out of the garrison: morale thinning, water rumored unsafe, hunger counted in days. The writers exaggerate and understate by turns, which is how you can tell it is honest. Not one was ever posted.",
+      "reckless": "Love letters and regrets written on ration box cardboard. Stashes and secrets hidden between the lines.",
+      "denialist": "Ordinary mail that was held up by communication disruptions. They will read them eventually.",
+      "fatalist": "Words written to people who had already turned to ash when the pen touched the paper."
+    },
+    "journal_religious_texts": {
+      "default": "Annotated liturgical texts and scriptures preserved in wasteland shelters, marked with prayers for the dead. The margins hold more handwriting than the printed pages. People needed somewhere to put the names.",
+      "paranoid": "Apocalyptic verses highlighted in red pen. People convinced themselves the fire was divine judgment.",
+      "cautious": "Religious texts recovered from the cloister. Shows how spiritual communities adapted to subterranean life.",
+      "realist": "A shelter scripture volume with funeral dates handwritten in the margins and counsel copied out for the sick. Whatever the theology, the book did steady work down here. The ribbon marker has moved many times.",
+      "reckless": "Holy book with pages missing for rolling paper. Still has the old hymns inside.",
+      "denialist": "Traditional faith texts. Good to keep old cultural traditions intact while we rebuild.",
+      "fatalist": "Prayers asking for mercy from an empty sky that answered with burning dust."
+    },
+    "journal_exchange_day": {
+      "default": "Newspaper edition rushed to press on the morning of the Exchange, headline frozen in the first hours of the war. The inside pages are ordinary: weather, markets, a school fundraiser. The ordinary pages are the hardest to read now.",
+      "paranoid": "The morning edition of the end. Government denials on page one, while sirens were already sounding outside.",
+      "cautious": "Exchange Day newspaper preserved in a sealed mail pouch. Details the timeline of initial missile detections.",
+      "realist": "A special morning bulletin: launch detections, blackout orders, instructions to remain indoors. The typesetting is no different from any other Tuesday. That is the detail worth recording.",
+      "reckless": "Headline screaming nuclear war in eighty-point type. The ultimate historical souvenir.",
+      "denialist": "Temporary crisis reporting. Urging citizens to remain calm until negotiations resumed.",
+      "fatalist": "The last words ever printed on a press in this city. Wet ink that survived everyone who read it."
+    },
+    "low_food": {
+      "default": "The food stores are running low again. Portions will have to shrink until something comes back in.",
+      "paranoid": "The shelves emptied faster than the ledger says they should have. Either the count is wrong, or someone is eating better than the rest of us.",
+      "cautious": "We are below a comfortable reserve. Rations need tightening now, before hunger starts making decisions for us.",
+      "realist": "There is less food than the shelter needs. We either reduce consumption or bring more in.",
+      "reckless": "We have gone hungry before and still worked. Cut the talking, send people out, and fill the shelves.",
+      "denialist": "The stores only look bad because everything is spread between too many bins. One decent expedition will make this look foolish.",
+      "fatalist": "The shelves keep getting lighter no matter how carefully we count them. Hunger was always going to reach us eventually.",
+      "empath": "Every time I write a lower number, I think of how much harder everyone’s day just got.",
+      "sociopath": "Diminishing caloric reserves. Identify non-essential personnel for reduction if intake does not improve."
+    },
+    "low_water": {
+      "default": "Clean water is getting scarce. We are measuring cups now instead of days.",
+      "paranoid": "The water count keeps changing between shifts. Someone knows where the missing containers are going.",
+      "cautious": "We need to protect what is left and check every source twice. Thirst leaves very little room for correcting mistakes.",
+      "realist": "The reserve is below what the shelter needs. Drinking comes first; washing and everything else wait.",
+      "reckless": "Sitting here counting bottles will not make more water. Take the cans and find a source.",
+      "denialist": "We are not out of water. We are low because everyone started panicking at the same time.",
+      "fatalist": "Food lets you bargain with time. Water does not. This shortage will decide for us if we cannot.",
+      "empath": "The silence in the kitchen when the taps run dry is a heavy thing to carry.",
+      "sociopath": "Water security at a critical threshold. Prioritize fluid access to high-value assets."
+    },
+    "death_of_survivor": {
+      "default": "Someone is missing from the shelter now, and every room notices it differently. Their work will be reassigned before anyone is ready.",
+      "paranoid": "A death never arrives alone here. Someone missed something, hid something, or decided it was safer not to ask.",
+      "cautious": "We need to understand what happened before grief turns into another preventable death. The shelter can mourn and still learn.",
+      "realist": "They are dead. Their duties, supplies, and space still have to be accounted for, however ugly that sounds today.",
+      "reckless": "Stopping will not bring them back. We carry what they were doing and keep moving.",
+      "denialist": "It still feels like they are away on a long shift. I keep expecting the door to open before I remember.",
+      "fatalist": "Another bed has become storage. We keep acting surprised when the shelter reminds us what survival costs.",
+      "empath": "I keep looking for their face in the crowd. The shelter feels a little emptier today.",
+      "sociopath": "Personnel loss registered. Reallocate their station and salvage any useful personal gear immediately."
+    },
+    "successful_expedition": {
+      "default": "The expedition came back with enough to matter. For once, the inventory went up before anyone started crossing things out.",
+      "paranoid": "They brought back good supplies, almost too clean for the route they described. I want the story checked before I trust the haul.",
+      "cautious": "The run paid off. We should store the useful pieces properly before success makes us careless about the next one.",
+      "realist": "The expedition returned with a net gain. That buys time, not safety.",
+      "reckless": "That is what happens when we stop hiding in the shelter. There is more out there if we move before someone else takes it.",
+      "denialist": "See? The shortages were never as bad as everyone said. One proper run and the shelves already look normal again.",
+      "fatalist": "We found enough to postpone the next problem. Around here, that counts as a good day.",
+      "empath": "Everyone looks a little lighter tonight. It’s amazing what a few full bags can do for morale.",
+      "sociopath": "Supply intake confirmed. Audit the gear quality and incentivize the team for future repeat performance."
+    },
+    "failed_expedition": {
+      "default": "The expedition came back with less than it took out. Nobody is calling the route a mistake yet.",
+      "paranoid": "The account does not fit the result. Either the route was worse than reported, or someone out there knew we were coming.",
+      "cautious": "We spent supplies and gained almost nothing. The route needs reviewing before another team repeats the same failure.",
+      "realist": "The run was a loss. We cannot afford many more expeditions with that return.",
+      "reckless": "One bad run is not a reason to close the door. Change the route and send the next team smarter.",
+      "denialist": "It was bad luck, nothing more. The same route could pay twice as much tomorrow.",
+      "fatalist": "We sent people out because staying here was not enough. They came back proving that leaving is not enough either.",
+      "empath": "They came back exhausted and empty-handed. You can see the weight of the failure on them.",
+      "sociopath": "Expenditure loss exceeds return. Reassess the competence of the lead scout and tighten equipment protocols."
+    },
+    "faction_raid": {
+      "default": "They came for what we had and left damage behind with the empty spaces. We will be counting both for days.",
+      "paranoid": "They knew where to hit and what to take. Someone has been watching the shelter more closely than we thought.",
+      "cautious": "The raid exposed weak points we cannot leave open. Inventory can wait; doors, watch shifts, and escape routes cannot.",
+      "realist": "We lost supplies and security at the same time. The next attack will cost more if we repair only one of them.",
+      "reckless": "They got inside once. That does not mean they get to leave thinking it was easy.",
+      "denialist": "It was a smash-and-grab, not a siege. Patch the damage and stop turning one raid into the end of the shelter.",
+      "fatalist": "We built walls because we knew someone would test them. Now we know how long they last.",
+      "empath": "The look on everyone’s face... we’ve lost our sense of safety. How do you rebuild that?",
+      "sociopath": "Security breach confirmed. Analyze the point of entry and target the raiding faction for calculated retaliation."
+    },
+    "disease_outbreak": {
+      "default": "Too many people are sick at once for coincidence. Beds, water, and clean hands matter more than arguments now.",
+      "paranoid": "Illness spread faster than anyone admitted. I want to know who was sick first and why nobody wrote it down.",
+      "cautious": "We need separation, clean supplies, and a proper count of symptoms. Guessing will spread this faster than the disease does.",
+      "realist": "This is an outbreak. Reduce contact, protect the healthy, and spend medicine where it changes outcomes.",
+      "reckless": "We cannot put the whole shelter in bed. Keep the worst cases down and let everyone else work.",
+      "denialist": "People get sick when they are cold and tired. Calling it an outbreak will only make everyone see symptoms they do not have.",
+      "fatalist": "Disease likes crowded shelters and tired people. We gave it both long before the first fever.",
+      "empath": "Hearing the coughing in the dark... it’s heartbreaking. I wish I could do more than just monitor.",
+      "sociopath": "Contagion risk detected. Isolate symptomatic individuals to prevent productivity loss among healthy units."
+    },
+    "power_failure": {
+      "default": "The lights are out and every machine sounds louder by being silent. We are back to deciding what can wait.",
+      "paranoid": "Power does not just disappear without a reason. I want the breakers checked before anyone blames the grid.",
+      "cautious": "We need to isolate the failure and protect what still works. Restarting everything at once would be another mistake.",
+      "realist": "The power is down. Heat, pumps, refrigeration, and communications now compete for whatever backup remains.",
+      "reckless": "Darkness is not a disaster. Get the generator turning and stop treating every dead bulb like a funeral.",
+      "denialist": "The grid has stumbled before. Give it time and half these emergency measures will look unnecessary.",
+      "fatalist": "Every machine in the shelter was borrowed time with a wire attached. Tonight the wire ran out.",
+      "empath": "There’s a strange vulnerability in the dark. Everyone is huddled closer than usual.",
+      "sociopath": "Infrastructure failure. Restore primary power or reconfigure the grid to prioritize essential life support systems."
+    },
+    "new_survivor_arrived": {
+      "default": "We made room for one more person. Their name is on the roster now, which makes the shelter different whether we notice yet or not.",
+      "paranoid": "New people arrive with stories polished by the road. I would rather learn what they left out before we hand them a key.",
+      "cautious": "One more survivor means another pair of hands and another set of needs. Give them time, rules, and nothing sensitive until we know them.",
+      "realist": "We gained labor, skills, appetite, and risk in one body. The balance will depend on what they can do.",
+      "reckless": "Good. We need people willing to work more than we need another empty bunk.",
+      "denialist": "Everyone is acting like taking in one person changes the shelter. They will settle in, and things will go back to normal.",
+      "fatalist": "We keep adding names because empty beds frighten us. Eventually the roster will thin again.",
+      "empath": "It takes courage to walk through that door. I hope we can offer them the home they're looking for.",
+      "sociopath": "New asset acquired. Profile them for skills, utility, and potential threats to internal security."
+    },
+    "severe_cold": {
+      "default": "The cold has moved indoors despite the walls. Every task takes longer when nobody wants to uncover their hands.",
+      "paranoid": "The temperature dropped faster than the forecast said. Either the instruments are failing, or someone gave us numbers they never trusted themselves.",
+      "cautious": "Heat loss is winning room by room. Close unused spaces, watch the pipes, and keep the weakest people near warmth.",
+      "realist": "The shelter is losing heat faster than we can replace it. Fuel and exposure time are now the same problem.",
+      "reckless": "Cold is a reason to move, not freeze in place. Work faster, keep circulation going, and save the complaining for spring.",
+      "denialist": "It is a bad cold snap, not a new climate. We have handled worse nights than this.",
+      "fatalist": "Winter always finds the weak seams eventually. This time it found ours.",
+      "empath": "I see people shivering even under their blankets. We need more fuel, for all our sakes.",
+      "sociopath": "Thermal efficiency dropping. Consolidate living areas to reduce fuel consumption and preserve core temperature."
+    },
+    "high_radiation_zone": {
+      "default": "The meter stayed high long enough that nobody needed reminding to leave. The route may still be useful, but not casually.",
+      "paranoid": "The warning markers were too far apart for readings like that. Someone knew the zone was hotter and chose not to mark it.",
+      "cautious": "The dose climbed quickly. Next time we need better protection, less time inside, or another route.",
+      "realist": "The area is usable only at a cost in dose. That cost needs to be counted like fuel or food.",
+      "reckless": "The meter complained, we moved through, and we came back. Keep the exposure short and take what is worth it.",
+      "denialist": "The reading was high because the equipment hates that terrain. Nobody felt any different when we crossed it.",
+      "fatalist": "Some places keep killing people long after everyone who poisoned them is gone. We crossed one today.",
+      "empath": "Thinking about the invisible damage we might be carrying... it’s hard to shake that fear.",
+      "sociopath": "Radiation levels excessive. Calculate the net yield against the long-term cost to the personnel’s health."
+    },
+    "moral_compromise": {
+      "default": "We chose the option that kept the shelter moving. Nobody has found a clean way to describe what it cost.",
+      "paranoid": "Everyone agreed quickly once the decision became useful. I wonder how many of them had already decided before they asked.",
+      "cautious": "We made a choice under pressure and cannot pretend the consequences ended with the decision. We need to remember why we crossed that line.",
+      "realist": "The choice solved the immediate problem and created another kind of debt. Both facts are true.",
+      "reckless": "We did what the situation demanded. Regret does not feed anyone or undo the decision.",
+      "denialist": "People keep calling it a compromise because they need the story to hurt. We made the only workable choice.",
+      "fatalist": "Survival keeps asking for pieces of us and calling the exchange temporary. We paid again.",
+      "empath": "Sometimes I wonder if what we’re saving is worth what we’re becoming.",
+      "sociopath": "Tactical decision executed. Moral considerations are secondary to the survival of the primary infrastructure."
     }
   }
 }

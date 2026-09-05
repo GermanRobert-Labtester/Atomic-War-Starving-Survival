@@ -43,6 +43,10 @@ namespace AtomicWar.GodotApp.UI
             // Phase 12 pilots — mapped to the new dashboard shell + data-grid primitives.
             new Target{ StableId="survival_workstation_default", Title="Survival Workstation (#19 Stitch)",          PanelCtor="AtomicWar.GodotApp.UI.SurvivalWorkstationPanel",        StateHint="default", Width=1280, Height=800 },
             new Target{ StableId="caravan_barter_default",       Title="Caravan Barter Ledger (#35 Stitch)",         PanelCtor="AtomicWar.GodotApp.UI.CaravanBarterLedgerPanel",      StateHint="default", Width=1280, Height=800 },
+            // Plan 56 phase 4 — market rows carry text provenance tags
+            // (locally made / imported / general supply) from regionalSupply.
+            new Target{ StableId="market_default",              Title="The Market — Supply and Demand",             PanelCtor="AtomicWar.GodotApp.Economy.EconomyMarketPanel",        StateHint="populated_fixture", Width=1280, Height=800, FixtureFactory=EconomyMarketSnapshotFixture.Bind },
+
             new Target{ StableId="shelter_hud_default",          Title="Shelter HUD (#40 Stitch)",                   PanelCtor="AtomicWar.GodotApp.UI.ShelterHudPanel",                  StateHint="default", Width=1280, Height=800 },
 
             // Plan 12C — captured against real catalog definitions, an

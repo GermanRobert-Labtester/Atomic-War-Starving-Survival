@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "processes": [
+    {
+      "id": "synth_high_energy_binder",
+      "displayName": "High-Energy Binder Synthesis",
+      "description": "Catalytic stabilization process synthesizing an elastomeric binding matrix for high-tier industrial charges.",
+      "requiredApparatusTier": 2,
+      "inputItems": {
+        "scrap_chemical": 3,
+        "chemical_solvent": 1
+      },
+      "outputItems": {
+        "synth_high_energy_binder": 1
+      },
+      "processingTicks": 3,
+      "heatBand": "High",
+      "volatilityRating": 0.45,
+      "scrubberDemand": 2.5,
+      "equipmentWear": 4.0,
+      "skillRequirement": 25.0,
+      "tags": [ "industrial", "energetic", "polymer" ]
+    },
+    {
+      "id": "synth_precision_primer_compound",
+      "displayName": "Precision Primer Formulation",
+      "description": "Controlled precipitation of fine primer compound granules in a temperature-regulated mixing retort.",
+      "requiredApparatusTier": 2,
+      "inputItems": {
+        "scrap_chemical": 2,
+        "scrap_metal": 1
+      },
+      "outputItems": {
+        "synth_precision_primer_compound": 2
+      },
+      "processingTicks": 2,
+      "heatBand": "Nominal",
+      "volatilityRating": 0.35,
+      "scrubberDemand": 1.5,
+      "equipmentWear": 3.0,
+      "skillRequirement": 20.0,
+      "tags": [ "munitions", "primer", "precision" ]
+    },
+    {
+      "id": "synth_corrosive_acid_reagent",
+      "displayName": "Corrosive Acid Distillation",
+      "description": "Concentration of mineral runoff into concentrated acid reagent within a borosilicate reflux condenser.",
+      "requiredApparatusTier": 1,
+      "inputItems": {
+        "chemicals": 2,
+        "clean_water": 1
+      },
+      "outputItems": {
+        "synth_corrosive_acid_reagent": 1
+      },
+      "processingTicks": 2,
+      "heatBand": "Nominal",
+      "volatilityRating": 0.25,
+      "scrubberDemand": 2.0,
+      "equipmentWear": 5.0,
+      "skillRequirement": 15.0,
+      "tags": [ "acid", "solvent", "reagent" ]
+    },
+    {
+      "id": "synth_hemostatic_coagulant",
+      "displayName": "Hemostatic Coagulant Refinement",
+      "description": "Enzymatic purification of biological polymers into rapid-acting trauma clotting granules.",
+      "requiredApparatusTier": 2,
+      "inputItems": {
+        "scrap_chemical": 1,
+        "clean_water": 1
+      },
+      "outputItems": {
+        "synth_hemostatic_coagulant": 2
+      },
+      "processingTicks": 2,
+      "heatBand": "Low",
+      "volatilityRating": 0.10,
+      "scrubberDemand": 0.5,
+      "equipmentWear": 1.5,
+      "skillRequirement": 20.0,
+      "tags": [ "medical", "coagulant", "pharmaceutical" ]
+    },
+    {
+      "id": "synth_toxic_agent_neutralizer",
+      "displayName": "Toxic Agent Neutralizer Batch",
+      "description": "Formulation of active alkaline wash slurry designed to neutralize aerosol blister and nerve agents.",
+      "requiredApparatusTier": 1,
+      "inputItems": {
+        "chemicals": 1,
+        "clean_water": 2
+      },
+      "outputItems": {
+        "synth_toxic_agent_neutralizer": 2
+      },
+      "processingTicks": 1,
+      "heatBand": "Low",
+      "volatilityRating": 0.15,
+      "scrubberDemand": 1.0,
+      "equipmentWear": 2.0,
+      "skillRequirement": 10.0,
+      "tags": [ "cbrn", "neutralizer", "safety" ]
+    },
+    {
+      "id": "synth_industrial_catalyst",
+      "displayName": "Transition Metal Catalyst Sintering",
+      "description": "High-temperature retort sintering of porous ceramic pellets impregnated with recovered catalytic metal dust.",
+      "requiredApparatusTier": 3,
+      "inputItems": {
+        "scrap_metal": 3,
+        "chemical_solvent": 1
+      },
+      "outputItems": {
+        "synth_industrial_catalyst": 1
+      },
+      "processingTicks": 4,
+      "heatBand": "High",
+      "volatilityRating": 0.30,
+      "scrubberDemand": 2.0,
+      "equipmentWear": 6.0,
+      "skillRequirement": 30.0,
+      "tags": [ "catalyst", "metallurgy", "high_tier" ]
+    },
+    {
+      "id": "synth_antiseptic_wash",
+      "displayName": "Antiseptic Wash Formulation",
+      "description": "Blended alcohol and iodine antiseptic compound for sterile surgical washdowns and wound disinfection.",
+      "requiredApparatusTier": 1,
+      "inputItems": {
+        "scrap_chemical": 1,
+        "clean_water": 1
+      },
+      "outputItems": {
+        "synth_antiseptic_wash": 2
+      },
+      "processingTicks": 1,
+      "heatBand": "Low",
+      "volatilityRating": 0.10,
+      "scrubberDemand": 0.5,
+      "equipmentWear": 1.0,
+      "skillRequirement": 10.0,
+      "tags": [ "medical", "antiseptic", "sterilization" ]
+    },
+    {
+      "id": "synth_polymer_sealant",
+      "displayName": "Polymer Sealant Vulcanization",
+      "description": "Cross-linking synthesis of dense silicone-rubber elastomer for vacuum chambers and armored hatch gaskets.",
+      "requiredApparatusTier": 2,
+      "inputItems": {
+        "scrap_chemical": 2,
+        "chemical_solvent": 1
+      },
+      "outputItems": {
+        "synth_polymer_sealant": 2
+      },
+      "processingTicks": 3,
+      "heatBand": "Nominal",
+      "volatilityRating": 0.20,
+      "scrubberDemand": 1.5,
+      "equipmentWear": 2.5,
+      "skillRequirement": 18.0,
+      "tags": [ "sealant", "elastomer", "maintenance" ]
+    },
+    {
+      "id": "synth_desiccant_matrix",
+      "displayName": "Desiccant Matrix Activation",
+      "description": "Thermal dehydration and acid activation of aluminosilicate gel granules for humidity extraction.",
+      "requiredApparatusTier": 1,
+      "inputItems": {
+        "chemicals": 1,
+        "scrap_chemical": 1
+      },
+      "outputItems": {
+        "synth_desiccant_matrix": 2
+      },
+      "processingTicks": 2,
+      "heatBand": "Nominal",
+      "volatilityRating": 0.15,
+      "scrubberDemand": 1.0,
+      "equipmentWear": 2.0,
+      "skillRequirement": 12.0,
+      "tags": [ "desiccant", "storage", "conditioning" ]
+    },
+    {
+      "id": "synth_solvent_extract",
+      "displayName": "Fractional Solvent Extraction",
+      "description": "Fractional distillation of volatile organic condensates into high-purity laboratory solvent extract.",
+      "requiredApparatusTier": 2,
+      "inputItems": {
+        "chemical_solvent": 2,
+        "clean_water": 1
+      },
+      "outputItems": {
+        "synth_solvent_extract": 2
+      },
+      "processingTicks": 2,
+      "heatBand": "Nominal",
+      "volatilityRating": 0.30,
+      "scrubberDemand": 2.0,
+      "equipmentWear": 3.0,
+      "skillRequirement": 22.0,
+      "tags": [ "solvent", "distillation", "purification" ]
+    }
+  ]
+}

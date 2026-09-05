@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.Waystation;
 
 namespace AtomicWar.GodotApp
 {
@@ -14,6 +15,14 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public WaystationSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Plan 56 phase 6 — the multi-node trade-stock network. When
+        /// attached (with the shortage policy bound), its 7-day resupply is
+        /// provenance-aware: locally produced and general stock survive a
+        /// market shortage, pure imports lapse until recovery.
+        /// </summary>
+        public WaystationNetworkSystem? Network { get; private set; }
         public WaystationHostSession(WaystationSystem system)
         {
             System = system ?? new WaystationSystem();
@@ -68,7 +77,22 @@ namespace AtomicWar.GodotApp
         public void TickDaily(bool iceRoadOpen)
         {
             System.TickDaily(iceRoadOpen);
+            Network?.TickDay();
             RaiseStateChanged();
+        }
+
+        /// <summary>
+        /// Plan 56 phase 6 — attach the trade-stock network and bind its
+        /// shortage policy to the live market. The policy closure must be
+        /// null-safe (it is invoked during the network's daily tick).
+        /// </summary>
+        public void AttachNetwork(
+            WaystationNetworkSystem network,
+            Ashfall.Core.Economy.GoodsCatalog catalog,
+            Func<bool> isSuppliesShort)
+        {
+            Network = network ?? throw new ArgumentNullException(nameof(network));
+            Network.BindShortagePolicy(catalog, isSuppliesShort);
         }
 
         public override void Save()

@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "npcs": [
+    {
+      "id": "npc_cael_ormund",
+      "display_name": "Registrar-General Cael Ormund",
+      "faction_id": "faction_the_office",
+      "role": "Registrar",
+      "description": "A civil servant who believes bureaucracy is the only thing that hasn't rotted. His voice is polite, his pencil is precise, and his patience is thinner than the paper he writes on.",
+      "dialogue_fragments": [
+        "The discrepancy is noted.",
+        "I am not collecting you. I am scheduling you.",
+        "The Schedule is complete. Yours is not.",
+        "Paperwork is the only thing that keeps the ice from claiming us all.",
+        "You are living in a facility that authenticated for fourteen. The fourteen did not arrive.",
+        "Under Continuity Reconstruction Order 12-C, unallocated occupants constitute a labor reserve.",
+        "I will be back in thirty days to review the roster."
+      ],
+      "hostile_actions": [
+        "Files you as a labor reserve",
+        "Sends auditors to your bunker",
+        "Confiscates unlisted survivors",
+        "Freezes your Ice Road access",
+        "Issues levy orders with impossible terms",
+        "Marks your bunker for audit",
+        "Demands perfect paperwork"
+      ],
+      "trust_building_requirements": [
+        "Complete census forms accurately",
+        "Honor levy orders",
+        "Share survivor occupations",
+        "Provide accurate location data",
+        "File paperwork on time",
+        "Accept the numbered apartment in Block C",
+        "Do not question the Schedule"
+      ],
+      "base_trust": 0.1,
+      "is_companion": false,
+      "companion_flags": [],
+      "companion_requirements": []
+    },
+    {
+      "id": "npc_edor_vale",
+      "display_name": "Clerk Edor Vale",
+      "faction_id": "faction_the_office",
+      "role": "Census Clerk",
+      "description": "A junior enumerator who knows his score is too low to matter. He reads the census form twice because he's afraid of making a mistake, and his fear makes him dangerous.",
+      "dialogue_fragments": [
+        "Most people want it read again. That's all right.",
+        "There isn't a time limit on understanding it.",
+        "The birth year is written twice. Once correctly.",
+        "I can wait. The ice can't.",
+        "The pencil hovers over the blank spaces like a judge's gavel.",
+        "Your name is in a column you were never meant to see.",
+        "I will file it. I will not sign it."
+      ],
+      "hostile_actions": [
+        "Waits silently at your hatch",
+        "Files incomplete returns",
+        "Marks your bunker for audit",
+        "Notes your survivors' occupations",
+        "Records your survivors as allocated",
+        "Refuses to acknowledge you in future"
+      ],
+      "trust_building_requirements": [
+        "Hear the form read aloud",
+        "Confirm or deny occupations",
+        "Allow him to wait near your hatch",
+        "Show Sela's card if you have it",
+        "Do not joke about the birth year",
+        "Accept his corrections"
+      ],
+      "base_trust": 0.3,
+      "is_companion": true,
+      "companion_flags": [
+        "companion_edor"
+      ],
+      "companion_requirements": [
+        "trust_edor_above_zero"
+      ]
+    },
+    {
+      "id": "npc_leva_quist",
+      "display_name": "Shift Lead Leva Quist",
+      "faction_id": "hydro_barons",
+      "role": "Plant Foreman",
+      "description": "A municipal engineer who was already at the plant when the Exchange happened. She calls the allocated 'the indoors' and the unlisted 'the ones who actually do the work.'",
+      "dialogue_fragments": [
+        "Motion: that we keep running. Carried.",
+        "The membranes don't care about your feelings.",
+        "I need four people on the outfall by morning or the indoors freeze in their numbers.",
+        "The count is short. The discrepancy is noted.",
+        "The evaporation is confirmed. The plant's failure is inevitable.",
+        "I will not shut the plant to spite Ormund. I have done the 48-hour math.",
+        "The resin drums are a countdown. The plant's failure is inevitable."
+      ],
+      "hostile_actions": [
+        "Poisons your water supply",
+        "Sabotages your steam connections",
+        "Overcharges for critical repairs",
+        "Refuses to share medical supplies",
+        "Blames you for plant failures",
+        "Evaporates your resin",
+        "Schedules you for outfall shifts"
+      ],
+      "trust_building_requirements": [
+        "Deliver brass fittings",
+        "Repair membrane systems",
+        "Share medical supplies",
+        "Work outfall shifts",
+        "Provide iodine crystals",
+        "Accept her minutes as gospel",
+        "Do not question her authority"
+      ],
+      "base_trust": 0.4,
+      "is_companion": true,
+      "companion_flags": [
+        "companion_leva"
+      ],
+      "companion_requirements": [
+        "trust_leva_above_zero"
+      ]
+    },
+    {
+      "id": "npc_yara_holm",
+      "display_name": "Cutter Yara Holm",
+      "faction_id": "faction_the_cutters",
+      "role": "Ice Pilot",
+      "description": "A harbor ice-pilot who speaks in distances and warnings. She calls the road 'lit' or 'dark' as if they were moral words, and she will not guide you onto ice she has marked dark.",
+      "dialogue_fragments": [
+        "I don't open it for you. I open it.",
+        "If it's dark, you wait.",
+        "If you don't wait, I write the accident in the book and I don't fetch you.",
+        "The ice groans beneath your boots.",
+        "Yara's rule is absolute: dark means do not cross.",
+        "The beacon is a contract.",
+        "Dark ice is a death sentence."
+      ],
+      "hostile_actions": [
+        "Marks your ice as unsafe",
+        "Sabotages your waystation",
+        "Steals your beacon oil",
+        "Leaves you stranded in a blizzard",
+        "Charges exorbitant passage fees",
+        "Withdraws her light from your section of the road",
+        "Springs traps on the ice"
+      ],
+      "trust_building_requirements": [
+        "Relight dark beacons",
+        "Provide lamp oil",
+        "Work ice road maintenance",
+        "Share navigation charts",
+        "Honor Cutter rules",
+        "Do not walk marked-dark ice",
+        "Accept her ledger as law"
+      ],
+      "base_trust": 0.5,
+      "is_companion": true,
+      "companion_flags": [
+        "companion_yara"
+      ],
+      "companion_requirements": [
+        "trust_yara_above_zero"
+      ]
+    },
+    {
+      "id": "npc_halden_mire",
+      "display_name": "Sparks Halden Mire",
+      "faction_id": "faction_the_fleet",
+      "role": "Radioman",
+      "description": "A Fleet radioman who has listened for a stand-up order for five years. He speaks in radio procedure and dead air. He wants to be told the wait is over, or to be told it is not, in writing.",
+      "dialogue_fragments": [
+        "I can hear you. That is not the same as a stand-up.",
+        "Say again.",
+        "I need a stand-up.",
+        "The Fleet does not forget.",
+        "The tender is still upright. The ice has come up to the Plimsoll mark and stopped.",
+        "Some waits do not end.",
+        "The Fleet's stand-up authentication is the same family as D/9's."
+      ],
+      "hostile_actions": [
+        "Demands authentication before boarding",
+        "Refuses to share radio frequencies",
+        "Charges for safe passage",
+        "Blames you for Fleet delays",
+        "Takes your survivors as crew",
+        "Denies boarding to unauthenticated parties",
+        "Accelerates Ormund's arrival"
+      ],
+      "trust_building_requirements": [
+        "Provide clean water",
+        "Share radio frequencies",
+        "Work on the tender",
+        "Honor Fleet protocols",
+        "Provide engine parts",
+        "Show Sole's paper if owned",
+        "Accept that some waits do not end"
+      ],
+      "base_trust": 0.2,
+      "is_companion": true,
+      "companion_flags": [
+        "companion_mire"
+      ],
+      "companion_requirements": [
+        "trust_mire_above_zero"
+      ]
+    },
+    {
+      "id": "npc_ivy_corrigan",
+      "display_name": "Ice Pilot Ivy Corrigan",
+      "faction_id": "faction_the_cutters",
+      "role": "Lamplighter",
+      "description": "A Cutter who won't cross Kilometre 19. She confirms the post exists but won't say why it's significant. Her refusal carries a warning that echoes in the silence.",
+      "dialogue_fragments": [
+        "I won't cross it.",
+        "I confirm the post exists.",
+        "I won't say why it's significant.",
+        "The ledger in Sector 4 stops here.",
+        "Yara's rule is absolute.",
+        "The silence is heavier than the ash on your boots."
+      ],
+      "hostile_actions": [
+        "Refuses to acknowledge you in future",
+        "Marks the ice as unsafe",
+        "Leaves you stranded",
+        "Charges exorbitant passage fees",
+        "Withdraws her light from your section of the road"
+      ],
+      "trust_building_requirements": [
+        "Carry oil south",
+        "Do not ask her to come north",
+        "Bring a receipt",
+        "Accept her refusal as law",
+        "Do not question her authority"
+      ],
+      "base_trust": 0.6,
+      "is_companion": false,
+      "companion_flags": [],
+      "companion_requirements": []
+    },
+    {
+      "id": "npc_margit_sole",
+      "display_name": "Margit Sole",
+      "faction_id": "faction_the_office",
+      "role": "Archivist",
+      "description": "A Continuity archivist who files but does not sign. She has the Schedule in her drawer and the truth in her eyes. She will not stand down a ship, but she will file your return.",
+      "dialogue_fragments": [
+        "She files it. She does not sign it.",
+        "The Order is real. The unlisted are a legal fiction.",
+        "I will not sign it.",
+        "The Schedule is complete. Yours is not.",
+        "Your name is in a column you were never meant to see.",
+        "I will file your return. I will not vouch for it."
+      ],
+      "hostile_actions": [
+        "Files your return incompletely",
+        "Marks your bunker for audit",
+        "Notes your survivors as allocated",
+        "Refuses to sign anything",
+        "Accelerates Ormund's arrival"
+      ],
+      "trust_building_requirements": [
+        "Carry a copy of Ormund's levy north-to-south",
+        "Do not question her filing",
+        "Accept her refusal to sign",
+        "Trust her with your return",
+        "Do not demand signatures"
+      ],
+      "base_trust": 0.7,
+      "is_companion": false,
+      "companion_flags": [],
+      "companion_requirements": []
+    },
+    {
+      "id": "npc_colonel_voss",
+      "display_name": "Colonel Rurik Voss",
+      "faction_id": "faction_central_garrison",
+      "role": "Military Commander",
+      "description": "A garrison commander who sees the reconstruction pool as a prize to be claimed. He wants the levy column for his own purposes, and he will intercept it if he can.",
+      "dialogue_fragments": [
+        "The reconstruction pool is a prize.",
+        "I want the levy column.",
+        "I will intercept it if I can.",
+        "The Order is a weapon.",
+        "Voss wants the reconstruction pool.",
+        "The Fleet pad still does not authenticate."
+      ],
+      "hostile_actions": [
+        "Intercepts levy columns",
+        "Conscripts your survivors",
+        "Blames you for plant failures",
+        "Demands tribute",
+        "Accelerates Ormund's arrival",
+        "Intensifies rivalry with Ormund"
+      ],
+      "trust_building_requirements": [
+        "Do not let him intercept your levy",
+        "Do not give him your survivors",
+        "Do not blame him for failures",
+        "Do not demand tribute",
+        "Accept his military authority"
+      ],
+      "base_trust": 0.0,
+      "is_companion": false,
+      "companion_flags": [],
+      "companion_requirements": []
+    },
+    {
+      "id": "npc_sela_renn",
+      "display_name": "Sela Renn",
+      "faction_id": "faction_unlisted",
+      "role": "Dependent",
+      "description": "A survivor who was part of Allocation 12. She carries her father's improvised kit and knows the truth about the Schedule. She will choose whether to be claimed as an allocated dependent or to remain unlisted.",
+      "dialogue_fragments": [
+        "They have a school. They have iodine. They have my father's number in a drawer.",
+        "That isn't the same as having him.",
+        "The Cluster claims me as Halvard's dependent.",
+        "Iodine, school, a number.",
+        "I choose.",
+        "I will hear it. I will choose."
+      ],
+      "hostile_actions": [
+        "Disappears survivors",
+        "Corrupts your records",
+        "Makes you question reality",
+        "Claims her as allocated dependent",
+        "Takes her away from you"
+      ],
+      "trust_building_requirements": [
+        "Let her hear the claim",
+        "Do not force her to choose",
+        "Accept her choice",
+        "Do not question her decision",
+        "Trust her with her future"
+      ],
+      "base_trust": 0.8,
+      "is_companion": true,
+      "companion_flags": [
+        "companion_sela"
+      ],
+      "companion_requirements": [
+        "sela_present_in_shelter"
+      ]
+    },
+    {
+      "id": "npc_wren",
+      "display_name": "Wren",
+      "faction_id": "faction_the_office",
+      "role": "Student",
+      "description": "A child born after the Exchange who has never known hunger in the Sector 4 sense. She sits in the back of the Cluster school and does not speak, but she notices everything.",
+      "dialogue_fragments": [
+        "The children's sums are neat.",
+        "The ideology is complete.",
+        "Wren's eyes are wide.",
+        "I will record what you tell her.",
+        "The sum is corrected.",
+        "The ideology is complete."
+      ],
+      "hostile_actions": [
+        "Records what you tell her",
+        "Files reports on your behavior",
+        "Corrupts your records",
+        "Makes you question reality",
+        "Breaks your trust"
+      ],
+      "trust_building_requirements": [
+        "Sit the lesson",
+        "Correct a sum or let it stand",
+        "Record what you tell her",
+        "Accept her recording",
+        "Do not question her presence"
+      ],
+      "base_trust": 0.9,
+      "is_companion": false,
+      "companion_flags": [],
+      "companion_requirements": []
+    }
+  ]
+}

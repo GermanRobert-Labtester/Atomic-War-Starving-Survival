@@ -152,7 +152,16 @@ namespace Ashfall.Core
             // Plan 40 — Ledger Debt Templates
             "debt_", "conseq_",
             // Plans 182-185 — Aviation, Forced Labor, Narcotics, Settlement Politics
-            "aircraft_", "camp_", "chem_", "policy_"
+            "aircraft_", "camp_", "chem_", "policy_",
+            // Plans 90-93 — acoustic listening arrays (rig_/mold_/charge_/synth_ ids
+            // register via definition keys; references validate via ReferenceKeys)
+            "array_",
+            // Flagship institutions (Tasks 5-8) — culture / diplomacy / sky defense / sanatorium
+            "tome_", "treaty_", "therapy_", "condition_",
+            // Flagship XI (Plans 154-157) — morale contagion, pathogen strains,
+            // subterranean networks, psyops campaigns (ids register via `id`;
+            // cross-references validate via ReferenceKeys)
+            "contagion_", "pathogen_", "subnode_", "psyops_"
         };
 
         /// <summary>
@@ -197,7 +206,9 @@ namespace Ashfall.Core
             // Plans 178-181
             "trait_id", "tactic_id", "mutation_id", "camo_id",
             // Plans 182-185
-            "aircraft_id", "camp_id", "chem_id", "policy_id"
+            "aircraft_id", "camp_id", "chem_id", "policy_id", "stage_id",
+            // Flagship institutions (Tasks 5-8)
+            "tome_id", "treaty_id", "ordnance_id", "therapy_id", "condition_id"
         };
 
         /// <summary>
@@ -229,7 +240,16 @@ namespace Ashfall.Core
             // Plan 46 — Scavenging Tables
             "scavenging_table_id",
             // Plans 178-181
-            "parent_mutation_ids", "exclusive_mutation_ids"
+            "parent_mutation_ids", "exclusive_mutation_ids",
+            // Plans 90-93 — cupola foundry, vertical ascent, acoustic detection
+            "feedstock_item_id", "fuel_item_id", "flux_item_id", "base_yield_item_id",
+            "allowed_mold_ids", "output_item_id", "refractory_item_id", "descale_item_id",
+            "install_item_ids", "repair_item_ids", "dampening_item_id",
+            // Flagship institutions (Tasks 5-8) — sanatorium condition refs
+            "eligible_conditions",
+            // Flagship XI (Plans 154-157) — pathogen strain lineage, subterranean
+            // anchors, psyops faction targets
+            "strain_of", "mutation_targets", "surface_anchor_id", "target_faction_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -243,7 +263,11 @@ namespace Ashfall.Core
         /// </summary>
         public static readonly string[] VocabularyKeys =
         {
-            "tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
+            // Flagship institutions (Tasks 5-8) + Plans 90-93 label columns whose
+            // slug vocabularies are not catalog references (repaired alongside the
+            // flagship institutions data registration).
+            "agenda_clauses", "canonical_surface", "sensor_class", "tool_class", "effectType",
+            "tags", "intel_tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name", "exclusive_group",
             "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
@@ -457,7 +481,13 @@ namespace Ashfall.Core
             // strings from unlock_trigger fields).
             "trap_catch", "combat_encounter", "encounter_sighting",
             "forage_discovery", "greenhouse_cultivation", "harvest_event",
-            "scout_observation"
+            "scout_observation",
+            // Radio rumor / broadcast quest hooks
+            "quest_patrol_bounty", "quest_missing_caravan", "quest_orphaned_stock",
+            // Companion trust gating flags (whitelists/companion_trust_flags.json)
+            "trust_edor_above_zero", "trust_leva_above_zero", "trust_yara_above_zero", "trust_mire_above_zero",
+            // Radio station owner / broadcast factions
+            "faction_civil_defense", "faction_independent_survivors", "faction_unknown_intelligence", "faction_automated_infrastructure"
         };
 
         private sealed class Ctx

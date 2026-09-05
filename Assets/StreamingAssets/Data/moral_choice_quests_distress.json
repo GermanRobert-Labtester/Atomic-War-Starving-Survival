@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_moral_distress_trapped_mechanic",
+      "display_name": "Distress: Trapped Mechanic",
+      "category": "trust",
+      "trigger": "A trapped mechanic at the rail recovery yard requests emergency rescue before her beam shifts.",
+      "discovery": "Daria is pinned beneath a fallen steel crane at the recovery yard. She has survived for days with a radio, but her water is gone. You can dispatch an expedition to free her, or ignore the broadcast and conserve fuel.",
+      "location_id": "loc_recovery_yard",
+      "min_day": 1,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Dispatch rescue expedition",
+          "moral_delta": 12,
+          "empathy_delta": 2,
+          "outcome_text": "You commit to the rescue and dispatch a crew to the rail depot. Daria is extracted from the collapsed crane and joins your network.",
+          "epitaph": "Heard a voice under iron and sent help. The crane was heavy, but living people are heavier."
+        },
+        {
+          "label": "Disregard the transmission",
+          "moral_delta": -8,
+          "empathy_delta": -1,
+          "outcome_text": "You turn off the radio. Days later, the frequency falls permanently silent as the beam shifts.",
+          "epitaph": "Left Daria under the crane. Silence came on the fifth day."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_distress_injured_trader",
+      "display_name": "Distress: Injured Trader",
+      "category": "trust",
+      "trigger": "A traveling merchant with a compound fracture is stranded at Route 6 gas station.",
+      "discovery": "Olen has broken his leg and barricaded himself in the back room of a ruined fuel stop. Hostile predators circle outside. He offers batteries and medical salvage if you bring him in.",
+      "location_id": "rural_gas_station",
+      "min_day": 1,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Dispatch rescue party",
+          "moral_delta": 10,
+          "empathy_delta": 2,
+          "outcome_text": "You reach the station and clear the perimeter. Olen survives and shares his battery reserves.",
+          "epitaph": "Brought Olen back from Route 6. A broken leg is not a death sentence."
+        },
+        {
+          "label": "Ignore his coordinates",
+          "moral_delta": -7,
+          "empathy_delta": -1,
+          "outcome_text": "You leave the trader to his fate. By nightfall, the radio signal cuts out abruptly.",
+          "epitaph": "Left the trader on Route 6. The dark took him."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_distress_family_shelter",
+      "display_name": "Distress: Family Shelter",
+      "category": "comfort",
+      "trigger": "A twelve-year-old child broadcasts from a locked backyard bunker with her unresponsive mother.",
+      "discovery": "Lena is trapped behind a jammed security door in a residential shed bunker. She has no food and her mother has succumbed to fever.",
+      "location_id": "family_bunker_backyard_shed",
+      "min_day": 1,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Breach the shelter door",
+          "moral_delta": 14,
+          "empathy_delta": 3,
+          "outcome_text": "Your team forces the jammed door. Lena is brought to safety and given warm broth.",
+          "epitaph": "Breached the blue door. A child was pulled into the light."
+        },
+        {
+          "label": "Leave the shelter closed",
+          "moral_delta": -12,
+          "empathy_delta": -2,
+          "outcome_text": "You decide the journey is too dangerous. Lena's voice fades from the airwaves after two days.",
+          "epitaph": "Ignored the blue door. The radio went quiet."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_distress_child_school",
+      "display_name": "Distress: Child at School",
+      "category": "comfort",
+      "trigger": "A frightened child broadcasts on an emergency frequency from a collapsed school basement.",
+      "discovery": "Petar is huddled under a collapsed timber joist in the school basement. His teacher told him to use the radio in an emergency.",
+      "location_id": "loc_school_gymnasium",
+      "min_day": 1,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Send a rescue team to the school",
+          "moral_delta": 15,
+          "empathy_delta": 3,
+          "outcome_text": "Your scavengers dig through the collapsed timbers and carry Petar out safely.",
+          "epitaph": "Pulled Petar from the ruins of the school. The radio did not lie."
+        },
+        {
+          "label": "Disregard the school broadcast",
+          "moral_delta": -14,
+          "empathy_delta": -2,
+          "outcome_text": "You decide the building is structurally unsound. The static swallows the frequency.",
+          "epitaph": "Left Petar in the basement. The silence was absolute."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_distress_siblings_clinic",
+      "display_name": "Distress: Hiding Siblings",
+      "category": "share",
+      "trigger": "Two young siblings broadcast from a storm cellar beneath an abandoned clinic.",
+      "discovery": "Ana and Miko have locked themselves in the basement with water but no food while armed raiders scour the area.",
+      "location_id": "",
+      "min_day": 1,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Knock three times and extract the siblings",
+          "moral_delta": 12,
+          "empathy_delta": 2,
+          "outcome_text": "You arrive, give the secret knock, and extract Ana and Miko with food rations.",
+          "epitaph": "Knocked three times on the cellar door. Two siblings walked out alive."
+        },
+        {
+          "label": "Leave the cellar untouched",
+          "moral_delta": -9,
+          "empathy_delta": -1,
+          "outcome_text": "You do not intervene. The broadcast ceases when food runs out.",
+          "epitaph": "Did not knock on the cellar door. Two children waited in vain."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_distress_military_patrol",
+      "display_name": "Distress: Stranded Patrol",
+      "category": "trust",
+      "trigger": "Sergeant Voss of the Iron Garrison requests extraction from a pinned culvert.",
+      "discovery": "An Iron Garrison patrol has been ambushed and pinned down with wounded. Voss offers tactical intelligence in exchange for ammunition and medical aid.",
+      "location_id": "checkpoint_kilo_armory",
+      "min_day": 1,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Supply and extract patrol six",
+          "moral_delta": 8,
+          "empathy_delta": 1,
+          "outcome_text": "Your expedition arrives with field dressings and ammo, breaking the encirclement. Garrison standing rises significantly.",
+          "epitaph": "Brought patrol six out of the culvert. The Garrison remembers."
+        },
+        {
+          "label": "Abandon the Garrison patrol",
+          "moral_delta": -6,
+          "empathy_delta": -1,
+          "outcome_text": "You leave the soldiers pinned. The patrol is overrun, severely damaging your standing with the Iron Garrison.",
+          "epitaph": "Let patrol six fall in the culvert. The Garrison found the bodies."
+        }
+      ]
+    }
+  ]
+}

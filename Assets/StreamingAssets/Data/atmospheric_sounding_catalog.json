@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "altitude_bands": [
+    {
+      "band_id": "band_surface_0_8k",
+      "altitude_min_m": 0,
+      "altitude_max_m": 8000,
+      "wind_variability": 0.6,
+      "temperature_profile_tag": "lapse_standard",
+      "dust_profile": "dust_heavy",
+      "radiation_sampling_modifier": 1.0,
+      "telemetry_quality_modifier": 1.0,
+      "tags": ["surface", "boundary_layer"]
+    },
+    {
+      "band_id": "band_lower_8k_16k",
+      "altitude_min_m": 8000,
+      "altitude_max_m": 16000,
+      "wind_variability": 1.0,
+      "temperature_profile_tag": "lapse_cold",
+      "dust_profile": "dust_moderate",
+      "radiation_sampling_modifier": 1.1,
+      "telemetry_quality_modifier": 1.0,
+      "tags": ["cloud_deck"]
+    },
+    {
+      "band_id": "band_middle_16k_24k",
+      "altitude_min_m": 16000,
+      "altitude_max_m": 24000,
+      "wind_variability": 1.4,
+      "temperature_profile_tag": "jet_stream",
+      "dust_profile": "fallout_trough",
+      "radiation_sampling_modifier": 1.25,
+      "telemetry_quality_modifier": 0.95,
+      "tags": ["jet_stream", "fallout_transport"]
+    },
+    {
+      "band_id": "band_upper_24k_30k",
+      "altitude_min_m": 24000,
+      "altitude_max_m": 30000,
+      "wind_variability": 2.0,
+      "temperature_profile_tag": "stratosphere",
+      "dust_profile": "fallout_plume",
+      "radiation_sampling_modifier": 1.5,
+      "telemetry_quality_modifier": 0.8,
+      "tags": ["stratosphere", "plume_ride"]
+    }
+  ],
+  "payloads": [
+    {
+      "payload_id": "payload_standard_sonde",
+      "display_name": "Standard Radiosonde Package",
+      "envelope_class": "latex_balloon_30km",
+      "lift_gas_class": "hydrogen",
+      "sensor_mass_kg": 0.6,
+      "burst_altitude_min_m": 24000,
+      "burst_altitude_max_m": 30000,
+      "telemetry_range_km": 40,
+      "parachute_descent_rate_km_per_tick": 6.0,
+      "recovery_value": 12,
+      "sensor_durability": 1.0,
+      "recovery_rewards": [
+        { "min_condition": 0.7, "item_id": "item_radiosonde", "amount": 1 },
+        { "min_condition": 0.4, "item_id": "scrap_metal", "amount": 2 },
+        { "min_condition": 0.0, "item_id": "scrap_metal", "amount": 1 }
+      ],
+      "tags": ["standard", "expendable_envelope"]
+    }
+  ]
+}

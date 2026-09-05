@@ -22,6 +22,7 @@ namespace AtomicWar.GodotApp
         public WildlifeMigrationSystem Wildlife { get; }
         public LandmarkDegradationSystem Landmarks { get; }
         public WastelandMapSystem WastelandMap { get; }
+        public DamagedMapSystem? DamagedMap { get; private set; }
         public SeasonProfileDef Profile { get; private set; }
 
         /// <summary>
@@ -68,7 +69,8 @@ namespace AtomicWar.GodotApp
             LocationEvolutionSystem locationEvolution = null!,
             WildlifeMigrationSystem wildlife = null!,
             LandmarkDegradationSystem landmarks = null!,
-            WastelandMapSystem wastelandMap = null!)
+            WastelandMapSystem wastelandMap = null!,
+            DamagedMapSystem? damagedMap = null)
         {
             Weather = weather ?? new WeatherSystem();
             SkyArmor = skyArmor ?? new SkyLayerArmorSystem();
@@ -77,6 +79,7 @@ namespace AtomicWar.GodotApp
             Wildlife = wildlife ?? new WildlifeMigrationSystem();
             Landmarks = landmarks ?? new LandmarkDegradationSystem();
             WastelandMap = wastelandMap ?? WastelandMapCatalogLoader.CreateSystem(string.Empty);
+            DamagedMap = damagedMap;
             Weather.OnWeatherChanged += kind =>
             {
                 LastEvent = $"Weather: {kind}";
@@ -94,6 +97,10 @@ namespace AtomicWar.GodotApp
                 ? WastelandMapCatalogLoader.CreateSystem(dataDir)
                 : null!;
             var session = new WorldHostSession(wastelandMap: mapSystem);
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                session.DamagedMap = DamagedMapCatalogLoader.CreateSystem(dataDir, session.WastelandMap);
+            }
             var profile = !string.IsNullOrEmpty(dataDir)
                 ? WeatherProfileLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer())
                 : null;

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using Ashfall.Core.Combat;
 using AtomicWar.Journal;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
@@ -44,6 +45,12 @@ namespace AtomicWar.GodotApp
             _muster.StateChanged += () => SaveMuster();
             _muster.OnQuestlineResolved += OnMusterQuestlineResolved;
             _muster.OnActionResolved += OnMusterActionResolved;
+
+            // Plan 45 phase 2 — an Iron Raiders raid is "a combat/loss event
+            // with no dialogue" (IronRaidersSystem): defend the shelter with
+            // the raid composition from the combat catalog (warlord enforcers
+            // and their crews), not the legacy template.
+            _muster.IronRaiders.OnRaidExecuted += OnIronRaidersRaidExecuted;
 
             if (_currentsRoster == null)
             {
@@ -130,19 +137,57 @@ namespace AtomicWar.GodotApp
             _statusLabel.Text = $"Hydro-Barons: Queue Pos {hb.QueuePosition}, Approach {hb.State.approach}.";
         }
 
+        /// <summary>
+        /// Plan 45 phase 2 — the Iron Raiders raid executes: spawn the raid
+        /// crew as a tactical defense fight using the combat catalog (the
+        /// raiders bring warlord enforcers at high aggression, scavenger
+        /// attackers below). Skipped when a fight is already active — the
+        /// shelter defense joins the queue like any other encounter.
+        /// </summary>
+        private void OnIronRaidersRaidExecuted()
+        {
+            if (_combat == null) return;
+            var cs = _combat.Engine.State;
+            bool idle = string.IsNullOrEmpty(cs.EncounterId) || cs.Resolved;
+            if (!idle)
+            {
+                GD.Print("[Ashfall Godot] Iron Raiders raid resolved as losses — combat already active.");
+                return;
+            }
+            var ir = _muster.IronRaiders;
+            int crewDanger = ir.AggressionLevel >= 0.6f ? 6 : 3;
+            var enemyIds = EnemyCompositionSelector.SelectRaidComposition(
+                crewDanger, CombatHostSession.DefaultAmbushEnemyCount + 1);
+            _combat.StartCombat(
+                "loc_iron_raiders_den", "The Toll — Den Raid",
+                enemyCombatantIds: enemyIds);
+            _combatDirty = true;
+            GD.Print($"[Ashfall Godot] Iron Raiders raid escalated to combat: {string.Join(", ", enemyIds)}.");
+        }
+
         public void OnIronRaidersClicked()
         {
             SetupMuster();
             var ir = _muster.IronRaiders;
+            // Plan VIII · Task 21.5 — raid pressure reads include the treaty term:
+            // ratified security pacts relieve pressure, breached accords raise it.
+            float treatyMod = _regionalTreaty != null ? _regionalTreaty.System.GetRaidPressureModifier() : 0f;
+            // Compose at the read site (same pattern as DebtConsequenceHostBridge):
+            // EvaluateRaidChance owns base+visibility; treaty pressure is an additive term.
+            float effectiveChance = System.Math.Clamp(ir.EvaluateRaidChance() + treatyMod, 0f, 1f);
+            string treatyNote = MathF.Abs(treatyMod) > 0.0005f
+                ? $"\nRegional treaties: {treatyMod:+0%;-0%} raid pressure\n"
+                : string.Empty;
             _codexViewer.Text =
                 "=== FACTION: IRON RAIDERS (DEN DEFENSE) ===\n" +
                 $"Is Active: {ir.State.isActive}\n" +
                 $"Aggression Level: {ir.AggressionLevel:P0}\n" +
                 $"Shelter Visibility: {ir.State.shelterVisibility:P0}\n" +
-                $"Raid Chance Today: {ir.EvaluateRaidChance():P0}\n" +
+                $"Raid Chance Today: {effectiveChance:P0}\n" +
+                treatyNote +
                 $"Raids This Season: {ir.RaidsThisSeason}\n\n" +
                 "The Toll's den at loc_iron_raiders_den. Fortifying approach routes reduces shelter visibility and raid chance.";
-            _statusLabel.Text = $"Iron Raiders: Aggression {ir.AggressionLevel:P0}, Raid Chance {ir.EvaluateRaidChance():P0}.";
+            _statusLabel.Text = $"Iron Raiders: Aggression {ir.AggressionLevel:P0}, Raid Chance {effectiveChance:P0}.";
         }
 
         public void OnLongWalkClicked()

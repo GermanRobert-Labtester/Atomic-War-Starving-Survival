@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Heavy Munitions - Precision Lathe</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#2c3132",
+                      "primary-fixed-dim": "#a1cfd3",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#832600",
+                      "on-tertiary": "#5d1800",
+                      "on-primary-container": "#a2d0d4",
+                      "secondary-container": "#af8d11",
+                      "on-background": "#dfe3e4",
+                      "secondary-fixed": "#ffe088",
+                      "on-error-container": "#ffdad6",
+                      "outline-variant": "#404849",
+                      "tertiary": "#ffb59d",
+                      "surface-container-low": "#171c1d",
+                      "surface-container-highest": "#313637",
+                      "on-primary-fixed-variant": "#1f4d51",
+                      "tertiary-container": "#992e00",
+                      "primary-container": "#2d5a5e",
+                      "tertiary-fixed-dim": "#ffb59d",
+                      "on-surface-variant": "#c0c8c9",
+                      "on-secondary": "#3c2f00",
+                      "surface-tint": "#a1cfd3",
+                      "outline": "#8a9293",
+                      "error-container": "#93000a",
+                      "surface-container": "#1b2021",
+                      "on-tertiary-fixed": "#390c00",
+                      "inverse-primary": "#396569",
+                      "on-secondary-fixed": "#241a00",
+                      "surface": "#0f1415",
+                      "error": "#ffb4ab",
+                      "on-primary-fixed": "#002022",
+                      "surface-dim": "#0f1415",
+                      "secondary": "#e9c349",
+                      "background": "#0f1415",
+                      "primary-fixed": "#bcebef",
+                      "on-surface": "#dfe3e4",
+                      "surface-bright": "#353a3b",
+                      "surface-container-high": "#262b2c",
+                      "surface-variant": "#313637",
+                      "on-tertiary-container": "#ffb79f",
+                      "tertiary-fixed": "#ffdbd0",
+                      "primary": "#a1cfd3",
+                      "on-secondary-fixed-variant": "#574500",
+                      "on-primary": "#00363a",
+                      "inverse-surface": "#dfe3e4",
+                      "surface-container-lowest": "#0a0f10",
+                      "secondary-fixed-dim": "#e9c349",
+                      "on-secondary-container": "#342800"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "margin": "24px",
+                      "container-max": "1440px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Bebas Neue"
+                      ],
+                      "headline-sm": [
+                              "Bebas Neue"
+                      ],
+                      "body-md": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Bebas Neue"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Bebas Neue"
+                      ],
+                      "data-num": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "JetBrains Mono"
+                      ],
+                      "display-lg": [
+                              "Bebas Neue"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-num": [
+                              "18px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        /* Scanline Overlay */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.05) 50%,
+                rgba(0, 0, 0, 0.05)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* CRT Flicker */
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            5% { opacity: 0.85; }
+            10% { opacity: 0.95; }
+            15% { opacity: 1; }
+            50% { opacity: 0.98; }
+            60% { opacity: 0.9; }
+            70% { opacity: 0.95; }
+            80% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+        .crt-effect {
+            animation: flicker 4s infinite;
+        }
+
+        /* Inner Glow */
+        .glow-primary {
+            box-shadow: inset 0 0 8px rgba(161, 207, 211, 0.2);
+        }
+        .glow-secondary {
+            box-shadow: inset 0 0 8px rgba(233, 195, 73, 0.2);
+        }
+
+        /* Bracket Corners */
+        .bracket-container {
+            position: relative;
+        }
+        .bracket-container::before, .bracket-container::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-color: #e9c349; /* Brass Amber */
+            border-style: solid;
+        }
+        .bracket-container::before {
+            top: 0;
+            left: 0;
+            border-width: 2px 0 0 2px;
+        }
+        .bracket-container::after {
+            bottom: 0;
+            right: 0;
+            border-width: 0 2px 2px 0;
+        }
+
+        /* Dashed Table Lines */
+        .dashed-bottom {
+            border-bottom: 1px dashed #404849;
+        }
+
+        /* Blinking Cursor */
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Progress Blocks */
+        .progress-block {
+            width: 8px;
+            height: 100%;
+            background-color: #a1cfd3;
+            margin-right: 2px;
+        }
+        .progress-block.empty {
+            background-color: #404849;
+        }
+        .progress-block.warning {
+            background-color: #e9c349;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md crt-effect flex flex-col h-screen overflow-hidden antialiased">
+<div class="scanlines"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface-container-lowest border-b-2 border-primary-container shadow-[inset_0_0_8px_rgba(161,207,211,0.2)]">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary uppercase tracking-wider">ASHFALL TERMINAL v4.2</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-primary hover:bg-primary-container hover:text-on-primary-container transition-colors p-2 rounded active:scale-95 duration-75">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings_input_component</span>
+</button>
+<button class="text-primary hover:bg-primary-container hover:text-on-primary-container transition-colors p-2 rounded active:scale-95 duration-75">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">power_settings_new</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 pt-16 pb-12">
+<!-- SideNavBar (Hidden on Mobile) -->
+<nav class="hidden md:flex flex-col pt-4 fixed left-0 top-16 bottom-0 w-64 bg-surface-container-low border-r-2 border-primary-container z-40">
+<div class="px-6 mb-6">
+<h2 class="font-headline-sm text-headline-sm text-secondary">OPERATOR-09</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">SECTOR-7G</p>
+</div>
+<ul class="flex flex-col gap-1 w-full">
+<!-- Active: Lathe -->
+<li>
+<a class="flex items-center gap-3 px-6 py-3 bg-primary-container text-on-primary-container border-l-4 border-secondary translate-x-1 duration-100 hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-label-caps text-label-caps uppercase">Lathe</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:text-primary border-l-4 border-transparent hover:bg-surface-container-highest transition-all duration-150" href="#">
+<span class="material-symbols-outlined">format_list_numbered</span>
+<span class="font-label-caps text-label-caps uppercase">Queue</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:text-primary border-l-4 border-transparent hover:bg-surface-container-highest transition-all duration-150" href="#">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label-caps text-label-caps uppercase">QC</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:text-primary border-l-4 border-transparent hover:bg-surface-container-highest transition-all duration-150" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-caps text-label-caps uppercase">Inventory</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-margin overflow-y-auto w-full max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+<!-- Left Column: Lathe Blueprint & Controls -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Blueprint Panel -->
+<section class="bg-surface-container border-2 border-outline-variant p-4 bracket-container glow-primary h-96 relative flex flex-col">
+<div class="flex justify-between items-center mb-4 border-b-2 border-primary-container pb-2">
+<h2 class="font-headline-md text-headline-md text-primary tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">memory</span>
+                                CALIBER TOOLING LATHE
+                            </h2>
+<div class="flex gap-2">
+<span class="px-2 py-1 border border-secondary text-secondary font-label-caps text-label-caps">RPM: <span class="font-data-num text-data-num">2400</span></span>
+<span class="px-2 py-1 border border-error text-error font-label-caps text-label-caps">WEAR: <span class="font-data-num text-data-num">12%</span></span>
+</div>
+</div>
+<!-- Visualization Area -->
+<div class="flex-1 relative bg-surface-container-lowest border border-outline-variant overflow-hidden p-2 flex items-center justify-center">
+<!-- Placeholder for schematic image/animation -->
+<div class="absolute inset-0 bg-contain bg-no-repeat bg-center opacity-70" data-alt="A highly detailed 2D wireframe technical schematic of a heavy industrial CNC munitions lathe. Rendered in a high-contrast dark mode aesthetic with glowing cyan and amber lines against a deep black background. The schematic shows cross-sections of gears, spindles, and a tooling head cutting into a brass billet. Subtle grid lines and alphanumeric coordinates overlay the diagram, giving it a complex, precision-engineering terminal readout vibe." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDPYhhIMA4dRgGupV19bjGBQxl70nVl0LCHkJOICSN0UlZ__wkhHYaZN7hNCo9xdE-VIQ-RtILV9TSSDFXynCGyxlOtik2Z6bzmEZeCOgeVUl5D3TBXOva62cYgM8ONKXvApSpjrf8pVcVFU7tW4jGZenfu3V5EEFjaH2wFXeOL_GHVjdxGBUN39WKvtKrDaJT9nJl-m7Vl3_Eaj59CU7gjMDxDIi32qTXl7wRO17zvAC0Ik0QHGkjU7F-58i48-wGulrkF_dPcH4-N')"></div>
+<!-- Overlay UI elements -->
+<div class="absolute top-4 left-4 bg-surface/80 p-2 border border-outline-variant">
+<p class="font-label-caps text-label-caps text-on-surface-variant">TARGET CALIBER</p>
+<p class="font-headline-sm text-headline-sm text-secondary mt-1">12.7x108mm API</p>
+</div>
+<!-- Simulated tool path indicator -->
+<div class="absolute right-1/4 top-1/2 w-32 h-px bg-primary opacity-50"></div>
+<div class="absolute right-1/4 top-1/2 w-4 h-4 border-2 border-primary rounded-full -mt-2 -ml-2 animate-ping"></div>
+</div>
+</section>
+<!-- Directives Panel -->
+<section class="bg-surface-container-low border-2 border-outline-variant p-4 glow-primary flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-3 uppercase border-b border-outline-variant pb-2">Operational Directives</h3>
+<div class="flex flex-wrap gap-4 mt-4">
+<button class="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-4 py-3 rounded uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-2 border-2 border-primary w-full sm:w-auto">
+<span class="material-symbols-outlined">play_arrow</span>
+                                BEGIN HIGH-SPEED BATCH
+                            </button>
+<button class="border-2 border-secondary text-secondary font-label-caps text-label-caps px-4 py-3 rounded uppercase tracking-wider hover:bg-secondary-container hover:text-secondary-fixed transition-colors flex items-center gap-2 w-full sm:w-auto">
+<span class="material-symbols-outlined">build</span>
+                                MILL CARBIDE TOOLING
+                            </button>
+<button class="border-2 border-error text-error font-label-caps text-label-caps px-4 py-3 rounded uppercase tracking-wider hover:bg-error-container hover:text-on-error-container transition-colors flex items-center gap-2 w-full sm:w-auto">
+<span class="material-symbols-outlined">delete_forever</span>
+                                PURGE FLAWED
+                            </button>
+</div>
+<!-- Terminal Input Simulation -->
+<div class="mt-6 border-b-2 border-primary bg-surface-container-lowest p-2 font-body-md text-primary">
+<span>&gt; WAITING FOR COMMAND</span><span class="blinking-cursor">_</span>
+</div>
+</section>
+</div>
+<!-- Right Column: Queue & QC -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Raw Materials -->
+<section class="bg-surface-container-high border-2 border-outline-variant p-4 bracket-container">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-3 uppercase flex items-center justify-between">
+                            Stock Readout
+                            <span class="material-symbols-outlined text-on-surface-variant text-sm">sensors</span>
+</h3>
+<ul class="flex flex-col gap-3">
+<li class="flex justify-between items-center dashed-bottom pb-1">
+<span class="text-on-surface-variant text-sm">BRASS SCRAP</span>
+<span class="font-data-num text-data-num text-secondary">640 KG</span>
+</li>
+<li class="flex justify-between items-center dashed-bottom pb-1">
+<span class="text-on-surface-variant text-sm">LEAD BILLETS</span>
+<span class="font-data-num text-data-num text-secondary">320 KG</span>
+</li>
+<li class="flex justify-between items-center dashed-bottom pb-1">
+<span class="text-on-surface-variant text-sm">CORDITE (SMOKELESS)</span>
+<span class="font-data-num text-data-num text-error">85 KG</span>
+</li>
+</ul>
+</section>
+<!-- Production Queue -->
+<section class="bg-surface-container border-2 border-outline-variant p-4 glow-primary flex-1">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-3 uppercase">Batch Queue</h3>
+<div class="flex flex-col gap-4">
+<!-- Queue Item 1 -->
+<div class="bg-surface-container-lowest p-3 border-l-4 border-primary">
+<div class="flex justify-between items-start mb-2">
+<span class="font-body-md font-bold text-on-surface">12.7mm AP</span>
+<span class="font-data-num text-data-num text-primary">500</span>
+</div>
+<div class="h-2 flex">
+<div class="progress-block"></div>
+<div class="progress-block"></div>
+<div class="progress-block"></div>
+<div class="progress-block empty"></div>
+<div class="progress-block empty"></div>
+</div>
+</div>
+<!-- Queue Item 2 -->
+<div class="bg-surface-container-lowest p-3 border-l-4 border-outline-variant opacity-70">
+<div class="flex justify-between items-start mb-2">
+<span class="font-body-md text-on-surface-variant">7.62x39mm FMJ</span>
+<span class="font-data-num text-data-num text-on-surface-variant">1200</span>
+</div>
+</div>
+<!-- Queue Item 3 -->
+<div class="bg-surface-container-lowest p-3 border-l-4 border-outline-variant opacity-70">
+<div class="flex justify-between items-start mb-2">
+<span class="font-body-md text-on-surface-variant">12G Flechette</span>
+<span class="font-data-num text-data-num text-on-surface-variant">300</span>
+</div>
+</div>
+</div>
+</section>
+<!-- QC Panel -->
+<section class="bg-surface-container-high border-2 border-secondary p-4 glow-secondary bracket-container">
+<h3 class="font-headline-sm text-headline-sm text-secondary mb-3 uppercase">QC Diagnostics</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-on-surface-variant">POWDER CONSISTENCY</span>
+<span class="text-primary font-bold">99.1%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1 border border-outline-variant">
+<div class="bg-primary h-full" style="width: 99.1%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-on-surface-variant">PRIMER SEATING</span>
+<span class="text-secondary font-bold">0.05mm</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-full bg-surface-container-lowest h-1 border border-outline-variant">
+<div class="bg-secondary h-full" style="width: 50%"></div>
+</div>
+<span class="text-xs font-bold text-primary px-1 bg-primary-container">EXCELLENT</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-40 flex justify-between items-center px-gutter py-2 bg-surface-container-lowest border-t-2 border-primary-container shadow-[inset_0_0_4px_rgba(233,195,73,0.1)]">
+<div class="font-label-caps text-label-caps text-on-surface-variant">
+            SYSTEM STABILITY: 98.4% | ENCRYPTION: AES-256 ACTIVE
+        </div>
+<div class="flex gap-6 font-body-md text-body-md">
+<a class="text-secondary underline hover:text-primary" href="#">LOGS</a>
+<a class="text-secondary underline hover:text-primary" href="#">DIAGNOSTICS</a>
+</div>
+</footer>
+</body></html>

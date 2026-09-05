@@ -15,6 +15,9 @@ using Ashfall.Core.Maritime;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.World;
+using Ashfall.Core.StartingLevel;
+using Ashfall.Core.YearOfAsh;
+using Ashfall.Core.Expeditions;
 
 namespace Ashfall.Core.Tests
 {
@@ -483,6 +486,308 @@ namespace Ashfall.Core.Tests
         public static IEnumerable<object[]> GetSweepSeeds()
         {
             return SweepSeeds.Select(s => new object[] { s });
+        }
+    }
+}
+
+// ── Plan 73 Wave F: Flagship campaign continuity pass (§12–§14) ──────
+// Runs all four flagship systems (sump, ventilation, sonde, rail) through
+// a deterministic 45-day scenario, then verifies save/load split-run
+// replay parity and identical-seed replay parity.
+namespace Ashfall.Core.Tests
+{
+    public class FlagshipContinuityTests
+    {
+        private const int Seed = 77;
+        private const int TotalDays = 45;
+        private const int SplitDay = 20;
+
+        private static WeatherSystem CreateWeather()
+        {
+            var weather = new WeatherSystem();
+            var profile = new SeasonProfileDef
+            {
+                id = "continuity_profile",
+                displayName = "Continuity Test",
+                weatherCheckIntervalHours = 6f,
+                seasons = new List<SeasonWindowDef>
+                {
+                    new SeasonWindowDef
+                    {
+                        id = "test_season",
+                        displayName = "Test",
+                        startDay = 0,
+                        clearWeight = 1f,
+                        rainWeight = 1f,
+                        overcastWeight = 1f,
+                        ashfallWeight = 0.5f,
+                        falloutStormWeight = 0.1f,
+                        blizzardWeight = 0.1f,
+                        blackRainWeight = 0f
+                    }
+                }
+            };
+            weather.BindProfile(profile, Seed);
+            return weather;
+        }
+
+        private static PowerGridSystem CreatePower()
+        {
+            var state = new PowerGridState
+            {
+                GenerationWatts = 800,
+                FuelUnits = 100,
+                BatteryCapacityWh = 4000,
+                BatteryReserveWh = 2000
+            };
+            var rooms = new List<PowerGridRoom>
+            {
+                new PowerGridRoom("sump_room", "Lower Level", 100f)
+            };
+            return new PowerGridSystem(state, rooms, new SeededRng(Seed));
+        }
+
+        private static SumpFloodingSystem CreateSump(
+            WeatherSystem weather,
+            PowerGridSystem power,
+            YearOfAshDeepFreezeSystem df,
+            Inventory.Inventory inventory,
+            WaterTreatmentSystem waterTreatment)
+        {
+            var sys = new SumpFloodingSystem(new SeededRng(Seed), weather, power, df);
+            sys.AddNode("sump_a", "Lower Sump");
+            sys.InstallPump("sump_a");
+            sys.SetNodePower("sump_a", true);
+            sys.ApplyStratumCatalog(new[]
+            {
+                new SumpStratumDef
+                {
+                    stratum_id = "strat_a",
+                    display_name = "Test Stratum",
+                    base_ingress_cm_per_day = 2f,
+                    water_table_pressure = 1.0f,
+                    silt_fraction = 0.3f,
+                    pump_load_modifier = 1.0f,
+                    toxicity_tier = 1
+                }
+            });
+            sys.AssignStratum("sump_a", "strat_a");
+            sys.BindServices(inventory, waterTreatment);
+            return sys;
+        }
+
+        private static VentilationSystem CreateVentilation(
+            StartingLevelSystem startingLevel,
+            PowerGridSystem power,
+            Inventory.Inventory inventory)
+        {
+            var sys = new VentilationSystem(startingLevel);
+            sys.RegisterSource(new VentilationSource
+            {
+                sourceId = "src_sump",
+                roomId = "sump_room",
+                smokeOutputPerDay = 0.5f,
+                coOutputPerDay = 0.2f,
+                requiresExhaust = true,
+                isActive = true
+            });
+            sys.ApplyElectrostaticCatalog(new[]
+            {
+                new ElectrostaticStageDef
+                {
+                    stage_id = "stage_electrostatic_single",
+                    display_name = "Test Stage",
+                    operating_profiles = new List<ElectrostaticProfileDef>
+                    {
+                        new ElectrostaticProfileDef
+                        {
+                            profile_id = "profile_standard",
+                            display_name = "Standard",
+                            nominal_power_w = 350,
+                            capture_efficiency_pm25 = 0.80f,
+                            capture_efficiency_pm10 = 0.90f,
+                            hot_ash_capture_efficiency = 0.70f,
+                            ozone_output_rate_ppm_per_day = 8.0f,
+                            arc_risk_base_bp = 40
+                        }
+                    },
+                    dust_capacity_kg = 12f,
+                    maintenance_interval_days = 14,
+                    required_component_ids = new List<ElectrostaticComponentCost>
+                    {
+                        new ElectrostaticComponentCost { item_id = "item_air_filter_hepa", amount = 1 },
+                        new ElectrostaticComponentCost { item_id = "mechanical_parts", amount = 4 },
+                        new ElectrostaticComponentCost { item_id = "scrap_chemical", amount = 2 }
+                    },
+                    tags = new List<string>()
+                }
+            });
+            sys.InstallElectrostaticStage("stage_electrostatic_single", "sump_room");
+            sys.SetStageProfile("profile_standard");
+            sys.BindStageServices(new SeededRng(Seed), power, inventory, null);
+            return sys;
+        }
+
+        private static WeatherSondeSystem CreateSonde(WeatherSystem weather)
+        {
+            var sys = new WeatherSondeSystem(weather);
+            sys.Launch("sonde_1", 1, 12f, 1f, 1f);
+            return sys;
+        }
+
+        private static RailwaySystem CreateRail(Inventory.Inventory inventory)
+        {
+            var sys = new RailwaySystem(new SeededRng(Seed), inventory);
+            sys.RegisterCatalog(new RailwayNetworkCatalog
+            {
+                nodes = new List<RailNodeDef>
+                {
+                    new RailNodeDef { node_id = "term_a", display_name = "Terminal A", node_type = "Terminal" },
+                    new RailNodeDef { node_id = "term_b", display_name = "Terminal B", node_type = "Terminal" }
+                },
+                segments = new List<TrackSegmentDef>
+                {
+                    new TrackSegmentDef
+                    {
+                        segment_id = "seg_a_b",
+                        display_name = "A-B",
+                        start_node_id = "term_a",
+                        end_node_id = "term_b",
+                        distance_km = 1f,
+                        base_integrity = 0.9f,
+                        bridge_required = false,
+                        max_train_mass = 200f
+                    }
+                },
+                cars = new List<TrainCarDef>
+                {
+                    new TrainCarDef { car_type_id = "car_locomotive_diesel", display_name = "Loco", empty_mass = 70f },
+                    new TrainCarDef { car_type_id = "car_freight_hopper", display_name = "Hopper", empty_mass = 25f }
+                }
+            });
+            sys.CreateStarterTrain("train_1", "Shuttle", "term_a");
+            sys.DispatchTrain("train_1", "seg_a_b");
+            return sys;
+        }
+
+        private record ScenarioBundle(
+            WeatherSystem Weather,
+            PowerGridSystem Power,
+            YearOfAshDeepFreezeSystem DeepFreeze,
+            StartingLevelSystem StartingLevel,
+            SumpFloodingSystem Sump,
+            VentilationSystem Ventilation,
+            WeatherSondeSystem Sonde,
+            RailwaySystem Rail,
+            Inventory.Inventory Inventory
+        );
+
+        private static ScenarioBundle SetupScenario()
+        {
+            var weather = CreateWeather();
+            var power = CreatePower();
+            var df = new YearOfAshDeepFreezeSystem();
+            var inventory = new Inventory.Inventory();
+            var waterTreatment = new WaterTreatmentSystem(NullLog.Instance);
+            inventory.AddById("item_air_filter_hepa", 1);
+            inventory.AddById("mechanical_parts", 4);
+            inventory.AddById("scrap_chemical", 2);
+
+            var startingLevel = new StartingLevelSystem();
+            var sump = CreateSump(weather, power, df, inventory, waterTreatment);
+            var vent = CreateVentilation(startingLevel, power, inventory);
+            var sonde = CreateSonde(weather);
+            var rail = CreateRail(inventory);
+
+            return new ScenarioBundle(
+                weather, power, df, startingLevel, sump, vent, sonde, rail, inventory);
+        }
+
+        private static void TickScenario(ScenarioBundle bundle, int day)
+        {
+            bundle.Sump.TickDay(day);
+            bundle.Ventilation.TickDay(day, incomingParticulateKgPerDay: 0.3f, hotAshLoad: false);
+            bundle.Sonde.Tick(new SeededRng(Seed), day);
+            bundle.Rail.TickTravel("train_1", 0.5f);
+        }
+
+        private static string SerializeState(object? state)
+        {
+            return System.Text.Json.JsonSerializer.Serialize(
+                state,
+                new System.Text.Json.JsonSerializerOptions { WriteIndented = false });
+        }
+
+        private static void AssertEqualCampaignState(
+            SumpFloodingState aSump, VentilationState aVent, WeatherSondeState aSonde, RailwayState aRail,
+            SumpFloodingState bSump, VentilationState bVent, WeatherSondeState bSonde, RailwayState bRail,
+            string message)
+        {
+            Assert.Equal(SerializeState(aSump), SerializeState(bSump));
+            Assert.Equal(SerializeState(aVent), SerializeState(bVent));
+            Assert.Equal(SerializeState(aSonde), SerializeState(bSonde));
+            Assert.Equal(SerializeState(aRail), SerializeState(bRail));
+        }
+
+        [Fact]
+        public void SplitRun_SaveLoad_ProducesIdenticalFinalState()
+        {
+            // Direct run: 45 days
+            var direct = SetupScenario();
+            for (int day = 1; day <= TotalDays; day++)
+                TickScenario(direct, day);
+
+            // Split run: 20 days, save, restore, continue 25 days
+            var split = SetupScenario();
+            for (int day = 1; day <= SplitDay; day++)
+                TickScenario(split, day);
+
+            var saved = new
+            {
+                weather = split.Weather.CaptureState(),
+                power = split.Power.CaptureState(),
+                deepFreeze = split.DeepFreeze.CaptureState(),
+                startingLevel = split.StartingLevel.CaptureState(),
+                sump = split.Sump.CaptureState(),
+                vent = split.Ventilation.CaptureState(),
+                sonde = split.Sonde.CaptureState(),
+                rail = split.Rail.State
+            };
+
+            var restored = SetupScenario();
+            restored.Weather.RestoreState(saved.weather);
+            restored.Power.RestoreState(saved.power);
+            restored.DeepFreeze.RestoreState(saved.deepFreeze);
+            restored.StartingLevel.RestoreState(saved.startingLevel);
+            restored.Sump.RestoreState(saved.sump);
+            restored.Ventilation.RestoreState(saved.vent);
+            restored.Sonde.RestoreState(saved.sonde);
+            restored.Rail.RestoreState(saved.rail);
+
+            for (int day = SplitDay + 1; day <= TotalDays; day++)
+                TickScenario(restored, day);
+
+            AssertEqualCampaignState(
+                direct.Sump.CaptureState(), direct.Ventilation.CaptureState(), direct.Sonde.CaptureState(), direct.Rail.State,
+                restored.Sump.CaptureState(), restored.Ventilation.CaptureState(), restored.Sonde.CaptureState(), restored.Rail.State,
+                "Split-run final state mismatch");
+        }
+
+        [Fact]
+        public void ReplayParity_SameSeed_SameFinalState()
+        {
+            var run1 = SetupScenario();
+            for (int day = 1; day <= TotalDays; day++)
+                TickScenario(run1, day);
+
+            var run2 = SetupScenario();
+            for (int day = 1; day <= TotalDays; day++)
+                TickScenario(run2, day);
+
+            AssertEqualCampaignState(
+                run1.Sump.CaptureState(), run1.Ventilation.CaptureState(), run1.Sonde.CaptureState(), run1.Rail.State,
+                run2.Sump.CaptureState(), run2.Ventilation.CaptureState(), run2.Sonde.CaptureState(), run2.Rail.State,
+                "Replay parity mismatch");
         }
     }
 }

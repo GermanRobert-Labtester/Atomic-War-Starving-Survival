@@ -18,6 +18,8 @@ namespace Ashfall.Core.Narrative
         public string treaty_articles;
         public string penalties;
         public string[] tags;
+        /// <summary>Plan VIII · Task 21 — optional treaty term in days; 0/absent = indefinite.</summary>
+        public float term_days;
     }
 
     [Serializable]

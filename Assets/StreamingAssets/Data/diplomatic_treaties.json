@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "treaties": [
+    {
+      "treaty_id": "treaty_non_aggression_compact",
+      "display_name": "Compact of Non-Aggression",
+      "description": "Signatories forswear raids and reprisals against one another for the treaty term. Old grudges are shelved, not settled.",
+      "eligible_faction_tags": ["militia", "civic", "holdout", "caravan"],
+      "minimum_signatories": 2,
+      "required_concessions": [
+        {"concession_kind": "goods", "item_id": "clean_water", "amount": 4}
+      ],
+      "duration_days": 30,
+      "stability_rating": 55,
+      "violation_tolerance": 1,
+      "guarantee_allowed": true,
+      "dmz_zone_ids": [],
+      "agenda_clauses": ["cease_raid_preparation", "mutual_reprisal_waiver", "quarterly_messenger_exchange"],
+      "violation_penalty_standing": -12,
+      "tags": ["core", "foundational"]
+    },
+    {
+      "treaty_id": "treaty_aquifer_water_sharing",
+      "display_name": "Aquifer Sharing Accord",
+      "description": "A pumping schedule for the deep aquifer, with metered quotas and a shared repair levy for the casing.",
+      "eligible_faction_tags": ["civic", "holdout", "settlement"],
+      "minimum_signatories": 2,
+      "required_concessions": [
+        {"concession_kind": "goods", "item_id": "mechanical_parts", "amount": 2},
+        {"concession_kind": "goods", "item_id": "clean_water", "amount": 6}
+      ],
+      "duration_days": 45,
+      "stability_rating": 65,
+      "violation_tolerance": 2,
+      "guarantee_allowed": false,
+      "dmz_zone_ids": [],
+      "agenda_clauses": ["metered_pump_roster", "shared_casing_levy", "taint_disclosure_duty"],
+      "violation_penalty_standing": -8,
+      "tags": ["resource", "water"]
+    },
+    {
+      "treaty_id": "treaty_demilitarized_trade_corridor",
+      "display_name": "Demilitarized Trade Corridor",
+      "description": "One road, swept and unarmed. Caravans cross between the ridgeline and the district with no patrols heavier than a sidearm.",
+      "eligible_faction_tags": ["caravan", "civic", "militia"],
+      "minimum_signatories": 3,
+      "required_concessions": [
+        {"concession_kind": "goods", "item_id": "fuel", "amount": 3}
+      ],
+      "duration_days": 40,
+      "stability_rating": 45,
+      "violation_tolerance": 1,
+      "guarantee_allowed": true,
+      "dmz_zone_ids": ["high_scarp_ridgeline", "industrial_district"],
+      "agenda_clauses": ["unarmed_corridor_sweep", "no_toll_transit", "violation_marshal_rotation"],
+      "violation_penalty_standing": -15,
+      "tags": ["trade", "dmz"]
+    },
+    {
+      "treaty_id": "treaty_prisoner_repatriation",
+      "display_name": "Repatriation and Safe Conduct",
+      "description": "Held people go home under escort, and each side posts a guarantee until the last exchange is confirmed.",
+      "eligible_faction_tags": ["militia", "civic", "remnant"],
+      "minimum_signatories": 2,
+      "required_concessions": [
+        {"concession_kind": "goods", "item_id": "bandage", "amount": 3},
+        {"concession_kind": "goods", "item_id": "clean_water", "amount": 4}
+      ],
+      "duration_days": 21,
+      "stability_rating": 50,
+      "violation_tolerance": 0,
+      "guarantee_allowed": true,
+      "dmz_zone_ids": [],
+      "agenda_clauses": ["named_prisoner_roster", "neutral_exchange_site", "guarantee_until_return"],
+      "violation_penalty_standing": -20,
+      "tags": ["humane", "guarantee"]
+    },
+    {
+      "treaty_id": "treaty_patrol_standdown",
+      "display_name": "Ridgeline Patrol Stand-Down",
+      "description": "Both sides pull sentries off the scarp line during the sowing window. Nobody pretends it is friendship. It holds anyway.",
+      "eligible_faction_tags": ["militia", "holdout"],
+      "minimum_signatories": 2,
+      "required_concessions": [
+        {"concession_kind": "goods", "item_id": "scrap_metal", "amount": 2}
+      ],
+      "duration_days": 25,
+      "stability_rating": 40,
+      "violation_tolerance": 1,
+      "guarantee_allowed": false,
+      "dmz_zone_ids": ["high_scarp_ridgeline"],
+      "agenda_clauses": ["sentry_withdrawal", "marked_boundary_cairns", "incident_hotline_schedule"],
+      "violation_penalty_standing": -10,
+      "tags": ["dmz", "seasonal"]
+    },
+    {
+      "treaty_id": "treaty_scuttle_debt_amnesty",
+      "display_name": "Debt Scuttle Amnesty",
+      "description": "Ledger debts racked during the famine quarter are scuttled — struck through, not forgiven — so trade can resume without the old arithmetic.",
+      "eligible_faction_tags": ["caravan", "civic", "settlement"],
+      "minimum_signatories": 2,
+      "required_concessions": [
+        {"concession_kind": "goods", "item_id": "battery", "amount": 1}
+      ],
+      "duration_days": 35,
+      "stability_rating": 60,
+      "violation_tolerance": 2,
+      "guarantee_allowed": false,
+      "dmz_zone_ids": [],
+      "agenda_clauses": ["ledger_debt_struck", "credit_resumption_terms", "arbitration_desk"],
+      "violation_penalty_standing": -6,
+      "tags": ["economy", "ledger"]
+    },
+    {
+      "treaty_id": "treaty_quarantine_of_the_low_fields",
+      "display_name": "Low Fields Quarantine Concord",
+      "description": "The flooded fields stay empty of armed parties while the taint runs its course. Medics of any signatory may work the dike clinics.",
+      "eligible_faction_tags": ["civic", "settlement", "remnant"],
+      "minimum_signatories": 2,
+      "required_concessions": [
+        {"concession_kind": "goods", "item_id": "item_preservation_salt", "amount": 2}
+      ],
+      "duration_days": 30,
+      "stability_rating": 55,
+      "violation_tolerance": 1,
+      "guarantee_allowed": false,
+      "dmz_zone_ids": ["deep_coast_shelf"],
+      "agenda_clauses": ["unarmed_medic_pass", "neutral_clinic_conduct", "taint_sampling_roster"],
+      "violation_penalty_standing": -12,
+      "tags": ["medical", "dmz"]
+    },
+    {
+      "treaty_id": "treaty_meteor_watch_collaboration",
+      "display_name": "Meteor Watch Collaboration",
+      "description": "Signatories pool telescope hours and share inbound-track warnings within the hour. The sky does not care who held the ridge last month.",
+      "eligible_faction_tags": ["civic", "militia", "holdout", "caravan", "settlement"],
+      "minimum_signatories": 3,
+      "required_concessions": [
+        {"concession_kind": "goods", "item_id": "scrap_electronic", "amount": 2},
+        {"concession_kind": "goods", "item_id": "copper_wire_10m_of_10m", "amount": 1}
+      ],
+      "duration_days": 60,
+      "stability_rating": 70,
+      "violation_tolerance": 2,
+      "guarantee_allowed": false,
+      "dmz_zone_ids": [],
+      "agenda_clauses": ["shared_track_warnings", "watch_rotation_registry", "no_warning_withholding"],
+      "violation_penalty_standing": -14,
+      "tags": ["telemetry", "cooperative"]
+    }
+  ]
+}

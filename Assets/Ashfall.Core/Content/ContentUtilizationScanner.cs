@@ -106,6 +106,9 @@ namespace Ashfall.Core.Content
             "mutations.json", "camouflage_gear.json",
             "aircraft_parts.json", "labor_camps.json",
             "narcotics.json", "political_policies.json",
+            "sump_drainage_catalog.json", "electrostatic_filtration_catalog.json",
+            "atmospheric_sounding_catalog.json",
+            "caravan_trade_routes.json", "power_subgrid_nodes.json", "perimeter_defenses.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -712,7 +715,7 @@ namespace Ashfall.Core.Content
                 ["desperation_events.json"] = new[] { "DesperationSystem" },
                 ["bounty_board.json"] = new[] { "MercenarySystem" },
                 ["lore_archives.json"] = new[] { "ArchaeologySystem" },
-                ["surgical_procedures.json"] = new[] { "AmputationSystem" },
+                ["surgical_procedures.json"] = new[] { "AmputationSystem", "AdvancedSurgicalWardSystem" },
                 ["rail_network.json"] = new[] { "RailwaySystem" },
                 ["underground_flora.json"] = new[] { "FungiCultivationSystem" },
                 ["wasteland_laws.json"] = new[] { "JusticeSystem" },
@@ -724,6 +727,12 @@ namespace Ashfall.Core.Content
                 ["labor_camps.json"] = new[] { "ForcedLaborSystem" },
                 ["narcotics.json"] = new[] { "NarcoticsSystem" },
                 ["political_policies.json"] = new[] { "PoliticsSystem" },
+                ["sump_drainage_catalog.json"] = new[] { "SumpFloodingSystem", "VentilationSystem" },
+                ["electrostatic_filtration_catalog.json"] = new[] { "VentilationSystem" },
+                ["atmospheric_sounding_catalog.json"] = new[] { "WeatherSondeSystem" },
+                ["caravan_trade_routes.json"] = new[] { "CaravanTradeNetworkSystem" },
+                ["power_subgrid_nodes.json"] = new[] { "PowerDistributionSubgridSystem" },
+                ["perimeter_defenses.json"] = new[] { "PerimeterDefenseSystem" },
             };
 
             foreach (var cat in _graph.Catalogs)

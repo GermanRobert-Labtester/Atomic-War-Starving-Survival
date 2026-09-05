@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "id": "core_strontium_rtg_100w",
+      "displayName": "Strontium-90 Thermoelectric Generator",
+      "powerClass": "RTG",
+      "baseElectricalOutput": 100.0,
+      "thermalClass": "Passive",
+      "radiationClass": "Sealed",
+      "coolingDemand": 0.0,
+      "shieldingRequirement": 20.0,
+      "wearRate": 0.05,
+      "decayClass": "DecadeLong",
+      "emergencyShutdownItemId": "scram_boron_canister",
+      "tags": [ "rtg", "passive", "unattended", "low_output" ]
+    },
+    {
+      "id": "core_naval_pebble_bed_2kw",
+      "displayName": "Submersible Pebble-Bed Reactor Core",
+      "powerClass": "PebbleBed",
+      "baseElectricalOutput": 2000.0,
+      "thermalClass": "LowThermal",
+      "radiationClass": "Moderate",
+      "coolingDemand": 15.0,
+      "shieldingRequirement": 60.0,
+      "wearRate": 0.50,
+      "decayClass": "MultiYear",
+      "emergencyShutdownItemId": "scram_boron_canister",
+      "tags": [ "reactor", "pebble_bed", "active", "industrial" ]
+    },
+    {
+      "id": "core_research_triga_5kw",
+      "displayName": "Civilian Research TRIGA Core",
+      "powerClass": "ResearchTRIGA",
+      "baseElectricalOutput": 5000.0,
+      "thermalClass": "HighThermal",
+      "radiationClass": "HighPenetration",
+      "coolingDemand": 35.0,
+      "shieldingRequirement": 85.0,
+      "wearRate": 0.80,
+      "decayClass": "Standard",
+      "emergencyShutdownItemId": "scram_boron_canister",
+      "tags": [ "reactor", "high_output", "triga", "heavy_cooling" ]
+    },
+    {
+      "id": "core_cesium_sealed_cell_250w",
+      "displayName": "Cesium Sealed Betavoltaic Cell",
+      "powerClass": "SealedCell",
+      "baseElectricalOutput": 250.0,
+      "thermalClass": "Passive",
+      "radiationClass": "Sealed",
+      "coolingDemand": 0.0,
+      "shieldingRequirement": 30.0,
+      "wearRate": 0.10,
+      "decayClass": "DecadeLong",
+      "emergencyShutdownItemId": "scram_boron_canister",
+      "tags": [ "betavoltaic", "sealed", "passive", "reliable" ]
+    },
+    {
+      "id": "core_beryllium_moderated_1kw",
+      "displayName": "Beryllium Moderated Fission Cell",
+      "powerClass": "ModeratedPack",
+      "baseElectricalOutput": 1000.0,
+      "thermalClass": "LowThermal",
+      "radiationClass": "Moderate",
+      "coolingDemand": 8.0,
+      "shieldingRequirement": 50.0,
+      "wearRate": 0.35,
+      "decayClass": "MultiYear",
+      "emergencyShutdownItemId": "scram_boron_canister",
+      "tags": [ "moderated", "compact", "medium_output" ]
+    },
+    {
+      "id": "core_plutonium_deep_pack_500w",
+      "displayName": "Plutonium Deep-Vault RTG Pack",
+      "powerClass": "RTG",
+      "baseElectricalOutput": 500.0,
+      "thermalClass": "Passive",
+      "radiationClass": "Moderate",
+      "coolingDemand": 0.0,
+      "shieldingRequirement": 40.0,
+      "wearRate": 0.08,
+      "decayClass": "DecadeLong",
+      "emergencyShutdownItemId": "scram_boron_canister",
+      "tags": [ "rtg", "plutonium", "deep_vault", "passive" ]
+    }
+  ]
+}

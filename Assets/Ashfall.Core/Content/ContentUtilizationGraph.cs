@@ -228,6 +228,9 @@ namespace Ashfall.Core.Content
 
         public string ExemptionId { get; set; } = string.Empty;
 
+        public ContentAcceptanceRung AchievedRung { get; set; } = ContentAcceptanceRung.PARSES;
+        public ContentAcceptanceRung RequiredRung { get; set; } = ContentAcceptanceRung.PLAYER_OR_SIM_REACHABLE;
+
         public List<string> ConsumerSystems { get; set; } = new List<string>();
 
         public List<string> Findings { get; set; } = new List<string>();

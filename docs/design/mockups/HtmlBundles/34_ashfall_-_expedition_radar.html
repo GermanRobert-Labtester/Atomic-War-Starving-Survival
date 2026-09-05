@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Wasteland Expedition Interface</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#ffc9b0",
+                        "on-primary-fixed": "#171c20",
+                        "on-tertiary": "#562000",
+                        "tertiary": "#ffede7",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "secondary-container": "#225054",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#201f1f",
+                        "on-surface": "#e5e2e1",
+                        "surface-variant": "#353534",
+                        "surface-container-low": "#1c1b1b",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface-variant": "#c5c6ca",
+                        "surface-container-highest": "#353534",
+                        "secondary": "#a1cfd3",
+                        "on-background": "#e5e2e1",
+                        "surface-bright": "#393939",
+                        "secondary-fixed": "#bcebef",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "surface-tint": "#c3c7cd",
+                        "on-secondary-container": "#93c0c5",
+                        "on-tertiary-fixed": "#351000",
+                        "background": "#131313",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "outline-variant": "#44474a",
+                        "on-secondary-fixed": "#002022",
+                        "surface": "#131313",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#2a2a2a",
+                        "on-primary": "#2c3136",
+                        "primary": "#eef1f7",
+                        "surface-dim": "#131313",
+                        "on-secondary": "#00363a",
+                        "outline": "#8f9194",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#dfe3e9",
+                        "on-tertiary-container": "#9c3f00",
+                        "tertiary-fixed": "#ffdbcc",
+                        "primary-container": "#d1d5db",
+                        "on-primary-container": "#585c61",
+                        "inverse-primary": "#5a5f64",
+                        "on-primary-fixed-variant": "#43474c",
+                        "ashfall-amber": "#CC5500",
+                        "ashfall-cyan": "#2D5A5E"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-padding": "12px",
+                        "stack-tight": "4px",
+                        "stack-md": "12px",
+                        "gutter": "8px",
+                        "margin-base": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "data-sm": ["JetBrains Mono"],
+                        "data-md": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            overflow: hidden;
+            background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent);
+            background-size: 4px 4px;
+        }
+
+        .crt-scanline {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .box-border-industrial {
+            border: 1px solid #44474a;
+        }
+
+        .glow-text-cyan {
+            text-shadow: 0 0 4px rgba(45, 90, 94, 0.8);
+        }
+
+        .glow-text-amber {
+            text-shadow: 0 0 4px rgba(204, 85, 0, 0.8);
+        }
+
+        .map-grid {
+            background-image:
+                linear-gradient(rgba(45, 90, 94, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(45, 90, 94, 0.2) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        @keyframes pulse-amber {
+            0% { color: #8f9194; }
+            50% { color: #CC5500; text-shadow: 0 0 8px rgba(204, 85, 0, 0.8); }
+            100% { color: #8f9194; }
+        }
+        .animate-pulse-amber {
+            animation: pulse-amber 2s infinite;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col p-margin-base gap-gutter">
+<div class="crt-scanline"></div>
+<!-- TopAppBar JSON execution -->
+<header class="flex justify-between items-center px-margin-base h-16 w-full z-50 bg-surface border-b border-outline dark:border-outline-variant box-border-industrial mb-gutter">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-headline-lg text-primary tracking-widest glow-text-cyan">ASHFALL_OS_v4.2</span>
+<div class="h-4 w-px bg-outline-variant mx-2"></div>
+<span class="font-data-md text-data-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">warning</span> FALLOUT ALERT: <span class="text-ashfall-amber animate-pulse-amber">LVL 4 SEVERE</span>
+</span>
+</div>
+<div class="flex items-center gap-6 font-data-sm text-data-sm text-primary">
+<div class="flex items-center gap-1 border-r border-outline-variant pr-4">
+<span class="material-symbols-outlined text-[16px]">air</span> WIND: 85 KM/H (E)
+            </div>
+<div class="flex items-center gap-1 border-r border-outline-variant pr-4">
+<span class="material-symbols-outlined text-[16px]">thermostat</span> TEMP: -38°C
+            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span> 18:42 N-TWILIGHT
+            </div>
+</div>
+</header>
+<div class="flex flex-1 gap-gutter overflow-hidden h-[calc(100vh-100px)] relative">
+<!-- Left Panel: Expedition Party Status -->
+<aside class="w-80 flex flex-col gap-gutter h-full">
+<!-- SideNavBar JSON Adaptation for Context -->
+<div class="box-border-industrial bg-surface-container flex flex-col h-full py-4 relative">
+<div class="px-4 mb-4 border-b border-outline-variant pb-2">
+<h2 class="font-headline-md text-headline-md text-primary glow-text-cyan">EXPEDITION_UNIT</h2>
+<p class="font-data-sm text-data-sm uppercase tracking-tighter text-on-surface-variant">SECTOR_7_NULL_ZONE</p>
+</div>
+<div class="flex-1 overflow-y-auto px-4 flex flex-col gap-stack-md hide-scrollbar">
+<!-- Squad Member 1 -->
+<div class="box-border-industrial p-2 bg-surface-container-low border-l-2 border-ashfall-cyan">
+<div class="flex justify-between items-center mb-1">
+<span class="font-data-md text-data-md text-primary">K. VANCE [LDR]</span>
+<span class="font-data-sm text-data-sm text-secondary">RAD: 12mSv</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-data-sm text-data-sm gap-2 mt-2">
+<span class="material-symbols-outlined text-[14px]">masks</span>
+<div class="flex-1 h-1 bg-surface-variant"><div class="h-full bg-primary w-[85%]"></div></div>
+<span>85%</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-data-sm text-data-sm gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px]">favorite</span>
+<div class="flex-1 h-1 bg-surface-variant"><div class="h-full bg-secondary w-[90%]"></div></div>
+<span>90%</span>
+</div>
+</div>
+<!-- Squad Member 2 -->
+<div class="box-border-industrial p-2 bg-surface-container-low">
+<div class="flex justify-between items-center mb-1">
+<span class="font-data-md text-data-md text-primary">M. RIES [MED]</span>
+<span class="font-data-sm text-data-sm text-ashfall-amber animate-pulse-amber">RAD: 45mSv</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-data-sm text-data-sm gap-2 mt-2">
+<span class="material-symbols-outlined text-[14px]">masks</span>
+<div class="flex-1 h-1 bg-surface-variant"><div class="h-full bg-primary w-[42%]"></div></div>
+<span>42%</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-data-sm text-data-sm gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px]">favorite</span>
+<div class="flex-1 h-1 bg-surface-variant"><div class="h-full bg-secondary w-[60%]"></div></div>
+<span>60%</span>
+</div>
+</div>
+<!-- Squad Member 3 -->
+<div class="box-border-industrial p-2 bg-surface-container-low opacity-60">
+<div class="flex justify-between items-center mb-1">
+<span class="font-data-md text-data-md text-on-surface-variant">J. TARR [ENG]</span>
+<span class="font-data-sm text-data-sm text-error">KIA</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-data-sm text-data-sm gap-2 mt-2">
+<span class="material-symbols-outlined text-[14px]">masks</span>
+<div class="flex-1 h-1 bg-surface-variant"><div class="h-full bg-surface-variant w-[0%]"></div></div>
+<span>0%</span>
+</div>
+</div>
+</div>
+<!-- Logistics Readout -->
+<div class="px-4 mt-auto border-t border-outline-variant pt-4 flex flex-col gap-2">
+<div class="flex items-center gap-2 font-data-sm text-data-sm text-on-surface">
+<span class="material-symbols-outlined text-[16px]">inventory_2</span>
+<span>CARGO: 48/120KG [||||....]</span>
+</div>
+<div class="flex items-center gap-2 font-data-sm text-data-sm text-on-surface">
+<span class="material-symbols-outlined text-[16px]">water_drop</span>
+<span>RATIONS: 12 DAYS</span>
+</div>
+<div class="flex items-center gap-2 font-data-sm text-data-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+<span>MORALE: STABLE</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main View: Wasteland Grid Map -->
+<main class="flex-1 box-border-industrial bg-surface-container relative overflow-hidden flex flex-col">
+<div class="absolute inset-0 map-grid opacity-30 z-0"></div>
+<!-- Map Placeholder / Background -->
+<div class="absolute inset-0 z-0 bg-cover bg-center opacity-40 mix-blend-luminosity" data-alt="A highly detailed, top-down tactical topographical map of a desolate nuclear wasteland. The map features dense, glowing vector lines indicating elevation contours. Heat map overlays show radioactive zones in shades of toxic green, amber, and crimson. The visual style is dark, industrial brutalism with a rugged military field monitor aesthetic. Grids, coordinates, and tactical iconography are scattered across the dark (#131313) background. The lighting simulates a cathode-ray tube display with subtle emissive glows on the data points." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCekg5Ikyk8UamHNV1f0ZamoC54onzzM1CelKs0I0BKm-aDbjA-HUUGxaYVZZO5z4jq3-QkLFW0jNPM76uaHLjI3lr6s9WG5sQ8Y8_sOhc-blq8E6UvgP0zIaVecvZ2Xix1p0xPrixOq5GDYv4vUO4riSKSothbFHrbrmssoTUSfepUu35ElKSs2dCBfEL4kPBl4Q6chtCiCeSLJ8WIQWmVMRtir6TvLAWWVdSdmjVPPJvhUK2YadKgfecQKM_s2JZGPc5-oQj855MQ')"></div>
+<!-- UI Overlay over Map -->
+<div class="relative z-10 w-full h-full flex flex-col p-4 pointer-events-none">
+<div class="flex justify-between items-start">
+<div class="font-data-lg text-data-lg text-primary bg-surface/80 p-2 box-border-industrial inline-block">
+                        COORD: N 45°12' E 11°04'
+                    </div>
+<div class="flex flex-col items-end gap-1">
+<div class="font-data-md text-data-md text-on-surface bg-surface/80 px-2 py-1 box-border-industrial border-l-4 border-l-ashfall-cyan">
+                            SECTOR-04 'Iron Quarry'
+                        </div>
+<div class="font-data-md text-data-md text-on-surface bg-surface/80 px-2 py-1 box-border-industrial border-l-4 border-l-ashfall-amber">
+                            SECTOR-09 'Sunken Reactor'
+                        </div>
+<div class="font-data-md text-data-md text-on-surface bg-surface/80 px-2 py-1 box-border-industrial border-l-4 border-l-outline-variant">
+                            SECTOR-12 'Echo Waystation'
+                        </div>
+</div>
+</div>
+<!-- Storm Vector Visual Indicator -->
+<div class="absolute top-1/3 left-1/4 flex items-center gap-2 bg-error-container/80 text-on-error-container font-data-sm text-data-sm px-2 py-1 box-border-industrial border-error animate-pulse">
+<span class="material-symbols-outlined text-[14px]">storm</span> STORM VECTOR -&gt; EAST
+                </div>
+<!-- Crosshair center -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-50">
+<div class="w-16 h-px bg-primary"></div>
+<div class="h-16 w-px bg-primary absolute"></div>
+<div class="w-4 h-4 border border-primary rounded-full absolute"></div>
+</div>
+</div>
+</main>
+<!-- Right Panel: Waypoint Navigation & Recon Telemetry -->
+<aside class="w-80 flex flex-col gap-gutter h-full">
+<div class="box-border-industrial bg-surface-container flex flex-col h-1/2 p-4">
+<h3 class="font-headline-md text-headline-md text-primary mb-2 border-b border-outline-variant pb-1">RECON_TELEMETRY</h3>
+<div class="bg-surface p-2 box-border-industrial mb-4">
+<div class="font-data-md text-data-md text-secondary mb-1">TARGET NODE:</div>
+<div class="font-data-sm text-data-sm text-on-surface">RUINED SILO</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 bg-ashfall-cyan"></span> <span class="font-label-caps text-label-caps text-on-surface-variant">HIGH SCRAP</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 bg-ashfall-amber animate-pulse"></span> <span class="font-label-caps text-label-caps text-on-surface-variant">EXTREME RADS</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 font-data-sm text-data-sm text-on-surface-variant mb-4">
+<div class="flex justify-between border-b border-outline-variant border-dotted pb-1">
+<span>DISTANCE:</span> <span class="text-primary">14.2 KM</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant border-dotted pb-1">
+<span>EST. TIME:</span> <span class="text-primary">04:30 HRS</span>
+</div>
+</div>
+<div class="mt-auto">
+<div class="font-data-sm text-data-sm text-on-surface-variant mb-1">ENCOUNTER RISK: HIGH</div>
+<div class="w-full h-2 bg-surface border border-outline-variant flex">
+<div class="h-full bg-ashfall-amber w-[75%]"></div>
+</div>
+</div>
+</div>
+<div class="box-border-industrial bg-surface-container flex flex-col h-1/2 p-4 justify-end gap-4">
+<h3 class="font-headline-md text-headline-md text-primary mb-auto border-b border-outline-variant pb-1">COMMAND_LINK</h3>
+<button class="w-full py-3 box-border-industrial font-data-md text-data-md text-primary bg-surface hover:bg-primary hover:text-surface transition-colors uppercase flex justify-center items-center gap-2 group">
+<span class="material-symbols-outlined text-[18px]">radar</span>
+                    [ DEPLOY SCOUTS_ ]
+                </button>
+<button class="w-full py-3 box-border-industrial font-data-md text-data-md text-error bg-surface hover:bg-error hover:text-surface transition-colors uppercase flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">emergency</span>
+                    [ RECALL PARTY_ ]
+                </button>
+</div>
+</aside>
+</div>
+</body></html>

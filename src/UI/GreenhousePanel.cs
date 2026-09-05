@@ -39,6 +39,9 @@ public partial class GreenhousePanel : Control
 
     private GreenhouseHostSession? _host;
 
+    // Plan 22 UI gap register
+    private string? _pendingPicker;
+
     public bool IsBound => _host != null;
 
     public void Bind(GreenhouseHostSession session)
@@ -76,15 +79,24 @@ public partial class GreenhousePanel : Control
         _statusRail.AddCard("vault", "Seed Vault", "—", AshfallMetricCard.Criticality.Normal, minWidth: 130);
         _statusRail.AddCard("blight", "Blighted Beds", "—", AshfallMetricCard.Criticality.Caution, minWidth: 130);
 
-        // Grid columns: bed #, stage badge, water, contamination, growth %, seed id.
+        // Plan 22 GAP-3: supply stock strip — only items that exist in the
+        // current catalog (concurrent worker trimmed the supply list).
+        _statusRail.AddCard("sup_glass", "Glass", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+        _statusRail.AddCard("sup_blight", "Blight", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+        _statusRail.AddCard("sup_medium", "Medium", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+
+        // Grid columns: bed #, stage badge, water, contamination, growth %,
+        // readiness, dry warning (GAP-7), seed id.
         var cols = new[]
         {
             new AshfallDataGrid.Column { Header = "Bed",       MinWidth = 60,  Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Stage",     MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Water",     MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Soil mSv",  MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Growth",    MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Seed",      MinWidth = 240, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Stage",     MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Water",     MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Soil mSv",  MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Growth",    MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Ready",     MinWidth = 60,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Dry",       MinWidth = 50,  Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Seed",      MinWidth = 180, Alignment = AshfallDataGrid.ColumnAlign.Left },
         };
         _plotGrid = new AshfallDataGrid(cols, showHeader: true, minWidth: 720, minHeight: 320);
         _plotGrid.OnRowSelected += HandleRowSelected;
@@ -147,8 +159,35 @@ public partial class GreenhousePanel : Control
     public void RefreshView()
     {
         RefreshStatusRail();
+        RefreshSupplyRail();
         BuildPlotRows();
         RefreshDetail();
+    }
+
+    /// <summary>
+    /// Plan 22 GAP-3: supply stock strip. Counts from the live inventory host;
+    /// zero stock renders in caution so a spent supply stays visible.
+    /// </summary>
+    private void RefreshSupplyRail()
+    {
+        if (_statusRail == null) return;
+        if (_cropFilter == "apiary") return;
+        var inv = _host?.InventoryHost?.Inventory;
+        SetSupply("sup_glass", GreenhouseExpansionCatalog.Items.LeadGlassPane, inv);
+        SetSupply("sup_blight", GreenhouseExpansionCatalog.Items.BlightTreatment, inv);
+        SetSupply("sup_medium", GreenhouseExpansionCatalog.Items.GrowMedium, inv);
+    }
+
+    private void SetSupply(string cardId, string itemId, Ashfall.Core.Inventory.Inventory? inv)
+    {
+        if (inv == null)
+        {
+            _statusRail!.Set(cardId, "—", AshfallMetricCard.Criticality.Normal);
+            return;
+        }
+        int count = inv.CountById(itemId);
+        _statusRail!.Set(cardId, $"{count}",
+            count > 0 ? AshfallMetricCard.Criticality.Normal : AshfallMetricCard.Criticality.Caution);
     }
 
     private void RefreshStatusRail()
@@ -231,6 +270,8 @@ public partial class GreenhousePanel : Control
                             new($"{hive.waterLevel * 100f:0.0}%", hive.waterLevel < 0.2f ? AshfallDataGrid.CellState.Caution : AshfallDataGrid.CellState.Normal),
                             new($"{hive.temperatureC:0.0}°C", (hive.temperatureC < 15f || hive.temperatureC > 32f) ? AshfallDataGrid.CellState.Caution : AshfallDataGrid.CellState.Normal),
                             new($"{hive.colonyPopulation * 100f:0.0}%", popState),
+                            new("—", AshfallDataGrid.CellState.Muted),
+                            new("—", AshfallDataGrid.CellState.Muted),
                             new($"Glass Orchard Apiary (+{bonus:P0} Pollination)", AshfallDataGrid.CellState.Normal),
                         },
                         Selectable = true
@@ -245,6 +286,8 @@ public partial class GreenhousePanel : Control
                     {
                         new("—", AshfallDataGrid.CellState.Muted),
                         new("NO HIVE", AshfallDataGrid.CellState.Caution),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
                         new("—", AshfallDataGrid.CellState.Muted),
                         new("—", AshfallDataGrid.CellState.Muted),
                         new("—", AshfallDataGrid.CellState.Muted),
@@ -290,6 +333,9 @@ public partial class GreenhousePanel : Control
 
             string seedName = GreenhouseSystem.IsFallow(p) ? "— fallow —" : FriendlySeed(p.seedItemId);
 
+            // Plan 22 GAP-7: readiness estimate + dry warning.
+            bool dry = !GreenhouseSystem.IsFallow(p) && p.water < 25f;
+
             var cells = new List<AshfallDataGrid.Cell>
             {
                 new($"#{i + 1}", AshfallDataGrid.CellState.Normal),
@@ -297,6 +343,8 @@ public partial class GreenhousePanel : Control
                 new($"{p.water:0.0}", waterState),
                 new($"{p.soilContamination:0.0}", soilState),
                 new($"{p.growth:0.0}%", growthState),
+                new(ReadyIn(p), AshfallDataGrid.CellState.Muted),
+                new(dry ? "DRY" : "—", dry ? AshfallDataGrid.CellState.Caution : AshfallDataGrid.CellState.Muted),
                 new(seedName, GreenhouseSystem.IsFallow(p) ? AshfallDataGrid.CellState.Muted : AshfallDataGrid.CellState.Normal),
             };
             rows.Add(new AshfallDataGrid.Row { Cells = cells, Selectable = true });
@@ -309,6 +357,8 @@ public partial class GreenhousePanel : Control
                 Cells = new List<AshfallDataGrid.Cell>
                 {
                     new("— no plot matches —", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),
@@ -457,19 +507,19 @@ public partial class GreenhousePanel : Control
             _detailBox.AddChild(AshfallUiHelpers.MakeSmall(_host.LastEvent));
         }
 
-        // ── Item 10 actions: plant / water / treat / clear / harvest ──
+        // ── Plan 22 UI gap register (trimmed to current host surface) ──
+        // GAP-1 seed picker, GAP-3 supply rail (above), GAP-6 water split,
+        // GAP-7 readiness + dry columns (grid above).
+        // Removed (concurrent worker trimmed catalog/host): GAP-2 amend,
+        // GAP-4 maintenance, GAP-5 sterilise, GAP-8 degraded copy.
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
         _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("ACTIONS"));
         var actionRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+
         var plantBtn = AshfallUiHelpers.MakeButton("PLANT",
-            () => OnActionRequested?.Invoke("plant", _selectedIndex));
+            () => _pendingPicker = _pendingPicker == "plant" ? null : "plant");
         plantBtn.CustomMinimumSize = new Vector2(90, 30);
         actionRow.AddChild(plantBtn);
-
-        var waterBtn = AshfallUiHelpers.MakeButton("WATER",
-            () => OnActionRequested?.Invoke("water", _selectedIndex));
-        waterBtn.CustomMinimumSize = new Vector2(90, 30);
-        actionRow.AddChild(waterBtn);
 
         var treatBtn = AshfallUiHelpers.MakeButton("TREAT",
             () => OnActionRequested?.Invoke("treat", _selectedIndex));
@@ -486,6 +536,63 @@ public partial class GreenhousePanel : Control
         harvestBtn.CustomMinimumSize = new Vector2(90, 30);
         actionRow.AddChild(harvestBtn);
         _detailBox.AddChild(actionRow);
+
+        // GAP-6: water split — three discrete options.
+        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("WATERING"));
+        var waterRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+        int cleanStock  = _host?.InventoryHost?.Inventory.CountById("clean_water")     ?? 0;
+        int irradStock  = _host?.InventoryHost?.Inventory.CountById("irradiated_water") ?? 0;
+
+        var c25Btn = AshfallUiHelpers.MakeButton("CLEAN 25",
+            () => OnActionRequested?.Invoke("water:25:clean", _selectedIndex),
+            disabled: _host?.InventoryHost != null && cleanStock < 3);
+        c25Btn.CustomMinimumSize = new Vector2(100, 28);
+        waterRow.AddChild(c25Btn);
+
+        var c50Btn = AshfallUiHelpers.MakeButton("CLEAN 50",
+            () => OnActionRequested?.Invoke("water:50:clean", _selectedIndex),
+            disabled: _host?.InventoryHost != null && cleanStock < 5);
+        c50Btn.CustomMinimumSize = new Vector2(100, 28);
+        waterRow.AddChild(c50Btn);
+
+        var t50Btn = AshfallUiHelpers.MakeButton("TAINTED 50",
+            () => OnActionRequested?.Invoke("water:50:tainted", _selectedIndex),
+            disabled: _host?.InventoryHost != null && irradStock < 5);
+        t50Btn.CustomMinimumSize = new Vector2(110, 28);
+        t50Btn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Entropy));
+        waterRow.AddChild(t50Btn);
+
+        _detailBox.AddChild(waterRow);
+        _detailBox.AddChild(AshfallUiHelpers.MakeSmall(
+            $"clean ×{cleanStock}  ·  irradiated ×{irradStock}"));
+        _detailBox.AddChild(AshfallUiHelpers.MakeSmall(
+            "irradiated — crops remember", autowrap: true));
+
+        // GAP-1: seed selection picker (toggled by PLANT button above).
+        if (_pendingPicker == "plant" && _host != null)
+        {
+            _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("SEED SELECT"));
+            var cat = GreenhouseExpansionCatalog.CropCatalog.All;
+            for (int i = 0; i < cat.Length; i++)
+            {
+                var def = cat[i];
+                bool locked  = def.RequiresUnlock && !_host.System.State.preWarWheatUnlocked;
+                bool noStock = _host.InventoryHost?.Inventory.CountById(def.SeedItemId) < 1;
+                bool disabled = locked || noStock;
+                var seedRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingXs);
+                var label = $"{FriendlySeed(def.SeedItemId)} — {def.GrowthHoursToMature / 24f:0.#}d · yield {def.BaseYield} · blight {(def.BlightResistance * 100f):0}% · {(def.WaterPerDay):0} water/day";
+                if (locked)  label += "  [SEED VAULT SEALED]";
+                if (noStock) label += "  [no stock]";
+                var seedBtn = AshfallUiHelpers.MakeButton(label,
+                    () => OnActionRequested?.Invoke($"plant:{def.SeedItemId}", _selectedIndex),
+                    disabled);
+                seedBtn.CustomMinimumSize = new Vector2(0, 24);
+                seedBtn.SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.Fill;
+                seedRow.AddChild(seedBtn);
+                _detailBox.AddChild(seedRow);
+            }
+        }
     }
 
     /// <summary>Raised when the player presses an action button. Host wires to GreenhouseHostSession.</summary>
@@ -503,12 +610,46 @@ public partial class GreenhousePanel : Control
 
     private static string FriendlySeed(string seedId) => seedId switch
     {
-        GreenhouseExpansionCatalog.Items.SeedMushroom => "Mushroom Spores",
-        GreenhouseExpansionCatalog.Items.SeedTuber    => "Frost Tuber",
-        GreenhouseExpansionCatalog.Items.SeedGrain    => "Winter Rye Grain",
-        GreenhouseExpansionCatalog.Items.SeedWheat    => "Pre-War Heritage Wheat",
-        _ => seedId,
+        GreenhouseExpansionCatalog.Items.SeedMushroom     => "Mushroom Spores",
+        GreenhouseExpansionCatalog.Items.SeedTuber        => "Frost Tuber",
+        GreenhouseExpansionCatalog.Items.SeedGrain        => "Winter Rye Grain",
+        GreenhouseExpansionCatalog.Items.SeedWheat        => "Pre-War Heritage Wheat",
+        GreenhouseExpansionCatalog.Items.SeedHardyTuber   => "Hardy Frost Tuber",
+        GreenhouseExpansionCatalog.Items.SeedAshGrain     => "Ashland Grain",
+        GreenhouseExpansionCatalog.Items.SeedBiolumMushroom => "Bioluminescent Mushroom",
+        GreenhouseExpansionCatalog.Items.SeedNutrientAlgae  => "Nutrient Algae",
+        GreenhouseExpansionCatalog.Items.SeedMedicinalHerb  => "Medicinal Herb",
+        GreenhouseExpansionCatalog.Items.SeedLeafyGreen     => "Leafy Green",
+        GreenhouseExpansionCatalog.Items.SeedOilseed        => "Oilseed",
+        GreenhouseExpansionCatalog.Items.SeedColdLegume     => "Cold Legume",
+        _ => "Cultivar",
     };
+
+    private static string FriendlySupply(string itemId) => itemId switch
+    {
+        GreenhouseExpansionCatalog.Items.LeadGlassPane   => "Glass Pane",
+        GreenhouseExpansionCatalog.Items.BlightTreatment => "Blight Treatment",
+        GreenhouseExpansionCatalog.Items.GrowMedium      => "Grow Medium",
+        _ => itemId,
+    };
+
+    /// <summary>
+    /// Plan 22 GAP-7: rough readiness estimate based on crop definition
+    /// and current growth. Returns "NOW" when mature, "—" for fallow or
+    /// when no definition exists.
+    /// </summary>
+    private static string ReadyIn(GreenhousePlotState p)
+    {
+        if (GreenhouseSystem.IsFallow(p)) return "—";
+        var stage = (GreenhouseStage)p.stage;
+        if (stage == GreenhouseStage.Mature) return "NOW";
+        if (stage == GreenhouseStage.Failed) return "—";
+        var def = GreenhouseExpansionCatalog.CropCatalog.Get(p.seedItemId);
+        if (def == null) return "—";
+        float daysTotal = Math.Max(1f, def.GrowthHoursToMature / 24f);
+        float daysLeft = (100f - p.growth) / 100f * daysTotal;
+        return $"{Math.Max(1, (int)Math.Ceiling(daysLeft))}d";
+    }
 
     /// <summary>
     /// Hard-coded fixture rows used when no host session is bound. IDs all
@@ -525,6 +666,8 @@ public partial class GreenhousePanel : Control
                     new("68.0", AshfallDataGrid.CellState.Normal),
                     new("12.0", AshfallDataGrid.CellState.Normal),
                     new("21.0%", AshfallDataGrid.CellState.Normal),
+                    new("4d", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
                     new(FriendlySeed(GreenhouseExpansionCatalog.Items.SeedMushroom), AshfallDataGrid.CellState.Normal),
                 }, Selectable = true },
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
@@ -534,6 +677,8 @@ public partial class GreenhousePanel : Control
                     new("44.0", AshfallDataGrid.CellState.Caution),
                     new("38.0", AshfallDataGrid.CellState.Normal),
                     new("72.0%", AshfallDataGrid.CellState.Normal),
+                    new("2d", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
                     new(FriendlySeed(GreenhouseExpansionCatalog.Items.SeedTuber), AshfallDataGrid.CellState.Normal),
                 }, Selectable = true },
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
@@ -543,6 +688,8 @@ public partial class GreenhousePanel : Control
                     new("82.0", AshfallDataGrid.CellState.Normal),
                     new("9.0", AshfallDataGrid.CellState.Normal),
                     new("100.0%", AshfallDataGrid.CellState.Positive),
+                    new("NOW", AshfallDataGrid.CellState.Positive),
+                    new("—", AshfallDataGrid.CellState.Muted),
                     new(FriendlySeed(GreenhouseExpansionCatalog.Items.SeedGrain), AshfallDataGrid.CellState.Normal),
                 }, Selectable = true },
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
@@ -552,6 +699,8 @@ public partial class GreenhousePanel : Control
                     new("0.0", AshfallDataGrid.CellState.Critical),
                     new("0.0", AshfallDataGrid.CellState.Normal),
                     new("0.0%", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
                     new("— fallow —", AshfallDataGrid.CellState.Muted),
                 }, Selectable = true },
         };

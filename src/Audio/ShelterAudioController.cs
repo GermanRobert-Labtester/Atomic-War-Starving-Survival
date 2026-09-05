@@ -16,6 +16,9 @@ namespace AtomicWar.GodotApp.Audio
         private PowerGridSystem? _powerGrid;
         private StartingLevelSystem? _startingLevel;
         private bool _filterHazard;
+        private bool _hasPowerSnapshot;
+        private bool _generatorRunning;
+        private bool _brownout;
         private bool _disposed;
 
         public ShelterAudioController(AudioManager audio)
@@ -59,7 +62,8 @@ namespace AtomicWar.GodotApp.Audio
             if (_startingLevel != null)
                 _startingLevel.OnStateChanged += OnStartingLevelChanged;
 
-            SyncGeneratorLoop();
+            _hasPowerSnapshot = false;
+            SyncPowerState(emitTransitions: false);
             SyncVentilationLoop();
             _filterHazard = _startingLevel?.State.airHazardWarning ?? false;
             if (_filterHazard)
@@ -68,14 +72,20 @@ namespace AtomicWar.GodotApp.Audio
 
         private void OnPowerChanged(PowerGridEvent evt)
         {
-            SyncGeneratorLoop();
-            if (evt != null && evt.Kind == PowerGridEventKind.Tripped)
-                _playCue(AudioCueCatalog.DangerAlarmKlaxon);
+            SyncPowerState(emitTransitions: true);
+            if (evt == null)
+                return;
+
+            if (evt.Kind == PowerGridEventKind.Tripped)
+                _playCue(AudioCueCatalog.ShelterBreakerTrip);
+            else if (evt.Kind == PowerGridEventKind.BreakerToggled
+                && string.Equals(evt.Detail, "open_to_closed", StringComparison.Ordinal))
+                _playCue(AudioCueCatalog.ShelterPowerRestore);
         }
 
         private void OnTickSummary(PowerGridTickSummary summary)
         {
-            SyncGeneratorLoop();
+            SyncPowerState(emitTransitions: true);
             if (summary != null && summary.IsBrownout)
                 _playCue(AudioCueCatalog.DangerAlarmKlaxon);
         }
@@ -89,25 +99,79 @@ namespace AtomicWar.GodotApp.Audio
             SyncVentilationLoop();
         }
 
-        private void SyncGeneratorLoop()
+        private void SyncPowerState(bool emitTransitions)
         {
             bool running = _powerGrid != null
                 && _powerGrid.GenerationWatts > 0f
                 && _powerGrid.FuelUnits > 0f;
+            bool brownout = _powerGrid?.IsBrownout ?? false;
+
+            if (emitTransitions && _hasPowerSnapshot)
+            {
+                if (running && !_generatorRunning)
+                    _playCue(AudioCueCatalog.ShelterGeneratorStart);
+                else if (!running && _generatorRunning)
+                    _playCue(AudioCueCatalog.ShelterGeneratorStop);
+
+                if (_brownout && !brownout)
+                    _playCue(AudioCueCatalog.ShelterPowerRestore);
+            }
+
+            _generatorRunning = running;
+            _brownout = brownout;
+            _hasPowerSnapshot = true;
+
+            SyncGeneratorLoop(running);
+            SyncLowPowerLoop(running, brownout);
+        }
+
+        private void SyncGeneratorLoop(bool running)
+        {
             if (running)
-                _playCue(AudioCueCatalog.ShelterGenerator);
+            {
+                bool heavyStrain = _powerGrid!.TotalDrawWatts >= _powerGrid.GenerationWatts * 0.85f;
+                if (heavyStrain)
+                {
+                    _playCue(AudioCueCatalog.ShelterGeneratorStrain);
+                    _stopCue(AudioCueCatalog.ShelterGenerator);
+                }
+                else
+                {
+                    _playCue(AudioCueCatalog.ShelterGenerator);
+                    _stopCue(AudioCueCatalog.ShelterGeneratorStrain);
+                }
+            }
             else
+            {
                 _stopCue(AudioCueCatalog.ShelterGenerator);
+                _stopCue(AudioCueCatalog.ShelterGeneratorStrain);
+            }
+        }
+
+        private void SyncLowPowerLoop(bool running, bool brownout)
+        {
+            if (_powerGrid != null && (!running || brownout))
+                _playCue(AudioCueCatalog.AmbBunkerLowPower);
+            else
+                _stopCue(AudioCueCatalog.AmbBunkerLowPower);
         }
 
         private void SyncVentilationLoop()
         {
-            // The Holdfast is sealed, so powered air circulation is audible
+            // The Holdfast is sealed, so powered air circulation and filtration is audible
             // whenever the starting-level atmosphere system exists.
             if (_startingLevel != null)
+            {
                 _playCue(AudioCueCatalog.ShelterVentilation);
+                _playCue(AudioCueCatalog.ShelterAirRecycler);
+                _playCue(AudioCueCatalog.ShelterWaterFiltration);
+            }
             else
+            {
                 _stopCue(AudioCueCatalog.ShelterVentilation);
+                _stopCue(AudioCueCatalog.ShelterAirRecycler);
+                _stopCue(AudioCueCatalog.ShelterWaterFiltration);
+            }
         }
 
         public void Dispose()
@@ -123,8 +187,13 @@ namespace AtomicWar.GodotApp.Audio
                 _startingLevel.OnStateChanged -= OnStartingLevelChanged;
             _powerGrid = null;
             _startingLevel = null;
+            _hasPowerSnapshot = false;
             _stopCue(AudioCueCatalog.ShelterGenerator);
+            _stopCue(AudioCueCatalog.ShelterGeneratorStrain);
+            _stopCue(AudioCueCatalog.AmbBunkerLowPower);
             _stopCue(AudioCueCatalog.ShelterVentilation);
+            _stopCue(AudioCueCatalog.ShelterAirRecycler);
+            _stopCue(AudioCueCatalog.ShelterWaterFiltration);
         }
 
         private void ThrowIfDisposed()

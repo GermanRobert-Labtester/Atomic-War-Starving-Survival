@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "tomes": [
+    {
+      "tome_id": "tome_mechanics_handbook_1974",
+      "display_name": "Municipal Mechanics Handbook, 1974 Printing",
+      "category": "technical",
+      "description": "A shop-grade repair manual with grease-stamped thumbholes. The last pages are loose; the torque tables still read true.",
+      "transcription_days": 4,
+      "paper_brittleness_tier": 2,
+      "initial_degradation_permille": 420,
+      "microfiche_frame_density": 60,
+      "knowledge_bonus": 3,
+      "morale_effect": 0.5,
+      "restoration_costs": [
+        {"item_id": "scrap_chemical", "amount": 1},
+        {"item_id": "clean_water", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1},
+        {"item_id": "scrap_chemical", "amount": 1}
+      ],
+      "tags": ["repair", "reference"]
+    },
+    {
+      "tome_id": "tome_stoic_meditations",
+      "display_name": "Hand-Copied Meditations",
+      "category": "philosophy",
+      "description": "Someone's grandmother copied this out by hand during the evacuation years. The margins carry two generations of pencil arguments.",
+      "transcription_days": 3,
+      "paper_brittleness_tier": 1,
+      "initial_degradation_permille": 180,
+      "microfiche_frame_density": 48,
+      "knowledge_bonus": 1,
+      "morale_effect": 1.5,
+      "restoration_costs": [
+        {"item_id": "clean_water", "amount": 1},
+        {"item_id": "paper_stock", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1}
+      ],
+      "tags": ["philosophy", "comfort"]
+    },
+    {
+      "tome_id": "tome_agricultural_botany",
+      "display_name": "Agricultural Botany, Annotated Course Text",
+      "category": "science",
+      "description": "A university press text with seed-space tables penciled in by a cooperative that no longer answers its door.",
+      "transcription_days": 5,
+      "paper_brittleness_tier": 2,
+      "initial_degradation_permille": 350,
+      "microfiche_frame_density": 72,
+      "knowledge_bonus": 3,
+      "morale_effect": 0.0,
+      "restoration_costs": [
+        {"item_id": "scrap_chemical", "amount": 1},
+        {"item_id": "paper_stock", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1},
+        {"item_id": "scrap_chemical", "amount": 1}
+      ],
+      "tags": ["farming", "greenhouse"]
+    },
+    {
+      "tome_id": "tome_metallurgical_handbook",
+      "display_name": "Foundry & Alloy Reference",
+      "category": "technical",
+      "description": "Heat-treatment charts for steels nobody can name anymore. The fold-out phase diagram is intact if you are patient with it.",
+      "transcription_days": 6,
+      "paper_brittleness_tier": 3,
+      "initial_degradation_permille": 610,
+      "microfiche_frame_density": 84,
+      "knowledge_bonus": 4,
+      "morale_effect": 0.0,
+      "restoration_costs": [
+        {"item_id": "scrap_chemical", "amount": 2},
+        {"item_id": "clean_water", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 2},
+        {"item_id": "scrap_chemical", "amount": 1}
+      ],
+      "tags": ["smithing", "reference"]
+    },
+    {
+      "tome_id": "tome_symphonic_scores",
+      "display_name": "Collected Orchestral Scores, Full Set",
+      "category": "music",
+      "description": "Heavy paper, wide margins, fingering notes in four different hands. Worth more to the shelter than its weight in filters, some nights.",
+      "transcription_days": 7,
+      "paper_brittleness_tier": 1,
+      "initial_degradation_permille": 120,
+      "microfiche_frame_density": 96,
+      "knowledge_bonus": 1,
+      "morale_effect": 2.5,
+      "restoration_costs": [
+        {"item_id": "paper_stock", "amount": 1},
+        {"item_id": "clean_water", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 2}
+      ],
+      "tags": ["music", "salon"]
+    },
+    {
+      "tome_id": "tome_field_surgery_primer",
+      "display_name": "Field Surgery Primer",
+      "category": "medicine",
+      "description": "Printed for aid columns that never arrived. Someone has already annotated the triage chapters in red, from practice.",
+      "transcription_days": 4,
+      "paper_brittleness_tier": 2,
+      "initial_degradation_permille": 480,
+      "microfiche_frame_density": 64,
+      "knowledge_bonus": 3,
+      "morale_effect": 0.0,
+      "restoration_costs": [
+        {"item_id": "scrap_chemical", "amount": 1},
+        {"item_id": "clean_water", "amount": 2}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1},
+        {"item_id": "scrap_chemical", "amount": 1}
+      ],
+      "tags": ["medicine", "triage"]
+    },
+    {
+      "tome_id": "tome_water_purification_manual",
+      "display_name": "Municipal Water Works Purification Manual",
+      "category": "technical",
+      "description": "Chlorination schedules, bed-change intervals, and a folded map of a reservoir that is now a bird refuge.",
+      "transcription_days": 3,
+      "paper_brittleness_tier": 3,
+      "initial_degradation_permille": 700,
+      "microfiche_frame_density": 52,
+      "knowledge_bonus": 4,
+      "morale_effect": 0.5,
+      "restoration_costs": [
+        {"item_id": "scrap_chemical", "amount": 2},
+        {"item_id": "clean_water", "amount": 2}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1},
+        {"item_id": "scrap_chemical", "amount": 2}
+      ],
+      "tags": ["water", "reference"]
+    },
+    {
+      "tome_id": "tome_municipal_archives_1971",
+      "display_name": "Consolidated Municipal Register, 1971",
+      "category": "civic",
+      "description": "Property lines, census abstracts, and the minutes of a town council arguing about a water tower. Proof that paperwork outlives its authors.",
+      "transcription_days": 6,
+      "paper_brittleness_tier": 3,
+      "initial_degradation_permille": 650,
+      "microfiche_frame_density": 88,
+      "knowledge_bonus": 2,
+      "morale_effect": 0.0,
+      "restoration_costs": [
+        {"item_id": "paper_stock", "amount": 2},
+        {"item_id": "clean_water", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 2},
+        {"item_id": "scrap_chemical", "amount": 1}
+      ],
+      "tags": ["civic", "chronicle"]
+    },
+    {
+      "tome_id": "tome_children_primers",
+      "display_name": "Boxed Set of Children's Primers",
+      "category": "education",
+      "description": "Six slim volumes with the covers colored in. The arithmetic book still has a pressed flower where lesson twelve should be.",
+      "transcription_days": 2,
+      "paper_brittleness_tier": 1,
+      "initial_degradation_permille": 90,
+      "microfiche_frame_density": 40,
+      "knowledge_bonus": 1,
+      "morale_effect": 2.0,
+      "restoration_costs": [
+        {"item_id": "paper_stock", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1}
+      ],
+      "tags": ["school", "salon"]
+    },
+    {
+      "tome_id": "tome_seed_almanac",
+      "display_name": "Regional Seed Almanac, Final Edition",
+      "category": "science",
+      "description": "Sowing windows and varietal notes for a climate that no longer exists. The cooperative stamps inside the cover are the only monument those farms get.",
+      "transcription_days": 3,
+      "paper_brittleness_tier": 2,
+      "initial_degradation_permille": 390,
+      "microfiche_frame_density": 56,
+      "knowledge_bonus": 3,
+      "morale_effect": 0.5,
+      "restoration_costs": [
+        {"item_id": "clean_water", "amount": 1},
+        {"item_id": "paper_stock", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1}
+      ],
+      "tags": ["farming", "greenhouse"]
+    },
+    {
+      "tome_id": "tome_radio_service_manual",
+      "display_name": "Radio Service Manual with Schematic Supplements",
+      "category": "technical",
+      "description": "Valve-era receivers through solid-state hybrids. The fold-outs are foxed but the coil-winding tables are complete.",
+      "transcription_days": 5,
+      "paper_brittleness_tier": 2,
+      "initial_degradation_permille": 440,
+      "microfiche_frame_density": 76,
+      "knowledge_bonus": 4,
+      "morale_effect": 0.0,
+      "restoration_costs": [
+        {"item_id": "scrap_chemical", "amount": 1},
+        {"item_id": "clean_water", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1},
+        {"item_id": "scrap_chemical", "amount": 1}
+      ],
+      "tags": ["radio", "reference"]
+    },
+    {
+      "tome_id": "tome_shelter_civil_defense_guide",
+      "display_name": "Civil Defense Shelter Placement Guide",
+      "category": "civic",
+      "description": "A government pamphlet expanded by hand into a real manual: airflow arrows, door braces, and a list of names under 'who digs'.",
+      "transcription_days": 4,
+      "paper_brittleness_tier": 2,
+      "initial_degradation_permille": 520,
+      "microfiche_frame_density": 60,
+      "knowledge_bonus": 2,
+      "morale_effect": 1.0,
+      "restoration_costs": [
+        {"item_id": "scrap_chemical", "amount": 1},
+        {"item_id": "paper_stock", "amount": 1}
+      ],
+      "microfiche_costs": [
+        {"item_id": "microfiche_film", "amount": 1}
+      ],
+      "tags": ["shelter", "reference"]
+    }
+  ]
+}

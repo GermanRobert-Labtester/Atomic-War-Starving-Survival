@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "collection_id": "contagion_events_catalog",
+  "contagion_events": [
+    {
+      "id": "contagion_funeral_grief",
+      "display_name": "Funeral Grief",
+      "description": "A burial in the common room lingers. The bereaved keep setting one extra bowl, and nobody moves it.",
+      "emotion_type": "despair",
+      "base_intensity": 0.7,
+      "duration_days": 4,
+      "bond_multiplier": 1.4,
+      "proximity_multiplier": 1.2,
+      "recovery_per_day": 0.15,
+      "tags": ["grief", "death", "social"]
+    },
+    {
+      "id": "contagion_food_shortage_panic",
+      "display_name": "Shortage Panic",
+      "description": "The ration shelf read empty one morning too many. People have started eating in the dark, alone.",
+      "emotion_type": "panic",
+      "base_intensity": 0.6,
+      "duration_days": 3,
+      "bond_multiplier": 1.1,
+      "proximity_multiplier": 1.5,
+      "recovery_per_day": 0.2,
+      "tags": ["scarcity", "food", "hurry"]
+    },
+    {
+      "id": "contagion_successful_rescue_hope",
+      "display_name": "Brought Back",
+      "description": "Someone came back through the hatch alive. For a day or two, people stand closer together at mess.",
+      "emotion_type": "hope",
+      "base_intensity": 0.6,
+      "duration_days": 3,
+      "bond_multiplier": 1.3,
+      "proximity_multiplier": 1.1,
+      "recovery_per_day": 0.25,
+      "tags": ["rescue", "relief", "social"]
+    },
+    {
+      "id": "contagion_outbreak_fear",
+      "display_name": "Outbreak Fear",
+      "description": "A cough behind the curtain travels farther than the cough itself. Neighbours count who is missing from mess.",
+      "emotion_type": "panic",
+      "base_intensity": 0.65,
+      "duration_days": 4,
+      "bond_multiplier": 1.0,
+      "proximity_multiplier": 1.6,
+      "recovery_per_day": 0.15,
+      "tags": ["outbreak", "sickness", "cross_system_pathogen"]
+    },
+    {
+      "id": "contagion_hope_beacon",
+      "display_name": "The Beacon Room",
+      "description": "The lamp in the common room is lit and someone is reading aloud. It is not much. It counts.",
+      "emotion_type": "hope",
+      "base_intensity": 0.5,
+      "duration_days": 5,
+      "bond_multiplier": 1.2,
+      "proximity_multiplier": 1.3,
+      "recovery_per_day": 0.3,
+      "tags": ["beacon", "community", "cross_system_hopebeacon"]
+    },
+    {
+      "id": "contagion_quarantine_resentment",
+      "display_name": "Curtain Resentment",
+      "description": "The isolated bunk is quiet, and the quiet is resented. Those outside watch the curtain more than the sick.",
+      "emotion_type": "despair",
+      "base_intensity": 0.45,
+      "duration_days": 3,
+      "bond_multiplier": 1.5,
+      "proximity_multiplier": 1.1,
+      "recovery_per_day": 0.2,
+      "tags": ["quarantine", "isolation", "cross_system_pathogen"]
+    }
+  ]
+}

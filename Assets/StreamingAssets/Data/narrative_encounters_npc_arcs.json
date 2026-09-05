@@ -1,0 +1,984 @@
+{
+  "schema_version": 1,
+  "encounters": [
+    {
+      "id": "enc_arc_mara_waystation",
+      "title": "The Factor at the Water Station",
+      "description": "Two wagons stand in the lee of the water station, tarped against the ash. The factor works through her ledger by memory: medicine, axle parts, the crossing she lost. Her prices are fast and exact, and she mentions once, without emphasis, that she pays favors back with interest.",
+      "category": "Trade",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_mara_veln",
+      "choices": [
+        {
+          "choiceId": "mara_share_medicine",
+          "text": "Trade fair — medicine and axle parts at her asking price.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_mara_01_waystation",
+          "completesQuestChoiceId": "mara_help"
+        },
+        {
+          "choiceId": "mara_squeeze_the_route",
+          "text": "Buy her shortage at a premium she is in no position to refuse.",
+          "moraleDelta": 1,
+          "guiltDelta": 3,
+          "completesQuestId": "quest_arc_mara_01_waystation",
+          "completesQuestChoiceId": "mara_exploit"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_mara_route",
+      "title": "Wreckage on the Cut Road",
+      "description": "A wagon sits hip-deep in a collapsed cut road crust, harness still on. The factor who owns it is camped on the wreck with a rifle across her knees, guarding cargo she cannot move. She looks up at your column and starts naming prices before you are close enough to see her face clearly.",
+      "category": "Discovery",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 0.75,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_mara_veln",
+      "choices": [
+        {
+          "choiceId": "mara_pull_her_out",
+          "text": "Spend the water and the day — pull the wagon out and walk her people in.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_mara_02_route",
+          "completesQuestChoiceId": "mara_rescue"
+        },
+        {
+          "choiceId": "mara_drive_past",
+          "text": "Take what is loose on the wreck and leave the road its due.",
+          "moraleDelta": 1,
+          "guiltDelta": 4,
+          "completesQuestId": "quest_arc_mara_02_route",
+          "completesQuestChoiceId": "mara_pass"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_ilze_clinic",
+      "title": "The Almshouse Inventory",
+      "description": "Eight beds, two occupied by sleep and six by endurance. The physician walks you past the shelves without stopping so you can see for yourself how little is on them, then names a list of what she needs and what it costs, at prices you could check.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_ilze_kaar",
+      "choices": [
+        {
+          "choiceId": "ilze_restock_the_shelves",
+          "text": "Restock the clinic at cost — medicine, clean water, the boring half of mercy.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_ilze_01_clinic",
+          "completesQuestChoiceId": "ilze_supply"
+        },
+        {
+          "choiceId": "ilze_walk_past",
+          "text": "Walk past. Your ledger has no column for other people's shelves.",
+          "moraleDelta": 0,
+          "guiltDelta": 2,
+          "completesQuestId": "quest_arc_ilze_01_clinic",
+          "completesQuestChoiceId": "ilze_pass"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_ilze_outbreak",
+      "title": "Sixteen Bedrolls",
+      "description": "The almshouse aisles are bedrolls now, and the fever has a rhythm she tracks on a slate. She does not ask you to come, and she has written to you anyway. The cordon rumor is two days old and gaining.",
+      "category": "Hazard",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 0.75,
+      "minDangerLevel": 1.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_ilze_kaar",
+      "choices": [
+        {
+          "choiceId": "ilze_take_her_out",
+          "text": "Come for her: bring her out before the cordon closes.",
+          "moraleDelta": 2,
+          "guiltDelta": 2,
+          "completesQuestId": "quest_arc_ilze_02_outbreak",
+          "completesQuestChoiceId": "ilze_extract"
+        },
+        {
+          "choiceId": "ilze_hold_the_clinic",
+          "text": "Come for the people: supplies and hands enough to hold, and leave her her clinic.",
+          "moraleDelta": 4,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_ilze_02_outbreak",
+          "completesQuestChoiceId": "ilze_fortify"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_marek_patrol",
+      "title": "The Posted Terms",
+      "description": "The checkpoint's orders are posted where petitioners can read them, and the corporal answers questions by pointing at the relevant line. The queue moves. The log grows. Somewhere in it, a space is waiting for however you conduct yourself.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_marek_voln",
+      "choices": [
+        {
+          "choiceId": "marek_honor_the_post",
+          "text": "Honor the posted terms and walk the column through clean.",
+          "moraleDelta": 1,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_marek_01_patrol",
+          "completesQuestChoiceId": "marek_cooperative"
+        },
+        {
+          "choiceId": "marek_dispute_the_order",
+          "text": "Dispute the order at the post, loudly and in writing.",
+          "moraleDelta": 0,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_marek_01_patrol",
+          "completesQuestChoiceId": "marek_defiant"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_marek_deserter",
+      "title": "A Kit Kept in Trust",
+      "description": "He waits where the sweeps do not look first, and the message that brought you here is six lines long, dated, and signed. The garrison's notices about him are posted one valley over. He does not run. He waits to learn what you decide.",
+      "category": "Social",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 1.25,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 1.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_marek_voln",
+      "choices": [
+        {
+          "choiceId": "marek_provision_him",
+          "text": "Provision him quiet and point him at a route out of the region.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_marek_02_deserter",
+          "completesQuestChoiceId": "marek_provisions"
+        },
+        {
+          "choiceId": "marek_report_him",
+          "text": "Report to the garrison and take what procedure pays.",
+          "moraleDelta": 0,
+          "guiltDelta": 4,
+          "completesQuestId": "quest_arc_marek_02_deserter",
+          "completesQuestChoiceId": "marek_turn_in"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_lina_baths",
+      "title": "Forty-One, Corrected",
+      "description": "The queue at the baths has a keeper: a child with a counting book and a voice pitched to carry. She tallies your column in, corrects your own number to your face, and waits to see whether the adults laugh or argue or fix the count.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_lina",
+      "choices": [
+        {
+          "choiceId": "lina_offer_a_place",
+          "text": "Offer her a place in the shelter — her work included, her terms honored.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_lina_01_found",
+          "completesQuestChoiceId": "lina_take_in"
+        },
+        {
+          "choiceId": "lina_leave_supplies",
+          "text": "Leave supplies with the queue and let her keep her count of it.",
+          "moraleDelta": 1,
+          "guiltDelta": 1,
+          "completesQuestId": "quest_arc_lina_01_found",
+          "completesQuestChoiceId": "lina_leave_supplies"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_anete_substation",
+      "title": "Grounds On, Lights Off",
+      "description": "The substation compound is swept, grounded, and labeled in a hand that believes in the future. The engineer walks you the perimeter, points out what works and what is missing, and hands you a parts list that is reasonable, which is the strange part.",
+      "category": "Discovery",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_anete_sarn",
+      "choices": [
+        {
+          "choiceId": "anete_fill_the_list",
+          "text": "Fill the parts list — copper, breakers, the boring unglamorous half of light.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_anete_01_substation",
+          "completesQuestChoiceId": "anete_supply_parts"
+        },
+        {
+          "choiceId": "anete_offer_shelter",
+          "text": "Offer her a place in the shelter; the grid can wait for a better season.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_anete_01_substation",
+          "completesQuestChoiceId": "anete_rescue"
+        },
+        {
+          "choiceId": "anete_drive_on",
+          "text": "Drive on. The list is reasonable and so is the road away from it.",
+          "moraleDelta": 0,
+          "guiltDelta": 2,
+          "completesQuestId": "quest_arc_anete_01_substation",
+          "completesQuestChoiceId": "anete_pass"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_anete_feeder",
+      "title": "One Feeder, Proving Itself",
+      "description": "The main bus is dressed and a single feeder runs daily, watched like a newborn. The rebuilders' paperwork has found her, and she treats it like weather. The project needs backing — goods, hands, or a reputation — and she will take it only as fast as it can be done safely.",
+      "category": "Discovery",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_anete_sarn",
+      "choices": [
+        {
+          "choiceId": "anete_back_the_rebuild",
+          "text": "Back the rebuild with the shelter's surplus and its reputation.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_anete_02_project",
+          "completesQuestChoiceId": "anete_back_the_project"
+        },
+        {
+          "choiceId": "anete_lend_hands",
+          "text": "Lend her your people for a season, taught to her standard.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_anete_02_project",
+          "completesQuestChoiceId": "anete_string_conductor"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_sava_camp",
+      "title": "The Meal, The Naming, The Silence",
+      "description": "The camp keeps its hours in the open: the pot, the names of the dead read aloud, and a silence you could set a watch by. On the ridge, small fires that are not the camp's. The elder meets you with a bowl and a plain question: stand, move, or walk on.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 0.9,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_elder_sava",
+      "choices": [
+        {
+          "choiceId": "sava_stand_the_fence",
+          "text": "Stand the fence with the camp through the bad nights.",
+          "moraleDelta": 4,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_sava_01_camp",
+          "completesQuestChoiceId": "sava_defend"
+        },
+        {
+          "choiceId": "sava_move_the_camp",
+          "text": "Help the camp move before the raiders pick their night.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_sava_01_camp",
+          "completesQuestChoiceId": "sava_evacuate"
+        },
+        {
+          "choiceId": "sava_walk_on",
+          "text": "Walk on. Your column cannot be spent on another camp's fence.",
+          "moraleDelta": 0,
+          "guiltDelta": 3,
+          "completesQuestId": "quest_arc_sava_01_camp",
+          "completesQuestChoiceId": "sava_decline"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_sava_schism",
+      "title": "Two Camps, One Rota",
+      "description": "The quarrel is about chores, which means it is about everything. Both camps quote the same elder, and the elder wants no throne and no doctrine. She will mediate once, properly, if somebody vouches. Shrines keeping her hours would rather have funding than opinions.",
+      "category": "Social",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_elder_sava",
+      "choices": [
+        {
+          "choiceId": "sava_vouch_for_her",
+          "text": "Vouch for her as mediator when the camps send for a neutral voice.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_sava_02_schism",
+          "completesQuestChoiceId": "sava_vouch_mediator"
+        },
+        {
+          "choiceId": "sava_fund_the_hours",
+          "text": "Fund the shrine-rotas spreading in her name, quietly.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_sava_02_schism",
+          "completesQuestChoiceId": "sava_fund_shrines"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_rika_cache",
+      "title": "Once, Exactly Once",
+      "description": "She is at the rope line before you mark the cellar, which is how you know whose streets these are. The offer comes fast: split the floor clean, her count, her division — or she is gone down it alone and you can race her if you like, once.",
+      "category": "Trade",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.25,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 1.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_rika_dorn",
+      "choices": [
+        {
+          "choiceId": "rika_take_the_split",
+          "text": "Take the split. Work the floor together and divide it clean.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_rika_01_cache",
+          "completesQuestChoiceId": "rika_split"
+        },
+        {
+          "choiceId": "rika_take_it_all",
+          "text": "Take the whole cache. She was slower and she knows it.",
+          "moraleDelta": 2,
+          "guiltDelta": 3,
+          "completesQuestId": "quest_arc_rika_01_cache",
+          "completesQuestChoiceId": "rika_take"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_rika_trap",
+      "title": "Camp-Bound, Loud About It",
+      "description": "The ankle is propped on a crate and the voice carrying over the camp is hers, directing traffic she cannot join. The registry pages are in her coat, and half the camp has noticed the coat. The medic's visit is beyond her trading stock this week.",
+      "category": "Social",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_rika_dorn",
+      "choices": [
+        {
+          "choiceId": "rika_carry_her_out",
+          "text": "Carry her out and stand the camp watch until the ankle can carry her.",
+          "moraleDelta": 4,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_rika_02_trap",
+          "completesQuestChoiceId": "rika_rescue"
+        },
+        {
+          "choiceId": "rika_trade_for_pages",
+          "text": "Trade the medic's visit for the registry pages. Business is business.",
+          "moraleDelta": 1,
+          "guiltDelta": 4,
+          "completesQuestId": "quest_arc_rika_02_trap",
+          "completesQuestChoiceId": "rika_her_registry"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_liva_tower",
+      "title": "The Neat Hand, The Live Wire",
+      "description": "The mast hums on scavenged cells and the log book is kept like a ledger in a bank that still believes in deposits. The operator offers slots and copies, and asks only that whoever keys back identify honestly. The cells she needs are the kind that hold charge.",
+      "category": "Trade",
+      "baseWeight": 2.5,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_liva_kern",
+      "choices": [
+        {
+          "choiceId": "liva_trade_cells",
+          "text": "Trade power cells for a standing relay slot and the signal copies.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_liva_01_tower",
+          "completesQuestChoiceId": "liva_cells"
+        },
+        {
+          "choiceId": "liva_send_it_properly",
+          "text": "Book a one-time slot and send a message properly, identified.",
+          "moraleDelta": 2,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_liva_01_tower",
+          "completesQuestChoiceId": "liva_slot"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_liva_survey",
+      "title": "Two Valleys Out",
+      "description": "The survey team's fires are two valleys out and their map is good — hers is better. She keeps transmitting, on schedule, and has started copying the log in two hands, one to send, one to lose. The shelter knows first. The knowing is heavy.",
+      "category": "Social",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 1.25,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 1.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_liva_kern",
+      "choices": [
+        {
+          "choiceId": "liva_move_her_first",
+          "text": "Warn her and move her gear before the survey team arrives.",
+          "moraleDelta": 3,
+          "guiltDelta": 0,
+          "completesQuestId": "quest_arc_liva_02_seizure",
+          "completesQuestChoiceId": "liva_warn"
+        },
+        {
+          "choiceId": "liva_sell_the_location",
+          "text": "Sell her location to the garrison and take the finder's fee.",
+          "moraleDelta": 0,
+          "guiltDelta": 4,
+          "completesQuestId": "quest_arc_liva_02_seizure",
+          "completesQuestChoiceId": "liva_bargain"
+        }
+      ]
+    },
+    {
+      "id": "enc_arc_oskar_01_debt",
+      "title": "The Settled Figure",
+      "description": "The debtor's wagon stands at the caravanserai with the Underwrite's mark chalked on the canvas, half worn. He shows you the contract and the buyout figure in the same breath, and watches which number your eyes stop on.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_oskar_ruut",
+      "choices": [
+            {
+                  "choiceId": "oskar_settle",
+                  "text": "Front the buyout at fair interest, in writing, twice read.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_oskar_01_debt",
+                  "completesQuestChoiceId": "oskar_settle"
+            },
+            {
+                  "choiceId": "oskar_press",
+                  "text": "Press the debt while it is cheap and buy his routes.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_oskar_01_debt",
+                  "completesQuestChoiceId": "oskar_press"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_tomas_01_rounding",
+      "title": "Rounding for the Living",
+      "description": "The dentist's row chairs are pulled out for cots, and the medic works with the composure of a man who has already done today's hard arithmetic three times. He tells you about the third ledger before you find it.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_tomas_geret",
+      "choices": [
+            {
+                  "choiceId": "tomas_vouch",
+                  "text": "Vouch for the rounding when the audit comes — the mornings it bought were real.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_tomas_01_rounding",
+                  "completesQuestChoiceId": "tomas_vouch"
+            },
+            {
+                  "choiceId": "tomas_testify",
+                  "text": "Testify to the discrepancy and let procedure run.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_tomas_01_rounding",
+                  "completesQuestChoiceId": "tomas_testify"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_joren_01_plant",
+      "title": "Staffing the Schedule",
+      "description": "The gantt chart on the wall of the batching plant office is the most honest document in district 8, right up until you ask about the one block marked only with a date and no crew name.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_joren_malk",
+      "choices": [
+            {
+                  "choiceId": "joren_crews",
+                  "text": "Commit trained crews to his checklists and hold them to his standard.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_joren_01_plant",
+                  "completesQuestChoiceId": "joren_crews"
+            },
+            {
+                  "choiceId": "joren_refuse",
+                  "text": "Refuse. The night shift question goes with him, not with you.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_joren_01_plant",
+                  "completesQuestChoiceId": "joren_refuse"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_pavel_01_map",
+      "title": "What I Have Walked",
+      "description": "He spreads the waxed map on the eastern road marker and lets you read it in the wind, holding the corners, saying nothing about the entry you are both looking at.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_pavel_eren",
+      "choices": [
+            {
+                  "choiceId": "pavel_buy_map",
+                  "text": "Buy the copy at his price and ask nothing about the eastern road.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_pavel_01_map",
+                  "completesQuestChoiceId": "pavel_buy_map"
+            },
+            {
+                  "choiceId": "pavel_refuse_map",
+                  "text": "Buy nothing and ask how he learned the eastern road.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_pavel_01_map",
+                  "completesQuestChoiceId": "pavel_refuse_map"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_sena_01_log",
+      "title": "Two Versions",
+      "description": "The crossing log hangs open on the bridge post in its oilcloth. She reads you both versions of last week's incident without comment and then waits, the way the queue waits, for someone to simply do the obvious thing.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_sena_aris",
+      "choices": [
+            {
+                  "choiceId": "sena_countersign",
+                  "text": "Countersign the log page where the versions diverge.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_sena_01_log",
+                  "completesQuestChoiceId": "sena_countersign"
+            },
+            {
+                  "choiceId": "sena_stay_clear",
+                  "text": "Stay clear of the dispute and cross on her terms.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_sena_01_log",
+                  "completesQuestChoiceId": "sena_stay_clear"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_dalia_01_annex",
+      "title": "A Year That Has Not Happened",
+      "description": "The annex smells of dry paper and gasket grease. She walks the racks naming varieties like relatives, and stops where the roof beam has begun to argue with the wall.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_dalia_marun",
+      "choices": [
+            {
+                  "choiceId": "dalia_haul_roof",
+                  "text": "Haul timber and re-sack the lots with her before the season turns.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_dalia_01_annex",
+                  "completesQuestChoiceId": "dalia_haul_roof"
+            },
+            {
+                  "choiceId": "dalia_wait",
+                  "text": "Wait for a better season. Everyone is waiting for a better season.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_dalia_01_annex",
+                  "completesQuestChoiceId": "dalia_wait"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_anton_01_herd",
+      "title": "The Fine Herd",
+      "description": "The goats come to the fence and the man does not. He talks to you across the pen, honestly, about everything except the word that starts with c, and the honesty is the loudest part.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_anton_renn",
+      "choices": [
+            {
+                  "choiceId": "anton_cull_quietly",
+                  "text": "Do the cull arithmetic with him at dawn, out loud, both counting.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_anton_01_herd",
+                  "completesQuestChoiceId": "anton_cull_quietly"
+            },
+            {
+                  "choiceId": "anton_say_nothing",
+                  "text": "Say nothing. Take the milk off the top and leave him his story.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_anton_01_herd",
+                  "completesQuestChoiceId": "anton_say_nothing"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_emil_01_numbers",
+      "title": "The Honest Notebooks",
+      "description": "The reel-to-reel turns and the notebooks breathe in pencil. He shows you the early solution first, face up, the way other people hide things — his disclaimers in the margins older than your shelter.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_emil_soren",
+      "choices": [
+            {
+                  "choiceId": "emil_fund_notebooks",
+                  "text": "Fund the fifth notebook, warning read and accepted.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_emil_01_numbers",
+                  "completesQuestChoiceId": "emil_fund_notebooks"
+            },
+            {
+                  "choiceId": "emil_refund_patron",
+                  "text": "Ask for your money back and your name out of it.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_emil_01_numbers",
+                  "completesQuestChoiceId": "emil_refund_patron"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_nadia_01_pot",
+      "title": "What the Manifest Says",
+      "description": "The queue at the plaza kitchen arranges itself by need and pretends not to. She serves with the ladle held like a verdict, and meets your eyes exactly once, over the heads of the people she is feeding.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_nadia_lem",
+      "choices": [
+            {
+                  "choiceId": "nadia_front_the_oil",
+                  "text": "Front the kitchen oil and salt with no audit and no ledger.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_nadia_01_pot",
+                  "completesQuestChoiceId": "nadia_front_the_oil"
+            },
+            {
+                  "choiceId": "nadia_audit_her",
+                  "text": "Audit the portions and let the manifest win.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_nadia_01_pot",
+                  "completesQuestChoiceId": "nadia_audit_her"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_arvo_01_crate",
+      "title": "Which Kind of Cook",
+      "description": "The mess hall smells correct and the portions land like stamped forms. He talks about stores the way auditors wish they could, and his eyes go, once, exactly once, to the upper floor.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_arvo_tamm",
+      "choices": [
+            {
+                  "choiceId": "arvo_amnesty",
+                  "text": "Offer amnesty: the crate goes to the mess kettle, the secret stays at the door.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_arvo_01_crate",
+                  "completesQuestChoiceId": "arvo_amnesty"
+            },
+            {
+                  "choiceId": "arvo_expose",
+                  "text": "Expose the crate and let the rota decide.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_arvo_01_crate",
+                  "completesQuestChoiceId": "arvo_expose"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_kaspar_01_bearing",
+      "title": "Posted Odds",
+      "description": "The wagon is up on blocks and he is under it, calling out part names to nobody in a voice that has been asking the road for forgiveness for years. The odds are posted on a board by the wheel, in fractions.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_kaspar_drej",
+      "choices": [
+            {
+                  "choiceId": "kaspar_parts_upfront",
+                  "text": "Buy the parts upfront and stand witness for the next borrowing.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_kaspar_01_bearing",
+                  "completesQuestChoiceId": "kaspar_parts_upfront"
+            },
+            {
+                  "choiceId": "kaspar_witness_deal",
+                  "text": "Offer to settle his debts — and own the roads he walks.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_kaspar_01_bearing",
+                  "completesQuestChoiceId": "kaspar_witness_deal"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_mira_01_intervals",
+      "title": "The Private Log",
+      "description": "The pump station generator turns over clean and the log book by the desk is open to two pages: the official one, and the one in her hand. The intake shed door is shut, and stays shut.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_mira_vos",
+      "choices": [
+            {
+                  "choiceId": "mira_winder_parts",
+                  "text": "Bring the brush set and copper, and never mention the shed.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_mira_01_intervals",
+                  "completesQuestChoiceId": "mira_winder_parts"
+            },
+            {
+                  "choiceId": "mira_ask_about_shed",
+                  "text": "Ask about the shed door. Once.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_mira_01_intervals",
+                  "completesQuestChoiceId": "mira_ask_about_shed"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_janek_01_dawn",
+      "title": "Walk With Me at Dawn",
+      "description": "He is at the recovery yard gate before first light with two sets of snowshoes and no speech prepared, which from him is the whole speech. The old lines ran east. The tracks, lately, do not.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_janek_orel",
+      "choices": [
+            {
+                  "choiceId": "janek_walk_dawn",
+                  "text": "Walk the dawn routes with him and let the new map happen out loud.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_janek_01_dawn",
+                  "completesQuestChoiceId": "janek_walk_dawn"
+            },
+            {
+                  "choiceId": "janek_quote_old_lines",
+                  "text": "Ask him for the old lines as truth and let the settlement believe.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_janek_01_dawn",
+                  "completesQuestChoiceId": "janek_quote_old_lines"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_veda_01_circuit",
+      "title": "Marked Paths",
+      "description": "The paths through the drowned fringe are marked in paint that survives wet, and the posts carry her rules in a hand that does not waver. She counts you onto the path like a caller at a dance, and the lines are exactly where the marks say.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_veda_ro",
+      "choices": [
+            {
+                  "choiceId": "veda_mark_the_lines",
+                  "text": "Buy tag paint and wire, and put your people on her marked paths.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_veda_01_circuit",
+                  "completesQuestChoiceId": "veda_mark_the_lines"
+            },
+            {
+                  "choiceId": "veda_press_the_fog_question",
+                  "text": "Press the fog question and take the whole truth at its price.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_veda_01_circuit",
+                  "completesQuestChoiceId": "veda_press_the_fog_question"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_mirael_01_page",
+      "title": "The Page on the Desk",
+      "description": "The copy desks are ruled in true lines and the page lies in the middle of them like a hole in the floor. She teaches provenance with it visible, names nothing, and watches every student decide.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_mirael_tesk",
+      "choices": [
+            {
+                  "choiceId": "mirael_sit_the_lessons",
+                  "text": "Sit the lessons and learn to doubt copies properly.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_mirael_01_page",
+                  "completesQuestChoiceId": "mirael_sit_the_lessons"
+            },
+            {
+                  "choiceId": "mirael_name_the_page",
+                  "text": "Name the page in session and make the archive rule on it.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_mirael_01_page",
+                  "completesQuestChoiceId": "mirael_name_the_page"
+            }
+      ]
+    },
+    {
+      "id": "enc_arc_niko_01_corridors",
+      "title": "The Rest of the Map",
+      "description": "He is waiting at the bus reversal loop with the specific patience of somebody who has counted how long adults take to decide things. He does not offer a map. He offers the rest of the map, verbally, to people who watch.",
+      "category": "Social",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 1.0,
+      "speedWeightMultiplier": 1.0,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "npcId": "npc_niko",
+      "choices": [
+            {
+                  "choiceId": "niko_vouch_employment",
+                  "text": "Vouch him runner's wages and take the corridor routes on his terms.",
+                  "moraleDelta": 2,
+                  "guiltDelta": 0,
+                  "completesQuestId": "quest_arc_niko_01_corridors",
+                  "completesQuestChoiceId": "niko_vouch_employment"
+            },
+            {
+                  "choiceId": "niko_tell_him_to_stop",
+                  "text": "Tell him to stop running the corridors. He is thirteen.",
+                  "moraleDelta": 1,
+                  "guiltDelta": 2,
+                  "completesQuestId": "quest_arc_niko_01_corridors",
+                  "completesQuestChoiceId": "niko_tell_him_to_stop"
+            }
+      ]
+    }
+
+
+  ]
+}

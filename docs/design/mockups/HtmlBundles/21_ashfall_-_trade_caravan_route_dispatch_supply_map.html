@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL CARAVAN_OS v4.2.0 - Route Dispatch</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#2a2a2a",
+                        "on-tertiary": "#4a2713",
+                        "tertiary-fixed": "#ffdbca",
+                        "on-secondary": "#472a00",
+                        "secondary": "#ffb95f",
+                        "secondary-container": "#ee9800",
+                        "warning-amber": "#f59e0b",
+                        "on-surface-variant": "#c0c8c9",
+                        "surface": "#131313",
+                        "surface-container-highest": "#353534",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#313030",
+                        "terminal-surface": "#131313",
+                        "surface-tint": "#a1cfd3",
+                        "background": "#131313",
+                        "data-dim": "#1e2b2c",
+                        "surface-bright": "#393939",
+                        "tertiary": "#f4ba9d",
+                        "primary-container": "#2d5a5e",
+                        "tertiary-fixed-dim": "#f4ba9d",
+                        "primary-fixed": "#bcebef",
+                        "surface-dim": "#131313",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "on-tertiary-fixed": "#311303",
+                        "inverse-primary": "#396569",
+                        "outline-variant": "#404849",
+                        "on-surface": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-fixed": "#2a1700",
+                        "secondary-fixed": "#ffddb8",
+                        "secondary-fixed-dim": "#ffb95f",
+                        "surface-variant": "#353534",
+                        "on-tertiary-container": "#f4bb9d",
+                        "surface-container": "#201f1f",
+                        "on-primary-container": "#a2d0d4",
+                        "primary": "#a1cfd3",
+                        "on-tertiary-fixed-variant": "#653d27",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary": "#00363a",
+                        "on-secondary-container": "#5b3800",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e5e2e1",
+                        "crt-phosphor": "#a3bfc1",
+                        "tactical-teal": "#2d5a5e",
+                        "on-primary-fixed": "#002022",
+                        "tertiary-container": "#734932",
+                        "on-background": "#e5e2e1",
+                        "outline": "#8a9293"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-padding": "12px",
+                        "gutter": "16px",
+                        "margin-edge": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Bebas Neue"],
+                        "telemetry-bold": ["JetBrains Mono"],
+                        "telemetry-standard": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "telemetry-compact": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", { "lineHeight": "64px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "telemetry-bold": ["16px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "telemetry-standard": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "telemetry-compact": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            background-image: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(45, 90, 94, 0.05) 2px,
+                rgba(45, 90, 94, 0.05) 4px
+            );
+            color: #e5e2e1;
+        }
+        .glow-sm { box-shadow: 0 0 4px rgba(161, 207, 211, 0.3); }
+        .glow-md { box-shadow: 0 0 8px rgba(161, 207, 211, 0.5); }
+        .glow-text { text-shadow: 0 0 4px rgba(161, 207, 211, 0.5); }
+
+        .scanline-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #131313; border-left: 1px solid rgba(45, 90, 94, 0.2); }
+        ::-webkit-scrollbar-thumb { background: #2d5a5e; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1cfd3; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-telemetry-standard overflow-hidden selection:bg-primary selection:text-on-primary">
+<div class="scanline-overlay"></div>
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface border-b border-tactical-teal/40 flex justify-between items-center w-full px-gutter h-16 fixed top-0 z-50 flat no shadows glow-sm">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary tracking-widest font-bold">ASHFALL CARAVAN_OS v4.2.0</h1>
+<span class="font-telemetry-compact text-telemetry-compact text-on-surface-variant bg-surface-container-high px-2 py-1 border border-tactical-teal/20 hidden md:inline-block">SYS: ONLINE</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="font-telemetry-bold text-telemetry-bold text-warning-amber border border-warning-amber/50 px-3 py-1 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-warning-amber animate-pulse"></span>
+                SECTOR 07: SECURED
+            </div>
+<div class="flex gap-4">
+<button class="text-on-surface-variant hover:bg-primary/10 hover:text-primary transition-all duration-150 ease-in-out hover:glow-md p-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings_input_component</span>
+</button>
+<button class="text-on-surface-variant hover:bg-primary/10 hover:text-primary transition-all duration-150 ease-in-out hover:glow-md p-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">terminal</span>
+</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low dark:bg-surface-container-low border-r border-tactical-teal/40 flex flex-col h-screen fixed left-0 top-0 pt-16 z-40 w-64 flat no shadows">
+<div class="p-gutter border-b border-tactical-teal/20 mb-4">
+<div class="font-label-caps text-label-caps text-primary mb-1">Dispatcher ID-882</div>
+<div class="font-display-lg text-display-lg text-primary leading-none mb-1">OPERATOR TERMINAL</div>
+<div class="font-telemetry-compact text-telemetry-compact text-secondary">CLEARANCE LEVEL 4</div>
+</div>
+<ul class="flex flex-col flex-grow">
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 bg-tactical-teal text-on-primary font-bold border-l-4 border-secondary active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-telemetry-bold text-telemetry-bold">Route Network</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:text-primary hover:bg-tactical-teal/10 hover:bg-tactical-teal/20 transition-colors border-l-4 border-transparent active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_shipping</span>
+<span class="font-telemetry-bold text-telemetry-bold">Active Convoys</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:text-primary hover:bg-tactical-teal/10 hover:bg-tactical-teal/20 transition-colors border-l-4 border-transparent active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="font-telemetry-bold text-telemetry-bold">Supply Ledger</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:text-primary hover:bg-tactical-teal/10 hover:bg-tactical-teal/20 transition-colors border-l-4 border-transparent active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings_remote</span>
+<span class="font-telemetry-bold text-telemetry-bold">Comms Relay</span>
+</a>
+</li>
+</ul>
+<div class="p-gutter mt-auto border-t border-tactical-teal/20">
+<button class="w-full bg-tactical-teal text-surface font-telemetry-bold text-telemetry-bold py-2 border border-primary hover:bg-primary hover:text-on-primary transition-colors mb-4">
+                INITIATE DISPATCH
+            </button>
+<div class="flex justify-between">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1" title="System Diagnostics">
+<span class="material-symbols-outlined text-sm">analytics</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1" title="Secure Logout">
+<span class="material-symbols-outlined text-sm">power_settings_new</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="ml-64 pt-16 h-screen overflow-y-auto pb-12">
+<div class="p-gutter grid grid-cols-12 gap-unit h-full">
+<!-- Center Map View -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-high border border-tactical-teal/40 flex flex-col relative h-[819px]">
+<div class="bg-tactical-teal/20 border-b border-tactical-teal/40 px-3 py-2 flex justify-between items-center z-10">
+<h2 class="font-headline-md text-headline-md text-primary m-0">REGIONAL SCHEMATIC // SECTOR 7</h2>
+<span class="font-telemetry-compact text-telemetry-compact text-primary animate-pulse">LIVE TRACKING ACTIVE</span>
+</div>
+<div class="relative flex-grow overflow-hidden p-4" data-alt="A dark, tactical topographical map schematic of a post-apocalyptic wasteland region. The map is displayed in high-contrast monochrome terminal green on a black background, with contour lines, grid coordinates, and ruined city footprints. The aesthetic is gritty, high-fidelity CRT software, emphasizing utilitarian military mapping over realism, lit entirely by the UI's simulated screen glow." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWWJV-j3fY7X886E0pt5bq2ASsaGbPIy8PApJxoNTB-M52TkUWr5ovYRtcEo5Wn3D1ubjP8CY4iTqx_i1EIAxggVbYOdGxkeO4ev_32w5Z20fXVojRnAdR30Sj8w-qm3oXUq34W_3fteovPLFz6Ht0QEkHG-7aCvvQOLqA7WSXA-vacn_QHxLBFO5RcsydmN4c_j1X4XxrD2VUnr3Ei7XYwLEdf2bUSx_LUtbW4mKbTZOr3ABYGFQxmYlqtbIMctWF8G2sc6zcODfD')">
+<!-- Map Nodes & Routes -->
+<div class="absolute inset-0 pointer-events-none">
+<!-- SVG for routes -->
+<svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<!-- Route: Vault 081 -> Fortress Cobalt -->
+<path class="animate-pulse" d="M 20% 30% L 50% 20%" fill="none" stroke="#a1cfd3" stroke-width="2" style="filter: drop-shadow(0 0 4px #a1cfd3);"></path>
+<!-- Route: Fortress Cobalt -> Iron Foundry -->
+<path d="M 50% 20% L 80% 40%" fill="none" stroke="#404849" stroke-dasharray="4,4" stroke-width="1"></path>
+<!-- Route: Vault 081 -> Green-Dome Commune -->
+<path d="M 20% 30% L 35% 70%" fill="none" stroke="#404849" stroke-dasharray="4,4" stroke-width="1"></path>
+<!-- Route: Green-Dome -> Port Broken-Hull -->
+<path d="M 35% 70% L 75% 85%" fill="none" stroke="#404849" stroke-dasharray="4,4" stroke-width="1"></path>
+</svg>
+</div>
+<!-- Nodes -->
+<div class="absolute top-[30%] left-[20%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="w-4 h-4 bg-primary border border-surface rounded-full shadow-[0_0_8px_#a1cfd3]"></div>
+<div class="mt-1 bg-surface/90 border border-tactical-teal px-2 py-1 backdrop-blur-sm">
+<div class="font-telemetry-bold text-telemetry-compact text-primary">VAULT 081</div>
+<div class="font-telemetry-standard text-[10px] text-on-surface-variant">ORIGIN</div>
+</div>
+</div>
+<div class="absolute top-[20%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="w-4 h-4 bg-tactical-teal border border-primary rounded-none shadow-[0_0_8px_#2d5a5e]"></div>
+<div class="mt-1 bg-surface/90 border border-tactical-teal px-2 py-1 backdrop-blur-sm">
+<div class="font-telemetry-bold text-telemetry-compact text-primary">FORTRESS COBALT</div>
+<div class="font-telemetry-standard text-[10px] text-warning-amber">DESTINATION</div>
+</div>
+</div>
+<!-- Telemetry Data Overlay on Route -->
+<div class="absolute top-[25%] left-[35%] bg-surface/90 border border-warning-amber/50 px-2 py-1 backdrop-blur-sm">
+<div class="font-telemetry-compact text-[10px] text-warning-amber">DANGER RATING: 3/10</div>
+<div class="font-telemetry-compact text-[10px] text-warning-amber">AMBUSH RISK: 12%</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar / Telemetry -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-unit h-[819px]">
+<!-- Active Convoy Telemetry -->
+<div class="bg-surface-container-high border border-tactical-teal/40 flex flex-col">
+<div class="bg-tactical-teal/20 border-b border-tactical-teal/40 px-3 py-1">
+<h3 class="font-headline-md text-[20px] text-primary m-0">ACTIVE CONVOY TELEMETRY</h3>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-center mb-2 border-b border-surface-variant pb-1">
+<span class="font-telemetry-bold text-telemetry-standard text-secondary">CONVOY 01: IRON MULE</span>
+<span class="font-label-caps text-label-caps bg-primary text-surface px-1">IN TRANSIT</span>
+</div>
+<ul class="font-telemetry-compact text-telemetry-compact space-y-2">
+<li class="flex flex-col border-b border-surface-variant pb-1 hover:text-primary transition-colors">
+<span class="text-on-surface-variant text-[10px]">ROUTE</span>
+<span>Vault 081 <span class="material-symbols-outlined text-[12px] align-middle">arrow_forward</span> Fortress Cobalt</span>
+</li>
+<li class="flex flex-col border-b border-surface-variant pb-1 hover:text-primary transition-colors">
+<span class="text-on-surface-variant text-[10px]">CARGO</span>
+<span>200kg Lead Ingots, 50L Clean Water</span>
+</li>
+<li class="flex justify-between border-b border-surface-variant pb-1 hover:text-primary transition-colors">
+<div class="flex flex-col">
+<span class="text-on-surface-variant text-[10px]">ESCORT</span>
+<span>3 Armed Guards</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-on-surface-variant text-[10px]">ETA</span>
+<span class="font-telemetry-bold text-primary">04:12:00</span>
+</div>
+</li>
+<li class="flex flex-col pt-1">
+<span class="text-on-surface-variant text-[10px]">AMBUSH RISK</span>
+<div class="flex items-center gap-2">
+<div class="flex-grow h-2 bg-surface-container-highest border border-surface-variant">
+<div class="h-full bg-warning-amber w-[18%]"></div>
+</div>
+<span class="text-warning-amber font-telemetry-bold glow-text">18%</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<!-- Weekly Supply Balance -->
+<div class="bg-surface-container-high border border-tactical-teal/40 flex flex-col flex-grow">
+<div class="bg-tactical-teal/20 border-b border-tactical-teal/40 px-3 py-1">
+<h3 class="font-headline-md text-[20px] text-primary m-0">SETTLEMENT SUPPLY BALANCE (WK)</h3>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="flex justify-between items-center border-b border-surface-variant pb-1 hover:text-primary transition-colors">
+<span class="font-telemetry-standard text-telemetry-standard text-on-surface">Food Inflow</span>
+<span class="font-telemetry-bold text-telemetry-standard text-primary">+420 kg/wk</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-variant pb-1 hover:text-primary transition-colors">
+<span class="font-telemetry-standard text-telemetry-standard text-on-surface">Clean Water Surplus</span>
+<span class="font-telemetry-bold text-telemetry-standard text-primary">+850 L/wk</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-variant pb-1 hover:text-error transition-colors">
+<span class="font-telemetry-standard text-telemetry-standard text-warning-amber">Ammunition Deficit</span>
+<span class="font-telemetry-bold text-telemetry-standard text-warning-amber glow-text">-120 rds/wk</span>
+</div>
+</div>
+</div>
+<!-- Directives -->
+<div class="flex flex-col gap-2 mt-auto">
+<button class="w-full bg-tactical-teal text-surface font-headline-md text-[20px] py-1 border border-primary hover:bg-primary hover:text-on-primary transition-all duration-150 ease-in-out hover:glow-md">
+                        [ DISPATCH NEW CONVOY ]
+                    </button>
+<button class="w-full bg-surface-container-highest text-primary font-headline-md text-[20px] py-1 border border-tactical-teal hover:bg-tactical-teal/20 transition-all duration-150 ease-in-out">
+                        [ RE-ROUTE CARAVAN ]
+                    </button>
+<button class="w-full bg-surface-container-highest text-warning-amber font-headline-md text-[20px] py-1 border border-warning-amber/50 hover:bg-warning-amber/20 transition-all duration-150 ease-in-out">
+                        [ ASSIGN HEAVY ESCORT ]
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-tactical-teal/20 fixed bottom-0 right-0 left-64 flex justify-between items-center px-gutter py-1 z-50 bg-surface/90 backdrop-blur-sm flat no shadows">
+<div class="font-label-caps text-label-caps text-on-surface tracking-widest">ASHFALL CARAVAN_OS v4.2.0</div>
+<div class="font-telemetry-compact text-telemetry-compact text-secondary font-telemetry-bold">
+            SYSTEM STABILITY: 98.4% | ENCRYPTION: AES-256 ACTIVE
+        </div>
+<div class="flex gap-4">
+<a class="font-telemetry-compact text-telemetry-compact text-on-surface-variant hover:text-warning-amber transition-opacity duration-300" href="#">Emergency Protocol</a>
+<a class="font-telemetry-compact text-telemetry-compact text-on-surface-variant hover:text-warning-amber transition-opacity duration-300" href="#">Logistics Policy</a>
+</div>
+</footer>
+</body></html>

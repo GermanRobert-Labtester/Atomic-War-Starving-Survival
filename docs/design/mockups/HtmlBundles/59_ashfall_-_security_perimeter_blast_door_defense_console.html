@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Security Perimeter Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#00363a",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "on-secondary-fixed": "#351000",
+                        "on-surface-variant": "#c0c8c9",
+                        "on-secondary-container": "#4b1b00",
+                        "surface-container": "#201f1f",
+                        "outline": "#8a9293",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "background": "#131313",
+                        "inverse-on-surface": "#313030",
+                        "primary": "#a1cfd3",
+                        "surface-dim": "#131313",
+                        "on-tertiary": "#003907",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "secondary": "#ffb693",
+                        "on-secondary": "#562000",
+                        "tertiary-fixed": "#72ff70",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "on-tertiary-fixed-variant": "#00530e",
+                        "on-tertiary-fixed": "#002203",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-primary": "#396569",
+                        "tertiary-fixed-dim": "#00e639",
+                        "on-primary-fixed": "#002022",
+                        "surface": "#131313",
+                        "primary-container": "#2d5a5e",
+                        "surface-container-highest": "#353534",
+                        "primary-fixed": "#bcebef",
+                        "tertiary-container": "#006112",
+                        "on-background": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-tint": "#a1cfd3",
+                        "surface-bright": "#393939",
+                        "secondary-fixed-dim": "#ffb693",
+                        "tertiary": "#00e639",
+                        "surface-variant": "#353534",
+                        "on-tertiary-container": "#00e639",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-surface": "#e5e2e1",
+                        "secondary-fixed": "#ffdbcc",
+                        "error": "#ffb4ab",
+                        "surface-container-low": "#1c1b1b",
+                        "outline-variant": "#404849",
+                        "secondary-container": "#ea6b1e",
+                        "on-primary-container": "#a2d0d4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin": "24px",
+                        "gutter": "16px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.1", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "1.4", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.05) 50%,
+                rgba(0,0,0,0.05)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .glow-active {
+            box-shadow: 0 0 8px rgba(161, 207, 211, 0.4);
+            border-color: #a1cfd3;
+        }
+        .glow-danger {
+            box-shadow: 0 0 8px rgba(234, 107, 30, 0.4);
+            border-color: #ea6b1e;
+        }
+
+        .radar-sweep {
+            animation: sweep 4s linear infinite;
+            transform-origin: center;
+        }
+        @keyframes sweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .blip-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen relative overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Global Scanlines -->
+<div class="fixed inset-0 scanlines"></div>
+<!-- SideNavBar Shell Component -->
+<nav class="fixed left-0 top-0 bottom-0 w-64 flex flex-col z-40 bg-surface-container-lowest border-r border-outline-variant hidden md:flex">
+<!-- Header -->
+<div class="p-margin border-b border-outline-variant">
+<h2 class="font-headline-lg text-headline-lg text-secondary">SECTOR_07</h2>
+<p class="font-label-sm text-label-sm text-primary uppercase mt-unit">STATUS: SECURED</p>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex flex-col py-gutter flex-grow">
+<!-- RADAR (Active) -->
+<a class="bg-primary-container text-on-primary-container font-label-sm text-label-sm uppercase font-bold border-l-4 border-tertiary px-margin py-gutter flex items-center gap-gutter active:bg-primary-fixed-dim" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">radar</span>
+                RADAR
+            </a>
+<!-- SENTRY (Inactive) -->
+<a class="text-outline hover:text-on-surface font-label-sm text-label-sm uppercase px-margin py-gutter flex items-center gap-gutter hover:bg-surface-container-highest transition-colors active:bg-primary-fixed-dim" href="#">
+<span class="material-symbols-outlined">swords</span>
+                SENTRY
+            </a>
+<!-- HYDRAULICS (Inactive) -->
+<a class="text-outline hover:text-on-surface font-label-sm text-label-sm uppercase px-margin py-gutter flex items-center gap-gutter hover:bg-surface-container-highest transition-colors active:bg-primary-fixed-dim" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+                HYDRAULICS
+            </a>
+<!-- POWER (Inactive) -->
+<a class="text-outline hover:text-on-surface font-label-sm text-label-sm uppercase px-margin py-gutter flex items-center gap-gutter hover:bg-surface-container-highest transition-colors active:bg-primary-fixed-dim" href="#">
+<span class="material-symbols-outlined">bolt</span>
+                POWER
+            </a>
+<!-- LOGS (Inactive) -->
+<a class="text-outline hover:text-on-surface font-label-sm text-label-sm uppercase px-margin py-gutter flex items-center gap-gutter hover:bg-surface-container-highest transition-colors active:bg-primary-fixed-dim" href="#">
+<span class="material-symbols-outlined">history</span>
+                LOGS
+            </a>
+</div>
+<!-- CTA -->
+<div class="p-margin border-t border-outline-variant">
+<button class="w-full bg-error-container text-on-error-container font-label-sm text-label-sm uppercase py-gutter border border-error/50 hover:bg-error hover:text-on-error transition-none active:invert">
+                EMERGENCY_VENT
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen p-margin md:p-8 flex flex-col gap-6 max-w-container-max mx-auto relative z-20">
+<!-- TopAppBar (Mobile Only - Fallback Nav) -->
+<header class="md:hidden flex justify-between items-center bg-background border-b border-outline-variant pb-4 mb-4">
+<div>
+<h1 class="font-display-lg text-headline-lg-mobile text-primary tracking-widest">BUNKER_OS_V4.2</h1>
+</div>
+<div class="flex gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined">settings_remote</span>
+<span class="material-symbols-outlined">security</span>
+</div>
+</header>
+<!-- Header -->
+<header class="mb-4 hidden md:block">
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-wider">DEFENSE CONSOLE</h1>
+<p class="font-data-lg text-data-lg text-outline">ASHFALL PERIMETER COMMAND // S-07</p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Surface Perimeter Radar (Central Large Span) -->
+<section class="md:col-span-8 bg-surface-container border border-outline-variant/30 relative overflow-hidden group">
+<!-- Module Header Strip -->
+<div class="bg-primary-container px-4 py-2 border-b border-primary/20 flex justify-between items-center">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-primary-container">SURFACE RADAR</h3>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-tertiary rounded-full animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary uppercase">ACTIVE SCAN</span>
+</div>
+</div>
+<div class="p-6 relative h-[400px] flex items-center justify-center">
+<!-- Radar Display -->
+<div class="relative w-[300px] h-[300px] rounded-full border border-primary/30 flex items-center justify-center bg-surface-container-lowest">
+<!-- Concentric Rings -->
+<div class="absolute w-3/4 h-3/4 rounded-full border border-outline/20"></div>
+<div class="absolute w-1/2 h-1/2 rounded-full border border-outline/20"></div>
+<div class="absolute w-1/4 h-1/4 rounded-full border border-outline/20"></div>
+<!-- Crosshairs -->
+<div class="absolute w-full h-[1px] bg-outline/20"></div>
+<div class="absolute h-full w-[1px] bg-outline/20"></div>
+<!-- Sweep -->
+<div class="absolute w-1/2 h-1/2 bg-gradient-to-tr from-primary/10 to-transparent top-0 right-0 origin-bottom-left radar-sweep rounded-tr-full"></div>
+<!-- Center Point -->
+<div class="absolute w-2 h-2 bg-primary rounded-full"></div>
+<!-- Motion Blips (Threats) -->
+<div class="absolute top-[20%] right-[30%] flex flex-col items-center">
+<div class="w-3 h-3 bg-secondary rounded-full blip-pulse shadow-[0_0_8px_#ea6b1e]"></div>
+<span class="font-label-sm text-[10px] text-secondary mt-1 whitespace-nowrap">3x SCOUT [120M]</span>
+</div>
+</div>
+<!-- Radar Overlay Data -->
+<div class="absolute top-6 left-6 font-data-lg text-label-sm space-y-2 text-outline">
+<div class="flex items-center gap-2">
+<span class="text-tertiary-fixed-dim">■</span> BARRICADE: 78%
+                        </div>
+<div class="flex items-center gap-2">
+<span class="text-secondary-container">■</span> MINES: 12 ARMED
+                        </div>
+<div class="flex items-center gap-2">
+<span class="text-primary-fixed">■</span> BLAST DOOR: 96%
+                        </div>
+</div>
+</div>
+</section>
+<!-- Automated Sentry Turrets -->
+<section class="md:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container border border-outline-variant/30 h-full flex flex-col">
+<div class="bg-surface-variant px-4 py-2 border-b border-outline-variant">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">SENTRY TURRETS</h3>
+</div>
+<div class="p-4 flex flex-col gap-4 flex-grow font-data-lg text-body-md">
+<!-- Turret Alpha -->
+<div class="border border-outline-variant/50 p-3 bg-surface-container-lowest">
+<div class="flex justify-between items-center mb-2 border-b border-outline-variant/30 pb-2">
+<span class="text-primary font-bold">ALPHA [HMG]</span>
+<span class="bg-tertiary-container text-on-tertiary-container text-[10px] px-1 uppercase">AUTO-ENGAGE</span>
+</div>
+<div class="flex justify-between text-outline">
+<span>AMMO:</span>
+<span class="text-on-surface">420 RNDS</span>
+</div>
+</div>
+<!-- Turret Beta -->
+<div class="border border-outline-variant/50 p-3 bg-surface-container-lowest">
+<div class="flex justify-between items-center mb-2 border-b border-outline-variant/30 pb-2">
+<span class="text-primary font-bold">BETA [FLAME]</span>
+<span class="bg-surface-variant text-outline text-[10px] px-1 uppercase border border-outline-variant">STANDBY</span>
+</div>
+<div class="flex justify-between text-outline">
+<span>FUEL:</span>
+<span class="text-on-surface">85%</span>
+</div>
+</div>
+<!-- Power Draw -->
+<div class="mt-auto border-t border-outline-variant/50 pt-3 flex justify-between items-center text-primary-fixed-dim">
+<span>PWR DRAW:</span>
+<span class="font-bold">3.2 kW</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Blast Door Hydraulics & Directives -->
+<section class="md:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Hydraulics -->
+<div class="md:col-span-6 bg-surface-container border border-outline-variant/30">
+<div class="bg-surface-variant px-4 py-2 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">BLAST DOOR HYDRAULICS</h3>
+<span class="material-symbols-outlined text-outline">settings_input_component</span>
+</div>
+<div class="p-4 grid grid-cols-2 gap-4">
+<!-- Data -->
+<div class="flex flex-col justify-center space-y-4">
+<div>
+<span class="font-label-sm text-outline block mb-1">SYS PRESSURE</span>
+<span class="font-data-lg text-headline-lg text-primary">3400 PSI</span>
+</div>
+<div>
+<span class="font-label-sm text-outline block mb-1">INTEGRITY SEAL</span>
+<span class="font-data-lg text-headline-lg-mobile text-tertiary-fixed-dim">96% LATCHED</span>
+</div>
+</div>
+<!-- Thermal Feed -->
+<div class="border border-outline-variant bg-background p-2 relative group cursor-crosshair">
+<span class="absolute top-0 left-0 bg-error-container text-on-error-container font-label-sm text-[10px] px-1 z-10">THERMAL FEED</span>
+<div class="w-full h-32 bg-gradient-to-br from-surface-container-highest via-secondary/10 to-error/20 flex items-center justify-center border border-outline-variant/50 overflow-hidden relative" data-alt="A highly degraded, low-resolution thermal camera feed showing the massive metal joints of a heavy bunker blast door. The image is monochromatic with stark white heat signatures against deep black cold steel, exhibiting digital noise and static consistent with a rugged, high-stakes tactical HUD aesthetic.">
+<!-- Placeholder texture for thermal feed -->
+<div class="absolute inset-0 opacity-40 mix-blend-screen" data-alt="A highly degraded, low-resolution thermal camera feed showing the massive metal joints of a heavy bunker blast door. The image is monochromatic with stark white heat signatures against deep black cold steel, exhibiting digital noise and static consistent with a rugged, high-stakes tactical HUD aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCkXy35-_jmm8BSXqZufRHr58OuhlM1lUYbmB11XWKDUyP4qU6N2NRCVQyrqJMFzdb9813mEgf79r-61etiKf2RRUsqMEq8ih1GeZj7pAd9i48NvVeMVGd0vczXRfJM4jOXSfPjmQuJoyc_HH-rRCeacguaFBtA3sJH8o6FTcwpUVg2eydwsCZ9Uy125ZiF0m-mh_ONNfYNgBF2DY1h_zEj-DxmQjmLneLLcbsGeL0a2nCD-GgTKs7kcTZVumEYIFnjDCmbPwLgcUeD'); background-size: cover; background-position: center;"></div>
+<span class="material-symbols-outlined text-outline opacity-50 z-10" style="font-size: 3rem;">videocam_off</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Tactical Directives -->
+<div class="md:col-span-6 bg-surface-container border border-outline-variant/30 flex flex-col">
+<div class="bg-secondary-container/20 px-4 py-2 border-b border-secondary-container/30 flex justify-between items-center">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-secondary">TACTICAL DIRECTIVES</h3>
+<span class="material-symbols-outlined text-secondary">warning</span>
+</div>
+<div class="p-4 flex flex-col gap-3 flex-grow justify-center">
+<button class="w-full bg-surface-container-highest border border-primary/50 text-primary font-label-sm py-3 uppercase tracking-wider hover:bg-primary hover:text-on-primary active:bg-primary-fixed transition-none text-left px-4 flex justify-between items-center">
+<span>[DEPLOY KINETIC TURRET FIRE]</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+<button class="w-full bg-surface-container-highest border border-secondary/50 text-secondary font-label-sm py-3 uppercase tracking-wider hover:bg-secondary hover:text-on-secondary active:invert transition-none text-left px-4 flex justify-between items-center">
+<span>[ACTIVATE HIGH-VOLTAGE PERIMETER WIRE]</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+<button class="w-full bg-error-container border border-error text-on-error-container font-label-sm py-3 uppercase tracking-wider hover:bg-error hover:text-on-error active:invert transition-none text-left px-4 flex justify-between items-center">
+<span>[ENGAGE FULL BUNKER LOCKDOWN]</span>
+<span class="material-symbols-outlined text-[16px] animate-pulse">lock</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<script>
+        // Micro-interaction for input simulation
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'translateY(2px)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'translateY(0)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

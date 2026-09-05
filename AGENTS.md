@@ -45,6 +45,69 @@ The project owner already maintains the following MCP connections. Treat this se
 - **Repository code, tests, JSON authority, Godot scenes** → native repo/editor tools first; MCP only when it adds a specific external capability.
 - **Verification** → always the canonical `dotnet` + `godot --headless` pipeline below; MCP output never substitutes for tests.
 
+### STITCH UI HANDOFF — Greenhouse supply actions (Plan 22) — DO NOT REDISCOVER
+
+The Greenhouse panel (`src/UI/GreenhousePanel.cs`) has **live host APIs with
+no UI**: seed selection (PLANT hardcodes tubers), soil AMEND, drip-chain
+install/filter, pest-protection deploy, shade cloth, STERILIZE (grow-medium
+clear), water quantity/tainted choice, a supply-stock strip, and
+readiness columns. All backing methods exist and are tested (Plan 22,
+`--greenhouse-selftest` 89/89). Agents asked to build/generate this UI must
+use **`google-stitch`** with the ready-made handoff spec:
+
+- **Spec:** `docs/ui/GREENHOUSE_UI_GAP_SPEC.md` — 8 gap register entries,
+  each with the exact host API, state bindings, action routes, theme tokens
+  (hex), component helpers, tone-anchored state copy, and paste-ready Stitch
+  prompt skeletons.
+- **Rules:** Stitch output is a layout proposal only — implement through
+  `AshfallUiHelpers`/`AshfallStatusRail`/`AshfallDataGrid`, extend
+  `Main.HandleGreenhouseAction`'s switch with the gap's action string, keep
+  `LastEvent` as the single feedback strip, and never render raw item IDs.
+  Reconcile with the runtime theme before merging; verify with
+  `--greenhouse-selftest` + `ashfall-godot-scene-lint`.
+
+### Missing UI panels — Google Stitch authority (via Antigravity)
+
+**`google-stitch` is the design authority for every missing/stub UI panel.**
+The Antigravity client holds the live MCP connection to Google Stitch —
+route all screen/layout/interaction design for the panels below through it
+(ANTIGRAVITY.md is the client bootstrap). A panel is "missing" when it either
+does not exist or is a **stub**: untyped `Bind(object?)`, hardcoded flavor
+text, no Core session binding. Stitch output remains a proposal until
+reconciled with the runtime theme (`AshfallUiHelpers`/`DesignTheme`), the
+`state → blocker → cost → consequence` panel standard, and Core binding
+discipline (presentation-only).
+
+Currently missing/stub (verified 2026-09-03 — replace entries as they are
+bound to Core):
+
+| Panel | Status |
+|---|---|
+| `ElectrostaticScrubberPanel` | missing (Plan 72 — create bound to VentilationSystem stage) |
+| `AquiferTreatyConcessionPanel` | stub — hardcoded text, no Core binding |
+| `BasalRadonMigrationPanel` | stub |
+| `ClandestineInsurgencyPanel` | stub |
+| `CrossingSafeConductVouchPanel` | stub |
+| `CryogenicPermafrostCorePanel` | stub |
+| `FungalProteinFermenterPanel` | stub |
+| `HeavyMarineDieselGeneratorPanel` | stub |
+| `InductionCupolaFurnacePanel` | stub |
+| `IronCenotaphMemorialPanel` | stub |
+| `LongWalkExpeditionPanel` | stub |
+| `MagneticDrumArchivePanel` | stub |
+| `MechanicalProstheticsLathePanel` | stub |
+| `SonicRuptureDrillPanel` | stub |
+| `SubterraneanDebtLedgerPanel` | stub |
+| `SurfaceShrapnelAegisPanel` | stub |
+| `TraumaBondingCohortPanel` | stub |
+| `TroposphericRadioRelayPanel` | stub |
+| `UltrasonicDecontaminationAirlockPanel` | stub |
+| `VaultDoorBreachingPanel` | stub |
+
+Bound panels are exempt (e.g. `SlurryDewateringSumpPanel`, `SumpFloodingPanel`,
+`WeatherSondePanel`, `RailwayTerminalPanel`). When a stub gains a Core
+binding, remove it from this table in the same commit.
+
 ### Failure policy
 
 If an MCP invocation fails because the server/tool is missing, disconnected, or auth-expired:

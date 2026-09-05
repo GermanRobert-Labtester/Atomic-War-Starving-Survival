@@ -13,6 +13,7 @@ using Ashfall.Core.World;
 using Ashfall.Core.Crafting;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Waystation;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -28,6 +29,8 @@ namespace AtomicWar.GodotApp
         private ShelterThermalPanel _shelterThermalPanel = null!;
         private bool _shelterThermalDirty;
         private Ashfall.Core.VentilationSystem _ventilation = null!; // Plan 29 29B: machine tell readings
+        private VentilationHostSession? _ventilationHost;                    // Plan 72 stage console session
+        private Ashfall.Core.Shelter.ShelterFireHazardSystem? _stageFireHazard; // Plan 72 arc-fault fire handoff
         private ShelterScheduleHostSession _shelterSchedule = null!;
         private ShelterSchedulePanel _shelterSchedulePanel = null!;
         private bool _shelterScheduleDirty;
@@ -118,6 +121,32 @@ namespace AtomicWar.GodotApp
 
             // Plan 29 29B: daily machine glitch pass — journal one-shots, evaluate continuous.
             TickMachineGlitchEvents(day);
+
+            // Plan 29 §29B.21: machine tell audio — quirk cues start on threshold
+            // crossings and stop on recovery; personality beds sustain.
+            TickMachineTellAudio();
+        }
+
+        /// <summary>
+        /// Plan 29 §29B.21 consumer side: daily machine tell audio sync. Evaluates
+        /// the same readings the text tells use and diffs the fired quirks against
+        /// the live audio conditions — newly degraded tells start their ElevenLabs
+        /// cue, recovered tells stop it, personality beds stay continuous. The
+        /// condition system's already_active guard makes repeated applies no-ops,
+        /// so audio fires on threshold transitions (§14), never per frame. No new
+        /// state authority: tells re-derive from the owning systems' live condition.
+        /// </summary>
+        private void TickMachineTellAudio()
+        {
+            var catalog = GetMachineTellCatalog();
+            if (catalog == null || catalog.MachineCount == 0) return;
+
+            var readings = BuildMachineReadings();
+            if (readings == null) return;
+
+            Ashfall.Core.Shelter.MachineTellAudioSync.Apply(
+                catalog, readings, _audioConditions,
+                cueId => AtomicWar.GodotApp.Audio.AudioCueCatalog.Resolve(cueId)?.Loop ?? false);
         }
 
         /// <summary>Apply an unlock batch through the journal (the single persistence authority).</summary>
@@ -246,10 +275,11 @@ namespace AtomicWar.GodotApp
         private void SetupWaterTreatment()
         {
             if (_waterTreatment != null) return;
+            SetupInventory();
             var wtState = WaterTreatmentSaveStore.TryLoad() ?? new WaterTreatmentState();
             var wtSys = new WaterTreatmentSystem(new GodotLog());
             wtSys.RestoreState(wtState);
-            _waterTreatment = new WaterTreatmentHostSession(wtSys);
+            _waterTreatment = new WaterTreatmentHostSession(wtSys, _inventory);
             if (_waterTreatmentPanel != null && _waterTreatmentPanel.IsInsideTree())
                 RemoveChild(_waterTreatmentPanel);
             _waterTreatmentPanel = new WaterTreatmentPanel();
@@ -332,15 +362,21 @@ namespace AtomicWar.GodotApp
                 CaptureSection("shelter_schedule", ShelterScheduleSaveStore.TryCapturePersisted(_shelterSchedule.System.CaptureState()));
         }
 
-        private void SetupAutopsy(ResearchSystem sharedResearch)
+        private void SetupAutopsy(ResearchSystem? sharedResearch = null)
         {
             if (_autopsy != null) return;
+            sharedResearch ??= _sharedResearch;
             var auState = AutopsySaveStore.TryLoad() ?? new AutopsyState();
             var auInv = _inventory.Inventory;
             var auRad = _survivors.Radiation;
             var auStarting = _startingLevel.System;
             var auVent = new VentilationSystem(auStarting);
             _ventilation = auVent; // Plan 29 29B: expose for machine tell readings
+            // Plan 72: electrostatic stage catalog + persistent arc-fire hazard.
+            auVent.ApplyElectrostaticCatalog(Ashfall.Core.ElectrostaticFiltrationCatalogLoader.Load(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer()));
+            _stageFireHazard = new Ashfall.Core.Shelter.ShelterFireHazardSystem();
+            _ventilationHost = new VentilationHostSession(auVent);
             var auRes = sharedResearch;
             var auMedical = _medicalWard;
             var auSys = new AutopsySystem(new SeededRng(1986), auInv, auRad, auVent, auRes, auMedical, new GodotLog());
@@ -368,6 +404,18 @@ namespace AtomicWar.GodotApp
             var wsSys = new WaystationSystem();
             wsSys.RestoreState(wsState);
             _waystation = new WaystationHostSession(wsSys);
+
+            // Plan 56 phase 6 — the multi-node trade-stock network: its 7-day
+            // resupply is provenance-aware (locally produced + general stock
+            // survive a market shortage; pure imports lapse). The shortage
+            // policy reads the live market; the closure is null-safe because
+            // the economy session may not be set up yet when it is bound.
+            SetupEconomy();
+            var network = new WaystationNetworkSystem();
+            _waystation.AttachNetwork(
+                network,
+                _economy.Catalog,
+                () => _economy?.Market.IsSuppliesShort() ?? false);
             if (_waystationPanel != null && _waystationPanel.IsInsideTree())
                 RemoveChild(_waystationPanel);
             _waystationPanel = new WaystationNetworkPanel();

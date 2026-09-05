@@ -58,6 +58,7 @@ namespace Ashfall.Core.World
             _state.NormalizeAndValidate(_nodes);
         }
 
+        public WastelandMapState State => _state;
         public IReadOnlyList<MapNode> Nodes => _nodes;
         public IReadOnlyList<MapRoute> Routes => _routes;
         public IReadOnlyList<string> DiscoveredNodes => _state.Discovered;
@@ -370,6 +371,9 @@ namespace Ashfall.Core.World
         /// <summary>List of dynamically unlocked location node IDs.</summary>
         public List<string> Unlocked = new List<string>();
 
+        /// <summary>List of registered damaged-map fragment IDs.</summary>
+        public List<string> RegisteredMapFragments = new List<string>();
+
         public void NormalizeAndValidate(IReadOnlyList<MapNode> nodes)
         {
             var validIds = new HashSet<string>(StringComparer.Ordinal);
@@ -403,7 +407,8 @@ namespace Ashfall.Core.World
             Discovered = new List<string>(Discovered),
             Completed = new List<string>(Completed),
             Locked = new List<string>(Locked),
-            Unlocked = new List<string>(Unlocked)
+            Unlocked = new List<string>(Unlocked),
+            RegisteredMapFragments = new List<string>(RegisteredMapFragments)
         };
 
         public void RestoreInto(WastelandMapState state, IReadOnlyList<MapNode> nodes)
@@ -412,6 +417,7 @@ namespace Ashfall.Core.World
             Completed = state.Completed != null ? new List<string>(state.Completed) : new List<string>();
             Locked = state.Locked != null ? new List<string>(state.Locked) : new List<string>();
             Unlocked = state.Unlocked != null ? new List<string>(state.Unlocked) : new List<string>();
+            RegisteredMapFragments = state.RegisteredMapFragments != null ? new List<string>(state.RegisteredMapFragments) : new List<string>();
             NormalizeAndValidate(nodes);
         }
     }

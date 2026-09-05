@@ -63,6 +63,67 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        /// <summary>Binds a sump node to a drainage stratum from sump_drainage_catalog.json.</summary>
+        public ActionResult AssignStratum(string nodeId, string stratumId)
+        {
+            var res = System.AssignStratum(nodeId, stratumId);
+            if (res.IsSuccess)
+            {
+                LastEvent = $"Drainage stratum {stratumId} bound to node {nodeId}";
+                RaiseStateChanged();
+            }
+            return res;
+        }
+
+        /// <summary>Flocculation treatment batch on a node (consumes flocculant).</summary>
+        public ActionResult StartFlocculation(string nodeId, int doseTier)
+        {
+            var res = System.StartFlocculation(nodeId, doseTier);
+            LastEvent = res.IsSuccess
+                ? $"Flocculation tier {doseTier} applied to {nodeId}"
+                : $"Flocculation blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
+        /// <summary>Centrifuge dewatering batch on a node (consumes filter cloth, needs power).</summary>
+        public ActionResult RunCentrifugeBatch(string nodeId)
+        {
+            var res = System.RunCentrifugeBatch(nodeId);
+            LastEvent = res.IsSuccess
+                ? $"Centrifuge batch completed for {nodeId}"
+                : $"Centrifuge blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
+        /// <summary>Replaces worn centrifuge filter media (consumes one cloth).</summary>
+        public ActionResult ReplaceCentrifugeMedia()
+        {
+            var res = System.ReplaceCentrifugeMedia();
+            LastEvent = res.IsSuccess ? "Centrifuge filter media replaced" : $"Media replace blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
+        /// <summary>Packs dewatered cake into canonical foundry feedstock items.</summary>
+        public ActionResult PackCakeForSmelting(int maxBlocks)
+        {
+            var res = System.PackCakeForSmelting(maxBlocks);
+            LastEvent = res.IsSuccess ? $"Cake packed: {maxBlocks} blocks max" : $"Cake packing blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
+        /// <summary>Packs hazardous tailings into canonical sealed drums for hauling.</summary>
+        public ActionResult PackTailingsDrums(int maxDrums)
+        {
+            var res = System.PackTailingsDrums(maxDrums);
+            LastEvent = res.IsSuccess ? $"Tailings sealed: {maxDrums} drums max" : $"Drum packing blocked: {res.FailureCode}";
+            RaiseStateChanged();
+            return res;
+        }
+
         public ActionResult SetNodePower(string nodeId, bool powered)
         {
             var res = System.SetNodePower(nodeId, powered);

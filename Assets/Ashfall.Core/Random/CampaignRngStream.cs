@@ -25,6 +25,11 @@ namespace Ashfall.Core.Random
         public const string Medical = "medical";
         public const string Events = "events";
         public const string WorldEvolution = "world_evolution";
+        // Plans 90-93 — deep industrial tier (distinct from the Silent Foundry's batch stream)
+        public const string CupolaFoundry = "cupola_foundry";
+        public const string VerticalAscent = "vertical_ascent";
+        public const string AcousticDetection = "acoustic_detection";
+        public const string MineralChemical = "mineral_chemical";
     }
 
     /// <summary>Domain-isolated deterministic RNG stream derived from a campaign master seed.</summary>

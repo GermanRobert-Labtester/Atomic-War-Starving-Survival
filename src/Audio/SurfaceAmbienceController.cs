@@ -44,10 +44,20 @@ namespace AtomicWar.GodotApp.Audio
             Sync();
         }
 
+        private string? _currentLocationId;
+
+        public void SetLocation(string? locationId)
+        {
+            if (_currentLocationId == locationId) return;
+            _currentLocationId = locationId;
+            Sync();
+        }
+
         public void Start()
         {
             ThrowIfDisposed();
             _active = true;
+            AudioManager.Instance?.SetBunkerOcclusion(false);
             Sync();
         }
 
@@ -55,8 +65,8 @@ namespace AtomicWar.GodotApp.Audio
         {
             if (_disposed) return;
             _active = false;
-            _stopCue(AudioCueCatalog.AmbSurface);
-            _stopCue(AudioCueCatalog.AmbSurfaceStorm);
+            AudioManager.Instance?.SetBunkerOcclusion(true);
+            StopAllAmbiences();
         }
 
         private void OnWeatherChanged(WeatherKind kind) => Sync();
@@ -65,16 +75,85 @@ namespace AtomicWar.GodotApp.Audio
         {
             if (!_active)
             {
-                _stopCue(AudioCueCatalog.AmbSurface);
-                _stopCue(AudioCueCatalog.AmbSurfaceStorm);
+                StopAllAmbiences();
                 return;
             }
 
-            bool storm = IsStorm(_weather?.Current ?? WeatherKind.Clear);
-            string desired = storm ? AudioCueCatalog.AmbSurfaceStorm : AudioCueCatalog.AmbSurface;
-            string other = storm ? AudioCueCatalog.AmbSurface : AudioCueCatalog.AmbSurfaceStorm;
-            _stopCue(other);
+            WeatherKind weather = _weather?.Current ?? WeatherKind.Clear;
+            if (weather is WeatherKind.Silence or WeatherKind.SilentSpring)
+            {
+                StopAllAmbiences();
+                return;
+            }
+
+            string desired = ResolveWeatherAmbience(weather) ?? ResolveLocationAmbience(_currentLocationId);
+            StopOtherAmbiences(desired);
             _playCue(desired);
+        }
+
+        internal static string? ResolveWeatherAmbience(WeatherKind kind) => kind switch
+        {
+            WeatherKind.Ashfall => AudioCueCatalog.AmbSurfaceAshfall,
+            WeatherKind.FalloutStorm => AudioCueCatalog.AmbSurfaceFalloutStorm,
+            WeatherKind.Blizzard or WeatherKind.AcidSnow or WeatherKind.BlackSnow
+                or WeatherKind.IceStorm => AudioCueCatalog.AmbSurfaceBlizzard,
+            _ when IsStorm(kind) => AudioCueCatalog.AmbSurfaceStorm,
+            _ => null,
+        };
+
+        public static string ResolveLocationAmbience(string? locationId)
+        {
+            if (string.IsNullOrEmpty(locationId)) return AudioCueCatalog.AmbSurface;
+            string lower = locationId.ToLowerInvariant();
+            if (lower.Contains("hospital") || lower.Contains("clinic") || lower.Contains("pharmacy"))
+                return AudioCueCatalog.AmbLocAbandonedHospital;
+            if (lower.Contains("gas") || lower.Contains("station") || lower.Contains("roadside"))
+                return AudioCueCatalog.AmbLocRuralGasStation;
+            if (lower.Contains("suburban") || lower.Contains("house") || lower.Contains("residential") || lower.Contains("neighborhood"))
+                return AudioCueCatalog.AmbLocSuburbanRuins;
+            if (lower.Contains("bunker") || lower.Contains("military") || lower.Contains("depot") || lower.Contains("silo") || lower.Contains("outpost"))
+                return AudioCueCatalog.AmbLocMilitaryBunker;
+            if (lower.Contains("geo") || lower.Contains("thermal") || lower.Contains("volcan") || lower.Contains("plant"))
+                return AudioCueCatalog.AmbLocGeothermalRuins;
+            if (lower.Contains("arcology") || lower.Contains("sector") || lower.Contains("tower") || lower.Contains("facility"))
+                return AudioCueCatalog.AmbLocArcologySector;
+            if (lower.Contains("granite") || lower.Contains("quarry") || lower.Contains("mine") || lower.Contains("cave") || lower.Contains("cavern"))
+                return AudioCueCatalog.AmbLocGraniteQuarry;
+            if (lower.Contains("warzone") || lower.Contains("front") || lower.Contains("battle") || lower.Contains("trench") || lower.Contains("crossing"))
+                return AudioCueCatalog.AmbWarzoneDistantShelling;
+            return AudioCueCatalog.AmbSurface;
+        }
+
+        private static readonly string[] s_surfaceAmbiences = new[]
+        {
+            AudioCueCatalog.AmbSurface,
+            AudioCueCatalog.AmbSurfaceAshfall,
+            AudioCueCatalog.AmbSurfaceBlizzard,
+            AudioCueCatalog.AmbSurfaceFalloutStorm,
+            AudioCueCatalog.AmbSurfaceStorm,
+            AudioCueCatalog.AmbLocAbandonedHospital,
+            AudioCueCatalog.AmbLocRuralGasStation,
+            AudioCueCatalog.AmbLocSuburbanRuins,
+            AudioCueCatalog.AmbLocMilitaryBunker,
+            AudioCueCatalog.AmbLocGeothermalRuins,
+            AudioCueCatalog.AmbLocArcologySector,
+            AudioCueCatalog.AmbLocGraniteQuarry,
+            AudioCueCatalog.AmbWarzoneDistantShelling
+        };
+
+        private void StopAllAmbiences()
+        {
+            foreach (var cue in s_surfaceAmbiences)
+                _stopCue(cue);
+        }
+
+        private void StopOtherAmbiences(string except)
+        {
+            foreach (var cue in s_surfaceAmbiences)
+            {
+                if (cue != except)
+                    _stopCue(cue);
+            }
         }
 
         private static bool IsStorm(WeatherKind kind) => kind switch
