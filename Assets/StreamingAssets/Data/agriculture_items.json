@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "item_compost_humus",
+      "displayName": "Compost Humus",
+      "description": "A bucket of dark, worked-down matter. It smells like before. Worked into a plot, it buys the soil a little more time.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.8,
+      "tradeValue": 3
+    },
+    {
+      "id": "item_pest_treatment_dust",
+      "displayName": "Pest Treatment Dust",
+      "description": "A paper sachet of harsh mineral dust. It kills the swarm and stings the hands, and the plants endure it the way everything here endures.",
+      "type": "Material",
+      "stackMax": 15,
+      "weight": 0.2,
+      "tradeValue": 8
+    }
+  ]
+}

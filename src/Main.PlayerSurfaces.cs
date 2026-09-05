@@ -578,6 +578,13 @@ namespace AtomicWar.GodotApp
                 openAction: () => OpenExpandedPanel("plans_130_133"),
                 closeAction: () => { if (_plans130To133Panel != null) _plans130To133Panel.Close(); });
 
+            // Plans 162-165 — advanced agriculture (Plan 162). Bind-on-open keeps
+            // the session lazy; the panel routes commands through HandleAgricultureAction.
+            PanelRegistry.ConfigureActions("farming",
+                bindAction: () => HandleAgricultureAction("OPEN", ""),
+                openAction: () => HandleAgricultureAction("OPEN", ""),
+                closeAction: () => HandleAgricultureAction("CLOSE", ""));
+
             // Note: 29 flagship prototype consoles (Issues 01–28, 30) are registered as
             // PanelMaturity.Prototype and excluded from player navigation. Their classes
             // remain available for snapshots, previews, and future host session development.
@@ -591,7 +598,7 @@ namespace AtomicWar.GodotApp
                 "waystation_network", "chemical_dependency", "sump_flooding", "decontamination",
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
                 "contractor_roster", "mental_health_crisis", "phantom_memory",
-                "traveling_caravan", "medical_ward", "plans_94_97", "plans_130_133"
+                "traveling_caravan", "medical_ward", "plans_94_97", "plans_130_133", "farming"
             };
 
             foreach (var expId in expandedIds)

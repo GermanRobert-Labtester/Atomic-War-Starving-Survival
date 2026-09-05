@@ -199,7 +199,18 @@ namespace AtomicWar.GodotApp
                     _m._expansions.TickGreenhouse(day);
 
                 _m.SetupGreenhouse();
-                _m._greenhouse.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.04f);
+                _m.SetupAgriculture();
+                if (_m._agriculture != null)
+                {
+                    // Plan 162: advanced agriculture derives the grow-light and
+                    // ash inputs from power + weather, then ticks the canonical
+                    // greenhouse growth authority exactly once inside Core.
+                    _m.TickAgricultureDay(day);
+                }
+                else
+                {
+                    _m._greenhouse.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.04f);
+                }
 
                 _m.SetupSilentFoundry();
                 _m._silentFoundry.TickDaily(day);
@@ -496,6 +507,11 @@ namespace AtomicWar.GodotApp
                         {
                             bool crisis = _m._dutyRoster.Quests.IsCrisisQuestActive();
                             _m._dutyRoster.BridgeHatchReturn(ex.survivorId, crisis: crisis);
+                            // Flagship XI Slice 8: a completed sortie is a hope
+                            // source; contagion spreads the relief naturally.
+                            _m.SetupMoraleContagion();
+                            _m._moraleContagion?.System.StartContagionEvent(
+                                "contagion_successful_rescue_hope", string.Empty, day);
                             break;
                         }
                     }

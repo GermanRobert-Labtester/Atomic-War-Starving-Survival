@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "strains": [
+    {
+      "id": "strain_tuber_heirloom",
+      "display_name": "Heirloom Tuber Line",
+      "seed_item_id": "item_seed_tuber",
+      "yield_modifier": 1.0,
+      "soil_tolerance": 0.6,
+      "toxicity_tolerance_permille": 350,
+      "radiation_tolerance": 0.5,
+      "pest_susceptibility": 0.5,
+      "mutation_threshold": 0.55,
+      "nutrition_profile": { "calories": 1.0, "protein": 0.4, "vitamin_c": 0.1, "micronutrients": 0.2, "fats": 0.0, "fiber": 0.5 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 70 },
+        { "outcome": "yield_penalty", "weight": 12 },
+        { "outcome": "toxic_harvest", "weight": 8 },
+        { "outcome": "hardy_strain", "result_strain_id": "strain_tuber_radline", "weight": 6 },
+        { "outcome": "sterile_seed", "weight": 4 }
+      ],
+      "tags": ["tuber", "staple"]
+    },
+    {
+      "id": "strain_tuber_radline",
+      "display_name": "Rad-Hardened Tuber Line",
+      "seed_item_id": "item_seed_tuber",
+      "yield_modifier": 1.1,
+      "soil_tolerance": 0.7,
+      "toxicity_tolerance_permille": 500,
+      "radiation_tolerance": 0.85,
+      "pest_susceptibility": 0.45,
+      "mutation_threshold": 0.95,
+      "nutrition_profile": { "calories": 1.0, "protein": 0.4, "vitamin_c": 0.1, "micronutrients": 0.15, "fats": 0.0, "fiber": 0.5 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 90 },
+        { "outcome": "toxic_harvest", "weight": 10 }
+      ],
+      "tags": ["tuber", "staple", "variant"]
+    },
+    {
+      "id": "strain_mushroom_cavern",
+      "display_name": "Cavern Mycelium Line",
+      "seed_item_id": "item_seed_mushroom",
+      "yield_modifier": 1.0,
+      "soil_tolerance": 0.5,
+      "toxicity_tolerance_permille": 600,
+      "radiation_tolerance": 0.7,
+      "pest_susceptibility": 0.35,
+      "mutation_threshold": 0.7,
+      "nutrition_profile": { "calories": 0.3, "protein": 0.7, "vitamin_c": 0.0, "micronutrients": 0.6, "fats": 0.1, "fiber": 0.3 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 85 },
+        { "outcome": "yield_penalty", "weight": 10 },
+        { "outcome": "toxic_harvest", "weight": 5 }
+      ],
+      "tags": ["fungus"]
+    },
+    {
+      "id": "strain_grain_ashline",
+      "display_name": "Ashline Grain Selection",
+      "seed_item_id": "item_seed_grain",
+      "yield_modifier": 1.05,
+      "soil_tolerance": 0.45,
+      "toxicity_tolerance_permille": 300,
+      "radiation_tolerance": 0.45,
+      "pest_susceptibility": 0.6,
+      "mutation_threshold": 0.5,
+      "nutrition_profile": { "calories": 1.0, "protein": 0.2, "vitamin_c": 0.0, "micronutrients": 0.15, "fats": 0.1, "fiber": 0.4 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 68 },
+        { "outcome": "yield_penalty", "weight": 13 },
+        { "outcome": "toxic_harvest", "weight": 9 },
+        { "outcome": "hardy_strain", "result_strain_id": "strain_grain_ashheart", "weight": 6 },
+        { "outcome": "sterile_seed", "weight": 4 }
+      ],
+      "tags": ["grain", "staple"]
+    },
+    {
+      "id": "strain_grain_ashheart",
+      "display_name": "Ashheart Grain Line",
+      "seed_item_id": "item_seed_grain",
+      "yield_modifier": 1.15,
+      "soil_tolerance": 0.6,
+      "toxicity_tolerance_permille": 420,
+      "radiation_tolerance": 0.8,
+      "pest_susceptibility": 0.55,
+      "mutation_threshold": 0.95,
+      "nutrition_profile": { "calories": 1.0, "protein": 0.25, "vitamin_c": 0.0, "micronutrients": 0.15, "fats": 0.1, "fiber": 0.4 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 90 },
+        { "outcome": "toxic_harvest", "weight": 10 }
+      ],
+      "tags": ["grain", "staple", "variant"]
+    },
+    {
+      "id": "strain_hardy_tuber_select",
+      "display_name": "Selected Hardy Tuber Line",
+      "seed_item_id": "item_seed_hardy_tuber",
+      "yield_modifier": 0.95,
+      "soil_tolerance": 0.85,
+      "toxicity_tolerance_permille": 550,
+      "radiation_tolerance": 0.75,
+      "pest_susceptibility": 0.4,
+      "mutation_threshold": 0.8,
+      "nutrition_profile": { "calories": 0.9, "protein": 0.35, "vitamin_c": 0.1, "micronutrients": 0.2, "fats": 0.0, "fiber": 0.6 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 88 },
+        { "outcome": "yield_penalty", "weight": 7 },
+        { "outcome": "toxic_harvest", "weight": 5 }
+      ],
+      "tags": ["tuber", "staple"]
+    },
+    {
+      "id": "strain_biolum_aglow",
+      "display_name": "Aglow Mycelium Line",
+      "seed_item_id": "item_seed_biolum_mushroom",
+      "yield_modifier": 0.9,
+      "soil_tolerance": 0.4,
+      "toxicity_tolerance_permille": 700,
+      "radiation_tolerance": 0.9,
+      "pest_susceptibility": 0.3,
+      "mutation_threshold": 0.75,
+      "nutrition_profile": { "calories": 0.3, "protein": 0.5, "vitamin_c": 0.0, "micronutrients": 0.8, "fats": 0.0, "fiber": 0.3 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 86 },
+        { "outcome": "yield_penalty", "weight": 9 },
+        { "outcome": "toxic_harvest", "weight": 5 }
+      ],
+      "tags": ["fungus"]
+    },
+    {
+      "id": "strain_leafy_shade",
+      "display_name": "Shade Bench Greens",
+      "seed_item_id": "item_seed_leafy_green",
+      "yield_modifier": 1.0,
+      "soil_tolerance": 0.5,
+      "toxicity_tolerance_permille": 250,
+      "radiation_tolerance": 0.35,
+      "pest_susceptibility": 0.7,
+      "mutation_threshold": 0.65,
+      "nutrition_profile": { "calories": 0.3, "protein": 0.2, "vitamin_c": 0.9, "micronutrients": 0.4, "fats": 0.0, "fiber": 0.6 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 84 },
+        { "outcome": "yield_penalty", "weight": 10 },
+        { "outcome": "toxic_harvest", "weight": 6 }
+      ],
+      "tags": ["leafy", "greens"]
+    },
+    {
+      "id": "strain_coldlegume_frostline",
+      "display_name": "Frostline Legume Line",
+      "seed_item_id": "item_seed_cold_legume",
+      "yield_modifier": 1.0,
+      "soil_tolerance": 0.65,
+      "toxicity_tolerance_permille": 400,
+      "radiation_tolerance": 0.55,
+      "pest_susceptibility": 0.45,
+      "mutation_threshold": 0.6,
+      "nutrition_profile": { "calories": 0.7, "protein": 0.8, "vitamin_c": 0.3, "micronutrients": 0.35, "fats": 0.1, "fiber": 0.7 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 85 },
+        { "outcome": "yield_penalty", "weight": 9 },
+        { "outcome": "toxic_harvest", "weight": 6 }
+      ],
+      "tags": ["legume"]
+    },
+    {
+      "id": "strain_oilseed_press",
+      "display_name": "Press Oilseed Line",
+      "seed_item_id": "item_seed_oilseed",
+      "yield_modifier": 0.95,
+      "soil_tolerance": 0.5,
+      "toxicity_tolerance_permille": 300,
+      "radiation_tolerance": 0.4,
+      "pest_susceptibility": 0.6,
+      "mutation_threshold": 0.6,
+      "nutrition_profile": { "calories": 0.6, "protein": 0.25, "vitamin_c": 0.0, "micronutrients": 0.2, "fats": 0.9, "fiber": 0.3 },
+      "mutation_outcomes": [
+        { "outcome": "no_mutation", "weight": 86 },
+        { "outcome": "yield_penalty", "weight": 9 },
+        { "outcome": "toxic_harvest", "weight": 5 }
+      ],
+      "tags": ["oilseed"]
+    }
+  ],
+  "pests": [
+    {
+      "id": "infestation_aphid_swarm",
+      "display_name": "Aphid Swarm",
+      "base_chance_per_day": 0.03,
+      "severity_step": 0.15,
+      "yield_damage_at_full": 0.5,
+      "treats_with_item_ids": ["item_pest_treatment_dust"],
+      "season_tag": "any",
+      "target_strain_tags": ["leafy", "greens", "grain"]
+    },
+    {
+      "id": "infestation_root_fly",
+      "display_name": "Root Fly Brood",
+      "base_chance_per_day": 0.02,
+      "severity_step": 0.1,
+      "yield_damage_at_full": 0.6,
+      "treats_with_item_ids": ["item_pest_treatment_dust"],
+      "season_tag": "any",
+      "target_strain_tags": ["tuber"]
+    },
+    {
+      "id": "infestation_spore_mite",
+      "display_name": "Spore Mite Colony",
+      "base_chance_per_day": 0.025,
+      "severity_step": 0.12,
+      "yield_damage_at_full": 0.45,
+      "treats_with_item_ids": ["item_pest_treatment_dust"],
+      "season_tag": "any",
+      "target_strain_tags": ["fungus"]
+    }
+  ],
+  "compost_recipes": [
+    {
+      "id": "recipe_compost_humus",
+      "display_name": "Humus Batch",
+      "input_item_id": "tainted_food",
+      "input_count": 2,
+      "output_item_id": "item_compost_humus",
+      "output_count": 1,
+      "duration_days": 5
+    },
+    {
+      "id": "recipe_compost_green_manure",
+      "display_name": "Green Manure Batch",
+      "input_item_id": "crop_leafy_green",
+      "input_count": 3,
+      "output_item_id": "item_compost_humus",
+      "output_count": 1,
+      "duration_days": 4
+    }
+  ]
+}

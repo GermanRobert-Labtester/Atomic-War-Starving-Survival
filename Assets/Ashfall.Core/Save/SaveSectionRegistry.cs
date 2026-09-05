@@ -195,6 +195,7 @@ namespace Ashfall.Core.Save
             new("microfluidic_diagnostic", "SaveMicrofluidicDiagnostic", "SetupMicrofluidicDiagnostic", "medical", "Plans 146-149 — microfluidic diagnostic cartridge manufacturing and run records"),
             new("mine_clearing_flail", "SaveMineClearingFlail", "SetupMineClearingFlail", "expeditions", "Plans 146-149 — mine-clearing flail vehicle modules and active breaches"),
             new("rail_grinding", "SaveRailGrinding", "SetupRailGrinding", "expeditions", "Plans 146-149 — rail grinding vehicle modules and active corridor jobs"),
+            new("agriculture", "SaveAgriculture", "SetupAgriculture", "farming", "Plans 162-165 — advanced crop strains, plot medium, pests, compost, and dietary diversity"),
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -334,6 +335,7 @@ namespace Ashfall.Core.Save
                 { "power_subgrids", "power_subgrids_save.json" },
                 { "perimeter_defense", "perimeter_defense_save.json" },
                 { "hydroponic_biomes", "hydroponic_biomes_save.json" },
+                { "agriculture", "agriculture_save.json" },
                 { "nuclear_core_lifecycle", "nuclear_core_lifecycle_save.json" },
                 { "armored_crawlers", "armored_crawlers_save.json" },
                 { "personal_quests", "personal_quests_save.json" },

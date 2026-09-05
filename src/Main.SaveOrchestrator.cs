@@ -228,6 +228,7 @@ namespace AtomicWar.GodotApp
             SetupPowerSubgrids();
             SetupPerimeterDefense();
             SetupHydroponicBiomes();
+            SetupAgriculture();
             SetupNuclearCore();
             SetupArmoredCrawlers();
             SetupPersonalQuests();
@@ -381,6 +382,7 @@ namespace AtomicWar.GodotApp
                 SavePowerSubgrids();
                 SavePerimeterDefense();
                 SaveHydroponicBiomes();
+                SaveAgriculture();
                 SaveNuclearCore();
                 SaveArmoredCrawlers();
                 SavePersonalQuests();

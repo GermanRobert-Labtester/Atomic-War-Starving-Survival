@@ -514,8 +514,13 @@ namespace AtomicWar.GodotApp
 
             var result = ActionResult.Success($"Consumed 1 × {def.displayName}.", deltas);
             LastEvent = result.MessageKey;
+            // Observers (nutrition diversity, Plan 162) see only committed consumptions.
+            OnConsumed?.Invoke(targetId ?? string.Empty, itemId);
             return result;
         }
+
+        /// <summary>Raised after a consume transaction commits (survivorId, itemId).</summary>
+        public Action<string, string>? OnConsumed;
 
         // ── Status ─────────────────────────────────────────────────────
 

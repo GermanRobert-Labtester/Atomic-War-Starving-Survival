@@ -156,6 +156,7 @@ namespace AtomicWar.GodotApp
         private UndergroundPrintingPressPanel _printingPressPanel = null!;
         private SiliconIngotSlicingPanel _siliconSlicingPanel = null!;
         private GeothermalSteamTurbinePanel _geothermalTurbinePanel = null!;
+        private GeothermalAquiferPanel _geothermalAquiferPanel = null!;
         private WarDogKennelPanel _warDogKennelPanel = null!;
         private IsotopeSeparatorPanel _isotopeSeparatorPanel = null!;
         private PlasmaArcSmeltingPanel _plasmaSmeltingPanel = null!;
@@ -168,6 +169,7 @@ namespace AtomicWar.GodotApp
         private SubterraneanDebtLedgerPanel _subterraneanDebtLedgerPanel = null!;
         private SurfaceShrapnelAegisPanel _surfaceShrapnelAegisPanel = null!;
         private LongWalkExpeditionPanel _longWalkExpeditionPanel = null!;
+        private ReconTelemetryPanel _reconTelemetryPanel = null!;
         private SonicRuptureDrillPanel _sonicRuptureDrillPanel = null!;
         private VaultDoorBreachingPanel _vaultDoorBreachingPanel = null!;
         private IronCenotaphMemorialPanel _ironCenotaphMemorialPanel = null!;
@@ -392,6 +394,66 @@ namespace AtomicWar.GodotApp
             AddChild(_shelterPanel);
 
             // ── Greenhouse panel (overlay) ──
+            _deconAirlockPanel = new AtomicWar.GodotApp.UI.DeconAirlockPanel();
+
+            _deconAirlockPanel.Visible = false;
+
+            _deconAirlockPanel.OnClose += CloseDeconAirlockPanel;
+
+            _deconAirlockPanel.OnActionRequested += HandleDeconAirlockAction;
+
+            AddChild(_deconAirlockPanel);
+
+
+
+            _geodeticSurveyPanel = new AtomicWar.GodotApp.UI.GeodeticSurveyPanel();
+
+            _geodeticSurveyPanel.Visible = false;
+
+            _geodeticSurveyPanel.OnClose += CloseGeodeticSurveyPanel;
+
+            _geodeticSurveyPanel.OnActionRequested += HandleGeodeticSurveyAction;
+
+            AddChild(_geodeticSurveyPanel);
+
+
+
+            _kineticStoragePanel = new AtomicWar.GodotApp.UI.KineticStoragePanel();
+
+            _kineticStoragePanel.Visible = false;
+
+            _kineticStoragePanel.OnClose += CloseKineticStoragePanel;
+
+            _kineticStoragePanel.OnActionRequested += HandleKineticStorageAction;
+
+            AddChild(_kineticStoragePanel);
+
+
+
+            _chemicalReconPanel = new AtomicWar.GodotApp.UI.ChemicalReconPanel();
+
+            _chemicalReconPanel.Visible = false;
+
+            _chemicalReconPanel.OnClose += CloseChemicalReconPanel;
+
+            _chemicalReconPanel.OnActionRequested += HandleChemicalReconAction;
+
+            AddChild(_chemicalReconPanel);
+
+
+
+            _farmingPanel = new AtomicWar.GodotApp.UI.FarmingPanel();
+
+            _farmingPanel.Visible = false;
+
+            _farmingPanel.OnClose += () => HandleAgricultureAction("CLOSE", "");
+
+            _farmingPanel.OnActionRequested += HandleAgricultureAction;
+
+            AddChild(_farmingPanel);
+
+            BuildPlans146To149Panels();
+
             _greenhousePanel = new GreenhousePanel();
             _greenhousePanel.OnClose += CloseGreenhousePanel;
             _greenhousePanel.OnActionRequested += HandleGreenhouseAction;
@@ -816,6 +878,10 @@ namespace AtomicWar.GodotApp
             _geothermalTurbinePanel.OnClose += () => _geothermalTurbinePanel.Visible = false;
             AddChild(_geothermalTurbinePanel);
 
+            _geothermalAquiferPanel = new GeothermalAquiferPanel { Visible = false };
+            _geothermalAquiferPanel.OnClose += () => _geothermalAquiferPanel.Visible = false;
+            AddChild(_geothermalAquiferPanel);
+
             _warDogKennelPanel = new WarDogKennelPanel { Visible = false };
             _warDogKennelPanel.OnClose += () => _warDogKennelPanel.Visible = false;
             AddChild(_warDogKennelPanel);
@@ -863,6 +929,10 @@ namespace AtomicWar.GodotApp
             _longWalkExpeditionPanel = new LongWalkExpeditionPanel { Visible = false };
             _longWalkExpeditionPanel.OnClose += () => _longWalkExpeditionPanel.Visible = false;
             AddChild(_longWalkExpeditionPanel);
+
+            _reconTelemetryPanel = new ReconTelemetryPanel { Visible = false };
+            _reconTelemetryPanel.OnClose += () => _reconTelemetryPanel.Visible = false;
+            AddChild(_reconTelemetryPanel);
 
             _sonicRuptureDrillPanel = new SonicRuptureDrillPanel { Visible = false };
             _sonicRuptureDrillPanel.OnClose += () => _sonicRuptureDrillPanel.Visible = false;

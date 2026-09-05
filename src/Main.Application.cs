@@ -89,6 +89,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.GreenhouseSelfTest:
                     GetTree().Quit(HostCli.RunGreenhouseSelfTest());
                     return;
+                case HostCliAction.AgricultureSelfTest:
+                    GetTree().Quit(HostCli.RunAgricultureSelfTest(_dataDir));
+                    return;
                 case HostCliAction.SilentFoundrySelfTest:
                     GetTree().Quit(HostCli.RunSilentFoundrySelfTest(_dataDir));
                     return;
@@ -151,6 +154,63 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.CombatSelfTest:
                     GetTree().Quit(HostCli.RunCombatSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DeconAirlockUiTest:
+
+                    RunDeconAirlockUiTestAndQuit();
+
+                    return;
+
+                case HostCliAction.GeodeticSurveyUiTest:
+
+                    RunGeodeticSurveyUiTestAndQuit();
+
+                    return;
+
+                case HostCliAction.KineticStorageUiTest:
+
+                    RunKineticStorageUiTestAndQuit();
+
+                    return;
+
+                case HostCliAction.ChemicalReconUiTest:
+
+                    RunChemicalReconUiTestAndQuit();
+
+                    return;
+
+                case HostCliAction.EbPvdCoatingUiTest:
+
+                    RunEbPvdCoatingUiTestAndQuit();
+
+                    return;
+
+                case HostCliAction.MicrofluidicDiagnosticUiTest:
+
+                    RunMicrofluidicDiagnosticUiTestAndQuit();
+
+                    return;
+
+                case HostCliAction.MineFlailUiTest:
+
+                    RunMineFlailUiTestAndQuit();
+
+                    return;
+
+                case HostCliAction.RailGrindingUiTest:
+
+                    RunRailGrindingUiTestAndQuit();
+
+                    return;
+                case HostCliAction.GeothermalAquiferSelfTest:
+
+                    RunGeothermalAquiferUiTestAndQuit();
+
+                    return;
+                case HostCliAction.ReconTelemetrySelfTest:
+
+                    RunReconTelemetryUiTestAndQuit();
+
                     return;
                 case HostCliAction.SilentFoundryUiTest:
                     RunSilentFoundryUiTestAndQuit();

@@ -96,7 +96,8 @@ namespace Ashfall.Core.Inventory
             "crossing_items.json",
             "dose_items.json",
             "chemical_dependency_items.json",
-            "year_of_ash_items.json"
+            "year_of_ash_items.json",
+            "agriculture_items.json"
         };
 
         public static ItemCatalog LoadCatalog(string dataDir, IFileIO fileIO, IJsonSerializer serializer)

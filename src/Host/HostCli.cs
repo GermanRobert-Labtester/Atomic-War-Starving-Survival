@@ -66,8 +66,21 @@ namespace AtomicWar.GodotApp
         ArbitrationSelfTest,
         LedgerDebtSelfTest,
         GreenhouseSelfTest,
+        AgricultureSelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
+        DeconAirlockUiTest,
+
+        GeodeticSurveyUiTest,
+
+        KineticStorageUiTest,
+
+        ChemicalReconUiTest,
+        EbPvdCoatingUiTest,
+        MicrofluidicDiagnosticUiTest,
+        MineFlailUiTest,
+        RailGrindingUiTest,
+        GeothermalAquiferSelfTest,
         DiseaseSelfTest,
         DutyRosterUiTest,
         ExpansionsSelfTest,
@@ -142,7 +155,8 @@ namespace AtomicWar.GodotApp
         ExpansionDepthSelfTest,
         DynamicWorldSelfTest,
         WastelandInhabitantsSelfTest,
-        OralLoreSelfTest
+        OralLoreSelfTest,
+        ReconTelemetrySelfTest
     }
 
     /// <summary>
@@ -234,6 +248,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.LedgerDebtSelfTest;
             if (Has(args, "--greenhouse-selftest") || Has(args, "--glass-orchard-selftest"))
                 return HostCliAction.GreenhouseSelfTest;
+            if (Has(args, "--agriculture-selftest"))
+                return HostCliAction.AgricultureSelfTest;
             if (Has(args, "--silent-foundry-selftest"))
                 return HostCliAction.SilentFoundrySelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))
@@ -242,6 +258,34 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.CombatSelfTest;
             if (Has(args, "--silent-foundry-uitest"))
                 return HostCliAction.SilentFoundryUiTest;
+            if (Has(args, "--decon-airlock-selftest") || Has(args, "--decon-airlock-uitest"))
+
+                return HostCliAction.DeconAirlockUiTest;
+
+            if (Has(args, "--geodetic-survey-selftest") || Has(args, "--geodetic-survey-uitest"))
+
+                return HostCliAction.GeodeticSurveyUiTest;
+
+            if (Has(args, "--kinetic-storage-selftest") || Has(args, "--kinetic-storage-uitest"))
+
+                return HostCliAction.KineticStorageUiTest;
+
+            if (Has(args, "--chemical-recon-selftest") || Has(args, "--chemical-recon-uitest"))
+                return HostCliAction.ChemicalReconUiTest;
+            if (Has(args, "--ebpvd-coating-uitest") || Has(args, "--ebpvd-coating-selftest"))
+                return HostCliAction.EbPvdCoatingUiTest;
+            if (Has(args, "--microfluidic-diagnostic-uitest") || Has(args, "--microfluidic-diagnostic-selftest"))
+                return HostCliAction.MicrofluidicDiagnosticUiTest;
+            if (Has(args, "--mine-flail-uitest") || Has(args, "--mine-flail-selftest"))
+                return HostCliAction.MineFlailUiTest;
+            if (Has(args, "--rail-grinding-uitest") || Has(args, "--rail-grinding-selftest"))
+                return HostCliAction.RailGrindingUiTest;
+            if (Has(args, "--geothermal-aquifer-selftest") || Has(args, "--geothermal-uitest"))
+
+                return HostCliAction.GeothermalAquiferSelfTest;
+            if (Has(args, "--recon-telemetry-selftest") || Has(args, "--recon-telemetry-uitest"))
+
+                return HostCliAction.ReconTelemetrySelfTest;
             if (Has(args, "--duty-roster-uitest"))
                 return HostCliAction.DutyRosterUiTest;
             if (Has(args, "--core-selftest"))
@@ -539,6 +583,25 @@ namespace AtomicWar.GodotApp
             GD.Print("  --shelter-decor-selftest / --shelter-interior-selftest / --memorial-wall-selftest Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification");
             GD.Print("  --shelter-operations-selftest / --shelter-ops-selftest / --operations-selftest Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification");
             GD.Print("  --silent-foundry-uitest   Silent Foundry trade panel UI construction, binding, and trade loop");
+            GD.Print("  --decon-airlock-uitest     Decon Airlock UI data grid panel bindings");
+            GD.Print("  --decon-airlock-selftest   Decon Airlock UI data grid panel bindings");
+            GD.Print("  --geodetic-survey-uitest   Geodetic Survey UI data grid panel bindings");
+            GD.Print("  --geodetic-survey-selftest Geodetic Survey UI data grid panel bindings");
+            GD.Print("  --kinetic-storage-uitest   Kinetic Storage UI data grid panel bindings");
+            GD.Print("  --kinetic-storage-selftest Kinetic Storage UI data grid panel bindings");
+            GD.Print("  --chemical-recon-uitest    Chemical Recon UI data grid panel bindings");
+            GD.Print("  --chemical-recon-selftest  Chemical Recon UI data grid panel bindings");
+            GD.Print("  --recon-telemetry-uitest / --recon-telemetry-selftest Recon Telemetry UI data grid panel bindings");
+            GD.Print("  --geothermal-uitest        Geothermal Aquifer UI panel bindings");
+            GD.Print("  --geothermal-aquifer-selftest Geothermal Aquifer UI panel bindings");
+            GD.Print("  --ebpvd-coating-uitest     EB-PVD Thermal Barrier Coating UI panel bindings");
+            GD.Print("  --ebpvd-coating-selftest   EB-PVD Thermal Barrier Coating UI panel bindings");
+            GD.Print("  --microfluidic-diagnostic-uitest Microfluidic Diagnostics UI panel bindings");
+            GD.Print("  --microfluidic-diagnostic-selftest Microfluidic Diagnostics UI panel bindings");
+            GD.Print("  --mine-flail-uitest        Mine-Clearing Flail UI panel bindings");
+            GD.Print("  --mine-flail-selftest      Mine-Clearing Flail UI panel bindings");
+            GD.Print("  --rail-grinding-uitest     Rail Grinding Corridor UI panel bindings");
+            GD.Print("  --rail-grinding-selftest   Rail Grinding Corridor UI panel bindings");
             GD.Print("  --survivors-uitest       Survivors panel UI construction, roster cards, and affliction badges");
             GD.Print("  --ui-layout-selftest / --layout-selftest Verify fixed 1920x1080 UI layout bounds, responsive containers, and panel alignments");
             GD.Print("  --ui-snapshot-regenerate / --ui-snapshots-regen Recapture all snapshot targets and OVERWRITE snapshots/ goldens (needs real display)");

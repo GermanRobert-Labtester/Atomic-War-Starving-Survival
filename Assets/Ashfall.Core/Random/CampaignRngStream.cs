@@ -30,6 +30,28 @@ namespace Ashfall.Core.Random
         public const string VerticalAscent = "vertical_ascent";
         public const string AcousticDetection = "acoustic_detection";
         public const string MineralChemical = "mineral_chemical";
+        // Plans 162-165 — flagship survival layer. Dot-namespaced so each mechanic
+        // draws from its own StableHash-derived stream; adding any of these cannot
+        // shift another stream's derived seed.
+        public const string AgricultureMutation = "agriculture.mutation";
+        public const string AgriculturePest = "agriculture.pest";
+        public const string AgricultureBlight = "agriculture.blight";
+        public const string DefenseTargeting = "defense.targeting";
+        public const string DefenseCapture = "defense.capture";
+        public const string DefenseDamage = "defense.damage";
+        public const string PsychologyArcTrigger = "psychology.arc_trigger";
+        public const string PsychologyArcBehavior = "psychology.arc_behavior";
+        public const string PsychologyRecovery = "psychology.recovery";
+        public const string WildlifePopulation = "wildlife.population";
+        public const string WildlifeMigration = "wildlife.migration";
+        public const string WildlifeApex = "wildlife.apex";
+        public const string WildlifeTaming = "wildlife.taming";
+        // Plans 146-149 — advanced industrial & expedition machinery. Dot-namespaced
+        // per-stream derivation (same additive-safety property as Plans 162-165).
+        public const string EbpvdCoating = "advanced_mfg.ebpvd_coating";
+        public const string MicrofluidicDiagnostics = "medical.microfluidic_diagnostics";
+        public const string MineClearingFlail = "route_engineering.mine_flail";
+        public const string RailGrinding = "route_engineering.rail_grinding";
     }
 
     /// <summary>Domain-isolated deterministic RNG stream derived from a campaign master seed.</summary>

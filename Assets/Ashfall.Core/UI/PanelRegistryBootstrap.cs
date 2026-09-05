@@ -169,6 +169,9 @@ namespace Ashfall.Core.UI
             R("plans_110_113",              "Plans 110–113 Industrial Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "world" });
             R("plans_130_133",              "Plans 130–133 Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "radio", "medical", "expedition" });
             R("magnetic_drum_archive",     "Magnetic Drum & Microfiche",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            // Plans 162-165 — advanced agriculture over the canonical greenhouse
+            // (strains, medium, water bands, pests, compost, dietary diversity).
+            R("farming",                   "Advanced Agriculture",        PanelGroup.Expanded, new[] { "inventory", "power_grid", "world" });
         }
 
         private static void R(

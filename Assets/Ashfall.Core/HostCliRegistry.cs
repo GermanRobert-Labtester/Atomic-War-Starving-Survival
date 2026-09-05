@@ -52,6 +52,7 @@ namespace Ashfall.Core
         EndingsSelfTest,
         ExpansionsSelfTest,
         GreenhouseSelfTest,
+        AgricultureSelfTest,
         HoldfastBriefing,
         HoldfastSelfTest,
         IceRoadSelfTest,
@@ -124,7 +125,11 @@ namespace Ashfall.Core
         UtilityAiUiTest,
         VerdictUiTest,
         OnboardingJourneySelfTest,
-        RealCampaignJourneySelfTest
+        RealCampaignJourneySelfTest,
+        EbPvdCoatingUiTest,
+        MicrofluidicDiagnosticUiTest,
+        MineFlailUiTest,
+        RailGrindingUiTest
     }
 
     /// <summary>
@@ -381,6 +386,12 @@ namespace Ashfall.Core
                     "--greenhouse-selftest",
                     new[] { "--glass-orchard-selftest" },
                     "GreenhouseHeadlessDemo (Exp 05)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.AgricultureSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--agriculture-selftest",
+                    null,
+                    "Plans 162-165: crop strain catalog, growth composition, mutation isolation, compost, nutrition diversity"),
                 new HostCliActionDescriptor(
                     HostCliAction.HoldfastBriefing,
                     "Expansions & Campaign Modules",
@@ -802,7 +813,31 @@ namespace Ashfall.Core
                     "UI Tests, Layout & Gameplay Smoke",
                     "--real-campaign-journey-selftest",
                     new[] { "--campaign-journey-selftest", "--real-main-journey-selftest" },
-                    "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)")
+                    "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.EbPvdCoatingUiTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--ebpvd-coating-uitest",
+                    new[] { "--ebpvd-coating-selftest" },
+                    "EB-PVD thermal barrier coating UI panel construction, status rail, and job controls"),
+                new HostCliActionDescriptor(
+                    HostCliAction.MicrofluidicDiagnosticUiTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--microfluidic-diagnostic-uitest",
+                    new[] { "--microfluidic-diagnostic-selftest" },
+                    "Microfluidic diagnostic analyzer UI panel construction, cartridge fab, and assay telemetry"),
+                new HostCliActionDescriptor(
+                    HostCliAction.MineFlailUiTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--mine-flail-uitest",
+                    new[] { "--mine-flail-selftest" },
+                    "Mine-clearing flail UI panel construction, breach telemetry, and hardware maintenance"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RailGrindingUiTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--rail-grinding-uitest",
+                    new[] { "--rail-grinding-selftest" },
+                    "Rail grinding train UI panel construction, reprofiling telemetry, and stone maintenance")
         };
 
         private static readonly HostCliActionDescriptor[] _configDescriptors = new[]
