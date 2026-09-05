@@ -213,3 +213,72 @@ cross-system integration; Schism event consumption by narrative in Slice 7/8.
 All milestone gates run through the companion project (D1) until the foreign streams land:
 `dotnet test _verify_flagship11.csproj` + `dotnet build Ashfall.csproj` + godot headless selftests
 (`--data-integrity-selftest`, `--content-utilization-selftest`, new milestone selftest).
+
+---
+
+## Slice 4 — Pathogen strain lineage (Plan 155, amended per D2)
+
+Status: PASS (engine hooks + strain layer + save + 100-day replay)
+
+Changed:
+- `Assets/Ashfall.Core/Disease/DiseaseSystem.cs` — three ADDITIVE engine hooks:
+  (1) `EffectiveLethalityModifier` optional delegate consulted in
+  `ResolveOutcomes` (null = untouched math) for abstract radiation severity;
+  (2) `MutateInfection(survivorId, from, to)` — fictional mutation as a pure
+  state transition preserving clinical history (infected day, days sick,
+  treatment ledger, quarantine), raises `OnStrainMutated` + `disease_strain_mutated`
+  and re-checks outbreak containment on the vacated entry;
+  (3) `GetDefinition(id)` + `RegisterStrain(def)` — first-class strain rows
+  (catalog definition + simulation entry, idempotent).
+- `Assets/Ashfall.Core/Disease/PathogenStrainSystem.cs` — the strain layer:
+  `AttachStrains` merges `pathogen_*` strains into the engine as derived
+  definitions (vector/countermeasure/tell inherited from the parent disease,
+  outcome/spread classes overridden); `TickMutations` — deterministic
+  per-active-infection rolls, seeds derived FNV-1a(day, survivorId, strainId)
+  so nothing about RNG is persisted; ordinal iteration; mutation chance
+  multiplies by (1 + dose/100 × radiation_severity_gain), clamped 0..1;
+  `RadiationSeverityPressure` — bounded abstract lethality pressure fed to the
+  engine hook (dose is READ-ONLY via the canonical radiation authority);
+  fictional cure projects (bounded required-days, host charges materials,
+  completion unlocks CureEfficacyLethalityRelief through future treatment flow
+  and marks the strain cured). Capture deep-copies; restore is non-operative.
+- `Assets/Ashfall.Core/Disease/PathogenStrainSave.cs` + `src/Host/PathogenStrainSaveStore.cs`
+  — versioned checksummed codec + `SaveStoreHub.FromCodec` façade, section
+  `pathogen_strains` (mutation results persist in the disease engine's own section).
+- `src/Main.PathogenStrains.cs` — Setup/Save triad; radiation query wired to
+  `SurvivorsHostSession.RadStateFor(id)?.RadiationDose`; `StartPathogenCureProject`
+  charges antibiotics×2 + medical_kit×1 + chemicals×3 atomically.
+- `src/Main.CampaignOwners.cs` — strain tick inside `MedicalDiseaseDayOwner`
+  immediately after `_disease.TickDaily` (mutations → cure research → triage).
+- `src/Main.SaveOrchestrator.cs` + `SaveSectionRegistry.cs` — `pathogen_strains`
+  section wired into SaveAll/restore (registry file: foreign edits preserved as-is).
+- `ContentUtilizationScanner.cs` — all four Flagship XI catalogs registered
+  (AuthoritativeCatalogs + loaderPatterns + registryMap + runtime consumers);
+  utilization gate PASS with 0 orphans, 164 gameplay-consumed.
+
+Tests: `Ashfall.Core.Tests/Flagship11/PathogenStrainSystemTests.cs` — 9 tests:
+strain merge (vector/countermeasure inheritance, engine-native infection,
+authored diseases untouched), idempotent attach + honest orphan rejection,
+mutation chance math (dose scaling + clamp), deterministic mutation transition
+preserving history + quarantine, zero-chance stability, read-only radiation
+coupling through the engine hook, cure validation/advance/unlock, save
+round-trip + restore non-operative + tamper rejection, and the §155.15
+**100-day deterministic replay** (same seed ⇒ identical trace; save/restore at
+day 40 lands on the identical final trace). 41/41 Flagship11 tests PASS.
+
+Result: `dotnet build Ashfall.csproj` 0/0; companion tests 41/41;
+`--content-utilization-selftest` PASS; earlier `--data-integrity-selftest` PASS.
+
+Divergences:
+- D2 (recorded at Slice 1): strains are NOT a parallel engine; the infection
+  model IS the disease engine. `pathogens.json` rows are lineage variants.
+- Radiation couples severity via the engine hook (bounded 0.3 lethality
+  pressure) and mutation pressure via chance multiplier — abstract values only.
+- Patient-zero provenance (DoD 60): the engine does not track provenance; no UI
+  claims any — "unknown" is the honest default. Deferred until the engine
+  tracks exposure chains.
+
+Remaining: medical-ward surface already shows strains through DiseaseHostSession
+snapshots (they are disease rows); no dedicated panel needed. Outbreak→morale
+cross-system trigger (`contagion_outbreak_fear` on outbreak declared) lands in
+Slice 8.

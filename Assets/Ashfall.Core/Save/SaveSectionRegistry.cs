@@ -107,6 +107,10 @@ namespace Ashfall.Core.Save
             new("waystation", "SaveWaystation", "SetupWaystation", "infrastructure", "Wasteland outpost network & relay hubs", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_thermal", "SaveShelterThermal", "SetupShelterThermal", "thermal", "Heating, insulation, and frost protection", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_schedule", "SaveShelterSchedule", "SetupShelterSchedule", "schedule", "Shift rotations and curfews", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("weather_hardening", "SaveWeatherHardening", "SetupWeatherHardening", "infrastructure", "Cryo-ash weather hardening & thermal insulation", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("geothermal_aquifer", "SaveGeothermalAquifer", "SetupGeothermalAquifer", "infrastructure", "Deep geothermal boreholes & aquifer pumping", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("counter_intelligence", "SaveCounterIntelligence", "SetupCounterIntelligence", "factions", "Counter-intelligence, vetting, and defector management", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("recon_telemetry", "SaveReconTelemetry", "SetupReconTelemetry", "expeditions", "Long-range recon drones & high-altitude mapping", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("sump_flooding", "SaveSumpFlooding", "SetupSumpFlooding", "maintenance", "Bunker sump pump drainage & flood risk", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("decontamination", "SaveDecontamination", "SetupDecontamination", "radiation", "Rad-scrubbing showers and chambers", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("kitchen_nutrition", "SaveKitchenNutrition", "SetupKitchenNutrition", "nutrition", "Rationing recipes and caloric balance", LifecycleGroup: ExpandedShelterLifecycleGroup),
@@ -178,7 +182,12 @@ namespace Ashfall.Core.Save
             new("powder_metallurgy", "SavePowderMetallurgy", "SetupPowderMetallurgy", "foundry", "Plans 130-133 — abstract advanced-material production quality and reliability", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("nvis_communications", "SaveNvisCommunications", "SetupNvisCommunications", "radio", "Plans 130-133 — regional NVIS status communications and recall queue", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("lyophilization", "SaveLyophilization", "SetupLyophilization", "medical", "Plans 130-133 — preserved-biologic batches and viability ledger", LifecycleGroup: ExpandedShelterLifecycleGroup),
-            new("draisine_recovery", "SaveDraisineRerailing", "SetupDraisineRerailing", "expedition", "Plans 130-133 — armored draisine derailment recovery")
+            new("draisine_recovery", "SaveDraisineRerailing", "SetupDraisineRerailing", "expedition", "Plans 130-133 — armored draisine derailment recovery"),
+            new("route_infrastructure", "SaveRouteInfrastructure", "SetupRouteInfrastructure", "world", "Plans 146-149 — mutable route infrastructure, corridor maintenance, and minefield clearance"),
+            new("ebpvd_coating", "SaveEbPvdCoating", "SetupEbPvdCoating", "shelter", "Plans 146-149 — EB-PVD thermal barrier coating machinery, job state, and records"),
+            new("microfluidic_diagnostic", "SaveMicrofluidicDiagnostic", "SetupMicrofluidicDiagnostic", "medical", "Plans 146-149 — microfluidic diagnostic cartridge manufacturing and run records"),
+            new("mine_clearing_flail", "SaveMineClearingFlail", "SetupMineClearingFlail", "expeditions", "Plans 146-149 — mine-clearing flail vehicle modules and active breaches"),
+            new("rail_grinding", "SaveRailGrinding", "SetupRailGrinding", "expeditions", "Plans 146-149 — rail grinding vehicle modules and active corridor jobs"),
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -256,6 +265,10 @@ namespace Ashfall.Core.Save
                 { "waystation", "waystation_save.json" },
                 { "shelter_thermal", "shelter_thermal_save.json" },
                 { "shelter_schedule", "shelter_schedule_save.json" },
+                { "weather_hardening", "weather_hardening_save.json" },
+                { "geothermal_aquifer", "geothermal_aquifer_save.json" },
+                { "counter_intelligence", "counter_intelligence_save.json" },
+                { "recon_telemetry", "recon_telemetry_save.json" },
                 { "sump_flooding", "sump_flooding_save.json" },
                 { "decontamination", "decontamination_save.json" },
                 { "kitchen_nutrition", "kitchen_nutrition_save.json" },
@@ -327,6 +340,11 @@ namespace Ashfall.Core.Save
                 { "nvis_communications", "nvis_communications_save.json" },
                 { "lyophilization", "lyophilization_save.json" },
                 { "draisine_recovery", "draisine_recovery_save.json" },
+                { "route_infrastructure", "route_infrastructure_save.json" },
+                { "ebpvd_coating", "ebpvd_coating_save.json" },
+                { "microfluidic_diagnostic", "microfluidic_diagnostic_save.json" },
+                { "mine_clearing_flail", "mine_clearing_flail_save.json" },
+                { "rail_grinding", "rail_grinding_save.json" },
             };
 
         /// <summary>

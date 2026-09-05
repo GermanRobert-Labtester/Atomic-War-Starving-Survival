@@ -109,6 +109,10 @@ namespace Ashfall.Core.Content
             "sump_drainage_catalog.json", "electrostatic_filtration_catalog.json",
             "atmospheric_sounding_catalog.json",
             "caravan_trade_routes.json", "power_subgrid_nodes.json", "perimeter_defenses.json",
+            "ebpvd_coating_catalog.json", "mine_flail_catalog.json", "microfluidic_diagnostic_catalog.json", "rail_grinding_catalog.json",
+            // Flagship XI (Plans 154-157)
+            "contagion_events.json", "pathogens.json",
+            "subterranean_zones.json", "propaganda_campaigns.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -369,6 +373,16 @@ namespace Ashfall.Core.Content
                 ["damaged_map_zones.json"] = new[] { "WastelandMapSystem" },
                 ["cassette_sets.json"] = new[] { "VinylMoraleSystem" },
                 ["epilogue_chronicle.json"] = new[] { "EpilogueMatrix" },
+                ["decontamination_protocol_catalog.json"] = new[] { "DeconProtocolCatalogLoader" },
+                ["geodetic_survey_catalog.json"] = new[] { "GeodeticSurveyCatalogLoader" },
+                ["kinetic_flywheel_catalog.json"] = new[] { "KineticFlywheelCatalogLoader" },
+                ["toxic_chemical_catalog.json"] = new[] { "ToxicChemicalCatalogLoader" },
+                ["infiltrator_profiles.json"] = new[] { "InfiltratorCatalogLoader" },
+                ["weather_hardening_upgrades.json"] = new[] { "WeatherHardeningCatalogLoader" },
+                ["ebpvd_coating_catalog.json"] = new[] { "EbPvdCoatingEngine" },
+                ["mine_flail_catalog.json"] = new[] { "MineClearingFlailEngine" },
+                ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticEngine" },
+                ["rail_grinding_catalog.json"] = new[] { "RailGrindingEngine" },
             };
 
             // Additional mappings for previously UNRESOLVED catalogs
@@ -412,6 +426,10 @@ namespace Ashfall.Core.Content
                 ["warlord_doctrines.json"] = "WarlordDoctrineCatalog",
                 ["combat_catalog.json"] = "CombatCatalog",
                 ["disease_catalog.json"] = "DiseaseCatalog",
+                ["contagion_events.json"] = "MoraleContagionSystem",
+                ["pathogens.json"] = "PathogenStrainSystem",
+                ["subterranean_zones.json"] = "SubterraneanZoneCatalog",
+                ["propaganda_campaigns.json"] = "PsyOpsCatalog",
                 ["expeditions.json"] = "ExpeditionCatalogLoader",
                 ["vehicles.json"] = "ExpeditionVehicleSystem",
                 ["greenhouse_items.json"] = "GreenhouseExpansionCatalog",
@@ -730,9 +748,27 @@ namespace Ashfall.Core.Content
                 ["sump_drainage_catalog.json"] = new[] { "SumpFloodingSystem", "VentilationSystem" },
                 ["electrostatic_filtration_catalog.json"] = new[] { "VentilationSystem" },
                 ["atmospheric_sounding_catalog.json"] = new[] { "WeatherSondeSystem" },
+                // Flagship XI (Plans 154-157)
+                ["contagion_events.json"] = new[] { "MoraleContagionSystem" },
+                ["pathogens.json"] = new[] { "PathogenStrainSystem" },
                 ["caravan_trade_routes.json"] = new[] { "CaravanTradeNetworkSystem" },
                 ["power_subgrid_nodes.json"] = new[] { "PowerDistributionSubgridSystem" },
                 ["perimeter_defenses.json"] = new[] { "PerimeterDefenseSystem" },
+                ["decontamination_protocol_catalog.json"] = new[] { "DeconProtocolCatalogLoader", "DecontaminationSystem" },
+                ["geodetic_survey_catalog.json"] = new[] { "GeodeticSurveyCatalogLoader", "GeodeticSurveyEngine" },
+                // Flagship XI (Plans 154-157)
+                ["contagion_events.json"] = new[] { "ContagionEventCatalogLoader", "MoraleContagionSystem" },
+                ["pathogens.json"] = new[] { "PathogenStrainCatalogLoader", "PathogenStrainSystem" },
+                ["subterranean_zones.json"] = new[] { "SubterraneanZoneCatalogLoader", "SubterraneanSystem" },
+                ["propaganda_campaigns.json"] = new[] { "PsyOpsCatalogLoader", "PsyOpsSystem" },
+                ["kinetic_flywheel_catalog.json"] = new[] { "KineticFlywheelCatalogLoader", "KineticStorageSystem" },
+                ["toxic_chemical_catalog.json"] = new[] { "ToxicChemicalCatalogLoader", "ChemicalReconEngine" },
+                ["infiltrator_profiles.json"] = new[] { "InfiltratorCatalogLoader", "CounterIntelligenceSystem" },
+                ["weather_hardening_upgrades.json"] = new[] { "WeatherHardeningCatalogLoader", "WeatherHardeningSystem" },
+                ["ebpvd_coating_catalog.json"] = new[] { "EbPvdCoatingEngine" },
+                ["mine_flail_catalog.json"] = new[] { "MineClearingFlailEngine", "RouteInfrastructureSystem" },
+                ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticEngine", "MedicalPipelineCoordinator" },
+                ["rail_grinding_catalog.json"] = new[] { "RailGrindingEngine", "RouteInfrastructureSystem" },
             };
 
             foreach (var cat in _graph.Catalogs)

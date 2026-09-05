@@ -473,6 +473,8 @@ namespace AtomicWar.GodotApp
             {
                 _m.SetupExpeditions();
                 _m._expeditions.TickHours(24f);
+                _m.SetupReconTelemetry();
+                _m._reconTelemetry?.TickDay(day);
 
                 _m.SetupDutyRoster();
                 var expeditions = _m._expeditions.Engine.CaptureState();
@@ -804,6 +806,8 @@ namespace AtomicWar.GodotApp
                 _m.SetupMoralChoice();
                 _m._moralChoice.Reconcile(day);
                 _m.TickFactionBranchDay(day);
+                _m.SetupCounterIntelligence();
+                _m._counterIntelligence?.TickDay(day);
 
                 _m.TickVerdict(day, _m.LivingDwellerCountEstimate());
 

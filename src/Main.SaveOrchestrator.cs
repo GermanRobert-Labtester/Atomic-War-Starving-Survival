@@ -286,6 +286,7 @@ namespace AtomicWar.GodotApp
             {
                 SaveJournal();
                 SaveMoralChoice();
+                SaveCounterIntelligence();
                 SaveHoldfast();
                 SaveHoldfastRuntime();
                 SaveDutyRoster();
@@ -301,6 +302,7 @@ namespace AtomicWar.GodotApp
                 SaveVerdict();
                 SaveMaritime();
                 SaveExpeditions();
+                SaveReconTelemetry();
                 SaveCombat();
                 SaveNarrative();
                 SaveEventAdapter();
@@ -318,6 +320,7 @@ namespace AtomicWar.GodotApp
                 SavePathogenStrains();
                 SaveDailyBriefing();
                 SavePowerGrid();
+                SaveGeothermalAquifer();
                 SaveMedicalWard();
                 SaveMemorial();
                 SaveOnboarding();
