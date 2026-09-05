@@ -97,6 +97,27 @@ Divergences: turret/wall definitions stay in `perimeter_defenses.json` (Perimete
 
 ## Phase E — Plan 164 (PsychologicalArcSystem)
 
+Status: PASS (Core + data + host + port bridge + UI + tests + gates)
+
+Changed:
+- `Assets/Ashfall.Core/Survivors/PsychologicalArcSystem.cs` (new — fictional arc model: Latent→Emerging→Acute→Crisis→Recovering→Resolved; sustained-exposure trigger (never one spike); conditional cooldown-gated behaviors routed to owning authorities; private-stash ledger with conservation; bounded non-stacking catharsis ≤0.15; IsEligibleForWork gate only for shutdown arcs at Acute+; MentalArcCatalogLoader + validator)
+- Data: `mental_arcs.json` (4 arcs: compulsive stashing, fire fixation 6% chance Crisis-only, persecutory crisis, shutdown withdrawal)
+- Save: `psychological_arcs` section; host `PsychologyArcHostSession`/`SaveStore`
+- Sanatorium bridge: `HostSurvivorConditionPort` now composes arc conditions (`arc_*` → HasArc, ApplyRecoveryProgress → ApplyTreatmentProgress) — the wired Sanatorium stays THE therapy authority (plan §7.14 preferred branch)
+- Day tick: phase-4 `psychology_arcs_162` owner (after phase-3 needs finalize), forks psychology.arc_trigger/.arc_behavior/.recovery; stress reader = NeedsSystem.Morale; hoarding host callback moves 1 canned_food (>2 held) deterministically; fire requests → ShelterFireHazardSystem.Ignite; refusal → needs morale + relations affinity; withdrawal → hygiene decay
+- UI: `PsychologyArcPanel` (route `psychology_arcs`, stash SEARCH/RETURN intervention, work-gate column, treatment progress; therapy stays sanatorium-side) + nav
+- Selftest: `--psychology-selftest` (9 gates); utilization entries for mental_arcs.json
+
+Tests: PsychologicalArcSystemTests 13/13 (trigger, stages, treatment, catharsis bounds, stash conservation/discovery/return, fire conditional, work gating, replay equivalence, old-save defaults).
+
+Result: arcs emerge only from sustained canonical stress; behaviors are conditional opportunities; hoarded items are ledgered and returnable (nothing vanishes); escalation events fire once per transition; treatment resolves with bounded catharsis; post-restore continuation matches uninterrupted.
+
+Divergences: acute-stress permille composes the port's existing combat-trauma reading with arc stage; relations penalty targets the first other roster survivor (no global assignment field on Main — documented v1 bound).
+
+---
+
+## Phase F — Plan 165 (WildlifeEcosystemSystem)
+
 Status: NOT STARTED
 
 ---

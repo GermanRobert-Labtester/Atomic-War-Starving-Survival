@@ -54,6 +54,7 @@ namespace Ashfall.Core
         GreenhouseSelfTest,
         AgricultureSelfTest,
         DefenseSelfTest,
+        PsychologySelfTest,
         HoldfastBriefing,
         HoldfastSelfTest,
         IceRoadSelfTest,
@@ -399,6 +400,12 @@ namespace Ashfall.Core
                     "--defense-selftest",
                     null,
                     "Plans 162-165: trap catalog, perimeter composition, pre-combat raid resolution, capture handoff"),
+                new HostCliActionDescriptor(
+                    HostCliAction.PsychologySelfTest,
+                    "Expansions & Campaign Modules",
+                    "--psychology-selftest",
+                    null,
+                    "Plans 162-165: arc catalog, sustained triggers, conditional behaviors, stash conservation, catharsis bounds"),
                 new HostCliActionDescriptor(
                     HostCliAction.HoldfastBriefing,
                     "Expansions & Campaign Modules",

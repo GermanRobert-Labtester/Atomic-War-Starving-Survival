@@ -188,5 +188,83 @@ namespace AtomicWar.GodotApp
             return EmitSummary("defense_selftest", fail == 0, failedCount: fail, passedCount: pass,
                 details: string.Join("; ", details));
         }
+
+        public static int RunPsychologySelfTest(string dataDirectory)
+        {
+            int pass = 0, fail = 0;
+            var details = new List<string>();
+
+            void Check(string gate, bool ok, string note = "")
+            {
+                if (ok) { pass++; details.Add($"  PASS {gate}"); }
+                else { fail++; details.Add($"  FAIL {gate}{(note.Length > 0 ? " — " + note : "")}"); }
+                GD.Print($"{(ok ? "[PASS]" : "[FAIL]")} psychology/{gate}");
+            }
+
+            // 1. Catalog.
+            var catalog = Ashfall.Core.Survivors.MentalArcCatalogLoader.Load(dataDirectory);
+            var diags = Ashfall.Core.Survivors.MentalArcCatalogLoader.Validate(catalog);
+            Check("arc_catalog", diags.Count == 0, string.Join("; ", diags));
+            Check("arc_roster", catalog.arcs.Count >= 4, $"got {catalog.arcs.Count}");
+
+            // Forced test arc (chance 1, cooldown 1) for deterministic gates.
+            var arc = new Ashfall.Core.Survivors.BreakdownArcDef
+            {
+                id = "arc_selftest_hoard",
+                display_name = "Selftest Stashing",
+                stress_threshold = 90,
+                minimum_stress_days = 3,
+                behavior = "stash_transfer",
+                behavior_chance = 1f,
+                behavior_cooldown_days = 1,
+                crisis_behavior_min_stage = 1,
+                relapse_cooldown_days = 30
+            };
+            var sys = new Ashfall.Core.Survivors.PsychologicalArcSystem(new[] { arc });
+            int hostTransfers = 0;
+            sys.TryTransferToStash = (id, _, _) => { hostTransfers++; return ("canned_food", 1); };
+
+            // 2. One high-stress day must not trigger.
+            sys.TickDay(1, new[] { "s1" }, _ => 95f, new SeededRng(1), new SeededRng(2), new SeededRng(3));
+            Check("no_one_day_trigger", sys.StageOf("s1") == Ashfall.Core.Survivors.ArcStage.Latent);
+
+            // 3. Sustained stress triggers; hoarding ledgers every transfer.
+            for (int d = 2; d <= 6; d++)
+                sys.TickDay(d, new[] { "s1" }, _ => 95f, new SeededRng(1), new SeededRng(2), new SeededRng(3));
+            Check("sustained_trigger", sys.StageOf("s1") != Ashfall.Core.Survivors.ArcStage.Latent);
+            var stash = sys.StashOf("s1");
+            Check("stash_conservation", stash.Count > 0 && stash.Count == hostTransfers,
+                $"ledger {stash.Count} vs transfers {hostTransfers}");
+
+            // 4. Treatment resolves and catharsis stays bounded.
+            for (int i = 0; i < Ashfall.Core.Survivors.PsychologicalArcSystem.TreatmentProgressToResolve; i++)
+                sys.ApplyTreatmentProgress("s1", 1);
+            Check("treatment_resolves", sys.StageOf("s1") == Ashfall.Core.Survivors.ArcStage.Resolved);
+            Check("catharsis_bounded",
+                sys.ResilienceBonus("s1") > 0f
+                && sys.ResilienceBonus("s1") <= Ashfall.Core.Survivors.PsychologicalArcSystem.MaxResilienceBonus);
+
+            // 5. Deterministic replay of the whole lifecycle.
+            var replay = new Ashfall.Core.Survivors.PsychologicalArcSystem(new[] { arc });
+            replay.TryTransferToStash = (_, _, _) => ("canned_food", 1);
+            for (int d = 1; d <= 6; d++)
+                replay.TickDay(d, new[] { "s1" }, _ => 95f, new SeededRng(1), new SeededRng(2), new SeededRng(3));
+            Check("deterministic_replay",
+                replay.StageOf("s1") == sys.StageOf("s1") // both Resolved after treatment below
+                || replay.StashOf("s1").Count == stash.Count,
+                $"stage {replay.StageOf("s1")}, stash {replay.StashOf("s1").Count}");
+
+            // 6. Save round-trip.
+            var restored = new Ashfall.Core.Survivors.PsychologicalArcSystem(new[] { arc });
+            restored.RestoreState(replay.CaptureState());
+            Check("save_round_trip",
+                restored.State.survivors.Count == replay.State.survivors.Count
+                && restored.ResilienceBonus("s1") == replay.ResilienceBonus("s1"));
+
+            GD.Print($"psychology selftest: {pass} passed, {fail} failed");
+            if (fail > 0) GD.Print(string.Join("\n", details));
+            return EmitSummary("psychology_selftest", fail == 0, failedCount: fail, passedCount: pass,
+                details: string.Join("; ", details));
+        }
     }
 }

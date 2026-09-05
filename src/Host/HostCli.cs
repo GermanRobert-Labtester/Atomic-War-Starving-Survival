@@ -68,6 +68,7 @@ namespace AtomicWar.GodotApp
         GreenhouseSelfTest,
         AgricultureSelfTest,
         DefenseSelfTest,
+        PsychologySelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
         DeconAirlockUiTest,
@@ -253,6 +254,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.AgricultureSelfTest;
             if (Has(args, "--defense-selftest"))
                 return HostCliAction.DefenseSelfTest;
+            if (Has(args, "--psychology-selftest"))
+                return HostCliAction.PsychologySelfTest;
             if (Has(args, "--silent-foundry-selftest"))
                 return HostCliAction.SilentFoundrySelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))

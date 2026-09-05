@@ -230,6 +230,7 @@ namespace AtomicWar.GodotApp
             SetupHydroponicBiomes();
             SetupAgriculture();
             SetupDefense();
+            SetupPsychologyArcs();
             SetupNuclearCore();
             SetupArmoredCrawlers();
             SetupPersonalQuests();
@@ -385,6 +386,7 @@ namespace AtomicWar.GodotApp
                 SaveHydroponicBiomes();
                 SaveAgriculture();
                 SaveDefense();
+                SavePsychologyArcs();
                 SaveNuclearCore();
                 SaveArmoredCrawlers();
                 SavePersonalQuests();

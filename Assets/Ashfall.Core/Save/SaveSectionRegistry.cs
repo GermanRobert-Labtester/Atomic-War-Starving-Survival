@@ -197,6 +197,7 @@ namespace Ashfall.Core.Save
             new("rail_grinding", "SaveRailGrinding", "SetupRailGrinding", "expeditions", "Plans 146-149 — rail grinding vehicle modules and active corridor jobs"),
             new("agriculture", "SaveAgriculture", "SetupAgriculture", "farming", "Plans 162-165 — advanced crop strains, plot medium, pests, compost, and dietary diversity"),
             new("settlement_defenses", "SaveDefense", "SetupDefense", "combat", "Plans 162-165 — trap installations, pre-combat raid resolution, captures, and the raid log"),
+            new("psychological_arcs", "SavePsychologyArcs", "SetupPsychologyArcs", "psychology", "Plans 162-165 — breakdown arcs, exposure, treatment progress, private stashes, catharsis"),
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -338,6 +339,7 @@ namespace Ashfall.Core.Save
                 { "hydroponic_biomes", "hydroponic_biomes_save.json" },
                 { "agriculture", "agriculture_save.json" },
                 { "settlement_defenses", "settlement_defenses_save.json" },
+                { "psychological_arcs", "psychological_arcs_save.json" },
                 { "nuclear_core_lifecycle", "nuclear_core_lifecycle_save.json" },
                 { "armored_crawlers", "armored_crawlers_save.json" },
                 { "personal_quests", "personal_quests_save.json" },

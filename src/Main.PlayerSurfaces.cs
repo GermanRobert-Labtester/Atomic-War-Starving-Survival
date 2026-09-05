@@ -591,6 +591,12 @@ namespace AtomicWar.GodotApp
                 openAction: () => HandleDefenseAction("OPEN", ""),
                 closeAction: () => HandleDefenseAction("CLOSE", ""));
 
+            // Plans 162-165 — psychological breakdown arcs (Plan 164).
+            PanelRegistry.ConfigureActions("psychology_arcs",
+                bindAction: () => HandlePsychologyAction("OPEN", ""),
+                openAction: () => HandlePsychologyAction("OPEN", ""),
+                closeAction: () => HandlePsychologyAction("CLOSE", ""));
+
             // Note: 29 flagship prototype consoles (Issues 01–28, 30) are registered as
             // PanelMaturity.Prototype and excluded from player navigation. Their classes
             // remain available for snapshots, previews, and future host session development.
@@ -604,7 +610,8 @@ namespace AtomicWar.GodotApp
                 "waystation_network", "chemical_dependency", "sump_flooding", "decontamination",
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
                 "contractor_roster", "mental_health_crisis", "phantom_memory",
-                "traveling_caravan", "medical_ward", "plans_94_97", "plans_130_133", "farming", "defense_grid"
+                "traveling_caravan", "medical_ward", "plans_94_97", "plans_130_133",
+                "farming", "defense_grid", "psychology_arcs"
             };
 
             foreach (var expId in expandedIds)

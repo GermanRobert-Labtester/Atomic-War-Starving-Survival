@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "arcs": [
+    {
+      "id": "arc_compulsive_hoarding",
+      "display_name": "Compulsive Stashing",
+      "stress_threshold": 90,
+      "minimum_stress_days": 6,
+      "behavior": "stash_transfer",
+      "behavior_chance": 0.25,
+      "behavior_cooldown_days": 3,
+      "crisis_behavior_min_stage": 1,
+      "treatment_tags": ["therapy_work_rhythm_restoration", "therapy_watch_rotation_counseling"],
+      "relapse_cooldown_days": 30,
+      "tags": ["hoarding", "anxiety"]
+    },
+    {
+      "id": "arc_fire_fixation",
+      "display_name": "Fire Fixation",
+      "stress_threshold": 92,
+      "minimum_stress_days": 8,
+      "behavior": "unsafe_fire_request",
+      "behavior_chance": 0.06,
+      "behavior_cooldown_days": 10,
+      "crisis_behavior_min_stage": 3,
+      "treatment_tags": ["therapy_cognitive_catharsis", "therapy_watch_rotation_counseling"],
+      "relapse_cooldown_days": 60,
+      "tags": ["fixation", "rare"]
+    },
+    {
+      "id": "arc_persecutory_crisis",
+      "display_name": "Persecutory Crisis",
+      "stress_threshold": 90,
+      "minimum_stress_days": 7,
+      "behavior": "refuse_assignment",
+      "behavior_chance": 0.3,
+      "behavior_cooldown_days": 2,
+      "crisis_behavior_min_stage": 2,
+      "treatment_tags": ["therapy_cognitive_catharsis", "therapy_work_rhythm_restoration"],
+      "relapse_cooldown_days": 30,
+      "tags": ["persecutory", "conflict"]
+    },
+    {
+      "id": "arc_shutdown_withdrawal",
+      "display_name": "Shutdown Withdrawal",
+      "stress_threshold": 95,
+      "minimum_stress_days": 9,
+      "behavior": "withdraw_self_care",
+      "behavior_chance": 0.35,
+      "behavior_cooldown_days": 2,
+      "crisis_behavior_min_stage": 2,
+      "treatment_tags": ["therapy_work_rhythm_restoration", "therapy_cognitive_catharsis"],
+      "relapse_cooldown_days": 45,
+      "tags": ["withdrawal", "care"]
+    }
+  ]
+}

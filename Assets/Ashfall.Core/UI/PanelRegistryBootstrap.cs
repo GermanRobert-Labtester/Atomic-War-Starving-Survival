@@ -175,6 +175,9 @@ namespace Ashfall.Core.UI
             // Plans 162-165 — trap installations + pre-combat raid resolution
             // composing the perimeter defense system (Plan 163).
             R("defense_grid",              "Settlement Defense Grid",     PanelGroup.Expanded, new[] { "inventory", "power_grid", "combat" });
+            // Plans 162-165 — breakdown arcs: stages, treatment progress,
+            // work gating, and private-stash intervention (Plan 164).
+            R("psychology_arcs",           "Psychological Arcs",          PanelGroup.Expanded, new[] { "survivors", "medical" });
         }
 
         private static void R(

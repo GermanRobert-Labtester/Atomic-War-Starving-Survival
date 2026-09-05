@@ -447,6 +447,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "FALLOUT RADAR", "fallout_detail");
             AddNavButton(content, "FARMING", "farming");
             AddNavButton(content, "DEFENSE GRID", "defense_grid");
+            AddNavButton(content, "PSYCH WATCH", "psychology_arcs");
 
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());

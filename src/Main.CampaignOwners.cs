@@ -50,6 +50,9 @@ namespace AtomicWar.GodotApp
             // Flagship XI (Plan 157): psyops broadcast day resolves after
             // expeditions (leaflets) and alongside the world-evolution radio feed.
             _campaignDay.Register("psyops", new PsyOpsDayOwner(this), phase: 4);
+            // Plans 162-165 (Plan 164): breakdown arcs evaluate AFTER the
+            // phase-3 needs tick finalized canonical stress (plan §11.3).
+            _campaignDay.Register("psychology_arcs_162", new PsychologyArcsDayOwner(this), phase: 4);
 
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
@@ -218,6 +221,18 @@ namespace AtomicWar.GodotApp
                 if (_m._foundryDirty) _m.SaveExpansionHub();
 
                 events.Add(new DayStateChangeEvent("greenhouse_foundry_ticked", "greenhouse_foundry", null, null, day));
+            }
+        }
+
+        private sealed class PsychologyArcsDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public PsychologyArcsDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickPsychologyArcsDay(day);
+                events.Add(new DayStateChangeEvent("psychology_arcs_ticked", "psychology_arcs_162", null, null, day));
             }
         }
 

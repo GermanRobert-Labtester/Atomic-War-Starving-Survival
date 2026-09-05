@@ -357,6 +357,13 @@ namespace AtomicWar.GodotApp
 
             public bool HasCondition(string survivorId, string conditionId)
             {
+                // Plan 164: breakdown-arc conditions live in the arc system;
+                // the port composes them with the Phase0 trauma conditions.
+                if (!string.IsNullOrEmpty(conditionId)
+                    && conditionId.StartsWith("arc_", System.StringComparison.Ordinal))
+                {
+                    return _m._psychologyArcs?.System.HasArc(survivorId, conditionId) == true;
+                }
                 var p0 = P0;
                 if (p0 == null || string.IsNullOrEmpty(survivorId)) return false;
                 switch (conditionId)
@@ -406,7 +413,9 @@ namespace AtomicWar.GodotApp
             {
                 // Recovery progress is tracked inside the sanatorium's patient
                 // state; the canonical surface is relieved through
-                // ApplyAcuteStressReduction at outcome time.
+                // ApplyAcuteStressReduction at outcome time. Plan 164: active
+                // breakdown arcs additionally advance their arc recovery here.
+                _m._psychologyArcs?.System.ApplyTreatmentProgress(survivorId, progress);
             }
 
             public void SuppressReversibleCondition(string survivorId, string conditionId)

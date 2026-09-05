@@ -464,6 +464,18 @@ namespace AtomicWar.GodotApp
 
             AddChild(_defenseGridPanel);
 
+
+
+            _psychologyArcPanel = new AtomicWar.GodotApp.UI.PsychologyArcPanel();
+
+            _psychologyArcPanel.Visible = false;
+
+            _psychologyArcPanel.OnClose += () => HandlePsychologyAction("CLOSE", "");
+
+            _psychologyArcPanel.OnActionRequested += HandlePsychologyAction;
+
+            AddChild(_psychologyArcPanel);
+
             BuildPlans146To149Panels();
 
             _greenhousePanel = new GreenhousePanel();
