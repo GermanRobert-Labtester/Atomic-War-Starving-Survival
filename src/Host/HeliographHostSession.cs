@@ -1,4 +1,6 @@
 using System;
+using Ashfall.Core;
+using Ashfall.Core.Save;
 using Ashfall.Core.Radio;
 
 namespace AtomicWar.GodotApp
@@ -22,7 +24,7 @@ namespace AtomicWar.GodotApp
                 LastEvent = $"Heliograph message blocked: {message.block_reason}.";
                 RaiseStateChanged();
             };
-            System.OnStateChanged += RaiseStateChanged;
+            System.OnStateChanged += () => RaiseStateChanged();
         }
 
         public ActionResult Transmit(

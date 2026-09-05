@@ -183,9 +183,9 @@ namespace Ashfall.Core.Tests
             Assert.Contains(versioned, f => f.SectionKey == "expansion_quest" && f.Version == ExpansionQuestSaveEnvelope.CurrentVersion);
             Assert.Contains(versioned, f => f.SectionKey == "weight_of_choices" && f.Version == Ashfall.Core.Factions.WeightOfChoicesSave.CurrentSaveVersion);
 
-            // 106 unversioned checksum envelopes (prior 105 + dynamic_quests
-            // enrollment from the endgame batch in SaveSectionRegistry)
-            Assert.Equal(106, envelopes.Count);
+            // 109 unversioned checksum envelopes (prior 106 + grain_processing,
+            // cryogenic_air_separation, heliograph enrollments in SaveSectionRegistry)
+            Assert.Equal(109, envelopes.Count);
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -198,7 +198,7 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
-            Assert.Contains("Save Persistence Inventory (112 sections: 6 versioned codecs, 106 checksum envelopes):", inventory);
+            Assert.Contains("Save Persistence Inventory (115 sections: 6 versioned codecs, 109 checksum envelopes):", inventory);
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);

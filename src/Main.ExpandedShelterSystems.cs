@@ -108,6 +108,9 @@ namespace AtomicWar.GodotApp
             WireAutopsyBridge();
             SetupDecontamination();
             SetupKitchenNutrition();
+            SetupGrainProcessing();
+            SetupCryogenicAirSeparation();
+            SetupHeliograph();
             SetupEquipmentCondition();
             SetupLibraryStudy(_sharedResearch);
             SetupArchiveDesk();
@@ -263,6 +266,9 @@ namespace AtomicWar.GodotApp
             SaveSumpFlooding();
             SaveDecontamination();
             SaveKitchenNutrition();
+            SaveGrainProcessing();
+            SaveCryogenicAirSeparation();
+            SaveHeliograph();
             SaveEquipmentCondition();
             SaveLibraryStudy();
             SaveResearch();
@@ -323,6 +329,7 @@ namespace AtomicWar.GodotApp
             _sumpFlooding?.TickDay(day);
             _decontamination?.TickDay(day);
             _kitchenNutrition?.TickDay(day);
+            TickPlans94To97(day);
             _equipmentCondition?.TickDay(day);
             _libraryStudy?.TickDay(day);
             _archiveDesk?.TickDay(day);
@@ -415,6 +422,13 @@ namespace AtomicWar.GodotApp
                     SetupMedicalWard();
                     if (_medicalWardPanel != null) { _medicalWardPanel.Visible = true; _medicalWardPanel.RefreshView(); }
                     break;
+                case "plans_94_97":
+                    SetupGrainProcessing();
+                    SetupCryogenicAirSeparation();
+                    SetupHeliograph();
+                    SetupPlans94To97Panel();
+                    if (_plans94To97Panel != null) { _plans94To97Panel.Visible = true; _plans94To97Panel.RefreshView(); }
+                    break;
                 case "journal":
                     SetupJournal();
                     if (_journalPanel != null) { _journalPanel.Bind(_journal); _journalPanel.Visible = true; _journalPanel.RefreshView(); }
@@ -462,6 +476,7 @@ namespace AtomicWar.GodotApp
             RemovePanel(_powerGridPanel); _powerGridPanel = null!;
             RemovePanel(_medicalWardPanel); _medicalWardPanel = null!;
             RemovePanel(_shelterDecorPanel); _shelterDecorPanel = null!;
+            RemovePanel(_plans94To97Panel); _plans94To97Panel = null;
 
             // Dispose / null host sessions
             _waterTreatment?.Dispose(); _waterTreatment = null!;

@@ -167,6 +167,9 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 110 | `waystation` | World & Expeditions | `WaystationSystem` | `locations.json` | `WaystationHostSession` | `WaystationSaveStore` | `WaystationNetworkPanel` | `--shelter-operations-selftest`, `WaystationSystemTests` | ✅ 6/6 |
 | 111 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
 | 112 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
+| 113 | `grain_processing` | Shelter & Life Support | `GrainProcessingSystem` | `grain_processing.json` | `GrainProcessingHostSession` | `GrainProcessingSaveStore` | `Plans94To97Panel` | `GrainProcessingTests` | ✅ 6/6 |
+| 114 | `cryogenic_air_separation` | Shelter & Life Support | `CryogenicAirSeparationSystem` | `cryogenic_air_separation.json` | `CryogenicAirSeparationHostSession` | `CryogenicAirSeparationSaveStore` | `Plans94To97Panel` | `CryogenicAirSeparationTests` | ✅ 6/6 |
+| 115 | `heliograph` | Communications & Radio | `HeliographSystem` | `heliograph.json` | `HeliographHostSession` | `HeliographSaveStore` | `Plans94To97Panel` | `HeliographSystemTests` | ✅ 6/6 |
 
 ---
 
@@ -1589,6 +1592,9 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `wildlife_trapping` | ✅ | ✅ | ✅ `Daily Snare Yield & Butchery` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `world` | ✅ | ✅ | ✅ `Daily Weather & Hazard` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `year_of_ash` | ✅ | ✅ | ✅ `Daily Deep-Freeze Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `cryogenic_air_separation` | ✅ | ✅ | ✅ `Daily Air Separation Cycle` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `grain_processing` | ✅ | ✅ | ✅ `Daily Milling & Silo Care` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `heliograph` | ✅ | ✅ | ⚡ `On-Demand (Optical Signaling)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 
 ---
 

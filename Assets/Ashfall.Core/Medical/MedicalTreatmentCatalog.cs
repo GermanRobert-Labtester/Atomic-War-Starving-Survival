@@ -99,6 +99,7 @@ namespace Ashfall.Core.Medical
         // ── Respiratory ───────────────────────────────────────────────
         public const string TreatmentInhaler = "treatment_inhaler";
         public const string TreatmentHerbalTea = "treatment_herbal_tea";
+        public const string TreatmentOxygenSupport = "treatment_oxygen_support";
 
         // ── General care ──────────────────────────────────────────────
         public const string TreatmentBandage = "treatment_bandage";
@@ -134,6 +135,7 @@ namespace Ashfall.Core.Medical
         public const string ItemGasMask = "gas_mask";
         public const string ItemAntibiotics = "antibiotics";
         public const string ItemHazmatSuit = "hazmat_suit";
+        public const string ItemOxygenSupply = "item_oxygen_supply";
 
         private static readonly Dictionary<string, MedicalTreatmentDef> s_defs = Build();
 
@@ -148,6 +150,11 @@ namespace Ashfall.Core.Medical
             var tea = new MedicalTreatmentDef(TreatmentHerbalTea, "Herbal Tea", RespiratoryDegenerationId);
             tea.ItemCosts[ItemHerbalTea] = 1;
             map[tea.TreatmentId] = tea;
+
+            var oxygen = new MedicalTreatmentDef(
+                TreatmentOxygenSupport, "Oxygen Support", RespiratoryDegenerationId);
+            oxygen.ItemCosts[ItemOxygenSupply] = 1;
+            map[oxygen.TreatmentId] = oxygen;
 
             var bandage = new MedicalTreatmentDef(TreatmentBandage, "Bandage", HealthDeficitId);
             bandage.ItemCosts[ItemBandage] = 1;

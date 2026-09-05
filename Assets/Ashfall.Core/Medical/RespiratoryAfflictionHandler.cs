@@ -96,7 +96,8 @@ namespace Ashfall.Core.Medical
         public string? ValidateTreatment(Survivors.SurvivorId survivor, string treatmentId, string? targetItem = null)
         {
             if (treatmentId != MedicalTreatmentCatalog.TreatmentInhaler &&
-                treatmentId != MedicalTreatmentCatalog.TreatmentHerbalTea)
+                treatmentId != MedicalTreatmentCatalog.TreatmentHerbalTea &&
+                treatmentId != MedicalTreatmentCatalog.TreatmentOxygenSupport)
                 return "treatment_not_for_affliction";
             if (_respiratory.RespiratoryDegradation(survivor.Value) <= 0f)
                 return "no_respiratory_damage";
@@ -108,6 +109,7 @@ namespace Ashfall.Core.Medical
             return treatmentId switch
             {
                 MedicalTreatmentCatalog.TreatmentInhaler => _respiratory.ApplyInhaler(survivor.Value),
+                MedicalTreatmentCatalog.TreatmentOxygenSupport => _respiratory.ApplyInhaler(survivor.Value),
                 MedicalTreatmentCatalog.TreatmentHerbalTea => _respiratory.ApplyHerbalTea(survivor.Value),
                 _ => false
             };

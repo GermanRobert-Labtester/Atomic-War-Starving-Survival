@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "stations": [
+    {
+      "station_id": "heliograph_holdfast",
+      "map_node_id": "loc_holdfast",
+      "condition": 100.0
+    },
+    {
+      "station_id": "heliograph_relay",
+      "map_node_id": "loc_hidden_relay_bunker",
+      "condition": 100.0
+    }
+  ]
+}

@@ -165,6 +165,7 @@ namespace Ashfall.Core.UI
             R("induction_cupola_furnace",  "Induction Cupola Furnace",    PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
             R("heavy_marine_diesel_gen",   "Heavy Marine Turbodiesel Gen",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
             R("slurry_dewatering_sump",    "Slurry Dewatering Sump",      PanelGroup.Expanded); // LIVE: bound to SumpFloodingHostSession
+            R("plans_94_97",               "Plans 94–97 Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "world", "radio" });
             R("magnetic_drum_archive",     "Magnetic Drum & Microfiche",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
         }
 

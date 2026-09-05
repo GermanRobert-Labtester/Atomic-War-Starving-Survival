@@ -47,6 +47,7 @@ namespace Ashfall.Core.Tests
                 "IceRoad",
                 "NpcArcs",
                 "Phantom",
+                "Plans94To97Panel",
                 "ShelterFireHazard", // Save twin is SaveShelterFire
                 "UtilityAi",
                 "WeatherSonde",

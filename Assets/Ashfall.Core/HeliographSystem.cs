@@ -21,6 +21,21 @@ namespace Ashfall.Core.Radio
     }
 
     [Serializable]
+    public sealed class HeliographStationDefinition
+    {
+        public string station_id = string.Empty;
+        public string map_node_id = string.Empty;
+        public float condition = 100f;
+    }
+
+    [Serializable]
+    public sealed class HeliographCatalog
+    {
+        public int schema_version = 1;
+        public List<HeliographStationDefinition> stations = new List<HeliographStationDefinition>();
+    }
+
+    [Serializable]
     public sealed class HeliographMessageState
     {
         public string message_id = string.Empty;
@@ -107,6 +122,13 @@ namespace Ashfall.Core.Radio
             station.is_operational = station.condition > 0f;
             OnStateChanged?.Invoke();
             return true;
+        }
+
+        public void LoadCatalog(HeliographCatalog catalog)
+        {
+            if (catalog == null) return;
+            foreach (var station in catalog.stations)
+                RegisterStation(station.station_id, station.map_node_id, station.condition);
         }
 
         public ActionResult Transmit(
@@ -213,6 +235,35 @@ namespace Ashfall.Core.Radio
             var serializer = new SystemTextJsonSerializer();
             string json = serializer.Serialize(src);
             return serializer.Deserialize<HeliographState>(json) ?? new HeliographState();
+        }
+    }
+
+    public static class HeliographCatalogLoader
+    {
+        public const string FileName = "heliograph.json";
+
+        public static HeliographCatalog Load(
+            string directory,
+            IFileIO fileIO,
+            IJsonSerializer serializer,
+            ILog? log = null)
+        {
+            var catalog = new HeliographCatalog();
+            if (fileIO == null || serializer == null || string.IsNullOrEmpty(directory))
+                return catalog;
+
+            string path = fileIO.Combine(directory, FileName);
+            if (!fileIO.FileExists(path)) return catalog;
+            try
+            {
+                return serializer.Deserialize<HeliographCatalog>(fileIO.ReadAllText(path))
+                    ?? catalog;
+            }
+            catch (Exception ex)
+            {
+                (log ?? NullLog.Instance).Warn($"[HeliographCatalog] failed to load {path}: {ex.Message}");
+                return catalog;
+            }
         }
     }
 }

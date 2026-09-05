@@ -21,6 +21,14 @@ namespace Ashfall.Core
     }
 
     [Serializable]
+    public sealed class CryogenicAirSeparationCatalog
+    {
+        public int schema_version = 1;
+        public float required_power_watts = 600f;
+        public List<CryogenicGasProduct> products = new List<CryogenicGasProduct>();
+    }
+
+    [Serializable]
     public sealed class CryogenicAirSeparationState
     {
         public string system_id = CryogenicAirSeparationSystem.SystemId;
@@ -89,6 +97,13 @@ namespace Ashfall.Core
                     units_per_cycle = product.units_per_cycle
                 });
             }
+        }
+
+        public void LoadCatalog(CryogenicAirSeparationCatalog catalog)
+        {
+            if (catalog == null) return;
+            _state.required_power_watts = Math.Max(MinimumPowerWatts, catalog.required_power_watts);
+            ConfigureProducts(catalog.products);
         }
 
         public bool SetRunning(bool running)
@@ -224,6 +239,35 @@ namespace Ashfall.Core
             string json = serializer.Serialize(src);
             return serializer.Deserialize<CryogenicAirSeparationState>(json)
                 ?? new CryogenicAirSeparationState();
+        }
+    }
+
+    public static class CryogenicAirSeparationCatalogLoader
+    {
+        public const string FileName = "cryogenic_air_separation.json";
+
+        public static CryogenicAirSeparationCatalog Load(
+            string directory,
+            IFileIO fileIO,
+            IJsonSerializer serializer,
+            ILog? log = null)
+        {
+            var catalog = new CryogenicAirSeparationCatalog();
+            if (fileIO == null || serializer == null || string.IsNullOrEmpty(directory))
+                return catalog;
+
+            string path = fileIO.Combine(directory, FileName);
+            if (!fileIO.FileExists(path)) return catalog;
+            try
+            {
+                return serializer.Deserialize<CryogenicAirSeparationCatalog>(fileIO.ReadAllText(path))
+                    ?? catalog;
+            }
+            catch (Exception ex)
+            {
+                (log ?? NullLog.Instance).Warn($"[CryogenicAirSeparationCatalog] failed to load {path}: {ex.Message}");
+                return catalog;
+            }
         }
     }
 }

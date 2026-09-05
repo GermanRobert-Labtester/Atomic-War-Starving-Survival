@@ -264,10 +264,11 @@ namespace Ashfall.Core.Tests.Save
             // Plans 190-193 added amputation, railway, fungi_cultivation, wasteland_justice;
             // Plans 178-181 added child_development, prisoner_management, mutation_tree, expedition_stealth;
             // PATROL-INT added travel_encounters;
-            // Plans 46-49 Task 6 added dynamic_quests).
-            Assert.Equal(112, SaveSectionRegistry.All.Count);
+            // Plans 46-49 Task 6 added dynamic_quests;
+            // Plans 94-97 added grain_processing, cryogenic_air_separation, heliograph).
+            Assert.Equal(115, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(112, keys.Count);
+            Assert.Equal(115, keys.Count);
         }
     }
 }

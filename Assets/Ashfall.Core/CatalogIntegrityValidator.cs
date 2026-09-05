@@ -185,7 +185,7 @@ namespace Ashfall.Core
             "questlineId", "stageId", "firstStageId",
             // The Weight of Choices — faction branching system (Military slice).
             "ponr_flag", "ending_id",
-            "recipe_id", "key",
+            "recipe_id", "silo_id", "key",
             // Plan 20
             "choice_id", "chain_id",
             // Plan 21

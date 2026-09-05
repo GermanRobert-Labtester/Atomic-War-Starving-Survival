@@ -16,7 +16,7 @@ namespace Ashfall.Core.Tests
                 recipe_id = "recipe_ash_grain_flour",
                 input_item_id = "crop_ash_grain",
                 input_quantity = 2,
-                output_item_id = "grain_flour",
+                output_item_id = "item_grain_flour",
                 output_quantity = 3,
                 processing_hours = 8f
             });
@@ -34,7 +34,7 @@ namespace Ashfall.Core.Tests
             Assert.Equal(0, inventory.CountById("crop_ash_grain"));
             system.TickDay(1);
 
-            Assert.Equal(3, inventory.CountById("grain_flour"));
+            Assert.Equal(3, inventory.CountById("item_grain_flour"));
             Assert.Equal(1, system.State.total_batches_completed);
             Assert.Empty(system.State.active_jobs);
         }
@@ -53,13 +53,13 @@ namespace Ashfall.Core.Tests
         {
             var system = Create(out var inventory);
             inventory.AddById("crop_ash_grain", 2);
-            inventory.AddById("silo_treatment", 1);
+            inventory.AddById("item_silo_pest_treatment", 1);
             Assert.True(system.StartMilling("recipe_ash_grain_flour", "silo_01").IsSuccess);
 
             system.GetSilo("silo_01")!.pest_pressure = 55f;
-            Assert.True(system.TreatSilo("silo_01", "silo_treatment", 1, 40f).IsSuccess);
+            Assert.True(system.TreatSilo("silo_01", "item_silo_pest_treatment", 1, 40f).IsSuccess);
             Assert.Equal(15f, system.GetSilo("silo_01")!.pest_pressure);
-            Assert.Equal(0, inventory.CountById("silo_treatment"));
+            Assert.Equal(0, inventory.CountById("item_silo_pest_treatment"));
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace Ashfall.Core.Tests
             system.TickDay(1);
             Assert.Single(system.State.active_jobs);
             Assert.True(system.State.active_jobs[0].is_blocked);
-            Assert.Equal(0, inventory.CountById("grain_flour"));
+            Assert.Equal(0, inventory.CountById("item_grain_flour"));
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace Ashfall.Core.Tests
                 recipe_id = "recipe_ash_grain_flour",
                 input_item_id = "crop_ash_grain",
                 input_quantity = 2,
-                output_item_id = "grain_flour",
+                output_item_id = "item_grain_flour",
                 output_quantity = 3,
                 processing_hours = 8f
             });

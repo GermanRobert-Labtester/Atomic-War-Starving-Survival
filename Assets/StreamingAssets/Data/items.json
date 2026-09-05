@@ -7171,6 +7171,47 @@
         "sky_defense",
         "heavy"
       ]
+    },
+    {
+      "id": "item_grain_flour",
+      "displayName": "Milled Ash-Barley Flour",
+      "description": "Dark flour milled from ash-barley grain. It is coarse, shelf-stable, and suitable for the shelter kitchen's bread and porridge recipes.",
+      "type": "Food",
+      "stackMax": 30,
+      "weight": 0.1,
+      "tradeValue": 8,
+      "hungerRestore": 18,
+      "empShielded": true
+    },
+    {
+      "id": "item_silo_pest_treatment",
+      "displayName": "Silo Pest Treatment",
+      "description": "A sealed maintenance packet used by the grain authority to lower normalized silo pest pressure.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.2,
+      "tradeValue": 6,
+      "empShielded": true
+    },
+    {
+      "id": "item_oxygen_supply",
+      "displayName": "Oxygen Supply",
+      "description": "A sealed medical oxygen supply unit produced by the shelter's abstract air-separation plant.",
+      "type": "Medical",
+      "stackMax": 20,
+      "weight": 1.0,
+      "tradeValue": 12,
+      "empShielded": true
+    },
+    {
+      "id": "item_nitrogen_supply",
+      "displayName": "Nitrogen Supply",
+      "description": "A sealed nitrogen supply unit used as a general foundry and workshop process input.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 1.0,
+      "tradeValue": 10,
+      "empShielded": true
     }
   ]
 }

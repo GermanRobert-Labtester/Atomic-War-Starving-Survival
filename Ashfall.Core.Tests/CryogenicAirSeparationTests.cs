@@ -15,15 +15,15 @@ namespace Ashfall.Core.Tests
             var system = new CryogenicAirSeparationSystem(inventory, new SeededRng(21), () => power);
             system.ConfigureProducts(new[]
             {
-                new CryogenicGasProduct { product_id = "gas_oxygen", units_per_cycle = 2 },
-                new CryogenicGasProduct { product_id = "gas_nitrogen", units_per_cycle = 3 }
+                new CryogenicGasProduct { product_id = "item_oxygen_supply", units_per_cycle = 2 },
+                new CryogenicGasProduct { product_id = "item_nitrogen_supply", units_per_cycle = 3 }
             });
 
             Assert.True(system.SetRunning(true));
             system.TickDay(1);
 
-            Assert.Equal(2, inventory.CountById("gas_oxygen"));
-            Assert.Equal(3, inventory.CountById("gas_nitrogen"));
+            Assert.Equal(2, inventory.CountById("item_oxygen_supply"));
+            Assert.Equal(3, inventory.CountById("item_nitrogen_supply"));
             Assert.Equal(1, system.State.cycles_completed);
             Assert.Equal(CryogenicPlantBand.Running, system.Band);
         }
@@ -36,13 +36,13 @@ namespace Ashfall.Core.Tests
             var system = new CryogenicAirSeparationSystem(inventory, new SeededRng(22), () => power);
             system.ConfigureProducts(new[]
             {
-                new CryogenicGasProduct { product_id = "gas_oxygen", units_per_cycle = 2 }
+                new CryogenicGasProduct { product_id = "item_oxygen_supply", units_per_cycle = 2 }
             });
             Assert.True(system.SetRunning(true));
 
             system.TickDay(1);
 
-            Assert.Equal(0, inventory.CountById("gas_oxygen"));
+            Assert.Equal(0, inventory.CountById("item_oxygen_supply"));
             Assert.Equal(1, system.State.cycles_blocked);
             Assert.Equal(CryogenicPlantBand.Ready, system.Band);
         }
@@ -56,14 +56,14 @@ namespace Ashfall.Core.Tests
             var system = new CryogenicAirSeparationSystem(inventory, new SeededRng(23), () => power);
             system.ConfigureProducts(new[]
             {
-                new CryogenicGasProduct { product_id = "gas_oxygen", units_per_cycle = 2 }
+                new CryogenicGasProduct { product_id = "item_oxygen_supply", units_per_cycle = 2 }
             });
             Assert.True(system.SetRunning(true));
 
             system.TickDay(1);
 
             Assert.Equal(0, system.State.cycles_completed);
-            Assert.Equal(0, inventory.CountById("gas_oxygen"));
+            Assert.Equal(0, inventory.CountById("item_oxygen_supply"));
             Assert.Equal(100f, system.State.plant_integrity);
             Assert.Equal(1, system.State.cycles_blocked);
         }
@@ -76,7 +76,7 @@ namespace Ashfall.Core.Tests
             var first = new CryogenicAirSeparationSystem(inventory, new SeededRng(24), () => power);
             first.ConfigureProducts(new[]
             {
-                new CryogenicGasProduct { product_id = "gas_oxygen", units_per_cycle = 1 }
+                new CryogenicGasProduct { product_id = "item_oxygen_supply", units_per_cycle = 1 }
             });
             first.State.plant_integrity = 1f;
             first.State.filter_condition = 1f;
@@ -87,7 +87,7 @@ namespace Ashfall.Core.Tests
             var second = new CryogenicAirSeparationSystem(inventory, new SeededRng(24), () => power);
             second.ConfigureProducts(new[]
             {
-                new CryogenicGasProduct { product_id = "gas_oxygen", units_per_cycle = 1 }
+                new CryogenicGasProduct { product_id = "item_oxygen_supply", units_per_cycle = 1 }
             });
             second.RestoreState(saved);
             Assert.Equal(saved.plant_integrity, second.State.plant_integrity);

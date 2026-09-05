@@ -18,9 +18,25 @@ namespace Ashfall.Core
         public string recipe_id = string.Empty;
         public string input_item_id = "crop_ash_grain";
         public int input_quantity = 1;
-        public string output_item_id = "grain_flour";
+        public string output_item_id = "item_grain_flour";
         public int output_quantity = 1;
         public float processing_hours = 8f;
+    }
+
+    [Serializable]
+    public sealed class GrainSiloDefinition
+    {
+        public string silo_id = string.Empty;
+        public float integrity = 100f;
+        public float moisture_pct = 12f;
+    }
+
+    [Serializable]
+    public sealed class GrainProcessingCatalog
+    {
+        public int schema_version = 1;
+        public List<GrainProcessingRecipe> recipes = new List<GrainProcessingRecipe>();
+        public List<GrainSiloDefinition> silos = new List<GrainSiloDefinition>();
     }
 
     [Serializable]
@@ -104,6 +120,15 @@ namespace Ashfall.Core
                 return;
 
             _recipes[recipe.recipe_id] = recipe;
+        }
+
+        public void LoadCatalog(GrainProcessingCatalog catalog)
+        {
+            if (catalog == null) return;
+            foreach (var recipe in catalog.recipes)
+                RegisterRecipe(recipe);
+            foreach (var silo in catalog.silos)
+                RegisterSilo(silo.silo_id, silo.integrity, silo.moisture_pct);
         }
 
         public GrainProcessingRecipe? GetRecipe(string recipeId)
@@ -307,6 +332,35 @@ namespace Ashfall.Core
             var serializer = new SystemTextJsonSerializer();
             string json = serializer.Serialize(src);
             return serializer.Deserialize<GrainProcessingState>(json) ?? new GrainProcessingState();
+        }
+    }
+
+    public static class GrainProcessingCatalogLoader
+    {
+        public const string FileName = "grain_processing.json";
+
+        public static GrainProcessingCatalog Load(
+            string directory,
+            IFileIO fileIO,
+            IJsonSerializer serializer,
+            ILog? log = null)
+        {
+            var catalog = new GrainProcessingCatalog();
+            if (fileIO == null || serializer == null || string.IsNullOrEmpty(directory))
+                return catalog;
+
+            string path = fileIO.Combine(directory, FileName);
+            if (!fileIO.FileExists(path)) return catalog;
+            try
+            {
+                return serializer.Deserialize<GrainProcessingCatalog>(fileIO.ReadAllText(path))
+                    ?? catalog;
+            }
+            catch (Exception ex)
+            {
+                (log ?? NullLog.Instance).Warn($"[GrainProcessingCatalog] failed to load {path}: {ex.Message}");
+                return catalog;
+            }
         }
     }
 }

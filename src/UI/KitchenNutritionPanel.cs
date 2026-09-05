@@ -28,6 +28,16 @@ namespace AtomicWar.GodotApp.UI
         private KitchenNutritionHostSession? _host;
         private string _selectedRecipeId = "recipe_fungal_stew";
 
+        private sealed class RecipeOption
+        {
+            public string id = string.Empty;
+            public string name = string.Empty;
+            public string desc = string.Empty;
+            public string cost = string.Empty;
+            public int morale;
+            public Dictionary<string, int> inputs = new Dictionary<string, int>();
+        }
+
         public bool IsBound => _host != null;
 
         public void Bind(KitchenNutritionHostSession session)
@@ -196,10 +206,19 @@ namespace AtomicWar.GodotApp.UI
             // Standard recipe catalog definitions
             var recipes = new[]
             {
-                new { id = "recipe_fungal_stew", name = "Nutritive Fungal Stew", desc = "Hearty broth fortified with underground mushroom caps.", cost = "1x Mushroom, 1x Clean Water", morale = 3 },
-                new { id = "recipe_canned_mash", name = "Heated Military Rations", desc = "Standard shelf-stable calories with mild vitamin paste.", cost = "1x Rations, 1x Fuel", morale = 2 },
-                new { id = "recipe_greenhouse_salad", name = "Fresh Harvest Greens", desc = "Crisp hydroponic root leaves and tuber salad.", cost = "2x Fresh Greens", morale = 5 },
-                new { id = "recipe_cured_jerky_broth", name = "Smoked Jerky & Bone Broth", desc = "Rich protein soup providing sustained work endurance.", cost = "1x Meat, 2x Clean Water", morale = 4 }
+                new RecipeOption { id = "recipe_fungal_stew", name = "Nutritive Fungal Stew", desc = "Hearty broth fortified with underground mushroom caps.", cost = "1x Mushroom, 1x Clean Water", morale = 3 },
+                new RecipeOption { id = "recipe_canned_mash", name = "Heated Military Rations", desc = "Standard shelf-stable calories with mild vitamin paste.", cost = "1x Rations, 1x Fuel", morale = 2 },
+                new RecipeOption { id = "recipe_greenhouse_salad", name = "Fresh Harvest Greens", desc = "Crisp hydroponic root leaves and tuber salad.", cost = "2x Fresh Greens", morale = 5 },
+                new RecipeOption { id = "recipe_cured_jerky_broth", name = "Smoked Jerky & Bone Broth", desc = "Rich protein soup providing sustained work endurance.", cost = "1x Meat, 2x Clean Water", morale = 4 },
+                new RecipeOption
+                {
+                    id = "recipe_ash_flour_bread",
+                    name = "Ash-Flour Bread",
+                    desc = "Dense shelter bread made from grain-system flour.",
+                    cost = "1x Milled Ash-Barley Flour",
+                    morale = 4,
+                    inputs = new Dictionary<string, int> { ["item_grain_flour"] = 1 }
+                }
             };
 
             // Populate Recipe List
@@ -249,6 +268,14 @@ namespace AtomicWar.GodotApp.UI
             _prepStation.AddChild(AshfallUiHelpers.MakeSeparator());
             _prepStation.AddChild(AshfallUiHelpers.MakeSubsectionHeader("COOK ASSIGNMENT"));
             _prepStation.AddChild(AshfallUiHelpers.MakeBody("Assign shelter cooks through the Duty Roster to schedule daily meal prep batches for this recipe."));
+            _prepStation.AddChild(AshfallUiHelpers.MakeButton("START PREP // SHELTER COOK", () =>
+            {
+                var result = _host.StartPrepJob(curRecipe.id, "cook_shelter", curRecipe.inputs);
+                _eventLogLabel.Text = result.IsSuccess
+                    ? $"Prep started: {curRecipe.name}."
+                    : $"Prep blocked: {result.FailureCode}.";
+                RefreshView();
+            }));
 
             // Populate Serving Log
             if (s.servingLog.Count == 0)

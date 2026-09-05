@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "recipes": [
+    {
+      "recipe_id": "recipe_ash_grain_flour",
+      "input_item_id": "crop_ash_grain",
+      "input_quantity": 2,
+      "output_item_id": "item_grain_flour",
+      "output_quantity": 3,
+      "processing_hours": 8.0
+    }
+  ],
+  "silos": [
+    {
+      "silo_id": "silo_holdfast",
+      "integrity": 100.0,
+      "moisture_pct": 12.0
+    }
+  ]
+}

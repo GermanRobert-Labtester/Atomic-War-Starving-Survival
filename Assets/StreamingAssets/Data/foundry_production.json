@@ -777,6 +777,10 @@
         {
           "item_id": "item_foundry_flux",
           "amount": 2
+        },
+        {
+          "item_id": "item_nitrogen_supply",
+          "amount": 1
         }
       ],
       "labor_hours": 12,

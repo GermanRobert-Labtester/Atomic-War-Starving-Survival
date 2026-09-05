@@ -81,18 +81,33 @@ discipline (presentation-only).
 Currently missing/stub (verified 2026-09-03 — replace entries as they are
 bound to Core):
 
+> **Plans 78–81 flagship batch (Wave 6, pending Stitch generation):**
+> `DeconAirlockPanel`, `GeodeticSurveyPanel`, `KineticStoragePanel`,
+> `ChemicalReconPanel`. The four Core systems exist
+> (`DecontaminationSystem` protocol/effluent extension, `GeodeticSurveyEngine`,
+> `KineticStorageSystem`, `ChemicalReconEngine`) with catalogs
+> `decontamination_protocol_catalog.json`, `geodetic_survey_catalog.json`,
+> `kinetic_flywheel_catalog.json`, `toxic_chemical_catalog.json` — but the
+> host panels do not exist yet. Generate layouts via `google-stitch` before
+> implementing in `src/UI/`, then extend `Main.HandleGreenhouseAction`-style
+> action switches and keep `LastEvent` as the single feedback strip.
+
 | Panel | Status |
 |---|---|
 | `ElectrostaticScrubberPanel` | missing (Plan 72 — create bound to VentilationSystem stage) |
 | `AquiferTreatyConcessionPanel` | stub — hardcoded text, no Core binding |
 | `BasalRadonMigrationPanel` | stub |
+| `ChemicalReconPanel` | missing (Plan 81 — create bound to ChemicalReconEngine: normalized detector reading, hazard class, filter saturation, wind, sample status; Wave 6 of Plans 78–81 flagship; UNKNOWN HAZARD / FILTER BREAKTHROUGH / CRITICAL EXPOSURE require text labels, no color-only semantics) |
 | `ClandestineInsurgencyPanel` | stub |
 | `CrossingSafeConductVouchPanel` | stub |
 | `CryogenicPermafrostCorePanel` | stub |
+| `DeconAirlockPanel` | missing (Plan 78 — create bound to DecontaminationSystem protocol/effluent/interlock APIs: stage progress, radiometric gate reading, effluent tank, reagent reserve, manual override; Wave 6 of Plans 78–81 flagship; distinct from the existing `UltrasonicDecontaminationAirlockPanel` stub; INNER DOOR LOCKED / CONTAMINATION ABOVE LIMIT / REWASH REQUIRED require text labels) |
 | `FungalProteinFermenterPanel` | stub |
+| `GeodeticSurveyPanel` | missing (Plan 79 — create bound to GeodeticSurveyEngine: sighted points, angle readout, uncertainty, network triangle, baseline length, monument status, hidden-route progress; Wave 6 of Plans 78–81 flagship; crosshair/vernier is visual-only — Core returns measured values, no UI-side trig) |
 | `HeavyMarineDieselGeneratorPanel` | stub |
 | `InductionCupolaFurnacePanel` | stub |
 | `IronCenotaphMemorialPanel` | stub |
+| `KineticStoragePanel` | missing (Plan 80 — create bound to KineticStorageSystem: RPM, stored energy, vacuum quality, bearing temperature, charge/discharge, containment state, maintenance, emergency brake; Wave 6 of Plans 78–81 flagship; OVERSPEED / VACUUM LOSS / BEARING OVERHEAT / CONTAINMENT COMPROMISED require text labels; UI must route the brake through the Core command, never bypass it) |
 | `LongWalkExpeditionPanel` | stub |
 | `MagneticDrumArchivePanel` | stub |
 | `MechanicalProstheticsLathePanel` | stub |

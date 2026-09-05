@@ -559,6 +559,17 @@ namespace AtomicWar.GodotApp
                 openAction: () => _slurryDewateringSumpPanel.Open(),
                 closeAction: () => _slurryDewateringSumpPanel.Visible = false);
 
+            PanelRegistry.ConfigureActions("plans_94_97",
+                bindAction: () =>
+                {
+                    SetupGrainProcessing();
+                    SetupCryogenicAirSeparation();
+                    SetupHeliograph();
+                    SetupPlans94To97Panel();
+                },
+                openAction: () => OpenExpandedPanel("plans_94_97"),
+                closeAction: () => { if (_plans94To97Panel != null) _plans94To97Panel.Close(); });
+
             // Note: 29 flagship prototype consoles (Issues 01–28, 30) are registered as
             // PanelMaturity.Prototype and excluded from player navigation. Their classes
             // remain available for snapshots, previews, and future host session development.
@@ -572,7 +583,7 @@ namespace AtomicWar.GodotApp
                 "waystation_network", "chemical_dependency", "sump_flooding", "decontamination",
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
                 "contractor_roster", "mental_health_crisis", "phantom_memory",
-                "traveling_caravan", "medical_ward"
+                "traveling_caravan", "medical_ward", "plans_94_97"
             };
 
             foreach (var expId in expandedIds)

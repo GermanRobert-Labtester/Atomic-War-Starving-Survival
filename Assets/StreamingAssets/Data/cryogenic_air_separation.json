@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "required_power_watts": 600.0,
+  "products": [
+    {
+      "product_id": "item_oxygen_supply",
+      "units_per_cycle": 2
+    },
+    {
+      "product_id": "item_nitrogen_supply",
+      "units_per_cycle": 3
+    }
+  ]
+}
