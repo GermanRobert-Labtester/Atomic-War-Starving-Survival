@@ -172,6 +172,9 @@ namespace Ashfall.Core.UI
             // Plans 162-165 — advanced agriculture over the canonical greenhouse
             // (strains, medium, water bands, pests, compost, dietary diversity).
             R("farming",                   "Advanced Agriculture",        PanelGroup.Expanded, new[] { "inventory", "power_grid", "world" });
+            // Plans 162-165 — trap installations + pre-combat raid resolution
+            // composing the perimeter defense system (Plan 163).
+            R("defense_grid",              "Settlement Defense Grid",     PanelGroup.Expanded, new[] { "inventory", "power_grid", "combat" });
         }
 
         private static void R(

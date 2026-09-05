@@ -452,6 +452,18 @@ namespace AtomicWar.GodotApp
 
             AddChild(_farmingPanel);
 
+
+
+            _defenseGridPanel = new AtomicWar.GodotApp.UI.DefenseGridPanel();
+
+            _defenseGridPanel.Visible = false;
+
+            _defenseGridPanel.OnClose += () => HandleDefenseAction("CLOSE", "");
+
+            _defenseGridPanel.OnActionRequested += HandleDefenseAction;
+
+            AddChild(_defenseGridPanel);
+
             BuildPlans146To149Panels();
 
             _greenhousePanel = new GreenhousePanel();

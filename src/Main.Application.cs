@@ -92,6 +92,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.AgricultureSelfTest:
                     GetTree().Quit(HostCli.RunAgricultureSelfTest(_dataDir));
                     return;
+                case HostCliAction.DefenseSelfTest:
+                    GetTree().Quit(HostCli.RunDefenseSelfTest(_dataDir));
+                    return;
                 case HostCliAction.SilentFoundrySelfTest:
                     GetTree().Quit(HostCli.RunSilentFoundrySelfTest(_dataDir));
                     return;

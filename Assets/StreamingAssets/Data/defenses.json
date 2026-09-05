@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "traps": [
+    {
+      "id": "trap_perimeter_snare",
+      "display_name": "Perimeter Snare Line",
+      "defense_type": "snare",
+      "base_strength": 1,
+      "max_hp": 60,
+      "activation_chance": 0.75,
+      "capture_chance": 0.15,
+      "concealed": true,
+      "placement_tag": "perimeter",
+      "build_costs": { "scrap_metal": 2 },
+      "reset_costs": { "scrap_metal": 1 },
+      "repair_costs": { "scrap_metal": 2 },
+      "tags": ["perimeter", "concealed"]
+    },
+    {
+      "id": "trap_choke_deadfall",
+      "display_name": "Chokepoint Deadfall",
+      "defense_type": "deadfall",
+      "base_strength": 2,
+      "max_hp": 100,
+      "activation_chance": 0.65,
+      "capture_chance": 0.1,
+      "concealed": false,
+      "placement_tag": "choke",
+      "build_costs": { "scrap_metal": 3 },
+      "reset_costs": { "scrap_metal": 2 },
+      "repair_costs": { "scrap_metal": 3 },
+      "tags": ["choke", "heavy"]
+    },
+    {
+      "id": "trap_concealed_capture_pit",
+      "display_name": "Concealed Capture Pit",
+      "defense_type": "capture_pit",
+      "base_strength": 1,
+      "max_hp": 80,
+      "activation_chance": 0.7,
+      "capture_chance": 0.45,
+      "concealed": true,
+      "placement_tag": "approach",
+      "build_costs": { "scrap_metal": 4 },
+      "reset_costs": { "scrap_metal": 2 },
+      "repair_costs": { "scrap_metal": 3 },
+      "tags": ["approach", "concealed", "capture"]
+    },
+    {
+      "id": "trap_spike_border",
+      "display_name": "Spike Border",
+      "defense_type": "spike_border",
+      "base_strength": 1,
+      "max_hp": 120,
+      "activation_chance": 0.55,
+      "capture_chance": 0.0,
+      "concealed": false,
+      "placement_tag": "perimeter",
+      "build_costs": { "scrap_metal": 3 },
+      "reset_costs": { "scrap_metal": 1 },
+      "repair_costs": { "scrap_metal": 2 },
+      "tags": ["perimeter", "passive"]
+    }
+  ]
+}

@@ -53,6 +53,7 @@ namespace Ashfall.Core
         ExpansionsSelfTest,
         GreenhouseSelfTest,
         AgricultureSelfTest,
+        DefenseSelfTest,
         HoldfastBriefing,
         HoldfastSelfTest,
         IceRoadSelfTest,
@@ -392,6 +393,12 @@ namespace Ashfall.Core
                     "--agriculture-selftest",
                     null,
                     "Plans 162-165: crop strain catalog, growth composition, mutation isolation, compost, nutrition diversity"),
+                new HostCliActionDescriptor(
+                    HostCliAction.DefenseSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--defense-selftest",
+                    null,
+                    "Plans 162-165: trap catalog, perimeter composition, pre-combat raid resolution, capture handoff"),
                 new HostCliActionDescriptor(
                     HostCliAction.HoldfastBriefing,
                     "Expansions & Campaign Modules",

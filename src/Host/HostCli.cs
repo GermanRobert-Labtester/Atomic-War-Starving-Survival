@@ -67,6 +67,7 @@ namespace AtomicWar.GodotApp
         LedgerDebtSelfTest,
         GreenhouseSelfTest,
         AgricultureSelfTest,
+        DefenseSelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
         DeconAirlockUiTest,
@@ -250,6 +251,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.GreenhouseSelfTest;
             if (Has(args, "--agriculture-selftest"))
                 return HostCliAction.AgricultureSelfTest;
+            if (Has(args, "--defense-selftest"))
+                return HostCliAction.DefenseSelfTest;
             if (Has(args, "--silent-foundry-selftest"))
                 return HostCliAction.SilentFoundrySelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))

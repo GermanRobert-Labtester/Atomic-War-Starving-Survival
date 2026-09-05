@@ -75,6 +75,26 @@ Status: NOT STARTED
 
 ---
 
+## Phase D — Plan 163 (DefenseSystem)
+
+Status: PASS (Core + data + host + raid seam + UI + tests + gates)
+
+Changed:
+- `Assets/Ashfall.Core/Defense/DefenseSystem.cs` (new — trap layer: DefenseTrapDefinition, armed/sprung/broken installations with reset ≠ repair, capture outcomes, bounded structured raid log, PerimeterStrengthBreakdown composing PerimeterDefenseSystem, ResolvePreCombatRaid; TrapCatalogLoader + validator)
+- Data: `defenses.json` (4 traps: perimeter snare, chokepoint deadfall, concealed capture pit, spike border — lossy costs in scrap_metal)
+- Save: `settlement_defenses` section (`settlement_defenses_save.json`)
+- Host: `DefenseHostSession` + `DefenseSaveStore` + `Main.Plans162_165` wiring; capture handoff → `EnsurePrisoners().TakePrisoner` (finally wiring the unwired intake); **raid seam**: `Main.Muster.OnIronRaidersRaidExecuted` now resolves traps → perimeter emplacements BEFORE combat — repelled raids never reach survivors, breaches escalate with enemy count scaled to survivors; turret power = grid-level brownout state (no invented room); RNG forks `defense.targeting`/`defense.capture` per raid
+- UI: `DefenseGridPanel` (route `defense_grid`, install/reset/repair/drill commands with costs, raid log, perimeter breakdown) + dashboard nav
+- Selftest: `--defense-selftest` (10 gates); utilization entries for defenses.json
+
+Tests: DefenseSystemTests 11 + DefensePersistenceTests 5 = 16 new; filter run 40/40 PASS (incl. pre-existing perimeter tests).
+
+Result: static defenses resolve before survivor combat; sprung traps never re-fire without reset; broken traps require repair before reset; captures hand off to the single captive authority; raid log bounded at 50; post-restore engagement equals uninterrupted.
+
+Divergences: turret/wall definitions stay in `perimeter_defenses.json` (PerimeterDefenseSystem owns emplacements — plan §6.2's conditional); `defenses.json` authors only the trap layer; emplacement power is grid-level (power_grid.json has no defense room).
+
+---
+
 ## Phase E — Plan 164 (PsychologicalArcSystem)
 
 Status: NOT STARTED

@@ -585,6 +585,12 @@ namespace AtomicWar.GodotApp
                 openAction: () => HandleAgricultureAction("OPEN", ""),
                 closeAction: () => HandleAgricultureAction("CLOSE", ""));
 
+            // Plans 162-165 — settlement defense grid (Plan 163).
+            PanelRegistry.ConfigureActions("defense_grid",
+                bindAction: () => HandleDefenseAction("OPEN", ""),
+                openAction: () => HandleDefenseAction("OPEN", ""),
+                closeAction: () => HandleDefenseAction("CLOSE", ""));
+
             // Note: 29 flagship prototype consoles (Issues 01–28, 30) are registered as
             // PanelMaturity.Prototype and excluded from player navigation. Their classes
             // remain available for snapshots, previews, and future host session development.
@@ -598,7 +604,7 @@ namespace AtomicWar.GodotApp
                 "waystation_network", "chemical_dependency", "sump_flooding", "decontamination",
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
                 "contractor_roster", "mental_health_crisis", "phantom_memory",
-                "traveling_caravan", "medical_ward", "plans_94_97", "plans_130_133", "farming"
+                "traveling_caravan", "medical_ward", "plans_94_97", "plans_130_133", "farming", "defense_grid"
             };
 
             foreach (var expId in expandedIds)

@@ -196,6 +196,7 @@ namespace Ashfall.Core.Save
             new("mine_clearing_flail", "SaveMineClearingFlail", "SetupMineClearingFlail", "expeditions", "Plans 146-149 — mine-clearing flail vehicle modules and active breaches"),
             new("rail_grinding", "SaveRailGrinding", "SetupRailGrinding", "expeditions", "Plans 146-149 — rail grinding vehicle modules and active corridor jobs"),
             new("agriculture", "SaveAgriculture", "SetupAgriculture", "farming", "Plans 162-165 — advanced crop strains, plot medium, pests, compost, and dietary diversity"),
+            new("settlement_defenses", "SaveDefense", "SetupDefense", "combat", "Plans 162-165 — trap installations, pre-combat raid resolution, captures, and the raid log"),
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -336,6 +337,7 @@ namespace Ashfall.Core.Save
                 { "perimeter_defense", "perimeter_defense_save.json" },
                 { "hydroponic_biomes", "hydroponic_biomes_save.json" },
                 { "agriculture", "agriculture_save.json" },
+                { "settlement_defenses", "settlement_defenses_save.json" },
                 { "nuclear_core_lifecycle", "nuclear_core_lifecycle_save.json" },
                 { "armored_crawlers", "armored_crawlers_save.json" },
                 { "personal_quests", "personal_quests_save.json" },

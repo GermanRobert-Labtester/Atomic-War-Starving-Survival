@@ -114,5 +114,79 @@ namespace AtomicWar.GodotApp
             return EmitSummary("agriculture_selftest", fail == 0, failedCount: fail, passedCount: pass,
                 details: string.Join("; ", details));
         }
+
+        public static int RunDefenseSelfTest(string dataDirectory)
+        {
+            int pass = 0, fail = 0;
+            var details = new List<string>();
+
+            void Check(string gate, bool ok, string note = "")
+            {
+                if (ok) { pass++; details.Add($"  PASS {gate}"); }
+                else { fail++; details.Add($"  FAIL {gate}{(note.Length > 0 ? " — " + note : "")}"); }
+                GD.Print($"{(ok ? "[PASS]" : "[FAIL]")} defense/{gate}");
+            }
+
+            // 1. Catalog.
+            var traps = Ashfall.Core.Defense.TrapCatalogLoader.Load(dataDirectory);
+            var diags = Ashfall.Core.Defense.TrapCatalogLoader.Validate(traps);
+            Check("trap_catalog", diags.Count == 0, string.Join("; ", diags));
+            Check("trap_roster", traps.Count >= 4, $"got {traps.Count}");
+
+            // 2. Install + deterministic engagement + capture handoff event.
+            // Uses a forced-certain trap (activation 1.0) so the spring gates
+            // assert behavior, not a roll; shipped data is covered by gate 1.
+            var forcedTrap = new Ashfall.Core.Defense.DefenseTrapDefinition
+            {
+                id = "trap_selftest_certain",
+                display_name = "Selftest Snare",
+                defense_type = "snare",
+                base_strength = 2,
+                max_hp = 100,
+                activation_chance = 1f,
+                capture_chance = 0.5f
+            };
+            var sys = new Ashfall.Core.Defense.DefenseSystem(new[] { forcedTrap });
+            bool installed = sys.InstallTrap("trap_selftest_certain", "approach", (_, _) => true);
+            Check("install_trap", installed);
+
+            int captured = 0;
+            sys.OnRaiderCaptured += (_, count) => captured += count;
+            var r1 = sys.ResolvePreCombatRaid(10, 6, false, null, null,
+                new SeededRng(91), new SeededRng(92));
+            Check("engagement_records", r1.Records.Count > 0);
+            Check("trap_springs_once", sys.Installations[0].sprung && sys.Installations[0].total_activations == 1);
+
+            // 3. Reset requires resources; broken traps need repair first.
+            var id = sys.Installations[0].installation_id;
+            Check("reset_requires_sprung", sys.CanResetTrap(id));
+            bool reset = sys.TryResetTrap(id, (_, _) => true);
+            Check("reset_arms_again", reset && !sys.Installations[0].sprung);
+
+            // 4. Perimeter composition: strength breakdown is non-opaque.
+            var strength = sys.CalculatePerimeterStrength(null, null);
+            Check("strength_breakdown", strength.Traps >= 0 && strength.Total >= 0,
+                $"traps {strength.Traps} total {strength.Total}");
+
+            // 5. Deterministic replay of the engagement.
+            var sys2 = new Ashfall.Core.Defense.DefenseSystem(new[] { forcedTrap });
+            sys2.InstallTrap("trap_selftest_certain", "approach", (_, _) => true);
+            var r2 = sys2.ResolvePreCombatRaid(10, 6, false, null, null,
+                new SeededRng(91), new SeededRng(92));
+            Check("deterministic_replay",
+                r2.RemainingRaiders == r1.RemainingRaiders && r2.RaidersCaptured == r1.RaidersCaptured);
+
+            // 6. Save round-trip.
+            var snapshot = sys.CaptureState();
+            var restored = new Ashfall.Core.Defense.DefenseSystem(new[] { forcedTrap });
+            restored.RestoreState(snapshot);
+            Check("save_round_trip", restored.Installations.Count == sys.Installations.Count
+                && restored.RaidLog.Count == sys.RaidLog.Count);
+
+            GD.Print($"defense selftest: {pass} passed, {fail} failed");
+            if (fail > 0) GD.Print(string.Join("\n", details));
+            return EmitSummary("defense_selftest", fail == 0, failedCount: fail, passedCount: pass,
+                details: string.Join("; ", details));
+        }
     }
 }

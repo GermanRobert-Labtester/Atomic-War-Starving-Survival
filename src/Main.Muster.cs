@@ -138,11 +138,12 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Plan 45 phase 2 — the Iron Raiders raid executes: spawn the raid
-        /// crew as a tactical defense fight using the combat catalog (the
-        /// raiders bring warlord enforcers at high aggression, scavenger
-        /// attackers below). Skipped when a fight is already active — the
-        /// shelter defense joins the queue like any other encounter.
+        /// Plan 45 phase 2 — the Iron Raiders raid executes. Plan 163 inserts
+        /// the static-defense phase BEFORE direct survivor combat: traps, then
+        /// perimeter emplacements, resolve first; only raiders that breach
+        /// escalate to the tactical fight (with the enemy count scaled to what
+        /// is left). Skipped when a fight is already active — the shelter
+        /// defense joins the queue like any other encounter.
         /// </summary>
         private void OnIronRaidersRaidExecuted()
         {
@@ -156,13 +157,30 @@ namespace AtomicWar.GodotApp
             }
             var ir = _muster.IronRaiders;
             int crewDanger = ir.AggressionLevel >= 0.6f ? 6 : 3;
+
+            // Plan 163 pre-combat: static defenses engage first. A repelled
+            // raid never reaches survivor combat; captives hand off to the
+            // prisoner authority from the defense session itself.
+            var engagement = ResolveRaidDefenses(_simDay, crewDanger, isNight: false);
+            if (engagement.Repelled && engagement.RemainingRaiders <= 0)
+            {
+                _combatDirty = true;
+                _journal?.TryAddRawEntry($"raid_repelled_{_simDay}",
+                    "The wire held. Traps and emplacements broke the raid before it reached the door.",
+                    null!, _simDay);
+                GD.Print($"[Ashfall Godot] Iron Raiders raid repelled by static defenses (trapped {engagement.RaidersNeutralizedByTraps}, captured {engagement.RaidersCaptured}).");
+                return;
+            }
+
+            int remaining = Math.Max(1, engagement.RemainingRaiders);
+            int enemyCount = Math.Max(1, Math.Min(remaining, CombatHostSession.DefaultAmbushEnemyCount + 1));
             var enemyIds = EnemyCompositionSelector.SelectRaidComposition(
-                crewDanger, CombatHostSession.DefaultAmbushEnemyCount + 1);
+                crewDanger, enemyCount);
             _combat.StartCombat(
                 "loc_iron_raiders_den", "The Toll — Den Raid",
                 enemyCombatantIds: enemyIds);
             _combatDirty = true;
-            GD.Print($"[Ashfall Godot] Iron Raiders raid escalated to combat: {string.Join(", ", enemyIds)}.");
+            GD.Print($"[Ashfall Godot] Iron Raiders raid escalated to combat: {string.Join(", ", enemyIds)} ({engagement.RemainingRaiders} of {engagement.InitialRaiderStrength} raiders reached the door).");
         }
 
         public void OnIronRaidersClicked()

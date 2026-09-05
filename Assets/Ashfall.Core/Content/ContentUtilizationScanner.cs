@@ -48,7 +48,7 @@ namespace Ashfall.Core.Content
             "expeditions.json", "disease_catalog.json", "vehicles.json",
             "starting_supplies.json", "starting_survivors.json",
             "greenhouse_items.json", "library_manuals.json",
-            "crop_strains.json", "nutrition_profiles.json", "agriculture_items.json",
+            "crop_strains.json", "nutrition_profiles.json", "agriculture_items.json", "defenses.json",
             "research_knowledge.json", "skills.json",
             "standing_record_factions.json", "standing_record_layouts.json",
             "standing_record_memory.json", "standing_record_quests.json",
@@ -269,6 +269,7 @@ namespace Ashfall.Core.Content
                 ["greenhouse_items.json"] = new[] { "GreenhouseExpansionCatalog" },
                 ["crop_strains.json"] = new[] { "CropStrainCatalogLoader" },
                 ["nutrition_profiles.json"] = new[] { "NutritionProfileCatalogLoader" },
+                ["defenses.json"] = new[] { "TrapCatalogLoader" },
                 ["library_manuals.json"] = new[] { "LibraryManualCatalogLoader" },
                 ["research_knowledge.json"] = new[] { "ResearchKnowledgeCatalogLoader" },
                 ["skills.json"] = new[] { "SkillCatalogLoader" },
@@ -385,10 +386,10 @@ namespace Ashfall.Core.Content
                 ["toxic_chemical_catalog.json"] = new[] { "ToxicChemicalCatalogLoader" },
                 ["infiltrator_profiles.json"] = new[] { "InfiltratorCatalogLoader" },
                 ["weather_hardening_upgrades.json"] = new[] { "WeatherHardeningCatalogLoader" },
-                ["ebpvd_coating_catalog.json"] = new[] { "EbPvdCoatingEngine" },
-                ["mine_flail_catalog.json"] = new[] { "MineClearingFlailEngine" },
-                ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticEngine" },
-                ["rail_grinding_catalog.json"] = new[] { "RailGrindingEngine" },
+                ["ebpvd_coating_catalog.json"] = new[] { "EbPvdCoatingCatalogLoader", "EbPvdCoatingEngine" },
+                ["mine_flail_catalog.json"] = new[] { "MineFlailCatalogLoader", "MineClearingFlailEngine" },
+                ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticCatalogLoader", "MicrofluidicDiagnosticEngine" },
+                ["rail_grinding_catalog.json"] = new[] { "RailGrindingCatalogLoader", "RailGrindingEngine" },
             };
 
             // Additional mappings for previously UNRESOLVED catalogs
@@ -623,6 +624,7 @@ namespace Ashfall.Core.Content
                 ["agriculture_items.json"] = new[] { "ItemCatalogLoader", "AgricultureSystem" },
                 ["crop_strains.json"] = new[] { "CropStrainCatalogLoader", "AgricultureSystem" },
                 ["nutrition_profiles.json"] = new[] { "NutritionProfileCatalogLoader", "NutritionDiversitySystem" },
+                ["defenses.json"] = new[] { "TrapCatalogLoader", "DefenseSystem" },
                 ["library_manuals.json"] = new[] { "LibraryStudySystem" },
                 ["research_knowledge.json"] = new[] { "ResearchSystem" },
                 ["skills.json"] = new[] { "SkillProgressionSystem", "LatentExpertAwakeningSystem" },
@@ -786,10 +788,10 @@ namespace Ashfall.Core.Content
                 ["toxic_chemical_catalog.json"] = new[] { "ToxicChemicalCatalogLoader", "ChemicalReconEngine" },
                 ["infiltrator_profiles.json"] = new[] { "InfiltratorCatalogLoader", "CounterIntelligenceSystem" },
                 ["weather_hardening_upgrades.json"] = new[] { "WeatherHardeningCatalogLoader", "WeatherHardeningSystem" },
-                ["ebpvd_coating_catalog.json"] = new[] { "EbPvdCoatingEngine" },
-                ["mine_flail_catalog.json"] = new[] { "MineClearingFlailEngine", "RouteInfrastructureSystem" },
-                ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticEngine", "MedicalPipelineCoordinator" },
-                ["rail_grinding_catalog.json"] = new[] { "RailGrindingEngine", "RouteInfrastructureSystem" },
+                ["ebpvd_coating_catalog.json"] = new[] { "EbPvdCoatingCatalogLoader", "EbPvdCoatingEngine" },
+                ["mine_flail_catalog.json"] = new[] { "MineFlailCatalogLoader", "MineClearingFlailEngine", "RouteInfrastructureSystem" },
+                ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticCatalogLoader", "MicrofluidicDiagnosticEngine", "MedicalPipelineCoordinator" },
+                ["rail_grinding_catalog.json"] = new[] { "RailGrindingCatalogLoader", "RailGrindingEngine", "RouteInfrastructureSystem" },
             };
 
             foreach (var cat in _graph.Catalogs)
