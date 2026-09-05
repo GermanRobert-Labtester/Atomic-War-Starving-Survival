@@ -99,6 +99,19 @@ namespace Ashfall.Core.Survivors
             return true;
         }
 
+        /// <summary>Canonical therapeutic relief (flagship sanatorium Task 8):
+        /// scales insomnia severity down by the authored fraction (0..1).</summary>
+        public void ApplyTherapyRelief(string survivorId, float fraction)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return;
+            fraction = Math.Clamp(fraction, 0f, 1f);
+            if (fraction <= 0f) return;
+            var state = _bySurvivor.TryGetValue(survivorId, out var s) ? s : null;
+            if (state == null) return;
+            state.insomniaSeverity = Math.Max(0f, state.insomniaSeverity * (1f - fraction));
+            OnStateChanged?.Invoke();
+        }
+
         public float GetSleepQualityMultiplier(string survivorId)
         {
             if (!_bySurvivor.TryGetValue(survivorId, out var state)) return 1f;

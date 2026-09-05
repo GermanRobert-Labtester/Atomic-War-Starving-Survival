@@ -123,6 +123,16 @@ namespace Ashfall.Core.Survivors
         /// <summary>
         /// Increase flashback susceptibility after a traumatic event.
         /// </summary>
+        /// <summary>Canonical therapeutic relief (flagship sanatorium): lowers
+        /// flashback susceptibility, floored at zero.</summary>
+        public void ReduceSusceptibility(string survivorId, float amount)
+        {
+            if (string.IsNullOrEmpty(survivorId) || amount <= 0f) return;
+            if (!_bySurvivor.TryGetValue(survivorId, out var state)) return;
+            state.susceptibility = Math.Max(0f, state.susceptibility - amount);
+            OnStateChanged?.Invoke();
+        }
+
         public void IncreaseSusceptibility(string survivorId, float amount)
         {
             if (string.IsNullOrEmpty(survivorId) || amount <= 0f) return;

@@ -63,6 +63,17 @@ namespace Ashfall.Core
                     _catalog[r.record_id] = r;
         }
 
+        /// <summary>
+        /// Merges ONE record into the catalog without replacing the rest
+        /// (flagship culture archive cutting path — LoadCatalog stays
+        /// replace-all for boot-time loads).
+        /// </summary>
+        public void MergeRecord(VinylRecordDefinition record)
+        {
+            if (record == null || string.IsNullOrEmpty(record.record_id)) return;
+            _catalog[record.record_id] = record;
+        }
+
         public void AcquireRecord(string recordId)
         {
             if (!_state.ownedRecordIds.Contains(recordId))

@@ -7,6 +7,8 @@ using Ashfall.Core.Campaign;
 using Ashfall.Core.Catalogs;
 using Ashfall.Core.Culture;
 using Ashfall.Core.Diplomacy;
+using Ashfall.Core.Lifecycle;
+using Ashfall.Core.Survivors;
 using Ashfall.Core.Institutions;
 using Ashfall.Core.Sanatorium;
 using Ashfall.Core.Shelter;
@@ -43,6 +45,36 @@ namespace AtomicWar.GodotApp
         private InstitutionAssignmentLedger EnsureInstitutionLedger() =>
             _institutionLedger ??= new InstitutionAssignmentLedger();
 
+        private bool _flagshipLifecycleRegistered;
+
+        /// <summary>
+        /// Registers the flagship sessions with the lifecycle registry so a
+        /// load-game reset nulls them (fields re-Ensure from disk on the next
+        /// Setup call). Idempotent; safe to call from every Ensure.
+        /// </summary>
+        private void EnsureFlagshipLifecycleRegistration()
+        {
+            if (_flagshipLifecycleRegistered) return;
+            if (_lifecycleRegistry == null) return;
+            _flagshipLifecycleRegistered = true;
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "flagship_institutions",
+                dependsOn: new[] { "inventory" },
+                saveSectionKey: null,
+                onReset: () =>
+                {
+                    _institutionLedger = null;
+                    _culturalArchive = null;
+                    _diplomaticSummit = null;
+                    _skyDefense = null;
+                    _sanatorium = null;
+                    _culturalArchiveDirty = false;
+                    _diplomaticSummitDirty = false;
+                    _skyDefenseDirty = false;
+                    _sanatoriumDirty = false;
+                }));
+        }
+
         /// <summary>
         /// The live campaign telemetry (world-owned). Sky defense consumes the
         /// SAME instance the radio/warning UIs consume — never a parallel one
@@ -67,6 +99,7 @@ namespace AtomicWar.GodotApp
 
         private CulturalArchiveVaultSystem EnsureCulturalArchive()
         {
+            EnsureFlagshipLifecycleRegistration();
             if (_culturalArchive != null) return _culturalArchive;
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
@@ -86,6 +119,7 @@ namespace AtomicWar.GodotApp
             _culturalArchive.OnSalonStarted += _ => MarkCulturalArchiveDirty();
             _culturalArchive.OnSalonEnded += _ => MarkCulturalArchiveDirty();
             _culturalArchive.OnChronicleEntryAdded += _ => MarkCulturalArchiveDirty();
+            BindCultureCrossDomainEvents();
 
             var saved = CulturalArchiveSaveStore.TryLoad();
             if (saved != null)
@@ -95,14 +129,17 @@ namespace AtomicWar.GodotApp
 
         private DiplomaticSummitSystem EnsureDiplomaticSummit()
         {
+            EnsureFlagshipLifecycleRegistration();
             if (_diplomaticSummit != null) return _diplomaticSummit;
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
 
+            _standingPort ??= new HostFactionStandingPort(this);
             _diplomaticSummit = new DiplomaticSummitSystem(
                 FlagshipMasterSeed,
                 inventory: _inventory.Inventory,
-                availability: EnsureInstitutionLedger());
+                availability: EnsureInstitutionLedger(),
+                standing: _standingPort);
             _diplomaticSummit.LoadTreatyCatalog(
                 DiplomaticTreatyCatalogLoader.Load(FlagshipDataDir, fileIO, json));
             _diplomaticSummit.OnSummitScheduled += _ => MarkDiplomaticSummitDirty();
@@ -120,6 +157,7 @@ namespace AtomicWar.GodotApp
 
         private SkyDefenseBatterySystem EnsureSkyDefense()
         {
+            EnsureFlagshipLifecycleRegistration();
             if (_skyDefense != null) return _skyDefense;
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
@@ -145,14 +183,19 @@ namespace AtomicWar.GodotApp
 
         private PsychologicalSanatoriumSystem EnsureSanatorium()
         {
+            EnsureFlagshipLifecycleRegistration();
             if (_sanatorium != null) return _sanatorium;
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
 
+            _skillsPort ??= new HostSurvivorSkillsPort(this);
+            _conditionPort ??= new HostSurvivorConditionPort(this);
             _sanatorium = new PsychologicalSanatoriumSystem(
                 FlagshipMasterSeed,
                 inventory: _inventory.Inventory,
-                availability: EnsureInstitutionLedger());
+                availability: EnsureInstitutionLedger(),
+                skills: _skillsPort,
+                conditions: _conditionPort);
             _sanatorium.LoadTherapyCatalog(
                 PsychologicalTherapyCatalogLoader.Load(FlagshipDataDir, fileIO, json));
             _sanatorium.OnPatientAdmitted += _ => MarkSanatoriumDirty();
@@ -160,6 +203,7 @@ namespace AtomicWar.GodotApp
             _sanatorium.OnTherapyCompleted += (_, _) => MarkSanatoriumDirty();
             _sanatorium.OnPatientRelapsed += (_, _, _) => MarkSanatoriumDirty();
             _sanatorium.OnPatientDischarged += _ => MarkSanatoriumDirty();
+            BindSanatoriumCrossDomainEvents();
 
             var saved = PsychologicalSanatoriumSaveStore.TryLoad();
             if (saved != null)
@@ -260,6 +304,183 @@ namespace AtomicWar.GodotApp
             if (_diplomaticSummitDirty) SaveDiplomaticSummit();
             if (_skyDefenseDirty) SaveSkyDefense();
             if (_sanatoriumDirty) SaveSanatorium();
+        }
+
+        // -----------------------------------------------------------------
+        // Port adapters (canonical authorities; null-safe before their setups)
+        // -----------------------------------------------------------------
+
+        private HostFactionStandingPort? _standingPort;
+        private HostSurvivorSkillsPort? _skillsPort;
+        private HostSurvivorConditionPort? _conditionPort;
+
+        internal sealed class HostFactionStandingPort : IFactionStandingPort
+        {
+            private readonly Main _m;
+            public HostFactionStandingPort(Main m) => _m = m;
+            public float GetStanding(string factionId) =>
+                _m._yearOfAsh?.FactionWar.GetStanding(factionId) ?? 0f;
+            public void AdjustStanding(string factionId, float delta, string reasonCode) =>
+                _m._yearOfAsh?.FactionWar.ModifyStanding(factionId, (int)Math.Round(delta));
+        }
+
+        internal sealed class HostSurvivorSkillsPort : ISurvivorSkillsPort
+        {
+            private readonly Main _m;
+            public HostSurvivorSkillsPort(Main m) => _m = m;
+            public bool HasSkill(string survivorId, string skillId) =>
+                _m.EnsureSharedSkillProgression().HasActiveSkill(survivorId, skillId);
+        }
+
+        /// <summary>
+        /// Maps authored condition ids onto the canonical Phase-0 trauma
+        /// surfaces (plan §9.9): hypervigilance ← CombatTraumaSystem,
+        /// flashback ← SomaticFlashbackSystem, guilt-insomnia ←
+        /// GuiltInsomniaSystem. Siege paranoia reads as extreme
+        /// hypervigilance. Relapse (negative reduction) deliberately does not
+        /// re-escalate canonical surfaces — no canonical re-escalation API
+        /// exists; the sanatorium's own risk ledger tracks it.
+        /// </summary>
+        internal sealed class HostSurvivorConditionPort : ISurvivorConditionPort
+        {
+            private readonly Main _m;
+            public HostSurvivorConditionPort(Main m) => _m = m;
+
+            private Phase0HostSession? P0
+            {
+                get
+                {
+                    if (_m._phase0 == null) _m.SetupPhase0();
+                    return _m._phase0;
+                }
+            }
+
+            public bool HasCondition(string survivorId, string conditionId)
+            {
+                var p0 = P0;
+                if (p0 == null || string.IsNullOrEmpty(survivorId)) return false;
+                switch (conditionId)
+                {
+                    case "condition_combat_ptsd":
+                        return p0.CombatTrauma.IsTracked(survivorId)
+                            && p0.CombatTrauma.GetHypervigilanceLevel(survivorId) >= 0.25f;
+                    case "condition_chronic_hypervigilance":
+                        return p0.CombatTrauma.GetHypervigilanceLevel(survivorId) >= 0.4f;
+                    case "condition_paranoid_psychosis":
+                        return p0.CombatTrauma.GetHypervigilanceLevel(survivorId) >= 0.6f;
+                    case "condition_flash_blindness_shock":
+                        return p0.Flashbacks.HasActiveFlashback(survivorId)
+                            || p0.Flashbacks.GetSusceptibility(survivorId) >= 0.2f;
+                    case "condition_severe_survivor_guilt":
+                        return p0.Guilt.GetGuiltSourceCount(survivorId) > 0
+                            && p0.Guilt.GetInsomniaSeverity(survivorId) >= 0.3f;
+                    case "condition_guilt_insomnia_loop":
+                        return p0.Guilt.GetInsomniaSeverity(survivorId) >= 0.4f;
+                    default:
+                        return false;
+                }
+            }
+
+            public int GetAcuteStressPermille(string survivorId)
+            {
+                var p0 = P0;
+                if (p0 == null) return 0;
+                float hv = p0.CombatTrauma.GetHypervigilanceLevel(survivorId);
+                float fb = p0.Flashbacks.GetSusceptibility(survivorId);
+                float gi = p0.Guilt.GetInsomniaSeverity(survivorId);
+                return (int)Math.Clamp(Math.Max(hv, Math.Max(fb, gi)) * 1000f, 0f, 1000f);
+            }
+
+            public void ApplyAcuteStressReduction(string survivorId, int permille)
+            {
+                if (permille <= 0) return;
+                float fraction = Math.Clamp(permille / 1000f, 0f, 1f);
+                var p0 = P0;
+                if (p0 == null) return;
+                p0.CombatTrauma.ApplyTherapyRelief(survivorId, fraction);
+                p0.Flashbacks.ReduceSusceptibility(survivorId, fraction);
+                p0.Guilt.ApplyTherapyRelief(survivorId, fraction);
+            }
+
+            public void ApplyRecoveryProgress(string survivorId, int progress)
+            {
+                // Recovery progress is tracked inside the sanatorium's patient
+                // state; the canonical surface is relieved through
+                // ApplyAcuteStressReduction at outcome time.
+            }
+
+            public void SuppressReversibleCondition(string survivorId, string conditionId)
+            {
+                var p0 = P0;
+                if (p0 == null) return;
+                switch (conditionId)
+                {
+                    case "condition_flash_blindness_shock":
+                        p0.Flashbacks.ReduceSusceptibility(survivorId, 1f);
+                        break;
+                    case "condition_chronic_hypervigilance":
+                    case "condition_combat_ptsd":
+                        p0.CombatTrauma.ApplyTherapyRelief(survivorId, 1f);
+                        break;
+                    case "condition_guilt_insomnia_loop":
+                    case "condition_severe_survivor_guilt":
+                        p0.Guilt.ApplyTherapyRelief(survivorId, 1f);
+                        break;
+                }
+            }
+
+            public int GetRelationshipTrust(string therapistId, string patientId) => 50;
+        }
+
+        // -----------------------------------------------------------------
+        // Cross-domain event bindings (bound once inside the Ensure methods)
+        // -----------------------------------------------------------------
+
+        private void BindCultureCrossDomainEvents()
+        {
+            // Salon morale → canonical needs authority (single consumer).
+            _culturalArchive!.OnSalonMoraleTick += delta =>
+            {
+                if (_survivors == null) return;
+                foreach (var sv in _survivors.RosterState)
+                {
+                    if (sv.Health <= 0f) continue;
+                    _survivors.Needs.Modify(sv, NeedKind.Morale, (float)delta);
+                }
+            };
+
+            // Archive disc cut → vinyl media catalog (single consumer; media
+            // playback morale stays owned by VinylMoraleSystem).
+            _culturalArchive!.OnArchiveRecordingCreated += (_, def) =>
+            {
+                if (_vinylMorale == null) SetupVinylMorale();
+                var system = _vinylMorale?.System;
+                if (system == null) return;
+                system.MergeRecord(new VinylRecordDefinition
+                {
+                    record_id = def.record_id,
+                    display_name = def.display_name,
+                    genre = def.genre,
+                    morale_daily_bonus = def.morale_daily_bonus,
+                    flashback_suppression = def.flashback_suppression,
+                    audio_cue_id = def.audio_cue_id,
+                    description = def.description,
+                });
+                system.AcquireRecord(def.record_id);
+            };
+        }
+
+        private void BindSanatoriumCrossDomainEvents()
+        {
+            // Dream transcription / testimony (§9.2): one completion → one
+            // archive oral-history disc; the culture system's duplicate guard
+            // makes this idempotent across re-fires.
+            _sanatorium!.OnTherapeuticJournalCompleted += (survivorId, _) =>
+            {
+                int day = _core?.Clock.Day ?? 0;
+                _culturalArchive?.TryCutArchiveDisc(
+                    $"archive_disc_dream_{survivorId}", "oral_history", survivorId, day);
+            };
         }
 
         // -----------------------------------------------------------------

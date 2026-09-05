@@ -122,6 +122,20 @@ namespace Ashfall.Core.Survivors
         /// <summary>
         /// Get the current hypervigilance level for a survivor.
         /// </summary>
+        /// <summary>
+        /// Canonical therapeutic relief (flagship sanatorium Task 8): scales a
+        /// survivor's hypervigilance down by the authored fraction (0..1).
+        /// </summary>
+        public void ApplyTherapyRelief(string survivorId, float fraction)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return;
+            fraction = Math.Clamp(fraction, 0f, 1f);
+            if (fraction <= 0f) return;
+            if (!_bySurvivor.TryGetValue(survivorId, out var state)) return;
+            state.hypervigilanceLevel = Math.Max(0f, state.hypervigilanceLevel * (1f - fraction));
+            OnStateChanged?.Invoke();
+        }
+
         public float GetHypervigilanceLevel(string survivorId)
         {
             return _bySurvivor.TryGetValue(survivorId, out var state)
