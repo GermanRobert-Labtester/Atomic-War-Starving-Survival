@@ -62,6 +62,41 @@ namespace AtomicWar.GodotApp
                 GD.Print("[Ashfall Godot] Morale contagion state restored.");
             }
 
+            // ── Flagship XI Slice 8: cross-system pressure links ──────────
+            // Canonical events instantiate contagion sources; contagion never
+            // reaches into another system's state itself.
+            SetupDisease();
+            if (_disease != null)
+            {
+                _disease.Engine.OnOutbreakDeclared += diseaseId =>
+                    _moraleContagion.System.StartContagionEvent("contagion_outbreak_fear", string.Empty, _simDay);
+                _disease.Engine.OnQuarantineStarted += (survivorId, diseaseId) =>
+                    _moraleContagion.System.StartContagionEvent("contagion_quarantine_resentment", survivorId, _simDay);
+            }
+            if (_survivors?.Needs != null)
+            {
+                _survivors.Needs.OnDied += state =>
+                {
+                    if (state == null || string.IsNullOrEmpty(state.Id)) return;
+                    // Grief has no living source: the funeral itself is the event.
+                    _moraleContagion.System.StartContagionEvent("contagion_funeral_grief", string.Empty, _simDay);
+                };
+            }
+
+            _moraleContagion.System.OnMoraleSchismTriggered += schism =>
+            {
+                // Schism surfaces through the canonical journal; cohesion
+                // consequences stay with the bond authorities.
+                SetupJournal();
+                _journal?.TryAddRawEntry(
+                    $"morale_schism_{schism.SubgroupId}_{schism.TriggerDay}",
+                    $"The {schism.SubgroupId} crew stopped eating together. " +
+                    $"{schism.AffectedCount} of {schism.MemberCount} have passed the point of despair.",
+                    null!,
+                    schism.TriggerDay);
+                GD.Print($"[Ashfall Godot] Morale schism: {schism.SubgroupId} ({schism.AffectedCount}/{schism.MemberCount}).");
+            };
+
             _moraleContagion.StateChanged += () =>
             {
                 _survivorRelationsPanel?.RefreshView();

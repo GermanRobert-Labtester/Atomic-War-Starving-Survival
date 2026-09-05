@@ -133,6 +133,19 @@ namespace Ashfall.Core
             _state = (ulong)((long)_state ^ (long)((uint)_state >> 31));
         }
 
+        /// <summary>
+        /// Flagship XI: the live xorshift position, for save codecs that must
+        /// reproduce a continuous roll sequence across a save/load boundary
+        /// (seed alone restarts the stream). 0 means "position unknown".
+        /// </summary>
+        public ulong PeekState() => _state;
+
+        /// <summary>Restores a previously peeked position. Seed stays authoritative for identity.</summary>
+        public void SeekState(ulong state)
+        {
+            if (state != 0) _state = state;
+        }
+
         public int Next(int minInclusive, int maxExclusive)
         {
             if (minInclusive >= maxExclusive)
@@ -254,6 +267,14 @@ namespace Ashfall.Core
             }
 
             return false;
+        }
+
+        public static string ResolveDataDirectory(string? startDirectory = null)
+        {
+            string start = startDirectory ?? Directory.GetCurrentDirectory();
+            if (TryFindDataDirectory(start, out var found)) return found;
+            if (TryFindDataDirectory(AppContext.BaseDirectory, out found)) return found;
+            return RelativeDataPath;
         }
 
         public static void UseInvariantCulture()

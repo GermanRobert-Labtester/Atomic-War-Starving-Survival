@@ -211,6 +211,11 @@ namespace Ashfall.Core.Disease
         // outcome sequence (determinism invariant).
         public int rngSeed = 0;
 
+        // Flagship XI: live xorshift position (0 = legacy save — seed-only
+        // restore, the pre-existing behavior). Persisted so a reload mid-run
+        // continues the exact roll sequence instead of restarting it.
+        public long rngPosition = 0;
+
         public List<DiseaseEntryState> diseases = new List<DiseaseEntryState>();
 
         /// <summary>Plan 63 / B4 — temporary immunity records per survivor and disease.</summary>
@@ -1479,6 +1484,9 @@ ILog? log = null)
         public DiseaseSystemState CaptureState()
         {
             _state.rngSeed = _rng.Seed;
+            // Flagship XI: persist the live stream position so a reload mid-run
+            // continues the exact sequence (legacy saves carry 0 = seed-only).
+            _state.rngPosition = _rng is SeededRng seeded ? (long)seeded.PeekState() : 0;
             return _state;
         }
 
@@ -1496,6 +1504,7 @@ ILog? log = null)
             _state.tools_sterilized_until_day = saved.tools_sterilized_until_day;
             _state.air_filtration_until_day = saved.air_filtration_until_day;
             _state.rngSeed = saved.rngSeed;
+            _state.rngPosition = saved.rngPosition;
 
             // Deep copy so the caller's DTO (and the save envelope) is not
             // aliased into live memory.
@@ -1565,8 +1574,12 @@ ILog? log = null)
             RebuildIndexFromState();
 
             // Re-seed from the saved seed so post-restore outcomes are identical
-            // to the same run without an intervening save.
+            // to the same run without an intervening save. Flagship XI: when the
+            // save carries a live stream position, continue THAT sequence instead
+            // of restarting it (a seed-only restore would replay early rolls).
             _rng = _rngFactory(_state.rngSeed == 0 ? DefaultSeed : _state.rngSeed);
+            if (_state.rngPosition != 0 && _rng is SeededRng seeded)
+                seeded.SeekState((ulong)_state.rngPosition);
             _state.rngSeed = _rng.Seed;
         }
 
