@@ -60,7 +60,7 @@ namespace AtomicWar.GodotApp
             var system = new SolarConcentratorEngine(
                 _inventory.Inventory,
                 _campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 21),
-                () => _world?.Weather?.System != null ? (float)_world.Weather.System.Visibility : 1.0f,
+                () => _world?.Weather != null ? _world.Weather.VisibilityFactor : 1.0f,
                 new GodotLog());
             system.LoadCatalog(catalog);
             system.RestoreState(saved);

@@ -34,9 +34,9 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
-        public ActionResult ServicePlant()
+        public ActionResult PerformMaintenance(string maintenanceItem = ChlorAlkaliSynthesisEngine.ItemAnode)
         {
-            var res = System.ServicePlant();
+            var res = System.PerformMaintenance(maintenanceItem);
             if (res.IsFailure) LastEvent = "Plant servicing blocked: " + res.FailureCode;
             RaiseStateChanged();
             return res;
