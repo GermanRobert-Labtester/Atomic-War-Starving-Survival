@@ -2221,6 +2221,27 @@
       "synopsis": "The runner knows the corridors grown-ups cannot stand up in, and has decided your column watches. The routes have never been written down, because paper can be ",
       "factionTag": "none",
       "status": "active"
+    },
+    {
+      "id": "quest_crossing_the_salvaged_accord",
+      "title": "The Salvaged Accord",
+      "synopsis": "A disputed covenant over river transit rights resurfaces when a salvage crew claims prior agreement over the same crossing lane. Resolve who holds the charter.",
+      "factionTag": "none",
+      "status": "active"
+    },
+    {
+      "id": "quest_crossing_the_registry_dispute",
+      "title": "The Registry Dispute",
+      "synopsis": "Two factions claim the same entry in the passage ledger. The crossing administrator needs an outside arbitration before trade can resume through the checkpoint.",
+      "factionTag": "none",
+      "status": "active"
+    },
+    {
+      "id": "quest_crossing_the_long_toll",
+      "title": "The Long Toll",
+      "synopsis": "The toll keeper is collecting more than the standard crossing fee. Survivors must decide whether to challenge the practice or find a route that avoids the station.",
+      "factionTag": "none",
+      "status": "active"
     }
 
 

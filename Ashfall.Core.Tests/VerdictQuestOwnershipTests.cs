@@ -67,7 +67,7 @@ namespace Ashfall.Core.Tests
             var save = VerdictSaveCodec.Capture(
                 241, new MachineLogSystem(), new ReckoningSystem(), new EvidenceLedger(), -1,
                 npcs: new VerdictNpcSystem(), quests: quests);
-            Assert.Equal(3, save.saveVersion);
+            Assert.Equal(VerdictSave.CurrentSaveVersion, save.saveVersion);
             Assert.True(save.quests.active.Exists(a => a.questlineId == qid),
                 "quest progress captured in the Verdict envelope");
             Assert.Contains(qid, save.quests.completedQuestlineIds);

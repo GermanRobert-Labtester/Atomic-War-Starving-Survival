@@ -407,5 +407,85 @@ namespace Ashfall.Core.Tests
             VehicleCatalog empty = VehicleCatalogLoader.Load("/nonexistent_dir_xyz", files, json);
             Assert.Empty(empty.vehicles);
         }
+
+        [Fact]
+        public void TrackGear_InstallsRepairsAndPersistsNormalizedEffects()
+        {
+            var vehicles = new ExpeditionVehicleSystem(new SeededRng(7));
+            vehicles.LoadCatalog(new VehicleCatalog
+            {
+                vehicles = new List<VehicleDefinition>
+                {
+                    new VehicleDefinition
+                    {
+                        vehicle_id = "vehicle_test",
+                        display_name = "Test Vehicle",
+                        cargo_capacity = 80f,
+                        speed_multiplier = 1.2f,
+                        fuel_consumption_per_km = 0.4f
+                    }
+                }
+            });
+            Assert.True(vehicles.AcquireVehicle("vehicle_test").IsSuccess);
+
+            var installed = vehicles.InstallTrackGear("vehicle_test", "vehicle_track_gear_test", 1.4f, 0.5f, 40f);
+            Assert.True(installed.IsSuccess);
+            var live = vehicles.GetVehicle("vehicle_test")!;
+            Assert.Equal(1.16f, live.trackGear.EffectiveTractionMultiplier(), 3);
+            Assert.Equal(0.8f, live.trackGear.EffectiveBreakdownRiskMultiplier(), 3);
+
+            Assert.True(vehicles.RepairTrackGear("vehicle_test", 60f).IsSuccess);
+            var saved = vehicles.CaptureState();
+            var restored = new ExpeditionVehicleSystem(new SeededRng(8));
+            restored.RestoreState(saved);
+            var gear = restored.GetVehicle("vehicle_test")!.trackGear;
+            Assert.Equal("vehicle_track_gear_test", gear.gearId);
+            Assert.Equal(100f, gear.condition);
+            Assert.Equal(1.4f, gear.EffectiveTractionMultiplier(), 3);
+            Assert.Equal(0.5f, gear.EffectiveBreakdownRiskMultiplier(), 3);
+        }
+
+        [Fact]
+        public void TrackGear_ProfileProjectionKeepsTravelMathInCore()
+        {
+            var vehicles = new ExpeditionVehicleSystem(new SeededRng(9));
+            vehicles.LoadCatalog(new VehicleCatalog
+            {
+                vehicles = new List<VehicleDefinition>
+                {
+                    new VehicleDefinition
+                    {
+                        vehicle_id = "vehicle_test",
+                        speed_multiplier = 1.2f,
+                        fuel_consumption_per_km = 0.4f
+                    }
+                }
+            });
+            Assert.True(vehicles.AcquireVehicle("vehicle_test").IsSuccess);
+            Assert.True(vehicles.InstallTrackGear("vehicle_test", "vehicle_track_gear_test", 1.5f, 0.4f).IsSuccess);
+
+            ExpeditionVehicleProfile profile = vehicles.CreateExpeditionProfile("vehicle_test", 2.5f)!;
+            Assert.Equal(1.8f, profile.speedMultiplier, 3);
+            Assert.Equal(1f, profile.fuelPerTravelTick, 3);
+            Assert.Equal(0f, profile.breakdownChancePerTick, 3);
+        }
+
+        [Fact]
+        public void TrackGear_RejectsInvalidFactsWithoutMutation()
+        {
+            var vehicles = new ExpeditionVehicleSystem(new SeededRng(10));
+            vehicles.LoadCatalog(new VehicleCatalog
+            {
+                vehicles = new List<VehicleDefinition>
+                {
+                    new VehicleDefinition { vehicle_id = "vehicle_test" }
+                }
+            });
+            Assert.True(vehicles.AcquireVehicle("vehicle_test").IsSuccess);
+            var before = vehicles.GetVehicle("vehicle_test")!.trackGear.gearId;
+
+            Assert.False(vehicles.InstallTrackGear("vehicle_test", "bad", 2.1f, 0.5f).IsSuccess);
+            Assert.Equal(before, vehicles.GetVehicle("vehicle_test")!.trackGear.gearId);
+        }
     }
 }

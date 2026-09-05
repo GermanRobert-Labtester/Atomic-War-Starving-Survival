@@ -1,0 +1,173 @@
+{
+  "schema_version": 3,
+  "items": [
+    {
+      "id": "storm_black_blizzard_day185",
+      "phase": "deep_freeze",
+      "day_start": 185,
+      "day_end": 188,
+      "type": "black_blizzard",
+      "intensity": 0.65,
+      "caloric_penalty": 0.12,
+      "radon_spike": 0.0,
+      "faction_morale_penalty": 0.05,
+      "description": "Ash-laden winds roll in from the northern flats. Visibility drops to arm's length. Intake vents pack with frozen soot."
+    },
+    {
+      "id": "storm_ash_fallout_day192",
+      "phase": "deep_freeze",
+      "day_start": 192,
+      "day_end": 196,
+      "type": "ash_fallout",
+      "intensity": 0.50,
+      "caloric_penalty": 0.08,
+      "radon_spike": 0.02,
+      "faction_morale_penalty": 0.03,
+      "description": "Particulate rain. Secondary ash columns from the eastern crater fields drift overhead for four days. Respiratory loads increase."
+    },
+    {
+      "id": "storm_thermal_inversion_day200",
+      "phase": "deep_freeze",
+      "day_start": 200,
+      "day_end": 204,
+      "type": "thermal_inversion",
+      "intensity": 0.70,
+      "caloric_penalty": 0.15,
+      "radon_spike": 0.06,
+      "faction_morale_penalty": 0.04,
+      "description": "Cold air traps the surface layer. Smoke, particulates, and radon accumulate below the inversion ceiling. Outdoor activity becomes acutely dangerous."
+    },
+    {
+      "id": "storm_ice_fog_day208",
+      "phase": "deep_freeze",
+      "day_start": 208,
+      "day_end": 212,
+      "type": "ice_fog",
+      "intensity": 0.45,
+      "caloric_penalty": 0.07,
+      "radon_spike": 0.0,
+      "faction_morale_penalty": 0.02,
+      "description": "Supercooled water droplets crystallize in the lower atmosphere. Roads and rooftops become mirror-slick. Patrol range halved."
+    },
+    {
+      "id": "storm_black_blizzard_day218",
+      "phase": "deep_freeze",
+      "day_start": 218,
+      "day_end": 222,
+      "type": "black_blizzard",
+      "intensity": 0.80,
+      "caloric_penalty": 0.18,
+      "radon_spike": 0.03,
+      "faction_morale_penalty": 0.07,
+      "description": "The deepest blizzard of the season. Sector patrols are grounded. Supply runs to the outer ring are suspended by standing order. Caloric demand spikes sharply in the cold."
+    },
+    {
+      "id": "storm_ash_fallout_day230",
+      "phase": "deep_freeze",
+      "day_start": 230,
+      "day_end": 233,
+      "type": "ash_fallout",
+      "intensity": 0.55,
+      "caloric_penalty": 0.09,
+      "radon_spike": 0.04,
+      "faction_morale_penalty": 0.03,
+      "description": "Late-freeze ashfall from the western burn perimeters. Water cisterns require extended filtration. Rooftop panels lose efficiency under the coat of grey."
+    },
+    {
+      "id": "storm_artillery_dust_day248",
+      "phase": "faction_siege",
+      "day_start": 248,
+      "day_end": 253,
+      "type": "artillery_dust",
+      "intensity": 0.60,
+      "caloric_penalty": 0.06,
+      "radon_spike": 0.05,
+      "faction_morale_penalty": 0.10,
+      "description": "Sector artillery exchanges kick pulverised rubble into the upper air column. Dust plumes drift south. Morale among shelter populations drops as the bombardment becomes audible."
+    },
+    {
+      "id": "storm_ash_fallout_day258",
+      "phase": "faction_siege",
+      "day_start": 258,
+      "day_end": 261,
+      "type": "ash_fallout",
+      "intensity": 0.40,
+      "caloric_penalty": 0.05,
+      "radon_spike": 0.03,
+      "faction_morale_penalty": 0.02,
+      "description": "Secondary particulate from collapsed structures to the north. Not the worst the season has offered, but persistent and demoralising."
+    },
+    {
+      "id": "storm_artillery_dust_day270",
+      "phase": "faction_siege",
+      "day_start": 270,
+      "day_end": 276,
+      "type": "artillery_dust",
+      "intensity": 0.75,
+      "caloric_penalty": 0.08,
+      "radon_spike": 0.08,
+      "faction_morale_penalty": 0.12,
+      "description": "The heaviest exchange of the siege phase. Continuous shelling to the north-east drives a rolling dust wall across the sector. Radon readings climb as disturbed soil vents subsurface gas."
+    },
+    {
+      "id": "storm_thermal_inversion_day283",
+      "phase": "faction_siege",
+      "day_start": 283,
+      "day_end": 287,
+      "type": "thermal_inversion",
+      "intensity": 0.55,
+      "caloric_penalty": 0.10,
+      "radon_spike": 0.12,
+      "faction_morale_penalty": 0.05,
+      "description": "Another inversion layer. Combat emissions compound with naturally venting radon. The scrubbers run continuously. Fuel consumption is unsustainable at this rate."
+    },
+    {
+      "id": "storm_thaw_flood_day308",
+      "phase": "great_thaw",
+      "day_start": 308,
+      "day_end": 313,
+      "type": "thaw_flood",
+      "intensity": 0.70,
+      "caloric_penalty": 0.05,
+      "radon_spike": 0.18,
+      "faction_morale_penalty": 0.06,
+      "description": "Meltwater from the plateau overwhelms the sector drainage network. Subsurface cavities collapse as permafrost liquefies. Radon liberation from the thawing ground is severe. Lower tunnels flood."
+    },
+    {
+      "id": "storm_ice_fog_day318",
+      "phase": "great_thaw",
+      "day_start": 318,
+      "day_end": 321,
+      "type": "ice_fog",
+      "intensity": 0.35,
+      "caloric_penalty": 0.04,
+      "radon_spike": 0.0,
+      "faction_morale_penalty": 0.01,
+      "description": "A late cold snap causes brief ice fog as refreezing melt water evaporates at the surface. Movement is hazardous on exposed slopes."
+    },
+    {
+      "id": "storm_thaw_flood_day330",
+      "phase": "great_thaw",
+      "day_start": 330,
+      "day_end": 337,
+      "type": "thaw_flood",
+      "intensity": 0.85,
+      "caloric_penalty": 0.07,
+      "radon_spike": 0.25,
+      "faction_morale_penalty": 0.08,
+      "description": "The great black-mud runoff. Every surface route is compromised. Long-wave broadcast frequencies degrade from atmospheric ionisation. This is what the Reckoning accounts referenced \u2014 the melt the machine was built to survive."
+    },
+    {
+      "id": "storm_ash_fallout_day345",
+      "phase": "great_thaw",
+      "day_start": 345,
+      "day_end": 348,
+      "type": "ash_fallout",
+      "intensity": 0.30,
+      "caloric_penalty": 0.03,
+      "radon_spike": 0.05,
+      "faction_morale_penalty": 0.01,
+      "description": "Residual ash from the last siege burns drifts south on spring thermals. A thin grey coat on the snowmelt puddles. The season is almost finished."
+    }
+  ]
+}

@@ -2,6 +2,186 @@
   "schema_version": 1,
   "items": [
     {
+      "id": "item_decon_chelator_concentrate",
+      "displayName": "Chelator Concentrate",
+      "description": "A sealed glass ampoule of chelating agent concentrate. The label is half dissolved but the formula is standard: binds heavy radionuclides into a water-soluble complex for rinse removal. One ampoule per decon cycle. The pre-war stock won't last forever, and the synthesis requires a working pharma bench.",
+      "type": "Consumable",
+      "stackMax": 20,
+      "weight": 0.2,
+      "tradeValue": 8
+    },
+    {
+      "id": "item_lead_lined_effluent_filter",
+      "displayName": "Lead-Lined Effluent Filter",
+      "description": "A cylindrical filtration cartridge with a lead-foil inner liner and activated charcoal matrix. Installed in the decon airlock effluent tank to capture radionuclide-laden particulates before they can be sluiced into the general water system. Good for approximately five hundred liters of contaminated wash water before replacement is required.",
+      "type": "Equipment",
+      "stackMax": 5,
+      "weight": 3.5,
+      "tradeValue": 15
+    },
+    {
+      "id": "item_heavy_neoprene_scrub_brush",
+      "displayName": "Heavy Neoprene Scrub Brush",
+      "description": "A stiff-bristled scrub brush with a neoprene grip and an integrated scraper edge. Designed for the coarse physical removal of radioactive particulates from canvas, leather, and skin before the chemical wash stage. The bristles are nylon — the pre-war kind that does not melt in mild solvent.",
+      "type": "Tool",
+      "stackMax": 3,
+      "weight": 0.5,
+      "tradeValue": 4
+    },
+    {
+      "id": "item_sealed_waste_bin",
+      "displayName": "Sealed Hazardous Waste Bin",
+      "description": "A galvanized steel bin with a rubber gasket seal and a clamp-down lid. Once sealed, the contents are considered permanently isolated: the bin is stacked in the waste gallery and added to the long-term burial manifest. No one opens these again without a very good reason.",
+      "type": "Container",
+      "stackMax": 3,
+      "weight": 8.0,
+      "tradeValue": 5
+    },
+    {
+      "id": "item_theodolite_brass_precision",
+      "displayName": "Brass Precision Theodolite",
+      "description": "A pre-war surveying theodolite with a brass body, etched vernier scales, and a spirit level that still holds true. The optics are fogged at the edges but the crosshairs are sharp. Measures horizontal and vertical angles to within five hundredths of a degree. Requires a stable tripod mount and a steady hand.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 4.5,
+      "tradeValue": 40
+    },
+    {
+      "id": "item_surveyor_stadia_rod",
+      "displayName": "Surveyor Stadia Rod",
+      "description": "A collapsible aluminum stadia rod with metric graduations and a reflective target panel. Extends to four meters and collapses to a meter and a half. The red-and-white markings are faded but still legible. Used in conjunction with the theodolite to determine distance and elevation difference.",
+      "type": "Tool",
+      "stackMax": 2,
+      "weight": 2.0,
+      "tradeValue": 12
+    },
+    {
+      "id": "item_datum_plate_bronze",
+      "displayName": "Bronze Datum Plate",
+      "description": "A small bronze plaque stamped with the survey datum designation and a crosshair center mark. Installed at established benchmarks to serve as a permanent reference point. Bronze because it does not rust, does not spark, and survives the freeze-thaw cycle better than iron. The stamp set is in the survey kit.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.3,
+      "tradeValue": 6
+    },
+    {
+      "id": "item_concrete_mix",
+      "displayName": "Quick-Set Concrete Mix",
+      "description": "A twenty-kilogram sack of pre-mixed concrete with a cold-weather additive. Sets in four hours even below freezing. Used for monument foundations, vault reinforcement, and emergency structural repairs. The aggregate is crushed rubble from the upper levels.",
+      "type": "Material",
+      "stackMax": 5,
+      "weight": 20.0,
+      "tradeValue": 3
+    },
+    {
+      "id": "item_forged_rotor_shaft",
+      "displayName": "Forged Rotor Shaft",
+      "description": "A precision-forged steel shaft machined to sub-millimeter tolerance. The bearing journals are polished to a mirror finish and the keyway is broached for a shear pin. This is the heart of the flywheel assembly: everything else spins around it, and if it fails, everything else stops.",
+      "type": "Material",
+      "stackMax": 1,
+      "weight": 45.0,
+      "tradeValue": 60
+    },
+    {
+      "id": "item_magnetic_bearing_coil",
+      "displayName": "Magnetic Bearing Coil Assembly",
+      "description": "A set of electromagnetic bearing coils wound with lacquered copper wire and potted in epoxy. When energized, they levitate the rotor shaft on a magnetic field, eliminating mechanical contact at operating speed. The control circuitry is delicate and the coils must be kept absolutely dry.",
+      "type": "Equipment",
+      "stackMax": 2,
+      "weight": 3.0,
+      "tradeValue": 35
+    },
+    {
+      "id": "item_high_vacuum_pump",
+      "displayName": "High-Vacuum Turbomolecular Pump",
+      "description": "A compact turbomolecular pump capable of pulling a vacuum of one ten-thousandth of a torr. The rotor spins at forty thousand RPM on its own magnetic bearings. Without this, the flywheel's aerodynamic drag would turn stored energy into waste heat within hours.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 12.0,
+      "tradeValue": 80
+    },
+    {
+      "id": "item_containment_ring_steel",
+      "displayName": "Steel Containment Ring",
+      "description": "A forged steel ring, two centimeters thick and one meter in diameter, designed to encircle the flywheel rotor. In the event of a catastrophic rotor failure, the ring absorbs the initial fragment impact and redirects the energy into the vault floor. It is not a guarantee — but it is the difference between a contained failure and a breached room.",
+      "type": "Material",
+      "stackMax": 1,
+      "weight": 80.0,
+      "tradeValue": 45
+    },
+    {
+      "id": "item_reinforced_concrete_vault",
+      "displayName": "Reinforced Concrete Vault Section",
+      "description": "A pre-cast reinforced concrete vault section with embedded steel rebar and anchor bolt channels. Weighs over a ton. Designed to be lowered into the flywheel pit and bolted together to form a containment vault that can redirect a rotor failure upward into the ceiling rather than sideways into occupied rooms.",
+      "type": "Material",
+      "stackMax": 1,
+      "weight": 1200.0,
+      "tradeValue": 30
+    },
+    {
+      "id": "item_seismic_damper_pad",
+      "displayName": "Seismic Damper Pad",
+      "description": "A layered elastomer-and-steel isolation pad that sits between the flywheel foundation and the bedrock. Absorbs micro-tremors, rotor imbalance vibrations, and the occasional seismic event. Without it, a four-ton rotor at six thousand RPM can transmit enough vibration to crack concrete three rooms away.",
+      "type": "Equipment",
+      "stackMax": 2,
+      "weight": 25.0,
+      "tradeValue": 25
+    },
+    {
+      "id": "item_vacuum_pump_oil",
+      "displayName": "Vacuum Pump Oil",
+      "description": "A liter of synthetic vacuum pump oil with low vapor pressure. Used to lubricate the roughing pump and maintain the turbomolecular pump's backing vacuum. The oil darkens with use as it absorbs water vapor and trace contaminants. Change it on schedule or the vacuum degrades.",
+      "type": "Consumable",
+      "stackMax": 10,
+      "weight": 1.0,
+      "tradeValue": 5
+    },
+    {
+      "id": "item_bearing_grease",
+      "displayName": "High-Temperature Bearing Grease",
+      "description": "A tube of synthetic grease rated for continuous operation at one hundred twenty degrees Celsius. Used on the flywheel's touchdown bearings — the mechanical backup that engages when the magnetic suspension loses power. Without it, a bearing touchdown at speed becomes a friction weld.",
+      "type": "Consumable",
+      "stackMax": 15,
+      "weight": 0.3,
+      "tradeValue": 3
+    },
+    {
+      "id": "item_rotor_balancing_kit",
+      "displayName": "Rotor Balancing Kit",
+      "description": "A kit containing precision weights, a stroboscopic balancer, and a set of balance-adjustment shims. Used to correct rotor imbalance that develops over time from thermal cycling and material fatigue. An unbalanced rotor at speed is a slow-motion demolition project.",
+      "type": "Tool",
+      "stackMax": 2,
+      "weight": 2.5,
+      "tradeValue": 20
+    },
+    {
+      "id": "item_portable_pid_detector",
+      "displayName": "Portable PID Detector",
+      "description": "A hand-held photoionization detector with a UV lamp module and interchangeable sensor heads. Responds to a broad range of volatile organic compounds and many inorganic gases. The display shows a normalized concentration bar and hazard-class identification. The battery pack is rechargeable and good for about one hundred twenty scans.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 1.8,
+      "tradeValue": 55
+    },
+    {
+      "id": "item_detector_sensor_module",
+      "displayName": "Detector Sensor Module",
+      "description": "An interchangeable sensor head for the portable PID detector. Different modules are optimized for different bands: low-band for nerve agents and blister agents, medium-band for corrosive vapors, wide-band for broad-spectrum screening. The module contains the UV lamp, the ionization chamber, and the response-curve calibration data.",
+      "type": "Equipment",
+      "stackMax": 3,
+      "weight": 0.4,
+      "tradeValue": 25
+    },
+    {
+      "id": "item_hermetic_sample_ampoule",
+      "displayName": "Hermetic Sample Ampoule",
+      "description": "A borosilicate glass ampoule with a PTFE-lined screw cap and a vacuum-seal indicator dot. Designed to hold atmospheric or soil samples for transport back to the shelter laboratory. The interior is purged and sterile. Once the cap is sealed, the sample is isolated from the outside environment.",
+      "type": "Consumable",
+      "stackMax": 12,
+      "weight": 0.1,
+      "tradeValue": 3
+    },
+    {
       "id": "item_hot_dust_drum",
       "displayName": "Sealed Hot-Dust Drum",
       "description": "A drum of concentrate from the electrostatic air scrubber: the fallout the plates caught so the rest of us would not. Lid welded, sides taped, paint marked with the trefoil. It does not decay on any schedule that matters to us. Bury it deep and mark the map.",

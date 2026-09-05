@@ -24,7 +24,7 @@ namespace Ashfall.Core.Verdict
     [Serializable]
     public class VerdictSave
     {
-        public const int CurrentSaveVersion = 3;
+        public const int CurrentSaveVersion = 4;
         public const int MigrationFromVersion = 1;
 
         public int saveVersion = CurrentSaveVersion;
@@ -37,6 +37,28 @@ namespace Ashfall.Core.Verdict
         public QuestlineSystemState quests = new QuestlineSystemState();
         public int censusLastWindowDay = -1;
 
+        // v4 section.
+        public VerdictAccusationState accusations = new VerdictAccusationState();
+
+        public string Checksum = string.Empty;
+    }
+
+    /// <summary>
+    /// Frozen v3 envelope shape (npcs + radio + quests, no accusations section).
+    /// Do not add fields here — it must match what v3 wrote byte-for-byte in field set.
+    /// </summary>
+    [Serializable]
+    public class VerdictSaveV3
+    {
+        public int saveVersion = 3;
+        public int simDay;
+        public MachineLogSystemState machineLog = new MachineLogSystemState();
+        public ReckoningState reckoning = new ReckoningState();
+        public EvidenceLedgerState evidence = new EvidenceLedgerState();
+        public VerdictNpcState npcs = new VerdictNpcState();
+        public VerdictRadioSystem.VerdictRadioState radio = new VerdictRadioSystem.VerdictRadioState();
+        public QuestlineSystemState quests = new QuestlineSystemState();
+        public int censusLastWindowDay = -1;
         public string Checksum = string.Empty;
     }
 
@@ -86,7 +108,8 @@ namespace Ashfall.Core.Verdict
             int censusLastWindowDay,
 VerdictNpcSystem? npcs = null,
 VerdictRadioSystem? radio = null,
-QuestlineSystem? quests = null)
+QuestlineSystem? quests = null,
+VerdictAccusationSystem? accusations = null)
         {
             var save = new VerdictSave
             {
@@ -97,6 +120,7 @@ QuestlineSystem? quests = null)
                 npcs = npcs != null ? npcs.CaptureState() : new VerdictNpcState(),
                 radio = radio != null ? radio.CaptureState() : new VerdictRadioSystem.VerdictRadioState(),
                 quests = quests != null ? quests.CaptureState() : new QuestlineSystemState(),
+                accusations = accusations != null ? accusations.CaptureState() : new VerdictAccusationState(),
                 censusLastWindowDay = censusLastWindowDay
             };
             save.Checksum = SaveChecksum.Compute(save);
@@ -129,6 +153,7 @@ QuestlineSystem? quests = null)
 
                 if (decoded.saveVersion == 1) return MigrateV1(json, serializer, out save);
                 if (decoded.saveVersion == 2) return MigrateV2(json, serializer, out save);
+                if (decoded.saveVersion == 3) return MigrateV3(json, serializer, out save);
 
                 // Current version: validate over the current shape.
                 if (string.IsNullOrEmpty(decoded.Checksum)) return false;   // tamper/legacy
@@ -160,7 +185,7 @@ QuestlineSystem? quests = null)
                 machineLog = v1.machineLog,
                 reckoning = v1.reckoning,
                 evidence = v1.evidence,
-                // npcs / radio / quests stay at their field initialisers (fresh defaults).
+                // npcs / radio / quests / accusations stay at their field initialisers (fresh defaults).
                 censusLastWindowDay = v1.censusLastWindowDay
             };
             migrated.Checksum = SaveChecksum.Compute(migrated);
@@ -185,8 +210,34 @@ QuestlineSystem? quests = null)
                 evidence = v2.evidence,
                 npcs = v2.npcs ?? new VerdictNpcState(),
                 radio = v2.radio ?? new VerdictRadioSystem.VerdictRadioState(),
-                // quests stays at its field initialiser (fresh default).
+                // quests / accusations stay at their field initialisers (fresh defaults).
                 censusLastWindowDay = v2.censusLastWindowDay
+            };
+            migrated.Checksum = SaveChecksum.Compute(migrated);
+            save = migrated;
+            return true;
+        }
+
+        private static bool MigrateV3(string json, IJsonSerializer serializer, out VerdictSave save)
+        {
+            save = null!;
+            var v3 = serializer.Deserialize<VerdictSaveV3>(json);
+            if (v3 == null) return false;
+            if (string.IsNullOrEmpty(v3.Checksum)) return false;
+            if (!string.Equals(SaveChecksum.Compute(v3), v3.Checksum, StringComparison.Ordinal)) return false;
+
+            var migrated = new VerdictSave
+            {
+                saveVersion = VerdictSave.CurrentSaveVersion,
+                simDay = v3.simDay,
+                machineLog = v3.machineLog,
+                reckoning = v3.reckoning,
+                evidence = v3.evidence,
+                npcs = v3.npcs ?? new VerdictNpcState(),
+                radio = v3.radio ?? new VerdictRadioSystem.VerdictRadioState(),
+                quests = v3.quests ?? new QuestlineSystemState(),
+                // accusations stays at its field initialiser (fresh empty state).
+                censusLastWindowDay = v3.censusLastWindowDay
             };
             migrated.Checksum = SaveChecksum.Compute(migrated);
             save = migrated;
@@ -200,7 +251,8 @@ QuestlineSystem? quests = null)
             EvidenceLedger evidence,
 VerdictNpcSystem? npcs = null,
 VerdictRadioSystem? radio = null,
-QuestlineSystem? quests = null)
+QuestlineSystem? quests = null,
+VerdictAccusationSystem? accusations = null)
         {
             if (save == null) return;
             machineLog.RestoreState(save.machineLog);
@@ -212,6 +264,8 @@ QuestlineSystem? quests = null)
                 radio.RestoreState(save.radio ?? new VerdictRadioSystem.VerdictRadioState());
             if (quests != null)
                 quests.RestoreState(save.quests ?? new QuestlineSystemState());
+            if (accusations != null)
+                accusations.RestoreState(save.accusations ?? new VerdictAccusationState());
         }
     }
 }

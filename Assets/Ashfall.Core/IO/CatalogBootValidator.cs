@@ -229,6 +229,12 @@ namespace Ashfall.Core.IO
             RegisterCatalog("dose_locations.json", "Dose Locations", CatalogClassification.Optional);
             RegisterCatalog("dose_quests.json", "Dose Quests", CatalogClassification.Optional);
             RegisterCatalog("dose_registers.json", "Dose Registers", CatalogClassification.Optional);
+
+            // Plans 78-81 catalogs
+            RegisterCatalog("decontamination_protocol_catalog.json", "Decon Protocols", CatalogClassification.Optional);
+            RegisterCatalog("geodetic_survey_catalog.json", "Geodetic Survey", CatalogClassification.Optional);
+            RegisterCatalog("kinetic_flywheel_catalog.json", "Kinetic Flywheel", CatalogClassification.Optional);
+            RegisterCatalog("toxic_chemical_catalog.json", "Toxic Chemical Recon", CatalogClassification.Optional);
         }
 
         /// <summary>

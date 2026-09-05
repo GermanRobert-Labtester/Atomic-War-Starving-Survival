@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Expeditions;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -26,6 +27,36 @@ namespace Ashfall.Core
         public bool isBrokenDown;
         public string breakdownCause = string.Empty;
         public List<string> attachments = new List<string>();
+        public VehicleTrackGearState trackGear = new VehicleTrackGearState();
+    }
+
+    /// <summary>
+    /// Persisted, normalized track-gear facts for one vehicle. Track gear is
+    /// an attachment effect, not a second vehicle or terrain simulator.
+    /// </summary>
+    [Serializable]
+    public sealed class VehicleTrackGearState
+    {
+        public string gearId = string.Empty;
+        public float condition = 100f;
+        public float tractionMultiplier = 1f;
+        public float breakdownRiskMultiplier = 1f;
+
+        public bool IsInstalled => !string.IsNullOrEmpty(gearId);
+
+        public float EffectiveTractionMultiplier()
+        {
+            float condition01 = Math.Clamp(condition / 100f, 0f, 1f);
+            float configured = Math.Clamp(tractionMultiplier, 0.5f, 2f);
+            return 1f + (configured - 1f) * condition01;
+        }
+
+        public float EffectiveBreakdownRiskMultiplier()
+        {
+            float condition01 = Math.Clamp(condition / 100f, 0f, 1f);
+            float configured = Math.Clamp(breakdownRiskMultiplier, 0f, 1f);
+            return 1f + (configured - 1f) * condition01;
+        }
     }
 
     [Serializable]
@@ -147,6 +178,94 @@ namespace Ashfall.Core
                 new Dictionary<string, double> { { "attachments", v.attachments.Count } });
         }
 
+        /// <summary>
+        /// Install normalized track gear on a vehicle. The host supplies the
+        /// authored gear facts; this authority owns the resulting condition
+        /// and projects it into expedition mobility.
+        /// </summary>
+        public ActionResult InstallTrackGear(
+            string vehicleId,
+            string gearId,
+            float tractionMultiplier,
+            float breakdownRiskMultiplier,
+            float condition = 100f)
+        {
+            if (!_state.ownedVehicles.TryGetValue(vehicleId, out var v))
+                return ActionResult.Failed("unknown_vehicle", "vehicle.unknown");
+            if (string.IsNullOrEmpty(gearId))
+                return ActionResult.Blocked("invalid_track_gear", "vehicle.invalid_track_gear");
+            if (tractionMultiplier < 0.5f || tractionMultiplier > 2f
+                || breakdownRiskMultiplier < 0f || breakdownRiskMultiplier > 1f)
+                return ActionResult.Blocked("invalid_track_gear", "vehicle.invalid_track_gear");
+
+            v.trackGear = new VehicleTrackGearState
+            {
+                gearId = gearId,
+                condition = Math.Clamp(condition, 0f, 100f),
+                tractionMultiplier = tractionMultiplier,
+                breakdownRiskMultiplier = breakdownRiskMultiplier
+            };
+            OnVehicleStateChanged?.Invoke();
+            return ActionResult.Success("vehicle.track_gear_installed",
+                new Dictionary<string, double>
+                {
+                    { "traction_multiplier", v.trackGear.EffectiveTractionMultiplier() },
+                    { "breakdown_risk_multiplier", v.trackGear.EffectiveBreakdownRiskMultiplier() }
+                });
+        }
+
+        public ActionResult RemoveTrackGear(string vehicleId)
+        {
+            if (!_state.ownedVehicles.TryGetValue(vehicleId, out var v))
+                return ActionResult.Failed("unknown_vehicle", "vehicle.unknown");
+            if (!v.trackGear.IsInstalled)
+                return ActionResult.Blocked("no_track_gear", "vehicle.no_track_gear");
+
+            v.trackGear = new VehicleTrackGearState();
+            OnVehicleStateChanged?.Invoke();
+            return ActionResult.Success("vehicle.track_gear_removed");
+        }
+
+        public ActionResult RepairTrackGear(string vehicleId, float amount)
+        {
+            if (!_state.ownedVehicles.TryGetValue(vehicleId, out var v))
+                return ActionResult.Failed("unknown_vehicle", "vehicle.unknown");
+            if (!v.trackGear.IsInstalled)
+                return ActionResult.Blocked("no_track_gear", "vehicle.no_track_gear");
+
+            v.trackGear.condition = Math.Clamp(v.trackGear.condition + Math.Max(0f, amount), 0f, 100f);
+            OnVehicleStateChanged?.Invoke();
+            return ActionResult.Success("vehicle.track_gear_repaired",
+                new Dictionary<string, double> { { "condition", v.trackGear.condition } });
+        }
+
+        /// <summary>
+        /// Project the garage facts into the existing expedition profile.
+        /// This keeps vehicle preparation and travel as separate authorities.
+        /// </summary>
+        public ExpeditionVehicleProfile? CreateExpeditionProfile(
+            string vehicleId,
+            float kmPerTravelTick = 2.5f)
+        {
+            if (!_state.ownedVehicles.TryGetValue(vehicleId, out var v))
+                return null;
+
+            var def = _catalog.TryGetValue(vehicleId, out var catalogDef) ? catalogDef : null;
+            float consumption = def?.fuel_consumption_per_km ?? 0.5f;
+            var gear = v.trackGear ?? new VehicleTrackGearState();
+            return new ExpeditionVehicleProfile
+            {
+                vehicleId = vehicleId,
+                speedMultiplier = Math.Max(0.01f, v.speedMultiplier * gear.EffectiveTractionMultiplier()),
+                cargoCapacityKg = v.cargoCapacity,
+                fuelPerTravelTick = Math.Max(0f, consumption * Math.Max(0f, kmPerTravelTick)),
+                breakdownChancePerTick = Math.Clamp(
+                    (100f - v.condition) / 100f * 0.15f * gear.EffectiveBreakdownRiskMultiplier(),
+                    0f,
+                    1f)
+            };
+        }
+
         public (float fuelCost, float travelTimeMod, bool breakdown) PrepareForExpedition(string vehicleId, float distanceKm)
         {
             if (!_state.ownedVehicles.TryGetValue(vehicleId, out var v))
@@ -161,6 +280,8 @@ namespace Ashfall.Core
             v.fuel -= fuelNeeded;
             float wear = distanceKm * 0.5f;
             v.condition = Math.Max(0, v.condition - wear);
+            if (v.trackGear != null && v.trackGear.IsInstalled)
+                v.trackGear.condition = Math.Max(0f, v.trackGear.condition - distanceKm * 0.25f);
 
             bool breakdown = false;
             if (v.condition < 20f && _rng.NextDouble() < 0.3f)

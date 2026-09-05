@@ -22,6 +22,7 @@ namespace Ashfall.Core.Crossing
         [JsonPropertyName("id")] public string id { get; set; } = "";
         [JsonPropertyName("text")] public string text { get; set; } = "";
         [JsonPropertyName("set_flag")] public string set_flag { get; set; } = "";
+        [JsonPropertyName("moral_delta")] public int moral_delta { get; set; }
     }
 
     public class CrossingQuestDef
@@ -88,6 +89,7 @@ namespace Ashfall.Core.Crossing
         private CrossingQuestSystemState _state = new();
         private IReadOnlyList<CrossingQuestDef> _catalog = Array.Empty<CrossingQuestDef>();
         private IFlagLedger? _consequenceLedger;
+        private Ashfall.Core.MoralChoice.MoralChoiceSystem? _moralSystem;
 
         public event Action<string, int> OnQuestStageChanged;
         public event Action<string> OnQuestStarted;
@@ -102,6 +104,11 @@ namespace Ashfall.Core.Crossing
         public void BindCatalog(IReadOnlyList<CrossingQuestDef> catalog)
         {
             _catalog = catalog ?? Array.Empty<CrossingQuestDef>();
+        }
+
+        public void BindMoralSystem(Ashfall.Core.MoralChoice.MoralChoiceSystem? moralSystem)
+        {
+            _moralSystem = moralSystem;
         }
 
         public CrossingQuestDef? GetDef(string questId)
@@ -125,10 +132,13 @@ namespace Ashfall.Core.Crossing
             ProjectFlagsToLedger();
         }
 
-        /// <summary>Quests available given current day, prereqs, and flags.</summary>
-        public List<CrossingQuestDef> GetAvailableQuests(int currentDay)
+        /// <summary>
+        /// Returns quests the player has unlocked/can see in the hub (prereqs met, min_day reached),
+        /// regardless of vouch access. Hub should show them as locked rather than hidden.
+        /// </summary>
+        public List<CrossingQuestDef> GetVisibleQuests(int currentDay)
         {
-            var available = new List<CrossingQuestDef>();
+            var visible = new List<CrossingQuestDef>();
             for (int i = 0; i < _catalog.Count; i++)
             {
                 var def = _catalog[i];
@@ -136,10 +146,32 @@ namespace Ashfall.Core.Crossing
                 if (IsQuestCompleted(def.id)) continue;
                 if (def.min_day > currentDay) continue;
                 if (!string.IsNullOrEmpty(def.prereq_quest_id) && !IsQuestCompleted(def.prereq_quest_id)) continue;
-                available.Add(def);
+                visible.Add(def);
             }
-            return available;
+            return visible;
         }
+
+        /// <summary>
+        /// Returns quests the player can actually start (visible + vouch access gate passed).
+        /// </summary>
+        public List<CrossingQuestDef> GetEligibleQuests(int currentDay, bool hasVouchAccess = false)
+        {
+            var visible = GetVisibleQuests(currentDay);
+            var eligible = new List<CrossingQuestDef>();
+            bool vouchPassed = hasVouchAccess || IsQuestCompleted(OpeningQuest);
+            for (int i = 0; i < visible.Count; i++)
+            {
+                var def = visible[i];
+                if (def.id == OpeningQuest || vouchPassed)
+                {
+                    eligible.Add(def);
+                }
+            }
+            return eligible;
+        }
+
+        /// <summary>Quests available given current day, prereqs, and flags. Backward-compatible alias for GetEligibleQuests.</summary>
+        public List<CrossingQuestDef> GetAvailableQuests(int currentDay) => GetEligibleQuests(currentDay, false);
 
         public bool IsQuestCompleted(string questId)
         {
@@ -314,6 +346,28 @@ namespace Ashfall.Core.Crossing
                         SystemId,
                         questId);
                     OnFlagSet?.Invoke(questId, choice.set_flag);
+                }
+
+                if (_moralSystem != null)
+                {
+                    if (!string.IsNullOrEmpty(choice.set_flag))
+                        _moralSystem.SetFlag(choice.set_flag);
+
+                    int delta = choice.moral_delta;
+                    if (delta == 0 && !string.IsNullOrEmpty(choice.set_flag))
+                    {
+                        if (choice.set_flag.StartsWith("flag_covenant_", StringComparison.Ordinal))
+                            delta = 5;
+                        else if (choice.set_flag.StartsWith("flag_dispute_", StringComparison.Ordinal))
+                            delta = -5;
+                    }
+                    if (delta != 0)
+                    {
+                        string moralFlag = delta > 0
+                            ? $"flag_moral_crossing_positive_{questId}"
+                            : $"flag_moral_crossing_negative_{questId}";
+                        _moralSystem.SetFlag(moralFlag);
+                    }
                 }
                 RaiseChanged();
                 return true;

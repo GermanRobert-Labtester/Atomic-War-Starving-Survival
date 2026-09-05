@@ -620,20 +620,7 @@ namespace AtomicWar.GodotApp
 
         private ExpeditionVehicleProfile? BuildProfile(string vehicleId)
         {
-            var inst = Vehicles.GetVehicle(vehicleId);
-            if (inst == null) return null;
-            var vdef = Vehicles.GetDefinition(vehicleId);
-            float consumption = vdef?.fuel_consumption_per_km ?? 0.5f;
-            return new ExpeditionVehicleProfile
-            {
-                vehicleId = vehicleId,
-                speedMultiplier = inst.speedMultiplier,
-                cargoCapacityKg = inst.cargoCapacity,
-                fuelPerTravelTick = consumption * KmPerTravelTick,
-                // Worn vehicles risk a mid-route breakdown each travel tick;
-                // pristine metal carries a ~0 chance.
-                breakdownChancePerTick = (100f - inst.condition) / 100f * 0.15f,
-            };
+            return Vehicles.CreateExpeditionProfile(vehicleId, KmPerTravelTick);
         }
 
         public CommandResult StartDemoExpedition(string survivorId, string locationId)

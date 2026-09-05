@@ -13,8 +13,11 @@ namespace Ashfall.Core.YearOfAsh
         /// chain runner (every chain unstarted) — older saves load safely,
         /// they simply replay the faction-war narrative content from its
         /// beginning rather than resuming mid-chain.
+        /// v5 adds the ice-road economy section (IceRoadState). v1-v4 saves
+        /// migrate with a fresh ice-road state (road closed, no trade window
+        /// days accumulated).
         /// </summary>
-        public const int CurrentSaveVersion = 4;
+        public const int CurrentSaveVersion = 5;
 
         public int saveVersion = CurrentSaveVersion;
         public int simDay = 180;
@@ -33,9 +36,32 @@ namespace Ashfall.Core.YearOfAsh
         // v4 section.
         public FactionWarChainRunnerState factionWarChainRunner = new FactionWarChainRunnerState();
 
+        // v5 section.
+        public IceRoadState iceRoad = new IceRoadState();
+
         /// <summary>
         /// Integrity hash computed over all payload fields.
         /// </summary>
+        public string Checksum = string.Empty;
+    }
+
+    /// <summary>
+    /// Frozen v4 envelope shape (adds faction-war chain runner, but no ice-road section).
+    /// Do not add fields here — it must match what v4 wrote byte-for-byte in field set.
+    /// </summary>
+    [Serializable]
+    public class YearOfAshSaveV4
+    {
+        public int saveVersion = 4;
+        public int simDay = 180;
+        public YearOfAshTimelineState timeline = new YearOfAshTimelineState();
+        public DoorEncounterSystemState encounters = new DoorEncounterSystemState();
+        public FactionWarSystemState factionWar = new FactionWarSystemState();
+        public WarlordDoctrineState warlord = new WarlordDoctrineState();
+        public YearOfAshDeepFreezeState deepFreeze = new YearOfAshDeepFreezeState();
+        public YearOfAshRadonState radon = new YearOfAshRadonState();
+        public QuestlineSystemState quests = new QuestlineSystemState();
+        public FactionWarChainRunnerState factionWarChainRunner = new FactionWarChainRunnerState();
         public string Checksum = string.Empty;
     }
 
@@ -110,7 +136,8 @@ YearOfAshDeepFreezeSystem? deepFreeze = null,
 YearOfAshRadonSystem? radon = null,
 QuestlineSystem? quests = null,
 WarlordDoctrineSystem? warlord = null,
-FactionWarChainRunner? factionWarChainRunner = null)
+FactionWarChainRunner? factionWarChainRunner = null,
+YearOfAshIceRoadSystem? iceRoad = null)
         {
             var save = new YearOfAshSave
             {
@@ -127,6 +154,7 @@ FactionWarChainRunner? factionWarChainRunner = null)
             if (quests != null) save.quests = quests.CaptureState();
             if (warlord != null) save.warlord = warlord.CaptureState();
             if (factionWarChainRunner != null) save.factionWarChainRunner = factionWarChainRunner.CaptureState();
+            if (iceRoad != null) save.iceRoad = iceRoad.CaptureState();
 
             save.Checksum = SaveChecksum.Compute(save);
             return save;
@@ -145,7 +173,8 @@ YearOfAshDeepFreezeSystem? deepFreeze = null,
 YearOfAshRadonSystem? radon = null,
 QuestlineSystem? quests = null,
 WarlordDoctrineSystem? warlord = null,
-FactionWarChainRunner? factionWarChainRunner = null)
+FactionWarChainRunner? factionWarChainRunner = null,
+YearOfAshIceRoadSystem? iceRoad = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));
@@ -160,6 +189,7 @@ FactionWarChainRunner? factionWarChainRunner = null)
             if (quests != null) quests.RestoreState(save.quests);
             if (warlord != null) warlord.RestoreState(save.warlord);
             if (factionWarChainRunner != null) factionWarChainRunner.RestoreState(save.factionWarChainRunner);
+            if (iceRoad != null) iceRoad.RestoreState(save.iceRoad);
 
             // Keep simDay authoritative if the timeline section was absent.
             if (save.timeline == null && save.simDay > 0)
@@ -297,6 +327,37 @@ FactionWarChainRunner? factionWarChainRunner = null)
                     quests = v3.quests
                     // factionWarChainRunner stays at its field initialiser (every
                     // chain unstarted).
+                };
+                upgraded.Checksum = SaveChecksum.Compute(upgraded);
+                return upgraded;
+            }
+
+            if (version == 4)
+            {
+                var v4 = json.Deserialize<YearOfAshSaveV4>(jsonText);
+                if (v4 == null)
+                    throw new InvalidOperationException("YearOfAshSave: v4 deserialization returned null.");
+
+                if (!string.IsNullOrEmpty(v4.Checksum))
+                {
+                    string actual = SaveChecksum.Compute(v4);
+                    if (!string.Equals(v4.Checksum, actual, StringComparison.Ordinal))
+                        throw new InvalidOperationException("YearOfAshSave: checksum mismatch (corrupted or tampered save).");
+                }
+
+                var upgraded = new YearOfAshSave
+                {
+                    saveVersion = YearOfAshSave.CurrentSaveVersion,
+                    simDay = v4.simDay,
+                    timeline = v4.timeline,
+                    encounters = v4.encounters,
+                    factionWar = v4.factionWar,
+                    warlord = v4.warlord,
+                    deepFreeze = v4.deepFreeze,
+                    radon = v4.radon,
+                    quests = v4.quests,
+                    factionWarChainRunner = v4.factionWarChainRunner
+                    // iceRoad stays at its field initialiser (fresh ice-road state).
                 };
                 upgraded.Checksum = SaveChecksum.Compute(upgraded);
                 return upgraded;

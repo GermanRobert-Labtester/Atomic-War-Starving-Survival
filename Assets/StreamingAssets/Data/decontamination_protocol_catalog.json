@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "protocols": [
+    {
+      "protocol_id": "decon_standard_return",
+      "display_name": "Standard Expedition Return Decontamination",
+      "description": "Four-stage decontamination protocol for personnel returning from contaminated zones. Coarse dust strip, chemical chelation wash, high-pressure rinse, and radiometric clearance gate.",
+      "stages": [
+        {
+          "stage_id": "stage_coarse_dust_strip",
+          "stage_order": 0,
+          "display_name": "Coarse Dust Strip",
+          "duration_ticks": 2,
+          "water_liters": 8,
+          "surfactant_units": 0,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.20,
+          "effluent_contamination_contribution": 0.15,
+          "equipment_wear_factor": 0.01,
+          "requires_operator": true,
+          "operator_skill_factor": 0.05
+        },
+        {
+          "stage_id": "stage_chemical_wash",
+          "stage_order": 1,
+          "display_name": "Chemical Chelation Wash",
+          "duration_ticks": 3,
+          "water_liters": 12,
+          "surfactant_units": 1,
+          "chelator_units": 2,
+          "external_contamination_multiplier": 0.45,
+          "effluent_contamination_contribution": 0.40,
+          "equipment_wear_factor": 0.03,
+          "requires_operator": true,
+          "operator_skill_factor": 0.08
+        },
+        {
+          "stage_id": "stage_high_pressure_rinse",
+          "stage_order": 2,
+          "display_name": "High-Pressure Rinse",
+          "duration_ticks": 2,
+          "water_liters": 15,
+          "surfactant_units": 0,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.30,
+          "effluent_contamination_contribution": 0.25,
+          "equipment_wear_factor": 0.02,
+          "requires_operator": false,
+          "operator_skill_factor": 0.0
+        },
+        {
+          "stage_id": "stage_radiometric_gate",
+          "stage_order": 3,
+          "display_name": "Radiometric Clearance Gate",
+          "duration_ticks": 1,
+          "water_liters": 0,
+          "surfactant_units": 0,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.05,
+          "effluent_contamination_contribution": 0.0,
+          "equipment_wear_factor": 0.0,
+          "requires_operator": true,
+          "operator_skill_factor": 0.02
+        }
+      ],
+      "total_water_liters": 35,
+      "total_surfactant_units": 1,
+      "total_chelator_units": 2,
+      "total_duration_ticks": 8,
+      "ideal_removal_target": 0.98,
+      "interlock_threshold_mSv_per_h": 0.5,
+      "tags": ["standard", "expedition_return"]
+    },
+    {
+      "protocol_id": "decon_emergency_rapid",
+      "display_name": "Emergency Rapid Decontamination",
+      "description": "Accelerated two-stage protocol for urgent medical cases. Sacrifices thoroughness for speed. Higher residual contamination risk.",
+      "stages": [
+        {
+          "stage_id": "stage_rapid_strip",
+          "stage_order": 0,
+          "display_name": "Rapid Contamination Strip",
+          "duration_ticks": 1,
+          "water_liters": 10,
+          "surfactant_units": 1,
+          "chelator_units": 1,
+          "external_contamination_multiplier": 0.40,
+          "effluent_contamination_contribution": 0.35,
+          "equipment_wear_factor": 0.02,
+          "requires_operator": true,
+          "operator_skill_factor": 0.06
+        },
+        {
+          "stage_id": "stage_rapid_gate",
+          "stage_order": 1,
+          "display_name": "Expedited Radiometric Gate",
+          "duration_ticks": 1,
+          "water_liters": 0,
+          "surfactant_units": 0,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.10,
+          "effluent_contamination_contribution": 0.0,
+          "equipment_wear_factor": 0.0,
+          "requires_operator": true,
+          "operator_skill_factor": 0.03
+        }
+      ],
+      "total_water_liters": 10,
+      "total_surfactant_units": 1,
+      "total_chelator_units": 1,
+      "total_duration_ticks": 2,
+      "ideal_removal_target": 0.75,
+      "interlock_threshold_mSv_per_h": 0.8,
+      "tags": ["emergency", "medical", "rapid"]
+    },
+    {
+      "protocol_id": "decon_equipment_only",
+      "display_name": "Equipment-Only Decontamination",
+      "description": "Protocol for contaminated gear without personnel. Higher chemical concentration, no radiometric gate on personnel.",
+      "stages": [
+        {
+          "stage_id": "stage_equipment_chemical_bath",
+          "stage_order": 0,
+          "display_name": "Equipment Chemical Bath",
+          "duration_ticks": 3,
+          "water_liters": 20,
+          "surfactant_units": 2,
+          "chelator_units": 3,
+          "external_contamination_multiplier": 0.50,
+          "effluent_contamination_contribution": 0.45,
+          "equipment_wear_factor": 0.05,
+          "requires_operator": true,
+          "operator_skill_factor": 0.04
+        },
+        {
+          "stage_id": "stage_equipment_rinse",
+          "stage_order": 1,
+          "display_name": "Equipment Pressure Rinse",
+          "duration_ticks": 2,
+          "water_liters": 18,
+          "surfactant_units": 0,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.35,
+          "effluent_contamination_contribution": 0.30,
+          "equipment_wear_factor": 0.02,
+          "requires_operator": false,
+          "operator_skill_factor": 0.0
+        }
+      ],
+      "total_water_liters": 38,
+      "total_surfactant_units": 2,
+      "total_chelator_units": 3,
+      "total_duration_ticks": 5,
+      "ideal_removal_target": 0.92,
+      "interlock_threshold_mSv_per_h": 0.5,
+      "tags": ["equipment", "gear_only"]
+    },
+    {
+      "protocol_id": "decon_maximum_containment",
+      "display_name": "Maximum Containment Protocol",
+      "description": "Full five-stage protocol for extreme contamination events. High resource cost but near-complete decontamination. Requires hazmat-trained operator.",
+      "stages": [
+        {
+          "stage_id": "stage_max_pre_wash",
+          "stage_order": 0,
+          "display_name": "Pre-Wash Dust Suppression",
+          "duration_ticks": 2,
+          "water_liters": 6,
+          "surfactant_units": 1,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.12,
+          "effluent_contamination_contribution": 0.10,
+          "equipment_wear_factor": 0.01,
+          "requires_operator": true,
+          "operator_skill_factor": 0.04
+        },
+        {
+          "stage_id": "stage_max_coarse_strip",
+          "stage_order": 1,
+          "display_name": "Extended Coarse Strip",
+          "duration_ticks": 3,
+          "water_liters": 10,
+          "surfactant_units": 0,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.18,
+          "effluent_contamination_contribution": 0.14,
+          "equipment_wear_factor": 0.01,
+          "requires_operator": true,
+          "operator_skill_factor": 0.05
+        },
+        {
+          "stage_id": "stage_max_chemical_wash",
+          "stage_order": 2,
+          "display_name": "Intensive Chemical Chelation",
+          "duration_ticks": 4,
+          "water_liters": 15,
+          "surfactant_units": 1,
+          "chelator_units": 3,
+          "external_contamination_multiplier": 0.40,
+          "effluent_contamination_contribution": 0.38,
+          "equipment_wear_factor": 0.04,
+          "requires_operator": true,
+          "operator_skill_factor": 0.10
+        },
+        {
+          "stage_id": "stage_max_pressure_rinse",
+          "stage_order": 3,
+          "display_name": "Extended High-Pressure Rinse",
+          "duration_ticks": 3,
+          "water_liters": 20,
+          "surfactant_units": 0,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.25,
+          "effluent_contamination_contribution": 0.22,
+          "equipment_wear_factor": 0.02,
+          "requires_operator": false,
+          "operator_skill_factor": 0.0
+        },
+        {
+          "stage_id": "stage_max_radiometric_gate",
+          "stage_order": 4,
+          "display_name": "Extended Radiometric Clearance",
+          "duration_ticks": 2,
+          "water_liters": 0,
+          "surfactant_units": 0,
+          "chelator_units": 0,
+          "external_contamination_multiplier": 0.05,
+          "effluent_contamination_contribution": 0.0,
+          "equipment_wear_factor": 0.0,
+          "requires_operator": true,
+          "operator_skill_factor": 0.03
+        }
+      ],
+      "total_water_liters": 51,
+      "total_surfactant_units": 2,
+      "total_chelator_units": 3,
+      "total_duration_ticks": 14,
+      "ideal_removal_target": 0.99,
+      "interlock_threshold_mSv_per_h": 0.3,
+      "tags": ["maximum", "containment", "extreme_hazard"]
+    }
+  ],
+  "effluent_treatment": {
+    "default_tank_capacity_liters": 200,
+    "settling_ticks": 4,
+    "water_recovery_fraction": 0.15,
+    "hazardous_sludge_per_liter": 0.02,
+    "treatment_required_item": "item_lead_lined_effluent_filter",
+    "filter_lifetime_liters": 500
+  },
+  "gear_disposal": {
+    "disposal_item_id": "item_sealed_waste_bin",
+    "max_safe_contamination_cleaning": 0.95,
+    "disposal_threshold": 0.85
+  }
+}

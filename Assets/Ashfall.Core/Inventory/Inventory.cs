@@ -124,6 +124,8 @@ namespace Ashfall.Core.Inventory
             return true;
         }
 
+        public bool TryConsumeById(string itemId, int count) => TryConsume(itemId, count);
+
         public bool TryProduce(string itemId, int count, ItemDefinition? def = null)
         {
             if (string.IsNullOrEmpty(itemId) || count <= 0) return true;

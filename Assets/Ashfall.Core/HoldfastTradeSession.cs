@@ -6,6 +6,14 @@ using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core
 {
+    public enum HoldfastFactionStance
+    {
+        Allied = 0,
+        Neutral = 1,
+        Hostile = 2,
+        Embargoed = 3
+    }
+
     public enum HoldfastTradeFailure
     {
         None,
@@ -281,10 +289,11 @@ namespace Ashfall.Core
         public string FactionId { get; set; } = string.Empty;
         public int TotalValue { get; set; }
         public string Message { get; set; } = string.Empty;
+        public string WhyLine { get; set; } = string.Empty;
         public HoldfastTradeFailure Failure { get; set; } = HoldfastTradeFailure.None;
 
-        public static HoldfastTradeResult Ok(string itemId, int quantity, string factionId, int totalValue)
-            => new HoldfastTradeResult { Success = true, ItemId = itemId, Quantity = quantity, FactionId = factionId, TotalValue = totalValue, Message = "Trade completed." };
+        public static HoldfastTradeResult Ok(string itemId, int quantity, string factionId, int totalValue, string whyLine = "")
+            => new HoldfastTradeResult { Success = true, ItemId = itemId, Quantity = quantity, FactionId = factionId, TotalValue = totalValue, Message = "Trade completed.", WhyLine = whyLine };
         public static HoldfastTradeResult Fail(string message, HoldfastTradeFailure failure = HoldfastTradeFailure.None)
             => new HoldfastTradeResult { Success = false, Message = message, Failure = failure };
     }
@@ -312,6 +321,12 @@ namespace Ashfall.Core
         /// ledger, so credit can never bypass what trade cannot.
         /// </summary>
         public Func<string, bool>? EmbargoQuery { get; set; }
+
+        /// <summary>
+        /// Faction stance query delegate. When set, modulates buy and sell prices
+        /// and supplies contextual why-lines. Defaults to Neutral if null.
+        /// </summary>
+        public Func<string, HoldfastFactionStance>? StanceQuery { get; set; }
 
         public event Action StateChanged;
 
@@ -438,6 +453,74 @@ namespace Ashfall.Core
             return false;
         }
 
+        public long GetBuyPrice(string itemId, string factionId, int quantity = 1)
+        {
+            if (quantity <= 0) return 0;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
+            if (def == null) return 0;
+
+            int baseVal = Math.Max(1, (int)def.TradeValue);
+            var stance = StanceQuery?.Invoke(factionId) ?? HoldfastFactionStance.Neutral;
+            float mult = stance switch
+            {
+                HoldfastFactionStance.Allied => 0.85f,
+                HoldfastFactionStance.Hostile => 1.25f,
+                _ => 1.0f
+            };
+            long unitPrice = Math.Max(1, (long)Math.Round(baseVal * mult));
+            return unitPrice * quantity;
+        }
+
+        public long GetSellPrice(string itemId, string factionId, int quantity = 1)
+        {
+            if (quantity <= 0) return 0;
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
+            if (def == null) return 0;
+
+            int baseVal = Math.Max(1, (int)def.TradeValue);
+            var stance = StanceQuery?.Invoke(factionId) ?? HoldfastFactionStance.Neutral;
+            float mult = stance switch
+            {
+                HoldfastFactionStance.Allied => 1.15f,
+                HoldfastFactionStance.Hostile => 0.75f,
+                _ => 1.0f
+            };
+            long unitPrice = Math.Max(1, (long)Math.Round(baseVal * mult));
+            return unitPrice * quantity;
+        }
+
+        public string GetWhyLine(string itemId, string factionId, bool isBuy)
+        {
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var stance = StanceQuery?.Invoke(factionId) ?? HoldfastFactionStance.Neutral;
+            var parts = new List<string>();
+
+            if (isBuy)
+            {
+                if (stance == HoldfastFactionStance.Allied)
+                    parts.Add("[Allied discount applied]");
+                else if (stance == HoldfastFactionStance.Hostile)
+                    parts.Add($"[Hostile surcharge — {factionId} stance]");
+            }
+            else
+            {
+                if (stance == HoldfastFactionStance.Allied)
+                    parts.Add("[Allied bonus applied]");
+                else if (stance == HoldfastFactionStance.Hostile)
+                    parts.Add($"[Hostile penalty — {factionId} stance]");
+            }
+
+            int stock = GetStock(canonical);
+            if (stock < 3)
+                parts.Add("[Stock critical — limited availability]");
+            else if (stock < 8)
+                parts.Add("[Stock low]");
+
+            return string.Join(" ", parts);
+        }
+
         public HoldfastTradeResult Buy(string itemId, int quantity, string factionId)
         {
             string canonical = ItemAliases.ToCanonical(itemId);
@@ -464,7 +547,8 @@ namespace Ashfall.Core
             if (currentStock < quantity)
                 return HoldfastTradeResult.Fail("Insufficient merchant stock.", HoldfastTradeFailure.InsufficientStock);
 
-            int cost = quantity * Math.Max(1, (int)def.TradeValue);
+            long costLong = GetBuyPrice(canonical, factionId, quantity);
+            int cost = (int)Math.Min(int.MaxValue, costLong);
             if (cost > _value)
                 return HoldfastTradeResult.Fail("Insufficient funds.", HoldfastTradeFailure.InsufficientFunds);
 
@@ -493,7 +577,8 @@ namespace Ashfall.Core
                     _held[canonical] = prevHeld + quantity;
                 }
                 StateChanged?.Invoke();
-                return HoldfastTradeResult.Ok(canonical, quantity, factionId, cost);
+                string whyLine = GetWhyLine(canonical, factionId, true);
+                return HoldfastTradeResult.Ok(canonical, quantity, factionId, cost, whyLine);
             }
             catch (Exception ex)
             {
@@ -534,13 +619,15 @@ namespace Ashfall.Core
             if (currentlyHeld < quantity)
                 return HoldfastTradeResult.Fail("Insufficient player inventory.", HoldfastTradeFailure.InsufficientInventory);
 
-            int gain = quantity * Math.Max(1, (int)def.TradeValue);
+            long gainLong = GetSellPrice(canonical, factionId, quantity);
+            int gain = (int)Math.Min(int.MaxValue, gainLong);
             _value += gain;
             _held[canonical] = currentlyHeld - quantity;
             _stock[canonical] = GetStock(canonical) + quantity;
             Inventory.RemoveItem(canonical, quantity);
             StateChanged?.Invoke();
-            return HoldfastTradeResult.Ok(canonical, quantity, factionId, gain);
+            string whyLine = GetWhyLine(canonical, factionId, false);
+            return HoldfastTradeResult.Ok(canonical, quantity, factionId, gain, whyLine);
         }
 
         public bool TryRestoreState(HoldfastTradeSaveState state, out string error)
@@ -662,7 +749,8 @@ namespace Ashfall.Core
             if (currentStock < quantity)
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_stock", "trade.insufficient_stock", stateVersion);
 
-            int cost = quantity * Math.Max(1, (int)def.TradeValue);
+            long costLong = GetBuyPrice(canonical, factionId, quantity);
+            int cost = (int)Math.Min(int.MaxValue, costLong);
             if (cost > _value)
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_funds", "trade.insufficient_funds", stateVersion);
 
@@ -739,7 +827,8 @@ namespace Ashfall.Core
             if (currentlyHeld < quantity)
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_inventory", "trade.insufficient_inventory", stateVersion);
 
-            int gain = quantity * Math.Max(1, (int)def.TradeValue);
+            long gainLong = GetSellPrice(canonical, factionId, quantity);
+            int gain = (int)Math.Min(int.MaxValue, gainLong);
             var deltas = new Dictionary<string, double>
             {
                 { "value", gain },

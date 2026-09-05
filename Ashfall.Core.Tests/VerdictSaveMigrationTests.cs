@@ -36,7 +36,7 @@ namespace Ashfall.Core.Tests
 
             string json = s_json.Serialize(v1);
             Assert.True(VerdictSaveCodec.TryDecode(json, s_json, out var loaded), "v1 save must decode");
-            Assert.Equal(3, loaded.saveVersion);             // migrated to current v3
+            Assert.Equal(VerdictSave.CurrentSaveVersion, loaded.saveVersion); // migrated to current version
             Assert.Equal(ReckoningPhase.Counted, loaded.reckoning.phase);
             Assert.True(loaded.reckoning.countPresented);
             Assert.Contains("evidence_fuse_linen", loaded.evidence.enrolled);
@@ -71,7 +71,7 @@ namespace Ashfall.Core.Tests
 
             string json = s_json.Serialize(v2);
             Assert.True(VerdictSaveCodec.TryDecode(json, s_json, out var loaded), "v2 save must decode");
-            Assert.Equal(3, loaded.saveVersion);
+            Assert.Equal(VerdictSave.CurrentSaveVersion, loaded.saveVersion);
             Assert.NotNull(loaded.quests);
             Assert.Empty(loaded.quests.active);
             Assert.Equal(ReckoningPhase.Counted, loaded.reckoning.phase);
@@ -95,7 +95,7 @@ namespace Ashfall.Core.Tests
             Assert.DoesNotContain("\"quests\"", json, StringComparison.Ordinal);
 
             Assert.True(VerdictSaveCodec.TryDecode(json, s_json, out var loaded), "genuine v2 save must migrate");
-            Assert.Equal(3, loaded.saveVersion);
+            Assert.Equal(VerdictSave.CurrentSaveVersion, loaded.saveVersion);
             Assert.True(loaded.reckoning.countPresented);
             Assert.Contains("evidence_eden_log", loaded.evidence.enrolled);
             Assert.Empty(loaded.quests.active);

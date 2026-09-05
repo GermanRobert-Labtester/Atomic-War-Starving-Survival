@@ -793,6 +793,120 @@
           "set_flag": "flag_crossing_filtered_passage"
         }
       ]
+    },
+    {
+      "id": "quest_crossing_the_salvaged_accord",
+      "display_name": "The Salvaged Accord",
+      "type": "covenant",
+      "briefing": "A pre-war non-aggression covenant signed by the river baronies was preserved in a lead tube. The water wardens seek to ratify its terms once more.",
+      "prereq_quest_id": "quest_crossing_the_vouch",
+      "min_day": 25,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_scalehouse",
+      "stages": [
+        {
+          "id": "recover_canister",
+          "text": "Recover the tarnished covenant canister from the lower piers."
+        },
+        {
+          "id": "present_terms",
+          "text": "Present the accord terms to the wardens and the ferrymen."
+        },
+        {
+          "id": "ratify_treaty",
+          "text": "Ratify the treaty or repudiate the terms."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_ratify_accord",
+          "text": "Ratify the salvaged accord with water seal.",
+          "set_flag": "flag_covenant_salvaged_accord_active",
+          "moral_delta": 5
+        },
+        {
+          "id": "choice_repudiate_accord",
+          "text": "Repudiate the accord and break the seal.",
+          "set_flag": "flag_covenant_salvaged_accord_breached",
+          "moral_delta": -5
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_the_registry_dispute",
+      "display_name": "The Registry Dispute",
+      "type": "dispute",
+      "briefing": "Two convoy lineages claim the same registration ledger at Stallrow. Without arbitration, supply wagons will remain impounded on the causeway.",
+      "prereq_quest_id": "quest_crossing_the_salvaged_accord",
+      "min_day": 35,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_viaduct_gate",
+      "stages": [
+        {
+          "id": "review_manifests",
+          "text": "Review the convoy manifests and watermarked seals."
+        },
+        {
+          "id": "summon_backers",
+          "text": "Summon three neutral backers to hear the dispute."
+        },
+        {
+          "id": "deliver_ruling",
+          "text": "Deliver a final ruling on registry ownership."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_uphold_registry",
+          "text": "Uphold the elder lineage's claim under the charter.",
+          "set_flag": "flag_dispute_registry_claim_resolved",
+          "moral_delta": 5
+        },
+        {
+          "id": "choice_escalate_registry",
+          "text": "Seize the disputed cargo for the crossing arsenal.",
+          "set_flag": "flag_dispute_registry_claim_escalated",
+          "moral_delta": -5
+        }
+      ]
+    },
+    {
+      "id": "quest_crossing_the_long_toll",
+      "display_name": "The Long Toll",
+      "type": "covenant",
+      "briefing": "The crossing gate requires upkeep that scrap tithes no longer cover. The gatekeepers demand a permanent salt covenant from all outbound caravans.",
+      "prereq_quest_id": "quest_crossing_the_registry_dispute",
+      "min_day": 50,
+      "knowledge_key": "",
+      "target_location_id": "loc_crossing_underwrite_hall",
+      "stages": [
+        {
+          "id": "inspect_hydraulics",
+          "text": "Inspect the failing hydraulic counterweights beneath the span."
+        },
+        {
+          "id": "negotiate_tithe",
+          "text": "Negotiate the salt tithe percentage with the caravan captains."
+        },
+        {
+          "id": "seal_toll_covenant",
+          "text": "Seal the long toll covenant in the gate registry."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_endow_toll",
+          "text": "Endow the crossing gate with the salt covenant.",
+          "set_flag": "flag_covenant_bridge_toll_active",
+          "moral_delta": 5
+        },
+        {
+          "id": "choice_reject_toll",
+          "text": "Refuse the toll and force open transit.",
+          "set_flag": "flag_covenant_bridge_toll_breached",
+          "moral_delta": -5
+        }
+      ]
     }
   ]
 }
