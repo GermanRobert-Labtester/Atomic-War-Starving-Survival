@@ -26,6 +26,9 @@ using AtomicWar.GodotApp.Radio;
 using AtomicWar.GodotApp.Audio;
 using AtomicWar.GodotApp.UI;
 
+using Ashfall.Core.Narrative;
+using Ashfall.Core.IO;
+
 namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
@@ -33,6 +36,8 @@ namespace AtomicWar.GodotApp
         // ── Expedition fields (GAP-ARCH-01 Phase 1) ──
         private ExpeditionHostSession _expeditions = null!;
         private bool _expeditionDirty;
+        private TravelEncounterSystem? _travelEncounters;
+        private bool _travelEncountersDirty;
         private Ashfall.Core.Expeditions.EncounterChoiceResolver _encounterChoice = null!;
         private bool _encounterChoiceDirty;
         private CombatHostSession _combat = null!;
@@ -41,6 +46,11 @@ namespace AtomicWar.GodotApp
         private void FlushExpeditionIfDirty()
         {
             if (_expeditionDirty) SaveExpeditions();
+        }
+
+        internal void FlushTravelEncountersIfDirty()
+        {
+            if (_travelEncountersDirty) SaveTravelEncounters();
         }
 
         /// <summary>
@@ -78,13 +88,32 @@ namespace AtomicWar.GodotApp
             if (_expeditions != null) return;
             SetupInventory();
             SetupSurvivors();
+            SetupYearOfAsh();
             // F1–F4 — the expedition encounter flow resolves through the SAME
             // narrative engine the "narrative" save section persists. Without
             // this the session ran an empty catalog and never saved history,
             // depletion, or pending rows.
             EnsureNarrativeSession();
-            _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine);
+            SetupTravelEncounters();
+            if (_travelEncounters != null)
+            {
+                if (_inventory != null)
+                    _travelEncounters.Inventory = _inventory.Inventory;
+                if (_yearOfAsh != null)
+                    _travelEncounters.FactionWar = _yearOfAsh.FactionWar;
+            }
+            _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine, _travelEncounters);
             _expeditions.Flags = _consequenceLedger;
+            _expeditions.CurrentDay = _simDay;
+            // F17 — micro-location hazard exposure routes into the disease
+            // authority through the same lazy-delegate pattern as wildlife
+            // trapping (Plan 36): the ward session is created on first use if
+            // the expedition flow runs before medical setup.
+            _expeditions.ApplyDisease = (survivorId, diseaseId, day) =>
+            {
+                if (_disease == null) SetupDisease();
+                _disease?.Engine?.Infect(survivorId, diseaseId, day);
+            };
             BindExpeditionJournalIfReady();
             if (_inventory != null)
             {
@@ -304,6 +333,47 @@ namespace AtomicWar.GodotApp
             catch (Exception e)
             {
                 GD.PushWarning("[Ashfall Godot] EncounterChoice save failed: " + e.Message);
+            }
+        }
+
+        private void SaveTravelEncounters()
+        {
+            if (_travelEncounters == null || !_travelEncountersDirty) return;
+            try
+            {
+                if (CaptureSection("travel_encounters", TravelEncounterSaveStore.TryCapturePersisted(_travelEncounters.CaptureState())))
+                    _travelEncountersDirty = false;
+            }
+            catch (Exception e)
+            {
+                GD.PushWarning("[Ashfall Godot] TravelEncounters save failed: " + e.Message);
+            }
+        }
+
+        private void SetupTravelEncounters()
+        {
+            if (_travelEncounters != null) return;
+            try
+            {
+                var fileIO = new FileSystemIO();
+                var catalog = TravelEncounterCatalog.LoadFromDirectory(_dataDir, fileIO);
+                _travelEncounters = new TravelEncounterSystem(catalog);
+                if (_inventory != null)
+                    _travelEncounters.Inventory = _inventory.Inventory;
+                if (_yearOfAsh != null)
+                    _travelEncounters.FactionWar = _yearOfAsh.FactionWar;
+
+                var saved = TravelEncounterSaveStore.TryLoad();
+                if (saved != null)
+                {
+                    _travelEncounters.RestoreState(saved);
+                }
+                _travelEncounters.OnChoiceResolved += (_, _) => _travelEncountersDirty = true;
+                _travelEncounters.OnChainStageAdvanced += (_, _) => _travelEncountersDirty = true;
+            }
+            catch (Exception e)
+            {
+                GD.PushWarning("[Ashfall Godot] TravelEncounters setup failed: " + e.Message);
             }
         }
 

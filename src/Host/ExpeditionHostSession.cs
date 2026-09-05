@@ -37,6 +37,13 @@ namespace AtomicWar.GodotApp
         public DiveInstanceRunner DiveRunner { get; private set; }
         public Ashfall.Core.Flags.IFlagLedger Flags { get; set; } = new Ashfall.Core.Flags.CampaignConsequenceLedger();
 
+        /// <summary>F17 — host wire into the canonical disease authority for
+        /// micro-location hazard consequences (same lazy-delegate pattern as
+        /// WildlifeTrappingHostSession.ApplyDisease). Signature:
+        /// (survivorId, diseaseId, day). Null (headless) degrades honestly:
+        /// hazards report SkippedNoAuthority and resolution still succeeds.</summary>
+        public Action<string, string, int>? ApplyDisease { get; set; }
+
         /// <summary>F3 — journal authority for encounter knowledge unlocks.
         /// Null (headless) degrades honestly: unlocks are skipped, resolution
         /// still succeeds.</summary>
@@ -100,8 +107,30 @@ namespace AtomicWar.GodotApp
         /// <summary>Passthrough to the Core per-location encounter-chance multiplier (faction/territory danger).</summary>
         public void SetEncounterChanceMultiplier(Func<string, float> multiplier) => Engine.SetEncounterChanceMultiplier(multiplier);
 
+        private int _currentDay;
         /// <summary>Current sim day, supplied by Main so EncounterApplyChoice can pass day to Core.</summary>
-        public int CurrentDay { get; set; }
+        public int CurrentDay
+        {
+            get => _currentDay;
+            set
+            {
+                _currentDay = value;
+                if (_bridge != null)
+                    _bridge.CurrentDay = value;
+            }
+        }
+
+        private string _currentSeason = "autumn";
+        public string CurrentSeason
+        {
+            get => _currentSeason;
+            set
+            {
+                _currentSeason = value;
+                if (_bridge != null)
+                    _bridge.CurrentSeason = value;
+            }
+        }
 
         public string LastEvent { get; private set; } = string.Empty;
         /// <summary>Fired when Core rolls an encounter and the bridge surfaces a DTO. Host UI subscribes here.</summary>
@@ -128,8 +157,18 @@ namespace AtomicWar.GodotApp
         /// the survivor; the stamina cost is already applied by the engine.</summary>
         public event Action<string, string, WeatherGateBlock>? OnWeatherGateForced;
 
+        private TravelEncounterSystem? _travelEngine;
         /// <summary>The Plan 20 wasteland-inhabitants encounter engine. Null outside Create(dataDir) hosts — combat binding degrades honestly.</summary>
-        public TravelEncounterSystem? TravelEngine { get; private set; }
+        public TravelEncounterSystem? TravelEngine
+        {
+            get => _travelEngine;
+            set
+            {
+                _travelEngine = value;
+                if (_bridge != null)
+                    _bridge.TravelEngine = value;
+            }
+        }
 
         /// <summary>When true (default), the UI shows a modal encounter notice. When false, a transient autoplay banner.</summary>
         public static bool UseEncounterModal { get; set; } = true;
@@ -184,6 +223,16 @@ namespace AtomicWar.GodotApp
             _rng = new SeededRng(DemoSeed);
             _narrative = narrative ?? new NarrativeEncounterSystem();
             _bridge = new ExpeditionEncounterBridge(_narrative, _rng);
+            _bridge.RegionResolver = locId =>
+            {
+                if (string.IsNullOrEmpty(locId)) return "the_toll";
+                if (locId.Contains("cut") || locId.Contains("toll") || locId.Contains("holdfast")) return "the_toll";
+                if (locId.Contains("scarp") || locId.Contains("high") || locId.Contains("ridge")) return "high_scarp";
+                if (locId.Contains("industrial") || locId.Contains("depot") || locId.Contains("factory") || locId.Contains("plant") || locId.Contains("arsenal")) return "industrial_belt";
+                if (locId.Contains("shelf") || locId.Contains("coast") || locId.Contains("flotilla") || locId.Contains("drown")) return "coastal_shelf";
+                if (locId.Contains("suburb") || locId.Contains("house") || locId.Contains("hospital") || locId.Contains("gas")) return "dead_suburbs";
+                return "the_toll";
+            };
             Definitions = new List<ExpeditionDefinition>();
             RegisterDefaultDefinitions();
             Vehicles = new ExpeditionVehicleSystem(new SeededRng(VehicleSeed));
@@ -210,7 +259,12 @@ namespace AtomicWar.GodotApp
                 RaiseStateChanged();
                 OnEncounterSurfaced?.Invoke(dto);
             };
-            Engine.OnEncounterTriggered += s => _bridge.Surface(s);
+            Engine.OnEncounterTriggered += s =>
+            {
+                _bridge.CurrentDay = CurrentDay;
+                _bridge.CurrentSeason = CurrentSeason;
+                _bridge.Surface(s);
+            };
             Engine.OnStateChanged += _ => RaiseStateChanged();
         }
 
@@ -242,9 +296,13 @@ namespace AtomicWar.GodotApp
             Definitions.Add(cut);
         }
 
-        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null!)
+        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null!, TravelEncounterSystem travel = null!)
         {
             var session = new ExpeditionHostSession(null!, narrative);
+            if (travel != null)
+            {
+                session.TravelEngine = travel;
+            }
             if (!string.IsNullOrEmpty(dataDir))
             {
                 var fileIO = new FileSystemIO();
@@ -280,17 +338,24 @@ namespace AtomicWar.GodotApp
                     session.Engine.ScavengingCatalog = scavengeCatalog;
                 // Plan 45 phase 2 — the wasteland-inhabitants layer: creature
                 // / human travel encounters resolve through the combat binder.
-                var travelCatalog = TravelEncounterCatalog.LoadFromDirectory(dataDir, fileIO);
-                if (travelCatalog != null && travelCatalog.Count > 0)
-                    session.TravelEngine = new TravelEncounterSystem(travelCatalog);
+                if (session.TravelEngine == null)
+                {
+                    var travelCatalog = TravelEncounterCatalog.LoadFromDirectory(dataDir, fileIO);
+                    if (travelCatalog != null && travelCatalog.Count > 0)
+                        session.TravelEngine = new TravelEncounterSystem(travelCatalog);
+                }
+            }
+            if (session.TravelEngine != null)
+            {
+                session._bridge.TravelEngine = session.TravelEngine;
             }
 
             var save = ExpeditionSaveStore.TryLoad();
             if (save != null)
             {
-                session.Engine.RestoreState(save.expeditions);
-                if (save.vehicles != null)
-                    session.Vehicles.RestoreState(save.vehicles);
+                // Full aggregate restore: active sorties, garage, F4 known
+                // locations, and lifetime CompletedCount for endgame metrics.
+                session.RestoreSaveAggregate(save);
                 session.LastEvent = "Expedition state restored from save.";
             }
             else if (session.Vehicles.State.ownedVehicles.Count == 0)
@@ -680,6 +745,12 @@ namespace AtomicWar.GodotApp
 
             public Status Flag = Status.NotApplicable;
             public string FlagId = string.Empty;
+
+            /// <summary>F17 — micro-location hazard routing outcome. NotApplicable
+            /// for flags without a registered hazard; Applied when the canonical
+            /// disease authority received the consequence exactly once.</summary>
+            public MicroLocationHazardRegistry.HazardStatus Hazard = MicroLocationHazardRegistry.HazardStatus.NotApplicable;
+            public string HazardDiseaseId = string.Empty;
         }
 
         /// <summary>F2/F3/F4 — outcome of the most recent consequence
@@ -902,13 +973,37 @@ namespace AtomicWar.GodotApp
 
             // ── World flag (authored micro-location consequence) ──
             app.FlagId = r.SetWorldFlagId;
+            bool flagWasAlreadySet = true;
             if (!string.IsNullOrEmpty(r.SetWorldFlagId))
             {
-                bool already = Flags != null && Flags.IsSet(r.SetWorldFlagId);
+                flagWasAlreadySet = Flags != null && Flags.IsSet(r.SetWorldFlagId);
                 Flags?.Set(r.SetWorldFlagId, NarrativeEncounterSystem.SystemId, r.ResolutionId, r.Day);
-                app.Flag = already
+                app.Flag = flagWasAlreadySet
                     ? EncounterApplicationResult.Status.AlreadyKnown
                     : EncounterApplicationResult.Status.Applied;
+
+                // F17 — hazard consequence: a freshly-set micro-location hazard
+                // flag routes into the owning disease authority exactly once
+                // (never on AlreadyKnown — a persistent flag cannot re-infect on
+                // revisit, save/reload, or event replay). The registry owns the
+                // flag→consequence mapping; the survivor is the same scavenger
+                // who received the grant (or the ordinal-first active expedition
+                // at the site), resolved by the same deterministic rule as loot.
+                var hazard = MicroLocationHazardRegistry.ApplyFlagHazard(
+                    r.SetWorldFlagId,
+                    flagWasAlreadySet,
+                    ResolveGrantSurvivorId(r.EncounterId, r.LocationId),
+                    r.Day,
+                    ApplyDisease);
+                app.Hazard = hazard.Status;
+                app.HazardDiseaseId = hazard.DiseaseId;
+
+                // The exposure is the choice's biggest consequence — surface it
+                // on the same feedback strip as loot and journal lines.
+                // Presentation only; the ledger and the disease authority own
+                // the state. Restrained wording: show the risk, not the diagnosis.
+                if (hazard.Status == MicroLocationHazardRegistry.HazardStatus.Applied)
+                    feedback.Add($"Exposure: {HumanizeId(hazard.SurvivorId)} worked among the remains. Watch for fever.");
             }
 
             if (feedback.Count > 0)
@@ -1102,7 +1197,8 @@ namespace AtomicWar.GodotApp
             {
                 expeditions = Engine.CaptureState(),
                 vehicles = Vehicles.CaptureState(),
-                knownLocationIds = Engine.CaptureKnownLocations()
+                knownLocationIds = Engine.CaptureKnownLocations(),
+                completedCount = Engine.CompletedCount
             };
             if (aggregate.knownLocationIds.Count == 0)
                 aggregate.knownLocationIds = new List<string>(); // explicit empty — authoritative, not legacy
@@ -1116,6 +1212,7 @@ namespace AtomicWar.GodotApp
                 Engine.RestoreState(aggregate.expeditions);
             if (aggregate.vehicles != null)
                 Vehicles.RestoreState(aggregate.vehicles);
+            Engine.RestoreCompletedCount(aggregate.completedCount);
 
             // F4 restore: a present list (even empty) is authoritative. A null
             // list marks a legacy aggregate that predates the ledger —
