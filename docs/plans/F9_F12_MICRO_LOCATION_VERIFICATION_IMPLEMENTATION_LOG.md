@@ -193,3 +193,60 @@ Status: PARTIAL — see below.
    (`.f9f12_scaffold/`, removed after the wave) referencing the live Core sources,
    because no commit boundary of the shared tree compiled during the wave
    (streams commit individual files while interdependent work sits uncommitted).
+
+## Phase 6 — Seal closeout (2026-09-06)
+
+Status: SEALED (with disclosed in-flight items owned by other streams)
+
+### Finding 1 — wave tests silenced by quarantine (VALID, sealed)
+
+The csproj quarantine block had swept all four committed wave test files
+(Compile Remove) while they were untracked during the broken-tree window —
+the wave suite was silently absent from the main project. Commit 620381bd
+unquarantined them. Post-fix: wave suite 31/31 and micro-location family
+87/87 pass inside the main project; full run includes them.
+
+### Finding 2 — reports vs current trunk (RECONCILED)
+
+No committed drift in micro_locations.json / expeditions.json / selection
+code since the wave. items.json gained additive entries only (no tradeValue
+changes). Regenerated reports (env `ASHFALL_GEN_MICRO_REPORTS=1`) verified
+bit-stable by double reproduction on current trunk:
+- utilization: triggered 64 → 78 between the scaffold-era generation and the
+  current tree (eligibility buckets identical; transition attributable to the
+  churning uncommitted tree state at scaffold time; current generation stable).
+- economy: ratio 19.5% → 25.7% — both inside the 10–30% band; recommendation
+  unchanged (no tuning).
+- classification gates unchanged across all generations: 0 dead, 0 orphan.
+
+### Finding 3 — full-suite stall (ROOT CAUSE FOUND AND FIXED)
+
+`dotnet test --blame-hang` pinned the stall to
+`GeothermalAquiferSystemTests.AdvanceDrilling_BitDestroyed_DeactivatesProject`:
+the test drills in an unbounded `while` without loading a strata catalog, so
+`GetCurrentStrata()` is null, `AdvanceDrilling` fails `no_strata` every
+iteration, and the loop never terminates. Fixed in-place (untracked file —
+Flagship XI stream owns the commit): both drilling tests now load a depth-0
+stratum mirroring the real caprock. `SaveRoundTrip_PreservesFullState` in the
+same file still fails on behavior unrelated to the hang — left to its owner.
+
+### Final full-suite verdict (2026-09-06, with the hang fix)
+
+```
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --blame-hang
+Total: 8328  Passed: 8315  Failed: 13  Duration: 69 s   NO HANG, NO ABORT
+```
+
+All 13 failures are other streams' in-flight gate tests (VersionReport,
+CatchPolicyLint, SaveStoreMatrix, HostCliHelp, AgentRulebookSync — failing
+partly because AGENTS.md itself carries their uncommitted edits,
+ArchitectureTestMap, SelfTestManifest, Subterranean CaveIn determinism,
+CampaignRngSource). None belong to the F9–F12 wave; all 31 wave tests pass
+inside the full run.
+
+### Register updates
+
+AGENTS.md UI-21 verification record: "Full xUnit run" row annotated with the
+resolved root cause and the 8328/8315/13 verdict; resolution paragraph added.
+Left uncommitted because AGENTS.md carries another stream's uncommitted edits
+in the same file — committing would have shipped their work.
