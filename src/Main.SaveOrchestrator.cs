@@ -157,6 +157,8 @@ namespace AtomicWar.GodotApp
             SetupRadio();
             SetupMoraleContagion();
             SetupPathogenStrains();
+            SetupSubterranean();
+            SetupPsyOps();
             SetupCrafting();
             SetupCaravans();
             SetupExpeditions();
@@ -320,6 +322,8 @@ namespace AtomicWar.GodotApp
                 SaveRadio();
                 SaveMoraleContagion();
                 SavePathogenStrains();
+                SaveSubterranean();
+                SavePsyOps();
                 SaveDailyBriefing();
                 SavePowerGrid();
                 SaveGeothermalAquifer();

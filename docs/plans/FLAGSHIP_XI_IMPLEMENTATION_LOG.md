@@ -357,3 +357,66 @@ Divergences:
   editing and self-completed the rest. Recorded, not attributed to Flagship XI.
 
 Remaining: SubterraneanMapPanel UI + narrative echoes land in Slices 7-8.
+
+---
+
+## Slice 6 — PsyOps (Plan 157)
+
+Status: PASS (system + faction routing + save + host wiring + tick)
+
+Changed:
+- `Assets/Ashfall.Core/Radio/PsyOpsSystem.cs` — campaign instances from
+  `propaganda_campaigns.json` (validation: unknown id, duplicate campaign, one
+  active channel per target faction); abstract reach model —
+  `EffectiveReach = base × (transmitterReady ? 1 : 0.3 stall) × (1 − 0.6·jamming)
+  × (0.25 if countered) × (0.6 fatigue after 7 consecutive broadcast days)`;
+  signed loyalty pressure (Fear negative, all other themes positive) scaled by
+  reach and receptiveness; ideological-pressure ledger (−100..100, 5%/day decay)
+  as the influence record for targets without a runtime trust aggregate;
+  abstract player jamming (per faction, strength/duration) and counter-
+  propaganda (per campaign); seeded intercept rolls per (day, campaignId) —
+  base 0.15, +0.2 under jamming; ordinal iteration; FNV-1a seeds; no RNG state
+  persisted. Loyalty shifts reach real authorities ONLY via the host-routed
+  `LoyaltyShiftRequested` delegate (faction-scoped). Capture deep-copies;
+  restore is non-operative (applies no pressure, fires nothing).
+- `Assets/Ashfall.Core/Radio/PsyOpsSave.cs` + `src/Host/PsyOpsSaveStore.cs` —
+  versioned checksummed codec + SaveStoreHub façade, section `psyops`.
+- `src/Host/PsyOpsHostSession.cs` — thin session (LastEvent/StateChanged) +
+  `BroadcastIntercepted` bridge for intel/narrative consumers.
+- `src/Main.PsyOps.cs` — Setup/Save triad; transmitter gate = comms array
+  (`_commsArray.State.ArrayTier ≥ 1 && IsPowered` — the existing transmitter
+  authority) AND grid not in brownout; `RouteLoyaltyShift`: garrison/warlord →
+  `FactionWarSystem.ModifyStanding`, prpf/military/rebel →
+  `FactionBranchCoordinator.ModifyStanding`, holdfast trade factions → pressure
+  ledger only (no runtime trust aggregate exists for them in this host — D7).
+- `src/Main.CampaignOwners.cs` — phase-4 `psyops` day owner (after expeditions,
+  before world_evolution, matching the plan's daily order).
+- `src/Main.SaveOrchestrator.cs` — `SetupPsyOps`/`SavePsyOps` wired.
+- Content utilization edges (Slice 2 wiring) now resolve: `PsyOpsSystem` exists.
+
+Tests: `Ashfall.Core.Tests/Flagship11/PsyOpsSystemTests.cs` — 9 tests:
+campaign validation incl. one-channel-per-target (synthetic duplicate-target
+catalog), expiry exactly-once, reach model (stall/jam/counter ordering),
+faction-scoped shifts with Fear-negative theme sign, ledger accumulate/decay/
+clamp, intercept determinism (identical traces) + jamming raises intercept
+frequency (100-day statistical window), campaign fatigue, save round-trip +
+restore non-operative + identical continuation + tamper rejection, and the
+real catalog starting all 8 campaigns on 8 distinct targets.
+61/61 Flagship11 tests PASS.
+
+Result: `dotnet build Ashfall.csproj` 0 errors; `--data-integrity-selftest`
+PASS (262 catalogs); `--content-utilization-selftest` PASS (0 orphans).
+
+Divergences:
+- D7: holdfast trade factions have no runtime trust aggregate in the current
+  host (FactionStanceEngine instances are per-domain session state); psyops
+  influence on them accrues in the system's own ideological-pressure ledger and
+  is surfaced through readouts — routed shifts touch only authorities that
+  actually exist (FactionWarSystem, FactionBranchCoordinator).
+- Transmitter gate reads the comms array's saved state (`State.ArrayTier`,
+  `State.IsPowered`) — the live system exposes state via `State`, not getters
+  (the class was rewritten by a concurrent stream mid-slice; the gate uses the
+  current surface).
+
+Remaining: `TroposphericRadioRelayPanel` revival (typed PsyOps binding) +
+leaflet expedition encounter data land in Slices 7-8.

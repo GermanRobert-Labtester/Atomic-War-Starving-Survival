@@ -47,6 +47,9 @@ namespace AtomicWar.GodotApp
             // Flagship XI (Plan 156): underground hazards tick after expeditions
             // (ordinal 's' > 'e', < 'w') so the bridge reads fresh sortie phases.
             _campaignDay.Register("subterranean_network", new SubterraneanDayOwner(this), phase: 4);
+            // Flagship XI (Plan 157): psyops broadcast day resolves after
+            // expeditions (leaflets) and alongside the world-evolution radio feed.
+            _campaignDay.Register("psyops", new PsyOpsDayOwner(this), phase: 4);
 
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
@@ -502,6 +505,31 @@ namespace AtomicWar.GodotApp
                 _m._caravans.TickRoute();
 
                 events.Add(new DayStateChangeEvent("expeditions_caravans_ticked", "expeditions_caravans", null, null, day));
+            }
+        }
+
+        /// <summary>
+        /// Flagship XI (Plan 157) — psyops broadcast day: campaign resolution,
+        /// loyalty-pressure routing to the faction authorities, intercept rolls.
+        /// </summary>
+        private sealed class PsyOpsDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public PsyOpsDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { /* no snapshot: campaign days are day-local */ }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupPsyOps();
+                if (_m._psyops == null) return;
+
+                int active = 0;
+                var campaigns = _m._psyops.System.Campaigns;
+                for (int i = 0; i < campaigns.Count; i++)
+                    if (campaigns[i] != null && campaigns[i].status == (int)Ashfall.Core.Radio.PsyOpsCampaignStatus.Active)
+                        active++;
+
+                _m._psyops.System.TickCampaigns(day);
+                events.Add(new DayStateChangeEvent("psyops_ticked", "psyops", null, null, active));
             }
         }
 
