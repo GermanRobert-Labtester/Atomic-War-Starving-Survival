@@ -340,7 +340,16 @@ namespace Ashfall.Core.Tests
         public void WriteBalanceReport()
         {
             var ledger = BuildLedger(LoadTradeValues());
-            var result = EconomyReportScratch.Result ?? RunEconomySimulation();
+            // Self-contained: run the sim here so the report never depends on
+            // test execution order for its numbers.
+            var result = RunEconomySimulation();
+            double meanPrimary = result.TotalPrimaryValue / 100d;
+            double meanMicro = result.TotalMicroItemValue / 100d;
+            double ratio = meanMicro / meanPrimary;
+            EconomyReportScratch.MeanPrimary = meanPrimary;
+            EconomyReportScratch.MeanMicro = meanMicro;
+            EconomyReportScratch.Ratio = ratio;
+            EconomyReportScratch.Result = result;
 
             if (Environment.GetEnvironmentVariable("ASHFALL_GEN_MICRO_REPORTS") == "1")
             {
@@ -372,9 +381,6 @@ namespace Ashfall.Core.Tests
                       .Append(" |\n");
 
                 sb.Append("\n## 100-expedition results\n\n");
-                double meanPrimary = EconomyReportScratch.MeanPrimary;
-                double meanMicro = EconomyReportScratch.MeanMicro;
-                double ratio = EconomyReportScratch.Ratio;
                 var perMicro = result.PerExpeditionMicro.OrderBy(x => x).ToList();
                 var perPrimary = result.PerExpeditionPrimary.OrderBy(x => x).ToList();
                 sb.Append("- mean primary loot value / expedition: ").Append(meanPrimary.ToString("0.##")).Append('\n');
@@ -433,7 +439,6 @@ namespace Ashfall.Core.Tests
         public static double MeanPrimary;
         public static double MeanMicro;
         public static double Ratio;
-        public static MicroLocationEconomyAuditTests? Holder;
         public static MicroLocationEconomyAuditTests.EconomyResult? Result;
     }
 }

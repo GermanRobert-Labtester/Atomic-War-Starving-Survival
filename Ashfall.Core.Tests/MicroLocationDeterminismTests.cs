@@ -97,10 +97,10 @@ namespace Ashfall.Core.Tests
             var truck = sys.Find("micro_crashed_truck");
             Assert.NotNull(truck);
             Assert.False(sys.IsDepleted(truck!.id));
-            truck.GetEffectiveWeight("Stealth", 2f, GasStation, cats);
-            truck.GetEffectiveWeight("Speed", 0f, GasStation, null);
+            truck.GetEffectiveWeight("Stealth", 2f, GasStation);
+            truck.GetEffectiveWeight("Speed", 0f, GasStation);
             sys.Find("micro_supply_drop");
-            sys.SelectEncounter("Stealth", 0f, GasStation, counting, cats); // eligible → documented roll
+            sys.SelectEncounter("Stealth", 0f, GasStation, counting); // eligible → documented roll
 
             Assert.Equal(1, counting.Draws);
         }
@@ -192,7 +192,7 @@ namespace Ashfall.Core.Tests
             var counting = new CountingRng(new SeededRng(31));
             var cats = ExpeditionDefinitionRegistry.Get(Allotments)?.lootCategories;
             for (int i = 0; i < 20; i++)
-                f.Narrative.SelectEncounter("Stealth", 2f, Allotments, counting, cats);
+                f.Narrative.SelectEncounter("Stealth", 2f, Allotments, counting);
             return counting.Draws;
         }
 

@@ -88,4 +88,101 @@ selection pipeline deterministic; nothing to carry across a save boundary).
 
 ## Phase 1 — Wave B (F9 persistence evidence)
 
-Status: PENDING
+Status: PASS (commit 45307130)
+
+Changed:
+- `Ashfall.Core.Tests/MicroLocationPersistenceWaveTests.cs` — 8 tests: production wire
+  round-trips (SystemTextJsonSerializer payload) for depletion and pending surfacing,
+  insertion-order-independent ordinal capture, capture immutability, malformed
+  duplicate-id collapse, INV-03 reward independence, legacy null-field reconstruction,
+  world-flag reapply convergence.
+
+Tests: 8/8 pass. Divergences: F9.13 empty-set default superseded by shipped §48
+history reconstruction (see D3 above); wire test pins that contract instead.
+
+## Phase 2 — Wave C (F10 determinism)
+
+Status: PASS
+
+Changed:
+- `Ashfall.Core.Tests/MicroLocationDeterminismHarness.cs` — production-wiring fixture
+  (full catalog, registered destinations, scavenging authority, ONE shared stream),
+  passive per-tick trace, ordinal depletion snapshots via CaptureState, draw-count
+  continuation replay (`CountingRng.ReplayDraws`).
+- `Ashfall.Core.Tests/MicroLocationDeterminismTests.cs` — 9 tests: named seeds 42/99/7
+  ×8 ticks repeat (runA/B/C), save@tick4 continuation == uninterrupted (INV-09),
+  metadata zero-draw contract, zero-eligible zero-draw, source-scan INV-06 gate,
+  stream-identical replay, depletion filtering determinism, 100-seed sweep 100/100.
+- `docs/discovery/MICRO_LOCATION_DETERMINISM.md` — the 10-section verified contract.
+
+Divergences: `SeededRng` lost its `State` getter/ctor mid-wave (upstream commit) —
+continuation checkpoints are draw counts replayed into fresh worlds; documented in
+the harness header and determinism doc §2/§7.
+
+## Phase 3 — Wave D (F11 utilization)
+
+Status: PASS
+
+Changed:
+- `Ashfall.Core.Tests/MicroLocationUtilizationAuditTests.cs` — 7 tests: 28 unique ids +
+  required fields, item/requiredItem references resolve, discovery/required locations
+  resolve + structural reachability, journal namespace discipline, eligibility-context
+  matrix over all authored destinations (28/28 have ≥1 context), reproducible
+  1000-opportunity simulation with dead/orphan/too-common/sample-luck classification,
+  redundancy scan (0 pairs above threshold).
+- `docs/discovery/MICRO_LOCATION_UTILIZATION.md` — generated (env
+  `ASHFALL_GEN_MICRO_REPORTS=1`), regeneration documented in-file.
+
+Findings (reported, not failures, per INV-10): 0 dead, 0 orphan; 3 entries not
+selected in the 1000-opportunity sample with expected < 1 (supply_drop, chapel
+ledger, levy board — rare by weight); 4 low-yield; 0 redundant pairs.
+
+## Phase 4 — Wave E (F12 economy)
+
+Status: PASS
+
+Changed:
+- `Ashfall.Core.Tests/MicroLocationEconomyAuditTests.cs` — 7 tests: ledger validation
+  (all grants resolve, finite values, outlier figures pinned: supply_drop 20, ring 25,
+  memorial 1.2, shrine cost), deterministic 100-expedition production-path simulation,
+  farming resistance (depleting grants one-shot across 64 seeds × every grant entry;
+  non-depleting grants must be net non-positive), outlier shape pinning, env-gated
+  balance report.
+- `docs/discovery/MICRO_LOCATION_BALANCE.md` — generated (same env gate).
+
+Headline: mean primary 7.69 vs mean micro 1.50 trade value/expedition → **19.5%**
+micro/primary ratio — inside the 10–30% band → **no balance tuning** (INV-10).
+Methodology notes: greedy max-item-value resolution = upper bound (0 journal unlocks
+and −3 morale/+6 guilt under greedy are methodology artifacts; the full reward
+structure — 16 journal keys, 2 discoveries, morale/guilt economics — is in the
+per-choice ledger table); only 8 micro-locations surfaced across 100 sorties because
+micros are a minority of the full encounter pool at ~0.06 trigger odds/tick.
+
+## Phase 5 — Wave F (revalidation)
+
+Status: PARTIAL — see below.
+
+- Wave suite (31 tests: F9 8 + F10 9 + F11 7 + F12 7): **PASS** (serial execution;
+  `ExpeditionDefinitionRegistry` is a static shared by loader paths, so the audit
+  classes require the repo's DisableTestParallelization contract).
+- `dotnet build Ashfall.csproj` / full-repo `dotnet test`: **blocked by concurrent
+  in-flight work from other streams** (untracked Collectible*/CraftAttribution* /
+  ContentAcceptanceLadder test files reference APIs that no longer exist on trunk —
+  `SeededRng.State`, `CollectibleCatalogFileRaw`, `TradeSpecialtySystem.OnCraftCompleted`,
+  `ContentExemption.ExpiryDate`). Not attributable to this wave; this wave's files
+  compile against current trunk (proven by the scaffold build).
+- Disclosed one-token fix to unblock the whole tree for every stream:
+  `Assets/Ashfall.Core/Farming/CropStrainCatalog.cs:140` `files.Exists(path)` →
+  `files.FileExists(path)` (the `IFileIO` port has no `Exists`).
+
+## Cross-cutting adaptations (mid-wave trunk drift)
+
+1. Route-affinity overload removal: another stream removed the F14
+   `lootCategories` overloads (`GetEffectiveWeight` 4-arg, `SelectEncounter` 5-arg)
+   during this wave. All wave code pins to the API intersection (3-arg weight,
+   4-arg select) which compiles against both the pre- and post-drift trunk.
+   Utilization/economy numbers measure **current-trunk selection semantics**.
+2. Verification ran in an untracked local scaffold project
+   (`.f9f12_scaffold/`, removed after the wave) referencing the live Core sources,
+   because no commit boundary of the shared tree compiled during the wave
+   (streams commit individual files while interdependent work sits uncommitted).

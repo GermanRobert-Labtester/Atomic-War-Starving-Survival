@@ -71,7 +71,7 @@ namespace Ashfall.Core.Tests
         }
 
         private static double EligibleWeight(EncounterDefinition e, ExpeditionDefinition d, string stance)
-            => e.GetEffectiveWeight(stance, d.dangerLevel, d.id, d.lootCategories);
+            => e.GetEffectiveWeight(stance, d.dangerLevel, d.id);
 
         private static bool Triggers(ExpeditionDefinition d, ISeededRng rng)
             => rng.NextDouble() < d.encounterChancePerTick * 0.5f; // Stealth parity with RollEncounter
@@ -247,12 +247,12 @@ namespace Ashfall.Core.Tests
 
                 // Eligibility bookkeeping consumes no RNG (metadata only).
                 foreach (var m in micros)
-                    if (m.GetEffectiveWeight("Stealth", d.dangerLevel, d.id, d.lootCategories) > 0f)
+                    if (m.GetEffectiveWeight("Stealth", d.dangerLevel, d.id) > 0f)
                         stats.Eligible[m.id]++;
 
                 if (!Triggers(d, rng)) continue;
                 stats.Triggered++;
-                var picked = sys.SelectEncounter("Stealth", d.dangerLevel, d.id, rng, d.lootCategories);
+                var picked = sys.SelectEncounter("Stealth", d.dangerLevel, d.id, rng);
                 if (picked == null) { stats.NoSelection++; continue; }
                 stats.Selected[picked.id] = stats.Selected.TryGetValue(picked.id, out var n) ? n + 1 : 1;
             }
@@ -323,11 +323,11 @@ namespace Ashfall.Core.Tests
             int slots = stats.Opportunities / destinations.Count;
             foreach (var d in destinations)
             {
-                float w = m.GetEffectiveWeight("Stealth", d.dangerLevel, d.id, d.lootCategories);
+                float w = m.GetEffectiveWeight("Stealth", d.dangerLevel, d.id);
                 if (w <= 0f) continue;
                 double total = 0d;
                 foreach (var other in LoadMicroCatalog())
-                    total += other.GetEffectiveWeight("Stealth", d.dangerLevel, d.id, d.lootCategories);
+                    total += other.GetEffectiveWeight("Stealth", d.dangerLevel, d.id);
                 if (total <= 0d) continue;
                 expected += slots * (d.encounterChancePerTick * 0.5f) * (w / total);
             }
