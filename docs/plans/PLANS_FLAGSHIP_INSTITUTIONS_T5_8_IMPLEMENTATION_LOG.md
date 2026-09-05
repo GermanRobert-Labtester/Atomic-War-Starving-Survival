@@ -116,6 +116,23 @@ Phase G work-in-progress files verbatim; content verified intact in HEAD.
 5. Validator needed VocabularyKeys repairs for 5 label columns, 2 of them
    pre-existing FAILs on this branch (Plans 90-93) — repaired alongside.
 
+### Host wave 2 (2026-09-05, commit e8292eca) — ports now live
+
+The v1 null-port divergence (#4) is resolved: standing -> FactionWarSystem,
+skills -> shared SkillProgressionSystem, conditions -> Phase-0 canonical
+trauma surfaces (hypervigilance / flashback susceptibility / guilt-insomnia
+severity, with authored thresholds per condition id), salon morale ->
+NeedsSystem(Morale) for the living roster, archive cuts -> VinylMoraleSystem
+MergeRecord, dream transcription -> one archive disc. Canonical relief APIs
+were added to the OWNING systems (CombatTraumaSystem.ApplyTherapyRelief,
+SomaticFlashbackSystem.ReduceSusceptibility,
+GuiltInsomniaSystem.ApplyTherapyRelief, VinylMoraleSystem.MergeRecord) — the
+sanatorium still never writes survivor state directly. Relapse (negative
+reduction) intentionally does not re-escalate canonical surfaces (no
+canonical re-escalation API exists; the sanatorium risk ledger tracks it).
+Load-game lifecycle: flagship sessions register a lifecycle participant and
+reset with everything else.
+
 ### Remaining known limitations
 
 1. Shared `Ashfall.Core.Tests` suite remains uncompilable from concurrent
@@ -126,10 +143,11 @@ Phase G work-in-progress files verbatim; content verified intact in HEAD.
 2. UI panels for the four institutions are out of scope (plan §24: core-system
    tasks; scene lint not required). Systems expose events + state for a future
    Stitch-designed panel wave.
-3. Culture salon morale surfaces as an event (`OnSalonMoraleTick`) awaiting a
-   host consumer into NeedsSystem (single line when wired).
-4. Diplomacy standing deltas route through `IFactionStandingPort`; host
-   binding to FactionWarSystem pending the same null-port note as (4).
+3. (resolved — host wave 2) Salon morale now reaches NeedsSystem.
+4. (resolved — host wave 2) Standing routes to FactionWarSystem.
+5. UI panels for the four institutions remain the natural next wave
+   (google-stitch authority per AGENTS.md); systems expose complete events +
+   state for binding.
 
 ---
 
@@ -149,7 +167,7 @@ Culture:
 
 Diplomacy:
 - treaty count: 8 (diplomatic_treaties.json)
-- faction authority: canonical faction systems via IFactionContextPort / IFactionStandingPort
+- faction authority: canonical faction systems; host binds IFactionStandingPort to _yearOfAsh.FactionWar
 - territory/DMZ authority: DiplomaticSummitSystem publishes IsArmedPatrolAllowed;
   zone ids validated against live world catalogs at load
 - grievance/war authority: violations route via IFactionStandingPort AdjustStanding
@@ -168,7 +186,7 @@ Sky Defense:
 
 Sanatorium:
 - therapy count: 8 + 6 conditions (psychological_therapies.json)
-- canonical condition authority: ISurvivorConditionPort (canonical trauma systems)
+- canonical condition authority: ISurvivorConditionPort -> Phase-0 trauma systems (hypervigilance / flashback / guilt-insomnia surfaces with authored thresholds)
 - survivor availability authority: InstitutionAssignmentLedger (one claim per survivor)
 - treatment effect authority: single ApplyTherapyOutcome applier
 - relapse RNG stream: keyed stream seed = FNV(masterSeed, survivorId, day); no persisted continuation
