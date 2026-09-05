@@ -14,6 +14,14 @@ namespace Ashfall.Core
 
         public static class Items
         {
+            // F18 — pre-existing generic seed packet (items.json "seed_packets",
+            // "assorted vegetable seeds, some dated, some anonymous"). Route it
+            // through the canonical crop catalog so grants (e.g. the ruined
+            // greenhouse micro-location) are real agriculture inputs instead of
+            // dead inventory. Data-contract fix at the crop authority — no
+            // micro-location-specific planting exception exists.
+            public const string SeedPacketsMixed = "seed_packets";
+
             public const string SeedMushroom = "item_seed_mushroom";
             public const string SeedTuber = "item_seed_tuber";
             public const string SeedGrain = "item_seed_grain";
@@ -110,6 +118,24 @@ namespace Ashfall.Core
                     BaseYield = 2,
                     BlightResistance = 0.85f,
                     ContaminationTolerance = 60f,
+                    RequiresUnlock = false
+                },
+                new CropDef
+                {
+                    // F18 — mixed assorted-vegetable packet maps to the hardy
+                    // starter staple: anonymous seeds most reliably grow tubers.
+                    // Stats mirror the item_seed_tuber profile (no invented
+                    // balance layer); plantability flows through the one
+                    // canonical CropCatalog lookup, unchanged for every caller.
+                    SeedItemId = Items.SeedPacketsMixed,
+                    YieldCleanId = Items.CropTuber,
+                    YieldTaintedId = Items.TaintedFood,
+                    GrowthHoursToMature = 144f,
+                    WaterPerDay = 12f,
+                    LightHoursPerDay = 6f,
+                    BaseYield = 3,
+                    BlightResistance = 0.70f,
+                    ContaminationTolerance = 45f,
                     RequiresUnlock = false
                 },
                 new CropDef

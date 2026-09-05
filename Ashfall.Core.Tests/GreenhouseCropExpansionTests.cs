@@ -9,9 +9,25 @@ namespace Ashfall.Core.Tests
     public sealed class GreenhouseCropExpansionTests
     {
         [Fact]
-        public void CropCatalog_ContainsAll12Crops()
+        public void CropCatalog_ContainsAll13Crops()
         {
-            Assert.Equal(12, GreenhouseExpansionCatalog.CropCatalog.All.Length);
+            // 12 canonical item_seed_* crops + the F18 mixed-packet route:
+            // "seed_packets" (items.json assorted-vegetable envelope) maps to
+            // the tuber profile so micro-location seed grants are plantable
+            // through the one canonical CropCatalog contract.
+            Assert.Equal(13, GreenhouseExpansionCatalog.CropCatalog.All.Length);
+        }
+
+        [Fact]
+        public void CropCatalog_MixedSeedPacket_IsPlantable_AndCanonical()
+        {
+            // F18 — the pre-existing generic packet must resolve to a real
+            // clean-yield crop; it may not silently remain a dead item.
+            var def = GreenhouseExpansionCatalog.CropCatalog.Get(
+                GreenhouseExpansionCatalog.Items.SeedPacketsMixed);
+            Assert.NotNull(def);
+            Assert.Equal("crop_tuber", def!.YieldCleanId);
+            Assert.False(def.RequiresUnlock);
         }
 
         [Theory]
