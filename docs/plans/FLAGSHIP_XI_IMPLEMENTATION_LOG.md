@@ -282,3 +282,78 @@ Remaining: medical-ward surface already shows strains through DiseaseHostSession
 snapshots (they are disease rows); no dedicated panel needed. Outbreak→morale
 cross-system trigger (`contagion_outbreak_fear` on outbreak declared) lands in
 Slice 8.
+
+---
+
+## Slice 5 — Subterranean exploration networks (Plan 156)
+
+Status: PASS (system + expedition bridge + save + host wiring + trait)
+
+Changed:
+- `Assets/Ashfall.Core/Subterranean/SubterraneanSystem.cs` — node state
+  (discovery, structuralIntegrity, shoringLevel 0..3, oxygenLevel,
+  ventilationInstalled, waterLevel, blocked); `EnsureNetwork(campaignSeed)` —
+  deterministic one-time generation from catalog + seed (seeded per-node
+  integrity/oxygen/water variance; ids = catalog ids verbatim; generated flag
+  persisted; restore never regenerates); discovery flows surface-anchor →
+  tier-1 nodes → one connected step down; `ApplyUndergroundDay` — environmental
+  hazards run for the WHOLE generated network (the underground keeps its own
+  time), oxygen drains only for occupants, low-O2 health request via canonical
+  delegate, forced-retreat event under 10 O2, flood pressure from the canonical
+  weather query (SumpFlooding scale; saturation blocks + erodes every saturated
+  day, event on transition only), cave-in roll seeded per (day, nodeId) with
+  abstract risk factors damped 25%/shoring level; `TryShoreNode`/
+  `TryInstallVentilation`/`TryClearBlockage` — atomic `InventoryBill` billing
+  (scrap_wood×4 + steel_rebar×2 [+scrap_metal×2 on second set]; scrap_metal×3 +
+  battery×1; scrap_wood×2), permanent risk reduction, structure-sound gating;
+  `UndergroundMoraleDelta` — claustrophobia bearer penalty (−3) only, zero
+  otherwise. FNV-1a seeded rolls; no RNG state persisted.
+- `Assets/Ashfall.Core/Subterranean/SubterraneanSave.cs` +
+  `src/Host/SubterraneanSaveStore.cs` — versioned checksummed codec +
+  SaveStoreHub façade, section `subterranean`; old campaigns load as "no
+  network" and generate lazily from `CampaignRngStream.MasterSeed`.
+- `src/Host/SubterraneanHostSession.cs` — thin session + the expedition
+  bridge (156.6): every zone registers as a CANONICAL `ExpeditionDefinition`
+  (distance by depth tier, danger/encounter risk from zone risk, loot through
+  the zone's `scavenging_table_id`, `requiresDiscovery=true`) — no second
+  roster; `TickDay` feeds each active underground sortie's environment hazards,
+  applies claustrophobia morale via the needs authority, and routes forced
+  retreats back through `ExpeditionSystem.Retreat`.
+- `src/Main.Subterranean.cs` — Setup/Save triad; weather read from
+  `WorldHostSession.Weather.Current`; health/morale deltas through NeedsSystem;
+  claustrophobia read from `SurvivorDefinition.traitIds`.
+- `src/Main.CampaignOwners.cs` — phase-4 `subterranean_network` day owner
+  (ordinal after `expeditions_caravans`, before `world_evolution`).
+- `SaveSectionRegistry.cs` + `Main.SaveOrchestrator.cs` — section + triad wired.
+- `survivors.json` — `trait_claustrophobe` on 2 survivors (2-line surgical diff;
+  self-registers via the traitIds definition-key mechanism).
+- Content utilization: `subterranean_zones.json` loader edge registered in Slice 4's pass.
+
+Tests: `Ashfall.Core.Tests/Flagship11/SubterraneanSystemTests.cs` — 11 tests:
+deterministic generation + stable ids + seed variance, EnsureNetwork idempotence
+after live mutation, anchor→connection discovery, oxygen drain/ventilation
+recovery/health request/forced retreat, weather-driven flood (rise, seep-out,
+saturation block + erosion), seeded deterministic cave-in with shoring damping
+(roll window chosen so unshored fires, shored rides out), atomic shoring with
+material gating and cost escalation, blockage clearing rules, claustrophobia
+delta scoping, save round-trip + EnsureNetwork no-op after restore, old-save
+lazy generation. 52/52 Flagship11 tests PASS.
+
+Result: `dotnet build Ashfall.csproj` 0 errors; `--data-integrity-selftest`
+PASS (262 catalogs); companion tests 52/52.
+
+Divergences:
+- Underground sorties are plain expeditions to registered underground
+  destinations; oxygen/collapse hazards apply per underground DAY (the bridge's
+  daily tick) rather than per travel tick — documented; a per-tick hazard seam
+  can hook `SetEncounterChanceMultiplier` later without re-architecture.
+- Loot tables reuse the canonical underground tables (metro_station,
+  collapsed_structure, waterworks, etc.); a sealed-pre-war table expansion is a
+  data-only follow-up.
+- D6 (baseline): concurrent foreign streams landed broken files mid-slice
+  (`CulturalArchiveSaveStore` etc. missing `using Ashfall.Core.Save;`,
+  `Main.FlagshipInstitutions.cs` missing usings/day-owner member) — applied
+  minimal mechanical fixes to unblock the shared build; their stream continued
+  editing and self-completed the rest. Recorded, not attributed to Flagship XI.
+
+Remaining: SubterraneanMapPanel UI + narrative echoes land in Slices 7-8.

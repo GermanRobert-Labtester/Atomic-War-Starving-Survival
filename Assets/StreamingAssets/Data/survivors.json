@@ -10,6 +10,7 @@
         },
         {
             "id": "marcus_olejnik",
+            "traitIds": ["trait_claustrophobe"],
             "displayName": "Marcus Olejnik",
             "profession": "Mechanical Engineer",
             "bio": "Marcus kept a turbine hall running on parts that were condemned five years earlier. He talks to machines more easily than to people, and is usually right about what they tell him.",
@@ -17,6 +18,7 @@
         },
         {
             "id": "suki_tanaka",
+            "traitIds": ["trait_claustrophobe"],
             "displayName": "Suki Tanaka",
             "profession": "Farmer",
             "bio": "Suki grew tomatoes on a rooftop where everyone said the wind would kill them. She tests soil by taste now, spits twice, and keeps a seed list she intends to outlive her.",
