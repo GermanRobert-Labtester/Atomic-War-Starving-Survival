@@ -7352,6 +7352,186 @@
       "weight": 1.0,
       "tradeValue": 16,
       "empShielded": true
+    },
+    {
+      "id": "item_ebpvd_ceramic_target_ingot",
+      "displayName": "EB-PVD Ceramic Target Ingot",
+      "description": "High-purity sintered zirconia-yttria target ingot for electron-beam evaporation in vacuum chambers.",
+      "type": "Material",
+      "stackMax": 5,
+      "weight": 2.5,
+      "tradeValue": 45
+    },
+    {
+      "id": "item_electron_gun_tungsten_filament",
+      "displayName": "Electron Gun Tungsten Filament",
+      "description": "Precision wound refractory tungsten cathode hairpin for high-voltage electron beam generation.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.1,
+      "tradeValue": 35
+    },
+    {
+      "id": "item_mcraly_bond_coat_powder",
+      "displayName": "MCrAlY Bond Coat Powder",
+      "description": "Metallic superalloy powder matrix applied before ceramic barrier deposition to provide oxidation resistance.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 1.0,
+      "tradeValue": 30
+    },
+    {
+      "id": "item_superalloy_turbine_blade_blank",
+      "displayName": "Superalloy Turbine Blade Blank",
+      "description": "Precision-cast nickel-chromium superalloy blade blank awaiting protective thermal barrier coating.",
+      "type": "Material",
+      "stackMax": 5,
+      "weight": 3.0,
+      "tradeValue": 55
+    },
+    {
+      "id": "item_coated_turbine_blade",
+      "displayName": "EB-PVD Coated Turbine Blade",
+      "description": "Finished high-temperature turbine blade with columnar ceramic thermal barrier coating.",
+      "type": "Equipment",
+      "stackMax": 5,
+      "weight": 3.1,
+      "tradeValue": 110
+    },
+    {
+      "id": "item_coated_combustor_tile",
+      "displayName": "Coated Combustor Tile",
+      "description": "Ceramic-insulated combustor liner tile for generator and thermal plant upgrade.",
+      "type": "Equipment",
+      "stackMax": 5,
+      "weight": 4.0,
+      "tradeValue": 95
+    },
+    {
+      "id": "item_coated_diesel_injector",
+      "displayName": "Coated Diesel Injector Nozzle",
+      "description": "Hardened and coated fuel injector nozzle with elevated heat and corrosion resistance.",
+      "type": "Equipment",
+      "stackMax": 10,
+      "weight": 0.5,
+      "tradeValue": 60
+    },
+    {
+      "id": "item_ebpvd_vacuum_pump_seal",
+      "displayName": "EB-PVD Viton Vacuum Seal",
+      "description": "Fluoropolymer hermetic gasket seal engineered for high-vacuum coater chambers.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.3,
+      "tradeValue": 18
+    },
+    {
+      "id": "item_mine_flail_module",
+      "displayName": "Heavy Mine-Clearing Flail Module",
+      "description": "Reinforced vehicle-mounted rotating flail drum assembly for mechanical mine detonation and breach clearance.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 180.0,
+      "tradeValue": 220
+    },
+    {
+      "id": "item_hardened_flail_chain",
+      "displayName": "Hardened Flail Chain Link",
+      "description": "Heavy forged alloy strike chain links designed to withstand ground impact and blast detonations.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 4.0,
+      "tradeValue": 25
+    },
+    {
+      "id": "item_hydraulic_drive_motor",
+      "displayName": "Heavy Hydraulic Drive Motor",
+      "description": "High-torque industrial hydraulic motor configured for rotating heavy clearance drums and flails.",
+      "type": "Equipment",
+      "stackMax": 2,
+      "weight": 25.0,
+      "tradeValue": 90
+    },
+    {
+      "id": "item_armored_blast_shield",
+      "displayName": "Armored Flail Blast Deflector",
+      "description": "Curved sloped armor plate mounted behind the flail drum to shield chassis and driver from blast fragmentation.",
+      "type": "Equipment",
+      "stackMax": 2,
+      "weight": 60.0,
+      "tradeValue": 85
+    },
+    {
+      "id": "item_pdms_silicone_kit",
+      "displayName": "Microfluidic PDMS Elastomer Kit",
+      "description": "Two-part prepolymer and curing agent kit for casting microchannel diagnostic cartridges.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 1.0,
+      "tradeValue": 35
+    },
+    {
+      "id": "item_microfluidic_reader",
+      "displayName": "Optical Fluorescence Micro-Reader",
+      "description": "Compact multichannel photometer for reading fluorescent assay cartridges with laser excitation.",
+      "type": "Equipment",
+      "stackMax": 2,
+      "weight": 4.5,
+      "tradeValue": 140
+    },
+    {
+      "id": "item_assay_reagent_pack",
+      "displayName": "Lyophilized Assay Reagent Pack",
+      "description": "Freeze-dried antibody/fluorophore reagent pellets for loading into microfluidic diagnostic chips.",
+      "type": "Consumable",
+      "stackMax": 25,
+      "weight": 0.2,
+      "tradeValue": 28
+    },
+    {
+      "id": "item_microfluidic_cartridge_general",
+      "displayName": "Microfluidic Diagnostic Cartridge",
+      "description": "Sealed lab-on-a-chip diagnostic cartridge loaded with reagents for rapid patient pathogen detection.",
+      "type": "Consumable",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 40
+    },
+    {
+      "id": "item_rail_grinding_head",
+      "displayName": "Rail Grinding Modular Head",
+      "description": "High-precision abrasive stone grinding head for reprofiling damaged steel rails on draisines.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 120.0,
+      "tradeValue": 190
+    },
+    {
+      "id": "item_abrasive_grinding_stone",
+      "displayName": "Abrasive Corundum Grinding Stone",
+      "description": "Vitrified corundum abrasive cup wheel rated for heavy rail corrugation and defect removal.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 8.0,
+      "tradeValue": 32
+    },
+    {
+      "id": "item_rail_profiling_cylinder",
+      "displayName": "Hydraulic Downforce Cylinder",
+      "description": "Double-acting hydraulic cylinder providing constant pressure on rail grinding stones.",
+      "type": "Equipment",
+      "stackMax": 4,
+      "weight": 15.0,
+      "tradeValue": 50
+    },
+    {
+      "id": "item_spark_suppression_manifold",
+      "displayName": "Water Spark Suppression Manifold",
+      "description": "High-pressure misting manifold that suppresses grinding sparks and prevents wayside brushfires.",
+      "type": "Equipment",
+      "stackMax": 2,
+      "weight": 8.0,
+      "tradeValue": 40
     }
   ]
 }

@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "machine": {
+    "min_voltage_kv": 15.0,
+    "max_voltage_kv": 25.0,
+    "nominal_power_kw": 10.0,
+    "target_vacuum_mbar": 0.00001
+  },
+  "coatings": [
+    {
+      "id": "ebpvd_tbc_yttria_stabilized_zirconia",
+      "display_name_key": "ebpvd_coating_ysz_name",
+      "display_name": "7YSZ Thermal Barrier Coating",
+      "ceramic_target_item_id": "item_ebpvd_ceramic_target_ingot",
+      "bond_coat_item_id": "item_mcraly_bond_coat_powder",
+      "valid_substrate_tags": [
+        "superalloy_blade",
+        "combustor_liner",
+        "diesel_injector"
+      ],
+      "target_thickness_um": 125.0,
+      "min_substrate_temperature_c": 950.0,
+      "nominal_rotation_rpm": 12.0,
+      "nominal_raster_hz": 500.0,
+      "base_duration_hours": 4.0,
+      "base_power_kwh": 40.0,
+      "thermal_resistance_bonus": 0.35,
+      "max_temperature_bonus_c": 180.0,
+      "durability_bonus": 0.4,
+      "spallation_base_risk": 0.05,
+      "required_skill": "mechanical",
+      "tags": [
+        "thermal_barrier",
+        "high_temp",
+        "turbine"
+      ]
+    },
+    {
+      "id": "ebpvd_tbc_gadolinium_zirconate",
+      "display_name_key": "ebpvd_coating_gz_name",
+      "display_name": "Pyrochlore Gd2Zr2O7 Advanced TBC",
+      "ceramic_target_item_id": "item_ebpvd_ceramic_target_ingot",
+      "bond_coat_item_id": "item_mcraly_bond_coat_powder",
+      "valid_substrate_tags": [
+        "superalloy_blade",
+        "combustor_liner"
+      ],
+      "target_thickness_um": 150.0,
+      "min_substrate_temperature_c": 1050.0,
+      "nominal_rotation_rpm": 15.0,
+      "nominal_raster_hz": 600.0,
+      "base_duration_hours": 6.0,
+      "base_power_kwh": 65.0,
+      "thermal_resistance_bonus": 0.50,
+      "max_temperature_bonus_c": 260.0,
+      "durability_bonus": 0.3,
+      "spallation_base_risk": 0.08,
+      "required_skill": "science",
+      "tags": [
+        "thermal_barrier",
+        "extreme_temp"
+      ]
+    },
+    {
+      "id": "ebpvd_tbc_alumina_barrier",
+      "display_name_key": "ebpvd_coating_alumina_name",
+      "display_name": "Alpha-Alumina Diffusion Barrier",
+      "ceramic_target_item_id": "item_ebpvd_ceramic_target_ingot",
+      "bond_coat_item_id": "item_mcraly_bond_coat_powder",
+      "valid_substrate_tags": [
+        "diesel_injector",
+        "superalloy_blade"
+      ],
+      "target_thickness_um": 50.0,
+      "min_substrate_temperature_c": 850.0,
+      "nominal_rotation_rpm": 10.0,
+      "nominal_raster_hz": 400.0,
+      "base_duration_hours": 3.0,
+      "base_power_kwh": 28.0,
+      "thermal_resistance_bonus": 0.25,
+      "max_temperature_bonus_c": 120.0,
+      "durability_bonus": 0.55,
+      "spallation_base_risk": 0.03,
+      "required_skill": "mechanical",
+      "tags": [
+        "corrosion_barrier",
+        "wear_resistant"
+      ]
+    }
+  ],
+  "substrate_classes": [
+    {
+      "tag": "superalloy_blade",
+      "display_name": "Nickel-Base Superalloy Turbine Blade",
+      "default_item_id": "item_superalloy_turbine_blade_blank",
+      "result_item_id": "item_coated_turbine_blade"
+    },
+    {
+      "tag": "combustor_liner",
+      "display_name": "Cobalt Combustor Tile Blank",
+      "default_item_id": "item_superalloy_turbine_blade_blank",
+      "result_item_id": "item_coated_combustor_tile"
+    },
+    {
+      "tag": "diesel_injector",
+      "display_name": "Heavy Diesel Heavy-Duty Nozzle Blank",
+      "default_item_id": "item_superalloy_turbine_blade_blank",
+      "result_item_id": "item_coated_diesel_injector"
+    }
+  ],
+  "failure_profiles": [
+    {
+      "code": "filament_blowout",
+      "display_name": "Electron Gun Filament Failure",
+      "base_risk": 0.04,
+      "threshold_hours": 80.0
+    },
+    {
+      "code": "vacuum_loss",
+      "display_name": "Diffusion Pump Vacuum Breach",
+      "base_risk": 0.03,
+      "threshold_hours": 100.0
+    },
+    {
+      "code": "thermal_overheat",
+      "display_name": "Substrate Thermal Warpage",
+      "base_risk": 0.05,
+      "threshold_hours": 120.0
+    }
+  ],
+  "maintenance": {
+    "filament_max_hours": 100.0,
+    "vacuum_pump_max_hours": 150.0,
+    "chamber_shield_max_hours": 200.0
+  }
+}

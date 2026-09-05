@@ -99,6 +99,7 @@ namespace AtomicWar.GodotApp
             SetupCaregiving();
             SetupShelterThermal();
             SetupWeatherHardening();
+            SetupGeothermalAquifer();
             SetupShelterSchedule();
             SetupAutopsy(_sharedResearch);
             SetupWaystation();
@@ -111,6 +112,7 @@ namespace AtomicWar.GodotApp
             SetupPlans78To81();
             SetupPlans110To113();
             SetupPlans130To133();
+            SetupPlans146To149();
             SetupKitchenNutrition();
             SetupGrainProcessing();
             SetupCryogenicAirSeparation();
@@ -265,6 +267,7 @@ namespace AtomicWar.GodotApp
             SaveCaregiving();
             SaveShelterThermal();
             SaveWeatherHardening();
+            SaveGeothermalAquifer();
             SaveShelterSchedule();
             SaveAutopsy();
             SaveWaystation();
@@ -273,6 +276,7 @@ namespace AtomicWar.GodotApp
             SavePlans78To81();
             SavePlans110To113();
             SavePlans130To133();
+            SavePlans146To149();
             SaveKitchenNutrition();
             SaveGrainProcessing();
             SaveCryogenicAirSeparation();
@@ -321,6 +325,7 @@ namespace AtomicWar.GodotApp
             _caregiving?.TickDay(day);
             _shelterThermal?.TickDay(day);
             _weatherHardening?.TickDay(day);
+            _geothermalAquifer?.TickDay(day);
             _shelterSchedule?.TickDay(day);
             _autopsy?.TickDay(day);
             // Plan 72 §3 ordering: advance ventilation/air filtration — hosts
@@ -340,6 +345,7 @@ namespace AtomicWar.GodotApp
             TickPlans78To81(day);
             TickPlans110To113(day);
             TickPlans130To133(day);
+            TickPlans146To149(day);
             _kitchenNutrition?.TickDay(day);
             TickPlans94To97(day);
             _equipmentCondition?.TickDay(day);
@@ -500,6 +506,8 @@ namespace AtomicWar.GodotApp
             _airlockSecurity?.Dispose(); _airlockSecurity = null!;
             _shelterThermal?.Dispose(); _shelterThermal = null!;
             _weatherHardening?.Dispose(); _weatherHardening = null!;
+            _geothermalAquifer?.Dispose(); _geothermalAquifer = null!;
+            _geothermalAquiferDirty = false;
             _shelterSchedule?.Dispose(); _shelterSchedule = null!;
             _autopsy?.Dispose(); _autopsy = null!;
             _waystation?.Dispose(); _waystation = null!;
@@ -534,12 +542,15 @@ namespace AtomicWar.GodotApp
             _medicalWardSession?.Dispose(); _medicalWardSession = null!;
             _medicalWard = null!;
             _factionBranch?.Dispose(); _factionBranch = null!;
+            _counterIntelligence?.Dispose(); _counterIntelligence = null!;
             _factionBranchDirty = false;
+            _counterIntelligenceDirty = false;
             _expandedShelterRoster = new DutyRosterSystem();
 
             _airlockSecurityDirty = false;
             _shelterThermalDirty = false;
             _weatherHardeningDirty = false;
+            _geothermalAquiferDirty = false;
             _shelterScheduleDirty = false;
             _autopsyDirty = false;
             _waystationDirty = false;

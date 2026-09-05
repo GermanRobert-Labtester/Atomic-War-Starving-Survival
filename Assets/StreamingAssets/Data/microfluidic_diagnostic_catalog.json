@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "machine": {
+    "nominal_power_kw": 2.5,
+    "curing_oven_temp_c": 65.0,
+    "reader_channels": 4
+  },
+  "assays": [
+    {
+      "id": "microfluidic_assay_cholera",
+      "display_name_key": "assay_cholera_name",
+      "display_name": "Vibrio Cholerae Rapid Immunochip",
+      "target_disease_ids": [
+        "disease_cholera"
+      ],
+      "cartridge_item_id": "item_microfluidic_cartridge_general",
+      "reagent_item_ids": [
+        "item_assay_reagent_pack"
+      ],
+      "reader_item_id": "item_microfluidic_reader",
+      "base_duration_minutes": 30.0,
+      "sensitivity": 0.94,
+      "specificity": 0.98,
+      "early_detection_modifier": 0.40,
+      "invalid_run_base_chance": 0.04,
+      "minimum_operator_skill": 0.35,
+      "tags": [
+        "waterborne",
+        "enteric"
+      ]
+    },
+    {
+      "id": "microfluidic_assay_zoonotic_flu",
+      "display_name_key": "assay_zoonotic_flu_name",
+      "display_name": "Avian-Swine Zoonotic Multiplex Chip",
+      "target_disease_ids": [
+        "disease_zoonotic_flu"
+      ],
+      "cartridge_item_id": "item_microfluidic_cartridge_general",
+      "reagent_item_ids": [
+        "item_assay_reagent_pack"
+      ],
+      "reader_item_id": "item_microfluidic_reader",
+      "base_duration_minutes": 45.0,
+      "sensitivity": 0.92,
+      "specificity": 0.96,
+      "early_detection_modifier": 0.50,
+      "invalid_run_base_chance": 0.05,
+      "minimum_operator_skill": 0.40,
+      "tags": [
+        "airborne",
+        "respiratory"
+      ]
+    },
+    {
+      "id": "microfluidic_assay_blood_fever",
+      "display_name_key": "assay_blood_fever_name",
+      "display_name": "Viral Hemorrhagic Blood Fever Panel",
+      "target_disease_ids": [
+        "disease_blood_fever"
+      ],
+      "cartridge_item_id": "item_microfluidic_cartridge_general",
+      "reagent_item_ids": [
+        "item_assay_reagent_pack"
+      ],
+      "reader_item_id": "item_microfluidic_reader",
+      "base_duration_minutes": 60.0,
+      "sensitivity": 0.95,
+      "specificity": 0.97,
+      "early_detection_modifier": 0.35,
+      "invalid_run_base_chance": 0.06,
+      "minimum_operator_skill": 0.50,
+      "tags": [
+        "bloodborne",
+        "acute"
+      ]
+    },
+    {
+      "id": "microfluidic_assay_spore_blight",
+      "display_name_key": "assay_spore_blight_name",
+      "display_name": "Ashfall Spore Blight Diagnostic Assay",
+      "target_disease_ids": [
+        "disease_spore_blight"
+      ],
+      "cartridge_item_id": "item_microfluidic_cartridge_general",
+      "reagent_item_ids": [
+        "item_assay_reagent_pack"
+      ],
+      "reader_item_id": "item_microfluidic_reader",
+      "base_duration_minutes": 40.0,
+      "sensitivity": 0.90,
+      "specificity": 0.95,
+      "early_detection_modifier": 0.45,
+      "invalid_run_base_chance": 0.05,
+      "minimum_operator_skill": 0.30,
+      "tags": [
+        "fallout",
+        "fungal"
+      ]
+    },
+    {
+      "id": "microfluidic_assay_fungal_respiratory",
+      "display_name_key": "assay_fungal_resp_name",
+      "display_name": "Deep-Bunker Aspergillus Respiratory Array",
+      "target_disease_ids": [
+        "disease_fungal_respiratory"
+      ],
+      "cartridge_item_id": "item_microfluidic_cartridge_general",
+      "reagent_item_ids": [
+        "item_assay_reagent_pack"
+      ],
+      "reader_item_id": "item_microfluidic_reader",
+      "base_duration_minutes": 50.0,
+      "sensitivity": 0.91,
+      "specificity": 0.96,
+      "early_detection_modifier": 0.40,
+      "invalid_run_base_chance": 0.04,
+      "minimum_operator_skill": 0.35,
+      "tags": [
+        "pulmonary",
+        "chronic"
+      ]
+    },
+    {
+      "id": "microfluidic_assay_typhoid",
+      "display_name_key": "assay_typhoid_name",
+      "display_name": "Salmonella Typhi Serological Card",
+      "target_disease_ids": [
+        "disease_typhoid_waterborne"
+      ],
+      "cartridge_item_id": "item_microfluidic_cartridge_general",
+      "reagent_item_ids": [
+        "item_assay_reagent_pack"
+      ],
+      "reader_item_id": "item_microfluidic_reader",
+      "base_duration_minutes": 35.0,
+      "sensitivity": 0.93,
+      "specificity": 0.97,
+      "early_detection_modifier": 0.35,
+      "invalid_run_base_chance": 0.03,
+      "minimum_operator_skill": 0.30,
+      "tags": [
+        "waterborne",
+        "systemic"
+      ]
+    },
+    {
+      "id": "microfluidic_assay_septic_fever",
+      "display_name_key": "assay_septic_fever_name",
+      "display_name": "Septic Rust-Wound Tetanic Micro-Screen",
+      "target_disease_ids": [
+        "disease_septic_rust_wound_fever"
+      ],
+      "cartridge_item_id": "item_microfluidic_cartridge_general",
+      "reagent_item_ids": [
+        "item_assay_reagent_pack"
+      ],
+      "reader_item_id": "item_microfluidic_reader",
+      "base_duration_minutes": 25.0,
+      "sensitivity": 0.96,
+      "specificity": 0.94,
+      "early_detection_modifier": 0.30,
+      "invalid_run_base_chance": 0.03,
+      "minimum_operator_skill": 0.25,
+      "tags": [
+        "trauma",
+        "bacterial"
+      ]
+    },
+    {
+      "id": "microfluidic_assay_mold_lung",
+      "display_name_key": "assay_mold_lung_name",
+      "display_name": "Excavation Stachybotrys Mycotoxin Assay",
+      "target_disease_ids": [
+        "disease_deep_excavation_mold_lung"
+      ],
+      "cartridge_item_id": "item_microfluidic_cartridge_general",
+      "reagent_item_ids": [
+        "item_assay_reagent_pack"
+      ],
+      "reader_item_id": "item_microfluidic_reader",
+      "base_duration_minutes": 55.0,
+      "sensitivity": 0.89,
+      "specificity": 0.97,
+      "early_detection_modifier": 0.45,
+      "invalid_run_base_chance": 0.05,
+      "minimum_operator_skill": 0.45,
+      "tags": [
+        "toxic",
+        "occupational"
+      ]
+    }
+  ],
+  "maintenance": {
+    "mold_max_impressions": 50,
+    "reader_calibration_runs": 80
+  }
+}

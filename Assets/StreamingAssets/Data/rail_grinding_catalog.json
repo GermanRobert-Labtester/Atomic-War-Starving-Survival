@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "rail_profiles": [
+    {
+      "id": "rail_profile_standard_heavy",
+      "route_mode": "rail",
+      "nominal_profile": "Standard Industrial Rail 60 kg/m",
+      "roughness_good_threshold": 0.25,
+      "roughness_bad_threshold": 0.75
+    },
+    {
+      "id": "rail_profile_subway_tunnel",
+      "route_mode": "subway",
+      "nominal_profile": "Subway Heavy Track 50 kg/m",
+      "roughness_good_threshold": 0.20,
+      "roughness_bad_threshold": 0.70
+    }
+  ],
+  "grinding_heads": [
+    {
+      "id": "grinding_head_corundum_m4",
+      "display_name_key": "grinding_head_m4_name",
+      "display_name": "M4 Corundum Track-Reprofiling Head",
+      "compatible_vehicle_tags": [
+        "locomotive",
+        "handcar",
+        "draisine"
+      ],
+      "nominal_rpm": 3600.0,
+      "min_rpm": 2000.0,
+      "max_rpm": 4800.0,
+      "pass_depth_mm": 0.4,
+      "base_work_rate_km_per_hour": 4.0,
+      "stone_wear_per_km": 1.5,
+      "water_suppression_per_km": 25.0,
+      "target_roughness": 0.20,
+      "max_speed_upgrade_kph": 80.0,
+      "spark_hazard_base": 0.12,
+      "stone_shatter_base": 0.04,
+      "required_items": [
+        "item_rail_grinding_head",
+        "item_abrasive_grinding_stone",
+        "item_rail_profiling_cylinder",
+        "item_spark_suppression_manifold"
+      ],
+      "tags": [
+        "railway",
+        "corridor_rehab",
+        "maintenance"
+      ]
+    }
+  ],
+  "maintenance": {
+    "stone_replacement_min_diameter_mm": 120.0,
+    "cylinder_calibration_interval_km": 50.0
+  }
+}

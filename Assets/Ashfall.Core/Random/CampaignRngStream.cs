@@ -46,12 +46,12 @@ namespace Ashfall.Core.Random
         public const string WildlifeMigration = "wildlife.migration";
         public const string WildlifeApex = "wildlife.apex";
         public const string WildlifeTaming = "wildlife.taming";
-        // Plans 146-149 — advanced industrial & expedition machinery. Dot-namespaced
-        // per-stream derivation (same additive-safety property as Plans 162-165).
-        public const string EbpvdCoating = "advanced_mfg.ebpvd_coating";
-        public const string MicrofluidicDiagnostics = "medical.microfluidic_diagnostics";
-        public const string MineClearingFlail = "route_engineering.mine_flail";
-        public const string RailGrinding = "route_engineering.rail_grinding";
+        // Plans 146-149 — advanced industrial & expedition machinery. Distinct
+        // StableHash-derived strings; snake_case per CampaignRngSourceGateTests.
+        public const string EbpvdCoating = "advanced_mfg_ebpvd_coating";
+        public const string MicrofluidicDiagnostics = "medical_microfluidic_diagnostics";
+        public const string MineClearingFlail = "route_engineering_mine_flail";
+        public const string RailGrinding = "route_engineering_rail_grinding";
     }
 
     /// <summary>Domain-isolated deterministic RNG stream derived from a campaign master seed.</summary>

@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "modules": [
+    {
+      "id": "module_heavy_flail_m1",
+      "display_name_key": "flail_m1_name",
+      "display_name": "M1 Heavy Demining Flail Rotor",
+      "compatible_vehicle_tags": [
+        "cargo_truck",
+        "steam_halftrack",
+        "armored_mobile_base"
+      ],
+      "nominal_rpm": 300.0,
+      "rpm_min": 150.0,
+      "rpm_max": 450.0,
+      "cleared_width_m": 3.5,
+      "nominal_breach_speed_kph": 8.0,
+      "chain_link_capacity": 40,
+      "chain_wear_per_km": 2.0,
+      "hydraulic_pressure_nominal": 180.0,
+      "blast_shield_integrity": 100.0,
+      "mine_clearance_efficiency": 0.94,
+      "tripwire_clearance_efficiency": 0.98,
+      "obstacle_stall_risk": 0.05,
+      "fuel_multiplier": 1.8,
+      "required_items": [
+        "item_mine_flail_module",
+        "item_hardened_flail_chain",
+        "item_hydraulic_drive_motor",
+        "item_armored_blast_shield"
+      ],
+      "tags": [
+        "demining",
+        "breaching",
+        "heavy_vehicle"
+      ]
+    },
+    {
+      "id": "module_light_scout_flail",
+      "display_name_key": "flail_light_name",
+      "display_name": "Scout Wire-Rupture Flail",
+      "compatible_vehicle_tags": [
+        "utility_quad",
+        "steam_halftrack"
+      ],
+      "nominal_rpm": 400.0,
+      "rpm_min": 200.0,
+      "rpm_max": 500.0,
+      "cleared_width_m": 2.0,
+      "nominal_breach_speed_kph": 12.0,
+      "chain_link_capacity": 24,
+      "chain_wear_per_km": 3.5,
+      "hydraulic_pressure_nominal": 140.0,
+      "blast_shield_integrity": 60.0,
+      "mine_clearance_efficiency": 0.85,
+      "tripwire_clearance_efficiency": 0.99,
+      "obstacle_stall_risk": 0.08,
+      "fuel_multiplier": 1.4,
+      "required_items": [
+        "item_mine_flail_module",
+        "item_hardened_flail_chain"
+      ],
+      "tags": [
+        "tripwire",
+        "lightweight"
+      ]
+    }
+  ],
+  "maintenance": {
+    "chain_link_cost_per_replacement": 1,
+    "hydraulic_rebuild_threshold_hours": 100.0
+  }
+}
