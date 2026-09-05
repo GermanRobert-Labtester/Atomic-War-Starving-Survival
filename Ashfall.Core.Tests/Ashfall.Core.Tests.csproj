@@ -114,12 +114,8 @@
     <Compile Remove="World/WeatherSeasonExpansionTests.cs" />
     <Compile Remove="MicroLocationRumorIntegrationTests.cs" />
     <Compile Remove="MicroLocationRouteAffinityTests.cs" />
-    <Compile Remove="MicroLocationUtilizationAuditTests.cs" />
     <Compile Remove="MicroLocationCatalogLoaderTests.cs" />
-    <Compile Remove="MicroLocationDeterminismTests.cs" />
     <Compile Remove="MicroLocationSimulationTests.cs" />
-    <Compile Remove="MicroLocationDeterminismHarness.cs" />
-    <Compile Remove="MicroLocationEconomyAuditTests.cs" />
     <Compile Remove="MicroLocationEthicsIntegrationTests.cs" />
     <Compile Remove="MicroLocationStorytellingIntegrityTests.cs" />
   </ItemGroup>

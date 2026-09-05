@@ -95,14 +95,14 @@ Generated deterministically by `MicroLocationEconomyAuditTests` (`ASHFALL_GEN_MI
 
 ## 100-expedition results
 
-- mean primary loot value / expedition: 7.69
-- mean micro item value / expedition: 1.5
-- micro/primary contribution ratio: 19.5% — target band 10–30%
+- mean primary loot value / expedition: 6.69
+- mean micro item value / expedition: 1.72
+- micro/primary contribution ratio: 25.7% — target band 10–30%
 - median micro value: 0; p95: 14
-- median primary value: 0; p95: 51
+- median primary value: 0; p95: 40
 - expeditions completed / failed: 24 / 0
-- non-item rewards across the run: 0 journal unlocks, 0 location discoveries, morale -3, guilt +6
-- micro encounters surfaced: 8
+- non-item rewards across the run: 0 journal unlocks, 0 location discoveries, morale -1, guilt +7
+- micro encounters surfaced: 12
 
 ## Named outlier reviews
 
@@ -120,4 +120,4 @@ Generated deterministically by `MicroLocationEconomyAuditTests` (`ASHFALL_GEN_MI
 
 ## Recommendation
 
-- ratio measured at 19.5% — inside the 10–30% design band: no change.
+- ratio measured at 25.7% — inside the 10–30% design band: no change.
