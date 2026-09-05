@@ -254,6 +254,28 @@ namespace Ashfall.Core
             OnTelemetryChanged?.Invoke();
         }
 
+        /// <summary>
+        /// Flagship sky-defense integration (Task 7): reduce the pending
+        /// impact's energy after a successful interception. The residual
+        /// fraction keeps flowing through the normal armor pipeline in
+        /// <see cref="ResolveImpact"/> — interception modifies the strike,
+        /// it never bypasses shelter armor. Returns false when no pending
+        /// impact matches the event id.
+        /// </summary>
+        public bool ApplyInterceptionMitigation(string eventId, float residualFraction)
+        {
+            if (string.IsNullOrEmpty(eventId)) return false;
+            if (_state.nextImpactDay < _currentDay && _state.nextImpactDay != _currentDay) return false;
+            if (_state.nextImpactDay < 0) return false;
+            if (!string.Equals(_state.scheduledEventId, eventId, StringComparison.Ordinal)) return false;
+
+            float clamped = Math.Clamp(residualFraction, 0f, 1f);
+            _state.impactEnergyMj = Math.Max(0f, _state.impactEnergyMj * clamped);
+            _log.Info($"[OrbitalHarrow] interception mitigation for '{eventId}': residual fraction {clamped:F2}, energy now {_state.impactEnergyMj:F1} MJ");
+            OnTelemetryChanged?.Invoke();
+            return true;
+        }
+
         public ActionResult ClaimSalvage(string eventId)
         {
             var opp = _state.activeSalvage.Find(s => s.eventId == eventId && !s.isClaimed);
