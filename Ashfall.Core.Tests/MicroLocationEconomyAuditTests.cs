@@ -135,38 +135,7 @@ namespace Ashfall.Core.Tests
 
         // ── 100-expedition production-path economy simulation ───────────
 
-        private sealed class EconomyResult
-        {
-            public double TotalPrimaryValue;
-            public double TotalMicroItemValue;
-            public double TotalMicroNetValue;
-            public int MicroEncounters;
-            public int JournalUnlocks;
-            public int LocationDiscoveries;
-            public double MoraleDelta;
-            public double GuiltDelta;
-            public int Completed;
-            public int Failed;
-            public List<double> PerExpeditionPrimary = new List<double>();
-            public List<double> PerExpeditionMicro = new List<double>();
-            public Dictionary<string, double> MicroValueByEncounter = new Dictionary<string, double>(StringComparer.Ordinal);
-
-            public string Canonical()
-            {
-                var sb = new StringBuilder();
-                sb.Append("primary=").Append(TotalPrimaryValue.ToString("R", System.Globalization.CultureInfo.InvariantCulture));
-                sb.Append(";micro=").Append(TotalMicroItemValue.ToString("R", System.Globalization.CultureInfo.InvariantCulture));
-                sb.Append(";net=").Append(TotalMicroNetValue.ToString("R", System.Globalization.CultureInfo.InvariantCulture));
-                sb.Append(";enc=").Append(MicroEncounters).Append(";journal=").Append(JournalUnlocks)
-                  .Append(";disc=").Append(LocationDiscoveries).Append(";morale=").Append(MoraleDelta)
-                  .Append(";guilt=").Append(GuiltDelta).Append(";done=").Append(Completed).Append(";fail=").Append(Failed);
-                foreach (var k in MicroValueByEncounter.Keys.OrderBy(k => k, StringComparer.Ordinal))
-                    sb.Append(';').Append(k).Append('=').Append(MicroValueByEncounter[k].ToString("R", System.Globalization.CultureInfo.InvariantCulture));
-                return sb.ToString();
-            }
-        }
-
-        private sealed class EconomyResult
+        internal sealed class EconomyResult
         {
             public double TotalPrimaryValue;
             public double TotalMicroItemValue;
@@ -465,9 +434,6 @@ namespace Ashfall.Core.Tests
         public static double MeanMicro;
         public static double Ratio;
         public static MicroLocationEconomyAuditTests? Holder;
-        public static MicroLocationEconomyAuditTests_EconomyResult? Result;
+        public static MicroLocationEconomyAuditTests.EconomyResult? Result;
     }
-
-    // Alias so the scratch class can reference the private nested type.
-    internal class MicroLocationEconomyAuditTests_EconomyResult { }
 }
