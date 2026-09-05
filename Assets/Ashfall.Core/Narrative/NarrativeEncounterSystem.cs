@@ -152,6 +152,34 @@ namespace Ashfall.Core.Narrative
         /// authored depletable set).</summary>
         public int DepletedCount => _depletedEncounters.Count;
 
+        /// <summary>
+        /// Returns all eligible narrative encounter candidates and their effective weights
+        /// for the given stance, danger level, and location without consuming any RNG.
+        /// </summary>
+        public List<(EncounterDefinition def, double weight)> GetEligibleCandidates(
+            string stance, float dangerLevel, string locationId)
+        {
+            var candidates = new List<(EncounterDefinition, double)>();
+            for (int i = 0; i < _catalog.Count; i++)
+            {
+                var def = _catalog[i];
+                if (IsDepleted(def.id)) continue;
+                double w = def.GetEffectiveWeight(stance, dangerLevel, locationId);
+                if (w <= 0d) continue;
+                if (WeatherGateFilter != null && WeatherGateFilter(def.id)) continue;
+                candidates.Add((def, w));
+            }
+            return candidates;
+        }
+
+        public void RecordEncounterSelected(EncounterDefinition def)
+        {
+            if (def == null) return;
+            OnEncounterSelected?.Invoke(def);
+            Instrumentation?.RecordDefinitionSelected(
+                NarrativeEncounterCatalogLoader.FileName, def.id, nameof(NarrativeEncounterSystem));
+        }
+
         /// <summary>Pick an eligible encounter by weight, or null when none
         /// qualify for this stance/danger/location. F1: depleted encounters are
         /// excluded before weighting, so they neither distort the weight sum
@@ -161,36 +189,22 @@ namespace Ashfall.Core.Narrative
         {
             if (rng == null) return null;
 
-            // Pass 1: sum only eligible, non-filtered weights
+            var candidates = GetEligibleCandidates(stance, dangerLevel, locationId);
+            if (candidates.Count == 0) return null;
+
             double total = 0d;
-            for (int i = 0; i < _catalog.Count; i++)
-            {
-                var def = _catalog[i];
-                if (IsDepleted(def.id)) continue; // F1: excluded before weighting
-                double w = def.GetEffectiveWeight(stance, dangerLevel, locationId);
-                if (w <= 0d) continue;
-                if (WeatherGateFilter != null && WeatherGateFilter(def.id)) continue;
-                total += w;
-            }
+            for (int i = 0; i < candidates.Count; i++) total += candidates[i].weight;
             if (total <= 0d) return null;
 
-            // Pass 2: roll against filtered total
             double roll = rng.NextDouble() * total;
             double acc = 0d;
-            for (int i = 0; i < _catalog.Count; i++)
+            for (int i = 0; i < candidates.Count; i++)
             {
-                var def = _catalog[i];
-                if (IsDepleted(def.id)) continue; // F1: excluded before weighting
-                double weight = def.GetEffectiveWeight(stance, dangerLevel, locationId);
-                if (weight <= 0d) continue;
-                if (WeatherGateFilter != null && WeatherGateFilter(def.id)) continue;
-                acc += weight;
+                acc += candidates[i].weight;
                 if (roll < acc)
                 {
-                    OnEncounterSelected?.Invoke(def);
-                    Instrumentation?.RecordDefinitionSelected(
-                        NarrativeEncounterCatalogLoader.FileName, def.id, nameof(NarrativeEncounterSystem));
-                    return def;
+                    RecordEncounterSelected(candidates[i].def);
+                    return candidates[i].def;
                 }
             }
             return null;
@@ -519,6 +533,17 @@ namespace Ashfall.Core.Narrative
                 {
                     if (parsed[i] == null || string.IsNullOrEmpty(parsed[i].id)) continue;
                     if (parsed[i].choices == null) parsed[i].choices = new List<EncounterChoiceDefinition>();
+
+                    // F6 §6.3 seal — the dedicated MicroLocationEncounterLoader stamps
+                    // marker + source file, but production loads through this shared
+                    // LoadFile. Apply the same stamp here so every definition from
+                    // micro_locations.json carries the metadata its consumers expect;
+                    // other catalog files keep their defaults.
+                    if (fileName == MicroLocationsFileName)
+                    {
+                        parsed[i].isMicroLocation = true;
+                        parsed[i].sourceFile = MicroLocationsFileName;
+                    }
                     result.Add(parsed[i]);
                 }
             }

@@ -272,6 +272,32 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void ContentValidation_ProductionCatalogLoad_StampsMicroLocationMarker()
+        {
+            // F6 §6.3 seal — production loads micro_locations.json through the shared
+            // NarrativeEncounterCatalogLoader.LoadFile, which must apply the same
+            // isMicroLocation/sourceFile stamp the dedicated
+            // MicroLocationEncounterLoader applies. Previously only the dedicated
+            // (test-only) loader stamped; production definitions silently carried
+            // isMicroLocation = false.
+            var defs = CreateProductionNarrativeSystem().Catalog;
+
+            var microDefs = defs.Where(d => d.id.StartsWith("micro_", StringComparison.Ordinal)).ToList();
+            Assert.True(microDefs.Count >= 6, $"expected the authored micro-location set, found {microDefs.Count}");
+
+            foreach (var def in microDefs)
+            {
+                Assert.True(def.isMicroLocation, $"production-loaded '{def.id}' must be stamped isMicroLocation");
+                Assert.Equal("micro_locations.json", def.sourceFile);
+            }
+
+            // Non-micro files keep their defaults (no cross-file stamping).
+            var coreDefs = defs.Where(d => !d.id.StartsWith("micro_", StringComparison.Ordinal)).ToList();
+            Assert.True(coreDefs.Count > 0);
+            Assert.All(coreDefs, d => Assert.False(d.isMicroLocation));
+        }
+
+        [Fact]
         public void ContentValidation_MicroLocations_CarrySchemaVersion()
         {
             // Data-authority hygiene (Invariant 6): the catalog the flagship
